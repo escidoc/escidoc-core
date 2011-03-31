@@ -45,41 +45,29 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * Test the create method of the organizational unit handler.
- * 
+ *
  * @author Michael Schneider
- * 
  */
 @RunWith(value = Parameterized.class)
 public class CreateTest extends OrganizationalUnitTestBase {
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public CreateTest(final int transport) {
         super(transport);
     }
 
     /**
-     * Test successfully creating an organizational unit where the root element
-     * of metadata has no XML prefix.
-     * 
-     * @test.input Valid Organizational Unit XML representation.
-     * @test.expected: The expected result is the XML representation of the
-     *                 created OrganizationalUnit, corresponding to XML-schema
-     *                 "organizational-unit.xsd" including generated id, creator
-     *                 and creation date
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test successfully creating an organizational unit where the root element of metadata has no XML prefix.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumCou1aMDPrefix() throws Exception {
 
         Document ou =
-            getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH,
-                "escidoc_ou_create_md-without-prefix.xml");
+            getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, "escidoc_ou_create_md-without-prefix.xml");
         setUniqueValue(ou, XPATH_ORGANIZATIONAL_UNIT_TITLE);
         String template = toString(ou, false);
         assertXmlValidOrganizationalUnit(template);
@@ -96,25 +84,13 @@ public class CreateTest extends OrganizationalUnitTestBase {
 
     /**
      * Test successfully creating an organizational unit.
-     * 
-     * @test.name Create Organizational Unit - Success
-     * @test.id OUM_COU-1-a
-     * @test.input Valid Organizational Unit XML representation.
-     * @test.expected: The expected result is the XML representation of the
-     *                 created OrganizationalUnit, corresponding to XML-schema
-     *                 "organizational-unit.xsd" including generated id, creator
-     *                 and creation date
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumCou1a() throws Exception {
 
-        Document ou =
-            getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH,
-                "escidoc_ou_create.xml");
+        Document ou = getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, "escidoc_ou_create.xml");
         setUniqueValue(ou, XPATH_ORGANIZATIONAL_UNIT_TITLE);
         String template = toString(ou, false);
         assertXmlValidOrganizationalUnit(template);
@@ -130,34 +106,19 @@ public class CreateTest extends OrganizationalUnitTestBase {
     }
 
     /**
-     * Test successfully creating an organizational unit with parents in state
-     * created.
-     * 
-     * @test.name Create Organizational Unit - With Parents - Success
-     * @test.id OUM_COU-1-b
-     * @test.input Valid Organizational Unit XML representation including
-     *             specified parent ous.
-     * @test.expected: The expected result is the XML representation of the
-     *                 created OrganizationalUnit, corresponding to XML-schema
-     *                 "organizational-unit.xsd" including generated id, creator
-     *                 and creation date. Parents as defined.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test successfully creating an organizational unit with parents in state created.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumCou1b() throws Exception {
 
-        final String[] parentValues =
-            createSuccessfully("escidoc_ou_create.xml", 2);
+        final String[] parentValues = createSuccessfully("escidoc_ou_create.xml", 2);
 
         Document toBeCreatedDocument =
-            getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH,
-                "escidoc_ou_create.xml");
+            getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, "escidoc_ou_create.xml");
         setUniqueValue(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_TITLE);
-        insertParentsElement(toBeCreatedDocument,
-            XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS, parentValues, false);
+        insertParentsElement(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS, parentValues, false);
 
         String toBeCreatedXml = toString(toBeCreatedDocument, false);
 
@@ -168,8 +129,7 @@ public class CreateTest extends OrganizationalUnitTestBase {
         catch (final Exception e) {
             failException("Creating OU with parents failed with exception. ", e);
         }
-        assertOrganizationalUnit(createdXml, toBeCreatedXml, startTimestamp,
-            startTimestamp);
+        assertOrganizationalUnit(createdXml, toBeCreatedXml, startTimestamp, startTimestamp);
     }
 
     // /**
@@ -208,40 +168,23 @@ public class CreateTest extends OrganizationalUnitTestBase {
     // assertXmlEquals("External id mismatch.", toBeCreatedDocument,
     // getDocument(createdXml), XPATH_ORGANIZATIONAL_UNIT_IDENTIFIER);
     // }
+
     /**
      * Test successfully creating an organizational unit using lax mode.
-     * 
-     * @test.name Create Organizational Unit - Lax Mode with Objid
-     * @test.id OUM_COU-1-d
-     * @test.input Organizational Unit XML representation. Attributes of
-     *             elements that are handled lax are not provided. Objid instead
-     *             of Href is provided in parent-ou elements.
-     * @test.expected: <ul>
-     *                 <li>In case of REST: XmlSchemaValidationException.</li>
-     *                 <li>In case of SOAP: The expected result is the XML
-     *                 representation of the created OrganizationalUnit,
-     *                 corresponding to XML-schema "organizational-unit.xsd"
-     *                 including generated id, creator and creation date.</li>
-     *                 </ul>
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumCou1d() throws Exception {
 
-        final String[] parentValues =
-            createSuccessfully("escidoc_ou_create.xml", 2);
+        final String[] parentValues = createSuccessfully("escidoc_ou_create.xml", 2);
         final String parent1Id = parentValues[0];
         final String parent2Id = parentValues[1];
 
         Document toBeCreatedDocument =
-            getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH,
-                "escidoc_ou_create.xml");
+            getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, "escidoc_ou_create.xml");
         setUniqueValue(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_TITLE);
-        insertParentsElement(toBeCreatedDocument,
-            XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS, parentValues, false);
+        insertParentsElement(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS, parentValues, false);
 
         toBeCreatedDocument = getDocument(toString(toBeCreatedDocument, false));
 
@@ -249,38 +192,25 @@ public class CreateTest extends OrganizationalUnitTestBase {
         // organizational-unit root element
         deleteNodes(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_XLINK_TYPE);
         // properties
-        deleteNodes(toBeCreatedDocument,
-            XPATH_ORGANIZATIONAL_UNIT_PROPERTIES_XLINK_TYPE);
+        deleteNodes(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_PROPERTIES_XLINK_TYPE);
         // data
-        deleteNodes(toBeCreatedDocument,
-            XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS_XLINK_TYPE);
+        deleteNodes(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS_XLINK_TYPE);
         // parent-ous
-        deleteNodes(toBeCreatedDocument,
-            XPATH_ORGANIZATIONAL_UNIT_PARENTS_XLINK_TYPE);
+        deleteNodes(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_PARENTS_XLINK_TYPE);
         // parent-ou
-        addAttribute(
-            toBeCreatedDocument,
-            XPATH_ORGANIZATIONAL_UNIT_PARENT + "[1]",
-            createAttributeNode(toBeCreatedDocument, null, null, NAME_OBJID,
-                parent1Id));
-        addAttribute(
-            toBeCreatedDocument,
-            XPATH_ORGANIZATIONAL_UNIT_PARENT + "[2]",
-            createAttributeNode(toBeCreatedDocument, null, null, NAME_OBJID,
-                parent2Id));
-        deleteNodes(toBeCreatedDocument,
-            XPATH_ORGANIZATIONAL_UNIT_PARENT_XLINK_HREF);
-        deleteNodes(toBeCreatedDocument,
-            XPATH_ORGANIZATIONAL_UNIT_PARENT_XLINK_TITLE);
-        deleteNodes(toBeCreatedDocument,
-            XPATH_ORGANIZATIONAL_UNIT_PARENT_XLINK_TYPE);
+        addAttribute(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_PARENT + "[1]", createAttributeNode(
+            toBeCreatedDocument, null, null, NAME_OBJID, parent1Id));
+        addAttribute(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_PARENT + "[2]", createAttributeNode(
+            toBeCreatedDocument, null, null, NAME_OBJID, parent2Id));
+        deleteNodes(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_PARENT_XLINK_HREF);
+        deleteNodes(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_PARENT_XLINK_TITLE);
+        deleteNodes(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_PARENT_XLINK_TYPE);
 
         String toBeCreatedXml = toString(toBeCreatedDocument, false);
 
         if (getTransport() == Constants.TRANSPORT_REST) {
 
-            final Class<XmlSchemaValidationException> ec =
-                XmlSchemaValidationException.class;
+            final Class<XmlSchemaValidationException> ec = XmlSchemaValidationException.class;
             try {
                 create(toBeCreatedXml);
                 failMissingException(ec);
@@ -297,40 +227,24 @@ public class CreateTest extends OrganizationalUnitTestBase {
             catch (final Exception e) {
                 failException("Lax creating of ou failed. ", e);
             }
-            assertOrganizationalUnit(createdXml, toBeCreatedXml,
-                startTimestamp, startTimestamp);
+            assertOrganizationalUnit(createdXml, toBeCreatedXml, startTimestamp, startTimestamp);
         }
     }
 
     /**
      * Test successfully creating an organizational unit using lax mode.
-     * 
-     * @test.name Create Organizational Unit - Lax Mode with Href
-     * @test.id OUM_COU-1-e
-     * @test.input Organizational Unit XML representation. Attributes of
-     *             elements that are handled lax are not provided. Href instead
-     *             of Objid is provided in parent-ou elements.
-     * @test.expected: The expected result is the XML representation of the
-     *                 created OrganizationalUnit, corresponding to XML-schema
-     *                 "organizational-unit.xsd" including generated id, creator
-     *                 and creation date
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumCou1e() throws Exception {
 
-        final String[] parentValues =
-            createSuccessfully("escidoc_ou_create.xml", 2);
+        final String[] parentValues = createSuccessfully("escidoc_ou_create.xml", 2);
 
         Document toBeCreatedDocument =
-            getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH,
-                "escidoc_ou_create.xml");
+            getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, "escidoc_ou_create.xml");
         setUniqueValue(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_TITLE);
-        insertParentsElement(toBeCreatedDocument,
-            XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS, parentValues, false);
+        insertParentsElement(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS, parentValues, false);
 
         toBeCreatedDocument = getDocument(toString(toBeCreatedDocument, false));
 
@@ -338,19 +252,14 @@ public class CreateTest extends OrganizationalUnitTestBase {
         // organizational-unit root element
         deleteNodes(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_XLINK_TYPE);
         // properties
-        deleteNodes(toBeCreatedDocument,
-            XPATH_ORGANIZATIONAL_UNIT_PROPERTIES_XLINK_TYPE);
+        deleteNodes(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_PROPERTIES_XLINK_TYPE);
         // data
-        deleteNodes(toBeCreatedDocument,
-            XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS_XLINK_TYPE);
+        deleteNodes(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS_XLINK_TYPE);
         // parent-ous
-        deleteNodes(toBeCreatedDocument,
-            XPATH_ORGANIZATIONAL_UNIT_PARENTS_XLINK_TYPE);
+        deleteNodes(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_PARENTS_XLINK_TYPE);
         // parent-ou
-        deleteNodes(toBeCreatedDocument,
-            XPATH_ORGANIZATIONAL_UNIT_PARENT_XLINK_TITLE);
-        deleteNodes(toBeCreatedDocument,
-            XPATH_ORGANIZATIONAL_UNIT_PARENT_XLINK_TYPE);
+        deleteNodes(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_PARENT_XLINK_TITLE);
+        deleteNodes(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_PARENT_XLINK_TYPE);
 
         String toBeCreatedXml = toString(toBeCreatedDocument, false);
 
@@ -362,26 +271,13 @@ public class CreateTest extends OrganizationalUnitTestBase {
             failException("Lax creating of ou failed. ", e);
         }
         assertXmlValidOrganizationalUnit(createdXml);
-        assertOrganizationalUnit(createdXml, toBeCreatedXml, startTimestamp,
-            startTimestamp);
+        assertOrganizationalUnit(createdXml, toBeCreatedXml, startTimestamp, startTimestamp);
     }
 
     /**
-     * Test successfully creating an organizational unit with 2 md-record
-     * elements.
-     * 
-     * @test.name Create Organizational Unit - Multiple md-record Elements
-     * @test.id OUM_COU-1-f
-     * @test.input Organizational Unit XML representation. In md-records 2
-     *             md-record elements have been placed.
-     * @test.expected: The expected result is the XML representation of the
-     *                 created OrganizationalUnit, corresponding to XML-schema
-     *                 "organizational-unit.xsd" including generated id, creator
-     *                 and creation date
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test successfully creating an organizational unit with 2 md-record elements.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumCou1f() throws Exception {
@@ -390,8 +286,7 @@ public class CreateTest extends OrganizationalUnitTestBase {
         // createSuccessfully("escidoc_ou_create_2_md_records.xml", 2);
 
         Document toBeCreatedDocument =
-            getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH,
-                "escidoc_ou_create_2_md_records.xml");
+            getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, "escidoc_ou_create_2_md_records.xml");
         setUniqueValue(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_TITLE);
         // insertParentsElement(toBeCreatedDocument,
         // XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS, parentValues, false);
@@ -407,47 +302,27 @@ public class CreateTest extends OrganizationalUnitTestBase {
         catch (final Exception e) {
             failException("Lax creating of ou failed. ", e);
         }
-        assertOrganizationalUnit(createdXml, toBeCreatedXml, startTimestamp,
-            startTimestamp);
+        assertOrganizationalUnit(createdXml, toBeCreatedXml, startTimestamp, startTimestamp);
     }
 
     /**
-     * Test successfully creating an organizational unit with parents in state
-     * opened.
-     * 
-     * @test.name Create Organizational Unit - With Parents - Success
-     * @test.id OUM_COU-1-g
-     * @test.input Valid Organizational Unit XML representation including
-     *             specified parent ous.
-     * @test.expected: The expected result is the XML representation of the
-     *                 created OrganizationalUnit, corresponding to XML-schema
-     *                 "organizational-unit.xsd" including generated id, creator
-     *                 and creation date. Parents as defined.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test successfully creating an organizational unit with parents in state opened.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumCou1g() throws Exception {
 
-        final String[] parentValues =
-            createSuccessfully("escidoc_ou_create.xml", 2);
-        open(
-            parentValues[0],
-            getTheLastModificationParam(true, parentValues[0],
-                "Opened organizational unit '" + parentValues[0] + "'."));
-        open(
-            parentValues[1],
-            getTheLastModificationParam(true, parentValues[1],
-                "Opened organizational unit '" + parentValues[1] + "'."));
+        final String[] parentValues = createSuccessfully("escidoc_ou_create.xml", 2);
+        open(parentValues[0], getTheLastModificationParam(true, parentValues[0], "Opened organizational unit '"
+            + parentValues[0] + "'."));
+        open(parentValues[1], getTheLastModificationParam(true, parentValues[1], "Opened organizational unit '"
+            + parentValues[1] + "'."));
 
         Document toBeCreatedDocument =
-            getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH,
-                "escidoc_ou_create.xml");
+            getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, "escidoc_ou_create.xml");
         setUniqueValue(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_TITLE);
-        insertParentsElement(toBeCreatedDocument,
-            XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS, parentValues, false);
+        insertParentsElement(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS, parentValues, false);
 
         String toBeCreatedXml = toString(toBeCreatedDocument, false);
 
@@ -458,43 +333,25 @@ public class CreateTest extends OrganizationalUnitTestBase {
         catch (final Exception e) {
             failException("Creating OU with parents failed with exception. ", e);
         }
-        assertOrganizationalUnit(createdXml, toBeCreatedXml, startTimestamp,
-            startTimestamp);
+        assertOrganizationalUnit(createdXml, toBeCreatedXml, startTimestamp, startTimestamp);
     }
 
     /**
-     * Test successfully creating an organizational unit with parents - one in
-     * state opened and one in state created.
-     * 
-     * @test.name Create Organizational Unit - With Parents - Success
-     * @test.id OUM_COU-1-h
-     * @test.input Valid Organizational Unit XML representation including
-     *             specified parent ous.
-     * @test.expected: The expected result is the XML representation of the
-     *                 created OrganizationalUnit, corresponding to XML-schema
-     *                 "organizational-unit.xsd" including generated id, creator
-     *                 and creation date. Parents as defined.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test successfully creating an organizational unit with parents - one in state opened and one in state created.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumCou1h() throws Exception {
 
-        final String[] parentValues =
-            createSuccessfully("escidoc_ou_create.xml", 2);
-        open(
-            parentValues[0],
-            getTheLastModificationParam(true, parentValues[0],
-                "Opened organizational unit '" + parentValues[0] + "'."));
+        final String[] parentValues = createSuccessfully("escidoc_ou_create.xml", 2);
+        open(parentValues[0], getTheLastModificationParam(true, parentValues[0], "Opened organizational unit '"
+            + parentValues[0] + "'."));
 
         Document toBeCreatedDocument =
-            getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH,
-                "escidoc_ou_create.xml");
+            getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, "escidoc_ou_create.xml");
         setUniqueValue(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_TITLE);
-        insertParentsElement(toBeCreatedDocument,
-            XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS, parentValues, false);
+        insertParentsElement(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS, parentValues, false);
 
         String toBeCreatedXml = toString(toBeCreatedDocument, false);
 
@@ -505,35 +362,22 @@ public class CreateTest extends OrganizationalUnitTestBase {
         catch (final Exception e) {
             failException("Creating OU with parents failed with exception. ", e);
         }
-        assertOrganizationalUnit(createdXml, toBeCreatedXml, startTimestamp,
-            startTimestamp);
+        assertOrganizationalUnit(createdXml, toBeCreatedXml, startTimestamp, startTimestamp);
     }
 
     /**
-     * Test declining creating an organizational unit without providing a
-     * title/name.
-     * 
-     * @test.name Create Organizational Unit - No Name
-     * @test.id OUM_COU-2-a
-     * @test.input Organizational Unit XML representation without a title/name.
-     * @test.expected: MissingElementValueException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test declining creating an organizational unit without providing a title/name.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumCou2a() throws Exception {
 
-        Class<MissingElementValueException> ec =
-            MissingElementValueException.class;
+        Class<MissingElementValueException> ec = MissingElementValueException.class;
 
         final String toBeCreatedXml =
-            toString(
-                deleteElement(
-                    getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH,
-                        "escidoc_ou_create.xml"),
-                    XPATH_ORGANIZATIONAL_UNIT_TITLE), false);
+            toString(deleteElement(getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, "escidoc_ou_create.xml"),
+                XPATH_ORGANIZATIONAL_UNIT_TITLE), false);
 
         try {
             create(toBeCreatedXml);
@@ -545,25 +389,16 @@ public class CreateTest extends OrganizationalUnitTestBase {
     }
 
     /**
-     * Test declining creating an organizational unit with an invalid xml
-     * representation (xml is an item xml).
-     * 
-     * @test.name Create Organizational Unit - Invalid xml
-     * @test.id OUM_COU-2-b
-     * @test.input XML representation of an item.
-     * @test.expected: InvalidXmlException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test declining creating an organizational unit with an invalid xml representation (xml is an item xml).
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumCou2b() throws Exception {
 
         Class<XmlCorruptedException> ec = XmlCorruptedException.class;
 
-        final String toBeCreatedXml =
-            getTemplateAsString(TEMPLATE_ITEM_PATH, "escidoc_item_198.xml");
+        final String toBeCreatedXml = getTemplateAsString(TEMPLATE_ITEM_PATH, "escidoc_item_198.xml");
 
         try {
             create(toBeCreatedXml);
@@ -575,27 +410,16 @@ public class CreateTest extends OrganizationalUnitTestBase {
     }
 
     /**
-     * Test declining creating an organizational unit with providing an empty
-     * name.
-     * 
-     * @test.name Create Organizational Unit - Empty Name
-     * @test.id OUM_COU-2-c
-     * @test.input Organizational Unit XML representation with an empty name.
-     * @test.expected: MissingElementValueException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test declining creating an organizational unit with providing an empty name.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumCou2c() throws Exception {
 
-        Document ou =
-            getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH,
-                "escidoc_ou_create.xml");
+        Document ou = getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, "escidoc_ou_create.xml");
         substitute(ou, XPATH_ORGANIZATIONAL_UNIT_TITLE, "");
-        final Class<MissingElementValueException> ec =
-            MissingElementValueException.class;
+        final Class<MissingElementValueException> ec = MissingElementValueException.class;
 
         try {
             create(toString(ou, false));
@@ -607,40 +431,24 @@ public class CreateTest extends OrganizationalUnitTestBase {
     }
 
     /**
-     * Test declining creating an organizational unit with providing a parent is
-     * state closed.
-     * 
-     * @test.name Create Organizational Unit - Parent in state closed
-     * @test.id OUM_COU-2-d
-     * @test.input Organizational Unit XML representation with a parent in state
-     *             closed.
-     * @test.expected: InvalidStatusException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test declining creating an organizational unit with providing a parent is state closed.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumCou2d() throws Exception {
 
-        final String[] parentValues =
-            createSuccessfully("escidoc_ou_create.xml", 2);
+        final String[] parentValues = createSuccessfully("escidoc_ou_create.xml", 2);
         String closedParent = parentValues[0];
-        open(
-            closedParent,
-            getTheLastModificationParam(true, closedParent,
-                "Opened organizational unit '" + closedParent + "'."));
-        close(
-            closedParent,
-            getTheLastModificationParam(true, closedParent,
-                "Closed organizational unit '" + closedParent + "'."));
+        open(closedParent, getTheLastModificationParam(true, closedParent, "Opened organizational unit '"
+            + closedParent + "'."));
+        close(closedParent, getTheLastModificationParam(true, closedParent, "Closed organizational unit '"
+            + closedParent + "'."));
 
         Document toBeCreatedDocument =
-            getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH,
-                "escidoc_ou_create.xml");
+            getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, "escidoc_ou_create.xml");
         setUniqueValue(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_TITLE);
-        insertParentsElement(toBeCreatedDocument,
-            XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS, parentValues, false);
+        insertParentsElement(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS, parentValues, false);
 
         String toBeCreatedXml = toString(toBeCreatedDocument, false);
         final Class<InvalidStatusException> ec = InvalidStatusException.class;
@@ -655,23 +463,14 @@ public class CreateTest extends OrganizationalUnitTestBase {
     }
 
     /**
-     * Test declining creating an organizational unit without an xml
-     * representation.
-     * 
-     * @test.name Create Organizational Unit - Missing XML data
-     * @test.id OUM_COU-4
-     * @test.input No Organizational Unit XML representation is provided.
-     * @test.expected: MissingMethodParameterException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test declining creating an organizational unit without an xml representation.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumCou4() throws Exception {
 
-        Class<MissingMethodParameterException> ec =
-            MissingMethodParameterException.class;
+        Class<MissingMethodParameterException> ec = MissingMethodParameterException.class;
         try {
             create(null);
             failMissingException(ec);
@@ -682,24 +481,10 @@ public class CreateTest extends OrganizationalUnitTestBase {
     }
 
     /**
-     * Test successfully creating an organizational unit with a name of an
-     * existing organizational unit in another scope of the parents.
-     * 
-     * @test.name Create Organizational Unit - Duplicate Name in different
-     *            Scopes of Parents
-     * @test.id OUM_COU-5-c
-     * @test.input Organizational Unit XML representation containing a name of
-     *             an organizational unit that just exists, but that is not in
-     *             the scope of the parents of the organizational unit to be
-     *             created.
-     * @test.expected: The expected result is the XML representation of the
-     *                 created OrganizationalUnit, corresponding to XML-schema
-     *                 "organizational-unit.xsd" including generated id, creator
-     *                 and creation date
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test successfully creating an organizational unit with a name of an existing organizational unit in another scope
+     * of the parents.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumCou5c() throws Exception {
@@ -712,22 +497,16 @@ public class CreateTest extends OrganizationalUnitTestBase {
         final String titleParentOu2 = parentValues[3];
 
         // create child of first parent ou
-        Document childOu1Document =
-            getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH,
-                "escidoc_ou_create.xml");
+        Document childOu1Document = getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, "escidoc_ou_create.xml");
         setUniqueValue(childOu1Document, XPATH_ORGANIZATIONAL_UNIT_TITLE);
-        insertParentsElement(childOu1Document,
-            XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS, new String[] { idParentOu1,
-                titleParentOu1 }, false);
-        final String ouName =
-            selectSingleNode(childOu1Document, XPATH_ORGANIZATIONAL_UNIT_TITLE)
-                .getTextContent();
+        insertParentsElement(childOu1Document, XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS, new String[] { idParentOu1,
+            titleParentOu1 }, false);
+        final String ouName = selectSingleNode(childOu1Document, XPATH_ORGANIZATIONAL_UNIT_TITLE).getTextContent();
         try {
             create(toString(childOu1Document, false));
         }
         catch (final Exception e) {
-            failException(
-                "Failure during init, creation of first child failed.", e);
+            failException("Failure during init, creation of first child failed.", e);
         }
 
         // // create child of second parent ou. This second child ou has the
@@ -757,12 +536,10 @@ public class CreateTest extends OrganizationalUnitTestBase {
     }
 
     /**
-     * Test if the last modification date of an fresh created OU equals the
-     * last-modification-date of the afterwards retrieved OU.
-     * 
-     * @throws Exception
-     *             Thrown if last-modification-date between create and retrieve
-     *             differs.
+     * Test if the last modification date of an fresh created OU equals the last-modification-date of the afterwards
+     * retrieved OU.
+     *
+     * @throws Exception Thrown if last-modification-date between create and retrieve differs.
      */
     @Test
     public void testOumLastModificationDate() throws Exception {
@@ -780,11 +557,9 @@ public class CreateTest extends OrganizationalUnitTestBase {
     }
 
     /**
-     * Test unexpected parser exception instead of InvalidXmlException during
-     * create (see issue INFR-911).
-     * 
-     * @throws Exception
-     *             Thrown if behavior is not as expected.
+     * Test unexpected parser exception instead of InvalidXmlException during create (see issue INFR-911).
+     *
+     * @throws Exception Thrown if behavior is not as expected.
      */
     @Test(expected = InvalidXmlException.class)
     public void testInvalidXml() throws Exception {
@@ -797,24 +572,21 @@ public class CreateTest extends OrganizationalUnitTestBase {
     }
 
     /**
-     * Test creating an Organizational Unit with missing required default
-     * md-record. It's checked if the expected Exception is thrown.
-     * 
+     * Test creating an Organizational Unit with missing required default md-record. It's checked if the expected
+     * Exception is thrown.
+     * <p/>
      * See issue INFR-1016
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test(expected = MissingMdRecordException.class)
     public void testOuCreateWithoutMdRecord() throws Exception {
 
         Document toBeCreatedDocument =
-            getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH,
-                "escidoc_ou_create.xml");
+            getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, "escidoc_ou_create.xml");
         setUniqueValue(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_TITLE);
 
-        substitute(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS
-            + "/md-record/@name", "non_default_name");
+        substitute(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS + "/md-record/@name", "non_default_name");
 
         String toBeCreatedXml = toString(toBeCreatedDocument, false);
 

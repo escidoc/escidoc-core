@@ -36,19 +36,16 @@ import de.escidoc.core.test.common.client.servlet.Constants;
 import javax.xml.rpc.ServiceException;
 
 /**
- * Offers access methods to the escidoc REST interface of the container
- * resource.
- * 
+ * Offers access methods to the escidoc REST interface of the container resource.
+ *
  * @author Michael Schneider
- * 
  */
 public class SemanticStoreClient extends ClientBase {
 
     private SemanticStoreHandler soapClient = null;
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public SemanticStoreClient(final int transport) {
         super(transport);
@@ -56,34 +53,28 @@ public class SemanticStoreClient extends ClientBase {
 
     /**
      * Retrieve the Containers of a Container.
-     * 
-     * @param queryParam
-     *            The id of the container.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param queryParam The id of the container.
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     public Object spo(final String queryParam) throws Exception {
 
-        return callEsciDoc("SemanticStore.spo", METHOD_SPO,
-            Constants.HTTP_METHOD_POST, Constants.SEMANTIC_STORE_BASE_URI
-                + Constants.SPO, new String[] {}, queryParam);
+        return callEsciDoc("SemanticStore.spo", METHOD_SPO, Constants.HTTP_METHOD_POST,
+            Constants.SEMANTIC_STORE_BASE_URI + Constants.SPO, new String[] {}, queryParam);
     }
 
     /**
      * @return Returns the soapClient.
-     * @throws ServiceException
-     *             If service instantiation fails.
+     * @throws ServiceException If service instantiation fails.
      */
     public SemanticStoreHandler getSoapClient() throws ServiceException {
 
         if (soapClient == null) {
             SemanticStoreHandlerServiceLocator serviceLocator =
                 new SemanticStoreHandlerServiceLocator(getEngineConfig());
-            serviceLocator
-                .setSemanticStoreHandlerServiceEndpointAddress(checkSoapAddress(serviceLocator
-                    .getSemanticStoreHandlerServiceAddress()));
+            serviceLocator.setSemanticStoreHandlerServiceEndpointAddress(checkSoapAddress(serviceLocator
+                .getSemanticStoreHandlerServiceAddress()));
             soapClient = serviceLocator.getSemanticStoreHandlerService();
         }
         return soapClient;

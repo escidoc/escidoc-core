@@ -13,11 +13,9 @@ public class IngestSoapTest extends IngestAbstractTest {
     }
 
     /**
-     * Test unexpected parser exception instead of InvalidXmlException during
-     * create (see issue INFR-911).
-     * 
-     * @throws Exception
-     *             Thrown if behavior is not as expected.
+     * Test unexpected parser exception instead of InvalidXmlException during create (see issue INFR-911).
+     *
+     * @throws Exception Thrown if behavior is not as expected.
      */
     @Test(expected = InvalidXmlException.class)
     public void testInvalidXml() throws Exception {

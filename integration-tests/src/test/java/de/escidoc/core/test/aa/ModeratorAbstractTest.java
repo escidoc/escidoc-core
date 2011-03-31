@@ -43,9 +43,8 @@ import static org.junit.Assert.fail;
 
 /**
  * Test suite for the role Moderator.
- * 
+ *
  * @author Torsten Tetteroo
- * 
  */
 public class ModeratorAbstractTest extends GrantTestBase {
 
@@ -56,9 +55,9 @@ public class ModeratorAbstractTest extends GrantTestBase {
     private static final String PASSWORD = PWCallback.PASSWORD;
 
     protected static String grantCreationUserOrGroupId = null;
-    
+
     private static int methodCounter = 0;
-    
+
     private static String itemId = null;
 
     private static String itemHref = null;
@@ -85,30 +84,22 @@ public class ModeratorAbstractTest extends GrantTestBase {
 
     /**
      * The constructor.
-     * 
-     * @param transport
-     *            The transport identifier.
-     * @param handlerCode
-     *            handlerCode of either UserAccountHandler or UserGroupHandler.
-     * @param userOrGroupId
-     *            userOrGroupId for grantCreation.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param transport     The transport identifier.
+     * @param handlerCode   handlerCode of either UserAccountHandler or UserGroupHandler.
+     * @param userOrGroupId userOrGroupId for grantCreation.
+     * @throws Exception If anything fails.
      */
-    public ModeratorAbstractTest(
-            final int transport, 
-            final int handlerCode,
-            final String userOrGroupId) throws Exception {
+    public ModeratorAbstractTest(final int transport, final int handlerCode, final String userOrGroupId)
+        throws Exception {
         super(transport, handlerCode);
         grantCreationUserOrGroupId = userOrGroupId;
     }
 
     /**
      * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Before
     public void initialize() throws Exception {
@@ -120,9 +111,8 @@ public class ModeratorAbstractTest extends GrantTestBase {
 
     /**
      * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @After
     public void deinitialize() throws Exception {
@@ -132,172 +122,116 @@ public class ModeratorAbstractTest extends GrantTestBase {
             revokeAllGrants(grantCreationUserOrGroupId);
             try {
                 revokeAllGrants(TEST_USER_ACCOUNT_ID1);
-            } catch (final Exception e) {}
+            }
+            catch (final Exception e) {
+            }
             try {
                 revokeAllGrants(TEST_USER_GROUP_ID);
-            } catch (final Exception e) {}
+            }
+            catch (final Exception e) {
+            }
             methodCounter = 0;
         }
     }
 
     /**
      * insert data into system for the tests.
-     * 
-     * @test.name prepare
-     * @test.id PREPARE
-     * @test.input
-     * @test.inputDescription
-     * @test.expected
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     protected void prepare() throws Exception {
         //create container in context1 status pending
-        String containerXml = 
-            prepareContainer(
-                PWCallback.DEFAULT_HANDLE, 
-                STATUS_PENDING, CONTEXT_ID,
-                false, false);
-        Document containerDocument =
-            EscidocRestSoapTestBase.getDocument(containerXml);
+        String containerXml = prepareContainer(PWCallback.DEFAULT_HANDLE, STATUS_PENDING, CONTEXT_ID, false, false);
+        Document containerDocument = EscidocRestSoapTestBase.getDocument(containerXml);
         containerId = getObjidValue(containerDocument);
         containerHref = Constants.CONTAINER_BASE_URI + "/" + containerId;
 
         //create container in context2 status pending
-        containerXml = 
-            prepareContainer(
-                PWCallback.DEFAULT_HANDLE, 
-                STATUS_PENDING, CONTEXT_ID1,
-                false, false);
-        containerDocument =
-            EscidocRestSoapTestBase.getDocument(containerXml);
+        containerXml = prepareContainer(PWCallback.DEFAULT_HANDLE, STATUS_PENDING, CONTEXT_ID1, false, false);
+        containerDocument = EscidocRestSoapTestBase.getDocument(containerXml);
         containerId1 = getObjidValue(containerDocument);
         containerHref1 = Constants.CONTAINER_BASE_URI + "/" + containerId1;
 
         //create item in status pending
         // in context1
-        String itemXml = 
-            prepareItem(
-                PWCallback.DEFAULT_HANDLE, 
-                STATUS_PENDING, 
-                CONTEXT_ID,
-                false, false);
-        Document document =
-            EscidocRestSoapTestBase.getDocument(itemXml);
-        
+        String itemXml = prepareItem(PWCallback.DEFAULT_HANDLE, STATUS_PENDING, CONTEXT_ID, false, false);
+        Document document = EscidocRestSoapTestBase.getDocument(itemXml);
+
         //save ids
         itemId = getObjidValue(document);
         itemHref = Constants.ITEM_BASE_URI + "/" + itemId;
         publicComponentId = extractComponentId(document, VISIBILITY_PUBLIC);
-        publicComponentHref = 
-            itemHref 
-                + "/" + Constants.SUB_COMPONENT 
-                + "/" + publicComponentId;
-        
+        publicComponentHref = itemHref + "/" + Constants.SUB_COMPONENT + "/" + publicComponentId;
+
         //create item in status pending
         // in context2
-        itemXml = 
-            prepareItem(
-                PWCallback.DEFAULT_HANDLE, 
-                STATUS_PENDING, 
-                CONTEXT_ID1,
-                false, false);
-        document =
-            EscidocRestSoapTestBase.getDocument(itemXml);
-        
+        itemXml = prepareItem(PWCallback.DEFAULT_HANDLE, STATUS_PENDING, CONTEXT_ID1, false, false);
+        document = EscidocRestSoapTestBase.getDocument(itemXml);
+
         //save ids
         itemId1 = getObjidValue(document);
         itemHref1 = Constants.ITEM_BASE_URI + "/" + itemId1;
         publicComponentId1 = extractComponentId(document, VISIBILITY_PUBLIC);
-        publicComponentHref1 = 
-            itemHref1 
-                + "/" + Constants.SUB_COMPONENT 
-                + "/" + publicComponentId1;
-        
+        publicComponentHref1 = itemHref1 + "/" + Constants.SUB_COMPONENT + "/" + publicComponentId1;
+
     }
-    
+
     /**
      * Tests declining releasing an unknown item by a moderator.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testReleaseUnknownItemDecline() throws Exception {
-      doTestCreateGrant(null, grantCreationUserOrGroupId, 
-          Constants.CONTEXT_BASE_URI + "/" 
-          + CONTEXT_ID, ROLE_HREF_MODERATOR, null);
-        doTestReleaseItem(HANDLE, PWCallback.DEFAULT_HANDLE, 
-                            null, ItemNotFoundException.class);
+        doTestCreateGrant(null, grantCreationUserOrGroupId, Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID,
+            ROLE_HREF_MODERATOR, null);
+        doTestReleaseItem(HANDLE, PWCallback.DEFAULT_HANDLE, null, ItemNotFoundException.class);
     }
 
     /**
-     * Tests successfully releasing an item by a moderator
-     * that has grant with scope on context.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests successfully releasing an item by a moderator that has grant with scope on context.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testReleaseItem() throws Exception {
-        String itemXml = prepareItem(
-                PWCallback.DEFAULT_HANDLE, 
-                STATUS_SUBMITTED, 
-                null, false, false);
-        Document document =
-            EscidocRestSoapTestBase.getDocument(itemXml);
+        String itemXml = prepareItem(PWCallback.DEFAULT_HANDLE, STATUS_SUBMITTED, null, false, false);
+        Document document = EscidocRestSoapTestBase.getDocument(itemXml);
         String id = getObjidValue(document);
-        doTestCreateGrant(null, grantCreationUserOrGroupId, 
-            Constants.CONTEXT_BASE_URI + "/" 
-            + CONTEXT_ID, ROLE_HREF_MODERATOR, null);
-        
-        releaseWithPid(ITEM_HANDLER_CODE, id,
-                HANDLE);
+        doTestCreateGrant(null, grantCreationUserOrGroupId, Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID,
+            ROLE_HREF_MODERATOR, null);
+
+        releaseWithPid(ITEM_HANDLER_CODE, id, HANDLE);
     }
 
     /**
-     * Tests successfully releasing an container by a moderator
-     * that has grant with scope on context.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests successfully releasing an container by a moderator that has grant with scope on context.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testReleaseContainer() throws Exception {
-        String containerXml = prepareContainer(
-                PWCallback.DEFAULT_HANDLE, 
-                STATUS_SUBMITTED, null, false, false);
-        Document document =
-            EscidocRestSoapTestBase.getDocument(containerXml);
+        String containerXml = prepareContainer(PWCallback.DEFAULT_HANDLE, STATUS_SUBMITTED, null, false, false);
+        Document document = EscidocRestSoapTestBase.getDocument(containerXml);
         String id = getObjidValue(document);
-        doTestCreateGrant(null, grantCreationUserOrGroupId, 
-            Constants.CONTEXT_BASE_URI + "/" 
-            + CONTEXT_ID, ROLE_HREF_MODERATOR, null);
-        
-        releaseWithPid(CONTAINER_HANDLER_CODE, id,
-                HANDLE);
+        doTestCreateGrant(null, grantCreationUserOrGroupId, Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID,
+            ROLE_HREF_MODERATOR, null);
+
+        releaseWithPid(CONTAINER_HANDLER_CODE, id, HANDLE);
     }
 
     /**
-     * Tests unsuccessfully retrieving a pending item by a moderator
-     * that has privileges on context-scope.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests unsuccessfully retrieving a pending item by a moderator that has privileges on context-scope.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrievePendingItem() throws Exception {
-        String itemXml = prepareItem(
-                PWCallback.DEFAULT_HANDLE, 
-                STATUS_PENDING, null, false, false);
-        Document document =
-            EscidocRestSoapTestBase.getDocument(itemXml);
+        String itemXml = prepareItem(PWCallback.DEFAULT_HANDLE, STATUS_PENDING, null, false, false);
+        Document document = EscidocRestSoapTestBase.getDocument(itemXml);
         String id = getObjidValue(document);
-        doTestCreateGrant(null, grantCreationUserOrGroupId, 
-            Constants.CONTEXT_BASE_URI + "/" 
-            + CONTEXT_ID, ROLE_HREF_MODERATOR, null);
+        doTestCreateGrant(null, grantCreationUserOrGroupId, Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID,
+            ROLE_HREF_MODERATOR, null);
 
         try {
             PWCallback.setHandle(HANDLE);
@@ -310,98 +244,73 @@ public class ModeratorAbstractTest extends GrantTestBase {
     }
 
     /**
-     * Tests successfully retrieving a submitted item by a moderator
-     * that has privileges on context-scope.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests successfully retrieving a submitted item by a moderator that has privileges on context-scope.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveSubmittedItem() throws Exception {
-        String itemXml = prepareItem(
-                PWCallback.DEFAULT_HANDLE, 
-                STATUS_SUBMITTED, null, false, false);
-        Document document =
-            EscidocRestSoapTestBase.getDocument(itemXml);
+        String itemXml = prepareItem(PWCallback.DEFAULT_HANDLE, STATUS_SUBMITTED, null, false, false);
+        Document document = EscidocRestSoapTestBase.getDocument(itemXml);
         String id = getObjidValue(document);
-        doTestCreateGrant(null, grantCreationUserOrGroupId, 
-            Constants.CONTEXT_BASE_URI + "/" 
-            + CONTEXT_ID, ROLE_HREF_MODERATOR, null);
+        doTestCreateGrant(null, grantCreationUserOrGroupId, Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID,
+            ROLE_HREF_MODERATOR, null);
 
         PWCallback.setHandle(HANDLE);
         retrieve(ITEM_HANDLER_CODE, id);
     }
 
     /**
-     * Tests successfully retrieving a released item by a moderator
-     * that has privileges on context-scope.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests successfully retrieving a released item by a moderator that has privileges on context-scope.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveReleasedItem() throws Exception {
-        String itemXml = prepareItem(
-                PWCallback.DEFAULT_HANDLE, 
-                STATUS_RELEASED, null, false, false);
-        Document document =
-            EscidocRestSoapTestBase.getDocument(itemXml);
+        String itemXml = prepareItem(PWCallback.DEFAULT_HANDLE, STATUS_RELEASED, null, false, false);
+        Document document = EscidocRestSoapTestBase.getDocument(itemXml);
         String id = getObjidValue(document);
-        doTestCreateGrant(null, grantCreationUserOrGroupId, 
-            Constants.CONTEXT_BASE_URI + "/" 
-            + CONTEXT_ID, ROLE_HREF_MODERATOR, null);
+        doTestCreateGrant(null, grantCreationUserOrGroupId, Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID,
+            ROLE_HREF_MODERATOR, null);
 
         PWCallback.setHandle(HANDLE);
         retrieve(ITEM_HANDLER_CODE, id);
     }
 
     /**
-     * Tests successfully retrieving a withdrawn item by a moderator
-     * that has privileges on context-scope.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests successfully retrieving a withdrawn item by a moderator that has privileges on context-scope.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveWithdrawnItem() throws Exception {
-        String itemXml = prepareItem(
-                PWCallback.DEFAULT_HANDLE, 
-                STATUS_WITHDRAWN, null, false, false);
-        Document document =
-            EscidocRestSoapTestBase.getDocument(itemXml);
+        String itemXml = prepareItem(PWCallback.DEFAULT_HANDLE, STATUS_WITHDRAWN, null, false, false);
+        Document document = EscidocRestSoapTestBase.getDocument(itemXml);
         String id = getObjidValue(document);
-        doTestCreateGrant(null, grantCreationUserOrGroupId, 
-            Constants.CONTEXT_BASE_URI + "/" 
-            + CONTEXT_ID, ROLE_HREF_MODERATOR, null);
+        doTestCreateGrant(null, grantCreationUserOrGroupId, Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID,
+            ROLE_HREF_MODERATOR, null);
 
         PWCallback.setHandle(HANDLE);
         retrieve(ITEM_HANDLER_CODE, id);
     }
 
     /**
-     * Tests unsuccessfully retrieving a pending container by a moderator
-     * that has privileges on context-scope.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests unsuccessfully retrieving a pending container by a moderator that has privileges on context-scope.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrievePendingContainer() throws Exception {
-        String containerXml = prepareContainer(
-                PWCallback.DEFAULT_HANDLE, 
-                STATUS_PENDING, null, false, false);
-        Document document =
-            EscidocRestSoapTestBase.getDocument(containerXml);
+        String containerXml = prepareContainer(PWCallback.DEFAULT_HANDLE, STATUS_PENDING, null, false, false);
+        Document document = EscidocRestSoapTestBase.getDocument(containerXml);
         String id = getObjidValue(document);
-        doTestCreateGrant(null, grantCreationUserOrGroupId, 
-            Constants.CONTEXT_BASE_URI + "/" 
-            + CONTEXT_ID, ROLE_HREF_MODERATOR, null);
+        doTestCreateGrant(null, grantCreationUserOrGroupId, Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID,
+            ROLE_HREF_MODERATOR, null);
 
         try {
             PWCallback.setHandle(HANDLE);
             retrieve(CONTAINER_HANDLER_CODE, id);
-            fail(
-            "No exception occurred on moderator retrieving pending container.");
+            fail("No exception occurred on moderator retrieving pending container.");
         }
         catch (final Exception e) {
             assertExceptionType(AuthorizationException.class, e);
@@ -409,438 +318,354 @@ public class ModeratorAbstractTest extends GrantTestBase {
     }
 
     /**
-     * Tests successfully retrieving a submitted container by a moderator
-     * that has privileges on context-scope.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests successfully retrieving a submitted container by a moderator that has privileges on context-scope.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveSubmittedContainer() throws Exception {
-        String containerXml = prepareContainer(
-                PWCallback.DEFAULT_HANDLE, 
-                STATUS_SUBMITTED, null, false, false);
-        Document document =
-            EscidocRestSoapTestBase.getDocument(containerXml);
+        String containerXml = prepareContainer(PWCallback.DEFAULT_HANDLE, STATUS_SUBMITTED, null, false, false);
+        Document document = EscidocRestSoapTestBase.getDocument(containerXml);
         String id = getObjidValue(document);
-        doTestCreateGrant(null, grantCreationUserOrGroupId, 
-            Constants.CONTEXT_BASE_URI + "/" 
-            + CONTEXT_ID, ROLE_HREF_MODERATOR, null);
+        doTestCreateGrant(null, grantCreationUserOrGroupId, Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID,
+            ROLE_HREF_MODERATOR, null);
 
         PWCallback.setHandle(HANDLE);
         retrieve(CONTAINER_HANDLER_CODE, id);
     }
 
     /**
-     * Tests successfully retrieving a released container by a moderator
-     * that has privileges on context-scope.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests successfully retrieving a released container by a moderator that has privileges on context-scope.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveReleasedContainer() throws Exception {
-        String containerXml = prepareContainer(
-                PWCallback.DEFAULT_HANDLE, 
-                STATUS_RELEASED, null, false, false);
-        Document document =
-            EscidocRestSoapTestBase.getDocument(containerXml);
+        String containerXml = prepareContainer(PWCallback.DEFAULT_HANDLE, STATUS_RELEASED, null, false, false);
+        Document document = EscidocRestSoapTestBase.getDocument(containerXml);
         String id = getObjidValue(document);
-        doTestCreateGrant(null, grantCreationUserOrGroupId, 
-            Constants.CONTEXT_BASE_URI + "/" 
-            + CONTEXT_ID, ROLE_HREF_MODERATOR, null);
+        doTestCreateGrant(null, grantCreationUserOrGroupId, Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID,
+            ROLE_HREF_MODERATOR, null);
 
         PWCallback.setHandle(HANDLE);
         retrieve(CONTAINER_HANDLER_CODE, id);
     }
 
     /**
-     * Tests successfully retrieving a withdrawn container by a moderator
-     * that has privileges on context-scope.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests successfully retrieving a withdrawn container by a moderator that has privileges on context-scope.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveWithdrawnContainer() throws Exception {
-        String containerXml = prepareContainer(
-                PWCallback.DEFAULT_HANDLE, 
-                STATUS_WITHDRAWN, null, false, false);
-        Document document =
-            EscidocRestSoapTestBase.getDocument(containerXml);
+        String containerXml = prepareContainer(PWCallback.DEFAULT_HANDLE, STATUS_WITHDRAWN, null, false, false);
+        Document document = EscidocRestSoapTestBase.getDocument(containerXml);
         String id = getObjidValue(document);
-        doTestCreateGrant(null, grantCreationUserOrGroupId, 
-            Constants.CONTEXT_BASE_URI + "/" 
-            + CONTEXT_ID, ROLE_HREF_MODERATOR, null);
+        doTestCreateGrant(null, grantCreationUserOrGroupId, Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID,
+            ROLE_HREF_MODERATOR, null);
 
         PWCallback.setHandle(HANDLE);
         retrieve(CONTAINER_HANDLER_CODE, id);
     }
 
     /**
-     * Tests successfully creating a grant on an item 
-     * that has same context as moderator has scope on.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests successfully creating a grant on an item that has same context as moderator has scope on.
+     *
+     * @throws Exception If anything fails.
      */
     //@Test
     public void testCreateItemGrant() throws Exception {
-        doTestCreateGrant(null, grantCreationUserOrGroupId, 
-            Constants.CONTEXT_BASE_URI + "/" 
-            + CONTEXT_ID, ROLE_HREF_MODERATOR, null);
+        doTestCreateGrant(null, grantCreationUserOrGroupId, Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID,
+            ROLE_HREF_MODERATOR, null);
 
         try {
             if (!isUserAccountTest) {
-                super.setClient((GrantClient) 
-                    getClient(USER_ACCOUNT_HANDLER_CODE));
+                super.setClient((GrantClient) getClient(USER_ACCOUNT_HANDLER_CODE));
             }
             revokeAllGrants(TEST_USER_ACCOUNT_ID1);
-            doTestCreateGrant(HANDLE, TEST_USER_ACCOUNT_ID1, 
-                itemHref, ROLE_HREF_COLLABORATOR, null);
-        } finally {
+            doTestCreateGrant(HANDLE, TEST_USER_ACCOUNT_ID1, itemHref, ROLE_HREF_COLLABORATOR, null);
+        }
+        finally {
             if (!isUserAccountTest) {
-                super.setClient(
-                    (GrantClient) getClient(USER_GROUP_HANDLER_CODE));
+                super.setClient((GrantClient) getClient(USER_GROUP_HANDLER_CODE));
             }
         }
     }
 
     /**
-     * Tests successfully creating a grant on an container 
-     * that has same context as moderator has scope on.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests successfully creating a grant on an container that has same context as moderator has scope on.
+     *
+     * @throws Exception If anything fails.
      */
     //@Test
     public void testCreateContainerGrant() throws Exception {
-        doTestCreateGrant(null, grantCreationUserOrGroupId, 
-            Constants.CONTEXT_BASE_URI + "/" 
-            + CONTEXT_ID, ROLE_HREF_MODERATOR, null);
+        doTestCreateGrant(null, grantCreationUserOrGroupId, Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID,
+            ROLE_HREF_MODERATOR, null);
 
         try {
             if (!isUserAccountTest) {
-                super.setClient((GrantClient) 
-                    getClient(USER_ACCOUNT_HANDLER_CODE));
+                super.setClient((GrantClient) getClient(USER_ACCOUNT_HANDLER_CODE));
             }
             revokeAllGrants(TEST_USER_ACCOUNT_ID1);
-            doTestCreateGrant(HANDLE, TEST_USER_ACCOUNT_ID1, 
-                containerHref, ROLE_HREF_COLLABORATOR, null);
-        } finally {
+            doTestCreateGrant(HANDLE, TEST_USER_ACCOUNT_ID1, containerHref, ROLE_HREF_COLLABORATOR, null);
+        }
+        finally {
             if (!isUserAccountTest) {
-                super.setClient(
-                    (GrantClient) getClient(USER_GROUP_HANDLER_CODE));
+                super.setClient((GrantClient) getClient(USER_GROUP_HANDLER_CODE));
             }
         }
     }
 
     /**
-     * Tests successfully creating a grant on an component 
-     * that has same context as moderator has scope on.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests successfully creating a grant on an component that has same context as moderator has scope on.
+     *
+     * @throws Exception If anything fails.
      */
     //@Test
     public void testCreateComponentGrant() throws Exception {
-        doTestCreateGrant(null, grantCreationUserOrGroupId, 
-            Constants.CONTEXT_BASE_URI + "/" 
-            + CONTEXT_ID, ROLE_HREF_MODERATOR, null);
+        doTestCreateGrant(null, grantCreationUserOrGroupId, Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID,
+            ROLE_HREF_MODERATOR, null);
 
         try {
             if (!isUserAccountTest) {
-                super.setClient((GrantClient) 
-                    getClient(USER_ACCOUNT_HANDLER_CODE));
+                super.setClient((GrantClient) getClient(USER_ACCOUNT_HANDLER_CODE));
             }
             revokeAllGrants(TEST_USER_ACCOUNT_ID1);
-            doTestCreateGrant(HANDLE, TEST_USER_ACCOUNT_ID1, 
-                publicComponentHref, ROLE_HREF_COLLABORATOR, null);
-        } finally {
+            doTestCreateGrant(HANDLE, TEST_USER_ACCOUNT_ID1, publicComponentHref, ROLE_HREF_COLLABORATOR, null);
+        }
+        finally {
             if (!isUserAccountTest) {
-                super.setClient(
-                    (GrantClient) getClient(USER_GROUP_HANDLER_CODE));
+                super.setClient((GrantClient) getClient(USER_GROUP_HANDLER_CODE));
             }
         }
     }
 
     /**
-     * Tests declining creating a grant on an item 
-     * that has not same context as moderator has scope on.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests declining creating a grant on an item that has not same context as moderator has scope on.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testCreateItemGrantDecline() throws Exception {
-        doTestCreateGrant(null, grantCreationUserOrGroupId, 
-            Constants.CONTEXT_BASE_URI + "/" 
-            + CONTEXT_ID, ROLE_HREF_MODERATOR, null);
+        doTestCreateGrant(null, grantCreationUserOrGroupId, Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID,
+            ROLE_HREF_MODERATOR, null);
 
         try {
             if (!isUserAccountTest) {
-                super.setClient((GrantClient) 
-                    getClient(USER_ACCOUNT_HANDLER_CODE));
+                super.setClient((GrantClient) getClient(USER_ACCOUNT_HANDLER_CODE));
             }
             revokeAllGrants(TEST_USER_ACCOUNT_ID1);
-            doTestCreateGrant(HANDLE, TEST_USER_ACCOUNT_ID1, 
-                itemHref1, ROLE_HREF_COLLABORATOR, AuthorizationException.class);
-        } finally {
+            doTestCreateGrant(HANDLE, TEST_USER_ACCOUNT_ID1, itemHref1, ROLE_HREF_COLLABORATOR,
+                AuthorizationException.class);
+        }
+        finally {
             if (!isUserAccountTest) {
-                super.setClient(
-                    (GrantClient) getClient(USER_GROUP_HANDLER_CODE));
+                super.setClient((GrantClient) getClient(USER_GROUP_HANDLER_CODE));
             }
         }
     }
 
     /**
-     * Tests declining creating a grant on an container 
-     * that has not same context as moderator has scope on.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests declining creating a grant on an container that has not same context as moderator has scope on.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testCreateContainerGrantDecline() throws Exception {
-        doTestCreateGrant(null, grantCreationUserOrGroupId, 
-            Constants.CONTEXT_BASE_URI + "/" 
-            + CONTEXT_ID, ROLE_HREF_MODERATOR, null);
+        doTestCreateGrant(null, grantCreationUserOrGroupId, Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID,
+            ROLE_HREF_MODERATOR, null);
 
         try {
             if (!isUserAccountTest) {
-                super.setClient((GrantClient) 
-                    getClient(USER_ACCOUNT_HANDLER_CODE));
+                super.setClient((GrantClient) getClient(USER_ACCOUNT_HANDLER_CODE));
             }
             revokeAllGrants(TEST_USER_ACCOUNT_ID1);
-            doTestCreateGrant(HANDLE, TEST_USER_ACCOUNT_ID1, 
-                containerHref1, ROLE_HREF_COLLABORATOR, 
-                        AuthorizationException.class);
-        } finally {
+            doTestCreateGrant(HANDLE, TEST_USER_ACCOUNT_ID1, containerHref1, ROLE_HREF_COLLABORATOR,
+                AuthorizationException.class);
+        }
+        finally {
             if (!isUserAccountTest) {
-                super.setClient(
-                    (GrantClient) getClient(USER_GROUP_HANDLER_CODE));
+                super.setClient((GrantClient) getClient(USER_GROUP_HANDLER_CODE));
             }
         }
     }
 
     /**
-     * Tests declining creating a grant on an component 
-     * that has not same context as moderator has scope on.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests declining creating a grant on an component that has not same context as moderator has scope on.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testCreateComponentGrantDecline() throws Exception {
-        doTestCreateGrant(null, grantCreationUserOrGroupId, 
-            Constants.CONTEXT_BASE_URI + "/" 
-            + CONTEXT_ID, ROLE_HREF_MODERATOR, null);
+        doTestCreateGrant(null, grantCreationUserOrGroupId, Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID,
+            ROLE_HREF_MODERATOR, null);
 
         try {
             if (!isUserAccountTest) {
-                super.setClient((GrantClient) 
-                    getClient(USER_ACCOUNT_HANDLER_CODE));
+                super.setClient((GrantClient) getClient(USER_ACCOUNT_HANDLER_CODE));
             }
             revokeAllGrants(TEST_USER_ACCOUNT_ID1);
-            doTestCreateGrant(HANDLE, TEST_USER_ACCOUNT_ID1, 
-                publicComponentHref1, ROLE_HREF_COLLABORATOR, 
-                    AuthorizationException.class);
-        } finally {
+            doTestCreateGrant(HANDLE, TEST_USER_ACCOUNT_ID1, publicComponentHref1, ROLE_HREF_COLLABORATOR,
+                AuthorizationException.class);
+        }
+        finally {
             if (!isUserAccountTest) {
-                super.setClient(
-                    (GrantClient) getClient(USER_GROUP_HANDLER_CODE));
+                super.setClient((GrantClient) getClient(USER_GROUP_HANDLER_CODE));
             }
         }
     }
 
     /**
-     * Tests successfully creating a group-grant on an item 
-     * that has same context as moderator has scope on.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests successfully creating a group-grant on an item that has same context as moderator has scope on.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testCreateItemGroupGrant() throws Exception {
-        doTestCreateGrant(null, grantCreationUserOrGroupId, 
-            Constants.CONTEXT_BASE_URI + "/" 
-            + CONTEXT_ID, ROLE_HREF_MODERATOR, null);
+        doTestCreateGrant(null, grantCreationUserOrGroupId, Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID,
+            ROLE_HREF_MODERATOR, null);
 
         try {
             if (isUserAccountTest) {
-                super.setClient((GrantClient) 
-                    getClient(USER_GROUP_HANDLER_CODE));
+                super.setClient((GrantClient) getClient(USER_GROUP_HANDLER_CODE));
             }
             revokeAllGrants(TEST_USER_GROUP_ID);
-            doTestCreateGrant(HANDLE, TEST_USER_GROUP_ID, 
-                itemHref, ROLE_HREF_COLLABORATOR, null);
-        } finally {
+            doTestCreateGrant(HANDLE, TEST_USER_GROUP_ID, itemHref, ROLE_HREF_COLLABORATOR, null);
+        }
+        finally {
             if (isUserAccountTest) {
-                super.setClient(
-                    (GrantClient) getClient(USER_ACCOUNT_HANDLER_CODE));
+                super.setClient((GrantClient) getClient(USER_ACCOUNT_HANDLER_CODE));
             }
         }
     }
 
     /**
-     * Tests successfully creating a grant on an container 
-     * that has same context as moderator has scope on.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests successfully creating a grant on an container that has same context as moderator has scope on.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testCreateContainerGroupGrant() throws Exception {
-        doTestCreateGrant(null, grantCreationUserOrGroupId, 
-            Constants.CONTEXT_BASE_URI + "/" 
-            + CONTEXT_ID, ROLE_HREF_MODERATOR, null);
+        doTestCreateGrant(null, grantCreationUserOrGroupId, Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID,
+            ROLE_HREF_MODERATOR, null);
 
         try {
             if (isUserAccountTest) {
-                super.setClient((GrantClient) 
-                    getClient(USER_GROUP_HANDLER_CODE));
+                super.setClient((GrantClient) getClient(USER_GROUP_HANDLER_CODE));
             }
             revokeAllGrants(TEST_USER_GROUP_ID);
-            doTestCreateGrant(HANDLE, TEST_USER_GROUP_ID, 
-                containerHref, ROLE_HREF_COLLABORATOR, null);
-        } finally {
+            doTestCreateGrant(HANDLE, TEST_USER_GROUP_ID, containerHref, ROLE_HREF_COLLABORATOR, null);
+        }
+        finally {
             if (isUserAccountTest) {
-                super.setClient(
-                    (GrantClient) getClient(USER_ACCOUNT_HANDLER_CODE));
+                super.setClient((GrantClient) getClient(USER_ACCOUNT_HANDLER_CODE));
             }
         }
     }
 
     /**
-     * Tests successfully creating a grant on an component 
-     * that has same context as moderator has scope on.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests successfully creating a grant on an component that has same context as moderator has scope on.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testCreateComponentGroupGrant() throws Exception {
-        doTestCreateGrant(null, grantCreationUserOrGroupId, 
-            Constants.CONTEXT_BASE_URI + "/" 
-            + CONTEXT_ID, ROLE_HREF_MODERATOR, null);
+        doTestCreateGrant(null, grantCreationUserOrGroupId, Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID,
+            ROLE_HREF_MODERATOR, null);
 
         try {
             if (isUserAccountTest) {
-                super.setClient((GrantClient) 
-                    getClient(USER_GROUP_HANDLER_CODE));
+                super.setClient((GrantClient) getClient(USER_GROUP_HANDLER_CODE));
             }
             revokeAllGrants(TEST_USER_GROUP_ID);
-            doTestCreateGrant(HANDLE, TEST_USER_GROUP_ID, 
-                publicComponentHref, ROLE_HREF_COLLABORATOR, null);
-        } finally {
+            doTestCreateGrant(HANDLE, TEST_USER_GROUP_ID, publicComponentHref, ROLE_HREF_COLLABORATOR, null);
+        }
+        finally {
             if (isUserAccountTest) {
-                super.setClient(
-                    (GrantClient) getClient(USER_ACCOUNT_HANDLER_CODE));
+                super.setClient((GrantClient) getClient(USER_ACCOUNT_HANDLER_CODE));
             }
         }
     }
 
     /**
-     * Tests declining creating a grant on an item 
-     * that has not same context as moderator has scope on.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests declining creating a grant on an item that has not same context as moderator has scope on.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testCreateItemGroupGrantDecline() throws Exception {
-        doTestCreateGrant(null, grantCreationUserOrGroupId, 
-            Constants.CONTEXT_BASE_URI + "/" 
-            + CONTEXT_ID, ROLE_HREF_MODERATOR, null);
+        doTestCreateGrant(null, grantCreationUserOrGroupId, Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID,
+            ROLE_HREF_MODERATOR, null);
 
         try {
             if (isUserAccountTest) {
-                super.setClient((GrantClient) 
-                    getClient(USER_GROUP_HANDLER_CODE));
+                super.setClient((GrantClient) getClient(USER_GROUP_HANDLER_CODE));
             }
             revokeAllGrants(TEST_USER_GROUP_ID);
-            doTestCreateGrant(HANDLE, TEST_USER_GROUP_ID, 
-                itemHref1, ROLE_HREF_COLLABORATOR, AuthorizationException.class);
-        } finally {
+            doTestCreateGrant(HANDLE, TEST_USER_GROUP_ID, itemHref1, ROLE_HREF_COLLABORATOR,
+                AuthorizationException.class);
+        }
+        finally {
             if (isUserAccountTest) {
-                super.setClient(
-                    (GrantClient) getClient(USER_ACCOUNT_HANDLER_CODE));
+                super.setClient((GrantClient) getClient(USER_ACCOUNT_HANDLER_CODE));
             }
         }
     }
 
     /**
-     * Tests declining creating a grant on an container 
-     * that has not same context as moderator has scope on.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests declining creating a grant on an container that has not same context as moderator has scope on.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testCreateContainerGroupGrantDecline() throws Exception {
-        doTestCreateGrant(null, grantCreationUserOrGroupId, 
-            Constants.CONTEXT_BASE_URI + "/" 
-            + CONTEXT_ID, ROLE_HREF_MODERATOR, null);
+        doTestCreateGrant(null, grantCreationUserOrGroupId, Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID,
+            ROLE_HREF_MODERATOR, null);
 
         try {
             if (isUserAccountTest) {
-                super.setClient((GrantClient) 
-                    getClient(USER_GROUP_HANDLER_CODE));
+                super.setClient((GrantClient) getClient(USER_GROUP_HANDLER_CODE));
             }
             revokeAllGrants(TEST_USER_GROUP_ID);
-            doTestCreateGrant(HANDLE, TEST_USER_GROUP_ID, 
-                containerHref1, ROLE_HREF_COLLABORATOR, 
-                        AuthorizationException.class);
-        } finally {
+            doTestCreateGrant(HANDLE, TEST_USER_GROUP_ID, containerHref1, ROLE_HREF_COLLABORATOR,
+                AuthorizationException.class);
+        }
+        finally {
             if (isUserAccountTest) {
-                super.setClient(
-                    (GrantClient) getClient(USER_ACCOUNT_HANDLER_CODE));
+                super.setClient((GrantClient) getClient(USER_ACCOUNT_HANDLER_CODE));
             }
         }
     }
 
     /**
-     * Tests declining creating a grant on an component 
-     * that has not same context as moderator has scope on.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests declining creating a grant on an component that has not same context as moderator has scope on.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testCreateComponentGroupGrantDecline() throws Exception {
-        doTestCreateGrant(null, grantCreationUserOrGroupId, 
-            Constants.CONTEXT_BASE_URI + "/" 
-            + CONTEXT_ID, ROLE_HREF_MODERATOR, null);
+        doTestCreateGrant(null, grantCreationUserOrGroupId, Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID,
+            ROLE_HREF_MODERATOR, null);
 
         try {
             if (isUserAccountTest) {
-                super.setClient((GrantClient) 
-                    getClient(USER_GROUP_HANDLER_CODE));
+                super.setClient((GrantClient) getClient(USER_GROUP_HANDLER_CODE));
             }
             revokeAllGrants(TEST_USER_GROUP_ID);
-            doTestCreateGrant(HANDLE, TEST_USER_GROUP_ID, 
-                publicComponentHref1, ROLE_HREF_COLLABORATOR, 
-                    AuthorizationException.class);
-        } finally {
+            doTestCreateGrant(HANDLE, TEST_USER_GROUP_ID, publicComponentHref1, ROLE_HREF_COLLABORATOR,
+                AuthorizationException.class);
+        }
+        finally {
             if (isUserAccountTest) {
-                super.setClient(
-                    (GrantClient) getClient(USER_ACCOUNT_HANDLER_CODE));
+                super.setClient((GrantClient) getClient(USER_ACCOUNT_HANDLER_CODE));
             }
         }
     }
 
     /**
      * Test logging out a moderator.
-     * 
-     * @test.name Moderator - Logout
-     * @test.id AA-Moderator-Logout
-     * @test.input Valid handle of the user.
-     * @test.expected Successful logout.
-     * @test.status Implemented
-     * @test.issue http://www.escidoc-project.de/issueManagement/show_bug.cgi?id=278
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testAaModeratorLogout() throws Exception {

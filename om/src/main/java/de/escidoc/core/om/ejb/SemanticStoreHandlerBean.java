@@ -29,16 +29,19 @@ import java.rmi.RemoteException;
 public class SemanticStoreHandlerBean implements SessionBean {
 
     SemanticStoreHandlerInterface service;
+
     SessionContext sessionCtx;
+
     private static final Logger LOGGER = LoggerFactory.getLogger(SemanticStoreHandlerBean.class);
 
     public void ejbCreate() throws CreateException {
         try {
             final BeanFactoryLocator beanFactoryLocator = SingletonBeanFactoryLocator.getInstance();
             final BeanFactory factory =
-                    beanFactoryLocator.useBeanFactory("SemanticStoreHandler.spring.ejb.context").getFactory();
+                beanFactoryLocator.useBeanFactory("SemanticStoreHandler.spring.ejb.context").getFactory();
             this.service = (SemanticStoreHandlerInterface) factory.getBean("service.SemanticStoreHandler");
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             LOGGER.error("ejbCreate(): Exception SemanticStoreHandlerComponent: " + e);
             throw new CreateException(e.getMessage());
         }
@@ -59,35 +62,26 @@ public class SemanticStoreHandlerBean implements SessionBean {
 
     }
 
-    public String spo(final String taskParam,
-                                final SecurityContext securityContext)
-            throws SystemException,
-            InvalidTripleStoreQueryException,
-            InvalidTripleStoreOutputFormatException,
-            InvalidXmlException,
-            MissingElementValueException,
-            AuthenticationException,
-            AuthorizationException {
+    public String spo(final String taskParam, final SecurityContext securityContext) throws SystemException,
+        InvalidTripleStoreQueryException, InvalidTripleStoreOutputFormatException, InvalidXmlException,
+        MissingElementValueException, AuthenticationException, AuthorizationException {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.spo(taskParam);
     }
 
     public String spo(final String taskParam, final String authHandle, final Boolean restAccess)
-            throws SystemException,
-            InvalidTripleStoreQueryException,
-            InvalidTripleStoreOutputFormatException,
-            InvalidXmlException,
-            MissingElementValueException,
-            AuthenticationException,
-            AuthorizationException {
+        throws SystemException, InvalidTripleStoreQueryException, InvalidTripleStoreOutputFormatException,
+        InvalidXmlException, MissingElementValueException, AuthenticationException, AuthorizationException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.spo(taskParam);

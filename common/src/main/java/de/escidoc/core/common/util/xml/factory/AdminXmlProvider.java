@@ -26,41 +26,34 @@ import java.util.Map;
 
 /**
  * Admin Xml Provider.
- * 
+ *
  * @author Michael Hoppe
  */
 public class AdminXmlProvider extends InfrastructureXmlProvider {
 
-    private static final String INDEX_CONFIGURATION_RESOURCE_NAME =
-        "index-configuration";
+    private static final String INDEX_CONFIGURATION_RESOURCE_NAME = "index-configuration";
 
     private static final String ADMIN_PATH = "/admin";
-
 
     private static final AdminXmlProvider PROVIDER = new AdminXmlProvider();
 
     /**
      * Gets the index-configuration as xml.
-     * 
+     *
      * @param values Map with values
      * @return Returns the index-configuration as xml.
-     * @throws WebserverSystemException
-     *             Thrown if the instance cannot be created due to an internal
-     *             error.
+     * @throws WebserverSystemException Thrown if the instance cannot be created due to an internal error.
      */
-    public String getIndexConfigurationXml(final Map values)
-        throws WebserverSystemException {
+    public String getIndexConfigurationXml(final Map values) throws WebserverSystemException {
 
         return getXml(INDEX_CONFIGURATION_RESOURCE_NAME, ADMIN_PATH, values);
     }
 
     /**
      * Gets the admin xml PROVIDER.
-     * 
+     *
      * @return Returns the <code>AdminXmlProvider</code> object.
-     * @throws WebserverSystemException
-     *             Thrown if the instance cannot be created due to an internal
-     *             error.
+     * @throws WebserverSystemException Thrown if the instance cannot be created due to an internal error.
      */
     public static AdminXmlProvider getInstance() {
         return PROVIDER;

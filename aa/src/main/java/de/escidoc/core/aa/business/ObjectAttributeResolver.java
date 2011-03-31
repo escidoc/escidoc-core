@@ -24,7 +24,7 @@ import java.util.Map;
 
 /**
  * Resolves objectType and objectTitle for given objectId.
- * 
+ *
  * @author Michael Hoppe
  */
 public class ObjectAttributeResolver {
@@ -47,69 +47,51 @@ public class ObjectAttributeResolver {
 
     /**
      * Try to retrieve ObjectType and objectTitle for given id.
-     * 
-     * @param objectId
-     *            The objectId.
+     *
+     * @param objectId The objectId.
      * @return HashMap with objectType and objectTitle
      * @throws MissingMethodParameterException
-     *             e
-     * @throws SystemException
-     *             e
-     * @throws AuthorizationException
-     *             e
-     * @throws AuthenticationException
-     *             e
+     *                                 e
+     * @throws SystemException         e
+     * @throws AuthorizationException  e
+     * @throws AuthenticationException e
      */
-    public Map<String, String> resolveObjectAttributes(final String objectId)
-        throws MissingMethodParameterException, SystemException,
-        AuthorizationException, AuthenticationException {
+    public Map<String, String> resolveObjectAttributes(final String objectId) throws MissingMethodParameterException,
+        SystemException, AuthorizationException, AuthenticationException {
         return resolveObjectAttributes(objectId, false);
     }
 
     /**
      * Try to retrieve ObjectType for given id.
-     * 
-     * @param objectId
-     *            The objectId.
+     *
+     * @param objectId The objectId.
      * @return String objectType
      * @throws MissingMethodParameterException
-     *             e
-     * @throws SystemException
-     *             e
-     * @throws AuthorizationException
-     *             e
-     * @throws AuthenticationException
-     *             e
+     *                                 e
+     * @throws SystemException         e
+     * @throws AuthorizationException  e
+     * @throws AuthenticationException e
      */
-    public String resolveObjectType(final String objectId)
-        throws MissingMethodParameterException, SystemException,
+    public String resolveObjectType(final String objectId) throws MissingMethodParameterException, SystemException,
         AuthorizationException, AuthenticationException {
-        final Map<String, String> objectAttributes =
-            resolveObjectAttributes(objectId, true);
+        final Map<String, String> objectAttributes = resolveObjectAttributes(objectId, true);
         return objectAttributes != null ? objectAttributes.get(ATTR_OBJECT_TYPE) : null;
     }
 
     /**
      * Try to retrieve ObjectType and objectTitle for given id.
-     * 
-     * @param objectId
-     *            The objectId.
-     * @param typeOnly
-     *            set to true if only objectType should get returned.
+     *
+     * @param objectId The objectId.
+     * @param typeOnly set to true if only objectType should get returned.
      * @return HashMap with objectType and objectTitle
      * @throws MissingMethodParameterException
-     *             e
-     * @throws SystemException
-     *             e
-     * @throws AuthorizationException
-     *             e
-     * @throws AuthenticationException
-     *             e
+     *                                 e
+     * @throws SystemException         e
+     * @throws AuthorizationException  e
+     * @throws AuthenticationException e
      */
-    private Map<String, String> resolveObjectAttributes(
-        final String objectId, final boolean typeOnly)
-        throws MissingMethodParameterException, SystemException,
-        AuthorizationException, AuthenticationException {
+    private Map<String, String> resolveObjectAttributes(final String objectId, final boolean typeOnly)
+        throws MissingMethodParameterException, SystemException, AuthorizationException, AuthenticationException {
 
         // try getting attributes from Triple-Store
         Map<String, String> objectAttributes = getObjectFromTripleStore(objectId, typeOnly);
@@ -144,27 +126,21 @@ public class ObjectAttributeResolver {
     }
 
     /**
-     * Try to retrieve ObjectType for given id from tripleStore. Also retreive
-     * title if objectType was resolvable
-     * 
-     * @param objectId
-     *            The objectId.
-     * @param typeOnly
-     *            set to true if only objectType should get returned.
+     * Try to retrieve ObjectType for given id from tripleStore. Also retreive title if objectType was resolvable
+     *
+     * @param objectId The objectId.
+     * @param typeOnly set to true if only objectType should get returned.
      * @return HashMap with objectType and objectTitle
-     * @throws SystemException
-     *             e
-     * 
+     * @throws SystemException e
      */
-    private Map<String, String> getObjectFromTripleStore(
-        final String objectId, final boolean typeOnly) throws SystemException {
+    private Map<String, String> getObjectFromTripleStore(final String objectId, final boolean typeOnly)
+        throws SystemException {
         final Map<String, String> result = new HashMap<String, String>();
         final String objectType = tsu.getObjectType(objectId);
         if (objectType != null) {
             // object information is stored in the triple store, title
             // can be get from information stored in triple store
-            result.put(ATTR_OBJECT_TYPE, FinderModuleHelper.convertObjectType(
-                objectType, true));
+            result.put(ATTR_OBJECT_TYPE, FinderModuleHelper.convertObjectType(objectType, true));
             if (!typeOnly) {
                 result.put(ATTR_OBJECT_TITLE, tsu.getTitle(objectId));
             }
@@ -177,28 +153,19 @@ public class ObjectAttributeResolver {
     }
 
     /**
-     * Try to retrieve ObjectType for given id from scopeHandler. Also retrieve
-     * title if objectType was resolvable
-     * 
-     * @param objectId
-     *            The objectId.
-     * @param typeOnly
-     *            set to true if only objectType should get returned.
+     * Try to retrieve ObjectType for given id from scopeHandler. Also retrieve title if objectType was resolvable
+     *
+     * @param objectId The objectId.
+     * @param typeOnly set to true if only objectType should get returned.
      * @return HashMap with objectType and objectTitle
      * @throws MissingMethodParameterException
-     *             e
-     * @throws SystemException
-     *             e
-     * @throws AuthorizationException
-     *             e
-     * @throws AuthenticationException
-     *             e
-     * 
+     *                                 e
+     * @throws SystemException         e
+     * @throws AuthorizationException  e
+     * @throws AuthenticationException e
      */
-    private Map<String, String> getObjectFromScopeHandler(
-        final String objectId, final boolean typeOnly)
-        throws MissingMethodParameterException, SystemException,
-        AuthorizationException, AuthenticationException {
+    private Map<String, String> getObjectFromScopeHandler(final String objectId, final boolean typeOnly)
+        throws MissingMethodParameterException, SystemException, AuthorizationException, AuthenticationException {
         final Map<String, String> result = new HashMap<String, String>();
         try {
             scopeHandler.retrieve(objectId);
@@ -206,16 +173,15 @@ public class ObjectAttributeResolver {
             // scope
             result.put(ATTR_OBJECT_TYPE, XmlUtility.NAME_SCOPE);
             if (!typeOnly) {
-                result.put(ATTR_OBJECT_TITLE, StringUtility
-                    .convertToUpperCaseLetterFormat(XmlUtility.NAME_SCOPE)
-                    + " " + objectId);
+                result.put(ATTR_OBJECT_TITLE, StringUtility.convertToUpperCaseLetterFormat(XmlUtility.NAME_SCOPE) + " "
+                    + objectId);
             }
         }
         catch (final ScopeNotFoundException e) {
-            if(LOGGER.isWarnEnabled()) {
+            if (LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on getting object.");
             }
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on getting object.", e);
             }
             return null;
@@ -225,20 +191,16 @@ public class ObjectAttributeResolver {
     }
 
     /**
-     * Try to retrieve ObjectType for given id from userAccountHandler. Also
-     * retrieve title if objectType was resolvable
-     * 
-     * @param objectId
-     *            The objectId.
-     * @param typeOnly
-     *            set to true if only objectType should get returned.
+     * Try to retrieve ObjectType for given id from userAccountHandler. Also retrieve title if objectType was
+     * resolvable
+     *
+     * @param objectId The objectId.
+     * @param typeOnly set to true if only objectType should get returned.
      * @return HashMap with objectType and objectTitle
-     * @throws SystemException
-     *             e
-     * 
+     * @throws SystemException e
      */
-    private Map<String, String> getObjectFromUserAccount(
-        final String objectId, final boolean typeOnly) throws SystemException {
+    private Map<String, String> getObjectFromUserAccount(final String objectId, final boolean typeOnly)
+        throws SystemException {
         final Map<String, String> result = new HashMap<String, String>();
         if (typeOnly) {
             if (userAccountDao.userAccountExists(objectId)) {
@@ -249,8 +211,7 @@ public class ObjectAttributeResolver {
             }
         }
         else {
-            final UserAccount userAccount =
-                userAccountDao.retrieveUserAccount(objectId);
+            final UserAccount userAccount = userAccountDao.retrieveUserAccount(objectId);
             if (userAccount != null) {
                 // we got a user account for the id,
                 // therefore objectType is set to
@@ -267,20 +228,15 @@ public class ObjectAttributeResolver {
     }
 
     /**
-     * Try to retrieve ObjectType for given id from userGroupHandler. Also
-     * retrieve title if objectType was resolvable
-     * 
-     * @param objectId
-     *            The objectId.
-     * @param typeOnly
-     *            set to true if only objectType should get returned.
+     * Try to retrieve ObjectType for given id from userGroupHandler. Also retrieve title if objectType was resolvable
+     *
+     * @param objectId The objectId.
+     * @param typeOnly set to true if only objectType should get returned.
      * @return HashMap with objectType and objectTitle
-     * @throws SystemException
-     *             e
-     * 
+     * @throws SystemException e
      */
-    private Map<String, String> getObjectFromUserGroup(
-        final String objectId, final boolean typeOnly) throws SystemException {
+    private Map<String, String> getObjectFromUserGroup(final String objectId, final boolean typeOnly)
+        throws SystemException {
         final Map<String, String> result = new HashMap<String, String>();
         if (typeOnly) {
             if (userGroupDao.userGroupExists(objectId)) {
@@ -309,17 +265,13 @@ public class ObjectAttributeResolver {
 
     /**
      * Resolve the object in case of resource is a role.
-     * 
-     * @param objectId
-     *            The objectId.
-     * @param typeOnly
-     *            set to true if only objectType should get returned.
+     *
+     * @param objectId The objectId.
+     * @param typeOnly set to true if only objectType should get returned.
      * @return HashMap with objectType and objectTitle
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     * @throws SystemException Thrown in case of an internal error.
      */
-    private Map<String, String> getObjectFromRole(
-        final String objectId, final boolean typeOnly) throws SystemException {
+    private Map<String, String> getObjectFromRole(final String objectId, final boolean typeOnly) throws SystemException {
         final Map<String, String> result = new HashMap<String, String>();
         if (typeOnly) {
             if (roleDao.roleExists(objectId)) {
@@ -348,24 +300,20 @@ public class ObjectAttributeResolver {
 
     /**
      * Resolve the object in case of resource is a grant.
-     * 
-     * @param objectId
-     *            The objectId.
-     * @param typeOnly
-     *            set to true if only objectType should get returned.
+     *
+     * @param objectId The objectId.
+     * @param typeOnly set to true if only objectType should get returned.
      * @return HashMap with objectType and objectTitle
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     * @throws SystemException Thrown in case of an internal error.
      */
-    private Map<String, String> getObjectFromGrant(
-        final String objectId, final boolean typeOnly) throws SystemException {
+    private Map<String, String> getObjectFromGrant(final String objectId, final boolean typeOnly)
+        throws SystemException {
         final Map<String, String> result = new HashMap<String, String>();
         if (userAccountDao.grantExists(objectId)) {
             result.put(ATTR_OBJECT_TYPE, XmlUtility.NAME_GRANT);
             if (!typeOnly) {
-                result.put(ATTR_OBJECT_TITLE, StringUtility
-                    .convertToUpperCaseLetterFormat(XmlUtility.NAME_GRANT)
-                    + " " + objectId);
+                result.put(ATTR_OBJECT_TITLE, StringUtility.convertToUpperCaseLetterFormat(XmlUtility.NAME_GRANT) + " "
+                    + objectId);
             }
         }
         else {
@@ -377,9 +325,8 @@ public class ObjectAttributeResolver {
 
     /**
      * Injects the scope handler bean.
-     * 
-     * @param scopeHandler
-     *            The {@link ScopeHandlerInterface} implementation.
+     *
+     * @param scopeHandler The {@link ScopeHandlerInterface} implementation.
      */
     public void setScopeHandler(final ScopeHandlerInterface scopeHandler) {
         this.scopeHandler = scopeHandler;
@@ -387,9 +334,8 @@ public class ObjectAttributeResolver {
 
     /**
      * Injects the triple store utility bean.
-     * 
-     * @param tsu
-     *            The {@link TripleStoreUtility}.
+     *
+     * @param tsu The {@link TripleStoreUtility}.
      */
     public void setTsu(final TripleStoreUtility tsu) {
         this.tsu = tsu;
@@ -397,9 +343,8 @@ public class ObjectAttributeResolver {
 
     /**
      * Injects the user account data access object.
-     * 
-     * @param userAccountDao
-     *            The data access object.
+     *
+     * @param userAccountDao The data access object.
      */
     public void setUserAccountDao(final UserAccountDaoInterface userAccountDao) {
         this.userAccountDao = userAccountDao;
@@ -407,9 +352,8 @@ public class ObjectAttributeResolver {
 
     /**
      * Injects the user group data access object.
-     * 
-     * @param userGroupDao
-     *            The data access object.
+     *
+     * @param userGroupDao The data access object.
      */
     public void setUserGroupDao(final UserGroupDaoInterface userGroupDao) {
         this.userGroupDao = userGroupDao;
@@ -417,9 +361,8 @@ public class ObjectAttributeResolver {
 
     /**
      * Injects the role dao.
-     * 
-     * @param roleDao
-     *            the {@link EscidocRoleDaoInterface} to inject.
+     *
+     * @param roleDao the {@link EscidocRoleDaoInterface} to inject.
      */
     public void setRoleDao(final EscidocRoleDaoInterface roleDao) {
         this.roleDao = roleDao;

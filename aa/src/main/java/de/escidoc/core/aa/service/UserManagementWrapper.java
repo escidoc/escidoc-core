@@ -34,23 +34,17 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 
 /**
  * The User management wrapper in service layer.
- * 
+ *
  * @author Torsten Tetteroo
  */
 public class UserManagementWrapper implements UserManagementWrapperInterface {
 
     private de.escidoc.core.aa.business.interfaces.UserManagementWrapperInterface business;
 
-
-
     /**
      * See Interface for functional description.
-     * 
-     * @throws AuthenticationException
-     * @throws SystemException
-     * @see UserManagementWrapperInterface
-     *      #logout()
      *
+     * @see UserManagementWrapperInterface #logout()
      */
     @Override
     public void logout() throws AuthenticationException, SystemException {
@@ -60,31 +54,22 @@ public class UserManagementWrapper implements UserManagementWrapperInterface {
 
     /**
      * See Interface for functional description.
-     * 
-     * @param handle the handle
-     * @throws AuthenticationException
-     *             Thrown if the authentication fails due to an invalid provided
-     *             eSciDocUserHandle.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
-     * 
      *
+     * @param handle the handle
+     * @throws AuthenticationException Thrown if the authentication fails due to an invalid provided eSciDocUserHandle.
+     * @throws SystemException         Thrown in case of an internal error.
      */
     @Override
-    public void initHandleExpiryTimestamp(final String handle)
-        throws AuthenticationException, SystemException {
+    public void initHandleExpiryTimestamp(final String handle) throws AuthenticationException, SystemException {
         business.initHandleExpiryTimestamp(handle);
     }
 
-
     /**
      * Setter for the business object.
-     * 
-     * @param business
-     *            business object.
+     *
+     * @param business business object.
      */
-    public void setBusiness(
-        final de.escidoc.core.aa.business.interfaces.UserManagementWrapperInterface business) {
+    public void setBusiness(final de.escidoc.core.aa.business.interfaces.UserManagementWrapperInterface business) {
 
         this.business = business;
     }

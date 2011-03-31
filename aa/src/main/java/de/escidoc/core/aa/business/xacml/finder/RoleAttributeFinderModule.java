@@ -47,96 +47,68 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Implementation of an XACML attribute finder module that is responsible for
- * the attributes related to an eSciDoc role.<br>
- * This finder module supports XACML resource attributes.<br>
- * The attribute values are fetched from the xml representation of the user
- * account.
- * 
- * Supported Attributes:<br>
- * -info:escidoc/names:aa:1.0:resource:role:id<br>
- *  the id of the role, single value attribute
- * -info:escidoc/names:aa:1.0:resource:role:created-by<br>
- *  the id of the user who created the role, single value attribute
- * -info:escidoc/names:aa:1.0:resource:role:modified-by<br>
- *  the id of the user who last modified the role, single value attribute
- * -info:escidoc/names:aa:1.0:resource:role:name<br>
- *  the name of the role, single value attribute
- * 
+ * Implementation of an XACML attribute finder module that is responsible for the attributes related to an eSciDoc
+ * role.<br> This finder module supports XACML resource attributes.<br> The attribute values are fetched from the xml
+ * representation of the user account.
+ * <p/>
+ * Supported Attributes:<br> -info:escidoc/names:aa:1.0:resource:role:id<br> the id of the role, single value attribute
+ * -info:escidoc/names:aa:1.0:resource:role:created-by<br> the id of the user who created the role, single value
+ * attribute -info:escidoc/names:aa:1.0:resource:role:modified-by<br> the id of the user who last modified the role,
+ * single value attribute -info:escidoc/names:aa:1.0:resource:role:name<br> the name of the role, single value
+ * attribute
+ * <p/>
  * created-by and modified-by can have tailing string with user-account-attributes.
- * 
+ *
  * @author Torsten Tetteroo
  */
 public class RoleAttributeFinderModule extends AbstractAttributeFinderModule {
 
     /**
-     * Pattern used to parse the attribute id and fetch the resolveable part,
-     * the last part of the resolveable part and the tail.
+     * Pattern used to parse the attribute id and fetch the resolveable part, the last part of the resolveable part and
+     * the tail.
      */
     private static final String ROLE_ATTRS = "(id|created-by|modified-by|name)";
 
     private static final Pattern PATTERN_PARSE_ROLE_ATTRIBUTE_ID =
-        Pattern.compile('(' + AttributeIds.ROLE_ATTR_PREFIX + ROLE_ATTRS
-            + ")(:.*){0,1}");
-    
+        Pattern.compile('(' + AttributeIds.ROLE_ATTR_PREFIX + ROLE_ATTRS + ")(:.*){0,1}");
+
     /**
      * This attribute matches the id of the role.
      */
-    public static final String ATTR_ROLE_ID =
-        AttributeIds.ROLE_ATTR_PREFIX + "id";
+    public static final String ATTR_ROLE_ID = AttributeIds.ROLE_ATTR_PREFIX + "id";
 
     /**
      * This attribute matches the user who created the role.
      */
-    public static final String ATTR_ROLE_CREATED_BY =
-        AttributeIds.ROLE_ATTR_PREFIX + "created-by";
+    public static final String ATTR_ROLE_CREATED_BY = AttributeIds.ROLE_ATTR_PREFIX + "created-by";
 
     /**
      * This attribute matches the user who modified the role.
      */
-    public static final String ATTR_ROLE_MODIFIED_BY =
-        AttributeIds.ROLE_ATTR_PREFIX + "modified-by";
+    public static final String ATTR_ROLE_MODIFIED_BY = AttributeIds.ROLE_ATTR_PREFIX + "modified-by";
 
     /**
      * This attribute matches the name of the role.
      */
-    public static final String ATTR_ROLE_NAME =
-        AttributeIds.ROLE_ATTR_PREFIX + "name";
-
-    
+    public static final String ATTR_ROLE_NAME = AttributeIds.ROLE_ATTR_PREFIX + "name";
 
     private EscidocRoleDaoInterface roleDao;
 
-
-
     /**
      * See Interface for functional description.
-     * 
-     * @param attributeIdValue
-     * @param ctx
-     * @param resourceId
-     * @param resourceObjid
-     * @param resourceVersionNumber
-     * @param designatorType
-     * @return
-     * @throws EscidocException
-     * @see de.escidoc.core.aa.business.xacml.finder.
-     *      AbstractAttributeFinderModule#assertAttribute(java.lang.String,
-     *      com.sun.xacml.EvaluationCtx, java.lang.String, java.lang.String,
-     *      java.lang.String, int)
      *
+     * @see de.escidoc.core.aa.business.xacml.finder. AbstractAttributeFinderModule#assertAttribute(java.lang.String,
+     *      com.sun.xacml.EvaluationCtx, java.lang.String, java.lang.String, java.lang.String, int)
      */
     @Override
     protected boolean assertAttribute(
-        final String attributeIdValue, final EvaluationCtx ctx,
-        final String resourceId, final String resourceObjid,
-        final String resourceVersionNumber, final int designatorType)
-        throws EscidocException {
+        final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
+        final String resourceVersionNumber, final int designatorType) throws EscidocException {
 
         // make sure attribute id is escidoc internal format and not empty
         // as this finder cannot resolve attributes of new resources.
-        if (!super.assertAttribute(attributeIdValue, ctx, resourceId,
-            resourceObjid, resourceVersionNumber, designatorType)
+        if (!super.assertAttribute(attributeIdValue, ctx, resourceId, resourceObjid, resourceVersionNumber,
+            designatorType)
             || FinderModuleHelper.isNewResourceId(resourceId)) {
 
             return false;
@@ -149,54 +121,36 @@ public class RoleAttributeFinderModule extends AbstractAttributeFinderModule {
 
     /**
      * See Interface for functional description.
-     * 
-     * @param attributeIdValue
-     * @param ctx
-     * @param resourceId
-     * @param resourceObjid
-     * @param resourceVersionNumber
-     * @return
-     * @throws EscidocException
-     * @see de.escidoc.core.aa.business.xacml.finder.
-     *      AbstractAttributeFinderModule#resolveLocalPart(java.lang.String,
-     *      com.sun.xacml.EvaluationCtx, java.lang.String, java.lang.String,
-     *      java.lang.String)
      *
+     * @see de.escidoc.core.aa.business.xacml.finder. AbstractAttributeFinderModule#resolveLocalPart(java.lang.String,
+     *      com.sun.xacml.EvaluationCtx, java.lang.String, java.lang.String, java.lang.String)
      */
     @Override
     protected Object[] resolveLocalPart(
-        final String attributeIdValue, final EvaluationCtx ctx,
-        final String resourceId, final String resourceObjid,
+        final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
         final String resourceVersionNumber) throws EscidocException {
 
         EvaluationResult result = null;
         final String resolvedAttributeIdValue;
-        final Matcher roleAttributeMatcher =
-            PATTERN_PARSE_ROLE_ATTRIBUTE_ID.matcher(attributeIdValue);
+        final Matcher roleAttributeMatcher = PATTERN_PARSE_ROLE_ATTRIBUTE_ID.matcher(attributeIdValue);
         if (roleAttributeMatcher.find()) {
             resolvedAttributeIdValue = roleAttributeMatcher.group(1);
             final EscidocRole role = retrieveRole(ctx, resourceId);
             if (resolvedAttributeIdValue.equals(ATTR_ROLE_ID)) {
-                result =
-                    CustomEvaluationResultBuilder
-                        .createSingleStringValueResult(role.getId());
+                result = CustomEvaluationResultBuilder.createSingleStringValueResult(role.getId());
             }
             else if (resolvedAttributeIdValue.equals(ATTR_ROLE_CREATED_BY)) {
                 result =
-                    CustomEvaluationResultBuilder
-                        .createSingleStringValueResult(
-                                role.getUserAccountByCreatorId().getId());
+                    CustomEvaluationResultBuilder.createSingleStringValueResult(role
+                        .getUserAccountByCreatorId().getId());
             }
             else if (resolvedAttributeIdValue.equals(ATTR_ROLE_MODIFIED_BY)) {
                 result =
-                    CustomEvaluationResultBuilder
-                        .createSingleStringValueResult(
-                                role.getUserAccountByModifiedById().getId());
+                    CustomEvaluationResultBuilder.createSingleStringValueResult(role
+                        .getUserAccountByModifiedById().getId());
             }
             else if (resolvedAttributeIdValue.equals(ATTR_ROLE_NAME)) {
-                result =
-                    CustomEvaluationResultBuilder
-                        .createSingleStringValueResult(role.getRoleName());
+                result = CustomEvaluationResultBuilder.createSingleStringValueResult(role.getRoleName());
             }
         }
         else {
@@ -206,47 +160,31 @@ public class RoleAttributeFinderModule extends AbstractAttributeFinderModule {
         return new Object[] { result, resolvedAttributeIdValue };
     }
 
-
-
     /**
      * Retrieve role from the system.
-     * 
-     * @param ctx
-     *            The evaluation context, which will be used as key for the
-     *            cache.
-     * @param roleId
-     *            The role id.
-     * @return Returns the <code>EscidocRole</code> identified by the provided
-     *         id.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
-     * @throws RoleNotFoundException
-     *             Thrown if no role with provided id exists.
      *
+     * @param ctx    The evaluation context, which will be used as key for the cache.
+     * @param roleId The role id.
+     * @return Returns the <code>EscidocRole</code> identified by the provided id.
+     * @throws WebserverSystemException Thrown in case of an internal error.
+     * @throws RoleNotFoundException    Thrown if no role with provided id exists.
      */
-    private EscidocRole retrieveRole(
-        final EvaluationCtx ctx, final String roleId)
-        throws WebserverSystemException, RoleNotFoundException {
+    private EscidocRole retrieveRole(final EvaluationCtx ctx, final String roleId) throws WebserverSystemException,
+        RoleNotFoundException {
 
-        final StringBuffer key =
-            StringUtility.concatenateWithColon(XmlUtility.NAME_ID, roleId);
-        EscidocRole role =
-            (EscidocRole) RequestAttributesCache.get(ctx, key.toString());
+        final StringBuffer key = StringUtility.concatenateWithColon(XmlUtility.NAME_ID, roleId);
+        EscidocRole role = (EscidocRole) RequestAttributesCache.get(ctx, key.toString());
         if (role == null) {
             try {
                 role = roleDao.retrieveRole(roleId);
                 if (role == null) {
-                    throw new RoleNotFoundException(StringUtility
-                        .format("Role not found",
-                            roleId));
+                    throw new RoleNotFoundException(StringUtility.format("Role not found", roleId));
                 }
                 RequestAttributesCache.put(ctx, key.toString(), role);
             }
             catch (final SqlDatabaseSystemException e) {
-                throw new WebserverSystemException(StringUtility
-                    .format(
-                        "Exception during retrieval of the role", e
-                            .getMessage()), e);
+                throw new WebserverSystemException(StringUtility.format("Exception during retrieval of the role", e
+                    .getMessage()), e);
             }
         }
 
@@ -255,9 +193,8 @@ public class RoleAttributeFinderModule extends AbstractAttributeFinderModule {
 
     /**
      * Injects the role dao if "called" via Spring.
-     * 
-     * @param roleDao
-     *            The role dao.
+     *
+     * @param roleDao The role dao.
      */
     public void setRoleDao(final EscidocRoleDaoInterface roleDao) {
         this.roleDao = roleDao;

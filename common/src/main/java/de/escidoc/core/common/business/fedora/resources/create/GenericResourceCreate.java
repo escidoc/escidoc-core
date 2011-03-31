@@ -35,9 +35,8 @@ import java.util.Map;
 
 /**
  * Generic Resource for Create.
- * 
+ *
  * @author Steffen Wagner
- * 
  */
 public abstract class GenericResourceCreate {
 
@@ -47,19 +46,15 @@ public abstract class GenericResourceCreate {
 
     /**
      * Generate FoXML for all MetadataRecords.
-     * 
-     * @param mdRecords
-     *            Vector with MdRecordCreate.
+     *
+     * @param mdRecords Vector with MdRecordCreate.
      * @return MetadataReocrd FoXML.
-     * @throws SystemException
-     *             Thrown if converting of characters to default character set
-     *             failed.
+     * @throws SystemException Thrown if converting of characters to default character set failed.
      */
-    protected List<Map<String, String>> getMetadataRecordsMap(
-        final Iterable<MdRecordCreate> mdRecords) throws SystemException {
+    protected List<Map<String, String>> getMetadataRecordsMap(final Iterable<MdRecordCreate> mdRecords)
+        throws SystemException {
 
-        final List<Map<String, String>> values =
-            new ArrayList<Map<String, String>>();
+        final List<Map<String, String>> values = new ArrayList<Map<String, String>>();
 
         if (mdRecords != null) {
             for (final MdRecordCreate mdRecord : mdRecords) {
@@ -72,65 +67,48 @@ public abstract class GenericResourceCreate {
 
     /**
      * Get DC.
-     * 
-     * @param mdRecord
-     *            Metadata record which is to map to DC.
-     * @param contentModelId
-     *            ID of the content model to look for transformation
-     *            instruction.
+     *
+     * @param mdRecord       Metadata record which is to map to DC.
+     * @param contentModelId ID of the content model to look for transformation instruction.
      * @return DC or null if default metadata is missing).
-     * @throws WebserverSystemException
-     *             Thrown if an error occurs during DC creation.
-     * @throws EncodingSystemException
-     *             Thrown if the conversion to default encoding failed.
+     * @throws WebserverSystemException Thrown if an error occurs during DC creation.
+     * @throws EncodingSystemException  Thrown if the conversion to default encoding failed.
      */
-    public String getDC(
-        final MdRecordCreate mdRecord, final String contentModelId)
-        throws WebserverSystemException, EncodingSystemException {
+    public String getDC(final MdRecordCreate mdRecord, final String contentModelId) throws WebserverSystemException,
+        EncodingSystemException {
         return XmlUtility.createDC(mdRecord.getNameSpace(), mdRecord.getContent(), this.objid, contentModelId);
     }
 
     /**
-     * Check status of a Context. An invalidStatusException is thrown if the
-     * Context has not the requested status.
-     * 
-     * @param contextId
-     *            The Id of the Context.
-     * @param status
-     *            The expected status of the Context.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
-     * @throws InvalidStatusException
-     *             Thrown if the Context is not in the requested status.
-     * @throws TripleStoreSystemException
-     *             If the triple store reports an error.
+     * Check status of a Context. An invalidStatusException is thrown if the Context has not the requested status.
+     *
+     * @param contextId The Id of the Context.
+     * @param status    The expected status of the Context.
+     * @throws WebserverSystemException   Thrown in case of an internal error.
+     * @throws InvalidStatusException     Thrown if the Context is not in the requested status.
+     * @throws TripleStoreSystemException If the triple store reports an error.
      */
-    protected void checkContextStatus(
-        final String contextId, final String status)
-        throws InvalidStatusException, TripleStoreSystemException,
-        WebserverSystemException {
+    protected void checkContextStatus(final String contextId, final String status) throws InvalidStatusException,
+        TripleStoreSystemException, WebserverSystemException {
 
         if (contextId == null || status == null) {
-            throw new WebserverSystemException(
-                "Context id and status must not be 'null' for check "
-                    + "context status.");
+            throw new WebserverSystemException("Context id and status must not be 'null' for check "
+                + "context status.");
         }
         final String curStatus =
-            TripleStoreUtility.getInstance().getPropertiesElements(contextId,
-                TripleStoreUtility.PROP_PUBLIC_STATUS);
+            TripleStoreUtility.getInstance().getPropertiesElements(contextId, TripleStoreUtility.PROP_PUBLIC_STATUS);
         if (curStatus == null || curStatus.length() == 0) {
             throw new WebserverSystemException("Can not get status of context " + contextId + '.');
         }
         // In first release, if object is once released no changes are allowed
         if (!curStatus.equals(status)) {
             throw new InvalidStatusException("The Context '" + contextId + "' is in state '" + curStatus
-                    + "' and not in status " + status + '.');
+                + "' and not in status " + status + '.');
         }
     }
 
     /**
-     * @param objid
-     *            the objid to set
+     * @param objid the objid to set
      */
     public void setObjid(final String objid) {
         this.objid = objid;
@@ -144,8 +122,7 @@ public abstract class GenericResourceCreate {
     }
 
     /**
-     * @param buildNumber
-     *            the buildNumber to set
+     * @param buildNumber the buildNumber to set
      */
     public void setBuildNumber(final String buildNumber) {
         this.buildNumber = buildNumber;
@@ -153,10 +130,9 @@ public abstract class GenericResourceCreate {
 
     /**
      * Get the version/build number of framework.
-     * 
+     *
      * @return the buildNumber
-     * @throws WebserverSystemException
-     *             Thrown by Utility instance.
+     * @throws WebserverSystemException Thrown by Utility instance.
      */
     public String getBuildNumber() throws WebserverSystemException {
         if (this.buildNumber == null) {

@@ -29,42 +29,58 @@
 package de.escidoc.core.test.st;
 
 //CHECKSTYLE:OFF Generated Java-File.
+
 /**
  * @hibernate.class table="staging_file"
  * @hibernate.mapping schema="st"
- * 
+ *
  */
 public class StagingFile {
 
-    /** identifier field */
+    /**
+     * identifier field
+     */
     private String token;
 
-    /** persistent field */
+    /**
+     * persistent field
+     */
     private long expiryTs;
 
-    /** nullable persistent field */
+    /**
+     * nullable persistent field
+     */
     private String reference;
 
-    /** nullable persistent field */
+    /**
+     * nullable persistent field
+     */
     private String mimeType;
 
-    /** persistent field */
+    /**
+     * persistent field
+     */
     private boolean upload;
 
-    /** full constructor */
-    public StagingFile(long expiryTs, String reference, String mimeType,
-        boolean upload) {
+    /**
+     * full constructor
+     */
+    public StagingFile(long expiryTs, String reference, String mimeType, boolean upload) {
         this.expiryTs = expiryTs;
         this.reference = reference;
         this.mimeType = mimeType;
         this.upload = upload;
     }
 
-    /** default constructor */
+    /**
+     * default constructor
+     */
     public StagingFile() {
     }
 
-    /** minimal constructor */
+    /**
+     * minimal constructor
+     */
     public StagingFile(long expiryTs, boolean upload) {
         this.expiryTs = expiryTs;
         this.upload = upload;
@@ -73,7 +89,7 @@ public class StagingFile {
     /**
      * @hibernate.id generator-class="de.escidoc.core.st.business.persistence.hibernate.TokenGenerator"
      *               type="java.lang.String" column="token"
-     * 
+     *
      */
     public String getToken() {
         return this.token;
@@ -85,7 +101,7 @@ public class StagingFile {
 
     /**
      * @hibernate.property column="expiry_ts" length="8" not-null="true"
-     * 
+     *
      */
     public long getExpiryTs() {
         return this.expiryTs;
@@ -97,7 +113,7 @@ public class StagingFile {
 
     /**
      * @hibernate.property column="reference" length="-1"
-     * 
+     *
      */
     public String getReference() {
         return this.reference;
@@ -109,7 +125,7 @@ public class StagingFile {
 
     /**
      * @hibernate.property column="mime_type" length="255"
-     * 
+     *
      */
     public String getMimeType() {
         return this.mimeType;
@@ -121,7 +137,7 @@ public class StagingFile {
 
     /**
      * @hibernate.property column="upload" length="1" not-null="true"
-     * 
+     *
      */
     public boolean isUpload() {
         return this.upload;

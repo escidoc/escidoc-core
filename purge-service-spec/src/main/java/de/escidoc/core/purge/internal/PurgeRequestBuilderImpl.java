@@ -25,8 +25,6 @@ public class PurgeRequestBuilderImpl extends PurgeRequestBuilder {
 
     @Override
     public String toString() {
-        return "PurgeRequestBuilderImpl{" +
-                "purgeRequest=" + this.purgeRequest +
-                '}';
+        return "PurgeRequestBuilderImpl{" + "purgeRequest=" + this.purgeRequest + '}';
     }
 }

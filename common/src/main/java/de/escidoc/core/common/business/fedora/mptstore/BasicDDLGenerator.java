@@ -26,15 +26,13 @@ import java.util.Collection;
 import java.util.regex.Pattern;
 
 /**
- * This class is the super class for the Postgres and MySQL implementations of the
- * DDL generator for the MPTStore. Both databases have limits when creating an
- * index on large column values so there has to be defined a maximum prefix length
- * for those indices.
+ * This class is the super class for the Postgres and MySQL implementations of the DDL generator for the MPTStore. Both
+ * databases have limits when creating an index on large column values so there has to be defined a maximum prefix
+ * length for those indices.
  *
  * @author André Schenk
  */
-public class BasicDDLGenerator
-    extends PostgresDDLGenerator {
+public class BasicDDLGenerator extends PostgresDDLGenerator {
 
     private static final Pattern SPLIT_PATTERN = Pattern.compile(" +");
 
@@ -57,8 +55,6 @@ public class BasicDDLGenerator
 
     /**
      * Copied from superclass.
-     * @param cmds
-     * @param table
      */
     protected void addSelectGrants(final Collection<String> cmds, final String table) {
         for (final String name : this.users) {
@@ -71,8 +67,6 @@ public class BasicDDLGenerator
 
     /**
      * Copied from superclass.
-     * @param name
-     * @return
      */
     protected static String[] splitProperty(final String name) {
         final String val = System.getProperty(name);

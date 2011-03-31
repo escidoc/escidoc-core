@@ -30,8 +30,6 @@ import java.net.HttpURLConnection;
 
 /**
  * Class encapsulating binary content.
- * 
- *
  */
 public class EscidocBinaryContent {
 
@@ -39,7 +37,7 @@ public class EscidocBinaryContent {
 
     @Deprecated
     private InputStream content;
-    
+
     private String fileName;
 
     private String mimeType;
@@ -57,8 +55,7 @@ public class EscidocBinaryContent {
     }
 
     /**
-     * @param redirectUrl
-     *            the redirectUrl to set
+     * @param redirectUrl the redirectUrl to set
      */
     public void setRedirectUrl(final String redirectUrl) {
         this.redirectUrl = redirectUrl;
@@ -66,35 +63,26 @@ public class EscidocBinaryContent {
 
     /**
      * @return the content
-     * @throws IOException
-     * @throws NullPointerException
      */
     public InputStream getContent() throws IOException, NullPointerException {
         if (this.getMethod == null) {
             if (this.content != null) {
                 return this.content;
             }
-            throw new NullPointerException(
-                "GetMethod not set or already released.");
+            throw new NullPointerException("GetMethod not set or already released.");
         }
         return this.content;
     }
 
-    
-
     /**
-     * @deprecated A GetMethod should be set. getContent will acquire the
-     *             InputStream from that GetMethod.
-     * 
-     * @param content
-     *            the content to set
+     * @param content the content to set
+     * @deprecated A GetMethod should be set. getContent will acquire the InputStream from that GetMethod.
      */
     @Deprecated
     public void setContent(final InputStream content) {
         this.content = content;
     }
 
-  
     /**
      * @return the fileName
      */
@@ -103,8 +91,7 @@ public class EscidocBinaryContent {
     }
 
     /**
-     * @param fileName
-     *            the fileName to set
+     * @param fileName the fileName to set
      */
     public void setFileName(final String fileName) {
         this.fileName = fileName;
@@ -123,15 +110,13 @@ public class EscidocBinaryContent {
     }
 
     /**
-     * @param mimeType
-     *            the mimeType to set
+     * @param mimeType the mimeType to set
      */
     public void setMimeType(final String mimeType) {
         this.mimeType = mimeType != null ? mimeType.trim() : null;
     }
 
     /**
-     * 
      * @return The HtpURLconnection.
      */
     @Deprecated
@@ -141,16 +126,12 @@ public class EscidocBinaryContent {
 
     /**
      * Set the HttpConnection.
-     * 
-     * @param connection
-     *            The HttpURLConnection to the content.
+     *
+     * @param connection The HttpURLConnection to the content.
      */
     @Deprecated
     public void setConnection(final HttpURLConnection connection) {
         this.conn = connection;
     }
 
-  
-  
-    
 }

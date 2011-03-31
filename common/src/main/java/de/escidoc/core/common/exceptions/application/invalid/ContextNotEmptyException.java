@@ -21,12 +21,10 @@
 package de.escidoc.core.common.exceptions.application.invalid;
 
 /**
- * The ContextNotEmptyException is used to indicate that the context requested
- * in the service-call is not empty and therefore can't be deleted or closed.
- * returned httpStatusCode is 450.
- * 
- * @author Michael Schneider
+ * The ContextNotEmptyException is used to indicate that the context requested in the service-call is not empty and
+ * therefore can't be deleted or closed. returned httpStatusCode is 450.
  *
+ * @author Michael Schneider
  */
 public class ContextNotEmptyException extends ValidationException {
 
@@ -41,8 +39,6 @@ public class ContextNotEmptyException extends ValidationException {
 
     /**
      * Default constructor.
-     * 
-     *
      */
     public ContextNotEmptyException() {
         super(HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -50,9 +46,8 @@ public class ContextNotEmptyException extends ValidationException {
 
     /**
      * Constructor used to map an initial exception.
-     * 
-     * @param error
-     *            Throwable
+     *
+     * @param error Throwable
      */
     public ContextNotEmptyException(final Throwable error) {
         super(error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -60,24 +55,19 @@ public class ContextNotEmptyException extends ValidationException {
 
     /**
      * Constructs a new exception with the specified detail message.
-     * 
-     * @param message -
-     *            the detail message.
      *
+     * @param message - the detail message.
      */
     public ContextNotEmptyException(final String message) {
         super(message, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 
     /**
-     * Constructor used to create a new Exception with the specified detail
-     * message and a mapping to an initial exception.
-     * 
-     * @param message -
-     *            the detail message.
-     * @param error
-     *            Throwable
+     * Constructor used to create a new Exception with the specified detail message and a mapping to an initial
+     * exception.
      *
+     * @param message - the detail message.
+     * @param error   Throwable
      */
     public ContextNotEmptyException(final String message, final Throwable error) {
         super(message, error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);

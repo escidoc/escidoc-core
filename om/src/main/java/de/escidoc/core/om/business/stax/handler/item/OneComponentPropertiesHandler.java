@@ -47,9 +47,8 @@ import java.util.Map;
 
 /**
  * Handler to obtain the properties for one Component.
- * 
+ *
  * @author ??
- * 
  */
 public class OneComponentPropertiesHandler extends DefaultHandler {
 
@@ -59,17 +58,14 @@ public class OneComponentPropertiesHandler extends DefaultHandler {
 
     private final StaxParser parser;
 
-    private final Map<String, String> properties =
-        new HashMap<String, String>();
+    private final Map<String, String> properties = new HashMap<String, String>();
 
-    private static final Logger LOGGER =
-        LoggerFactory.getLogger(OneComponentPropertiesHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(OneComponentPropertiesHandler.class);
 
     /**
      * OneComponentPropertiesHandler.
-     * 
-     * @param parser
-     *            StAX parser.
+     *
+     * @param parser StAX parser.
      */
     public OneComponentPropertiesHandler(final StaxParser parser) {
         this.parser = parser;
@@ -78,7 +74,7 @@ public class OneComponentPropertiesHandler extends DefaultHandler {
 
     /**
      * Get Properties of Component.
-     * 
+     *
      * @return Map with properties of Component.
      */
     public Map<String, String> getProperties() {
@@ -86,8 +82,7 @@ public class OneComponentPropertiesHandler extends DefaultHandler {
     }
 
     @Override
-    public StartElement startElement(final StartElement element)
-        throws ReadonlyElementViolationException,
+    public StartElement startElement(final StartElement element) throws ReadonlyElementViolationException,
         ReadonlyAttributeViolationException, InvalidContentException {
 
         if (this.inside) {
@@ -121,9 +116,8 @@ public class OneComponentPropertiesHandler extends DefaultHandler {
     }
 
     @Override
-    public String characters(final String s, final StartElement element)
-        throws MissingElementValueException, InvalidContentException,
-        WebserverSystemException {
+    public String characters(final String s, final StartElement element) throws MissingElementValueException,
+        InvalidContentException, WebserverSystemException {
 
         final String theName = element.getLocalName();
 
@@ -143,19 +137,15 @@ public class OneComponentPropertiesHandler extends DefaultHandler {
                     properties.put(TripleStoreUtility.PROP_VISIBILITY, s);
                 }
                 else {
-                    throw new MissingElementValueException(
-                        "The value of element " + theName + " is missing");
+                    throw new MissingElementValueException("The value of element " + theName + " is missing");
                 }
             }
-            else if (theName
-                .equals(Elements.ELEMENT_COMPONENT_CONTENT_CATEGORY)) {
+            else if (theName.equals(Elements.ELEMENT_COMPONENT_CONTENT_CATEGORY)) {
                 if (s != null && s.length() > 0) {
-                    properties.put(
-                        TripleStoreUtility.PROP_COMPONENT_CONTENT_CATEGORY, s);
+                    properties.put(TripleStoreUtility.PROP_COMPONENT_CONTENT_CATEGORY, s);
                 }
                 else {
-                    throw new MissingElementValueException(
-                        "The value of element " + theName + " is missing");
+                    throw new MissingElementValueException("The value of element " + theName + " is missing");
                 }
             }
         }

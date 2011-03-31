@@ -45,16 +45,14 @@ import static org.junit.Assert.fail;
 
 /**
  * Test the mock implementation of the container resource.
- * 
+ *
  * @author Michael Schneider
- * 
  */
 @RunWith(value = Parameterized.class)
 public class ContainerDeleteTest extends ContainerTestBase {
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ContainerDeleteTest(final int transport) {
         super(transport);
@@ -62,39 +60,33 @@ public class ContainerDeleteTest extends ContainerTestBase {
 
     /**
      * Test successfully delete of container in status 'pending'.
-     * 
-     * @throws Exception
-     *             If an error occurs.
+     *
+     * @throws Exception If an error occurs.
      */
     @Test
     public void testOM_DC_1() throws Exception {
 
-        String containerId =
-            createContainerFromTemplate("create_container_WithoutMembers_v1.1.xml");
+        String containerId = createContainerFromTemplate("create_container_WithoutMembers_v1.1.xml");
         delete(containerId);
 
         try {
             retrieve(containerId);
-            EscidocRestSoapTestBase
-                .failMissingException(ContainerNotFoundException.class);
+            EscidocRestSoapTestBase.failMissingException(ContainerNotFoundException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                ContainerNotFoundException.class, e);
+            EscidocRestSoapTestBase.assertExceptionType(ContainerNotFoundException.class, e);
         }
     }
 
     /**
      * Test successfully delete of container in status 'revised'.
-     * 
-     * @throws Exception
-     *             If an error occurs.
+     *
+     * @throws Exception If an error occurs.
      */
     @Test
     public void testOM_DC_7() throws Exception {
 
-        String containerId =
-            createContainerFromTemplate("create_container_WithoutMembers_v1.1.xml");
+        String containerId = createContainerFromTemplate("create_container_WithoutMembers_v1.1.xml");
         String paramXml = getTheLastModificationParam(false, containerId);
         submit(containerId, paramXml);
         paramXml = getTheLastModificationParam(false, containerId);
@@ -103,28 +95,23 @@ public class ContainerDeleteTest extends ContainerTestBase {
 
         try {
             retrieve(containerId);
-            EscidocRestSoapTestBase
-                .failMissingException(ContainerNotFoundException.class);
+            EscidocRestSoapTestBase.failMissingException(ContainerNotFoundException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                ContainerNotFoundException.class, e);
+            EscidocRestSoapTestBase.assertExceptionType(ContainerNotFoundException.class, e);
         }
     }
 
     /**
      * Test declining delete of container which contains members.
-     * 
-     * @throws Exception
-     *             If an error occurs.
+     *
+     * @throws Exception If an error occurs.
      */
     @Test
     public void testOM_DC_5() throws Exception {
 
-        String theItemId =
-            createItemFromTemplate("escidoc_item_198_for_create.xml");
-        String xmlData =
-            getContainerTemplate("create_container_v1.1-forItem.xml");
+        String theItemId = createItemFromTemplate("escidoc_item_198_for_create.xml");
+        String xmlData = getContainerTemplate("create_container_v1.1-forItem.xml");
 
         String replaced = xmlData.replaceAll("##ITEMID##", theItemId);
         assertXmlValidContainer(getTransport(), replaced);
@@ -133,98 +120,82 @@ public class ContainerDeleteTest extends ContainerTestBase {
         String theContainerId = getObjidValue(theContainerXml);
         try {
             delete(theContainerId);
-            EscidocRestSoapTestBase.failMissingException(
-                "No exception with deleting container with members.",
+            EscidocRestSoapTestBase.failMissingException("No exception with deleting container with members.",
                 InvalidStatusException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                InvalidStatusException.class, e);
+            EscidocRestSoapTestBase.assertExceptionType(InvalidStatusException.class, e);
         }
     }
 
     /**
      * Test declining delete of container with non existing id.
-     * 
-     * @throws Exception
-     *             If an error occurs.
+     *
+     * @throws Exception If an error occurs.
      */
     @Test
     public void testOM_DC_2() throws Exception {
 
         try {
             delete("bla");
-            EscidocRestSoapTestBase.failMissingException(
-                "No exception occurred on delete with non existing id.",
+            EscidocRestSoapTestBase.failMissingException("No exception occurred on delete with non existing id.",
                 ContainerNotFoundException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                ContainerNotFoundException.class, e);
+            EscidocRestSoapTestBase.assertExceptionType(ContainerNotFoundException.class, e);
         }
     }
 
     /**
      * Test declining delete of container with missing id.
-     * 
-     * @throws Exception
-     *             If an error occurs.
+     *
+     * @throws Exception If an error occurs.
      */
     @Test
     public void testOM_DC_3() throws Exception {
 
         try {
             delete(null);
-            EscidocRestSoapTestBase.failMissingException(
-                "No exception occurred on delete with missing id.",
+            EscidocRestSoapTestBase.failMissingException("No exception occurred on delete with missing id.",
                 MissingMethodParameterException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                MissingMethodParameterException.class, e);
+            EscidocRestSoapTestBase.assertExceptionType(MissingMethodParameterException.class, e);
         }
     }
 
     /**
      * Test declining delete of container in status submitted.
-     * 
-     * @throws Exception
-     *             If an error occurs.
+     *
+     * @throws Exception If an error occurs.
      */
     @Test
     public void testOM_DC_6() throws Exception {
 
-        String containerId =
-            createContainerFromTemplate("create_container_WithoutMembers_v1.1.xml");
+        String containerId = createContainerFromTemplate("create_container_WithoutMembers_v1.1.xml");
         String param = getTheLastModificationParam(false, containerId);
         submit(containerId, param);
         try {
             delete(containerId);
-            EscidocRestSoapTestBase.failMissingException(
-                "No exception occurred on delete submitted container.",
+            EscidocRestSoapTestBase.failMissingException("No exception occurred on delete submitted container.",
                 InvalidStatusException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                InvalidStatusException.class, e);
+            EscidocRestSoapTestBase.assertExceptionType(InvalidStatusException.class, e);
         }
     }
 
     /**
      * Test successfully delete container which is member.
-     * 
-     * @throws Exception
-     *             If an error occurs.
+     *
+     * @throws Exception If an error occurs.
      */
     @Test
     public void testDeleteMemberContainer() throws Exception {
 
-        String theItemId =
-            createItemFromTemplate("escidoc_item_198_for_create.xml");
-        String theContainerId =
-            createContainerFromTemplate("create_container_WithoutMembers_v1.1.xml");
-        String xmlData =
-            getContainerTemplate("create_container_v1.1-forItemAndforContainer.xml");
+        String theItemId = createItemFromTemplate("escidoc_item_198_for_create.xml");
+        String theContainerId = createContainerFromTemplate("create_container_WithoutMembers_v1.1.xml");
+        String xmlData = getContainerTemplate("create_container_v1.1-forItemAndforContainer.xml");
 
         String replaced = xmlData.replaceAll("##ITEMID##", theItemId);
         replaced = replaced.replaceAll("##CONTAINERID##", theContainerId);
@@ -235,40 +206,28 @@ public class ContainerDeleteTest extends ContainerTestBase {
         String parentAfterDeletion = retrieve(theParentId);
         // first check if removed from container struct-map, but that's already
         // the case if member does not longer exist
-        NodeList containerMembers =
-            selectNodeList(getDocument(parentAfterDeletion),
-                "/container/members//container");
-        assertEquals("Member entry should be deleted while deleting member.",
-            0, containerMembers.getLength());
+        NodeList containerMembers = selectNodeList(getDocument(parentAfterDeletion), "/container/members//container");
+        assertEquals("Member entry should be deleted while deleting member.", 0, containerMembers.getLength());
         // check if RELS-EXT does not longer contain the member
         String triplestoreEntry =
-            new TripleStoreTestBase()
-                .requestMPT(
-                    "<info:fedora/"
-                        + theParentId
-                        + " <http://escidoc.de/core/01/structural-relations/member> <info:fedora/"
-                        + theContainerId + ">", TripleStoreTestBase.FORMAT_MPT);
-        assertEquals("Member entry should be deleted while deleting member.",
-            0, triplestoreEntry.length());
+            new TripleStoreTestBase().requestMPT("<info:fedora/" + theParentId
+                + " <http://escidoc.de/core/01/structural-relations/member> <info:fedora/" + theContainerId + ">",
+                TripleStoreTestBase.FORMAT_MPT);
+        assertEquals("Member entry should be deleted while deleting member.", 0, triplestoreEntry.length());
     }
 
     /**
-     * Test declining delete of container which is member because of
-     * insufficient rights to modify parent container.
-     * 
-     * @throws Exception
-     *             If an error occurs.
+     * Test declining delete of container which is member because of insufficient rights to modify parent container.
+     *
+     * @throws Exception If an error occurs.
      */
     @Test
     public void testDeclineDeleteMemberContainer01() throws Exception {
 
         PWCallback.setHandle(PWCallback.DEPOSITOR_HANDLE);
-        String theItemId =
-            createItemFromTemplate("escidoc_item_198_for_create.xml");
-        String theContainerId =
-            createContainerFromTemplate("create_container_WithoutMembers_v1.1.xml");
-        String xmlData =
-            getContainerTemplate("create_container_v1.1-forItemAndforContainer.xml");
+        String theItemId = createItemFromTemplate("escidoc_item_198_for_create.xml");
+        String theContainerId = createContainerFromTemplate("create_container_WithoutMembers_v1.1.xml");
+        String xmlData = getContainerTemplate("create_container_v1.1-forItemAndforContainer.xml");
 
         String replaced = xmlData.replaceAll("##ITEMID##", theItemId);
         replaced = replaced.replaceAll("##CONTAINERID##", theContainerId);
@@ -290,19 +249,15 @@ public class ContainerDeleteTest extends ContainerTestBase {
 
     /**
      * Test successfully delete item which is member.
-     * 
-     * @throws Exception
-     *             If an error occurs.
+     *
+     * @throws Exception If an error occurs.
      */
     @Test
     public void testDeleteMemberItem() throws Exception {
 
-        String theItemId =
-            createItemFromTemplate("escidoc_item_198_for_create.xml");
-        String theContainerId =
-            createContainerFromTemplate("create_container_WithoutMembers_v1.1.xml");
-        String xmlData =
-            getContainerTemplate("create_container_v1.1-forItemAndforContainer.xml");
+        String theItemId = createItemFromTemplate("escidoc_item_198_for_create.xml");
+        String theContainerId = createContainerFromTemplate("create_container_WithoutMembers_v1.1.xml");
+        String xmlData = getContainerTemplate("create_container_v1.1-forItemAndforContainer.xml");
 
         String replaced = xmlData.replaceAll("##ITEMID##", theItemId);
         replaced = replaced.replaceAll("##CONTAINERID##", theContainerId);
@@ -313,41 +268,29 @@ public class ContainerDeleteTest extends ContainerTestBase {
         String parentAfterDeletion = retrieve(theParentId);
         // first check if removed from container struct-map, but that's already
         // the case if member does not longer exist
-        NodeList containerMembers =
-            selectNodeList(getDocument(parentAfterDeletion),
-                "/container/struct-map//item");
-        assertEquals("Member entry should be deleted while deleting member.",
-            0, containerMembers.getLength());
+        NodeList containerMembers = selectNodeList(getDocument(parentAfterDeletion), "/container/struct-map//item");
+        assertEquals("Member entry should be deleted while deleting member.", 0, containerMembers.getLength());
         // check if RELS-EXT does not longer contain the member
         String triplestoreEntry =
-            new TripleStoreTestBase()
-                .requestMPT(
-                    "<info:fedora/"
-                        + theParentId
-                        + " <http://escidoc.de/core/01/structural-relations/member> <info:fedora/"
-                        + theItemId + ">", TripleStoreTestBase.FORMAT_MPT);
-        assertEquals("Member entry should be deleted while deleting member.",
-            0, triplestoreEntry.length());
+            new TripleStoreTestBase().requestMPT("<info:fedora/" + theParentId
+                + " <http://escidoc.de/core/01/structural-relations/member> <info:fedora/" + theItemId + ">",
+                TripleStoreTestBase.FORMAT_MPT);
+        assertEquals("Member entry should be deleted while deleting member.", 0, triplestoreEntry.length());
 
     }
 
     /**
-     * Test declining delete of item which is member because of insufficient
-     * rights to modify parent container.
-     * 
-     * @throws Exception
-     *             If an error occurs.
+     * Test declining delete of item which is member because of insufficient rights to modify parent container.
+     *
+     * @throws Exception If an error occurs.
      */
     @Test
     public void testDeclineDeleteMemberItem01() throws Exception {
 
         PWCallback.setHandle(PWCallback.DEPOSITOR_HANDLE);
-        String theItemId =
-            createItemFromTemplate("escidoc_item_198_for_create.xml");
-        String theContainerId =
-            createContainerFromTemplate("create_container_WithoutMembers_v1.1.xml");
-        String xmlData =
-            getContainerTemplate("create_container_v1.1-forItemAndforContainer.xml");
+        String theItemId = createItemFromTemplate("escidoc_item_198_for_create.xml");
+        String theContainerId = createContainerFromTemplate("create_container_WithoutMembers_v1.1.xml");
+        String xmlData = getContainerTemplate("create_container_v1.1-forItemAndforContainer.xml");
 
         String replaced = xmlData.replaceAll("##ITEMID##", theItemId);
         replaced = replaced.replaceAll("##CONTAINERID##", theContainerId);

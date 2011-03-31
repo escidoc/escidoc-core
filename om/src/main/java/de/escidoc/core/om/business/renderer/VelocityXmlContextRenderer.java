@@ -66,14 +66,11 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * 
  * @author Steffen Wagner
- * 
  */
 public class VelocityXmlContextRenderer implements ContextRendererInterface {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(
-        VelocityXmlContextRenderer.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(VelocityXmlContextRenderer.class);
 
     /*
      * (non-Javadoc)
@@ -83,8 +80,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * #render(de.escidoc.core.om.business.fedora.resources.Context)
      */
     @Override
-    public String render(final FedoraContextHandler contextHandler)
-        throws SystemException {
+    public String render(final FedoraContextHandler contextHandler) throws SystemException {
 
         final Context context = contextHandler.getContext();
         final Map<String, Object> values = new HashMap<String, Object>();
@@ -94,38 +90,28 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
         addResourcesValues(context, values);
         renderAdminDescriptors(contextHandler, values);
 
-        values.put(XmlTemplateProvider.IS_ROOT_SUB_RESOURCE,
-            XmlTemplateProvider.FALSE);
+        values.put(XmlTemplateProvider.IS_ROOT_SUB_RESOURCE, XmlTemplateProvider.FALSE);
 
         return ContextXmlProvider.getInstance().getContextXml(values);
     }
 
     /**
      * Render AdminDescriptors.
-     * 
-     * @param contextHandler
-     *            ContextHandler.
-     * @param values
-     *            Context value map.
+     *
+     * @param contextHandler ContextHandler.
+     * @param values         Context value map.
      * @return XML representation of admin-descriptors
-     * @throws FedoraSystemException
-     *             Thrown if retrieving admin-descriptors datastream from Fedora
-     *             failed.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
-     * @throws EncodingSystemException
-     *             Thrown if character encoding failed.
+     * @throws FedoraSystemException    Thrown if retrieving admin-descriptors datastream from Fedora failed.
+     * @throws WebserverSystemException Thrown in case of an internal error.
+     * @throws EncodingSystemException  Thrown if character encoding failed.
      */
     @Override
-    public String renderAdminDescriptors(
-        final FedoraContextHandler contextHandler,
-        final Map<String, Object> values) throws FedoraSystemException,
-        WebserverSystemException, EncodingSystemException {
+    public String renderAdminDescriptors(final FedoraContextHandler contextHandler, final Map<String, Object> values)
+        throws FedoraSystemException, WebserverSystemException, EncodingSystemException {
 
         addCommonValues(contextHandler.getContext(), values);
 
-        final Map<String, Datastream> admDescs =
-            contextHandler.getContext().getAdminDescriptorsMap();
+        final Map<String, Datastream> admDescs = contextHandler.getContext().getAdminDescriptorsMap();
 
         final Set<String> keys = admDescs.keySet();
 
@@ -136,62 +122,50 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
             while (it.hasNext()) {
                 final String name = it.next();
                 final Datastream adm = admDescs.get(name);
-                admDescriptors.add(renderAdminDescriptor(contextHandler, name,
-                    adm, false));
+                admDescriptors.add(renderAdminDescriptor(contextHandler, name, adm, false));
             }
 
             values.put("admsContent", admDescriptors);
         }
 
         final Context context = contextHandler.getContext();
-        values.put("admsHref", XmlUtility.getContextHref(context.getId())
-            + "/admin-descriptors");
+        values.put("admsHref", XmlUtility.getContextHref(context.getId()) + "/admin-descriptors");
         values.put("admsTitle", "Admin Descriptors");
-        values.put(XmlTemplateProvider.IS_ROOT_SUB_RESOURCE,
-            XmlTemplateProvider.TRUE);
+        values.put(XmlTemplateProvider.IS_ROOT_SUB_RESOURCE, XmlTemplateProvider.TRUE);
 
         return ContextXmlProvider.getInstance().getAdminDescriptorsXml(values);
     }
 
     /**
      * Render one admin-descriptor datastream.
-     * 
-     * @param contextHandler
-     *            The contextHandler.
-     * @param name
-     *            Name of the datastream (unique).
-     * @param admDesc
-     *            The datastream.
-     * @param isRoot
-     *            Set true if admin-descriptor is to render as root element.
+     *
+     * @param contextHandler The contextHandler.
+     * @param name           Name of the datastream (unique).
+     * @param admDesc        The datastream.
+     * @param isRoot         Set true if admin-descriptor is to render as root element.
      * @return XML representation of one admin-descriptor datastream.
-     * @throws EncodingSystemException
-     *             Thrown if encoding convertion fails.
-     * @throws WebserverSystemException
-     *             Thrown if anything else fails.
+     * @throws EncodingSystemException  Thrown if encoding convertion fails.
+     * @throws WebserverSystemException Thrown if anything else fails.
      */
 
     @Override
     public String renderAdminDescriptor(
-        final FedoraContextHandler contextHandler, final String name,
-        final Datastream admDesc, final boolean isRoot)
+        final FedoraContextHandler contextHandler, final String name, final Datastream admDesc, final boolean isRoot)
         throws EncodingSystemException, WebserverSystemException {
         if (admDesc.isDeleted()) {
             return "";
         }
         final Map<String, Object> values = new HashMap<String, Object>();
         addCommonValues(contextHandler.getContext(), values);
-        values.put("admHref",
-            XmlUtility.getContextHref(contextHandler.getContext().getId())
-                + "/admin-descriptors/admin-descriptor/" + name);
+        values.put("admHref", XmlUtility.getContextHref(contextHandler.getContext().getId())
+            + "/admin-descriptors/admin-descriptor/" + name);
         values.put("admName", name);
         values.put("admRecordTitle", name + " admin descriptor.");
         values.put(XmlTemplateProvider.IS_ROOT_RESOURCES, isRoot);
 
         final String admContent;
         try {
-            admContent =
-                new String(admDesc.getStream(), XmlUtility.CHARACTER_ENCODING);
+            admContent = new String(admDesc.getStream(), XmlUtility.CHARACTER_ENCODING);
         }
         catch (final UnsupportedEncodingException e) {
             throw new EncodingSystemException(e);
@@ -208,16 +182,14 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * #renderProperties(de.escidoc.core.om.business.fedora.resources.Context)
      */
     @Override
-    public String renderProperties(final FedoraContextHandler contextHandler)
-        throws WebserverSystemException {
+    public String renderProperties(final FedoraContextHandler contextHandler) throws WebserverSystemException {
 
         final Context context = contextHandler.getContext();
         final Map<String, Object> values = new HashMap<String, Object>();
 
         addCommonValues(context, values);
         addNamespaceValues(values);
-        values.put(XmlTemplateProvider.IS_ROOT_PROPERTIES,
-            XmlTemplateProvider.TRUE);
+        values.put(XmlTemplateProvider.IS_ROOT_PROPERTIES, XmlTemplateProvider.TRUE);
         try {
             addPropertiesValues(context, values);
         }
@@ -236,15 +208,13 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * #renderResources(de.escidoc.core.om.business.fedora.resources.Context)
      */
     @Override
-    public String renderResources(final FedoraContextHandler contextHandler)
-        throws WebserverSystemException {
+    public String renderResources(final FedoraContextHandler contextHandler) throws WebserverSystemException {
 
         final Context context = contextHandler.getContext();
         final Map<String, Object> values = new HashMap<String, Object>();
 
         addCommonValues(context, values);
-        values.put(XmlTemplateProvider.IS_ROOT_SUB_RESOURCE,
-            XmlTemplateProvider.TRUE);
+        values.put(XmlTemplateProvider.IS_ROOT_SUB_RESOURCE, XmlTemplateProvider.TRUE);
         addNamespaceValues(values);
         addResourcesValues(context, values);
 
@@ -253,20 +223,15 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
 
     /**
      * Render Context MemberList.
-     * 
-     * @param contextHandler
-     *            FedoraContextHandler
-     * @param memberList
-     *            List of members.
+     *
+     * @param contextHandler FedoraContextHandler
+     * @param memberList     List of members.
      * @return XML representation with list of Context members.
-     * @throws SystemException
-     *             If anything fails.
-     * @throws AuthorizationException
-     *             Thrown if access to origin Item is restricted.
+     * @throws SystemException        If anything fails.
+     * @throws AuthorizationException Thrown if access to origin Item is restricted.
      */
     @Override
-    public String renderMemberList(
-        final FedoraContextHandler contextHandler, final List<String> memberList)
+    public String renderMemberList(final FedoraContextHandler contextHandler, final List<String> memberList)
         throws SystemException, AuthorizationException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
@@ -279,20 +244,15 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
 
     /**
      * See Interface for functional description.
-     * 
-     * @param contextHandler
-     *            The ContextHandler
-     * @param memberList
-     *            The list with members
+     *
+     * @param contextHandler The ContextHandler
+     * @param memberList     The list with members
      * @return XML representation of member reference list
-     * @throws SystemException
-     *             Thrown if internal error occurs.
-     * @throws AuthorizationException
-     *             Thrown if access to origin Item is restricted.
+     * @throws SystemException        Thrown if internal error occurs.
+     * @throws AuthorizationException Thrown if access to origin Item is restricted.
      */
     @Override
-    public String renderMemberRefList(
-        final FedoraContextHandler contextHandler, final List<String> memberList)
+    public String renderMemberRefList(final FedoraContextHandler contextHandler, final List<String> memberList)
         throws SystemException, AuthorizationException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
@@ -305,28 +265,23 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
 
     /**
      * Adds the common values to the provided map.
-     * 
-     * @param context
-     *            The Context for that data shall be created.
-     * @param values
-     *            The map to add values to.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
+     *
+     * @param context The Context for that data shall be created.
+     * @param values  The map to add values to.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private void addCommonValues(
-        final Context context, final Map<String, Object> values)
+    private void addCommonValues(final Context context, final Map<String, Object> values)
         throws WebserverSystemException {
 
         String lastModDate = null;
         try {
             lastModDate = context.getLastModificationDate();
-            values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE,
-                Iso8601Util.getIso8601(Iso8601Util.parseIso8601(lastModDate)));
+            values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, Iso8601Util.getIso8601(Iso8601Util
+                .parseIso8601(lastModDate)));
         }
         catch (final Exception e) {
-            throw new WebserverSystemException(
-                "Unable to parse last-modification-date '" + lastModDate
-                    + "' of context '" + context.getId() + "'!", e);
+            throw new WebserverSystemException("Unable to parse last-modification-date '" + lastModDate
+                + "' of context '" + context.getId() + "'!", e);
         }
         values.put("contextId", context.getId());
         values.put("contextTitle", context.getTitle());
@@ -338,31 +293,25 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
 
     /**
      * Add xlink values to value Map.
-     * 
-     * @param values
-     *            Map where parameter to add.
-     * @throws WebserverSystemException
+     *
+     * @param values Map where parameter to add.
      */
     private static void addXlinkValues(final Map<String, Object> values) {
 
-        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL,
-            System.getProperty(EscidocConfiguration.ESCIDOC_CORE_BASEURL));
-        values.put(XmlTemplateProvider.VAR_XLINK_NAMESPACE_PREFIX,
-            Constants.XLINK_NS_PREFIX);
-        values.put(XmlTemplateProvider.VAR_XLINK_NAMESPACE,
-            Constants.XLINK_NS_URI);
+        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, System
+            .getProperty(EscidocConfiguration.ESCIDOC_CORE_BASEURL));
+        values.put(XmlTemplateProvider.VAR_XLINK_NAMESPACE_PREFIX, Constants.XLINK_NS_PREFIX);
+        values.put(XmlTemplateProvider.VAR_XLINK_NAMESPACE, Constants.XLINK_NS_URI);
     }
 
     /**
      * Add namespace values to Map.
-     * 
-     * @param values
-     *            Map where parameter to add.
+     *
+     * @param values Map where parameter to add.
      */
     private void addNamespaceValues(final Map<String, Object> values) {
 
-        values.put("contextNamespacePrefix",
-            Constants.CONTEXT_PROPERTIES_PREFIX);
+        values.put("contextNamespacePrefix", Constants.CONTEXT_PROPERTIES_PREFIX);
         values.put("contextNamespace", Constants.CONTEXT_NAMESPACE_URI);
 
         addPropertiesNamespaceValues(values);
@@ -371,101 +320,77 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
 
     /**
      * Add name relations spaces.
-     * 
-     * @param values
-     *            Value Map for Velocity
+     *
+     * @param values Value Map for Velocity
      */
-    protected void addStructuralRelationsNamespaceValues(
-        final Map<String, Object> values) {
+    protected void addStructuralRelationsNamespaceValues(final Map<String, Object> values) {
 
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX,
-            Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS,
-            Constants.STRUCTURAL_RELATIONS_NS_URI);
+        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
+        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
     }
 
     /**
      * Add name properties spaces.
-     * 
-     * @param values
-     *            Value Map for Velocity
+     *
+     * @param values Value Map for Velocity
      */
     protected void addPropertiesNamespaceValues(final Map<String, Object> values) {
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX,
-            Constants.PROPERTIES_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS,
-            Constants.PROPERTIES_NS_URI);
+        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX, Constants.PROPERTIES_NS_PREFIX);
+        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS, Constants.PROPERTIES_NS_URI);
     }
 
     /**
      * Adds the properties values to the provided map.
-     * 
-     * @param context
-     *            .
-     * @param values
-     *            Map with property values. New values are added to this Map.
-     * @throws SystemException
-     *             If anything fails.
+     *
+     * @param context .
+     * @param values  Map with property values. New values are added to this Map.
+     * @throws SystemException If anything fails.
      */
-    private void addPropertiesValues(
-        final Context context, final Map<String, Object> values)
-        throws SystemException {
+    private void addPropertiesValues(final Context context, final Map<String, Object> values) throws SystemException {
 
         final Map<String, String> properties = context.getResourceProperties();
 
         values.put(XmlTemplateProvider.VAR_PROPERTIES_TITLE, "Properties");
-        values.put(XmlTemplateProvider.VAR_PROPERTIES_HREF,
-            XmlUtility.getContextPropertiesHref(context.getId()));
+        values.put(XmlTemplateProvider.VAR_PROPERTIES_HREF, XmlUtility.getContextPropertiesHref(context.getId()));
 
         values.put("contextName", context.getTitle());
         final String description =
         // properties.get(PropertyMapKeys.LATEST_VERSION_DESCRIPTION);
-            TripleStoreUtility.getInstance().getPropertiesElements(
-                context.getId(), Constants.DC_NS_URI + "description");
+            TripleStoreUtility
+                .getInstance().getPropertiesElements(context.getId(), Constants.DC_NS_URI + "description");
         if (description != null) {
             values.put("contextDescription", description);
         }
         values.put("contextCreationDate", context.getCreationDate());
 
-        values.put("contextStatus",
-            properties.get(PropertyMapKeys.PUBLIC_STATUS));
-        values.put("contextStatusComment",
-            properties.get(PropertyMapKeys.PUBLIC_STATUS_COMMENT));
+        values.put("contextStatus", properties.get(PropertyMapKeys.PUBLIC_STATUS));
+        values.put("contextStatusComment", properties.get(PropertyMapKeys.PUBLIC_STATUS_COMMENT));
         values.put("contextType", properties.get(PropertyMapKeys.CONTEXT_TYPE));
         values.put("contextObjid", context.getId());
 
         values.put("contextCreatedById", context.getCreatedBy());
-        values.put("contextCreatedByHref", Constants.USER_ACCOUNT_URL_BASE
-            + context.getCreatedBy());
-        values.put("contextCreatedByTitle",
-            properties.get(PropertyMapKeys.CREATED_BY_TITLE));
+        values.put("contextCreatedByHref", Constants.USER_ACCOUNT_URL_BASE + context.getCreatedBy());
+        values.put("contextCreatedByTitle", properties.get(PropertyMapKeys.CREATED_BY_TITLE));
 
-        values
-            .put("contextCurrentVersionModifiedById", context.getModifiedBy());
-        values.put("contextCurrentVersionModifiedByHref",
-            Constants.USER_ACCOUNT_URL_BASE + context.getModifiedBy());
-        values.put("contextCurrentVersionModifiedByTitle",
-            properties.get(PropertyMapKeys.LATEST_VERSION_MODIFIED_BY_TITLE));
+        values.put("contextCurrentVersionModifiedById", context.getModifiedBy());
+        values.put("contextCurrentVersionModifiedByHref", Constants.USER_ACCOUNT_URL_BASE + context.getModifiedBy());
+        values.put("contextCurrentVersionModifiedByTitle", properties
+            .get(PropertyMapKeys.LATEST_VERSION_MODIFIED_BY_TITLE));
 
-        values
-            .put("organizational-units", getOrganizationalUnitsContext(context
-                .getOrganizationalUnitObjids()));
+        values.put("organizational-units", getOrganizationalUnitsContext(context.getOrganizationalUnitObjids()));
     }
 
     /**
      * Maybe a bad play. Better use renderOrganizationalUntitsRefs()
-     * 
-     * @param ouids
-     *            Vector with IDs of OUs.
+     *
+     * @param ouids Vector with IDs of OUs.
      * @return Vector with OU description (id, title, href)
-     * @throws SystemException
-     *             Thrown if retrieving OU context failed.
+     * @throws SystemException Thrown if retrieving OU context failed.
      */
-    public Collection<Map<String, String>> getOrganizationalUnitsContext(
-        final Iterable<String> ouids) throws SystemException {
+    public Collection<Map<String, String>> getOrganizationalUnitsContext(final Iterable<String> ouids)
+        throws SystemException {
 
-        final Collection<Map<String, String>> ousContext =
-            new ArrayList<Map<String, String>>();
+        final Collection<Map<String, String>> ousContext = new ArrayList<Map<String, String>>();
 
         for (final String ouid : ouids) {
             ousContext.add(getOrganizationalUnitContext(ouid));
@@ -476,80 +401,60 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
 
     /**
      * OU context (id, title, href).
-     * 
-     * @param id
-     *            The Id of the Organizational Unit.
+     *
+     * @param id The Id of the Organizational Unit.
      * @return HashMap with (id, title, href)
-     * @throws SystemException
-     *             Thrown if instance of TripleStore failed.
+     * @throws SystemException Thrown if instance of TripleStore failed.
      */
-    public Map<String, String> getOrganizationalUnitContext(final String id)
-        throws SystemException {
+    public Map<String, String> getOrganizationalUnitContext(final String id) throws SystemException {
         final Map<String, String> ouContext = new HashMap<String, String>();
 
         ouContext.put("id", id);
-        ouContext.put(
-            "title",
-            TripleStoreUtility.getInstance().getPropertiesElements(id,
-                TripleStoreUtility.PROP_DC_TITLE));
+        ouContext.put("title", TripleStoreUtility.getInstance().getPropertiesElements(id,
+            TripleStoreUtility.PROP_DC_TITLE));
         ouContext.put("href", XmlUtility.getOrganizationalUnitHref(id));
         return ouContext;
     }
 
     /**
      * Adds the resource values to the provided map.
-     * 
-     * @param context
-     *            The context for that data shall be created.
-     * @param values
-     *            The map to add values to.
+     *
+     * @param context The context for that data shall be created.
+     * @param values  The map to add values to.
      */
     private static void addResourcesValues(final FedoraResource context, final Map<String, Object> values) {
 
         values.put(XmlTemplateProvider.RESOURCES_TITLE, "Resources");
-        values.put("resourcesHref",
-            XmlUtility.getContextResourcesHref(context.getId()));
-        values.put("membersHref", XmlUtility.getContextHref(context.getId())
-            + "/resources/members");
+        values.put("resourcesHref", XmlUtility.getContextResourcesHref(context.getId()));
+        values.put("membersHref", XmlUtility.getContextHref(context.getId()) + "/resources/members");
         values.put("membersTitle", "Members ");
     }
 
     /**
      * Add the namespace values to the provided map.
-     * 
-     * @param values
-     *            The map to add values to.
+     *
+     * @param values The map to add values to.
      */
     private static void addListNamespaceValues(final Map<String, Object> values) {
 
-        values.put("organizationalUnitsNamespacePrefix",
-            Constants.ORGANIZATIONAL_UNIT_LIST_PREFIX);
-        values.put("organizationalUnitsNamespace",
-            Constants.ORGANIZATIONAL_UNIT_LIST_NAMESPACE_URI);
+        values.put("organizationalUnitsNamespacePrefix", Constants.ORGANIZATIONAL_UNIT_LIST_PREFIX);
+        values.put("organizationalUnitsNamespace", Constants.ORGANIZATIONAL_UNIT_LIST_NAMESPACE_URI);
     }
 
     /**
      * Add the values to render the member list.
-     * 
-     * @param context
-     *            The Context.
-     * @param values
-     * @param memberList
-     * @throws SystemException
-     * @throws AuthorizationException
-     *             Thrown if access to origin Item is restricted.
+     *
+     * @param context The Context.
+     * @throws AuthorizationException Thrown if access to origin Item is restricted.
      */
     private void addMemberListValues(
-        final Context context, final Map<String, Object> values,
-        final Iterable<String> memberList) throws SystemException,
-        AuthorizationException {
+        final Context context, final Map<String, Object> values, final Iterable<String> memberList)
+        throws SystemException, AuthorizationException {
 
         final FedoraItemHandler itemHandler =
-            (FedoraItemHandler) BeanLocator.getBean("Om.spring.ejb.context",
-                "business.FedoraItemHandler");
+            (FedoraItemHandler) BeanLocator.getBean("Om.spring.ejb.context", "business.FedoraItemHandler");
         final FedoraContainerHandler containerHandler =
-            (FedoraContainerHandler) BeanLocator.getBean(
-                "Om.spring.ejb.context", "business.FedoraContainerHandler");
+            (FedoraContainerHandler) BeanLocator.getBean("Om.spring.ejb.context", "business.FedoraContainerHandler");
 
         values.put("memberListNamespacePrefix", Constants.MEMBER_LIST_PREFIX);
         values.put("memberListNamespace", Constants.MEMBER_LIST_NAMESPACE_URI);
@@ -558,39 +463,40 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
         final StringBuilder sb = new StringBuilder();
 
         for (final String objectId : memberList) {
-            final String objectType =
-                    TripleStoreUtility.getInstance().getObjectType(objectId);
+            final String objectType = TripleStoreUtility.getInstance().getObjectType(objectId);
             try {
                 if (Constants.ITEM_OBJECT_TYPE.equals(objectType)) {
                     sb.append(itemHandler.retrieve(objectId));
-                } else if (Constants.CONTAINER_OBJECT_TYPE.equals(objectType)) {
+                }
+                else if (Constants.CONTAINER_OBJECT_TYPE.equals(objectType)) {
                     sb.append(containerHandler.retrieve(objectId));
-                } else {
+                }
+                else {
                     final String msg =
-                            "FedoraContextHandler.retrieveMemberRefs:"
-                                    + " can not return object with unknown type: "
-                                    + objectId + ". Write comment.";
+                        "FedoraContextHandler.retrieveMemberRefs:" + " can not return object with unknown type: "
+                            + objectId + ". Write comment.";
                     sb.append("<!-- ").append(msg).append(" -->");
                     LOGGER.error(msg);
                 }
-            } catch (final ItemNotFoundException e) {
+            }
+            catch (final ItemNotFoundException e) {
                 final Map<String, Object> extValues = new HashMap<String, Object>();
                 addXlinkValues(extValues);
                 addListNamespaceValues(extValues);
                 extValues.put("href", "/ir/" + objectType + '/' + objectId);
                 extValues.put("objid", objectId);
-                final String msg = "FedoraContextHandler.retrieveMemberRefs:"
-                        + " can not retrieve object";
+                final String msg = "FedoraContextHandler.retrieveMemberRefs:" + " can not retrieve object";
                 extValues.put("msg", msg);
                 sb.append(ContextXmlProvider.getInstance().getWithdrawnMessageXml(extValues));
                 LOGGER.debug(msg, e);
-                if(LOGGER.isWarnEnabled()) {
+                if (LOGGER.isWarnEnabled()) {
                     LOGGER.warn(msg);
                 }
-                if(LOGGER.isDebugEnabled()) {
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug(msg, e);
                 }
-            } catch (final ComponentNotFoundException e) {
+            }
+            catch (final ComponentNotFoundException e) {
                 final Map<String, Object> extValues = new HashMap<String, Object>();
                 addXlinkValues(extValues);
                 addListNamespaceValues(extValues);
@@ -599,15 +505,17 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
                 final String msg = "FedoraContextHandler.retrieveMemberRefs:can not retrieve object";
                 extValues.put("msg", msg);
                 sb.append(ContextXmlProvider.getInstance().getWithdrawnMessageXml(extValues));
-                if(LOGGER.isWarnEnabled()) {
+                if (LOGGER.isWarnEnabled()) {
                     LOGGER.warn(msg);
                 }
-                if(LOGGER.isDebugEnabled()) {
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug(msg, e);
                 }
-            } catch (final MissingParameterException e) {
+            }
+            catch (final MissingParameterException e) {
                 throw new SystemException("Should not occure in FedoraContextHandler.retrieveMembers", e);
-            } catch (final ContainerNotFoundException e) {
+            }
+            catch (final ContainerNotFoundException e) {
                 final Map<String, Object> extValues = new HashMap<String, Object>();
                 addXlinkValues(extValues);
                 addListNamespaceValues(extValues);
@@ -615,15 +523,15 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
                 extValues.put("objid", objectId);
                 final String msg = "FedoraContextHandler.retrieveMembers:can not retrieve object";
                 extValues.put("msg", msg);
-                sb.append(ContextXmlProvider
-                        .getInstance().getWithdrawnMessageXml(extValues));
-                if(LOGGER.isWarnEnabled()) {
+                sb.append(ContextXmlProvider.getInstance().getWithdrawnMessageXml(extValues));
+                if (LOGGER.isWarnEnabled()) {
                     LOGGER.warn(msg);
                 }
-                if(LOGGER.isDebugEnabled()) {
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug(msg, e);
                 }
-            } catch (final EncodingSystemException e) {
+            }
+            catch (final EncodingSystemException e) {
                 throw new SystemException("Should not occure in FedoraContextHandler.retrieveMembers", e);
             }
 
@@ -633,31 +541,22 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
     }
 
     /**
-     * 
-     * @param id
-     *            The id of the context.
+     * @param id The id of the context.
      * @return Returns the name of a context.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     * @throws SystemException Thrown in case of an internal error.
      */
     public String getName(final String id) throws SystemException {
         return getProperty(id, TripleStoreUtility.PROP_NAME);
     }
 
     /**
-     * 
-     * @param id
-     *            The id of the context.
-     * @param property
-     *            The name of the property.
+     * @param id       The id of the context.
+     * @param property The name of the property.
      * @return Returns a value of a property of an organizational unit.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     * @throws SystemException Thrown in case of an internal error.
      */
-    private static String getProperty(final String id, final String property)
-        throws SystemException {
+    private static String getProperty(final String id, final String property) throws SystemException {
 
-        return TripleStoreUtility.getInstance().getPropertiesElements(id,
-            property);
+        return TripleStoreUtility.getInstance().getPropertiesElements(id, property);
     }
 }

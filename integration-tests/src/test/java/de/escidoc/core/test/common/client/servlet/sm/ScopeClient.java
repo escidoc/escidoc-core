@@ -37,20 +37,16 @@ import javax.xml.rpc.ServiceException;
 import java.util.Map;
 
 /**
- * Offers access methods to the escidoc REST and SOAP interface of the Statistic
- * Scope resource.
- * 
+ * Offers access methods to the escidoc REST and SOAP interface of the Statistic Scope resource.
+ *
  * @author Michael Hoppe
- * 
  */
 public class ScopeClient extends ClientBase {
 
     private ScopeHandler soapClient = null;
 
     /**
-     * 
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ScopeClient(final int transport) {
         super(transport);
@@ -59,113 +55,85 @@ public class ScopeClient extends ClientBase {
 
     /**
      * Create an Scope in the escidoc framework.
-     * 
-     * @param scopeXml
-     *            The xml representation of the Scope.
-     * @return The HttpMethod after the service call(REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param scopeXml The xml representation of the Scope.
+     * @return The HttpMethod after the service call(REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     @Override
     public Object create(final Object scopeXml) throws Exception {
 
-        return callEsciDoc("Scope.create", METHOD_CREATE,
-            Constants.HTTP_METHOD_PUT, Constants.STATISTIC_SCOPE_BASE_URI,
-            new String[] {}, changeToString(scopeXml));
+        return callEsciDoc("Scope.create", METHOD_CREATE, Constants.HTTP_METHOD_PUT,
+            Constants.STATISTIC_SCOPE_BASE_URI, new String[] {}, changeToString(scopeXml));
     }
 
     /**
      * Delete an Scope from the escidoc framework.
-     * 
-     * @param id
-     *            The id of the Scope.
-     * @return The HttpMethod after the service call(REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param id The id of the Scope.
+     * @return The HttpMethod after the service call(REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     @Override
     public Object delete(final String id) throws Exception {
 
-        return callEsciDoc("Scope.delete", METHOD_DELETE,
-            Constants.HTTP_METHOD_DELETE, Constants.STATISTIC_SCOPE_BASE_URI,
-            new String[] { id });
+        return callEsciDoc("Scope.delete", METHOD_DELETE, Constants.HTTP_METHOD_DELETE,
+            Constants.STATISTIC_SCOPE_BASE_URI, new String[] { id });
     }
 
     /**
      * Retrieve the xml representation of an Scope.
-     * 
-     * @param id
-     *            The id of the Scope.
-     * @return The HttpMethod after the service call(REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param id The id of the Scope.
+     * @return The HttpMethod after the service call(REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     @Override
     public Object retrieve(final String id) throws Exception {
 
-        return callEsciDoc("Scope.retrieve", METHOD_RETRIEVE,
-            Constants.HTTP_METHOD_GET, Constants.STATISTIC_SCOPE_BASE_URI,
-            new String[] { id });
+        return callEsciDoc("Scope.retrieve", METHOD_RETRIEVE, Constants.HTTP_METHOD_GET,
+            Constants.STATISTIC_SCOPE_BASE_URI, new String[] { id });
     }
 
     /**
      * Retrieve the XML representation of the list of scopes.
-     * 
-     * @param filter
-     *            filter as CQL query
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param filter filter as CQL query
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
-    public Object retrieveScopes(final Map<String, String[]> filter)
-        throws Exception {
+    public Object retrieveScopes(final Map<String, String[]> filter) throws Exception {
 
-        return callEsciDoc("Scope.retrieveScopes", METHOD_RETRIEVE_SCOPES,
-            Constants.HTTP_METHOD_GET, Constants.STATISTIC_SCOPES_BASE_URI,
-            new String[] {}, filter);
+        return callEsciDoc("Scope.retrieveScopes", METHOD_RETRIEVE_SCOPES, Constants.HTTP_METHOD_GET,
+            Constants.STATISTIC_SCOPES_BASE_URI, new String[] {}, filter);
     }
 
     /**
      * Update an Scope in the escidoc framework.
-     * 
-     * @param id
-     *            The id of the Scope.
-     * @param scopeXml
-     *            The xml representation of the Scope.
-     * @return The HttpMethod after the service call(REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param id       The id of the Scope.
+     * @param scopeXml The xml representation of the Scope.
+     * @return The HttpMethod after the service call(REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     @Override
-    public Object update(final String id, final Object scopeXml)
-        throws Exception {
+    public Object update(final String id, final Object scopeXml) throws Exception {
 
-        return callEsciDoc("Scope.update", METHOD_UPDATE,
-            Constants.HTTP_METHOD_PUT, Constants.STATISTIC_SCOPE_BASE_URI,
-            new String[] { id }, changeToString(scopeXml));
+        return callEsciDoc("Scope.update", METHOD_UPDATE, Constants.HTTP_METHOD_PUT,
+            Constants.STATISTIC_SCOPE_BASE_URI, new String[] { id }, changeToString(scopeXml));
     }
 
     /**
-     * 
      * @return Returns the soapClient.
-     * @throws ServiceException
-     *             If service instantiation fails.
+     * @throws ServiceException If service instantiation fails.
      */
     @Override
     public ScopeHandler getSoapClient() throws ServiceException {
 
         if (soapClient == null) {
-            ScopeHandlerServiceLocator serviceLocator =
-                new ScopeHandlerServiceLocator(getEngineConfig());
-            serviceLocator
-                .setScopeHandlerServiceEndpointAddress(
-                    checkSoapAddress(serviceLocator
-                    .getScopeHandlerServiceAddress()));
+            ScopeHandlerServiceLocator serviceLocator = new ScopeHandlerServiceLocator(getEngineConfig());
+            serviceLocator.setScopeHandlerServiceEndpointAddress(checkSoapAddress(serviceLocator
+                .getScopeHandlerServiceAddress()));
             soapClient = serviceLocator.getScopeHandlerService();
         }
         return soapClient;

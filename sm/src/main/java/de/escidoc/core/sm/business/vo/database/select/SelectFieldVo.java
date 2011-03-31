@@ -33,14 +33,13 @@ import de.escidoc.core.sm.business.Constants;
 import de.escidoc.core.sm.business.vo.database.DatabaseConventionChecker;
 
 /**
- * Holds the Fields that have to get selected if selectType is 'select'. If
- * selectType is 'update' or 'delete' it holds the information which records to
- * update/delete.
- * 
- * @author Michael Hoppe
+ * Holds the Fields that have to get selected if selectType is 'select'. If selectType is 'update' or 'delete' it holds
+ * the information which records to update/delete.
  *
+ * @author Michael Hoppe
  */
 public class SelectFieldVo {
+
     private String tableName;
 
     private String fieldName;
@@ -59,12 +58,10 @@ public class SelectFieldVo {
     }
 
     /**
-     * @param fieldName
-     *            the fieldName to set
+     * @param fieldName the fieldName to set
      * @throws SqlDatabaseSystemException databaseException
      */
-    public void setFieldName(final String fieldName) 
-                            throws SqlDatabaseSystemException {
+    public void setFieldName(final String fieldName) throws SqlDatabaseSystemException {
         DatabaseConventionChecker.checkName(fieldName);
         this.fieldName = fieldName;
     }
@@ -77,12 +74,10 @@ public class SelectFieldVo {
     }
 
     /**
-     * @param tableName
-     *            the tableName to set
+     * @param tableName the tableName to set
      * @throws SqlDatabaseSystemException databaseException
      */
-    public void setTableName(final String tableName) 
-                        throws SqlDatabaseSystemException {
+    public void setTableName(final String tableName) throws SqlDatabaseSystemException {
         DatabaseConventionChecker.checkName(tableName);
         this.tableName = tableName;
     }
@@ -95,17 +90,15 @@ public class SelectFieldVo {
     }
 
     /**
-     * @param fieldValue
-     *            the fieldValue to set
+     * @param fieldValue the fieldValue to set
      */
     public void setFieldValue(final String fieldValue) {
         this.fieldValue = fieldValue;
     }
 
     /**
-     * can be text, numeric, date, daydate, xpath-boolean, xpath-string,
-     * xpath-numeric, free-sql.
-     * 
+     * can be text, numeric, date, daydate, xpath-boolean, xpath-string, xpath-numeric, free-sql.
+     *
      * @return the fieldType
      */
     public String getFieldType() {
@@ -113,18 +106,13 @@ public class SelectFieldVo {
     }
 
     /**
-     * can be text, numeric, date, daydate, xpath-boolean, xpath-string,
-     * xpath-numeric, free-sql.
-     * 
-     * @param fieldType
-     *            the fieldType to set
-     * @throws SqlDatabaseSystemException
-     *             e
+     * can be text, numeric, date, daydate, xpath-boolean, xpath-string, xpath-numeric, free-sql.
+     *
+     * @param fieldType the fieldType to set
+     * @throws SqlDatabaseSystemException e
      */
-    public void setFieldType(final String fieldType)
-        throws SqlDatabaseSystemException {
-        if (fieldType == null 
-        		|| !fieldType.equals(Constants.DATABASE_FIELD_TYPE_TEXT)
+    public void setFieldType(final String fieldType) throws SqlDatabaseSystemException {
+        if (fieldType == null || !fieldType.equals(Constants.DATABASE_FIELD_TYPE_TEXT)
             && !fieldType.equals(Constants.DATABASE_FIELD_TYPE_NUMERIC)
             && !fieldType.equals(Constants.DATABASE_FIELD_TYPE_DATE)
             && !fieldType.equals(Constants.DATABASE_FIELD_TYPE_DAYDATE)

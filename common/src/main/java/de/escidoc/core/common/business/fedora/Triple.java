@@ -21,11 +21,9 @@
 package de.escidoc.core.common.business.fedora;
 
 /**
- * Simple data structure for a Triple. Subject, Predicate and Object are simply
- * handles as Strings.
- * 
+ * Simple data structure for a Triple. Subject, Predicate and Object are simply handles as Strings.
+ *
  * @author Steffen Wagner
- * 
  */
 public class Triple {
     /*
@@ -48,16 +46,12 @@ public class Triple {
 
     /**
      * Triple.
-     * 
-     * @param subject
-     *            The subject.
-     * @param predicate
-     *            The predicate.
-     * @param object
-     *            The object.
+     *
+     * @param subject   The subject.
+     * @param predicate The predicate.
+     * @param object    The object.
      */
-    public Triple(final String subject, final String predicate,
-        final String object) {
+    public Triple(final String subject, final String predicate, final String object) {
 
         this.setSubject(subject);
         this.setPredicate(predicate);
@@ -65,8 +59,7 @@ public class Triple {
     }
 
     /**
-     * @param subject
-     *            the subject to set
+     * @param subject the subject to set
      */
     public final void setSubject(final String subject) {
         this.subject = subject;
@@ -80,8 +73,7 @@ public class Triple {
     }
 
     /**
-     * @param predicate
-     *            the predicate to set
+     * @param predicate the predicate to set
      */
     public final void setPredicate(final String predicate) {
         this.predicate = predicate;
@@ -95,8 +87,7 @@ public class Triple {
     }
 
     /**
-     * @param object
-     *            the object to set
+     * @param object the object to set
      */
     public final void setObject(final String object) {
         this.object = object;
@@ -111,11 +102,10 @@ public class Triple {
 
     /**
      * Get a string representation of this object.
-     * 
+     *
      * @return string representation of this object
      */
     public String toString() {
-        return "[subject=" + this.subject + ", predicate=" + this.predicate + ", object="
-            + this.object + ']';
+        return "[subject=" + this.subject + ", predicate=" + this.predicate + ", object=" + this.object + ']';
     }
 }

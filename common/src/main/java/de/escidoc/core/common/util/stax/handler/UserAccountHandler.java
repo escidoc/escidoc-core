@@ -45,14 +45,14 @@ public class UserAccountHandler extends DefaultHandler {
 
     /*
      * 
-     */public UserAccountHandler(final StaxParser parser) {
+     */
+    public UserAccountHandler(final StaxParser parser) {
         this.parser = parser;
 
     }
 
     @Override
-    public StartElement startElement(final StartElement element)
-        throws MissingAttributeValueException {
+    public StartElement startElement(final StartElement element) throws MissingAttributeValueException {
 
         final String elementPath = "/user-account";
         final String currenrPath = parser.getCurPath();

@@ -21,13 +21,11 @@
 package de.escidoc.core.common.exceptions.application.invalid;
 
 /**
- * The XmlSchemaValidationException is used to indicate that the XML cannot get
- * validated by the given Schema. returned httpStatusCode is 412. Status code
- * (412) indicating that the precondition given in one or more of the
- * request-header fields evaluated to false when it was tested on the server.
- * 
- * @author Michael Hoppe (FIZ Karlsruhe)
+ * The XmlSchemaValidationException is used to indicate that the XML cannot get validated by the given Schema. returned
+ * httpStatusCode is 412. Status code (412) indicating that the precondition given in one or more of the request-header
+ * fields evaluated to false when it was tested on the server.
  *
+ * @author Michael Hoppe (FIZ Karlsruhe)
  */
 public class XmlSchemaValidationException extends InvalidXmlException {
 
@@ -38,23 +36,18 @@ public class XmlSchemaValidationException extends InvalidXmlException {
 
     public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_INVALID;
 
-    public static final String HTTP_STATUS_MESSAGE =
-        "XML schema validation failed.";
+    public static final String HTTP_STATUS_MESSAGE = "XML schema validation failed.";
 
     /**
      * Default constructor.
-     * 
-     *
      */
     public XmlSchemaValidationException() {
     }
 
     /**
      * Constructs a new exception with the specified detail message.
-     * 
-     * @param message -
-     *            the detail message.
      *
+     * @param message - the detail message.
      */
     public XmlSchemaValidationException(final String message) {
         super(message);
@@ -62,26 +55,21 @@ public class XmlSchemaValidationException extends InvalidXmlException {
 
     /**
      * Constructor used to map an initial exception.
-     * 
-     * @param error
-     *            Throwable
+     *
+     * @param error Throwable
      */
     public XmlSchemaValidationException(final Throwable error) {
         super(error);
     }
 
     /**
-     * Constructor used to create a new Exception with the specified detail
-     * message and a mapping to an initial exception.
-     * 
-     * @param message -
-     *            the detail message.
-     * @param error
-     *            Throwable
+     * Constructor used to create a new Exception with the specified detail message and a mapping to an initial
+     * exception.
      *
+     * @param message - the detail message.
+     * @param error   Throwable
      */
-    public XmlSchemaValidationException(final String message,
-        final Throwable error) {
+    public XmlSchemaValidationException(final String message, final Throwable error) {
         super(message);
     }
 }

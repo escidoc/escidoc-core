@@ -47,60 +47,39 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 /**
- * The methods of the class deals with datastreams for fedora objects, which
- * will represent the Container Resource.
- * 
- * @author Rozita Friedman
+ * The methods of the class deals with datastreams for fedora objects, which will represent the Container Resource.
  *
+ * @author Rozita Friedman
  */
 public class ContainerHandlerCreate extends ContainerResourceListener {
 
     /**
      * Get FoXML of Container.
-     * 
-     * @param containerDataStreams
-     *            Map with datastreams of the Container.
-     * @param metadataHandler
-     * @param containerId
-     *            objid of the Container.
-     * @param contentModel
-     * @param properties
-     * @param members
-     * @param lastModificationDate
-     * @param contentRelations
-     * @param comment
-     * @param propertiesAsReferences
+     *
+     * @param containerDataStreams Map with datastreams of the Container.
+     * @param containerId          objid of the Container.
      * @return FoXML of Container.
-     * @throws SystemException
      */
     protected String getContainerFoxml(
-        final Map<String, Object> containerDataStreams,
-        final MetadataHandler metadataHandler, final String containerId,
-        final String contentModel, final Map<String, String> properties,
+        final Map<String, Object> containerDataStreams, final MetadataHandler metadataHandler,
+        final String containerId, final String contentModel, final Map<String, String> properties,
         final List<String> members, final String lastModificationDate,
-        final List<Map<String, String>> contentRelations,
-        final String comment,
-        final Map<String, String> propertiesAsReferences)
-        throws SystemException {
+        final List<Map<String, String>> contentRelations, final String comment,
+        final Map<String, String> propertiesAsReferences) throws SystemException {
 
-        final Map<String, Map<String, String>> metadataAttributes =
-            metadataHandler.getMetadataAttributes();
+        final Map<String, Map<String, String>> metadataAttributes = metadataHandler.getMetadataAttributes();
         final Map<String, Object> values = new HashMap<String, Object>();
 
         values.put(XmlTemplateProvider.OBJID, containerId);
         values.put("title", "Container " + containerId);
 
-        values.put(XmlTemplateProvider.PUBLIC_STATUS, properties
-            .get(Elements.ELEMENT_PUBLIC_STATUS));
-        values.put(XmlTemplateProvider.VERSION_STATUS, properties
-            .get(Elements.ELEMENT_PUBLIC_STATUS));
+        values.put(XmlTemplateProvider.PUBLIC_STATUS, properties.get(Elements.ELEMENT_PUBLIC_STATUS));
+        values.put(XmlTemplateProvider.VERSION_STATUS, properties.get(Elements.ELEMENT_PUBLIC_STATUS));
 
-        if (properties.get(Elements.ELEMENT_PUBLIC_STATUS).equals(
-            StatusType.RELEASED.toString())) {
+        if (properties.get(Elements.ELEMENT_PUBLIC_STATUS).equals(StatusType.RELEASED.toString())) {
             // if status release add release number and date (date is later
             // to update)
-            values.put(XmlTemplateProvider.LATEST_RELEASE_DATE,
-                XmlTemplateProvider.PLACEHOLDER);
+            values.put(XmlTemplateProvider.LATEST_RELEASE_DATE, XmlTemplateProvider.PLACEHOLDER);
             values.put(XmlTemplateProvider.LATEST_RELEASE_NUMBER, "1");
         }
 
@@ -108,14 +87,10 @@ public class ContainerHandlerCreate extends ContainerResourceListener {
         final String dcXml;
         try {
             dcXml =
-                XmlUtility
-                    .createDC(
-                        metadataHandler.getEscidocMdRecordNameSpace(),
-                        ((ByteArrayOutputStream) ((Map) containerDataStreams
-                            .get("md-records"))
-                            .get(XmlTemplateProvider.DEFAULT_METADATA_FOR_DC_MAPPING))
-                            .toString(XmlUtility.CHARACTER_ENCODING),
-                        containerId, contentModel);
+                XmlUtility.createDC(metadataHandler.getEscidocMdRecordNameSpace(),
+                    ((ByteArrayOutputStream) ((Map) containerDataStreams.get("md-records"))
+                        .get(XmlTemplateProvider.DEFAULT_METADATA_FOR_DC_MAPPING))
+                        .toString(XmlUtility.CHARACTER_ENCODING), containerId, contentModel);
         }
         catch (final UnsupportedEncodingException e) {
             throw new EncodingSystemException(e.getMessage(), e);
@@ -131,34 +106,32 @@ public class ContainerHandlerCreate extends ContainerResourceListener {
                 final ByteArrayOutputStream outsideValue = (ByteArrayOutputStream) entry.getValue();
                 try {
                     // now we map to Velocity Variable Names
-                    if (outsideKey
-                            .equals(Elements.ELEMENT_CONTENT_MODEL_SPECIFIC)) {
-                        values.put(XmlTemplateProvider.CONTENT_MODEL_SPECIFIC,
-                                outsideValue
-                                        .toString(XmlUtility.CHARACTER_ENCODING));
-                    } else {
-                        values.put(outsideKey, outsideValue
-                                .toString(XmlUtility.CHARACTER_ENCODING));
+                    if (outsideKey.equals(Elements.ELEMENT_CONTENT_MODEL_SPECIFIC)) {
+                        values.put(XmlTemplateProvider.CONTENT_MODEL_SPECIFIC, outsideValue
+                            .toString(XmlUtility.CHARACTER_ENCODING));
                     }
-                } catch (final UnsupportedEncodingException e) {
+                    else {
+                        values.put(outsideKey, outsideValue.toString(XmlUtility.CHARACTER_ENCODING));
+                    }
+                }
+                catch (final UnsupportedEncodingException e) {
                     throw new EncodingSystemException(e);
                 }
 
-            } else if ("md-records".equals(outsideKey)) {
+            }
+            else if ("md-records".equals(outsideKey)) {
 
                 final Map insideHash = (Map) entry.getValue();
                 if (!insideHash.isEmpty()) {
                     final Collection<Map<String, String>> mdRecords =
-                            new ArrayList<Map<String, String>>(insideHash.size());
+                        new ArrayList<Map<String, String>>(insideHash.size());
                     values.put(XmlTemplateProvider.MD_RECORDS, mdRecords);
                     final Set content2 = insideHash.entrySet();
                     for (final Object aContent2 : content2) {
-                        final Map<String, String> mdRecord =
-                                new HashMap<String, String>();
+                        final Map<String, String> mdRecord = new HashMap<String, String>();
                         final Entry entry2 = (Entry) aContent2;
                         final String insideKey = (String) entry2.getKey();
-                        final Map<String, String> mdAttributes =
-                                metadataAttributes.get(insideKey);
+                        final Map<String, String> mdAttributes = metadataAttributes.get(insideKey);
                         String schema = null;
                         String type = null;
                         if (mdAttributes != null) {
@@ -166,17 +139,15 @@ public class ContainerHandlerCreate extends ContainerResourceListener {
                             type = mdAttributes.get("type");
                         }
                         final ByteArrayOutputStream insideValue = (ByteArrayOutputStream) entry2.getValue();
-                        mdRecord.put(XmlTemplateProvider.MD_RECORD_SCHEMA,
-                                schema);
+                        mdRecord.put(XmlTemplateProvider.MD_RECORD_SCHEMA, schema);
                         mdRecord.put(XmlTemplateProvider.MD_RECORD_TYPE, type);
-                        mdRecord.put(XmlTemplateProvider.MD_RECORD_NAME,
-                                insideKey);
+                        mdRecord.put(XmlTemplateProvider.MD_RECORD_NAME, insideKey);
                         try {
-                            mdRecord.put(XmlTemplateProvider.MD_RECORD_CONTENT,
-                                    insideValue
-                                            .toString(XmlUtility.CHARACTER_ENCODING));
+                            mdRecord.put(XmlTemplateProvider.MD_RECORD_CONTENT, insideValue
+                                .toString(XmlUtility.CHARACTER_ENCODING));
 
-                        } catch (final UnsupportedEncodingException e) {
+                        }
+                        catch (final UnsupportedEncodingException e) {
                             throw new EncodingSystemException(e);
                         }
                         mdRecords.add(mdRecord);
@@ -185,8 +156,7 @@ public class ContainerHandlerCreate extends ContainerResourceListener {
             }
         }
 
-        return getFoxmlRenderer().render(values, properties, members,
-            containerId, lastModificationDate, contentRelations, comment,
-            propertiesAsReferences);
+        return getFoxmlRenderer().render(values, properties, members, containerId, lastModificationDate,
+            contentRelations, comment, propertiesAsReferences);
     }
 }

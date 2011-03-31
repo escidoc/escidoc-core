@@ -36,9 +36,8 @@ import java.util.Map;
 
 /**
  * Context Retrieve Handler.
- * 
+ *
  * @author Steffen Wagner
- * 
  */
 public class ContextHandlerRetrieve extends ContextHandlerBase {
 
@@ -46,63 +45,50 @@ public class ContextHandlerRetrieve extends ContextHandlerBase {
 
     /**
      * Get XML representation of Context.
-     * 
-     * @param contextHandler
-     *            FedoraContextHandler
+     *
+     * @param contextHandler FedoraContextHandler
      * @return XML representation of Context.
-     * @throws SystemException
-     *             If anything fails.
+     * @throws SystemException If anything fails.
      */
-    protected String getContextXml(final FedoraContextHandler contextHandler)
-        throws SystemException {
+    protected String getContextXml(final FedoraContextHandler contextHandler) throws SystemException {
 
         return getRenderer().render(contextHandler);
     }
 
     /**
      * Get XML representation of Context Properties.
-     * 
-     * @param contextHandler
-     *            FedoraContextHandler
+     *
+     * @param contextHandler FedoraContextHandler
      * @return XML representation of Context Properties.
-     * @throws SystemException
-     *             If anything fails.
+     * @throws SystemException If anything fails.
      */
-    protected String getPropertiesXml(final FedoraContextHandler contextHandler)
-        throws SystemException {
+    protected String getPropertiesXml(final FedoraContextHandler contextHandler) throws SystemException {
 
         return getRenderer().renderProperties(contextHandler);
     }
 
     /**
      * Get XML representation of Context Resources.
-     * 
-     * @param contextHandler
-     *            FedoraContextHandler
+     *
+     * @param contextHandler FedoraContextHandler
      * @return XML representation of Context Resources.
-     * @throws SystemException
-     *             If anything fails.
+     * @throws SystemException If anything fails.
      */
-    protected String getResourcesXml(final FedoraContextHandler contextHandler)
-        throws SystemException {
+    protected String getResourcesXml(final FedoraContextHandler contextHandler) throws SystemException {
 
         return getRenderer().renderResources(contextHandler);
     }
 
     /**
      * Get the XML representation of all admin-descriptors.
-     * 
-     * @param contextHandler
-     *            FedoraContextHandler
+     *
+     * @param contextHandler FedoraContextHandler
      * @return XML representation of all admin-descriptors.
-     * @throws ContextNotFoundException
-     *             If context is not found.
-     * @throws SystemException
-     *             If anything fails.
+     * @throws ContextNotFoundException If context is not found.
+     * @throws SystemException          If anything fails.
      */
-    protected String getAdminDescriptorsXml(
-        final FedoraContextHandler contextHandler)
-        throws ContextNotFoundException, SystemException {
+    protected String getAdminDescriptorsXml(final FedoraContextHandler contextHandler) throws ContextNotFoundException,
+        SystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         values.put(IS_ROOT_RESOURCES, true);

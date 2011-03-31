@@ -43,32 +43,23 @@ import java.util.regex.Pattern;
 
 /**
  * Action renderer implementation using the velocity template engine.
- * 
+ *
  * @author Torsten Tetteroo
  */
-public class VelocityXmlActionRenderer extends AbstractRenderer
-    implements ActionRendererInterface {
+public class VelocityXmlActionRenderer extends AbstractRenderer implements ActionRendererInterface {
 
     /**
      * Pattern used to detect white spaces.
      */
     private static final Pattern PATTERN_WHITESPACE = Pattern.compile("\\s");
 
-
-
     /**
      * See Interface for functional description.
-     * 
-     * @param actions
-     * @return
-     * @throws WebserverSystemException
-     * @see RoleRendererInterface
-     *      #renderUnsecuredActionList(de.escidoc.core.aa.business.persistence.UnsecuredActionList)
      *
+     * @see RoleRendererInterface #renderUnsecuredActionList(de.escidoc.core.aa.business.persistence.UnsecuredActionList)
      */
     @Override
-    public String renderUnsecuredActionList(final UnsecuredActionList actions)
-        throws WebserverSystemException {
+    public String renderUnsecuredActionList(final UnsecuredActionList actions) throws WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         addRdfValues(values);
@@ -76,8 +67,7 @@ public class VelocityXmlActionRenderer extends AbstractRenderer
 
         final List<String> actionIdList;
         if (actions.getActionIds() != null) {
-            final String[] actionIds =
-                PATTERN_WHITESPACE.split(actions.getActionIds());
+            final String[] actionIds = PATTERN_WHITESPACE.split(actions.getActionIds());
             actionIdList = new ArrayList<String>(actionIds.length);
             actionIdList.addAll(Arrays.asList(actionIds));
         }
@@ -89,18 +79,13 @@ public class VelocityXmlActionRenderer extends AbstractRenderer
         return getActionXmlProvider().getUnsecuredActionsXml(values);
     }
 
-
-
     /**
      * Gets the {@link ActionXmlProvider} object.
-     * 
-     * @return Returns the {@link ActionXmlProvider} object.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
      *
+     * @return Returns the {@link ActionXmlProvider} object.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private static ActionXmlProvider getActionXmlProvider()
-        throws WebserverSystemException {
+    private static ActionXmlProvider getActionXmlProvider() throws WebserverSystemException {
 
         return ActionXmlProvider.getInstance();
     }

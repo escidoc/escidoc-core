@@ -27,7 +27,7 @@
  * All rights reserved.  Use is subject to license terms.
  */
 /**
- * 
+ *
  */
 package de.escidoc.core.om.business.renderer;
 
@@ -38,14 +38,11 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import java.util.List;
 
 /**
- * @deprecated Item renderer interface is implemented by item retrieve handler.
- * 
  * @author Frank Schwichtenberg
- * 
+ * @deprecated Item renderer interface is implemented by item retrieve handler.
  */
 @Deprecated
 public class VelocityXmlItemRenderer {
-
 
     /*
      * (non-Javadoc)
@@ -82,7 +79,6 @@ public class VelocityXmlItemRenderer {
         // TODO Auto-generated method stub
         return null;
     }
-
 
     /*
      * (non-Javadoc)

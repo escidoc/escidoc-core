@@ -37,25 +37,16 @@ public class EscidocAuthenticationProvider implements AuthenticationProvider {
 
     private EscidocUserDetailsServiceInterface escidocUserDetailsService;
 
-
-
     /**
      * See Interface for functional description.
-     * 
-     * @param authentication
-     * @return
-     * @throws AuthenticationException
-     * @see org.acegisecurity.providers.AuthenticationProvider
-     *      #authenticate(org.acegisecurity.Authentication)
      *
+     * @see org.acegisecurity.providers.AuthenticationProvider #authenticate(org.acegisecurity.Authentication)
      */
     @Override
-    public Authentication authenticate(final Authentication authentication)
-        throws AuthenticationException {
+    public Authentication authenticate(final Authentication authentication) throws AuthenticationException {
         final String credentials = (String) authentication.getCredentials();
         if (credentials == null || "".equals(credentials)) {
-            final GrantedAuthority grantedAuthority =
-                new GrantedAuthorityImpl("");
+            final GrantedAuthority grantedAuthority = new GrantedAuthorityImpl("");
             final GrantedAuthority[] grantedAuthorities = { grantedAuthority };
             return new AnonymousAuthenticationToken("key", "Anonymous", grantedAuthorities);
         }
@@ -65,12 +56,8 @@ public class EscidocAuthenticationProvider implements AuthenticationProvider {
 
     /**
      * See Interface for functional description.
-     * 
-     * @param cls
-     * @return
-     * @see org.acegisecurity.providers.AuthenticationProvider
-     *      #supports(java.lang.Class)
      *
+     * @see org.acegisecurity.providers.AuthenticationProvider #supports(java.lang.Class)
      */
     @Override
     public boolean supports(final Class cls) {
@@ -78,16 +65,12 @@ public class EscidocAuthenticationProvider implements AuthenticationProvider {
         return UsernamePasswordAuthenticationToken.class.isAssignableFrom(cls);
     }
 
-
-
     /**
      * Injects the {@link EscidocUserDetailsServiceInterface}.
-     * 
-     * @param escidocUserDetailsService
-     *            the escidocUserDetailsService to inject.
+     *
+     * @param escidocUserDetailsService the escidocUserDetailsService to inject.
      */
-    public void setEscidocUserDetailsService(
-        final EscidocUserDetailsServiceInterface escidocUserDetailsService) {
+    public void setEscidocUserDetailsService(final EscidocUserDetailsServiceInterface escidocUserDetailsService) {
 
         this.escidocUserDetailsService = escidocUserDetailsService;
     }

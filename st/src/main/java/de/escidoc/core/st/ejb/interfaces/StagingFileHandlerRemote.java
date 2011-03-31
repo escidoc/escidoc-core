@@ -17,29 +17,19 @@ import java.rmi.RemoteException;
 public interface StagingFileHandlerRemote extends EJBObject {
 
     String create(EscidocBinaryContent binaryContent, SecurityContext securityContext)
-            throws MissingMethodParameterException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException, RemoteException;
+        throws MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException,
+        RemoteException;
 
     String create(EscidocBinaryContent binaryContent, String authHandle, Boolean restAccess)
-            throws MissingMethodParameterException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException, RemoteException;
+        throws MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException,
+        RemoteException;
 
     EscidocBinaryContent retrieve(String stagingFileId, SecurityContext securityContext)
-            throws StagingFileNotFoundException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            SystemException, RemoteException;
+        throws StagingFileNotFoundException, AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, SystemException, RemoteException;
 
     EscidocBinaryContent retrieve(String stagingFileId, String authHandle, Boolean restAccess)
-            throws StagingFileNotFoundException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            SystemException, RemoteException;
+        throws StagingFileNotFoundException, AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, SystemException, RemoteException;
 
 }

@@ -51,33 +51,25 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 /**
- * Handle ContentRelation XML to obtain all required values (Properties,
- * Metadata, .. ).
- * 
+ * Handle ContentRelation XML to obtain all required values (Properties, Metadata, .. ).
+ *
  * @author Steffen Wagner
- * 
  */
 public class ContentRelationHandler extends DefaultHandler {
 
-    private static final Logger LOGGER =
-        LoggerFactory.getLogger(ContentRelationHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ContentRelationHandler.class);
 
-    private static final String XPATH_CONTENT_RELATION =
-            '/' + Elements.ELEMENT_CONTENT_RELATION;
+    private static final String XPATH_CONTENT_RELATION = '/' + Elements.ELEMENT_CONTENT_RELATION;
 
-    private static final String XPATH_CONTENT_RELATION_PROPERTIES =
-        XPATH_CONTENT_RELATION + "/properties";
+    private static final String XPATH_CONTENT_RELATION_PROPERTIES = XPATH_CONTENT_RELATION + "/properties";
 
-    private static final String XPATH_CONTENT_RELATION_METADATA =
-        XPATH_CONTENT_RELATION + "/md-records/md-record";
+    private static final String XPATH_CONTENT_RELATION_METADATA = XPATH_CONTENT_RELATION + "/md-records/md-record";
 
     private static final String XPATH_TYPE = XPATH_CONTENT_RELATION + "/type";
 
-    private static final String XPATH_SUBJECT =
-        XPATH_CONTENT_RELATION + "/subject";
+    private static final String XPATH_SUBJECT = XPATH_CONTENT_RELATION + "/subject";
 
-    private static final String XPATH_OBJECT =
-        XPATH_CONTENT_RELATION + "/object";
+    private static final String XPATH_OBJECT = XPATH_CONTENT_RELATION + "/object";
 
     private final StaxParser parser;
 
@@ -98,14 +90,11 @@ public class ContentRelationHandler extends DefaultHandler {
 
     /**
      * ContentRelationHandler.
-     * 
-     * @param parser
-     *            StAX Parser.
-     * @throws WebserverSystemException
-     *             Thrown if obtaining UserContext failed.
+     *
+     * @param parser StAX Parser.
+     * @throws WebserverSystemException Thrown if obtaining UserContext failed.
      */
-    public ContentRelationHandler(final StaxParser parser)
-        throws WebserverSystemException {
+    public ContentRelationHandler(final StaxParser parser) throws WebserverSystemException {
 
         this.parser = parser;
         this.contentRelation = new ContentRelationCreate();
@@ -113,24 +102,18 @@ public class ContentRelationHandler extends DefaultHandler {
 
     /**
      * Parser hits an XML start element.
-     * 
-     * @param element
-     *            StAX Parser StartElement
+     *
+     * @param element StAX Parser StartElement
      * @return StartElement The StartElement.
-     * @throws InvalidContentException
-     *             Thrown if metadata content is invalid
-     * @throws MissingAttributeValueException
-     *             Thrown if attributes of metadata elements are missing
-     * @throws XMLStreamException
-     *             Thrown if metadata stream is unable to parse
-     * @throws WebserverSystemException
-     *             Thrown if setting ContentRelationProperties failed (obtaining
-     *             UserContext error).
+     * @throws InvalidContentException        Thrown if metadata content is invalid
+     * @throws MissingAttributeValueException Thrown if attributes of metadata elements are missing
+     * @throws XMLStreamException             Thrown if metadata stream is unable to parse
+     * @throws WebserverSystemException       Thrown if setting ContentRelationProperties failed (obtaining UserContext
+     *                                        error).
      */
     @Override
-    public StartElement startElement(final StartElement element)
-        throws InvalidContentException, MissingAttributeValueException,
-        XMLStreamException, WebserverSystemException {
+    public StartElement startElement(final StartElement element) throws InvalidContentException,
+        MissingAttributeValueException, XMLStreamException, WebserverSystemException {
 
         if (this.parsingProperties) {
             this.propertiesHandler.startElement(element);
@@ -142,39 +125,33 @@ public class ContentRelationHandler extends DefaultHandler {
             final String currentPath = parser.getCurPath();
 
             if (XPATH_CONTENT_RELATION_PROPERTIES.equals(currentPath)) {
-                if(LOGGER.isDebugEnabled()) {
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Parser reached " + XPATH_CONTENT_RELATION_PROPERTIES);
                 }
                 this.parsingProperties = true;
-                this.propertiesHandler =
-                    new ContentRelationPropertiesHandler(this.parser);
+                this.propertiesHandler = new ContentRelationPropertiesHandler(this.parser);
                 this.propertiesHandler.startElement(element);
-            } else if (XPATH_CONTENT_RELATION_METADATA.equals(currentPath)) {
+            }
+            else if (XPATH_CONTENT_RELATION_METADATA.equals(currentPath)) {
                 this.parsingMetaData = true;
-                this.metadataHandler =
-                    new MetadataHandler2(this.parser,
-                        XPATH_CONTENT_RELATION_METADATA);
+                this.metadataHandler = new MetadataHandler2(this.parser, XPATH_CONTENT_RELATION_METADATA);
                 this.metadataHandler.startElement(element);
             }
             else if (XPATH_SUBJECT.equals(currentPath)) {
                 final String objid = handleReferences(element);
                 if (objid != null) {
-                    final String subjectIdWithoutVersion =
-                        XmlUtility.getObjidWithoutVersion(objid);
+                    final String subjectIdWithoutVersion = XmlUtility.getObjidWithoutVersion(objid);
                     this.contentRelation.setSubject(subjectIdWithoutVersion);
-                    final String subjectVersion =
-                        XmlUtility.getVersionNumberFromObjid(objid);
+                    final String subjectVersion = XmlUtility.getVersionNumberFromObjid(objid);
                     this.contentRelation.setSubjectVersion(subjectVersion);
                 }
             }
             else if (XPATH_OBJECT.equals(currentPath)) {
                 final String objid = handleReferences(element);
                 if (objid != null) {
-                    final String objectIdWithoutVersion =
-                        XmlUtility.getObjidWithoutVersion(objid);
+                    final String objectIdWithoutVersion = XmlUtility.getObjidWithoutVersion(objid);
                     this.contentRelation.setObject(objectIdWithoutVersion);
-                    final String objectVersion =
-                        XmlUtility.getVersionNumberFromObjid(objid);
+                    final String objectVersion = XmlUtility.getVersionNumberFromObjid(objid);
                     this.contentRelation.setObjectVersion(objectVersion);
                 }
             }
@@ -189,45 +166,39 @@ public class ContentRelationHandler extends DefaultHandler {
 
     /**
      * Parser hits an XML end element.
-     * 
-     * @param element
-     *            StAX EndElement
+     *
+     * @param element StAX EndElement
      * @return StAX EndElement
-     * 
-     * @throws InvalidContentException
-     *             Thrown if metadata has invalid content.
-     * @throws WebserverSystemException
-     *             Thrown if streaming failed.
+     * @throws InvalidContentException  Thrown if metadata has invalid content.
+     * @throws WebserverSystemException Thrown if streaming failed.
      */
     @Override
-    public EndElement endElement(final EndElement element)
-        throws InvalidContentException, WebserverSystemException {
+    public EndElement endElement(final EndElement element) throws InvalidContentException, WebserverSystemException {
 
         final String currentPath = parser.getCurPath();
 
         if (XPATH_CONTENT_RELATION_PROPERTIES.equals(currentPath)) {
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Parser reached end of " + XPATH_CONTENT_RELATION_PROPERTIES);
             }
             // parser leaves the XML component element
             this.parsingProperties = false;
             this.propertiesHandler.endElement(element);
-            this.contentRelation.setProperties(this.propertiesHandler
-                .getProperties());
+            this.contentRelation.setProperties(this.propertiesHandler.getProperties());
             this.propertiesHandler = null;
         }
         else if (XPATH_CONTENT_RELATION_METADATA.equals(currentPath)) {
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Parser reached end of " + XPATH_CONTENT_RELATION_METADATA);
             }
             // parser leaves the XML md-records element
             this.parsingMetaData = false;
             this.metadataHandler.endElement(element);
-            this.contentRelation.addMdRecord(this.metadataHandler
-                .getMetadataRecord());
+            this.contentRelation.addMdRecord(this.metadataHandler.getMetadataRecord());
             this.metadataHandler = null;
-        } else if (XPATH_TYPE.equals(currentPath)) {
-            if(LOGGER.isDebugEnabled()) {
+        }
+        else if (XPATH_TYPE.equals(currentPath)) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Parser reached end of " + XPATH_TYPE);
             }
             // parser leaves the XML type element
@@ -253,21 +224,16 @@ public class ContentRelationHandler extends DefaultHandler {
 
     /**
      * Parser hits an XML character element.
-     * 
-     * @param s
-     *            XML character element.
-     * @param element
-     *            StAX StartElement
+     *
+     * @param s       XML character element.
+     * @param element StAX StartElement
      * @return XML character element.
-     * 
-     * @throws InvalidStatusException
-     *             Thrown if value of status is invalid text.
-     * @throws WebserverSystemException
-     *             Thrown if streaming failed.
+     * @throws InvalidStatusException   Thrown if value of status is invalid text.
+     * @throws WebserverSystemException Thrown if streaming failed.
      */
     @Override
-    public String characters(final String s, final StartElement element)
-        throws WebserverSystemException, InvalidStatusException {
+    public String characters(final String s, final StartElement element) throws WebserverSystemException,
+        InvalidStatusException {
 
         if (this.parsingProperties) {
             this.propertiesHandler.characters(s, element);
@@ -284,10 +250,10 @@ public class ContentRelationHandler extends DefaultHandler {
 
     /**
      * Get the ContentRelation.
-     * 
-     * Attention! ContentRelationCreate is only a transition object. Later
-     * implementation has to return the ContentRelationCreate class.
-     * 
+     * <p/>
+     * Attention! ContentRelationCreate is only a transition object. Later implementation has to return the
+     * ContentRelationCreate class.
+     *
      * @return ContentRelationCreate
      */
     public ContentRelationCreate getContentRelation() {
@@ -297,32 +263,25 @@ public class ContentRelationHandler extends DefaultHandler {
 
     /**
      * Handle href or objid references. Version number is kept.
-     * 
-     * @param element
-     *            StartElement
+     *
+     * @param element StartElement
      * @return objid (with version number if set)
-     * @throws MissingAttributeValueException
-     *             Thrown if element has neither objid nor href attribute
+     * @throws MissingAttributeValueException Thrown if element has neither objid nor href attribute
      */
-    private static String handleReferences(final StartElement element)
-        throws MissingAttributeValueException {
+    private static String handleReferences(final StartElement element) throws MissingAttributeValueException {
 
         String objid;
         try {
-            final Attribute curAttr =
-                element.getAttribute(null, Elements.ATTRIBUTE_XLINK_OBJID);
+            final Attribute curAttr = element.getAttribute(null, Elements.ATTRIBUTE_XLINK_OBJID);
             objid = curAttr.getValue();
         }
         catch (final NoSuchAttributeException e) {
             try {
-                final Attribute curAttr =
-                    element.getAttribute(Constants.XLINK_NS_URI,
-                        Elements.ATTRIBUTE_XLINK_HREF);
+                final Attribute curAttr = element.getAttribute(Constants.XLINK_NS_URI, Elements.ATTRIBUTE_XLINK_HREF);
                 objid = Utility.getId(curAttr.getValue());
             }
             catch (final NoSuchAttributeException e1) {
-                throw new MissingAttributeValueException(
-                    "Objid or href is missing for subject reference", e);
+                throw new MissingAttributeValueException("Objid or href is missing for subject reference", e);
             }
         }
 

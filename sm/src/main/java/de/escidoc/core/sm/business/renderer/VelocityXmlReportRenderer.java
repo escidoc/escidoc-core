@@ -47,29 +47,15 @@ import java.util.Map;
 
 /**
  * Report renderer implementation using the velocity template engine.
- * 
- * Value-Map:
- * ESCIDOC_BASE_URL
- * reportNamespacePrefix
- * reportNamespace
- * structuralRelationsNamespacePrefix
- * structuralRelationsNamespace
- * parameterNamespacePrefix
- * parameterNamespace
- * reportDefinitionId
- * reportDefinitionName
- * reportDefinitionHref
- * records (List with Lists)
- *     List containing all fields of one record
- *          fieldname
- *          decimalvalue
- *          stringvalue
- *          datevalue
- * 
+ * <p/>
+ * Value-Map: ESCIDOC_BASE_URL reportNamespacePrefix reportNamespace structuralRelationsNamespacePrefix
+ * structuralRelationsNamespace parameterNamespacePrefix parameterNamespace reportDefinitionId reportDefinitionName
+ * reportDefinitionHref records (List with Lists) List containing all fields of one record fieldname decimalvalue
+ * stringvalue datevalue
+ *
  * @author Michael Hoppe
  */
-public final class VelocityXmlReportRenderer
-    implements ReportRendererInterface {
+public final class VelocityXmlReportRenderer implements ReportRendererInterface {
 
     /**
      * Private constructor to prevent initialization.
@@ -77,24 +63,15 @@ public final class VelocityXmlReportRenderer
     private VelocityXmlReportRenderer() {
     }
 
-
-
     /**
      * See Interface for functional description.
-     * 
-     * @param dbResult
-     *            result from dbCall.
-     * @param reportDefinition
-     *            the reportDefinition Hibernate Object.
-     * @return
-     * @throws SystemException
-     * @see de.escidoc.core.sm.business.renderer.interfaces.
-     *      ReportRendererInterface#render(List, ReportDefinition)
      *
+     * @param dbResult         result from dbCall.
+     * @param reportDefinition the reportDefinition Hibernate Object.
+     * @see de.escidoc.core.sm.business.renderer.interfaces. ReportRendererInterface#render(List, ReportDefinition)
      */
     @Override
-    public String render(final List dbResult,
-            final ReportDefinition reportDefinition) throws SystemException {
+    public String render(final List dbResult, final ReportDefinition reportDefinition) throws SystemException {
         final Map<String, Object> values = new HashMap<String, Object>();
 
         addReportNamespaceValues(values);
@@ -105,24 +82,19 @@ public final class VelocityXmlReportRenderer
 
     /**
      * Adds the values of the database-query to the provided {@link Map}.
-     * 
-     * @param dbResult
-     *            The dbResult.
-     * @param values
-     *            The {@link Map} to add the values to.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     *
+     * @param dbResult The dbResult.
+     * @param values   The {@link Map} to add the values to.
+     * @throws SystemException Thrown in case of an internal error.
      */
     private static void addDataValues(final Collection dbResult, final Map<String, Object> values)
         throws SystemException {
 
-        final Collection<List<HashMap<String, Object>>> recordsList =
-            new ArrayList<List<HashMap<String, Object>>>();
+        final Collection<List<HashMap<String, Object>>> recordsList = new ArrayList<List<HashMap<String, Object>>>();
         if (dbResult != null && !dbResult.isEmpty()) {
             // Iterate records from database
             for (final Object aDbResult : dbResult) {
-                final List<HashMap<String, Object>> recordFieldList =
-                        new ArrayList<HashMap<String, Object>>();
+                final List<HashMap<String, Object>> recordFieldList = new ArrayList<HashMap<String, Object>>();
                 final Map map = (Map) aDbResult;
 
                 // iterate all fields of one record
@@ -133,25 +105,20 @@ public final class VelocityXmlReportRenderer
                     // depending on the fieldtype,
                     // write stringvalue, datevalue or decimalvalue-element
                     if (map.get(fieldname) != null) {
-                        final HashMap<String, Object> recordFieldMap =
-                                new HashMap<String, Object>();
+                        final HashMap<String, Object> recordFieldMap = new HashMap<String, Object>();
                         recordFieldMap.put("fieldname", fieldname);
-                        final String classname =
-                                map.get(fieldname).getClass().getSimpleName();
+                        final String classname = map.get(fieldname).getClass().getSimpleName();
                         if ("BigDecimal".equals(classname)) {
-                            recordFieldMap.put("decimalvalue", map
-                                    .get(fieldname).toString());
-                        } else if ("Timestamp".equals(classname)) {
-                            DateTime dateTime =
-                                    new DateTime(map
-                                            .get(fieldname));
+                            recordFieldMap.put("decimalvalue", map.get(fieldname).toString());
+                        }
+                        else if ("Timestamp".equals(classname)) {
+                            DateTime dateTime = new DateTime(map.get(fieldname));
                             dateTime = dateTime.withZone(DateTimeZone.UTC);
-                            final String dateString =
-                                    dateTime.toString(Constants.TIMESTAMP_FORMAT);
+                            final String dateString = dateTime.toString(Constants.TIMESTAMP_FORMAT);
                             recordFieldMap.put("datevalue", dateString);
-                        } else {
-                            recordFieldMap.put("stringvalue", map
-                                    .get(fieldname));
+                        }
+                        else {
+                            recordFieldMap.put("stringvalue", map.get(fieldname));
                         }
 
                         // Add field to record
@@ -167,79 +134,56 @@ public final class VelocityXmlReportRenderer
         }
         values.put("records", recordsList);
     }
-    
+
     /**
      * Adds the values to the provided {@link Map}.
-     * 
-     * @param reportDefinition
-     *            The reportDefinitionId Hibernate Object.
-     * @param values
-     *            The {@link Map} to add the values to.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     *
+     * @param reportDefinition The reportDefinitionId Hibernate Object.
+     * @param values           The {@link Map} to add the values to.
+     * @throws SystemException Thrown in case of an internal error.
      */
     private static void addReportValues(final ReportDefinition reportDefinition, final Map<String, Object> values)
         throws SystemException {
 
         values.put("reportDefinitionId", reportDefinition.getId());
         values.put("reportDefinitionName", reportDefinition.getName());
-        values.put("reportDefinitionHref", 
-                XmlUtility.getReportDefinitionHref(reportDefinition.getId()));
+        values.put("reportDefinitionHref", XmlUtility.getReportDefinitionHref(reportDefinition.getId()));
     }
-    
-
 
     /**
      * Adds the scope name space values.
-     * 
-     * @param values
-     *            The {@link Map} to that the values shall be added.
-     * @throws SystemException e
      *
+     * @param values The {@link Map} to that the values shall be added.
+     * @throws SystemException e
      */
-    private void addReportNamespaceValues(
-            final Map<String, Object> values) throws SystemException {
+    private void addReportNamespaceValues(final Map<String, Object> values) throws SystemException {
         addEscidocBaseUrl(values);
-        values.put("reportNamespacePrefix",
-            Constants.REPORT_NS_PREFIX);
-        values.put("reportNamespace", 
-                Constants.REPORT_NS_URI);
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX,
-                Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS,
-                Constants.STRUCTURAL_RELATIONS_NS_URI);
-        values.put(XmlTemplateProvider.ESCIDOC_PARAMETER_NS_PREFIX,
-                Constants.PARAMETER_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_PARAMETER_NS,
-                Constants.PARAMETER_NS_URI);
+        values.put("reportNamespacePrefix", Constants.REPORT_NS_PREFIX);
+        values.put("reportNamespace", Constants.REPORT_NS_URI);
+        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
+        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
+        values.put(XmlTemplateProvider.ESCIDOC_PARAMETER_NS_PREFIX, Constants.PARAMETER_NS_PREFIX);
+        values.put(XmlTemplateProvider.ESCIDOC_PARAMETER_NS, Constants.PARAMETER_NS_URI);
     }
 
     /**
      * Adds the escidoc base URL to the provided map.
-     * 
-     * @param values
-     *            The map to add values to.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
      *
+     * @param values The map to add values to.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private static void addEscidocBaseUrl(final Map<String, Object> values)
-        throws WebserverSystemException {
+    private static void addEscidocBaseUrl(final Map<String, Object> values) throws WebserverSystemException {
 
-        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, XmlUtility
-            .getEscidocBaseUrl());
+        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, XmlUtility.getEscidocBaseUrl());
     }
 
     /**
      * Gets the <code>ReportXmlProvider</code> object.
-     * 
-     * @return Returns the <code>ReportXmlProvider</code> object.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
      *
+     * @return Returns the <code>ReportXmlProvider</code> object.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private static ReportXmlProvider getReportXmlProvider()
-        throws WebserverSystemException {
+    private static ReportXmlProvider getReportXmlProvider() throws WebserverSystemException {
 
         return ReportXmlProvider.getInstance();
     }

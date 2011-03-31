@@ -62,9 +62,8 @@ import java.util.TreeMap;
 
 /**
  * Context.
- * 
+ *
  * @author Steffen Wagner
- * 
  */
 public class Context extends GenericResource implements ContextInterface {
 
@@ -76,26 +75,21 @@ public class Context extends GenericResource implements ContextInterface {
 
     private Datastream resources;
 
-    private final Map<String, Datastream> adminDescriptors =
-        new HashMap<String, Datastream>();
+    private final Map<String, Datastream> adminDescriptors = new HashMap<String, Datastream>();
 
     private final Datastream organizationalUnits = null;
 
     private boolean ouUpdated;
 
     /**
-     * Instantiates the Context with the specified id. The datastreams are
-     * instantiated and retrieved if the related getter is called.
-     * 
-     * @param id
-     *            The id of an context managed in Fedora.
-     * @throws ContextNotFoundException
-     *             Thrown if Context with id could not be found.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     * Instantiates the Context with the specified id. The datastreams are instantiated and retrieved if the related
+     * getter is called.
+     *
+     * @param id The id of an context managed in Fedora.
+     * @throws ContextNotFoundException Thrown if Context with id could not be found.
+     * @throws SystemException          Thrown in case of an internal error.
      */
-    public Context(final String id) throws ContextNotFoundException,
-        SystemException {
+    public Context(final String id) throws ContextNotFoundException, SystemException {
 
         super(id);
         setPropertiesNames(expandPropertiesNames(getPropertiesNames()),
@@ -106,15 +100,12 @@ public class Context extends GenericResource implements ContextInterface {
 
     /**
      * Get Resources datastream.
-     * 
+     *
      * @return Datastream of resources.
-     * @throws StreamNotFoundException
-     *             If datastream not exists.
-     * @throws FedoraSystemException
-     *             If datastream is not accessible.
+     * @throws StreamNotFoundException If datastream not exists.
+     * @throws FedoraSystemException   If datastream is not accessible.
      */
-    public Datastream getResources() throws StreamNotFoundException,
-        FedoraSystemException {
+    public Datastream getResources() throws StreamNotFoundException, FedoraSystemException {
         // if properties is unset, instantiate the Datastream
         if (this.resources == null) {
             this.resources = new Datastream("resources", getId(), null);
@@ -124,17 +115,12 @@ public class Context extends GenericResource implements ContextInterface {
 
     /**
      * Set Resource datastream.
-     * 
-     * @param ds
-     *            new resource datastream.
-     * @throws StreamNotFoundException
-     *             If resource datastream could not be found.
-     * 
-     * @throws SystemException
-     *             If anything else fails.
+     *
+     * @param ds new resource datastream.
+     * @throws StreamNotFoundException If resource datastream could not be found.
+     * @throws SystemException         If anything else fails.
      */
-    public void setResources(final Datastream ds)
-        throws StreamNotFoundException, SystemException {
+    public void setResources(final Datastream ds) throws StreamNotFoundException, SystemException {
         // check if properties is set, is equal to ds and save to fedora
         try {
             final Datastream curDs = getProperties();
@@ -145,8 +131,7 @@ public class Context extends GenericResource implements ContextInterface {
         }
         catch (final StreamNotFoundException e) {
             // A context have to have a properties datastream
-            throw new StreamNotFoundException("No properties for context "
-                + getId() + '.', e);
+            throw new StreamNotFoundException("No properties for context " + getId() + '.', e);
         }
         // getSomeValuesFromFedora();
 
@@ -160,8 +145,7 @@ public class Context extends GenericResource implements ContextInterface {
      * #getProperties()
      */
     @Override
-    public Datastream getProperties() throws StreamNotFoundException,
-        FedoraSystemException {
+    public Datastream getProperties() throws StreamNotFoundException, FedoraSystemException {
         // if properties is unset, instantiate the Datastream
         if (this.properties == null) {
             this.properties = new Datastream("properties", getId(), null);
@@ -179,8 +163,7 @@ public class Context extends GenericResource implements ContextInterface {
      * )
      */
     @Override
-    public void setProperties(final Datastream ds)
-        throws StreamNotFoundException, SystemException {
+    public void setProperties(final Datastream ds) throws StreamNotFoundException, SystemException {
         // check if properties is set, is equal to ds and save to fedora
         try {
             final Datastream curDs = getProperties();
@@ -191,8 +174,7 @@ public class Context extends GenericResource implements ContextInterface {
         }
         catch (final StreamNotFoundException e) {
             // A context have to have a properties datastream
-            throw new StreamNotFoundException("No properties for context "
-                + getId() + '.', e);
+            throw new StreamNotFoundException("No properties for context " + getId() + '.', e);
         }
         // getSomeValuesFromFedora();
     }
@@ -204,9 +186,8 @@ public class Context extends GenericResource implements ContextInterface {
         return this.organizationalUnits;
     }
 
-    public void setOrganizationalUnits(final List<String> ous)
-        throws InvalidContentException, TripleStoreSystemException,
-        WebserverSystemException {
+    public void setOrganizationalUnits(final List<String> ous) throws InvalidContentException,
+        TripleStoreSystemException, WebserverSystemException {
 
         // check that at least one OU is given
         if (ous.isEmpty()) {
@@ -225,32 +206,28 @@ public class Context extends GenericResource implements ContextInterface {
             final String ou = it.next();
             if (!ous.contains(ou)) {
                 this.ouUpdated = true;
-                final StartElementWithChildElements ouToRemove =
-                    new StartElementWithChildElements();
+                final StartElementWithChildElements ouToRemove = new StartElementWithChildElements();
                 ouToRemove.setLocalName(Elements.ELEMENT_ORGANIZATIONAL_UNIT);
                 ouToRemove.setPrefix(Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
                 ouToRemove.setNamespace(Constants.STRUCTURAL_RELATIONS_NS_URI);
 
                 final Attribute resource =
-                    new Attribute("resource", Constants.RDF_NAMESPACE_URI,
-                        Constants.RDF_NAMESPACE_PREFIX, "info:fedora/" + ou);
+                    new Attribute("resource", Constants.RDF_NAMESPACE_URI, Constants.RDF_NAMESPACE_PREFIX,
+                        "info:fedora/" + ou);
 
                 ouToRemove.addAttribute(resource);
                 ouToRemove.setChildrenElements(null);
 
-                final List<StartElementWithChildElements> toRemove =
-                    new ArrayList<StartElementWithChildElements>();
+                final List<StartElementWithChildElements> toRemove = new ArrayList<StartElementWithChildElements>();
                 toRemove.add(ouToRemove);
-                elementsToRemove.put("/RDF/Description/"
-                    + Elements.ELEMENT_ORGANIZATIONAL_UNIT, toRemove);
+                elementsToRemove.put("/RDF/Description/" + Elements.ELEMENT_ORGANIZATIONAL_UNIT, toRemove);
 
                 it.remove();
             }
         }
 
         // add
-        final List<StartElementWithChildElements> elementsToAdd =
-            new ArrayList<StartElementWithChildElements>();
+        final List<StartElementWithChildElements> elementsToAdd = new ArrayList<StartElementWithChildElements>();
 
         it = ous.iterator();
         while (it.hasNext()) {
@@ -261,8 +238,7 @@ public class Context extends GenericResource implements ContextInterface {
                 currentOus.add(ou);
 
                 // create elements for RELS-EXT update
-                final StartElementWithChildElements ouElement =
-                    new StartElementWithChildElements();
+                final StartElementWithChildElements ouElement = new StartElementWithChildElements();
                 ouElement.setLocalName(Elements.ELEMENT_ORGANIZATIONAL_UNIT);
                 ouElement.setPrefix(Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
                 ouElement.setNamespace(Constants.STRUCTURAL_RELATIONS_NS_URI);
@@ -273,9 +249,7 @@ public class Context extends GenericResource implements ContextInterface {
         }
 
         try {
-            final byte[] relsExtNewBytes =
-                Utility.updateRelsExt(elementsToAdd, elementsToRemove, null,
-                    this, null);
+            final byte[] relsExtNewBytes = Utility.updateRelsExt(elementsToAdd, elementsToRemove, null, this, null);
             setRelsExt(relsExtNewBytes);
         }
         catch (final IntegritySystemException e) {
@@ -291,7 +265,7 @@ public class Context extends GenericResource implements ContextInterface {
 
     /**
      * Get href of context.
-     * 
+     *
      * @return href.
      */
     @Override
@@ -306,8 +280,7 @@ public class Context extends GenericResource implements ContextInterface {
      * de.escidoc.core.om.business.fedora.resources.interfaces.ContextInterface
      * #getRelsExt()
      */
-    public Datastream getDc() throws StreamNotFoundException,
-        FedoraSystemException {
+    public Datastream getDc() throws StreamNotFoundException, FedoraSystemException {
         if (this.dc == null) {
             this.dc = new Datastream("DC", getId(), null);
         }
@@ -321,9 +294,8 @@ public class Context extends GenericResource implements ContextInterface {
      * de.escidoc.core.om.business.fedora.resources.interfaces.ContextInterface
      * #setRelsExt(de.escidoc.core.common.business.fedora.datastream.Datastream)
      */
-    public void setDc(final Datastream ds) throws StreamNotFoundException,
-        FedoraSystemException, WebserverSystemException,
-        TripleStoreSystemException {
+    public void setDc(final Datastream ds) throws StreamNotFoundException, FedoraSystemException,
+        WebserverSystemException, TripleStoreSystemException {
         // check if dc is set, is equal to ds and save to fedora
         try {
             final Datastream curDs = getDc();
@@ -334,8 +306,7 @@ public class Context extends GenericResource implements ContextInterface {
         }
         catch (final StreamNotFoundException e) {
             // An item have to have a RELS-EXT datastream
-            throw new StreamNotFoundException("No DC for context " + getId()
-                + '.', e);
+            throw new StreamNotFoundException("No DC for context " + getId() + '.', e);
         }
         // getSomeValuesFromFedora();
     }
@@ -348,11 +319,9 @@ public class Context extends GenericResource implements ContextInterface {
      * #getAdminDescriptors()
      */
     @Override
-    public Map<String, Datastream> getAdminDescriptors()
-        throws IntegritySystemException, FedoraSystemException {
+    public Map<String, Datastream> getAdminDescriptors() throws IntegritySystemException, FedoraSystemException {
 
-        final Map<String, Datastream> result =
-            new HashMap<String, Datastream>();
+        final Map<String, Datastream> result = new HashMap<String, Datastream>();
         final org.fcrepo.server.types.gen.Datastream[] datastreams =
             getFedoraUtility().getDatastreamsInformation(getId(), null);
         final Collection<String> names = new ArrayList<String>();
@@ -360,8 +329,7 @@ public class Context extends GenericResource implements ContextInterface {
         for (final org.fcrepo.server.types.gen.Datastream datastream : datastreams) {
             final String[] altIDs = datastream.getAltIDs();
             if (altIDs.length > 0
-                    && altIDs[0]
-                    .equals(de.escidoc.core.common.business.fedora.Constants.ADMIN_DESCRIPTOR_ALT_ID)) {
+                && altIDs[0].equals(de.escidoc.core.common.business.fedora.Constants.ADMIN_DESCRIPTOR_ALT_ID)) {
                 names.add(datastream.getID());
             }
         }
@@ -370,9 +338,10 @@ public class Context extends GenericResource implements ContextInterface {
             try {
                 final Datastream newDs = new Datastream(dsNname, getId(), null);
                 result.put(dsNname, newDs);
-            } catch (final StreamNotFoundException e) {
-                throw new IntegritySystemException("Admin-descriptor \"" + dsNname
-                                + "\" not found for Context " + getId() + '.', e);
+            }
+            catch (final StreamNotFoundException e) {
+                throw new IntegritySystemException("Admin-descriptor \"" + dsNname + "\" not found for Context "
+                    + getId() + '.', e);
             }
 
         }
@@ -387,15 +356,14 @@ public class Context extends GenericResource implements ContextInterface {
      * #getAdminDescriptor(java.lang.String)
      */
     @Override
-    public Datastream getAdminDescriptor(final String adminDescriptorName)
-        throws FedoraSystemException, AdminDescriptorNotFoundException {
+    public Datastream getAdminDescriptor(final String adminDescriptorName) throws FedoraSystemException,
+        AdminDescriptorNotFoundException {
 
         final Map<String, Datastream> admDescs = getAdminDescriptorsMap();
 
         if (!admDescs.containsKey(adminDescriptorName)) {
-            throw new AdminDescriptorNotFoundException(
-                "Admin descriptor with name '" + adminDescriptorName
-                    + "' does not exist.");
+            throw new AdminDescriptorNotFoundException("Admin descriptor with name '" + adminDescriptorName
+                + "' does not exist.");
         }
 
         return admDescs.get(adminDescriptorName);
@@ -410,8 +378,7 @@ public class Context extends GenericResource implements ContextInterface {
      * Datastream)
      */
     @Override
-    public void setAdminDescriptor(final Datastream ds)
-        throws FedoraSystemException, WebserverSystemException {
+    public void setAdminDescriptor(final Datastream ds) throws FedoraSystemException, WebserverSystemException {
 
         // TODO never reached by create, therefore no persist is needed. Correct
         // behavior? (FRS)
@@ -420,32 +387,27 @@ public class Context extends GenericResource implements ContextInterface {
     }
 
     /**
-     * Get a map of all admin-decriptors of the Context. The map consists of
-     * datastream name and the admin-descriptor datastream itself.
-     * 
+     * Get a map of all admin-decriptors of the Context. The map consists of datastream name and the admin-descriptor
+     * datastream itself.
+     *
      * @return Map of admin-descriptors.
-     * @throws FedoraSystemException
-     *             Thrown if retrieve of datastreams fail.
+     * @throws FedoraSystemException Thrown if retrieve of datastreams fail.
      */
-    public Map<String, Datastream> getAdminDescriptorsMap()
-        throws FedoraSystemException {
+    public Map<String, Datastream> getAdminDescriptorsMap() throws FedoraSystemException {
 
         final Collection<String> dsNames =
-            getFedoraUtility()
-                .getDatastreamNamesByAltId(
-                    getId(),
-                    de.escidoc.core.common.business.fedora.Constants.ADMIN_DESCRIPTOR_ALT_ID);
+            getFedoraUtility().getDatastreamNamesByAltId(getId(),
+                de.escidoc.core.common.business.fedora.Constants.ADMIN_DESCRIPTOR_ALT_ID);
 
         // add only new Datastreams to HashMap
         for (final String dsName : dsNames) {
             if (!this.adminDescriptors.containsKey(dsName)) {
                 try {
-                    final Datastream newDs =
-                            new Datastream(dsName, getId(), null);
+                    final Datastream newDs = new Datastream(dsName, getId(), null);
                     this.adminDescriptors.put(dsName, newDs);
-                } catch (final StreamNotFoundException e) {
-                    LOGGER.error("AdminDescriptor \"" + dsName
-                            + "\" not found for Context " + getId() + '.', e);
+                }
+                catch (final StreamNotFoundException e) {
+                    LOGGER.error("AdminDescriptor \"" + dsName + "\" not found for Context " + getId() + '.', e);
                 }
             }
         }
@@ -455,9 +417,8 @@ public class Context extends GenericResource implements ContextInterface {
 
     /**
      * Add an AdminDescriptor to Context.
-     * 
-     * @param adm
-     *            Admin Descriptor Datastream
+     *
+     * @param adm Admin Descriptor Datastream
      */
     public void addAdminDescriptor(final Datastream adm) {
 
@@ -467,60 +428,49 @@ public class Context extends GenericResource implements ContextInterface {
 
     /**
      * Delete an AdminDescriptor from Context.
-     * 
-     * @param admDescName
-     *            The name/id of the AdminDescriptor (must be unique within
-     *            Context).
-     * @throws FedoraSystemException
-     *             Thrown if Fedora reports an error.
-     * @throws WebserverSystemException
-     *             Thrown if an internal error occurs.
+     *
+     * @param admDescName The name/id of the AdminDescriptor (must be unique within Context).
+     * @throws FedoraSystemException    Thrown if Fedora reports an error.
+     * @throws WebserverSystemException Thrown if an internal error occurs.
      */
-    public void deleteAdminDescriptor(final String admDescName)
-        throws FedoraSystemException, WebserverSystemException {
+    public void deleteAdminDescriptor(final String admDescName) throws FedoraSystemException, WebserverSystemException {
 
         this.adminDescriptors.get(admDescName).delete();
     }
 
     /**
      * Get id of modifier.
-     * 
+     *
      * @return modified-by id
-     * @throws SystemException
-     *             If anything fails.
+     * @throws SystemException If anything fails.
      */
     public String getModifiedBy() throws SystemException {
-        return getResourceProperties().get(
-            PropertyMapKeys.LATEST_VERSION_MODIFIED_BY_ID);
+        return getResourceProperties().get(PropertyMapKeys.LATEST_VERSION_MODIFIED_BY_ID);
     }
 
     /**
      * Get object id of organizational units of context.
-     * 
+     *
      * @return Vector with organizational units object ids
-     * @throws TripleStoreSystemException
-     *             Thrown if TripleStore request fails.
-     * @throws WebserverSystemException
-     *             If anything fails.
+     * @throws TripleStoreSystemException Thrown if TripleStore request fails.
+     * @throws WebserverSystemException   If anything fails.
      */
-    public List<String> getOrganizationalUnitObjids()
-        throws TripleStoreSystemException, WebserverSystemException {
-        return TripleStoreUtility.getInstance().getPropertiesElementsVector(
-            getId(), TripleStoreUtility.PROP_ORGANIZATIONAL_UNIT);
+    public List<String> getOrganizationalUnitObjids() throws TripleStoreSystemException, WebserverSystemException {
+        return TripleStoreUtility.getInstance().getPropertiesElementsVector(getId(),
+            TripleStoreUtility.PROP_ORGANIZATIONAL_UNIT);
     }
 
     /**
      * Get hrefs of organizational units of context.
-     * 
+     *
      * @return Vector with hrefs of organizational units.
-     * @throws SystemException
-     *             If anythings fails.
+     * @throws SystemException If anythings fails.
      */
     public Collection<String> getOrganizationalUnitHrefs() throws SystemException {
         final String path = "/oum/organizational-unit/";
         final List<String> propVals = getOrganizationalUnitObjids();
         final Collection<String> ouHrefs = new ArrayList<String>(propVals.size());
-        
+
         for (final String s : propVals) {
             ouHrefs.add(path + s);
         }
@@ -530,14 +480,11 @@ public class Context extends GenericResource implements ContextInterface {
 
     /**
      * Check if resource with object id exists and has type of Context.
-     * 
-     * @throws ContextNotFoundException
-     *             Thrown if no Context exists with this object id.
-     * @throws SystemException
-     *             Thrown in case of internal error.
+     *
+     * @throws ContextNotFoundException Thrown if no Context exists with this object id.
+     * @throws SystemException          Thrown in case of internal error.
      */
-    private void checkContextExist() throws ContextNotFoundException,
-        SystemException {
+    private void checkContextExist() throws ContextNotFoundException, SystemException {
 
         try {
             Utility.getInstance().checkIsContext(getId());
@@ -548,13 +495,11 @@ public class Context extends GenericResource implements ContextInterface {
     }
 
     /**
-     * Expand a list with names of properties values with the propertiesNames
-     * for a versionated resource. These list could be used to request the
-     * TripleStore.
-     * 
-     * @param propertiesNames
-     *            Collection of propertiesNames. The collection contains only
-     *            the version resource specific propertiesNames.
+     * Expand a list with names of properties values with the propertiesNames for a versionated resource. These list
+     * could be used to request the TripleStore.
+     *
+     * @param propertiesNames Collection of propertiesNames. The collection contains only the version resource specific
+     *                        propertiesNames.
      * @return Parameter name collection
      */
     private static Collection<String> expandPropertiesNames(final Collection<String> propertiesNames) {
@@ -570,27 +515,22 @@ public class Context extends GenericResource implements ContextInterface {
 
     /**
      * Expanding the properties naming map.
-     * 
-     * @param propertiesMapping
-     *            The properties name mapping from external as key and the
-     *            internal name as value. E.g. with the key "version-status" and
-     *            "LATEST_VERSION_STATUS" as value is the value of
-     *            "version-status" after the mapping accessible with the
-     *            internal key "LATEST_VERSION_STATUS".
+     *
+     * @param propertiesMapping The properties name mapping from external as key and the internal name as value. E.g.
+     *                          with the key "version-status" and "LATEST_VERSION_STATUS" as value is the value of
+     *                          "version-status" after the mapping accessible with the internal key
+     *                          "LATEST_VERSION_STATUS".
      * @return The key mapping.
      */
     private static Map<String, String> expandPropertiesNamesMapping(final Map<String, String> propertiesMapping) {
         final Map<String, String> newPropertiesNames;
         newPropertiesNames = propertiesMapping != null ? propertiesMapping : new HashMap<String, String>();
-        newPropertiesNames.put(Constants.DC_NS_URI + "description",
-            PropertyMapKeys.LATEST_VERSION_DESCRIPTION);
-        newPropertiesNames.put(TripleStoreUtility.PROP_CONTEXT_TYPE,
-            PropertyMapKeys.CONTEXT_TYPE);
+        newPropertiesNames.put(Constants.DC_NS_URI + "description", PropertyMapKeys.LATEST_VERSION_DESCRIPTION);
+        newPropertiesNames.put(TripleStoreUtility.PROP_CONTEXT_TYPE, PropertyMapKeys.CONTEXT_TYPE);
         return newPropertiesNames;
     }
 
     /**
-     * 
      * @return true if Organizational Unit was updated. False otherwise.
      */
     public boolean isOuUpdated() {

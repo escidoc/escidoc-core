@@ -27,12 +27,12 @@ import org.slf4j.LoggerFactory;
 import java.util.Map;
 
 /**
- * This class is a value object for all parameters used in an SRU request with a
- * relational database as back end.
- * 
+ * This class is a value object for all parameters used in an SRU request with a relational database as back end.
+ *
  * @author André Schenk
  */
 public class DbRequestParameters extends SRURequestParameters {
+
     public static final int DEFAULT_MAXIMUM_RECORDS = 20;
 
     // SQL starts counting from 0
@@ -41,18 +41,15 @@ public class DbRequestParameters extends SRURequestParameters {
     /**
      * Logging goes there.
      */
-    private static final Logger LOGGER = LoggerFactory.getLogger(
-        DbRequestParameters.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DbRequestParameters.class);
 
     private static int defaultMaximumRecords = DEFAULT_MAXIMUM_RECORDS;
 
     static {
         try {
             defaultMaximumRecords =
-                 EscidocConfiguration
-                    .getInstance()
-                    .getAsInt(
-                        EscidocConfiguration.ESCIDOC_CORE_FILTER_DEFAULT_MAXIMUM_RECORDS);
+                EscidocConfiguration.getInstance().getAsInt(
+                    EscidocConfiguration.ESCIDOC_CORE_FILTER_DEFAULT_MAXIMUM_RECORDS);
         }
         catch (final Exception e) {
             LOGGER.error(e.getMessage(), e);
@@ -61,9 +58,8 @@ public class DbRequestParameters extends SRURequestParameters {
 
     /**
      * Create a new parameters object from the given map.
-     * 
-     * @param parameters
-     *            map map containing the CQL request parameters
+     *
+     * @param parameters map map containing the CQL request parameters
      */
     public DbRequestParameters(final Map<String, String[]> parameters) {
         super(parameters);
@@ -71,7 +67,7 @@ public class DbRequestParameters extends SRURequestParameters {
 
     /**
      * Get the default maximum records value for search.
-     * 
+     *
      * @return default maximum records value for search
      */
     @Override
@@ -81,7 +77,7 @@ public class DbRequestParameters extends SRURequestParameters {
 
     /**
      * Get the default start record for search.
-     * 
+     *
      * @return default start record for search
      */
     @Override

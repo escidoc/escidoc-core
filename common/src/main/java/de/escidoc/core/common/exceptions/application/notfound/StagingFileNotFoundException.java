@@ -21,13 +21,11 @@
 package de.escidoc.core.common.exceptions.application.notfound;
 
 /**
- * The StagingFileNotFoundException is used to indicate that the staging file
- * requested in the context of the service-call does not exist in the System.
- * returned httpStatusCode is 404. Status code (404) indicating that the
+ * The StagingFileNotFoundException is used to indicate that the staging file requested in the context of the
+ * service-call does not exist in the System. returned httpStatusCode is 404. Status code (404) indicating that the
  * requested resource is not available.
- * 
- * @author Michael Hoppe (FIZ Karlsruhe)
  *
+ * @author Michael Hoppe (FIZ Karlsruhe)
  */
 public class StagingFileNotFoundException extends ResourceNotFoundException {
 
@@ -42,8 +40,6 @@ public class StagingFileNotFoundException extends ResourceNotFoundException {
 
     /**
      * Default constructor.
-     * 
-     *
      */
     public StagingFileNotFoundException() {
         super(HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -51,9 +47,8 @@ public class StagingFileNotFoundException extends ResourceNotFoundException {
 
     /**
      * Constructor used to map an initial exception.
-     * 
-     * @param error
-     *            Throwable
+     *
+     * @param error Throwable
      */
     public StagingFileNotFoundException(final Throwable error) {
         super(error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -61,27 +56,21 @@ public class StagingFileNotFoundException extends ResourceNotFoundException {
 
     /**
      * Constructs a new exception with the specified detail message.
-     * 
-     * @param message -
-     *            the detail message.
      *
+     * @param message - the detail message.
      */
     public StagingFileNotFoundException(final String message) {
         super(message, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 
     /**
-     * Constructor used to create a new Exception with the specified detail
-     * message and a mapping to an initial exception.
-     * 
-     * @param message -
-     *            the detail message.
-     * @param error
-     *            Throwable
+     * Constructor used to create a new Exception with the specified detail message and a mapping to an initial
+     * exception.
      *
+     * @param message - the detail message.
+     * @param error   Throwable
      */
-    public StagingFileNotFoundException(final String message,
-        final Throwable error) {
+    public StagingFileNotFoundException(final String message, final Throwable error) {
         super(message, error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 }

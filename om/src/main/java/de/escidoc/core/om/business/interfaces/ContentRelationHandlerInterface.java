@@ -47,342 +47,204 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 
 /**
  * Interface of a content relation handler of the business layer.
- * 
+ *
  * @author Steffen Wagner
- * 
  */
 public interface ContentRelationHandlerInterface extends IngestableResource {
+
     /**
      * Creates a resource with the provided data.
-     * 
-     * @param xmlData
-     *            The data of the resource.
-     * @return Returns the XML representation of the created resource, now
-     *         containing the id by which the resource can be identified in the
-     *         system.
-     * 
-     * @throws MissingAttributeValueException
-     *             Thrown if attribute value is missing
+     *
+     * @param xmlData The data of the resource.
+     * @return Returns the XML representation of the created resource, now containing the id by which the resource can
+     *         be identified in the system.
+     * @throws MissingAttributeValueException Thrown if attribute value is missing
      * @throws MissingMethodParameterException
-     *             Thrown if method parameter is missing
-     * @throws InvalidContentException
-     *             Thrown if content is invalid
-     * @throws InvalidXmlException
-     *             Thrown if XML is invalid
+     *                                        Thrown if method parameter is missing
+     * @throws InvalidContentException        Thrown if content is invalid
+     * @throws InvalidXmlException            Thrown if XML is invalid
      * @throws ReferencedResourceNotFoundException
-     *             Thrown if referenced resource does not exist.
+     *                                        Thrown if referenced resource does not exist.
      * @throws RelationPredicateNotFoundException
-     *             Thrown if the predicate is not registered.
-     * @throws SystemException
-     *             Thrown if internal error occurs.
+     *                                        Thrown if the predicate is not registered.
+     * @throws SystemException                Thrown if internal error occurs.
      */
 
-    String create(final String xmlData) throws MissingAttributeValueException,
-        MissingMethodParameterException, InvalidXmlException,
-        InvalidContentException, ReferencedResourceNotFoundException,
+    String create(final String xmlData) throws MissingAttributeValueException, MissingMethodParameterException,
+        InvalidXmlException, InvalidContentException, ReferencedResourceNotFoundException,
         RelationPredicateNotFoundException, SystemException;
 
     /**
      * Update Content Relation.
-     * 
-     * @param id
-     *            objid of Content Relation
-     * @param xmlData
-     *            XML representation of Content Relation
+     *
+     * @param id      objid of Content Relation
+     * @param xmlData XML representation of Content Relation
      * @return XML representation of updated Content Relation
-     * 
      * @throws ContentRelationNotFoundException
-     *             Thrown if no Content Relation could be found under provided
-     *             objid
-     * @throws OptimisticLockingException
-     *             Thrown if resource is updated in the meantime and last
-     *             modification date differs
-     * @throws InvalidStatusException
-     *             Thrown if resource has invalid status to update
-     * @throws MissingAttributeValueException
-     *             Thrown if attribute value is missing
-     * @throws LockingException
-     *             Thrown if resource is locked through other user
+     *                                        Thrown if no Content Relation could be found under provided objid
+     * @throws OptimisticLockingException     Thrown if resource is updated in the meantime and last modification date
+     *                                        differs
+     * @throws InvalidStatusException         Thrown if resource has invalid status to update
+     * @throws MissingAttributeValueException Thrown if attribute value is missing
+     * @throws LockingException               Thrown if resource is locked through other user
      * @throws MissingMethodParameterException
-     *             Thrown if method parameter is missing
+     *                                        Thrown if method parameter is missing
      * @throws ReferencedResourceNotFoundException
-     *             Thrown if referenced resource does not exist.
+     *                                        Thrown if referenced resource does not exist.
      * @throws RelationPredicateNotFoundException
-     *             Thrown if the predicate is not registered.
-     * @throws InvalidContentException
-     *             Thrown if content is invalid
-     * @throws InvalidXmlException
-     *             Thrown if XML is invalid
-     * @throws MissingAttributeValueException
-     *             Thrown if attribute value is missing
-     * @throws SystemException
-     *             Thrown if internal error occur
+     *                                        Thrown if the predicate is not registered.
+     * @throws InvalidContentException        Thrown if content is invalid
+     * @throws InvalidXmlException            Thrown if XML is invalid
+     * @throws MissingAttributeValueException Thrown if attribute value is missing
+     * @throws SystemException                Thrown if internal error occur
      */
-    String update(final String id, final String xmlData)
-        throws ContentRelationNotFoundException, OptimisticLockingException,
-        InvalidContentException, InvalidStatusException, LockingException,
-        MissingAttributeValueException, MissingMethodParameterException,
-        InvalidXmlException, ReferencedResourceNotFoundException,
-        RelationPredicateNotFoundException, SystemException;
+    String update(final String id, final String xmlData) throws ContentRelationNotFoundException,
+        OptimisticLockingException, InvalidContentException, InvalidStatusException, LockingException,
+        MissingAttributeValueException, MissingMethodParameterException, InvalidXmlException,
+        ReferencedResourceNotFoundException, RelationPredicateNotFoundException, SystemException;
 
     /**
      * Delete Content Relation.
-     * 
-     * @param id
-     *            The objid of the Content Relation
+     *
+     * @param id The objid of the Content Relation
      * @throws ContentRelationNotFoundException
-     *             Thrown if a content relation with the provided id cannot be
-     *             found.
-     * @throws LockingException
-     *             Thrown if Content Relation is locked by other user
-     * @throws SystemException
-     *             Thrown if internal error occurs.
+     *                          Thrown if a content relation with the provided id cannot be found.
+     * @throws LockingException Thrown if Content Relation is locked by other user
+     * @throws SystemException  Thrown if internal error occurs.
      */
-    void delete(final String id) throws ContentRelationNotFoundException,
-        SystemException, LockingException;
+    void delete(final String id) throws ContentRelationNotFoundException, SystemException, LockingException;
 
     /**
      * Submit a resource with a provided id.
-     * 
-     * @param id
-     * @param param
-     * @return
-     * @throws ContentRelationNotFoundException
-     * @throws LockingException
-     * @throws InvalidStatusException
-     * @throws MissingMethodParameterException
-     * @throws SystemException
-     * @throws OptimisticLockingException
-     * @throws InvalidXmlException
-     * @throws InvalidContentException
      */
-    String submit(final String id, final String param)
-        throws ContentRelationNotFoundException, LockingException,
-        InvalidStatusException, MissingMethodParameterException,
-        SystemException, OptimisticLockingException, InvalidXmlException,
-        InvalidContentException;
+    String submit(final String id, final String param) throws ContentRelationNotFoundException, LockingException,
+        InvalidStatusException, MissingMethodParameterException, SystemException, OptimisticLockingException,
+        InvalidXmlException, InvalidContentException;
 
     /**
      * Release a resource with a provided id.
-     * 
-     * @param id
-     * @param param
-     * @return
-     * @throws ContentRelationNotFoundException
-     * @throws LockingException
-     * @throws InvalidStatusException
-     * @throws MissingMethodParameterException
-     * @throws SystemException
-     * @throws OptimisticLockingException
-     * @throws InvalidXmlException
-     * @throws InvalidContentException
      */
-    String release(final String id, final String param)
-        throws ContentRelationNotFoundException, LockingException,
-        InvalidStatusException, MissingMethodParameterException,
-        SystemException, OptimisticLockingException, InvalidXmlException,
-        InvalidContentException;
+    String release(final String id, final String param) throws ContentRelationNotFoundException, LockingException,
+        InvalidStatusException, MissingMethodParameterException, SystemException, OptimisticLockingException,
+        InvalidXmlException, InvalidContentException;
 
     /**
      * Revise a resource with a provided id.
-     * 
-     * @param id
-     * @param param
-     * @return
-     * @throws ContentRelationNotFoundException
-     * @throws LockingException
-     * @throws InvalidStatusException
-     * @throws MissingMethodParameterException
-     * @throws SystemException
-     * @throws OptimisticLockingException
-     * @throws XmlCorruptedException
-     * @throws InvalidContentException
      */
-    String revise(final String id, final String param)
-        throws ContentRelationNotFoundException, LockingException,
-        InvalidStatusException, MissingMethodParameterException,
-        SystemException, OptimisticLockingException, XmlCorruptedException,
-        InvalidContentException;
+    String revise(final String id, final String param) throws ContentRelationNotFoundException, LockingException,
+        InvalidStatusException, MissingMethodParameterException, SystemException, OptimisticLockingException,
+        XmlCorruptedException, InvalidContentException;
 
     /**
      * Lock a Content Relation for other user access.
-     * 
-     * @param id
-     * @param param
-     * @return
-     * @throws ContentRelationNotFoundException
-     * @throws LockingException
-     * @throws InvalidContentException
-     * @throws MissingMethodParameterException
-     * @throws SystemException
-     * @throws OptimisticLockingException
-     * @throws InvalidXmlException
-     * @throws InvalidStatusException
      */
-    String lock(final String id, final String param)
-        throws ContentRelationNotFoundException, LockingException,
-        InvalidContentException, MissingMethodParameterException,
-        SystemException, OptimisticLockingException, InvalidXmlException,
-        InvalidStatusException;
+    String lock(final String id, final String param) throws ContentRelationNotFoundException, LockingException,
+        InvalidContentException, MissingMethodParameterException, SystemException, OptimisticLockingException,
+        InvalidXmlException, InvalidStatusException;
 
     /**
      * Unlock a Content Relation.
-     * 
-     * @param id
-     * @param param
-     * @return
-     * @throws ContentRelationNotFoundException
-     * @throws LockingException
-     * @throws MissingMethodParameterException
-     * @throws SystemException
-     * @throws OptimisticLockingException
-     * @throws InvalidXmlException
-     * @throws InvalidContentException
-     * @throws InvalidStatusException
-     *             Thrown if resource is not locked.
+     *
+     * @throws InvalidStatusException Thrown if resource is not locked.
      */
-    String unlock(final String id, final String param)
-        throws ContentRelationNotFoundException, LockingException,
-        MissingMethodParameterException, SystemException,
-        OptimisticLockingException, InvalidXmlException,
+    String unlock(final String id, final String param) throws ContentRelationNotFoundException, LockingException,
+        MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidXmlException,
         InvalidContentException, InvalidStatusException;
 
     /**
      * Get escidoc XML representation of ContentRelation.
-     * 
-     * @param id
-     *            objid of ContentRelation resource
+     *
+     * @param id objid of ContentRelation resource
      * @return escidoc XML representation of ContentRelation
      * @throws ContentRelationNotFoundException
-     *             Thrown if under provided id no ContentRelation could be found
-     * @throws SystemException
-     *             Thrown if internal error occurs.
+     *                         Thrown if under provided id no ContentRelation could be found
+     * @throws SystemException Thrown if internal error occurs.
      */
-    String retrieve(final String id) throws ContentRelationNotFoundException,
-        SystemException;
+    String retrieve(final String id) throws ContentRelationNotFoundException, SystemException;
 
     /**
      * Retrieves a filtered list of content relations.
-     * 
-     * @param parameters
-     *            parameters from the SRU request
-     * 
-     * @return Returns XML representation of the list of content relation
-     *         objects.
-     * @throws SystemException
-     *             If case of internal error.
+     *
+     * @param parameters parameters from the SRU request
+     * @return Returns XML representation of the list of content relation objects.
+     * @throws SystemException If case of internal error.
      */
-    String retrieveContentRelations(final SRURequestParameters parameters)
-        throws SystemException;
+    String retrieveContentRelations(final SRURequestParameters parameters) throws SystemException;
 
     /**
      * Get escidoc XML representation of ContentRelations properties.
-     * 
-     * @param id
-     *            objid of ContentRelation resource
+     *
+     * @param id objid of ContentRelation resource
      * @return escidoc XML representation of ContentRelation
      * @throws ContentRelationNotFoundException
-     *             Thrown if under provided id no ContentRelation could be found
-     * @throws SystemException
-     *             Thrown if internal error occurs.
+     *                         Thrown if under provided id no ContentRelation could be found
+     * @throws SystemException Thrown if internal error occurs.
      */
-    String retrieveProperties(final String id)
-        throws ContentRelationNotFoundException, SystemException;
+    String retrieveProperties(final String id) throws ContentRelationNotFoundException, SystemException;
 
     /**
      * Assign persistent identifier to a Content-relation object.
-     * 
-     * @param id
-     *            The Id of the Content-relation witch is to assign with an
-     *            ObjectPid.
-     * @param taskParam
-     *            XML snippet with parameter for the persistent identifier
-     *            system.
+     *
+     * @param id        The Id of the Content-relation witch is to assign with an ObjectPid.
+     * @param taskParam XML snippet with parameter for the persistent identifier system.
      * @return The assigned persistent identifier for the Content-relation.
-     * 
-     * 
      * @throws ContentRelationNotFoundException
-     *             Thrown if the object with id is does not exist or is no Item.
-     * @throws LockingException
-     *             Thrown if the Item is locked
+     *                                     Thrown if the object with id is does not exist or is no Item.
+     * @throws LockingException            Thrown if the Item is locked
      * @throws MissingMethodParameterException
-     *             Thrown if a parameter is missing within
-     *             <code>taskParam</code>.
-     * @throws OptimisticLockingException
-     *             Thrown if Item was altered in the mean time.
-     * @throws PidAlreadyAssignedException
-     *             Thrown if a Content-relation is already assigned a PID.
-     * @throws InvalidXmlException
-     *             Thrown if taskParam has invalid XML.
-     * @throws SystemException
-     *             Thrown in case of internal error.
-     * 
+     *                                     Thrown if a parameter is missing within <code>taskParam</code>.
+     * @throws OptimisticLockingException  Thrown if Item was altered in the mean time.
+     * @throws PidAlreadyAssignedException Thrown if a Content-relation is already assigned a PID.
+     * @throws InvalidXmlException         Thrown if taskParam has invalid XML.
+     * @throws SystemException             Thrown in case of internal error.
      */
-    String assignObjectPid(final String id, final String taskParam)
-        throws ContentRelationNotFoundException, LockingException,
-        MissingMethodParameterException, OptimisticLockingException,
-        InvalidXmlException, SystemException, PidAlreadyAssignedException;
+    String assignObjectPid(final String id, final String taskParam) throws ContentRelationNotFoundException,
+        LockingException, MissingMethodParameterException, OptimisticLockingException, InvalidXmlException,
+        SystemException, PidAlreadyAssignedException;
 
     /**
      * Get escidoc XML representation of ContentRelations md-records.
-     * 
-     * @param id
-     *            objid of ContentRelation resource
+     *
+     * @param id objid of ContentRelation resource
      * @return escidoc XML representation of ContentRelation
      * @throws ContentRelationNotFoundException
-     *             Thrown if under provided id no ContentRelation could be found
-     * @throws SystemException
-     *             Thrown if internal error occurs.
+     *                         Thrown if under provided id no ContentRelation could be found
+     * @throws SystemException Thrown if internal error occurs.
      */
-    String retrieveMdRecords(final String id)
-        throws ContentRelationNotFoundException, SystemException;
+    String retrieveMdRecords(final String id) throws ContentRelationNotFoundException, SystemException;
 
     /**
      * Get escidoc XML representation of ContentRelations md-records.
-     * 
-     * @param id
-     *            objid of ContentRelation resource
-     * @param name
-     *            name of a md-record
+     *
+     * @param id   objid of ContentRelation resource
+     * @param name name of a md-record
      * @return escidoc XML representation of ContentRelation
      * @throws ContentRelationNotFoundException
-     *             Thrown if under provided id no ContentRelation could be found
-     * @throws MdRecordNotFoundException
-     *             Thrown if md-record with provided name was not found
-     * @throws SystemException
-     *             Thrown if internal error occurs.
+     *                                   Thrown if under provided id no ContentRelation could be found
+     * @throws MdRecordNotFoundException Thrown if md-record with provided name was not found
+     * @throws SystemException           Thrown if internal error occurs.
      */
-    String retrieveMdRecord(final String id, final String name)
-        throws ContentRelationNotFoundException, MdRecordNotFoundException,
-        SystemException;
+    String retrieveMdRecord(final String id, final String name) throws ContentRelationNotFoundException,
+        MdRecordNotFoundException, SystemException;
 
     /**
-     * Retrieves a list of registered predicates which can be used to create
-     * content relations.
-     * 
+     * Retrieves a list of registered predicates which can be used to create content relations.
+     *
      * @return String containing a list with registered predicates.
-     * @throws InvalidContentException
-     *             Thrown if a xml file with an ontology has invalid content
-     * @throws InvalidXmlException
-     *             Thrown if a xml file with an ontology is invalid rdf/xml
-     * @throws SystemException
-     *             Thrown if internal error occurs.
+     * @throws InvalidContentException Thrown if a xml file with an ontology has invalid content
+     * @throws InvalidXmlException     Thrown if a xml file with an ontology is invalid rdf/xml
+     * @throws SystemException         Thrown if internal error occurs.
      */
-    String retrieveRegisteredPredicates() throws InvalidContentException,
-        InvalidXmlException, SystemException;
+    String retrieveRegisteredPredicates() throws InvalidContentException, InvalidXmlException, SystemException;
 
     /**
      * Retrieves the subresource resources.
-     * 
-     * @param id
-     *            The id of the resource.
+     *
+     * @param id The id of the resource.
      * @return Returns the value of the subresource.
      * @throws ContentRelationNotFoundException
-     *             Thrown if a Content Relation with the provided id cannot be
-     *             found.
-     * @throws SystemException
-     *             If case of internal error.
+     *                         Thrown if a Content Relation with the provided id cannot be found.
+     * @throws SystemException If case of internal error.
      */
-    String retrieveResources(String id)
-        throws ContentRelationNotFoundException, SystemException;
+    String retrieveResources(String id) throws ContentRelationNotFoundException, SystemException;
 }

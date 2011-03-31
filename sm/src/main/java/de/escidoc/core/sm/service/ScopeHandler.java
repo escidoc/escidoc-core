@@ -42,7 +42,7 @@ import java.util.Map;
 
 /**
  * An statistic Scope resource handler.
- * 
+ *
  * @author Michael Hoppe
  */
 public class ScopeHandler implements ScopeHandlerInterface {
@@ -51,170 +51,110 @@ public class ScopeHandler implements ScopeHandlerInterface {
 
     /**
      * Injects the Scope handler.
-     * 
-     * @param scopeHandler
-     *            The Scope handler bean to inject.
+     *
+     * @param scopeHandler The Scope handler bean to inject.
      */
-    public void setScopeHandler(
-        final de.escidoc.core.sm.business.interfaces.ScopeHandlerInterface scopeHandler) {
+    public void setScopeHandler(final de.escidoc.core.sm.business.interfaces.ScopeHandlerInterface scopeHandler) {
 
         this.handler = scopeHandler;
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @see de.escidoc.core.sm.service.interfaces .ScopeHandlerInterface
-     *      #create(java.lang.String)
-     * 
-     * @param xmlData
-     *            Scope as xml in Scope schema.
-     * @return Returns the XML representation of the resource.
-     * 
-     * @throws AuthenticationException
-     *             Thrown in case of failed authentication.
-     * @throws AuthorizationException
-     *             Thrown in case of failed authorization.
-     * @throws XmlSchemaValidationException
-     *             ex
-     * @throws XmlCorruptedException
-     *             ex
-     * @throws MissingMethodParameterException
-     *             ex
-     * @throws SystemException
-     *             ex
-     * 
      *
+     * @param xmlData Scope as xml in Scope schema.
+     * @return Returns the XML representation of the resource.
+     * @throws AuthenticationException      Thrown in case of failed authentication.
+     * @throws AuthorizationException       Thrown in case of failed authorization.
+     * @throws XmlSchemaValidationException ex
+     * @throws XmlCorruptedException        ex
+     * @throws MissingMethodParameterException
+     *                                      ex
+     * @throws SystemException              ex
+     * @see de.escidoc.core.sm.service.interfaces .ScopeHandlerInterface #create(java.lang.String)
      */
     @Override
-    public String create(final String xmlData) throws AuthenticationException,
-        AuthorizationException, XmlSchemaValidationException,
-        XmlCorruptedException, MissingMethodParameterException, SystemException {
+    public String create(final String xmlData) throws AuthenticationException, AuthorizationException,
+        XmlSchemaValidationException, XmlCorruptedException, MissingMethodParameterException, SystemException {
         return handler.create(xmlData);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @see de.escidoc.core.sm.service.interfaces .ScopeHandlerInterface
-     *      #delete(java.lang.String)
-     * 
-     * @param id
-     *            resource id.
-     * 
-     * @throws AuthenticationException
-     *             Thrown in case of failed authentication.
-     * @throws AuthorizationException
-     *             Thrown in case of failed authorization.
-     * @throws ScopeNotFoundException
-     *             e.
-     * @throws MissingMethodParameterException
-     *             e.
-     * @throws SystemException
-     *             e.
-     * 
      *
+     * @param id resource id.
+     * @throws AuthenticationException Thrown in case of failed authentication.
+     * @throws AuthorizationException  Thrown in case of failed authorization.
+     * @throws ScopeNotFoundException  e.
+     * @throws MissingMethodParameterException
+     *                                 e.
+     * @throws SystemException         e.
+     * @see de.escidoc.core.sm.service.interfaces .ScopeHandlerInterface #delete(java.lang.String)
      */
     @Override
-    public void delete(final String id) throws AuthenticationException,
-        AuthorizationException, ScopeNotFoundException,
+    public void delete(final String id) throws AuthenticationException, AuthorizationException, ScopeNotFoundException,
         MissingMethodParameterException, SystemException {
         handler.delete(id);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @see de.escidoc.core.sm.service.interfaces .ScopeHandlerInterface
-     *      #retrieve(java.lang.String)
-     * 
-     * @param id
-     *            resource id.
-     * @return Returns the XML representation of the resource.
-     * 
-     * @throws AuthenticationException
-     *             Thrown in case of failed authentication.
-     * @throws AuthorizationException
-     *             Thrown in case of failed authorization.
-     * @throws ScopeNotFoundException
-     *             e.
-     * @throws MissingMethodParameterException
-     *             e.
-     * @throws SystemException
-     *             e.
-     * 
      *
+     * @param id resource id.
+     * @return Returns the XML representation of the resource.
+     * @throws AuthenticationException Thrown in case of failed authentication.
+     * @throws AuthorizationException  Thrown in case of failed authorization.
+     * @throws ScopeNotFoundException  e.
+     * @throws MissingMethodParameterException
+     *                                 e.
+     * @throws SystemException         e.
+     * @see de.escidoc.core.sm.service.interfaces .ScopeHandlerInterface #retrieve(java.lang.String)
      */
     @Override
-    public String retrieve(final String id) throws AuthenticationException,
-        AuthorizationException, ScopeNotFoundException,
-        MissingMethodParameterException, SystemException {
+    public String retrieve(final String id) throws AuthenticationException, AuthorizationException,
+        ScopeNotFoundException, MissingMethodParameterException, SystemException {
         return handler.retrieve(id);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @see de.escidoc.core.sm.service.interfaces .ScopeHandlerInterface
-     *      #retrieveScopes(java.util.Map)
-     * 
-     * @param parameters
-     *            filter as CQL query
-     * 
+     *
+     * @param parameters filter as CQL query
      * @return Returns the XML representation of the resource-list.
      * @throws MissingMethodParameterException
-     *             If the parameter filter is not given.
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a SQL query
-     * @throws AuthenticationException
-     *             Thrown in case of failed authentication.
-     * @throws AuthorizationException
-     *             Thrown in case of failed authorization.
-     * @throws SystemException
-     *             e.
+     *                                     If the parameter filter is not given.
+     * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
+     * @throws AuthenticationException     Thrown in case of failed authentication.
+     * @throws AuthorizationException      Thrown in case of failed authorization.
+     * @throws SystemException             e.
+     * @see de.escidoc.core.sm.service.interfaces .ScopeHandlerInterface #retrieveScopes(java.util.Map)
      */
     @Override
-    public String retrieveScopes(final Map<String, String[]> parameters)
-        throws InvalidSearchQueryException, MissingMethodParameterException,
-        AuthenticationException, AuthorizationException, SystemException {
+    public String retrieveScopes(final Map<String, String[]> parameters) throws InvalidSearchQueryException,
+        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
         return handler.retrieveScopes(parameters);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @see de.escidoc.core.sm.service.interfaces .ScopeHandlerInterface
-     *      #update(java.lang.String,java.lang.String)
-     * 
-     * @param xmlData
-     *            Scope data as xml in Scope schema.
-     * @param id
-     *            resource id.
-     * @return Returns the XML representation of the resource.
-     * 
-     * @throws AuthenticationException
-     *             Thrown in case of failed authentication.
-     * @throws AuthorizationException
-     *             Thrown in case of failed authorization.
-     * @throws ScopeNotFoundException
-     *             e.
-     * @throws MissingMethodParameterException
-     *             e.
-     * @throws XmlSchemaValidationException
-     *             e.
-     * @throws XmlCorruptedException
-     *             e.
-     * @throws SystemException
-     *             e.
-     * 
      *
+     * @param xmlData Scope data as xml in Scope schema.
+     * @param id      resource id.
+     * @return Returns the XML representation of the resource.
+     * @throws AuthenticationException      Thrown in case of failed authentication.
+     * @throws AuthorizationException       Thrown in case of failed authorization.
+     * @throws ScopeNotFoundException       e.
+     * @throws MissingMethodParameterException
+     *                                      e.
+     * @throws XmlSchemaValidationException e.
+     * @throws XmlCorruptedException        e.
+     * @throws SystemException              e.
+     * @see de.escidoc.core.sm.service.interfaces .ScopeHandlerInterface #update(java.lang.String,java.lang.String)
      */
     @Override
-    public String update(final String id, final String xmlData)
-        throws AuthenticationException, AuthorizationException,
-        ScopeNotFoundException, MissingMethodParameterException,
-        XmlSchemaValidationException, XmlCorruptedException, SystemException {
+    public String update(final String id, final String xmlData) throws AuthenticationException, AuthorizationException,
+        ScopeNotFoundException, MissingMethodParameterException, XmlSchemaValidationException, XmlCorruptedException,
+        SystemException {
         return handler.update(id, xmlData);
     }
 

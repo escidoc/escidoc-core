@@ -84,12 +84,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * 
- * Contains methods pertaining creation of an item. Is extended at least by
- * FedoraItemHandler.
- * 
+ * Contains methods pertaining creation of an item. Is extended at least by FedoraItemHandler.
+ *
  * @author Michael Schneider
- * 
  */
 public class ItemHandlerCreate extends ItemResourceListener {
 
@@ -98,75 +95,50 @@ public class ItemHandlerCreate extends ItemResourceListener {
     private static final Pattern PATTERN_INVALID_FOXML =
         Pattern.compile("fedora.server.errors.ObjectValidityException");
 
-    private static final Logger LOGGER =
-        LoggerFactory.getLogger(ItemHandlerCreate.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ItemHandlerCreate.class);
 
     /**
      * Render RELS-EXT of a Component.
-     * 
-     * @param id
-     *            Objid of Component.
-     * @param properties
-     *            Component properties
-     * @param inCreate
-     *            Set true if Component is to create, false if it's an update.
+     *
+     * @param id         Objid of Component.
+     * @param properties Component properties
+     * @param inCreate   Set true if Component is to create, false if it's an update.
      * @return RELS-EXT XML representation of Component
-     * 
-     * @throws WebserverSystemException
-     *             Thrown in case of internal error.
+     * @throws WebserverSystemException Thrown in case of internal error.
      */
     protected String getComponentRelsExtWithVelocity(
-        final String id, final Map<String, String> properties,
-        final boolean inCreate) throws WebserverSystemException {
+        final String id, final Map<String, String> properties, final boolean inCreate) throws WebserverSystemException {
 
-        return getFoxmlRenderer().renderComponentRelsExt(id, properties,
-            inCreate);
+        return getFoxmlRenderer().renderComponentRelsExt(id, properties, inCreate);
     }
 
     /**
      * Get FoXML for Component (rendered with Velocity).
-     * 
-     * @param id
-     *            Objid of Component.
-     * @param contentMimeType
-     *            MIME type of content.
-     * @param dataStreams
-     *            Map with data (chaotic structure)
-     * @param metadataAttributes
-     *            Map with attributes of md-records.
-     * @param nsUri
-     *            Name space URI
-     * @param storage
-     *            Type of storage.
+     *
+     * @param id                 Objid of Component.
+     * @param contentMimeType    MIME type of content.
+     * @param dataStreams        Map with data (chaotic structure)
+     * @param metadataAttributes Map with attributes of md-records.
+     * @param nsUri              Name space URI
+     * @param storage            Type of storage.
      * @return FoXML representation of Component
-     * 
-     * @throws WebserverSystemException
-     * @throws EncodingSystemException
-     * @throws InvalidContentException
-     * @throws TripleStoreSystemException
      */
     private String getComponentFoxmlWithVelocity(
         final String id, final String contentMimeType, final Map dataStreams,
-        final Map<String, Map<String, String>> metadataAttributes,
-        final String nsUri, final String storage)
-        throws WebserverSystemException, EncodingSystemException,
-        InvalidContentException, TripleStoreSystemException {
+        final Map<String, Map<String, String>> metadataAttributes, final String nsUri, final String storage)
+        throws WebserverSystemException, EncodingSystemException, InvalidContentException, TripleStoreSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         // dc-mapping prototyping
         if (dataStreams.containsKey("md-records")
-            && ((Map) dataStreams.get("md-records"))
-                .containsKey(Elements.MANDATORY_MD_RECORD_NAME)) {
+            && ((Map) dataStreams.get("md-records")).containsKey(Elements.MANDATORY_MD_RECORD_NAME)) {
             final String dcXml;
             try {
                 // no content model id for component dc-mapping, default mapping
                 // should be applied
                 dcXml =
-                    XmlUtility.createDC(nsUri,
-                        ((ByteArrayOutputStream) ((Map) dataStreams
-                            .get("md-records"))
-                            .get(Elements.MANDATORY_MD_RECORD_NAME))
-                            .toString(XmlUtility.CHARACTER_ENCODING), id, null);
+                    XmlUtility.createDC(nsUri, ((ByteArrayOutputStream) ((Map) dataStreams.get("md-records"))
+                        .get(Elements.MANDATORY_MD_RECORD_NAME)).toString(XmlUtility.CHARACTER_ENCODING), id, null);
             }
             catch (final UnsupportedEncodingException e) {
                 throw new EncodingSystemException(e.getMessage(), e);
@@ -179,52 +151,40 @@ public class ItemHandlerCreate extends ItemResourceListener {
         values.put(XmlTemplateProvider.TITLE, "Component " + id);
 
         if (dataStreams.get(Datastream.RELS_EXT_DATASTREAM) != null) {
-            values.put(XmlTemplateProvider.RELS_EXT, dataStreams
-                .get(Datastream.RELS_EXT_DATASTREAM));
+            values.put(XmlTemplateProvider.RELS_EXT, dataStreams.get(Datastream.RELS_EXT_DATASTREAM));
         }
 
         if (dataStreams.get("uploadUrl") != null) {
             values.put(XmlTemplateProvider.MIME_TYPE, contentMimeType);
-            final String theUrl =
-                Utility.processUrl((String) dataStreams.get("uploadUrl"), null,
-                    null);
+            final String theUrl = Utility.processUrl((String) dataStreams.get("uploadUrl"), null, null);
             values.put(XmlTemplateProvider.REF, theUrl);
             values.put(XmlTemplateProvider.REF_TYPE, "URL");
-            if (storage
-                .equals(de.escidoc.core.common.business.fedora.Constants.STORAGE_EXTERNAL_URL)) {
+            if (storage.equals(de.escidoc.core.common.business.fedora.Constants.STORAGE_EXTERNAL_URL)) {
                 values.put(XmlTemplateProvider.CONTROL_GROUP, "R");
             }
-            else if (storage
-                .equals(de.escidoc.core.common.business.fedora.Constants.STORAGE_EXTERNAL_MANAGED)) {
+            else if (storage.equals(de.escidoc.core.common.business.fedora.Constants.STORAGE_EXTERNAL_MANAGED)) {
                 values.put(XmlTemplateProvider.CONTROL_GROUP, "E");
             }
-            else if (storage
-                .equals(de.escidoc.core.common.business.fedora.Constants.STORAGE_INTERNAL_MANAGED)) {
+            else if (storage.equals(de.escidoc.core.common.business.fedora.Constants.STORAGE_INTERNAL_MANAGED)) {
                 values.put(XmlTemplateProvider.CONTROL_GROUP, "M");
             }
             values.put(XmlTemplateProvider.REF_TYPE, "URL");
             try {
-                values
-                    .put(
-                        XmlTemplateProvider.CONTENT_CHECKSUM_ALGORITHM,
-                        EscidocConfiguration
-                            .getInstance()
-                            .get(
-                                EscidocConfiguration.ESCIDOC_CORE_OM_CONTENT_CHECKSUM_ALGORITHM,
-                                "DISABLED"));
-            } catch (final IOException e) {
-                if(LOGGER.isWarnEnabled()) {
+                values.put(XmlTemplateProvider.CONTENT_CHECKSUM_ALGORITHM, EscidocConfiguration.getInstance().get(
+                    EscidocConfiguration.ESCIDOC_CORE_OM_CONTENT_CHECKSUM_ALGORITHM, "DISABLED"));
+            }
+            catch (final IOException e) {
+                if (LOGGER.isWarnEnabled()) {
                     LOGGER.warn("Error on loading configuration.");
                 }
-                if(LOGGER.isDebugEnabled()) {
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Error on loading configuration.", e);
                 }
             }
         }
 
         if (dataStreams.get(FoXmlProvider.DATASTREAM_MD_RECORDS) != null) {
-            final Map mdRecordsStreams =
-                (Map) dataStreams.get(FoXmlProvider.DATASTREAM_MD_RECORDS);
+            final Map mdRecordsStreams = (Map) dataStreams.get(FoXmlProvider.DATASTREAM_MD_RECORDS);
             if (!mdRecordsStreams.isEmpty()) {
                 final Collection<Map<String, String>> mdRecords =
                     new ArrayList<Map<String, String>>(mdRecordsStreams.size());
@@ -232,14 +192,11 @@ public class ItemHandlerCreate extends ItemResourceListener {
 
                 for (final Object o : mdRecordsStreams.keySet()) {
                     final String key = (String) o;
-                    final ByteArrayOutputStream mdRecordStream =
-                            (ByteArrayOutputStream) mdRecordsStreams.get(key);
+                    final ByteArrayOutputStream mdRecordStream = (ByteArrayOutputStream) mdRecordsStreams.get(key);
 
-                    final Map<String, String> mdRecord =
-                            new HashMap<String, String>();
+                    final Map<String, String> mdRecord = new HashMap<String, String>();
 
-                    final Map<String, String> mdAttributes =
-                            metadataAttributes.get(key);
+                    final Map<String, String> mdAttributes = metadataAttributes.get(key);
                     String schema = null;
                     String type = null;
                     if (mdAttributes != null) {
@@ -251,11 +208,11 @@ public class ItemHandlerCreate extends ItemResourceListener {
                     mdRecord.put(XmlTemplateProvider.MD_RECORD_TYPE, type);
                     mdRecord.put(XmlTemplateProvider.MD_RECORD_NAME, key);
                     try {
-                        mdRecord.put(XmlTemplateProvider.MD_RECORD_CONTENT,
-                                mdRecordStream
-                                        .toString(XmlUtility.CHARACTER_ENCODING));
+                        mdRecord.put(XmlTemplateProvider.MD_RECORD_CONTENT, mdRecordStream
+                            .toString(XmlUtility.CHARACTER_ENCODING));
 
-                    } catch (final UnsupportedEncodingException e) {
+                    }
+                    catch (final UnsupportedEncodingException e) {
                         throw new EncodingSystemException(e);
                     }
                     mdRecords.add(mdRecord);
@@ -267,63 +224,39 @@ public class ItemHandlerCreate extends ItemResourceListener {
 
     /**
      * Get WOV as XML representation.
-     * 
-     * @param id
-     * @param title
-     * @param versionNo
-     * @param lastModificationDate
-     * @param versionStatus
-     * @param comment
+     *
      * @return XML representation of WOV
-     * @throws WebserverSystemException
      */
     protected String getWovDatastream(
-        final String id, final String title, final String versionNo,
-        final String lastModificationDate, final String versionStatus,
-        final String comment) throws WebserverSystemException {
-        return getFoxmlRenderer().renderWov(id, title, versionNo,
-            lastModificationDate, versionStatus, comment);
+        final String id, final String title, final String versionNo, final String lastModificationDate,
+        final String versionStatus, final String comment) throws WebserverSystemException {
+        return getFoxmlRenderer().renderWov(id, title, versionNo, lastModificationDate, versionStatus, comment);
 
     }
 
     /**
      * Add a component to the item.
-     * 
-     * @param xmlData
-     *            The component xml.
-     * 
+     *
+     * @param xmlData The component xml.
      * @return The xml representation of the component after creation.
-     * 
-     * @throws SystemException
-     *             Thrown in case of an internal system error.
-     * @throws XmlCorruptedException
-     *             If xml data is corrupt.
-     * @throws XmlSchemaValidationException
-     *             If xml schema validation fails.
-     * @throws LockingException
-     *             If the item is locked and the current user is not the one who
-     *             locked it.
-     * @throws InvalidStatusException
-     *             If the item is not in a status to add a component.
-     * @throws FileNotFoundException
-     *             If binary content can not be retrieved.
-     * @throws MissingElementValueException
-     *             If a required value is missing in xml data.
+     * @throws SystemException              Thrown in case of an internal system error.
+     * @throws XmlCorruptedException        If xml data is corrupt.
+     * @throws XmlSchemaValidationException If xml schema validation fails.
+     * @throws LockingException             If the item is locked and the current user is not the one who locked it.
+     * @throws InvalidStatusException       If the item is not in a status to add a component.
+     * @throws FileNotFoundException        If binary content can not be retrieved.
+     * @throws MissingElementValueException If a required value is missing in xml data.
      * @throws ReadonlyElementViolationException
-     *             If a read-only Element is set.
+     *                                      If a read-only Element is set.
      * @throws ReadonlyAttributeViolationException
-     *             If a read-only attribute is set.
-     * @throws InvalidContentException
-     *             If there is invalid content in xml data.
-     * @throws MissingContentException
-     *             If some required content is missing in xml data.
+     *                                      If a read-only attribute is set.
+     * @throws InvalidContentException      If there is invalid content in xml data.
+     * @throws MissingContentException      If some required content is missing in xml data.
      */
-    public String addComponent(final String xmlData) throws SystemException,
-        XmlCorruptedException, XmlSchemaValidationException, LockingException,
-        InvalidStatusException, FileNotFoundException,
-        MissingElementValueException, ReadonlyElementViolationException,
-        ReadonlyAttributeViolationException, InvalidContentException,
-        MissingContentException {
+    public String addComponent(final String xmlData) throws SystemException, XmlCorruptedException,
+        XmlSchemaValidationException, LockingException, InvalidStatusException, FileNotFoundException,
+        MissingElementValueException, ReadonlyElementViolationException, ReadonlyAttributeViolationException,
+        InvalidContentException, MissingContentException {
 
         // TODO move all precondition checks to service method
         // checkLocked();
@@ -336,30 +269,24 @@ public class ItemHandlerCreate extends ItemResourceListener {
         // add Handler to the StaxParser to split the xml stream
         // in to data streams and modify these datastreams
 
-        final List<DefaultHandler> handlerChain =
-            new ArrayList<DefaultHandler>();
+        final List<DefaultHandler> handlerChain = new ArrayList<DefaultHandler>();
         // TODO Einkommentieren
         // OptimisticLockingHandler lockingHandler = new
         // OptimisticLockingHandler(id, sp);
         // handlerChain.add(lockingHandler);
 
-        final OneComponentPropertiesHandler componentPropertiesHandler =
-            new OneComponentPropertiesHandler(sp);
+        final OneComponentPropertiesHandler componentPropertiesHandler = new OneComponentPropertiesHandler(sp);
         handlerChain.add(componentPropertiesHandler);
-        final OneComponentContentHandler contentHandler =
-            new OneComponentContentHandler(sp);
+        final OneComponentContentHandler contentHandler = new OneComponentContentHandler(sp);
         handlerChain.add(contentHandler);
-        final OneComponentTitleHandler titleHandler =
-            new OneComponentTitleHandler(sp);
+        final OneComponentTitleHandler titleHandler = new OneComponentTitleHandler(sp);
         handlerChain.add(titleHandler);
-        final ComponentMetadataHandler cmh =
-            new ComponentMetadataHandler(sp, "/component");
+        final ComponentMetadataHandler cmh = new ComponentMetadataHandler(sp, "/component");
         final List<String> pids = new ArrayList<String>();
         pids.add(componentId);
         cmh.setObjids(pids);
         handlerChain.add(cmh);
-        final HashMap<String, String> extractPathes =
-            new HashMap<String, String>();
+        final HashMap<String, String> extractPathes = new HashMap<String, String>();
         extractPathes.put("/component/content", null);
         extractPathes.put("/component/md-records/md-record", "name");
         final List<String> componentPid = new ArrayList<String>();
@@ -399,42 +326,32 @@ public class ItemHandlerCreate extends ItemResourceListener {
 
         // reset StaxParser
         sp.clearHandlerChain();
-        final Map<String, String> componentBinary =
-            contentHandler.getComponentBinary();
+        final Map<String, String> componentBinary = contentHandler.getComponentBinary();
         // get modified data streams
         final Map streams = me.getOutputStreams();
-        final Map<String, String> properties =
-            componentPropertiesHandler.getProperties();
+        final Map<String, String> properties = componentPropertiesHandler.getProperties();
 
-        properties.put(TripleStoreUtility.PROP_CREATED_BY_ID, getUtility()
-            .getCurrentUserId());
-        properties.put(TripleStoreUtility.PROP_CREATED_BY_TITLE, getUtility()
-            .getCurrentUserRealName());
+        properties.put(TripleStoreUtility.PROP_CREATED_BY_ID, getUtility().getCurrentUserId());
+        properties.put(TripleStoreUtility.PROP_CREATED_BY_TITLE, getUtility().getCurrentUserRealName());
         final Map components = (Map) streams.get("components");
         final Map componentStreams = (Map) components.get(componentId);
-        final Map<String, Map<String, String>> componentMdAttributes =
-            cmh.getMetadataAttributes().get(componentId);
+        final Map<String, Map<String, String>> componentMdAttributes = cmh.getMetadataAttributes().get(componentId);
         final String escidocMdNsUri = cmh.getNamespacesMap().get(componentId);
         if (componentBinary.get("storage") == null) {
-            throw new InvalidContentException("The attribute 'storage' of the element "
-                    + "'content' is missing.");
+            throw new InvalidContentException("The attribute 'storage' of the element " + "'content' is missing.");
         }
         if (componentBinary.get(DATASTREAM_CONTENT) != null
-            && (componentBinary
-                .get("storage")
-                .equals(
-                    de.escidoc.core.common.business.fedora.Constants.STORAGE_EXTERNAL_URL) || componentBinary
-                .get("storage")
-                .equals(
-                    de.escidoc.core.common.business.fedora.Constants.STORAGE_EXTERNAL_MANAGED))) {
-            throw new InvalidContentException("The component section 'content' with the attribute 'storage' set to 'external-url' "
+            && (componentBinary.get("storage").equals(
+                de.escidoc.core.common.business.fedora.Constants.STORAGE_EXTERNAL_URL) || componentBinary
+                .get("storage").equals(de.escidoc.core.common.business.fedora.Constants.STORAGE_EXTERNAL_MANAGED))) {
+            throw new InvalidContentException(
+                "The component section 'content' with the attribute 'storage' set to 'external-url' "
                     + "or 'external-managed' may not have an inline content.");
         }
-        handleComponent(componentId, properties, componentBinary,
-            componentStreams, componentMdAttributes, escidocMdNsUri);
+        handleComponent(componentId, properties, componentBinary, componentStreams, componentMdAttributes,
+            escidocMdNsUri);
 
-        final AddNewSubTreesToDatastream addNewEntriesHandler =
-            new AddNewSubTreesToDatastream("/RDF", sp);
+        final AddNewSubTreesToDatastream addNewEntriesHandler = new AddNewSubTreesToDatastream("/RDF", sp);
 
         final StartElement pointer = new StartElement();
         pointer.setLocalName("Description");
@@ -442,20 +359,16 @@ public class ItemHandlerCreate extends ItemResourceListener {
         pointer.setNamespace(Constants.RDF_NAMESPACE_URI);
 
         addNewEntriesHandler.setPointerElement(pointer);
-        final StartElementWithChildElements newComponentIdElement =
-            new StartElementWithChildElements();
+        final StartElementWithChildElements newComponentIdElement = new StartElementWithChildElements();
         newComponentIdElement.setLocalName("component");
-        newComponentIdElement
-            .setPrefix(Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
-        newComponentIdElement
-            .setNamespace(Constants.STRUCTURAL_RELATIONS_NS_URI);
+        newComponentIdElement.setPrefix(Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
+        newComponentIdElement.setNamespace(Constants.STRUCTURAL_RELATIONS_NS_URI);
         final Attribute resource =
-            new Attribute("resource", Constants.RDF_NAMESPACE_URI,
-                Constants.RDF_NAMESPACE_PREFIX, "info:fedora/" + componentId);
+            new Attribute("resource", Constants.RDF_NAMESPACE_URI, Constants.RDF_NAMESPACE_PREFIX, "info:fedora/"
+                + componentId);
         newComponentIdElement.addAttribute(resource);
         newComponentIdElement.setChildrenElements(null);
-        final List<StartElementWithChildElements> elements =
-            new ArrayList<StartElementWithChildElements>();
+        final List<StartElementWithChildElements> elements = new ArrayList<StartElementWithChildElements>();
 
         elements.add(newComponentIdElement);
         addNewEntriesHandler.setSubtreeToInsert(elements);
@@ -471,8 +384,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
             throw new WebserverSystemException(e);
         }
         sp.clearHandlerChain();
-        final ByteArrayOutputStream relsExtNew =
-            addNewEntriesHandler.getOutputStreams();
+        final ByteArrayOutputStream relsExtNew = addNewEntriesHandler.getOutputStreams();
 
         try {
             getItem().setRelsExt(relsExtNew);
@@ -483,8 +395,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
         getFedoraUtility().sync();
         final String component;
         try {
-            final Component c =
-                new Component(componentId, getItem().getId(), null);
+            final Component c = new Component(componentId, getItem().getId(), null);
             getItem().addComponent(c);
 
             component = renderComponent(componentId, false);
@@ -498,56 +409,35 @@ public class ItemHandlerCreate extends ItemResourceListener {
 
     /**
      * Create a new Component.
-     * 
+     * <p/>
      * ATTENTION: Object is created but sync is not called!
-     * 
-     * @param xmlData
-     *            eSciDoc XML representation of Component.
+     *
+     * @param xmlData eSciDoc XML representation of Component.
      * @return objid of the new Component
-     * 
-     * @throws SystemException
-     * @throws XmlCorruptedException
-     * @throws XmlSchemaValidationException
-     * @throws LockingException
-     * @throws InvalidStatusException
-     * @throws FileNotFoundException
-     * @throws MissingElementValueException
-     * @throws ReadonlyElementViolationException
-     * @throws ReadonlyAttributeViolationException
-     * @throws InvalidContentException
-     * @throws MissingContentException
      */
-    public String createComponent(final String xmlData) throws SystemException,
-        XmlCorruptedException, XmlSchemaValidationException, LockingException,
-        InvalidStatusException, FileNotFoundException,
-        MissingElementValueException, ReadonlyElementViolationException,
-        ReadonlyAttributeViolationException, InvalidContentException,
-        MissingContentException {
+    public String createComponent(final String xmlData) throws SystemException, XmlCorruptedException,
+        XmlSchemaValidationException, LockingException, InvalidStatusException, FileNotFoundException,
+        MissingElementValueException, ReadonlyElementViolationException, ReadonlyAttributeViolationException,
+        InvalidContentException, MissingContentException {
 
         final StaxParser sp = new StaxParser();
         // find out the creator of the component
-        final List<DefaultHandler> handlerChain =
-            new ArrayList<DefaultHandler>();
+        final List<DefaultHandler> handlerChain = new ArrayList<DefaultHandler>();
 
-        final OneComponentPropertiesHandler componentPropertiesHandler =
-            new OneComponentPropertiesHandler(sp);
+        final OneComponentPropertiesHandler componentPropertiesHandler = new OneComponentPropertiesHandler(sp);
         handlerChain.add(componentPropertiesHandler);
-        final OneComponentContentHandler contentHandler =
-            new OneComponentContentHandler(sp);
+        final OneComponentContentHandler contentHandler = new OneComponentContentHandler(sp);
         handlerChain.add(contentHandler);
-        final OneComponentTitleHandler titleHandler =
-            new OneComponentTitleHandler(sp);
+        final OneComponentTitleHandler titleHandler = new OneComponentTitleHandler(sp);
         handlerChain.add(titleHandler);
-        final ComponentMetadataHandler cmh =
-            new ComponentMetadataHandler(sp, "/component");
+        final ComponentMetadataHandler cmh = new ComponentMetadataHandler(sp, "/component");
         final List<String> pids = new ArrayList<String>();
 
         final String componentId = getIdProvider().getNextPid();
         pids.add(componentId);
         cmh.setObjids(pids);
         handlerChain.add(cmh);
-        final HashMap<String, String> extractPathes =
-            new HashMap<String, String>();
+        final HashMap<String, String> extractPathes = new HashMap<String, String>();
 
         // extractPathes.put("/component/properties", null);
         extractPathes.put("/component/content", null);
@@ -589,120 +479,84 @@ public class ItemHandlerCreate extends ItemResourceListener {
 
         // reset StaxParser
         sp.clearHandlerChain();
-        final Map<String, String> componentBinary =
-            contentHandler.getComponentBinary();
+        final Map<String, String> componentBinary = contentHandler.getComponentBinary();
         // get modified data streams
         final Map<String, Object> streams = me.getOutputStreams();
-        final Map<String, String> properties =
-            componentPropertiesHandler.getProperties();
+        final Map<String, String> properties = componentPropertiesHandler.getProperties();
 
-        properties.put(TripleStoreUtility.PROP_CREATED_BY_ID, getUtility()
-            .getCurrentUserId());
-        properties.put(TripleStoreUtility.PROP_CREATED_BY_TITLE, getUtility()
-            .getCurrentUserRealName());
+        properties.put(TripleStoreUtility.PROP_CREATED_BY_ID, getUtility().getCurrentUserId());
+        properties.put(TripleStoreUtility.PROP_CREATED_BY_TITLE, getUtility().getCurrentUserRealName());
         final Map components = (Map) streams.get("components");
         final Map componentStreams = (Map) components.get(componentId);
-        final Map<String, Map<String, String>> componentMdAttributes =
-            cmh.getMetadataAttributes().get(componentId);
+        final Map<String, Map<String, String>> componentMdAttributes = cmh.getMetadataAttributes().get(componentId);
         final String escidocMdNsUri = cmh.getNamespacesMap().get(componentId);
         if (componentBinary.get("storage") == null) {
-            throw new InvalidContentException("The attribute 'storage' of the element "
-                    + "'content' is missing.");
+            throw new InvalidContentException("The attribute 'storage' of the element " + "'content' is missing.");
         }
         if (componentBinary.get(DATASTREAM_CONTENT) != null
-            && (componentBinary
-                .get("storage")
-                .equals(
-                    de.escidoc.core.common.business.fedora.Constants.STORAGE_EXTERNAL_URL) || componentBinary
-                .get("storage")
-                .equals(
-                    de.escidoc.core.common.business.fedora.Constants.STORAGE_EXTERNAL_MANAGED))) {
-            throw new InvalidContentException("The component section 'content' with the attribute 'storage' set to 'external-url' "
+            && (componentBinary.get("storage").equals(
+                de.escidoc.core.common.business.fedora.Constants.STORAGE_EXTERNAL_URL) || componentBinary
+                .get("storage").equals(de.escidoc.core.common.business.fedora.Constants.STORAGE_EXTERNAL_MANAGED))) {
+            throw new InvalidContentException(
+                "The component section 'content' with the attribute 'storage' set to 'external-url' "
                     + "or 'external-managed' may not have an inline content.");
         }
-        handleComponent(componentId, properties, componentBinary,
-            componentStreams, componentMdAttributes, escidocMdNsUri);
+        handleComponent(componentId, properties, componentBinary, componentStreams, componentMdAttributes,
+            escidocMdNsUri);
 
         return componentId;
     }
 
     /**
-     * The method prepares datastreams for a fedora object which will represent
-     * a component. - it calls a jhof service to get a technical metadata about
-     * a binary data of the component. - in case that a binary data is an inline
-     * binary stream, the method uploads this binary stream in to a staging area
-     * using a staging component in order to get an access url. - then it calls
-     * the method buildComponentFoxml() with following parameter: provided
-     * componentStreams, an access url to a binary content and a component title
-     * - store retrieved component FOXML in to Fedora.
-     * 
-     * @param componentId
-     *            component id
-     * @param properties
-     *            Property Map
-     * @param binaryContent
-     *            data of the binary data stream
-     * @param datastreams
-     *            HashMap with component data streams
-     * @param mdRecordAttributes
-     *            Attributes of eSciDoc XML md-record element.
-     * @param nsUri
-     *            Name space URI
-     * 
-     * @throws IntegritySystemException
-     *             If the integrity of the repository is violated.
-     * @throws EncodingSystemException
-     *             If encoding fails.
-     * @throws WebserverSystemException
-     *             In case of an internal error.
-     * @throws FileNotFoundException
-     *             If binary content can not be retrieved.
-     * @throws InvalidContentException
-     * @throws TripleStoreSystemException
-     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * The method prepares datastreams for a fedora object which will represent a component. - it calls a jhof service
+     * to get a technical metadata about a binary data of the component. - in case that a binary data is an inline
+     * binary stream, the method uploads this binary stream in to a staging area using a staging component in order to
+     * get an access url. - then it calls the method buildComponentFoxml() with following parameter: provided
+     * componentStreams, an access url to a binary content and a component title - store retrieved component FOXML in to
+     * Fedora.
+     *
+     * @param componentId        component id
+     * @param properties         Property Map
+     * @param binaryContent      data of the binary data stream
+     * @param datastreams        HashMap with component data streams
+     * @param mdRecordAttributes Attributes of eSciDoc XML md-record element.
+     * @param nsUri              Name space URI
+     * @throws IntegritySystemException If the integrity of the repository is violated.
+     * @throws EncodingSystemException  If encoding fails.
+     * @throws WebserverSystemException In case of an internal error.
+     * @throws FileNotFoundException    If binary content can not be retrieved.
      */
     protected void handleComponent(
-        final String componentId, final Map<String, String> properties,
-        final Map<String, String> binaryContent, final Map datastreams,
-        final Map<String, Map<String, String>> mdRecordAttributes,
-        final String nsUri) throws FileNotFoundException,
-        WebserverSystemException, EncodingSystemException,
-        IntegritySystemException, FedoraSystemException,
-        InvalidContentException, TripleStoreSystemException {
+        final String componentId, final Map<String, String> properties, final Map<String, String> binaryContent,
+        final Map datastreams, final Map<String, Map<String, String>> mdRecordAttributes, final String nsUri)
+        throws FileNotFoundException, WebserverSystemException, EncodingSystemException, IntegritySystemException,
+        FedoraSystemException, InvalidContentException, TripleStoreSystemException {
 
         if (datastreams.containsKey(DATASTREAM_CONTENT)) {
             datastreams.remove(DATASTREAM_CONTENT);
         }
-        String mimeType =
-                properties.get(TripleStoreUtility.PROP_MIME_TYPE);
+        String mimeType = properties.get(TripleStoreUtility.PROP_MIME_TYPE);
         if (mimeType == null || mimeType.length() == 0) {
             mimeType = FoXmlProvider.MIME_TYPE_APPLICATION_OCTET_STREAM;
         }
-        datastreams.put(Datastream.RELS_EXT_DATASTREAM,
-            getComponentRelsExtWithVelocity(componentId, properties, true));
+        datastreams.put(Datastream.RELS_EXT_DATASTREAM, getComponentRelsExtWithVelocity(componentId, properties, true));
         if (datastreams.get(FoXmlProvider.DATASTREAM_MD_RECORDS) == null) {
             datastreams.put(FoXmlProvider.DATASTREAM_MD_RECORDS, new HashMap());
         }
-        String uploadUrl =
-                binaryContent.get(FoXmlProvider.DATASTREAM_UPLOAD_URL);
+        String uploadUrl = binaryContent.get(FoXmlProvider.DATASTREAM_UPLOAD_URL);
         if (binaryContent.get(DATASTREAM_CONTENT) != null) {
             final String fileName = "component " + componentId;
-            uploadUrl =
-                uploadBase64EncodedContent(binaryContent
-                    .get(DATASTREAM_CONTENT), fileName, mimeType);
+            uploadUrl = uploadBase64EncodedContent(binaryContent.get(DATASTREAM_CONTENT), fileName, mimeType);
         }
         datastreams.put(FoXmlProvider.DATASTREAM_UPLOAD_URL, uploadUrl);
         try {
             final String componentFoxml =
-                getComponentFoxmlWithVelocity(componentId, mimeType,
-                    datastreams, mdRecordAttributes, nsUri,
-                        binaryContent
-                            .get(FoXmlProvider.DATASTREAM_STORAGE_ATTRIBUTE));
+                getComponentFoxmlWithVelocity(componentId, mimeType, datastreams, mdRecordAttributes, nsUri,
+                    binaryContent.get(FoXmlProvider.DATASTREAM_STORAGE_ATTRIBUTE));
             getFedoraUtility().storeObjectInFedora(componentFoxml, false);
         }
         catch (final FedoraSystemException e) {
-            final Matcher invalidFoxml =
-                PATTERN_INVALID_FOXML.matcher(e.getCause().getMessage());
+            final Matcher invalidFoxml = PATTERN_INVALID_FOXML.matcher(e.getCause().getMessage());
             if (invalidFoxml.find()) {
                 throw new IntegritySystemException(e);
             }

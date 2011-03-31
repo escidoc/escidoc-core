@@ -34,17 +34,15 @@ import org.junit.Test;
 
 /**
  * Test for the Admin tool with REST transport.
- * 
+ *
  * @author André Schenk
- * 
  */
 public class LoadExamplesRestTest extends AdminToolTestBase {
 
     /**
      * Constructor.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     public LoadExamplesRestTest() throws Exception {
         super(Constants.TRANSPORT_REST);
@@ -52,9 +50,8 @@ public class LoadExamplesRestTest extends AdminToolTestBase {
 
     /**
      * Load the examples objects into the repository.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test(timeout = 90000)
     public void testLoadExamples() throws Exception {

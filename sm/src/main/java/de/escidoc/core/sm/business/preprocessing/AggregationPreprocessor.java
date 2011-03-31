@@ -68,15 +68,14 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 /**
- * Preprocesses Raw Statistic Data according one Aggregation-Definition and
- * writes it into the aggregation-tables defined in the aggregation-definition.
- * 
+ * Preprocesses Raw Statistic Data according one Aggregation-Definition and writes it into the aggregation-tables
+ * defined in the aggregation-definition.
+ *
  * @author Michael Hoppe
  */
 public class AggregationPreprocessor {
 
-    private static final Logger LOGGER =
-        LoggerFactory.getLogger(AggregationPreprocessor.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AggregationPreprocessor.class);
 
     private DirectDatabaseAccessorInterface dbAccessor;
 
@@ -86,41 +85,29 @@ public class AggregationPreprocessor {
 
     /**
      * initialize global Hashes (dataHash, fieldTypeHash, differencesHash).
-     * 
-     * @param aggregationDefinitionIn
-     *            AggregationDefinition Binding Object.
+     *
+     * @param aggregationDefinitionIn AggregationDefinition Binding Object.
      * @return AggregationPreprocessorVo initialized Data-Structure
      * @throws StatisticPreprocessingSystemException
-     *             e
-     * 
+     *          e
      */
-    private AggregationPreprocessorVo initVo(
-            final AggregationDefinition aggregationDefinitionIn)
+    private AggregationPreprocessorVo initVo(final AggregationDefinition aggregationDefinitionIn)
         throws StatisticPreprocessingSystemException {
         if (aggregationDefinitionIn == null) {
-            throw new StatisticPreprocessingSystemException(
-                        "AggregationDefinition may not be null");
+            throw new StatisticPreprocessingSystemException("AggregationDefinition may not be null");
         }
         if (aggregationDefinitionIn.getAggregationTables() == null
-                || aggregationDefinitionIn.getAggregationTables().isEmpty()) {
-                throw new StatisticPreprocessingSystemException(
-                    "Aggregation-Tables is null");
+            || aggregationDefinitionIn.getAggregationTables().isEmpty()) {
+            throw new StatisticPreprocessingSystemException("Aggregation-Tables is null");
         }
-        final AggregationPreprocessorVo aggregationPreprocessorVo =
-                                    new AggregationPreprocessorVo();
-        aggregationPreprocessorVo
-            .setAggregationDefinition(aggregationDefinitionIn);
-        for (final AggregationTable aggregationTable
-                : aggregationDefinitionIn.getAggregationTables()) {
-            if (aggregationTable.getName() == null
-                || aggregationTable.getName().length() == 0) {
-                throw new StatisticPreprocessingSystemException(
-                    "Aggregation-Table-Name is null");
+        final AggregationPreprocessorVo aggregationPreprocessorVo = new AggregationPreprocessorVo();
+        aggregationPreprocessorVo.setAggregationDefinition(aggregationDefinitionIn);
+        for (final AggregationTable aggregationTable : aggregationDefinitionIn.getAggregationTables()) {
+            if (aggregationTable.getName() == null || aggregationTable.getName().length() == 0) {
+                throw new StatisticPreprocessingSystemException("Aggregation-Table-Name is null");
             }
-            aggregationPreprocessorVo.getDataHash().put(
-                    aggregationTable.getName(), new HashMap());
-            aggregationPreprocessorVo.getFieldTypeHash().put(
-                aggregationTable.getName(),
+            aggregationPreprocessorVo.getDataHash().put(aggregationTable.getName(), new HashMap());
+            aggregationPreprocessorVo.getFieldTypeHash().put(aggregationTable.getName(),
                 initFieldTypeHash(aggregationTable.getAggregationTableFields()));
 
         }
@@ -129,19 +116,16 @@ public class AggregationPreprocessor {
 
     /**
      * initialize FieldHash.
-     * 
-     * fieldTypeHash-Structure: -key: tablename, value:HashMap within this
-     * HashMap: -key: "fieldtype", value: HashMap within this HashMap: -key:
-     * fieldname, value: filedtype (info, time-reduction, count-cumulation,
-     * difference-cummulation -key: "dbtype", value: HashMap within this
-     * HashMap: -key: fieldname, value:fieldtype (text,numeric, date)
-     * 
-     * @param fieldList
-     *            List of Table-Fields out of Aggregation-Definition.
+     * <p/>
+     * fieldTypeHash-Structure: -key: tablename, value:HashMap within this HashMap: -key: "fieldtype", value: HashMap
+     * within this HashMap: -key: fieldname, value: filedtype (info, time-reduction, count-cumulation,
+     * difference-cummulation -key: "dbtype", value: HashMap within this HashMap: -key: fieldname, value:fieldtype
+     * (text,numeric, date)
+     *
+     * @param fieldList List of Table-Fields out of Aggregation-Definition.
      * @return HashMap fieldInfos
      * @throws StatisticPreprocessingSystemException
-     *             e
-     * 
+     *          e
      */
     private static Map initFieldTypeHash(final Collection<AggregationTableField> fieldList)
         throws StatisticPreprocessingSystemException {
@@ -149,41 +133,27 @@ public class AggregationPreprocessor {
         final HashMap fieldtypes = new HashMap();
         final HashMap dbtypes = new HashMap();
         if (fieldList == null || fieldList.isEmpty()) {
-            throw new StatisticPreprocessingSystemException(
-                "Field-List is null");
+            throw new StatisticPreprocessingSystemException("Field-List is null");
         }
         for (final AggregationTableField field : fieldList) {
-            if (field.getFieldTypeId()
-                    == Constants.COUNT_CUMULATION_FIELD_ID) {
-                fieldtypes.put(field.getName(),
-                    Constants.COUNT_CUMULATION_FIELD);
-                dbtypes.put(field.getName(),
-                    Constants.DATABASE_FIELD_TYPE_NUMERIC);
+            if (field.getFieldTypeId() == Constants.COUNT_CUMULATION_FIELD_ID) {
+                fieldtypes.put(field.getName(), Constants.COUNT_CUMULATION_FIELD);
+                dbtypes.put(field.getName(), Constants.DATABASE_FIELD_TYPE_NUMERIC);
             }
-            else if (field.getFieldTypeId()
-                    == Constants.DIFFERENCE_CUMULATION_FIELD_ID) {
-                fieldtypes.put(field.getName(),
-                    Constants.DIFFERENCE_CUMULATION_FIELD);
-                dbtypes.put(field.getName(),
-                    Constants.DATABASE_FIELD_TYPE_NUMERIC);
+            else if (field.getFieldTypeId() == Constants.DIFFERENCE_CUMULATION_FIELD_ID) {
+                fieldtypes.put(field.getName(), Constants.DIFFERENCE_CUMULATION_FIELD);
+                dbtypes.put(field.getName(), Constants.DATABASE_FIELD_TYPE_NUMERIC);
             }
-            else if (field.getFieldTypeId()
-                    == Constants.INFO_FIELD_ID) {
-                fieldtypes.put(field.getName(),
-                    Constants.INFO_FIELD);
-                dbtypes.put(field.getName(), field
-                    .getDataType());
+            else if (field.getFieldTypeId() == Constants.INFO_FIELD_ID) {
+                fieldtypes.put(field.getName(), Constants.INFO_FIELD);
+                dbtypes.put(field.getName(), field.getDataType());
             }
-            else if (field.getFieldTypeId()
-                    == Constants.TIME_REDUCTION_FIELD_ID) {
-                fieldtypes.put(field.getName(),
-                    Constants.TIME_REDUCTION_FIELD);
-                dbtypes.put(field.getName(),
-                    Constants.DATABASE_FIELD_TYPE_TEXT);
+            else if (field.getFieldTypeId() == Constants.TIME_REDUCTION_FIELD_ID) {
+                fieldtypes.put(field.getName(), Constants.TIME_REDUCTION_FIELD);
+                dbtypes.put(field.getName(), Constants.DATABASE_FIELD_TYPE_TEXT);
             }
             else {
-                throw new StatisticPreprocessingSystemException(
-                    "Field is empty");
+                throw new StatisticPreprocessingSystemException("Field is empty");
             }
         }
         fields.put("fieldtype", fieldtypes);
@@ -192,116 +162,87 @@ public class AggregationPreprocessor {
     }
 
     /**
-     * process Aggregation. -Iterate Statistic-records and cumulate data into
-     * dataHash. -Persist dataHash into Database. (check if insert or update has
-     * to be done).
-     * 
-     * @param aggregationDefinitionIn
-     *            binding-object
-     * @param statisticDatas
-     *            List of statisticData-Records as xml
+     * process Aggregation. -Iterate Statistic-records and cumulate data into dataHash. -Persist dataHash into Database.
+     * (check if insert or update has to be done).
+     *
+     * @param aggregationDefinitionIn binding-object
+     * @param statisticDatas          List of statisticData-Records as xml
      * @return AggregationPreprocessorVo Vo with preprocessed data
      * @throws StatisticPreprocessingSystemException
-     *             e
-     * @throws SqlDatabaseSystemException
-     *             e
-     * 
+     *                                    e
+     * @throws SqlDatabaseSystemException e
      */
     public AggregationPreprocessorVo processAggregation(
-        final AggregationDefinition aggregationDefinitionIn,
-        final Iterable statisticDatas)
-        throws StatisticPreprocessingSystemException,
-        SqlDatabaseSystemException {
+        final AggregationDefinition aggregationDefinitionIn, final Iterable statisticDatas)
+        throws StatisticPreprocessingSystemException, SqlDatabaseSystemException {
         this.xpathFactory = XPathFactory.newInstance();
         if (statisticDatas != null) {
             // initialize DataHash depending on AggregationDefinition
-            final AggregationPreprocessorVo aggregationPreprocessorVo =
-                                    initVo(aggregationDefinitionIn);
+            final AggregationPreprocessorVo aggregationPreprocessorVo = initVo(aggregationDefinitionIn);
             // Iterate over statistic-records
             for (final Object statisticData : statisticDatas) {
                 final Map map = (Map) statisticData;
-                final String xml = (String) map.get(
-                        Constants.STATISTIC_DATA_XML_FIELD_NAME);
-                final Timestamp timestamp = (Timestamp) map.get(
-                        Constants.STATISTIC_DATA_TIMESTAMP_FIELD_NAME);
+                final String xml = (String) map.get(Constants.STATISTIC_DATA_XML_FIELD_NAME);
+                final Timestamp timestamp = (Timestamp) map.get(Constants.STATISTIC_DATA_TIMESTAMP_FIELD_NAME);
                 try {
                     // put data of statistic-record into dataHash
                     if (xml != null && timestamp != null) {
                         handleRecord(xml, timestamp, aggregationPreprocessorVo);
-                    } else {
+                    }
+                    else {
                         LOGGER.error("xml or timestamp is null");
                     }
-                } catch (final Exception e) {
+                }
+                catch (final Exception e) {
                     throw new StatisticPreprocessingSystemException(e);
                 }
             }
-            
+
             return aggregationPreprocessorVo;
-        } else {
+        }
+        else {
             return null;
         }
     }
 
     /**
      * process one Statistic Record.
-     * 
-     * @param xml
-     *            statistic-record-xml
-     * @param aggregationPreprocessorVo
-     *            Object that holds all values
-     * @param timestamp
-     *            time the record was written
+     *
+     * @param xml                       statistic-record-xml
+     * @param aggregationPreprocessorVo Object that holds all values
+     * @param timestamp                 time the record was written
      * @throws StatisticPreprocessingSystemException
-     *             e
-     * 
+     *          e
      */
-    private void handleRecord(final String xml, 
-                final Timestamp timestamp, 
-                final AggregationPreprocessorVo aggregationPreprocessorVo)
+    private void handleRecord(
+        final String xml, final Timestamp timestamp, final AggregationPreprocessorVo aggregationPreprocessorVo)
         throws StatisticPreprocessingSystemException {
-        if (aggregationPreprocessorVo
-                .getAggregationDefinition()
-                    .getAggregationTables() == null
-            || aggregationPreprocessorVo
-                .getAggregationDefinition()
-                    .getAggregationTables().isEmpty()) {
-            throw new StatisticPreprocessingSystemException(
-                "Aggregation-Tables is null");
+        if (aggregationPreprocessorVo.getAggregationDefinition().getAggregationTables() == null
+            || aggregationPreprocessorVo.getAggregationDefinition().getAggregationTables().isEmpty()) {
+            throw new StatisticPreprocessingSystemException("Aggregation-Tables is null");
         }
         // Iterate over all Tables of this Aggregation
-        for (final AggregationTable aggregationTable
-                : aggregationPreprocessorVo.getAggregationDefinition()
-                                            .getAggregationTables()) {
-            handleTable(xml, 
-                    timestamp, 
-                    aggregationTable, 
-                    aggregationPreprocessorVo);
+        for (final AggregationTable aggregationTable : aggregationPreprocessorVo
+            .getAggregationDefinition().getAggregationTables()) {
+            handleTable(xml, timestamp, aggregationTable, aggregationPreprocessorVo);
 
         }
     }
 
     /**
-     * preprocess one statistic-record for one aggregation-table. -Put values in
-     * global -forOneRecord-Hashes. -merge data of -forOneRecord-Hashes into
-     * global Hashes for this Aggregation.
-     * 
-     * @param xml
-     *            statistic-record-xml
-     * @param timestamp
-     *            time the record was written
-     * @param aggregationTable
-     *            aggregation-table-binding-object
-     * @param aggregationPreprocessorVo
-     *            Object that holds all values
+     * preprocess one statistic-record for one aggregation-table. -Put values in global -forOneRecord-Hashes. -merge
+     * data of -forOneRecord-Hashes into global Hashes for this Aggregation.
+     *
+     * @param xml                       statistic-record-xml
+     * @param timestamp                 time the record was written
+     * @param aggregationTable          aggregation-table-binding-object
+     * @param aggregationPreprocessorVo Object that holds all values
      * @throws StatisticPreprocessingSystemException
-     *             e
-     * 
+     *          e
      */
     private void handleTable(
-        final String xml, final Timestamp timestamp,
-        final AggregationTable aggregationTable,
-        final AggregationPreprocessorVo aggregationPreprocessorVo)
-        throws StatisticPreprocessingSystemException {
+        final String xml, final Timestamp timestamp, final AggregationTable aggregationTable,
+        final AggregationPreprocessorVo aggregationPreprocessorVo) throws StatisticPreprocessingSystemException {
         // write all fields + values into fieldHashForOneRecord
         // later merge this with dataHash
         aggregationPreprocessorVo.setFieldHashForOneRecord(new HashMap());
@@ -320,25 +261,18 @@ public class AggregationPreprocessor {
         // Iterate over all fields of this Aggregation
         // to get the required data out of the statistic-record
         // as defined for each field as xpathFactory-expression
-        for (final AggregationTableField field
-                : aggregationTable.getAggregationTableFields()) {
-            if (field.getFieldTypeId()
-                    == Constants.COUNT_CUMULATION_FIELD_ID) {
+        for (final AggregationTableField field : aggregationTable.getAggregationTableFields()) {
+            if (field.getFieldTypeId() == Constants.COUNT_CUMULATION_FIELD_ID) {
                 handleCountCumulationField(field, aggregationPreprocessorVo);
             }
-            else if (field.getFieldTypeId()
-                    == Constants.DIFFERENCE_CUMULATION_FIELD_ID) {
-                handleDifferenceCumulationField(
-                        field, xml, aggregationPreprocessorVo);
+            else if (field.getFieldTypeId() == Constants.DIFFERENCE_CUMULATION_FIELD_ID) {
+                handleDifferenceCumulationField(field, xml, aggregationPreprocessorVo);
             }
-            else if (field.getFieldTypeId()
-                    == Constants.INFO_FIELD_ID) {
+            else if (field.getFieldTypeId() == Constants.INFO_FIELD_ID) {
                 handleInfoField(field, xml, aggregationPreprocessorVo);
             }
-            else if (field.getFieldTypeId()
-                    == Constants.TIME_REDUCTION_FIELD_ID) {
-                handleTimeReductionField(
-                        field, xml, timestamp, aggregationPreprocessorVo);
+            else if (field.getFieldTypeId() == Constants.TIME_REDUCTION_FIELD_ID) {
+                handleTimeReductionField(field, xml, timestamp, aggregationPreprocessorVo);
             }
         }
 
@@ -349,22 +283,16 @@ public class AggregationPreprocessor {
     }
 
     /**
-     * Handle one statistic-record for one info-field. Put values in global
-     * -forOneRecord-Hashes.
-     * 
-     * @param field
-     *            info-field
-     * @param xml
-     *            statistic-record-xml
-     * @param aggregationPreprocessorVo
-     *            Object that holds all values
+     * Handle one statistic-record for one info-field. Put values in global -forOneRecord-Hashes.
+     *
+     * @param field                     info-field
+     * @param xml                       statistic-record-xml
+     * @param aggregationPreprocessorVo Object that holds all values
      * @throws StatisticPreprocessingSystemException
-     *             e
-     * 
+     *          e
      */
-    private void handleInfoField(final AggregationTableField field, 
-                final String xml, 
-                final AggregationPreprocessorVo aggregationPreprocessorVo)
+    private void handleInfoField(
+        final AggregationTableField field, final String xml, final AggregationPreprocessorVo aggregationPreprocessorVo)
         throws StatisticPreprocessingSystemException {
         // process info-field
         // -get fieldValue by querying statistic-data-xml
@@ -373,21 +301,13 @@ public class AggregationPreprocessor {
         // -append fieldValue to uniqueKey
         try {
             String fieldValue =
-                (String) xpathFactory.newXPath().evaluate(
-                        field.getXpath().replaceAll("\\s+", " "), 
-                        new InputSource(
-                    new ByteArrayInputStream(xml.getBytes(
-                                    XmlUtility.CHARACTER_ENCODING))),
+                (String) xpathFactory.newXPath().evaluate(field.getXpath().replaceAll("\\s+", " "),
+                    new InputSource(new ByteArrayInputStream(xml.getBytes(XmlUtility.CHARACTER_ENCODING))),
                     XPathConstants.STRING);
 
             fieldValue = fieldValue.trim().replaceAll("\\s+", " ");
-            aggregationPreprocessorVo
-                .getFieldHashForOneRecord()
-                .put(field.getName(),
-                fieldValue);
-            aggregationPreprocessorVo
-                .getUniqueKeyForOneRecord()
-                    .append(fieldValue);
+            aggregationPreprocessorVo.getFieldHashForOneRecord().put(field.getName(), fieldValue);
+            aggregationPreprocessorVo.getUniqueKeyForOneRecord().append(fieldValue);
         }
         catch (final Exception e) {
             throw new StatisticPreprocessingSystemException(e);
@@ -396,27 +316,18 @@ public class AggregationPreprocessor {
     }
 
     /**
-     * Handle one statistic-record for one time-reduction-field. Put values in
-     * global -forOneRecord-Hashes.
-     * 
-     * @param field
-     *            time-reduction-field
-     * @param xml
-     *            statistic-record-xml
-     * @param timestamp
-     *            time the record was written
-     * @param aggregationPreprocessorVo
-     *            Object that holds all values
+     * Handle one statistic-record for one time-reduction-field. Put values in global -forOneRecord-Hashes.
+     *
+     * @param field                     time-reduction-field
+     * @param xml                       statistic-record-xml
+     * @param timestamp                 time the record was written
+     * @param aggregationPreprocessorVo Object that holds all values
      * @throws StatisticPreprocessingSystemException
-     *             e
-     * 
+     *          e
      */
     private void handleTimeReductionField(
-            final AggregationTableField field, 
-            final String xml, 
-            final Timestamp timestamp, 
-            final AggregationPreprocessorVo aggregationPreprocessorVo)
-        throws StatisticPreprocessingSystemException {
+        final AggregationTableField field, final String xml, final Timestamp timestamp,
+        final AggregationPreprocessorVo aggregationPreprocessorVo) throws StatisticPreprocessingSystemException {
         // process time-reduction-field
         // -get fieldValue by querying statistic-data-xml
         // with XPath-expression of Field
@@ -428,33 +339,22 @@ public class AggregationPreprocessor {
         // -append fieldValue to uniqueKey
         try {
             final Calendar cal;
-            if (field.getXpath() != null
-                && field.getXpath().length() != 0) {
+            if (field.getXpath() != null && field.getXpath().length() != 0) {
                 String fieldValue =
-                    (String) xpathFactory.newXPath().evaluate(
-                            field.getXpath().replaceAll("\\s+", " "), 
-                            new InputSource(
-                        new ByteArrayInputStream(
-                                xml.getBytes(XmlUtility.CHARACTER_ENCODING))),
+                    (String) xpathFactory.newXPath().evaluate(field.getXpath().replaceAll("\\s+", " "),
+                        new InputSource(new ByteArrayInputStream(xml.getBytes(XmlUtility.CHARACTER_ENCODING))),
                         XPathConstants.STRING);
                 fieldValue = fieldValue.trim().replaceAll("\\s+", " ");
-                final XMLGregorianCalendar xmlCal =
-                    DatatypeFactory.newInstance().newXMLGregorianCalendar(
-                        fieldValue);
+                final XMLGregorianCalendar xmlCal = DatatypeFactory.newInstance().newXMLGregorianCalendar(fieldValue);
                 cal = xmlCal.toGregorianCalendar();
             }
             else {
                 cal = Calendar.getInstance();
                 cal.setTimeInMillis(timestamp.getTime());
             }
-            final String hashValue =
-                reduceTime(cal, field.getReduceTo());
-            aggregationPreprocessorVo
-                .getFieldHashForOneRecord()
-                .put(field.getName(),
-                hashValue);
-            aggregationPreprocessorVo
-                .getUniqueKeyForOneRecord().append(hashValue);
+            final String hashValue = reduceTime(cal, field.getReduceTo());
+            aggregationPreprocessorVo.getFieldHashForOneRecord().put(field.getName(), hashValue);
+            aggregationPreprocessorVo.getUniqueKeyForOneRecord().append(hashValue);
         }
         catch (final Exception e) {
             throw new StatisticPreprocessingSystemException(e);
@@ -462,43 +362,29 @@ public class AggregationPreprocessor {
     }
 
     /**
-     * Handle one statistic-record for one count-cumulation-field. Put values in
-     * global -forOneRecord-Hashes.
-     * 
-     * @param field
-     *            count-cumulation-field
-     * @param aggregationPreprocessorVo
-     *            Object that holds all values
-     * 
+     * Handle one statistic-record for one count-cumulation-field. Put values in global -forOneRecord-Hashes.
+     *
+     * @param field                     count-cumulation-field
+     * @param aggregationPreprocessorVo Object that holds all values
      */
-    private static void handleCountCumulationField(final AggregationTableField field,
-                                                   final AggregationPreprocessorVo aggregationPreprocessorVo) {
+    private static void handleCountCumulationField(
+        final AggregationTableField field, final AggregationPreprocessorVo aggregationPreprocessorVo) {
         // process count-cumulation-field:
         // just put 1 in fieldsHash
-        aggregationPreprocessorVo
-            .getFieldHashForOneRecord()
-            .put(field.getName(),
-            "1");
+        aggregationPreprocessorVo.getFieldHashForOneRecord().put(field.getName(), "1");
     }
 
     /**
-     * Handle one statistic-record for one difference-cumulation-field. Put
-     * values in global -forOneRecord-Hashes.
-     * 
-     * @param field
-     *            difference-cumulation-field
-     * @param xml
-     *            statistic-record-xml
-     * @param aggregationPreprocessorVo
-     *            Object that holds all values
+     * Handle one statistic-record for one difference-cumulation-field. Put values in global -forOneRecord-Hashes.
+     *
+     * @param field                     difference-cumulation-field
+     * @param xml                       statistic-record-xml
+     * @param aggregationPreprocessorVo Object that holds all values
      * @throws StatisticPreprocessingSystemException
-     *             e
-     * 
+     *          e
      */
     private void handleDifferenceCumulationField(
-            final AggregationTableField field, 
-            final String xml, 
-            final AggregationPreprocessorVo aggregationPreprocessorVo)
+        final AggregationTableField field, final String xml, final AggregationPreprocessorVo aggregationPreprocessorVo)
         throws StatisticPreprocessingSystemException {
         // process difference-cumulation-field
         // -write fieldname + fieldvalue from this statistic-record
@@ -506,39 +392,27 @@ public class AggregationPreprocessor {
         // -just put 1 in fieldsHash
         try {
             String fieldValue =
-                (String) xpathFactory.newXPath().evaluate(
-                        field.getXpath().replaceAll("\\s+", " "),
-                    new InputSource(new ByteArrayInputStream(
-                            xml.getBytes(XmlUtility.CHARACTER_ENCODING))),
+                (String) xpathFactory.newXPath().evaluate(field.getXpath().replaceAll("\\s+", " "),
+                    new InputSource(new ByteArrayInputStream(xml.getBytes(XmlUtility.CHARACTER_ENCODING))),
                     XPathConstants.STRING);
             fieldValue = fieldValue.trim().replaceAll("\\s+", " ");
             aggregationPreprocessorVo
-                .getDifferenceHashForOneRecord()
-                .put(field
-                .getName(), field.getName()
-                + fieldValue);
+                .getDifferenceHashForOneRecord().put(field.getName(), field.getName() + fieldValue);
         }
         catch (final Exception e) {
             throw new StatisticPreprocessingSystemException(e);
         }
-        aggregationPreprocessorVo
-            .getFieldHashForOneRecord()
-            .put(field
-            .getName(), "1");
+        aggregationPreprocessorVo.getFieldHashForOneRecord().put(field.getName(), "1");
 
     }
 
     /**
-     * merge values of global -ForOneRecord-Hashes into global Hashes for this
-     * aggregation.
-     * 
-     * @param tablename
-     *            tablename
-     * @param aggregationPreprocessorVo
-     *            Object that holds all values
+     * merge values of global -ForOneRecord-Hashes into global Hashes for this aggregation.
+     *
+     * @param tablename                 tablename
+     * @param aggregationPreprocessorVo Object that holds all values
      * @throws StatisticPreprocessingSystemException
-     *             e
-     * 
+     *          e
      */
     private static void mergeRecord(final String tablename, final AggregationPreprocessorVo aggregationPreprocessorVo)
         throws StatisticPreprocessingSystemException {
@@ -552,25 +426,17 @@ public class AggregationPreprocessor {
         // if it exists: set value of field in fieldHash to 0
         // if it doesnt exist: write it into global variable differencesHash
         if (aggregationPreprocessorVo.getDifferenceHashForOneRecord() != null) {
-            for (final Object o : aggregationPreprocessorVo
-                    .getDifferenceHashForOneRecord()
-                    .keySet()) {
+            for (final Object o : aggregationPreprocessorVo.getDifferenceHashForOneRecord().keySet()) {
                 final String fieldname = (String) o;
                 final StringBuilder key = new StringBuilder(tablename);
                 key.append('|').append(fieldname).append('|').append(
-                        aggregationPreprocessorVo
-                                .getUniqueKeyForOneRecord().toString())
-                        .append('|').append(
-                        aggregationPreprocessorVo
-                                .getDifferenceHashForOneRecord().get(fieldname));
-                if (aggregationPreprocessorVo
-                        .getDifferencesHash()
-                        .get(key.toString()) == null) {
-                    aggregationPreprocessorVo
-                            .getDifferencesHash().put(key.toString(), "");
-                } else {
-                    aggregationPreprocessorVo
-                            .getFieldHashForOneRecord().put(fieldname, "0");
+                    aggregationPreprocessorVo.getUniqueKeyForOneRecord().toString()).append('|').append(
+                    aggregationPreprocessorVo.getDifferenceHashForOneRecord().get(fieldname));
+                if (aggregationPreprocessorVo.getDifferencesHash().get(key.toString()) == null) {
+                    aggregationPreprocessorVo.getDifferencesHash().put(key.toString(), "");
+                }
+                else {
+                    aggregationPreprocessorVo.getFieldHashForOneRecord().put(fieldname, "0");
                 }
             }
         }
@@ -580,12 +446,11 @@ public class AggregationPreprocessor {
         // of the count-cumulation-fields
         // and difference-cumulation-fields to the record in the dataHash
         // if no: add new record with uniqueKey to dataHash
-        if (((Map) aggregationPreprocessorVo
-                .getDataHash().get(tablename)).get(
-                        aggregationPreprocessorVo.getUniqueKeyForOneRecord()
-                        .toString()) != null) {
-            final Map record = (Map) ((Map) aggregationPreprocessorVo.getDataHash().get(tablename))
-                    .get(aggregationPreprocessorVo.getUniqueKeyForOneRecord().toString());
+        if (((Map) aggregationPreprocessorVo.getDataHash().get(tablename)).get(aggregationPreprocessorVo
+            .getUniqueKeyForOneRecord().toString()) != null) {
+            final Map record =
+                (Map) ((Map) aggregationPreprocessorVo.getDataHash().get(tablename)).get(aggregationPreprocessorVo
+                    .getUniqueKeyForOneRecord().toString());
             final Map tablefields = (Map) aggregationPreprocessorVo.getFieldTypeHash().get(tablename);
             HashMap fieldtypes = new HashMap();
             if (tablefields != null) {
@@ -594,67 +459,48 @@ public class AggregationPreprocessor {
             final Set<Entry> fieldtypesEntrySet = fieldtypes.entrySet();
             for (final Entry entry : fieldtypesEntrySet) {
                 final String fieldname = (String) entry.getKey();
-                if (entry.getValue().equals(
-                        Constants.COUNT_CUMULATION_FIELD)
-                    || entry.getValue().equals(
-                        Constants.DIFFERENCE_CUMULATION_FIELD)) {
-                    BigInteger dataHashInteger =
-                        new BigInteger((String) record.get(fieldname));
+                if (entry.getValue().equals(Constants.COUNT_CUMULATION_FIELD)
+                    || entry.getValue().equals(Constants.DIFFERENCE_CUMULATION_FIELD)) {
+                    BigInteger dataHashInteger = new BigInteger((String) record.get(fieldname));
                     final BigInteger oneRecordHashInteger =
-                        new BigInteger((String) aggregationPreprocessorVo
-                                .getFieldHashForOneRecord()
-                                .get(fieldname));
+                        new BigInteger((String) aggregationPreprocessorVo.getFieldHashForOneRecord().get(fieldname));
                     dataHashInteger = dataHashInteger.add(oneRecordHashInteger);
                     record.put(fieldname, dataHashInteger.toString());
                 }
             }
         }
         else {
-            ((Map) aggregationPreprocessorVo.getDataHash().get(tablename)).put(
-                        aggregationPreprocessorVo.getUniqueKeyForOneRecord()
-                            .toString(), 
-                            aggregationPreprocessorVo.getFieldHashForOneRecord());
+            ((Map) aggregationPreprocessorVo.getDataHash().get(tablename)).put(aggregationPreprocessorVo
+                .getUniqueKeyForOneRecord().toString(), aggregationPreprocessorVo.getFieldHashForOneRecord());
         }
-    }   
+    }
 
     /**
      * persist Aggregation-data into database.
-     * 
-     * @param aggregationPreprocessorVo
-     *            Object that holds all values
-     * @param aggregationDefinitionId
-     *            aggregationDefinitionId
-     * @param date
-     *            processing-date
-     * @throws SqlDatabaseSystemException
-     *             e
      *
+     * @param aggregationPreprocessorVo Object that holds all values
+     * @param aggregationDefinitionId   aggregationDefinitionId
+     * @param date                      processing-date
+     * @throws SqlDatabaseSystemException e
      */
     public void persistAggregation(
-            final AggregationPreprocessorVo aggregationPreprocessorVo, 
-            final String aggregationDefinitionId, 
-            final Date date) 
-                                    throws SqlDatabaseSystemException {
+        final AggregationPreprocessorVo aggregationPreprocessorVo, final String aggregationDefinitionId, final Date date)
+        throws SqlDatabaseSystemException {
         // dont process statistic-data for this date and
         // aggregation-definition
         // if statistic-data was processed successfully before.
         final Collection<PreprocessingLog> preprocessingLogs =
-                preprocessingLogsDao.retrievePreprocessingLogs(
-                aggregationDefinitionId, date, false);
+            preprocessingLogsDao.retrievePreprocessingLogs(aggregationDefinitionId, date, false);
         if (preprocessingLogs != null && !preprocessingLogs.isEmpty()) {
             final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            LOGGER.error("aggregation-definition "
-                    + aggregationDefinitionId
-                    + " already preprocessed successfully for date "
-                    + dateFormat.format(date));
+            LOGGER.error("aggregation-definition " + aggregationDefinitionId
+                + " already preprocessed successfully for date " + dateFormat.format(date));
             return;
         }
         final DatabaseSelectVo databaseSelectVo = new DatabaseSelectVo();
-        if (aggregationPreprocessorVo != null
-                && aggregationPreprocessorVo.getDataHash() != null
-                && !aggregationPreprocessorVo.getDataHash().isEmpty()) {
-            for (final Object o : aggregationPreprocessorVo.getDataHash()
-                    .keySet()) {
+        if (aggregationPreprocessorVo != null && aggregationPreprocessorVo.getDataHash() != null
+            && !aggregationPreprocessorVo.getDataHash().isEmpty()) {
+            for (final Object o : aggregationPreprocessorVo.getDataHash().keySet()) {
                 // Iterate dataHash, for each Aggregation-table
                 final String tablename = (String) o;
 
@@ -671,8 +517,7 @@ public class AggregationPreprocessor {
                         tablenames.add(tablename);
                         databaseSelectVo.setTableNames(tablenames);
 
-                        databaseSelectVo.setSelectType(
-                                Constants.DATABASE_SELECT_TYPE_SELECT);
+                        databaseSelectVo.setSelectType(Constants.DATABASE_SELECT_TYPE_SELECT);
 
                         final SelectFieldVo selectFieldVo = new SelectFieldVo();
                         selectFieldVo.setFieldName("*");
@@ -680,8 +525,7 @@ public class AggregationPreprocessor {
                         selectFieldVos.add(selectFieldVo);
                         databaseSelectVo.setSelectFieldVos(selectFieldVos);
 
-                        final RootWhereGroupVo rootWhereGroupVo =
-                                new RootWhereGroupVo();
+                        final RootWhereGroupVo rootWhereGroupVo = new RootWhereGroupVo();
                         if (fields == null || fields.isEmpty()) {
                             continue;
                         }
@@ -691,94 +535,61 @@ public class AggregationPreprocessor {
                         for (final Object o2 : fields.keySet()) {
                             final String fieldname = (String) o2;
                             final Map fieldHash =
-                                    (Map) ((Map) aggregationPreprocessorVo.getFieldTypeHash().get(tablename))
-                                            .get("fieldtype");
-                            final Map dbHash = (Map) ((Map) aggregationPreprocessorVo.getFieldTypeHash().get(tablename))
-                                    .get("dbtype");
+                                (Map) ((Map) aggregationPreprocessorVo.getFieldTypeHash().get(tablename))
+                                    .get("fieldtype");
+                            final Map dbHash =
+                                (Map) ((Map) aggregationPreprocessorVo.getFieldTypeHash().get(tablename)).get("dbtype");
                             String fieldtype = null;
                             if (fieldHash != null) {
-                                fieldtype = (String) fieldHash
-                                        .get(fieldname);
+                                fieldtype = (String) fieldHash.get(fieldname);
                             }
                             if (fieldtype != null
-                                    && (fieldtype
-                                    .equals(Constants.INFO_FIELD)
-                                    || fieldtype
-                                    .equals(
-                                            Constants.TIME_REDUCTION_FIELD))) {
+                                && (fieldtype.equals(Constants.INFO_FIELD) || fieldtype
+                                    .equals(Constants.TIME_REDUCTION_FIELD))) {
                                 if (i == 0) {
-                                    final RootWhereFieldVo rootWhereFieldVo =
-                                            new RootWhereFieldVo();
-                                    rootWhereFieldVo
-                                            .setFieldName(fieldname);
-                                    rootWhereFieldVo
-                                            .setFieldType((String) dbHash
-                                                    .get(fieldname));
-                                    rootWhereFieldVo
-                                            .setFieldValue((String) fields
-                                                    .get(fieldname));
-                                    rootWhereFieldVo
-                                            .setOperator(
-                                                    Constants.DATABASE_OPERATOR_EQUALS);
-                                    rootWhereGroupVo
-                                            .setRootWhereFieldVo(rootWhereFieldVo);
-                                } else {
-                                    final AdditionalWhereFieldVo additionalWhereFieldVo =
-                                            new AdditionalWhereFieldVo();
-                                    additionalWhereFieldVo
-                                            .setAlliance(
-                                                    Constants.DATABASE_ALLIANCE_AND);
-                                    additionalWhereFieldVo
-                                            .setFieldName(fieldname);
-                                    additionalWhereFieldVo
-                                            .setFieldType((String) dbHash
-                                                    .get(fieldname));
-                                    additionalWhereFieldVo
-                                            .setFieldValue((String) fields
-                                                    .get(fieldname));
-                                    additionalWhereFieldVo
-                                            .setOperator(
-                                                    Constants.DATABASE_OPERATOR_EQUALS);
-                                    if (rootWhereGroupVo
-                                            .getAdditionalWhereFieldVos()
-                                            == null) {
+                                    final RootWhereFieldVo rootWhereFieldVo = new RootWhereFieldVo();
+                                    rootWhereFieldVo.setFieldName(fieldname);
+                                    rootWhereFieldVo.setFieldType((String) dbHash.get(fieldname));
+                                    rootWhereFieldVo.setFieldValue((String) fields.get(fieldname));
+                                    rootWhereFieldVo.setOperator(Constants.DATABASE_OPERATOR_EQUALS);
+                                    rootWhereGroupVo.setRootWhereFieldVo(rootWhereFieldVo);
+                                }
+                                else {
+                                    final AdditionalWhereFieldVo additionalWhereFieldVo = new AdditionalWhereFieldVo();
+                                    additionalWhereFieldVo.setAlliance(Constants.DATABASE_ALLIANCE_AND);
+                                    additionalWhereFieldVo.setFieldName(fieldname);
+                                    additionalWhereFieldVo.setFieldType((String) dbHash.get(fieldname));
+                                    additionalWhereFieldVo.setFieldValue((String) fields.get(fieldname));
+                                    additionalWhereFieldVo.setOperator(Constants.DATABASE_OPERATOR_EQUALS);
+                                    if (rootWhereGroupVo.getAdditionalWhereFieldVos() == null) {
                                         rootWhereGroupVo
-                                                .setAdditionalWhereFieldVos(
-                                                        new ArrayList<AdditionalWhereFieldVo>());
+                                            .setAdditionalWhereFieldVos(new ArrayList<AdditionalWhereFieldVo>());
                                     }
-                                    rootWhereGroupVo
-                                            .getAdditionalWhereFieldVos()
-                                            .add(
-                                                    additionalWhereFieldVo);
+                                    rootWhereGroupVo.getAdditionalWhereFieldVos().add(additionalWhereFieldVo);
                                 }
                                 i++;
                             }
                         }
 
                         // set where-clauses
-                        databaseSelectVo
-                                .setRootWhereGroupVo(rootWhereGroupVo);
+                        databaseSelectVo.setRootWhereGroupVo(rootWhereGroupVo);
 
                         // Query Database
-                        final List results = dbAccessor
-                                .executeSql(databaseSelectVo);
+                        final List results = dbAccessor.executeSql(databaseSelectVo);
 
                         // If record doesnt exist yet, insert new Record
                         if (results == null || results.isEmpty()) {
                             // insert Record
-                            insertRecord(
-                                    tablename, fields,
-                                    aggregationPreprocessorVo);
+                            insertRecord(tablename, fields, aggregationPreprocessorVo);
 
                             // if record already exists, take record and add
                             // values
                             // to count-cumulation-fields
                             // and difference-cumulation-fields
-                        } else {
+                        }
+                        else {
                             // update Record
-                            updateRecord(tablename,
-                                    fields, results,
-                                    aggregationPreprocessorVo);
+                            updateRecord(tablename, fields, results, aggregationPreprocessorVo);
                         }
                     }
                 }
@@ -797,34 +608,25 @@ public class AggregationPreprocessor {
 
     /**
      * insert record into aggregation-table.
-     * 
-     * @param tablename
-     *            name of database table
-     * @param fields
-     *            database fields
-     * @param aggregationPreprocessorVo
-     *            Object that holds all values
-     * @throws SqlDatabaseSystemException
-     *             e
-     * 
+     *
+     * @param tablename                 name of database table
+     * @param fields                    database fields
+     * @param aggregationPreprocessorVo Object that holds all values
+     * @throws SqlDatabaseSystemException e
      */
-    private void insertRecord(final String tablename, 
-            final Map fields, 
-            final AggregationPreprocessorVo aggregationPreprocessorVo)
+    private void insertRecord(
+        final String tablename, final Map fields, final AggregationPreprocessorVo aggregationPreprocessorVo)
         throws SqlDatabaseSystemException {
         final DatabaseRecordVo databaseRecordVo = new DatabaseRecordVo();
         databaseRecordVo.setTableName(tablename);
-        final Collection<DatabaseRecordFieldVo> databaseRecordFieldVos =
-            new ArrayList<DatabaseRecordFieldVo>();
+        final Collection<DatabaseRecordFieldVo> databaseRecordFieldVos = new ArrayList<DatabaseRecordFieldVo>();
         final Set<Entry> fieldsEntrySet = fields.entrySet();
         for (final Entry entry : fieldsEntrySet) {
-            final String fieldname = (String)entry.getKey();
-            final DatabaseRecordFieldVo databaseRecordFieldVo =
-                new DatabaseRecordFieldVo();
+            final String fieldname = (String) entry.getKey();
+            final DatabaseRecordFieldVo databaseRecordFieldVo = new DatabaseRecordFieldVo();
             databaseRecordFieldVo.setFieldName(fieldname);
-            databaseRecordFieldVo.setFieldValue((String)entry.getValue());
-            databaseRecordFieldVo.setFieldType(getDbFieldType(tablename,
-                fieldname, aggregationPreprocessorVo));
+            databaseRecordFieldVo.setFieldValue((String) entry.getValue());
+            databaseRecordFieldVo.setFieldType(getDbFieldType(tablename, fieldname, aggregationPreprocessorVo));
             databaseRecordFieldVos.add(databaseRecordFieldVo);
         }
         databaseRecordVo.setDatabaseRecordFieldVos(databaseRecordFieldVos);
@@ -832,29 +634,19 @@ public class AggregationPreprocessor {
     }
 
     /**
-     * updates record in aggregation-table. -Take list of results (should be one
-     * result only) and add values of this processing to the
-     * count-cumulation-fields and difference-cumulation-fields -build
-     * databaseSelectVo -update record in database
-     * 
-     * 
-     * @param tablename
-     *            name of database table
-     * @param fields
-     *            database fields
-     * @param results
-     *            results from old db-record
-     * @param aggregationPreprocessorVo
-     *            Object that holds all values
-     * @throws SqlDatabaseSystemException
-     *             e
+     * updates record in aggregation-table. -Take list of results (should be one result only) and add values of this
+     * processing to the count-cumulation-fields and difference-cumulation-fields -build databaseSelectVo -update record
+     * in database
+     *
+     * @param tablename                 name of database table
+     * @param fields                    database fields
+     * @param results                   results from old db-record
+     * @param aggregationPreprocessorVo Object that holds all values
+     * @throws SqlDatabaseSystemException e
      */
     private void updateRecord(
-            final String tablename, 
-            final Map fields, 
-            final Iterable results,
-            final AggregationPreprocessorVo aggregationPreprocessorVo)
-        throws SqlDatabaseSystemException {
+        final String tablename, final Map fields, final Iterable results,
+        final AggregationPreprocessorVo aggregationPreprocessorVo) throws SqlDatabaseSystemException {
         for (final Object result : results) {
             final Map fieldsMap = (Map) result;
             final DatabaseSelectVo databaseSelectVo = new DatabaseSelectVo();
@@ -862,11 +654,9 @@ public class AggregationPreprocessor {
             tablenames.add(tablename);
             databaseSelectVo.setTableNames(tablenames);
 
-            databaseSelectVo.setSelectType(
-                    Constants.DATABASE_SELECT_TYPE_UPDATE);
+            databaseSelectVo.setSelectType(Constants.DATABASE_SELECT_TYPE_UPDATE);
             final RootWhereGroupVo rootWhereGroupVo = new RootWhereGroupVo();
-            final Collection<SelectFieldVo> selectFieldVos =
-                    new ArrayList<SelectFieldVo>();
+            final Collection<SelectFieldVo> selectFieldVos = new ArrayList<SelectFieldVo>();
 
             final Set<Entry> fieldsEntrySet = fields.entrySet();
             try {
@@ -874,66 +664,51 @@ public class AggregationPreprocessor {
                 for (final Entry entry : fieldsEntrySet) {
                     final String fieldname = (String) entry.getKey();
                     final Map fieldHash =
-                            (Map) ((Map) aggregationPreprocessorVo.getFieldTypeHash().get(tablename)).get("fieldtype");
+                        (Map) ((Map) aggregationPreprocessorVo.getFieldTypeHash().get(tablename)).get("fieldtype");
                     final Map dbHash =
-                            (Map) ((Map) aggregationPreprocessorVo.getFieldTypeHash().get(tablename)).get("dbtype");
+                        (Map) ((Map) aggregationPreprocessorVo.getFieldTypeHash().get(tablename)).get("dbtype");
                     String fieldtype = null;
                     if (fieldHash != null) {
                         fieldtype = (String) fieldHash.get(fieldname);
                     }
                     if (fieldtype != null
-                            && (fieldtype.equals(
-                            Constants.COUNT_CUMULATION_FIELD) || fieldtype
+                        && (fieldtype.equals(Constants.COUNT_CUMULATION_FIELD) || fieldtype
                             .equals(Constants.DIFFERENCE_CUMULATION_FIELD))) {
                         final SelectFieldVo selectFieldVo = new SelectFieldVo();
                         selectFieldVo.setFieldName(fieldname);
-                        selectFieldVo.setFieldType(getDbFieldType(tablename,
-                                fieldname, aggregationPreprocessorVo));
-                        BigInteger toAdd =
-                                new BigInteger((String) entry.getValue());
-                        final BigInteger initial =
-                                new BigInteger(fieldsMap
-                                        .get(fieldname).toString());
+                        selectFieldVo.setFieldType(getDbFieldType(tablename, fieldname, aggregationPreprocessorVo));
+                        BigInteger toAdd = new BigInteger((String) entry.getValue());
+                        final BigInteger initial = new BigInteger(fieldsMap.get(fieldname).toString());
                         toAdd = toAdd.add(initial);
                         selectFieldVo.setFieldValue(toAdd.toString());
                         selectFieldVos.add(selectFieldVo);
-                    } else {
+                    }
+                    else {
                         if (i == 0) {
-                            final RootWhereFieldVo rootWhereFieldVo =
-                                    new RootWhereFieldVo();
+                            final RootWhereFieldVo rootWhereFieldVo = new RootWhereFieldVo();
                             rootWhereFieldVo.setFieldName(fieldname);
-                            rootWhereFieldVo.setFieldType((String) dbHash
-                                    .get(fieldname));
+                            rootWhereFieldVo.setFieldType((String) dbHash.get(fieldname));
                             rootWhereFieldVo.setFieldValue((String) entry.getValue());
-                            rootWhereFieldVo.setOperator(
-                                    Constants.DATABASE_OPERATOR_EQUALS);
-                            rootWhereGroupVo
-                                    .setRootWhereFieldVo(rootWhereFieldVo);
-                        } else {
-                            final AdditionalWhereFieldVo additionalWhereFieldVo =
-                                    new AdditionalWhereFieldVo();
-                            additionalWhereFieldVo.setAlliance(
-                                    Constants.DATABASE_ALLIANCE_AND);
+                            rootWhereFieldVo.setOperator(Constants.DATABASE_OPERATOR_EQUALS);
+                            rootWhereGroupVo.setRootWhereFieldVo(rootWhereFieldVo);
+                        }
+                        else {
+                            final AdditionalWhereFieldVo additionalWhereFieldVo = new AdditionalWhereFieldVo();
+                            additionalWhereFieldVo.setAlliance(Constants.DATABASE_ALLIANCE_AND);
                             additionalWhereFieldVo.setFieldName(fieldname);
-                            additionalWhereFieldVo.setFieldType((String) dbHash
-                                    .get(fieldname));
-                            additionalWhereFieldVo
-                                    .setFieldValue((String) entry.getValue());
-                            additionalWhereFieldVo.setOperator(
-                                    Constants.DATABASE_OPERATOR_EQUALS);
-                            if (rootWhereGroupVo.getAdditionalWhereFieldVos()
-                                    == null) {
-                                rootWhereGroupVo
-                                        .setAdditionalWhereFieldVos(
-                                                new ArrayList<AdditionalWhereFieldVo>());
+                            additionalWhereFieldVo.setFieldType((String) dbHash.get(fieldname));
+                            additionalWhereFieldVo.setFieldValue((String) entry.getValue());
+                            additionalWhereFieldVo.setOperator(Constants.DATABASE_OPERATOR_EQUALS);
+                            if (rootWhereGroupVo.getAdditionalWhereFieldVos() == null) {
+                                rootWhereGroupVo.setAdditionalWhereFieldVos(new ArrayList<AdditionalWhereFieldVo>());
                             }
-                            rootWhereGroupVo.getAdditionalWhereFieldVos().add(
-                                    additionalWhereFieldVo);
+                            rootWhereGroupVo.getAdditionalWhereFieldVos().add(additionalWhereFieldVo);
                         }
                         i++;
                     }
                 }
-            } catch (final Exception e) {
+            }
+            catch (final Exception e) {
                 throw new SqlDatabaseSystemException(e);
             }
             databaseSelectVo.setRootWhereGroupVo(rootWhereGroupVo);
@@ -944,17 +719,14 @@ public class AggregationPreprocessor {
 
     /**
      * get field type from aggregation-definition.
-     * 
-     * @param tablename
-     *            name of database table
-     * @param fieldname
-     *            name of database field
-     * @param aggregationPreprocessorVo
-     *            Object that holds all values
+     *
+     * @param tablename                 name of database table
+     * @param fieldname                 name of database field
+     * @param aggregationPreprocessorVo Object that holds all values
      * @return String fieldType (text or numeric)
      */
-    private static String getDbFieldType(final String tablename, final String fieldname,
-                                         final AggregationPreprocessorVo aggregationPreprocessorVo) {
+    private static String getDbFieldType(
+        final String tablename, final String fieldname, final AggregationPreprocessorVo aggregationPreprocessorVo) {
         final Map tableFieldTypes = (Map) aggregationPreprocessorVo.getFieldTypeHash().get(tablename);
         if (tableFieldTypes != null) {
             final Map dbFieldTypes = (Map) tableFieldTypes.get("dbtype");
@@ -973,13 +745,10 @@ public class AggregationPreprocessor {
 
     /**
      * reduce time to specified precision.
-     * 
-     * @param cal
-     *            XMLGregorianCalendar-record-xml
-     * @param reduceTo
-     *            reduceTo
+     *
+     * @param cal      XMLGregorianCalendar-record-xml
+     * @param reduceTo reduceTo
      * @return String reduced time
-     * 
      */
     private static String reduceTime(final Calendar cal, final String reduceTo) {
         if (reduceTo.equals(Constants.TIME_REDUCTION_TYPE_YEAR)) {
@@ -996,27 +765,22 @@ public class AggregationPreprocessor {
         }
         return "";
     }
-    
+
     /**
      * Setting the directDatabaseAccessor.
-     * 
-     * @param dbAccessorIn
-     *            The directDatabaseAccessor to set.
+     *
+     * @param dbAccessorIn The directDatabaseAccessor to set.
      */
-    public void setDirectDatabaseAccessor(
-        final DirectDatabaseAccessorInterface dbAccessorIn) {
+    public void setDirectDatabaseAccessor(final DirectDatabaseAccessorInterface dbAccessorIn) {
         this.dbAccessor = dbAccessorIn;
     }
 
     /**
      * Setter for the preprocessingLogsDao.
-     * 
-     * @param preprocessingLogsDao
-     *            The data access object.
-     * 
+     *
+     * @param preprocessingLogsDao The data access object.
      */
-    public void setPreprocessingLogsDao(
-            final SmPreprocessingLogsDaoInterface preprocessingLogsDao) {
+    public void setPreprocessingLogsDao(final SmPreprocessingLogsDaoInterface preprocessingLogsDao) {
         this.preprocessingLogsDao = preprocessingLogsDao;
     }
 

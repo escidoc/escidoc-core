@@ -31,13 +31,12 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 
 /**
  * Versionable Resource Interface.
- * 
+ *
  * @author Steffen Wagner
  */
 public interface VersionableResource extends Resource {
 
     /**
-     * 
      * @return true is version is latest/newest version, false otherwise.
      */
     @Deprecated
@@ -45,90 +44,70 @@ public interface VersionableResource extends Resource {
 
     /**
      * Get Whole Object Version (WOV) Datastream.
-     * 
+     *
      * @return WOV datastream
-     * @throws StreamNotFoundException
-     *             Thrown if datastream was not found.
-     * @throws FedoraSystemException
-     *             Thrown in case of Fedora failure.
+     * @throws StreamNotFoundException Thrown if datastream was not found.
+     * @throws FedoraSystemException   Thrown in case of Fedora failure.
      */
     Datastream getWov() throws StreamNotFoundException, FedoraSystemException;
 
     /**
-     * Indicate that the version-status (of the latest version) has changed. E.g
-     * from pending to submitted or to released.
-     * 
-     * @return True if version-status has changed during the current update.
-     *         False if version-status is same as before update.
+     * Indicate that the version-status (of the latest version) has changed. E.g from pending to submitted or to
+     * released.
+     *
+     * @return True if version-status has changed during the current update. False if version-status is same as before
+     *         update.
      */
     boolean hasVersionStatusChanged();
 
     /**
-     * Indicate that the status of the latest version (version-status) has
-     * changed.
+     * Indicate that the status of the latest version (version-status) has changed.
      */
     void setVersionStatusChange();
 
     /**
      * Get status of latest version.
-     * 
+     *
      * @return version-status
-     * @throws IntegritySystemException
-     *             If data integrity of Fedora Repository is violated
+     * @throws IntegritySystemException If data integrity of Fedora Repository is violated
      */
     String getVersionStatus() throws IntegritySystemException;
 
     /**
-     * Set status of latest version. (Status change is done outside of Resource
-     * in Utility.class but currently not written back to resource class. The
-     * status change obtains the resource class if its created as new instance.
-     * This has to change of course.)
-     * 
-     * @param versionStatus
-     *            Status of version
-     * @throws IntegritySystemException
-     *             If data integrity of Fedora Repository is violated
+     * Set status of latest version. (Status change is done outside of Resource in Utility.class but currently not
+     * written back to resource class. The status change obtains the resource class if its created as new instance. This
+     * has to change of course.)
+     *
+     * @param versionStatus Status of version
+     * @throws IntegritySystemException If data integrity of Fedora Repository is violated
      */
-    void setVersionStatus(final String versionStatus)
-        throws IntegritySystemException;
+    void setVersionStatus(final String versionStatus) throws IntegritySystemException;
 
     /**
      * Set the Whole Object Version (WOV) Datastream.
-     * 
-     * @param ds
-     *            WOV datastream.
-     * @throws StreamNotFoundException
-     *             Thrown if datastream was not found.
-     * @throws LockingException
-     *             Thrown if object is locked.
-     * @throws SystemException
-     *             Thrown in case of internal failure.
+     *
+     * @param ds WOV datastream.
+     * @throws StreamNotFoundException Thrown if datastream was not found.
+     * @throws LockingException        Thrown if object is locked.
+     * @throws SystemException         Thrown in case of internal failure.
      */
-    void setWov(Datastream ds) throws StreamNotFoundException,
-        LockingException, SystemException;
+    void setWov(Datastream ds) throws StreamNotFoundException, LockingException, SystemException;
 
     /**
      * Get the last-modification-date of the object.
-     * 
+     *
      * @return last-modification-date
-     * 
-     * @throws TripleStoreSystemException
-     *             Thrown if TripleStore reports an error.
-     * @throws FedoraSystemException
-     *             Thrown in case of Fedora failure.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
+     * @throws TripleStoreSystemException Thrown if TripleStore reports an error.
+     * @throws FedoraSystemException      Thrown in case of Fedora failure.
+     * @throws WebserverSystemException   Thrown in case of an internal error.
      */
-    String getLastModificationDate() throws TripleStoreSystemException,
-        FedoraSystemException, WebserverSystemException;
+    String getLastModificationDate() throws TripleStoreSystemException, FedoraSystemException, WebserverSystemException;
 
     /**
      * Persist the resource.
-     * 
+     *
      * @return last-modification-date of the resource
-     * 
-     * @throws SystemException
-     *             Thrown if persisting fails.
+     * @throws SystemException Thrown if persisting fails.
      */
     String persist() throws SystemException;
 }

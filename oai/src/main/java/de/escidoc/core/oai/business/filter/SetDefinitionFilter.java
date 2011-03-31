@@ -43,71 +43,52 @@ import java.util.Set;
 import java.util.TreeSet;
 
 /**
- * This class parses a CQL filter to filter for OAI set definitions and
- * translates it into a Hibernate query.
- * 
+ * This class parses a CQL filter to filter for OAI set definitions and translates it into a Hibernate query.
+ *
  * @author André Schenk
  */
 public class SetDefinitionFilter extends CqlFilter {
+
     /**
-     * Parse the given CQL query and create a corresponding Hibernate query to
-     * filter for OAI set definitions from it.
-     * 
-     * @param query
-     *            CQL query
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a SQL query
+     * Parse the given CQL query and create a corresponding Hibernate query to filter for OAI set definitions from it.
+     *
+     * @param query CQL query
+     * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
      */
-    public SetDefinitionFilter(final String query)
-        throws InvalidSearchQueryException {
+    public SetDefinitionFilter(final String query) throws InvalidSearchQueryException {
         //Adding or Removal of values has also to be done in Method evaluate
         //and in the Hibernate-Class-Method retrieveSetDefinitions
         // URI-style filters/////////////////////////////////////////////////////
         //Filter-Names
-        criteriaMap.put(Constants.DC_IDENTIFIER_URI, new Object[] { COMPARE_EQ,
-            "id" });
-        criteriaMap.put(TripleStoreUtility.PROP_NAME, new Object[] {
-            COMPARE_LIKE, "name" });
-        criteriaMap.put(TripleStoreUtility.PROP_CREATED_BY_ID, new Object[] {
-            COMPARE_EQ, "creator_id" });
-        criteriaMap.put(TripleStoreUtility.PROP_MODIFIED_BY_ID, new Object[] {
-            COMPARE_EQ, "modified_by_id" });
-        criteriaMap.put(Constants.SET_DEFINITION_NS_URI + '/'
-            + XmlUtility.NAME_SPECIFICATION, new Object[] { COMPARE_LIKE,
-            "specification" });
+        criteriaMap.put(Constants.DC_IDENTIFIER_URI, new Object[] { COMPARE_EQ, "id" });
+        criteriaMap.put(TripleStoreUtility.PROP_NAME, new Object[] { COMPARE_LIKE, "name" });
+        criteriaMap.put(TripleStoreUtility.PROP_CREATED_BY_ID, new Object[] { COMPARE_EQ, "creator_id" });
+        criteriaMap.put(TripleStoreUtility.PROP_MODIFIED_BY_ID, new Object[] { COMPARE_EQ, "modified_by_id" });
+        criteriaMap.put(Constants.SET_DEFINITION_NS_URI + '/' + XmlUtility.NAME_SPECIFICATION, new Object[] {
+            COMPARE_LIKE, "specification" });
 
         //Sortby-Names
         propertyNamesMap.put("specification", "specification");
         propertyNamesMap.put(TripleStoreUtility.PROP_NAME, "name");
-        propertyNamesMap.put(TripleStoreUtility.PROP_CREATED_BY_ID,
-            "creator_id");
-        propertyNamesMap.put(TripleStoreUtility.PROP_MODIFIED_BY_ID,
-            "modified_by_id");
+        propertyNamesMap.put(TripleStoreUtility.PROP_CREATED_BY_ID, "creator_id");
+        propertyNamesMap.put(TripleStoreUtility.PROP_MODIFIED_BY_ID, "modified_by_id");
         propertyNamesMap.put(Constants.DC_IDENTIFIER_URI, "id");
         // //////////////////////////////////////////////////////////////////////
 
         // Path-style filters////////////////////////////////////////////////////
         //Filter-Names
-        criteriaMap.put(Constants.FILTER_PATH_ID, new Object[] { COMPARE_EQ,
-            "id" });
-        criteriaMap.put(Constants.FILTER_PATH_NAME, new Object[] {
-            COMPARE_LIKE, "name" });
-        criteriaMap.put(Constants.FILTER_PATH_CREATED_BY_ID, new Object[] {
-            COMPARE_EQ, "creator_id" });
-        criteriaMap.put(Constants.FILTER_PATH_MODIFIED_BY_ID, new Object[] {
-            COMPARE_EQ, "modified_by_id" });
-        criteriaMap.put(Constants.FILTER_PATH_SPECIFICATION, new Object[] { COMPARE_LIKE,
-            "specification" });
+        criteriaMap.put(Constants.FILTER_PATH_ID, new Object[] { COMPARE_EQ, "id" });
+        criteriaMap.put(Constants.FILTER_PATH_NAME, new Object[] { COMPARE_LIKE, "name" });
+        criteriaMap.put(Constants.FILTER_PATH_CREATED_BY_ID, new Object[] { COMPARE_EQ, "creator_id" });
+        criteriaMap.put(Constants.FILTER_PATH_MODIFIED_BY_ID, new Object[] { COMPARE_EQ, "modified_by_id" });
+        criteriaMap.put(Constants.FILTER_PATH_SPECIFICATION, new Object[] { COMPARE_LIKE, "specification" });
 
         // Sortby-Names
         propertyNamesMap.put("specification", "specification");
         propertyNamesMap.put(Constants.FILTER_PATH_SPECIFICATION, "specification");
         propertyNamesMap.put(Constants.FILTER_PATH_NAME, "name");
-        propertyNamesMap.put(Constants.FILTER_PATH_CREATED_BY_ID,
-            "creator_id");
-        propertyNamesMap.put(Constants.FILTER_PATH_MODIFIED_BY_ID,
-            "modified_by_id");
+        propertyNamesMap.put(Constants.FILTER_PATH_CREATED_BY_ID, "creator_id");
+        propertyNamesMap.put(Constants.FILTER_PATH_MODIFIED_BY_ID, "modified_by_id");
         propertyNamesMap.put(Constants.FILTER_PATH_ID, "id");
         // //////////////////////////////////////////////////////////////////////
 
@@ -115,8 +96,7 @@ public class SetDefinitionFilter extends CqlFilter {
             try {
                 final CQLParser parser = new CQLParser();
 
-                this.detachedCriteria =
-                    DetachedCriteria.forClass(SetDefinition.class, "sd");
+                this.detachedCriteria = DetachedCriteria.forClass(SetDefinition.class, "sd");
 
                 final Criterion criterion = evaluate(parser.parse(query));
 
@@ -132,42 +112,33 @@ public class SetDefinitionFilter extends CqlFilter {
 
     /**
      * Evaluate a CQL term node.
-     * 
-     * @param node
-     *            CQL node
-     * 
+     *
+     * @param node CQL node
      * @return Hibernate query reflecting the given CQL query
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a SQL query
+     * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
      */
     @Override
-    protected Criterion evaluate(final CQLTermNode node)
-        throws InvalidSearchQueryException {
+    protected Criterion evaluate(final CQLTermNode node) throws InvalidSearchQueryException {
         Criterion result = null;
         final Object[] parts = criteriaMap.get(node.getIndex());
         final String value = node.getTerm();
 
         if (parts != null) {
-            result =
-                evaluate(node.getRelation(), (String) parts[1], value,
-                    (Integer) parts[0] == COMPARE_LIKE);
+            result = evaluate(node.getRelation(), (String) parts[1], value, (Integer) parts[0] == COMPARE_LIKE);
         }
         else {
             final String columnName = node.getIndex();
 
             if (columnName != null) {
-                throw new InvalidSearchQueryException(
-                    "unknown filter criteria: " + columnName);
+                throw new InvalidSearchQueryException("unknown filter criteria: " + columnName);
             }
         }
         return result;
     }
 
     /**
-     * Get all property names that are allowed as filter criteria for that
-     * filter.
-     * 
+     * Get all property names that are allowed as filter criteria for that filter.
+     *
      * @return all property names for that filter
      */
     @Override

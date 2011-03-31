@@ -32,13 +32,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * MetadataRecordDefinition for create. This his a helper construct until all
- * values can be handled within the standard MdRecord class.
- * 
+ * MetadataRecordDefinition for create. This his a helper construct until all values can be handled within the standard
+ * MdRecord class.
+ * <p/>
  * This class represent a metadata record.
- * 
+ *
  * @author Frank Schwichtenberg
- * 
  */
 public class ResourceDefinitionCreate {
 
@@ -50,18 +49,15 @@ public class ResourceDefinitionCreate {
 
     /**
      * Set Name of Metadata Record.
-     * 
-     * @param name
-     *            Name of MdRecord.
-     * @throws MissingAttributeValueException
-     *             Thrown if name is an empty String.
+     *
+     * @param name Name of MdRecord.
+     * @throws MissingAttributeValueException Thrown if name is an empty String.
      */
-    public void setName(final String name)
-        throws MissingAttributeValueException {
+    public void setName(final String name) throws MissingAttributeValueException {
 
         if (name == null || name.length() == 0) {
             throw new MissingAttributeValueException("the value of the"
-                    + " \"name\" atribute of the element 'resource-definition' is missing");
+                + " \"name\" atribute of the element 'resource-definition' is missing");
         }
 
         this.name = name;
@@ -69,7 +65,7 @@ public class ResourceDefinitionCreate {
 
     /**
      * Get Name of Metadata Record.
-     * 
+     *
      * @return name of metadata record.
      */
     public String getName() {
@@ -78,12 +74,10 @@ public class ResourceDefinitionCreate {
     }
 
     /**
-     * 
      * Persist Component to Repository.
-     * 
+     *
      * @return FoXML representation of metadata record.
-     * @throws SystemException
-     *             Thrown if rendering failed.
+     * @throws SystemException Thrown if rendering failed.
      */
     public String getFOXML() throws SystemException {
 
@@ -93,10 +87,9 @@ public class ResourceDefinitionCreate {
 
     /**
      * Get a HashMap with all values of MdRecord (for FoXML renderer).
-     * 
+     *
      * @return HashMap with all values of MdRecord
-     * @throws SystemException
-     *             Thrown if character encoding failed.
+     * @throws SystemException Thrown if character encoding failed.
      */
     public Map<String, String> getValueMap() throws SystemException {
         return new HashMap<String, String>();
@@ -106,10 +99,10 @@ public class ResourceDefinitionCreate {
         return this.xsltHref;
     }
 
-    public void setXsltHref(final String xsltHref) throws MalformedURLException,
-        IOException {
+    public void setXsltHref(final String xsltHref) throws MalformedURLException, IOException {
         final URL url;
-        url = xsltHref.startsWith("/") ? new URL(EscidocConfiguration.getInstance().get(
+        url =
+            xsltHref.startsWith("/") ? new URL(EscidocConfiguration.getInstance().get(
                 EscidocConfiguration.ESCIDOC_CORE_BASEURL)
                 + xsltHref) : new URL(xsltHref);
         this.xsltHref = url.toString();
@@ -125,11 +118,9 @@ public class ResourceDefinitionCreate {
 
     public String getFedoraId(final String parentId) {
         if (this.name == null) {
-            throw new NullPointerException(
-                "Name must not be null to provide FedoraId.");
+            throw new NullPointerException("Name must not be null to provide FedoraId.");
         }
-        return "info:fedora/sdef:" + parentId.replaceAll(":", "_") + '-'
-            + this.name;
+        return "info:fedora/sdef:" + parentId.replaceAll(":", "_") + '-' + this.name;
     }
 
 }

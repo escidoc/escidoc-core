@@ -48,69 +48,60 @@ import java.util.Set;
 
 /**
  * Fills xml-data into hibernate object.
- * 
+ *
  * @author Michael Hoppe
  */
 public class AggregationDefinitionStaxHandler extends DefaultHandler {
 
-    private AggregationDefinition aggregationDefinition =
-            new AggregationDefinition();
+    private AggregationDefinition aggregationDefinition = new AggregationDefinition();
 
-    private final Set<AggregationStatisticDataSelector>
-                aggregationStatisticDataSelectors =
-            new HashSet<AggregationStatisticDataSelector>();
+    private final Set<AggregationStatisticDataSelector> aggregationStatisticDataSelectors =
+        new HashSet<AggregationStatisticDataSelector>();
 
-    private final Set<AggregationTable> aggregationTables =
-            new HashSet<AggregationTable>();
-    
+    private final Set<AggregationTable> aggregationTables = new HashSet<AggregationTable>();
+
     private static final String ROOT_PATH = "/aggregation-definition";
-    
+
     private static final String TABLE_PATH = "/aggregation-definition/aggregation-table";
-    
-    private static final String TABLE_FIELD_PATH = 
-            "/aggregation-definition/aggregation-table/field";
-    
-    private static final String TABLE_INDEX_PATH = 
-        "/aggregation-definition/aggregation-table/index";
-    
-    private static final String STATISTIC_DATA_SELECTOR_PATH = 
-                "/aggregation-definition/statistic-data";
-    
+
+    private static final String TABLE_FIELD_PATH = "/aggregation-definition/aggregation-table/field";
+
+    private static final String TABLE_INDEX_PATH = "/aggregation-definition/aggregation-table/index";
+
+    private static final String STATISTIC_DATA_SELECTOR_PATH = "/aggregation-definition/statistic-data";
+
     private int tableIndex;
-    
+
     private int tableFieldIndex;
-    
+
     private int tableIndexIndex;
-    
+
     private int tableIndexFieldIndex;
-    
+
     private int statisticDataSelectorIndex;
 
     private boolean inTable;
-    
+
     private boolean inTableField;
-    
+
     private boolean inTableIndex;
-    
+
     private boolean inStatisticDataSelector;
-    
+
     private AggregationTableField aggregationTableField;
 
     private AggregationTableIndexe aggregationTableIndex;
 
     private AggregationTable aggregationTable;
 
-    private AggregationStatisticDataSelector 
-                aggregationStatisticDataSelector;
+    private AggregationStatisticDataSelector aggregationStatisticDataSelector;
 
     private final StaxParser parser;
 
     /**
      * Constructor with StaxParser.
-     * 
-     * @param parser
-     *            StaxParser
-     * 
+     *
+     * @param parser StaxParser
      */
     public AggregationDefinitionStaxHandler(final StaxParser parser) {
         this.parser = parser;
@@ -118,25 +109,21 @@ public class AggregationDefinitionStaxHandler extends DefaultHandler {
 
     /**
      * Handle the character section of an element.
-     * 
-     * @param s
-     *            The contents of the character section.
-     * @param element
-     *            The element.
+     *
+     * @param s       The contents of the character section.
+     * @param element The element.
      * @return The character section.
-     * @throws Exception
-     *             e
+     * @throws Exception e
      */
     @Override
-    public String characters(final String s, final StartElement element)
-        throws Exception {
+    public String characters(final String s, final StartElement element) throws Exception {
         if (this.inTable) {
             if (this.inTableField) {
                 if ("name".equals(element.getLocalName())) {
                     if (aggregationTableField.getName() != null) {
-                        aggregationTableField.setName(
-                            aggregationTableField.getName() + s);
-                    } else {
+                        aggregationTableField.setName(aggregationTableField.getName() + s);
+                    }
+                    else {
                         aggregationTableField.setName(s);
                     }
                 }
@@ -148,9 +135,9 @@ public class AggregationDefinitionStaxHandler extends DefaultHandler {
                 else if ("xpath".equals(element.getLocalName())) {
                     if (s != null) {
                         if (aggregationTableField.getXpath() != null) {
-                            aggregationTableField.setXpath(
-                                aggregationTableField.getXpath() + s);
-                        } else {
+                            aggregationTableField.setXpath(aggregationTableField.getXpath() + s);
+                        }
+                        else {
                             aggregationTableField.setXpath(s);
                         }
                     }
@@ -162,41 +149,38 @@ public class AggregationDefinitionStaxHandler extends DefaultHandler {
             else if (this.inTableIndex) {
                 if ("name".equals(element.getLocalName())) {
                     if (aggregationTableIndex.getName() != null) {
-                        aggregationTableIndex.setName(
-                            aggregationTableIndex.getName() + s);
-                    } else {
+                        aggregationTableIndex.setName(aggregationTableIndex.getName() + s);
+                    }
+                    else {
                         aggregationTableIndex.setName(s);
                     }
                 }
                 else if ("field".equals(element.getLocalName())) {
                     this.tableIndexFieldIndex++;
-                    final AggregationTableIndexField indexField =
-                        new AggregationTableIndexField();
+                    final AggregationTableIndexField indexField = new AggregationTableIndexField();
                     indexField.setField(s);
                     indexField.setListIndex(this.tableIndexFieldIndex);
                     indexField.setAggregationTableIndexe(this.aggregationTableIndex);
-                    aggregationTableIndex.getAggregationTableIndexFields().add(
-                        indexField);
+                    aggregationTableIndex.getAggregationTableIndexFields().add(indexField);
                 }
             }
             else {
                 if ("name".equals(element.getLocalName())) {
                     if (aggregationTable.getName() != null) {
-                        aggregationTable.setName(
-                            aggregationTable.getName() + s);
-                    } else {
+                        aggregationTable.setName(aggregationTable.getName() + s);
+                    }
+                    else {
                         aggregationTable.setName(s);
                     }
                 }
             }
         }
         else if (this.inStatisticDataSelector) {
-            if ("xpath".equals(element.getLocalName())
-                && s != null) {
+            if ("xpath".equals(element.getLocalName()) && s != null) {
                 if (aggregationStatisticDataSelector.getXpath() != null) {
-                    aggregationStatisticDataSelector.setXpath(
-                        aggregationStatisticDataSelector.getXpath() + s);
-                } else {
+                    aggregationStatisticDataSelector.setXpath(aggregationStatisticDataSelector.getXpath() + s);
+                }
+                else {
                     aggregationStatisticDataSelector.setXpath(s);
                 }
             }
@@ -204,9 +188,9 @@ public class AggregationDefinitionStaxHandler extends DefaultHandler {
         else {
             if ("name".equals(element.getLocalName())) {
                 if (aggregationDefinition.getName() != null) {
-                    aggregationDefinition.setName(
-                        aggregationDefinition.getName() + s);
-                } else {
+                    aggregationDefinition.setName(aggregationDefinition.getName() + s);
+                }
+                else {
                     aggregationDefinition.setName(s);
                 }
             }
@@ -216,11 +200,10 @@ public class AggregationDefinitionStaxHandler extends DefaultHandler {
 
     /**
      * Handle startElement event.
-     * 
+     *
      * @param element startElement
      * @return StartElement startElement
      * @throws Exception e
-     * 
      */
     @Override
     public StartElement startElement(final StartElement element) throws Exception {
@@ -250,8 +233,7 @@ public class AggregationDefinitionStaxHandler extends DefaultHandler {
         else if (STATISTIC_DATA_SELECTOR_PATH.equals(currentPath)) {
             this.inStatisticDataSelector = true;
             this.statisticDataSelectorIndex++;
-            this.aggregationStatisticDataSelector =
-                        new AggregationStatisticDataSelector();
+            this.aggregationStatisticDataSelector = new AggregationStatisticDataSelector();
             aggregationStatisticDataSelector.setListIndex(this.statisticDataSelectorIndex);
         }
         else if ("scope".equals(element.getLocalName())) {
@@ -265,7 +247,7 @@ public class AggregationDefinitionStaxHandler extends DefaultHandler {
         else if ("info-field".equals(element.getLocalName())) {
             aggregationTableField.setFieldTypeId(1);
             fieldRootElement = true;
-        } 
+        }
         else if ("time-reduction-field".equals(element.getLocalName())) {
             aggregationTableField.setFieldTypeId(2);
             fieldRootElement = true;
@@ -274,15 +256,13 @@ public class AggregationDefinitionStaxHandler extends DefaultHandler {
             aggregationTableField.setFieldTypeId(3);
             fieldRootElement = true;
         }
-        else if ("difference-cumulation-field"
-                    .equals(element.getLocalName())) {
+        else if ("difference-cumulation-field".equals(element.getLocalName())) {
             aggregationTableField.setFieldTypeId(4);
             fieldRootElement = true;
         }
         else if ("statistic-table".equals(element.getLocalName())) {
-            aggregationStatisticDataSelector
-                    .setSelectorType("statistic-table");
-        } 
+            aggregationStatisticDataSelector.setSelectorType("statistic-table");
+        }
         if (fieldRootElement) {
             final int indexOfAttribute = element.indexOfAttribute("", "feed");
             if (indexOfAttribute != -1) {
@@ -295,11 +275,10 @@ public class AggregationDefinitionStaxHandler extends DefaultHandler {
 
     /**
      * Handle endElement event.
-     * 
+     *
      * @param element endElement
      * @return EndElement endElement
      * @throws Exception e
-     * 
      */
     @Override
     public EndElement endElement(final EndElement element) throws Exception {
@@ -311,26 +290,21 @@ public class AggregationDefinitionStaxHandler extends DefaultHandler {
         else if (TABLE_FIELD_PATH.equals(currentPath)) {
             this.inTableField = false;
             aggregationTableField.setAggregationTable(this.aggregationTable);
-            aggregationTable.getAggregationTableFields()
-                                .add(this.aggregationTableField);
+            aggregationTable.getAggregationTableFields().add(this.aggregationTableField);
         }
         else if (TABLE_INDEX_PATH.equals(currentPath)) {
             this.inTableIndex = false;
             aggregationTableIndex.setAggregationTable(this.aggregationTable);
-            aggregationTable.getAggregationTableIndexes()
-            .add(this.aggregationTableIndex);
+            aggregationTable.getAggregationTableIndexes().add(this.aggregationTableIndex);
         }
         else if (STATISTIC_DATA_SELECTOR_PATH.equals(currentPath)) {
             this.inStatisticDataSelector = false;
-            aggregationStatisticDataSelectors
-                                    .add(this.aggregationStatisticDataSelector);
+            aggregationStatisticDataSelectors.add(this.aggregationStatisticDataSelector);
         }
         else if (ROOT_PATH.equals(currentPath)
-            && (aggregationDefinition.getName() == null
-                    || this.aggregationStatisticDataSelectors == null
-                    || aggregationStatisticDataSelectors.isEmpty()
-                    || this.aggregationTables == null
-                    || aggregationTables.isEmpty())) {
+            && (aggregationDefinition.getName() == null || this.aggregationStatisticDataSelectors == null
+                || aggregationStatisticDataSelectors.isEmpty() || this.aggregationTables == null || aggregationTables
+                .isEmpty())) {
             //check objects
             throw new SystemException("DataIntegrity violated");
         }
@@ -341,53 +315,41 @@ public class AggregationDefinitionStaxHandler extends DefaultHandler {
      * @param aggregationDefinition the aggregationDefinition
      * @throws SystemException e
      */
-    public void setAggregationDefinition(
-            final AggregationDefinition aggregationDefinition) 
-                                        throws SystemException {
+    public void setAggregationDefinition(final AggregationDefinition aggregationDefinition) throws SystemException {
         this.aggregationDefinition = aggregationDefinition;
-        for (final AggregationStatisticDataSelector aggregationStatisticDataSel
-                                        : this.aggregationStatisticDataSelectors) {
-            aggregationStatisticDataSel
-                    .setAggregationDefinition(aggregationDefinition);
+        for (final AggregationStatisticDataSelector aggregationStatisticDataSel : this.aggregationStatisticDataSelectors) {
+            aggregationStatisticDataSel.setAggregationDefinition(aggregationDefinition);
         }
         for (final AggregationTable aggregationTab : this.aggregationTables) {
-            aggregationTab.setName(getReplacedTableOrIndexName(
-                    aggregationDefinition, aggregationTab.getName()));
+            aggregationTab.setName(getReplacedTableOrIndexName(aggregationDefinition, aggregationTab.getName()));
             if (aggregationTab.getAggregationTableIndexes() != null) {
-                for (final AggregationTableIndexe index
-                        : aggregationTab.getAggregationTableIndexes()) {
-                    index.setName(getReplacedTableOrIndexName(
-                            aggregationDefinition, index.getName()));
+                for (final AggregationTableIndexe index : aggregationTab.getAggregationTableIndexes()) {
+                    index.setName(getReplacedTableOrIndexName(aggregationDefinition, index.getName()));
                 }
             }
-            aggregationTab
-                    .setAggregationDefinition(aggregationDefinition);
+            aggregationTab.setAggregationDefinition(aggregationDefinition);
         }
     }
-    
+
     /**
      * Prefix table or index name with aggregationDefinitionId.
-     * 
+     *
      * @param aggregationDef the aggregationDefinition
-     * @param orgName the original Name
+     * @param orgName        the original Name
      * @return String prefixed name
      * @throws SystemException e
      */
     private static String getReplacedTableOrIndexName(final AggregationDefinition aggregationDef, final String orgName)
-            throws SystemException {
-        if (aggregationDef == null 
-                || aggregationDef.getId() == null) {
-            throw new SystemException(
-                    "aggregationDefinition PrimKey may not be null");
+        throws SystemException {
+        if (aggregationDef == null || aggregationDef.getId() == null) {
+            throw new SystemException("aggregationDefinition PrimKey may not be null");
         }
         final StringBuilder replaced = new StringBuilder();
-        replaced
-            .append(aggregationDef.getId().replaceAll("\\:", ""))
-            .append('_').append(orgName);
-        
+        replaced.append(aggregationDef.getId().replaceAll("\\:", "")).append('_').append(orgName);
+
         return replaced.toString();
     }
-    
+
     /**
      * @return the aggregationDefinition
      */
@@ -398,8 +360,7 @@ public class AggregationDefinitionStaxHandler extends DefaultHandler {
     /**
      * @return the aggregationStatisticDataSelectors
      */
-    public Set<AggregationStatisticDataSelector> 
-                getAggregationStatisticDataSelectors() {
+    public Set<AggregationStatisticDataSelector> getAggregationStatisticDataSelectors() {
         return this.aggregationStatisticDataSelectors;
     }
 

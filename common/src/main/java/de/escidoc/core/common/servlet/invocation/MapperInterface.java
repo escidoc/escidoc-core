@@ -28,49 +28,35 @@ import java.util.Map;
 
 /**
  * Interface for mapping a http request to a resource method.
- * 
+ *
  * @author Michael Schneider
- * 
  */
 public interface MapperInterface {
 
     /**
-     * Retrieve the matching resource method from the HTTP method and the
-     * request uri.
-     * 
-     * @param request
-     *            The HTTP request.
-     * @return The resource method.
-     * @throws MethodNotFoundException
-     *             If no matching method is found.
-     * @throws EncodingSystemException e
+     * Retrieve the matching resource method from the HTTP method and the request uri.
      *
+     * @param request The HTTP request.
+     * @return The resource method.
+     * @throws MethodNotFoundException If no matching method is found.
+     * @throws EncodingSystemException e
      */
-    BeanMethod getMethod(final HttpServletRequest request)
-        throws MethodNotFoundException, EncodingSystemException;
+    BeanMethod getMethod(final HttpServletRequest request) throws MethodNotFoundException, EncodingSystemException;
 
     /**
-     * Retrieve the matching resource method from the provided URI, HTTP method
-     * and the request body.
-     * 
-     * @param uri
-     *            The request URI.
-     * @param query
-     *            The request Query.
-     * @param parameters The request parameters.
-     * @param httpMethod
-     *            The http method.
-     * @param body
-     *            The body of the request, if any.
-     * @return The resource method.
-     * @throws MethodNotFoundException
-     *             If no matching method is found.
-     * @throws EncodingSystemException e
+     * Retrieve the matching resource method from the provided URI, HTTP method and the request body.
      *
+     * @param uri        The request URI.
+     * @param query      The request Query.
+     * @param parameters The request parameters.
+     * @param httpMethod The http method.
+     * @param body       The body of the request, if any.
+     * @return The resource method.
+     * @throws MethodNotFoundException If no matching method is found.
+     * @throws EncodingSystemException e
      */
     BeanMethod getMethod(
-        final String uri, final String query,
-        final Map<String, String[]> parameters, final String httpMethod,
+        final String uri, final String query, final Map<String, String[]> parameters, final String httpMethod,
         final Object body) throws MethodNotFoundException, EncodingSystemException;
 
 }

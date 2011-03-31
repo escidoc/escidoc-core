@@ -56,11 +56,9 @@ import java.net.URL;
 
 /**
  * Communication with PIDManager WebService via RESTlet API.
- * 
- * @see PIDManager Web Service
- * 
+ *
  * @author Steffen Wagner
- * 
+ * @see PIDManager Web Service
  */
 public class PIDManagerRESTService implements PIDSystem {
 
@@ -92,24 +90,18 @@ public class PIDManagerRESTService implements PIDSystem {
      * java.lang.String)
      */
     @Override
-    public String assignPID(final String systemID, final String param)
-        throws PidSystemException, MissingMethodParameterException,
-        WebserverSystemException {
+    public String assignPID(final String systemID, final String param) throws PidSystemException,
+        MissingMethodParameterException, WebserverSystemException {
 
         if (param == null) {
-            throw new MissingMethodParameterException(
-                "Invalid param structure.");
+            throw new MissingMethodParameterException("Invalid param structure.");
         }
 
         final String password;
         final String username;
         try {
-            username =
-                EscidocConfiguration.getInstance().get(
-                    "escidoc-core.PidSystemRESTService.user");
-            password =
-                EscidocConfiguration.getInstance().get(
-                    "escidoc-core.PidSystemRESTService.password");
+            username = EscidocConfiguration.getInstance().get("escidoc-core.PidSystemRESTService.user");
+            password = EscidocConfiguration.getInstance().get("escidoc-core.PidSystemRESTService.password");
         }
         catch (final IOException e) {
             throw new WebserverSystemException(e);
@@ -128,13 +120,14 @@ public class PIDManagerRESTService implements PIDSystem {
                 throw new Exception("Authorization at PIDManager fails.");
             }
             else {
-                throw new PidSystemException(EntityUtils.toString(httpPostRes.getEntity(), XmlUtility.CHARACTER_ENCODING));
+                throw new PidSystemException(EntityUtils.toString(httpPostRes.getEntity(),
+                    XmlUtility.CHARACTER_ENCODING));
             }
         }
         catch (final Exception e) {
             throw new PidSystemException(e);
         }
-      
+
         return pidResult;
     }
 
@@ -167,15 +160,11 @@ public class PIDManagerRESTService implements PIDSystem {
     }
 
     /**
-     * Delete a Persistent Identifier from the PID System. Attention: A
-     * Persistent Identifier exist even if the resource is permanently
-     * in-accessible. Therefore is a PID deletion usually not necessary. Use
-     * this with caution.
-     * 
-     * @param pid
-     *            The Persistent Identifier which is to delete.
-     * @throws PidSystemException
-     *             Thrown if delete from the PID System fails.
+     * Delete a Persistent Identifier from the PID System. Attention: A Persistent Identifier exist even if the resource
+     * is permanently in-accessible. Therefore is a PID deletion usually not necessary. Use this with caution.
+     *
+     * @param pid The Persistent Identifier which is to delete.
+     * @throws PidSystemException Thrown if delete from the PID System fails.
      */
     public void deletePID(final String pid) throws PidSystemException {
 
@@ -196,16 +185,16 @@ public class PIDManagerRESTService implements PIDSystem {
             if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
                 throw new Exception("PID System connetion broken (" + url.toString() + ") " + conn.getResponseCode());
             }
-        } catch (final Exception e) {
+        }
+        catch (final Exception e) {
             throw new PidSystemException(e);
         }
     }
 
     /**
      * Set the system for PID management service.
-     * 
-     * @param url
-     *            URL to PID Manager Service (http://host[:port]/)
+     *
+     * @param url URL to PID Manager Service (http://host[:port]/)
      */
     public void setPidGeneratorServer(final String url) {
         this.pidGeneratorServer = url;
@@ -213,25 +202,21 @@ public class PIDManagerRESTService implements PIDSystem {
 
     /**
      * Set the globalPrefix for generated PIDs.
-     * 
-     * @param globalPrefix
-     *            The globalPrefix for generated PIDs
+     *
+     * @param globalPrefix The globalPrefix for generated PIDs
      * @throws MissingMethodParameterException
-     *             If <code>globalPrefix</code> is null.
+     *          If <code>globalPrefix</code> is null.
      */
-    public void setGlobalPrefix(final String globalPrefix)
-        throws MissingMethodParameterException {
+    public void setGlobalPrefix(final String globalPrefix) throws MissingMethodParameterException {
         Utility.checkNotNull(globalPrefix, "global prefix for PID");
         this.globalPrefix = globalPrefix;
     }
 
     /**
-     * Set the localPrefix for generated PIDs. This a part of the PID between
-     * the global prefix and the system id. Default is "test" to indicate that
-     * the generated (Dummy-)PIDs are not registered.
-     * 
-     * @param localPrefix
-     *            The localPrefix for generated PIDs
+     * Set the localPrefix for generated PIDs. This a part of the PID between the global prefix and the system id.
+     * Default is "test" to indicate that the generated (Dummy-)PIDs are not registered.
+     *
+     * @param localPrefix The localPrefix for generated PIDs
      */
     public void setLocalPrefix(final String localPrefix) {
         this.localPrefix = localPrefix;
@@ -239,64 +224,50 @@ public class PIDManagerRESTService implements PIDSystem {
 
     /**
      * Set the separator between the parts of generated PIDs. Default is "/".
-     * 
-     * @param separator
-     *            The separator for generated PIDs
+     *
+     * @param separator The separator for generated PIDs
      * @throws MissingMethodParameterException
-     *             If <code>separator</code> is null.
+     *          If <code>separator</code> is null.
      */
-    public void setSeparator(final String separator)
-        throws MissingMethodParameterException {
+    public void setSeparator(final String separator) throws MissingMethodParameterException {
         Utility.checkNotNull(separator, "separator");
         this.separator = separator;
     }
 
     /**
      * Set the namespace of PID.
-     * 
-     * @param pidNamespace
-     *            The namespace for generated PIDs
+     *
+     * @param pidNamespace The namespace for generated PIDs
      * @throws MissingMethodParameterException
-     *             If <code>pidNamespace</code> is null.
+     *          If <code>pidNamespace</code> is null.
      */
-    public void setPidNamespace(final String pidNamespace)
-        throws MissingMethodParameterException {
+    public void setPidNamespace(final String pidNamespace) throws MissingMethodParameterException {
         Utility.checkNotNull(pidNamespace, "namespace for PID");
         this.pidNamespace = pidNamespace;
     }
 
     /**
      * Add systemID to data structure for PIDManager.
-     * 
-     * @param systemID
-     *            Objid of resource.
-     * @param param
-     *            XML parameter from assignPID user interface.
+     *
+     * @param systemID Objid of resource.
+     * @param param    XML parameter from assignPID user interface.
      * @return XML data structure for PID Manager enriched with objid.
-     * 
-     * @throws ParserConfigurationException
-     * @throws IOException
-     * @throws SAXException
-     * @throws TransformerFactoryConfigurationError
-     * @throws TransformerException
      */
     private static String preparePidManagerDatastructure(final String systemID, final String param)
-        throws ParserConfigurationException, SAXException, IOException,
-        TransformerFactoryConfigurationError, TransformerException {
+        throws ParserConfigurationException, SAXException, IOException, TransformerFactoryConfigurationError,
+        TransformerException {
 
         final String xmlParam;
 
         // add the systemID of object for semantic identifier
-        final DocumentBuilder db =
-            DocumentBuilderFactory
-                .newInstance().newDocumentBuilder();
-        final Document doc =
-            db.parse(new ByteArrayInputStream(param.getBytes()));
+        final DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+        final Document doc = db.parse(new ByteArrayInputStream(param.getBytes()));
         final NodeList systemIDs = doc.getElementsByTagName("systemID");
 
         if (systemIDs.getLength() == 1) {
             xmlParam = param;
-        } else {
+        }
+        else {
             final Node first = doc.getFirstChild();
             final Node sysid = doc.createElement("systemID");
             sysid.setTextContent(systemID);
@@ -315,27 +286,22 @@ public class PIDManagerRESTService implements PIDSystem {
 
     /**
      * Obtain PID from respose message of PIDManager.
-     * 
-     * @param in
-     *            InputStream from PIDManager.
+     *
+     * @param in InputStream from PIDManager.
      * @return PID
-     * 
-     * @throws ParserConfigurationException
-     * @throws SAXException
-     * @throws IOException
      */
-    private static String obtainPidResult(final InputStream in)
-        throws ParserConfigurationException, SAXException, IOException {
+    private static String obtainPidResult(final InputStream in) throws ParserConfigurationException, SAXException,
+        IOException {
         String returnValue;
         try {
-            final DocumentBuilder db =
-                DocumentBuilderFactory.newInstance().newDocumentBuilder();
+            final DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             final Document doc = db.parse(in);
             // retrieve PID result
             final NodeList nl = doc.getElementsByTagName("pid");
             final Node n = nl.item(0);
             returnValue = n.getTextContent();
-        } finally {
+        }
+        finally {
             IOUtils.closeStream(in);
         }
         return returnValue;

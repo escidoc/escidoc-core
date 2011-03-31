@@ -10,9 +10,9 @@ import java.rmi.RemoteException;
 public interface UserAccountHandlerRemoteHome extends EJBHome {
 
     String COMP_NAME = "java:comp/env/ejb/UserAccountHandler";
+
     String JNDI_NAME = "ejb/UserAccountHandler";
 
-    UserAccountHandlerRemote create()
-            throws CreateException, RemoteException;
+    UserAccountHandlerRemote create() throws CreateException, RemoteException;
 
 }

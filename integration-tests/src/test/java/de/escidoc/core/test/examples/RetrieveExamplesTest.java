@@ -41,9 +41,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 /**
- * 
  * @author Michael Schneider
- * 
  */
 @RunWith(value = Parameterized.class)
 public class RetrieveExamplesTest extends EscidocRestSoapTestBase {
@@ -56,30 +54,24 @@ public class RetrieveExamplesTest extends EscidocRestSoapTestBase {
 
     private final String[] EXAMPLE_OU_IDS = { "escidoc:ex3" };
 
-    private final String[] EXAMPLE_ROLE_IDS =
-        { "escidoc:role-administrator", "escidoc:role-system-inspector" };
+    private final String[] EXAMPLE_ROLE_IDS = { "escidoc:role-administrator", "escidoc:role-system-inspector" };
 
     private final String[] EXAMPLE_USER_ACCOUNT_IDS = { "escidoc:exuser1" };
 
-    private final ContentModelClient cmClient =
-        new ContentModelClient(getTransport());
+    private final ContentModelClient cmClient = new ContentModelClient(getTransport());
 
-    private final ContextClient contextClient =
-        new ContextClient(getTransport());
+    private final ContextClient contextClient = new ContextClient(getTransport());
 
     private final ItemClient itemClient = new ItemClient(getTransport());
 
-    private final OrganizationalUnitClient ouClient =
-        new OrganizationalUnitClient(getTransport());
+    private final OrganizationalUnitClient ouClient = new OrganizationalUnitClient(getTransport());
 
     private final RoleClient roleClient = new RoleClient(getTransport());
 
-    private final UserAccountClient uaClient =
-        new UserAccountClient(getTransport());
+    private final UserAccountClient uaClient = new UserAccountClient(getTransport());
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public RetrieveExamplesTest(final int transport) {
         super(transport);
@@ -90,13 +82,10 @@ public class RetrieveExamplesTest extends EscidocRestSoapTestBase {
 
         int noContexts = EXAMPLE_CONTEXT_IDS.length;
         for (int i = 0; i < noContexts; ++i) {
-            String context =
-                handleXmlResult(contextClient.retrieve(EXAMPLE_CONTEXT_IDS[i]));
+            String context = handleXmlResult(contextClient.retrieve(EXAMPLE_CONTEXT_IDS[i]));
             assertXmlValidContext(context);
-            ResourceProvider.saveToFile(getTransport(),
-                ESCIDOC_OBJECTS_SAVE_PATH, getFilename("context",
-                    EXAMPLE_CONTEXT_IDS[i], ".xml"), toString(
-                    getDocument(context), false));
+            ResourceProvider.saveToFile(getTransport(), ESCIDOC_OBJECTS_SAVE_PATH, getFilename("context",
+                EXAMPLE_CONTEXT_IDS[i], ".xml"), toString(getDocument(context), false));
         }
     }
 
@@ -105,13 +94,10 @@ public class RetrieveExamplesTest extends EscidocRestSoapTestBase {
 
         int noItems = EXAMPLE_ITEM_IDS.length;
         for (int i = 0; i < noItems; ++i) {
-            String item =
-                handleXmlResult(itemClient.retrieve(EXAMPLE_ITEM_IDS[i]));
+            String item = handleXmlResult(itemClient.retrieve(EXAMPLE_ITEM_IDS[i]));
             assertXmlValidItem(item);
-            ResourceProvider.saveToFile(getTransport(),
-                ESCIDOC_OBJECTS_SAVE_PATH, getFilename("item",
-                    EXAMPLE_ITEM_IDS[i], ".xml"), toString(getDocument(item),
-                    false));
+            ResourceProvider.saveToFile(getTransport(), ESCIDOC_OBJECTS_SAVE_PATH, getFilename("item",
+                EXAMPLE_ITEM_IDS[i], ".xml"), toString(getDocument(item), false));
         }
     }
 
@@ -122,9 +108,8 @@ public class RetrieveExamplesTest extends EscidocRestSoapTestBase {
         for (int i = 0; i < noOus; ++i) {
             String ou = handleXmlResult(ouClient.retrieve(EXAMPLE_OU_IDS[i]));
             assertXmlValidOrganizationalUnit(ou);
-            ResourceProvider.saveToFile(getTransport(),
-                ESCIDOC_OBJECTS_SAVE_PATH, getFilename("ou", EXAMPLE_OU_IDS[i],
-                    ".xml"), toString(getDocument(ou), false));
+            ResourceProvider.saveToFile(getTransport(), ESCIDOC_OBJECTS_SAVE_PATH, getFilename("ou", EXAMPLE_OU_IDS[i],
+                ".xml"), toString(getDocument(ou), false));
         }
     }
 
@@ -133,12 +118,9 @@ public class RetrieveExamplesTest extends EscidocRestSoapTestBase {
 
         int noContentModels = EXAMPLE_CONTENT_MODEL_IDS.length;
         for (int i = 0; i < noContentModels; ++i) {
-            String contentModel =
-                handleXmlResult(cmClient.retrieve(EXAMPLE_CONTENT_MODEL_IDS[i]));
-            ResourceProvider.saveToFile(getTransport(),
-                ESCIDOC_OBJECTS_SAVE_PATH, getFilename("content-model",
-                    EXAMPLE_CONTENT_MODEL_IDS[i], ".xml"), toString(
-                    getDocument(contentModel), false));
+            String contentModel = handleXmlResult(cmClient.retrieve(EXAMPLE_CONTENT_MODEL_IDS[i]));
+            ResourceProvider.saveToFile(getTransport(), ESCIDOC_OBJECTS_SAVE_PATH, getFilename("content-model",
+                EXAMPLE_CONTENT_MODEL_IDS[i], ".xml"), toString(getDocument(contentModel), false));
         }
     }
 
@@ -147,13 +129,10 @@ public class RetrieveExamplesTest extends EscidocRestSoapTestBase {
 
         int noUserAccounts = EXAMPLE_USER_ACCOUNT_IDS.length;
         for (int i = 0; i < noUserAccounts; ++i) {
-            String userAccount =
-                handleXmlResult(uaClient.retrieve(EXAMPLE_USER_ACCOUNT_IDS[i]));
+            String userAccount = handleXmlResult(uaClient.retrieve(EXAMPLE_USER_ACCOUNT_IDS[i]));
             assertXmlValidUserAccount(userAccount);
-            ResourceProvider.saveToFile(getTransport(),
-                ESCIDOC_OBJECTS_SAVE_PATH, getFilename("user-account",
-                    EXAMPLE_USER_ACCOUNT_IDS[i], ".xml"), toString(
-                    getDocument(userAccount), false));
+            ResourceProvider.saveToFile(getTransport(), ESCIDOC_OBJECTS_SAVE_PATH, getFilename("user-account",
+                EXAMPLE_USER_ACCOUNT_IDS[i], ".xml"), toString(getDocument(userAccount), false));
         }
     }
 
@@ -162,18 +141,14 @@ public class RetrieveExamplesTest extends EscidocRestSoapTestBase {
 
         int noRoles = EXAMPLE_ROLE_IDS.length;
         for (int i = 0; i < noRoles; ++i) {
-            String role =
-                handleXmlResult(roleClient.retrieve(EXAMPLE_ROLE_IDS[i]));
+            String role = handleXmlResult(roleClient.retrieve(EXAMPLE_ROLE_IDS[i]));
             assertXmlValidRole(role);
-            ResourceProvider.saveToFile(getTransport(),
-                ESCIDOC_OBJECTS_SAVE_PATH, getFilename("role",
-                    EXAMPLE_ROLE_IDS[i], ".xml"), toString(getDocument(role),
-                    false));
+            ResourceProvider.saveToFile(getTransport(), ESCIDOC_OBJECTS_SAVE_PATH, getFilename("role",
+                EXAMPLE_ROLE_IDS[i], ".xml"), toString(getDocument(role), false));
         }
     }
 
-    public static String getFilename(
-        final String resource, final String id, final String extension) {
+    public static String getFilename(final String resource, final String id, final String extension) {
         String result = resource + "_" + id;
         if (!extension.startsWith(".")) {
             result += ".";

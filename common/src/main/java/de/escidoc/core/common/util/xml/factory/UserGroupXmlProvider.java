@@ -25,11 +25,10 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import java.util.Map;
 
 /**
- * XmlTemplateProvider implementation using the Velocity template engine.<br/>
- * This implementation uses the velocity singleton pattern.
- * 
- * @author André Schenk
+ * XmlTemplateProvider implementation using the Velocity template engine.<br/> This implementation uses the velocity
+ * singleton pattern.
  *
+ * @author André Schenk
  */
 public final class UserGroupXmlProvider extends InfrastructureXmlProvider {
 
@@ -37,8 +36,7 @@ public final class UserGroupXmlProvider extends InfrastructureXmlProvider {
 
     private static final String USER_GROUPS_RESOURCE_NAME = "user-group-list";
 
-    private static final String USER_GROUPS_SRW_RESOURCE_NAME =
-        "user-group-srw-list";
+    private static final String USER_GROUPS_SRW_RESOURCE_NAME = "user-group-srw-list";
 
     private static final String USER_GROUP_PATH = "/user-group";
 
@@ -58,27 +56,23 @@ public final class UserGroupXmlProvider extends InfrastructureXmlProvider {
 
     /**
      * Private constructor to prevent initialization.
-     * 
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
+     *
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     private UserGroupXmlProvider() {
     }
 
     /**
      * Gets the role xml PROVIDER.
-     * 
+     *
      * @return Returns the <code>UserGroupXmlProvider</code> object.
-     * @throws WebserverSystemException
-     *             Thrown if the instance cannot be created due to an internal
-     *             error.
+     * @throws WebserverSystemException Thrown if the instance cannot be created due to an internal error.
      */
     public static UserGroupXmlProvider getInstance() {
         return PROVIDER;
     }
 
-    public String getCurrentGrantsXml(final Map values)
-        throws WebserverSystemException {
+    public String getCurrentGrantsXml(final Map values) throws WebserverSystemException {
 
         return getXml(CURRENT_GRANTS_RESOURCE_NAME, CURRENT_GRANTS_PATH, values);
     }
@@ -92,14 +86,10 @@ public final class UserGroupXmlProvider extends InfrastructureXmlProvider {
      * Get the XML representation for a user group.
      *
      * @param values variables to be put into the Velocity template
-     *
      * @return XML representation for the user group
-     * @throws WebserverSystemException
-     *             Thrown if the instance cannot be created due to an internal
-     *             error.
+     * @throws WebserverSystemException Thrown if the instance cannot be created due to an internal error.
      */
-    public String getUserGroupXml(final Map <String, Object> values)
-        throws WebserverSystemException {
+    public String getUserGroupXml(final Map<String, Object> values) throws WebserverSystemException {
 
         return getXml(USER_GROUP_RESOURCE_NAME, USER_GROUP_PATH, values);
     }
@@ -108,14 +98,10 @@ public final class UserGroupXmlProvider extends InfrastructureXmlProvider {
      * Get the XML representation for the resources of a user group.
      *
      * @param values variables to be put into the Velocity template
-     *
      * @return XML representation for the resources of the user group
-     * @throws WebserverSystemException
-     *             Thrown if the instance cannot be created due to an internal
-     *             error.
+     * @throws WebserverSystemException Thrown if the instance cannot be created due to an internal error.
      */
-    public String getResourcesXml(final Map <String, Object> values)
-        throws WebserverSystemException {
+    public String getResourcesXml(final Map<String, Object> values) throws WebserverSystemException {
 
         return getXml(RESOURCES_RESOURCE_NAME, RESOURCES_PATH, values);
     }
@@ -124,14 +110,10 @@ public final class UserGroupXmlProvider extends InfrastructureXmlProvider {
      * Get the XML representation for a list of user group.
      *
      * @param values variables to be put into the Velocity template
-     *
      * @return XML representation for the list of user group
-     * @throws WebserverSystemException
-     *             Thrown if the instance cannot be created due to an internal
-     *             error.
+     * @throws WebserverSystemException Thrown if the instance cannot be created due to an internal error.
      */
-    public String getUserGroupsXml(final Map <String, Object> values)
-        throws WebserverSystemException {
+    public String getUserGroupsXml(final Map<String, Object> values) throws WebserverSystemException {
 
         return getXml(USER_GROUPS_RESOURCE_NAME, RESOURCES_PATH, values);
     }
@@ -140,14 +122,10 @@ public final class UserGroupXmlProvider extends InfrastructureXmlProvider {
      * Get the SRW response for a list of user group.
      *
      * @param values variables to be put into the Velocity template
-     *
      * @return XML representation for the list of user group
-     * @throws WebserverSystemException
-     *             Thrown if the instance cannot be created due to an internal
-     *             error.
+     * @throws WebserverSystemException Thrown if the instance cannot be created due to an internal error.
      */
-    public String getUserGroupsSrwXml(final Map <String, Object> values)
-        throws WebserverSystemException {
+    public String getUserGroupsSrwXml(final Map<String, Object> values) throws WebserverSystemException {
 
         return getXml(USER_GROUPS_SRW_RESOURCE_NAME, RESOURCES_PATH, values);
     }

@@ -1,13 +1,10 @@
 package de.escidoc.core.sm.mbean;
 
-
 /**
  * @author Michael Hoppe
- * 
- *         Singleton for timing Scheduled Job.
- *         We need this because Spring Scheduler has Bug and 
- *         always executes scheduled job twice.
- * 
+ *         <p/>
+ *         Singleton for timing Scheduled Job. We need this because Spring Scheduler has Bug and always executes
+ *         scheduled job twice.
  */
 public final class StatisticPreprocessorServiceTimer {
 
@@ -17,29 +14,25 @@ public final class StatisticPreprocessorServiceTimer {
 
     /**
      * private Constructor for Singleton.
-     * 
      */
     private StatisticPreprocessorServiceTimer() {
     }
 
     /**
      * Only initialize Object once. Check for old objects in cache.
-     * 
+     *
      * @return StatisticPreprocessorServiceTimer StatisticPreprocessorServiceTimer
-     * 
      */
     public static StatisticPreprocessorServiceTimer getInstance() {
         return instance;
     }
-    
+
     /**
      * Get lastExecutionTime.
-     *
-     * @return
      */
     public long getLastExecutionTime() {
         final long newLastExecutionTime = System.currentTimeMillis();
-        synchronized(instance) {
+        synchronized (instance) {
             final long savedLastExecutionTime = this.lastExecutionTime;
             this.lastExecutionTime = newLastExecutionTime;
             return savedLastExecutionTime;
@@ -47,4 +40,3 @@ public final class StatisticPreprocessorServiceTimer {
     }
 
 }
-

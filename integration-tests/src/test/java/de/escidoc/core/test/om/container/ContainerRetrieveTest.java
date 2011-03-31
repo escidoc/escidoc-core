@@ -55,9 +55,8 @@ import static org.junit.Assert.fail;
 
 /**
  * Test the mock implementation of the container resource.
- * 
+ *
  * @author Michael Schneider
- * 
  */
 @RunWith(value = Parameterized.class)
 public class ContainerRetrieveTest extends ContainerTestBase {
@@ -71,8 +70,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
     private String path = TEMPLATE_CONTAINER_PATH;
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ContainerRetrieveTest(final int transport) {
         super(transport);
@@ -80,18 +78,15 @@ public class ContainerRetrieveTest extends ContainerTestBase {
 
     /**
      * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Before
     public void setUp() throws Exception {
         this.path += "/" + getTransport(false);
 
         this.theItemId = createItem();
-        String xmlData =
-            EscidocRestSoapTestBase.getTemplateAsString(this.path,
-                "create_container_v1.1-forItem.xml");
+        String xmlData = EscidocRestSoapTestBase.getTemplateAsString(this.path, "create_container_v1.1-forItem.xml");
 
         theContainerXml = create(xmlData.replaceAll("##ITEMID##", theItemId));
         this.theContainerId = getObjidValue(this.theContainerXml);
@@ -99,9 +94,8 @@ public class ContainerRetrieveTest extends ContainerTestBase {
 
     /**
      * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Override
     @After
@@ -118,75 +112,41 @@ public class ContainerRetrieveTest extends ContainerTestBase {
 
     /**
      * Retrieve members: correct input (success case).
-     * 
-     * @test.name Retrieve members: correct input (success case).
-     * @test.id OM_RFLMC_1_2
-     * @test.input Container ID, filter criteria for all members.
-     * 
-     * @test.expected The XML representation of the filtered list of members of
-     *                the container.
-     * 
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOM_RFLMC_1_2() throws Exception {
 
-        List<String> smMembersList =
-            getStructMapMembers(retrieve(theContainerId));
-        String memberListXml =
-            retrieveMembers(theContainerId, new HashMap<String, String[]>());
+        List<String> smMembersList = getStructMapMembers(retrieve(theContainerId));
+        String memberListXml = retrieveMembers(theContainerId, new HashMap<String, String[]>());
         List<String> mlMembersList = getMemberListMembers(memberListXml);
 
-        assertListContentEqual(
-            "Member list does not contain the same IDs as struct map.",
-            mlMembersList, smMembersList);
+        assertListContentEqual("Member list does not contain the same IDs as struct map.", mlMembersList, smMembersList);
         assertXmlValidSrwResponse(memberListXml);
     }
 
     /**
      * Retrieve members: nonexisting container id.
-     * 
-     * @test.name Retrieve members: nonexisting container id.
-     * @test.id OM_RFLMC_2
-     * @test.input Nonexisting Container ID, filter criteria for all members.
-     * 
-     * @test.expected Error message with reason for failure.
-     * 
-     * @test.status Not Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOM_RFLMC_2() throws Exception {
         try {
-            retrieveMembers("escidoc:nonexist1",
-                new HashMap<String, String[]>());
+            retrieveMembers("escidoc:nonexist1", new HashMap<String, String[]>());
             fail("No exception on retrieve members of nonexisting container.");
         }
         catch (final Exception e) {
             Class<?> ec = ContainerNotFoundException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected on retrieve members.", ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected on retrieve members.", ec, e);
         }
     }
 
     /**
      * Retrieve members: container id not provided.
-     * 
-     * @test.name Retrieve members: container id not provided.
-     * @test.id OM_RFLMC_4_1
-     * @test.input No Container ID (null), filter criteria for all members.
-     * 
-     * @test.expected Error message with reason for failure.
-     * 
-     * @test.status Not Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOM_RFLMC_4_1() throws Exception {
@@ -196,48 +156,37 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected on retrieve members.", ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected on retrieve members.", ec, e);
         }
     }
 
     @Test
-    public void testCompareRetrieveContainerByTwoMethods_IssueINFR_657()
-        throws Exception {
+    public void testCompareRetrieveContainerByTwoMethods_IssueINFR_657() throws Exception {
         String container1Xml = retrieve(theContainerId);
 
         Map<String, String[]> parameters = new HashMap<String, String[]>();
 
-        parameters.put(FILTER_PARAMETER_QUERY, new String[] { "\"/id\"="
-            + theContainerId });
+        parameters.put(FILTER_PARAMETER_QUERY, new String[] { "\"/id\"=" + theContainerId });
         String container2Xml = retrieveContainers(parameters);
         Document container1Document = getDocument(container1Xml);
         Document container2Document = getDocument(container2Xml);
         String lmdInContainer1 =
-            selectSingleNode(container1Document,
-                "/container/@last-modification-date").getNodeValue();
+            selectSingleNode(container1Document, "/container/@last-modification-date").getNodeValue();
         String versionDateInContainer1 =
-            selectSingleNode(container1Document,
-                "/container/properties/version/date").getTextContent();
-        assertEquals("last modification date and version date are not equal",
-            versionDateInContainer1, lmdInContainer1);
+            selectSingleNode(container1Document, "/container/properties/version/date").getTextContent();
+        assertEquals("last modification date and version date are not equal", versionDateInContainer1, lmdInContainer1);
         String lmdInContainer2 =
-            selectSingleNode(container2Document,
-                XPATH_SRW_CONTAINER_LIST_CONTAINER + "/@last-modification-date")
+            selectSingleNode(container2Document, XPATH_SRW_CONTAINER_LIST_CONTAINER + "/@last-modification-date")
                 .getNodeValue();
         String versionDateInContainer2 =
-            selectSingleNode(container2Document,
-                XPATH_SRW_CONTAINER_LIST_CONTAINER + "/properties/version/date")
+            selectSingleNode(container2Document, XPATH_SRW_CONTAINER_LIST_CONTAINER + "/properties/version/date")
                 .getTextContent();
-        assertEquals("last modification date and version date are not equal",
-            versionDateInContainer2, lmdInContainer2);
+        assertEquals("last modification date and version date are not equal", versionDateInContainer2, lmdInContainer2);
 
     }
 
     /**
      * Test successfully retrieving of container.
-     * 
-     * @throws Exception
      */
     @Test
     public void testOM_RC_1_1() throws Exception {
@@ -248,8 +197,6 @@ public class ContainerRetrieveTest extends ContainerTestBase {
 
     /**
      * Test declining retrieving of container with non existing id.
-     * 
-     * @throws Exception
      */
     @Test
     public void testOM_RC_2() throws Exception {
@@ -260,15 +207,12 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = ContainerNotFoundException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
     }
 
     /**
      * Test declining retrieving of container with missing id.
-     * 
-     * @throws Exception
      */
     @Test
     public void testOM_RC_3() throws Exception {
@@ -280,19 +224,15 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         catch (final Exception e) {
             // Class<?> ec = ContainerNotFoundException.class;
             Class<?> ec = MissingMethodParameterException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
     }
 
     /**
-     * Test retrieving all Containers from the repository. The list of
-     * Containers is afterwards checked with retrieving each Container
-     * separately. Note: This test checks not if one of the Containers is
-     * missing in the List!
-     * 
-     * @throws Exception
-     *             If one of the Container in the list is not retrievable.
+     * Test retrieving all Containers from the repository. The list of Containers is afterwards checked with retrieving
+     * each Container separately. Note: This test checks not if one of the Containers is missing in the List!
+     *
+     * @throws Exception If one of the Container in the list is not retrievable.
      */
     @Test
     public void testRetrieveContainers() throws Exception {
@@ -304,13 +244,11 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         NodeList nodes = null;
         if (Constants.TRANSPORT_REST == getTransport()) {
             nodes =
-                selectNodeList(EscidocRestSoapTestBase.getDocument(xml),
-                    XPATH_SRW_CONTAINER_LIST_CONTAINER + "/@href");
+                selectNodeList(EscidocRestSoapTestBase.getDocument(xml), XPATH_SRW_CONTAINER_LIST_CONTAINER + "/@href");
         }
         else {
             nodes =
-                selectNodeList(EscidocRestSoapTestBase.getDocument(xml),
-                    XPATH_SRW_CONTAINER_LIST_CONTAINER + "/@objid");
+                selectNodeList(EscidocRestSoapTestBase.getDocument(xml), XPATH_SRW_CONTAINER_LIST_CONTAINER + "/@objid");
         }
         assertContainers(nodes);
     }
@@ -338,49 +276,38 @@ public class ContainerRetrieveTest extends ContainerTestBase {
     @Test
     public void testRetrieveMembers() throws Exception {
         // make list from containers struct map
-        Document container =
-            EscidocRestSoapTestBase.getDocument(retrieve(theContainerId));
+        Document container = EscidocRestSoapTestBase.getDocument(retrieve(theContainerId));
         NodeList smMembers = null;
         if (Constants.TRANSPORT_REST == getTransport()) {
-            smMembers =
-                selectNodeList(container, "/container/struct-map/*/@href");
+            smMembers = selectNodeList(container, "/container/struct-map/*/@href");
         }
         else {
-            smMembers =
-                selectNodeList(container, "/container/struct-map/*/@objid");
+            smMembers = selectNodeList(container, "/container/struct-map/*/@objid");
         }
 
         // make list from containers member list
-        String xml =
-            retrieveMembers(theContainerId, new HashMap<String, String[]>());
+        String xml = retrieveMembers(theContainerId, new HashMap<String, String[]>());
         NodeList mlMembers = null;
         if (Constants.TRANSPORT_REST == getTransport()) {
-            mlMembers =
-                selectNodeList(EscidocRestSoapTestBase.getDocument(xml),
-                    XPATH_SRW_RESPONSE_OBJECT + "*/@href");
+            mlMembers = selectNodeList(EscidocRestSoapTestBase.getDocument(xml), XPATH_SRW_RESPONSE_OBJECT + "*/@href");
         }
         else {
             mlMembers =
-                selectNodeList(EscidocRestSoapTestBase.getDocument(xml),
-                    XPATH_SRW_RESPONSE_OBJECT + "*/@objid");
+                selectNodeList(EscidocRestSoapTestBase.getDocument(xml), XPATH_SRW_RESPONSE_OBJECT + "*/@objid");
         }
 
         List<String> smMembersList = nodeList2List(smMembers);
         List<String> mlMembersList = nodeList2List(mlMembers);
 
-        assertListContentEqual(
-            "Member list does not contain the same IDs as struct map.",
-            mlMembersList, smMembersList);
+        assertListContentEqual("Member list does not contain the same IDs as struct map.", mlMembersList, smMembersList);
         assertXmlValidSrwResponse(xml);
     }
 
     @Test
     public void testRetrievePendingMembers() throws Exception {
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_URI_PUBLIC_STATUS + "\"=pending" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_URI_PUBLIC_STATUS + "\"=pending" });
 
         String xml = retrieveMembers(theContainerId, filterParams);
 
@@ -389,40 +316,32 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         Document xmlDoc = EscidocRestSoapTestBase.getDocument(xml);
         NodeList memberIds = null;
         if (Constants.TRANSPORT_REST == getTransport()) {
-            memberIds =
-                selectNodeList(xmlDoc, XPATH_SRW_RESPONSE_OBJECT
-                    + "*/@href");
+            memberIds = selectNodeList(xmlDoc, XPATH_SRW_RESPONSE_OBJECT + "*/@href");
         }
         else {
-            memberIds =
-                selectNodeList(xmlDoc, XPATH_SRW_RESPONSE_OBJECT
-                    + "*/@objid");
+            memberIds = selectNodeList(xmlDoc, XPATH_SRW_RESPONSE_OBJECT + "*/@objid");
         }
 
         for (int i = memberIds.getLength() - 1; i >= 0; i--) {
             String id = memberIds.item(i).getNodeValue();
             if (Constants.TRANSPORT_REST == getTransport()) {
 
-                selectSingleNodeAsserted(xmlDoc,
-                    XPATH_SRW_RESPONSE_OBJECT + "*[@href = '" + id
-                        + "']/properties/public-status[text() = 'pending']");
+                selectSingleNodeAsserted(xmlDoc, XPATH_SRW_RESPONSE_OBJECT + "*[@href = '" + id
+                    + "']/properties/public-status[text() = 'pending']");
             }
             else {
-                selectSingleNodeAsserted(xmlDoc,
-                    XPATH_SRW_RESPONSE_OBJECT + "*[@objid = '" + id
-                        + "']/properties/public-status[text() = 'pending']");
+                selectSingleNodeAsserted(xmlDoc, XPATH_SRW_RESPONSE_OBJECT + "*[@objid = '" + id
+                    + "']/properties/public-status[text() = 'pending']");
             }
         }
     }
 
     @Test
     public void testRetrieveSubmittedItemMembers() throws Exception {
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_URI_PUBLIC_STATUS + "\"=submitted and " + "\""
-            + RDF_TYPE_NS_URI + "\"=\"" + RESOURCES_NS_URI + "Item\"" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_URI_PUBLIC_STATUS + "\"=submitted and "
+            + "\"" + RDF_TYPE_NS_URI + "\"=\"" + RESOURCES_NS_URI + "Item\"" });
 
         String xml = retrieveMembers(theContainerId, filterParams);
 
@@ -431,38 +350,32 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         Document xmlDoc = EscidocRestSoapTestBase.getDocument(xml);
         NodeList memberIds = null;
         if (Constants.TRANSPORT_REST == getTransport()) {
-            memberIds =
-                selectNodeList(xmlDoc, XPATH_SRW_RESPONSE_OBJECT
-                    + "*/@href");
+            memberIds = selectNodeList(xmlDoc, XPATH_SRW_RESPONSE_OBJECT + "*/@href");
         }
         else {
-            memberIds =
-                selectNodeList(xmlDoc, XPATH_SRW_RESPONSE_OBJECT
-                    + "*/@objid");
+            memberIds = selectNodeList(xmlDoc, XPATH_SRW_RESPONSE_OBJECT + "*/@objid");
         }
 
         for (int i = memberIds.getLength() - 1; i >= 0; i--) {
             String id = memberIds.item(i).getNodeValue();
             if (Constants.TRANSPORT_REST == getTransport()) {
 
-                selectSingleNodeAsserted(xmlDoc, "/member-list/*[@href = '"
-                    + id + "']/properties/public-status[text() = 'submitted']");
+                selectSingleNodeAsserted(xmlDoc, "/member-list/*[@href = '" + id
+                    + "']/properties/public-status[text() = 'submitted']");
             }
             else {
-                selectSingleNodeAsserted(xmlDoc, "/member-list/*[@objid = '"
-                    + id + "']/properties/public-status[text() = 'submitted']");
+                selectSingleNodeAsserted(xmlDoc, "/member-list/*[@objid = '" + id
+                    + "']/properties/public-status[text() = 'submitted']");
             }
         }
     }
 
     @Test
     public void testRetrievePendingContainerMembers() throws Exception {
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_URI_PUBLIC_STATUS + "\"=pending and " + "\"" + RDF_TYPE_NS_URI
-            + "\"=\"" + RESOURCES_NS_URI + "Container\"" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_URI_PUBLIC_STATUS + "\"=pending and "
+            + "\"" + RDF_TYPE_NS_URI + "\"=\"" + RESOURCES_NS_URI + "Container\"" });
 
         String xml = retrieveMembers(theContainerId, filterParams);
 
@@ -471,38 +384,30 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         Document xmlDoc = EscidocRestSoapTestBase.getDocument(xml);
         NodeList memberIds = null;
         if (Constants.TRANSPORT_REST == getTransport()) {
-            memberIds =
-                selectNodeList(xmlDoc, XPATH_SRW_RESPONSE_OBJECT
-                    + "*/@objid");
+            memberIds = selectNodeList(xmlDoc, XPATH_SRW_RESPONSE_OBJECT + "*/@objid");
         }
         else {
-            memberIds =
-                selectNodeList(xmlDoc, XPATH_SRW_RESPONSE_OBJECT
-                    + "*/@objid");
+            memberIds = selectNodeList(xmlDoc, XPATH_SRW_RESPONSE_OBJECT + "*/@objid");
         }
         for (int i = memberIds.getLength() - 1; i >= 0; i--) {
             String id = memberIds.item(i).getNodeValue();
             if (Constants.TRANSPORT_REST == getTransport()) {
 
-                selectSingleNodeAsserted(xmlDoc,
-                    "/member-list/container[@href = '" + id
-                        + "']/properties/public-status[text() = 'pending']");
+                selectSingleNodeAsserted(xmlDoc, "/member-list/container[@href = '" + id
+                    + "']/properties/public-status[text() = 'pending']");
             }
             else {
-                selectSingleNodeAsserted(xmlDoc,
-                    "/member-list/container[@objid = '" + id
-                        + "']/properties/public-status[text() = 'pending']");
+                selectSingleNodeAsserted(xmlDoc, "/member-list/container[@objid = '" + id
+                    + "']/properties/public-status[text() = 'pending']");
             }
         }
     }
 
     /**
-     * Check if all Members of a Container are part of the retrieveMembers()
-     * representation. See also Bug #638, where only the Items could be
-     * retrieved and not Container.
-     * 
-     * @throws Exception
-     *             e
+     * Check if all Members of a Container are part of the retrieveMembers() representation. See also Bug #638, where
+     * only the Items could be retrieved and not Container.
+     *
+     * @throws Exception e
      */
     @Test
     public void testRetrievingMembers() throws Exception {
@@ -511,18 +416,15 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         int maxItem = 1;
 
         // creating Container --------------------------------------------------
-        String containerId =
-            createContainerFromTemplate("create_container_WithoutMembers_v1.1.xml");
+        String containerId = createContainerFromTemplate("create_container_WithoutMembers_v1.1.xml");
         // create multiple Resource (item/Container) ---------------------------
         Vector<String> ids = new Vector<String>();
         for (int i = 0; i < maxItem; i++) {
-            String id =
-                createItemFromTemplate("escidoc_item_198_for_create.xml");
+            String id = createItemFromTemplate("escidoc_item_198_for_create.xml");
             ids.add(id);
         }
         for (int i = 0; i < maxContainer; i++) {
-            String id =
-                createContainerFromTemplate("create_container_WithoutMembers_v1.1.xml");
+            String id = createContainerFromTemplate("create_container_WithoutMembers_v1.1.xml");
             ids.add(id);
         }
 
@@ -533,8 +435,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         addMembers(containerId, taskParam);
 
         // check if retrieveMembers contains exactly the kind of objects -------
-        String memberListXml =
-            retrieveMembers(containerId, new HashMap<String, String[]>());
+        String memberListXml = retrieveMembers(containerId, new HashMap<String, String[]>());
         List<String> members = getMemberListMembers(memberListXml);
 
         // converting hrefs to objids
@@ -548,18 +449,15 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         // compare the members with ids
         for (int i = 0; i < ids.size(); i++) {
             if (!members.contains(ids.get(i))) {
-                throw new Exception("Added Member '" + ids.get(i)
-                    + "' not part of the member list.");
+                throw new Exception("Added Member '" + ids.get(i) + "' not part of the member list.");
             }
         }
     }
 
     /**
-     * Create a Container with whitespaces in md-records attribute name. This
-     * has to be fail with a schema exception.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Create a Container with whitespaces in md-records attribute name. This has to be fail with a schema exception.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOM_MdRecords() throws Exception {
@@ -568,9 +466,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
 
         String nameWS = "MD-Records Descriptor Name with whitespaces";
 
-        Document context =
-            EscidocRestSoapTestBase.getTemplateAsDocument(this.path,
-                "create_container.xml");
+        Document context = EscidocRestSoapTestBase.getTemplateAsDocument(this.path, "create_container.xml");
         substitute(context, "/container/md-records/md-record[2]/@name", nameWS);
         String template = toString(context, false);
 
@@ -579,18 +475,15 @@ public class ContainerRetrieveTest extends ContainerTestBase {
             fail(ec + " expected but no error occurred!");
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
     }
 
     /**
-     * Create a Container with more than the allowed number of characters in
-     * md-records attribute name. The length is limited to 64 charachter. This
-     * has to be fail with a schema exception.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Create a Container with more than the allowed number of characters in md-records attribute name. The length is
+     * limited to 64 charachter. This has to be fail with a schema exception.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOM_MdRecords2() throws Exception {
@@ -599,14 +492,10 @@ public class ContainerRetrieveTest extends ContainerTestBase {
 
         String nameLong =
             "MD-Records_Attribute_Name_without_whitespaces_but_"
-                + "extra_long_to_reach_the_64_character_limit_of_fedora_other"
-                + "_things_are_not_tested";
+                + "extra_long_to_reach_the_64_character_limit_of_fedora_other" + "_things_are_not_tested";
 
-        Document context =
-            EscidocRestSoapTestBase.getTemplateAsDocument(this.path,
-                "create_container.xml");
-        substitute(context, "/container/md-records/md-record[2]/@name",
-            nameLong);
+        Document context = EscidocRestSoapTestBase.getTemplateAsDocument(this.path, "create_container.xml");
+        substitute(context, "/container/md-records/md-record[2]/@name", nameLong);
         String template = toString(context, false);
 
         try {
@@ -614,19 +503,16 @@ public class ContainerRetrieveTest extends ContainerTestBase {
             fail(ec + " expected but no error occurred!");
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
     }
 
     /**
      * Test retrieving struct-map of a container.
-     * 
-     * Bugzilla #585
-     * (http://www.escidoc-project.de/issueManagement/show_bug.cgi?id=585)
-     * 
-     * @throws Exception
-     *             Thrown if retrieving fails.
+     * <p/>
+     * Bugzilla #585 (http://www.escidoc-project.de/issueManagement/show_bug.cgi?id=585)
+     *
+     * @throws Exception Thrown if retrieving fails.
      */
     @Test
     public void testRetrievingStructMap() throws Exception {
@@ -646,18 +532,14 @@ public class ContainerRetrieveTest extends ContainerTestBase {
 
     /**
      * Prepare the TaskParam for addMember.
-     * 
-     * @param members
-     *            Vector with id of member candidates.
-     * @param lastModificationDate
-     *            The last modification date of the resource (Container).
+     *
+     * @param members              Vector with id of member candidates.
+     * @param lastModificationDate The last modification date of the resource (Container).
      * @return TaskParam
      */
-    private String createAddMemberTaskParam(
-        final Vector<String> members, final String lastModificationDate) {
+    private String createAddMemberTaskParam(final Vector<String> members, final String lastModificationDate) {
 
-        String taskParam =
-            "<param last-modification-date=\"" + lastModificationDate + "\" ";
+        String taskParam = "<param last-modification-date=\"" + lastModificationDate + "\" ";
         taskParam += ">\n";
 
         for (int i = 0; i < members.size(); i++) {
@@ -670,10 +552,6 @@ public class ContainerRetrieveTest extends ContainerTestBase {
 
     /**
      * Get the ids of the StructMap members.
-     * 
-     * @param xml
-     * @return
-     * @throws Exception
      */
     private List<String> getStructMapMembers(final String xml) throws Exception {
 
@@ -681,12 +559,10 @@ public class ContainerRetrieveTest extends ContainerTestBase {
 
         NodeList smMembers = null;
         if (Constants.TRANSPORT_REST == getTransport()) {
-            smMembers =
-                selectNodeList(container, "/container/struct-map/*/@href");
+            smMembers = selectNodeList(container, "/container/struct-map/*/@href");
         }
         else {
-            smMembers =
-                selectNodeList(container, "/container/struct-map/*/@objid");
+            smMembers = selectNodeList(container, "/container/struct-map/*/@objid");
         }
 
         return nodeList2List(smMembers);
@@ -694,31 +570,24 @@ public class ContainerRetrieveTest extends ContainerTestBase {
 
     /**
      * Get the ids of the memberList members.
-     * 
-     * @param xml
-     *            XML escidoc member-list.
+     *
+     * @param xml XML escidoc member-list.
      * @return Objids exctracted from the member list.
-     * @throws Exception
      */
-    private List<String> getMemberListMembers(final String xml)
-        throws Exception {
+    private List<String> getMemberListMembers(final String xml) throws Exception {
         // make list from containers member list
         NodeList mlMembers = null;
         if (Constants.TRANSPORT_REST == getTransport()) {
-            mlMembers =
-                selectNodeList(EscidocRestSoapTestBase.getDocument(xml),
-                    XPATH_SRW_RESPONSE_OBJECT + "*/@href");
+            mlMembers = selectNodeList(EscidocRestSoapTestBase.getDocument(xml), XPATH_SRW_RESPONSE_OBJECT + "*/@href");
         }
         else {
             mlMembers =
-                selectNodeList(EscidocRestSoapTestBase.getDocument(xml),
-                    XPATH_SRW_RESPONSE_OBJECT + "*/@objid");
+                selectNodeList(EscidocRestSoapTestBase.getDocument(xml), XPATH_SRW_RESPONSE_OBJECT + "*/@objid");
         }
         return nodeList2List(mlMembers);
     }
 
-    private void doTestFilterContainersStatus(
-        final String reqStatus, final boolean versionStatus) throws Exception {
+    private void doTestFilterContainersStatus(final String reqStatus, final boolean versionStatus) throws Exception {
 
         String filterName = FILTER_URI_PUBLIC_STATUS;
         String filterResultXPath = "/container/properties/public-status/text()";
@@ -728,17 +597,13 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         }
 
         String list = null;
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
-        StringBuffer filter =
-            new StringBuffer("\"" + filterName + "\"=" + reqStatus);
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
+        StringBuffer filter = new StringBuffer("\"" + filterName + "\"=" + reqStatus);
 
         if (versionStatus) {
-            filter
-                .append(" and " + "\"" + FILTER_URI_PUBLIC_STATUS + "\"=released");
+            filter.append(" and " + "\"" + FILTER_URI_PUBLIC_STATUS + "\"=released");
         }
-        filterParams.put(FILTER_PARAMETER_QUERY,
-            new String[] { filter.toString() });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { filter.toString() });
         list = retrieveContainers(filterParams);
         assertXmlValidSrwResponse(list);
 
@@ -746,13 +611,12 @@ public class ContainerRetrieveTest extends ContainerTestBase {
 
         if (getTransport() == Constants.TRANSPORT_REST) {
             nodes =
-                selectNodeList(EscidocRestSoapTestBase.getDocument(list),
-                    XPATH_SRW_CONTAINER_LIST_CONTAINER + "/@href");
+                selectNodeList(EscidocRestSoapTestBase.getDocument(list), XPATH_SRW_CONTAINER_LIST_CONTAINER + "/@href");
         }
         else if (getTransport() == Constants.TRANSPORT_SOAP) {
             nodes =
-                selectNodeList(EscidocRestSoapTestBase.getDocument(list),
-                    XPATH_SRW_CONTAINER_LIST_CONTAINER + "/@objid");
+                selectNodeList(EscidocRestSoapTestBase.getDocument(list), XPATH_SRW_CONTAINER_LIST_CONTAINER
+                    + "/@objid");
         }
 
         for (int count = nodes.getLength() - 1; count >= 0; count--) {
@@ -768,19 +632,15 @@ public class ContainerRetrieveTest extends ContainerTestBase {
             try {
                 String container = retrieve(nodeValue);
                 String containerStatus =
-                    selectSingleNode(
-                        EscidocRestSoapTestBase.getDocument(container),
-                        filterResultXPath).getNodeValue();
+                    selectSingleNode(EscidocRestSoapTestBase.getDocument(container), filterResultXPath).getNodeValue();
                 assertEquals(reqStatus, containerStatus);
             }
             catch (final ContainerNotFoundException e) {
                 if (reqStatus.equals(STATUS_WITHDRAWN)) {
-                    EscidocRestSoapTestBase.assertExceptionType(
-                        ItemNotFoundException.class, e);
+                    EscidocRestSoapTestBase.assertExceptionType(ItemNotFoundException.class, e);
                 }
                 else {
-                    fail("No container could be retrieved with id " + nodeValue
-                        + " returned by retrieveContainerRefs.");
+                    fail("No container could be retrieved with id " + nodeValue + " returned by retrieveContainerRefs.");
                 }
             }
 
@@ -814,27 +674,24 @@ public class ContainerRetrieveTest extends ContainerTestBase {
 
     /**
      * Create Item from template.
-     * 
+     *
      * @return objid of Item.
-     * @throws Exception
-     *             Thrown if creation or id extraction failed.
+     * @throws Exception Thrown if creation or id extraction failed.
      */
     private String createItem() throws Exception {
 
         // create an item and save the id
         String xmlData =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
-                + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                "escidoc_item_198_for_create.xml");
 
         String theItemXml = handleXmlResult(getItemClient().create(xmlData));
         return getObjidValue(theItemXml);
     }
 
-    private void doTestFilterMembersUserRole(
-        final String id, final String reqUser, final String reqRole)
+    private void doTestFilterMembersUserRole(final String id, final String reqUser, final String reqRole)
         throws Exception {
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
         String filter = "";
 
         if (reqUser != null) {
@@ -853,20 +710,14 @@ public class ContainerRetrieveTest extends ContainerTestBase {
 
         String list = retrieveMembers(id, filterParams);
         if (Constants.TRANSPORT_REST == getTransport()) {
-            items =
-                selectNodeList(EscidocRestSoapTestBase.getDocument(list),
-                    "/member-list/member/item/@href");
+            items = selectNodeList(EscidocRestSoapTestBase.getDocument(list), "/member-list/member/item/@href");
             containers =
-                selectNodeList(EscidocRestSoapTestBase.getDocument(list),
-                    "/member-list/member/container/@href");
+                selectNodeList(EscidocRestSoapTestBase.getDocument(list), "/member-list/member/container/@href");
         }
         else {
-            items =
-                selectNodeList(EscidocRestSoapTestBase.getDocument(list),
-                    "/member-list/member/item/@objid");
+            items = selectNodeList(EscidocRestSoapTestBase.getDocument(list), "/member-list/member/item/@objid");
             containers =
-                selectNodeList(EscidocRestSoapTestBase.getDocument(list),
-                    "/member-list/member/container/@objid");
+                selectNodeList(EscidocRestSoapTestBase.getDocument(list), "/member-list/member/container/@objid");
         }
 
         for (int count = containers.getLength() - 1; count >= 0; count--) {
@@ -901,17 +752,16 @@ public class ContainerRetrieveTest extends ContainerTestBase {
     }
 
     /**
-     * 
+     *
      * @param memberIds
      * @return
      */
     private String getMemberRefList(List<String> memberIds) {
 
         String result =
-            "<member-ref-list:member-ref-list><member-ref-list:member>"
-                + "<member-ref-list:item-ref  " + XLINK_TYPE_ESCIDOC
-                + "=\"simple\" " + XLINK_HREF_ESCIDOC + "=\"/ir/item/"
-                + theItemId + "\" objid=\"" + theItemId + "\"/>";
+            "<member-ref-list:member-ref-list><member-ref-list:member>" + "<member-ref-list:item-ref  "
+                + XLINK_TYPE_ESCIDOC + "=\"simple\" " + XLINK_HREF_ESCIDOC + "=\"/ir/item/" + theItemId + "\" objid=\""
+                + theItemId + "\"/>";
 
         if (memberIds != null) {
             // FIXME this methods does nothing useful
@@ -921,20 +771,15 @@ public class ContainerRetrieveTest extends ContainerTestBase {
             }
         }
 
-        result +=
-            "</member-ref-list:member>" + "</member-ref-list:member-ref-list>";
+        result += "</member-ref-list:member>" + "</member-ref-list:member-ref-list>";
 
         return result;
     }
 
     /**
      * Test successfully retrieving md-record.
-     * 
-     * 
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveMdRecord() throws Exception {
@@ -943,12 +788,8 @@ public class ContainerRetrieveTest extends ContainerTestBase {
 
     /**
      * Test decline retrieving md-record without container ID.
-     * 
-     * 
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveMdRecordWithoutItemID() throws Exception {
@@ -964,12 +805,8 @@ public class ContainerRetrieveTest extends ContainerTestBase {
 
     /**
      * Test decline retrieving md-record with no name.
-     * 
-     * 
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveMdRecordWithoutName() throws Exception {
@@ -985,12 +822,8 @@ public class ContainerRetrieveTest extends ContainerTestBase {
 
     /**
      * Test decline retrieving md-record with empty name.
-     * 
-     * 
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveMdRecordWithEmptyName() throws Exception {
@@ -1006,12 +839,8 @@ public class ContainerRetrieveTest extends ContainerTestBase {
 
     /**
      * Test successfully retrieving md-record with non existing name.
-     * 
-     * 
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveMdRecordNonExistingName() throws Exception {
@@ -1027,19 +856,12 @@ public class ContainerRetrieveTest extends ContainerTestBase {
 
     /**
      * Test successfully retrieving an explain response.
-     * 
-     * @test.name testExplainRetrieveContainers
-     * @test.id testExplainRetrieveContainers
-     * @test.input
-     * @test.expected: valid explain response.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testExplainRetrieveContainers() throws Exception {
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_EXPLAIN, new String[] { "" });
 
@@ -1056,19 +878,12 @@ public class ContainerRetrieveTest extends ContainerTestBase {
 
     /**
      * Test successfully retrieving an explain response.
-     * 
-     * @test.name testExplainRetrieveMembers
-     * @test.id testExplainRetrieveMembers
-     * @test.input
-     * @test.expected: valid explain response.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testExplainRetrieveMembers() throws Exception {
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_EXPLAIN, new String[] { "" });
 
@@ -1085,19 +900,12 @@ public class ContainerRetrieveTest extends ContainerTestBase {
 
     /**
      * Test successfully retrieving an explain response.
-     * 
-     * @test.name testExplainRetrieveTocs
-     * @test.id testExplainRetrieveTocs
-     * @test.input
-     * @test.expected: valid explain response.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testExplainRetrieveTocs() throws Exception {
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_EXPLAIN, new String[] { "" });
 
@@ -1114,29 +922,26 @@ public class ContainerRetrieveTest extends ContainerTestBase {
 
     /**
      * Test if the objid is handles right.
-     * 
+     * <p/>
      * see issue INFR-773
-     * 
-     * The tests creates an Container with one Item as Member and uses then on
-     * the Item handler the objid of the Item with and without version suffix.
-     * The framework has to answer with ContainerNotFoundException in all cases.
-     * 
-     * @throws Exception
-     *             If framework behavior is not as expected.
+     * <p/>
+     * The tests creates an Container with one Item as Member and uses then on the Item handler the objid of the Item
+     * with and without version suffix. The framework has to answer with ContainerNotFoundException in all cases.
+     *
+     * @throws Exception If framework behavior is not as expected.
      */
     @Test
     public void testWrongObjid01() throws Exception {
 
         // create container
         String containerTemplXml = getContainerTemplate("create_container.xml");
-        containerTemplXml =
-            containerTemplXml.replaceAll("escidoc:persistent3", "escidoc:ex1");
+        containerTemplXml = containerTemplXml.replaceAll("escidoc:persistent3", "escidoc:ex1");
         String containerXml = create(containerTemplXml);
         String containerId = getObjidValue(containerXml);
 
         String itemTemplXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
-                + "/" + getTransport(false), "item_without_component.xml");
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                "item_without_component.xml");
 
         String itemXml = createItem(containerId, itemTemplXml);
         String itemId = getObjidValue(itemXml);
@@ -1145,46 +950,38 @@ public class ContainerRetrieveTest extends ContainerTestBase {
             retrieve(itemId);
         }
         catch (final Exception e) {
-            assertExceptionType("Wrong exception",
-                ContainerNotFoundException.class, e);
+            assertExceptionType("Wrong exception", ContainerNotFoundException.class, e);
         }
 
         try {
             retrieve(itemId + ":1");
         }
         catch (final Exception e) {
-            assertExceptionType("Wrong exception",
-                ContainerNotFoundException.class, e);
+            assertExceptionType("Wrong exception", ContainerNotFoundException.class, e);
         }
 
         try {
             retrieve(itemId + ":a");
         }
         catch (final Exception e) {
-            assertExceptionType("Wrong exception",
-                ContainerNotFoundException.class, e);
+            assertExceptionType("Wrong exception", ContainerNotFoundException.class, e);
         }
     }
 
     /**
      * Creates an Item and retrieves the md-record by given name.
-     * 
-     * @param resourceId
-     *            If the retrieve should be done with resource ID.
-     * @param name
-     *            The name of the md-record to be retrieved.
-     * @throws Exception
-     *             If an error occures.
+     *
+     * @param resourceId If the retrieve should be done with resource ID.
+     * @param name       The name of the md-record to be retrieved.
+     * @throws Exception If an error occures.
      */
-    private void retrieveMdRecord(final boolean resourceId, final String name)
-        throws Exception {
+    private void retrieveMdRecord(final boolean resourceId, final String name) throws Exception {
         if (!resourceId) {
             this.theContainerId = null;
         }
 
-        String retrievedMdRecord =
-            retrieveMetadataRecord(this.theContainerId, name);
-        assertCreatedMdRecord(name, this.theContainerId, "container",
-            retrievedMdRecord, this.theContainerXml, startTimestamp);
+        String retrievedMdRecord = retrieveMetadataRecord(this.theContainerId, name);
+        assertCreatedMdRecord(name, this.theContainerId, "container", retrievedMdRecord, this.theContainerXml,
+            startTimestamp);
     }
 }

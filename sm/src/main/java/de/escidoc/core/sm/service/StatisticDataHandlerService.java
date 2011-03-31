@@ -14,16 +14,10 @@ import java.rmi.RemoteException;
  */
 public interface StatisticDataHandlerService extends Remote {
 
-    void create(String xmlData, SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            SystemException, RemoteException;
+    void create(String xmlData, SecurityContext securityContext) throws AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, SystemException, RemoteException;
 
-    void create(String xmlData, String authHandle, Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            SystemException, RemoteException;
+    void create(String xmlData, String authHandle, Boolean restAccess) throws AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, SystemException, RemoteException;
 
 }

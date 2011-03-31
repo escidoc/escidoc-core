@@ -86,12 +86,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Helper class to support Xml stuff in eSciDoc.<br>
- * This class provides the validation of XML data using specified schemas.<br>
- * The schemas are specified by providing their schema URIs from that
- * <code>Schema</code> objects are created. These <code>Schema</code> objects
- * are thread-safe and are cached to prevent unnecessary recreation.
- * 
+ * Helper class to support Xml stuff in eSciDoc.<br> This class provides the validation of XML data using specified
+ * schemas.<br> The schemas are specified by providing their schema URIs from that <code>Schema</code> objects are
+ * created. These <code>Schema</code> objects are thread-safe and are cached to prevent unnecessary recreation.
+ *
  * @author Torsten Tetteroo
  */
 public final class XmlUtility {
@@ -99,15 +97,15 @@ public final class XmlUtility {
     private static final Logger LOGGER = LoggerFactory.getLogger(XmlUtility.class);
 
     /**
-     * Pattern used to detect Object type is in resource type format, e.g.
-     * http://escidoc.de/core/01/resources/OrganizationalUnit
+     * Pattern used to detect Object type is in resource type format, e.g. http://escidoc.de/core/01/resources/OrganizationalUnit
      */
-    private static final Pattern PATTERN_RESOURCE_OBJECT_TYPE = Pattern
-        .compile('^' + Constants.RESOURCES_NS_URI + ".*$");
+    private static final Pattern PATTERN_RESOURCE_OBJECT_TYPE =
+        Pattern.compile('^' + Constants.RESOURCES_NS_URI + ".*$");
 
-    /** The cache storing the compiled schemas. */
-    private static final Map<String, Schema> SCHEMA_CACHE =
-        new HashMap<String, Schema>();
+    /**
+     * The cache storing the compiled schemas.
+     */
+    private static final Map<String, Schema> SCHEMA_CACHE = new HashMap<String, Schema>();
 
     /**
      * The UTF-8 character encoding used in eSciDoc.
@@ -122,8 +120,8 @@ public final class XmlUtility {
     /**
      * Head of document.
      */
-    public static final String DOCUMENT_START = "<?xml version=\""
-        + XML_VERSION + "\" encoding=\"" + CHARACTER_ENCODING + "\"?>\n";
+    public static final String DOCUMENT_START =
+        "<?xml version=\"" + XML_VERSION + "\" encoding=\"" + CHARACTER_ENCODING + "\"?>\n";
 
     /**
      * CDATA start.
@@ -155,42 +153,31 @@ public final class XmlUtility {
 
     public static final String ESC_QUOT = "&quot;";
 
-    private static final Pattern PATTERN_ESCAPE_NEEDED = Pattern
-        .compile(AMPERSAND + '|' + LESS_THAN + '|' + GREATER_THAN + '|' + QUOT
-            + '|' + APOS);
+    private static final Pattern PATTERN_ESCAPE_NEEDED =
+        Pattern.compile(AMPERSAND + '|' + LESS_THAN + '|' + GREATER_THAN + '|' + QUOT + '|' + APOS);
 
-    private static final Pattern PATTERN_UNESCAPE_NEEDED = Pattern
-        .compile(ESC_AMPERSAND + '|' + ESC_LESS_THAN + '|' + ESC_GREATER_THAN
-            + '|' + ESC_QUOT + '|' + ESC_APOS);
+    private static final Pattern PATTERN_UNESCAPE_NEEDED =
+        Pattern.compile(ESC_AMPERSAND + '|' + ESC_LESS_THAN + '|' + ESC_GREATER_THAN + '|' + ESC_QUOT + '|' + ESC_APOS);
 
     private static final Pattern PATTERN_AMPERSAND = Pattern.compile('(' + AMPERSAND + ')');
 
-    private static final Pattern PATTERN_LESS_THAN = Pattern.compile('('
-        + LESS_THAN + ')');
+    private static final Pattern PATTERN_LESS_THAN = Pattern.compile('(' + LESS_THAN + ')');
 
-    private static final Pattern PATTERN_GREATER_THAN = Pattern.compile('('
-        + GREATER_THAN + ')');
+    private static final Pattern PATTERN_GREATER_THAN = Pattern.compile('(' + GREATER_THAN + ')');
 
-    private static final Pattern PATTERN_QUOT = Pattern.compile('(' + QUOT
-        + ')');
+    private static final Pattern PATTERN_QUOT = Pattern.compile('(' + QUOT + ')');
 
-    private static final Pattern PATTERN_APOS = Pattern.compile('(' + APOS
-        + ')');
+    private static final Pattern PATTERN_APOS = Pattern.compile('(' + APOS + ')');
 
-    private static final Pattern PATTERN_ESC_AMPERSAND = Pattern.compile('('
-        + ESC_AMPERSAND + ')');
+    private static final Pattern PATTERN_ESC_AMPERSAND = Pattern.compile('(' + ESC_AMPERSAND + ')');
 
-    private static final Pattern PATTERN_ESC_LESS_THAN = Pattern.compile('('
-        + ESC_LESS_THAN + ')');
+    private static final Pattern PATTERN_ESC_LESS_THAN = Pattern.compile('(' + ESC_LESS_THAN + ')');
 
-    private static final Pattern PATTERN_ESC_GREATER_THAN = Pattern.compile('('
-        + ESC_GREATER_THAN + ')');
+    private static final Pattern PATTERN_ESC_GREATER_THAN = Pattern.compile('(' + ESC_GREATER_THAN + ')');
 
-    private static final Pattern PATTERN_ESC_QUOT = Pattern.compile('('
-        + ESC_QUOT + ')');
+    private static final Pattern PATTERN_ESC_QUOT = Pattern.compile('(' + ESC_QUOT + ')');
 
-    private static final Pattern PATTERN_ESC_APOS = Pattern.compile('('
-        + ESC_APOS + ')');
+    private static final Pattern PATTERN_ESC_APOS = Pattern.compile('(' + ESC_APOS + ')');
 
     private static String containerRestSchemaLocation;
 
@@ -326,24 +313,20 @@ public final class XmlUtility {
 
     public static final String NAME_ITEM_REF = "item-ref";
 
-    /** The name of the last modification date attribute. */
-    public static final String NAME_LAST_MODIFICATION_DATE =
-        "last-modification-date";
+    /**
+     * The name of the last modification date attribute.
+     */
+    public static final String NAME_LAST_MODIFICATION_DATE = "last-modification-date";
 
-    public static final String NAME_LATEST_RELEASE_NUMBER =
-        "latest-release-number";
+    public static final String NAME_LATEST_RELEASE_NUMBER = "latest-release-number";
 
-    public static final String NAME_LATEST_VERSION_MODIFIED_BY =
-        "latest-version-modified-by";
+    public static final String NAME_LATEST_VERSION_MODIFIED_BY = "latest-version-modified-by";
 
-    public static final String NAME_LATEST_VERSION_NUMBER =
-        "latest-version-number";
+    public static final String NAME_LATEST_VERSION_NUMBER = "latest-version-number";
 
-    public static final String NAME_LATEST_VERSION_STATUS =
-        "latest-version-status";
+    public static final String NAME_LATEST_VERSION_STATUS = "latest-version-status";
 
-    public static final String NAME_LATEST_VERSION_VALID_STATUS =
-        "latest-version-valid-status";
+    public static final String NAME_LATEST_VERSION_VALID_STATUS = "latest-version-valid-status";
 
     public static final String NAME_PUBLIC_STATUS = "public-status";
 
@@ -396,15 +379,13 @@ public final class XmlUtility {
 
     public static final String NAME_SCOPE = "scope";
 
-    public static final String NAME_AGGREGATION_DEFINITION =
-        "aggregation-definition";
+    public static final String NAME_AGGREGATION_DEFINITION = "aggregation-definition";
 
     public static final String NAME_REPORT = "report";
 
     public static final String NAME_REPORT_DEFINITION = "report-definition";
 
-    public static final String NAME_PREPROCESSING_INFORMATION =
-        "preprocessing-information";
+    public static final String NAME_PREPROCESSING_INFORMATION = "preprocessing-information";
 
     // /////////////////////////////////////////
 
@@ -432,8 +413,7 @@ public final class XmlUtility {
 
     public static final String NAME_RESOURCES = "resources";
 
-    public static final String NAME_ORGANIZATION_DETAILS =
-        "organization-details";
+    public static final String NAME_ORGANIZATION_DETAILS = "organization-details";
 
     public static final String NAME_ID = "id";
 
@@ -491,8 +471,7 @@ public final class XmlUtility {
 
     public static final String NAME_UNSECURED_ACTIONS = "unsecured-actions";
 
-    public static final String XPATH_ITEM_COMPONENT_STATUS =
-        "/item/component/properties/status";
+    public static final String XPATH_ITEM_COMPONENT_STATUS = "/item/component/properties/status";
 
     public static final String XPATH_USER_ACCOUNT_ORGANIZATIONAL_UNIT =
         "/user-account/properties/organizational-units/organizational-unit";
@@ -505,17 +484,13 @@ public final class XmlUtility {
 
     public static final String BASE_OM = "/ir/";
 
-    public static final String BASE_ORGANIZATIONAL_UNIT = BASE_OUM
-        + NAME_ORGANIZATIONAL_UNIT + '/';
+    public static final String BASE_ORGANIZATIONAL_UNIT = BASE_OUM + NAME_ORGANIZATIONAL_UNIT + '/';
 
-    public static final String BASE_USER_ACCOUNT = BASE_AA + NAME_USER_ACCOUNT
-        + '/';
+    public static final String BASE_USER_ACCOUNT = BASE_AA + NAME_USER_ACCOUNT + '/';
 
-    public static final String BASE_USER_GROUP = BASE_AA + NAME_USER_GROUP
-        + '/';
+    public static final String BASE_USER_GROUP = BASE_AA + NAME_USER_GROUP + '/';
 
-    public static final String BASE_SET_DEFINITION = "/oai/"
-        + NAME_SET_DEFINITION + '/';
+    public static final String BASE_SET_DEFINITION = "/oai/" + NAME_SET_DEFINITION + '/';
 
     public static final String BASE_ROLE = BASE_AA + NAME_ROLE + '/';
 
@@ -523,50 +498,38 @@ public final class XmlUtility {
 
     public static final String BASE_SCOPE = BASE_SM + NAME_SCOPE + '/';
 
-    public static final String BASE_AGGREGATION_DEFINITION = BASE_SM
-        + NAME_AGGREGATION_DEFINITION + '/';
+    public static final String BASE_AGGREGATION_DEFINITION = BASE_SM + NAME_AGGREGATION_DEFINITION + '/';
 
-    public static final String BASE_REPORT_DEFINITION = BASE_SM
-        + NAME_REPORT_DEFINITION + '/';
+    public static final String BASE_REPORT_DEFINITION = BASE_SM + NAME_REPORT_DEFINITION + '/';
 
-    private static final Map<String, String> REST_SCHEMA_LOCATIONS =
-        new HashMap<String, String>();
+    private static final Map<String, String> REST_SCHEMA_LOCATIONS = new HashMap<String, String>();
 
-    private static final Map<String, String> SOAP_SCHEMA_LOCATIONS =
-        new HashMap<String, String>();
+    private static final Map<String, String> SOAP_SCHEMA_LOCATIONS = new HashMap<String, String>();
 
-    public static final String XPATH_USER_ACCOUNT_PROPERTIES = '/'
-        + NAME_USER_ACCOUNT + '/' + NAME_PROPERTIES;
+    public static final String XPATH_USER_ACCOUNT_PROPERTIES = '/' + NAME_USER_ACCOUNT + '/' + NAME_PROPERTIES;
 
     /**
-     * The thread-safe compiled Pattern used to extract the object id from an
-     * provided URI/Fedora id, e.g. from &lt;info:fedora/escidoc:1&gt; or from
-     * http://www.escidoc.de/some/path/escidoc:1
+     * The thread-safe compiled Pattern used to extract the object id from an provided URI/Fedora id, e.g. from
+     * &lt;info:fedora/escidoc:1&gt; or from http://www.escidoc.de/some/path/escidoc:1
      */
-    private static final Pattern PATTERN_GET_ID_FROM_URI_OR_FEDORA_ID = Pattern
-        .compile(".*/([^/>]+)>{0,1}");
+    private static final Pattern PATTERN_GET_ID_FROM_URI_OR_FEDORA_ID = Pattern.compile(".*/([^/>]+)>{0,1}");
 
     /**
-     * The thread-safe compiled pattern to extract an object id from an XML
-     * representation of a resource, either by getting it from the attribute
-     * objid or extracting it from the attribute ...:href.
+     * The thread-safe compiled pattern to extract an object id from an XML representation of a resource, either by
+     * getting it from the attribute objid or extracting it from the attribute ...:href.
      */
-    private static final Pattern PATTERN_OBJID_FROM_XML = Pattern
-        .compile("(.*?objid=\"|.*?:href=\".*/)(.*?)\".*");
+    private static final Pattern PATTERN_OBJID_FROM_XML = Pattern.compile("(.*?objid=\"|.*?:href=\".*/)(.*?)\".*");
 
     /**
-     * The thread-safe compiled pattern to extract a title from an XML
-     * representation of a resource.
+     * The thread-safe compiled pattern to extract a title from an XML representation of a resource.
      */
-    private static final Pattern PATTERN_NAME_FROM_XML = Pattern.compile(
-        ".*?<.*?:" + NAME_NAME + ">(.*?)</.*?:" + NAME_NAME + ">.*",
-        Pattern.DOTALL | Pattern.MULTILINE);
+    private static final Pattern PATTERN_NAME_FROM_XML =
+        Pattern
+            .compile(".*?<.*?:" + NAME_NAME + ">(.*?)</.*?:" + NAME_NAME + ">.*", Pattern.DOTALL | Pattern.MULTILINE);
 
-    private static final Pattern PATTERN_ID_WITHOUT_VERSION = Pattern
-        .compile("([a-zA-Z]+:[a-zA-Z0-9]+):[0-9]+");
+    private static final Pattern PATTERN_ID_WITHOUT_VERSION = Pattern.compile("([a-zA-Z]+:[a-zA-Z0-9]+):[0-9]+");
 
-    private static final Pattern PATTERN_VERSION_NUMBER = Pattern
-        .compile("[a-zA-Z]+:[a-zA-Z0-9]+:([0-9]+)");
+    private static final Pattern PATTERN_VERSION_NUMBER = Pattern.compile("[a-zA-Z]+:[a-zA-Z0-9]+:([0-9]+)");
 
     public static final String ERR_MSG_MISSING_ATTRIBUTE = "Missing attribute";
 
@@ -580,17 +543,13 @@ public final class XmlUtility {
     }
 
     /**
-     * Simple proxy method that can decide about the resource type and return
-     * the matching schema location.
-     * 
-     * @param type
-     *            The type of the resource.
+     * Simple proxy method that can decide about the resource type and return the matching schema location.
+     *
+     * @param type The type of the resource.
      * @return Returns the location of the appropriate schema
-     * @throws WebserverSystemException
-     *             Thrown if retrieve of SchemaLocation failed.
+     * @throws WebserverSystemException Thrown if retrieve of SchemaLocation failed.
      */
-    public static String getSchemaLocationForResource(final ResourceType type)
-        throws WebserverSystemException {
+    public static String getSchemaLocationForResource(final ResourceType type) throws WebserverSystemException {
 
         final String schemaLocation;
         switch (type) {
@@ -610,68 +569,52 @@ public final class XmlUtility {
                 schemaLocation = getContentRelationSchemaLocation();
                 break;
             default:
-                throw new WebserverSystemException(
-                    "Unknown schema location for resoure type " + type);
+                throw new WebserverSystemException("Unknown schema location for resoure type " + type);
         }
 
         return schemaLocation;
     }
 
     /**
-     * Gets the organizational unit href for the provided organizational unit
-     * id.
-     * 
-     * @param organizationalUnitId
-     *            The id of the organizational unit.
+     * Gets the organizational unit href for the provided organizational unit id.
+     *
+     * @param organizationalUnitId The id of the organizational unit.
      * @return Returns the href for the provided organizational unit id.
      */
-    public static String getOrganizationalUnitHref(
-        final String organizationalUnitId) {
+    public static String getOrganizationalUnitHref(final String organizationalUnitId) {
 
         return BASE_ORGANIZATIONAL_UNIT + organizationalUnitId;
     }
 
     /**
-     * Gets the container md records href for the provided organizational unit
-     * id.
-     * 
-     * @param organizationalUnitId
-     *            The id of organizational unit.
-     * @return Returns the href for the md records of the provided
-     *         organizational unit id.
+     * Gets the container md records href for the provided organizational unit id.
+     *
+     * @param organizationalUnitId The id of organizational unit.
+     * @return Returns the href for the md records of the provided organizational unit id.
      */
-    public static String getOrganizationalUnitMdRecordsHref(
-        final String organizationalUnitId) {
+    public static String getOrganizationalUnitMdRecordsHref(final String organizationalUnitId) {
 
-        return getOrganizationalUnitHref(organizationalUnitId) + '/'
-            + NAME_MDRECORDS;
+        return getOrganizationalUnitHref(organizationalUnitId) + '/' + NAME_MDRECORDS;
     }
 
     /**
-     * Gets the container properties href for the provided organizational unit
-     * id and name.
-     * 
-     * @param organizationalUnitId
-     *            The id of organizational unit.
-     * @param name
-     *            The name of the md record.
-     * @return Returns the href for the md record of the provided organizational
-     *         unit id and name.
+     * Gets the container properties href for the provided organizational unit id and name.
+     *
+     * @param organizationalUnitId The id of organizational unit.
+     * @param name                 The name of the md record.
+     * @return Returns the href for the md record of the provided organizational unit id and name.
      */
-    public static String getOrganizationalUnitMdRecordHref(
-        final String organizationalUnitId, final String name) {
+    public static String getOrganizationalUnitMdRecordHref(final String organizationalUnitId, final String name) {
 
-        return getOrganizationalUnitMdRecordsHref(organizationalUnitId) + '/'
-            + NAME_MDRECORD + '/' + name;
+        return getOrganizationalUnitMdRecordsHref(organizationalUnitId) + '/' + NAME_MDRECORD + '/' + name;
     }
 
     /**
      * Gets the container href for the provided container id.
-     * 
+     * <p/>
      * Use the getHref() methods of the resource objects itself (Container).
-     * 
-     * @param containerId
-     *            The id of the container.
+     *
+     * @param containerId The id of the container.
      * @return Returns the href for the provided container id.
      */
     @Deprecated
@@ -682,9 +625,8 @@ public final class XmlUtility {
 
     /**
      * Gets the container properties href for the provided container id.
-     * 
-     * @param containerHref
-     *            The href of container.
+     *
+     * @param containerHref The href of container.
      * @return Returns the href for the properties of the provided container id.
      */
     public static String getContainerMdRecordsHref(final String containerHref) {
@@ -694,9 +636,8 @@ public final class XmlUtility {
 
     /**
      * Gets the container properties href for the provided container id.
-     * 
-     * @param containerHref
-     *            The href of the container.
+     *
+     * @param containerHref The href of the container.
      * @return Returns the href for the properties of the provided container id.
      */
     public static String getContainerPropertiesHref(final String containerHref) {
@@ -706,9 +647,8 @@ public final class XmlUtility {
 
     /**
      * Gets the item href for the provided item id.
-     * 
-     * @param itemId
-     *            The id of the container.
+     *
+     * @param itemId The id of the container.
      * @return Returns the href for the provided container id.
      */
     public static String getItemHref(final String itemId) {
@@ -718,9 +658,8 @@ public final class XmlUtility {
 
     /**
      * Gets the item parents href for the provided item href.
-     * 
-     * @param itemHref
-     *            The href of the item.
+     *
+     * @param itemHref The href of the item.
      * @return Returns the href for the data of the provided item id.
      */
     public static String getItemParentsHref(final String itemHref) {
@@ -730,43 +669,40 @@ public final class XmlUtility {
 
     /**
      * Gets the component href for the provided component id.
-     * 
-     * @param componentId
-     *            The id of the component.
+     *
+     * @param componentId The id of the component.
      * @return Returns the href for the provided component id.
      */
     public static String getComponentHref(final String componentId) {
         final String itemId;
         try {
-            itemId =
-                TripleStoreUtility.getInstance().getItemForComponent(
-                    componentId);
-        } catch (final TripleStoreSystemException e) {
-            if(LOGGER.isWarnEnabled()) {
+            itemId = TripleStoreUtility.getInstance().getItemForComponent(componentId);
+        }
+        catch (final TripleStoreSystemException e) {
+            if (LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on accessing triple store.");
             }
-            if(LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Error on accessing triple store.", e);
-            }
-            return null;
-        } catch (final WebserverSystemException e) {
-            if(LOGGER.isWarnEnabled()) {
-                LOGGER.warn("Error on accessing triple store.");
-            }
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on accessing triple store.", e);
             }
             return null;
         }
-        return Constants.ITEM_URL_BASE + itemId + Constants.COMPONENT_URL_PART
-            + componentId;
+        catch (final WebserverSystemException e) {
+            if (LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Error on accessing triple store.");
+            }
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on accessing triple store.", e);
+            }
+            return null;
+        }
+        return Constants.ITEM_URL_BASE + itemId + Constants.COMPONENT_URL_PART + componentId;
     }
 
     /**
      * Gets the content-relation href for the provided content-relation id.
-     * 
-     * @param contentRelationId
-     *            The id of the content-relation.
+     *
+     * @param contentRelationId The id of the content-relation.
      * @return Returns the href for the provided content-relation id.
      */
     public static String getContentRelationHref(final String contentRelationId) {
@@ -775,9 +711,8 @@ public final class XmlUtility {
 
     /**
      * Gets the context href for the provided container id.
-     * 
-     * @param contextId
-     *            The id of the context.
+     *
+     * @param contextId The id of the context.
      * @return Returns the href for the provided context id.
      */
     public static String getContextHref(final String contextId) {
@@ -787,9 +722,8 @@ public final class XmlUtility {
 
     /**
      * Get the properties href for the provided context.
-     * 
-     * @param contextId
-     *            The id of the context.
+     *
+     * @param contextId The id of the context.
      * @return Returns the href of the properties for the provided context id.
      */
     public static String getContextPropertiesHref(final String contextId) {
@@ -799,9 +733,8 @@ public final class XmlUtility {
 
     /**
      * Gets the context resources href for the provided context id.
-     * 
-     * @param contextId
-     *            The id of the context.
+     *
+     * @param contextId The id of the context.
      * @return Returns the href for the data of the provided context id.
      */
     public static String getContextResourcesHref(final String contextId) {
@@ -811,9 +744,8 @@ public final class XmlUtility {
 
     /**
      * Gets the content model href for the provided content model id.
-     * 
-     * @param contentModelId
-     *            The id of the content model.
+     *
+     * @param contentModelId The id of the content model.
      * @return Returns the href for the provided content model id.
      */
     public static String getContentModelHref(final String contentModelId) {
@@ -822,74 +754,53 @@ public final class XmlUtility {
     }
 
     /**
-     * Gets the organizational unit properties href for the provided
-     * organizational unit id.
-     * 
-     * @param organizationalUnitId
-     *            The id of the organizational unit.
-     * @return Returns the href for the properties of the provided
-     *         organizational unit id.
+     * Gets the organizational unit properties href for the provided organizational unit id.
+     *
+     * @param organizationalUnitId The id of the organizational unit.
+     * @return Returns the href for the properties of the provided organizational unit id.
      */
-    public static String getOrganizationalUnitPropertiesHref(
-        final String organizationalUnitId) {
+    public static String getOrganizationalUnitPropertiesHref(final String organizationalUnitId) {
 
-        return getOrganizationalUnitHref(organizationalUnitId) + '/'
-            + NAME_PROPERTIES;
+        return getOrganizationalUnitHref(organizationalUnitId) + '/' + NAME_PROPERTIES;
     }
 
     /**
-     * Gets the organizational unit parent-ous href for the provided
-     * organizational unit id.
-     * 
-     * @param organizationalUnitId
-     *            The id of the organizational unit.
-     * @return Returns the href for the parent-ous of the provided
-     *         organizational unit id.
+     * Gets the organizational unit parent-ous href for the provided organizational unit id.
+     *
+     * @param organizationalUnitId The id of the organizational unit.
+     * @return Returns the href for the parent-ous of the provided organizational unit id.
      */
-    public static String getOrganizationalUnitParentsHref(
-        final String organizationalUnitId) {
+    public static String getOrganizationalUnitParentsHref(final String organizationalUnitId) {
 
-        return getOrganizationalUnitHref(organizationalUnitId) + '/'
-            + NAME_PARENTS;
+        return getOrganizationalUnitHref(organizationalUnitId) + '/' + NAME_PARENTS;
     }
 
     /**
-     * Get href of organizational unit predecessor OUs for the provided
-     * organizational unit id.
-     * 
-     * @param organizationalUnitId
-     *            The id of the organizational unit.
-     * @return Returns the href for the predecessor OUs of the provided
-     *         organizational unit id.
+     * Get href of organizational unit predecessor OUs for the provided organizational unit id.
+     *
+     * @param organizationalUnitId The id of the organizational unit.
+     * @return Returns the href for the predecessor OUs of the provided organizational unit id.
      */
-    public static String getOrganizationalUnitPredecessorsHref(
-        final String organizationalUnitId) {
+    public static String getOrganizationalUnitPredecessorsHref(final String organizationalUnitId) {
 
-        return getOrganizationalUnitHref(organizationalUnitId) + '/'
-            + NAME_PREDECESSORS;
+        return getOrganizationalUnitHref(organizationalUnitId) + '/' + NAME_PREDECESSORS;
     }
 
     /**
-     * Get href of organizational unit successors for the provided
-     * organizational unit id.
-     * 
-     * @param organizationalUnitId
-     *            The id of the organizational unit.
-     * @return Returns the href for the successor OUs of the provided
-     *         organizational unit id.
+     * Get href of organizational unit successors for the provided organizational unit id.
+     *
+     * @param organizationalUnitId The id of the organizational unit.
+     * @return Returns the href for the successor OUs of the provided organizational unit id.
      */
-    public static String getOrganizationalUnitSuccessorsHref(
-        final String organizationalUnitId) {
+    public static String getOrganizationalUnitSuccessorsHref(final String organizationalUnitId) {
 
-        return getOrganizationalUnitHref(organizationalUnitId) + '/'
-            + NAME_SUCCESSORS;
+        return getOrganizationalUnitHref(organizationalUnitId) + '/' + NAME_SUCCESSORS;
     }
 
     /**
      * Gets the container resources href for the provided container id.
-     * 
-     * @param containerHref
-     *            The href of the container.
+     *
+     * @param containerHref The href of the container.
      * @return Returns the href for the data of the provided container id.
      */
     public static String getContainerResourcesHref(final String containerHref) {
@@ -899,9 +810,8 @@ public final class XmlUtility {
 
     /**
      * Gets the container parents href for the provided container id.
-     * 
-     * @param containerHref
-     *            The href of the container.
+     *
+     * @param containerHref The href of the container.
      * @return Returns the href for the data of the provided container id.
      */
     public static String getContainerParentsHref(final String containerHref) {
@@ -910,90 +820,64 @@ public final class XmlUtility {
     }
 
     /**
-     * Gets the organizational unit resources href for the provided
-     * organizational unit id.
-     * 
-     * @param organizationalUnitId
-     *            The id of the organizational unit.
-     * @return Returns the href for the data of the provided organizational unit
-     *         id.
+     * Gets the organizational unit resources href for the provided organizational unit id.
+     *
+     * @param organizationalUnitId The id of the organizational unit.
+     * @return Returns the href for the data of the provided organizational unit id.
      */
-    public static String getOrganizationalUnitResourcesHref(
-        final String organizationalUnitId) {
+    public static String getOrganizationalUnitResourcesHref(final String organizationalUnitId) {
 
-        return getOrganizationalUnitHref(organizationalUnitId) + '/'
-            + NAME_RESOURCES;
+        return getOrganizationalUnitHref(organizationalUnitId) + '/' + NAME_RESOURCES;
     }
 
     /**
-     * Gets the organizational unit virtual resource parents href for the
-     * provided organizational unit id.
-     * 
-     * @param organizationalUnitId
-     *            The id of the organizational unit.
-     * @return Returns the href for the data of the provided organizational unit
-     *         id.
+     * Gets the organizational unit virtual resource parents href for the provided organizational unit id.
+     *
+     * @param organizationalUnitId The id of the organizational unit.
+     * @return Returns the href for the data of the provided organizational unit id.
      */
-    public static String getOrganizationalUnitResourcesParentObjectsHref(
-        final String organizationalUnitId) {
+    public static String getOrganizationalUnitResourcesParentObjectsHref(final String organizationalUnitId) {
 
-        return getOrganizationalUnitResourcesHref(organizationalUnitId) + '/'
-            + NAME_PARENT_OBJECTS;
+        return getOrganizationalUnitResourcesHref(organizationalUnitId) + '/' + NAME_PARENT_OBJECTS;
     }
 
     /**
-     * Gets the organizational unit virtual resource children href for the
-     * provided organizational unit id.
-     * 
-     * @param organizationalUnitId
-     *            The id of the organizational unit.
-     * @return Returns the href for the data of the provided organizational unit
-     *         id.
+     * Gets the organizational unit virtual resource children href for the provided organizational unit id.
+     *
+     * @param organizationalUnitId The id of the organizational unit.
+     * @return Returns the href for the data of the provided organizational unit id.
      */
-    public static String getOrganizationalUnitResourcesChildObjectsHref(
-        final String organizationalUnitId) {
+    public static String getOrganizationalUnitResourcesChildObjectsHref(final String organizationalUnitId) {
 
-        return getOrganizationalUnitResourcesHref(organizationalUnitId) + '/'
-            + NAME_CHILD_OBJECTS;
+        return getOrganizationalUnitResourcesHref(organizationalUnitId) + '/' + NAME_CHILD_OBJECTS;
     }
 
     /**
-     * Gets the organizational unit virtual resource path-list href for the
-     * provided organizational unit id.
-     * 
-     * @param organizationalUnitId
-     *            The id of the organizational unit.
-     * @return Returns the href for the data of the provided organizational unit
-     *         id.
+     * Gets the organizational unit virtual resource path-list href for the provided organizational unit id.
+     *
+     * @param organizationalUnitId The id of the organizational unit.
+     * @return Returns the href for the data of the provided organizational unit id.
      */
-    public static String getOrganizationalUnitResourcesPathListHref(
-        final String organizationalUnitId) {
+    public static String getOrganizationalUnitResourcesPathListHref(final String organizationalUnitId) {
 
-        return getOrganizationalUnitResourcesHref(organizationalUnitId) + '/'
-            + NAME_PATH_LIST;
+        return getOrganizationalUnitResourcesHref(organizationalUnitId) + '/' + NAME_PATH_LIST;
     }
 
     /**
-     * Gets the organizational unit virtual resource successors href for the
-     * provided organizational unit id.
-     * 
-     * @param organizationalUnitId
-     *            The id of the organizational unit.
-     * @return Returns the href for the data of the provided organizational unit
-     *         id.
+     * Gets the organizational unit virtual resource successors href for the provided organizational unit id.
+     *
+     * @param organizationalUnitId The id of the organizational unit.
+     * @return Returns the href for the data of the provided organizational unit id.
      */
-    public static String getOrganizationalUnitResourcesSuccessorsHref(
-        final String organizationalUnitId) {
+    public static String getOrganizationalUnitResourcesSuccessorsHref(final String organizationalUnitId) {
 
-        return getOrganizationalUnitResourcesHref(organizationalUnitId) + '/'
-            + NAME_SUCCESSORS;
+        return getOrganizationalUnitResourcesHref(organizationalUnitId) + '/' + NAME_SUCCESSORS;
     }
 
     /**
      * Gets the user account href for the provided user account id.
-     * 
-     * @param userAccountId
-     *            The id of the user account.
+     *
+     * @param userAccountId The id of the user account.
      * @return Returns the href for the provided user account id.
      */
     public static String getUserAccountHref(final String userAccountId) {
@@ -1003,9 +887,8 @@ public final class XmlUtility {
 
     /**
      * Gets the user group href for the provided user group id.
-     * 
-     * @param userGroupId
-     *            The id of the user group.
+     *
+     * @param userGroupId The id of the user group.
      * @return Returns the href for the provided user group id.
      */
     public static String getUserGroupHref(final String userGroupId) {
@@ -1015,9 +898,8 @@ public final class XmlUtility {
 
     /**
      * Gets the set definition href for the provided set definition id.
-     * 
-     * @param setDefinitionId
-     *            The id of the set definition.
+     *
+     * @param setDefinitionId The id of the set definition.
      * @return Returns the href for the provided set definition id.
      */
     public static String getSetDefinitionHref(final String setDefinitionId) {
@@ -1027,24 +909,20 @@ public final class XmlUtility {
 
     /**
      * Gets the user group member href for the provided user group member id.
-     * 
-     * @param userGroupHref
-     *            The href of the user group member.
-     * @param userGroupMemberId
-     *            The id of the user group member.
+     *
+     * @param userGroupHref     The href of the user group member.
+     * @param userGroupMemberId The id of the user group member.
      * @return Returns the href for the provided user group member id.
      */
-    public static String getUserGroupMemberHref(
-        final String userGroupHref, final String userGroupMemberId) {
+    public static String getUserGroupMemberHref(final String userGroupHref, final String userGroupMemberId) {
 
         return userGroupHref + "/selectors/selector/" + userGroupMemberId;
     }
 
     /**
      * Get the href for current grants.
-     * 
-     * @param userAccountId
-     *            objid of user account
+     *
+     * @param userAccountId objid of user account
      * @return href for the provided grant with user account id
      */
     public static String getCurrentGrantsHref(final String userAccountId) {
@@ -1089,41 +967,32 @@ public final class XmlUtility {
 
     /**
      * Get the href to the specified role grant of the specified user.
-     * 
-     * @param userAccountId
-     *            The account of the user account owning the grant.
-     * @param grantId
-     *            The id of the grant.
-     * 
+     *
+     * @param userAccountId The account of the user account owning the grant.
+     * @param grantId       The id of the grant.
      * @return The href of the provided role grant.
      */
-    public static String getUserAccountGrantHref(
-        final String userAccountId, final String grantId) {
+    public static String getUserAccountGrantHref(final String userAccountId, final String grantId) {
 
         return getUserAccountGrantsHref(userAccountId) + "/grant/" + grantId;
     }
 
     /**
      * Get the href to the specified role grant of the specified user group.
-     * 
-     * @param userGroupId
-     *            id of the user group owning the grant
-     * @param grantId
-     *            id of the grant
-     * 
+     *
+     * @param userGroupId id of the user group owning the grant
+     * @param grantId     id of the grant
      * @return The href of the provided role grant.
      */
-    public static String getUserGroupGrantHref(
-        final String userGroupId, final String grantId) {
+    public static String getUserGroupGrantHref(final String userGroupId, final String grantId) {
 
         return getUserGroupGrantsHref(userGroupId) + "/grant/" + grantId;
     }
 
     /**
      * Get the href to the specified role.
-     * 
-     * @param roleId
-     *            The id of the role.
+     *
+     * @param roleId The id of the role.
      * @return Returns the href to the role with the specified id.
      */
     public static String getRoleHref(final String roleId) {
@@ -1133,9 +1002,8 @@ public final class XmlUtility {
 
     /**
      * Get the href to the specified scope.
-     * 
-     * @param scopeId
-     *            The id of the role.
+     *
+     * @param scopeId The id of the role.
      * @return Returns the href to the role with the specified id.
      */
     public static String getScopeHref(final String scopeId) {
@@ -1145,23 +1013,19 @@ public final class XmlUtility {
 
     /**
      * Get the href to the specified aggregation-definition.
-     * 
-     * @param aggregationDefinitionId
-     *            The id of the aggregationDefinition.
-     * @return Returns the href to the aggregationDefinitionId with the
-     *         specified id.
+     *
+     * @param aggregationDefinitionId The id of the aggregationDefinition.
+     * @return Returns the href to the aggregationDefinitionId with the specified id.
      */
-    public static String getAggregationDefinitionHref(
-        final String aggregationDefinitionId) {
+    public static String getAggregationDefinitionHref(final String aggregationDefinitionId) {
 
         return BASE_AGGREGATION_DEFINITION + aggregationDefinitionId;
     }
 
     /**
      * Get the href to the specified report-definition.
-     * 
-     * @param reportDefinitionId
-     *            The id of the reportDefinition.
+     *
+     * @param reportDefinitionId The id of the reportDefinition.
      * @return Returns the href to the reportDefinitionId with the specified id.
      */
     public static String getReportDefinitionHref(final String reportDefinitionId) {
@@ -1170,44 +1034,30 @@ public final class XmlUtility {
     }
 
     /**
-     * Adds the commonly used namespaces (xlink) to the provided
-     * <code>XMLStreamWriter</code> object.
-     * 
-     * @param writer
-     *            The <code>XMLStreamWriter</code> object to add the prefixes
-     *            to.
-     * @throws XMLStreamException
-     *             Thrown in case of an xml stream error.
+     * Adds the commonly used namespaces (xlink) to the provided <code>XMLStreamWriter</code> object.
+     *
+     * @param writer The <code>XMLStreamWriter</code> object to add the prefixes to.
+     * @throws XMLStreamException Thrown in case of an xml stream error.
      */
-    public static void addCommonNamespaces(final XMLStreamWriter writer)
-        throws XMLStreamException {
+    public static void addCommonNamespaces(final XMLStreamWriter writer) throws XMLStreamException {
 
         writer.writeNamespace("xlink", Constants.XLINK_NS_URI);
     }
 
     /**
-     * Adds a new element to the provided <code>XMLStreamWriter</code> object
-     * containing a <code>String</code> value.
-     * 
-     * @param writer
-     *            The <code>XMLStreamWriter</code> object to add the element to.
-     * @param elementName
-     *            The name of the new element.
-     * @param elementContent
-     *            The <code>String</code> that shall be set as the value of the
-     *            new element.
-     * @param namespaceUri
-     *            The namespace URI of the new element.
-     * @param createEmpty
-     *            Flag indicating if a an empty element shall be created if the
-     *            provided data is <code>null</code> ( <code>true</code> ), or
-     *            if the element shall not be created ( <code>false</code> ).
-     * @throws XMLStreamException
-     *             Thrown in case of an xml stream error.
+     * Adds a new element to the provided <code>XMLStreamWriter</code> object containing a <code>String</code> value.
+     *
+     * @param writer         The <code>XMLStreamWriter</code> object to add the element to.
+     * @param elementName    The name of the new element.
+     * @param elementContent The <code>String</code> that shall be set as the value of the new element.
+     * @param namespaceUri   The namespace URI of the new element.
+     * @param createEmpty    Flag indicating if a an empty element shall be created if the provided data is
+     *                       <code>null</code> ( <code>true</code> ), or if the element shall not be created (
+     *                       <code>false</code> ).
+     * @throws XMLStreamException Thrown in case of an xml stream error.
      */
     public static void addElement(
-        final XMLStreamWriter writer, final String elementName,
-        final String elementContent, final String namespaceUri,
+        final XMLStreamWriter writer, final String elementName, final String elementContent, final String namespaceUri,
         final boolean createEmpty) throws XMLStreamException {
         if (elementContent == null) {
             if (createEmpty) {
@@ -1222,29 +1072,20 @@ public final class XmlUtility {
     }
 
     /**
-     * Adds a new element to the provided <code>XMLStreamWriter</code> object
-     * containing a date value.
-     * 
-     * @param writer
-     *            The <code>XMLStreamWriter</code> object to add the element to.
-     * @param elementName
-     *            The name of the new element.
-     * @param elementContent
-     *            The <code>Date</code> that shall be set as the value of the
-     *            new element.
-     * @param namespaceUri
-     *            The namespace URI of the new element.
-     * @param createEmpty
-     *            Flag indicating if a an empty element shall be created if the
-     *            provided data is <code>null</code> ( <code>true</code> ), or
-     *            if the element shall not be created ( <code>false</code> ).
-     * @throws XMLStreamException
-     *             Thrown in case of an xml stream error.
+     * Adds a new element to the provided <code>XMLStreamWriter</code> object containing a date value.
+     *
+     * @param writer         The <code>XMLStreamWriter</code> object to add the element to.
+     * @param elementName    The name of the new element.
+     * @param elementContent The <code>Date</code> that shall be set as the value of the new element.
+     * @param namespaceUri   The namespace URI of the new element.
+     * @param createEmpty    Flag indicating if a an empty element shall be created if the provided data is
+     *                       <code>null</code> ( <code>true</code> ), or if the element shall not be created (
+     *                       <code>false</code> ).
+     * @throws XMLStreamException Thrown in case of an xml stream error.
      */
     public static void addElement(
-        final XMLStreamWriter writer, final String elementName,
-        final ReadableDateTime elementContent, final String namespaceUri,
-        final boolean createEmpty) throws XMLStreamException {
+        final XMLStreamWriter writer, final String elementName, final ReadableDateTime elementContent,
+        final String namespaceUri, final boolean createEmpty) throws XMLStreamException {
 
         if (elementContent == null) {
             if (createEmpty) {
@@ -1253,79 +1094,55 @@ public final class XmlUtility {
         }
         else {
             writer.writeStartElement(namespaceUri, elementName);
-            writer.writeCharacters(elementContent
-                .toString(Constants.TIMESTAMP_FORMAT));
+            writer.writeCharacters(elementContent.toString(Constants.TIMESTAMP_FORMAT));
             writer.writeEndElement();
         }
     }
 
     /**
-     * Adds the "last-modification-date" attribute to the provided
-     * <code>XMLStreamWriter</code>.<br>
-     * The value of the attribute is set to the value of the provided date.<br>
-     * If no date is provided, nothing is added.
-     * 
-     * @param writer
-     *            The <code>XMLStreamWriter</code> object to add the attribute
-     *            to.
-     * @param modifiedDate
-     *            The date to set as the last modified date.
-     * @throws XMLStreamException
-     *             Thrown in case of an xml stream error.
+     * Adds the "last-modification-date" attribute to the provided <code>XMLStreamWriter</code>.<br> The value of the
+     * attribute is set to the value of the provided date.<br> If no date is provided, nothing is added.
+     *
+     * @param writer       The <code>XMLStreamWriter</code> object to add the attribute to.
+     * @param modifiedDate The date to set as the last modified date.
+     * @throws XMLStreamException Thrown in case of an xml stream error.
      */
     public static void addLastModificationDateAttribute(
-        final XMLStreamWriter writer, final ReadableDateTime modifiedDate)
-        throws XMLStreamException {
+        final XMLStreamWriter writer, final ReadableDateTime modifiedDate) throws XMLStreamException {
 
         if (modifiedDate == null) {
             return;
         }
 
-        writer.writeAttribute("last-modification-date",
-            modifiedDate.toString(Constants.TIMESTAMP_FORMAT));
+        writer.writeAttribute("last-modification-date", modifiedDate.toString(Constants.TIMESTAMP_FORMAT));
     }
 
     /**
-     * Adds the provided object id to the <code>XMLStreamWriter</code> that has
-     * been provided.<br>
-     * The object id is added as the attribute "objid".
-     * 
-     * @param writer
-     *            The <code>XMLStreamWriter</code> object to add the attribute
-     *            to.
-     * @param objId
-     *            The object id to add.
-     * @throws XMLStreamException
-     *             Thrown in case of an xml stream error.
+     * Adds the provided object id to the <code>XMLStreamWriter</code> that has been provided.<br> The object id is
+     * added as the attribute "objid".
+     *
+     * @param writer The <code>XMLStreamWriter</code> object to add the attribute to.
+     * @param objId  The object id to add.
+     * @throws XMLStreamException Thrown in case of an xml stream error.
      */
-    public static void addObjectId(
-        final XMLStreamWriter writer, final String objId)
-        throws XMLStreamException {
+    public static void addObjectId(final XMLStreamWriter writer, final String objId) throws XMLStreamException {
 
         writer.writeAttribute("objid", objId);
     }
 
     /**
-     * Adds a new element to the provided <code>XMLStreamWriter</code>
-     * containing a simple xlink with the provided values. The new element is
-     * empty.
-     * 
-     * @param writer
-     *            The <code>XMLStreamWriter</code> object to add the element to.
-     * @param elementName
-     *            The name of the new element.
-     * @param xlinkTitle
-     *            The title of the xlink contained in the new element.
-     * @param xlinkHref
-     *            The href of the xlink contained in the new element.
-     * @param namespaceUri
-     *            The namespace URI of the new element.
-     * @throws XMLStreamException
-     *             Thrown in case of an xml stream error.
+     * Adds a new element to the provided <code>XMLStreamWriter</code> containing a simple xlink with the provided
+     * values. The new element is empty.
+     *
+     * @param writer       The <code>XMLStreamWriter</code> object to add the element to.
+     * @param elementName  The name of the new element.
+     * @param xlinkTitle   The title of the xlink contained in the new element.
+     * @param xlinkHref    The href of the xlink contained in the new element.
+     * @param namespaceUri The namespace URI of the new element.
+     * @throws XMLStreamException Thrown in case of an xml stream error.
      */
     public static void addReferencingElement(
-        final XMLStreamWriter writer, final String elementName,
-        final String xlinkTitle, final String xlinkHref,
+        final XMLStreamWriter writer, final String elementName, final String xlinkTitle, final String xlinkHref,
         final String namespaceUri) throws XMLStreamException {
 
         writer.writeStartElement(namespaceUri, elementName);
@@ -1334,25 +1151,17 @@ public final class XmlUtility {
     }
 
     /**
-     * Adds the xlink attributes to the provided <code>Element</code>.<br>
-     * The attribute "xlink:type" is set to "simple", the attributes
-     * "xlink:title" and "xlink:href" to the respective provided values.<br>
-     * If the provided title is <code>null</code>. the title attribute is
-     * skipped.
-     * 
-     * @param writer
-     *            The <code>XMLStreamWriter</code> object to add the attributes
-     *            to.
-     * @param xlinkTitle
-     *            The title of the xlink.
-     * @param xlinkHref
-     *            The href of the xlink.
-     * @throws XMLStreamException
-     *             Thrown in case of an xml stream error.
+     * Adds the xlink attributes to the provided <code>Element</code>.<br> The attribute "xlink:type" is set to
+     * "simple", the attributes "xlink:title" and "xlink:href" to the respective provided values.<br> If the provided
+     * title is <code>null</code>. the title attribute is skipped.
+     *
+     * @param writer     The <code>XMLStreamWriter</code> object to add the attributes to.
+     * @param xlinkTitle The title of the xlink.
+     * @param xlinkHref  The href of the xlink.
+     * @throws XMLStreamException Thrown in case of an xml stream error.
      */
-    public static void addXlinkAttributes(
-        final XMLStreamWriter writer, final String xlinkTitle,
-        final String xlinkHref) throws XMLStreamException {
+    public static void addXlinkAttributes(final XMLStreamWriter writer, final String xlinkTitle, final String xlinkHref)
+        throws XMLStreamException {
 
         writer.writeAttribute(Constants.XLINK_NS_URI, "type", "simple");
         if (xlinkTitle != null) {
@@ -1362,80 +1171,56 @@ public final class XmlUtility {
     }
 
     /**
-     * Adds the "xml:base" attribute to the provided
-     * <code>XMLStreamWriter</code>.<br>
-     * The value of the attribute is set to the value of the configuration
-     * property <code>escidoc.baseurl</code>.
-     * 
-     * @param writer
-     *            The <code>XMLStreamWriter</code> object to add the attribute
-     *            to.
-     * @throws IOException
-     *             Thrown if the base url cannot be determined.
-     * @throws XMLStreamException
-     *             Thrown in case of an xml stream error.
+     * Adds the "xml:base" attribute to the provided <code>XMLStreamWriter</code>.<br> The value of the attribute is set
+     * to the value of the configuration property <code>escidoc.baseurl</code>.
+     *
+     * @param writer The <code>XMLStreamWriter</code> object to add the attribute to.
+     * @throws IOException        Thrown if the base url cannot be determined.
+     * @throws XMLStreamException Thrown in case of an xml stream error.
      */
-    public static void addXmlBaseAttribute(final XMLStreamWriter writer)
-        throws XMLStreamException, IOException {
+    public static void addXmlBaseAttribute(final XMLStreamWriter writer) throws XMLStreamException, IOException {
 
-        writer.writeAttribute(
-            Constants.XML_NS_URI,
-            "base",
-            EscidocConfiguration.getInstance().get(
-                EscidocConfiguration.ESCIDOC_CORE_BASEURL));
+        writer.writeAttribute(Constants.XML_NS_URI, "base", EscidocConfiguration.getInstance().get(
+            EscidocConfiguration.ESCIDOC_CORE_BASEURL));
     }
 
     /**
      * Sets the commonly used prefixes (xlink, xsi, and xlink).
-     * 
-     * @param writer
-     *            The <code>XMLStreamWriter</code> object to set the prefixes
-     *            for.
-     * @throws XMLStreamException
-     *             Thrown in case of an xml stream error.
+     *
+     * @param writer The <code>XMLStreamWriter</code> object to set the prefixes for.
+     * @throws XMLStreamException Thrown in case of an xml stream error.
      */
-    public static void setCommonPrefixes(final XMLStreamWriter writer)
-        throws XMLStreamException {
+    public static void setCommonPrefixes(final XMLStreamWriter writer) throws XMLStreamException {
 
         writer.setPrefix("xlink", Constants.XLINK_NS_URI);
         writer.setPrefix("xml", Constants.XML_NS_URI);
     }
 
     /**
-     * Gets the <code>Schema</code> from the cache.<br>
-     * If none exists for the provided schema URL, it is created and put into
-     * the cache.
-     * 
-     * @param schemaUri
-     *            The schema URI
-     * @return Returns the validator for the schema specified by the provided
-     *         URL.
-     * @throws IOException
-     *             Thrown in case of an I/O error.
-     * @throws WebserverSystemException
-     *             Thrown if schema can not be parsed.
+     * Gets the <code>Schema</code> from the cache.<br> If none exists for the provided schema URL, it is created and
+     * put into the cache.
+     *
+     * @param schemaUri The schema URI
+     * @return Returns the validator for the schema specified by the provided URL.
+     * @throws IOException              Thrown in case of an I/O error.
+     * @throws WebserverSystemException Thrown if schema can not be parsed.
      */
-    public static Schema getSchema(final String schemaUri) throws IOException,
-        WebserverSystemException {
+    public static Schema getSchema(final String schemaUri) throws IOException, WebserverSystemException {
 
         Schema schema = SCHEMA_CACHE.get(schemaUri);
         if (schema == null) {
             final URLConnection conn = new URL(schemaUri).openConnection();
-            final SchemaFactory sf =
-                SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+            final SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
 
             // set resource resolver to change schema-location-host
             sf.setResourceResolver(new SchemaBaseResourceResolver());
 
             schema = null;
             try {
-                schema =
-                    sf.newSchema(new SAXSource(new InputSource(conn
-                        .getInputStream())));
+                schema = sf.newSchema(new SAXSource(new InputSource(conn.getInputStream())));
             }
             catch (final SAXException e) {
-                throw new WebserverSystemException("Problem with schema "
-                    + schemaUri + ". ", e);
+                throw new WebserverSystemException("Problem with schema " + schemaUri + ". ", e);
             }
 
             SCHEMA_CACHE.put(schemaUri, schema);
@@ -1445,90 +1230,64 @@ public final class XmlUtility {
     }
 
     /**
-     * Gets a <code>Validator</code> object for the specified schema.<br>
-     * The validator is thread-unsafe and non-reentrant. Therefore, it is not
-     * cached but a new <code>Validator</code> object is created using cached
+     * Gets a <code>Validator</code> object for the specified schema.<br> The validator is thread-unsafe and
+     * non-reentrant. Therefore, it is not cached but a new <code>Validator</code> object is created using cached
      * <code>Schema</code>.
-     * 
-     * @param schemaUri
-     *            The schema URI
-     * @return Returns the validator for the schema specified by the provided
-     *         URL.
-     * @throws IOException
-     *             Thrown in case of an I/O error.
-     * @throws WebserverSystemException
-     *             Thrown if schema can not be parsed.
+     *
+     * @param schemaUri The schema URI
+     * @return Returns the validator for the schema specified by the provided URL.
+     * @throws IOException              Thrown in case of an I/O error.
+     * @throws WebserverSystemException Thrown if schema can not be parsed.
      */
-    public static Validator getValidator(final String schemaUri)
-        throws IOException, WebserverSystemException {
+    public static Validator getValidator(final String schemaUri) throws IOException, WebserverSystemException {
 
         return getSchema(schemaUri).newValidator();
     }
 
     /**
-     * Validates the provided XML data using the specified schema and creates a
-     * <code>ByteArrayInputStream</code> for the data.
-     * 
-     * @param xmlData
-     *            The xml data.
-     * @param schemaUri
-     *            The URL identifying the schema that shall be used for
-     *            validation.
+     * Validates the provided XML data using the specified schema and creates a <code>ByteArrayInputStream</code> for
+     * the data.
+     *
+     * @param xmlData   The xml data.
+     * @param schemaUri The URL identifying the schema that shall be used for validation.
      * @return Returns the xml data in a <code>ByteArrayInputStream</code>.
-     * @throws XmlSchemaValidationException
-     *             Thrown if data in not valid.
-     * @throws XmlCorruptedException
-     *             Thrown if the XML data cannot be parsed.
-     * @throws WebserverSystemException
-     *             Thrown in case of any other failure.
+     * @throws XmlSchemaValidationException Thrown if data in not valid.
+     * @throws XmlCorruptedException        Thrown if the XML data cannot be parsed.
+     * @throws WebserverSystemException     Thrown in case of any other failure.
      */
-    public static ByteArrayInputStream createValidatedByteArrayInputStream(
-        final String xmlData, final String schemaUri)
-        throws XmlCorruptedException, WebserverSystemException,
-        XmlSchemaValidationException {
+    public static ByteArrayInputStream createValidatedByteArrayInputStream(final String xmlData, final String schemaUri)
+        throws XmlCorruptedException, WebserverSystemException, XmlSchemaValidationException {
 
-        final ByteArrayInputStream byteArrayInputStream =
-            convertToByteArrayInputStream(xmlData);
+        final ByteArrayInputStream byteArrayInputStream = convertToByteArrayInputStream(xmlData);
         validate(byteArrayInputStream, schemaUri);
         return byteArrayInputStream;
     }
 
     /**
-     * Validates the provided XML data using the specified schema.<br>
-     * The provided <code>ByteArrayInputStream</code> is reset after validation.
-     * 
-     * @param byteArrayInputStream
-     *            The XML data to validate in an
-     *            <code>ByteArrayInputStream</code>.<br>
-     *            This input stream is reset after the validation.
-     * @param schemaUri
-     *            The URL identifying the schema that shall be used for
-     *            validation.
-     * @throws XmlCorruptedException
-     *             Thrown if the XML data cannot be parsed.
-     * @throws XmlSchemaValidationException
-     *             Thrown if both validation fail or only one validation is
-     *             executed and fails
-     * @throws WebserverSystemException
-     *             Thrown in any other case.
+     * Validates the provided XML data using the specified schema.<br> The provided <code>ByteArrayInputStream</code> is
+     * reset after validation.
+     *
+     * @param byteArrayInputStream The XML data to validate in an <code>ByteArrayInputStream</code>.<br> This input
+     *                             stream is reset after the validation.
+     * @param schemaUri            The URL identifying the schema that shall be used for validation.
+     * @throws XmlCorruptedException        Thrown if the XML data cannot be parsed.
+     * @throws XmlSchemaValidationException Thrown if both validation fail or only one validation is executed and fails
+     * @throws WebserverSystemException     Thrown in any other case.
      */
-    public static void validate(
-        final ByteArrayInputStream byteArrayInputStream, final String schemaUri)
-        throws XmlCorruptedException, XmlSchemaValidationException,
-        WebserverSystemException {
+    public static void validate(final ByteArrayInputStream byteArrayInputStream, final String schemaUri)
+        throws XmlCorruptedException, XmlSchemaValidationException, WebserverSystemException {
 
         try {
             final Validator validator = getValidator(schemaUri);
-            validator.validate(new SAXSource(new InputSource(
-                byteArrayInputStream)));
+            validator.validate(new SAXSource(new InputSource(byteArrayInputStream)));
         }
         catch (final SAXParseException e) {
             final String errorMsg =
-                "Error in line " + e.getLineNumber() + ", column "
-                    + e.getColumnNumber() + ". " + e.getMessage();
+                "Error in line " + e.getLineNumber() + ", column " + e.getColumnNumber() + ". " + e.getMessage();
             if (e.getMessage().startsWith("cvc")) {
                 throw new XmlSchemaValidationException(errorMsg, e);
-            } else {
+            }
+            else {
                 throw new XmlCorruptedException(errorMsg, e);
             }
         }
@@ -1543,31 +1302,19 @@ public final class XmlUtility {
     }
 
     /**
-     * Checks, if the provided XML data has the provided root element,
-     * afterwards validates the provided XML data using the specified schema.
-     * 
-     * @param xmlData
-     *            The XML data to validate.
-     * @param schemaUri
-     *            The URL identifying the schema that shall be used for
-     *            validation.
-     * @param root
-     *            Check for this root element.
-     * @throws XmlCorruptedException
-     *             Thrown if the XML data cannot be parsed.
-     * @throws XmlSchemaValidationException
-     *             Thrown if both validation fail or only one validation is
-     *             executed and fails
-     * @throws WebserverSystemException
-     *             Thrown in any other case.
-     * @throws XmlParserSystemException
-     *             Thrown if the expected root element raise an unexpected
-     *             error.
+     * Checks, if the provided XML data has the provided root element, afterwards validates the provided XML data using
+     * the specified schema.
+     *
+     * @param xmlData   The XML data to validate.
+     * @param schemaUri The URL identifying the schema that shall be used for validation.
+     * @param root      Check for this root element.
+     * @throws XmlCorruptedException        Thrown if the XML data cannot be parsed.
+     * @throws XmlSchemaValidationException Thrown if both validation fail or only one validation is executed and fails
+     * @throws WebserverSystemException     Thrown in any other case.
+     * @throws XmlParserSystemException     Thrown if the expected root element raise an unexpected error.
      */
-    public static void validate(
-        final String xmlData, final String schemaUri, final String root)
-        throws XmlCorruptedException, XmlSchemaValidationException,
-        WebserverSystemException, XmlParserSystemException {
+    public static void validate(final String xmlData, final String schemaUri, final String root)
+        throws XmlCorruptedException, XmlSchemaValidationException, WebserverSystemException, XmlParserSystemException {
 
         if (root.length() > 0) {
             checkRootElement(xmlData, root);
@@ -1577,32 +1324,23 @@ public final class XmlUtility {
 
     /**
      * Check if the root element has the expected element.
-     * 
-     * @param xmlData
-     *            The XML document which is to check.
-     * @param expectedRoot
-     *            The expected root element.
-     * @throws XmlCorruptedException
-     *             Thrown if the document has not the expected element.
-     * @throws XmlParserSystemException
-     *             Thrown if the expected root element raise an unexpected
-     *             error.
+     *
+     * @param xmlData      The XML document which is to check.
+     * @param expectedRoot The expected root element.
+     * @throws XmlCorruptedException    Thrown if the document has not the expected element.
+     * @throws XmlParserSystemException Thrown if the expected root element raise an unexpected error.
      */
-    private static void checkRootElement(
-        final String xmlData, final String expectedRoot)
-        throws XmlCorruptedException, XmlParserSystemException {
+    private static void checkRootElement(final String xmlData, final String expectedRoot) throws XmlCorruptedException,
+        XmlParserSystemException {
 
         final StaxParser sp = new StaxParser();
-        final CheckRootElementStaxHandler checkRoot =
-            new CheckRootElementStaxHandler(expectedRoot);
+        final CheckRootElementStaxHandler checkRoot = new CheckRootElementStaxHandler(expectedRoot);
         sp.addHandler(checkRoot);
         try {
             sp.parse(xmlData);
         }
         catch (final InvalidXmlException e) {
-            throw new XmlCorruptedException(
-                "Xml Document has wrong root element, expected '"
-                    + expectedRoot + "'.", e);
+            throw new XmlCorruptedException("Xml Document has wrong root element, expected '" + expectedRoot + "'.", e);
         }
         catch (final WstxParsingException e) {
             throw new XmlCorruptedException(e.getMessage(), e);
@@ -1611,71 +1349,49 @@ public final class XmlUtility {
             // ignore, check was successful and parsing aborted
         }
         catch (final Exception e) {
-            handleUnexpectedStaxParserException("Check for root '"
-                + expectedRoot + "' element raised unexpected exception! ", e);
+            handleUnexpectedStaxParserException("Check for root '" + expectedRoot
+                + "' element raised unexpected exception! ", e);
         }
     }
 
     /**
      * Validates the provided XML data using the specified schema.
-     * 
-     * @param xmlData
-     *            The XML data to validate.
-     * @param schemaUri
-     *            The URL identifying the schema that shall be used for
-     *            validation.
-     * @throws XmlCorruptedException
-     *             Thrown if the XML data cannot be parsed.
-     * @throws XmlSchemaValidationException
-     *             Thrown if both validation fail or only one validation is
-     *             executed and fails
-     * @throws WebserverSystemException
-     *             Thrown in any other case.
+     *
+     * @param xmlData   The XML data to validate.
+     * @param schemaUri The URL identifying the schema that shall be used for validation.
+     * @throws XmlCorruptedException        Thrown if the XML data cannot be parsed.
+     * @throws XmlSchemaValidationException Thrown if both validation fail or only one validation is executed and fails
+     * @throws WebserverSystemException     Thrown in any other case.
      */
-    public static void validate(final String xmlData, final String schemaUri)
-        throws XmlCorruptedException, XmlSchemaValidationException,
-        WebserverSystemException {
+    public static void validate(final String xmlData, final String schemaUri) throws XmlCorruptedException,
+        XmlSchemaValidationException, WebserverSystemException {
 
         validate(convertToByteArrayInputStream(xmlData), schemaUri);
     }
 
     /**
      * Validates the provided XML data using the specified resource type.
-     * 
-     * @param xmlData
-     *            The XML data to validate.
-     * @param resourceType
-     *            The resourceType whose schema will be used for validation
-     *            validation.
-     * @throws WebserverSystemException
-     * @throws XmlSchemaValidationException
-     * @throws XmlCorruptedException
-     * @throws XmlCorruptedException
-     *             Thrown if the XML data cannot be parsed.
-     * @throws XmlSchemaValidationException
-     *             # Thrown if both validation fail or only one validation is
-     *             executed and fails
-     * @throws WebserverSystemException
-     *             Thrown in any other case.
+     *
+     * @param xmlData      The XML data to validate.
+     * @param resourceType The resourceType whose schema will be used for validation validation.
+     * @throws XmlCorruptedException        Thrown if the XML data cannot be parsed.
+     * @throws XmlSchemaValidationException # Thrown if both validation fail or only one validation is executed and
+     *                                      fails
+     * @throws WebserverSystemException     Thrown in any other case.
      */
-    public static void validate(
-        final String xmlData, final ResourceType resourceType)
-        throws XmlCorruptedException, XmlSchemaValidationException,
-        WebserverSystemException {
+    public static void validate(final String xmlData, final ResourceType resourceType) throws XmlCorruptedException,
+        XmlSchemaValidationException, WebserverSystemException {
         validate(xmlData, getSchemaLocationForResource(resourceType));
 
     }
 
     /**
      * Converts the provided String to a <code>ByteArrayInputStream</code>.
-     * 
-     * @param str
-     *            The string to get as <code>ByteArrayInputStream</code>.
-     * @return Returns the <code>ByteArrayInputStream</code> for the provided
-     *         string.
+     *
+     * @param str The string to get as <code>ByteArrayInputStream</code>.
+     * @return Returns the <code>ByteArrayInputStream</code> for the provided string.
      */
-    public static ByteArrayInputStream convertToByteArrayInputStream(
-        final String str) {
+    public static ByteArrayInputStream convertToByteArrayInputStream(final String str) {
 
         try {
             return new ByteArrayInputStream(str.getBytes(CHARACTER_ENCODING));
@@ -1688,28 +1404,28 @@ public final class XmlUtility {
 
     /**
      * Converts the provided String to a <code>ByteArrayOutputStream</code>.
-     * 
-     * @param str
-     *            The string to get as <code>ByteArrayOutputStream</code>.
-     * @return Returns the <code>ByteArrayOutputStream</code> for the provided
-     *         string.
+     *
+     * @param str The string to get as <code>ByteArrayOutputStream</code>.
+     * @return Returns the <code>ByteArrayOutputStream</code> for the provided string.
      */
     public static ByteArrayOutputStream convertToByteArrayOutputStream(final String str) {
         final ByteArrayOutputStream stream = new ByteArrayOutputStream();
         try {
             stream.write(str.getBytes(CHARACTER_ENCODING));
-        } catch (final UnsupportedEncodingException e) {
-            if(LOGGER.isWarnEnabled()) {
+        }
+        catch (final UnsupportedEncodingException e) {
+            if (LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on writing to stream.");
             }
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on writing to stream.", e);
             }
-        } catch (final IOException e) {
-            if(LOGGER.isWarnEnabled()) {
+        }
+        catch (final IOException e) {
+            if (LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on writing to stream.");
             }
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on writing to stream.", e);
             }
         }
@@ -1717,13 +1433,11 @@ public final class XmlUtility {
     }
 
     /**
-     * Get the objid from an URI/Fedora identifier, e.g. from
-     * &lt;info:fedora/escidoc:1&gt;<br/>
-     * If the provided value does not match the expected pattern, it is returned
-     * as provided. Otherwise, the objid is extracted from it and returned.
-     * 
-     * @param uri
-     *            The value to get the objid from
+     * Get the objid from an URI/Fedora identifier, e.g. from &lt;info:fedora/escidoc:1&gt;<br/> If the provided value
+     * does not match the expected pattern, it is returned as provided. Otherwise, the objid is extracted from it and
+     * returned.
+     *
+     * @param uri The value to get the objid from
      * @return Returns the extracted objid or the provided value.
      */
     public static String getIdFromURI(final String uri) {
@@ -1731,19 +1445,16 @@ public final class XmlUtility {
         if (uri == null) {
             return null;
         }
-        final Matcher matcher =
-            PATTERN_GET_ID_FROM_URI_OR_FEDORA_ID.matcher(uri);
+        final Matcher matcher = PATTERN_GET_ID_FROM_URI_OR_FEDORA_ID.matcher(uri);
         return matcher.find() ? matcher.group(1) : uri;
     }
 
     /**
-     * Extracts the objid from the provided resource XML representation.<br/>
-     * Either the first occurence of objid="..." is searched and the value is
-     * returned, or the first occurence of :href="..." is searched and from this
-     * value the objid is extracted and returned.
-     * 
-     * @param resourceXml
-     *            The XML representation of the resource to get the objid from.
+     * Extracts the objid from the provided resource XML representation.<br/> Either the first occurence of objid="..."
+     * is searched and the value is returned, or the first occurence of :href="..." is searched and from this value the
+     * objid is extracted and returned.
+     *
+     * @param resourceXml The XML representation of the resource to get the objid from.
      * @return Returns the extracted objid or <code>null</code>.
      */
     public static String getIdFromXml(final CharSequence resourceXml) {
@@ -1753,40 +1464,34 @@ public final class XmlUtility {
     }
 
     /**
-     * Extracts the objid from the provided element.<br/>
-     * Either the id is fetched from the attribute objid of the provided
-     * element. If this fails, it is extracted from the attribute href. If this
-     * fials, too, an exception is thrown.
-     * 
-     * @param element
-     *            The element to get the objid from.
+     * Extracts the objid from the provided element.<br/> Either the id is fetched from the attribute objid of the
+     * provided element. If this fails, it is extracted from the attribute href. If this fials, too, an exception is
+     * thrown.
+     *
+     * @param element The element to get the objid from.
      * @return Returns the objid value.
-     * @throws MissingAttributeValueException
-     *             Thrown if neither an objid nor an href attribute exists.
+     * @throws MissingAttributeValueException Thrown if neither an objid nor an href attribute exists.
      */
 
-    public static String getIdFromStartElement(final StartElement element)
-        throws MissingAttributeValueException {
+    public static String getIdFromStartElement(final StartElement element) throws MissingAttributeValueException {
 
         try {
             final String objid;
-            objid = element.indexOfAttribute(null, NAME_OBJID) == -1 ? getIdFromURI(element.getAttributeValue(
-                    Constants.XLINK_NS_URI,
-                    NAME_HREF)) : element.getAttributeValue(null, NAME_OBJID);
+            objid =
+                element.indexOfAttribute(null, NAME_OBJID) == -1 ? getIdFromURI(element.getAttributeValue(
+                    Constants.XLINK_NS_URI, NAME_HREF)) : element.getAttributeValue(null, NAME_OBJID);
             return objid;
         }
         catch (final NoSuchAttributeException e) {
-            throwMissingAttributeValueException(element, NAME_OBJID
-                + '|' + NAME_HREF);
+            throwMissingAttributeValueException(element, NAME_OBJID + '|' + NAME_HREF);
             return null;
         }
     }
 
     /**
      * Remove version information from given objid.
-     * 
-     * @param objid
-     *            The objid.
+     *
+     * @param objid The objid.
      * @return The objid without version information.
      */
     public static String getObjidWithoutVersion(final String objid) {
@@ -1801,9 +1506,8 @@ public final class XmlUtility {
 
     /**
      * Extract version number from objid.
-     * 
-     * @param objid
-     *            The objid.
+     *
+     * @param objid The objid.
      * @return The number of version or null.
      */
     public static String getVersionNumberFromObjid(final CharSequence objid) {
@@ -1816,12 +1520,10 @@ public final class XmlUtility {
     }
 
     /**
-     * Extracts the name from the provided resource XML representation.<br>
-     * The first occurence of &lt;...:name&gt;...&lt;/...:name&gt; is searched
-     * and the value is returned.
-     * 
-     * @param resourceXml
-     *            The XML representation of the resource to get the name from.
+     * Extracts the name from the provided resource XML representation.<br> The first occurence of
+     * &lt;...:name&gt;...&lt;/...:name&gt; is searched and the value is returned.
+     *
+     * @param resourceXml The XML representation of the resource to get the name from.
      * @return Returns the extracted name (trimmed) or <code>null</code>.
      */
     public static String extractNameFromXml(final CharSequence resourceXml) {
@@ -1832,23 +1534,18 @@ public final class XmlUtility {
 
     /**
      * Parse the task parameter structure.
-     * 
-     * @param param
-     *            The parameter structure.
+     *
+     * @param param The parameter structure.
      * @return The handler holding the extracted values.
-     * 
-     * @throws EncodingSystemException
-     *             If a wrong Encoding is detected.
-     * @throws XmlCorruptedException
-     *             If the given XML is not valid.
+     * @throws EncodingSystemException If a wrong Encoding is detected.
+     * @throws XmlCorruptedException   If the given XML is not valid.
      */
-    public static TaskParamHandler parseTaskParam(final String param)
-        throws XmlCorruptedException, EncodingSystemException {
+    public static TaskParamHandler parseTaskParam(final String param) throws XmlCorruptedException,
+        EncodingSystemException {
         return parseTaskParam(param, true);
     }
 
-    public static TaskParamHandler parseTaskParam(
-        final String param, final boolean checkLastModificationDate)
+    public static TaskParamHandler parseTaskParam(final String param, final boolean checkLastModificationDate)
         throws XmlCorruptedException, EncodingSystemException {
 
         final StaxParser staxParser = new StaxParser();
@@ -1857,14 +1554,12 @@ public final class XmlUtility {
             result.setCheckLastModificationDate(checkLastModificationDate);
             final ByteArrayInputStream xmlDataIs;
             try {
-                xmlDataIs =
-                    new ByteArrayInputStream(param.getBytes(CHARACTER_ENCODING));
+                xmlDataIs = new ByteArrayInputStream(param.getBytes(CHARACTER_ENCODING));
             }
             catch (final UnsupportedEncodingException e) {
                 throw new EncodingSystemException(e.getMessage(), e);
             }
-            final List<DefaultHandler> handlerChain =
-                new ArrayList<DefaultHandler>();
+            final List<DefaultHandler> handlerChain = new ArrayList<DefaultHandler>();
             handlerChain.add(result);
             staxParser.setHandlerChain(handlerChain);
             try {
@@ -1880,45 +1575,37 @@ public final class XmlUtility {
     }
 
     /**
-     * Retrieves the base url for XML schemas for internal validation (i.e.
-     * escidoc-core.selfurl + escidoc-core.xsd-path.<br>
-     * 
+     * Retrieves the base url for XML schemas for internal validation (i.e. escidoc-core.selfurl +
+     * escidoc-core.xsd-path.<br>
+     *
      * @return Returns the base url.
-     * @throws WebserverSystemException
-     *             In case of an error.
+     * @throws WebserverSystemException In case of an error.
      */
     private static String getSchemaBaseUrl() throws WebserverSystemException {
 
         try {
-            return EscidocConfiguration.getInstance().get(
-                EscidocConfiguration.ESCIDOC_CORE_SELFURL)
-                + EscidocConfiguration.getInstance().get(
-                    EscidocConfiguration.ESCIDOC_CORE_XSD_PATH) + '/';
+            return EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_SELFURL)
+                + EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_XSD_PATH) + '/';
         }
         catch (final IOException e) {
-            throw new WebserverSystemException(
-                "Error accessing Escidoc configuration!", e);
+            throw new WebserverSystemException("Error accessing Escidoc configuration!", e);
         }
     }
 
     /**
      * Gets the stylesheet definition.
-     * 
-     * @return Returns the stylesheet definition. This may be an empty string,
-     *         if the xslt has not been defined with the eSciDoc configuration
-     *         property escidoc.xslt.std.
-     * @throws WebserverSystemException
-     *             In case of an error.
+     *
+     * @return Returns the stylesheet definition. This may be an empty string, if the xslt has not been defined with the
+     *         eSciDoc configuration property escidoc.xslt.std.
+     * @throws WebserverSystemException In case of an error.
      */
-    public static String getStylesheetDefinition()
-        throws WebserverSystemException {
+    public static String getStylesheetDefinition() throws WebserverSystemException {
 
         if (stylesheetDefinition == null) {
             try {
-                final String xslt =
-                    EscidocConfiguration.getInstance().get(
-                        EscidocConfiguration.ESCIDOC_CORE_XSLT_STD);
-                stylesheetDefinition = xslt != null && xslt.length() > 0 ? "<?xml-stylesheet type=\"text/xsl\" " + "href=\""
+                final String xslt = EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_XSLT_STD);
+                stylesheetDefinition =
+                    xslt != null && xslt.length() > 0 ? "<?xml-stylesheet type=\"text/xsl\" " + "href=\""
                         + getEscidocBaseUrl() + xslt + "\"?>\n" : "";
             }
             catch (final IOException e) {
@@ -1930,25 +1617,21 @@ public final class XmlUtility {
 
     /**
      * @return Returns the adminDescriptorSchemaLocation.
-     * @throws WebserverSystemException
-     *             In case of an error.
+     * @throws WebserverSystemException In case of an error.
      */
-    public static String getAdminDescriptorSchemaLocation()
-        throws WebserverSystemException {
+    public static String getAdminDescriptorSchemaLocation() throws WebserverSystemException {
 
         final String result;
         final String subPath = "context/0.4/context.xsd";
         if (UserContext.isRestAccess()) {
             if (contextRestSchemaLocation == null) {
-                contextRestSchemaLocation =
-                    getSchemaBaseUrl() + "rest/" + subPath;
+                contextRestSchemaLocation = getSchemaBaseUrl() + "rest/" + subPath;
             }
             result = contextRestSchemaLocation;
         }
         else {
             if (contextSoapSchemaLocation == null) {
-                contextSoapSchemaLocation =
-                    getSchemaBaseUrl() + "soap/" + subPath;
+                contextSoapSchemaLocation = getSchemaBaseUrl() + "soap/" + subPath;
             }
             result = contextSoapSchemaLocation;
         }
@@ -1957,18 +1640,15 @@ public final class XmlUtility {
 
     /**
      * @return Returns the containerSchemaLocation.
-     * @throws WebserverSystemException
-     *             In case of an error.
+     * @throws WebserverSystemException In case of an error.
      */
-    public static String getContainerSchemaLocation()
-        throws WebserverSystemException {
+    public static String getContainerSchemaLocation() throws WebserverSystemException {
 
         final String result;
         if (UserContext.isRestAccess()) {
             if (containerRestSchemaLocation == null) {
                 containerRestSchemaLocation =
-                    getSchemaBaseUrl() + "rest/" + "container"
-                        + Constants.CONTAINER_NS_URI_SCHEMA_VERSION
+                    getSchemaBaseUrl() + "rest/" + "container" + Constants.CONTAINER_NS_URI_SCHEMA_VERSION
                         + "/container.xsd";
             }
             result = containerRestSchemaLocation;
@@ -1976,8 +1656,7 @@ public final class XmlUtility {
         else {
             if (containerSoapSchemaLocation == null) {
                 containerSoapSchemaLocation =
-                    getSchemaBaseUrl() + "soap/" + "container"
-                        + Constants.CONTAINER_NS_URI_SCHEMA_VERSION
+                    getSchemaBaseUrl() + "soap/" + "container" + Constants.CONTAINER_NS_URI_SCHEMA_VERSION
                         + "/container.xsd";
             }
             result = containerSoapSchemaLocation;
@@ -1987,39 +1666,32 @@ public final class XmlUtility {
 
     /**
      * @return Returns the spoTaskParamSchemaLocation.
-     * @throws WebserverSystemException
-     *             In case of an error.
+     * @throws WebserverSystemException In case of an error.
      */
-    public static String getSpoTaskParamSchemaLocation()
-        throws WebserverSystemException {
+    public static String getSpoTaskParamSchemaLocation() throws WebserverSystemException {
         if (spoTaskParamSchemaLocation == null) {
-            spoTaskParamSchemaLocation =
-                getSchemaBaseUrl() + "common/0.3/query.xsd";
+            spoTaskParamSchemaLocation = getSchemaBaseUrl() + "common/0.3/query.xsd";
         }
         return spoTaskParamSchemaLocation;
     }
 
     /**
      * @return Returns the containerMembersFilterSchemaLocation.
-     * @throws WebserverSystemException
-     *             In case of an error.
+     * @throws WebserverSystemException In case of an error.
      */
-    public static String getContainerMembersFilterSchemaLocation()
-        throws WebserverSystemException {
+    public static String getContainerMembersFilterSchemaLocation() throws WebserverSystemException {
         final String result;
         if (UserContext.isRestAccess()) {
             if (containerMembersFilterRestSchemaLocation == null) {
                 containerMembersFilterRestSchemaLocation =
-                    getSchemaBaseUrl() + "rest/"
-                        + "container/0.3/filter-members.xsd";
+                    getSchemaBaseUrl() + "rest/" + "container/0.3/filter-members.xsd";
             }
             result = containerMembersFilterRestSchemaLocation;
         }
         else {
             if (containerMembersFilterSoapSchemaLocation == null) {
                 containerMembersFilterSoapSchemaLocation =
-                    getSchemaBaseUrl() + "soap/"
-                        + "container/0.3/filter-members.xsd";
+                    getSchemaBaseUrl() + "soap/" + "container/0.3/filter-members.xsd";
             }
             result = containerMembersFilterSoapSchemaLocation;
         }
@@ -2028,22 +1700,16 @@ public final class XmlUtility {
 
     /**
      * @return Returns the containersFilterSchemaLocation.
-     * @throws WebserverSystemException
-     *             In case of an error.
+     * @throws WebserverSystemException In case of an error.
      */
-    public static String getContainersFilterSchemaLocation()
-        throws WebserverSystemException {
+    public static String getContainersFilterSchemaLocation() throws WebserverSystemException {
         final String result;
         if (UserContext.isRestAccess()) {
-            containersFilterRestSchemaLocation =
-                getSchemaBaseUrl() + "rest/"
-                    + "container/0.3/filter-containers.xsd";
+            containersFilterRestSchemaLocation = getSchemaBaseUrl() + "rest/" + "container/0.3/filter-containers.xsd";
             result = containersFilterRestSchemaLocation;
         }
         else {
-            containersFilterSoapSchemaLocation =
-                getSchemaBaseUrl() + "soap/"
-                    + "container/0.3/filter-containers.xsd";
+            containersFilterSoapSchemaLocation = getSchemaBaseUrl() + "soap/" + "container/0.3/filter-containers.xsd";
             result = containersFilterSoapSchemaLocation;
         }
 
@@ -2052,27 +1718,22 @@ public final class XmlUtility {
 
     /**
      * @return Returns the content relation schema location.
-     * @throws WebserverSystemException
-     *             In case of an error.
+     * @throws WebserverSystemException In case of an error.
      */
-    public static String getContentModelSchemaLocation()
-        throws WebserverSystemException {
+    public static String getContentModelSchemaLocation() throws WebserverSystemException {
 
         final String result;
         final String contentModelXsd =
-            "content-model" + Constants.CONTENT_MODEL_NS_URI_SCHEMA_VERSION
-                + "/content-model.xsd";
+            "content-model" + Constants.CONTENT_MODEL_NS_URI_SCHEMA_VERSION + "/content-model.xsd";
         if (UserContext.isRestAccess()) {
             if (contentModelRestSchemaLocation == null) {
-                contentModelRestSchemaLocation =
-                    getSchemaBaseUrl() + "rest/" + contentModelXsd;
+                contentModelRestSchemaLocation = getSchemaBaseUrl() + "rest/" + contentModelXsd;
             }
             result = contentModelRestSchemaLocation;
         }
         else {
             if (contentModelSoapSchemaLocation == null) {
-                contentModelSoapSchemaLocation =
-                    getSchemaBaseUrl() + "soap/" + contentModelXsd;
+                contentModelSoapSchemaLocation = getSchemaBaseUrl() + "soap/" + contentModelXsd;
             }
             result = contentModelSoapSchemaLocation;
         }
@@ -2081,27 +1742,21 @@ public final class XmlUtility {
 
     /**
      * @return Returns the contextSchemaLocation.
-     * @throws WebserverSystemException
-     *             In case of an error.
+     * @throws WebserverSystemException In case of an error.
      */
-    public static String getContextSchemaLocation()
-        throws WebserverSystemException {
+    public static String getContextSchemaLocation() throws WebserverSystemException {
 
         final String result;
-        final String contextXsd =
-            "context" + Constants.CONTEXT_NS_URI_SCHEMA_VERSION
-                + "/context.xsd";
+        final String contextXsd = "context" + Constants.CONTEXT_NS_URI_SCHEMA_VERSION + "/context.xsd";
         if (UserContext.isRestAccess()) {
             if (contextRestSchemaLocation == null) {
-                contextRestSchemaLocation =
-                    getSchemaBaseUrl() + "rest/" + contextXsd;
+                contextRestSchemaLocation = getSchemaBaseUrl() + "rest/" + contextXsd;
             }
             result = contextRestSchemaLocation;
         }
         else {
             if (contextSoapSchemaLocation == null) {
-                contextSoapSchemaLocation =
-                    getSchemaBaseUrl() + "soap/" + contextXsd;
+                contextSoapSchemaLocation = getSchemaBaseUrl() + "soap/" + contextXsd;
             }
             result = contextSoapSchemaLocation;
         }
@@ -2110,28 +1765,22 @@ public final class XmlUtility {
 
     /**
      * @return Returns the content relation schema location.
-     * @throws WebserverSystemException
-     *             In case of an error.
+     * @throws WebserverSystemException In case of an error.
      */
-    public static String getContentRelationSchemaLocation()
-        throws WebserverSystemException {
+    public static String getContentRelationSchemaLocation() throws WebserverSystemException {
 
         final String result;
         final String contentRelationXsd =
-            "content-relation"
-                + Constants.CONTENT_RELATION_NS_URI_SCHEMA_VERSION
-                + "/content-relation.xsd";
+            "content-relation" + Constants.CONTENT_RELATION_NS_URI_SCHEMA_VERSION + "/content-relation.xsd";
         if (UserContext.isRestAccess()) {
             if (contentRelationRestSchemaLocation == null) {
-                contentRelationRestSchemaLocation =
-                    getSchemaBaseUrl() + "rest/" + contentRelationXsd;
+                contentRelationRestSchemaLocation = getSchemaBaseUrl() + "rest/" + contentRelationXsd;
             }
             result = contentRelationRestSchemaLocation;
         }
         else {
             if (contentRelationSoapSchemaLocation == null) {
-                contentRelationSoapSchemaLocation =
-                    getSchemaBaseUrl() + "soap/" + contentRelationXsd;
+                contentRelationSoapSchemaLocation = getSchemaBaseUrl() + "soap/" + contentRelationXsd;
             }
             result = contentRelationSoapSchemaLocation;
         }
@@ -2140,25 +1789,21 @@ public final class XmlUtility {
 
     /**
      * @return Returns the contextSchemaLocation.
-     * @throws WebserverSystemException
-     *             In case of an error.
+     * @throws WebserverSystemException In case of an error.
      */
-    public static String getSetDefinitionSchemaLocation()
-        throws WebserverSystemException {
+    public static String getSetDefinitionSchemaLocation() throws WebserverSystemException {
 
         final String result;
         final String setDefinitionXsd = "set-definition/0.1/set-definition.xsd";
         if (UserContext.isRestAccess()) {
             if (setDefinitionRestSchemaLocation == null) {
-                setDefinitionRestSchemaLocation =
-                    getSchemaBaseUrl() + "rest/" + setDefinitionXsd;
+                setDefinitionRestSchemaLocation = getSchemaBaseUrl() + "rest/" + setDefinitionXsd;
             }
             result = setDefinitionRestSchemaLocation;
         }
         else {
             if (setDefinitionSoapSchemaLocation == null) {
-                setDefinitionSoapSchemaLocation =
-                    getSchemaBaseUrl() + "soap/" + setDefinitionXsd;
+                setDefinitionSoapSchemaLocation = getSchemaBaseUrl() + "soap/" + setDefinitionXsd;
             }
             result = setDefinitionSoapSchemaLocation;
         }
@@ -2167,26 +1812,20 @@ public final class XmlUtility {
 
     /**
      * @return Returns the contextsFilterSchemaLocation.
-     * @throws WebserverSystemException
-     *             In case of an error.
+     * @throws WebserverSystemException In case of an error.
      */
-    public static String getContextsFilterSchemaLocation()
-        throws WebserverSystemException {
+    public static String getContextsFilterSchemaLocation() throws WebserverSystemException {
 
         final String result;
         if (UserContext.isRestAccess()) {
             if (contextsFilterSchemaLocationRest == null) {
-                contextsFilterSchemaLocationRest =
-                    getSchemaBaseUrl() + "rest/"
-                        + "context/0.3/filter-contexts.xsd";
+                contextsFilterSchemaLocationRest = getSchemaBaseUrl() + "rest/" + "context/0.3/filter-contexts.xsd";
             }
             result = contextsFilterSchemaLocationRest;
         }
         else {
             if (contextsFilterSchemaLocationSoap == null) {
-                contextsFilterSchemaLocationSoap =
-                    getSchemaBaseUrl() + "soap/"
-                        + "context/0.3/filter-contexts.xsd";
+                contextsFilterSchemaLocationSoap = getSchemaBaseUrl() + "soap/" + "context/0.3/filter-contexts.xsd";
             }
             result = contextsFilterSchemaLocationSoap;
         }
@@ -2196,26 +1835,22 @@ public final class XmlUtility {
 
     /**
      * @return Returns the contextMembersFilterSchemaLocation.
-     * @throws WebserverSystemException
-     *             In case of an error.
+     * @throws WebserverSystemException In case of an error.
      */
-    public static String getContextMembersFilterSchemaLocation()
-        throws WebserverSystemException {
+    public static String getContextMembersFilterSchemaLocation() throws WebserverSystemException {
 
         final String result;
         if (UserContext.isRestAccess()) {
             if (contextMembersFilterSchemaLocationRest == null) {
                 contextMembersFilterSchemaLocationRest =
-                    getSchemaBaseUrl() + "rest/"
-                        + "context/0.3/filter-contexts.xsd";
+                    getSchemaBaseUrl() + "rest/" + "context/0.3/filter-contexts.xsd";
             }
             result = contextMembersFilterSchemaLocationRest;
         }
         else {
             if (contextMembersFilterSchemaLocationSoap == null) {
                 contextMembersFilterSchemaLocationSoap =
-                    getSchemaBaseUrl() + "soap/"
-                        + "context/0.3/filter-contexts.xsd";
+                    getSchemaBaseUrl() + "soap/" + "context/0.3/filter-contexts.xsd";
             }
             result = contextMembersFilterSchemaLocationSoap;
         }
@@ -2225,59 +1860,49 @@ public final class XmlUtility {
 
     /**
      * @return Returns the grantsSchemaLocation.
-     * @throws WebserverSystemException
-     *             In case of an error.
+     * @throws WebserverSystemException In case of an error.
      */
-    public static String getGrantsSchemaLocation()
-        throws WebserverSystemException {
+    public static String getGrantsSchemaLocation() throws WebserverSystemException {
 
         return getSchemaLocation("user-account/0.5/grants.xsd");
     }
 
     /**
      * @return Returns the preferencesSchemaLocation.
-     * @throws WebserverSystemException
-     *             In case of an error.
+     * @throws WebserverSystemException In case of an error.
      */
-    public static String getPreferencesSchemaLocation()
-        throws WebserverSystemException {
+    public static String getPreferencesSchemaLocation() throws WebserverSystemException {
 
         return getSchemaLocation("user-account/0.1/preferences.xsd");
     }
 
     /**
      * @return Returns the preferencesSchemaLocation.
-     * @throws WebserverSystemException
-     *             In case of an error.
+     * @throws WebserverSystemException In case of an error.
      */
-    public static String getAttributesSchemaLocation()
-        throws WebserverSystemException {
+    public static String getAttributesSchemaLocation() throws WebserverSystemException {
 
         return getSchemaLocation("user-account/0.1/attributes.xsd");
     }
 
     /**
      * @return Returns the itemSchemaLocation.
-     * @throws WebserverSystemException
-     *             In case of an error.
+     * @throws WebserverSystemException In case of an error.
      */
-    public static String getItemSchemaLocation()
-        throws WebserverSystemException {
+    public static String getItemSchemaLocation() throws WebserverSystemException {
 
         final String result;
         if (UserContext.isRestAccess()) {
             if (itemRestSchemaLocation == null) {
                 itemRestSchemaLocation =
-                    getSchemaBaseUrl() + "rest/" + "item"
-                        + Constants.ITEM_NS_URI_SCHEMA_VERSION + "/item.xsd";
+                    getSchemaBaseUrl() + "rest/" + "item" + Constants.ITEM_NS_URI_SCHEMA_VERSION + "/item.xsd";
             }
             result = itemRestSchemaLocation;
         }
         else {
             if (itemSoapSchemaLocation == null) {
                 itemSoapSchemaLocation =
-                    getSchemaBaseUrl() + "soap/" + "item"
-                        + Constants.ITEM_NS_URI_SCHEMA_VERSION + "/item.xsd";
+                    getSchemaBaseUrl() + "soap/" + "item" + Constants.ITEM_NS_URI_SCHEMA_VERSION + "/item.xsd";
             }
             result = itemSoapSchemaLocation;
         }
@@ -2286,23 +1911,19 @@ public final class XmlUtility {
 
     /**
      * @return Returns the itemsFilterSchemaLocation.
-     * @throws WebserverSystemException
-     *             In case of an error.
+     * @throws WebserverSystemException In case of an error.
      */
-    public static String getUpdateRelationsSchemaLocation()
-        throws WebserverSystemException {
+    public static String getUpdateRelationsSchemaLocation() throws WebserverSystemException {
         final String result;
         if (UserContext.isRestAccess()) {
             if (updateRelationsSchemaLocation == null) {
-                updateRelationsSchemaLocation =
-                    getSchemaBaseUrl() + "rest/common/0.3/update-relations.xsd";
+                updateRelationsSchemaLocation = getSchemaBaseUrl() + "rest/common/0.3/update-relations.xsd";
             }
             result = updateRelationsSchemaLocation;
         }
         else {
             if (updateRelationsSchemaLocation == null) {
-                updateRelationsSchemaLocation =
-                    getSchemaBaseUrl() + "soap/common/0.3/update-relations.xsd";
+                updateRelationsSchemaLocation = getSchemaBaseUrl() + "soap/common/0.3/update-relations.xsd";
             }
             result = updateRelationsSchemaLocation;
         }
@@ -2312,23 +1933,19 @@ public final class XmlUtility {
 
     /**
      * @return Returns the relationsSchemaLocation.
-     * @throws WebserverSystemException
-     *             In case of an error.
+     * @throws WebserverSystemException In case of an error.
      */
-    public static String getRelationsSchemaLocation()
-        throws WebserverSystemException {
+    public static String getRelationsSchemaLocation() throws WebserverSystemException {
         final String result;
         if (UserContext.isRestAccess()) {
             if (relationsSchemaLocation == null) {
-                relationsSchemaLocation =
-                    getSchemaBaseUrl() + "rest/common/0.3/relations.xsd";
+                relationsSchemaLocation = getSchemaBaseUrl() + "rest/common/0.3/relations.xsd";
             }
             result = relationsSchemaLocation;
         }
         else {
             if (relationsSchemaLocation == null) {
-                relationsSchemaLocation =
-                    getSchemaBaseUrl() + "soap/common/0.3/relations.xsd";
+                relationsSchemaLocation = getSchemaBaseUrl() + "soap/common/0.3/relations.xsd";
             }
             result = relationsSchemaLocation;
         }
@@ -2336,21 +1953,17 @@ public final class XmlUtility {
     }
 
     /**
-     * @return Returns the organizationalUnitSchemaLocation dependent on
-     *         UserContext flag isRestAccess.
-     * @throws WebserverSystemException
-     *             In case of an error.
+     * @return Returns the organizationalUnitSchemaLocation dependent on UserContext flag isRestAccess.
+     * @throws WebserverSystemException In case of an error.
      */
-    public static String getOrganizationalUnitSchemaLocation()
-        throws WebserverSystemException {
+    public static String getOrganizationalUnitSchemaLocation() throws WebserverSystemException {
 
         final String result;
         if (UserContext.isRestAccess()) {
             if (organizationalUnitRestSchemaLocation == null) {
                 organizationalUnitRestSchemaLocation =
                     getSchemaBaseUrl() + "rest/" + "organizational-unit"
-                        + Constants.ORGANIZATIONAL_UNIT_NS_URI_SCHEMA_VERSION
-                        + "/organizational-unit.xsd";
+                        + Constants.ORGANIZATIONAL_UNIT_NS_URI_SCHEMA_VERSION + "/organizational-unit.xsd";
             }
             result = organizationalUnitRestSchemaLocation;
         }
@@ -2358,8 +1971,7 @@ public final class XmlUtility {
             if (organizationalUnitSoapSchemaLocation == null) {
                 organizationalUnitSoapSchemaLocation =
                     getSchemaBaseUrl() + "soap/" + "organizational-unit"
-                        + Constants.ORGANIZATIONAL_UNIT_NS_URI_SCHEMA_VERSION
-                        + "/organizational-unit.xsd";
+                        + Constants.ORGANIZATIONAL_UNIT_NS_URI_SCHEMA_VERSION + "/organizational-unit.xsd";
             }
             result = organizationalUnitSoapSchemaLocation;
         }
@@ -2367,21 +1979,17 @@ public final class XmlUtility {
     }
 
     /**
-     * @return Returns the organizationalUnitListSchemaLocation dependent on
-     *         UserContext flag isRestAccess.
-     * @throws WebserverSystemException
-     *             In case of an error.
+     * @return Returns the organizationalUnitListSchemaLocation dependent on UserContext flag isRestAccess.
+     * @throws WebserverSystemException In case of an error.
      */
-    public static String getOrganizationalUnitListSchemaLocation()
-        throws WebserverSystemException {
+    public static String getOrganizationalUnitListSchemaLocation() throws WebserverSystemException {
 
         final String result;
         if (UserContext.isRestAccess()) {
             if (organizationalUnitListRestSchemaLocation == null) {
                 organizationalUnitListRestSchemaLocation =
                     getSchemaBaseUrl() + "rest/" + "organizational-unit"
-                        + Constants.CONTAINER_LIST_NS_URI_SCHEMA_VERSION
-                        + "/organizational-unit-list.xsd";
+                        + Constants.CONTAINER_LIST_NS_URI_SCHEMA_VERSION + "/organizational-unit-list.xsd";
             }
             result = organizationalUnitListRestSchemaLocation;
         }
@@ -2389,8 +1997,7 @@ public final class XmlUtility {
             if (organizationalUnitListSoapSchemaLocation == null) {
                 organizationalUnitListSoapSchemaLocation =
                     getSchemaBaseUrl() + "soap/" + "organizational-unit"
-                        + Constants.CONTAINER_LIST_NS_URI_SCHEMA_VERSION
-                        + "/organizational-unit-list.xsd";
+                        + Constants.CONTAINER_LIST_NS_URI_SCHEMA_VERSION + "/organizational-unit-list.xsd";
             }
             result = organizationalUnitListSoapSchemaLocation;
         }
@@ -2398,30 +2005,23 @@ public final class XmlUtility {
     }
 
     /**
-     * @return Returns the organizationalUnitPathListSchemaLocation dependent on
-     *         UserContext flag isRestAccess.
-     * @throws WebserverSystemException
-     *             In case of an error.
+     * @return Returns the organizationalUnitPathListSchemaLocation dependent on UserContext flag isRestAccess.
+     * @throws WebserverSystemException In case of an error.
      */
-    public static String getOrganizationalUnitPathListSchemaLocation()
-        throws WebserverSystemException {
+    public static String getOrganizationalUnitPathListSchemaLocation() throws WebserverSystemException {
 
         final String result;
         if (UserContext.isRestAccess()) {
             if (organizationalUnitPathListRestSchemaLocation == null) {
                 organizationalUnitPathListRestSchemaLocation =
-                    getSchemaBaseUrl()
-                        + "rest/"
-                        + "organizational-unit/0.4/organizational-unit-path-list.xsd";
+                    getSchemaBaseUrl() + "rest/" + "organizational-unit/0.4/organizational-unit-path-list.xsd";
             }
             result = organizationalUnitPathListRestSchemaLocation;
         }
         else {
             if (organizationalUnitPathListSoapSchemaLocation == null) {
                 organizationalUnitPathListSoapSchemaLocation =
-                    getSchemaBaseUrl()
-                        + "soap/"
-                        + "organizational-unit/0.4/organizational-unit-path-list.xsd";
+                    getSchemaBaseUrl() + "soap/" + "organizational-unit/0.4/organizational-unit-path-list.xsd";
             }
             result = organizationalUnitPathListSoapSchemaLocation;
         }
@@ -2429,30 +2029,23 @@ public final class XmlUtility {
     }
 
     /**
-     * @return Returns the organizationalUnitRefListSchemaLocation dependent on
-     *         UserContext flag isRestAccess.
-     * @throws WebserverSystemException
-     *             In case of an error.
+     * @return Returns the organizationalUnitRefListSchemaLocation dependent on UserContext flag isRestAccess.
+     * @throws WebserverSystemException In case of an error.
      */
-    public static String getOrganizationalUnitRefListSchemaLocation()
-        throws WebserverSystemException {
+    public static String getOrganizationalUnitRefListSchemaLocation() throws WebserverSystemException {
 
         final String result;
         if (UserContext.isRestAccess()) {
             if (organizationalUnitRefListRestSchemaLocation == null) {
                 organizationalUnitRefListRestSchemaLocation =
-                    getSchemaBaseUrl()
-                        + "rest/"
-                        + "organizational-unit/0.4/organizational-unit-ref-list.xsd";
+                    getSchemaBaseUrl() + "rest/" + "organizational-unit/0.4/organizational-unit-ref-list.xsd";
             }
             result = organizationalUnitRefListRestSchemaLocation;
         }
         else {
             if (organizationalUnitRefListSoapSchemaLocation == null) {
                 organizationalUnitRefListSoapSchemaLocation =
-                    getSchemaBaseUrl()
-                        + "soap/"
-                        + "organizational-unit/0.4/organizational-unit-ref-list.xsd";
+                    getSchemaBaseUrl() + "soap/" + "organizational-unit/0.4/organizational-unit-ref-list.xsd";
             }
             result = organizationalUnitRefListSoapSchemaLocation;
         }
@@ -2460,26 +2053,21 @@ public final class XmlUtility {
     }
 
     /**
-     * @return Returns the filterSchemaLocation dependent on UserContext flag
-     *         isRestAccess.
-     * @throws WebserverSystemException
-     *             In case of an error.
+     * @return Returns the filterSchemaLocation dependent on UserContext flag isRestAccess.
+     * @throws WebserverSystemException In case of an error.
      */
-    public static String getFilterSchemaLocation()
-        throws WebserverSystemException {
+    public static String getFilterSchemaLocation() throws WebserverSystemException {
 
         final String result;
         if (UserContext.isRestAccess()) {
             if (filterSchemaLocationRest == null) {
-                filterSchemaLocationRest =
-                    getSchemaBaseUrl() + "rest/" + "common/0.4/filter.xsd";
+                filterSchemaLocationRest = getSchemaBaseUrl() + "rest/" + "common/0.4/filter.xsd";
             }
             result = filterSchemaLocationRest;
         }
         else {
             if (filterSchemaLocationSoap == null) {
-                filterSchemaLocationSoap =
-                    getSchemaBaseUrl() + "soap/" + "common/0.4/filter.xsd";
+                filterSchemaLocationSoap = getSchemaBaseUrl() + "soap/" + "common/0.4/filter.xsd";
             }
             result = filterSchemaLocationSoap;
         }
@@ -2489,165 +2077,131 @@ public final class XmlUtility {
 
     /**
      * @return Returns the pdpRequestsSchemaLocation.
-     * @throws WebserverSystemException
-     *             In case of an error.
+     * @throws WebserverSystemException In case of an error.
      */
-    public static String getPdpRequestsSchemaLocation()
-        throws WebserverSystemException {
+    public static String getPdpRequestsSchemaLocation() throws WebserverSystemException {
 
         // There are is no difference between calling the pdp via rest or soap,
         // the schemas are the same. Therefore, the schema from the rest folder
         // is allways used.
         if (pdpRequestsSchemaLocation == null) {
-            pdpRequestsSchemaLocation =
-                getSchemaBaseUrl() + "rest/pdp/0.3/requests.xsd";
+            pdpRequestsSchemaLocation = getSchemaBaseUrl() + "rest/pdp/0.3/requests.xsd";
         }
         return pdpRequestsSchemaLocation;
     }
 
     /**
-     * @return Returns the roleSchemaLocation dependent on UserContext flag
-     *         isRestAccess.
-     * @throws WebserverSystemException
-     *             In case of an error.
+     * @return Returns the roleSchemaLocation dependent on UserContext flag isRestAccess.
+     * @throws WebserverSystemException In case of an error.
      */
-    public static String getRoleSchemaLocation()
-        throws WebserverSystemException {
+    public static String getRoleSchemaLocation() throws WebserverSystemException {
 
         return getSchemaLocation("role/0.5/role.xsd");
     }
 
     /**
      * @return Returns the stagingFileSchemaLocation.
-     * @throws WebserverSystemException
-     *             In case of an error.
+     * @throws WebserverSystemException In case of an error.
      */
-    public static String getStagingFileSchemaLocation()
-        throws WebserverSystemException {
+    public static String getStagingFileSchemaLocation() throws WebserverSystemException {
 
         if (stagingFileSchemaLocation == null) {
-            stagingFileSchemaLocation =
-                getSchemaBaseUrl() + "rest/staging-file/0.3/staging-file.xsd";
+            stagingFileSchemaLocation = getSchemaBaseUrl() + "rest/staging-file/0.3/staging-file.xsd";
         }
         return stagingFileSchemaLocation;
     }
 
     /**
      * @return Returns the tmeRequestsSchemaLocation.
-     * @throws WebserverSystemException
-     *             In case of an error.
+     * @throws WebserverSystemException In case of an error.
      */
-    public static String getTmeRequestsSchemaLocation()
-        throws WebserverSystemException {
+    public static String getTmeRequestsSchemaLocation() throws WebserverSystemException {
 
         // There is no difference between calling the Tme via rest or soap,
         // the schemas are the same. Therefore, the schema from the rest folder
         // is allways used.
         if (tmeRequestsSchemaLocation == null) {
-            tmeRequestsSchemaLocation =
-                getSchemaBaseUrl() + "tme/0.1/request.xsd";
+            tmeRequestsSchemaLocation = getSchemaBaseUrl() + "tme/0.1/request.xsd";
         }
         return tmeRequestsSchemaLocation;
     }
 
     /**
-     * @return Returns the unsecuredActionsSchemaLocation dependent on
-     *         UserContext flag isRestAccess.
-     * @throws WebserverSystemException
-     *             In case of an error.
+     * @return Returns the unsecuredActionsSchemaLocation dependent on UserContext flag isRestAccess.
+     * @throws WebserverSystemException In case of an error.
      */
-    public static String getUnsecuredActionsSchemaLocation()
-        throws WebserverSystemException {
+    public static String getUnsecuredActionsSchemaLocation() throws WebserverSystemException {
 
         return getSchemaLocation("role/0.4/unsecured-actions.xsd");
     }
 
     /**
      * @return Returns the userAccountSchemaLocation.
-     * @throws WebserverSystemException
-     *             In case of an error.
+     * @throws WebserverSystemException In case of an error.
      */
-    public static String getUserAccountSchemaLocation()
-        throws WebserverSystemException {
+    public static String getUserAccountSchemaLocation() throws WebserverSystemException {
 
-        return getSchemaLocation("user-account"
-            + Constants.USER_ACCOUNT_NS_URI_SCHEMA_VERSION
-            + "/user-account.xsd");
+        return getSchemaLocation("user-account" + Constants.USER_ACCOUNT_NS_URI_SCHEMA_VERSION + "/user-account.xsd");
     }
 
     /**
      * @return Returns the addSelectorsSchemaLocation.
-     * @throws WebserverSystemException
-     *             In case of an error.
+     * @throws WebserverSystemException In case of an error.
      */
-    public static String getAddSelectorsSchemaLocation()
-        throws WebserverSystemException {
+    public static String getAddSelectorsSchemaLocation() throws WebserverSystemException {
 
         return getSchemaLocation("user-group/0.6/add-selectors.xsd");
     }
 
     /**
      * @return Returns the removeSelectorsSchemaLocation.
-     * @throws WebserverSystemException
-     *             In case of an error.
+     * @throws WebserverSystemException In case of an error.
      */
-    public static String getRemoveSelectorsSchemaLocation()
-        throws WebserverSystemException {
+    public static String getRemoveSelectorsSchemaLocation() throws WebserverSystemException {
 
         return getSchemaLocation("user-group/0.6/remove-selectors.xsd");
     }
 
     /**
      * @return Returns the userGroupSchemaLocation.
-     * @throws WebserverSystemException
-     *             In case of an error.
+     * @throws WebserverSystemException In case of an error.
      */
-    public static String getUserGroupSchemaLocation()
-        throws WebserverSystemException {
+    public static String getUserGroupSchemaLocation() throws WebserverSystemException {
 
         return getSchemaLocation("user-group/0.6/user-group.xsd");
     }
 
     /**
      * @return Returns the statisticDataSchemaLocation.
-     * @throws WebserverSystemException
-     *             In case of an error.
+     * @throws WebserverSystemException In case of an error.
      */
-    public static String getStatisticDataSchemaLocation()
-        throws WebserverSystemException {
+    public static String getStatisticDataSchemaLocation() throws WebserverSystemException {
 
         if (statisticDataSchemaLocation == null) {
-            statisticDataSchemaLocation =
-                getSchemaBaseUrl() + "statistic-data/0.3/statistic-data.xsd";
+            statisticDataSchemaLocation = getSchemaBaseUrl() + "statistic-data/0.3/statistic-data.xsd";
         }
         return statisticDataSchemaLocation;
     }
 
     /**
      * @return Returns the aggregationDefinitionSchemaLocation.
-     * @throws WebserverSystemException
-     *             In case of an error.
+     * @throws WebserverSystemException In case of an error.
      */
-    public static String getAggregationDefinitionSchemaLocation()
-        throws WebserverSystemException {
+    public static String getAggregationDefinitionSchemaLocation() throws WebserverSystemException {
         final String result;
         if (UserContext.isRestAccess()) {
             if (aggregationDefinitionRestSchemaLocation == null) {
                 aggregationDefinitionRestSchemaLocation =
-                    getSchemaBaseUrl()
-                        + "rest/aggregation-definition"
-                        + Constants.AGGREGATION_DEFINITION_NS_URI_SCHEMA_VERSION
-                        + "/aggregation-definition.xsd";
+                    getSchemaBaseUrl() + "rest/aggregation-definition"
+                        + Constants.AGGREGATION_DEFINITION_NS_URI_SCHEMA_VERSION + "/aggregation-definition.xsd";
             }
             result = aggregationDefinitionRestSchemaLocation;
         }
         else {
             if (aggregationDefinitionSoapSchemaLocation == null) {
                 aggregationDefinitionSoapSchemaLocation =
-                    getSchemaBaseUrl()
-                        + "soap/aggregation-definition"
-                        + Constants.AGGREGATION_DEFINITION_NS_URI_SCHEMA_VERSION
-                        + "/aggregation-definition.xsd";
+                    getSchemaBaseUrl() + "soap/aggregation-definition"
+                        + Constants.AGGREGATION_DEFINITION_NS_URI_SCHEMA_VERSION + "/aggregation-definition.xsd";
             }
             result = aggregationDefinitionSoapSchemaLocation;
         }
@@ -2657,17 +2211,14 @@ public final class XmlUtility {
 
     /**
      * @return Returns the reportDefinitionSchemaLocation.
-     * @throws WebserverSystemException
-     *             In case of an error.
+     * @throws WebserverSystemException In case of an error.
      */
-    public static String getReportDefinitionSchemaLocation()
-        throws WebserverSystemException {
+    public static String getReportDefinitionSchemaLocation() throws WebserverSystemException {
         final String result;
         if (UserContext.isRestAccess()) {
             if (reportDefinitionRestSchemaLocation == null) {
                 reportDefinitionRestSchemaLocation =
-                    getSchemaBaseUrl() + "rest/report-definition"
-                        + Constants.REPORT_DEFINITION_NS_URI_SCHEMA_VERSION
+                    getSchemaBaseUrl() + "rest/report-definition" + Constants.REPORT_DEFINITION_NS_URI_SCHEMA_VERSION
                         + "/report-definition.xsd";
             }
             result = reportDefinitionRestSchemaLocation;
@@ -2675,8 +2226,7 @@ public final class XmlUtility {
         else {
             if (reportDefinitionSoapSchemaLocation == null) {
                 reportDefinitionSoapSchemaLocation =
-                    getSchemaBaseUrl() + "soap/report-definition"
-                        + Constants.REPORT_DEFINITION_NS_URI_SCHEMA_VERSION
+                    getSchemaBaseUrl() + "soap/report-definition" + Constants.REPORT_DEFINITION_NS_URI_SCHEMA_VERSION
                         + "/report-definition.xsd";
             }
             result = reportDefinitionSoapSchemaLocation;
@@ -2687,25 +2237,21 @@ public final class XmlUtility {
 
     /**
      * @return Returns the scopeSchemaLocation.
-     * @throws WebserverSystemException
-     *             In case of an error.
+     * @throws WebserverSystemException In case of an error.
      */
-    public static String getScopeSchemaLocation()
-        throws WebserverSystemException {
+    public static String getScopeSchemaLocation() throws WebserverSystemException {
         final String result;
         if (UserContext.isRestAccess()) {
             if (scopeRestSchemaLocation == null) {
                 scopeRestSchemaLocation =
-                    getSchemaBaseUrl() + "rest/scope"
-                        + Constants.SCOPE_NS_URI_SCHEMA_VERSION + "/scope.xsd";
+                    getSchemaBaseUrl() + "rest/scope" + Constants.SCOPE_NS_URI_SCHEMA_VERSION + "/scope.xsd";
             }
             result = scopeRestSchemaLocation;
         }
         else {
             if (scopeSoapSchemaLocation == null) {
                 scopeSoapSchemaLocation =
-                    getSchemaBaseUrl() + "soap/scope"
-                        + Constants.SCOPE_NS_URI_SCHEMA_VERSION + "/scope.xsd";
+                    getSchemaBaseUrl() + "soap/scope" + Constants.SCOPE_NS_URI_SCHEMA_VERSION + "/scope.xsd";
             }
             result = scopeSoapSchemaLocation;
         }
@@ -2715,27 +2261,21 @@ public final class XmlUtility {
 
     /**
      * @return Returns the reportSchemaLocation.
-     * @throws WebserverSystemException
-     *             In case of an error.
+     * @throws WebserverSystemException In case of an error.
      */
-    public static String getReportSchemaLocation()
-        throws WebserverSystemException {
+    public static String getReportSchemaLocation() throws WebserverSystemException {
         final String result;
         if (UserContext.isRestAccess()) {
             if (reportRestSchemaLocation == null) {
                 reportRestSchemaLocation =
-                    getSchemaBaseUrl() + "rest/report"
-                        + Constants.REPORT_NS_URI_SCHEMA_VERSION
-                        + "/report.xsd";
+                    getSchemaBaseUrl() + "rest/report" + Constants.REPORT_NS_URI_SCHEMA_VERSION + "/report.xsd";
             }
             result = reportRestSchemaLocation;
         }
         else {
             if (reportSoapSchemaLocation == null) {
                 reportSoapSchemaLocation =
-                    getSchemaBaseUrl() + "soap/report"
-                        + Constants.REPORT_NS_URI_SCHEMA_VERSION
-                        + "/report.xsd";
+                    getSchemaBaseUrl() + "soap/report" + Constants.REPORT_NS_URI_SCHEMA_VERSION + "/report.xsd";
             }
             result = reportSoapSchemaLocation;
         }
@@ -2745,17 +2285,14 @@ public final class XmlUtility {
 
     /**
      * @return Returns the ReportParametersSchemaLocation.
-     * @throws WebserverSystemException
-     *             In case of an error.
+     * @throws WebserverSystemException In case of an error.
      */
-    public static String getReportParametersSchemaLocation()
-        throws WebserverSystemException {
+    public static String getReportParametersSchemaLocation() throws WebserverSystemException {
         final String result;
         if (UserContext.isRestAccess()) {
             if (reportParametersRestSchemaLocation == null) {
                 reportParametersRestSchemaLocation =
-                    getSchemaBaseUrl() + "rest/report"
-                        + Constants.REPORT_PARAMETERS_NS_URI_SCHEMA_VERSION
+                    getSchemaBaseUrl() + "rest/report" + Constants.REPORT_PARAMETERS_NS_URI_SCHEMA_VERSION
                         + "/report-parameters.xsd";
             }
             result = reportParametersRestSchemaLocation;
@@ -2763,8 +2300,7 @@ public final class XmlUtility {
         else {
             if (reportParametersSoapSchemaLocation == null) {
                 reportParametersSoapSchemaLocation =
-                    getSchemaBaseUrl() + "soap/report"
-                        + Constants.REPORT_PARAMETERS_NS_URI_SCHEMA_VERSION
+                    getSchemaBaseUrl() + "soap/report" + Constants.REPORT_PARAMETERS_NS_URI_SCHEMA_VERSION
                         + "/report-parameters.xsd";
             }
             result = reportParametersSoapSchemaLocation;
@@ -2775,48 +2311,37 @@ public final class XmlUtility {
 
     /**
      * @return Returns the PreprocessingInformationSchemaLocation.
-     * @throws WebserverSystemException
-     *             In case of an error.
+     * @throws WebserverSystemException In case of an error.
      */
-    public static String getPreprocessingInformationSchemaLocation()
-        throws WebserverSystemException {
+    public static String getPreprocessingInformationSchemaLocation() throws WebserverSystemException {
 
         if (preprocessingInformationSchemaLocation == null) {
             preprocessingInformationSchemaLocation =
                 getSchemaBaseUrl() + "soap/preprocessing-information"
-                    + Constants.PREPROCESSING_INFORMATION_NS_URI_SCHEMA_VERSION
-                    + "/preprocessing-information.xsd";
+                    + Constants.PREPROCESSING_INFORMATION_NS_URI_SCHEMA_VERSION + "/preprocessing-information.xsd";
         }
         return preprocessingInformationSchemaLocation;
     }
 
     /**
      * @return Returns the xmlSchemaSchemaLocation.
-     * @throws WebserverSystemException
-     *             In case of an error.
+     * @throws WebserverSystemException In case of an error.
      */
-    public static String getXmlSchemaSchemaLocation()
-        throws WebserverSystemException {
+    public static String getXmlSchemaSchemaLocation() throws WebserverSystemException {
 
         if (xmlSchemaSchemaLocation == null) {
-            xmlSchemaSchemaLocation =
-                getSchemaBaseUrl() + "common/0.2/xml-schema.xsd";
+            xmlSchemaSchemaLocation = getSchemaBaseUrl() + "common/0.2/xml-schema.xsd";
         }
         return xmlSchemaSchemaLocation;
     }
 
     /**
-     * @param commonPart
-     *            The tailing part of a schema location that is common for the
-     *            rest schema location and the soap schema location, e.g.
-     *            role/0.4/role.xsd.
-     * @return Returns the complete schema location for the provided value
-     *         dependent on UserContext flag isRestAccess.
-     * @throws WebserverSystemException
-     *             In case of an error.
+     * @param commonPart The tailing part of a schema location that is common for the rest schema location and the soap
+     *                   schema location, e.g. role/0.4/role.xsd.
+     * @return Returns the complete schema location for the provided value dependent on UserContext flag isRestAccess.
+     * @throws WebserverSystemException In case of an error.
      */
-    private static String getSchemaLocation(final String commonPart)
-        throws WebserverSystemException {
+    private static String getSchemaLocation(final String commonPart) throws WebserverSystemException {
 
         String result;
 
@@ -2838,25 +2363,19 @@ public final class XmlUtility {
     }
 
     /**
-     * Replace forbidden characters in xml content with their escape sequence.<br/>
-     * This method escapes &, <, and > in attributes and text content. In
-     * attributes, it additionally escapes " and '.
-     * 
-     * @param xmlText
-     *            The xml text.
+     * Replace forbidden characters in xml content with their escape sequence.<br/> This method escapes &, <, and > in
+     * attributes and text content. In attributes, it additionally escapes " and '.
+     *
+     * @param xmlText The xml text.
      * @return The resulting text with escaped characters.
      */
     public static String escapeForbiddenXmlCharacters(final String xmlText) {
 
         String result = xmlText;
         if (result != null && PATTERN_ESCAPE_NEEDED.matcher(result).find()) {
-            result =
-                PATTERN_AMPERSAND.matcher(result).replaceAll(ESC_AMPERSAND);
-            result =
-                PATTERN_LESS_THAN.matcher(result).replaceAll(ESC_LESS_THAN);
-            result =
-                PATTERN_GREATER_THAN.matcher(result).replaceAll(
-                    ESC_GREATER_THAN);
+            result = PATTERN_AMPERSAND.matcher(result).replaceAll(ESC_AMPERSAND);
+            result = PATTERN_LESS_THAN.matcher(result).replaceAll(ESC_LESS_THAN);
+            result = PATTERN_GREATER_THAN.matcher(result).replaceAll(ESC_GREATER_THAN);
             result = PATTERN_QUOT.matcher(result).replaceAll(ESC_QUOT);
             result = PATTERN_APOS.matcher(result).replaceAll(ESC_APOS);
         }
@@ -2866,44 +2385,32 @@ public final class XmlUtility {
 
     /**
      * Replace all escape sequences for forbidden charcters with their readable.
-     * 
-     * @param xmlText
-     *            The xml text with escape sequences.
-     * @param isAttribute
-     *            Indicates if this is an attribute.
+     *
+     * @param xmlText     The xml text with escape sequences.
+     * @param isAttribute Indicates if this is an attribute.
      * @return The resulting text with unescaped characters.
      */
-    public static String unescapeForbiddenXmlCharacters(
-        final String xmlText, final boolean isAttribute) {
+    public static String unescapeForbiddenXmlCharacters(final String xmlText, final boolean isAttribute) {
 
         String result = xmlText;
         if (result != null && PATTERN_UNESCAPE_NEEDED.matcher(result).find()) {
-            result =
-                PATTERN_ESC_LESS_THAN.matcher(result).replaceAll(LESS_THAN);
-            result =
-                PATTERN_ESC_GREATER_THAN.matcher(result).replaceAll(
-                    GREATER_THAN);
+            result = PATTERN_ESC_LESS_THAN.matcher(result).replaceAll(LESS_THAN);
+            result = PATTERN_ESC_GREATER_THAN.matcher(result).replaceAll(GREATER_THAN);
             result = PATTERN_ESC_QUOT.matcher(result).replaceAll(QUOT);
             result = PATTERN_ESC_APOS.matcher(result).replaceAll(APOS);
-            result =
-                PATTERN_ESC_AMPERSAND.matcher(result).replaceAll(AMPERSAND);
+            result = PATTERN_ESC_AMPERSAND.matcher(result).replaceAll(AMPERSAND);
         }
         return result;
     }
 
     /**
-     * Throw a uniform escidoc system exception in case of an unexpected
-     * exception from the stax parser.
-     * 
-     * @param message
-     *            A handler specific message added to thrown exception message.
-     * @param e
-     *            The unexcepcted exception.
-     * @throws XmlParserSystemException
-     *             Thrown in case of an internal system error.
+     * Throw a uniform escidoc system exception in case of an unexpected exception from the stax parser.
+     *
+     * @param message A handler specific message added to thrown exception message.
+     * @param e       The unexcepcted exception.
+     * @throws XmlParserSystemException Thrown in case of an internal system error.
      */
-    public static void handleUnexpectedStaxParserException(
-        final String message, final Exception e)
+    public static void handleUnexpectedStaxParserException(final String message, final Exception e)
         throws XmlParserSystemException {
         final String text;
         text = message != null ? message + e.getMessage() : e.getMessage();
@@ -2911,203 +2418,142 @@ public final class XmlUtility {
     }
 
     /**
-     * FIXME Often this method is not used but get(ESCIDOC_CORE_BASEURL)
-     * directly. And/or there is no such method for every other property!?
-     * 
+     * FIXME Often this method is not used but get(ESCIDOC_CORE_BASEURL) directly. And/or there is no such method for
+     * every other property!?
+     *
      * @return Return the configured escidoc baseurl.
-     * @throws WebserverSystemException
-     *             If an error occurs accessing the escidoc configuration
+     * @throws WebserverSystemException If an error occurs accessing the escidoc configuration
      */
     public static String getEscidocBaseUrl() throws WebserverSystemException {
         try {
-            return EscidocConfiguration.getInstance().get(
-                EscidocConfiguration.ESCIDOC_CORE_BASEURL);
+            return EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_BASEURL);
         }
         catch (final IOException e) {
-            throw new WebserverSystemException(
-                "Error accessing Escidoc configuration!", e);
+            throw new WebserverSystemException("Error accessing Escidoc configuration!", e);
         }
     }
 
     /**
      * Replace the oldPrefix with newPrefix in xml String.
-     * 
-     * @param xml
-     *            The xml String.
-     * @param currentPrefix
-     *            The currentPrefix.
-     * @param newPrefix
-     *            The newPrefix.
+     *
+     * @param xml           The xml String.
+     * @param currentPrefix The currentPrefix.
+     * @param newPrefix     The newPrefix.
      * @return The resulting xml String.
      */
-    public static String replaceNamespacePrefix(
-        final String xml, final String currentPrefix, final String newPrefix) {
+    public static String replaceNamespacePrefix(final String xml, final String currentPrefix, final String newPrefix) {
         String result = xml;
         if (result.contains(currentPrefix)) {
-            result =
-                result.replaceAll("xmlns:" + currentPrefix, "xmlns:"
-                    + newPrefix);
-            result =
-                result.replaceAll('<' + currentPrefix + ':', '<' + newPrefix
-                    + ':');
-            result =
-                result.replaceAll("</" + currentPrefix + ':', "</" + newPrefix
-                    + ':');
+            result = result.replaceAll("xmlns:" + currentPrefix, "xmlns:" + newPrefix);
+            result = result.replaceAll('<' + currentPrefix + ':', '<' + newPrefix + ':');
+            result = result.replaceAll("</" + currentPrefix + ':', "</" + newPrefix + ':');
         }
         return result;
     }
 
     /**
-     * Gets an initilized <code>XMLOutputFactory2</code> instance.<br/>
-     * The returned instance is initialized as follows:
-     * <ul>
-     * <li>If the provided parameter is set to <code>true</code>,
-     * IS_REPAIRING_NAMESPACES is set to true, i.e. the created writers will
-     * automatically repair the namespaces, see <code>XMLOutputFactory</code>
-     * for details.</li>
-     * <li>For writing escaped attribute values, the
-     * {@link StaxAttributeEscapingWriterFactory} is used<./li>
-     * <li>For writing escaped text content, the
-     * {@link StaxTextEscapingWriterFactory} is used.</li>
-     * </ul>
-     * 
-     * @param repairing
-     *            Flag indicating if the factory shall create namespace
-     *            repairing writers (<code>true</code>) or non repairing writers
-     *            (<code>false</code>).
+     * Gets an initilized <code>XMLOutputFactory2</code> instance.<br/> The returned instance is initialized as follows:
+     * <ul> <li>If the provided parameter is set to <code>true</code>, IS_REPAIRING_NAMESPACES is set to true, i.e. the
+     * created writers will automatically repair the namespaces, see <code>XMLOutputFactory</code> for details.</li>
+     * <li>For writing escaped attribute values, the {@link StaxAttributeEscapingWriterFactory} is used<./li> <li>For
+     * writing escaped text content, the {@link StaxTextEscapingWriterFactory} is used.</li> </ul>
+     *
+     * @param repairing Flag indicating if the factory shall create namespace repairing writers (<code>true</code>) or
+     *                  non repairing writers (<code>false</code>).
      * @return Returns the initalized <code>XMLOutputFactory</code> instance.
      */
-    private static XMLOutputFactory getInitilizedXmlOutputFactory(
-        final boolean repairing) {
+    private static XMLOutputFactory getInitilizedXmlOutputFactory(final boolean repairing) {
 
         final XMLOutputFactory xmlof = XMLOutputFactory.newInstance();
-        xmlof.setProperty(XMLOutputFactory.IS_REPAIRING_NAMESPACES,
-                repairing);
+        xmlof.setProperty(XMLOutputFactory.IS_REPAIRING_NAMESPACES, repairing);
         if (repairing) {
             xmlof.setProperty(XMLOutputFactory2.P_AUTOMATIC_NS_PREFIX, "ext");
         }
-        xmlof.setProperty(XMLOutputFactory2.P_ATTR_VALUE_ESCAPER,
-            new StaxAttributeEscapingWriterFactory());
-        xmlof.setProperty(XMLOutputFactory2.P_TEXT_ESCAPER,
-            new StaxTextEscapingWriterFactory());
+        xmlof.setProperty(XMLOutputFactory2.P_ATTR_VALUE_ESCAPER, new StaxAttributeEscapingWriterFactory());
+        xmlof.setProperty(XMLOutputFactory2.P_TEXT_ESCAPER, new StaxTextEscapingWriterFactory());
         return xmlof;
     }
 
     /**
-     * Creates an <code>XMLStreamWriter</code> for the provided
-     * <code>OutputStream</code>.
-     * 
-     * @param out
-     *            The <code>OutputStream</code> to get the writer for.
+     * Creates an <code>XMLStreamWriter</code> for the provided <code>OutputStream</code>.
+     *
+     * @param out The <code>OutputStream</code> to get the writer for.
      * @return Returns the <code>XMLStreamWriter</code>.
-     * @throws XMLStreamException
-     *             Thrown in case of an error during creating the writer.
+     * @throws XMLStreamException Thrown in case of an error during creating the writer.
      */
-    public static XMLStreamWriter createXmlStreamWriter(final OutputStream out)
-        throws XMLStreamException {
+    public static XMLStreamWriter createXmlStreamWriter(final OutputStream out) throws XMLStreamException {
 
         return getInitilizedXmlOutputFactory(false).createXMLStreamWriter(out);
     }
 
     /**
-     * Creates a namespace repairing <code>XMLStreamWriter</code> for the
-     * provided <code>OutputStream</code>.
-     * 
-     * @param out
-     *            The <code>OutputStream</code> to get the writer for.
+     * Creates a namespace repairing <code>XMLStreamWriter</code> for the provided <code>OutputStream</code>.
+     *
+     * @param out The <code>OutputStream</code> to get the writer for.
      * @return Returns the <code>XMLStreamWriter</code>.
-     * @throws XMLStreamException
-     *             Thrown in case of an error during creating the writer.
+     * @throws XMLStreamException Thrown in case of an error during creating the writer.
      */
-    public static XMLStreamWriter createXmlStreamWriterNamespaceRepairing(
-        final OutputStream out) throws XMLStreamException {
+    public static XMLStreamWriter createXmlStreamWriterNamespaceRepairing(final OutputStream out)
+        throws XMLStreamException {
 
         return getInitilizedXmlOutputFactory(true).createXMLStreamWriter(out);
     }
 
     /**
-     * Creates an <code>XMLStreamWriter</code> for the provided
-     * <code>OutputStream</code>.
-     * 
-     * @param writer
-     *            The <code>Writer</code> to get the writer for.
+     * Creates an <code>XMLStreamWriter</code> for the provided <code>OutputStream</code>.
+     *
+     * @param writer The <code>Writer</code> to get the writer for.
      * @return Returns the <code>XMLStreamWriter</code>.
-     * @throws XMLStreamException
-     *             Thrown in case of an error during creating the writer.
+     * @throws XMLStreamException Thrown in case of an error during creating the writer.
      */
-    public static XMLStreamWriter createXmlStreamWriter(final Writer writer)
-        throws XMLStreamException {
+    public static XMLStreamWriter createXmlStreamWriter(final Writer writer) throws XMLStreamException {
 
-        return getInitilizedXmlOutputFactory(false).createXMLStreamWriter(
-            writer);
+        return getInitilizedXmlOutputFactory(false).createXMLStreamWriter(writer);
     }
 
     /**
-     * Creates an <code>XMLEventWriter</code> for the provided
-     * <code>Writer</code>.
-     * 
-     * @param writer
-     *            The <code>Writer</code> to get the writer for.
+     * Creates an <code>XMLEventWriter</code> for the provided <code>Writer</code>.
+     *
+     * @param writer The <code>Writer</code> to get the writer for.
      * @return Returns the <code>XMLEventWriter</code>.
-     * @throws XMLStreamException
-     *             Thrown in case of an error during creating the writer.
+     * @throws XMLStreamException Thrown in case of an error during creating the writer.
      */
-    public static XMLEventWriter createXmlEventWriter(final Writer writer)
-        throws XMLStreamException {
+    public static XMLEventWriter createXmlEventWriter(final Writer writer) throws XMLStreamException {
 
-        return getInitilizedXmlOutputFactory(false)
-            .createXMLEventWriter(writer);
+        return getInitilizedXmlOutputFactory(false).createXMLEventWriter(writer);
     }
 
     /**
      * Throws an <code>MissingAttributeValueException</code>.
-     * 
-     * @param element
-     *            The element in that the attribute is missing.
-     * @param attributeName
-     *            The name of the missing attribute.
-     * @throws MissingAttributeValueException
-     *             Throws created exception.
+     *
+     * @param element       The element in that the attribute is missing.
+     * @param attributeName The name of the missing attribute.
+     * @throws MissingAttributeValueException Throws created exception.
      */
-    public static void throwMissingAttributeValueException(
-        final AbstractElement element, final String attributeName)
+    public static void throwMissingAttributeValueException(final AbstractElement element, final String attributeName)
         throws MissingAttributeValueException {
 
-        throw new MissingAttributeValueException(
-            StringUtility.format(
-                ERR_MSG_MISSING_ATTRIBUTE, element.getPath(),
-                attributeName, element.getLocationString()));
+        throw new MissingAttributeValueException(StringUtility.format(ERR_MSG_MISSING_ATTRIBUTE, element.getPath(),
+            attributeName, element.getLocationString()));
     }
 
     /**
      * Get the href to the object with the specified type and id.
-     * 
-     * @param objectType
-     *            The type of the object. This must be one of
-     *            <ul>
-     *            <li>container</li>
-     *            <li>content-model</li>
-     *            <li>context</li>
-     *            <li>item</li>
-     *            <li>component</li>
-     *            <li>content-relation</li>
-     *            <li>organizational-unit</li>
-     *            <li>role</li>
-     *            <li>scope</li>
-     *            <li>user-account</li>
-     *            </ul>
-     *            Otherwise, <code>null</code> is returned.
-     * @param objectId
-     *            The id of the object.
-     * 
+     *
+     * @param objectType The type of the object. This must be one of <ul> <li>container</li> <li>content-model</li>
+     *                   <li>context</li> <li>item</li> <li>component</li> <li>content-relation</li>
+     *                   <li>organizational-unit</li> <li>role</li> <li>scope</li> <li>user-account</li> </ul>
+     *                   Otherwise, <code>null</code> is returned.
+     * @param objectId   The id of the object.
      * @return Returns the href to the specified object or <code>null</code>.
      */
     public static String getHref(final String objectType, final String objectId) {
 
         String type = null;
-        if(objectType != null) {
-            type = PATTERN_RESOURCE_OBJECT_TYPE.matcher(objectType).find() ? objectType : Constants.RESOURCES_NS_URI
-                + StringUtility.convertToUpperCaseLetterFormat(objectType);
+        if (objectType != null) {
+            type =
+                PATTERN_RESOURCE_OBJECT_TYPE.matcher(objectType).find() ? objectType : Constants.RESOURCES_NS_URI
+                    + StringUtility.convertToUpperCaseLetterFormat(objectType);
         }
 
         String objectHref = null;
@@ -3150,45 +2596,31 @@ public final class XmlUtility {
 
     /**
      * Create the content of the DC datastream to store in Fedora.
-     * 
-     * @param nsUri
-     *            nsUri of the md record. Through this URI is the mapping schema
-     *            selected.
-     * @param mdRecordXml
-     *            Xml representation of the md record to parse.
-     * @param objID
-     *            The objid of the Fedora object. A triple is created with this
-     *            objid.
+     *
+     * @param nsUri       nsUri of the md record. Through this URI is the mapping schema selected.
+     * @param mdRecordXml Xml representation of the md record to parse.
+     * @param objID       The objid of the Fedora object. A triple is created with this objid.
      * @return The content of the DC datastream or null if content is empty.
-     * @throws WebserverSystemException
-     *             If an error occurs.
+     * @throws WebserverSystemException If an error occurs.
      */
-    public static String createDC(
-        final String nsUri, final String mdRecordXml, final String objID)
+    public static String createDC(final String nsUri, final String mdRecordXml, final String objID)
         throws WebserverSystemException {
         return createDC(nsUri, mdRecordXml, objID, null);
     }
 
     /**
      * Create the content of the DC datastream to store in Fedora.
-     * 
-     * @param nsUri
-     *            nsUri of the md record. Through this URI is the mapping schema
-     *            selected.
-     * @param mdRecordXml
-     *            Xml representation of the md record to parse.
-     * @param objID
-     *            The objid of the Fedora object. A triple is created with this
-     *            objid.
-     * @param contentModelID
-     *            The objid of the content-model.
+     *
+     * @param nsUri          nsUri of the md record. Through this URI is the mapping schema selected.
+     * @param mdRecordXml    Xml representation of the md record to parse.
+     * @param objID          The objid of the Fedora object. A triple is created with this objid.
+     * @param contentModelID The objid of the content-model.
      * @return The content of the DC datastream or null if content is empty.
-     * @throws WebserverSystemException
-     *             If an error occurs.
+     * @throws WebserverSystemException If an error occurs.
      */
     public static String createDC(
-        final String nsUri, final String mdRecordXml, final CharSequence objID,
-        final String contentModelID) throws WebserverSystemException {
+        final String nsUri, final String mdRecordXml, final CharSequence objID, final String contentModelID)
+        throws WebserverSystemException {
 
         String result = null;
 
@@ -3203,22 +2635,23 @@ public final class XmlUtility {
                 t.clearParameters();
             }
             final ByteArrayOutputStream out = new ByteArrayOutputStream();
-            t.transform(
-                new StreamSource(new ByteArrayInputStream(mdRecordXml
-                    .getBytes(CHARACTER_ENCODING))), new StreamResult(out));
+            t.transform(new StreamSource(new ByteArrayInputStream(mdRecordXml.getBytes(CHARACTER_ENCODING))),
+                new StreamResult(out));
 
             result = out.toString(CHARACTER_ENCODING).trim();
-        } catch (final Exception e) {
-            throw new WebserverSystemException(
-                "Mapping of Metadata to DC failed.", e);
-        } finally {
+        }
+        catch (final Exception e) {
+            throw new WebserverSystemException("Mapping of Metadata to DC failed.", e);
+        }
+        finally {
             try {
                 TRANSFORMER_POOL.returnObject(transformerKey, t);
-            } catch (final Exception e) {
-                if(LOGGER.isWarnEnabled()) {
+            }
+            catch (final Exception e) {
+                if (LOGGER.isWarnEnabled()) {
                     LOGGER.warn("Returning transformer to pool failed.");
                 }
-                if(LOGGER.isDebugEnabled()) {
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Returning transformer to pool failed.", e);
                 }
             }
@@ -3234,18 +2667,14 @@ public final class XmlUtility {
 
     /**
      * Calculate the MD 5 Checksum.
-     * 
-     * @param xmlBytes
-     *            Content over which the checksum is to calculate.
+     *
+     * @param xmlBytes Content over which the checksum is to calculate.
      * @return MD 5 checksum of xmlBytes.
-     * @throws ParserConfigurationException
-     *             Thrown if instance new SAXParser failed.
-     * @throws SAXException
-     *             Thrown if pasring failed.
+     * @throws ParserConfigurationException Thrown if instance new SAXParser failed.
+     * @throws SAXException                 Thrown if pasring failed.
      */
     // TODO create XMLCompareUtility
-    public static String getMd5Hash(final byte[] xmlBytes)
-        throws ParserConfigurationException, SAXException {
+    public static String getMd5Hash(final byte[] xmlBytes) throws ParserConfigurationException, SAXException {
         if (xmlBytes.length == 0) {
             return "";
         }

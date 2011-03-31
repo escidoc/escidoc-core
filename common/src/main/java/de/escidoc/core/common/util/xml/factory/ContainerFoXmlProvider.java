@@ -26,8 +26,6 @@ import java.util.Map;
 
 /**
  * Container FoXML PROVIDER.
- * 
- * 
  */
 public final class ContainerFoXmlProvider extends InfrastructureFoXmlProvider {
 
@@ -43,16 +41,14 @@ public final class ContainerFoXmlProvider extends InfrastructureFoXmlProvider {
 
     /**
      * Private constructor to prevent initialization.
-     *
      */
     private ContainerFoXmlProvider() {
     }
 
     /**
      * Gets the role xml PROVIDER.
-     * 
-     * @return Returns the <code>UserAccountXmlProvider</code> object.
      *
+     * @return Returns the <code>UserAccountXmlProvider</code> object.
      */
     public static ContainerFoXmlProvider getInstance() {
         return PROVIDER;
@@ -60,31 +56,24 @@ public final class ContainerFoXmlProvider extends InfrastructureFoXmlProvider {
 
     /**
      * Render Container to XML.
-     * 
-     * @param values
-     *            Value Map.
+     *
+     * @param values Value Map.
      * @return XML representation of Container
-     * 
-     * @throws WebserverSystemException
-     *             Thrown in case of internal failure.
+     * @throws WebserverSystemException Thrown in case of internal failure.
      */
-    public String getContainerFoXml(final Map values)
-        throws WebserverSystemException {
+    public String getContainerFoXml(final Map values) throws WebserverSystemException {
 
         return getXml(CONTAINER_RESOURCE_NAME, CONTAINER_PATH, values);
     }
 
     /**
      * Render RELS-EXT.
-     * 
-     * @param values
-     *            Value Map.
+     *
+     * @param values Value Map.
      * @return XML representation of RELS-EXT
-     * @throws WebserverSystemException
-     *             Thrown in case of internal failure.
+     * @throws WebserverSystemException Thrown in case of internal failure.
      */
-    public String getContainerRelsExt(final Map values)
-        throws WebserverSystemException {
+    public String getContainerRelsExt(final Map values) throws WebserverSystemException {
 
         return getXml(RELS_EXT_RESOURCE_NAME, RELS_EXT_PATH, values);
     }

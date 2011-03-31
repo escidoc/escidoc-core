@@ -41,11 +41,9 @@ import java.util.HashMap;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Test if IndexSearcher gets reloaded when 
- * an object is added or deleted in the index.
- * 
+ * Test if IndexSearcher gets reloaded when an object is added or deleted in the index.
+ *
  * @author Michael Hoppe
- * 
  */
 @RunWith(value = Parameterized.class)
 public class ExpiredIndexSearcherTest extends SearchTestBase {
@@ -53,8 +51,7 @@ public class ExpiredIndexSearcherTest extends SearchTestBase {
     private static final String INDEX_NAME = "item_container_admin";
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ExpiredIndexSearcherTest(final int transport) {
         super(transport);
@@ -64,9 +61,8 @@ public class ExpiredIndexSearcherTest extends SearchTestBase {
 
     /**
      * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Before
     public void initialize() throws Exception {
@@ -74,9 +70,8 @@ public class ExpiredIndexSearcherTest extends SearchTestBase {
 
     /**
      * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @After
     public void deinitialize() throws Exception {
@@ -84,51 +79,32 @@ public class ExpiredIndexSearcherTest extends SearchTestBase {
 
     /**
      * Test searching for a single term.
-     * 
-     * @test.name Single Term Search
-     * @test.id SB_SR-1
-     * @test.input mandatory request parameters: - any single term query -
-     *             existing database
-     * @test.inputDescription execute single term query on given database
-     * @test.expected List of search records according to eSciDoc Default Schema
-     *                for search results first record to be returned ist at the
-     *                1st position in the sequence of matched records. only
-     *                released objects are found.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testExpiredIndexSearcher() throws Exception {
 
         // create empty indices/////////////////////////////////////////////////
         String urlParameters =
-            "?operation=updateIndex" + "&action=createEmpty"
-                + "&repositoryName=escidocrepository" + "&indexName=";
+            "?operation=updateIndex" + "&action=createEmpty" + "&repositoryName=escidocrepository" + "&indexName=";
         String httpUrl =
-            HttpHelper
-                .createUrl(
-                    de.escidoc.core.test.common.client.servlet.Constants.PROTOCOL,
-                    de.escidoc.core.test.common.client.servlet.Constants.HOST_PORT,
-                    de.escidoc.core.test.common.client.servlet.Constants.FEDORAGSEARCH_BASE_URI
-                        + urlParameters);
-        HttpHelper
-            .executeHttpRequest(
-                de.escidoc.core.test.common.client.servlet.Constants.HTTP_METHOD_GET,
-                httpUrl, null, null, null);
+            HttpHelper.createUrl(de.escidoc.core.test.common.client.servlet.Constants.PROTOCOL,
+                de.escidoc.core.test.common.client.servlet.Constants.HOST_PORT,
+                de.escidoc.core.test.common.client.servlet.Constants.FEDORAGSEARCH_BASE_URI + urlParameters);
+        HttpHelper.executeHttpRequest(de.escidoc.core.test.common.client.servlet.Constants.HTTP_METHOD_GET, httpUrl,
+            null, null, null);
         // /////////////////////////////////////////////////////////////////////
         String xmlData =
-            EscidocRestSoapTestBase.getTemplateAsString(
-                TEMPLATE_ITEM_SEARCH_PATH, "escidoc_search_item0" + "_"
-                    + getTransport(false) + ".xml");
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_SEARCH_PATH, "escidoc_search_item0" + "_"
+                + getTransport(false) + ".xml");
         item.create(xmlData);
         HashMap<String, String> parameters = new HashMap<String, String>();
         HashMap<String, String> scanParameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, "PID=escidoc*");
         scanParameters.put(FILTER_PARAMETER_OPERATION, FILTER_PARAMETER_SCAN);
         scanParameters.put(FILTER_PARAMETER_SCAN_CLAUSE, "PID=\"\"");
-        
+
         String response = search(parameters, INDEX_NAME);
         String scanResponse = scan(scanParameters, INDEX_NAME);
         assertEquals("1", getNumberOfHits(response));

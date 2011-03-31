@@ -31,57 +31,44 @@ package de.escidoc.core.aa.business.persistence;
 import java.util.List;
 
 /**
- * Data access object to retrieve xacml policies from an underlying persistent
- * layer.
- * 
- * @author Torsten Tetteroo
+ * Data access object to retrieve xacml policies from an underlying persistent layer.
  *
+ * @author Torsten Tetteroo
  */
 public interface XacmlPolicyDao {
 
     /**
      * Loads Xacml Policies objects.
-     * 
-     * @param userId
-     *            The user ID to fetch policies for.
-     * @param action
-     *            The action to fetch policies for.
-     * @return The Policies as Set of Xacml policy objects.
      *
+     * @param userId The user ID to fetch policies for.
+     * @param action The action to fetch policies for.
+     * @return The Policies as Set of Xacml policy objects.
      */
     List loadUserPolicies(final String userId, final String action);
 
     /**
-     * Loads Xacml Policies.<br>
-     * This method fetches all policies created to restrict privileges of roles
-     * related to the provided action for the specified user.
-     * 
-     * @param userId
-     *            The user ID to fetch policies for.
-     * @param action
-     *            The action to fetch policies for.
-     * @return The Policies as Set of Xacml policy objects.
+     * Loads Xacml Policies.<br> This method fetches all policies created to restrict privileges of roles related to the
+     * provided action for the specified user.
      *
+     * @param userId The user ID to fetch policies for.
+     * @param action The action to fetch policies for.
+     * @return The Policies as Set of Xacml policy objects.
      */
     List loadUserRestrictRolesPolicies(final String userId, final String action);
 
     /**
      * Loads Xacml Polices related to the specified role.
-     * 
-     * @param roleId
-     *            The id of the role to load policies for.
-     * @return The role's polices Set of Xacml policy objects.
      *
+     * @param roleId The id of the role to load policies for.
+     * @return The role's polices Set of Xacml policy objects.
      */
     List loadRolePolices(final String roleId);
 
     /**
      * Loads an action from the database table <code>actions</code>.
-     * 
-     * @param actionName
-     *            The name of the action
-     * @return The action object.
      *
+     * @param actionName The name of the action
+     * @return The action object.
      */
     Action loadAction(final String actionName);
 

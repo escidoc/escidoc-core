@@ -25,12 +25,12 @@ import java.util.Set;
 import java.util.TreeSet;
 
 /**
- * This class represents a database schema containing a list of all its table
- * names.
- * 
+ * This class represents a database schema containing a list of all its table names.
+ *
  * @author André Schenk
  */
 public class Schema {
+
     private String name;
 
     private Set<Table> tables;
@@ -43,11 +43,9 @@ public class Schema {
 
     /**
      * Create a new Schema object.
-     * 
-     * @param name
-     *            schema name
-     * @param tables
-     *            list of database tables
+     *
+     * @param name   schema name
+     * @param tables list of database tables
      */
     public Schema(final String name, final Table[] tables) {
         setName(name);
@@ -56,7 +54,7 @@ public class Schema {
 
     /**
      * Get the schema name.
-     * 
+     *
      * @return schema name
      */
     public String getName() {
@@ -65,7 +63,7 @@ public class Schema {
 
     /**
      * Get the list of table names.
-     * 
+     *
      * @return table names
      */
     public Set<Table> getTables() {
@@ -74,9 +72,8 @@ public class Schema {
 
     /**
      * Set the schema name.
-     * 
-     * @param name
-     *            schema name
+     *
+     * @param name schema name
      */
     public final void setName(final String name) {
         this.name = name;
@@ -84,9 +81,8 @@ public class Schema {
 
     /**
      * Set the list of table names.
-     * 
-     * @param tables
-     *            table names
+     *
+     * @param tables table names
      */
     public final void setTables(final Table[] tables) {
         if (tables != null) {
@@ -99,9 +95,8 @@ public class Schema {
 
     /**
      * Set the list of table names.
-     * 
-     * @param tables
-     *            table names
+     *
+     * @param tables table names
      */
     public void setTables(final Set<Table> tables) {
         this.tables = tables;

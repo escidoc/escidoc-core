@@ -40,7 +40,7 @@ import java.util.List;
 
 /**
  * Fills all elements + attributes and values in list.
- * 
+ *
  * @author Michael Hoppe
  */
 public class AllStaxHandler extends DefaultHandler {
@@ -48,68 +48,50 @@ public class AllStaxHandler extends DefaultHandler {
     private final StaxParser parser;
 
     /**
-     * Holds values of all elements and attributes as key-value pairs.
-     * Key is path to element or attribute
-     * eg /properties/version/number
-     * If attribute is href, extract objectId out of href and write it as key id
-     * If element is root-element, write root-element name as value with key = type.
+     * Holds values of all elements and attributes as key-value pairs. Key is path to element or attribute eg
+     * /properties/version/number If attribute is href, extract objectId out of href and write it as key id If element
+     * is root-element, write root-element name as value with key = type.
      */
     private List<String> values = new ArrayList<String>();
-    
+
     /**
      * Constructor with StaxParser.
-     * 
-     * @param parser
-     *            StaxParser
-     * 
+     *
+     * @param parser StaxParser
      */
     public AllStaxHandler(final StaxParser parser) {
         this.parser = parser;
     }
 
     /**
-     * Parser hits an XML character element.
-     * Write all elements and all attributes 
-     * with path to element and value
-     * (eg /properties/version/status=released)
-     * in a list.
-     * If attribute is xlink:href, extract objectId out of href
-     * and replace attribute-name in path with /id.
-     * 
-     * @param s
-     *            XML character element.
-     * @param element
-     *            StAX StartElement
+     * Parser hits an XML character element. Write all elements and all attributes with path to element and value (eg
+     * /properties/version/status=released) in a list. If attribute is xlink:href, extract objectId out of href and
+     * replace attribute-name in path with /id.
+     *
+     * @param s       XML character element.
+     * @param element StAX StartElement
      * @return XML character element.
-     * 
-     * 
      */
     @Override
-    public String characters(
-        final String s, final StartElement element) 
-                            throws UnsupportedEncodingException {
+    public String characters(final String s, final StartElement element) throws UnsupportedEncodingException {
 
-        String path = parser.getCurPath()
-                    .replaceFirst("/.*?/", "/");
+        String path = parser.getCurPath().replaceFirst("/.*?/", "/");
         if (path.equals(parser.getCurPath())) {
             path = "";
-            values.add("\"type\"=\"" 
-                + parser.getCurPath().substring(1) + "\"");
-        } else {
+            values.add("\"type\"=\"" + parser.getCurPath().substring(1) + "\"");
+        }
+        else {
             if (s != null && !s.trim().equals("")) {
-                values.add("\"" + path + "\"=\"" 
-                + s + "\"");
+                values.add("\"" + path + "\"=\"" + s + "\"");
             }
         }
         List<Attribute> attributes = element.getAttributes();
         for (Attribute attribute : attributes) {
-            if (attribute.getValue() != null 
-                && !attribute.getValue().trim().equals("")) {
+            if (attribute.getValue() != null && !attribute.getValue().trim().equals("")) {
                 String value = attribute.getValue();
                 String namespace = attribute.getNamespace();
                 String localName = attribute.getLocalName();
-                if (namespace != null 
-                    && EscidocTestBase.XLINK_NS_URI.equals(namespace)) {
+                if (namespace != null && EscidocTestBase.XLINK_NS_URI.equals(namespace)) {
                     if (attribute.getLocalName().equals("href")) {
                         localName = "id";
                         value = value.replaceFirst(".*/", "");
@@ -119,13 +101,13 @@ public class AllStaxHandler extends DefaultHandler {
                         if (!value.contains(":")) {
                             value = "";
                         }
-                    } else {
+                    }
+                    else {
                         value = "";
                     }
                 }
                 if (!value.equals("")) {
-                    values.add("\"" + path + "/" + localName + "\"=\"" 
-                        + value + "\"");
+                    values.add("\"" + path + "/" + localName + "\"=\"" + value + "\"");
                 }
             }
         }
@@ -135,10 +117,8 @@ public class AllStaxHandler extends DefaultHandler {
 
     /**
      * Get the values.
-     * 
+     *
      * @return List with searches.
-     * 
-     * 
      */
     public List<String> getValues() {
         return values;

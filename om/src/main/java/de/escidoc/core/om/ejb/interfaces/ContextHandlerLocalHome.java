@@ -9,6 +9,7 @@ import javax.ejb.EJBLocalHome;
 public interface ContextHandlerLocalHome extends EJBLocalHome {
 
     String COMP_NAME = "java:comp/env/ejb/ContextHandlerLocal";
+
     String JNDI_NAME = "ejb/ContextHandlerLocal";
 
     ContextHandlerLocal create() throws CreateException;

@@ -38,12 +38,11 @@ import java.util.List;
 
 /**
  * Stax handler implementation that extracts ouIds out of a ouList.
- * 
  *
  * @author Michael Hoppe
- * 
  */
 public class OuListOuIdHandler extends DefaultHandler {
+
     public static final String XLINK_PREFIX = "xlink";
 
     public static final String XLINK_URI = "http://www.w3.org/1999/xlink";
@@ -54,10 +53,8 @@ public class OuListOuIdHandler extends DefaultHandler {
 
     /**
      * The constructor.
-     * 
-     * @param parser
-     *            The StaxParser.
      *
+     * @param parser The StaxParser.
      */
     public OuListOuIdHandler(final StaxParser parser) {
         this.parser = parser;
@@ -66,19 +63,16 @@ public class OuListOuIdHandler extends DefaultHandler {
 
     /**
      * See Interface for functional description.
-     * 
+     *
      * @param element element
      * @return StartElement
      * @throws Exception e
-     * @see DefaultHandler
-     *      #startElement(de.escidoc.core.common.util.xml.stax.events.StartElement)
-     *
+     * @see DefaultHandler #startElement(de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
     public StartElement startElement(final StartElement element) throws Exception {
 
-        final String ouRefPath = "/organizational-unit-path-list/"
-                + "organizational-unit-path/organizational-unit-ref";
+        final String ouRefPath = "/organizational-unit-path-list/" + "organizational-unit-path/organizational-unit-ref";
         final String currentPath = parser.getCurPath();
 
         if (ouRefPath.equals(currentPath)) {

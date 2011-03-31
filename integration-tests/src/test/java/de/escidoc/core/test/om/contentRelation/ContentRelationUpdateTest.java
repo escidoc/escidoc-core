@@ -48,9 +48,8 @@ import static org.junit.Assert.fail;
 
 /**
  * Test content relation create implementation.
- * 
+ *
  * @author Steffen Wagner
- * 
  */
 @RunWith(value = Parameterized.class)
 public class ContentRelationUpdateTest extends ContentRelationTestBase {
@@ -60,8 +59,7 @@ public class ContentRelationUpdateTest extends ContentRelationTestBase {
     private String relationId = null;
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ContentRelationUpdateTest(final int transport) {
         super(transport);
@@ -69,23 +67,20 @@ public class ContentRelationUpdateTest extends ContentRelationTestBase {
 
     /**
      * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Before
     public void setUp() throws Exception {
-        String contentRelationXml =
-            getExampleTemplate("content-relation-01.xml");
+        String contentRelationXml = getExampleTemplate("content-relation-01.xml");
         relationXml = create(contentRelationXml);
         relationId = getObjidValue(relationXml);
     }
 
     /**
      * Update with empty XML.
-     * 
-     * @throws Exception
-     *             Thrown if no or wrong exception is thrown
+     *
+     * @throws Exception Thrown if no or wrong exception is thrown
      */
     @Test
     public void testUpdateWithEmptyXML() throws Exception {
@@ -95,57 +90,46 @@ public class ContentRelationUpdateTest extends ContentRelationTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
     }
 
     /**
      * Delete md-record and add new with same name again.
-     * 
-     * @throws Exception
-     *             Thrown if behaviour differs from expected
+     *
+     * @throws Exception Thrown if behaviour differs from expected
      */
     @Test
     public void testAddMdRecordAfterDelete() throws Exception {
 
         // create ContentRelation and remove md-records
         Document relationCreated = getDocument(relationXml);
-        NodeList mdRecords =
-            selectNodeList(relationCreated,
-                "/content-relation/md-records/md-record");
+        NodeList mdRecords = selectNodeList(relationCreated, "/content-relation/md-records/md-record");
         String mdRecordPath = null;
         if (mdRecords.getLength() > 1) {
-            mdRecordPath =
-                "/content-relation/md-records/md-record[@name='escidoc']";
+            mdRecordPath = "/content-relation/md-records/md-record[@name='escidoc']";
         }
         else {
             mdRecordPath = "/content-relation/md-records";
         }
-        Node relationWithoutEscidocMdRecord =
-            deleteElement(relationCreated, mdRecordPath);
-        String relationWithoutEscidocMdRecordXml =
-            toString(relationWithoutEscidocMdRecord, true);
+        Node relationWithoutEscidocMdRecord = deleteElement(relationCreated, mdRecordPath);
+        String relationWithoutEscidocMdRecordXml = toString(relationWithoutEscidocMdRecord, true);
 
         // update ContentRelation with missing md-records
-        String updatedXml =
-            update(this.relationId, relationWithoutEscidocMdRecordXml);
+        String updatedXml = update(this.relationId, relationWithoutEscidocMdRecordXml);
         assertXmlValidContentRelation(updatedXml);
 
         // check if md-records element is deleted
         Document updatedDocument = getDocument(updatedXml);
-        Node notExistedMdRecord =
-            selectSingleNode(updatedDocument, mdRecordPath);
+        Node notExistedMdRecord = selectSingleNode(updatedDocument, mdRecordPath);
         assertNull("Escidoc md-record must be deleted", notExistedMdRecord);
 
         // add new md-record element
         Element mdRecordsNew =
-            updatedDocument.createElementNS(
-                "http://www.escidoc.de/schemas/metadatarecords/0.5",
+            updatedDocument.createElementNS("http://www.escidoc.de/schemas/metadatarecords/0.5",
                 "escidocMetadataRecords:md-records");
         Element mdRecord =
-            updatedDocument.createElementNS(
-                "http://www.escidoc.de/schemas/metadatarecords/0.5",
+            updatedDocument.createElementNS("http://www.escidoc.de/schemas/metadatarecords/0.5",
                 "escidocMetadataRecords:md-record");
         mdRecordsNew.appendChild(mdRecord);
         mdRecord.setAttribute("name", "md2");
@@ -153,10 +137,8 @@ public class ContentRelationUpdateTest extends ContentRelationTestBase {
         Element mdRecordContent = updatedDocument.createElement("md");
         mdRecord.appendChild(mdRecordContent);
         mdRecordContent.setTextContent("more then bla");
-        Node resources =
-            selectSingleNode(updatedDocument, "/content-relation/resources");
-        selectSingleNode(updatedDocument, "/content-relation").insertBefore(
-            mdRecordsNew, resources);
+        Node resources = selectSingleNode(updatedDocument, "/content-relation/resources");
+        selectSingleNode(updatedDocument, "/content-relation").insertBefore(mdRecordsNew, resources);
         String relationWithNewMdRecord = toString(updatedDocument, false);
 
         // update with new md-record
@@ -165,39 +147,32 @@ public class ContentRelationUpdateTest extends ContentRelationTestBase {
         // check md-record element
         assertXmlValidContentRelation(updatedXml);
         Document updatedRelationDocument = getDocument(updatedXml);
-        Node escidocMdRecord =
-            selectSingleNode(updatedRelationDocument, mdRecordPath);
+        Node escidocMdRecord = selectSingleNode(updatedRelationDocument, mdRecordPath);
         assertNotNull(escidocMdRecord);
 
     }
 
     /**
-     * Test adding a second md-record to ContentRelation. One md-record already
-     * exists.
-     * 
-     * @throws Exception
-     *             Thrown if adding one md-record failed.
+     * Test adding a second md-record to ContentRelation. One md-record already exists.
+     *
+     * @throws Exception Thrown if adding one md-record failed.
      */
     @Test
     public void testAddMdRecord() throws Exception {
 
         // add one more md-record
         Document relationCreated = getDocument(relationXml);
-        NodeList mdRecordsCreated =
-            selectNodeList(relationCreated,
-                "/content-relation/md-records/md-record");
+        NodeList mdRecordsCreated = selectNodeList(relationCreated, "/content-relation/md-records/md-record");
         int numberMdRecordsCreated = mdRecordsCreated.getLength();
         Element mdRecord =
-            relationCreated.createElementNS(
-                "http://www.escidoc.de/schemas/metadatarecords/0.5",
+            relationCreated.createElementNS("http://www.escidoc.de/schemas/metadatarecords/0.5",
                 "escidocMetadataRecords:md-record");
         mdRecord.setAttribute("name", "md2");
         mdRecord.setAttribute("schema", "bla");
         Element mdRecordContent = relationCreated.createElement("md");
         mdRecord.appendChild(mdRecordContent);
         mdRecordContent.setTextContent("bla");
-        selectSingleNode(relationCreated, "/content-relation/md-records")
-            .appendChild(mdRecord);
+        selectSingleNode(relationCreated, "/content-relation/md-records").appendChild(mdRecord);
         String relationWithNewMdRecord = toString(relationCreated, false);
 
         String updatedXml = update(this.relationId, relationWithNewMdRecord);
@@ -205,101 +180,82 @@ public class ContentRelationUpdateTest extends ContentRelationTestBase {
         // check updated
         assertXmlValidContentRelation(updatedXml);
         Document updatedRelationDocument = getDocument(updatedXml);
-        NodeList mdRecordsUpdated =
-            selectNodeList(updatedRelationDocument,
-                "/content-relation/md-records/md-record");
+        NodeList mdRecordsUpdated = selectNodeList(updatedRelationDocument, "/content-relation/md-records/md-record");
         int numberMdRecordsUpdated = mdRecordsUpdated.getLength();
-        assertEquals("the content relation should have one additional"
-            + " md-record after update ", numberMdRecordsUpdated,
-            numberMdRecordsCreated + 1);
+        assertEquals("the content relation should have one additional" + " md-record after update ",
+            numberMdRecordsUpdated, numberMdRecordsCreated + 1);
 
     }
 
     /**
      * Test to add a second md-record.
-     * 
-     * @throws Exception
-     *             Thrown if adding of additional md-record failed.
+     *
+     * @throws Exception Thrown if adding of additional md-record failed.
      */
     @Test
     public void testAddSecondEscidocMdRecord() throws Exception {
         Document relationCreated = getDocument(relationXml);
 
         Element mdRecord =
-            relationCreated.createElementNS(
-                "http://www.escidoc.de/schemas/metadatarecords/0.5",
+            relationCreated.createElementNS("http://www.escidoc.de/schemas/metadatarecords/0.5",
                 "escidocMetadataRecords:md-record");
         mdRecord.setAttribute("name", "escidoc");
         mdRecord.setAttribute("schema", "bla");
         Element mdRecordContent = relationCreated.createElement("md");
         mdRecord.appendChild(mdRecordContent);
         mdRecordContent.setTextContent("updated");
-        selectSingleNode(relationCreated, "/content-relation/md-records")
-            .appendChild(mdRecord);
+        selectSingleNode(relationCreated, "/content-relation/md-records").appendChild(mdRecord);
         String relationWithNewMdRecord = toString(relationCreated, false);
 
         try {
             update(this.relationId, relationWithNewMdRecord);
-            fail("No exception on update content relation with"
-                + " two md-records with the same name.");
+            fail("No exception on update content relation with" + " two md-records with the same name.");
         }
         catch (final Exception e) {
             Class<?> ec = InvalidContentException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
 
     }
 
     /**
      * Test delete md-record.
-     * 
-     * @throws Exception
-     *             Thrown if deletion of md-record failed.
+     *
+     * @throws Exception Thrown if deletion of md-record failed.
      */
     @Test
     public void testDeleteMdRecord() throws Exception {
         Document relationCreated = getDocument(relationXml);
-        NodeList mdRecords =
-            selectNodeList(relationCreated,
-                "/content-relation/md-records/md-record");
+        NodeList mdRecords = selectNodeList(relationCreated, "/content-relation/md-records/md-record");
         String mdRecordPath = null;
         if (mdRecords.getLength() > 1) {
-            mdRecordPath =
-                "/content-relation/md-records/md-record[@name='escidoc']";
+            mdRecordPath = "/content-relation/md-records/md-record[@name='escidoc']";
         }
         else {
             mdRecordPath = "/content-relation/md-records";
         }
-        Node relationWithoutEscidocMdRecord =
-            deleteElement(relationCreated, mdRecordPath);
-        String relationWithoutEscidocMdRecordXml =
-            toString(relationWithoutEscidocMdRecord, true);
-        String updatedXml =
-            update(this.relationId, relationWithoutEscidocMdRecordXml);
+        Node relationWithoutEscidocMdRecord = deleteElement(relationCreated, mdRecordPath);
+        String relationWithoutEscidocMdRecordXml = toString(relationWithoutEscidocMdRecord, true);
+        String updatedXml = update(this.relationId, relationWithoutEscidocMdRecordXml);
         assertXmlValidContentRelation(updatedXml);
 
         Document updatedDocument = getDocument(updatedXml);
 
-        Node notExistedMdRecord =
-            selectSingleNode(updatedDocument, mdRecordPath);
+        Node notExistedMdRecord = selectSingleNode(updatedDocument, mdRecordPath);
         assertNull("Escidoc md-record must be deleted", notExistedMdRecord);
     }
 
     /**
      * Test update description of Content Relation.
-     * 
-     * @throws Exception
-     *             Thrown if description is not updated or other (unexpected)
-     *             values are changed.
+     *
+     * @throws Exception Thrown if description is not updated or other (unexpected) values are changed.
      */
     @Test
     public void testUpdateDescription() throws Exception {
 
         // change description
         Document relationCreated = getDocument(relationXml);
-        Node description =
-            selectSingleNode(relationCreated, "/content-relation/properties/description");
+        Node description = selectSingleNode(relationCreated, "/content-relation/properties/description");
         String updatedDescription = "updated description";
         description.setTextContent(updatedDescription);
         String relationToUdate = toString(relationCreated, false);
@@ -311,8 +267,7 @@ public class ContentRelationUpdateTest extends ContentRelationTestBase {
         assertXmlValidContentRelation(updatedRelationXml);
         Document updatedRelationDocument = getDocument(updatedRelationXml);
         String descriptionValue =
-            selectSingleNode(updatedRelationDocument,
-                "/content-relation/properties/description").getTextContent();
+            selectSingleNode(updatedRelationDocument, "/content-relation/properties/description").getTextContent();
         assertEquals(updatedDescription, descriptionValue);
 
         // retrieve
@@ -321,18 +276,14 @@ public class ContentRelationUpdateTest extends ContentRelationTestBase {
         // check values of retrieved ContentRelation
         assertXmlValidContentRelation(retrieveXml);
         Document retrieveDoc = getDocument(retrieveXml);
-        descriptionValue =
-            selectSingleNode(retrieveDoc, "/content-relation/properties/description")
-                .getTextContent();
+        descriptionValue = selectSingleNode(retrieveDoc, "/content-relation/properties/description").getTextContent();
         assertEquals(updatedDescription, descriptionValue);
     }
 
     /**
      * Test update subject of Content Relation.
-     * 
-     * @throws Exception
-     *             Thrown if description is not updated or other (unexpected)
-     *             values are changed.
+     *
+     * @throws Exception Thrown if description is not updated or other (unexpected) values are changed.
      */
     @Test
     public void testUpdateSubject() throws Exception {
@@ -340,28 +291,19 @@ public class ContentRelationUpdateTest extends ContentRelationTestBase {
         // change subject
         Document relationCreated = getDocument(relationXml);
 
-        String newSubject =
-            createItemFromTemplate("item_without_component.xml");
+        String newSubject = createItemFromTemplate("item_without_component.xml");
 
         String oldSubject = null;
         Node subject = null;
         if (Constants.TRANSPORT_REST == getTransport()) {
-            subject =
-                selectSingleNode(relationCreated,
-                    "/content-relation/subject/@href");
+            subject = selectSingleNode(relationCreated, "/content-relation/subject/@href");
             newSubject = "/ir/item/" + newSubject;
 
-            oldSubject =
-                selectSingleNode(relationCreated,
-                    "/content-relation/subject/@href").getNodeValue();
+            oldSubject = selectSingleNode(relationCreated, "/content-relation/subject/@href").getNodeValue();
         }
         else {
-            subject =
-                selectSingleNode(relationCreated,
-                    "/content-relation/subject/@objid");
-            oldSubject =
-                selectSingleNode(relationCreated,
-                    "/content-relation/subject/@objid").getNodeValue();
+            subject = selectSingleNode(relationCreated, "/content-relation/subject/@objid");
+            oldSubject = selectSingleNode(relationCreated, "/content-relation/subject/@objid").getNodeValue();
         }
 
         subject.setNodeValue(newSubject);
@@ -378,14 +320,10 @@ public class ContentRelationUpdateTest extends ContentRelationTestBase {
         String subjectValue = null;
 
         if (Constants.TRANSPORT_REST == getTransport()) {
-            subjectValue =
-                selectSingleNode(updatedRelationDoc,
-                    "/content-relation/subject/@href").getNodeValue();
+            subjectValue = selectSingleNode(updatedRelationDoc, "/content-relation/subject/@href").getNodeValue();
         }
         else {
-            subjectValue =
-                selectSingleNode(updatedRelationDoc,
-                    "/content-relation/subject/@objid").getNodeValue();
+            subjectValue = selectSingleNode(updatedRelationDoc, "/content-relation/subject/@objid").getNodeValue();
         }
         assertEquals(oldSubject, subjectValue);
 
@@ -396,14 +334,10 @@ public class ContentRelationUpdateTest extends ContentRelationTestBase {
         assertXmlValidContentRelation(retrieveXml);
         Document retrieveDoc = getDocument(retrieveXml);
         if (Constants.TRANSPORT_REST == getTransport()) {
-            subjectValue =
-                selectSingleNode(retrieveDoc, "/content-relation/subject/@href")
-                    .getNodeValue();
+            subjectValue = selectSingleNode(retrieveDoc, "/content-relation/subject/@href").getNodeValue();
         }
         else {
-            subjectValue =
-                selectSingleNode(retrieveDoc,
-                    "/content-relation/subject/@objid").getNodeValue();
+            subjectValue = selectSingleNode(retrieveDoc, "/content-relation/subject/@objid").getNodeValue();
         }
         assertEquals(oldSubject, subjectValue);
 
@@ -416,10 +350,8 @@ public class ContentRelationUpdateTest extends ContentRelationTestBase {
 
     /**
      * Test update object of Content Relation.
-     * 
-     * @throws Exception
-     *             Thrown if description is not updated or other (unexpected)
-     *             values are changed.
+     *
+     * @throws Exception Thrown if description is not updated or other (unexpected) values are changed.
      */
     @Test
     public void testUpdateObject() throws Exception {
@@ -427,28 +359,19 @@ public class ContentRelationUpdateTest extends ContentRelationTestBase {
         // change subject
         Document relationCreated = getDocument(relationXml);
 
-        String newSubject =
-            createItemFromTemplate("item_without_component.xml");
+        String newSubject = createItemFromTemplate("item_without_component.xml");
 
         String oldSubject = null;
         Node subject = null;
         if (Constants.TRANSPORT_REST == getTransport()) {
-            subject =
-                selectSingleNode(relationCreated,
-                    "/content-relation/object/@href");
+            subject = selectSingleNode(relationCreated, "/content-relation/object/@href");
             newSubject = "/ir/item/" + newSubject;
 
-            oldSubject =
-                selectSingleNode(relationCreated,
-                    "/content-relation/object/@href").getNodeValue();
+            oldSubject = selectSingleNode(relationCreated, "/content-relation/object/@href").getNodeValue();
         }
         else {
-            subject =
-                selectSingleNode(relationCreated,
-                    "/content-relation/object/@objid");
-            oldSubject =
-                selectSingleNode(relationCreated,
-                    "/content-relation/object/@objid").getNodeValue();
+            subject = selectSingleNode(relationCreated, "/content-relation/object/@objid");
+            oldSubject = selectSingleNode(relationCreated, "/content-relation/object/@objid").getNodeValue();
         }
 
         subject.setNodeValue(newSubject);
@@ -465,14 +388,10 @@ public class ContentRelationUpdateTest extends ContentRelationTestBase {
         String subjectValue = null;
 
         if (Constants.TRANSPORT_REST == getTransport()) {
-            subjectValue =
-                selectSingleNode(updatedRelationDoc,
-                    "/content-relation/object/@href").getNodeValue();
+            subjectValue = selectSingleNode(updatedRelationDoc, "/content-relation/object/@href").getNodeValue();
         }
         else {
-            subjectValue =
-                selectSingleNode(updatedRelationDoc,
-                    "/content-relation/object/@objid").getNodeValue();
+            subjectValue = selectSingleNode(updatedRelationDoc, "/content-relation/object/@objid").getNodeValue();
         }
         assertEquals(oldSubject, subjectValue);
 
@@ -483,14 +402,10 @@ public class ContentRelationUpdateTest extends ContentRelationTestBase {
         assertXmlValidContentRelation(retrieveXml);
         Document retrieveDoc = getDocument(retrieveXml);
         if (Constants.TRANSPORT_REST == getTransport()) {
-            subjectValue =
-                selectSingleNode(retrieveDoc, "/content-relation/object/@href")
-                    .getNodeValue();
+            subjectValue = selectSingleNode(retrieveDoc, "/content-relation/object/@href").getNodeValue();
         }
         else {
-            subjectValue =
-                selectSingleNode(retrieveDoc, "/content-relation/object/@objid")
-                    .getNodeValue();
+            subjectValue = selectSingleNode(retrieveDoc, "/content-relation/object/@objid").getNodeValue();
         }
         assertEquals(oldSubject, subjectValue);
 

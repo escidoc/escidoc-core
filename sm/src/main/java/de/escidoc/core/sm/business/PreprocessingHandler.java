@@ -46,51 +46,37 @@ public class PreprocessingHandler implements PreprocessingHandlerInterface {
 
     /**
      * See Interface for functional description.
-     * 
-     * @see PreprocessingHandlerInterface
-     *      #create(java.lang.String)
-     * 
-     * @param aggregationDefinitionId
-     *         id of the aggregation-definition to preprocess.
-     * @param xmlData
-     *            preprocessing-information as xml in statistic-data schema.
-     * 
-     * @throws MissingMethodParameterException
-     *             ex
-     * @throws SystemException
-     *             ex
-     * 
      *
+     * @param aggregationDefinitionId id of the aggregation-definition to preprocess.
+     * @param xmlData                 preprocessing-information as xml in statistic-data schema.
+     * @throws MissingMethodParameterException
+     *                         ex
+     * @throws SystemException ex
+     * @see PreprocessingHandlerInterface #create(java.lang.String)
      */
     @Override
-    public void preprocess(
-            final String aggregationDefinitionId, 
-            final String xmlData)
+    public void preprocess(final String aggregationDefinitionId, final String xmlData)
         throws MissingMethodParameterException, SystemException {
 
         //parse
         final StaxParser sp = new StaxParser();
-        final PreprocessingInformationStaxHandler handler =
-                new PreprocessingInformationStaxHandler(sp);
+        final PreprocessingInformationStaxHandler handler = new PreprocessingInformationStaxHandler(sp);
         sp.addHandler(handler);
         try {
             sp.parse(xmlData);
-        } catch (final Exception e) {
+        }
+        catch (final Exception e) {
             throw new SystemException(e);
         }
-        
+
         //call statistic-preprocessor
-        preprocessor.execute(
-                handler.getStartDate(), 
-                handler.getEndDate(), 
-                aggregationDefinitionId);
+        preprocessor.execute(handler.getStartDate(), handler.getEndDate(), aggregationDefinitionId);
     }
 
     /**
      * Injects the {@link StatisticPreprocessor} to use.
-     * 
-     * @param preprocessor
-     *            The {@link StatisticPreprocessor}.
+     *
+     * @param preprocessor The {@link StatisticPreprocessor}.
      */
     public void setPreprocessor(final StatisticPreprocessor preprocessor) {
         this.preprocessor = preprocessor;

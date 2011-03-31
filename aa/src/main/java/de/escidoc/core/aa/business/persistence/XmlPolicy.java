@@ -30,12 +30,11 @@ package de.escidoc.core.aa.business.persistence;
 
 /**
  * The persistence domain object for the XACML policies.
- * 
+ *
  * @author Roland Werner (Accenture)
- * @hibernate.mapping schema = "aa"
- * @hibernate.class table = "xml_policies"
  */
 public class XmlPolicy {
+
     private int id;
 
     private String userId;
@@ -46,15 +45,13 @@ public class XmlPolicy {
 
     /**
      * @return Returns the id.
-     * @hibernate.id generator-class = "increment"
      */
     public int getId() {
         return this.id;
     }
 
     /**
-     * @param id
-     *            The id to set.
+     * @param id The id to set.
      */
     public void setId(final int id) {
         this.id = id;
@@ -62,15 +59,13 @@ public class XmlPolicy {
 
     /**
      * @return Returns the action.
-     * @hibernate.property column = "action"
      */
     public String getAction() {
         return this.action;
     }
 
     /**
-     * @param action
-     *            The action to set.
+     * @param action The action to set.
      */
     public void setAction(final String action) {
         this.action = action;
@@ -78,15 +73,13 @@ public class XmlPolicy {
 
     /**
      * @return Returns the userId.
-     * @hibernate.property column = "user_id"
      */
     public String getUserId() {
         return this.userId;
     }
 
     /**
-     * @param userId
-     *            The userId to set.
+     * @param userId The userId to set.
      */
     public void setUserId(final String userId) {
         this.userId = userId;
@@ -94,15 +87,13 @@ public class XmlPolicy {
 
     /**
      * @return Returns the xml.
-     * @hibernate.property column = "xml" type = "text"
      */
     public String getXml() {
         return this.xml;
     }
 
     /**
-     * @param xml
-     *            The xml to set.
+     * @param xml The xml to set.
      */
     public void setXml(final String xml) {
         this.xml = xml;

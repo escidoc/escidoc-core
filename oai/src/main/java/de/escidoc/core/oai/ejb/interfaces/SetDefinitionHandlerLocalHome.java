@@ -9,6 +9,7 @@ import javax.ejb.EJBLocalHome;
 public interface SetDefinitionHandlerLocalHome extends EJBLocalHome {
 
     String COMP_NAME = "java:comp/env/ejb/SetDefinitionHandlerLocal";
+
     String JNDI_NAME = "ejb/SetDefinitionHandlerLocal";
 
     SetDefinitionHandlerLocal create() throws CreateException;

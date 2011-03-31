@@ -51,9 +51,8 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * Test suite for the GrantFilter .
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 public class GrantFilterAbstractTest extends GrantTestBase {
 
@@ -115,17 +114,13 @@ public class GrantFilterAbstractTest extends GrantTestBase {
 
     private static final int PART_TIME_ROLE_NUMBER = 3;
 
-    public static final String XPATH_SRW_GRANT_LIST_GRANT =
-        XPATH_SRW_RESPONSE_OBJECT + NAME_GRANT;
+    public static final String XPATH_SRW_GRANT_LIST_GRANT = XPATH_SRW_RESPONSE_OBJECT + NAME_GRANT;
 
-    private static HashMap<String, String> partTimeParameters =
-        new HashMap<String, String>();
+    private static HashMap<String, String> partTimeParameters = new HashMap<String, String>();
 
-    private static ArrayList<HashMap<String, String>> creatorSysadmins =
-        new ArrayList<HashMap<String, String>>();
+    private static ArrayList<HashMap<String, String>> creatorSysadmins = new ArrayList<HashMap<String, String>>();
 
-    private static ArrayList<HashMap<String, String>> revokerSysadmins =
-        new ArrayList<HashMap<String, String>>();
+    private static ArrayList<HashMap<String, String>> revokerSysadmins = new ArrayList<HashMap<String, String>>();
 
     private static ArrayList<String> userIds = new ArrayList<String>();
 
@@ -164,12 +159,9 @@ public class GrantFilterAbstractTest extends GrantTestBase {
 
     /**
      * The constructor.
-     * 
-     * @param transport
-     *            The transport identifier.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param transport The transport identifier.
+     * @throws Exception If anything fails.
      */
     public GrantFilterAbstractTest(final int transport) throws Exception {
         super(transport, USER_ACCOUNT_HANDLER_CODE);
@@ -178,9 +170,8 @@ public class GrantFilterAbstractTest extends GrantTestBase {
 
     /**
      * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Before
     public void initialize() throws Exception {
@@ -191,9 +182,8 @@ public class GrantFilterAbstractTest extends GrantTestBase {
 
     /**
      * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @After
     public void deinitialize() throws Exception {
@@ -202,16 +192,8 @@ public class GrantFilterAbstractTest extends GrantTestBase {
 
     /**
      * insert grants into system for the tests.
-     * 
-     * @test.name prepare
-     * @test.id PREPARE
-     * @test.input
-     * @test.inputDescription
-     * @test.expected
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     private void prepare() throws Exception {
         try {
@@ -227,31 +209,23 @@ public class GrantFilterAbstractTest extends GrantTestBase {
 
             // create containers
             for (int i = 0; i < NUM_CONTAINERS; i++) {
-                final String createdXml =
-                    doTestCreateContainer(PWCallback.DEFAULT_HANDLE, null);
-                objects.add(Constants.CONTAINER_BASE_URI + "/"
-                    + getObjidValue(createdXml));
+                final String createdXml = doTestCreateContainer(PWCallback.DEFAULT_HANDLE, null);
+                objects.add(Constants.CONTAINER_BASE_URI + "/" + getObjidValue(createdXml));
             }
 
             // create items
             for (int i = 0; i < NUM_ITEMS; i++) {
-                final String createdXml =
-                    doTestCreateItem(PWCallback.DEFAULT_HANDLE, null);
-                objects.add(Constants.ITEM_BASE_URI + "/"
-                    + getObjidValue(createdXml));
+                final String createdXml = doTestCreateItem(PWCallback.DEFAULT_HANDLE, null);
+                objects.add(Constants.ITEM_BASE_URI + "/" + getObjidValue(createdXml));
             }
 
             // create users
             for (int i = 0; i < NUM_USERS; i++) {
-                Document user =
-                    createSuccessfully("escidoc_useraccount_for_create1.xml");
+                Document user = createSuccessfully("escidoc_useraccount_for_create1.xml");
                 String userId = getObjidValue(getTransport(), user);
-                userAttributeTestBase.createAttribute(userId,
-                    "<attribute xmlns="
-                        + "\"http://www.escidoc.de/schemas/attributes/0.1\""
-                        + " name=\"o\">"
-                        + EscidocTestBase.ORGANIZATIONAL_UNIT_ID1
-                        + "</attribute>");
+                userAttributeTestBase.createAttribute(userId, "<attribute xmlns="
+                    + "\"http://www.escidoc.de/schemas/attributes/0.1\"" + " name=\"o\">"
+                    + EscidocTestBase.ORGANIZATIONAL_UNIT_ID1 + "</attribute>");
                 userIds.add(userId);
             }
 
@@ -261,8 +235,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             int roleCounter = 0;
             for (String role : ROLES) {
                 if (roleCounter == PART_TIME_ROLE_NUMBER) {
-                    partTimeParameters.put("time",
-                        new DateTime(System.currentTimeMillis()).toString());
+                    partTimeParameters.put("time", new DateTime(System.currentTimeMillis()).toString());
                     System.out.println(partTimeParameters.get("time"));
                 }
                 roleCounter++;
@@ -273,36 +246,23 @@ public class GrantFilterAbstractTest extends GrantTestBase {
                     String grantXml;
                     setClient((GrantClient) getClient(USER_ACCOUNT_HANDLER_CODE));
                     for (String userId : userIds) {
-                        grantXml =
-                            doTestCreateGrant(createHandle, userId, object,
-                                role, null);
+                        grantXml = doTestCreateGrant(createHandle, userId, object, role, null);
                         if (creatorSysadmins.get(0).get("grantCount") == null) {
                             creatorSysadmins.get(0).put("grantCount", "0");
                         }
-                        int grantCount =
-                            Integer.parseInt(creatorSysadmins.get(0).get(
-                                "grantCount")) + 1;
-                        creatorSysadmins.get(0).put("grantCount",
-                            Integer.toString(grantCount));
+                        int grantCount = Integer.parseInt(creatorSysadmins.get(0).get("grantCount")) + 1;
+                        creatorSysadmins.get(0).put("grantCount", Integer.toString(grantCount));
                         if (i % 2 == 0) {
-                            Document createdDocument =
-                                EscidocRestSoapTestBase.getDocument(grantXml);
+                            Document createdDocument = EscidocRestSoapTestBase.getDocument(grantXml);
                             String grantId = getObjidValue(createdDocument);
-                            String lastModificationDate =
-                                getLastModificationDateValue(createdDocument);
-                            String taskParamXML =
-                                "<param last-modification-date=\""
-                                    + lastModificationDate + "\" />";
-                            revokeGrant(userId, grantId, taskParamXML,
-                                revokeHandle);
+                            String lastModificationDate = getLastModificationDateValue(createdDocument);
+                            String taskParamXML = "<param last-modification-date=\"" + lastModificationDate + "\" />";
+                            revokeGrant(userId, grantId, taskParamXML, revokeHandle);
                             if (revokerSysadmins.get(0).get("grantCount") == null) {
                                 revokerSysadmins.get(0).put("grantCount", "0");
                             }
-                            grantCount =
-                                Integer.parseInt(revokerSysadmins.get(0).get(
-                                    "grantCount")) + 1;
-                            revokerSysadmins.get(0).put("grantCount",
-                                Integer.toString(grantCount));
+                            grantCount = Integer.parseInt(revokerSysadmins.get(0).get("grantCount")) + 1;
+                            revokerSysadmins.get(0).put("grantCount", Integer.toString(grantCount));
                         }
                         i++;
                     }
@@ -310,36 +270,23 @@ public class GrantFilterAbstractTest extends GrantTestBase {
                     revokeHandle = revokerSysadmins.get(1).get("handle");
                     setClient((GrantClient) getClient(USER_GROUP_HANDLER_CODE));
                     for (String groupId : GROUP_IDS) {
-                        grantXml =
-                            doTestCreateGrant(createHandle, groupId, object,
-                                role, null);
+                        grantXml = doTestCreateGrant(createHandle, groupId, object, role, null);
                         if (creatorSysadmins.get(1).get("grantCount") == null) {
                             creatorSysadmins.get(1).put("grantCount", "0");
                         }
-                        int grantCount =
-                            Integer.parseInt(creatorSysadmins.get(1).get(
-                                "grantCount")) + 1;
-                        creatorSysadmins.get(1).put("grantCount",
-                            Integer.toString(grantCount));
+                        int grantCount = Integer.parseInt(creatorSysadmins.get(1).get("grantCount")) + 1;
+                        creatorSysadmins.get(1).put("grantCount", Integer.toString(grantCount));
                         if (i % 2 == 0) {
-                            Document createdDocument =
-                                EscidocRestSoapTestBase.getDocument(grantXml);
+                            Document createdDocument = EscidocRestSoapTestBase.getDocument(grantXml);
                             String grantId = getObjidValue(createdDocument);
-                            String lastModificationDate =
-                                getLastModificationDateValue(createdDocument);
-                            String taskParamXML =
-                                "<param last-modification-date=\""
-                                    + lastModificationDate + "\" />";
-                            revokeGrant(groupId, grantId, taskParamXML,
-                                revokeHandle);
+                            String lastModificationDate = getLastModificationDateValue(createdDocument);
+                            String taskParamXML = "<param last-modification-date=\"" + lastModificationDate + "\" />";
+                            revokeGrant(groupId, grantId, taskParamXML, revokeHandle);
                             if (revokerSysadmins.get(1).get("grantCount") == null) {
                                 revokerSysadmins.get(1).put("grantCount", "0");
                             }
-                            grantCount =
-                                Integer.parseInt(revokerSysadmins.get(1).get(
-                                    "grantCount")) + 1;
-                            revokerSysadmins.get(1).put("grantCount",
-                                Integer.toString(grantCount));
+                            grantCount = Integer.parseInt(revokerSysadmins.get(1).get("grantCount")) + 1;
+                            revokerSysadmins.get(1).put("grantCount", Integer.toString(grantCount));
                         }
                         i++;
                     }
@@ -354,18 +301,8 @@ public class GrantFilterAbstractTest extends GrantTestBase {
 
     /**
      * Test successfully filtering grants for a userId.
-     * 
-     * @test.name userIdFilter
-     * @test.id userIdFilter
-     * @test.input UserAccount id
-     * @test.inputDescription: <ul>
-     *                         <li>existing user-id</li>
-     *                         </ul>
-     * @test.expected: result with all grants of the user.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void userIdFilterCQL() throws Exception {
@@ -376,14 +313,11 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             allowedValues.add(USER_GROUP_WITH_GROUP_LIST_ID);
             allowedValues.add(USER_GROUP_WITH_OU_LIST_ID);
 
-            final Map<String, String[]> filterParams =
-                new HashMap<String, String[]>();
+            final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-            filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-                + FILTER_USER + "\"=" + userId + " and " + "\""
-                + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
-            filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS,
-                new String[] { "1000" });
+            filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_USER + "\"=" + userId + " and "
+                + "\"" + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
+            filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "1000" });
 
             String result = null;
 
@@ -394,27 +328,15 @@ public class GrantFilterAbstractTest extends GrantTestBase {
                 EscidocRestSoapTestBase.failException(e);
             }
             assertXmlValidSrwResponse(result);
-            assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT,
-                expectedGrantCount);
-            assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT
-                + "/properties/granted-to", allowedValues, true);
+            assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
+            assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/granted-to", allowedValues, true);
         }
     }
 
     /**
      * Test successfully filtering grants for several userIds.
-     * 
-     * @test.name userIdsFilter
-     * @test.id userIdsFilter
-     * @test.input UserAccount ids
-     * @test.inputDescription: <ul>
-     *                         <li>existing user-ids</li>
-     *                         </ul>
-     * @test.expected: result with all grants of the users.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void userIdsFilterCQL() throws Exception {
@@ -428,15 +350,11 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         allowedValues.add(USER_GROUP_WITH_GROUP_LIST_ID);
         allowedValues.add(USER_GROUP_WITH_OU_LIST_ID);
 
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\""
-            + FILTER_USER + "\"=" + userId + " or " + "\"" + FILTER_USER
-            + "\"=" + userId1 + ") and " + "\"" + FILTER_CREATION_DATE
-            + "\">=\"" + startTime + "\"" });
-        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS,
-            new String[] { "1000" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\"" + FILTER_USER + "\"=" + userId + " or " + "\""
+            + FILTER_USER + "\"=" + userId1 + ") and " + "\"" + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "1000" });
 
         String result = null;
 
@@ -448,24 +366,13 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
-        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/granted-to", allowedValues, true);
+        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/granted-to", allowedValues, true);
     }
 
     /**
      * Test successfully filtering grants for a groupId.
-     * 
-     * @test.name groupIdFilter
-     * @test.id groupIdFilter
-     * @test.input UserGroup id
-     * @test.inputDescription: <ul>
-     *                         <li>existing group-id</li>
-     *                         </ul>
-     * @test.expected: result with all grants of the group.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void groupIdFilterCQL() throws Exception {
@@ -475,14 +382,11 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             allowedValues.add(groupId);
             allowedValues.add(USER_GROUP_WITH_GROUP_LIST_ID);
 
-            final Map<String, String[]> filterParams =
-                new HashMap<String, String[]>();
+            final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-            filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-                + FILTER_GROUP + "\"=" + groupId + " and " + "\""
-                + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
-            filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS,
-                new String[] { "1000" });
+            filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_GROUP + "\"=" + groupId + " and "
+                + "\"" + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
+            filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "1000" });
 
             String result = null;
 
@@ -494,32 +398,19 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             }
             assertXmlValidSrwResponse(result);
             if (groupId.equals(USER_GROUP_WITH_OU_LIST_ID)) {
-                assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT,
-                    expectedGrantCount * 2);
+                assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount * 2);
             }
             else {
-                assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT,
-                    expectedGrantCount);
+                assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
             }
-            assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT
-                + "/properties/granted-to", allowedValues, true);
+            assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/granted-to", allowedValues, true);
         }
     }
 
     /**
      * Test successfully filtering grants for several groupIds.
-     * 
-     * @test.name groupIdsFilter
-     * @test.id groupIdsFilter
-     * @test.input UserGroup ids
-     * @test.inputDescription: <ul>
-     *                         <li>existing group-ids</li>
-     *                         </ul>
-     * @test.expected: result with all grants of the groups.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void groupIdsFilterCQL() throws Exception {
@@ -531,15 +422,11 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         allowedValues.add(groupId);
         allowedValues.add(groupId1);
 
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\""
-            + FILTER_GROUP + "\"=" + groupId + " or " + "\"" + FILTER_GROUP
-            + "\"=" + groupId1 + ") and " + "\"" + FILTER_CREATION_DATE
-            + "\">=\"" + startTime + "\"" });
-        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS,
-            new String[] { "1000" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\"" + FILTER_GROUP + "\"=" + groupId + " or " + "\""
+            + FILTER_GROUP + "\"=" + groupId1 + ") and " + "\"" + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "1000" });
 
         String result = null;
 
@@ -551,24 +438,13 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
-        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/granted-to", allowedValues, true);
+        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/granted-to", allowedValues, true);
     }
 
     /**
      * Test successfully filtering grants for a roleId.
-     * 
-     * @test.name roleIdFilter
-     * @test.id roleIdFilter
-     * @test.input role id
-     * @test.inputDescription: <ul>
-     *                         <li>existing role-id</li>
-     *                         </ul>
-     * @test.expected: result with all grants of the role.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void roleIdFilterCQL() throws Exception {
@@ -578,14 +454,11 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             List<String> allowedValues = new ArrayList<String>();
             allowedValues.add(roleId);
 
-            final Map<String, String[]> filterParams =
-                new HashMap<String, String[]>();
+            final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-            filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-                + FILTER_ROLE + "\"=" + roleId + " and " + "\""
-                + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
-            filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS,
-                new String[] { "1000" });
+            filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_ROLE + "\"=" + roleId + " and "
+                + "\"" + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
+            filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "1000" });
 
             String result = null;
 
@@ -596,27 +469,15 @@ public class GrantFilterAbstractTest extends GrantTestBase {
                 EscidocRestSoapTestBase.failException(e);
             }
             assertXmlValidSrwResponse(result);
-            assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT,
-                expectedGrantCount);
-            assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT
-                + "/properties/role", allowedValues, true);
+            assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
+            assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/role", allowedValues, true);
         }
     }
 
     /**
      * Test successfully filtering grants for several roleIds.
-     * 
-     * @test.name roleIdsFilter
-     * @test.id roleIdsFilter
-     * @test.input role ids
-     * @test.inputDescription: <ul>
-     *                         <li>existing role-ids</li>
-     *                         </ul>
-     * @test.expected: result with all grants of the roles.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void roleIdsFilterCQL() throws Exception {
@@ -628,15 +489,11 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         allowedValues.add(roleId);
         allowedValues.add(roleId1);
 
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\""
-            + FILTER_ROLE + "\"=" + roleId + " or " + "\"" + FILTER_ROLE
-            + "\"=" + roleId1 + ") and " + "\"" + FILTER_CREATION_DATE
-            + "\">=\"" + startTime + "\"" });
-        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS,
-            new String[] { "1000" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\"" + FILTER_ROLE + "\"=" + roleId + " or " + "\""
+            + FILTER_ROLE + "\"=" + roleId1 + ") and " + "\"" + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "1000" });
 
         String result = null;
 
@@ -648,24 +505,13 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
-        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/role", allowedValues, true);
+        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/role", allowedValues, true);
     }
 
     /**
      * Test successfully filtering grants for a objectId.
-     * 
-     * @test.name objectIdFilter
-     * @test.id objectIdFilter
-     * @test.input object id
-     * @test.inputDescription: <ul>
-     *                         <li>existing object-id</li>
-     *                         </ul>
-     * @test.expected: result with all grants of the object.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void objectIdFilterCQL() throws Exception {
@@ -675,14 +521,11 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             List<String> allowedValues = new ArrayList<String>();
             allowedValues.add(objectId);
 
-            final Map<String, String[]> filterParams =
-                new HashMap<String, String[]>();
+            final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-            filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-                + FILTER_ASSIGNED_ON + "\"=" + objectId + " and " + "\""
-                + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
-            filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS,
-                new String[] { "1000" });
+            filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_ASSIGNED_ON + "\"=" + objectId
+                + " and " + "\"" + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
+            filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "1000" });
 
             String result = null;
 
@@ -693,27 +536,16 @@ public class GrantFilterAbstractTest extends GrantTestBase {
                 EscidocRestSoapTestBase.failException(e);
             }
             assertXmlValidSrwResponse(result);
-            assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT,
-                expectedGrantCount);
-            assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT
-                + "/properties/assigned-on", allowedValues, true);
+            assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
+            assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/assigned-on", allowedValues,
+                true);
         }
     }
 
     /**
      * Test successfully filtering grants for several objectIds.
-     * 
-     * @test.name objectIdsFilter
-     * @test.id objectIdsFilter
-     * @test.input object ids
-     * @test.inputDescription: <ul>
-     *                         <li>existing object-ids</li>
-     *                         </ul>
-     * @test.expected: result with all grants of the objects.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void objectIdsFilterCQL() throws Exception {
@@ -725,15 +557,12 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         allowedValues.add(objectId);
         allowedValues.add(objectId1);
 
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\""
-            + FILTER_ASSIGNED_ON + "\"=" + objectId + " or " + "\""
-            + FILTER_ASSIGNED_ON + "\"=" + objectId1 + ") and " + "\""
-            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
-        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS,
-            new String[] { "1000" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\"" + FILTER_ASSIGNED_ON + "\"=" + objectId + " or "
+            + "\"" + FILTER_ASSIGNED_ON + "\"=" + objectId1 + ") and " + "\"" + FILTER_CREATION_DATE + "\">=\""
+            + startTime + "\"" });
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "1000" });
 
         String result = null;
 
@@ -745,37 +574,22 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
-        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/assigned-on", allowedValues, true);
+        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/assigned-on", allowedValues, true);
     }
 
     /**
      * Test successfully filtering grants for revocationDateFrom.
-     * 
-     * @test.name revocationDateFromFilter
-     * @test.id revocationDateFromFilter
-     * @test.input revocationDateFrom
-     * @test.inputDescription: <ul>
-     *                         <li>revocationDateFrom</li>
-     *                         </ul>
-     * @test.expected: result with all grants having revocationDate >
-     *                 revocationDateFrom.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void revocationDateFromFilterCQL() throws Exception {
         int expectedGrantCount = REVOKED_GRANT_COUNT;
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_REVOCATION_DATE + "\">=\"" + startTime + "\" and " + "\""
-            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
-        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS,
-            new String[] { "1000" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_REVOCATION_DATE + "\">=\"" + startTime
+            + "\" and " + "\"" + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "1000" });
 
         String result = null;
 
@@ -791,31 +605,17 @@ public class GrantFilterAbstractTest extends GrantTestBase {
 
     /**
      * Test successfully filtering grants for revocationDateFrom.
-     * 
-     * @test.name revocationDateFromFilter1
-     * @test.id revocationDateFromFilter1
-     * @test.input revocationDateFrom
-     * @test.inputDescription: <ul>
-     *                         <li>revocationDateFrom</li>
-     *                         </ul>
-     * @test.expected: result with all grants having revocationDate >
-     *                 revocationDateFrom.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void revocationDateFromFilter1CQL() throws Exception {
         int expectedGrantCount = 0;
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY,
-            new String[] { "\"" + FILTER_REVOCATION_DATE + "\">=\""
-                + new DateTime(System.currentTimeMillis()).toString()
-                + "\" and " + "\"" + FILTER_CREATION_DATE + "\">=\""
-                + startTime + "\"" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_REVOCATION_DATE + "\">=\""
+            + new DateTime(System.currentTimeMillis()).toString() + "\" and " + "\"" + FILTER_CREATION_DATE + "\">=\""
+            + startTime + "\"" });
 
         String result = null;
 
@@ -831,29 +631,16 @@ public class GrantFilterAbstractTest extends GrantTestBase {
 
     /**
      * Test successfully filtering grants for revocationDateTo.
-     * 
-     * @test.name revocationDateToFilter
-     * @test.id revocationDateToFilter
-     * @test.input revocationDateTo
-     * @test.inputDescription: <ul>
-     *                         <li>revocationDateTo</li>
-     *                         </ul>
-     * @test.expected: result with all grants having revocationDate &lt;
-     *                 revocationDateTo.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void revocationDateToFilterCQL() throws Exception {
         int expectedGrantCount = 0;
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_REVOCATION_DATE + "\"<=\"" + startTime + "\" and " + "\""
-            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_REVOCATION_DATE + "\"<=\"" + startTime
+            + "\" and " + "\"" + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
 
         String result = null;
 
@@ -869,33 +656,18 @@ public class GrantFilterAbstractTest extends GrantTestBase {
 
     /**
      * Test successfully filtering grants for revocationDateTo.
-     * 
-     * @test.name revocationDateToFilter
-     * @test.id revocationDateToFilter
-     * @test.input revocationDateTo
-     * @test.inputDescription: <ul>
-     *                         <li>revocationDateTo</li>
-     *                         </ul>
-     * @test.expected: result with all grants having revocationDate &lt;
-     *                 revocationDateTo.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void revocationDateToFilter1CQL() throws Exception {
         int expectedGrantCount = REVOKED_GRANT_COUNT;
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY,
-            new String[] { "\"" + FILTER_REVOCATION_DATE + "\"<=\""
-                + new DateTime(System.currentTimeMillis()).toString()
-                + "\" and " + "\"" + FILTER_CREATION_DATE + "\">=\""
-                + startTime + "\"" });
-        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS,
-            new String[] { "1000" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_REVOCATION_DATE + "\"<=\""
+            + new DateTime(System.currentTimeMillis()).toString() + "\" and " + "\"" + FILTER_CREATION_DATE + "\">=\""
+            + startTime + "\"" });
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "1000" });
 
         String result = null;
 
@@ -911,30 +683,17 @@ public class GrantFilterAbstractTest extends GrantTestBase {
 
     /**
      * Test successfully filtering grants for grantedDateFrom.
-     * 
-     * @test.name grantedDateFromFilter
-     * @test.id grantedDateFromFilter
-     * @test.input grantedDateFrom
-     * @test.inputDescription: <ul>
-     *                         <li>grantedDateFrom</li>
-     *                         </ul>
-     * @test.expected: result with all grants having grantedDate >
-     *                 grantedDateFrom.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void grantedDateFromFilterCQL() throws Exception {
         int expectedGrantCount = TOTAL_GRANT_COUNT;
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
-        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS,
-            new String[] { "1000" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_CREATION_DATE + "\">=\"" + startTime
+            + "\"" });
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "1000" });
 
         String result = null;
 
@@ -950,29 +709,16 @@ public class GrantFilterAbstractTest extends GrantTestBase {
 
     /**
      * Test successfully filtering grants for grantedDateFrom.
-     * 
-     * @test.name grantedDateFromFilter1
-     * @test.id grantedDateFromFilter1
-     * @test.input grantedDateFrom
-     * @test.inputDescription: <ul>
-     *                         <li>grantedDateFrom</li>
-     *                         </ul>
-     * @test.expected: result with all grants having grantedDate >
-     *                 grantedDateFrom.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void grantedDateFromFilter1CQL() throws Exception {
         int expectedGrantCount = 0;
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY,
-            new String[] { "\"" + FILTER_CREATION_DATE + "\">=\""
-                + new DateTime(System.currentTimeMillis()).toString() + "\"" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_CREATION_DATE + "\">=\""
+            + new DateTime(System.currentTimeMillis()).toString() + "\"" });
 
         String result = null;
 
@@ -988,29 +734,16 @@ public class GrantFilterAbstractTest extends GrantTestBase {
 
     /**
      * Test successfully filtering grants for grantedDateTo.
-     * 
-     * @test.name grantedDateToFilter
-     * @test.id grantedDateToFilter
-     * @test.input grantedDateTo
-     * @test.inputDescription: <ul>
-     *                         <li>grantedDateTo</li>
-     *                         </ul>
-     * @test.expected: result with all grants having grantedDate &lt;
-     *                 grantedDateTo.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void grantedDateToFilterCQL() throws Exception {
         int expectedGrantCount = 0;
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_CREATION_DATE + "\"<=\"" + startTime + "\" and " + "\""
-            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_CREATION_DATE + "\"<=\"" + startTime
+            + "\" and " + "\"" + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
 
         String result = null;
 
@@ -1026,33 +759,18 @@ public class GrantFilterAbstractTest extends GrantTestBase {
 
     /**
      * Test successfully filtering grants for grantedDateTo.
-     * 
-     * @test.name grantedDateToFilter1
-     * @test.id grantedDateToFilter1
-     * @test.input grantedDateTo
-     * @test.inputDescription: <ul>
-     *                         <li>grantedDateTo</li>
-     *                         </ul>
-     * @test.expected: result with all grants having grantedDate &lt;
-     *                 grantedDateTo.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void grantedDateToFilter1CQL() throws Exception {
         int expectedGrantCount = TOTAL_GRANT_COUNT;
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY,
-            new String[] { "\"" + FILTER_CREATION_DATE + "\"<=\""
-                + new DateTime(System.currentTimeMillis()).toString()
-                + "\" and " + "\"" + FILTER_CREATION_DATE + "\">=\""
-                + startTime + "\"" });
-        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS,
-            new String[] { "1000" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_CREATION_DATE + "\"<=\""
+            + new DateTime(System.currentTimeMillis()).toString() + "\" and " + "\"" + FILTER_CREATION_DATE + "\">=\""
+            + startTime + "\"" });
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "1000" });
 
         String result = null;
 
@@ -1068,35 +786,21 @@ public class GrantFilterAbstractTest extends GrantTestBase {
 
     /**
      * Test successfully filtering grants for creatorId.
-     * 
-     * @test.name creatorIdFilter
-     * @test.id creatorIdFilter
-     * @test.input creatorId
-     * @test.inputDescription: <ul>
-     *                         <li>creatorId</li>
-     *                         </ul>
-     * @test.expected: result with all grants having provided creatorId.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void creatorIdFilterCQL() throws Exception {
-        int expectedGrantCount =
-            Integer.parseInt(creatorSysadmins.get(0).get("grantCount"));
+        int expectedGrantCount = Integer.parseInt(creatorSysadmins.get(0).get("grantCount"));
         List<String> allowedValues = new ArrayList<String>();
         allowedValues.add(creatorSysadmins.get(0).get("userId"));
 
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_CREATED_BY + "\"=" + creatorSysadmins.get(0).get("userId")
-            + " and " + "\"" + FILTER_CREATION_DATE + "\">=\"" + startTime
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_CREATED_BY + "\"="
+            + creatorSysadmins.get(0).get("userId") + " and " + "\"" + FILTER_CREATION_DATE + "\">=\"" + startTime
             + "\"" });
-        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS,
-            new String[] { "1000" });
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "1000" });
 
         String result = null;
 
@@ -1108,24 +812,13 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
-        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/created-by", allowedValues, true);
+        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/created-by", allowedValues, true);
     }
 
     /**
      * Test successfully filtering grants for creatorIds.
-     * 
-     * @test.name creatorIdsFilter
-     * @test.id creatorIdsFilter
-     * @test.input creatorIds
-     * @test.inputDescription: <ul>
-     *                         <li>creatorIds</li>
-     *                         </ul>
-     * @test.expected: result with all grants having provided creatorIds.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void creatorIdsFilterCQL() throws Exception {
@@ -1136,18 +829,13 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         allowedValues.add(creatorSysadmins.get(0).get("userId"));
         allowedValues.add(creatorSysadmins.get(1).get("userId"));
 
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(
-            FILTER_PARAMETER_QUERY,
-            new String[] { "(\"" + FILTER_CREATED_BY + "\"="
-                + creatorSysadmins.get(0).get("userId") + " or " + "\""
-                + FILTER_CREATED_BY + "\"="
-                + creatorSysadmins.get(1).get("userId") + ") and " + "\""
-                + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
-        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS,
-            new String[] { "1000" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\"" + FILTER_CREATED_BY + "\"="
+            + creatorSysadmins.get(0).get("userId") + " or " + "\"" + FILTER_CREATED_BY + "\"="
+            + creatorSysadmins.get(1).get("userId") + ") and " + "\"" + FILTER_CREATION_DATE + "\">=\"" + startTime
+            + "\"" });
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "1000" });
 
         String result = null;
 
@@ -1159,40 +847,25 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
-        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/created-by", allowedValues, true);
+        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/created-by", allowedValues, true);
     }
 
     /**
      * Test successfully filtering grants for revokerId.
-     * 
-     * @test.name revokerIdFilter
-     * @test.id revokerIdFilter
-     * @test.input revokerId
-     * @test.inputDescription: <ul>
-     *                         <li>revokerId</li>
-     *                         </ul>
-     * @test.expected: result with all grants having provided revokerId.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void revokerIdFilterCQL() throws Exception {
-        int expectedGrantCount =
-            Integer.parseInt(revokerSysadmins.get(0).get("grantCount"));
+        int expectedGrantCount = Integer.parseInt(revokerSysadmins.get(0).get("grantCount"));
         List<String> allowedValues = new ArrayList<String>();
         allowedValues.add(revokerSysadmins.get(0).get("userId"));
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_REVOKED_BY + "\"=" + revokerSysadmins.get(0).get("userId")
-            + " and " + "\"" + FILTER_CREATION_DATE + "\">=\"" + startTime
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_REVOKED_BY + "\"="
+            + revokerSysadmins.get(0).get("userId") + " and " + "\"" + FILTER_CREATION_DATE + "\">=\"" + startTime
             + "\"" });
-        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS,
-            new String[] { "1000" });
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "1000" });
 
         String result = null;
 
@@ -1204,24 +877,13 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
-        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/revoked-by", allowedValues, true);
+        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/revoked-by", allowedValues, true);
     }
 
     /**
      * Test successfully filtering grants for revokerIds.
-     * 
-     * @test.name revokerIdsFilter
-     * @test.id revokerIdsFilter
-     * @test.input revokerIds
-     * @test.inputDescription: <ul>
-     *                         <li>revokerIds</li>
-     *                         </ul>
-     * @test.expected: result with all grants having provided revokerIds.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void revokerIdsFilterCQL() throws Exception {
@@ -1232,18 +894,13 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         allowedValues.add(revokerSysadmins.get(0).get("userId"));
         allowedValues.add(revokerSysadmins.get(1).get("userId"));
 
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(
-            FILTER_PARAMETER_QUERY,
-            new String[] { "(\"" + FILTER_REVOKED_BY + "\"="
-                + revokerSysadmins.get(0).get("userId") + " or " + "\""
-                + FILTER_REVOKED_BY + "\"="
-                + revokerSysadmins.get(1).get("userId") + ") and " + "\""
-                + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
-        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS,
-            new String[] { "1000" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\"" + FILTER_REVOKED_BY + "\"="
+            + revokerSysadmins.get(0).get("userId") + " or " + "\"" + FILTER_REVOKED_BY + "\"="
+            + revokerSysadmins.get(1).get("userId") + ") and " + "\"" + FILTER_CREATION_DATE + "\">=\"" + startTime
+            + "\"" });
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "1000" });
 
         String result = null;
 
@@ -1255,25 +912,13 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
-        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/revoked-by", allowedValues, true);
+        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/revoked-by", allowedValues, true);
     }
 
     /**
      * Test successfully filtering grants for userId and objectId.
-     * 
-     * @test.name userIdObjectIdFilter
-     * @test.id userIdObjectIdFilter
-     * @test.input userIdObjectIdFilter
-     * @test.inputDescription: <ul>
-     *                         <li>userId</li>
-     *                         <li>objectId</li>
-     *                         </ul>
-     * @test.expected: result with all grants having provided userId and
-     *                 objectId
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void userIdObjectIdFilterCQL() throws Exception {
@@ -1288,13 +933,11 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         allowedValues.add(USER_GROUP_WITH_OU_LIST_ID);
         allowedValues.add(objectId);
 
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_USER + "\"=" + userId + " and " + "\""
-            + FILTER_ASSIGNED_ON + "\"=" + objectId + " and " + "\""
-            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_USER + "\"=" + userId + " and " + "\""
+            + FILTER_ASSIGNED_ON + "\"=" + objectId + " and " + "\"" + FILTER_CREATION_DATE + "\">=\"" + startTime
+            + "\"" });
 
         String result = null;
 
@@ -1306,27 +949,14 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
-        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/granted-to", allowedValues, true);
-        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/assigned-on", allowedValues, true);
+        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/granted-to", allowedValues, true);
+        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/assigned-on", allowedValues, true);
     }
 
     /**
      * Test successfully filtering grants for userIds and objectIds.
-     * 
-     * @test.name userIdsObjectIdsFilter
-     * @test.id userIdsObjectIdsFilter
-     * @test.input userIdsObjectIdsFilter
-     * @test.inputDescription: <ul>
-     *                         <li>userIds</li>
-     *                         <li>objectIds</li>
-     *                         </ul>
-     * @test.expected: result with all grants having provided userIds and
-     *                 objectIds
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void userIdsObjectIdsFilterCQL() throws Exception {
@@ -1345,17 +975,13 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         allowedValues.add(USER_GROUP_WITH_GROUP_LIST_ID);
         allowedValues.add(USER_GROUP_WITH_OU_LIST_ID);
 
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\""
-            + FILTER_USER + "\"=" + userId + " or " + "\"" + FILTER_USER
-            + "\"=" + userId1 + ") and " + "(\"" + FILTER_ASSIGNED_ON + "\"="
-            + objectId + " or " + "\"" + FILTER_ASSIGNED_ON + "\"=" + objectId1
-            + ") and " + "\"" + FILTER_CREATION_DATE + "\">=\"" + startTime
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\"" + FILTER_USER + "\"=" + userId + " or " + "\""
+            + FILTER_USER + "\"=" + userId1 + ") and " + "(\"" + FILTER_ASSIGNED_ON + "\"=" + objectId + " or " + "\""
+            + FILTER_ASSIGNED_ON + "\"=" + objectId1 + ") and " + "\"" + FILTER_CREATION_DATE + "\">=\"" + startTime
             + "\"" });
-        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS,
-            new String[] { "1000" });
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "1000" });
 
         String result = null;
 
@@ -1367,28 +993,14 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
-        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/granted-to", allowedValues, true);
-        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/assigned-on", allowedValues, true);
+        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/granted-to", allowedValues, true);
+        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/assigned-on", allowedValues, true);
     }
 
     /**
      * Test successfully filtering grants for userId,objectId and roleId.
-     * 
-     * @test.name userIdObjectIdRoleIdFilter
-     * @test.id userIdObjectIdRoleIdFilter
-     * @test.input userIdObjectIdRoleIdFilter
-     * @test.inputDescription: <ul>
-     *                         <li>userId</li>
-     *                         <li>objectId</li>
-     *                         <li>roleId</li>
-     *                         </ul>
-     * @test.expected: result with all grants having provided userId, objectId
-     *                 and roleId
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void userIdObjectIdRoleIdFilterCQL() throws Exception {
@@ -1406,13 +1018,10 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         allowedValues.add(objectId);
         allowedValues.add(roleId);
 
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_USER + "\"=" + userId + " and " + "\""
-            + FILTER_ASSIGNED_ON + "\"=" + objectId + " and " + "\""
-            + FILTER_ROLE + "\"=" + roleId + " and " + "\""
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_USER + "\"=" + userId + " and " + "\""
+            + FILTER_ASSIGNED_ON + "\"=" + objectId + " and " + "\"" + FILTER_ROLE + "\"=" + roleId + " and " + "\""
             + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
 
         String result = null;
@@ -1425,30 +1034,15 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
-        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/granted-to", allowedValues, true);
-        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/assigned-on", allowedValues, true);
-        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/role", allowedValues, true);
+        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/granted-to", allowedValues, true);
+        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/assigned-on", allowedValues, true);
+        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/role", allowedValues, true);
     }
 
     /**
      * Test successfully filtering grants for userIds,objectIds and roleIds.
-     * 
-     * @test.name userIdsObjectIdsRoleIdsFilter
-     * @test.id userIdsObjectIdsRoleIdsFilter
-     * @test.input userIdsObjectIdsRoleIdsFilter
-     * @test.inputDescription: <ul>
-     *                         <li>userIds</li>
-     *                         <li>objectIds</li>
-     *                         <li>roleIds</li>
-     *                         </ul>
-     * @test.expected: result with all grants having provided userIds, objectIds
-     *                 and roleIds
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void userIdsObjectIdsRoleIdsFilterCQL() throws Exception {
@@ -1472,16 +1066,12 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         allowedValues.add(roleId);
         allowedValues.add(roleId1);
 
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\""
-            + FILTER_USER + "\"=" + userId + " or " + "\"" + FILTER_USER
-            + "\"=" + userId1 + ") and " + "(\"" + FILTER_ASSIGNED_ON + "\"="
-            + objectId + " or " + "\"" + FILTER_ASSIGNED_ON + "\"=" + objectId1
-            + ") and " + "(\"" + FILTER_ROLE + "\"=" + roleId + " or " + "\""
-            + FILTER_ROLE + "\"=" + roleId1 + ") and " + "\""
-            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\"" + FILTER_USER + "\"=" + userId + " or " + "\""
+            + FILTER_USER + "\"=" + userId1 + ") and " + "(\"" + FILTER_ASSIGNED_ON + "\"=" + objectId + " or " + "\""
+            + FILTER_ASSIGNED_ON + "\"=" + objectId1 + ") and " + "(\"" + FILTER_ROLE + "\"=" + roleId + " or " + "\""
+            + FILTER_ROLE + "\"=" + roleId1 + ") and " + "\"" + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
 
         String result = null;
 
@@ -1493,29 +1083,15 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
-        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/granted-to", allowedValues, true);
-        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/assigned-on", allowedValues, true);
-        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/role", allowedValues, true);
+        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/granted-to", allowedValues, true);
+        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/assigned-on", allowedValues, true);
+        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/role", allowedValues, true);
     }
 
     /**
      * Test successfully filtering grants for creatorId and objectId.
-     * 
-     * @test.name creatorIdObjectIdFilter
-     * @test.id creatorIdObjectIdFilter
-     * @test.input creatorIdObjectIdFilter
-     * @test.inputDescription: <ul>
-     *                         <li>creatorId</li>
-     *                         <li>objectId</li>
-     *                         </ul>
-     * @test.expected: result with all grants having provided creatorId and
-     *                 objectId
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void creatorIdObjectIdFilterCQL() throws Exception {
@@ -1527,13 +1103,11 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         allowedValues.add(creatorId);
         allowedValues.add(objectId);
 
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_CREATED_BY + "\"=" + creatorId + " and " + "\""
-            + FILTER_ASSIGNED_ON + "\"=" + objectId + " and " + "\""
-            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_CREATED_BY + "\"=" + creatorId + " and "
+            + "\"" + FILTER_ASSIGNED_ON + "\"=" + objectId + " and " + "\"" + FILTER_CREATION_DATE + "\">=\""
+            + startTime + "\"" });
 
         String result = null;
 
@@ -1545,27 +1119,14 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
-        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/created-by", allowedValues, true);
-        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/assigned-on", allowedValues, true);
+        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/created-by", allowedValues, true);
+        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/assigned-on", allowedValues, true);
     }
 
     /**
      * Test successfully filtering grants for creatorIds and objectIds.
-     * 
-     * @test.name creatorIdsObjectIdsFilter
-     * @test.id creatorIdsObjectIdsFilter
-     * @test.input creatorIdsObjectIdsFilter
-     * @test.inputDescription: <ul>
-     *                         <li>creatorIds</li>
-     *                         <li>objectIds</li>
-     *                         </ul>
-     * @test.expected: result with all grants having provided creatorIds and
-     *                 objectIds
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void creatorIdsObjectIdsFilterCQL() throws Exception {
@@ -1581,17 +1142,13 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         allowedValues.add(objectId);
         allowedValues.add(objectId1);
 
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\""
-            + FILTER_CREATED_BY + "\"=" + creatorId + " or " + "\""
-            + FILTER_CREATED_BY + "\"=" + creatorId1 + ") and " + "(\""
-            + FILTER_ASSIGNED_ON + "\"=" + objectId + " or " + "\""
-            + FILTER_ASSIGNED_ON + "\"=" + objectId1 + ") and " + "\""
-            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
-        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS,
-            new String[] { "1000" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\"" + FILTER_CREATED_BY + "\"=" + creatorId + " or "
+            + "\"" + FILTER_CREATED_BY + "\"=" + creatorId1 + ") and " + "(\"" + FILTER_ASSIGNED_ON + "\"=" + objectId
+            + " or " + "\"" + FILTER_ASSIGNED_ON + "\"=" + objectId1 + ") and " + "\"" + FILTER_CREATION_DATE
+            + "\">=\"" + startTime + "\"" });
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "1000" });
 
         String result = null;
 
@@ -1603,27 +1160,14 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
-        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/created-by", allowedValues, true);
-        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/assigned-on", allowedValues, true);
+        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/created-by", allowedValues, true);
+        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/assigned-on", allowedValues, true);
     }
 
     /**
      * Test successfully filtering grants for revokerId and objectId.
-     * 
-     * @test.name revokerIdObjectIdFilter
-     * @test.id revokerIdObjectIdFilter
-     * @test.input revokerIdObjectIdFilter
-     * @test.inputDescription: <ul>
-     *                         <li>revokerId</li>
-     *                         <li>objectId</li>
-     *                         </ul>
-     * @test.expected: result with all grants having provided revokerId and
-     *                 objectId
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void revokerIdObjectIdFilterCQL() throws Exception {
@@ -1635,13 +1179,11 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         allowedValues.add(revokerId);
         allowedValues.add(objectId);
 
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_REVOKED_BY + "\"=" + revokerId + " and " + "\""
-            + FILTER_ASSIGNED_ON + "\"=" + objectId + " and " + "\""
-            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_REVOKED_BY + "\"=" + revokerId + " and "
+            + "\"" + FILTER_ASSIGNED_ON + "\"=" + objectId + " and " + "\"" + FILTER_CREATION_DATE + "\">=\""
+            + startTime + "\"" });
 
         String result = null;
 
@@ -1653,27 +1195,14 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
-        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/revoked-by", allowedValues, true);
-        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/assigned-on", allowedValues, true);
+        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/revoked-by", allowedValues, true);
+        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/assigned-on", allowedValues, true);
     }
 
     /**
      * Test successfully filtering grants for revokerIds and objectIds.
-     * 
-     * @test.name revokerIdsObjectIdsFilter
-     * @test.id revokerIdsObjectIdsFilter
-     * @test.input revokerIdsObjectIdsFilter
-     * @test.inputDescription: <ul>
-     *                         <li>revokerIds</li>
-     *                         <li>objectIds</li>
-     *                         </ul>
-     * @test.expected: result with all grants having provided revokerIds and
-     *                 objectIds
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void revokerIdsObjectIdsFilterCQL() throws Exception {
@@ -1689,17 +1218,13 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         allowedValues.add(objectId);
         allowedValues.add(objectId1);
 
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\""
-            + FILTER_REVOKED_BY + "\"=" + revokerId + " or " + "\""
-            + FILTER_REVOKED_BY + "\"=" + revokerId1 + ") and " + "(\""
-            + FILTER_ASSIGNED_ON + "\"=" + objectId + " or " + "\""
-            + FILTER_ASSIGNED_ON + "\"=" + objectId1 + ") and " + "\""
-            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
-        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS,
-            new String[] { "1000" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\"" + FILTER_REVOKED_BY + "\"=" + revokerId + " or "
+            + "\"" + FILTER_REVOKED_BY + "\"=" + revokerId1 + ") and " + "(\"" + FILTER_ASSIGNED_ON + "\"=" + objectId
+            + " or " + "\"" + FILTER_ASSIGNED_ON + "\"=" + objectId1 + ") and " + "\"" + FILTER_CREATION_DATE
+            + "\">=\"" + startTime + "\"" });
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "1000" });
 
         String result = null;
 
@@ -1711,27 +1236,14 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
-        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/revoked-by", allowedValues, true);
-        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/assigned-on", allowedValues, true);
+        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/revoked-by", allowedValues, true);
+        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/assigned-on", allowedValues, true);
     }
 
     /**
      * Test successfully filtering grants for groupId and objectId.
-     * 
-     * @test.name groupIdObjectIdFilter
-     * @test.id groupIdObjectIdFilter
-     * @test.input groupIdObjectIdFilter
-     * @test.inputDescription: <ul>
-     *                         <li>groupId</li>
-     *                         <li>objectId</li>
-     *                         </ul>
-     * @test.expected: result with all grants having provided groupId and
-     *                 objectId
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void groupIdObjectIdFilterCQL() throws Exception {
@@ -1744,13 +1256,11 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         allowedValues.add(groupId);
         allowedValues.add(objectId);
 
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_GROUP + "\"=" + groupId + " and " + "\""
-            + FILTER_ASSIGNED_ON + "\"=" + objectId + " and " + "\""
-            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_GROUP + "\"=" + groupId + " and " + "\""
+            + FILTER_ASSIGNED_ON + "\"=" + objectId + " and " + "\"" + FILTER_CREATION_DATE + "\">=\"" + startTime
+            + "\"" });
 
         String result = null;
 
@@ -1762,27 +1272,14 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
-        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/granted-to", allowedValues, true);
-        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/assigned-on", allowedValues, true);
+        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/granted-to", allowedValues, true);
+        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/assigned-on", allowedValues, true);
     }
 
     /**
      * Test successfully filtering grants for groupIds and objectIds.
-     * 
-     * @test.name groupIdsObjectIdsFilter
-     * @test.id groupIdsObjectIdsFilter
-     * @test.input groupIdsObjectIdsFilter
-     * @test.inputDescription: <ul>
-     *                         <li>groupIds</li>
-     *                         <li>objectIds</li>
-     *                         </ul>
-     * @test.expected: result with all grants having provided userIds and
-     *                 objectIds
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void groupIdsObjectIdsFilterCQL() throws Exception {
@@ -1799,15 +1296,12 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         allowedValues.add(objectId);
         allowedValues.add(objectId1);
 
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\""
-            + FILTER_GROUP + "\"=" + groupId + " or " + "\"" + FILTER_GROUP
-            + "\"=" + groupId1 + ") and " + "(\"" + FILTER_ASSIGNED_ON + "\"="
-            + objectId + " or " + "\"" + FILTER_ASSIGNED_ON + "\"=" + objectId1
-            + ") and " + "\"" + FILTER_CREATION_DATE + "\">=\"" + startTime
-            + "\"" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\"" + FILTER_GROUP + "\"=" + groupId + " or " + "\""
+            + FILTER_GROUP + "\"=" + groupId1 + ") and " + "(\"" + FILTER_ASSIGNED_ON + "\"=" + objectId + " or "
+            + "\"" + FILTER_ASSIGNED_ON + "\"=" + objectId1 + ") and " + "\"" + FILTER_CREATION_DATE + "\">=\""
+            + startTime + "\"" });
 
         String result = null;
 
@@ -1819,28 +1313,14 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
-        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/granted-to", allowedValues, true);
-        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/assigned-on", allowedValues, true);
+        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/granted-to", allowedValues, true);
+        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/assigned-on", allowedValues, true);
     }
 
     /**
      * Test successfully filtering grants for groupId,objectId and roleId.
-     * 
-     * @test.name groupIdObjectIdRoleIdFilter
-     * @test.id groupIdObjectIdRoleIdFilter
-     * @test.input groupIdObjectIdRoleIdFilter
-     * @test.inputDescription: <ul>
-     *                         <li>groupId</li>
-     *                         <li>objectId</li>
-     *                         <li>roleId</li>
-     *                         </ul>
-     * @test.expected: result with all grants having provided groupId, objectId
-     *                 and roleId
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void groupIdObjectIdRoleIdFilterCQL() throws Exception {
@@ -1856,13 +1336,10 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         allowedValues.add(objectId);
         allowedValues.add(roleId);
 
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_GROUP + "\"=" + groupId + " and " + "\""
-            + FILTER_ASSIGNED_ON + "\"=" + objectId + " and " + "\""
-            + FILTER_ROLE + "\"=" + roleId + " and " + "\""
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_GROUP + "\"=" + groupId + " and " + "\""
+            + FILTER_ASSIGNED_ON + "\"=" + objectId + " and " + "\"" + FILTER_ROLE + "\"=" + roleId + " and " + "\""
             + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
 
         String result = null;
@@ -1875,30 +1352,15 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
-        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/granted-to", allowedValues, true);
-        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/assigned-on", allowedValues, true);
-        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/role", allowedValues, true);
+        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/granted-to", allowedValues, true);
+        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/assigned-on", allowedValues, true);
+        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/role", allowedValues, true);
     }
 
     /**
      * Test successfully filtering grants for groupIds,objectIds and roleIds.
-     * 
-     * @test.name groupIdsObjectIdsRoleIdsFilter
-     * @test.id groupIdsObjectIdsRoleIdsFilter
-     * @test.input groupIdsObjectIdsRoleIdsFilter
-     * @test.inputDescription: <ul>
-     *                         <li>groupIds</li>
-     *                         <li>objectIds</li>
-     *                         <li>roleIds</li>
-     *                         </ul>
-     * @test.expected: result with all grants having provided groupIds,
-     *                 objectIds and roleIds
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void groupIdsObjectIdsRoleIdsFilterCQL() throws Exception {
@@ -1920,16 +1382,13 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         allowedValues.add(roleId);
         allowedValues.add(roleId1);
 
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\""
-            + FILTER_GROUP + "\"=" + groupId + " or " + "\"" + FILTER_GROUP
-            + "\"=" + groupId1 + ") and " + "(\"" + FILTER_ASSIGNED_ON + "\"="
-            + objectId + " or " + "\"" + FILTER_ASSIGNED_ON + "\"=" + objectId1
-            + ") and " + "(\"" + FILTER_ROLE + "\"=" + roleId + " or " + "\""
-            + FILTER_ROLE + "\"=" + roleId1 + ") and " + "\""
-            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\"" + FILTER_GROUP + "\"=" + groupId + " or " + "\""
+            + FILTER_GROUP + "\"=" + groupId1 + ") and " + "(\"" + FILTER_ASSIGNED_ON + "\"=" + objectId + " or "
+            + "\"" + FILTER_ASSIGNED_ON + "\"=" + objectId1 + ") and " + "(\"" + FILTER_ROLE + "\"=" + roleId + " or "
+            + "\"" + FILTER_ROLE + "\"=" + roleId1 + ") and " + "\"" + FILTER_CREATION_DATE + "\">=\"" + startTime
+            + "\"" });
 
         String result = null;
 
@@ -1941,32 +1400,15 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
-        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/granted-to", allowedValues, true);
-        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/assigned-on", allowedValues, true);
-        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/role", allowedValues, true);
+        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/granted-to", allowedValues, true);
+        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/assigned-on", allowedValues, true);
+        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/role", allowedValues, true);
     }
 
     /**
-     * Test successfully filtering grants for userId and objectId created in the
-     * first half of the prepare-method.
-     * 
-     * @test.name userIdObjectIdFirstpartFilter
-     * @test.id userIdObjectIdFirstpartFilter
-     * @test.input userIdObjectIdFirstpartFilter
-     * @test.inputDescription: <ul>
-     *                         <li>userId</li>
-     *                         <li>objectId</li>
-     *                         <li>grantedDateFrom</li>
-     *                         <li>grantedDateTo</li>
-     *                         </ul>
-     * @test.expected: result with all grants having provided userId and
-     *                 objectId created in the first half of the prepare-method.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test successfully filtering grants for userId and objectId created in the first half of the prepare-method.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void userIdObjectIdFirstpartFilterCQL() throws Exception {
@@ -1981,15 +1423,11 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         allowedValues.add(USER_GROUP_WITH_OU_LIST_ID);
         allowedValues.add(objectId);
 
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_USER + "\"=" + userId + " and " + "\""
-            + FILTER_ASSIGNED_ON + "\"=" + objectId + " and " + "\""
-            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\" and " + "\""
-            + FILTER_CREATION_DATE + "\"<=\"" + partTimeParameters.get("time")
-            + "\"" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_USER + "\"=" + userId + " and " + "\""
+            + FILTER_ASSIGNED_ON + "\"=" + objectId + " and " + "\"" + FILTER_CREATION_DATE + "\">=\"" + startTime
+            + "\" and " + "\"" + FILTER_CREATION_DATE + "\"<=\"" + partTimeParameters.get("time") + "\"" });
 
         String result = null;
 
@@ -2001,31 +1439,14 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
-        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/granted-to", allowedValues, true);
-        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/assigned-on", allowedValues, true);
+        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/granted-to", allowedValues, true);
+        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/assigned-on", allowedValues, true);
     }
 
     /**
-     * Test successfully filtering grants for userIds and objectIds created in
-     * the first half of the prepare-method.
-     * 
-     * @test.name userIdsObjectIdsFirstpartFilter
-     * @test.id userIdsObjectIdsFirstpartFilter
-     * @test.input userIdsObjectIdsFirstpartFilter
-     * @test.inputDescription: <ul>
-     *                         <li>userIds</li>
-     *                         <li>objectIds</li>
-     *                         <li>grantedDateFrom</li>
-     *                         <li>grantedDateTo</li>
-     *                         </ul>
-     * @test.expected: result with all grants having provided userIds and
-     *                 objectIds created in the first half of the
-     *                 prepare-method.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test successfully filtering grants for userIds and objectIds created in the first half of the prepare-method.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void userIdsObjectIdsFirstpartFilterCQL() throws Exception {
@@ -2044,18 +1465,13 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         allowedValues.add(objectId);
         allowedValues.add(objectId1);
 
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\""
-            + FILTER_USER + "\"=" + userId + " or " + "\"" + FILTER_USER
-            + "\"=" + userId1 + ") and " + "(\"" + FILTER_ASSIGNED_ON + "\"="
-            + objectId + " or " + "\"" + FILTER_ASSIGNED_ON + "\"=" + objectId1
-            + ") and " + "\"" + FILTER_CREATION_DATE + "\">=\"" + startTime
-            + "\" and " + "\"" + FILTER_CREATION_DATE + "\"<=\""
-            + partTimeParameters.get("time") + "\"" });
-        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS,
-            new String[] { "1000" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\"" + FILTER_USER + "\"=" + userId + " or " + "\""
+            + FILTER_USER + "\"=" + userId1 + ") and " + "(\"" + FILTER_ASSIGNED_ON + "\"=" + objectId + " or " + "\""
+            + FILTER_ASSIGNED_ON + "\"=" + objectId1 + ") and " + "\"" + FILTER_CREATION_DATE + "\">=\"" + startTime
+            + "\" and " + "\"" + FILTER_CREATION_DATE + "\"<=\"" + partTimeParameters.get("time") + "\"" });
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "1000" });
 
         String result = null;
 
@@ -2067,32 +1483,15 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
-        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/granted-to", allowedValues, true);
-        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/assigned-on", allowedValues, true);
+        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/granted-to", allowedValues, true);
+        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/assigned-on", allowedValues, true);
     }
 
     /**
-     * Test successfully filtering grants for userId,objectId and roleId created
-     * in the first half of the prepare-method.
-     * 
-     * @test.name userIdObjectIdRoleIdFirstpartFilter
-     * @test.id userIdObjectIdRoleIdFirstpartFilter
-     * @test.input userIdObjectIdRoleIdFirstpartFilter
-     * @test.inputDescription: <ul>
-     *                         <li>userId</li>
-     *                         <li>objectId</li>
-     *                         <li>roleId</li>
-     *                         <li>grantedDateFrom</li>
-     *                         <li>grantedDateTo</li>
-     *                         </ul>
-     * @test.expected: result with all grants having provided userId, objectId
-     *                 and roleId created in the first half of the
-     *                 prepare-method.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test successfully filtering grants for userId,objectId and roleId created in the first half of the
+     * prepare-method.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void userIdObjectIdRoleIdFirstpartFilterCQL() throws Exception {
@@ -2110,16 +1509,12 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         allowedValues.add(objectId);
         allowedValues.add(roleId);
 
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_USER + "\"=" + userId + " and " + "\""
-            + FILTER_ASSIGNED_ON + "\"=" + objectId + " and " + "\""
-            + FILTER_ROLE + "\"=" + roleId + " and " + "\""
-            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\" and " + "\""
-            + FILTER_CREATION_DATE + "\"<=\"" + partTimeParameters.get("time")
-            + "\"" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_USER + "\"=" + userId + " and " + "\""
+            + FILTER_ASSIGNED_ON + "\"=" + objectId + " and " + "\"" + FILTER_ROLE + "\"=" + roleId + " and " + "\""
+            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\" and " + "\"" + FILTER_CREATION_DATE + "\"<=\""
+            + partTimeParameters.get("time") + "\"" });
 
         String result = null;
 
@@ -2131,34 +1526,16 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
-        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/granted-to", allowedValues, true);
-        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/assigned-on", allowedValues, true);
-        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/role", allowedValues, true);
+        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/granted-to", allowedValues, true);
+        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/assigned-on", allowedValues, true);
+        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/role", allowedValues, true);
     }
 
     /**
-     * Test successfully filtering grants for userIds,objectIds and roleIds
-     * created in the first half of the prepare-method.
-     * 
-     * @test.name userIdsObjectIdsRoleIdsFirstpartFilter
-     * @test.id userIdsObjectIdsRoleIdsFirstpartFilter
-     * @test.input userIdsObjectIdsRoleIdsFirstpartFilter
-     * @test.inputDescription: <ul>
-     *                         <li>userIds</li>
-     *                         <li>objectIds</li>
-     *                         <li>roleIds</li>
-     *                         <li>grantedDateFrom</li>
-     *                         <li>grantedDateTo</li>
-     *                         </ul>
-     * @test.expected: result with all grants having provided userIds, objectIds
-     *                 and roleIds created in the first half of the
-     *                 prepare-method.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test successfully filtering grants for userIds,objectIds and roleIds created in the first half of the
+     * prepare-method.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void userIdsObjectIdsRoleIdsFirstpartFilterCQL() throws Exception {
@@ -2182,18 +1559,13 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         allowedValues.add(roleId);
         allowedValues.add(roleId1);
 
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\""
-            + FILTER_USER + "\"=" + userId + " or " + "\"" + FILTER_USER
-            + "\"=" + userId1 + ") and " + "(\"" + FILTER_ASSIGNED_ON + "\"="
-            + objectId + " or " + "\"" + FILTER_ASSIGNED_ON + "\"=" + objectId1
-            + ") and " + "(\"" + FILTER_ROLE + "\"=" + roleId + " or " + "\""
-            + FILTER_ROLE + "\"=" + roleId1 + ") and " + "\""
-            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\" and " + "\""
-            + FILTER_CREATION_DATE + "\"<=\"" + partTimeParameters.get("time")
-            + "\"" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\"" + FILTER_USER + "\"=" + userId + " or " + "\""
+            + FILTER_USER + "\"=" + userId1 + ") and " + "(\"" + FILTER_ASSIGNED_ON + "\"=" + objectId + " or " + "\""
+            + FILTER_ASSIGNED_ON + "\"=" + objectId1 + ") and " + "(\"" + FILTER_ROLE + "\"=" + roleId + " or " + "\""
+            + FILTER_ROLE + "\"=" + roleId1 + ") and " + "\"" + FILTER_CREATION_DATE + "\">=\"" + startTime + "\" and "
+            + "\"" + FILTER_CREATION_DATE + "\"<=\"" + partTimeParameters.get("time") + "\"" });
 
         String result = null;
 
@@ -2205,31 +1577,15 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
-        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/granted-to", allowedValues, true);
-        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/assigned-on", allowedValues, true);
-        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/role", allowedValues, true);
+        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/granted-to", allowedValues, true);
+        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/assigned-on", allowedValues, true);
+        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/role", allowedValues, true);
     }
 
     /**
-     * Test successfully filtering grants for objectId revoked in the first half
-     * of the prepare-method.
-     * 
-     * @test.name ObjectIdFirstpartRevocationFilter
-     * @test.id ObjectIdFirstpartRevocationFilter
-     * @test.input ObjectIdFirstpartRevocationFilter
-     * @test.inputDescription: <ul>
-     *                         <li>objectId</li>
-     *                         <li>revocationDateFrom</li>
-     *                         <li>revocationDateTo</li>
-     *                         </ul>
-     * @test.expected: result with all grants having provided objectId revoked
-     *                 in the first half of the prepare-method.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test successfully filtering grants for objectId revoked in the first half of the prepare-method.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void objectIdFirstpartRevocationFilterCQL() throws Exception {
@@ -2239,14 +1595,11 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         List<String> allowedValues = new ArrayList<String>();
         allowedValues.add(objectId);
 
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY,
-            new String[] { "\"" + FILTER_ASSIGNED_ON + "\"=" + objectId
-                + " and " + "\"" + FILTER_REVOCATION_DATE + "\">=\""
-                + startTime + "\" and " + "\"" + FILTER_REVOCATION_DATE
-                + "\"<=\"" + partTimeParameters.get("time") + "\"" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_ASSIGNED_ON + "\"=" + objectId + " and "
+            + "\"" + FILTER_REVOCATION_DATE + "\">=\"" + startTime + "\" and " + "\"" + FILTER_REVOCATION_DATE
+            + "\"<=\"" + partTimeParameters.get("time") + "\"" });
 
         String result = null;
 
@@ -2258,32 +1611,22 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
-        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/assigned-on", allowedValues, true);
+        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/assigned-on", allowedValues, true);
     }
 
     /**
      * Test successfully sorting grants for userId ascending.
-     * 
-     * @test.name userIdSortFilter
-     * @test.id userIdSortFilter
-     * @test.input
-     * @test.expected: result with all grants sorted ascending by userId.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void userIdSortFilterAscCQL() throws Exception {
         int expectedGrantCount = TOTAL_GRANT_COUNT;
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\" sortby " + "\""
-            + FILTER_USER + "\"/sort.ascending" });
-        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS,
-            new String[] { "1000" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_CREATION_DATE + "\">=\"" + startTime
+            + "\" sortby " + "\"" + FILTER_USER + "\"/sort.ascending" });
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "1000" });
 
         String result = null;
 
@@ -2295,33 +1638,23 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
-        assertSorted(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/granted-to",
+        assertSorted(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/granted-to",
             "parent::node()[@resource='user-account']", true, true);
     }
 
     /**
      * Test successfully sorting grants for userId descending.
-     * 
-     * @test.name userIdSortFilter
-     * @test.id userIdSortFilter
-     * @test.input
-     * @test.expected: result with all grants sorted descending by userId.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void userIdSortFilterDescCQL() throws Exception {
         int expectedGrantCount = TOTAL_GRANT_COUNT;
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\" sortby " + "\""
-            + FILTER_USER + "\"/sort.descending" });
-        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS,
-            new String[] { "1000" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_CREATION_DATE + "\">=\"" + startTime
+            + "\" sortby " + "\"" + FILTER_USER + "\"/sort.descending" });
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "1000" });
 
         String result = null;
 
@@ -2333,33 +1666,23 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
-        assertSorted(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/granted-to",
+        assertSorted(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/granted-to",
             "parent::node()[@resource='user-account']", false, true);
     }
 
     /**
      * Test successfully sorting grants for groupId ascending.
-     * 
-     * @test.name groupIdSortFilter
-     * @test.id groupIdSortFilter
-     * @test.input
-     * @test.expected: result with all grants sorted ascending by groupId.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void groupIdSortFilterAscCQL() throws Exception {
         int expectedGrantCount = TOTAL_GRANT_COUNT;
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\" sortby " + "\""
-            + FILTER_GROUP + "\"/sort.ascending" });
-        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS,
-            new String[] { "1000" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_CREATION_DATE + "\">=\"" + startTime
+            + "\" sortby " + "\"" + FILTER_GROUP + "\"/sort.ascending" });
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "1000" });
 
         String result = null;
 
@@ -2371,33 +1694,23 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
-        assertSorted(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/granted-to",
+        assertSorted(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/granted-to",
             "parent::node()[@resource='user-group']", true, true);
     }
 
     /**
      * Test successfully sorting grants for groupId descending.
-     * 
-     * @test.name groupIdSortFilter
-     * @test.id groupIdSortFilter
-     * @test.input
-     * @test.expected: result with all grants sorted descending by groupId.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void groupIdSortFilterDescCQL() throws Exception {
         int expectedGrantCount = TOTAL_GRANT_COUNT;
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\" sortby " + "\""
-            + FILTER_GROUP + "\"/sort.descending" });
-        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS,
-            new String[] { "1000" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_CREATION_DATE + "\">=\"" + startTime
+            + "\" sortby " + "\"" + FILTER_GROUP + "\"/sort.descending" });
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "1000" });
 
         String result = null;
 
@@ -2409,33 +1722,23 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
-        assertSorted(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/granted-to",
+        assertSorted(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/granted-to",
             "parent::node()[@resource='user-group']", false, true);
     }
 
     /**
      * Test successfully sorting grants for roleId ascending.
-     * 
-     * @test.name roleIdSortFilter
-     * @test.id roleIdSortFilter
-     * @test.input
-     * @test.expected: result with all grants sorted ascending by roleId.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void roleIdSortFilterAscCQL() throws Exception {
         int expectedGrantCount = TOTAL_GRANT_COUNT;
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\" sortby " + "\""
-            + FILTER_ROLE + "\"/sort.ascending" });
-        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS,
-            new String[] { "1000" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_CREATION_DATE + "\">=\"" + startTime
+            + "\" sortby " + "\"" + FILTER_ROLE + "\"/sort.ascending" });
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "1000" });
 
         String result = null;
 
@@ -2447,32 +1750,22 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
-        assertSorted(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/role",
-            null, true, true);
+        assertSorted(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/role", null, true, true);
     }
 
     /**
      * Test successfully sorting grants for roleId descending.
-     * 
-     * @test.name roleIdSortFilter
-     * @test.id roleIdSortFilter
-     * @test.input
-     * @test.expected: result with all grants sorted descending by roleId.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void roleIdSortFilterDescCQL() throws Exception {
         int expectedGrantCount = TOTAL_GRANT_COUNT;
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\" sortby " + "\""
-            + FILTER_ROLE + "\"/sort.descending" });
-        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS,
-            new String[] { "1000" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_CREATION_DATE + "\">=\"" + startTime
+            + "\" sortby " + "\"" + FILTER_ROLE + "\"/sort.descending" });
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "1000" });
 
         String result = null;
 
@@ -2484,32 +1777,22 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
-        assertSorted(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/role",
-            null, false, true);
+        assertSorted(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/role", null, false, true);
     }
 
     /**
      * Test successfully sorting grants for objectId ascending.
-     * 
-     * @test.name objectIdSortFilter
-     * @test.id objectIdSortFilter
-     * @test.input
-     * @test.expected: result with all grants sorted ascending by objectId.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void objectIdSortFilterAscCQL() throws Exception {
         int expectedGrantCount = TOTAL_GRANT_COUNT;
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\" sortby " + "\""
-            + FILTER_ASSIGNED_ON + "\"/sort.ascending" });
-        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS,
-            new String[] { "1000" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_CREATION_DATE + "\">=\"" + startTime
+            + "\" sortby " + "\"" + FILTER_ASSIGNED_ON + "\"/sort.ascending" });
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "1000" });
 
         String result = null;
 
@@ -2521,32 +1804,22 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
-        assertSorted(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/assigned-on", null, true, true);
+        assertSorted(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/assigned-on", null, true, true);
     }
 
     /**
      * Test successfully sorting grants for objectId descending.
-     * 
-     * @test.name objectIdSortFilter
-     * @test.id objectIdSortFilter
-     * @test.input
-     * @test.expected: result with all grants sorted descending by objectId.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void objectIdSortFilterDescCQL() throws Exception {
         int expectedGrantCount = TOTAL_GRANT_COUNT;
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\" sortby " + "\""
-            + FILTER_ASSIGNED_ON + "\"/sort.descending" });
-        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS,
-            new String[] { "1000" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_CREATION_DATE + "\">=\"" + startTime
+            + "\" sortby " + "\"" + FILTER_ASSIGNED_ON + "\"/sort.descending" });
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "1000" });
 
         String result = null;
 
@@ -2558,32 +1831,22 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
-        assertSorted(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/assigned-on", null, false, true);
+        assertSorted(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/assigned-on", null, false, true);
     }
 
     /**
      * Test successfully sorting grants for creatorId ascending.
-     * 
-     * @test.name creatorIdSortFilter
-     * @test.id creatorIdSortFilter
-     * @test.input
-     * @test.expected: result with all grants sorted ascending by creatorId.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void creatorIdSortFilterAscCQL() throws Exception {
         int expectedGrantCount = TOTAL_GRANT_COUNT;
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\" sortby " + "\""
-            + FILTER_CREATED_BY + "\"/sort.ascending" });
-        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS,
-            new String[] { "1000" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_CREATION_DATE + "\">=\"" + startTime
+            + "\" sortby " + "\"" + FILTER_CREATED_BY + "\"/sort.ascending" });
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "1000" });
 
         String result = null;
 
@@ -2595,32 +1858,22 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
-        assertSorted(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/created-by", null, true, true);
+        assertSorted(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/created-by", null, true, true);
     }
 
     /**
      * Test successfully sorting grants for creatorId descending.
-     * 
-     * @test.name creatorIdSortFilter
-     * @test.id creatorIdSortFilter
-     * @test.input
-     * @test.expected: result with all grants sorted descending by creatorId.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void creatorIdSortFilterDescCQL() throws Exception {
         int expectedGrantCount = TOTAL_GRANT_COUNT;
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\" sortby " + "\""
-            + FILTER_CREATED_BY + "\"/sort.descending" });
-        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS,
-            new String[] { "1000" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_CREATION_DATE + "\">=\"" + startTime
+            + "\" sortby " + "\"" + FILTER_CREATED_BY + "\"/sort.descending" });
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "1000" });
 
         String result = null;
 
@@ -2632,32 +1885,22 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
-        assertSorted(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/created-by", null, false, true);
+        assertSorted(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/created-by", null, false, true);
     }
 
     /**
      * Test successfully sorting grants for revokerId ascending.
-     * 
-     * @test.name revokerIdSortFilter
-     * @test.id revokerIdSortFilter
-     * @test.input
-     * @test.expected: result with all grants sorted ascending by revokerId.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void revokerIdSortFilterAscCQL() throws Exception {
         int expectedGrantCount = TOTAL_GRANT_COUNT;
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\" sortby " + "\""
-            + FILTER_REVOKED_BY + "\"/sort.ascending" });
-        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS,
-            new String[] { "1000" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_CREATION_DATE + "\">=\"" + startTime
+            + "\" sortby " + "\"" + FILTER_REVOKED_BY + "\"/sort.ascending" });
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "1000" });
 
         String result = null;
 
@@ -2669,32 +1912,22 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
-        assertSorted(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/revoked-by", null, true, true);
+        assertSorted(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/revoked-by", null, true, true);
     }
 
     /**
      * Test successfully sorting grants for revokerId descending.
-     * 
-     * @test.name revokerIdSortFilter
-     * @test.id revokerIdSortFilter
-     * @test.input
-     * @test.expected: result with all grants sorted descending by revokerId.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void revokerIdSortFilterDescCQL() throws Exception {
         int expectedGrantCount = TOTAL_GRANT_COUNT;
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\" sortby " + "\""
-            + FILTER_REVOKED_BY + "\"/sort.descending" });
-        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS,
-            new String[] { "1000" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_CREATION_DATE + "\">=\"" + startTime
+            + "\" sortby " + "\"" + FILTER_REVOKED_BY + "\"/sort.descending" });
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "1000" });
 
         String result = null;
 
@@ -2706,33 +1939,22 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
-        assertSorted(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/revoked-by", null, false, true);
+        assertSorted(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/revoked-by", null, false, true);
     }
 
     /**
      * Test successfully sorting grants for revocationDate ascending.
-     * 
-     * @test.name revocationDateSortFilter
-     * @test.id revocationDateSortFilter
-     * @test.input
-     * @test.expected: result with all grants sorted ascending by
-     *                 revocationDate.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void revocationDateSortFilterAscCQL() throws Exception {
         int expectedGrantCount = TOTAL_GRANT_COUNT;
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\" sortby " + "\""
-            + FILTER_REVOCATION_DATE + "\"/sort.ascending" });
-        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS,
-            new String[] { "1000" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_CREATION_DATE + "\">=\"" + startTime
+            + "\" sortby " + "\"" + FILTER_REVOCATION_DATE + "\"/sort.ascending" });
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "1000" });
 
         String result = null;
 
@@ -2744,33 +1966,22 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
-        assertSorted(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/revocation-date", null, true, true);
+        assertSorted(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/revocation-date", null, true, true);
     }
 
     /**
      * Test successfully sorting grants for revocationDate descending.
-     * 
-     * @test.name revocationDateSortFilter
-     * @test.id revocationDateSortFilter
-     * @test.input
-     * @test.expected: result with all grants sorted descending by
-     *                 revocationDate.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void revocationDateSortFilterDescCQL() throws Exception {
         int expectedGrantCount = TOTAL_GRANT_COUNT;
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\" sortby " + "\""
-            + FILTER_REVOCATION_DATE + "\"/sort.descending" });
-        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS,
-            new String[] { "1000" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_CREATION_DATE + "\">=\"" + startTime
+            + "\" sortby " + "\"" + FILTER_REVOCATION_DATE + "\"/sort.descending" });
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "1000" });
 
         String result = null;
 
@@ -2782,33 +1993,22 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
-        assertSorted(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/revocation-date", null, false, true);
+        assertSorted(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/revocation-date", null, false, true);
     }
 
     /**
      * Test successfully sorting grants for grantedDateFrom ascending.
-     * 
-     * @test.name grantedDateFromSortFilter
-     * @test.id grantedDateFromSortFilter
-     * @test.input
-     * @test.expected: result with all grants sorted ascending by
-     *                 grantedDateFrom.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void grantedDateFromSortFilterAscCQL() throws Exception {
         int expectedGrantCount = TOTAL_GRANT_COUNT;
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\" sortby " + "\""
-            + FILTER_GRANTED_FROM + "\"/sort.ascending" });
-        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS,
-            new String[] { "1000" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_CREATION_DATE + "\">=\"" + startTime
+            + "\" sortby " + "\"" + FILTER_GRANTED_FROM + "\"/sort.ascending" });
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "1000" });
 
         String result = null;
 
@@ -2820,33 +2020,22 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
-        assertSorted(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/granted-from", null, true, true);
+        assertSorted(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/granted-from", null, true, true);
     }
 
     /**
      * Test successfully sorting grants for grantedDateFrom descending.
-     * 
-     * @test.name grantedDateFromSortFilter
-     * @test.id grantedDateFromSortFilter
-     * @test.input
-     * @test.expected: result with all grants sorted descending by
-     *                 grantedDateFrom.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void grantedDateFromSortFilterDescCQL() throws Exception {
         int expectedGrantCount = TOTAL_GRANT_COUNT;
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\" sortby " + "\""
-            + FILTER_GRANTED_FROM + "\"/sort.descending" });
-        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS,
-            new String[] { "1000" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_CREATION_DATE + "\">=\"" + startTime
+            + "\" sortby " + "\"" + FILTER_GRANTED_FROM + "\"/sort.descending" });
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "1000" });
 
         String result = null;
 
@@ -2858,32 +2047,22 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
-        assertSorted(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/granted-from", null, false, true);
+        assertSorted(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/granted-from", null, false, true);
     }
 
     /**
      * Test successfully sorting grants for grantedDateTo ascending.
-     * 
-     * @test.name grantedDateToSortFilter
-     * @test.id grantedDateToSortFilter
-     * @test.input
-     * @test.expected: result with all grants sorted ascending by grantedDateTo.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void grantedDateToSortFilterAscCQL() throws Exception {
         int expectedGrantCount = TOTAL_GRANT_COUNT;
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\" sortby " + "\""
-            + FILTER_CREATION_DATE + "\"/sort.ascending" });
-        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS,
-            new String[] { "1000" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_CREATION_DATE + "\">=\"" + startTime
+            + "\" sortby " + "\"" + FILTER_CREATION_DATE + "\"/sort.ascending" });
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "1000" });
 
         String result = null;
 
@@ -2895,33 +2074,22 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
-        assertSorted(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/creation-date", null, true, true);
+        assertSorted(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/creation-date", null, true, true);
     }
 
     /**
      * Test successfully sorting grants for grantedDateTo descending.
-     * 
-     * @test.name grantedDateToSortFilter
-     * @test.id grantedDateToSortFilter
-     * @test.input
-     * @test.expected: result with all grants sorted descending by
-     *                 grantedDateTo.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void grantedDateToSortFilterDescCQL() throws Exception {
         int expectedGrantCount = TOTAL_GRANT_COUNT;
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\" sortby " + "\""
-            + FILTER_GRANTED_TO + "\"/sort.descending" });
-        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS,
-            new String[] { "1000" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_CREATION_DATE + "\">=\"" + startTime
+            + "\" sortby " + "\"" + FILTER_GRANTED_TO + "\"/sort.descending" });
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "1000" });
 
         String result = null;
 
@@ -2933,33 +2101,22 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
-        assertSorted(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/granted-to", null, false, true);
+        assertSorted(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/granted-to", null, false, true);
     }
 
     /**
      * Test successfully sorting grants for grantedDateTo descending.
-     * 
-     * @test.name grantedDateToSortFilter
-     * @test.id grantedDateToSortFilter
-     * @test.input
-     * @test.expected: result with all grants sorted descending by
-     *                 grantedDateTo.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void offsetLimitFilterCQL() throws Exception {
         int expectedGrantCount = USER_GRANT_COUNT;
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\" sortby " + "\""
-            + FILTER_USER + "\"/sort.ascending" });
-        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS,
-            new String[] { String.valueOf(USER_GRANT_COUNT) });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_CREATION_DATE + "\">=\"" + startTime
+            + "\" sortby " + "\"" + FILTER_USER + "\"/sort.ascending" });
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { String.valueOf(USER_GRANT_COUNT) });
 
         String result = null;
         int i = 0;
@@ -2976,36 +2133,25 @@ public class GrantFilterAbstractTest extends GrantTestBase {
                 EscidocRestSoapTestBase.failException(e);
             }
             assertXmlValidSrwResponse(result);
-            assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT,
-                expectedGrantCount);
-            assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT
-                + "/properties/granted-to", allowedValues, true);
+            assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
+            assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/granted-to", allowedValues, true);
             i++;
         }
     }
 
     /**
      * Test successfully retrieving grants with userId = null.
-     * 
-     * @test.name nullUserFilter
-     * @test.id nullUserFilter
-     * @test.input
-     * @test.expected: result with all grants having userId = null.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void nullUserFilterCQL() throws Exception {
         int expectedGrantCount = GROUP_GRANT_COUNT * GROUP_IDS.size();
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_USER + "\"=\"\" and " + "\"" + FILTER_CREATION_DATE
-            + "\">=\"" + startTime + "\"" });
-        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS,
-            new String[] { "1000" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_USER + "\"=\"\" and " + "\""
+            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "1000" });
 
         String result = null;
 
@@ -3017,36 +2163,23 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
-        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/granted-to", GROUP_IDS, true);
+        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/granted-to", GROUP_IDS, true);
     }
 
     /**
-     * Test successfully retrieving grants with userId = null or userId =
-     * existing userId.
-     * 
-     * @test.name nullPlusUserFilter
-     * @test.id nullPlusUserFilter
-     * @test.input
-     * @test.expected: result with all grants having userId = null or userId =
-     *                 existing userId.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test successfully retrieving grants with userId = null or userId = existing userId.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void nullPlusUserFilterCQL() throws Exception {
-        int expectedGrantCount =
-            GROUP_GRANT_COUNT * GROUP_IDS.size() + USER_GRANT_COUNT;
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        int expectedGrantCount = GROUP_GRANT_COUNT * GROUP_IDS.size() + USER_GRANT_COUNT;
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\""
-            + FILTER_USER + "\"=\"\" or " + "\"" + FILTER_USER + "\"="
-            + userIds.get(0) + ") and " + "\"" + FILTER_CREATION_DATE
-            + "\">=\"" + startTime + "\"" });
-        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS,
-            new String[] { "1000" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\"" + FILTER_USER + "\"=\"\" or " + "\""
+            + FILTER_USER + "\"=" + userIds.get(0) + ") and " + "\"" + FILTER_CREATION_DATE + "\">=\"" + startTime
+            + "\"" });
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "1000" });
 
         List<String> allowedValues = new ArrayList<String>();
         allowedValues.addAll(GROUP_IDS);
@@ -3060,32 +2193,22 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
-        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/granted-to", allowedValues, true);
+        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/granted-to", allowedValues, true);
     }
 
     /**
      * Test successfully retrieving grants with groupId = null.
-     * 
-     * @test.name nullGroupFilter
-     * @test.id nullGroupFilter
-     * @test.input
-     * @test.expected: result with all grants having groupId = null.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void nullGroupFilterCQL() throws Exception {
         int expectedGrantCount = USER_GRANT_COUNT * userIds.size();
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_GROUP + "\"=\"\" and " + "\"" + FILTER_CREATION_DATE
-            + "\">=\"" + startTime + "\"" });
-        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS,
-            new String[] { "1000" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_GROUP + "\"=\"\" and " + "\""
+            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "1000" });
 
         String result = null;
 
@@ -3097,36 +2220,23 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
-        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/granted-to", userIds, true);
+        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/granted-to", userIds, true);
     }
 
     /**
-     * Test successfully retrieving grants with groupId = null or groupId =
-     * existing groupId.
-     * 
-     * @test.name nullPlusGroupFilter
-     * @test.id nullPlusGroupFilter
-     * @test.input
-     * @test.expected: result with all grants having groupId = null or groupId =
-     *                 existing groupId.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test successfully retrieving grants with groupId = null or groupId = existing groupId.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void nullPlusGroupFilterCQL() throws Exception {
-        int expectedGrantCount =
-            USER_GRANT_COUNT * userIds.size() + GROUP_GRANT_COUNT;
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        int expectedGrantCount = USER_GRANT_COUNT * userIds.size() + GROUP_GRANT_COUNT;
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\""
-            + FILTER_GROUP + "\"=\"\" or " + "\"" + FILTER_GROUP + "\"="
-            + GROUP_IDS.get(0) + ") and " + "\"" + FILTER_CREATION_DATE
-            + "\">=\"" + startTime + "\"" });
-        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS,
-            new String[] { "1000" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\"" + FILTER_GROUP + "\"=\"\" or " + "\""
+            + FILTER_GROUP + "\"=" + GROUP_IDS.get(0) + ") and " + "\"" + FILTER_CREATION_DATE + "\">=\"" + startTime
+            + "\"" });
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "1000" });
 
         List<String> allowedValues = new ArrayList<String>();
         allowedValues.addAll(userIds);
@@ -3140,32 +2250,22 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
-        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT
-            + "/properties/granted-to", allowedValues, true);
+        assertAllowedXpathValues(result, XPATH_SRW_GRANT_LIST_GRANT + "/properties/granted-to", allowedValues, true);
     }
 
     /**
      * Test successfully retrieving grants with revokerId = null.
-     * 
-     * @test.name nullRevokerFilter
-     * @test.id nullRevokerFilter
-     * @test.input
-     * @test.expected: result with all grants having revokerId = null.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void nullRevokerFilterCQL() throws Exception {
         int expectedGrantCount = NON_REVOKED_GRANT_COUNT;
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_REVOKED_BY + "\"=\"\" and " + "\"" + FILTER_CREATION_DATE
-            + "\">=\"" + startTime + "\"" });
-        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS,
-            new String[] { "1000" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_REVOKED_BY + "\"=\"\" and " + "\""
+            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "1000" });
 
         String result = null;
 
@@ -3180,32 +2280,19 @@ public class GrantFilterAbstractTest extends GrantTestBase {
     }
 
     /**
-     * Test successfully retrieving grants with revokerId = null or revokerId =
-     * existing revokerId.
-     * 
-     * @test.name nullPlusRevokerFilter
-     * @test.id nullPlusRevokerFilter
-     * @test.input
-     * @test.expected: result with all grants having revokerId = null or
-     *                 revokerId = existing revokerId.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test successfully retrieving grants with revokerId = null or revokerId = existing revokerId.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void nullPlusRevokerFilterCQL() throws Exception {
-        int expectedGrantCount =
-            NON_REVOKED_GRANT_COUNT
-                + Integer.parseInt(revokerSysadmins.get(0).get("grantCount"));
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        int expectedGrantCount = NON_REVOKED_GRANT_COUNT + Integer.parseInt(revokerSysadmins.get(0).get("grantCount"));
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\""
-            + FILTER_REVOKED_BY + "\"=\"\" or " + "\"" + FILTER_REVOKED_BY
-            + "\"=" + revokerSysadmins.get(0).get("userId") + ") and " + "\""
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\"" + FILTER_REVOKED_BY + "\"=\"\" or " + "\""
+            + FILTER_REVOKED_BY + "\"=" + revokerSysadmins.get(0).get("userId") + ") and " + "\""
             + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
-        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS,
-            new String[] { "1000" });
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "1000" });
 
         String result = null;
 
@@ -3221,26 +2308,17 @@ public class GrantFilterAbstractTest extends GrantTestBase {
 
     /**
      * Test successfully retrieving grants with revocationDate = null.
-     * 
-     * @test.name nullRevocationDateFilter
-     * @test.id nullRevocationDateFilter
-     * @test.input
-     * @test.expected: result with all grants having revocationDate = null.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void nullRevocationDateFilterCQL() throws Exception {
         int expectedGrantCount = NON_REVOKED_GRANT_COUNT;
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_REVOCATION_DATE + "\"=\"\" and " + "\""
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_REVOCATION_DATE + "\"=\"\" and " + "\""
             + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
-        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS,
-            new String[] { "1000" });
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "1000" });
 
         String result = null;
 
@@ -3255,33 +2333,19 @@ public class GrantFilterAbstractTest extends GrantTestBase {
     }
 
     /**
-     * Test successfully retrieving grants with revocationDate = null or
-     * revocationDate > parttimeDate.
-     * 
-     * @test.name nullPlusRevocationDateFilter
-     * @test.id nullPlusRevocationDateFilter
-     * @test.input
-     * @test.expected: result with all grants having revocationDate = null or
-     *                 revocationDate > parttimeDate.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test successfully retrieving grants with revocationDate = null or revocationDate > parttimeDate.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void nullPlusRevocationDateFilterCQL() throws Exception {
-        int expectedGrantCount =
-            NON_REVOKED_GRANT_COUNT + REVOKED_FROM_PARTTIME_GRANTS;
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        int expectedGrantCount = NON_REVOKED_GRANT_COUNT + REVOKED_FROM_PARTTIME_GRANTS;
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(
-            FILTER_PARAMETER_QUERY,
-            new String[] { "(\"" + FILTER_REVOCATION_DATE + "\"=\"\" or "
-                + "\"" + FILTER_REVOCATION_DATE + "\">=\""
-                + partTimeParameters.get("time") + "\") and " + "\""
-                + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
-        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS,
-            new String[] { "1000" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\"" + FILTER_REVOCATION_DATE + "\"=\"\" or " + "\""
+            + FILTER_REVOCATION_DATE + "\">=\"" + partTimeParameters.get("time") + "\") and " + "\""
+            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "1000" });
 
         String result = null;
 
@@ -3297,56 +2361,35 @@ public class GrantFilterAbstractTest extends GrantTestBase {
 
     /**
      * Test declining retrieving grants with invalid filter-xml.
-     * 
-     * @test.name invalidFilterDecline
-     * @test.id invalidFilterDecline
-     * @test.input invalidXml with wrong filter
-     * @test.expected: XmlSchemaValidationException
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void invalidFilterDeclineCQL() throws Exception {
         try {
-            final Map<String, String[]> filterParams =
-                new HashMap<String, String[]>();
+            final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-            filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-                + NAME_CREATED_BY + "\"=\"Some value\"" });
+            filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + NAME_CREATED_BY + "\"=\"Some value\"" });
             retrieveGrants(filterParams);
-            EscidocRestSoapTestBase.failMissingException(
-                "Retrieving grants with providing corrupt filter"
-                    + " not declined. ", InvalidSearchQueryException.class);
+            EscidocRestSoapTestBase.failMissingException("Retrieving grants with providing corrupt filter"
+                + " not declined. ", InvalidSearchQueryException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                "Retrieving grants with providing corrupt filter"
-                    + "not declined properly. ",
-                InvalidSearchQueryException.class, e);
+            EscidocRestSoapTestBase.assertExceptionType("Retrieving grants with providing corrupt filter"
+                + "not declined properly. ", InvalidSearchQueryException.class, e);
         }
     }
 
     /**
-     * Test successful retrieving a list of existing Grant resources.
-     * Test if maximumRecords=0 delivers 0 Grant
-     * 
-     * @test.name Retrieve Grant - Success.
-     * @test.id emptyFilterZeroMaximumRecords
-     * @test.input Valid filter criteria.
-     * @test.expected: XML representation of the list of Grant
-     *                 containing all Grant.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test successful retrieving a list of existing Grant resources. Test if maximumRecords=0 delivers 0 Grant
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void emptyFilterZeroMaximumRecords() throws Exception {
 
-        final Map <String, String[]> filterParams =
-            new HashMap<String, String[]>();
-            filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] {"0"});
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "0" });
 
         String result = null;
 
@@ -3354,38 +2397,26 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Retrieving of list of Grants failed. ", e);
+            EscidocRestSoapTestBase.failException("Retrieving of list of Grants failed. ", e);
         }
 
         assertXmlValidSrwResponse(result);
-        Document retrievedDocument =
-            EscidocRestSoapTestBase.getDocument(result);
-        NodeList resultNodes =
-            selectNodeList(retrievedDocument,
-                XPATH_SRW_GRANT_LIST_GRANT);
+        Document retrievedDocument = EscidocRestSoapTestBase.getDocument(result);
+        NodeList resultNodes = selectNodeList(retrievedDocument, XPATH_SRW_GRANT_LIST_GRANT);
         final int totalRecordsWithZeroMaximum = resultNodes.getLength();
-        
-        assertEquals("Unexpected number of records.", 
-            totalRecordsWithZeroMaximum, 0);
+
+        assertEquals("Unexpected number of records.", totalRecordsWithZeroMaximum, 0);
 
     }
 
     /**
      * Test successfully retrieving an explain response.
-     * 
-     * @test.name explainTest
-     * @test.id explainTest
-     * @test.input
-     * @test.expected: valid explain response.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void explainTest() throws Exception {
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_EXPLAIN, new String[] { "" });
 
@@ -3402,38 +2433,28 @@ public class GrantFilterAbstractTest extends GrantTestBase {
 
     /**
      * Create systemadmin-users and return userId + handle in hashmap.
-     * 
-     * @param count
-     *            number of sysadmins to create
+     *
+     * @param count number of sysadmins to create
      * @return HashMap containing sysadmins with key=userId and value=handle
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    private ArrayList<HashMap<String, String>> createSysadmins(final int count)
-        throws Exception {
-        ArrayList<HashMap<String, String>> returnList =
-            new ArrayList<HashMap<String, String>>();
+    private ArrayList<HashMap<String, String>> createSysadmins(final int count) throws Exception {
+        ArrayList<HashMap<String, String>> returnList = new ArrayList<HashMap<String, String>>();
         for (int i = 0; i < count; i++) {
             // create user + grant
-            Document user =
-                createSuccessfully("escidoc_useraccount_for_create1.xml");
+            Document user = createSuccessfully("escidoc_useraccount_for_create1.xml");
             final String userId = getObjidValue(user);
-            doTestCreateGrant(null, userId, null,
-                ROLE_HREF_SYSTEM_ADMINISTRATOR, null);
+            doTestCreateGrant(null, userId, null, ROLE_HREF_SYSTEM_ADMINISTRATOR, null);
 
             // update password
-            final String lastModificationDate =
-                getLastModificationDateValue(user);
+            final String lastModificationDate = getLastModificationDateValue(user);
             final String taskParamXML =
-                "<param last-modification-date=\"" + lastModificationDate
-                    + "\" ><password>" + SYSADMIN_PASSWORD
+                "<param last-modification-date=\"" + lastModificationDate + "\" ><password>" + SYSADMIN_PASSWORD
                     + "</password> </param>";
             updatePassword(userId, taskParamXML);
 
             // login to get handle
-            final String loginName =
-                selectSingleNode(user, XPATH_USER_ACCOUNT_LOGINNAME)
-                    .getTextContent();
+            final String loginName = selectSingleNode(user, XPATH_USER_ACCOUNT_LOGINNAME).getTextContent();
             final String handle = login(loginName, SYSADMIN_PASSWORD, true);
 
             // save userId + handle

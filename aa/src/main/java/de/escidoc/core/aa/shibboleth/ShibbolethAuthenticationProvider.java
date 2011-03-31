@@ -8,29 +8,19 @@ public class ShibbolethAuthenticationProvider implements AuthenticationProvider 
 
     /**
      * See Interface for functional description.
-     * 
-     * @param authentication
-     * @return
-     * @throws AuthenticationException
-     * @see AuthenticationProvider
-     *      #authenticate(org.springframework.security.Authentication)
      *
+     * @see AuthenticationProvider #authenticate(org.springframework.security.Authentication)
      */
     @Override
-    public Authentication authenticate(final Authentication authentication)
-        throws AuthenticationException {
+    public Authentication authenticate(final Authentication authentication) throws AuthenticationException {
 
         return supports(authentication.getClass()) ? authentication : null;
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param authentication
-     * @return
-     * @see AuthenticationProvider
-     *      #supports(java.lang.Class)
      *
+     * @see AuthenticationProvider #supports(java.lang.Class)
      */
     @Override
     public boolean supports(final Class authentication) {

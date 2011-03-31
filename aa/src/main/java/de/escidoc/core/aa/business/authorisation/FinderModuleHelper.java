@@ -55,31 +55,24 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Helper class for a finder module.<br>
- * This class provides some methods used in all finder modules of the AA
+ * Helper class for a finder module.<br> This class provides some methods used in all finder modules of the AA
  * component.
- * 
- * @author Torsten Tetteroo
- * 
  *
+ * @author Torsten Tetteroo
  */
 public final class FinderModuleHelper {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FinderModuleHelper.class);
 
-    private static final String ERROR_EXCEPTION_INSTANTIATION =
-        "Could not create ResourceNotFoundException instance.";
+    private static final String ERROR_EXCEPTION_INSTANTIATION = "Could not create ResourceNotFoundException instance.";
 
-    private static final Pattern PATTERN_PARSE_STATUS =
-        Pattern.compile(AttributeIds.STATUS_PREFIX + "(.*)");
+    private static final Pattern PATTERN_PARSE_STATUS = Pattern.compile(AttributeIds.STATUS_PREFIX + "(.*)");
 
     /**
      * Pattern used to convert the object type retrieved from the triple store.
      */
     private static final Pattern PATTERN_CONVERT_TRIPLESTORE_OBJECT_TYPE =
-        Pattern.compile('('
-            + de.escidoc.core.common.business.Constants.RESOURCES_NS_URI
-            + "){0,1}([A-Z])([^A-Z]*)");
+        Pattern.compile('(' + de.escidoc.core.common.business.Constants.RESOURCES_NS_URI + "){0,1}([A-Z])([^A-Z]*)");
 
     private static final int GROUP_NUMBER_TAILING_CHARACTERS = 3;
 
@@ -87,20 +80,15 @@ public final class FinderModuleHelper {
 
     /**
      * Constructor.
-     * 
-     *
      */
     private FinderModuleHelper() {
     }
 
     /**
      * Checks if the provided resource id is the dummy id for new resources.
-     * 
-     * @param resourceId
-     *            The id to check.
-     * @return Returns <code>true</code> if the provided id is the dummy id of
-     *         new resources.
      *
+     * @param resourceId The id to check.
+     * @return Returns <code>true</code> if the provided id is the dummy id of new resources.
      */
     public static boolean isNewResourceId(final String resourceId) {
 
@@ -108,91 +96,65 @@ public final class FinderModuleHelper {
     }
 
     /**
-     * Retrieves the resource attribute with type
-     * http://www.w3.org/2001/XMLSchema#string and the provided id from the
+     * Retrieves the resource attribute with type http://www.w3.org/2001/XMLSchema#string and the provided id from the
      * provided <code>EvaluationCtx</code> object.
-     * 
-     * @param context
-     *            The EvaluationCtx to retrieve the attribute from
-     * @param idUri
-     *            The id of the attribute
-     * @param forceEmptyResultException
-     *            Flag indicating if in case of an empty result bag an exception
-     *            shall be thrown (<code>true</code>) or <code>null</code> shall
-     *            be returned (<code>false</code>).
-     * @return The retrieved attribute value
-     * @throws ResourceNotFoundException
-     *             Thrown if the attribute fetching failed because the resource
-     *             from that it should be fetched does not exist.
-     * @throws WebserverSystemException
-     *             Thrown if an internal error occurred.
      *
+     * @param context                   The EvaluationCtx to retrieve the attribute from
+     * @param idUri                     The id of the attribute
+     * @param forceEmptyResultException Flag indicating if in case of an empty result bag an exception shall be thrown
+     *                                  (<code>true</code>) or <code>null</code> shall be returned
+     *                                  (<code>false</code>).
+     * @return The retrieved attribute value
+     * @throws ResourceNotFoundException Thrown if the attribute fetching failed because the resource from that it
+     *                                   should be fetched does not exist.
+     * @throws WebserverSystemException  Thrown if an internal error occurred.
      */
     public static String retrieveSingleResourceAttribute(
-        final EvaluationCtx context, final URI idUri,
-        final boolean forceEmptyResultException)
+        final EvaluationCtx context, final URI idUri, final boolean forceEmptyResultException)
         throws ResourceNotFoundException, WebserverSystemException {
 
-        return extractSingleResult(idUri, context.getResourceAttribute(
-            Constants.URI_XMLSCHEMA_STRING, idUri, null),
+        return extractSingleResult(idUri, context.getResourceAttribute(Constants.URI_XMLSCHEMA_STRING, idUri, null),
             forceEmptyResultException);
     }
 
     /**
-     * Retrieves the subject attribute with type
-     * http://www.w3.org/2001/XMLSchema#string and the provided id from the
+     * Retrieves the subject attribute with type http://www.w3.org/2001/XMLSchema#string and the provided id from the
      * provided <code>EvaluationCtx</code> object.
-     * 
-     * @param context
-     *            The EvaluationCtx to retrieve the attribute from
-     * @param idUri
-     *            The id of the attribute
-     * @param forceEmptyResultException
-     *            Flag indicating if in case of an empty result bag an exception
-     *            shall be thrown (<code>true</code>) or <code>null</code> shall
-     *            be returned (<code>false</code>).
-     * @return The retrieved attribute value
-     * @throws ResourceNotFoundException
-     *             Thrown if the attribute fetching failed because the resource
-     *             from that it should be fetched does not exist.
-     * @throws WebserverSystemException
-     *             Thrown if an internal error occurred.
      *
+     * @param context                   The EvaluationCtx to retrieve the attribute from
+     * @param idUri                     The id of the attribute
+     * @param forceEmptyResultException Flag indicating if in case of an empty result bag an exception shall be thrown
+     *                                  (<code>true</code>) or <code>null</code> shall be returned
+     *                                  (<code>false</code>).
+     * @return The retrieved attribute value
+     * @throws ResourceNotFoundException Thrown if the attribute fetching failed because the resource from that it
+     *                                   should be fetched does not exist.
+     * @throws WebserverSystemException  Thrown if an internal error occurred.
      */
     public static String retrieveSingleSubjectAttribute(
-        final EvaluationCtx context, final URI idUri,
-        final boolean forceEmptyResultException)
+        final EvaluationCtx context, final URI idUri, final boolean forceEmptyResultException)
         throws ResourceNotFoundException, WebserverSystemException {
 
-        return extractSingleResult(idUri, context.getSubjectAttribute(
-            Constants.URI_XMLSCHEMA_STRING, idUri,
-            Subject.DEFAULT_CATEGORY),
-            forceEmptyResultException);
+        return extractSingleResult(idUri, context.getSubjectAttribute(Constants.URI_XMLSCHEMA_STRING, idUri,
+            Subject.DEFAULT_CATEGORY), forceEmptyResultException);
     }
 
     /**
      * Extracts a single string result from the provided bag.
-     * 
-     * @param idUri
-     *            The attribute id URI for message in case of an error.
-     * @param result
-     *            The <code>EvaluationResult</code> object from that the single
-     *            result shall be extracted.
-     * @param forceEmptyResultException
-     *            Flag indicating if in case of an empty result bag an exception
-     *            shall be thrown (<code>true</code>) or <code>null</code> shall
-     *            be returned (<code>false</code>).
-     * @return Returns the extracted single string.
-     * @throws ResourceNotFoundException
-     *             Thrown if the attribute fetching failed because the resource
-     *             from that it should be fetched does not exist.
-     * @throws WebserverSystemException
-     *             Thrown if an internal error occurred.
      *
+     * @param idUri                     The attribute id URI for message in case of an error.
+     * @param result                    The <code>EvaluationResult</code> object from that the single result shall be
+     *                                  extracted.
+     * @param forceEmptyResultException Flag indicating if in case of an empty result bag an exception shall be thrown
+     *                                  (<code>true</code>) or <code>null</code> shall be returned
+     *                                  (<code>false</code>).
+     * @return Returns the extracted single string.
+     * @throws ResourceNotFoundException Thrown if the attribute fetching failed because the resource from that it
+     *                                   should be fetched does not exist.
+     * @throws WebserverSystemException  Thrown if an internal error occurred.
      */
     private static String extractSingleResult(
-        final URI idUri, final EvaluationResult result,
-        final boolean forceEmptyResultException)
+        final URI idUri, final EvaluationResult result, final boolean forceEmptyResultException)
         throws ResourceNotFoundException, WebserverSystemException {
 
         final BagAttribute bag = (BagAttribute) result.getAttributeValue();
@@ -211,14 +173,10 @@ public final class FinderModuleHelper {
             // handle result that is empty
             if (bag == null || bag.isEmpty()) {
                 if (forceEmptyResultException) {
-                    final StringBuffer errorMsg =
-                        new StringBuffer(idUri.toString());
+                    final StringBuffer errorMsg = new StringBuffer(idUri.toString());
                     errorMsg.append(", bag is null or empty");
-                    throw new WebserverSystemException(
-                            StringUtility
-                                    .format(
-                                            "There should be exactly one attribute in the bag!",
-                                            errorMsg));
+                    throw new WebserverSystemException(StringUtility.format(
+                        "There should be exactly one attribute in the bag!", errorMsg));
                 }
                 else {
                     return null;
@@ -226,14 +184,11 @@ public final class FinderModuleHelper {
             }
             // handle result that contains more than one value
             else {
-                final StringBuffer errorMsg =
-                    new StringBuffer(idUri.toString());
+                final StringBuffer errorMsg = new StringBuffer(idUri.toString());
                 errorMsg.append(", bag.size = ");
                 errorMsg.append(bag.size());
-                throw new WebserverSystemException(StringUtility
-                        .format(
-                                "There should be exactly one attribute in the bag!",
-                                errorMsg));
+                throw new WebserverSystemException(StringUtility.format(
+                    "There should be exactly one attribute in the bag!", errorMsg));
             }
         }
 
@@ -241,59 +196,43 @@ public final class FinderModuleHelper {
     }
 
     /**
-     * Retrieves the resource attribute with type
-     * http://www.w3.org/2001/XMLSchema#string and the provided id from the
+     * Retrieves the resource attribute with type http://www.w3.org/2001/XMLSchema#string and the provided id from the
      * provided <code>EvaluationCtx</code> object.
-     * 
-     * @param context
-     *            The EvaluationCtx to retrieve the attribute from
-     * @param idUri
-     *            The id of the attribute
-     * @param forceEmptyResultException
-     *            Flag indicating if in case of an empty result bag an exception
-     *            shall be thrown (<code>true</code>) or <code>null</code> shall
-     *            be returned (<code>false</code>).
-     * @return The retrieved attribute values as HashSet
-     * @throws ResourceNotFoundException
-     *             Thrown if the attribute fetching failed because the resource
-     *             from that it should be fetched does not exist.
-     * @throws WebserverSystemException
-     *             Thrown if an internal error occurred.
      *
+     * @param context                   The EvaluationCtx to retrieve the attribute from
+     * @param idUri                     The id of the attribute
+     * @param forceEmptyResultException Flag indicating if in case of an empty result bag an exception shall be thrown
+     *                                  (<code>true</code>) or <code>null</code> shall be returned
+     *                                  (<code>false</code>).
+     * @return The retrieved attribute values as HashSet
+     * @throws ResourceNotFoundException Thrown if the attribute fetching failed because the resource from that it
+     *                                   should be fetched does not exist.
+     * @throws WebserverSystemException  Thrown if an internal error occurred.
      */
     public static Set<String> retrieveMultiResourceAttribute(
-        final EvaluationCtx context, final URI idUri,
-        final boolean forceEmptyResultException)
+        final EvaluationCtx context, final URI idUri, final boolean forceEmptyResultException)
         throws ResourceNotFoundException, WebserverSystemException {
 
-        return extractMultiResult(idUri, context.getResourceAttribute(
-            Constants.URI_XMLSCHEMA_STRING, idUri, null),
+        return extractMultiResult(idUri, context.getResourceAttribute(Constants.URI_XMLSCHEMA_STRING, idUri, null),
             forceEmptyResultException);
     }
 
     /**
      * Extracts a multi string result from the provided bag.
-     * 
-     * @param idUri
-     *            The attribute id URI for message in case of an error.
-     * @param result
-     *            The <code>EvaluationResult</code> object from that the single
-     *            result shall be extracted.
-     * @param forceEmptyResultException
-     *            Flag indicating if in case of an empty result bag an exception
-     *            shall be thrown (<code>true</code>) or <code>null</code> shall
-     *            be returned (<code>false</code>).
-     * @return Returns the extracted strings as HashSet.
-     * @throws ResourceNotFoundException
-     *             Thrown if the attribute fetching failed because the resource
-     *             from that it should be fetched does not exist.
-     * @throws WebserverSystemException
-     *             Thrown if an internal error occurred.
      *
+     * @param idUri                     The attribute id URI for message in case of an error.
+     * @param result                    The <code>EvaluationResult</code> object from that the single result shall be
+     *                                  extracted.
+     * @param forceEmptyResultException Flag indicating if in case of an empty result bag an exception shall be thrown
+     *                                  (<code>true</code>) or <code>null</code> shall be returned
+     *                                  (<code>false</code>).
+     * @return Returns the extracted strings as HashSet.
+     * @throws ResourceNotFoundException Thrown if the attribute fetching failed because the resource from that it
+     *                                   should be fetched does not exist.
+     * @throws WebserverSystemException  Thrown if an internal error occurred.
      */
     private static Set<String> extractMultiResult(
-        final URI idUri, final EvaluationResult result,
-        final boolean forceEmptyResultException)
+        final URI idUri, final EvaluationResult result, final boolean forceEmptyResultException)
         throws ResourceNotFoundException, WebserverSystemException {
 
         final Set<String> returnHash = new HashSet<String>();
@@ -312,20 +251,16 @@ public final class FinderModuleHelper {
 
             // handle result that is empty
             if (forceEmptyResultException) {
-                final StringBuffer errorMsg =
-                    new StringBuffer(idUri.toString());
+                final StringBuffer errorMsg = new StringBuffer(idUri.toString());
                 errorMsg.append(", bag is null or empty");
-                throw new WebserverSystemException(StringUtility
-                        .format(
-                                "There should be at least one attribute in the bag!",
-                                errorMsg));
+                throw new WebserverSystemException(StringUtility.format(
+                    "There should be at least one attribute in the bag!", errorMsg));
             }
             else {
                 return returnHash;
             }
         }
-        for (Iterator<StringAttribute> iterator = bag.iterator(); iterator
-            .hasNext();) {
+        for (Iterator<StringAttribute> iterator = bag.iterator(); iterator.hasNext();) {
             returnHash.add(iterator.next().getValue());
         }
 
@@ -333,26 +268,18 @@ public final class FinderModuleHelper {
     }
 
     /**
-     * Converts the status code of the provided status to the corresponding
-     * exception.<br>
-     * If the status indicates the attribute fetching has failed because the
-     * resource to fetch the attribute from could not be found, a
-     * <code>ResourceNotFoundException</code> is thrown. All other errors are
-     * thrown in a <code>WebserverSystemException</code>.
-     * 
-     * @param msg
-     *            The error message.
-     * @param statusCode
-     *            The status code.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
-     * @throws ResourceNotFoundException
-     *             Thrown if a resource does not exist.
+     * Converts the status code of the provided status to the corresponding exception.<br> If the status indicates the
+     * attribute fetching has failed because the resource to fetch the attribute from could not be found, a
+     * <code>ResourceNotFoundException</code> is thrown. All other errors are thrown in a
+     * <code>WebserverSystemException</code>.
      *
+     * @param msg        The error message.
+     * @param statusCode The status code.
+     * @throws WebserverSystemException  Thrown in case of an internal error.
+     * @throws ResourceNotFoundException Thrown if a resource does not exist.
      */
-    private static void convertToException(
-        final String msg, final String statusCode)
-        throws WebserverSystemException, ResourceNotFoundException {
+    private static void convertToException(final String msg, final String statusCode) throws WebserverSystemException,
+        ResourceNotFoundException {
 
         final Matcher matcher = PATTERN_PARSE_STATUS.matcher(statusCode);
         if (matcher.find()) {
@@ -365,34 +292,28 @@ public final class FinderModuleHelper {
             final ResourceNotFoundException exceptionInstance;
             try {
                 exceptionInstance =
-                    (ResourceNotFoundException) Class.forName(
-                        exceptionClassName).getConstructor(
-                        new Class[] { String.class }).newInstance(
-                            msg);
+                    (ResourceNotFoundException) Class.forName(exceptionClassName).getConstructor(
+                        new Class[] { String.class }).newInstance(msg);
             }
             catch (final Exception e) {
-                throw new WebserverSystemException(StringUtility.format(
-                            ERROR_EXCEPTION_INSTANTIATION, exceptionClassName), e);
+                throw new WebserverSystemException(StringUtility.format(ERROR_EXCEPTION_INSTANTIATION,
+                    exceptionClassName), e);
             }
             LOGGER.error(exceptionClassName + ' ' + msg + ' ' + statusCode);
             throw exceptionInstance;
         }
         else {
             // found unexpected "error" status
-            final String emsg =
-                StringUtility.format(
-                        "Error during attribute fetching", msg);
+            final String emsg = StringUtility.format("Error during attribute fetching", msg);
             throw new WebserverSystemException(emsg);
         }
     }
 
     /**
      * Gets the resource id from the provided <code>EvaluationCtx</code>.<br>
-     * 
-     * @param context
-     *            The <code>EvaluationCtx</code> to get the resource id from.
-     * @return Returns the resource id from the <code>EvaluationCtx</code> as a
-     *         <code>String</code>.
+     *
+     * @param context The <code>EvaluationCtx</code> to get the resource id from.
+     * @return Returns the resource id from the <code>EvaluationCtx</code> as a <code>String</code>.
      */
     public static String getResourceId(final EvaluationCtx context) {
 
@@ -402,101 +323,70 @@ public final class FinderModuleHelper {
 
     /**
      * Retrieves values from the triple store using the provided where clause.
-     * 
-     * @param targetIsSubject
-     *            targetIsSubject
-     * @param whereClause
-     *            The where clause to "select" the values that shall be
-     *            returned. This clause should be created by using one of the
-     *            appropriate methods provided by this class.
-     * @param objectId
-     *            The id of the resource object for that the values hall be
-     *            retrieved.
-     * @param predicateId
-     * @param tsu
-     *            The {@link TripleStoreUtility} to use.
-     * @return Returns the specified attribute of the specified resource.<br>
-     *         This is a list of string values and may be empty.
-     * @throws ResourceNotFoundException
-     *             Thrown if a resource with the provided id cannot be found in
-     *             the triple store.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
      *
+     * @param targetIsSubject targetIsSubject
+     * @param whereClause     The where clause to "select" the values that shall be returned. This clause should be
+     *                        created by using one of the appropriate methods provided by this class.
+     * @param objectId        The id of the resource object for that the values hall be retrieved.
+     * @param tsu             The {@link TripleStoreUtility} to use.
+     * @return Returns the specified attribute of the specified resource.<br> This is a list of string values and may be
+     *         empty.
+     * @throws ResourceNotFoundException Thrown if a resource with the provided id cannot be found in the triple store.
+     * @throws SystemException           Thrown in case of an internal error.
      */
     public static List<String> retrieveFromTripleStore(
-        final boolean targetIsSubject, final StringBuffer whereClause,
-        final String objectId, final String predicateId, final TripleStoreUtility tsu)
-        throws ResourceNotFoundException, SystemException {
+        final boolean targetIsSubject, final StringBuffer whereClause, final String objectId, final String predicateId,
+        final TripleStoreUtility tsu) throws ResourceNotFoundException, SystemException {
 
-        final StringBuffer query =
-            tsu.getRetrieveSelectClause(targetIsSubject, predicateId).append(whereClause);
+        final StringBuffer query = tsu.getRetrieveSelectClause(targetIsSubject, predicateId).append(whereClause);
         final List<String> result = tsu.retrieve(query.toString());
 
         return result == null || result.isEmpty() ? handleAttributeFromTripleStoreNotFound(objectId, tsu) : result;
     }
 
     /**
-     * If an attribute for a resource is not found, this can happen, because an
-     * existing resource does not own the searched attribute, or because the
-     * resource itself does not exist. In the first case, an empty list is
-     * returned. In the second case, a <code>ResourceNotFoundException</code>
-     * must be thrown.
-     * 
-     * @param id
-     *            The resource id for that the attribute could not be found.
-     * @param tsu
-     *            The {@link TripleStoreUtility} to use.
+     * If an attribute for a resource is not found, this can happen, because an existing resource does not own the
+     * searched attribute, or because the resource itself does not exist. In the first case, an empty list is returned.
+     * In the second case, a <code>ResourceNotFoundException</code> must be thrown.
+     *
+     * @param id  The resource id for that the attribute could not be found.
+     * @param tsu The {@link TripleStoreUtility} to use.
      * @return Returns an empty list or throws an exception.
-     * @throws ResourceNotFoundException
-     *             Thrown if a resource with the provided id is not found.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     * @throws ResourceNotFoundException Thrown if a resource with the provided id is not found.
+     * @throws SystemException           Thrown in case of an internal error.
      */
-    private static List<String> handleAttributeFromTripleStoreNotFound(
-        final String id, final TripleStoreUtility tsu)
+    private static List<String> handleAttributeFromTripleStoreNotFound(final String id, final TripleStoreUtility tsu)
         throws ResourceNotFoundException, SystemException {
 
         if (tsu.exists(id)) {
             return new ArrayList<String>();
         }
         else {
-            throw new ResourceNotFoundException(StringUtility
-                    .format("Resource not found", id));
+            throw new ResourceNotFoundException(StringUtility.format("Resource not found", id));
         }
     }
 
     /**
-     * Converts from value stored in triple store (e.g.
-     * http://escidoc.de/core/01/resources/OrganizationalUnit) to value used in
-     * attribute-ids and scope-defs (e.g. organizational-unit)
-     * 
-     * @param objectType
-     *            The object type to convert. If this is <code>null</code>,
-     *            <code>null</code> is returned.
-     * @param failOnNoMatch
-     *            If this is <code>true</code>, an exception is thrown if the
-     *            provided object type is not in the format used in triple
-     *            store. Otherwise the provided value is returned.
-     * @return Returns the converted value or the provided value, if conversion
-     *         fails and no exception shall be thrown.
-     * @throws IntegritySystemException
-     *             Thrown if the provided value is not in expected format and
-     *             failOnNoMatch is <code>true</code>.
+     * Converts from value stored in triple store (e.g. http://escidoc.de/core/01/resources/OrganizationalUnit) to value
+     * used in attribute-ids and scope-defs (e.g. organizational-unit)
+     *
+     * @param objectType    The object type to convert. If this is <code>null</code>, <code>null</code> is returned.
+     * @param failOnNoMatch If this is <code>true</code>, an exception is thrown if the provided object type is not in
+     *                      the format used in triple store. Otherwise the provided value is returned.
+     * @return Returns the converted value or the provided value, if conversion fails and no exception shall be thrown.
+     * @throws IntegritySystemException Thrown if the provided value is not in expected format and failOnNoMatch is
+     *                                  <code>true</code>.
      */
-    public static String convertObjectType(
-        final String objectType, final boolean failOnNoMatch)
+    public static String convertObjectType(final String objectType, final boolean failOnNoMatch)
         throws IntegritySystemException {
 
         if (objectType != null) {
-            final Matcher matcher =
-                PATTERN_CONVERT_TRIPLESTORE_OBJECT_TYPE.matcher(objectType);
+            final Matcher matcher = PATTERN_CONVERT_TRIPLESTORE_OBJECT_TYPE.matcher(objectType);
             if (matcher.find()) {
                 final StringBuilder ret = new StringBuilder();
                 boolean hasNext;
                 do {
-                    ret.append(matcher
-                        .group(GROUP_NUMBER_FIRST_CHARACTER).toLowerCase());
+                    ret.append(matcher.group(GROUP_NUMBER_FIRST_CHARACTER).toLowerCase());
                     ret.append(matcher.group(GROUP_NUMBER_TAILING_CHARACTERS));
                     hasNext = matcher.find(matcher.end());
                     if (hasNext) {
@@ -508,9 +398,7 @@ public final class FinderModuleHelper {
                 return ret.toString();
             }
             else if (failOnNoMatch) {
-                throw new IntegritySystemException(StringUtility
-                    .format(
-                            "Unexpected object type retrieved", objectType));
+                throw new IntegritySystemException(StringUtility.format("Unexpected object type retrieved", objectType));
             }
         }
 

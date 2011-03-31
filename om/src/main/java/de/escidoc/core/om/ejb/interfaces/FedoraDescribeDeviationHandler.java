@@ -11,10 +11,9 @@ import java.util.Map;
  */
 public interface FedoraDescribeDeviationHandler extends Remote {
 
-    String getFedoraDescription(Map parameters, SecurityContext securityContext)
-            throws Exception, RemoteException;
+    String getFedoraDescription(Map parameters, SecurityContext securityContext) throws Exception, RemoteException;
 
-    String getFedoraDescription(Map parameters, String authHandle, Boolean restAccess)
-            throws Exception, RemoteException;
+    String getFedoraDescription(Map parameters, String authHandle, Boolean restAccess) throws Exception,
+        RemoteException;
 
 }

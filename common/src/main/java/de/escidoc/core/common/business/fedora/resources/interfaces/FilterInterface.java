@@ -20,26 +20,24 @@
 
 package de.escidoc.core.common.business.fedora.resources.interfaces;
 
-
 /**
- * This is a common interface for all filter classes which are able to transform
- * some kind of a filter language into an SQL fragment which can later be used
- * in the resource cache.
- * 
+ * This is a common interface for all filter classes which are able to transform some kind of a filter language into an
+ * SQL fragment which can later be used in the resource cache.
+ *
  * @author Andr&eacute; Schenk
  */
 public interface FilterInterface {
 
     /**
      * Get the user role id.
-     * 
+     *
      * @return user role id or null
      */
     String getRoleId();
 
     /**
      * Get the user id.
-     * 
+     *
      * @return user id or null
      */
     String getUserId();

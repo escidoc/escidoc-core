@@ -44,9 +44,8 @@ import static org.junit.Assert.assertNotNull;
 
 /**
  * Base class for tests of the mock implementation of the SB resources.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 public class SbTestBase extends EscidocRestSoapTestBase {
 
@@ -61,8 +60,7 @@ public class SbTestBase extends EscidocRestSoapTestBase {
     protected static final int ORGANIZATIONAL_UNIT_HANDLER_CODE = 5;
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public SbTestBase(final int transport) {
         super(transport);
@@ -72,74 +70,54 @@ public class SbTestBase extends EscidocRestSoapTestBase {
     }
 
     /**
-     * @param handlerCode
-     *            the code of the handler to use.
-     * @param xml
-     *            xml of object to create.
+     * @param handlerCode the code of the handler to use.
+     * @param xml         xml of object to create.
      * @return String xml-representation of the created object
-     * @throws Exception
-     *             e
+     * @throws Exception e
      */
-    public String create(final int handlerCode, final String xml)
-        throws Exception {
+    public String create(final int handlerCode, final String xml) throws Exception {
         Object result = getClient(handlerCode).create(xml);
         return handleResult(result);
     }
 
     /**
-     * @param handlerCode
-     *            the code of the handler to use.
-     * @param id
-     *            id to retrieve.
+     * @param handlerCode the code of the handler to use.
+     * @param id          id to retrieve.
      * @return String xml-representation of the retrieved object
-     * @throws Exception
-     *             e
+     * @throws Exception e
      */
-    public String retrieve(final int handlerCode, final String id)
-        throws Exception {
+    public String retrieve(final int handlerCode, final String id) throws Exception {
         Object result = getClient(handlerCode).retrieve(id);
         return handleResult(result);
     }
 
     /**
-     * @param handlerCode
-     *            the code of the handler to use.
-     * @param id
-     *            id to retrieve.
-     * @param xml
-     *            The ou-xml.
+     * @param handlerCode the code of the handler to use.
+     * @param id          id to retrieve.
+     * @param xml         The ou-xml.
      * @return String xml-representation of the retrieved object
-     * @throws Exception
-     *             e
+     * @throws Exception e
      */
-    public String update(
-        final int handlerCode, final String id, final String xml)
-        throws Exception {
+    public String update(final int handlerCode, final String id, final String xml) throws Exception {
         Object result = getClient(handlerCode).update(id, xml);
         return handleResult(result);
     }
 
     /**
-     * Prepares an organizational unit for a test.<br>
-     * The organizational unit is created and set into the specified state.
-     * 
-     * @param creatorUserHandle
-     *            The eSciDoc user handle of the creator.
-     * @param template
-     *            the xml of the org-unit.
-     * @param status
-     *            The status to set for the item. If this is <code>null</code>,
-     *            no item is created and <code>null</code> is returned.
-     * @param parentIds
-     *            parentIds of this orgUnit
-     * @return Returns the XML representation of the created organizational
-     *         unit.
-     * @throws Exception
-     *             If anything fails.
+     * Prepares an organizational unit for a test.<br> The organizational unit is created and set into the specified
+     * state.
+     *
+     * @param creatorUserHandle The eSciDoc user handle of the creator.
+     * @param template          the xml of the org-unit.
+     * @param status            The status to set for the item. If this is <code>null</code>, no item is created and
+     *                          <code>null</code> is returned.
+     * @param parentIds         parentIds of this orgUnit
+     * @return Returns the XML representation of the created organizational unit.
+     * @throws Exception If anything fails.
      */
     public String prepareOrgUnit(
-        final String creatorUserHandle, final Document template,
-        final String status, final String[] parentIds) throws Exception {
+        final String creatorUserHandle, final Document template, final String status, final String[] parentIds)
+        throws Exception {
 
         if (status == null) {
             return null;
@@ -148,9 +126,7 @@ public class SbTestBase extends EscidocRestSoapTestBase {
         PWCallback.setHandle(creatorUserHandle);
         String createdXml = null;
         try {
-            createdXml =
-                create(ORGANIZATIONAL_UNIT_HANDLER_CODE, prepareOrgUnitData(
-                    template, parentIds));
+            createdXml = create(ORGANIZATIONAL_UNIT_HANDLER_CODE, prepareOrgUnitData(template, parentIds));
         }
         catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
@@ -159,8 +135,7 @@ public class SbTestBase extends EscidocRestSoapTestBase {
         Document document = EscidocRestSoapTestBase.getDocument(createdXml);
         final String objidValue = getObjidValue(document);
 
-        if (!ORGANIZATIONAL_UNIT_STATUS_CREATED.equals(status)
-                && !ORGANIZATIONAL_UNIT_STATUS_DELETED.equals(status)) {
+        if (!ORGANIZATIONAL_UNIT_STATUS_CREATED.equals(status) && !ORGANIZATIONAL_UNIT_STATUS_DELETED.equals(status)) {
             Thread.sleep(5000);
             LOGGER.info("opening ou with id " + objidValue);
             createdXml = openOrgUnit(objidValue);
@@ -178,17 +153,13 @@ public class SbTestBase extends EscidocRestSoapTestBase {
 
     /**
      * Prepares the data for an organizational unit.
-     * 
+     *
+     * @param template  name of the template
+     * @param parentIds parentIds of this orgUnit
      * @return Returns the xml representation of an organizational unit.
-     * @param template
-     *            name of the template
-     * @param parentIds
-     *            parentIds of this orgUnit
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    protected String prepareOrgUnitData(
-        final Document template, final String[] parentIds) throws Exception {
+    protected String prepareOrgUnitData(final Document template, final String[] parentIds) throws Exception {
 
         setUniqueValue(template, XPATH_ORGANIZATIONAL_UNIT_TITLE);
 
@@ -199,8 +170,7 @@ public class SbTestBase extends EscidocRestSoapTestBase {
                 parentValues[i] = parentIds[i];
                 parentValues[i + length] = null;
             }
-            orgUnitHelper.insertParentsElement(template,
-                XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS, parentValues, false);
+            orgUnitHelper.insertParentsElement(template, XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS, parentValues, false);
         }
         final String toBeCreatedXml = toString(template, true);
 
@@ -209,12 +179,10 @@ public class SbTestBase extends EscidocRestSoapTestBase {
 
     /**
      * Handles the result of a base service access.
-     * 
-     * @param result
-     *            The result to handle.
+     *
+     * @param result The result to handle.
      * @return Returns the xml response.
-     * @throws Exception
-     *             Thrown if anything fails.
+     * @throws Exception Thrown if anything fails.
      */
     private String handleResult(final Object result) throws Exception {
 
@@ -232,45 +200,35 @@ public class SbTestBase extends EscidocRestSoapTestBase {
 
     /**
      * Opens on Organizational Unit.
-     * 
-     * @param objidValue
-     *            The object-id.
+     *
+     * @param objidValue The object-id.
      * @return Returns the xml response.
-     * @throws Exception
-     *             Thrown if anything fails.
+     * @throws Exception Thrown if anything fails.
      */
     protected String openOrgUnit(final String objidValue) throws Exception {
-        getOrganizationalUnitClient().open(objidValue,
-            orgUnitHelper.getTheLastModificationParam(false, objidValue));
-        String createdXml =
-            retrieve(ORGANIZATIONAL_UNIT_HANDLER_CODE, objidValue);
+        getOrganizationalUnitClient().open(objidValue, orgUnitHelper.getTheLastModificationParam(false, objidValue));
+        String createdXml = retrieve(ORGANIZATIONAL_UNIT_HANDLER_CODE, objidValue);
         return createdXml;
     }
 
     /**
      * Closes on Organizational Unit.
-     * 
-     * @param objidValue
-     *            The object-id.
+     *
+     * @param objidValue The object-id.
      * @return Returns the xml response.
-     * @throws Exception
-     *             Thrown if anything fails.
+     * @throws Exception Thrown if anything fails.
      */
     protected String closeOrgUnit(final String objidValue) throws Exception {
-        getOrganizationalUnitClient().close(objidValue,
-            orgUnitHelper.getTheLastModificationParam(false, objidValue));
-        String createdXml =
-            retrieve(ORGANIZATIONAL_UNIT_HANDLER_CODE, objidValue);
+        getOrganizationalUnitClient().close(objidValue, orgUnitHelper.getTheLastModificationParam(false, objidValue));
+        String createdXml = retrieve(ORGANIZATIONAL_UNIT_HANDLER_CODE, objidValue);
         return createdXml;
     }
 
     /**
      * Deletes on Organizational Unit.
-     * 
-     * @param objidValue
-     *            The object-id.
-     * @throws Exception
-     *             Thrown if anything fails.
+     *
+     * @param objidValue The object-id.
+     * @throws Exception Thrown if anything fails.
      */
     protected void deleteOrgUnit(final String objidValue) throws Exception {
         getOrganizationalUnitClient().delete(objidValue);
@@ -278,31 +236,24 @@ public class SbTestBase extends EscidocRestSoapTestBase {
 
     /**
      * Closes on Organizational Unit.
-     * 
-     * @param objidValue
-     *            The object-id.
-     * @param xml
-     *            The ou-xml.
+     *
+     * @param objidValue The object-id.
+     * @param xml        The ou-xml.
      * @return Returns the xml response.
-     * @throws Exception
-     *             Thrown if anything fails.
+     * @throws Exception Thrown if anything fails.
      */
-    protected String updateMdRecordsOfOrgUnit(
-        final String objidValue, final String xml) throws Exception {
+    protected String updateMdRecordsOfOrgUnit(final String objidValue, final String xml) throws Exception {
         getOrganizationalUnitClient().updateMdRecords(objidValue, xml);
-        String createdXml =
-            retrieve(ORGANIZATIONAL_UNIT_HANDLER_CODE, objidValue);
+        String createdXml = retrieve(ORGANIZATIONAL_UNIT_HANDLER_CODE, objidValue);
         return createdXml;
     }
 
     /**
      * Gets the corresponding client for the provided handler code.
-     * 
-     * @param handlerCode
-     *            The code identifying the handler.
+     *
+     * @param handlerCode The code identifying the handler.
      * @return Returns the client.
-     * @throws Exception
-     *             Thrown if anything fails.
+     * @throws Exception Thrown if anything fails.
      */
     protected ClientBase getClient(final int handlerCode) throws Exception {
 
@@ -313,8 +264,7 @@ public class SbTestBase extends EscidocRestSoapTestBase {
                 client = organizationalUnitClient;
                 break;
             default:
-                throw new Exception("Unknown handler code [" + handlerCode
-                    + "]");
+                throw new Exception("Unknown handler code [" + handlerCode + "]");
         }
 
         return client;

@@ -40,68 +40,45 @@ import java.util.Vector;
 
 /**
  * velocity render for FoXML representation of Item and Item sub-elements.
- * 
+ *
  * @author ??
- * 
  */
 public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface {
 
-    private final VelocityXmlCommonFoXmlRenderer commonRenderer =
-        new VelocityXmlCommonFoXmlRenderer();
+    private final VelocityXmlCommonFoXmlRenderer commonRenderer = new VelocityXmlCommonFoXmlRenderer();
 
     private String buildNumber;
 
     /**
      * See Interface for functional description.
-     * 
-     * @param datastreams
-     * @return
-     * @throws SystemException
      */
     @Override
     public String renderItem(
-        final Map<String, Object> values, final String itemId,
-        final String lastModificationDate, final String[] components,
-        final Map<String, String> properties,
-        final List<Map<String, String>> contentRelations,
-        final Map<String, String> propertiesAsReferences,
+        final Map<String, Object> values, final String itemId, final String lastModificationDate,
+        final String[] components, final Map<String, String> properties,
+        final List<Map<String, String>> contentRelations, final Map<String, String> propertiesAsReferences,
         final Map<String, String> propertiesVersion) throws SystemException {
 
         values.put("title", "Item " + itemId);
-        addRelsExtValues(values, itemId, lastModificationDate, components,
-            properties, contentRelations, propertiesAsReferences,
-            propertiesVersion);
+        addRelsExtValues(values, itemId, lastModificationDate, components, properties, contentRelations,
+            propertiesAsReferences, propertiesVersion);
         return ItemFoXmlProvider.getInstance().getItemFoXml(values);
     }
 
     @Override
-    public String renderComponent(final Map<String, Object> values)
-        throws WebserverSystemException {
+    public String renderComponent(final Map<String, Object> values) throws WebserverSystemException {
         return ItemFoXmlProvider.getInstance().getComponentFoXml(values);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param properties
-     * @param title
-     * @param members
-     * @param adminDescriptorId
-     * @param containerId
-     * @param lastModificationDate
-     * @param contentRelations
-     * @param comment
-     * @return
-     * @throws WebserverSystemException
-     *             cf. Interface
+     *
+     * @throws WebserverSystemException cf. Interface
      * @see de.escidoc.core.om.business.renderer.interfaces.ContainerFoXmlRendererInterface#renderRelsExt(HashMap,
-     *      String, ArrayList, String,
-     *      String, String, Vector,
-     *      String)
+     *      String, ArrayList, String, String, String, Vector, String)
      */
     @Override
-    public String renderDefaultDc(final String componentId)
-        throws WebserverSystemException {
+    public String renderDefaultDc(final String componentId) throws WebserverSystemException {
         final Map<String, Object> values = new HashMap<String, Object>();
         values.put("title", "component " + componentId);
         values.put("componentId", componentId);
@@ -109,18 +86,14 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
     }
 
     private void addRelsExtValues(
-        final Map<String, Object> values, final String itemId,
-        final String lastModificationDate, final String[] components,
-        final Map<String, String> properties,
-        final Collection<Map<String, String>> contentRelations,
-        final Map<String, String> propertiesAsReferences,
-        final Map<String, String> propertiesVersion)
-        throws WebserverSystemException {
+        final Map<String, Object> values, final String itemId, final String lastModificationDate,
+        final String[] components, final Map<String, String> properties,
+        final Collection<Map<String, String>> contentRelations, final Map<String, String> propertiesAsReferences,
+        final Map<String, String> propertiesVersion) throws WebserverSystemException {
 
         addRelsExtNamespaceValues(values);
 
-        propertiesVersion.put(XmlTemplateProvider.LATEST_VERSION_DATE,
-            lastModificationDate);
+        propertiesVersion.put(XmlTemplateProvider.LATEST_VERSION_DATE, lastModificationDate);
 
         if (properties != null && !properties.isEmpty()) {
             values.put("properties", properties);
@@ -131,8 +104,7 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
             this.buildNumber = Utility.getBuildNumber();
         }
 
-        values
-            .put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER, this.buildNumber);
+        values.put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER, this.buildNumber);
         values.put("itemId", itemId);
 
         // values.put("latestVersionUser",
@@ -157,155 +129,95 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
         // values.put("itemNamespace", Constants.ITEM_NAMESPACE_URI);
         // values.put("itemNamespacePrefix", Constants.ITEM_NAMESPACE_PREFIX);
 
-        values.put("escidocPropertiesNamespacePrefix",
-            Constants.PROPERTIES_NS_PREFIX);
+        values.put("escidocPropertiesNamespacePrefix", Constants.PROPERTIES_NS_PREFIX);
         values.put("escidocPropertiesNamespace", Constants.PROPERTIES_NS_URI);
 
-        values.put("escidocPropertiesVersionNamespacePrefix",
-            Constants.VERSION_NS_PREFIX);
-        values.put("escidocPropertiesVersionNamespace",
-            Constants.VERSION_NS_URI);
+        values.put("escidocPropertiesVersionNamespacePrefix", Constants.VERSION_NS_PREFIX);
+        values.put("escidocPropertiesVersionNamespace", Constants.VERSION_NS_URI);
 
-        values.put("escidocPropertiesReleaseNamespacePrefix",
-            Constants.RELEASE_NS_PREFIX);
-        values.put("escidocPropertiesReleaseNamespace",
-            Constants.RELEASE_NS_URI);
+        values.put("escidocPropertiesReleaseNamespacePrefix", Constants.RELEASE_NS_PREFIX);
+        values.put("escidocPropertiesReleaseNamespace", Constants.RELEASE_NS_URI);
 
         values.put("escidocResourcesNamespace", Constants.RESOURCES_NS_URI);
 
-        values.put("escidocRelationsNamespacePrefix",
-            Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
-        values.put("escidocRelationsNamespace",
-            Constants.STRUCTURAL_RELATIONS_NS_URI);
+        values.put("escidocRelationsNamespacePrefix", Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
+        values.put("escidocRelationsNamespace", Constants.STRUCTURAL_RELATIONS_NS_URI);
 
-        values.put("contentRelationsNamespacePrefix",
-            Constants.CONTENT_RELATIONS_NS_PREFIX_IN_RELSEXT);
+        values.put("contentRelationsNamespacePrefix", Constants.CONTENT_RELATIONS_NS_PREFIX_IN_RELSEXT);
 
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param properties
-     * @param title
-     * @param members
-     * @param adminDescriptorId
-     * @param containerId
-     * @param lastModificationDate
-     * @param contentRelations
-     * @param comment
-     * @return
-     * @throws WebserverSystemException
-     *             cf. Interface
+     *
+     * @throws WebserverSystemException cf. Interface
      * @see de.escidoc.core.om.business.renderer.interfaces.ContainerFoXmlRendererInterface#renderRelsExt(HashMap,
-     *      String, ArrayList, String,
-     *      String, String, Vector,
-     *      String)
+     *      String, ArrayList, String, String, String, Vector, String)
      */
     @Override
     public String renderItemRelsExt(
-        final String itemId, final String lastModificationDate,
-        final String[] components, final Map<String, String> properties,
-        final List<Map<String, String>> contentRelations,
-        final Map<String, String> propertiesAsReferences,
-        final Map<String, String> propertiesVersion)
+        final String itemId, final String lastModificationDate, final String[] components,
+        final Map<String, String> properties, final List<Map<String, String>> contentRelations,
+        final Map<String, String> propertiesAsReferences, final Map<String, String> propertiesVersion)
         throws WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
-        addRelsExtValues(values, itemId, lastModificationDate, components,
-            properties, contentRelations, propertiesAsReferences,
-            propertiesVersion);
+        addRelsExtValues(values, itemId, lastModificationDate, components, properties, contentRelations,
+            propertiesAsReferences, propertiesVersion);
 
         return ItemFoXmlProvider.getInstance().getItemRelsExt(values);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param id
-     * @param title
-     * @param versionNo
-     * @param lastModificationDate
-     * @param versionStatus
-     * @param validStatus
-     * @param comment
-     * @return
-     * @throws WebserverSystemException
-     *             cf. Interface
-     * @see de.escidoc.core.om.business.renderer.interfaces.ContainerFoXmlRendererInterface#renderWov(String,
-     *      String, String, String,
-     *      String, String, String)
+     *
+     * @throws WebserverSystemException cf. Interface
+     * @see de.escidoc.core.om.business.renderer.interfaces.ContainerFoXmlRendererInterface#renderWov(String, String,
+     *      String, String, String, String, String)
      */
     @Override
     public String renderWov(
-        final String id, final String title, final String versionNo,
-        final String lastModificationDate, final String versionStatus,
-        final String comment) throws WebserverSystemException {
-        return commonRenderer.renderWov(id, title, versionNo,
-            lastModificationDate, versionStatus, comment,
+        final String id, final String title, final String versionNo, final String lastModificationDate,
+        final String versionStatus, final String comment) throws WebserverSystemException {
+        return commonRenderer.renderWov(id, title, versionNo, lastModificationDate, versionStatus, comment,
             Constants.ITEM_URL_BASE);
     }
 
     /**
      * Render RELS-EXT of a Component.
-     * 
-     * @param id
-     *            Objid of Component.
-     * @param properties
-     *            Component properties
-     * @param inCreate
-     *            Set true if Component is to create, false if it's an update.
+     *
+     * @param id         Objid of Component.
+     * @param properties Component properties
+     * @param inCreate   Set true if Component is to create, false if it's an update.
      * @return RELS-EXT XML representation
-     * 
-     * @throws WebserverSystemException
-     *             Thrown in case of internal error.
+     * @throws WebserverSystemException Thrown in case of internal error.
      */
     @Override
-    public String renderComponentRelsExt(
-        final String id, final Map<String, String> properties,
-        final boolean inCreate) throws WebserverSystemException {
+    public String renderComponentRelsExt(final String id, final Map<String, String> properties, final boolean inCreate)
+        throws WebserverSystemException {
         final Map<String, Object> values = new HashMap<String, Object>();
         addRelsExtNamespaceValues(values);
         if (this.buildNumber == null) {
             this.buildNumber = Utility.getBuildNumber();
         }
-        values.put(XmlTemplateProvider.OBJECT_PID,
-            properties.get(TripleStoreUtility.PROP_OBJECT_PID));
-        values
-            .put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER, this.buildNumber);
+        values.put(XmlTemplateProvider.OBJECT_PID, properties.get(TripleStoreUtility.PROP_OBJECT_PID));
+        values.put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER, this.buildNumber);
         values.put(XmlTemplateProvider.OBJID, id);
-        values.put(XmlTemplateProvider.CREATED_BY_ID,
-            properties.get(TripleStoreUtility.PROP_CREATED_BY_ID));
-        values
-            .put(
-                XmlTemplateProvider.CREATED_BY_TITLE,
-                getEscpapedValue(
-                    properties.get(TripleStoreUtility.PROP_CREATED_BY_TITLE),
-                    false));
+        values.put(XmlTemplateProvider.CREATED_BY_ID, properties.get(TripleStoreUtility.PROP_CREATED_BY_ID));
+        values.put(XmlTemplateProvider.CREATED_BY_TITLE, getEscpapedValue(properties
+            .get(TripleStoreUtility.PROP_CREATED_BY_TITLE), false));
 
-        values
-            .put(
-                XmlTemplateProvider.CONTENT_CATEGORY,
-                getEscpapedValue(properties
-                    .get(TripleStoreUtility.PROP_COMPONENT_CONTENT_CATEGORY),
-                    false));
-        values.put(
-            XmlTemplateProvider.VISIBILITY,
-            getEscpapedValue(
-                    properties.get(TripleStoreUtility.PROP_VISIBILITY),
-                false));
+        values.put(XmlTemplateProvider.CONTENT_CATEGORY, getEscpapedValue(properties
+            .get(TripleStoreUtility.PROP_COMPONENT_CONTENT_CATEGORY), false));
+        values.put(XmlTemplateProvider.VISIBILITY, getEscpapedValue(properties.get(TripleStoreUtility.PROP_VISIBILITY),
+            false));
         if (properties.get(TripleStoreUtility.PROP_MIME_TYPE) != null) {
-            values.put(
-                XmlTemplateProvider.MIME_TYPE,
-                getEscpapedValue(
-                        properties.get(TripleStoreUtility.PROP_MIME_TYPE),
-                    false));
+            values.put(XmlTemplateProvider.MIME_TYPE, getEscpapedValue(properties
+                .get(TripleStoreUtility.PROP_MIME_TYPE), false));
         }
         if (properties.get(TripleStoreUtility.PROP_VALID_STATUS) != null) {
-            values.put(
-                XmlTemplateProvider.VALID_STATUS,
-                getEscpapedValue(properties
-                    .get(TripleStoreUtility.PROP_VALID_STATUS), false));
+            values.put(XmlTemplateProvider.VALID_STATUS, getEscpapedValue(properties
+                .get(TripleStoreUtility.PROP_VALID_STATUS), false));
         }
         if (inCreate) {
             values.put("inCreate", inCreate);
@@ -315,11 +227,9 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
 
     /**
      * Escapes the value for xml.
-     * 
-     * @param value
-     *            The string to escape.
-     * @param isAttribute
-     *            If it is an attribute or element value.
+     *
+     * @param value       The string to escape.
+     * @param isAttribute If it is an attribute or element value.
      * @return The escaped string.
      */
     private static String getEscpapedValue(final String value, final boolean isAttribute) {

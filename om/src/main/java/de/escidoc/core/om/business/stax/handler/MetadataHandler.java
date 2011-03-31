@@ -41,10 +41,8 @@ import java.util.Map;
 
 /**
  * The MetadataHandler.
- * 
- * @author Michael Schneider
- * 
  *
+ * @author Michael Schneider
  */
 public class MetadataHandler extends DefaultHandler {
 
@@ -66,8 +64,7 @@ public class MetadataHandler extends DefaultHandler {
 
     private String mdRecordsPath;
 
-    private final Map<String, Map<String, String>> metadataAttributes =
-        new HashMap<String, Map<String, String>>();
+    private final Map<String, Map<String, String>> metadataAttributes = new HashMap<String, Map<String, String>>();
 
     // FIXME: work around, mandatory md-record name will be defined in a content
     // model
@@ -77,10 +74,8 @@ public class MetadataHandler extends DefaultHandler {
 
     /**
      * Instantiate a MetaDataHandler.
-     * 
-     * @param parser
-     *            The parser.
      *
+     * @param parser The parser.
      */
     public MetadataHandler(final StaxParser parser) {
         this.parser = parser;
@@ -88,18 +83,13 @@ public class MetadataHandler extends DefaultHandler {
 
     /**
      * Handle the start of an element.
-     * 
-     * @param element
-     *            The element.
-     * @return The element.
-     * @throws MissingAttributeValueException
-     * @throws MissingAttributeValueException
-     *             If a required attribute is missing.
      *
+     * @param element The element.
+     * @return The element.
+     * @throws MissingAttributeValueException If a required attribute is missing.
      */
     @Override
-    public StartElement startElement(final StartElement element)
-        throws MissingAttributeValueException {
+    public StartElement startElement(final StartElement element) throws MissingAttributeValueException {
 
         final String currentPath = parser.getCurPath();
         this.mdRecordsPath = "/item/md-records";
@@ -116,9 +106,8 @@ public class MetadataHandler extends DefaultHandler {
             this.nameValue = name.getValue();
 
             if (nameValue.length() == 0) {
-                throw new MissingAttributeValueException("The value of the"
-                    + " \"name\" atribute of the element " + theName
-                    + " is missing");
+                throw new MissingAttributeValueException("The value of the" + " \"name\" atribute of the element "
+                    + theName + " is missing");
 
             }
             if (nameValue.equals(MANDATORY_MD_RECORD_NAME)) {
@@ -153,7 +142,7 @@ public class MetadataHandler extends DefaultHandler {
 
             metadataAttributes.put(this.nameValue, md);
         }
-        else if (this.isInside && ! this.isRootMetadataElement) {
+        else if (this.isInside && !this.isRootMetadataElement) {
             this.isRootMetadataElement = true;
             if (this.nameValue.equals(MANDATORY_MD_RECORD_NAME)) {
                 this.escidocMdRecordNameSpace = element.getNamespace();
@@ -166,41 +155,32 @@ public class MetadataHandler extends DefaultHandler {
 
     /**
      * Handle the end of an element.
-     * 
-     * @param element
-     *            The element.
-     * @throws MissingMdRecordException
-     *             Thrown if a mentatory meta data datastream is missing
-     *             (refernced by name).
-     * @return The element.
      *
+     * @param element The element.
+     * @return The element.
+     * @throws MissingMdRecordException Thrown if a mentatory meta data datastream is missing (refernced by name).
      */
     @Override
-    public EndElement endElement(final EndElement element)
-        throws MissingMdRecordException {
+    public EndElement endElement(final EndElement element) throws MissingMdRecordException {
         if (elementPath.equals(parser.getCurPath())) {
 
             this.isInside = false;
             this.isRootMetadataElement = false;
             this.nameValue = null;
         }
-        else if (mdRecordsPath.equals(parser.getCurPath())
-            && ! this.isMandatoryName) {
-            throw new MissingMdRecordException("Mandatory md-record with a name "
-                    + MANDATORY_MD_RECORD_NAME + " is missing.");
+        else if (mdRecordsPath.equals(parser.getCurPath()) && !this.isMandatoryName) {
+            throw new MissingMdRecordException("Mandatory md-record with a name " + MANDATORY_MD_RECORD_NAME
+                + " is missing.");
         }
         return element;
     }
 
     /**
      * Handle the character section of an element.
-     * 
-     * @param s
-     *            The contents of the character section.
-     * @param element
-     *            The element.
-     * @return The character section.
      *
+     * @param s       The contents of the character section.
+     * @param element The element.
+     * @return The character section.
      */
     @Override
     public String characters(final String s, final StartElement element) {
@@ -223,9 +203,8 @@ public class MetadataHandler extends DefaultHandler {
     }
 
     /**
-     * Retrieves a namespace uri of a child element of "md-record" element,
-     * whose attribute "name" set to "escidoc".
-     * 
+     * Retrieves a namespace uri of a child element of "md-record" element, whose attribute "name" set to "escidoc".
+     *
      * @return namespace
      */
     public String getEscidocMdRecordNameSpace() {

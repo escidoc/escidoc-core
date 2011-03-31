@@ -39,8 +39,7 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
     }
 
     // TODO ContentModelHandlerBase ?
-    protected void setContentModel(final String id)
-        throws ContentModelNotFoundException, SystemException {
+    protected void setContentModel(final String id) throws ContentModelNotFoundException, SystemException {
 
         try {
             this.contentModel = new ContentModel(id);
@@ -54,10 +53,9 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
     }
 
     // TODO ContentHandlerRetrieve ?
-    protected String render() throws WebserverSystemException,
-        ContentModelNotFoundException, TripleStoreSystemException,
-        IntegritySystemException, XmlParserSystemException,
-        EncodingSystemException, FedoraSystemException {
+    protected String render() throws WebserverSystemException, ContentModelNotFoundException,
+        TripleStoreSystemException, IntegritySystemException, XmlParserSystemException, EncodingSystemException,
+        FedoraSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
 
@@ -65,39 +63,32 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
         values.putAll(getPropertiesValues(getContentModel()));
         values.putAll(getMdRecordDefinitionsValues(getContentModel()));
         values.putAll(getResourceDefinitionsValues(getContentModel()));
-        values.put(XmlTemplateProvider.CONTENT_STREAMS,
-            renderContentStreams(false));
+        values.put(XmlTemplateProvider.CONTENT_STREAMS, renderContentStreams(false));
         values.putAll(getResourcesValues(getContentModel()));
 
         return ContentModelXmlProvider.getInstance().getContentModelXml(values);
     }
 
     // TODO ContentHandlerRetrieve ?
-    protected String renderProperties() throws ContentModelNotFoundException,
-        WebserverSystemException, TripleStoreSystemException,
-        IntegritySystemException, XmlParserSystemException,
-        EncodingSystemException, FedoraSystemException {
+    protected String renderProperties() throws ContentModelNotFoundException, WebserverSystemException,
+        TripleStoreSystemException, IntegritySystemException, XmlParserSystemException, EncodingSystemException,
+        FedoraSystemException {
 
         final Map<String, String> values = getCommonValues(getContentModel());
         values.putAll(getPropertiesValues(getContentModel()));
-        values.put(XmlTemplateProvider.IS_ROOT_PROPERTIES,
-            XmlTemplateProvider.TRUE);
-        return ContentModelXmlProvider
-            .getInstance().getContentModelPropertiesXml(values);
+        values.put(XmlTemplateProvider.IS_ROOT_PROPERTIES, XmlTemplateProvider.TRUE);
+        return ContentModelXmlProvider.getInstance().getContentModelPropertiesXml(values);
     }
 
     // TODO ContentHandlerRetrieve ?
-    protected String renderResources() throws ContentModelNotFoundException,
-        WebserverSystemException, TripleStoreSystemException,
-        IntegritySystemException, XmlParserSystemException,
-        EncodingSystemException, FedoraSystemException {
+    protected String renderResources() throws ContentModelNotFoundException, WebserverSystemException,
+        TripleStoreSystemException, IntegritySystemException, XmlParserSystemException, EncodingSystemException,
+        FedoraSystemException {
 
         final Map<String, String> values = getCommonValues(getContentModel());
         values.putAll(getResourcesValues(getContentModel()));
-        values.put(XmlTemplateProvider.IS_ROOT_RESOURCES,
-            XmlTemplateProvider.TRUE);
-        return ContentModelXmlProvider
-            .getInstance().getContentModelResourcesXml(values);
+        values.put(XmlTemplateProvider.IS_ROOT_RESOURCES, XmlTemplateProvider.TRUE);
+        return ContentModelXmlProvider.getInstance().getContentModelResourcesXml(values);
     }
 
     // TODO ContentHandlerRetrieve ?
@@ -111,10 +102,8 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
     }
 
     // TODO ContentModelHandlerRetrieve ?
-    protected String renderContentStreams(final boolean isRoot)
-        throws WebserverSystemException, EncodingSystemException,
-        FedoraSystemException, IntegritySystemException,
-        TripleStoreSystemException {
+    protected String renderContentStreams(final boolean isRoot) throws WebserverSystemException,
+        EncodingSystemException, FedoraSystemException, IntegritySystemException, TripleStoreSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
 
@@ -122,34 +111,29 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
         values.putAll(commonValues);
 
         final StringBuilder content = new StringBuilder();
-        for (final String contentStreamName : getContentModel()
-                .getContentStreams().keySet()) {
+        for (final String contentStreamName : getContentModel().getContentStreams().keySet()) {
             content.append(renderContentStream(contentStreamName, false));
         }
-        values.put(XmlTemplateProvider.VAR_CONTENT_STREAMS_HREF,
-            getContentModel().getHref() + Constants.CONTENT_STREAMS_URL_PART);
-        values.put(XmlTemplateProvider.VAR_CONTENT_STREAMS_TITLE,
-            "Content streams of Item " + getContentModel().getId());
+        values.put(XmlTemplateProvider.VAR_CONTENT_STREAMS_HREF, getContentModel().getHref()
+            + Constants.CONTENT_STREAMS_URL_PART);
+        values.put(XmlTemplateProvider.VAR_CONTENT_STREAMS_TITLE, "Content streams of Item "
+            + getContentModel().getId());
 
         if (content.length() == 0) {
             return "";
         }
 
         if (isRoot) {
-            values.put(XmlTemplateProvider.IS_ROOT_SUB_RESOURCE,
-                XmlTemplateProvider.TRUE);
+            values.put(XmlTemplateProvider.IS_ROOT_SUB_RESOURCE, XmlTemplateProvider.TRUE);
         }
-        values.put(XmlTemplateProvider.VAR_CONTENT_STREAMS_CONTENT,
-            content.toString());
-        return ContentModelXmlProvider.getInstance().getContentStreamsXml(
-            values);
+        values.put(XmlTemplateProvider.VAR_CONTENT_STREAMS_CONTENT, content.toString());
+        return ContentModelXmlProvider.getInstance().getContentStreamsXml(values);
 
     }
 
     // TODO ContentModelHandlerRetrieve ?
-    protected String renderContentStream(final String name, final boolean isRoot)
-        throws WebserverSystemException, IntegritySystemException,
-        TripleStoreSystemException {
+    protected String renderContentStream(final String name, final boolean isRoot) throws WebserverSystemException,
+        IntegritySystemException, TripleStoreSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
 
@@ -164,18 +148,14 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
         values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_NAME, ds.getName());
         values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_TITLE, ds.getLabel());
         String location = ds.getLocation();
-        if ("M".equals(ds.getControlGroup())
-            || "X".equals(ds.getControlGroup())) {
-            values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_STORAGE,
-                Constants.STORAGE_INTERNAL_MANAGED);
+        if ("M".equals(ds.getControlGroup()) || "X".equals(ds.getControlGroup())) {
+            values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_STORAGE, Constants.STORAGE_INTERNAL_MANAGED);
             location =
-                getContentModel().getHref() + Constants.CONTENT_STREAM_URL_PART
-                    + '/' + ds.getName()
+                getContentModel().getHref() + Constants.CONTENT_STREAM_URL_PART + '/' + ds.getName()
                     + Constants.CONTENT_STREAM_CONTENT_URL_EXTENSION;
             if ("X".equals(ds.getControlGroup())) {
                 try {
-                    values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_CONTENT,
-                        ds.toStringUTF8());
+                    values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_CONTENT, ds.toStringUTF8());
                 }
                 catch (final EncodingSystemException e) {
                     throw new WebserverSystemException(e);
@@ -183,24 +163,19 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
             }
         }
         else if ("E".equals(ds.getControlGroup())) {
-            values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_STORAGE,
-                Constants.STORAGE_EXTERNAL_MANAGED);
+            values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_STORAGE, Constants.STORAGE_EXTERNAL_MANAGED);
             location =
-                getContentModel().getHref() + Constants.CONTENT_STREAM_URL_PART
-                    + '/' + ds.getName()
+                getContentModel().getHref() + Constants.CONTENT_STREAM_URL_PART + '/' + ds.getName()
                     + Constants.CONTENT_STREAM_CONTENT_URL_EXTENSION;
 
         }
         else if ("R".equals(ds.getControlGroup())) {
-            values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_STORAGE,
-                Constants.STORAGE_EXTERNAL_URL);
+            values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_STORAGE, Constants.STORAGE_EXTERNAL_URL);
         }
-        values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_MIME_TYPE,
-            ds.getMimeType());
+        values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_MIME_TYPE, ds.getMimeType());
         values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_HREF, location);
 
-        return ContentModelXmlProvider
-            .getInstance().getContentStreamXml(values);
+        return ContentModelXmlProvider.getInstance().getContentStreamXml(values);
     }
 
     /*
@@ -208,18 +183,15 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
      */
 
     // TODO ContentHandlerRetrieve ?
+
     /**
      * Get Common values from ContentModel.
-     * 
-     * @param contentModel
-     *            The ContentModel.
+     *
+     * @param contentModel The ContentModel.
      * @return Map with common ContentModel values.
-     * 
-     * @throws WebserverSystemException
-     *             Thrown if values extracting failed.
+     * @throws WebserverSystemException Thrown if values extracting failed.
      */
-    private Map<String, String> getCommonValues(final ContentModel contentModel)
-        throws WebserverSystemException {
+    private Map<String, String> getCommonValues(final ContentModel contentModel) throws WebserverSystemException {
 
         final Map<String, String> values = new HashMap<String, String>();
 
@@ -229,17 +201,13 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
         values.put(XmlTemplateProvider.HREF, getContentModel().getHref());
 
         try {
-            values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE,
-                Iso8601Util.getIso8601(Iso8601Util.parseIso8601(contentModel
-                    .getLastModificationDate())));
+            values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, Iso8601Util.getIso8601(Iso8601Util
+                .parseIso8601(contentModel.getLastModificationDate())));
         }
         catch (final ParseException e) {
             try {
-                throw new WebserverSystemException(
-                    "Unable to parse last-modification-date '"
-                        + contentModel.getLastModificationDate()
-                        + "' of content model '" + contentModel.getId() + "'!",
-                    e);
+                throw new WebserverSystemException("Unable to parse last-modification-date '"
+                    + contentModel.getLastModificationDate() + "' of content model '" + contentModel.getId() + "'!", e);
             }
             catch (final FedoraSystemException e1) {
                 throw new WebserverSystemException(e1);
@@ -249,74 +217,47 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
             throw new WebserverSystemException(e);
         }
 
-        values
-            .put(
-                XmlTemplateProvider.VAR_CONTENT_MODEL_NAMESPACE_PREFIX,
-                de.escidoc.core.common.business.Constants.CONTENT_MODEL_NAMESPACE_PREFIX);
-        values
-            .put(
-                XmlTemplateProvider.VAR_CONTENT_MODEL_NAMESPACE,
-                de.escidoc.core.common.business.Constants.CONTENT_MODEL_NAMESPACE_URI);
-        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL,
-            XmlUtility.getEscidocBaseUrl());
+        values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_NAMESPACE_PREFIX,
+            de.escidoc.core.common.business.Constants.CONTENT_MODEL_NAMESPACE_PREFIX);
+        values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_NAMESPACE,
+            de.escidoc.core.common.business.Constants.CONTENT_MODEL_NAMESPACE_URI);
+        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, XmlUtility.getEscidocBaseUrl());
         values.put(XmlTemplateProvider.VAR_XLINK_NAMESPACE_PREFIX,
             de.escidoc.core.common.business.Constants.XLINK_NS_PREFIX);
-        values.put(XmlTemplateProvider.VAR_XLINK_NAMESPACE,
-            de.escidoc.core.common.business.Constants.XLINK_NS_URI);
+        values.put(XmlTemplateProvider.VAR_XLINK_NAMESPACE, de.escidoc.core.common.business.Constants.XLINK_NS_URI);
 
         values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS,
             de.escidoc.core.common.business.Constants.PROPERTIES_NS_URI);
         values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX,
             de.escidoc.core.common.business.Constants.PROPERTIES_NS_PREFIX);
-        values
-            .put(
-                XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX,
-                de.escidoc.core.common.business.Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
-        values
-            .put(
-                XmlTemplateProvider.ESCIDOC_SREL_NS,
-                de.escidoc.core.common.business.Constants.STRUCTURAL_RELATIONS_NS_URI);
-        values.put("versionNamespacePrefix",
-            de.escidoc.core.common.business.Constants.VERSION_NS_PREFIX);
-        values.put("versionNamespace",
-            de.escidoc.core.common.business.Constants.VERSION_NS_URI);
-        values.put("releaseNamespacePrefix",
-            de.escidoc.core.common.business.Constants.RELEASE_NS_PREFIX);
-        values.put("releaseNamespace",
-            de.escidoc.core.common.business.Constants.RELEASE_NS_URI);
+        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX,
+            de.escidoc.core.common.business.Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
+        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS,
+            de.escidoc.core.common.business.Constants.STRUCTURAL_RELATIONS_NS_URI);
+        values.put("versionNamespacePrefix", de.escidoc.core.common.business.Constants.VERSION_NS_PREFIX);
+        values.put("versionNamespace", de.escidoc.core.common.business.Constants.VERSION_NS_URI);
+        values.put("releaseNamespacePrefix", de.escidoc.core.common.business.Constants.RELEASE_NS_PREFIX);
+        values.put("releaseNamespace", de.escidoc.core.common.business.Constants.RELEASE_NS_URI);
 
-        values
-            .put(
-                XmlTemplateProvider.VAR_CONTENT_STREAM_NS_PREFIX,
-                de.escidoc.core.common.business.Constants.CONTENT_STREAMS_NAMESPACE_PREFIX);
-        values
-            .put(
-                XmlTemplateProvider.VAR_CONTENT_STREAM_NS,
-                de.escidoc.core.common.business.Constants.CONTENT_STREAMS_NAMESPACE_URI);
+        values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_NS_PREFIX,
+            de.escidoc.core.common.business.Constants.CONTENT_STREAMS_NAMESPACE_PREFIX);
+        values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_NS,
+            de.escidoc.core.common.business.Constants.CONTENT_STREAMS_NAMESPACE_URI);
 
         return values;
     }
 
     // TODO ContentModelHandlerRetrieve ?
+
     /**
      * Prepare properties values from content model resource as velocity values.
-     * 
-     * @param contentModel
-     *            The Content Model.
+     *
+     * @param contentModel The Content Model.
      * @return Map with properties values (for velocity template)
-     * 
-     * @throws TripleStoreSystemException
-     * @throws WebserverSystemException
-     * @throws IntegritySystemException
-     * @throws XmlParserSystemException
-     * @throws EncodingSystemException
-     * @throws FedoraSystemException
-     * @throws ContentModelNotFoundException
      */
     private static Map<String, String> getPropertiesValues(final ContentModel contentModel)
-            throws TripleStoreSystemException, WebserverSystemException, IntegritySystemException,
-        XmlParserSystemException, EncodingSystemException,
-        FedoraSystemException, ContentModelNotFoundException {
+        throws TripleStoreSystemException, WebserverSystemException, IntegritySystemException,
+        XmlParserSystemException, EncodingSystemException, FedoraSystemException, ContentModelNotFoundException {
 
         // retrieve properties from resource (the resource decided where are the
         // data to load, TripleStore or Wov)
@@ -326,8 +267,7 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
         final Map<String, String> values = new HashMap<String, String>();
 
         values.put(XmlTemplateProvider.VAR_PROPERTIES_TITLE, "Properties");
-        values.put(XmlTemplateProvider.VAR_PROPERTIES_HREF,
-            contentModel.getHref() + Constants.PROPERTIES_URL_PART);
+        values.put(XmlTemplateProvider.VAR_PROPERTIES_HREF, contentModel.getHref() + Constants.PROPERTIES_URL_PART);
 
         // FIXME description not in map? (FRS)
         final String debug = contentModel.getDescription();
@@ -335,44 +275,36 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
         values.put(XmlTemplateProvider.VAR_DESCRIPTION, debug);
 
         try {
-            values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_CREATION_DATE,
-                contentModel.getCreationDate());
+            values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_CREATION_DATE, contentModel.getCreationDate());
         }
         catch (final TripleStoreSystemException e) {
             throw new ContentModelNotFoundException(e);
         }
 
-        values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_CREATED_BY_TITLE,
-            properties.get(PropertyMapKeys.CREATED_BY_TITLE));
+        values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_CREATED_BY_TITLE, properties
+            .get(PropertyMapKeys.CREATED_BY_TITLE));
         values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_CREATED_BY_HREF,
             de.escidoc.core.common.business.Constants.USER_ACCOUNT_URL_BASE
                 + properties.get(PropertyMapKeys.CREATED_BY_ID));
-        values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_CREATED_BY_ID,
-            properties.get(PropertyMapKeys.CREATED_BY_ID));
+        values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_CREATED_BY_ID, properties.get(PropertyMapKeys.CREATED_BY_ID));
 
-        values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_STATUS,
-            contentModel.getStatus());
-        values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_STATUS_COMMENT,
-            properties.get(PropertyMapKeys.PUBLIC_STATUS_COMMENT));
+        values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_STATUS, contentModel.getStatus());
+        values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_STATUS_COMMENT, properties
+            .get(PropertyMapKeys.PUBLIC_STATUS_COMMENT));
 
         if (contentModel.hasObjectPid()) {
-            values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_OBJECT_PID,
-                contentModel.getObjectPid());
+            values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_OBJECT_PID, contentModel.getObjectPid());
         }
 
         if (contentModel.isLocked()) {
             values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_LOCK_STATUS,
                 de.escidoc.core.common.business.Constants.STATUS_LOCKED);
-            values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_LOCK_DATE,
-                contentModel.getLockDate());
+            values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_LOCK_DATE, contentModel.getLockDate());
             final String lockOwnerId = contentModel.getLockOwner();
-            values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_LOCK_OWNER_ID,
-                lockOwnerId);
+            values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_LOCK_OWNER_ID, lockOwnerId);
             values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_LOCK_OWNER_HREF,
-                de.escidoc.core.common.business.Constants.USER_ACCOUNT_URL_BASE
-                    + lockOwnerId);
-            values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_LOCK_OWNER_TITLE,
-                contentModel.getLockOwnerTitle());
+                de.escidoc.core.common.business.Constants.USER_ACCOUNT_URL_BASE + lockOwnerId);
+            values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_LOCK_OWNER_TITLE, contentModel.getLockOwnerTitle());
         }
         else {
             values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_LOCK_STATUS,
@@ -380,106 +312,69 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
         }
 
         // version
-        final StringBuilder versionIdBase =
-                new StringBuilder(contentModel.getId()).append(':');
+        final StringBuilder versionIdBase = new StringBuilder(contentModel.getId()).append(':');
 
-        values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_CURRENT_VERSION_HREF,
-            contentModel.getVersionHref());
+        values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_CURRENT_VERSION_HREF, contentModel.getVersionHref());
         // de.escidoc.core.common.business.Constants.CONTENT_MODEL_URL_BASE
         // + currentVersionId);
-        values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_CURRENT_VERSION_ID,
-            contentModel.getFullId());
-        values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_CURRENT_VERSION_TITLE,
-            "This Version");
-        values.put(
-            XmlTemplateProvider.VAR_CONTENT_MODEL_CURRENT_VERSION_NUMBER,
-            contentModel.getVersionId());
+        values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_CURRENT_VERSION_ID, contentModel.getFullId());
+        values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_CURRENT_VERSION_TITLE, "This Version");
+        values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_CURRENT_VERSION_NUMBER, contentModel.getVersionId());
         // properties.get(TripleStoreUtility.PROP_CURRENT_VERSION_NUMBER));
-        values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_CURRENT_VERSION_DATE,
-            contentModel.getVersionDate());
+        values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_CURRENT_VERSION_DATE, contentModel.getVersionDate());
         // properties.get(TripleStoreUtility.PROP_VERSION_DATE));
-        values.put(
-            XmlTemplateProvider.VAR_CONTENT_MODEL_CURRENT_VERSION_STATUS,
-            contentModel.getVersionStatus());
+        values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_CURRENT_VERSION_STATUS, contentModel.getVersionStatus());
         // properties.get(TripleStoreUtility.PROP_CURRENT_VERSION_STATUS));
-        values.put(
-            XmlTemplateProvider.VAR_CONTENT_MODEL_CURRENT_VERSION_VALID_STATUS,
-            properties.get(PropertyMapKeys.CURRENT_VERSION_VALID_STATUS));
-        values.put(
-            XmlTemplateProvider.VAR_CONTENT_MODEL_CURRENT_VERSION_COMMENT,
-            properties.get(PropertyMapKeys.CURRENT_VERSION_VERSION_COMMENT));
+        values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_CURRENT_VERSION_VALID_STATUS, properties
+            .get(PropertyMapKeys.CURRENT_VERSION_VALID_STATUS));
+        values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_CURRENT_VERSION_COMMENT, properties
+            .get(PropertyMapKeys.CURRENT_VERSION_VERSION_COMMENT));
 
-        values
-            .put(
-                XmlTemplateProvider.VAR_CONTENT_MODEL_CURRENT_VERSION_MODIFIED_BY_ID,
-                properties.get(PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_ID));
-        values
-            .put(
-                XmlTemplateProvider.VAR_CONTENT_MODEL_CURRENT_VERSION_MODIFIED_BY_TITLE,
-                properties
-                    .get(PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_TITLE));
+        values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_CURRENT_VERSION_MODIFIED_BY_ID, properties
+            .get(PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_ID));
+        values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_CURRENT_VERSION_MODIFIED_BY_TITLE, properties
+            .get(PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_TITLE));
 
         // href is rest only value
-        values
-            .put(
-                XmlTemplateProvider.VAR_CONTENT_MODEL_CURRENT_VERSION_MODIFIED_BY_HREF,
-                de.escidoc.core.common.business.Constants.USER_ACCOUNT_URL_BASE
-                    + properties
-                        .get(PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_ID));
+        values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_CURRENT_VERSION_MODIFIED_BY_HREF,
+            de.escidoc.core.common.business.Constants.USER_ACCOUNT_URL_BASE
+                + properties.get(PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_ID));
 
         // PID ---------------------------------------------------
         if (contentModel.hasVersionPid()) {
-            values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_VERSION_PID,
-                contentModel.getVersionPid());
+            values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_VERSION_PID, contentModel.getVersionPid());
         }
 
         final String latestVersionId = contentModel.getLatestVersionId();
         values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_LATEST_VERSION_HREF,
-            de.escidoc.core.common.business.Constants.CONTENT_MODEL_URL_BASE
-                + latestVersionId);
-        values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_LATEST_VERSION_TITLE,
-            "Latest Version");
-        values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_LATEST_VERSION_ID,
-            latestVersionId);
-        values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_LATEST_VERSION_NUMBER,
-            properties.get(PropertyMapKeys.LATEST_VERSION_NUMBER));
-        values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_LATEST_VERSION_DATE,
-            properties.get(PropertyMapKeys.LATEST_VERSION_DATE));
+            de.escidoc.core.common.business.Constants.CONTENT_MODEL_URL_BASE + latestVersionId);
+        values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_LATEST_VERSION_TITLE, "Latest Version");
+        values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_LATEST_VERSION_ID, latestVersionId);
+        values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_LATEST_VERSION_NUMBER, properties
+            .get(PropertyMapKeys.LATEST_VERSION_NUMBER));
+        values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_LATEST_VERSION_DATE, properties
+            .get(PropertyMapKeys.LATEST_VERSION_DATE));
 
         // if contentModel is released
         // -------------------------------------------------
         if (properties.get(PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER) != null) {
 
-            values.put(
-                XmlTemplateProvider.VAR_CONTENT_MODEL_LATEST_RELEASE_NUMBER,
-                properties.get(PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER));
+            values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_LATEST_RELEASE_NUMBER, properties
+                .get(PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER));
 
             // ! changes versionIdBase
             final String latestRevisonId =
-                versionIdBase
-                    .append(
-                        properties
-                            .get(PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER))
-                    .toString();
-            values
-                .put(
-                    XmlTemplateProvider.VAR_CONTENT_MODEL_LATEST_RELEASE_HREF,
-                    de.escidoc.core.common.business.Constants.CONTENT_MODEL_URL_BASE
-                        + latestRevisonId);
-            values.put(
-                XmlTemplateProvider.VAR_CONTENT_MODEL_LATEST_RELEASE_TITLE,
-                "Latest public version");
-            values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_LATEST_RELEASE_ID,
-                latestRevisonId);
-            values.put(
-                XmlTemplateProvider.VAR_CONTENT_MODEL_LATEST_RELEASE_DATE,
-                properties.get(PropertyMapKeys.LATEST_RELEASE_VERSION_DATE));
+                versionIdBase.append(properties.get(PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER)).toString();
+            values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_LATEST_RELEASE_HREF,
+                de.escidoc.core.common.business.Constants.CONTENT_MODEL_URL_BASE + latestRevisonId);
+            values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_LATEST_RELEASE_TITLE, "Latest public version");
+            values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_LATEST_RELEASE_ID, latestRevisonId);
+            values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_LATEST_RELEASE_DATE, properties
+                .get(PropertyMapKeys.LATEST_RELEASE_VERSION_DATE));
 
             final String latestReleasePid = contentModel.getLatestReleasePid();
             if (latestReleasePid != null) {
-                values.put(
-                    XmlTemplateProvider.VAR_CONTENT_MODEL_LATEST_RELEASE_PID,
-                    latestReleasePid);
+                values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_LATEST_RELEASE_PID, latestReleasePid);
             }
         }
 
@@ -487,9 +382,8 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
     }
 
     // TODO ContentModelHandlerRetrieve ?
-    private Map<String, Object> getMdRecordDefinitionsValues(
-        final ContentModel contentModel) throws IntegritySystemException,
-        WebserverSystemException {
+    private Map<String, Object> getMdRecordDefinitionsValues(final ContentModel contentModel)
+        throws IntegritySystemException, WebserverSystemException {
 
         // get name and schema-href for every md-record datastream definition
         // from DC_COMPOSITE datastream
@@ -506,43 +400,35 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
         // </dsCompositeModel>
 
         final Map<String, Object> values = new HashMap<String, Object>();
-        final Collection<Map<String, String>> mdRecordDefinitions =
-            new ArrayList<Map<String, String>>();
+        final Collection<Map<String, String>> mdRecordDefinitions = new ArrayList<Map<String, String>>();
 
         // get dsTypeModel/@ID entries from datastream DS-COMPOSITE-MODEL
-        final List<DsTypeModel> datastreamEntries =
-            getContentModel().getMdRecordDefinitionIDs();
+        final List<DsTypeModel> datastreamEntries = getContentModel().getMdRecordDefinitionIDs();
 
         if (datastreamEntries != null) {
             for (final DsTypeModel datastreamEntry : datastreamEntries) {
                 final Map<String, String> mdRecordDefinition = new HashMap<String, String>();
                 mdRecordDefinition.put("name", datastreamEntry.getName());
                 if (datastreamEntry.hasSchema()) {
-                    mdRecordDefinition
-                            .put(
-                                    "schemaHref",
-                                    de.escidoc.core.common.business.Constants.CONTENT_MODEL_URL_BASE
-                                            + getContentModel().getId()
-                                            + "/md-record-definitions/md-record-definition/"
-                                            + datastreamEntry.getName() + "/schema/content");
+                    mdRecordDefinition.put("schemaHref",
+                        de.escidoc.core.common.business.Constants.CONTENT_MODEL_URL_BASE + getContentModel().getId()
+                            + "/md-record-definitions/md-record-definition/" + datastreamEntry.getName()
+                            + "/schema/content");
                 }
                 mdRecordDefinitions.add(mdRecordDefinition);
             }
         }
 
         if (!mdRecordDefinitions.isEmpty()) {
-            values.put(
-                XmlTemplateProvider.VAR_CONTENT_MODEL_MDRECORD_DEFINITIONS,
-                mdRecordDefinitions);
+            values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_MDRECORD_DEFINITIONS, mdRecordDefinitions);
         }
 
         return values;
     }
 
     // TODO ContentModelHandlerRetrieve ?
-    private Map<String, Object> getResourceDefinitionsValues(
-        final ContentModel contentModel) throws TripleStoreSystemException,
-        WebserverSystemException {
+    private Map<String, Object> getResourceDefinitionsValues(final ContentModel contentModel)
+        throws TripleStoreSystemException, WebserverSystemException {
 
         // for every xslt service definition bound to this content model
         // get the operation name and create a URL for the datastream "xslt"
@@ -550,34 +436,29 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
         // the XSLT is retrieved and stored in the service definition object)
 
         final Map<String, Object> values = new HashMap<String, Object>();
-        final Collection<Map<String, String>> resourceDefinitions =
-            new ArrayList<Map<String, String>>();
+        final Collection<Map<String, String>> resourceDefinitions = new ArrayList<Map<String, String>>();
 
         // FIXME do not use triplestore
 
         final Collection<String> methodNames = new ArrayList<String>();
         // <info:fedora/fedora-system:def/model#hasService>
         final List<String> sdefs =
-            getTripleStoreUtility().getPropertiesElementsVector(
-                getContentModel().getId(),
+            getTripleStoreUtility().getPropertiesElementsVector(getContentModel().getId(),
                 "info:fedora/fedora-system:def/model#hasService");
         // <info:fedora/fedora-system:def/model#definesMethod>
         // and
         // TODO <http://escidoc.de/core/01/tmp/transforms>
         for (final String sdef : sdefs) {
-            methodNames.add(getTripleStoreUtility().getProperty(
-                    sdef,
-                    "info:fedora/fedora-system:def/model#definesMethod"));
+            methodNames.add(getTripleStoreUtility().getProperty(sdef,
+                "info:fedora/fedora-system:def/model#definesMethod"));
         }
 
         if (!methodNames.isEmpty()) {
             for (final String methodName : methodNames) {
-                final Map<String, String> resourceDefinition =
-                        new HashMap<String, String>();
+                final Map<String, String> resourceDefinition = new HashMap<String, String>();
                 resourceDefinition.put("name", methodName);
                 resourceDefinition.put("xsltHref", getContentModel().getHref()
-                        + "/resource-definitions/resource-definition/" + methodName
-                        + "/xslt/content");
+                    + "/resource-definitions/resource-definition/" + methodName + "/xslt/content");
                 // FIXME get from service deployment
                 // <http://escidoc.de/core/01/tmp/transforms>
                 // it's just a name or
@@ -590,9 +471,7 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
         }
 
         if (!resourceDefinitions.isEmpty()) {
-            values.put(
-                XmlTemplateProvider.VAR_CONTENT_MODEL_RESOURCE_DEFINITIONS,
-                resourceDefinitions);
+            values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_RESOURCE_DEFINITIONS, resourceDefinitions);
         }
 
         return values;
@@ -600,7 +479,7 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
 
     // TODO ContentModelHandlerRetrieve ?
     private static Map<String, String> getResourcesValues(final FedoraResource contentModel)
-            throws WebserverSystemException {
+        throws WebserverSystemException {
         final Map<String, String> values = new HashMap<String, String>();
         values.put(XmlTemplateProvider.RESOURCES_TITLE, "Resources");
         values.put("resourcesHref", contentModel.getHref() + "/resources");

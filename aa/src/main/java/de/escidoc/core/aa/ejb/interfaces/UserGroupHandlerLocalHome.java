@@ -9,6 +9,7 @@ import javax.ejb.EJBLocalHome;
 public interface UserGroupHandlerLocalHome extends EJBLocalHome {
 
     String COMP_NAME = "java:comp/env/ejb/UserGroupHandlerLocal";
+
     String JNDI_NAME = "ejb/UserGroupHandlerLocal";
 
     UserGroupHandlerLocal create() throws CreateException;

@@ -26,59 +26,47 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 
 /**
  * Interface of a PIDGenerator obtained from PIDGeneratorFactory.
- * 
+ *
  * @author Frank Schwichtenberg
- * 
  */
 public interface PIDSystem {
 
     /**
-     * Assign a Persistent Identifier. Create an Identifier and register the
-     * values in the configured Persistent Identifier System.
-     * 
-     * @param systemID
-     *            The system identifier of the resource.
-     * @param param
-     *            The XML snippet with the values for the PIDManagement System
-     *            (or Generator system)
+     * Assign a Persistent Identifier. Create an Identifier and register the values in the configured Persistent
+     * Identifier System.
+     *
+     * @param systemID The system identifier of the resource.
+     * @param param    The XML snippet with the values for the PIDManagement System (or Generator system)
      * @return XML snippet with the assigned PID.
-     * @throws PidSystemException
-     *             Thrown if communication with the PID System fails.
+     * @throws PidSystemException       Thrown if communication with the PID System fails.
      * @throws MissingMethodParameterException
-     *             Thrown if parameter is missing or is invalid.
-     * @throws WebserverSystemException
-     *             Thrown if reading of eSciDoc properties failed.
-     * 
-     * <pre>
-     * &lt;param&gt;
-     *    &lt;pid&gt;protocol:persistent identifier&lt;/pid&gt;
-     * &lt;/param&gt;
-     * </pre>
+     *                                  Thrown if parameter is missing or is invalid.
+     * @throws WebserverSystemException Thrown if reading of eSciDoc properties failed.
+     *                                  <p/>
+     *                                  <pre>
+     *                                  &lt;param&gt;
+     *                                     &lt;pid&gt;protocol:persistent identifier&lt;/pid&gt;
+     *                                  &lt;/param&gt;
+     *                                  </pre>
      */
-    String assignPID(final String systemID, final String param)
-        throws PidSystemException, MissingMethodParameterException,
-        WebserverSystemException;
+    String assignPID(final String systemID, final String param) throws PidSystemException,
+        MissingMethodParameterException, WebserverSystemException;
 
     /**
-     * Generate a new PID that is guaranteed to be unique for the object with
-     * the given system id.
-     * 
-     * @param systemID
-     *            The id of the object.
+     * Generate a new PID that is guaranteed to be unique for the object with the given system id.
+     *
+     * @param systemID The id of the object.
      * @return The generated PID.
-     * @throws PidSystemException
-     *             Thrown if communication with the PID System fails.
+     * @throws PidSystemException Thrown if communication with the PID System fails.
      * @throws MissingMethodParameterException
-     *             Thrown if parameter is missing or is invalid.
+     *                            Thrown if parameter is missing or is invalid.
      */
-    String generatePID(String systemID) throws PidSystemException,
-        MissingMethodParameterException;
+    String generatePID(String systemID) throws PidSystemException, MissingMethodParameterException;
 
     /**
      * Register pid to ensure it is never generated.
-     * 
-     * @param pid
-     *            The persistent identifier.
+     *
+     * @param pid The persistent identifier.
      */
     void neverGeneratePID(String pid);
 }

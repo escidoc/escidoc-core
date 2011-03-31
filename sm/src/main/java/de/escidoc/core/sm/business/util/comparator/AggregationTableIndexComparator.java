@@ -36,27 +36,20 @@ import java.util.Comparator;
 
 /**
  * Sorts AggregationTableIndex-Objects according to their listIndex.
- * 
- * @author Michael Hoppe
  *
+ * @author Michael Hoppe
  */
-public class AggregationTableIndexComparator 
-        implements Comparator<AggregationTableIndexe>,Serializable {
+public class AggregationTableIndexComparator implements Comparator<AggregationTableIndexe>, Serializable {
 
     /**
      * compares listIndex.
-     * 
+     *
      * @param a1 AggregationTableIndexe1
      * @param a2 AggregationTableIndexe2
      * @return Returns compare result.
-     * 
-     *
      */
     @Override
-    public int compare(
-            final AggregationTableIndexe a1, 
-            final AggregationTableIndexe a2) {
-        return Integer.toString(a1.getListIndex())
-                .compareTo(Integer.toString(a2.getListIndex()));
+    public int compare(final AggregationTableIndexe a1, final AggregationTableIndexe a2) {
+        return Integer.toString(a1.getListIndex()).compareTo(Integer.toString(a2.getListIndex()));
     }
 }

@@ -37,20 +37,16 @@ import org.apache.http.HttpResponse;
 import javax.xml.rpc.ServiceException;
 
 /**
- * Offers access methods to the escidoc REST and soap interface of the user
- * management wrapper.
- * 
+ * Offers access methods to the escidoc REST and soap interface of the user management wrapper.
+ *
  * @author Torsten Tetteroo
- * 
  */
 public class UserManagementWrapperClient extends ClientBase {
 
     private UserManagementWrapper soapClient = null;
 
     /**
-     * 
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public UserManagementWrapperClient(final int transport) {
         super(transport);
@@ -58,87 +54,60 @@ public class UserManagementWrapperClient extends ClientBase {
 
     /**
      * Login an user.
-     * 
-     * @param loginName
-     *            The login name of the user.
-     * @param password
-     *            The password of the user.
-     * @param expectedAuthenticationFailure
-     *            Flag indicating that the provided values should cause a failed
-     *            authentication, i.e. login page will be presented to the user
-     *            as the result.
-     * @param accountIsDeactivated
-     *            Flag indicating that the authenticated user account should be
-     *            deactivated.
-     * @param targetUrl
-     *            The target url to that the user shall be redirected.
-     * @param encodeTargetUrlSlashes
-     *            Flag indicating that the slashes contained in the targetUrl
-     *            shall be encoded (<code>true</code>) or shall not be
-     *            encoded (<code>false</code>).
+     *
+     * @param loginName                     The login name of the user.
+     * @param password                      The password of the user.
+     * @param expectedAuthenticationFailure Flag indicating that the provided values should cause a failed
+     *                                      authentication, i.e. login page will be presented to the user as the
+     *                                      result.
+     * @param accountIsDeactivated          Flag indicating that the authenticated user account should be deactivated.
+     * @param targetUrl                     The target url to that the user shall be redirected.
+     * @param encodeTargetUrlSlashes        Flag indicating that the slashes contained in the targetUrl shall be encoded
+     *                                      (<code>true</code>) or shall not be encoded (<code>false</code>).
      * @return The HttpMethod after the service call (REST).
-     * @throws Exception
-     *             If the service call fails.
+     * @throws Exception If the service call fails.
      */
     public HttpResponse login(
-        final String loginName, final String password,
-        final boolean expectedAuthenticationFailure,
-        final boolean accountIsDeactivated, final String targetUrl,
-        final boolean encodeTargetUrlSlashes) throws Exception {
+        final String loginName, final String password, final boolean expectedAuthenticationFailure,
+        final boolean accountIsDeactivated, final String targetUrl, final boolean encodeTargetUrlSlashes)
+        throws Exception {
 
-        return HttpHelper.performLogin(getHttpClient(), loginName, password,
-            expectedAuthenticationFailure, accountIsDeactivated, targetUrl,
-            encodeTargetUrlSlashes);
+        return HttpHelper.performLogin(getHttpClient(), loginName, password, expectedAuthenticationFailure,
+            accountIsDeactivated, targetUrl, encodeTargetUrlSlashes);
     }
 
     /**
      * Logout an user.
-     * 
-     * @param userHandle
-     *            The eSciDOc user handle that shall be sent in the cookie of
-     *            the logout request.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param userHandle The eSciDOc user handle that shall be sent in the cookie of the logout request.
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     public Object logout(final String userHandle) throws Exception {
 
-        return HttpHelper
-            .performLogout(getHttpClient(), null, userHandle, true);
+        return HttpHelper.performLogout(getHttpClient(), null, userHandle, true);
     }
 
     /**
      * Logout an user.
-     * 
-     * @param redirectUrl
-     *            The target to that the user shall be redirected after being
-     *            logged out. This may be <code>null</code> (no redirect).
-     * @param userHandle
-     *            The eSciDOc user handle that shall be sent in the cookie of
-     *            the logout request.
-     * @param encodeRedirectUrlSlashes
-     *            Flag indicating that the slashes contained in the redirectUrl
-     *            shall be encoded (<code>true</code>) or shall not be
-     *            encoded (<code>false</code>).
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param redirectUrl              The target to that the user shall be redirected after being logged out. This may
+     *                                 be <code>null</code> (no redirect).
+     * @param userHandle               The eSciDOc user handle that shall be sent in the cookie of the logout request.
+     * @param encodeRedirectUrlSlashes Flag indicating that the slashes contained in the redirectUrl shall be encoded
+     *                                 (<code>true</code>) or shall not be encoded (<code>false</code>).
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
-    public Object logout(
-        final String redirectUrl, final String userHandle,
-        final boolean encodeRedirectUrlSlashes) throws Exception {
+    public Object logout(final String redirectUrl, final String userHandle, final boolean encodeRedirectUrlSlashes)
+        throws Exception {
 
-        return HttpHelper.performLogout(getHttpClient(), redirectUrl,
-            userHandle, encodeRedirectUrlSlashes);
+        return HttpHelper.performLogout(getHttpClient(), redirectUrl, userHandle, encodeRedirectUrlSlashes);
     }
 
     /**
-     * 
      * @return Returns the soapClient.
-     * @throws ServiceException
-     *             If the client creation fails.
+     * @throws ServiceException If the client creation fails.
      */
     @Override
     public UserManagementWrapper getSoapClient() throws ServiceException {
@@ -146,9 +115,8 @@ public class UserManagementWrapperClient extends ClientBase {
         if (soapClient == null) {
             UserManagementWrapperServiceLocator serviceLocator =
                 new UserManagementWrapperServiceLocator(getEngineConfig());
-            serviceLocator
-                .setUserManagementWrapperServiceEndpointAddress(checkSoapAddress(serviceLocator
-                    .getUserManagementWrapperServiceAddress()));
+            serviceLocator.setUserManagementWrapperServiceEndpointAddress(checkSoapAddress(serviceLocator
+                .getUserManagementWrapperServiceAddress()));
             soapClient = serviceLocator.getUserManagementWrapperService();
         }
         return soapClient;

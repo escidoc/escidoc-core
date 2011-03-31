@@ -24,11 +24,9 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 
 import java.util.Map;
 
-public final
-class ActionXmlProvider extends InfrastructureXmlProvider {
+public final class ActionXmlProvider extends InfrastructureXmlProvider {
 
-    private static final String UNSECURED_ACTIONS_RESOURCE_NAME =
-        "unsecured-actions";
+    private static final String UNSECURED_ACTIONS_RESOURCE_NAME = "unsecured-actions";
 
     private static final String ACTION_PATH = "/action";
 
@@ -36,8 +34,7 @@ class ActionXmlProvider extends InfrastructureXmlProvider {
 
     private static final ActionXmlProvider PROVIDER = new ActionXmlProvider();
 
-    public String getUnsecuredActionsXml(final Map values)
-        throws WebserverSystemException {
+    public String getUnsecuredActionsXml(final Map values) throws WebserverSystemException {
 
         return getXml(UNSECURED_ACTIONS_RESOURCE_NAME, RESOURCES_PATH, values);
     }
@@ -50,12 +47,9 @@ class ActionXmlProvider extends InfrastructureXmlProvider {
 
     /**
      * Gets the action xml PROVIDER.
-     * 
-     * @return Returns the <code>ActionXmlProvider</code> object.
-     * @throws WebserverSystemException
-     *             Thrown if the instance cannot be created due to an internal
-     *             error.
      *
+     * @return Returns the <code>ActionXmlProvider</code> object.
+     * @throws WebserverSystemException Thrown if the instance cannot be created due to an internal error.
      */
     public static ActionXmlProvider getInstance() {
         return PROVIDER;

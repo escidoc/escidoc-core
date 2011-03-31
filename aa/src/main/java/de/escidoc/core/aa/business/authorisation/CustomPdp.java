@@ -72,13 +72,11 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * This is a custom XACML PDP. It sets up an eSciDoc specific configuration of
- * the Sun-specific XACML PDP.<p/>
- * 
+ * This is a custom XACML PDP. It sets up an eSciDoc specific configuration of the Sun-specific XACML PDP.<p/>
+ * <p/>
  * For setup see constructor definition.
- * 
- * @author Roland Werner (Accenture)
  *
+ * @author Roland Werner (Accenture)
  */
 public class CustomPdp {
 
@@ -121,48 +119,32 @@ public class CustomPdp {
 
     /**
      * Default constructor. This creates a CustomPdp programmatically. <p/>
-     * 
-     * The configuration in detail:
-     * <ul>
-     * <li>As a policy finder the <code>DatabasePolicyFinderModule</code> is
-     * used</li>
-     * <li>In order to retrieve system-specific subject attributes, the
-     * <code>UserAccountAttributeFinderModule</code> Attribute Finder Module
-     * is used.</li>
-     * <li>In order to retrieve system-specific resource attributes, the
-     * <code>ResourceAttributeFinderModule</code> Attribute Finder Module is
-     * used.</li>
-     * </ul>
-     * 
-     * @throws Exception
-     *             exception thrown if something during setup of the
-     *             configuration goes wrong.
-     * 
+     * <p/>
+     * The configuration in detail: <ul> <li>As a policy finder the <code>DatabasePolicyFinderModule</code> is used</li>
+     * <li>In order to retrieve system-specific subject attributes, the <code>UserAccountAttributeFinderModule</code>
+     * Attribute Finder Module is used.</li> <li>In order to retrieve system-specific resource attributes, the
+     * <code>ResourceAttributeFinderModule</code> Attribute Finder Module is used.</li> </ul>
+     *
+     * @throws Exception exception thrown if something during setup of the configuration goes wrong.
      * @see UserAccountAttributeFinderModule
      * @see ResourceAttributeFinderModule
      * @see DatabasePolicyFinderModule
-     *
      */
     public CustomPdp() throws Exception {
 
     }
 
     /**
-     * Initilizes the pdp.<br>
-     * This must be called before the first access to the wrapped pdp.
-     * 
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
-     * 
+     * Initilizes the pdp.<br> This must be called before the first access to the wrapped pdp.
      *
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     private void init() throws WebserverSystemException {
 
         // setup the PolicyFinder that this PDP will use
         final PolicyFinder policyFinder = new PolicyFinder();
         databasePolicyFinder.setPolicyFinder(policyFinder);
-        final Set<PolicyFinderModule> policyModules =
-            new HashSet<PolicyFinderModule>();
+        final Set<PolicyFinderModule> policyModules = new HashSet<PolicyFinderModule>();
         policyModules.add(this.databasePolicyFinder);
         policyFinder.setModules(policyModules);
 
@@ -171,8 +153,7 @@ public class CustomPdp {
         // that unlike with the policy finder, the order matters here. See the
         // the javadocs for more details.
         final AttributeFinder attributeFinder = new AttributeFinder();
-        final List<AttributeFinderModule> attributeModules =
-            new ArrayList<AttributeFinderModule>();
+        final List<AttributeFinderModule> attributeModules = new ArrayList<AttributeFinderModule>();
         // first the standard XACML Modules
         attributeModules.add(new CurrentEnvModule());
         attributeModules.add(new SelectorModule());
@@ -201,8 +182,7 @@ public class CustomPdp {
         attributeFinder.setModules(attributeModules);
 
         // Setup the FunctionFactory
-        final FunctionFactoryProxy proxy =
-            StandardFunctionFactory.getNewFactoryProxy();
+        final FunctionFactoryProxy proxy = StandardFunctionFactory.getNewFactoryProxy();
         final FunctionFactory factory = proxy.getTargetFactory();
         factory.addFunction(new XacmlFunctionContains());
         factory.addFunction(new XacmlFunctionIsIn());
@@ -217,54 +197,38 @@ public class CustomPdp {
     }
 
     /**
-     * Evaluates the given request and returns the Response that the PDP will
-     * hand back to the PEP.
-     * 
-     * @param requestFile
-     *            the name of a file that contains a Request
-     * 
-     * @return the result of the evaluation
-     * 
-     * @throws IOException
-     *             if there is a problem accessing the file
-     * @throws ParsingException
-     *             if the Request is invalid
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
+     * Evaluates the given request and returns the Response that the PDP will hand back to the PEP.
      *
+     * @param requestFile the name of a file that contains a Request
+     * @return the result of the evaluation
+     * @throws IOException              if there is a problem accessing the file
+     * @throws ParsingException         if the Request is invalid
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    public ResponseCtx evaluate(final String requestFile) throws IOException,
-        ParsingException, WebserverSystemException {
+    public ResponseCtx evaluate(final String requestFile) throws IOException, ParsingException,
+        WebserverSystemException {
 
         if (this.pdp == null) {
             init();
         }
 
         // setup the request based on the file
-        final RequestCtx request =
-            RequestCtx.getInstance(new FileInputStream(requestFile));
+        final RequestCtx request = RequestCtx.getInstance(new FileInputStream(requestFile));
 
         // evaluate the request
         return pdp.evaluate(request);
     }
 
     /**
-     * Evaluates the given request and returns the Response that the PDP will
-     * hand back to the PEP.<p/>
-     * 
+     * Evaluates the given request and returns the Response that the PDP will hand back to the PEP.<p/>
+     * <p/>
      * This is the method currently in use for the AA component.
-     * 
-     * @param request
-     *            the request to evaluate
-     * 
-     * @return the result of the evaluation
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
      *
-     * 
+     * @param request the request to evaluate
+     * @return the result of the evaluation
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    public ResponseCtx evaluate(final RequestCtx request)
-        throws WebserverSystemException {
+    public ResponseCtx evaluate(final RequestCtx request) throws WebserverSystemException {
 
         if (this.pdp == null) {
             init();
@@ -275,176 +239,118 @@ public class CustomPdp {
     }
 
     /**
-     * Injects the <code>DatabasePolicyFinderModule</code> if "called" via
-     * Spring.
-     * 
-     * @param databasePolicyFinder
-     *            <code>DatabasePolicyFinderModule</code> object to inject.
+     * Injects the <code>DatabasePolicyFinderModule</code> if "called" via Spring.
      *
+     * @param databasePolicyFinder <code>DatabasePolicyFinderModule</code> object to inject.
      */
-    public void setDatabasePolicyFinder(
-        final DatabasePolicyFinderModule databasePolicyFinder) {
+    public void setDatabasePolicyFinder(final DatabasePolicyFinderModule databasePolicyFinder) {
         this.databasePolicyFinder = databasePolicyFinder;
     }
 
     /**
-     * Injects the <code>{@link CheckProvidedAttributeFinderModule}</code> if
-     * "called" via Spring.
-     * 
-     * @param checkProvidedAttrFinder
-     *            <code>CheckProvidedAttributeFinderModule</code> object to
-     *            inject.
+     * Injects the <code>{@link CheckProvidedAttributeFinderModule}</code> if "called" via Spring.
      *
+     * @param checkProvidedAttrFinder <code>CheckProvidedAttributeFinderModule</code> object to inject.
      */
-    public void setCheckProvidedAttrFinder(
-        final CheckProvidedAttributeFinderModule checkProvidedAttrFinder) {
+    public void setCheckProvidedAttrFinder(final CheckProvidedAttributeFinderModule checkProvidedAttrFinder) {
         this.checkProvidedAttrFinder = checkProvidedAttrFinder;
     }
 
     /**
-     * Injects the <code>ResourceNotFoundAttributeFinderModule</code> if
-     * "called" via Spring.
-     * 
-     * @param resourceNotFoundAttrFinder
-     *            <code>ResourceNotFoundAttributeFinderModule</code> object to
-     *            inject.
+     * Injects the <code>ResourceNotFoundAttributeFinderModule</code> if "called" via Spring.
      *
+     * @param resourceNotFoundAttrFinder <code>ResourceNotFoundAttributeFinderModule</code> object to inject.
      */
-    public void setResourceNotFoundAttrFinder(
-        final ResourceNotFoundAttributeFinderModule resourceNotFoundAttrFinder) {
+    public void setResourceNotFoundAttrFinder(final ResourceNotFoundAttributeFinderModule resourceNotFoundAttrFinder) {
         this.resourceNotFoundAttrFinder = resourceNotFoundAttrFinder;
     }
 
     /**
-     * Injects the <code>PartlyResolveableAttributeFinderModule</code> if
-     * "called" via Spring.
-     * 
-     * @param partlyResolveableAttrFinder
-     *            <code>PartlyResolveableAttributeFinderModule</code> object
-     *            to inject.
+     * Injects the <code>PartlyResolveableAttributeFinderModule</code> if "called" via Spring.
      *
+     * @param partlyResolveableAttrFinder <code>PartlyResolveableAttributeFinderModule</code> object to inject.
      */
-    public void setPartlyResolveableAttrFinder(
-        final PartlyResolveableAttributeFinderModule partlyResolveableAttrFinder) {
+    public void setPartlyResolveableAttrFinder(final PartlyResolveableAttributeFinderModule partlyResolveableAttrFinder) {
         this.partlyResolveableAttrFinder = partlyResolveableAttrFinder;
     }
 
     /**
-     * Injects the <code>ObjectTypeAttributeFinderModule</code> if "called"
-     * via Spring.
-     * 
-     * @param objectTypeAttrFinder
-     *            <code>ObjectTypeAttributeFinderModule</code> object to
-     *            inject.
+     * Injects the <code>ObjectTypeAttributeFinderModule</code> if "called" via Spring.
      *
+     * @param objectTypeAttrFinder <code>ObjectTypeAttributeFinderModule</code> object to inject.
      */
-    public void setObjectTypeAttrFinder(
-        final ObjectTypeAttributeFinderModule objectTypeAttrFinder) {
+    public void setObjectTypeAttrFinder(final ObjectTypeAttributeFinderModule objectTypeAttrFinder) {
         this.objectTypeAttrFinder = objectTypeAttrFinder;
     }
 
     /**
-     * Injects the <code>ResourceAttributeFinderModule</code> if "called" via
-     * Spring.
-     * 
-     * @param resourceAttrFinder
-     *            <code>ResourceAttributeFinderModule</code> object to inject.
+     * Injects the <code>ResourceAttributeFinderModule</code> if "called" via Spring.
      *
+     * @param resourceAttrFinder <code>ResourceAttributeFinderModule</code> object to inject.
      */
-    public void setResourceAttrFinder(
-        final ResourceAttributeFinderModule resourceAttrFinder) {
+    public void setResourceAttrFinder(final ResourceAttributeFinderModule resourceAttrFinder) {
         this.resourceAttrFinder = resourceAttrFinder;
     }
 
     /**
-     * Injects the <code>ResourceIdentifierAttributeFinderModule</code> if
-     * "called" via Spring.
-     * 
-     * @param resourceIdAttrFinder
-     *            <code>ResourceIdentifierAttributeFinderModule</code> object
-     *            to inject.
+     * Injects the <code>ResourceIdentifierAttributeFinderModule</code> if "called" via Spring.
      *
+     * @param resourceIdAttrFinder <code>ResourceIdentifierAttributeFinderModule</code> object to inject.
      */
-    public void setResourceIdAttrFinderModule(
-        final ResourceIdentifierAttributeFinderModule resourceIdAttrFinder) {
+    public void setResourceIdAttrFinderModule(final ResourceIdentifierAttributeFinderModule resourceIdAttrFinder) {
         this.resourceIdAttrFinderModule = resourceIdAttrFinder;
     }
 
     /**
-     * Injects the <code>RoleAttributeFinderModule</code> if "called" via
-     * Spring.
-     * 
-     * @param roleAttrFinder
-     *            <code>RoleAttributeFinderModule</code> object to inject.
+     * Injects the <code>RoleAttributeFinderModule</code> if "called" via Spring.
      *
+     * @param roleAttrFinder <code>RoleAttributeFinderModule</code> object to inject.
      */
     public void setRoleAttrFinder(final RoleAttributeFinderModule roleAttrFinder) {
         this.roleAttrFinder = roleAttrFinder;
     }
 
     /**
-     * Injects the <code>TripleStoreAttributeFinderModule</code> if "called"
-     * via Spring.
-     * 
-     * @param tripleStoreAttrFinder
-     *            <code>tripleStoreAttributeFinderModule</code> object to
-     *            inject.
+     * Injects the <code>TripleStoreAttributeFinderModule</code> if "called" via Spring.
      *
+     * @param tripleStoreAttrFinder <code>tripleStoreAttributeFinderModule</code> object to inject.
      */
-    public void setTripleStoreAttrFinder(
-        final TripleStoreAttributeFinderModule tripleStoreAttrFinder) {
+    public void setTripleStoreAttrFinder(final TripleStoreAttributeFinderModule tripleStoreAttrFinder) {
         this.tripleStoreAttrFinder = tripleStoreAttrFinder;
     }
 
     /**
-     * Injects the <code>UserAccountAttributeFinderModule</code> if "called"
-     * via Spring.
-     * 
-     * @param userAccountAttrFinder
-     *            <code>UserAccountAttributeFinderModule</code> object to
-     *            inject.
+     * Injects the <code>UserAccountAttributeFinderModule</code> if "called" via Spring.
      *
+     * @param userAccountAttrFinder <code>UserAccountAttributeFinderModule</code> object to inject.
      */
-    public void setUserAccountAttrFinder(
-        final UserAccountAttributeFinderModule userAccountAttrFinder) {
+    public void setUserAccountAttrFinder(final UserAccountAttributeFinderModule userAccountAttrFinder) {
         this.userAccountAttrFinder = userAccountAttrFinder;
     }
 
     /**
-     * Injects the <code>UserGroupAttributeFinderModule</code> if "called"
-     * via Spring.
-     * 
-     * @param userGroupAttrFinder
-     *            <code>UserGroupAttributeFinderModule</code> object to
-     *            inject.
+     * Injects the <code>UserGroupAttributeFinderModule</code> if "called" via Spring.
      *
+     * @param userGroupAttrFinder <code>UserGroupAttributeFinderModule</code> object to inject.
      */
-    public void setUserGroupAttrFinder(
-        final UserGroupAttributeFinderModule userGroupAttrFinder) {
+    public void setUserGroupAttrFinder(final UserGroupAttributeFinderModule userGroupAttrFinder) {
         this.userGroupAttrFinder = userGroupAttrFinder;
     }
 
     /**
-     * Injects the <code>GrantAttributeFinderModule</code> if "called"
-     * via Spring.
-     * 
-     * @param grantAttrFinder
-     *            <code>GrantAttributeFinderModule</code> object to
-     *            inject.
+     * Injects the <code>GrantAttributeFinderModule</code> if "called" via Spring.
      *
+     * @param grantAttrFinder <code>GrantAttributeFinderModule</code> object to inject.
      */
-    public void setGrantAttrFinder(
-        final GrantAttributeFinderModule grantAttrFinder) {
+    public void setGrantAttrFinder(final GrantAttributeFinderModule grantAttrFinder) {
         this.grantAttrFinder = grantAttrFinder;
     }
 
     /**
      * Gets the pdp configuration used in this PDP.
-     * 
-     * @return Returns the <code>PDPConfig</code> of this PDP.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
      *
+     * @return Returns the <code>PDPConfig</code> of this PDP.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     public PDPConfig getPdpConfig() throws WebserverSystemException {
 
@@ -456,42 +362,36 @@ public class CustomPdp {
 
     /**
      * Injects the {@link XacmlFunctionRoleIsGranted}.
-     * 
-     * @param xacmlFunctionRoleIsGranted
-     *            the {@link XacmlFunctionRoleIsGranted} to inject.
+     *
+     * @param xacmlFunctionRoleIsGranted the {@link XacmlFunctionRoleIsGranted} to inject.
      */
-    public void setXacmlFunctionRoleIsGranted(
-        final XacmlFunctionRoleIsGranted xacmlFunctionRoleIsGranted) {
+    public void setXacmlFunctionRoleIsGranted(final XacmlFunctionRoleIsGranted xacmlFunctionRoleIsGranted) {
         this.xacmlFunctionRoleIsGranted = xacmlFunctionRoleIsGranted;
     }
 
     /**
      * Injects the {@link SmAttributesFinderModule}.
-     * 
-     * @param smAttributesFinderModule
-     *            the {@link SmAttributesFinderModule} to inject.
+     *
+     * @param smAttributesFinderModule the {@link SmAttributesFinderModule} to inject.
      */
-    public void setSmAttributesFinderModule(
-        final SmAttributesFinderModule smAttributesFinderModule) {
+    public void setSmAttributesFinderModule(final SmAttributesFinderModule smAttributesFinderModule) {
         this.smAttributesFinderModule = smAttributesFinderModule;
     }
 
     /**
      * Injects the {@link LockOwnerAttributeFinderModule}.
-     * 
-     * @param lockOwnerAttributeFinderModule
-     *            the {@link LockOwnerAttributeFinderModule} to inject.
+     *
+     * @param lockOwnerAttributeFinderModule the {@link LockOwnerAttributeFinderModule} to inject.
      */
-    public void setLockOwnerAttributeFinderModule(
-        final LockOwnerAttributeFinderModule lockOwnerAttributeFinderModule) {
+    public void setLockOwnerAttributeFinderModule(final LockOwnerAttributeFinderModule lockOwnerAttributeFinderModule) {
         this.lockOwnerAttributeFinderModule = lockOwnerAttributeFinderModule;
     }
 
     /**
      * Injects the {@link NewOuParentsAttributesFinderModule}.
-     * 
+     *
      * @param newOuParentsAttributeFinderModule
-     *            the {@link NewOuParentsAttributeFinderModule} to inject.
+     *         the {@link NewOuParentsAttributeFinderModule} to inject.
      */
     public void setNewOuParentsAttributeFinderModule(
         final NewOuParentsAttributeFinderModule newOuParentsAttributeFinderModule) {

@@ -46,11 +46,10 @@ import java.util.Map;
 import java.util.TreeMap;
 
 /**
- * Extends the Generic Resource with Object PID features. Object PIDs are stored
- * with RELS-EXT. The timestamp is not influenced by assignment methods.
- * 
+ * Extends the Generic Resource with Object PID features. Object PIDs are stored with RELS-EXT. The timestamp is not
+ * influenced by assignment methods.
+ *
  * @author Steffen Wagner
- * 
  */
 public class GenericResourcePid extends GenericResource {
 
@@ -58,7 +57,6 @@ public class GenericResourcePid extends GenericResource {
 
     /**
      * Constructor.
-     * 
      */
     public GenericResourcePid() {
 
@@ -68,18 +66,13 @@ public class GenericResourcePid extends GenericResource {
 
     /**
      * Constructor.
-     * 
-     * @param objid
-     *            The id of the object in the repository.
-     * @throws ResourceNotFoundException
-     *             Thrown if the resource with the provided objid was not found.
-     * @throws TripleStoreSystemException
-     *             Thrown in case of TripleStore error.
-     * @throws WebserverSystemException
-     *             Thrown in case of internal error.
+     *
+     * @param objid The id of the object in the repository.
+     * @throws ResourceNotFoundException  Thrown if the resource with the provided objid was not found.
+     * @throws TripleStoreSystemException Thrown in case of TripleStore error.
+     * @throws WebserverSystemException   Thrown in case of internal error.
      */
-    public GenericResourcePid(final String objid)
-        throws TripleStoreSystemException, WebserverSystemException,
+    public GenericResourcePid(final String objid) throws TripleStoreSystemException, WebserverSystemException,
         ResourceNotFoundException {
 
         setPropertiesNames(expandPropertiesNames(getPropertiesNames()),
@@ -89,24 +82,20 @@ public class GenericResourcePid extends GenericResource {
 
     /**
      * Remove the Persistent Identifier from the Resource (ObjectPID).
-     * 
-     * XPath for objectPid in the item XML representation is
-     * /&lt;resource&gt;/properties/pid
-     * 
+     * <p/>
+     * XPath for objectPid in the item XML representation is /&lt;resource&gt;/properties/pid
+     * <p/>
      * ObjectPid is part of the RELS-EXT (and therefore in the TripleStore)
-     * 
-     * @throws SystemException
-     *             Thrown in case of internal error.
+     *
+     * @throws SystemException Thrown in case of internal error.
      */
     public void removeObjectPid() throws SystemException {
         final Map<String, List<StartElementWithChildElements>> deleteFromRelsExt =
             new TreeMap<String, List<StartElementWithChildElements>>();
-        final List<StartElementWithChildElements> elementsToRemove =
-            new ArrayList<StartElementWithChildElements>();
+        final List<StartElementWithChildElements> elementsToRemove = new ArrayList<StartElementWithChildElements>();
 
-        elementsToRemove.add(new StartElementWithChildElements(
-            Elements.ELEMENT_PID, Constants.PROPERTIES_NS_URI, null, null,
-            null, null));
+        elementsToRemove.add(new StartElementWithChildElements(Elements.ELEMENT_PID, Constants.PROPERTIES_NS_URI, null,
+            null, null, null));
         deleteFromRelsExt.put("/RDF/Description/pid", elementsToRemove);
         updateRelsExt(null, deleteFromRelsExt);
         this.objectPid = null;
@@ -114,22 +103,18 @@ public class GenericResourcePid extends GenericResource {
 
     /**
      * Set the Persistent Identifier from the Resource (ObjectPID).
-     * 
-     * XPath for objectPid in the item XML representation is
-     * /&lt;resource&gt;/properties/pid
-     * 
+     * <p/>
+     * XPath for objectPid in the item XML representation is /&lt;resource&gt;/properties/pid
+     * <p/>
      * ObjectPid is part of the RELS-EXT (and therefore in the TripleStore)
-     * 
-     * @param pid
-     *            The PID which is to assign as object PID.
-     * @throws SystemException
-     *             Thrown in case of internal error.
+     *
+     * @param pid The PID which is to assign as object PID.
+     * @throws SystemException Thrown in case of internal error.
      */
     public void setObjectPid(final String pid) throws SystemException {
 
         if (!validPidStructure(pid)) {
-            throw new SystemException(
-                "Invalid structure for Persistent Identifier");
+            throw new SystemException("Invalid structure for Persistent Identifier");
         }
         updateRelsExtWithObjectPid(getId(), pid);
         this.objectPid = pid;
@@ -137,29 +122,22 @@ public class GenericResourcePid extends GenericResource {
 
     /**
      * Get the object PID.
-     * 
+     *
      * @return The objPid or null if no object PID is assigned.
-     * 
-     * @throws TripleStoreSystemException
-     *             Thrown if TripleStore request fails.
-     * @throws WebserverSystemException
-     *             Thrown if TripleStore instance failed.
+     * @throws TripleStoreSystemException Thrown if TripleStore request fails.
+     * @throws WebserverSystemException   Thrown if TripleStore instance failed.
      */
-    public String getObjectPid() throws TripleStoreSystemException,
-        WebserverSystemException {
+    public String getObjectPid() throws TripleStoreSystemException, WebserverSystemException {
 
         // TODO use objectPid from the propertiesMap and avoid a second
         // parameter
         if (this.objectPid == null) {
-            this.objectPid =
-                getResourceProperties().get(PropertyMapKeys.OBJECT_PID);
+            this.objectPid = getResourceProperties().get(PropertyMapKeys.OBJECT_PID);
             // FIXME
             // sche: It seems that the key used for object PID differs between
             // Item and Component.
             if (this.objectPid == null) {
-                this.objectPid =
-                    getResourceProperties().get(
-                        TripleStoreUtility.PROP_OBJECT_PID);
+                this.objectPid = getResourceProperties().get(TripleStoreUtility.PROP_OBJECT_PID);
             }
             // getTripleStoreUtility().getPropertiesElements(getId(),
             // TripleStoreUtility.PROP_OBJECT_PID);
@@ -173,31 +151,24 @@ public class GenericResourcePid extends GenericResource {
 
     /**
      * Check if Container (Object) has Persistent Identifier (ObjectPID).
-     * 
-     * XPath for objectPid in the item XML representation is
-     * /&lt;resource&gt;/properties/pid
-     * 
+     * <p/>
+     * XPath for objectPid in the item XML representation is /&lt;resource&gt;/properties/pid
+     * <p/>
      * ObjectPid is part of the RELS-EXT (and therefore in the TripleStore)
-     * 
+     *
      * @return true if Item has objectPid, false otherwise
-     * 
-     * @throws TripleStoreSystemException
-     *             Thrown if TripleStore request fails.
-     * @throws WebserverSystemException
-     *             Thrown in case of internal error.
+     * @throws TripleStoreSystemException Thrown if TripleStore request fails.
+     * @throws WebserverSystemException   Thrown in case of internal error.
      */
-    public boolean hasObjectPid() throws TripleStoreSystemException,
-        WebserverSystemException {
+    public boolean hasObjectPid() throws TripleStoreSystemException, WebserverSystemException {
 
         return getObjectPid() != null;
     }
 
     /**
-     * Check if the structure of the PID has valid structure in relation to the
-     * defined requirements.
-     * 
-     * @param pid
-     *            The to validate PID.
+     * Check if the structure of the PID has valid structure in relation to the defined requirements.
+     *
+     * @param pid The to validate PID.
      * @return true if the structure is valid, false otherwise.
      */
     public boolean validPidStructure(final CharSequence pid) {
@@ -205,13 +176,11 @@ public class GenericResourcePid extends GenericResource {
     }
 
     /**
-     * Expand a list with names of properties values with the propertiesNames
-     * for a versionated resource. These list could be used to request the
-     * TripleStore.
-     * 
-     * @param propertiesNames
-     *            Collection of propertiesNames. The collection contains only
-     *            the version resource specific propertiesNames.
+     * Expand a list with names of properties values with the propertiesNames for a versionated resource. These list
+     * could be used to request the TripleStore.
+     *
+     * @param propertiesNames Collection of propertiesNames. The collection contains only the version resource specific
+     *                        propertiesNames.
      * @return Parameter name collection
      */
     private static Collection<String> expandPropertiesNames(final Collection<String> propertiesNames) {
@@ -225,49 +194,34 @@ public class GenericResourcePid extends GenericResource {
     }
 
     /**
-     * Update RELS-EXT with object PID. The pid is written to RELS-EXT (
-     * <code>properties/pid</code>).
-     * 
-     * @param id
-     *            object id
-     * @param pid
-     *            persistent identifier
-     * 
-     * @throws FedoraSystemException
-     *             If Fedora reports an error.
-     * @throws EncodingSystemException
-     *             If an encoding failure occurs.
-     * @throws XmlParserSystemException
-     *             If parsing of XMl data fails.
-     * @throws WebserverSystemException
-     *             In case of an internal error.
-     * @throws TripleStoreSystemException
-     *             Thrown if TripleStore requests fail.
+     * Update RELS-EXT with object PID. The pid is written to RELS-EXT ( <code>properties/pid</code>).
+     *
+     * @param id  object id
+     * @param pid persistent identifier
+     * @throws FedoraSystemException      If Fedora reports an error.
+     * @throws EncodingSystemException    If an encoding failure occurs.
+     * @throws XmlParserSystemException   If parsing of XMl data fails.
+     * @throws WebserverSystemException   In case of an internal error.
+     * @throws TripleStoreSystemException Thrown if TripleStore requests fail.
      */
-    private void updateRelsExtWithObjectPid(final String id, final String pid)
-        throws XmlParserSystemException, EncodingSystemException,
-        FedoraSystemException, WebserverSystemException,
-        TripleStoreSystemException {
+    private void updateRelsExtWithObjectPid(final String id, final String pid) throws XmlParserSystemException,
+        EncodingSystemException, FedoraSystemException, WebserverSystemException, TripleStoreSystemException {
 
         // TODO we haven't defined a non-versioned resource where we use
         // objectPid. So this method is more or less untested.
         final StaxParser sp = new StaxParser();
 
-        final StartElementWithChildElements pidElement =
-            new StartElementWithChildElements();
+        final StartElementWithChildElements pidElement = new StartElementWithChildElements();
         pidElement.setLocalName(Elements.ELEMENT_PID);
         pidElement.setPrefix(Constants.PROPERTIES_NS_PREFIX);
         pidElement.setNamespace(Constants.PROPERTIES_NS_URI);
         pidElement.setElementText(pid);
 
-        final AddNewSubTreesToDatastream addNewSubtreesHandler =
-            new AddNewSubTreesToDatastream("/RDF", sp);
+        final AddNewSubTreesToDatastream addNewSubtreesHandler = new AddNewSubTreesToDatastream("/RDF", sp);
         final StartElement pointer =
-            new StartElement("Description",
-                "http://www.w3.org/1999/02/22-rdf-syntax-ns#", "rdf", null);
+            new StartElement("Description", "http://www.w3.org/1999/02/22-rdf-syntax-ns#", "rdf", null);
         addNewSubtreesHandler.setPointerElement(pointer);
-        final List<StartElementWithChildElements> elements =
-            new ArrayList<StartElementWithChildElements>();
+        final List<StartElementWithChildElements> elements = new ArrayList<StartElementWithChildElements>();
         elements.add(pidElement);
         addNewSubtreesHandler.setSubtreeToInsert(elements);
         sp.addHandler(addNewSubtreesHandler);
@@ -291,13 +245,10 @@ public class GenericResourcePid extends GenericResource {
     }
 
     /**
-     * Expand the map for the to mapping key names. The properties key names
-     * from the TripleStore differ to the internal representation. Therefore we
-     * translate the key names to the internal.
-     * 
-     * @param propertiesNamesMap
-     *            The key is the to replace value. E.g. the &lt;oldKeyName,
-     *            newKeyName&gt;
+     * Expand the map for the to mapping key names. The properties key names from the TripleStore differ to the internal
+     * representation. Therefore we translate the key names to the internal.
+     *
+     * @param propertiesNamesMap The key is the to replace value. E.g. the &lt;oldKeyName, newKeyName&gt;
      * @return propertiesNamesMappingMap
      */
     private static Map<String, String> expandPropertiesNamesMapping(final Map<String, String> propertiesNamesMap) {
@@ -305,8 +256,7 @@ public class GenericResourcePid extends GenericResource {
         final Map<String, String> newPropertiesNamesMap;
         newPropertiesNamesMap = propertiesNamesMap != null ? propertiesNamesMap : new HashMap<String, String>();
 
-        newPropertiesNamesMap.put(TripleStoreUtility.PROP_OBJECT_PID,
-            PropertyMapKeys.OBJECT_PID);
+        newPropertiesNamesMap.put(TripleStoreUtility.PROP_OBJECT_PID, PropertyMapKeys.OBJECT_PID);
 
         return newPropertiesNamesMap;
     }

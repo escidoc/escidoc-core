@@ -21,13 +21,11 @@
 package de.escidoc.core.common.exceptions.application.invalid;
 
 /**
- * The XmlCorruptedException is used to indicate that the given XML is
- * corrupted. returned httpStatusCode is 412. Status code (412) indicating that
- * the precondition given in one or more of the request-header fields evaluated
- * to false when it was tested on the server.
- * 
- * @author Michael Hoppe (FIZ Karlsruhe)
+ * The XmlCorruptedException is used to indicate that the given XML is corrupted. returned httpStatusCode is 412. Status
+ * code (412) indicating that the precondition given in one or more of the request-header fields evaluated to false when
+ * it was tested on the server.
  *
+ * @author Michael Hoppe (FIZ Karlsruhe)
  */
 public class XmlCorruptedException extends InvalidXmlException {
 
@@ -42,17 +40,14 @@ public class XmlCorruptedException extends InvalidXmlException {
 
     /**
      * Default constructor.
-     * 
-     *
      */
     public XmlCorruptedException() {
     }
 
     /**
      * Constructor used to map an initial exception.
-     * 
-     * @param error
-     *            Throwable
+     *
+     * @param error Throwable
      */
     public XmlCorruptedException(final Throwable error) {
         super(error);
@@ -60,24 +55,19 @@ public class XmlCorruptedException extends InvalidXmlException {
 
     /**
      * Constructs a new exception with the specified detail message.
-     * 
-     * @param message -
-     *            the detail message.
      *
+     * @param message - the detail message.
      */
     public XmlCorruptedException(final String message) {
         super(message);
     }
 
     /**
-     * Constructor used to create a new Exception with the specified detail
-     * message and a mapping to an initial exception.
-     * 
-     * @param message -
-     *            the detail message.
-     * @param error
-     *            Throwable
+     * Constructor used to create a new Exception with the specified detail message and a mapping to an initial
+     * exception.
      *
+     * @param message - the detail message.
+     * @param error   Throwable
      */
     public XmlCorruptedException(final String message, final Throwable error) {
         super(message, error);

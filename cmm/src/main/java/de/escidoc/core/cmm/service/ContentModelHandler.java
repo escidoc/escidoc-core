@@ -60,255 +60,146 @@ import java.util.Map;
  * @author Michael Schneider
  */
 
-public class ContentModelHandler
-    implements
-    de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface {
+public class ContentModelHandler implements de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface {
 
     private ContentModelHandlerInterface business;
 
     /**
      * Setter for the business object.
      *
-     * @param business
-     *            business object.
+     * @param business business object.
      */
     public void setBusiness(final ContentModelHandlerInterface business) {
         this.business = business;
     }
 
-
-
     /**
      * See Interface for functional description.
-     * 
-     * @param xmlData
-     * @return
-     * @throws SystemException
-     * @throws MissingAttributeValueException
-     * @throws InvalidContentException
-     * @throws InvalidXmlException
-     * @throws InvalidXmlException
-     * @throws SystemException
-     * @throws AuthenticationException
-     * @throws AuthorizationException
-     * @throws MissingMethodParameterException
-     * @throws XMLStreamException
-     * @throws MalformedURLException
      */
     @Override
-    public String create(final String xmlData) throws InvalidContentException,
-        MissingAttributeValueException, SystemException,
-        AuthenticationException, AuthorizationException,
-        MissingMethodParameterException, XmlCorruptedException,
-        XmlSchemaValidationException {
+    public String create(final String xmlData) throws InvalidContentException, MissingAttributeValueException,
+        SystemException, AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        XmlCorruptedException, XmlSchemaValidationException {
         return business.create(xmlData);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param id
-     * @throws SystemException
-     * @throws ContentModelNotFoundException
-     * @throws AuthenticationException
-     * @throws AuthorizationException
-     * @throws MissingMethodParameterException
-     * @throws InvalidStatusException
-     * @throws LockingException
-     * @throws ResourceInUseException
-     * @see package
-     *      de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface
-     *      #delete(java.lang.String)
+     *
+     * @see package de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface #delete(java.lang.String)
      */
     @Override
-    public void delete(final String id) throws SystemException,
-        ContentModelNotFoundException, AuthenticationException,
-        AuthorizationException, MissingMethodParameterException,
-        LockingException, InvalidStatusException, ResourceInUseException {
+    public void delete(final String id) throws SystemException, ContentModelNotFoundException, AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, LockingException, InvalidStatusException,
+        ResourceInUseException {
         business.delete(id);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param id
-     * @return
-     * @throws ContentModelNotFoundException
-     * @throws SystemException
-     * @throws MissingMethodParameterException
-     * @throws AuthenticationException
-     * @throws AuthorizationException
-     * @see package
-     *      de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface
-     *      #retrieve(java.lang.String)
+     *
+     * @see package de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface #retrieve(java.lang.String)
      */
     @Override
-    public String retrieve(final String id)
-        throws ContentModelNotFoundException, SystemException,
-        MissingMethodParameterException, AuthenticationException,
-        AuthorizationException {
+    public String retrieve(final String id) throws ContentModelNotFoundException, SystemException,
+        MissingMethodParameterException, AuthenticationException, AuthorizationException {
         return business.retrieve(id);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param id
-     * @return
-     * @throws ContentModelNotFoundException
-     * @throws SystemException
-     * @throws MissingMethodParameterException
-     * @throws AuthenticationException
-     * @throws AuthorizationException
-     * @see package
-     *      de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface
-     *      #retrieve(java.lang.String)
+     *
+     * @see package de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface #retrieve(java.lang.String)
      */
     @Override
-    public String retrieveProperties(final String id)
-        throws ContentModelNotFoundException, SystemException,
-        AuthenticationException, AuthorizationException,
-        MissingMethodParameterException {
+    public String retrieveProperties(final String id) throws ContentModelNotFoundException, SystemException,
+        AuthenticationException, AuthorizationException, MissingMethodParameterException {
         return business.retrieveProperties(id);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param id
-     * @return
-     * @throws ContentModelNotFoundException
-     * @throws SystemException
-     * @throws MissingMethodParameterException
-     * @throws AuthenticationException
-     * @throws AuthorizationException
-     * @see package
-     *      de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface
+     *
+     * @see package de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface
      *      #retrieveContentStreams(java.lang.String)
      */
     @Override
-    public String retrieveContentStreams(final String id)
-        throws ContentModelNotFoundException, SystemException,
-        AuthenticationException, AuthorizationException,
-        MissingMethodParameterException {
+    public String retrieveContentStreams(final String id) throws ContentModelNotFoundException, SystemException,
+        AuthenticationException, AuthorizationException, MissingMethodParameterException {
         return business.retrieveContentStreams(id);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param id
-     * @return
-     * @throws ContentModelNotFoundException
-     * @throws SystemException
-     * @throws MissingMethodParameterException
-     * @throws AuthenticationException
-     * @throws AuthorizationException
-     * @see package
-     *      de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface
+     *
+     * @see package de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface
      *      #retrieveContentStream(java.lang.String)
      */
     @Override
-    public String retrieveContentStream(final String id, final String name)
-        throws ContentModelNotFoundException, SystemException,
-        AuthenticationException, AuthorizationException,
-        MissingMethodParameterException {
+    public String retrieveContentStream(final String id, final String name) throws ContentModelNotFoundException,
+        SystemException, AuthenticationException, AuthorizationException, MissingMethodParameterException {
         return business.retrieveContentStream(id, name);
     }
 
     @Override
-    public EscidocBinaryContent retrieveContentStreamContent(
-        final String id, final String name)
-        throws ContentModelNotFoundException, SystemException,
-        AuthenticationException, AuthorizationException,
-        MissingMethodParameterException, ContentStreamNotFoundException,
-        InvalidStatusException {
+    public EscidocBinaryContent retrieveContentStreamContent(final String id, final String name)
+        throws ContentModelNotFoundException, SystemException, AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, ContentStreamNotFoundException, InvalidStatusException {
         return business.retrieveContentStreamContent(id, name);
     }
 
     @Override
-    public String retrieveResources(final String id)
-        throws ContentModelNotFoundException, SystemException,
-        AuthenticationException, AuthorizationException,
-        MissingMethodParameterException {
+    public String retrieveResources(final String id) throws ContentModelNotFoundException, SystemException,
+        AuthenticationException, AuthorizationException, MissingMethodParameterException {
         return business.retrieveResources(id);
     }
 
     @Override
-    public String retrieveVersionHistory(final String id)
-        throws ContentModelNotFoundException, SystemException,
-        AuthenticationException, AuthorizationException,
-        MissingMethodParameterException {
+    public String retrieveVersionHistory(final String id) throws ContentModelNotFoundException, SystemException,
+        AuthenticationException, AuthorizationException, MissingMethodParameterException {
         return business.retrieveVersionHistory(id);
     }
 
     /**
      * Retrieves a filtered list of Content Models.
-     * 
-     * @param parameterMap
-     *            map of key - value pairs describing the filter
-     * 
+     *
+     * @param parameterMap map of key - value pairs describing the filter
      * @return Returns XML representation of the list of Content Model objects.
-     * @throws InvalidSearchQueryException
-     *             Thrown if the given search query could not be translated into
-     *             a SQL query.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     * @throws InvalidSearchQueryException Thrown if the given search query could not be translated into a SQL query.
+     * @throws SystemException             Thrown in case of an internal error.
      */
     @Override
-    public String retrieveContentModels(final Map<String, String[]> parameterMap)
-        throws InvalidSearchQueryException, SystemException {
-        return business.retrieveContentModels(new LuceneRequestParameters(
-            parameterMap));
+    public String retrieveContentModels(final Map<String, String[]> parameterMap) throws InvalidSearchQueryException,
+        SystemException {
+        return business.retrieveContentModels(new LuceneRequestParameters(parameterMap));
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param id
-     * @param xmlData
-     * @return
-     * @throws InvalidXmlException
-     * @throws ContentModelNotFoundException
-     * @throws OptimisticLockingException
-     * @throws SystemException
-     * @throws AuthenticationException
-     * @throws AuthorizationException
-     * @throws MissingMethodParameterException
-     * @throws ReadonlyVersionException
-     * @throws XMLStreamException
-     * @throws InvalidContentException
-     * @throws MissingAttributeValueException
-     * @see package
-     *      de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface
-     *      #update(java.lang.String, java.lang.String)
+     *
+     * @see package de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface #update(java.lang.String,
+     *      java.lang.String)
      */
     @Override
-    public String update(final String id, final String xmlData)
-        throws InvalidXmlException, ContentModelNotFoundException,
-        OptimisticLockingException, SystemException, AuthenticationException,
-        AuthorizationException, MissingMethodParameterException,
-        ReadonlyVersionException, MissingAttributeValueException,
-        InvalidContentException {
+    public String update(final String id, final String xmlData) throws InvalidXmlException,
+        ContentModelNotFoundException, OptimisticLockingException, SystemException, AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, ReadonlyVersionException,
+        MissingAttributeValueException, InvalidContentException {
         return business.update(id, xmlData);
     }
 
     @Override
-    public EscidocBinaryContent retrieveMdRecordDefinitionSchemaContent(
-        final String id, final String name) throws AuthenticationException,
-        AuthorizationException, MissingMethodParameterException,
+    public EscidocBinaryContent retrieveMdRecordDefinitionSchemaContent(final String id, final String name)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
         ContentModelNotFoundException, SystemException {
         return business.retrieveMdRecordDefinitionSchemaContent(id, name);
     }
 
     @Override
-    public EscidocBinaryContent retrieveResourceDefinitionXsltContent(
-        final String id, final String name) throws AuthenticationException,
-        AuthorizationException, MissingMethodParameterException,
-        ContentModelNotFoundException, ResourceNotFoundException,
-        SystemException {
+    public EscidocBinaryContent retrieveResourceDefinitionXsltContent(final String id, final String name)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        ContentModelNotFoundException, ResourceNotFoundException, SystemException {
         return business.retrieveResourceDefinitionXsltContent(id, name);
     }
-
 
 }

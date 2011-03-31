@@ -34,26 +34,23 @@ import de.escidoc.core.om.service.interfaces.FedoraRestDeviationHandlerInterface
 import java.util.Map;
 
 /**
- * Fedora access deviation handler that provides interface for fedoragsearch and
- * delegates to the resource handlers with providing the user information.
- * 
- * 
- * Security note: This handler should not be intercepted for authorization, as
- * it delegates to secured resource handlers with providing the original user
- * information.
- * 
+ * Fedora access deviation handler that provides interface for fedoragsearch and delegates to the resource handlers with
+ * providing the user information.
+ * <p/>
+ * <p/>
+ * Security note: This handler should not be intercepted for authorization, as it delegates to secured resource handlers
+ * with providing the original user information.
+ *
  * @author Michael Hoppe
  */
-public class FedoraRestDeviationHandler
-    implements FedoraRestDeviationHandlerInterface {
+public class FedoraRestDeviationHandler implements FedoraRestDeviationHandlerInterface {
 
     private de.escidoc.core.om.business.interfaces.FedoraRestDeviationHandlerInterface handler;
 
     /**
      * Injects the FedoraRestDeviation handler.
-     * 
-     * @param fedoraRestDeviationHandler
-     *            The FedoraRestDeviation handler bean to inject.
+     *
+     * @param fedoraRestDeviationHandler The FedoraRestDeviation handler bean to inject.
      */
     public void setFedoraRestDeviationHandler(
         final de.escidoc.core.om.business.interfaces.FedoraRestDeviationHandlerInterface fedoraRestDeviationHandler) {
@@ -62,57 +59,39 @@ public class FedoraRestDeviationHandler
     }
 
     /**
-     * @see de.escidoc.core.om.service.interfaces
-     *      .FedorarestDeviationHandlerInterface #getDatastreamDissemination(
-     *      java.lang.String,java.lang.String,java.lang.String)
-     * @param pid
-     *            unused.
-     * @param dsID
-     *            uri to component-content
+     * @param pid        unused.
+     * @param dsID       uri to component-content
      * @param parameters REST-GET-Parameters.
-     * 
      * @return EscidocBinaryContent escidocBinaryContent
-     * @throws Exception
-     *             ex
+     * @throws Exception ex
+     * @see de.escidoc.core.om.service.interfaces .FedorarestDeviationHandlerInterface #getDatastreamDissemination(
+     *      java.lang.String,java.lang.String,java.lang.String)
      */
     @Override
     public EscidocBinaryContent getDatastreamDissemination(
-        final String pid, final String dsID, final Map<String, String[]> parameters)
-        throws Exception {
+        final String pid, final String dsID, final Map<String, String[]> parameters) throws Exception {
         return handler.getDatastreamDissemination(pid, dsID, parameters);
     }
-    
+
     /**
-     * @see de.escidoc.core.om.service.interfaces
-     *      .FedorarestDeviationHandlerInterface
-     *      #export(java.lang.String,java.lang.String,java.lang.String)
-     * @param pid
-     *            uri to the resource.
+     * @param pid        uri to the resource.
      * @param parameters REST-GET-Parameters.
-     * 
      * @return String String with the fedora-object as escidoc-xml
-     * @throws Exception
-     *             ex
-     * 
+     * @throws Exception ex
+     * @see de.escidoc.core.om.service.interfaces .FedorarestDeviationHandlerInterface
+     *      #export(java.lang.String,java.lang.String,java.lang.String)
      */
     @Override
-    public String export(
-        final String pid, final Map<String, String[]> parameters)
-        throws Exception {
+    public String export(final String pid, final Map<String, String[]> parameters) throws Exception {
         return handler.export(pid, parameters);
     }
 
     /**
      * writes the given xml into the cache.
-     * 
-     * @param pid
-     *            uri to the resource.
-     * @param xml
-     *            xml-representation of the object
-     * 
-     * @throws Exception
-     *             ex
-     * 
+     *
+     * @param pid uri to the resource.
+     * @param xml xml-representation of the object
+     * @throws Exception ex
      */
     @Override
     public void cache(final String pid, final String xml) throws Exception {
@@ -121,13 +100,9 @@ public class FedoraRestDeviationHandler
 
     /**
      * removes the given pid from the cache.
-     * 
-     * @param pid
-     *            uri to the resource.
-     * @throws Exception
-     *             ex
-     * 
      *
+     * @param pid uri to the resource.
+     * @throws Exception ex
      */
     @Override
     public void removeFromCache(final String pid) throws Exception {
@@ -135,23 +110,15 @@ public class FedoraRestDeviationHandler
     }
 
     /**
-     * replaces the given pid in the cache
-     * with the given xml.
-     * 
-     * @param pid
-     *            uri to the resource.
-     * @param xml
-     *            xml-representation of the object.
-     * @throws Exception
-     *             ex
-     * 
+     * replaces the given pid in the cache with the given xml.
      *
+     * @param pid uri to the resource.
+     * @param xml xml-representation of the object.
+     * @throws Exception ex
      */
     @Override
-    public void replaceInCache(
-        final String pid, final String xml) throws Exception {
+    public void replaceInCache(final String pid, final String xml) throws Exception {
         handler.replaceInCache(pid, xml);
     }
-
 
 }

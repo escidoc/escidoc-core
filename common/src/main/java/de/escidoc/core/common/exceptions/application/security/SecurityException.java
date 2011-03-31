@@ -25,12 +25,10 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
 
 /**
- * The EsidocSecurityException is used to indicate that the action is not
- * allowed because a security check fails. Status code (302) indicating that a
- * redirect to eSciDoc login could be needed.
- * 
- * @author Torsten Tetteroo
+ * The EsidocSecurityException is used to indicate that the action is not allowed because a security check fails. Status
+ * code (302) indicating that a redirect to eSciDoc login could be needed.
  *
+ * @author Torsten Tetteroo
  */
 public class SecurityException extends EscidocException {
 
@@ -41,18 +39,14 @@ public class SecurityException extends EscidocException {
 
     public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_SECURITY;
 
-    public static final String HTTP_STATUS_MESSAGE =
-        "Security check failed. Redirect to login";
+    public static final String HTTP_STATUS_MESSAGE = "Security check failed. Redirect to login";
 
     private final String redirectLocation;
 
     /**
      * Default constructor.
-     * 
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
-     * 
      *
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     public SecurityException() throws WebserverSystemException {
 
@@ -62,19 +56,14 @@ public class SecurityException extends EscidocException {
     }
 
     /**
-     * Constructor used to create a new Exception with the specified detail
-     * message and a mapping to an initial exception.
-     * 
-     * @param message -
-     *            the detail message.
-     * @param cause
-     *            Throwable
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
+     * Constructor used to create a new Exception with the specified detail message and a mapping to an initial
+     * exception.
      *
+     * @param message - the detail message.
+     * @param cause   Throwable
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    public SecurityException(final String message, final Throwable cause)
-        throws WebserverSystemException {
+    public SecurityException(final String message, final Throwable cause) throws WebserverSystemException {
         super(message, cause, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
         final String baseLocation = XmlUtility.getEscidocBaseUrl();
         this.redirectLocation = baseLocation + XmlUtility.BASE_LOGIN.substring(0, XmlUtility.BASE_LOGIN.length() - 1);
@@ -82,15 +71,11 @@ public class SecurityException extends EscidocException {
 
     /**
      * Constructs a new exception with the specified detail message.
-     * 
-     * @param message -
-     *            the detail message.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
      *
+     * @param message - the detail message.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    public SecurityException(final String message)
-        throws WebserverSystemException {
+    public SecurityException(final String message) throws WebserverSystemException {
         super(message, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
         final String baseLocation = XmlUtility.getEscidocBaseUrl();
         this.redirectLocation = baseLocation + XmlUtility.BASE_LOGIN.substring(0, XmlUtility.BASE_LOGIN.length() - 1);
@@ -98,15 +83,11 @@ public class SecurityException extends EscidocException {
 
     /**
      * Constructor used to map an initial exception.
-     * 
-     * @param cause
-     *            Throwable
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
      *
+     * @param cause Throwable
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    public SecurityException(final Throwable cause)
-        throws WebserverSystemException {
+    public SecurityException(final Throwable cause) throws WebserverSystemException {
         super(cause, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
         final String baseLocation = XmlUtility.getEscidocBaseUrl();
         this.redirectLocation = baseLocation + XmlUtility.BASE_LOGIN.substring(0, XmlUtility.BASE_LOGIN.length() - 1);
@@ -114,41 +95,29 @@ public class SecurityException extends EscidocException {
 
     /**
      * Default constructor.
-     * 
-     * @param httpStatusCode
-     *            the http status code
-     * @param httpStatusMsg
-     *            the http status message
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
      *
+     * @param httpStatusCode the http status code
+     * @param httpStatusMsg  the http status message
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    public SecurityException(final int httpStatusCode,
-        final String httpStatusMsg) throws WebserverSystemException {
+    public SecurityException(final int httpStatusCode, final String httpStatusMsg) throws WebserverSystemException {
         super(httpStatusCode, httpStatusMsg);
         final String baseLocation = XmlUtility.getEscidocBaseUrl();
         this.redirectLocation = baseLocation + XmlUtility.BASE_LOGIN.substring(0, XmlUtility.BASE_LOGIN.length() - 1);
     }
 
     /**
-     * Constructor used to create a new Exception with the specified detail
-     * message and a mapping to an initial exception.
-     * 
-     * @param message
-     *            the detail message.
-     * @param cause
-     *            Throwable
-     * @param httpStatusCode
-     *            the http status code
-     * @param httpStatusMsg
-     *            the http status message
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
+     * Constructor used to create a new Exception with the specified detail message and a mapping to an initial
+     * exception.
      *
+     * @param message        the detail message.
+     * @param cause          Throwable
+     * @param httpStatusCode the http status code
+     * @param httpStatusMsg  the http status message
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    public SecurityException(final String message, final Throwable cause,
-        final int httpStatusCode, final String httpStatusMsg)
-        throws WebserverSystemException {
+    public SecurityException(final String message, final Throwable cause, final int httpStatusCode,
+        final String httpStatusMsg) throws WebserverSystemException {
         super(message, cause, httpStatusCode, httpStatusMsg);
         final String baseLocation = XmlUtility.getEscidocBaseUrl();
         this.redirectLocation = baseLocation + XmlUtility.BASE_LOGIN.substring(0, XmlUtility.BASE_LOGIN.length() - 1);
@@ -156,19 +125,14 @@ public class SecurityException extends EscidocException {
 
     /**
      * Constructs a new exception with the specified detail message.
-     * 
-     * @param message
-     *            the detail message.
-     * @param httpStatusCode
-     *            the http status code
-     * @param httpStatusMsg
-     *            the http status message
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
      *
+     * @param message        the detail message.
+     * @param httpStatusCode the http status code
+     * @param httpStatusMsg  the http status message
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    public SecurityException(final String message, final int httpStatusCode,
-        final String httpStatusMsg) throws WebserverSystemException {
+    public SecurityException(final String message, final int httpStatusCode, final String httpStatusMsg)
+        throws WebserverSystemException {
         super(message, httpStatusCode, httpStatusMsg);
         final String baseLocation = XmlUtility.getEscidocBaseUrl();
         this.redirectLocation = baseLocation + XmlUtility.BASE_LOGIN.substring(0, XmlUtility.BASE_LOGIN.length() - 1);
@@ -176,19 +140,14 @@ public class SecurityException extends EscidocException {
 
     /**
      * Constructor used to map an initial exception.
-     * 
-     * @param cause
-     *            Throwable
-     * @param httpStatusCode
-     *            the http status code
-     * @param httpStatusMsg
-     *            the http status message
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
      *
+     * @param cause          Throwable
+     * @param httpStatusCode the http status code
+     * @param httpStatusMsg  the http status message
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    public SecurityException(final Throwable cause, final int httpStatusCode,
-        final String httpStatusMsg) throws WebserverSystemException {
+    public SecurityException(final Throwable cause, final int httpStatusCode, final String httpStatusMsg)
+        throws WebserverSystemException {
         super(cause, httpStatusCode, httpStatusMsg);
         final String baseLocation = XmlUtility.getEscidocBaseUrl();
         this.redirectLocation = baseLocation + XmlUtility.BASE_LOGIN.substring(0, XmlUtility.BASE_LOGIN.length() - 1);
@@ -196,9 +155,8 @@ public class SecurityException extends EscidocException {
 
     /**
      * Gets the redirect location (to the UserManagementWrapper).
-     * 
-     * @return Returns the redirect location in a <code>String</code>.
      *
+     * @return Returns the redirect location in a <code>String</code>.
      */
     public String getRedirectLocation() {
         return this.redirectLocation;

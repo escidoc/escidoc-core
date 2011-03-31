@@ -44,31 +44,27 @@ import java.util.Map;
 
 /**
  * Fills xml-data into hibernate object.
- * 
- * @author Michael Hoppe
  *
+ * @author Michael Hoppe
  */
 public class ReportDefinitionStaxHandler extends DefaultHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ReportDefinitionStaxHandler.class);
 
     private ReportDefinition reportDefinition = new ReportDefinition();
-    
+
     private int allowedRolesIndex;
-    
+
     private final Map<String, Integer> charactersCounter = new HashMap<String, Integer>();
-    
-    private static final String MSG_INCONSISTENT_IDS = 
-        "id in xml is not the same as id provided in method.";
+
+    private static final String MSG_INCONSISTENT_IDS = "id in xml is not the same as id provided in method.";
 
     /**
      * Handle startElement event.
-     * 
+     *
      * @param element startElement
      * @return StartElement startElement
      * @throws Exception e
-     * 
-     *
      */
     @Override
     public StartElement startElement(final StartElement element) throws Exception {
@@ -76,12 +72,10 @@ public class ReportDefinitionStaxHandler extends DefaultHandler {
             final String objId = XmlUtility.getIdFromStartElement(element);
             if (objId != null) {
                 this.allowedRolesIndex++;
-                final ReportDefinitionRole reportDefinitionRole =
-                                        new ReportDefinitionRole();
+                final ReportDefinitionRole reportDefinitionRole = new ReportDefinitionRole();
                 reportDefinitionRole.setRoleId(objId);
                 reportDefinitionRole.setListIndex(this.allowedRolesIndex);
-                reportDefinition.getReportDefinitionRoles()
-                                    .add(reportDefinitionRole);
+                reportDefinition.getReportDefinitionRoles().add(reportDefinitionRole);
             }
         }
         else if ("scope".equals(element.getLocalName())) {
@@ -94,17 +88,16 @@ public class ReportDefinitionStaxHandler extends DefaultHandler {
         }
         else if ("report-definition".equals(element.getLocalName())) {
             try {
-                final String reportDefinitionId =
-                    XmlUtility.getIdFromStartElement(element);
-                if (reportDefinition.getId() != null 
-                        && !reportDefinition.getId().equals(reportDefinitionId)) {
+                final String reportDefinitionId = XmlUtility.getIdFromStartElement(element);
+                if (reportDefinition.getId() != null && !reportDefinition.getId().equals(reportDefinitionId)) {
                     throw new IntegritySystemException(MSG_INCONSISTENT_IDS);
                 }
-            } catch (final MissingAttributeValueException e) {
-                if(LOGGER.isWarnEnabled()) {
+            }
+            catch (final MissingAttributeValueException e) {
+                if (LOGGER.isWarnEnabled()) {
                     LOGGER.warn("Missing attribute value.");
                 }
-                if(LOGGER.isDebugEnabled()) {
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Missing attribute value.", e);
                 }
             }
@@ -114,35 +107,29 @@ public class ReportDefinitionStaxHandler extends DefaultHandler {
 
     /**
      * Handle the character section of an element.
-     * 
-     * @param s
-     *            The contents of the character section.
-     * @param element
-     *            The element.
+     *
+     * @param s       The contents of the character section.
+     * @param element The element.
      * @return The character section.
      * @throws Exception e
-     *
      */
     @Override
-    public String characters(final String s, final StartElement element)
-        throws Exception {
+    public String characters(final String s, final StartElement element) throws Exception {
         if ("name".equals(element.getLocalName())) {
-            if (reportDefinition.getName() != null 
-                && charactersCounter.get(element.getLocalName()) != null) {
-                reportDefinition.setName(
-                    reportDefinition.getName() + s);
-            } else {
+            if (reportDefinition.getName() != null && charactersCounter.get(element.getLocalName()) != null) {
+                reportDefinition.setName(reportDefinition.getName() + s);
+            }
+            else {
                 reportDefinition.setName(s);
             }
             charactersCounter.put(element.getLocalName(), 1);
         }
         else if ("sql".equals(element.getLocalName())) {
             if (s != null) {
-                if (reportDefinition.getSql() != null 
-                    && charactersCounter.get(element.getLocalName()) != null) {
-                    reportDefinition.setSql(
-                        reportDefinition.getSql() + s);
-                } else {
+                if (reportDefinition.getSql() != null && charactersCounter.get(element.getLocalName()) != null) {
+                    reportDefinition.setSql(reportDefinition.getSql() + s);
+                }
+                else {
                     reportDefinition.setSql(s);
                 }
             }
@@ -161,8 +148,7 @@ public class ReportDefinitionStaxHandler extends DefaultHandler {
     /**
      * @param reportDefinition the reportDefinition to set
      */
-    public void setReportDefinition(
-            final ReportDefinition reportDefinition) {
+    public void setReportDefinition(final ReportDefinition reportDefinition) {
         this.reportDefinition = reportDefinition;
     }
 

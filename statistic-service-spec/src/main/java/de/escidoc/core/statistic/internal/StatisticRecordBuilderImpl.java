@@ -12,11 +12,12 @@ import java.math.BigDecimal;
 public class StatisticRecordBuilderImpl extends StatisticRecordBuilder {
 
     private StatisticRecordImpl statisticRecord = new StatisticRecordImpl();
+
     private String scopeId = "escidoc:scope1"; // NON-NLS
 
     @Override
     public StatisticRecordBuilder withParameter(final String name, final String value) {
-        if(value != null) {
+        if (value != null) {
             final ParameterImpl parameter = new ParameterImpl(name, value);
             this.statisticRecord.addParameter(parameter);
         }
@@ -25,7 +26,7 @@ public class StatisticRecordBuilderImpl extends StatisticRecordBuilder {
 
     @Override
     public StatisticRecordBuilder withParameter(final String name, final BigDecimal value) {
-        if(value != null) {
+        if (value != null) {
             final ParameterImpl parameter = new ParameterImpl(name, value);
             this.statisticRecord.addParameter(parameter);
         }
@@ -34,7 +35,7 @@ public class StatisticRecordBuilderImpl extends StatisticRecordBuilder {
 
     @Override
     public StatisticRecordBuilder withParameter(final String name, final DateTime value) {
-        if(value != null) {
+        if (value != null) {
             final ParameterImpl parameter = new ParameterImpl(name, value);
             this.statisticRecord.addParameter(parameter);
         }
@@ -51,7 +52,7 @@ public class StatisticRecordBuilderImpl extends StatisticRecordBuilder {
     @Override
     public StatisticRecord build() {
         final StatisticRecordImpl returnValue = this.statisticRecord;
-        final LinkRequiredImpl scope = new LinkRequiredImpl(this.scopeId);        
+        final LinkRequiredImpl scope = new LinkRequiredImpl(this.scopeId);
         returnValue.setScope(scope);
         this.statisticRecord = new StatisticRecordImpl();
         return returnValue;
@@ -69,9 +70,7 @@ public class StatisticRecordBuilderImpl extends StatisticRecordBuilder {
 
     @Override
     public String toString() {
-        return "StatisticRecordBuilderImpl{" +
-                "statisticRecord=" + this.statisticRecord +
-                ", scopeId='" + this.scopeId + '\'' +
-                '}';
+        return "StatisticRecordBuilderImpl{" + "statisticRecord=" + this.statisticRecord + ", scopeId='" + this.scopeId
+            + '\'' + '}';
     }
 }

@@ -40,66 +40,51 @@ import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import javax.naming.directory.NoSuchAttributeException;
 
 /**
- * 
  * @author Michael Schneider
- * 
  */
 public class OrganizationalUnitHandlerBase extends HandlerBase {
 
     private String id;
 
     /**
-     * @param id
-     *            The id of the organizational unit.
-     * @param parser
-     *            The stax parser.
+     * @param id     The id of the organizational unit.
+     * @param parser The stax parser.
      */
-    public OrganizationalUnitHandlerBase(final String id,
-        final StaxParser parser) {
+    public OrganizationalUnitHandlerBase(final String id, final StaxParser parser) {
         super(parser);
     }
 
     /**
-     * Check the given element if it contains a valid reference to another
-     * organizational unit.
-     * 
-     * @param element
-     *            The element.
+     * Check the given element if it contains a valid reference to another organizational unit.
+     *
+     * @param element The element.
      * @return The id of the referenced organizational unit.
-     * @throws MissingAttributeValueException
-     *             If neither href (REST transport) nor objid (SOAP transport)
-     *             is found.
+     * @throws MissingAttributeValueException If neither href (REST transport) nor objid (SOAP transport) is found.
      * @throws OrganizationalUnitNotFoundException
-     *             If the id does not point to an organizational unit.
-     * @throws SystemException
-     *             If an intenal error occurs.
+     *                                        If the id does not point to an organizational unit.
+     * @throws SystemException                If an intenal error occurs.
      */
-    protected String checkParentRef(final StartElement element)
-        throws MissingAttributeValueException,
+    protected String checkParentRef(final StartElement element) throws MissingAttributeValueException,
         OrganizationalUnitNotFoundException, SystemException {
 
         String result;
         try {
-            result =
-                XmlUtility.getIdFromURI(element.getAttribute(
-                    Constants.XLINK_URI, "href").getValue());
+            result = XmlUtility.getIdFromURI(element.getAttribute(Constants.XLINK_URI, "href").getValue());
         }
         catch (final NoSuchAttributeException e) {
             try {
                 result = element.getAttribute(null, "objid").getValue();
             }
             catch (final NoSuchAttributeException e1) {
-                throw new MissingAttributeValueException(
-                    "Parent attribute 'href' or 'objid' has to be set! ", e1);
+                throw new MissingAttributeValueException("Parent attribute 'href' or 'objid' has to be set! ", e1);
             }
         }
         try {
             Utility.getInstance().checkIsOrganizationalUnit(result);
         }
         catch (final OrganizationalUnitNotFoundException e) {
-            throw new OrganizationalUnitNotFoundException(
-                "Reference to parent organizational-unit is not valid! "
-                    + e.getMessage(), e);
+            throw new OrganizationalUnitNotFoundException("Reference to parent organizational-unit is not valid! "
+                + e.getMessage(), e);
         }
         return result;
     }
@@ -113,17 +98,14 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
 
     /**
      * Retrieve the value of the given property from the triplestore.
-     * 
-     * @param property
-     *            The property.
+     *
+     * @param property The property.
      * @return The value of the property.
-     * @throws SystemException
-     *             If access to the triplestore fails.
+     * @throws SystemException If access to the triplestore fails.
      */
     public String getProperty(final String property) throws SystemException {
 
-        return getTripleStoreUtility().getPropertiesElements(getId(),
-            property);
+        return getTripleStoreUtility().getPropertiesElements(getId(), property);
     }
 
 }

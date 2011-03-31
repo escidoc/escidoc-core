@@ -77,7 +77,6 @@ public class ContextHandler implements ContextHandlerInterface {
         this.handler = contextHandler;
     }
 
-
     // FIXME: exception handling
 
     /**
@@ -86,12 +85,11 @@ public class ContextHandler implements ContextHandlerInterface {
      * @see ResourceHandlerInterface#create(String)
      */
     @Override
-    public String create(final String xmlData)
-            throws MissingMethodParameterException, ContextNameNotUniqueException, AuthenticationException,
-            AuthorizationException, SystemException, ContentModelNotFoundException, ReadonlyElementViolationException,
-            MissingAttributeValueException, MissingElementValueException, ReadonlyAttributeViolationException,
-            InvalidContentException, OrganizationalUnitNotFoundException, InvalidStatusException, XmlCorruptedException,
-            XmlSchemaValidationException {
+    public String create(final String xmlData) throws MissingMethodParameterException, ContextNameNotUniqueException,
+        AuthenticationException, AuthorizationException, SystemException, ContentModelNotFoundException,
+        ReadonlyElementViolationException, MissingAttributeValueException, MissingElementValueException,
+        ReadonlyAttributeViolationException, InvalidContentException, OrganizationalUnitNotFoundException,
+        InvalidStatusException, XmlCorruptedException, XmlSchemaValidationException {
 
         return handler.create(xmlData);
     }
@@ -102,9 +100,9 @@ public class ContextHandler implements ContextHandlerInterface {
      * @see ResourceHandlerInterface#delete(String)
      */
     @Override
-    public void delete(final String id)
-            throws ContextNotFoundException, ContextNotEmptyException, MissingMethodParameterException,
-            InvalidStatusException, AuthenticationException, AuthorizationException, SystemException {
+    public void delete(final String id) throws ContextNotFoundException, ContextNotEmptyException,
+        MissingMethodParameterException, InvalidStatusException, AuthenticationException, AuthorizationException,
+        SystemException {
 
         handler.delete(id);
     }
@@ -115,16 +113,14 @@ public class ContextHandler implements ContextHandlerInterface {
      * @see ResourceHandlerInterface#retrieve(String)
      */
     @Override
-    public String retrieve(final String id)
-            throws ContextNotFoundException, MissingMethodParameterException, AuthenticationException,
-            AuthorizationException, SystemException {
+    public String retrieve(final String id) throws ContextNotFoundException, MissingMethodParameterException,
+        AuthenticationException, AuthorizationException, SystemException {
 
         return handler.retrieve(id);
     }
 
     /**
      * See Interface for functional description.
-     *
      */
     @Override
     public String retrieveProperties(final String id) throws ContextNotFoundException, SystemException {
@@ -138,54 +134,50 @@ public class ContextHandler implements ContextHandlerInterface {
      *      java.lang.String)
      */
     @Override
-    public String update(final String id, final String xmlData)
-            throws ContextNotFoundException, MissingMethodParameterException, InvalidContentException,
-            InvalidStatusException, AuthenticationException, AuthorizationException, ReadonlyElementViolationException,
-            ReadonlyAttributeViolationException, OptimisticLockingException, ContextNameNotUniqueException,
-            InvalidXmlException, MissingElementValueException, SystemException {
+    public String update(final String id, final String xmlData) throws ContextNotFoundException,
+        MissingMethodParameterException, InvalidContentException, InvalidStatusException, AuthenticationException,
+        AuthorizationException, ReadonlyElementViolationException, ReadonlyAttributeViolationException,
+        OptimisticLockingException, ContextNameNotUniqueException, InvalidXmlException, MissingElementValueException,
+        SystemException {
 
         return handler.update(id, xmlData);
     }
 
     @Override
-    public EscidocBinaryContent retrieveResource(final String id, final String resourceName,
-                                                 final Map<String, String[]> parameters)
-            throws OperationNotFoundException, ContextNotFoundException, MissingMethodParameterException,
-            AuthenticationException, AuthorizationException, SystemException {
+    public EscidocBinaryContent retrieveResource(
+        final String id, final String resourceName, final Map<String, String[]> parameters)
+        throws OperationNotFoundException, ContextNotFoundException, MissingMethodParameterException,
+        AuthenticationException, AuthorizationException, SystemException {
 
         return handler.retrieveResource(id, resourceName, parameters);
     }
 
     @Override
-    public String retrieveResources(final String id)
-            throws ContextNotFoundException, MissingMethodParameterException, AuthenticationException,
-            AuthorizationException, SystemException {
+    public String retrieveResources(final String id) throws ContextNotFoundException, MissingMethodParameterException,
+        AuthenticationException, AuthorizationException, SystemException {
 
         return handler.retrieveResources(id);
     }
 
     /**
      * See Interface for functional description.
-     *
      */
     @Override
-    public String open(final String id, final String taskParam)
-            throws ContextNotFoundException, MissingMethodParameterException, InvalidStatusException,
-            AuthenticationException, AuthorizationException, OptimisticLockingException, InvalidXmlException,
-            SystemException, LockingException, StreamNotFoundException {
+    public String open(final String id, final String taskParam) throws ContextNotFoundException,
+        MissingMethodParameterException, InvalidStatusException, AuthenticationException, AuthorizationException,
+        OptimisticLockingException, InvalidXmlException, SystemException, LockingException, StreamNotFoundException {
 
         return handler.open(id, taskParam);
     }
 
     /**
      * See Interface for functional description.
-     *
      */
     @Override
-    public String close(final String id, final String taskParam)
-            throws ContextNotFoundException, MissingMethodParameterException, AuthenticationException,
-            AuthorizationException, SystemException, OptimisticLockingException, InvalidXmlException,
-            InvalidStatusException, LockingException, StreamNotFoundException {
+    public String close(final String id, final String taskParam) throws ContextNotFoundException,
+        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException,
+        OptimisticLockingException, InvalidXmlException, InvalidStatusException, LockingException,
+        StreamNotFoundException {
 
         return handler.close(id, taskParam);
     }
@@ -196,22 +188,20 @@ public class ContextHandler implements ContextHandlerInterface {
      * @see ContextHandlerInterface #retrieveContexts(java.util.Map)
      */
     @Override
-    public String retrieveContexts(final Map<String, String[]> filter)
-            throws MissingMethodParameterException, SystemException {
+    public String retrieveContexts(final Map<String, String[]> filter) throws MissingMethodParameterException,
+        SystemException {
         return handler.retrieveContexts(new LuceneRequestParameters(filter));
     }
 
     /**
      * See Interface for functional description.
-     *
      */
     @Override
-    public String retrieveMembers(final String id, final Map<String, String[]> filter)
-            throws ContextNotFoundException, MissingMethodParameterException, SystemException {
+    public String retrieveMembers(final String id, final Map<String, String[]> filter) throws ContextNotFoundException,
+        MissingMethodParameterException, SystemException {
 
         return handler.retrieveMembers(id, new LuceneRequestParameters(filter));
     }
-
 
     /**
      * See Interface for functional description.
@@ -219,9 +209,9 @@ public class ContextHandler implements ContextHandlerInterface {
      * @see ContextHandlerInterface#retrieveAdminDescriptor(String)
      */
     @Override
-    public String retrieveAdminDescriptor(final String id, final String name)
-            throws ContextNotFoundException, MissingMethodParameterException, AuthenticationException,
-            AuthorizationException, SystemException, AdminDescriptorNotFoundException {
+    public String retrieveAdminDescriptor(final String id, final String name) throws ContextNotFoundException,
+        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException,
+        AdminDescriptorNotFoundException {
 
         return handler.retrieveAdminDescriptor(id, name);
     }
@@ -232,22 +222,19 @@ public class ContextHandler implements ContextHandlerInterface {
      * @see ContextHandlerInterface#retrieveAdminDescriptor(String)
      */
     @Override
-    public String retrieveAdminDescriptors(final String id)
-            throws ContextNotFoundException, MissingMethodParameterException, AuthenticationException,
-            AuthorizationException, SystemException {
+    public String retrieveAdminDescriptors(final String id) throws ContextNotFoundException,
+        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
 
         return handler.retrieveAdminDescriptors(id);
     }
 
     /**
      * See Interface for functional description.
-     *
      */
     @Override
-    public String updateAdminDescriptor(final String id, final String xmlData)
-            throws ContextNotFoundException, MissingMethodParameterException, AuthenticationException,
-            AuthorizationException, SystemException, OptimisticLockingException, AdminDescriptorNotFoundException,
-            InvalidXmlException {
+    public String updateAdminDescriptor(final String id, final String xmlData) throws ContextNotFoundException,
+        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException,
+        OptimisticLockingException, AdminDescriptorNotFoundException, InvalidXmlException {
 
         return handler.updateAdminDescriptor(id, xmlData);
     }

@@ -48,9 +48,8 @@ import static org.junit.Assert.assertNotNull;
 
 /**
  * Test suite for the StagingFile.
- * 
+ *
  * @author Torsten Tetteroo
- * 
  */
 public abstract class StagingFileTest extends StagingFileTestBase {
 
@@ -60,52 +59,36 @@ public abstract class StagingFileTest extends StagingFileTestBase {
 
     /**
      * Constructor.
-     * 
      */
     public StagingFileTest() throws Exception {
         super(Constants.TRANSPORT_REST);
     }
 
     /**
-     * @param transport
-     *            The transport identifier.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * @param transport The transport identifier.
+     * @throws Exception If anything fails.
      */
     protected StagingFileTest(final int transport) throws Exception {
 
         super(transport);
         if (transport != Constants.TRANSPORT_REST) {
-            throw new Exception("Provided Transport not supported ["
-                + transport + "]");
+            throw new Exception("Provided Transport not supported [" + transport + "]");
         }
     }
 
     /**
      * Test successfully creating a StagingFile.
-     * 
-     * @test.name Successful Creation of StagingFile.
-     * @test.id ST_Csf_1
-     * @test.input Binary Content
-     * @test.inputDescription: Body contains data, data's mime type set in
-     *                         header
-     * @test.expected: Http status OK (200),XML representation of a StagingFile
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSTCsf1() throws Exception {
 
-        InputStream fileInputStream =
-            StagingFileTestBase.getFileInputStream(testUploadFile);
+        InputStream fileInputStream = StagingFileTestBase.getFileInputStream(testUploadFile);
 
         HttpResponse httpRes = null;
         try {
-            httpRes =
-                create(fileInputStream, testUploadFileMimeType, testUploadFile);
+            httpRes = create(fileInputStream, testUploadFileMimeType, testUploadFile);
         }
         catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
@@ -113,81 +96,51 @@ public abstract class StagingFileTest extends StagingFileTestBase {
         assertNotNull("No HTTPMethod. ", httpRes);
         assertHttpStatusOfMethod("Create failed", httpRes);
         final String stagingFileXml = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
-      
+
         EscidocRestSoapTestBase.assertXmlValidStagingFile(stagingFileXml);
-        Document document =
-            EscidocRestSoapTestBase.getDocument(stagingFileXml);
+        Document document = EscidocRestSoapTestBase.getDocument(stagingFileXml);
         assertXmlExists("No xlink type", document, "/staging-file/@type");
         assertXmlExists("No xlink href", document, "/staging-file/@href");
-        assertXmlExists("No last modification date", document,
-            "/staging-file/@last-modification-date");
+        assertXmlExists("No last modification date", document, "/staging-file/@last-modification-date");
     }
 
     /**
      * Test declining the creation of a StagingFile without binary content.
-     * 
-     * @test.name Successful Missing Binary Content in Create.
-     * @test.id ST_Csf_2
-     * @test.input Binary Content
-     * @test.inputDescription: Body contains no data, data's mime type set in
-     *                         header
-     * @test.expected: Http status 417
-     * @test.status To Be Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSTCsf2() throws Exception {
 
         try {
             create(null, testUploadFileMimeType, testUploadFile);
-            EscidocRestSoapTestBase
-                .failMissingException(MissingMethodParameterException.class);
+            EscidocRestSoapTestBase.failMissingException(MissingMethodParameterException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType("",
-                MissingMethodParameterException.class, e);
+            EscidocRestSoapTestBase.assertExceptionType("", MissingMethodParameterException.class, e);
         }
     }
 
     /**
      * Test successfully retrieving staging file.
-     * 
-     * @test.name Successful Retrieval of StagingFile
-     * @test.id ST_RSF_1
-     * @test.input Token
-     * @test.inputDescription: Valid upload token as parameter for that a
-     *                         StagingFile has been created in the staging area.
-     *                         Mime type of file has been specified during
-     *                         creation.
-     * 
-     * @test.expected: Http status OK (200), File content in http body, Mime
-     *                 type of body in http header.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSTRsf1() throws Exception {
 
-        InputStream fileInputStream =
-            StagingFileTestBase.getFileInputStream(testUploadFile);
+        InputStream fileInputStream = StagingFileTestBase.getFileInputStream(testUploadFile);
         HttpResponse httpRes = null;
         try {
-            httpRes =
-                create(fileInputStream, testUploadFileMimeType, testUploadFile);
+            httpRes = create(fileInputStream, testUploadFileMimeType, testUploadFile);
         }
         catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertNotNull("No HTTPMethod. ", httpRes);
         assertHttpStatusOfMethod("Create failed", httpRes);
-        Document document =
-            EscidocRestSoapTestBase
-                .getDocument(EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8));
-       
+        Document document = EscidocRestSoapTestBase.getDocument(EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8));
+
         String objidValue = getIdFromRootElementHref(document);
 
         try {
@@ -202,244 +155,159 @@ public abstract class StagingFileTest extends StagingFileTestBase {
         }
         assertNotNull("Got no HTTP method object", httpRes);
         assertHttpStatusOfMethod("Retrieve failed", httpRes);
-        final Header contentTypeHeader =
-            httpRes.getFirstHeader(HttpHelper.HTTP_HEADER_CONTENT_TYPE);
-        assertNotNull("Retrieve failed! No returned mime type found",
-            contentTypeHeader);
-        assertEquals("Retrieve failed! The returned mime type is wrong,",
-            testUploadFileMimeType, contentTypeHeader.getValue());
-        StagingFileTestBase.assertResponseContentMatchesSourceFile(httpRes,
-            testUploadFile);
-     
+        final Header contentTypeHeader = httpRes.getFirstHeader(HttpHelper.HTTP_HEADER_CONTENT_TYPE);
+        assertNotNull("Retrieve failed! No returned mime type found", contentTypeHeader);
+        assertEquals("Retrieve failed! The returned mime type is wrong,", testUploadFileMimeType, contentTypeHeader
+            .getValue());
+        StagingFileTestBase.assertResponseContentMatchesSourceFile(httpRes, testUploadFile);
+
     }
 
     /**
-     * Test declining the retrieval of a StagingFile with missing parameter
-     * token.
-     * 
-     * @test.name: Missing Token in Retrieve
-     * @test.id: ST_Rsf_2
-     * @test.input: Token
-     * @test.inputDescription: No token is sent as parameter.
-     * @test.expected: MissingMethodParameterException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test declining the retrieval of a StagingFile with missing parameter token.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSTRsf2() throws Exception {
 
         try {
             retrieveStagingFile(null);
-            EscidocRestSoapTestBase
-                .failMissingException(MissingMethodParameterException.class);
+            EscidocRestSoapTestBase.failMissingException(MissingMethodParameterException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                "Unexpected exception, ",
+            EscidocRestSoapTestBase.assertExceptionType("Unexpected exception, ",
                 MissingMethodParameterException.class, e);
         }
     }
 
     /**
      * Test declining the retrieval of a StagingFile with unknown token.
-     * 
-     * @test.name: Retrieve Staging File - Unknown Token
-     * @test.id: ST_Rsf_4
-     * @test.input: Token
-     * @test.inputDescription: Token that is unknown to the system.
-     * @test.expected: Http status NOT_FOUND (404)
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSTRsf4() throws Exception {
 
         try {
             retrieveStagingFile(UNKNOWN_ID);
-            EscidocRestSoapTestBase
-                .failMissingException(StagingFileNotFoundException.class);
+            EscidocRestSoapTestBase.failMissingException(StagingFileNotFoundException.class);
         }
         catch (final Exception e) {
             EscidocRestSoapTestBase
-                .assertExceptionType("Unexpected exception, ",
-                    StagingFileNotFoundException.class, e);
+                .assertExceptionType("Unexpected exception, ", StagingFileNotFoundException.class, e);
         }
     }
 
     /**
-     * Test declining the retrieval of a StagingFile with providing the id of an
-     * existing resource of another type.
-     * 
-     * @test.name: Retrieve Staging File - Wrong Token
-     * @test.id: ST_Rsf_4
-     * @test.input: Existing context id instead of token.
-     * @test.expected: Http status NOT_FOUND (404)
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test declining the retrieval of a StagingFile with providing the id of an existing resource of another type.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSTRsf4_2() throws Exception {
 
         try {
             retrieveStagingFile(CONTEXT_ID);
-            EscidocRestSoapTestBase
-                .failMissingException(StagingFileNotFoundException.class);
+            EscidocRestSoapTestBase.failMissingException(StagingFileNotFoundException.class);
         }
         catch (final Exception e) {
             EscidocRestSoapTestBase
-                .assertExceptionType("Unexpected exception, ",
-                    StagingFileNotFoundException.class, e);
+                .assertExceptionType("Unexpected exception, ", StagingFileNotFoundException.class, e);
         }
     }
 
     /**
      * Test declining the retrieval of an expired StagingFile.
-     * 
-     * @test.name: Expired Token in Retrieve
-     * @test.id: ST_RSF_5
-     * @test.input: Token
-     * @test.inputDescription: Token that is expired.
-     * @test.expected: Http status NOT_FOUND (404)
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSTRsf5() throws Exception {
 
-        InputStream fileInputStream =
-            StagingFileTestBase.getFileInputStream(testUploadFile);
+        InputStream fileInputStream = StagingFileTestBase.getFileInputStream(testUploadFile);
         HttpResponse httpRes = null;
         try {
-            httpRes =
-                create(fileInputStream, testUploadFileMimeType, testUploadFile);
+            httpRes = create(fileInputStream, testUploadFileMimeType, testUploadFile);
         }
         catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertNotNull("No HTTPMethod. ", httpRes);
         assertHttpStatusOfMethod("Create failed", httpRes);
-        Document document =
-            EscidocRestSoapTestBase
-                .getDocument(EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8));
-       
+        Document document = EscidocRestSoapTestBase.getDocument(EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8));
+
         String objidValue = getIdFromRootElementHref(document);
         StagingFileTestBase.setExpired(objidValue);
 
         try {
             httpRes = retrieveStagingFile(objidValue);
-            EscidocRestSoapTestBase
-                .failMissingException(StagingFileNotFoundException.class);
+            EscidocRestSoapTestBase.failMissingException(StagingFileNotFoundException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                StagingFileNotFoundException.class, e);
+            EscidocRestSoapTestBase.assertExceptionType(StagingFileNotFoundException.class, e);
         }
-     
+
     }
 
     /**
-     * Test declining the retrieval of an StagingFile for that the file had been
-     * manually (e.g. by a administrator) removed from the staging area.
-     * 
-     * @test.name: StagingFile with removed file
-     * @test.id: ST_Rsf_7
-     * @test.input: Token
-     * @test.inputDescription: Valid token for that a StangingFile had been
-     *                         created but its file has been manually removed
-     *                         from the file system (e.g. by the administrator).
-     * @test.expected: Http status NOT_FOUND (404)
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test declining the retrieval of an StagingFile for that the file had been manually (e.g. by a administrator)
+     * removed from the staging area.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSTRsf7() throws Exception {
 
-        InputStream fileInputStream =
-            StagingFileTestBase.getFileInputStream(testUploadFile);
+        InputStream fileInputStream = StagingFileTestBase.getFileInputStream(testUploadFile);
         HttpResponse httpRes = null;
         try {
-            httpRes =
-                create(fileInputStream, testUploadFileMimeType, testUploadFile);
+            httpRes = create(fileInputStream, testUploadFileMimeType, testUploadFile);
         }
         catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertNotNull("No HTTPMethod. ", httpRes);
         assertHttpStatusOfMethod("Create failed", httpRes);
-        Document document =
-            EscidocRestSoapTestBase
-                .getDocument(EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8));
-      
+        Document document = EscidocRestSoapTestBase.getDocument(EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8));
+
         String objidValue = getIdFromRootElementHref(document);
         StagingFileTestBase.deletePhysicalFile(objidValue);
 
         try {
             httpRes = retrieveStagingFile(objidValue);
-            EscidocRestSoapTestBase
-                .failMissingException(
-                    "Upload Servlet's get method did not decline"
-                        + " getting an object for which a file had been uploaded but"
-                        + " has been manually removed, ",
-                    StagingFileNotFoundException.class);
+            EscidocRestSoapTestBase.failMissingException("Upload Servlet's get method did not decline"
+                + " getting an object for which a file had been uploaded but" + " has been manually removed, ",
+                StagingFileNotFoundException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase
-                .assertExceptionType(
-                    "Upload Servlet's get method did not decline"
-                        + " getting an object for which a file had been uploaded but"
-                        + " has been manually removed, correctly, ",
-                    StagingFileNotFoundException.class, e);
+            EscidocRestSoapTestBase.assertExceptionType("Upload Servlet's get method did not decline"
+                + " getting an object for which a file had been uploaded but"
+                + " has been manually removed, correctly, ", StagingFileNotFoundException.class, e);
         }
-       
+
     }
 
     /**
-     * Test declining the retrieval of a staging file that has been previously
-     * retrieved.
-     * 
-     * @test.name Repeated Retrieval of Staging File
-     * @test.id ST_RSF_8
-     * @test.input Token
-     * @test.inputDescription: Valid upload token as parameter for that a
-     *                         StagingFile has been created in the staging area,
-     *                         and the staging file has been previously
-     *                         retrieved.
-     * 
-     * @test.expected: StagingFileNotFoundException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test declining the retrieval of a staging file that has been previously retrieved.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSTRsf8() throws Exception {
 
-        InputStream fileInputStream =
-            StagingFileTestBase.getFileInputStream(testUploadFile);
+        InputStream fileInputStream = StagingFileTestBase.getFileInputStream(testUploadFile);
         HttpResponse httpRes = null;
         try {
-            httpRes =
-                create(fileInputStream, testUploadFileMimeType, testUploadFile);
+            httpRes = create(fileInputStream, testUploadFileMimeType, testUploadFile);
         }
         catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertNotNull("No HTTPMethod. ", httpRes);
         assertHttpStatusOfMethod("Create failed", httpRes);
-        Document document =
-            EscidocRestSoapTestBase
-                .getDocument(EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8));
-       
+        Document document = EscidocRestSoapTestBase.getDocument(EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8));
+
         String objidValue = getIdFromRootElementHref(document);
 
         try {
@@ -451,18 +319,14 @@ public abstract class StagingFileTest extends StagingFileTestBase {
 
         try {
             httpRes = retrieveStagingFile(objidValue);
-            EscidocRestSoapTestBase.failMissingException(
-                "Upload Servlet's get method did not decline"
-                    + " repeated retrieval of a staging file, ",
-                StagingFileNotFoundException.class);
+            EscidocRestSoapTestBase.failMissingException("Upload Servlet's get method did not decline"
+                + " repeated retrieval of a staging file, ", StagingFileNotFoundException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                "Upload Servlet's get method did not decline"
-                    + " repeated retrieval of a staging file, correctly, ",
-                StagingFileNotFoundException.class, e);
+            EscidocRestSoapTestBase.assertExceptionType("Upload Servlet's get method did not decline"
+                + " repeated retrieval of a staging file, correctly, ", StagingFileNotFoundException.class, e);
         }
-       
+
     }
 
 }

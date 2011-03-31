@@ -39,12 +39,10 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 /**
  * Stax Handler managing the properties of an UserAccount.
- * 
- * @author Torsten Tetteroo
  *
+ * @author Torsten Tetteroo
  */
-public class UserAccountPropertiesStaxHandler
-    extends UserAccountStaxHandlerBase {
+public class UserAccountPropertiesStaxHandler extends UserAccountStaxHandlerBase {
 
     private final UserAccountDaoInterface dao;
 
@@ -52,44 +50,28 @@ public class UserAccountPropertiesStaxHandler
 
     /**
      * The constructor.
-     * 
-     * @param userAccount
-     *            The <code>UserAccount</code> to handle.
-     * @param dao
-     *            The data access object to retrieve <code>UserAccount</code>
-     *            objects.
-     * @param create
-     *            The flag indicating if new user data may be created (
-     *            <code>true</code> ) or data from database shall be updated (
-     *            <code>false</code> ).
-     * 
      *
+     * @param userAccount The <code>UserAccount</code> to handle.
+     * @param dao         The data access object to retrieve <code>UserAccount</code> objects.
+     * @param create      The flag indicating if new user data may be created ( <code>true</code> ) or data from
+     *                    database shall be updated ( <code>false</code> ).
      */
-    public UserAccountPropertiesStaxHandler(final UserAccount userAccount,
-        final UserAccountDaoInterface dao, final boolean create) {
+    public UserAccountPropertiesStaxHandler(final UserAccount userAccount, final UserAccountDaoInterface dao,
+        final boolean create) {
 
         super(userAccount, create);
         this.dao = dao;
     }
 
-
-
     /**
      * See Interface for functional description.
-     * 
-     * @param element
-     * @return
-     * @see DefaultHandler
-     *      #startElement
-     *      (de.escidoc.core.common.util.xml.stax.events.StartElement)
      *
+     * @see DefaultHandler #startElement (de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
     public StartElement startElement(final StartElement element) {
 
-        if (isNotReady()
-            && XmlUtility.XPATH_USER_ACCOUNT_PROPERTIES.equals(element
-                .getPath())) {
+        if (isNotReady() && XmlUtility.XPATH_USER_ACCOUNT_PROPERTIES.equals(element.getPath())) {
 
             this.insideProperties = true;
         }
@@ -98,19 +80,12 @@ public class UserAccountPropertiesStaxHandler
 
     /**
      * See Interface for functional description.
-     * 
-     * @param s
-     * @param element
-     * @return
-     * @throws SqlDatabaseSystemException
-     * @throws UniqueConstraintViolationException
-     * @see DefaultHandler
-     *      #characters(java.lang.String,
-     *      de.escidoc.core.common.util.xml.stax.events.Star tElement)
+     *
+     * @see DefaultHandler #characters(java.lang.String, de.escidoc.core.common.util.xml.stax.events.Star tElement)
      */
     @Override
-    public String characters(final String s, final StartElement element)
-        throws UniqueConstraintViolationException, SqlDatabaseSystemException {
+    public String characters(final String s, final StartElement element) throws UniqueConstraintViolationException,
+        SqlDatabaseSystemException {
 
         if (isNotReady() && this.insideProperties) {
             final String elementName = element.getLocalName();
@@ -131,38 +106,29 @@ public class UserAccountPropertiesStaxHandler
         return s;
     }
 
-
-
     /**
      * Asserts that the loginname of the provided UserAccount is unique.
-     * 
-     * @param toBeAsserted
-     *            The login name that shall be asserted.
-     * @throws SqlDatabaseSystemException
-     *             Thrown In case of an database error.
-     * @throws UniqueConstraintViolationException
-     *             Thrown if the login name of the provided
-     *             <code>UserAccount</code> object is not unique, i.e. it
-     *             exists another account with the same loginname but a
-     *             different user id.
      *
+     * @param toBeAsserted The login name that shall be asserted.
+     * @throws SqlDatabaseSystemException Thrown In case of an database error.
+     * @throws UniqueConstraintViolationException
+     *                                    Thrown if the login name of the provided <code>UserAccount</code> object is
+     *                                    not unique, i.e. it exists another account with the same loginname but a
+     *                                    different user id.
      */
-    private void assertUniqueLoginName(final String toBeAsserted)
-        throws SqlDatabaseSystemException, UniqueConstraintViolationException {
+    private void assertUniqueLoginName(final String toBeAsserted) throws SqlDatabaseSystemException,
+        UniqueConstraintViolationException {
 
         if ("current".equalsIgnoreCase(toBeAsserted)) {
-            throw new UniqueConstraintViolationException(
-                  "Login name may not be 'current' as this is a reserved String");
+            throw new UniqueConstraintViolationException("Login name may not be 'current' as this is a reserved String");
         }
-        final UserAccount loginNameUserAccount =
-            dao.retrieveUserAccountByLoginName(toBeAsserted);
+        final UserAccount loginNameUserAccount = dao.retrieveUserAccountByLoginName(toBeAsserted);
         if (loginNameUserAccount != null) {
             if (loginNameUserAccount.getId().equals(getUserAccount().getId())) {
                 return;
             }
-            throw new UniqueConstraintViolationException(StringUtility
-                    .format(
-                            "Login name must be unique within eSciDoc", toBeAsserted));
+            throw new UniqueConstraintViolationException(StringUtility.format(
+                "Login name must be unique within eSciDoc", toBeAsserted));
         }
     }
 

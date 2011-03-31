@@ -51,8 +51,8 @@ public class DcUpdateHandler extends DefaultHandler {
         return this.props;
     }
 
-    public DcUpdateHandler(final String elementName,
-        final StartElementWithChildElements element, final StaxParser parser) {
+    public DcUpdateHandler(final String elementName, final StartElementWithChildElements element,
+        final StaxParser parser) {
         this.parser = parser;
         this.props = new TreeMap();
         this.props.put(elementName, element);
@@ -64,14 +64,11 @@ public class DcUpdateHandler extends DefaultHandler {
         if (!props.isEmpty()) {
             final String curPath = parser.getCurPath();
             final String theKey = element.getLocalName();
-            if (curPath.endsWith(PATH + theKey)
-                && props.containsKey(theKey)) {
+            if (curPath.endsWith(PATH + theKey) && props.containsKey(theKey)) {
                 // update propertie and remove the used value
-                final StartElementWithText replacementElement =
-                    (StartElementWithText) props.get(theKey);
+                final StartElementWithText replacementElement = (StartElementWithText) props.get(theKey);
                 String curElementNamespace = element.getNamespace();
-                String replacementElementNamespace =
-                    replacementElement.getNamespace();
+                String replacementElementNamespace = replacementElement.getNamespace();
 
                 // namespaces must not be null for testing
                 if (curElementNamespace == null) {
@@ -80,8 +77,7 @@ public class DcUpdateHandler extends DefaultHandler {
                 if (replacementElementNamespace == null) {
                     replacementElementNamespace = "";
                 }
-                if (curElementNamespace.endsWith("/")
-                    && !replacementElementNamespace.endsWith("/")) {
+                if (curElementNamespace.endsWith("/") && !replacementElementNamespace.endsWith("/")) {
                     replacementElementNamespace += "/";
                 }
                 if (curElementNamespace.equals(replacementElementNamespace)) {

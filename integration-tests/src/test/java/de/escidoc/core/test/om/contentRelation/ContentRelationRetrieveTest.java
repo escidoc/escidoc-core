@@ -43,16 +43,14 @@ import static org.junit.Assert.assertNull;
 
 /**
  * Test content relation retrieve implementation.
- * 
+ *
  * @author Steffen Wagner
- * 
  */
 @RunWith(value = Parameterized.class)
 public class ContentRelationRetrieveTest extends ContentRelationTestBase {
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ContentRelationRetrieveTest(final int transport) {
         super(transport);
@@ -60,9 +58,8 @@ public class ContentRelationRetrieveTest extends ContentRelationTestBase {
 
     /**
      * Test retrieving content relation with non-existing objid.
-     * 
-     * @throws Exception
-     *             Thrown if deleting failed.
+     *
+     * @throws Exception Thrown if deleting failed.
      */
     @Test(expected = ContentRelationNotFoundException.class)
     public void testWrongObjid() throws Exception {
@@ -72,15 +69,13 @@ public class ContentRelationRetrieveTest extends ContentRelationTestBase {
 
     /**
      * Test retrieving content relation properties.
-     * 
-     * @throws Exception
-     *             Thrown if deleting failed.
+     *
+     * @throws Exception Thrown if deleting failed.
      */
     @Test
     public void testRetrieveProperties01() throws Exception {
 
-        String contentRelationXml =
-            getExampleTemplate("content-relation-01.xml");
+        String contentRelationXml = getExampleTemplate("content-relation-01.xml");
         String xml = create(contentRelationXml);
         String relationId = getObjidValue(xml);
         String lmd = getLastModificationDateValue(getDocument(xml));
@@ -91,16 +86,14 @@ public class ContentRelationRetrieveTest extends ContentRelationTestBase {
 
     /**
      * Test retrieving content relation (virtual-)resources.
-     * 
-     * @throws Exception
-     *             Thrown if deleting failed.
+     *
+     * @throws Exception Thrown if deleting failed.
      */
     @Test
     public void retrieveResources() throws Exception {
 
         if (getTransport() == Constants.TRANSPORT_REST) {
-            String contentRelationXml =
-                getExampleTemplate("content-relation-01.xml");
+            String contentRelationXml = getExampleTemplate("content-relation-01.xml");
             String xml = create(contentRelationXml);
             String relationId = getObjidValue(xml);
 
@@ -110,22 +103,16 @@ public class ContentRelationRetrieveTest extends ContentRelationTestBase {
     }
 
     /**
-     * Assert the xmlItemProperties match the expected
-     * xmlTemplateItemProperties.
-     * 
-     * @param propertiesXml
-     *            The retrieved properties.
-     * @param timestampBeforeCreation
-     *            A timestamp before the creation of the item.
-     * @throws Exception
-     *             If anything fails.
+     * Assert the xmlItemProperties match the expected xmlTemplateItemProperties.
+     *
+     * @param propertiesXml           The retrieved properties.
+     * @param timestampBeforeCreation A timestamp before the creation of the item.
+     * @throws Exception If anything fails.
      */
-    private void assertContentRelationProperties(
-        final String propertiesXml, final String timestampBeforeCreation)
+    private void assertContentRelationProperties(final String propertiesXml, final String timestampBeforeCreation)
         throws Exception {
 
-        Document createdProperties =
-            EscidocRestSoapTestBase.getDocument(propertiesXml);
+        Document createdProperties = EscidocRestSoapTestBase.getDocument(propertiesXml);
         if (getTransport() == Constants.TRANSPORT_REST) {
             String href = getRootElementHrefValue(createdProperties);
             if ("".equals(href)) {
@@ -133,55 +120,36 @@ public class ContentRelationRetrieveTest extends ContentRelationTestBase {
             }
             assertNotNull("Properties error: href attribute was not set!", href);
         }
-        String rootLastModificationDate =
-            getLastModificationDateValue(createdProperties);
+        String rootLastModificationDate = getLastModificationDateValue(createdProperties);
         if ("".equals(rootLastModificationDate)) {
             rootLastModificationDate = null;
         }
-        assertNotNull("Properties error: last-modification-date attribute "
-            + "was not set!", rootLastModificationDate);
-        assertXmlExists("Properties error: creation-date was not set!",
-            createdProperties, "/properties/creation-date");
-        assertXmlExists("Properties error: public-status was not set!",
-            createdProperties, "/properties/public-status");
-        assertXmlExists(
-            "Properties error: lock-status was not set in properties!",
-            createdProperties, "/properties/lock-status");
+        assertNotNull("Properties error: last-modification-date attribute " + "was not set!", rootLastModificationDate);
+        assertXmlExists("Properties error: creation-date was not set!", createdProperties, "/properties/creation-date");
+        assertXmlExists("Properties error: public-status was not set!", createdProperties, "/properties/public-status");
+        assertXmlExists("Properties error: lock-status was not set in properties!", createdProperties,
+            "/properties/lock-status");
 
-        assertXmlExists(
-            "Properties error: created-by was not set in properties!",
-            createdProperties, "/properties/created-by");
-        String creationDate =
-            selectSingleNode(createdProperties, "/properties/creation-date")
-                .getTextContent();
+        assertXmlExists("Properties error: created-by was not set in properties!", createdProperties,
+            "/properties/created-by");
+        String creationDate = selectSingleNode(createdProperties, "/properties/creation-date").getTextContent();
 
-        assertTimestampEquals(
-            "Properties error: creation-date is not as expected!",
-            creationDate, timestampBeforeCreation);
+        assertTimestampEquals("Properties error: creation-date is not as expected!", creationDate,
+            timestampBeforeCreation);
 
-        assertReferencingElement("Invalid created-by. ", createdProperties,
-            "/properties/created-by", Constants.USER_ACCOUNT_BASE_URI);
+        assertReferencingElement("Invalid created-by. ", createdProperties, "/properties/created-by",
+            Constants.USER_ACCOUNT_BASE_URI);
 
-        Node nodeLockOwner =
-            selectSingleNode(createdProperties, "/properties/lock-owner");
+        Node nodeLockOwner = selectSingleNode(createdProperties, "/properties/lock-owner");
         assertNull("Properties error: lock-owner must be null!", nodeLockOwner);
 
-        Node nodeWithdrawalComment =
-            selectSingleNode(createdProperties,
-                "/properties/withdrawal-comment");
-        assertNull("Properties error: withdrawal-comment must be null!",
-            nodeWithdrawalComment);
+        Node nodeWithdrawalComment = selectSingleNode(createdProperties, "/properties/withdrawal-comment");
+        assertNull("Properties error: withdrawal-comment must be null!", nodeWithdrawalComment);
 
-        String status =
-            selectSingleNode(createdProperties, "/properties/public-status")
-                .getTextContent();
-        assertEquals("Properties error: invalid public-status!", STATE_PENDING,
-            status);
+        String status = selectSingleNode(createdProperties, "/properties/public-status").getTextContent();
+        assertEquals("Properties error: invalid public-status!", STATE_PENDING, status);
 
-        String lockStatus =
-            selectSingleNode(createdProperties, "/properties/lock-status")
-                .getTextContent();
-        assertEquals("Iroperties error: invalid lock-status!", STATE_UNLOCKED,
-            lockStatus);
+        String lockStatus = selectSingleNode(createdProperties, "/properties/lock-status").getTextContent();
+        assertEquals("Iroperties error: invalid lock-status!", STATE_UNLOCKED, lockStatus);
     }
 }

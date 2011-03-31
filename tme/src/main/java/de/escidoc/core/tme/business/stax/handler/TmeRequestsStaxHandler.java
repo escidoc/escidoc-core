@@ -44,11 +44,9 @@ import java.util.Collection;
 import java.util.Iterator;
 
 /**
- * Stax handler that handles the last modification attribute and checks the
- * optimistic locking criteria.
- * 
- * @author Torsten Tetteroo
+ * Stax handler that handles the last modification attribute and checks the optimistic locking criteria.
  *
+ * @author Torsten Tetteroo
  */
 public class TmeRequestsStaxHandler extends DefaultHandler {
 
@@ -62,40 +60,33 @@ public class TmeRequestsStaxHandler extends DefaultHandler {
 
     /**
      * See Interface for functional description.
-     * 
-     * @param element
-     *            Start Element
-     * @return
-     * @throws EscidocException
-     *             TODO
+     *
+     * @param element Start Element
+     * @throws EscidocException TODO
      */
     @Override
-    public StartElement startElement(final StartElement element)
-        throws EscidocException {
+    public StartElement startElement(final StartElement element) throws EscidocException {
 
         if ("file".equals(element.getLocalName())) {
             try {
-                final String uriString =
-                    element
-                        .getAttribute(Constants.XLINK_URI, "href").getValue();
+                final String uriString = element.getAttribute(Constants.XLINK_URI, "href").getValue();
                 if ("".equals(uriString)) {
-                    throw new TmeException("Link '" + uriString
-                        + "' to file is no Uri!");
+                    throw new TmeException("Link '" + uriString + "' to file is no Uri!");
                 }
                 try {
                     new URI(uriString);
                 }
                 catch (final URISyntaxException e) {
-                    throw new TmeException("Link '" + uriString
-                        + "' to file is no Uri!", e);
+                    throw new TmeException("Link '" + uriString + "' to file is no Uri!", e);
                 }
                 files.add(uriString);
-            } catch (final NoSuchAttributeException e) {
+            }
+            catch (final NoSuchAttributeException e) {
                 // TODO what happens here?
-                if(LOGGER.isWarnEnabled()) {
+                if (LOGGER.isWarnEnabled()) {
                     LOGGER.warn("Error on parsing last modification attribute.");
                 }
-                if(LOGGER.isDebugEnabled()) {
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Error on parsing last modification attribute.", e);
                 }
             }

@@ -36,18 +36,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class contains all the handlers of the respective resources. It is
- * configured via Spring and contains a List of ResourceMapperBean instances,
- * each consisting of an enum and its handler instance.
- *
+ * This class contains all the handlers of the respective resources. It is configured via Spring and contains a List of
+ * ResourceMapperBean instances, each consisting of an enum and its handler instance.
  *
  * @author Kai Strnad
- *
  */
 public class ResourceMapperDao {
 
-    private List<ResourceMapperBean> resourceMappers =
-        new ArrayList<ResourceMapperBean>();
+    private List<ResourceMapperBean> resourceMappers = new ArrayList<ResourceMapperBean>();
 
     /**
      * Getter for the ResourceMapper beans
@@ -60,8 +56,6 @@ public class ResourceMapperDao {
 
     /**
      * Set the resourceMappers (see spring-beans.xml for configuration).
-     *
-     * @param resourceMappers
      */
     public void setResourceMappers(final List<ResourceMapperBean> resourceMappers) {
         this.resourceMappers = resourceMappers;
@@ -70,17 +64,13 @@ public class ResourceMapperDao {
     /**
      * Returns the IngestableResource upon the first match.
      *
-     * @param xmlData
      * @return the IngestableResource responsible for the given resource.
-     * @throws EscidocException
      */
-    public ResourceMapperBean getIngestableForResource(final String xmlData)
-        throws EscidocException {
+    public ResourceMapperBean getIngestableForResource(final String xmlData) throws EscidocException {
         final StringBuilder exceptions = new StringBuilder();
         for (final ResourceMapperBean bean : getResourceMappers()) {
             try {
-                if (bean.getValidator().isResourceValid(xmlData,
-                    bean.getResourceType())) {
+                if (bean.getValidator().isResourceValid(xmlData, bean.getResourceType())) {
                     return bean;
                 }
             }
@@ -92,9 +82,8 @@ public class ResourceMapperDao {
 
         }
         // for valid resources this code should never be reached
-        throw new InvalidResourceException(
-            "The given resource is invalid. It cannot be validated against any schema: "
-                + exceptions);
+        throw new InvalidResourceException("The given resource is invalid. It cannot be validated against any schema: "
+            + exceptions);
     }
 
 }

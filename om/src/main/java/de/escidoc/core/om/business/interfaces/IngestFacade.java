@@ -31,26 +31,21 @@ package de.escidoc.core.om.business.interfaces;
 import de.escidoc.core.common.exceptions.EscidocException;
 
 /**
- * This interface unifies all handlers in order to create a single ingest
- * interface that can handle any given resource. Each handler which needs to be
- * part of this ingest has to implement this interface via an extension of its
+ * This interface unifies all handlers in order to create a single ingest interface that can handle any given resource.
+ * Each handler which needs to be part of this ingest has to implement this interface via an extension of its
  * implemented interface.
- * 
+ *
  * @author Kai Strnad
- * 
  */
 public interface IngestFacade {
 
     /**
-     * Ingest the given resource without prior knowledge of its type. As any
-     * implementing interface can throw different checked exceptions the
-     * assumptions regarding exceptions have to be fairly generic.
-     * 
-     * @param xmlData
-     *            The resource which is to ingest as XML.
+     * Ingest the given resource without prior knowledge of its type. As any implementing interface can throw different
+     * checked exceptions the assumptions regarding exceptions have to be fairly generic.
+     *
+     * @param xmlData The resource which is to ingest as XML.
      * @return Returns the object id.
-     * @throws EscidocException
-     *             Thrown if ingest failed.
+     * @throws EscidocException Thrown if ingest failed.
      */
     String ingest(final String xmlData) throws EscidocException;
 

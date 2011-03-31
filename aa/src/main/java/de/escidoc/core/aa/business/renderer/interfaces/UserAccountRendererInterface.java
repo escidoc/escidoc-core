@@ -40,178 +40,111 @@ import java.util.Set;
 
 /**
  * Interface of an user account renderer.
- * 
- * @author Torsten Tetteroo
  *
+ * @author Torsten Tetteroo
  */
 public interface UserAccountRendererInterface {
 
     /**
      * Gets the representation of an user account.
-     * 
-     * @param userAccount
-     *            The user account to render.
-     * @return Returns the XML representation of the user account.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
      *
+     * @param userAccount The user account to render.
+     * @return Returns the XML representation of the user account.
+     * @throws SystemException Thrown in case of an internal error.
      */
     String render(final UserAccount userAccount) throws SystemException;
 
     /**
      * Gets a list of grants (from filterfunction retrieveGrants.
-     * 
-     * @param grants
-     *            A list of grants.
-     * @param numberOfHits
-     * @param offset
-     * @param limit
-     * @param recordPacking
-     *            A string to determine how the record should be escaped in the
-     *            response. Defined values are 'string' and 'xml'. The default
-     *            is 'xml'.
-     * 
+     *
+     * @param grants        A list of grants.
+     * @param recordPacking A string to determine how the record should be escaped in the response. Defined values are
+     *                      'string' and 'xml'. The default is 'xml'.
      * @return Returns the XML representation of the grants.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     * @throws SystemException Thrown in case of an internal error.
      */
     String renderGrants(
-        final List<RoleGrant> grants, final String numberOfHits,
-        final String offset, final String limit,
+        final List<RoleGrant> grants, final String numberOfHits, final String offset, final String limit,
         final RecordPacking recordPacking) throws SystemException;
 
     /**
-     * Gets the representation of the virtual sub resource "currentGrants" of an
-     * user account.
-     * 
-     * @param userAccount
-     *            The user account to render.
-     * @param currentGrants
-     *            The list of currently valid grants of the user account that
-     *            shall be rendered.
-     * @return Returns the XML representation of the virtual sub resource
-     *         "currentGrants" of an user account.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     * Gets the representation of the virtual sub resource "currentGrants" of an user account.
      *
+     * @param userAccount   The user account to render.
+     * @param currentGrants The list of currently valid grants of the user account that shall be rendered.
+     * @return Returns the XML representation of the virtual sub resource "currentGrants" of an user account.
+     * @throws SystemException Thrown in case of an internal error.
      */
-    String renderCurrentGrants(
-        final UserAccount userAccount, final List<RoleGrant> currentGrants)
+    String renderCurrentGrants(final UserAccount userAccount, final List<RoleGrant> currentGrants)
         throws SystemException;
 
     /**
      * Gets the representation of the provided <code>RoleGrant</code> object.
-     * 
-     * @param grant
-     *            The {@link RoleGrant} to render.
-     * @return Returns the XML representation of the provided
-     *         <code>RoleGrant</code> object.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
      *
+     * @param grant The {@link RoleGrant} to render.
+     * @return Returns the XML representation of the provided <code>RoleGrant</code> object.
+     * @throws SystemException Thrown in case of an internal error.
      */
     String renderGrant(final RoleGrant grant) throws SystemException;
 
     /**
-     * Gets the representation of the provided list of
-     * <code>UserPreference</code> objects.
-     * 
-     * @param userAccount
-     *            The user account to render preferences for.
-     * @param preferences
-     *            The <code>UserPreference</code> objects to render.
+     * Gets the representation of the provided list of <code>UserPreference</code> objects.
+     *
+     * @param userAccount The user account to render preferences for.
+     * @param preferences The <code>UserPreference</code> objects to render.
      * @return Returns the XML representation of the preferences.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
-     *
+     * @throws SystemException Thrown in case of an internal error.
      */
-    String renderPreferences(
-        final UserAccount userAccount, final Set<UserPreference> preferences)
+    String renderPreferences(final UserAccount userAccount, final Set<UserPreference> preferences)
         throws SystemException;
 
     /**
-     * Gets the representation of the provided <code>UserPreference</code>
-     * object.
-     * 
-     * @param userAccount
-     * @param preference
-     *            The {@link UserPreference} to render.
-     * @return Returns the XML representation of the provided
-     *         <code>RoleGrant</code> object.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     * Gets the representation of the provided <code>UserPreference</code> object.
      *
+     * @param preference The {@link UserPreference} to render.
+     * @return Returns the XML representation of the provided <code>RoleGrant</code> object.
+     * @throws SystemException Thrown in case of an internal error.
      */
-    String renderPreference(
-        final UserAccount userAccount, final UserPreference preference)
-        throws SystemException;
+    String renderPreference(final UserAccount userAccount, final UserPreference preference) throws SystemException;
 
     /**
-     * Gets the representation of the provided list of
-     * <code>UserAttribute</code> objects.
-     * 
-     * @param userAccount
-     *            The user account to render preferences for.
-     * @param attributes
-     *            The <code>UserAttribute</code> objects to render.
+     * Gets the representation of the provided list of <code>UserAttribute</code> objects.
+     *
+     * @param userAccount The user account to render preferences for.
+     * @param attributes  The <code>UserAttribute</code> objects to render.
      * @return Returns the XML representation of the attributes.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
-     *
+     * @throws SystemException Thrown in case of an internal error.
      */
-    String renderAttributes(
-        final UserAccount userAccount, final Set<UserAttribute> attributes)
-        throws SystemException;
+    String renderAttributes(final UserAccount userAccount, final Set<UserAttribute> attributes) throws SystemException;
 
     /**
-     * Gets the representation of the provided <code>UserAttribute</code>
-     * object.
-     * 
-     * @param attribute
-     *            The {@link UserAttribute} to render.
-     * @return Returns the XML representation of the provided
-     *         <code>UserAttribute</code> object.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     * Gets the representation of the provided <code>UserAttribute</code> object.
      *
+     * @param attribute The {@link UserAttribute} to render.
+     * @return Returns the XML representation of the provided <code>UserAttribute</code> object.
+     * @throws SystemException Thrown in case of an internal error.
      */
-    String renderAttribute(final UserAttribute attribute)
-        throws SystemException;
+    String renderAttribute(final UserAttribute attribute) throws SystemException;
 
     /**
-     * Gets the representation of the "resources" sub resource of an user
-     * account.
-     * 
-     * @param userAccount
-     *            The user account to render.
-     * @return Returns the XML representation of the "resources" sub resource of
-     *         the user account.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     * Gets the representation of the "resources" sub resource of an user account.
      *
+     * @param userAccount The user account to render.
+     * @return Returns the XML representation of the "resources" sub resource of the user account.
+     * @throws SystemException Thrown in case of an internal error.
      */
-    String renderResources(final UserAccount userAccount)
-        throws SystemException;
+    String renderResources(final UserAccount userAccount) throws SystemException;
 
     /**
      * Gets the representation of a list of the provided user accounts.
-     * 
-     * @param userAccounts
-     *            The <code>List</code> of
-     *            {@link UserAccount}
-     *            objects to render.
-     * @param recordPacking
-     *            A string to determine how the record should be escaped in the
-     *            response. Defined values are 'string' and 'xml'. The default
-     *            is 'xml'.
-     * 
-     * @return Returns the XML representation of the list of user accounts.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
      *
+     * @param userAccounts  The <code>List</code> of {@link UserAccount} objects to render.
+     * @param recordPacking A string to determine how the record should be escaped in the response. Defined values are
+     *                      'string' and 'xml'. The default is 'xml'.
+     * @return Returns the XML representation of the list of user accounts.
+     * @throws SystemException Thrown in case of an internal error.
      */
-    String renderUserAccounts(
-        final List<UserAccount> userAccounts, final RecordPacking recordPacking)
+    String renderUserAccounts(final List<UserAccount> userAccounts, final RecordPacking recordPacking)
         throws SystemException;
 
 }

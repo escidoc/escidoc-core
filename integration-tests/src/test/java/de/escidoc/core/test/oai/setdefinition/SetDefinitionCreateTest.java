@@ -13,10 +13,8 @@ import static org.junit.Assert.fail;
 @RunWith(value = Parameterized.class)
 public class SetDefinitionCreateTest extends SetDefinitionTestBase {
 
-
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public SetDefinitionCreateTest(final int transport) {
         super(transport);
@@ -24,47 +22,32 @@ public class SetDefinitionCreateTest extends SetDefinitionTestBase {
 
     /**
      * Test successful creating an SetDefinition resource.
-     * 
-     * @test.name Create SetDefinition
-     * @test.input SetDefinition XML representation
-     * @test.inputDescription: Valid XML representation of the SetDefinition.
-     * @test.expected: XML representation of the created SetDefinition
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testCreateSuccessfully() throws Exception {
 
-        final Document createdDocument =
-            createSuccessfully("escidoc_setdefinition_for_create.xml");
+        final Document createdDocument = createSuccessfully("escidoc_setdefinition_for_create.xml");
 
-        assertEquals(
-            "Creation date and last modification date are different. ",
-            assertCreationDateExists("", createdDocument),
-            getLastModificationDateValue(createdDocument));
+        assertEquals("Creation date and last modification date are different. ", assertCreationDateExists("",
+            createdDocument), getLastModificationDateValue(createdDocument));
     }
-    
+
     /**
-     * Test declining creating an SetDefinition resource with a set specification,
-     * which is already exist.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test declining creating an SetDefinition resource with a set specification, which is already exist.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testCreateSetDefinitionWithNotUniqueSetSpecification() throws Exception {
 
-        final Document createdDocument =
-            createSuccessfully("escidoc_setdefinition_for_create.xml");
+        final Document createdDocument = createSuccessfully("escidoc_setdefinition_for_create.xml");
 
-        assertEquals(
-            "Creation date and last modification date are different. ",
-            assertCreationDateExists("", createdDocument),
-            getLastModificationDateValue(createdDocument));
+        assertEquals("Creation date and last modification date are different. ", assertCreationDateExists("",
+            createdDocument), getLastModificationDateValue(createdDocument));
         String createdSetDefinition = toString(createdDocument, false);
-        try{
+        try {
             create(createdSetDefinition);
             fail("No exception on create set definition with not unique set specification.");
         }

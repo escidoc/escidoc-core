@@ -37,31 +37,22 @@ import java.util.List;
 
 /**
  * An utility class for filtering objectids by AA-Component.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 public class SmFilterUtility {
 
     private static PolicyDecisionPointInterface pdp;
 
     /**
-     * Filters the provided list of object ids by evaluating the retrieve
-     * privilege for the current user.
-     * 
-     * @param objectType
-     *            The object type of the objects to filter.
-     * @param objectIds
-     *            The list of object ids that shall be filtered.
-     * @return Returns the ids of the provided objects that the current user is
-     *         allowed to retrieve.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error that prevents the
-     *             filtering.
+     * Filters the provided list of object ids by evaluating the retrieve privilege for the current user.
      *
+     * @param objectType The object type of the objects to filter.
+     * @param objectIds  The list of object ids that shall be filtered.
+     * @return Returns the ids of the provided objects that the current user is allowed to retrieve.
+     * @throws WebserverSystemException Thrown in case of an internal error that prevents the filtering.
      */
-    public Collection<String> filterRetrievePrivilege(
-        final String objectType, final Collection<String> objectIds)
+    public Collection<String> filterRetrievePrivilege(final String objectType, final Collection<String> objectIds)
         throws WebserverSystemException {
 
         if (pdp == null) {
@@ -69,8 +60,7 @@ public class SmFilterUtility {
         }
         final List<String> resultIds;
         try {
-            resultIds = pdp.evaluateRetrieve(
-                    objectType, (List<String>) objectIds);
+            resultIds = pdp.evaluateRetrieve(objectType, (List<String>) objectIds);
         }
         catch (final Exception e) {
             throw new WebserverSystemException(e);
@@ -79,17 +69,13 @@ public class SmFilterUtility {
     }
 
     /**
-     * Locates the policy decision point. This should be called to initialize
-     * the static field holding the pdp EJB.
-     * 
-     * @return PolicyDecisionPointInterface policyDecisionPointInterface
-     * @throws WebserverSystemException
-     *             Thrown if the policy decision point bean cannot be retrieved
-     *             due to an internal error.
+     * Locates the policy decision point. This should be called to initialize the static field holding the pdp EJB.
      *
+     * @return PolicyDecisionPointInterface policyDecisionPointInterface
+     * @throws WebserverSystemException Thrown if the policy decision point bean cannot be retrieved due to an internal
+     *                                  error.
      */
-    private static PolicyDecisionPointInterface locateAa()
-        throws WebserverSystemException {
+    private static PolicyDecisionPointInterface locateAa() throws WebserverSystemException {
 
         pdp = BeanLocator.locatePolicyDecisionPoint();
         return pdp;

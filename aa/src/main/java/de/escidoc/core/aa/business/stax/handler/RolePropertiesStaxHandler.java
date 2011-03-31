@@ -42,20 +42,16 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 /**
  * Stax handler that manages the properties section of a role.
- * 
- * @author Torsten Tetteroo
  *
+ * @author Torsten Tetteroo
  */
 public class RolePropertiesStaxHandler extends DefaultHandler {
 
-    private static final String BASE_PATH =
-            '/' + XmlUtility.NAME_ROLE + '/' + XmlUtility.NAME_PROPERTIES;
+    private static final String BASE_PATH = '/' + XmlUtility.NAME_ROLE + '/' + XmlUtility.NAME_PROPERTIES;
 
-    private static final String DESCRIPTION_PATH =
-        BASE_PATH + '/' + XmlUtility.NAME_DESCRIPTION;
+    private static final String DESCRIPTION_PATH = BASE_PATH + '/' + XmlUtility.NAME_DESCRIPTION;
 
-    private static final String NAME_PATH =
-        BASE_PATH + '/' + XmlUtility.NAME_NAME;
+    private static final String NAME_PATH = BASE_PATH + '/' + XmlUtility.NAME_NAME;
 
     private final EscidocRole role;
 
@@ -63,41 +59,25 @@ public class RolePropertiesStaxHandler extends DefaultHandler {
 
     /**
      * The constructor.
-     * 
-     * @param role
-     *            The role to handle.
-     * @param roleDao
-     *            The data access object to access roles.
      *
+     * @param role    The role to handle.
+     * @param roleDao The data access object to access roles.
      */
-    public RolePropertiesStaxHandler(final EscidocRole role,
-        final EscidocRoleDaoInterface roleDao) {
+    public RolePropertiesStaxHandler(final EscidocRole role, final EscidocRoleDaoInterface roleDao) {
 
         this.role = role;
         this.roleDao = roleDao;
     }
 
-
-
     /**
      * See Interface for functional description.
-     * 
-     * @param s
-     * @param element
-     * @return
-     * @throws XmlCorruptedException
-     *             Thrown if an invalid role name is used.
-     * @throws UniqueConstraintViolationException
-     * @throws SystemException
-     * @see DefaultHandler
-     *      #characters(java.lang.String,
-     *      de.escidoc.core.common.util.xml.stax.events.StartElement)
      *
+     * @throws XmlCorruptedException Thrown if an invalid role name is used.
+     * @see DefaultHandler #characters(java.lang.String, de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
-    public String characters(final String s, final StartElement element)
-        throws UniqueConstraintViolationException, 
-                    XmlCorruptedException, SystemException {
+    public String characters(final String s, final StartElement element) throws UniqueConstraintViolationException,
+        XmlCorruptedException, SystemException {
 
         if (isNotReady()) {
 
@@ -116,33 +96,24 @@ public class RolePropertiesStaxHandler extends DefaultHandler {
         return s;
     }
 
-
-
     /**
      * Asserts that the role name is valid and unique.
-     * 
-     * @param name
-     *            The role name that shall be asserted.
-     * @param id
-     *            The id of the role that shall be created or updated and for
-     *            that the unique constraint has to be checked.
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an database error.
-     * @throws UniqueConstraintViolationException
-     *             Thrown if the role name is not unique, i.e. it exists another
-     *             role with the same name but a different id.
-     * @throws XmlCorruptedException
-     *             Thrown if an invalid role name is used.
      *
+     * @param name The role name that shall be asserted.
+     * @param id   The id of the role that shall be created or updated and for that the unique constraint has to be
+     *             checked.
+     * @throws SqlDatabaseSystemException Thrown in case of an database error.
+     * @throws UniqueConstraintViolationException
+     *                                    Thrown if the role name is not unique, i.e. it exists another role with the
+     *                                    same name but a different id.
+     * @throws XmlCorruptedException      Thrown if an invalid role name is used.
      */
-    private void assertValidAndUniqueLoginName(
-        final String name, final String id) throws SqlDatabaseSystemException,
+    private void assertValidAndUniqueLoginName(final String name, final String id) throws SqlDatabaseSystemException,
         XmlCorruptedException, UniqueConstraintViolationException {
 
         // first, assert valid name.
         if (RoleHandler.FORBIDDEN_ROLE_NAME.equals(name)) {
-            throw new XmlCorruptedException(StringUtility
-                .format("Role name not allowed", name));
+            throw new XmlCorruptedException(StringUtility.format("Role name not allowed", name));
         }
 
         final EscidocRole existingRoleWithSameName = roleDao.retrieveRole(name);
@@ -150,9 +121,8 @@ public class RolePropertiesStaxHandler extends DefaultHandler {
             if (existingRoleWithSameName.getId().equals(id)) {
                 return;
             }
-            throw new UniqueConstraintViolationException(StringUtility
-                    .format(
-                            "Role name must be unique within eSciDoc", name));
+            throw new UniqueConstraintViolationException(StringUtility.format(
+                "Role name must be unique within eSciDoc", name));
         }
     }
 

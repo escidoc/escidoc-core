@@ -36,44 +36,31 @@ import java.util.Collection;
 
 /**
  * Interface of an report definition renderer.
- * 
- * @author Michael Hoppe
  *
+ * @author Michael Hoppe
  */
 public interface ReportDefinitionRendererInterface {
 
     /**
      * Gets the representation of an report definition.
-     * 
-     * @param reportDefinition
-     *            The report definition to render.
-     * @return Returns the XML representation of the report definition.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
      *
+     * @param reportDefinition The report definition to render.
+     * @return Returns the XML representation of the report definition.
+     * @throws SystemException Thrown in case of an internal error.
      */
-    String render(final ReportDefinition reportDefinition)
-        throws SystemException;
+    String render(final ReportDefinition reportDefinition) throws SystemException;
 
     /**
      * Gets the representation of a list of the provided report definition.
-     * 
-     * @param reportDefinitions
-     *            The <code>List</code> of
-     *            {@link de.escidoc.core.sm.business.persistence.ReportDefinition}
-     *            objects to render.
-     * @param recordPacking
-     *            A string to determine how the record should be escaped in the
-     *            response. Defined values are 'string' and 'xml'. The default
-     *            is 'xml'.
-     * 
-     * @return Returns the XML representation of the list of reportDefinitions.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
      *
+     * @param reportDefinitions The <code>List</code> of {@link de.escidoc.core.sm.business.persistence.ReportDefinition}
+     *                          objects to render.
+     * @param recordPacking     A string to determine how the record should be escaped in the response. Defined values
+     *                          are 'string' and 'xml'. The default is 'xml'.
+     * @return Returns the XML representation of the list of reportDefinitions.
+     * @throws SystemException Thrown in case of an internal error.
      */
     String renderReportDefinitions(
-        final Collection<ReportDefinition> reportDefinitions,
-        final RecordPacking recordPacking) throws SystemException;
+        final Collection<ReportDefinition> reportDefinitions, final RecordPacking recordPacking) throws SystemException;
 
 }

@@ -37,91 +37,69 @@ import java.util.Map;
 
 /**
  * Interface of an Statistic Scope Handler of the business layer.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 public interface ScopeHandlerInterface {
 
     /**
      * Creates new Scope with given xmlData.
-     * 
-     * @param xmlData
-     *            Scope as xml in Scope schema.
+     *
+     * @param xmlData Scope as xml in Scope schema.
      * @return Returns the XML representation of the resource.
-     * 
      * @throws MissingMethodParameterException
-     *             ex
-     * @throws SystemException
-     *             ex
-     * 
+     *                         ex
+     * @throws SystemException ex
      */
     String create(final String xmlData) throws MissingMethodParameterException, SystemException;
 
     /**
      * Deletes the specified resource.
-     * 
-     * @param scopeId
-     *            The Scope ID.
-     * @throws ScopeNotFoundException
-     *             e.
+     *
+     * @param scopeId The Scope ID.
+     * @throws ScopeNotFoundException e.
      * @throws MissingMethodParameterException
-     *             e.
-     * @throws SystemException
-     *             e.
+     *                                e.
+     * @throws SystemException        e.
      */
-    void delete(String scopeId) throws ScopeNotFoundException,
-        MissingMethodParameterException, SystemException;
+    void delete(String scopeId) throws ScopeNotFoundException, MissingMethodParameterException, SystemException;
 
     /**
      * Retrieves the specified resource.
-     * 
-     * @param scopeId
-     *            The Scope ID.
+     *
+     * @param scopeId The Scope ID.
      * @return Returns the XML representation of the resource.
-     * @throws ScopeNotFoundException
-     *             e.
+     * @throws ScopeNotFoundException e.
      * @throws MissingMethodParameterException
-     *             e.
-     * @throws SystemException
-     *             e.
+     *                                e.
+     * @throws SystemException        e.
      */
-    String retrieve(String scopeId) throws ScopeNotFoundException,
-        MissingMethodParameterException, SystemException;
+    String retrieve(String scopeId) throws ScopeNotFoundException, MissingMethodParameterException, SystemException;
 
     /**
      * Retrieves Scopes the user is allowed to see.
-     * 
-     * @param parameters
-     *            filter as CQL query
+     *
+     * @param parameters filter as CQL query
      * @return Returns the XML representation of the Scope-list.
      * @throws MissingMethodParameterException
-     *             If the parameter filter is not given.
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a SQL query
-     * @throws SystemException
-     *             e.
+     *                                     If the parameter filter is not given.
+     * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
+     * @throws SystemException             e.
      */
-    String retrieveScopes(Map<String, String[]> parameters)
-        throws InvalidSearchQueryException, MissingMethodParameterException,
-        SystemException;
+    String retrieveScopes(Map<String, String[]> parameters) throws InvalidSearchQueryException,
+        MissingMethodParameterException, SystemException;
 
     /**
      * Updates the specified resource with the provided data.
-     * 
-     * @param scopeId
-     *            The Scope ID.
-     * @param xmlData
-     *            The new data of the Scope.
+     *
+     * @param scopeId The Scope ID.
+     * @param xmlData The new data of the Scope.
      * @return Returns the XML representation of the updated Scope.
-     * @throws ScopeNotFoundException
-     *             e.
+     * @throws ScopeNotFoundException e.
      * @throws MissingMethodParameterException
-     *             e.
-     * @throws SystemException
-     *             e.
+     *                                e.
+     * @throws SystemException        e.
      */
-    String update(String scopeId, String xmlData) throws ScopeNotFoundException,
-        MissingMethodParameterException, SystemException;
+    String update(String scopeId, String xmlData) throws ScopeNotFoundException, MissingMethodParameterException,
+        SystemException;
 }

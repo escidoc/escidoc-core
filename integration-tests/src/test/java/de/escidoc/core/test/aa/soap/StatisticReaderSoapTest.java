@@ -39,45 +39,36 @@ import java.util.Arrays;
 import java.util.Collection;
 
 /**
- * Test suite for testing access-rights 
- * to statistic-reports using the SOAP interface.
- * 
+ * Test suite for testing access-rights to statistic-reports using the SOAP interface.
+ *
  * @author Torsten Tetteroo
- * 
  */
 @RunWith(Parameterized.class)
 public class StatisticReaderSoapTest extends StatisticReaderAbstractTest {
 
     /**
      * Initializes test-class with data.
-     * 
+     *
      * @return Collection with data.
-     * 
      */
     @Parameters
     public static Collection<Object[]> data() {
-        return Arrays.asList(new Object[][]{
-                {USER_ACCOUNT_HANDLER_CODE, 
-                    PWCallback.ID_PREFIX + PWCallback.TEST_HANDLE},
-                {USER_GROUP_HANDLER_CODE, USER_GROUP_WITH_GROUP_LIST_ID},
-                {USER_GROUP_HANDLER_CODE, USER_GROUP_WITH_USER_LIST_ID},
-                {USER_GROUP_HANDLER_CODE, USER_GROUP_WITH_OU_LIST_ID},
-                {USER_GROUP_HANDLER_CODE, USER_GROUP_WITH_EXTERNAL_SELECTOR}
-        });
+        return Arrays.asList(new Object[][] {
+            { USER_ACCOUNT_HANDLER_CODE, PWCallback.ID_PREFIX + PWCallback.TEST_HANDLE },
+            { USER_GROUP_HANDLER_CODE, USER_GROUP_WITH_GROUP_LIST_ID },
+            { USER_GROUP_HANDLER_CODE, USER_GROUP_WITH_USER_LIST_ID },
+            { USER_GROUP_HANDLER_CODE, USER_GROUP_WITH_OU_LIST_ID },
+            { USER_GROUP_HANDLER_CODE, USER_GROUP_WITH_EXTERNAL_SELECTOR } });
     }
 
     /**
      * Constructor.
-     * 
-     * @param handlerCode handlerCode 
-     *      of UserAccountHandler or UserGroupHandler
-     * @param userOrGroupId
-     *            userOrGroupId for grantCreation.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param handlerCode   handlerCode of UserAccountHandler or UserGroupHandler
+     * @param userOrGroupId userOrGroupId for grantCreation.
+     * @throws Exception If anything fails.
      */
-    public StatisticReaderSoapTest(final int handlerCode,
-            final String userOrGroupId) throws Exception {
+    public StatisticReaderSoapTest(final int handlerCode, final String userOrGroupId) throws Exception {
 
         super(Constants.TRANSPORT_SOAP, handlerCode, userOrGroupId);
     }

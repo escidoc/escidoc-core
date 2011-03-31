@@ -43,9 +43,8 @@ import static org.junit.Assert.fail;
 
 /**
  * Test the mock implementation of the Container resource.
- * 
+ *
  * @author Michael Schneider
- * 
  */
 @RunWith(value = Parameterized.class)
 public class ContainerSubmitTest extends ContainerTestBase {
@@ -55,8 +54,7 @@ public class ContainerSubmitTest extends ContainerTestBase {
     private String theContainerId;
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ContainerSubmitTest(final int transport) {
         super(transport);
@@ -64,14 +62,12 @@ public class ContainerSubmitTest extends ContainerTestBase {
 
     /**
      * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Before
     public void setUp() throws Exception {
-        String xmlData =
-            getContainerTemplate("create_container_WithoutMembers_v1.1.xml");
+        String xmlData = getContainerTemplate("create_container_WithoutMembers_v1.1.xml");
 
         this.theContainerXml = create(xmlData);
         this.theContainerId = getObjidValue(this.theContainerXml);
@@ -79,36 +75,21 @@ public class ContainerSubmitTest extends ContainerTestBase {
 
     /**
      * Test successful submitting a container in state "pending".
-     * 
-     * @test.name Submit Container - Pending
-     * @test.id OM_SC_1
-     * @test.input
-     *          <ul>
-     *          <li>id of an existing container in state pending</li>
-     *          <li>timestamp of the last modification of the container</li>
-     *          </ul>
-     * @test.expected: No result, no exception, Container has been submitted,
-     *                 Last modification date of container has been updated.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOM_SC_1() throws Exception {
 
         String paramXml = getTheLastModificationParam(false, theContainerId);
-        final Document paramDocument =
-            EscidocRestSoapTestBase.getDocument(paramXml);
-        final String pendingLastModificationDate =
-            getLastModificationDateValue(paramDocument);
+        final Document paramDocument = EscidocRestSoapTestBase.getDocument(paramXml);
+        final String pendingLastModificationDate = getLastModificationDateValue(paramDocument);
 
         try {
             submit(theContainerId, paramXml);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Submitting the pending item failed. ", e);
+            EscidocRestSoapTestBase.failException("Submitting the pending item failed. ", e);
         }
 
         String submittedXml = null;
@@ -116,35 +97,19 @@ public class ContainerSubmitTest extends ContainerTestBase {
             submittedXml = retrieve(theContainerId);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Retrieving the revised, submitted item failed. ", e);
+            EscidocRestSoapTestBase.failException("Retrieving the revised, submitted item failed. ", e);
         }
-        final Document submittedDocument =
-            EscidocRestSoapTestBase.getDocument(submittedXml);
-        assertDateBeforeAfter(pendingLastModificationDate,
-            getLastModificationDateValue(submittedDocument));
-        assertXmlEquals("Unexpected status. ", submittedDocument,
-            XPATH_CONTAINER_STATUS, STATE_SUBMITTED);
-        assertXmlEquals("Unexpected current version status", submittedDocument,
-            XPATH_CONTAINER_CURRENT_VERSION_STATUS, STATE_SUBMITTED);
+        final Document submittedDocument = EscidocRestSoapTestBase.getDocument(submittedXml);
+        assertDateBeforeAfter(pendingLastModificationDate, getLastModificationDateValue(submittedDocument));
+        assertXmlEquals("Unexpected status. ", submittedDocument, XPATH_CONTAINER_STATUS, STATE_SUBMITTED);
+        assertXmlEquals("Unexpected current version status", submittedDocument, XPATH_CONTAINER_CURRENT_VERSION_STATUS,
+            STATE_SUBMITTED);
     }
 
     /**
      * Test successful submitting a container in state "in-revision".
-     * 
-     * @test.name Submit Container - In Revision
-     * @test.id OM_SC_1-2
-     * @test.input
-     *          <ul>
-     *          <li>id of an existing container in state in-revision</li>
-     *          <li>timestamp of the last modification of the container</li>
-     *          </ul>
-     * @test.expected: No result, no exception, Container has been submitted,
-     *                 Last modification date of container has been updated.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOM_SC_1_2() throws Exception {
@@ -154,17 +119,14 @@ public class ContainerSubmitTest extends ContainerTestBase {
         paramXml = getTheLastModificationParam(false, theContainerId);
         revise(theContainerId, paramXml);
         paramXml = getTheLastModificationParam(false, theContainerId);
-        final Document paramDocument =
-            EscidocRestSoapTestBase.getDocument(paramXml);
-        final String revisedLastModificationDate =
-            getLastModificationDateValue(paramDocument);
+        final Document paramDocument = EscidocRestSoapTestBase.getDocument(paramXml);
+        final String revisedLastModificationDate = getLastModificationDateValue(paramDocument);
 
         try {
             submit(theContainerId, paramXml);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Submitting the revised item failed. ", e);
+            EscidocRestSoapTestBase.failException("Submitting the revised item failed. ", e);
         }
 
         String submittedXml = null;
@@ -172,23 +134,17 @@ public class ContainerSubmitTest extends ContainerTestBase {
             submittedXml = retrieve(theContainerId);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Retrieving the revised, submitted item failed. ", e);
+            EscidocRestSoapTestBase.failException("Retrieving the revised, submitted item failed. ", e);
         }
-        final Document submittedDocument =
-            EscidocRestSoapTestBase.getDocument(submittedXml);
-        assertDateBeforeAfter(revisedLastModificationDate,
-            getLastModificationDateValue(submittedDocument));
-        assertXmlEquals("Unexpected status. ", submittedDocument,
-            XPATH_CONTAINER_STATUS, STATE_SUBMITTED);
-        assertXmlEquals("Unexpected current version status", submittedDocument,
-            XPATH_CONTAINER_CURRENT_VERSION_STATUS, STATE_SUBMITTED);
+        final Document submittedDocument = EscidocRestSoapTestBase.getDocument(submittedXml);
+        assertDateBeforeAfter(revisedLastModificationDate, getLastModificationDateValue(submittedDocument));
+        assertXmlEquals("Unexpected status. ", submittedDocument, XPATH_CONTAINER_STATUS, STATE_SUBMITTED);
+        assertXmlEquals("Unexpected current version status", submittedDocument, XPATH_CONTAINER_CURRENT_VERSION_STATUS,
+            STATE_SUBMITTED);
     }
 
     /**
      * Test declining submit of container with non existing id.
-     * 
-     * @throws Exception
      */
     @Test
     public void testOM_SC_2_1() throws Exception {
@@ -201,23 +157,19 @@ public class ContainerSubmitTest extends ContainerTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = ContainerNotFoundException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
     }
 
     /**
      * Test declining submitting of container with wrong time stamp.
-     * 
-     * @throws Exception
      */
     @Test
     public void test_OM_SC_2_2() throws Exception {
 
         String param = getTheLastModificationParam(false, theContainerId);
         param =
-            param.replaceFirst(
-                "<param last-modification-date=\"([0-9TZ:\\.-])+\"",
+            param.replaceFirst("<param last-modification-date=\"([0-9TZ:\\.-])+\"",
                 "<param last-modification-date=\"2005-01-30T11:36:42.015Z\"");
 
         try {
@@ -226,15 +178,12 @@ public class ContainerSubmitTest extends ContainerTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = OptimisticLockingException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
     }
 
     /**
      * Test declining submitting of container with missing id
-     * 
-     * @throws Exception
      */
     @Test
     public void testOM_SC_3_1() throws Exception {
@@ -247,15 +196,12 @@ public class ContainerSubmitTest extends ContainerTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
     }
 
     /**
      * Test declining submitting of container with missing time stamp
-     * 
-     * @throws Exception
      */
     @Test
     public void testOM_SC_3_2() throws Exception {
@@ -266,16 +212,14 @@ public class ContainerSubmitTest extends ContainerTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
     }
 
     /**
      * Clean up after test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Override
     @After

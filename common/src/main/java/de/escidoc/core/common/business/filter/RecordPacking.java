@@ -21,9 +21,8 @@
 package de.escidoc.core.common.business.filter;
 
 /**
- * This is an enumeration for the different values of record packing in an SRU
- * request.
- * 
+ * This is an enumeration for the different values of record packing in an SRU request.
+ *
  * @author André Schenk
  */
 public enum RecordPacking {
@@ -33,9 +32,8 @@ public enum RecordPacking {
 
     /**
      * Construct a new RecordPacking object.
-     * 
-     * @param type
-     *            record packing type
+     *
+     * @param type record packing type
      */
     RecordPacking(final String type) {
         this.type = type;
@@ -43,7 +41,7 @@ public enum RecordPacking {
 
     /**
      * Get the record packing type.
-     * 
+     *
      * @return the record packing type
      */
     public String getType() {
@@ -52,10 +50,8 @@ public enum RecordPacking {
 
     /**
      * Create a RecordPacking object from the given type.
-     * 
-     * @param type
-     *            record packing type
-     * 
+     *
+     * @param type record packing type
      * @return RecordPacking object
      */
     public static RecordPacking fromType(final String type) {

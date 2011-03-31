@@ -43,7 +43,6 @@ import de.escidoc.core.common.util.string.StringUtility;
  * Implementation of a wrapper of an external user management.
  *
  * @author Torsten Tetteroo
- *
  */
 public class UserManagementWrapper implements UserManagementWrapperInterface {
 
@@ -53,39 +52,27 @@ public class UserManagementWrapper implements UserManagementWrapperInterface {
     private UserAccountDaoInterface dao;
 
     /**
-     * The time span during that the eSciDoc user handle is valid (in milli
-     * seconds).
+     * The time span during that the eSciDoc user handle is valid (in milli seconds).
      */
     private long eSciDocUserHandleLifetime = Long.MIN_VALUE;
 
     /**
      * Setter for the dao.
      *
-     * @param dao
-     *            The data access object.
-     * 
-     *
+     * @param dao The data access object.
      */
     public void setDao(final UserAccountDaoInterface dao) {
 
         this.dao = dao;
     }
 
-
-
     /**
      * See Interface for functional description.
-     * 
-     * @throws AuthenticationException
-     * @throws SqlDatabaseSystemException
-     * @throws WebserverSystemException
-     * @see de.escidoc.core.aa.service.interfaces.UserManagementWrapperInterface
-     *      #logout()
      *
+     * @see de.escidoc.core.aa.service.interfaces.UserManagementWrapperInterface #logout()
      */
     @Override
-    public void logout() throws AuthenticationException,
-        SqlDatabaseSystemException, WebserverSystemException {
+    public void logout() throws AuthenticationException, SqlDatabaseSystemException, WebserverSystemException {
 
         if (UserContext.isAnonymousUser()) {
             return;
@@ -100,26 +87,18 @@ public class UserManagementWrapper implements UserManagementWrapperInterface {
 
     /**
      * See Interface for functional description.
-     * 
-     * @param handle the handle
-     * @throws AuthenticationException
-     *             Thrown if the authentication fails due to an invalid provided
-     *             eSciDocUserHandle.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
-     * 
      *
+     * @param handle the handle
+     * @throws AuthenticationException Thrown if the authentication fails due to an invalid provided eSciDocUserHandle.
+     * @throws SystemException         Thrown in case of an internal error.
      */
     @Override
-    public void initHandleExpiryTimestamp(final String handle)
-        throws SystemException {
+    public void initHandleExpiryTimestamp(final String handle) throws SystemException {
         final UserLoginData userLoginData = dao.retrieveUserLoginDataByHandle(handle);
-        final long expiryts = System.currentTimeMillis()
-                        + getESciDocUserHandleLifetime();
+        final long expiryts = System.currentTimeMillis() + getESciDocUserHandleLifetime();
         if (userLoginData.getExpiryts() < expiryts) {
             if (userLoginData.getExpiryts() < System.currentTimeMillis()) {
-                throw new WebserverSystemException(
-                    "Handle-expiry-timestamp cannot get "
+                throw new WebserverSystemException("Handle-expiry-timestamp cannot get "
                     + "reinitialized on expired handles");
             }
             userLoginData.setExpiryts(expiryts);
@@ -129,8 +108,7 @@ public class UserManagementWrapper implements UserManagementWrapperInterface {
 
     /**
      * @return the eSciDocUserHandleLifetime.
-     * @throws WebserverSystemException
-     *             Thrown if access to configuration properties fails.
+     * @throws WebserverSystemException Thrown if access to configuration properties fails.
      */
     private long getESciDocUserHandleLifetime() throws WebserverSystemException {
 
@@ -141,11 +119,8 @@ public class UserManagementWrapper implements UserManagementWrapperInterface {
                         EscidocConfiguration.ESCIDOC_CORE_USERHANDLE_LIFETIME));
             }
             catch (final Exception e) {
-                throw new WebserverSystemException(StringUtility
-                    .format(
-                        "Can't get configuration parameter",
-                        EscidocConfiguration.ESCIDOC_CORE_USERHANDLE_LIFETIME,
-                        e.getMessage()), e);
+                throw new WebserverSystemException(StringUtility.format("Can't get configuration parameter",
+                    EscidocConfiguration.ESCIDOC_CORE_USERHANDLE_LIFETIME, e.getMessage()), e);
             }
         }
         return this.eSciDocUserHandleLifetime;

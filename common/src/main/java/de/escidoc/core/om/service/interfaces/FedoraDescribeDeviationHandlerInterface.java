@@ -24,26 +24,18 @@ import java.util.Map;
 
 /**
  * Interface of an fedora deviation handler.
- * 
- * @author Michael Hoppe
- * 
  *
+ * @author Michael Hoppe
  */
 public interface FedoraDescribeDeviationHandlerInterface {
 
     /**
-     * Overwrites the Fedora http-Call /describe. Executes http-request
-     * to /describe and returns String.
-     * 
-     * @param parameters
-     *            request parameters.
-     * 
+     * Overwrites the Fedora http-Call /describe. Executes http-request to /describe and returns String.
+     *
+     * @param parameters request parameters.
      * @return String response
-     * @throws Exception
-     *             ex
-     * 
+     * @throws Exception ex
      */
-    String getFedoraDescription(Map<String, String[]> parameters)
-        throws Exception;
+    String getFedoraDescription(Map<String, String[]> parameters) throws Exception;
 
 }

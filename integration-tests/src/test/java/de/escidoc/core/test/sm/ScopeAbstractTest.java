@@ -47,9 +47,8 @@ import static org.junit.Assert.fail;
 
 /**
  * Test the implementation of the Scope resource.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 @RunWith(value = Parameterized.class)
 public class ScopeAbstractTest extends ScopeTestBase {
@@ -58,12 +57,10 @@ public class ScopeAbstractTest extends ScopeTestBase {
 
     private static int methodCounter = 0;
 
-    public static final String XPATH_SRW_SCOPE_LIST_SCOPE =
-        XPATH_SRW_RESPONSE_OBJECT + NAME_SCOPE;
-    
+    public static final String XPATH_SRW_SCOPE_LIST_SCOPE = XPATH_SRW_RESPONSE_OBJECT + NAME_SCOPE;
+
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ScopeAbstractTest(final int transport) {
         super(transport);
@@ -71,9 +68,8 @@ public class ScopeAbstractTest extends ScopeTestBase {
 
     /**
      * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Before
     public void initialize() throws Exception {
@@ -85,9 +81,8 @@ public class ScopeAbstractTest extends ScopeTestBase {
 
     /**
      * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @After
     public void deinitialize() throws Exception {
@@ -100,14 +95,11 @@ public class ScopeAbstractTest extends ScopeTestBase {
 
     /**
      * create new scope.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     public void createScope() throws Exception {
-        String xml =
-            getTemplateAsFixedScopeString(
-                        TEMPLATE_SCOPE_PATH, "escidoc_scope1.xml");
+        String xml = getTemplateAsFixedScopeString(TEMPLATE_SCOPE_PATH, "escidoc_scope1.xml");
         String result = create(xml);
         assertXmlValidScope(result);
         primKeys.add(getPrimKey(result));
@@ -115,9 +107,8 @@ public class ScopeAbstractTest extends ScopeTestBase {
 
     /**
      * delete scope to clean database.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     public void deleteScope() throws Exception {
         for (String primKey : primKeys) {
@@ -127,9 +118,8 @@ public class ScopeAbstractTest extends ScopeTestBase {
 
     /**
      * retrieve scope with id of created scope.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSMSC1() throws Exception {
@@ -139,9 +129,8 @@ public class ScopeAbstractTest extends ScopeTestBase {
 
     /**
      * retrieve scope with invalid id.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSMSC2() throws Exception {
@@ -158,34 +147,26 @@ public class ScopeAbstractTest extends ScopeTestBase {
 
     /**
      * update scope.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSMSC3() throws Exception {
-        String xml =
-            getTemplateAsFixedScopeString(
-                        TEMPLATE_SCOPE_PATH, "escidoc_scope2.xml");
+        String xml = getTemplateAsFixedScopeString(TEMPLATE_SCOPE_PATH, "escidoc_scope2.xml");
         String primKey = primKeys.iterator().next();
-        xml =
-            replacePrimKey(xml, primKey);
-        String result =
-            update(primKey, xml);
+        xml = replacePrimKey(xml, primKey);
+        String result = update(primKey, xml);
         assertXmlValidScope(result);
     }
 
     /**
      * create with invalid xml.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSMSC4() throws Exception {
-        String xml =
-            getTemplateAsFixedScopeString(TEMPLATE_SCOPE_PATH,
-                "escidoc_scope_invalid.xml");
+        String xml = getTemplateAsFixedScopeString(TEMPLATE_SCOPE_PATH, "escidoc_scope_invalid.xml");
         try {
             create(xml);
             fail("No exception occured on create with invalid xml.");
@@ -199,15 +180,12 @@ public class ScopeAbstractTest extends ScopeTestBase {
 
     /**
      * create with invalid scope-type.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSMSC5() throws Exception {
-        String xml =
-            getTemplateAsFixedScopeString(TEMPLATE_SCOPE_PATH,
-                "escidoc_scope_invalid1.xml");
+        String xml = getTemplateAsFixedScopeString(TEMPLATE_SCOPE_PATH, "escidoc_scope_invalid1.xml");
         try {
             create(xml);
             fail("No exception occured on create with invalid xml.");
@@ -221,15 +199,12 @@ public class ScopeAbstractTest extends ScopeTestBase {
 
     /**
      * update with wrong primkey.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSMSC6() throws Exception {
-        String xml =
-            getTemplateAsFixedScopeString(
-                        TEMPLATE_SCOPE_PATH, "escidoc_scope1.xml");
+        String xml = getTemplateAsFixedScopeString(TEMPLATE_SCOPE_PATH, "escidoc_scope1.xml");
         try {
             update("99999", xml);
             fail("No exception occured on update with wrong primkey.");
@@ -243,15 +218,12 @@ public class ScopeAbstractTest extends ScopeTestBase {
 
     /**
      * create with wrong namespace-prefix.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSMSC7() throws Exception {
-        String xml =
-            getTemplateAsFixedScopeString(
-                        TEMPLATE_SCOPE_PATH, "escidoc_scope4.xml");
+        String xml = getTemplateAsFixedScopeString(TEMPLATE_SCOPE_PATH, "escidoc_scope4.xml");
         try {
             create(xml);
             fail("No exception occured on create with wrong namespace-prefix.");
@@ -265,15 +237,12 @@ public class ScopeAbstractTest extends ScopeTestBase {
 
     /**
      * create correct namespace-prefix.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSMSC8() throws Exception {
-        String xml =
-            getTemplateAsFixedScopeString(
-                        TEMPLATE_SCOPE_PATH, "escidoc_scope5.xml");
+        String xml = getTemplateAsFixedScopeString(TEMPLATE_SCOPE_PATH, "escidoc_scope5.xml");
         String result = create(xml);
         primKeys.add(getPrimKey(result));
         assertXmlValidScope(result);
@@ -281,15 +250,12 @@ public class ScopeAbstractTest extends ScopeTestBase {
 
     /**
      * create with id-attribute.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSMSC9() throws Exception {
-        String xml =
-            getTemplateAsFixedScopeString(
-                        TEMPLATE_SCOPE_PATH, "escidoc_scope6.xml");
+        String xml = getTemplateAsFixedScopeString(TEMPLATE_SCOPE_PATH, "escidoc_scope6.xml");
         String result = create(xml);
         String primKey = getPrimKey(result);
         primKeys.add(primKey);
@@ -299,9 +265,8 @@ public class ScopeAbstractTest extends ScopeTestBase {
 
     /**
      * retrieve list of scopes.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSMSC10CQL() throws Exception {
@@ -310,26 +275,15 @@ public class ScopeAbstractTest extends ScopeTestBase {
     }
 
     /**
-     * Test successful retrieving a list of existing 
-     * Scopes resources.
-     * Test if maximumRecords=0 delivers 0 Scopes
-     * 
-     * @test.name Retrieve Scopes - Success.
-     * @test.id emptyFilterZeroMaximumRecords
-     * @test.input Valid filter criteria.
-     * @test.expected: XML representation of the list of Scopes
-     *                 containing 0 Scopes.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test successful retrieving a list of existing Scopes resources. Test if maximumRecords=0 delivers 0 Scopes
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void emptyFilterZeroMaximumRecords() throws Exception {
 
-        final Map <String, String[]> filterParams =
-            new HashMap<String, String[]>();
-            filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] {"0"});
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "0" });
 
         String result = null;
 
@@ -337,41 +291,28 @@ public class ScopeAbstractTest extends ScopeTestBase {
             result = retrieveScopes(filterParams);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Retrieving of list of Scopes failed. ", e);
+            EscidocRestSoapTestBase.failException("Retrieving of list of Scopes failed. ", e);
         }
 
         assertXmlValidSrwResponse(result);
-        Document retrievedDocument =
-            EscidocRestSoapTestBase.getDocument(result);
-        NodeList resultNodes =
-            selectNodeList(retrievedDocument,
-                XPATH_SRW_SCOPE_LIST_SCOPE);
+        Document retrievedDocument = EscidocRestSoapTestBase.getDocument(result);
+        NodeList resultNodes = selectNodeList(retrievedDocument, XPATH_SRW_SCOPE_LIST_SCOPE);
         final int totalRecordsWithZeroMaximum = resultNodes.getLength();
-        
-        assertEquals("Unexpected number of records.", 
-            totalRecordsWithZeroMaximum, 0);
+
+        assertEquals("Unexpected number of records.", totalRecordsWithZeroMaximum, 0);
 
     }
 
     /**
      * Test successfully retrieving an explain response.
-     * 
-     * @test.name explainTest
-     * @test.id explainTest
-     * @test.input
-     * @test.expected: valid explain response.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void explainTest() throws Exception {
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(EscidocRestSoapTestBase.FILTER_PARAMETER_EXPLAIN,
-            new String[] { "" });
+        filterParams.put(EscidocRestSoapTestBase.FILTER_PARAMETER_EXPLAIN, new String[] { "" });
 
         String result = null;
 

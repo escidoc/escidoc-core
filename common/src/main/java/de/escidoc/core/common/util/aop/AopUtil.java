@@ -20,14 +20,11 @@
 
 package de.escidoc.core.common.util.aop;
 
-
 /**
- * Utility class for aop in eSciDoc.<br>
- * Besides providing utility methods, the order of the interceptors (advises) is
+ * Utility class for aop in eSciDoc.<br> Besides providing utility methods, the order of the interceptors (advises) is
  * defined here.
- * 
- * @author Torsten Tetteroo
  *
+ * @author Torsten Tetteroo
  */
 public final class AopUtil {
 
@@ -45,8 +42,6 @@ public final class AopUtil {
 
     /**
      * Private constructor to prevent initialization.
-     * 
-     *
      */
     private AopUtil() {
     }

@@ -56,8 +56,7 @@ import java.util.Set;
 /**
  * @author Rozita Friedman
  */
-public class HibernateSetDefinitionDao extends AbstractHibernateDao
-    implements SetDefinitionDaoInterface {
+public class HibernateSetDefinitionDao extends AbstractHibernateDao implements SetDefinitionDaoInterface {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(HibernateSetDefinitionDao.class);
 
@@ -67,20 +66,19 @@ public class HibernateSetDefinitionDao extends AbstractHibernateDao
 
     private SetDefinitionFilter setDefinitionFilter;
 
-
-
     /**
      * Constructor to initialize filter-names with RoleFilter-Class.
      */
     public HibernateSetDefinitionDao() {
         try {
             this.setDefinitionFilter = new SetDefinitionFilter(null);
-        } catch (final InvalidSearchQueryException e) {
+        }
+        catch (final InvalidSearchQueryException e) {
             // Dont do anything because null-query is given
-            if(LOGGER.isWarnEnabled()) {
+            if (LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Expected exception for null-query");
             }
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Expected exception for null-query", e);
             }
         }
@@ -90,22 +88,16 @@ public class HibernateSetDefinitionDao extends AbstractHibernateDao
 
     /**
      * See Interface for functional description.
-     * 
-     * @param userGroup
-     * @throws SqlDatabaseSystemException
-     * @see UserGroupDaoInterface
-     *      #delete(de.escidoc.core.aa.business.persistence.UserGroup)
      *
+     * @see UserGroupDaoInterface #delete(de.escidoc.core.aa.business.persistence.UserGroup)
      */
     @Override
-    public void delete(final SetDefinition setDefinition)
-        throws SqlDatabaseSystemException {
+    public void delete(final SetDefinition setDefinition) throws SqlDatabaseSystemException {
         super.delete(setDefinition);
     }
 
     @Override
-    public SetDefinition findSetDefinitionBySpecification(
-        final String specification) throws SqlDatabaseSystemException {
+    public SetDefinition findSetDefinitionBySpecification(final String specification) throws SqlDatabaseSystemException {
         final SetDefinition result;
         try {
             result =
@@ -119,8 +111,7 @@ public class HibernateSetDefinitionDao extends AbstractHibernateDao
         }
         catch (final HibernateException e) {
             //noinspection ThrowableResultOfMethodCallIgnored,ThrowableResultOfMethodCallIgnored
-            throw new SqlDatabaseSystemException(
-                convertHibernateAccessException(e));
+            throw new SqlDatabaseSystemException(convertHibernateAccessException(e));
         }
         catch (final IllegalStateException e) {
             throw new SqlDatabaseSystemException(e);
@@ -130,23 +121,16 @@ public class HibernateSetDefinitionDao extends AbstractHibernateDao
 
     /**
      * See Interface for functional description.
-     * 
-     * @param groupId
-     * @return
-     * @see UserGroupDaoInterface
-     *      #retrieveUserGroup(java.lang.String)
      *
+     * @see UserGroupDaoInterface #retrieveUserGroup(java.lang.String)
      */
     @Override
-    public SetDefinition retrieveSetDefinition(final String id)
-        throws SqlDatabaseSystemException {
+    public SetDefinition retrieveSetDefinition(final String id) throws SqlDatabaseSystemException {
         SetDefinition result = null;
 
         if (id != null) {
             try {
-                result =
-                        getHibernateTemplate().get(
-                            SetDefinition.class, id);
+                result = getHibernateTemplate().get(SetDefinition.class, id);
             }
             catch (final DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);
@@ -156,8 +140,7 @@ public class HibernateSetDefinitionDao extends AbstractHibernateDao
             }
             catch (final HibernateException e) {
                 //noinspection ThrowableResultOfMethodCallIgnored,ThrowableResultOfMethodCallIgnored
-                throw new SqlDatabaseSystemException(
-                    convertHibernateAccessException(e));
+                throw new SqlDatabaseSystemException(convertHibernateAccessException(e));
             }
         }
         return result;
@@ -165,33 +148,20 @@ public class HibernateSetDefinitionDao extends AbstractHibernateDao
 
     /**
      * See Interface for functional description.
-     * 
-     * @param criteria
-     * @param offset
-     * @param maxResults
-     * @param orderBy
-     * @param sorting
-     * 
-     * @return
-     * @throws SqlDatabaseSystemException
-     * @see UserGroupDaoInterface
-     *      #retrieveSetDefinitions(java.util.Map, int, int, String, ListSorting)
      *
+     * @see UserGroupDaoInterface #retrieveSetDefinitions(java.util.Map, int, int, String, ListSorting)
      */
     @Override
     public List<SetDefinition> retrieveSetDefinitions(
-        final Map<String, Object> criteria, final int offset,
-        final int maxResults, final String orderBy, final ListSorting sorting)
-        throws SqlDatabaseSystemException {
-        final DetachedCriteria detachedCriteria =
-            DetachedCriteria.forClass(SetDefinition.class);
-        final Map<String, Object> clonedCriterias =
-            new HashMap<String, Object>(criteria);
+        final Map<String, Object> criteria, final int offset, final int maxResults, final String orderBy,
+        final ListSorting sorting) throws SqlDatabaseSystemException {
+        final DetachedCriteria detachedCriteria = DetachedCriteria.forClass(SetDefinition.class);
+        final Map<String, Object> clonedCriterias = new HashMap<String, Object>(criteria);
 
         // ids
-        final Set<String> setIds = mergeSets(
-            (Set<String>) clonedCriterias.remove(Constants.DC_IDENTIFIER_URI),
-            (Set<String>) clonedCriterias.remove(Constants.FILTER_PATH_ID));
+        final Set<String> setIds =
+            mergeSets((Set<String>) clonedCriterias.remove(Constants.DC_IDENTIFIER_URI), (Set<String>) clonedCriterias
+                .remove(Constants.FILTER_PATH_ID));
 
         if (setIds != null) {
             detachedCriteria.add(Restrictions.in("id", setIds.toArray()));
@@ -202,30 +172,25 @@ public class HibernateSetDefinitionDao extends AbstractHibernateDao
             if (criteriaValue != null) {
                 final Object[] parts = stringEntry.getValue();
                 if (parts[0].equals(COMPARE_EQ)) {
-                    detachedCriteria.add(Restrictions.eq((String) parts[1],
-                            criteriaValue));
-                } else {
-                    detachedCriteria.add(Restrictions.like((String) parts[1],
-                            criteriaValue));
+                    detachedCriteria.add(Restrictions.eq((String) parts[1], criteriaValue));
+                }
+                else {
+                    detachedCriteria.add(Restrictions.like((String) parts[1], criteriaValue));
                 }
             }
         }
         if (orderBy != null) {
             if (sorting == ListSorting.ASCENDING) {
-                detachedCriteria.addOrder(Order.asc(propertiesNamesMap
-                    .get(orderBy)));
+                detachedCriteria.addOrder(Order.asc(propertiesNamesMap.get(orderBy)));
             }
             else if (sorting == ListSorting.DESCENDING) {
-                detachedCriteria.addOrder(Order.desc(propertiesNamesMap
-                    .get(orderBy)));
+                detachedCriteria.addOrder(Order.desc(propertiesNamesMap.get(orderBy)));
             }
         }
         final List<SetDefinition> result;
         if (clonedCriterias.isEmpty()) {
             try {
-                result =
-                    getHibernateTemplate().findByCriteria(detachedCriteria,
-                        offset, maxResults);
+                result = getHibernateTemplate().findByCriteria(detachedCriteria, offset, maxResults);
             }
             catch (final DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);
@@ -241,39 +206,24 @@ public class HibernateSetDefinitionDao extends AbstractHibernateDao
 
     /**
      * See Interface for functional description.
-     * 
-     * @param criteria
-     * @param offset
-     * @param maxResults
-     * @param orderBy
-     * @param sorting
-     * 
-     * @return
-     * @throws SqlDatabaseSystemException
-     * @see UserGroupDaoInterface
-     *      #retrieveSetDefinitions(java.util.Map, int, int, String, ListSorting)
+     *
+     * @see UserGroupDaoInterface #retrieveSetDefinitions(java.util.Map, int, int, String, ListSorting)
      */
     @Override
-    public List<SetDefinition> retrieveSetDefinitions(
-        final String criterias, final int offset, final int maxResults)
+    public List<SetDefinition> retrieveSetDefinitions(final String criterias, final int offset, final int maxResults)
         throws InvalidSearchQueryException, SqlDatabaseSystemException {
 
         final List<SetDefinition> result;
 
         if (criterias != null && criterias.length() > 0) {
             result =
-                getHibernateTemplate().findByCriteria(
-                    new SetDefinitionFilter(criterias).toSql(), offset,
-                    maxResults);
+                getHibernateTemplate().findByCriteria(new SetDefinitionFilter(criterias).toSql(), offset, maxResults);
         }
         else {
             try {
-                final DetachedCriteria detachedCriteria =
-                    DetachedCriteria.forClass(SetDefinition.class);
+                final DetachedCriteria detachedCriteria = DetachedCriteria.forClass(SetDefinition.class);
 
-                result =
-                    getHibernateTemplate().findByCriteria(detachedCriteria,
-                        offset, maxResults);
+                result = getHibernateTemplate().findByCriteria(detachedCriteria, offset, maxResults);
             }
             catch (final DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);
@@ -284,44 +234,28 @@ public class HibernateSetDefinitionDao extends AbstractHibernateDao
 
     /**
      * See Interface for functional description.
-     * 
-     * @param userGroup
-     * @throws SqlDatabaseSystemException
-     * @see UserGroupDaoInterface
-     *      #save(de.escidoc.core.aa.business.persistence.UserGroup)
      *
+     * @see UserGroupDaoInterface #save(de.escidoc.core.aa.business.persistence.UserGroup)
      */
     @Override
-    public void save(final SetDefinition setDefinition)
-        throws SqlDatabaseSystemException {
+    public void save(final SetDefinition setDefinition) throws SqlDatabaseSystemException {
         super.save(setDefinition);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param userGroup
-     * @throws SqlDatabaseSystemException
-     * @see UserGroupDaoInterface
-     *      #update(de.escidoc.core.aa.business.persistence.UserGroup)
      *
+     * @see UserGroupDaoInterface #update(de.escidoc.core.aa.business.persistence.UserGroup)
      */
     @Override
-    public void update(final SetDefinition setDefinition)
-        throws SqlDatabaseSystemException {
+    public void update(final SetDefinition setDefinition) throws SqlDatabaseSystemException {
         super.update(setDefinition);
     }
 
-
-
-
-
     /**
-     * Wrapper of setSessionFactory to enable bean stuff generation for this
-     * bean.
-     * 
-     * @param mySessionFactory
-     *            The mySessionFactory to set.
+     * Wrapper of setSessionFactory to enable bean stuff generation for this bean.
+     *
+     * @param mySessionFactory The mySessionFactory to set.
      */
     public final void setMySessionFactory(final SessionFactory mySessionFactory) {
         setSessionFactory(mySessionFactory);

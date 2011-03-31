@@ -45,16 +45,14 @@ import static org.junit.Assert.fail;
 
 /**
  * Test content relation create implementation.
- * 
+ *
  * @author Steffen Wagner
- * 
  */
 @RunWith(value = Parameterized.class)
 public class ContentRelationCreateTest extends ContentRelationTestBase {
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ContentRelationCreateTest(final int transport) {
         super(transport);
@@ -62,15 +60,13 @@ public class ContentRelationCreateTest extends ContentRelationTestBase {
 
     /**
      * Test create content relation.
-     * 
-     * @throws Exception
-     *             Thrown if deleting failed.
+     *
+     * @throws Exception Thrown if deleting failed.
      */
     @Test
     public void testCreate01() throws Exception {
 
-        String contentRelationXml =
-            getExampleTemplate("content-relation-01.xml");
+        String contentRelationXml = getExampleTemplate("content-relation-01.xml");
         String xml = create(contentRelationXml);
         Document createDoc = getDocument(xml);
         String relationId = getObjidValue(xml);
@@ -83,11 +79,9 @@ public class ContentRelationCreateTest extends ContentRelationTestBase {
 
         // compare description --------------------------------------
         String origDescrValue =
-            selectSingleNode(createDoc,
-                "/content-relation/properties/description").getTextContent();
+            selectSingleNode(createDoc, "/content-relation/properties/description").getTextContent();
         String descriptionValue =
-            selectSingleNode(retrieveDoc,
-                "/content-relation/properties/description").getTextContent();
+            selectSingleNode(retrieveDoc, "/content-relation/properties/description").getTextContent();
 
         assertEquals(origDescrValue, descriptionValue);
 
@@ -96,20 +90,12 @@ public class ContentRelationCreateTest extends ContentRelationTestBase {
         String subjectValue = null;
 
         if (Constants.TRANSPORT_REST == getTransport()) {
-            origSubjectValue =
-                selectSingleNode(createDoc, "/content-relation/subject/@href")
-                    .getNodeValue();
-            subjectValue =
-                selectSingleNode(retrieveDoc, "/content-relation/subject/@href")
-                    .getNodeValue();
+            origSubjectValue = selectSingleNode(createDoc, "/content-relation/subject/@href").getNodeValue();
+            subjectValue = selectSingleNode(retrieveDoc, "/content-relation/subject/@href").getNodeValue();
         }
         else {
-            origSubjectValue =
-                selectSingleNode(createDoc, "/content-relation/subject/@objid")
-                    .getNodeValue();
-            subjectValue =
-                selectSingleNode(retrieveDoc,
-                    "/content-relation/subject/@objid").getNodeValue();
+            origSubjectValue = selectSingleNode(createDoc, "/content-relation/subject/@objid").getNodeValue();
+            subjectValue = selectSingleNode(retrieveDoc, "/content-relation/subject/@objid").getNodeValue();
         }
         assertEquals(origSubjectValue, subjectValue);
 
@@ -118,20 +104,12 @@ public class ContentRelationCreateTest extends ContentRelationTestBase {
         String objValue = null;
 
         if (Constants.TRANSPORT_REST == getTransport()) {
-            origObjValue =
-                selectSingleNode(createDoc, "/content-relation/object/@href")
-                    .getNodeValue();
-            objValue =
-                selectSingleNode(retrieveDoc, "/content-relation/object/@href")
-                    .getNodeValue();
+            origObjValue = selectSingleNode(createDoc, "/content-relation/object/@href").getNodeValue();
+            objValue = selectSingleNode(retrieveDoc, "/content-relation/object/@href").getNodeValue();
         }
         else {
-            origObjValue =
-                selectSingleNode(createDoc, "/content-relation/object/@objid")
-                    .getNodeValue();
-            objValue =
-                selectSingleNode(retrieveDoc, "/content-relation/object/@objid")
-                    .getNodeValue();
+            origObjValue = selectSingleNode(createDoc, "/content-relation/object/@objid").getNodeValue();
+            objValue = selectSingleNode(retrieveDoc, "/content-relation/object/@objid").getNodeValue();
         }
         assertEquals(origObjValue, objValue);
 
@@ -141,11 +119,9 @@ public class ContentRelationCreateTest extends ContentRelationTestBase {
     }
 
     /**
-     * Test if create content relation throws the right exception if xml is
-     * invalid.
-     * 
-     * @throws Exception
-     *             Thrown if deleting failed.
+     * Test if create content relation throws the right exception if xml is invalid.
+     *
+     * @throws Exception Thrown if deleting failed.
      */
     @Test
     public void testCreate02() throws Exception {
@@ -155,17 +131,14 @@ public class ContentRelationCreateTest extends ContentRelationTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
     }
 
     /**
-     * Test unexpected parser exception instead of InvalidXmlException during
-     * create (see issue INFR-911).
-     * 
-     * @throws Exception
-     *             Thrown if behavior is not as expected.
+     * Test unexpected parser exception instead of InvalidXmlException during create (see issue INFR-911).
+     *
+     * @throws Exception Thrown if behavior is not as expected.
      */
     @Test
     public void testInvalidXml() throws Exception {
@@ -184,49 +157,40 @@ public class ContentRelationCreateTest extends ContentRelationTestBase {
     }
 
     /**
-     * Test if md-record attributes md-type and schema are not delivered if
-     * unset.
-     * 
+     * Test if md-record attributes md-type and schema are not delivered if unset.
+     * <p/>
      * See issue INFR-1010
-     * 
-     * @throws Exception
-     *             Thrown if deleting failed.
+     *
+     * @throws Exception Thrown if deleting failed.
      */
     @Test
     public void setOfMdRecordAttributes() throws Exception {
 
-        String contentRelationXml =
-            getExampleTemplate("content-relation-01.xml");
+        String contentRelationXml = getExampleTemplate("content-relation-01.xml");
         String xml = create(contentRelationXml);
         assertXmlValidContentRelation(xml);
 
         Document createDoc = getDocument(xml);
-        Node value =
-            selectSingleNode(createDoc,
-                "/content-relation/md-records/md-record/@md-type");
+        Node value = selectSingleNode(createDoc, "/content-relation/md-records/md-record/@md-type");
         assertNull(value);
-        value =
-            selectSingleNode(createDoc,
-                "/content-relation/md-records/md-record/@schema");
+        value = selectSingleNode(createDoc, "/content-relation/md-records/md-record/@schema");
         assertNull(value);
 
     }
 
     /**
      * Test if properties and resources elements have xlink attributes.
-     * 
+     * <p/>
      * See issue INFR-1009
-     * 
-     * @throws Exception
-     *             Thrown if deleting failed.
+     *
+     * @throws Exception Thrown if deleting failed.
      */
     @Test
     public void xlinkAttributes() throws Exception {
 
         if (getTransport() == Constants.TRANSPORT_REST) {
 
-            String contentRelationXml =
-                getExampleTemplate("content-relation-01.xml");
+            String contentRelationXml = getExampleTemplate("content-relation-01.xml");
             String xml = create(contentRelationXml);
             assertXmlValidContentRelation(xml);
 
@@ -234,44 +198,30 @@ public class ContentRelationCreateTest extends ContentRelationTestBase {
             String objid = getObjidValue(createDoc);
 
             // properties
-            Node value =
-                selectSingleNode(createDoc,
-                    "/content-relation/properties/@href");
+            Node value = selectSingleNode(createDoc, "/content-relation/properties/@href");
             assertNotNull("Missing xlink:href attribute", value);
-            assertEquals("Wrong xlink:href", "/ir/content-relation/" + objid
-                + "/properties", value.getTextContent());
+            assertEquals("Wrong xlink:href", "/ir/content-relation/" + objid + "/properties", value.getTextContent());
 
-            value =
-                selectSingleNode(createDoc,
-                    "/content-relation/properties/@type");
+            value = selectSingleNode(createDoc, "/content-relation/properties/@type");
             assertNotNull("Missing xlink:type attribute", value);
             assertEquals("", "simple", value.getTextContent());
 
-            value =
-                selectSingleNode(createDoc,
-                    "/content-relation/properties/@title");
+            value = selectSingleNode(createDoc, "/content-relation/properties/@title");
             assertNotNull("Missing xlink:title attribute", value);
-            assertEquals("Wrong xlink:title", "Content Relation Properties",
-                value.getTextContent());
+            assertEquals("Wrong xlink:title", "Content Relation Properties", value.getTextContent());
 
             // resources
-            value =
-                selectSingleNode(createDoc, "/content-relation/resources/@href");
+            value = selectSingleNode(createDoc, "/content-relation/resources/@href");
             assertNotNull("Missing xlink:href attribute", value);
-            assertEquals("Wrong xlink:href", "/ir/content-relation/" + objid
-                + "/resources", value.getTextContent());
+            assertEquals("Wrong xlink:href", "/ir/content-relation/" + objid + "/resources", value.getTextContent());
 
-            value =
-                selectSingleNode(createDoc, "/content-relation/resources/@type");
+            value = selectSingleNode(createDoc, "/content-relation/resources/@type");
             assertNotNull("Missing xlink:type attribute", value);
             assertEquals("", "simple", value.getTextContent());
 
-            value =
-                selectSingleNode(createDoc,
-                    "/content-relation/resources/@title");
+            value = selectSingleNode(createDoc, "/content-relation/resources/@title");
             assertNotNull("Missing xlink:title attribute", value);
-            assertEquals("Wrong xlink:title", "Resources",
-                value.getTextContent());
+            assertEquals("Wrong xlink:title", "Resources", value.getTextContent());
 
         }
     }

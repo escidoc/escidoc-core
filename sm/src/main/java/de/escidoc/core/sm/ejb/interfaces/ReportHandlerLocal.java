@@ -17,24 +17,12 @@ import javax.ejb.EJBLocalObject;
  */
 public interface ReportHandlerLocal extends EJBLocalObject {
 
-    String retrieve(String xml, SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            XmlCorruptedException,
-            XmlSchemaValidationException,
-            ReportDefinitionNotFoundException,
-            MissingMethodParameterException,
-            InvalidSqlException,
-            SystemException;
+    String retrieve(String xml, SecurityContext securityContext) throws AuthenticationException,
+        AuthorizationException, XmlCorruptedException, XmlSchemaValidationException, ReportDefinitionNotFoundException,
+        MissingMethodParameterException, InvalidSqlException, SystemException;
 
-    String retrieve(String xml, String authHandle, Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            XmlCorruptedException,
-            XmlSchemaValidationException,
-            ReportDefinitionNotFoundException,
-            MissingMethodParameterException,
-            InvalidSqlException,
-            SystemException;
+    String retrieve(String xml, String authHandle, Boolean restAccess) throws AuthenticationException,
+        AuthorizationException, XmlCorruptedException, XmlSchemaValidationException, ReportDefinitionNotFoundException,
+        MissingMethodParameterException, InvalidSqlException, SystemException;
 
 }

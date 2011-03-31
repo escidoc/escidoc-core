@@ -40,26 +40,22 @@ import org.w3c.dom.Document;
 
 import static org.junit.Assert.assertTrue;
 
-
 /**
  * Test the mock implementation of the item resource.
- * 
+ *
  * @author Michael Schneider
- * 
  */
 @RunWith(value = Parameterized.class)
 public class ContainerCreateTest extends ContainerTestBase {
 
     public static final String XPATH_CONTAINER_XLINK_HREF = "/container/@href";
 
-    public static final String XPATH_CONTAINER_XLINK_TITLE =
-        "/container/@title";
+    public static final String XPATH_CONTAINER_XLINK_TITLE = "/container/@title";
 
     private String path = "";
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ContainerCreateTest(final int transport) {
         super(transport);
@@ -67,9 +63,8 @@ public class ContainerCreateTest extends ContainerTestBase {
 
     /**
      * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Before
     public void setUp() throws Exception {
@@ -77,52 +72,40 @@ public class ContainerCreateTest extends ContainerTestBase {
     }
 
     /**
-     * Test successfully creating a Container with an Item and a Container as
-     * members.
+     * Test successfully creating a Container with an Item and a Container as members.
      */
     @Test
     public void testCreateContainerWithMembers() throws Exception {
 
-        String theContainerId =
-            createContainerFromTemplate("create_container_WithoutMembers_v1.1.xml");
+        String theContainerId = createContainerFromTemplate("create_container_WithoutMembers_v1.1.xml");
 
-        String theItemId =
-            createItemFromTemplate("escidoc_item_198_for_create.xml");
+        String theItemId = createItemFromTemplate("escidoc_item_198_for_create.xml");
 
-        String containerTemplate =
-            getContainerTemplate("create_container_v1.1-forItemAndforContainer.xml");
+        String containerTemplate = getContainerTemplate("create_container_v1.1-forItemAndforContainer.xml");
 
-        String xmlWithItem =
-            containerTemplate.replaceAll("##ITEMID##", theItemId);
-        String xmlWithItemAndContainer =
-            xmlWithItem.replaceAll("##CONTAINERID##", theContainerId);
+        String xmlWithItem = containerTemplate.replaceAll("##ITEMID##", theItemId);
+        String xmlWithItemAndContainer = xmlWithItem.replaceAll("##CONTAINERID##", theContainerId);
 
         String theContainerXml = create(xmlWithItemAndContainer);
         Document theContainer = getDocument(theContainerXml);
 
-        selectSingleNodeAsserted(theContainer,
-            "/container/struct-map//*[@objid='" + theItemId
-                + "' or @href= '/ir/item/" + theItemId + "']");
-        selectSingleNodeAsserted(theContainer,
-            "/container/struct-map//*[@objid='" + theContainerId
-                + "' or @href= '/ir/container/" + theContainerId + "']");
+        selectSingleNodeAsserted(theContainer, "/container/struct-map//*[@objid='" + theItemId
+            + "' or @href= '/ir/item/" + theItemId + "']");
+        selectSingleNodeAsserted(theContainer, "/container/struct-map//*[@objid='" + theContainerId
+            + "' or @href= '/ir/container/" + theContainerId + "']");
     }
 
     /**
-     * Successful creation of a Container with empty content of an md-redord.
-     * SchemaException expected.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Successful creation of a Container with empty content of an md-redord. SchemaException expected.
+     *
+     * @throws Exception If anything fails.
      */
     @Test(expected = XmlSchemaValidationException.class)
     public void testConCr1() throws Exception {
 
         Document context =
-            EscidocRestSoapTestBase.getTemplateAsDocument(
-                TEMPLATE_CONTAINER_PATH + this.path, "create_container.xml");
-        substitute(context, "/container/properties/name",
-            getUniqueName("Container Name "));
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTAINER_PATH + this.path, "create_container.xml");
+        substitute(context, "/container/properties/name", getUniqueName("Container Name "));
         substitute(context, "/container/md-records/md-record[1]", "");
         String template = toString(context, false);
 
@@ -130,41 +113,31 @@ public class ContainerCreateTest extends ContainerTestBase {
     }
 
     /**
-     * Test if namespaces in meta data records of Container are still part of
-     * the representation after create.
-     * 
+     * Test if namespaces in meta data records of Container are still part of the representation after create.
+     * <p/>
      * Issue INFR-947
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Ignore
     @Test
     public void containerMetadataNamespaces() throws Exception {
 
-        String container =
-            getTemplateAsString(TEMPLATE_CONTAINER_PATH + this.path,
-                "container_issue_infr_947.xml");
+        String container = getTemplateAsString(TEMPLATE_CONTAINER_PATH + this.path, "container_issue_infr_947.xml");
 
         String createdContainer = create(container);
 
         // assert that namespace declarations of metadata are still present
         // after create
-        assertTrue(
-            "Missing eterms namespace",
-            createdContainer
-                .contains("xmlns:eterms=\"http://purl.org/escidoc/metadata/terms/0.1/\""));
-        assertTrue("Missing PURL",
-            createdContainer
-                .contains("xmlns:dc=\"http://purl.org/dc/elements/1.1\""));
+        assertTrue("Missing eterms namespace", createdContainer
+            .contains("xmlns:eterms=\"http://purl.org/escidoc/metadata/terms/0.1/\""));
+        assertTrue("Missing PURL", createdContainer.contains("xmlns:dc=\"http://purl.org/dc/elements/1.1\""));
     }
 
     /**
-     * Test unexpected parser exception instead of InvalidXmlException during
-     * create (see issue INFR-911).
-     * 
-     * @throws Exception
-     *             Thrown if behavior is not as expected.
+     * Test unexpected parser exception instead of InvalidXmlException during create (see issue INFR-911).
+     *
+     * @throws Exception Thrown if behavior is not as expected.
      */
     @Test(expected = InvalidXmlException.class)
     public void testInvalidXml() throws Exception {
@@ -178,17 +151,15 @@ public class ContainerCreateTest extends ContainerTestBase {
 
     /**
      * https://www.escidoc.org/jira/browse/INFR-1096
-     * 
+     * <p/>
      * Create a container without a content-model-specific element.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testCreateContainerWithoutContentModel() throws Exception {
         Document container =
-            EscidocRestSoapTestBase.getTemplateAsDocument(
-                TEMPLATE_CONTAINER_PATH + this.path, "create_container.xml");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTAINER_PATH + this.path, "create_container.xml");
 
         deleteNodes(container, XPATH_CONTAINER_PROPERTIES_CMS);
         create(toString(container, false));

@@ -30,9 +30,8 @@ import java.util.regex.Pattern;
 
 /**
  * Servlet that initializes the AA beans during startup.
- * 
+ *
  * @author Torsten Tetteroo
- * 
  */
 public class InitBeansServlet extends HttpServlet {
 
@@ -40,14 +39,13 @@ public class InitBeansServlet extends HttpServlet {
      * Pattern used to split the comma separated list of bean ids.
      */
     private static final Pattern PATTERN_SPLIT_IDS = Pattern.compile(",\\s*");
+
     private static final long serialVersionUID = -1471080999315442967L;
 
     /**
      * See Interface for functional description.
-     * 
-     * @throws ServletException
-     *             Thrown in case of an error.
-     * 
+     *
+     * @throws ServletException Thrown in case of an error.
      * @see GenericServlet#init()
      */
     @Override
@@ -59,8 +57,7 @@ public class InitBeansServlet extends HttpServlet {
         final String beanIds = getServletConfig().getInitParameter("beanIds");
 
         if (factoryId == null || beanIds == null) {
-            throw new ServletException(
-                "factory id and bean ids must be specified as init parameters.");
+            throw new ServletException("factory id and bean ids must be specified as init parameters.");
         }
 
         try {
@@ -76,7 +73,7 @@ public class InitBeansServlet extends HttpServlet {
 
     /**
      * See Interface for functional description.
-     * 
+     *
      * @see GenericServlet#destroy()
      */
     @Override

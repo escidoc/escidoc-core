@@ -53,9 +53,8 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * Test the implementation of the admin search for contexts.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 @RunWith(value = Parameterized.class)
 public class ContextAdminSearchTest extends SearchTestBase {
@@ -64,13 +63,13 @@ public class ContextAdminSearchTest extends SearchTestBase {
 
     private static final String INDEX_NAME = "context_admin";
 
-    private static final ArrayList<String> RESULT_XPATHS = 
-        new ArrayList<String>() {
-            private static final long serialVersionUID = 1L;
-            { 
-                add(XPATH_SRW_RESPONSE_OBJECT + "context");
-            }
-            };
+    private static final ArrayList<String> RESULT_XPATHS = new ArrayList<String>() {
+        private static final long serialVersionUID = 1L;
+
+        {
+            add(XPATH_SRW_RESPONSE_OBJECT + "context");
+        }
+    };
 
     private static String[] contextIds = null;
 
@@ -79,42 +78,37 @@ public class ContextAdminSearchTest extends SearchTestBase {
     private static String startTime = "";
 
     /**
-     * @param transport
-     *            The transport identifier.
-     * @throws Exception
-     *             e
+     * @param transport The transport identifier.
+     * @throws Exception e
      */
     public ContextAdminSearchTest(final int transport) throws Exception {
         super(transport);
         context = new ContextHelper(transport);
-        grant = new GrantHelper(
-                transport, GrantHelper.getUserAccountHandlerCode());
+        grant = new GrantHelper(transport, GrantHelper.getUserAccountHandlerCode());
     }
 
     /**
      * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Before
     public void initialize() throws Exception {
         if (methodCounter == 0) {
             prepare();
-//          int c = 8357;
-//          contextIds = new String[4];
-//          for (int i = 0; i < 4; i++) {
-//              contextIds[i] = "escidoc:" + c;
-//              c++;
-//          }
+            //          int c = 8357;
+            //          contextIds = new String[4];
+            //          for (int i = 0; i < 4; i++) {
+            //              contextIds[i] = "escidoc:" + c;
+            //              c++;
+            //          }
         }
     }
 
     /**
      * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @After
     public void deinitialize() throws Exception {
@@ -126,59 +120,38 @@ public class ContextAdminSearchTest extends SearchTestBase {
 
     /**
      * insert item(s) into system for the tests.
-     * 
-     * @test.name prepare
-     * @test.id PREPARE
-     * @test.input
-     * @test.inputDescription
-     * @test.expected
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     private void prepare() throws Exception {
         LOGGER.info("starting SearchTest at "
-                + new DateTime(System.currentTimeMillis()
-                        + (60 * 60 * 1000), DateTimeZone.UTC).toString());
+            + new DateTime(System.currentTimeMillis() + (60 * 60 * 1000), DateTimeZone.UTC).toString());
         // create empty indices/////////////////////////////////////////////////
         String urlParameters =
-                "?operation=updateIndex" + "&action=createEmpty"
-                        + "&repositoryName=escidocrepository" + "&indexName=";
+            "?operation=updateIndex" + "&action=createEmpty" + "&repositoryName=escidocrepository" + "&indexName=";
         String httpUrl =
-                HttpHelper
-                        .createUrl(
-                                de.escidoc.core.test.common.client.servlet.Constants.PROTOCOL,
-                                de.escidoc.core.test.common.client.servlet.Constants.HOST_PORT,
-                                de.escidoc.core.test.common.client.servlet.Constants.FEDORAGSEARCH_BASE_URI
-                                        + urlParameters);
-        HttpHelper
-                .executeHttpRequest(
-                        de.escidoc.core.test.common.client.servlet.Constants.HTTP_METHOD_GET,
-                        httpUrl, null, null, null);
+            HttpHelper.createUrl(de.escidoc.core.test.common.client.servlet.Constants.PROTOCOL,
+                de.escidoc.core.test.common.client.servlet.Constants.HOST_PORT,
+                de.escidoc.core.test.common.client.servlet.Constants.FEDORAGSEARCH_BASE_URI + urlParameters);
+        HttpHelper.executeHttpRequest(de.escidoc.core.test.common.client.servlet.Constants.HTTP_METHOD_GET, httpUrl,
+            null, null, null);
         // /////////////////////////////////////////////////////////////////////
 
-        startTime =
-                new DateTime(System.currentTimeMillis(), DateTimeZone.UTC)
-                        .toString();
+        startTime = new DateTime(System.currentTimeMillis(), DateTimeZone.UTC).toString();
         // Create Contexts with different status/////////////////////////////////////////////////
         String handle = PWCallback.CONTEXT_ADMINISTRATOR_HANDLE;
         contextIds = new String[5];
-        contextIds[0] = prepareContext(PWCallback.SYSTEMADMINISTRATOR_HANDLE, 
-                "escidoc_search_context0_" + getTransport(false) + ".xml", 
-                CONTEXT_STATUS_CREATED);
-        contextIds[1] = prepareContext(handle, 
-                "escidoc_search_context0_" + getTransport(false) + ".xml", 
-                CONTEXT_STATUS_CREATED);
-        contextIds[2] = prepareContext(handle, 
-                "escidoc_search_context0_" + getTransport(false) + ".xml", 
-                CONTEXT_STATUS_OPENED);
-        contextIds[3] = prepareContext(handle, 
-                "escidoc_search_context0_" + getTransport(false) + ".xml", 
-                CONTEXT_STATUS_CLOSED);
-        contextIds[4] = prepareContext(handle, 
-                "escidoc_search_context0_" + getTransport(false) + ".xml", 
-                CONTEXT_STATUS_DELETED);
+        contextIds[0] =
+            prepareContext(PWCallback.SYSTEMADMINISTRATOR_HANDLE, "escidoc_search_context0_" + getTransport(false)
+                + ".xml", CONTEXT_STATUS_CREATED);
+        contextIds[1] =
+            prepareContext(handle, "escidoc_search_context0_" + getTransport(false) + ".xml", CONTEXT_STATUS_CREATED);
+        contextIds[2] =
+            prepareContext(handle, "escidoc_search_context0_" + getTransport(false) + ".xml", CONTEXT_STATUS_OPENED);
+        contextIds[3] =
+            prepareContext(handle, "escidoc_search_context0_" + getTransport(false) + ".xml", CONTEXT_STATUS_CLOSED);
+        contextIds[4] =
+            prepareContext(handle, "escidoc_search_context0_" + getTransport(false) + ".xml", CONTEXT_STATUS_DELETED);
 
         // /////////////////////////////////////////////////////////////////////
 
@@ -188,17 +161,8 @@ public class ContextAdminSearchTest extends SearchTestBase {
 
     /**
      * explain operation without parameters for existing database xyz.
-     * 
-     * @test.name explain (1)
-     * @test.id SB_EX-1
-     * @test.input
-     * @test.inputDescription
-     * @test.expected explain plan for the corresponding database according
-     *                ZeeRex Schema
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBEX1() throws Exception {
@@ -206,34 +170,26 @@ public class ContextAdminSearchTest extends SearchTestBase {
         String response = explain(parameters, INDEX_NAME);
         assertXmlValidExplainPlan(response);
         assertEquals("srw/search/" + INDEX_NAME, getDatabase(response));
-        assertEquals(Constants.CONTEXT_ADMIN_INDEX_FIELD_COUNT,
-                                            getIndexFieldCount(response));
-        assertEquals(Constants.CONTEXT_ADMIN_SORT_FIELD_COUNT,
-                                            getSortFieldCount(response));
+        assertEquals(Constants.CONTEXT_ADMIN_INDEX_FIELD_COUNT, getIndexFieldCount(response));
+        assertEquals(Constants.CONTEXT_ADMIN_SORT_FIELD_COUNT, getSortFieldCount(response));
     }
 
     /**
      * Test searching as anonymous user.
-     * 
-     * @test.name Anonymous User Search
-     * @test.id SB_AnonymousUserSearch
-     * @test.input anonymous user searching all objects
-     * @test.expected 2 hits.
-     *              Anonymous may see Contexts in public-status open + closed
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSearchAsAnonymousUser() throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
             private static final long serialVersionUID = 1L;
+
             {
                 put("handle", PWCallback.ANONYMOUS_HANDLE);
                 put("expectedHits", "2");
                 put("searchresultIds", new HashMap<String, ArrayList<String>>() {
                     private static final long serialVersionUID = 1L;
+
                     {
                         put(contextIds[2], getContextXpathList(2));
                         put(contextIds[3], getContextXpathList(3));
@@ -246,29 +202,22 @@ public class ContextAdminSearchTest extends SearchTestBase {
 
     /**
      * Test searching as Systemadministrator user.
-     * 
-     * @test.name Systemadministrator User Search
-     * @test.id SB_SystemadministratorUserSearch
-     * @test.input Systemadministrator user searching all objects
-     * @test.expected 4 hits.
-     *              Systemadministrator may see all Contexts
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSearchAsSystemadministratorUser() throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
             private static final long serialVersionUID = 1L;
+
             {
-                put("role0",
-                               GrantHelper.ROLE_HREF_SYSTEM_ADMINISTRATOR);
+                put("role0", GrantHelper.ROLE_HREF_SYSTEM_ADMINISTRATOR);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "4");
                 put("searchresultIds", new HashMap<String, ArrayList<String>>() {
                     private static final long serialVersionUID = 1L;
+
                     {
                         put(contextIds[0], getContextXpathList(0));
                         put(contextIds[1], getContextXpathList(1));
@@ -283,29 +232,22 @@ public class ContextAdminSearchTest extends SearchTestBase {
 
     /**
      * Test searching as Systeminspector user.
-     * 
-     * @test.name Systeminspector User Search
-     * @test.id SB_SysteminspectorUserSearch
-     * @test.input Systeminspector user searching all objects
-     * @test.expected 4 hits.
-     *              Systeminspector may see all OrgUnits
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSearchAsSysteminspectorUser() throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
             private static final long serialVersionUID = 1L;
+
             {
-                put("role0",
-                               GrantHelper.ROLE_HREF_SYSTEM_INSPECTOR);
+                put("role0", GrantHelper.ROLE_HREF_SYSTEM_INSPECTOR);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "4");
                 put("searchresultIds", new HashMap<String, ArrayList<String>>() {
                     private static final long serialVersionUID = 1L;
+
                     {
                         put(contextIds[0], getContextXpathList(0));
                         put(contextIds[1], getContextXpathList(1));
@@ -320,34 +262,24 @@ public class ContextAdminSearchTest extends SearchTestBase {
 
     /**
      * Test searching as Administrator user.
-     * 
-     * @test.name Administrator User Search
-     * @test.id SB_AdministratorUserSearch
-     * @test.input Administrator user searching all objects
-     *              scope on context[0].
-     * @test.expected 3 hits.
-     *              Administrator may see the Context 
-     *              (s)he has scoped.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSearchAsAdminUser() throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
             private static final long serialVersionUID = 1L;
+
             {
-                put("role0",
-                               GrantHelper.ROLE_HREF_ADMINISTRATOR);
-                put("scope0", de.escidoc.core.test.common.client
-                        .servlet.Constants.CONTEXT_BASE_URI
-                        + "/" + contextIds[0]);
+                put("role0", GrantHelper.ROLE_HREF_ADMINISTRATOR);
+                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.CONTEXT_BASE_URI + "/"
+                    + contextIds[0]);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "3");
                 put("searchresultIds", new HashMap<String, ArrayList<String>>() {
                     private static final long serialVersionUID = 1L;
+
                     {
                         put(contextIds[0], getContextXpathList(0));
                         put(contextIds[2], getContextXpathList(2));
@@ -361,27 +293,20 @@ public class ContextAdminSearchTest extends SearchTestBase {
 
     /**
      * Test searching as Context-Administrator user.
-     * 
-     * @test.name Context-Administrator User Search
-     * @test.id SB_Context-AdministratorUserSearch
-     * @test.input ContextAdministrator user searching all objects
-     * @test.expected 3 hits.
-     *              Context-Administrator may see the Contexts 
-     *              (s)he has created.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSearchAsContextAdminUser() throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
             private static final long serialVersionUID = 1L;
+
             {
                 put("handle", PWCallback.CONTEXT_ADMINISTRATOR_HANDLE);
                 put("expectedHits", "3");
                 put("searchresultIds", new HashMap<String, ArrayList<String>>() {
                     private static final long serialVersionUID = 1L;
+
                     {
                         put(contextIds[1], getContextXpathList(1));
                         put(contextIds[2], getContextXpathList(2));
@@ -395,34 +320,24 @@ public class ContextAdminSearchTest extends SearchTestBase {
 
     /**
      * Test searching as Context-Modifier user.
-     * 
-     * @test.name Context-Modifier User Search
-     * @test.id SB_Context-ModifierUserSearch
-     * @test.input Context-Modifier user searching all objects
-     *              scope on context[0].
-     * @test.expected 3 hits.
-     *              Context-Modifier may see the Context 
-     *              (s)he has scoped.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSearchAsContextModifierUser() throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
             private static final long serialVersionUID = 1L;
+
             {
-                put("role0",
-                               GrantHelper.ROLE_HREF_CONTEXT_MODIFIER);
-                put("scope0", de.escidoc.core.test.common.client
-                        .servlet.Constants.CONTEXT_BASE_URI
-                        + "/" + contextIds[1]);
+                put("role0", GrantHelper.ROLE_HREF_CONTEXT_MODIFIER);
+                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.CONTEXT_BASE_URI + "/"
+                    + contextIds[1]);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "3");
                 put("searchresultIds", new HashMap<String, ArrayList<String>>() {
                     private static final long serialVersionUID = 1L;
+
                     {
                         put(contextIds[1], getContextXpathList(1));
                         put(contextIds[2], getContextXpathList(2));
@@ -436,11 +351,9 @@ public class ContextAdminSearchTest extends SearchTestBase {
 
     /**
      * search with roles provided in HashMap.
-     * 
-     * @param role
-     *            parameters
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param role parameters
+     * @throws Exception If anything fails.
      */
     private void search(final HashMap<String, Object> role) throws Exception {
         StringBuffer errorTrace = new StringBuffer();
@@ -450,15 +363,10 @@ public class ContextAdminSearchTest extends SearchTestBase {
                 if ((String) role.get("role" + i) == null) {
                     break;
                 }
-                errorTrace.append("role: ")
-                        .append(role.get("role" + i)).append("\n");
-                errorTrace.append("scope: ")
-                        .append(role.get("scope" + i)).append("\n");
-                grant.doTestCreateGrant(
-                        null,
-                        (String) role.get("user"),
-                        (String) role.get("scope" + i),
-                        (String) role.get("role" + i), null);
+                errorTrace.append("role: ").append(role.get("role" + i)).append("\n");
+                errorTrace.append("scope: ").append(role.get("scope" + i)).append("\n");
+                grant.doTestCreateGrant(null, (String) role.get("user"), (String) role.get("scope" + i), (String) role
+                    .get("role" + i), null);
             }
             PWCallback.setHandle((String) role.get("handle"));
             HashMap<String, String> parameters = new HashMap<String, String>();
@@ -467,60 +375,45 @@ public class ContextAdminSearchTest extends SearchTestBase {
             String response = search(parameters, INDEX_NAME);
             assertXmlValidSearchResult(response);
             Document searchResultDoc = getDocument(response, true);
-            Node n = selectSingleNode(searchResultDoc,
-                    "/searchRetrieveResponse/diagnostics/diagnostic/details");
+            Node n = selectSingleNode(searchResultDoc, "/searchRetrieveResponse/diagnostics/diagnostic/details");
             String textContent = null;
             if (n != null) {
                 textContent = n.getTextContent();
             }
-            assertEquals(errorTrace.toString() + "diagnostics: "
-                    + textContent, null, n);
-//            assertEquals(true, checkHighlighting(response));
-            assertEquals(errorTrace.toString()
-                    + "hits not as expected: expected: "
-                    + role.get("expectedHits")
-                    + ", but was "
-                    + getNumberOfHits(response)
-                    + " for ",
-                    role.get("expectedHits"), getNumberOfHits(response));
+            assertEquals(errorTrace.toString() + "diagnostics: " + textContent, null, n);
+            //            assertEquals(true, checkHighlighting(response));
+            assertEquals(errorTrace.toString() + "hits not as expected: expected: " + role.get("expectedHits")
+                + ", but was " + getNumberOfHits(response) + " for ", role.get("expectedHits"),
+                getNumberOfHits(response));
             HashSet<String> foundIds = new HashSet<String>();
             // check if all items in result may be there
             for (String xPath : RESULT_XPATHS) {
-                NodeList nodes = selectNodeList(
-                        searchResultDoc, xPath);
+                NodeList nodes = selectNodeList(searchResultDoc, xPath);
                 for (int i = 0; i < nodes.getLength(); i++) {
                     Node node = nodes.item(i);
-                    String objId = getObjidValue(
-                            de.escidoc.core.test.common.client
-                            .servlet.Constants.TRANSPORT_REST, node, null);
+                    String objId =
+                        getObjidValue(de.escidoc.core.test.common.client.servlet.Constants.TRANSPORT_REST, node, null);
                     foundIds.add(objId);
-                    assertTrue(errorTrace.toString()
-                            + "object " + objId + " may not be in searchResult",
-                            ((HashMap<String, String>) role
-                                    .get("searchresultIds")).containsKey(objId));
-                    ArrayList<String> searchIds = 
-                        ((HashMap<String, ArrayList<String>>) role
-                            .get("searchresultIds")).get(objId);
+                    assertTrue(errorTrace.toString() + "object " + objId + " may not be in searchResult",
+                        ((HashMap<String, String>) role.get("searchresultIds")).containsKey(objId));
+                    ArrayList<String> searchIds =
+                        ((HashMap<String, ArrayList<String>>) role.get("searchresultIds")).get(objId);
                     if (searchIds != null) {
                         for (String searchId : searchIds) {
                             String[] parts = searchId.split("=");
-                            assertXmlEquals(errorTrace.toString()
-                                    + "not expected value in "
-                                    + parts[0] + " for objectId " 
-                                    + objId, node, parts[0], parts[1]);
+                            assertXmlEquals(errorTrace.toString() + "not expected value in " + parts[0]
+                                + " for objectId " + objId, node, parts[0], parts[1]);
                         }
                     }
                 }
             }
             // check if all objects that should be in result are there
-            for (String id : ((HashMap<String, String>) role
-                    .get("searchresultIds")).keySet()) {
-                assertTrue(errorTrace.toString()
-                        + id + " was not in searchResult",
-                        foundIds.contains(id));
+            for (String id : ((HashMap<String, String>) role.get("searchresultIds")).keySet()) {
+                assertTrue(errorTrace.toString() + id + " was not in searchResult", foundIds.contains(id));
 
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
             if (role.get("role0") != null) {
                 grant.revokeAllGrants((String) role.get("user"));
@@ -530,65 +423,54 @@ public class ContextAdminSearchTest extends SearchTestBase {
 
     /**
      * prepare context for tests.
-     * 
-     * @param creatorHandle
-     *            handle of creator
-     * @param templateName
-     *            template for item to create
-     * @param status
-     *            status of item to create
+     *
+     * @param creatorHandle handle of creator
+     * @param templateName  template for item to create
+     * @param status        status of item to create
      * @return String id of created context
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    private String prepareContext(
-                final String creatorHandle,
-                final String templateName,
-                final String status) throws Exception {
+    private String prepareContext(final String creatorHandle, final String templateName, final String status)
+        throws Exception {
         try {
             if (creatorHandle != null) {
                 PWCallback.setHandle(creatorHandle);
             }
-            Document xmlData =
-                    EscidocRestSoapTestBase.getTemplateAsDocument(
-                            TEMPLATE_SB_CONTEXT_PATH, templateName);
-            substitute(xmlData, "/context/properties/name",
-                    getUniqueName("PubMan Context "));
+            Document xmlData = EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_SB_CONTEXT_PATH, templateName);
+            substitute(xmlData, "/context/properties/name", getUniqueName("PubMan Context "));
             String xml = context.create(toString(xmlData, false));
             String lastModDate = getLastModificationDate(xml);
             String objectId = getId(xml);
 
-            if (!status.equals(CONTEXT_STATUS_CREATED) 
-                    && !status.equals(CONTEXT_STATUS_DELETED)) {
+            if (!status.equals(CONTEXT_STATUS_CREATED) && !status.equals(CONTEXT_STATUS_DELETED)) {
                 // open context
-                context.open(objectId, "<param last-modification-date=\""
-                        + lastModDate + "\" />");
+                context.open(objectId, "<param last-modification-date=\"" + lastModDate + "\" />");
 
                 if (!status.equals(CONTEXT_STATUS_OPENED)) {
                     // close item
                     xml = context.retrieve(objectId);
                     lastModDate = getLastModificationDate(xml);
-                    context.close(objectId, "<param last-modification-date=\""
-                            + lastModDate + "\" />");
+                    context.close(objectId, "<param last-modification-date=\"" + lastModDate + "\" />");
                 }
-            } else if (status.equals(CONTEXT_STATUS_DELETED)) {
+            }
+            else if (status.equals(CONTEXT_STATUS_DELETED)) {
                 Thread.sleep(3000);
                 context.delete(objectId);
             }
             return objectId;
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
     }
 
-    private ArrayList<String> getContextXpathList(
-            final int i) {
+    private ArrayList<String> getContextXpathList(final int i) {
         ArrayList<String> xpaths = new ArrayList<String>();
         if (i >= 0 && i <= 1) {
             //created
             xpaths.add("properties/public-status=created");
         }
-        else if (i ==2) {
+        else if (i == 2) {
             //opened
             xpaths.add("properties/public-status=opened");
         }
@@ -598,6 +480,5 @@ public class ContextAdminSearchTest extends SearchTestBase {
         }
         return xpaths;
     }
-
 
 }

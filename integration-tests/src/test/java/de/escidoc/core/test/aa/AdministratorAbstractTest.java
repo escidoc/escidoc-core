@@ -38,9 +38,8 @@ import org.w3c.dom.Document;
 
 /**
  * Test suite for the role Administrator.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 public class AdministratorAbstractTest extends GrantTestBase {
 
@@ -51,36 +50,27 @@ public class AdministratorAbstractTest extends GrantTestBase {
     private static final String PASSWORD = PWCallback.PASSWORD;
 
     protected static String grantCreationUserOrGroupId = null;
-    
+
     private static int methodCounter = 0;
-    
-    
+
     /**
      * The constructor.
-     * 
-     * @param transport
-     *            The transport identifier.
-     * @param handlerCode
-     *            handlerCode of either UserAccountHandler or UserGroupHandler.
-     * @param userOrGroupId
-     *            userOrGroupId for grantCreation.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param transport     The transport identifier.
+     * @param handlerCode   handlerCode of either UserAccountHandler or UserGroupHandler.
+     * @param userOrGroupId userOrGroupId for grantCreation.
+     * @throws Exception If anything fails.
      */
-    public AdministratorAbstractTest(
-            final int transport, 
-            final int handlerCode,
-            final String userOrGroupId) throws Exception {
+    public AdministratorAbstractTest(final int transport, final int handlerCode, final String userOrGroupId)
+        throws Exception {
         super(transport, handlerCode);
         grantCreationUserOrGroupId = userOrGroupId;
     }
 
     /**
      * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Before
     public void initialize() throws Exception {
@@ -89,18 +79,15 @@ public class AdministratorAbstractTest extends GrantTestBase {
             revokeAllGrants(grantCreationUserOrGroupId);
             //create grant administrator for user grantCreationUserOrGroupId 
             //with scope on default-context
-            doTestCreateGrant(
-                null, grantCreationUserOrGroupId, 
-                Constants.CONTEXT_BASE_URI + "/" 
-                + CONTEXT_ID, ROLE_HREF_ADMINISTRATOR, null);
+            doTestCreateGrant(null, grantCreationUserOrGroupId, Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID,
+                ROLE_HREF_ADMINISTRATOR, null);
         }
     }
 
     /**
      * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @After
     public void deinitialize() throws Exception {
@@ -113,106 +100,78 @@ public class AdministratorAbstractTest extends GrantTestBase {
 
     /**
      * Tests declining withdrawing an unknown item by an administrator.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testWithdrawUnknownItemDecline() throws Exception {
 
-        doTestWithdrawItem(
-                HANDLE, PWCallback.DEFAULT_HANDLE, 
-                    null, ItemNotFoundException.class);
+        doTestWithdrawItem(HANDLE, PWCallback.DEFAULT_HANDLE, null, ItemNotFoundException.class);
     }
 
     /**
      * Tests successfully withdrawing an item by an administrator.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testWithdrawItem() throws Exception {
 
-        doTestWithdrawItem(
-                HANDLE, PWCallback.DEFAULT_HANDLE, STATUS_RELEASED, null);
+        doTestWithdrawItem(HANDLE, PWCallback.DEFAULT_HANDLE, STATUS_RELEASED, null);
     }
 
     /**
-     * Test retrieving user account by an administrator using the eSciDoc user
-     * handle.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test retrieving user account by an administrator using the eSciDoc user handle.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveUserAccountById() throws Exception {
 
-        doTestRetrieveUserAccount(HANDLE, null, "byId",
-            PWCallback.DEFAULT_HANDLE, STATUS_ACTIVE, null);
+        doTestRetrieveUserAccount(HANDLE, null, "byId", PWCallback.DEFAULT_HANDLE, STATUS_ACTIVE, null);
     }
 
     /**
-     * Test retrieving user account by an administrator using the eSciDoc user
-     * handle.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test retrieving user account by an administrator using the eSciDoc user handle.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveUserAccountByLoginName() throws Exception {
 
-        doTestRetrieveUserAccount(HANDLE, null, "byLoginName",
-            PWCallback.DEFAULT_HANDLE, STATUS_ACTIVE, null);
+        doTestRetrieveUserAccount(HANDLE, null, "byLoginName", PWCallback.DEFAULT_HANDLE, STATUS_ACTIVE, null);
     }
 
     /**
      * Test creating grant for an user account by an administrator.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testCreateGrant() throws Exception {
 
-        final String createdXml =
-            doTestCreateItem(PWCallback.DEFAULT_HANDLE, null);
-        final String itemHref =
-            Constants.ITEM_BASE_URI + "/" + getObjidValue(createdXml);
-        doTestCreateGrant(HANDLE, grantCreationUserOrGroupId, itemHref, 
-            ROLE_HREF_COLLABORATOR, null);
+        final String createdXml = doTestCreateItem(PWCallback.DEFAULT_HANDLE, null);
+        final String itemHref = Constants.ITEM_BASE_URI + "/" + getObjidValue(createdXml);
+        doTestCreateGrant(HANDLE, grantCreationUserOrGroupId, itemHref, ROLE_HREF_COLLABORATOR, null);
     }
 
     /**
-     * Test creating grant for an user account by an administrator.<br>
-     * The grant is created on a container.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test creating grant for an user account by an administrator.<br> The grant is created on a container.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testCreateGrantContainer() throws Exception {
 
-        final String createdXml =
-            doTestCreateContainer(PWCallback.DEFAULT_HANDLE, null);
-        final String containerHref =
-            Constants.CONTAINER_BASE_URI + "/" + getObjidValue(createdXml);
-        doTestCreateGrant(HANDLE, grantCreationUserOrGroupId, containerHref, 
-                ROLE_HREF_COLLABORATOR, null);
+        final String createdXml = doTestCreateContainer(PWCallback.DEFAULT_HANDLE, null);
+        final String containerHref = Constants.CONTAINER_BASE_URI + "/" + getObjidValue(createdXml);
+        doTestCreateGrant(HANDLE, grantCreationUserOrGroupId, containerHref, ROLE_HREF_COLLABORATOR, null);
     }
 
     /**
      * Test logging out a depositor.
-     * 
-     * @Test.name Administrator - Logout
-     * @Test.id AA-Administrator-Logout
-     * @Test.input Valid handle of the user.
-     * @Test.expected Successful logout.
-     * @Test.status Implemented
-     * @Test.issue http://www.escidoc-project.de/issueManagement/show_bug.cgi?id=278
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testAaAdministratorLogout() throws Exception {
@@ -222,19 +181,8 @@ public class AdministratorAbstractTest extends GrantTestBase {
 
     /**
      * Tests retrieving a context in status created.
-     * 
-     * @Test.name Administrator - Retrieve Created Context
-     * @Test.id AA-ADMINISTRATOR-RC
-     * @Test.input
-     *          <ul>
-     *          <li>Id of existing context in public-status "created".</li>
-     *          <li>User is administrator of the context.</li>
-     *          </ul>
-     * @Test.expected: XML representation of the created Context
-     * @Test.status Implemented
-     * @Test.issues http://www.escidoc-project.de/issueManagement/show_bug.cgi?id=378
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testAaAdministratorRc() throws Exception {
@@ -249,10 +197,8 @@ public class AdministratorAbstractTest extends GrantTestBase {
         else if (getTransport() == Constants.TRANSPORT_SOAP) {
             path += "/soap";
         }
-        final Document toBeCreatedDocument =
-            getTemplateAsDocument(path, "context_create.xml");
-        substitute(toBeCreatedDocument, XPATH_CONTEXT_PROPERTIES_NAME,
-            getUniqueName("Some Context "));
+        final Document toBeCreatedDocument = getTemplateAsDocument(path, "context_create.xml");
+        substitute(toBeCreatedDocument, XPATH_CONTEXT_PROPERTIES_NAME, getUniqueName("Some Context "));
         final String toBeCreatedXml = toString(toBeCreatedDocument, false);
 
         String createdXml = null;
@@ -266,15 +212,11 @@ public class AdministratorAbstractTest extends GrantTestBase {
 
         // grant administrator role on new context to user
         final Document toBeCreatedGrantDocument =
-            getTemplateAsFixedGrantDocument(TEMPLATE_USER_ACCOUNT_PATH,
-                "escidoc_grant_for_create.xml");
-        substitute(toBeCreatedGrantDocument, XPATH_GRANT_OBJECT,
-            createReferencingElementNode(toBeCreatedGrantDocument,
-                GRANTS_NS_URI, SREL_PREFIX_TEMPLATES, NAME_ASSIGNED_ON,
-                XLINK_PREFIX_TEMPLATES, "", Constants.CONTEXT_BASE_URI + "/"
-                    + id));
-        final String toBeCreatedGrantXml =
-            toString(toBeCreatedGrantDocument, false);
+            getTemplateAsFixedGrantDocument(TEMPLATE_USER_ACCOUNT_PATH, "escidoc_grant_for_create.xml");
+        substitute(toBeCreatedGrantDocument, XPATH_GRANT_OBJECT, createReferencingElementNode(toBeCreatedGrantDocument,
+            GRANTS_NS_URI, SREL_PREFIX_TEMPLATES, NAME_ASSIGNED_ON, XLINK_PREFIX_TEMPLATES, "",
+            Constants.CONTEXT_BASE_URI + "/" + id));
+        final String toBeCreatedGrantXml = toString(toBeCreatedGrantDocument, false);
 
         try {
             createGrant(grantCreationUserOrGroupId, toBeCreatedGrantXml);
@@ -289,9 +231,7 @@ public class AdministratorAbstractTest extends GrantTestBase {
             retrieve(CONTEXT_HANDLER_CODE, id);
         }
         catch (final Exception e) {
-            failException(
-                "Retrieving created context by context's administrator failed",
-                e);
+            failException("Retrieving created context by context's administrator failed", e);
         }
 
     }

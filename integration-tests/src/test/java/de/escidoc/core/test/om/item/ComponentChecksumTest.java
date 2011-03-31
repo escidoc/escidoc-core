@@ -46,9 +46,8 @@ import static org.junit.Assert.fail;
 
 /**
  * Test the implementation of checksums in components.
- * 
+ *
  * @author Frank Schwichtenberg
- * 
  */
 @RunWith(value = Parameterized.class)
 public class ComponentChecksumTest extends ItemTestBase {
@@ -59,12 +58,10 @@ public class ComponentChecksumTest extends ItemTestBase {
 
     private static final String ELEMENT_CHECKSUM = "checksum";
 
-    private static final String ELEMENT_CHECKSUM_ALGORITHM =
-        "checksum-algorithm";
+    private static final String ELEMENT_CHECKSUM_ALGORITHM = "checksum-algorithm";
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ComponentChecksumTest(final int transport) {
         super(transport);
@@ -72,25 +69,23 @@ public class ComponentChecksumTest extends ItemTestBase {
 
     /**
      * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Before
     public void setUp() throws Exception {
         // create an item and save the id
         String xmlData =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
-                + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                "escidoc_item_198_for_create.xml");
         theItemXml = create(xmlData);
         theItemId = getObjidValue(theItemXml);
     }
 
     /**
      * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Override
     @After
@@ -101,11 +96,9 @@ public class ComponentChecksumTest extends ItemTestBase {
     }
 
     /**
-     * Test sucessfully retrieving an Item with checksum for every (at least
-     * two) components.
-     * 
-     * @throws Exception
-     *             If an error occurs.
+     * Test sucessfully retrieving an Item with checksum for every (at least two) components.
+     *
+     * @throws Exception If an error occurs.
      */
     @Test
     public void testRetrieveItemWithChecksums() throws Exception {
@@ -114,27 +107,19 @@ public class ComponentChecksumTest extends ItemTestBase {
     }
 
     /**
-     * Test sucessfully updating content with same external URL and checksum is
-     * unchanged.
-     * 
-     * @throws Exception
-     *             If an error occurs.
+     * Test sucessfully updating content with same external URL and checksum is unchanged.
+     *
+     * @throws Exception If an error occurs.
      */
     @Test
     public void testChecksumUnchanged() throws Exception {
 
         Document itemDoc = getDocument(this.theItemXml);
         String imageChecksum =
-            selectSingleNode(
-                itemDoc,
-                "//components/component/properties"
-                    + "[mime-type = 'image/jpeg']/checksum/text()")
-                .getNodeValue();
+            selectSingleNode(itemDoc,
+                "//components/component/properties" + "[mime-type = 'image/jpeg']/checksum/text()").getNodeValue();
 
-        String fedoraUrl =
-            PropertiesProvider.getInstance()
-                .getProperty("fedora.url",
-                "http://localhost:8082/fedora");
+        String fedoraUrl = PropertiesProvider.getInstance().getProperty("fedora.url", "http://localhost:8082/fedora");
 
         String imageUrl = fedoraUrl + "/images/newlogo2.jpg";
 
@@ -142,9 +127,7 @@ public class ComponentChecksumTest extends ItemTestBase {
         Element contentNode =
             (Element) selectSingleNode(itemDoc, "//components/component"
                 + "[properties/mime-type = 'image/jpeg']/content");
-        Attr attr =
-            itemDoc.createAttributeNS(
-                de.escidoc.core.test.Constants.XLINK_NS_URI, "xlink:href");
+        Attr attr = itemDoc.createAttributeNS(de.escidoc.core.test.Constants.XLINK_NS_URI, "xlink:href");
         attr.setValue(imageUrl);
         contentNode.setAttributeNode(attr);
 
@@ -152,58 +135,43 @@ public class ComponentChecksumTest extends ItemTestBase {
         String itemXml = update(this.theItemId, tmp);
 
         // content must be renewed
-        selectSingleNodeAsserted(getDocument(itemXml),
-            "//properties/version[number = '2']");
+        selectSingleNodeAsserted(getDocument(itemXml), "//properties/version[number = '2']");
 
         // check xml returned by update
         assertValidChecksums(itemXml, 2);
-        assertEquals(imageChecksum, selectSingleNode(
-            getDocument(itemXml),
-            "//components/component/properties"
-                + "[mime-type = 'image/jpeg']/checksum/text()").getNodeValue());
+        assertEquals(imageChecksum, selectSingleNode(getDocument(itemXml),
+            "//components/component/properties" + "[mime-type = 'image/jpeg']/checksum/text()").getNodeValue());
 
         // check xml returned by retrieve
         itemXml = retrieve(this.theItemId);
         assertValidChecksums(itemXml, 2);
-        assertEquals(imageChecksum, selectSingleNode(
-            getDocument(itemXml),
-            "//components/component/properties"
-                + "[mime-type = 'image/jpeg']/checksum/text()").getNodeValue());
+        assertEquals(imageChecksum, selectSingleNode(getDocument(itemXml),
+            "//components/component/properties" + "[mime-type = 'image/jpeg']/checksum/text()").getNodeValue());
     }
 
     /**
      * Test successfully updating content checksum is changed.
-     * 
-     * @throws Exception
-     *             If an error occurs.
+     *
+     * @throws Exception If an error occurs.
      */
     @Test
     public void testChecksumChanged() throws Exception {
 
         Document itemDoc = getDocument(this.theItemXml);
         String imageChecksum =
-            selectSingleNode(
-                itemDoc,
-                "//components/component/properties"
-                    + "[mime-type = 'image/jpeg']/checksum/text()")
-                .getNodeValue();
+            selectSingleNode(itemDoc,
+                "//components/component/properties" + "[mime-type = 'image/jpeg']/checksum/text()").getNodeValue();
 
         String imageUrl =
-            "http://"
-                + PropertiesProvider.getInstance()
-                    .getProperty(PropertiesProvider.ESCIDOC_SERVER_NAME)
-                + ":"
-                + PropertiesProvider.getInstance()
-                    .getProperty(PropertiesProvider.ESCIDOC_SERVER_PORT)
+            "http://" + PropertiesProvider.getInstance().getProperty(PropertiesProvider.ESCIDOC_SERVER_NAME) + ":"
+                + PropertiesProvider.getInstance().getProperty(PropertiesProvider.ESCIDOC_SERVER_PORT)
                 + "/images/escidoc-logo.jpg";
 
         // change url to the one of a different image
         Element contentNode =
             (Element) selectSingleNode(itemDoc, "//components/component"
                 + "[properties/mime-type = 'image/jpeg']/content");
-        Attr attr =
-            itemDoc.createAttributeNS(
-                de.escidoc.core.test.Constants.XLINK_NS_URI, "xlink:href");
+        Attr attr = itemDoc.createAttributeNS(de.escidoc.core.test.Constants.XLINK_NS_URI, "xlink:href");
         attr.setValue(imageUrl);
         contentNode.setAttributeNode(attr);
 
@@ -211,58 +179,42 @@ public class ComponentChecksumTest extends ItemTestBase {
         String itemXml = update(this.theItemId, tmp);
 
         // content must be renewed
-        selectSingleNodeAsserted(getDocument(itemXml),
-            "//properties/version[number = '2']");
+        selectSingleNodeAsserted(getDocument(itemXml), "//properties/version[number = '2']");
 
         // check xml returned by update
         assertValidChecksums(itemXml, 2);
-        assertNotEquals("Checksum still the same.", imageChecksum,
-            selectSingleNode(
-                getDocument(itemXml),
-                "//components/component/properties"
-                    + "[mime-type = 'image/jpeg']/checksum/text()")
-                .getNodeValue());
+        assertNotEquals("Checksum still the same.", imageChecksum, selectSingleNode(getDocument(itemXml),
+            "//components/component/properties" + "[mime-type = 'image/jpeg']/checksum/text()").getNodeValue());
 
         // check xml returned by retrieve
         itemXml = retrieve(this.theItemId);
         assertValidChecksums(itemXml, 2);
-        assertNotEquals("Checksum still the same.", imageChecksum,
-            selectSingleNode(
-                getDocument(itemXml),
-                "//components/component/properties"
-                    + "[mime-type = 'image/jpeg']/checksum/text()")
-                .getNodeValue());
+        assertNotEquals("Checksum still the same.", imageChecksum, selectSingleNode(getDocument(itemXml),
+            "//components/component/properties" + "[mime-type = 'image/jpeg']/checksum/text()").getNodeValue());
     }
 
     /**
      * Checks for valid checksums in every component.
-     * 
-     * @param xml
-     *            A XML document with components.
-     * @param minComponents
-     *            Minimum number of expected components.
-     * @throws Exception
-     *             In case of an error.
+     *
+     * @param xml           A XML document with components.
+     * @param minComponents Minimum number of expected components.
+     * @throws Exception In case of an error.
      */
-    public void assertValidChecksums(final String xml, final int minComponents)
-        throws Exception {
+    public void assertValidChecksums(final String xml, final int minComponents) throws Exception {
 
         Document itemDoc = getDocument(xml);
 
         // two components expected
-        selectSingleNodeAsserted(itemDoc, "//components/component["
-            + minComponents + "]");
+        selectSingleNodeAsserted(itemDoc, "//components/component[" + minComponents + "]");
 
         NodeList list;
 
         // no component without checksum
         list =
-            selectNodeList(itemDoc, "//components/component[not(properties/"
-                + ELEMENT_CHECKSUM + ") or not(properties/"
-                + ELEMENT_CHECKSUM_ALGORITHM + ")]");
+            selectNodeList(itemDoc, "//components/component[not(properties/" + ELEMENT_CHECKSUM
+                + ") or not(properties/" + ELEMENT_CHECKSUM_ALGORITHM + ")]");
         if (list.getLength() > 0) {
-            fail("Found at least one component without element '"
-                + ELEMENT_CHECKSUM + "' or without element '"
+            fail("Found at least one component without element '" + ELEMENT_CHECKSUM + "' or without element '"
                 + ELEMENT_CHECKSUM_ALGORITHM + "'.");
         }
 

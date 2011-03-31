@@ -29,9 +29,9 @@ import java.rmi.RemoteException;
 public interface SoapExceptionGenerationRemoteHome extends EJBHome {
 
     String COMP_NAME = "java:comp/env/ejb/SoapExceptionGeneration";
+
     String JNDI_NAME = "ejb/SoapExceptionGeneration";
 
-    SoapExceptionGenerationRemote create()
-            throws CreateException, RemoteException;
+    SoapExceptionGenerationRemote create() throws CreateException, RemoteException;
 
 }

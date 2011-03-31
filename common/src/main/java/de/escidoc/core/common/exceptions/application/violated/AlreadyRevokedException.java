@@ -21,13 +21,11 @@
 package de.escidoc.core.common.exceptions.application.violated;
 
 /**
- * The AlreadyRevokedException is used to indicate that the Grant object cannot
- * get revoked because it already is revoked. returned httpStatusCode is 409.
- * Status code (409) indicating that the request could not be completed due to a
- * conflict with the current state of the resource.
- * 
- * @author Michael Hoppe (FIZ Karlsruhe)
+ * The AlreadyRevokedException is used to indicate that the Grant object cannot get revoked because it already is
+ * revoked. returned httpStatusCode is 409. Status code (409) indicating that the request could not be completed due to
+ * a conflict with the current state of the resource.
  *
+ * @author Michael Hoppe (FIZ Karlsruhe)
  */
 public class AlreadyRevokedException extends RuleViolationException {
 
@@ -38,13 +36,10 @@ public class AlreadyRevokedException extends RuleViolationException {
 
     public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_VIOLATED;
 
-    public static final String HTTP_STATUS_MESSAGE =
-        "Grant resource already revoked.";
+    public static final String HTTP_STATUS_MESSAGE = "Grant resource already revoked.";
 
     /**
      * Default constructor.
-     * 
-     *
      */
     public AlreadyRevokedException() {
         super(HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -52,9 +47,8 @@ public class AlreadyRevokedException extends RuleViolationException {
 
     /**
      * Constructor used to map an initial exception.
-     * 
-     * @param error
-     *            Throwable
+     *
+     * @param error Throwable
      */
     public AlreadyRevokedException(final Throwable error) {
         super(error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -62,24 +56,19 @@ public class AlreadyRevokedException extends RuleViolationException {
 
     /**
      * Constructs a new exception with the specified detail message.
-     * 
-     * @param message -
-     *            the detail message.
      *
+     * @param message - the detail message.
      */
     public AlreadyRevokedException(final String message) {
         super(message, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 
     /**
-     * Constructor used to create a new Exception with the specified detail
-     * message and a mapping to an initial exception.
-     * 
-     * @param message -
-     *            the detail message.
-     * @param error
-     *            Throwable
+     * Constructor used to create a new Exception with the specified detail message and a mapping to an initial
+     * exception.
      *
+     * @param message - the detail message.
+     * @param error   Throwable
      */
     public AlreadyRevokedException(final String message, final Throwable error) {
         super(message, error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);

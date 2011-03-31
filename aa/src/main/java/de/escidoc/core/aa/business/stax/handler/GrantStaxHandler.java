@@ -34,9 +34,8 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 /**
  * Stax handler for grants.
- * 
+ *
  * @author Torsten Tetteroo
- * 
  */
 public class GrantStaxHandler extends DefaultHandler {
 
@@ -44,28 +43,18 @@ public class GrantStaxHandler extends DefaultHandler {
 
     /**
      * The constructor.
-     * 
-     * @param grant
-     *            The grant.
-     * 
      *
+     * @param grant The grant.
      */
     public GrantStaxHandler(final RoleGrant grant) {
 
         this.grant = grant;
     }
 
-
-
     /**
      * See Interface for functional description.
-     * 
-     * @param s
-     * @param element
-     * @return
-     * @see DefaultHandler
-     *      #characters(java.lang.String,
-     *      de.escidoc.core.common.util.xml.stax.events.Star tElement)
+     *
+     * @see DefaultHandler #characters(java.lang.String, de.escidoc.core.common.util.xml.stax.events.Star tElement)
      */
     @Override
     public String characters(final String s, final StartElement element) {

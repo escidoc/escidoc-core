@@ -40,65 +40,46 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * Stax handler implementation that handles the attributes that have to be
- * fetched from an item Xml representation.<br>
- * This handler extracts the attributes ...:item:component,
- * ...:item:version-status, and ...:item:version-status. The attributes found
- * are stored in the <code>RequestAttributesCache</code>.
- * 
- * @author Torsten Tetteroo
+ * Stax handler implementation that handles the attributes that have to be fetched from an item Xml representation.<br>
+ * This handler extracts the attributes ...:item:component, ...:item:version-status, and ...:item:version-status. The
+ * attributes found are stored in the <code>RequestAttributesCache</code>.
  *
+ * @author Torsten Tetteroo
  */
 public class ItemStaxHandler extends AbstractResourceAttributeStaxHandler {
 
-    private final Collection<StringAttribute> componentIds =
-        new ArrayList<StringAttribute>();
+    private final Collection<StringAttribute> componentIds = new ArrayList<StringAttribute>();
 
     /**
      * The constructor.
-     * 
-     * @param ctx
-     *            The <code>EvaluationCtx</code> for that the item xml
-     *            representation shall be parsed. Found attributes are cached
-     *            using this context as part of the key.
-     * @param resourceId
-     *            The id of the item resource. Used as part of the cache key.
+     *
+     * @param ctx        The <code>EvaluationCtx</code> for that the item xml representation shall be parsed. Found
+     *                   attributes are cached using this context as part of the key.
+     * @param resourceId The id of the item resource. Used as part of the cache key.
      */
     public ItemStaxHandler(final EvaluationCtx ctx, final String resourceId) {
 
-        super(ctx, resourceId, AttributeIds.URN_ITEM_MODIFIED_BY_ATTR,
-            AttributeIds.URN_ITEM_PUBLIC_STATUS_ATTR,
+        super(ctx, resourceId, AttributeIds.URN_ITEM_MODIFIED_BY_ATTR, AttributeIds.URN_ITEM_PUBLIC_STATUS_ATTR,
             AttributeIds.URN_ITEM_VERSION_STATUS_ATTR);
     }
 
-
-
     /**
      * See Interface for functional description.
-     * 
-     * @param element
-     * @return
-     * @throws Exception
-     * @see DefaultHandler
-     *      #startElement
-     *      (de.escidoc.core.common.util.xml.stax.events.StartElement)
      *
+     * @see DefaultHandler #startElement (de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
-    public StartElement startElement(final StartElement element)
-        throws Exception {
+    public StartElement startElement(final StartElement element) throws Exception {
 
         super.startElement(element);
         if (isNotReady() && !isInMetadata()) {
 
             final String localName = element.getLocalName();
             if (XmlUtility.NAME_COMPONENT.equals(localName)) {
-                componentIds.add(new StringAttribute(XmlUtility
-                    .getIdFromStartElement(element)));
+                componentIds.add(new StringAttribute(XmlUtility.getIdFromStartElement(element)));
             }
             else if (XmlUtility.NAME_LOCK_OWNER.equals(localName)) {
-                cacheAttribute(AttributeIds.URN_ITEM_LOCK_OWNER_ATTR,
-                    XmlUtility.getIdFromStartElement(element));
+                cacheAttribute(AttributeIds.URN_ITEM_LOCK_OWNER_ATTR, XmlUtility.getIdFromStartElement(element));
             }
         }
 
@@ -107,13 +88,8 @@ public class ItemStaxHandler extends AbstractResourceAttributeStaxHandler {
 
     /**
      * See Interface for functional description.
-     * 
-     * @param element
-     * @return
-     * @throws Exception
-     * @see DefaultHandler
-     *      #endElement(de.escidoc.core.common.util.xml.stax.events.EndElement)
      *
+     * @see DefaultHandler #endElement(de.escidoc.core.common.util.xml.stax.events.EndElement)
      */
     @Override
     public EndElement endElement(final EndElement element) throws Exception {

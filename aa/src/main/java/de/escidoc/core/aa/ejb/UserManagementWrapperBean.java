@@ -24,16 +24,19 @@ import java.rmi.RemoteException;
 public class UserManagementWrapperBean implements SessionBean {
 
     UserManagementWrapperInterface service;
+
     SessionContext sessionCtx;
+
     private static final Logger LOGGER = LoggerFactory.getLogger(UserManagementWrapperBean.class);
 
     public void ejbCreate() throws CreateException {
         try {
             final BeanFactoryLocator beanFactoryLocator = SingletonBeanFactoryLocator.getInstance();
             final BeanFactory factory =
-                    beanFactoryLocator.useBeanFactory("UserManagementWrapper.spring.ejb.context").getFactory();
+                beanFactoryLocator.useBeanFactory("UserManagementWrapper.spring.ejb.context").getFactory();
             this.service = (UserManagementWrapperInterface) factory.getBean("service.UserManagementWrapper");
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             LOGGER.error("ejbCreate(): Exception UserManagementWrapperComponent: " + e);
             throw new CreateException(e.getMessage());
         }
@@ -54,49 +57,46 @@ public class UserManagementWrapperBean implements SessionBean {
 
     }
 
-    public void logout(final SecurityContext securityContext)
-            throws AuthenticationException,
-            SystemException {
+    public void logout(final SecurityContext securityContext) throws AuthenticationException, SystemException {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         service.logout();
     }
 
-    public void logout(final String authHandle, final Boolean restAccess)
-            throws AuthenticationException,
-            SystemException {
+    public void logout(final String authHandle, final Boolean restAccess) throws AuthenticationException,
+        SystemException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         service.logout();
     }
 
-    public void initHandleExpiryTimestamp(final String handle,
-                                          final SecurityContext securityContext)
-            throws AuthenticationException,
-            SystemException {
+    public void initHandleExpiryTimestamp(final String handle, final SecurityContext securityContext)
+        throws AuthenticationException, SystemException {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         service.initHandleExpiryTimestamp(handle);
     }
 
-    public void initHandleExpiryTimestamp(final String handle, final String authHandle,
-                                          final Boolean restAccess)
-            throws AuthenticationException,
-            SystemException {
+    public void initHandleExpiryTimestamp(final String handle, final String authHandle, final Boolean restAccess)
+        throws AuthenticationException, SystemException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         service.initHandleExpiryTimestamp(handle);

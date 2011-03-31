@@ -45,104 +45,69 @@ import java.util.Collection;
 
 /**
  * Database-Backend for the Scopes database-table.
- * 
+ *
  * @author Michael Hoppe
  */
-public class SmScopesHibernateDao     
-    extends AbstractHibernateDao
-    implements SmScopesDaoInterface {
+public class SmScopesHibernateDao extends AbstractHibernateDao implements SmScopesDaoInterface {
 
     /**
      * See Interface for functional description.
-     * 
-     * @see SmScopesDaoInterface
-     *      #save(de.escidoc.core.sm.business.persistence.hibernate.Scope)
-     * 
-     * @param scope
-     *            The scope hibernate object.
-     * @throws SqlDatabaseSystemException
-     *             e
-     * 
      *
+     * @param scope The scope hibernate object.
+     * @throws SqlDatabaseSystemException e
+     * @see SmScopesDaoInterface #save(de.escidoc.core.sm.business.persistence.hibernate.Scope)
      */
     @Override
-    public void save(final Scope scope)
-        throws SqlDatabaseSystemException {
+    public void save(final Scope scope) throws SqlDatabaseSystemException {
         super.save(scope);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @see SmScopesDaoInterface
-     *      #update(de.escidoc.core.sm.business.persistence.hibernate.Scope)
-     * 
-     * @param scope
-     *            The scope hibernate object.
-     * @throws SqlDatabaseSystemException
-     *             e
-     * 
      *
+     * @param scope The scope hibernate object.
+     * @throws SqlDatabaseSystemException e
+     * @see SmScopesDaoInterface #update(de.escidoc.core.sm.business.persistence.hibernate.Scope)
      */
     @Override
-    public void update(final Scope scope)
-        throws SqlDatabaseSystemException {
+    public void update(final Scope scope) throws SqlDatabaseSystemException {
         super.update(scope);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @see SmScopesDaoInterface
-     *      #delete(de.escidoc.core.sm.business.persistence.hibernate.Scope)
-     * 
-     * @param scope
-     *            The scope hibernate object.
-     * 
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database access error.
      *
+     * @param scope The scope hibernate object.
+     * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
+     * @see SmScopesDaoInterface #delete(de.escidoc.core.sm.business.persistence.hibernate.Scope)
      */
     @Override
-    public void delete(final Scope scope)
-        throws SqlDatabaseSystemException {
-        if (scope != null && (scope.getAggregationDefinitions() != null
-            && !scope.getAggregationDefinitions().isEmpty()
-            || scope.getReportDefinitions() != null
-            && !scope.getReportDefinitions().isEmpty()
-            || scope.getStatisticDatas() != null
-            && !scope.getStatisticDatas().isEmpty())) {
-            throw new SqlDatabaseSystemException(
-                "Scope still references dependent objects");
+    public void delete(final Scope scope) throws SqlDatabaseSystemException {
+        if (scope != null
+            && (scope.getAggregationDefinitions() != null && !scope.getAggregationDefinitions().isEmpty()
+                || scope.getReportDefinitions() != null && !scope.getReportDefinitions().isEmpty() || scope
+                .getStatisticDatas() != null
+                && !scope.getStatisticDatas().isEmpty())) {
+            throw new SqlDatabaseSystemException("Scope still references dependent objects");
         }
         super.delete(scope);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @see SmScopesDaoInterface
-     *      #retrieve(java.lang.Integer)
-     * 
-     * @param id
-     *            The id of the Scope.
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database access error.
-     * @throws ScopeNotFoundException
-     *             Thrown if scope with given id was not found.
-     * @return Scope scope as hibernate Object
-     * 
      *
+     * @param id The id of the Scope.
+     * @return Scope scope as hibernate Object
+     * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
+     * @throws ScopeNotFoundException     Thrown if scope with given id was not found.
+     * @see SmScopesDaoInterface #retrieve(java.lang.Integer)
      */
     @Override
-    public Scope retrieve(final String id)
-        throws SqlDatabaseSystemException, ScopeNotFoundException {
+    public Scope retrieve(final String id) throws SqlDatabaseSystemException, ScopeNotFoundException {
         Scope result = null;
         if (id != null) {
             try {
-                result =
-                        getHibernateTemplate().get(Scope.class,
-                            id);
+                result = getHibernateTemplate().get(Scope.class, id);
             }
             catch (final DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);
@@ -152,28 +117,21 @@ public class SmScopesHibernateDao
             }
             catch (final HibernateException e) {
                 //noinspection ThrowableResultOfMethodCallIgnored
-                throw new SqlDatabaseSystemException(
-                    convertHibernateAccessException(e));
+                throw new SqlDatabaseSystemException(convertHibernateAccessException(e));
             }
         }
         if (result == null) {
-            throw new ScopeNotFoundException(
-                    "Scope with id " + id + " was not found");
+            throw new ScopeNotFoundException("Scope with id " + id + " was not found");
         }
         return result;
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @see SmScopesDaoInterface
-     *      #retrieveScopes()
-     * 
-     * @return Collection of Scopes as hibernate Objects
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database access error.
-     * 
      *
+     * @return Collection of Scopes as hibernate Objects
+     * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
+     * @see SmScopesDaoInterface #retrieveScopes()
      */
     @Override
     public Collection<Scope> retrieveScopes() throws SqlDatabaseSystemException {
@@ -183,67 +141,49 @@ public class SmScopesHibernateDao
 
     /**
      * See Interface for functional description.
-     * 
-     * @see SmScopesDaoInterface
-     *      #retrieveScopes(java.util.Collection)
-     * 
-     * @param scopeIds
-     *            Collection of scopeIds
-     * @return Collection of Scopes as xml
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database access error.
-     * 
      *
+     * @param scopeIds Collection of scopeIds
+     * @return Collection of Scopes as xml
+     * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
+     * @see SmScopesDaoInterface #retrieveScopes(java.util.Collection)
      */
     @Override
-    public Collection<Scope> retrieveScopes(final Collection<String> scopeIds)
-        throws SqlDatabaseSystemException {
+    public Collection<Scope> retrieveScopes(final Collection<String> scopeIds) throws SqlDatabaseSystemException {
         if (scopeIds == null || scopeIds.isEmpty()) {
             return null;
         }
 
-        final DetachedCriteria detachedCriteria =
-            DetachedCriteria.forClass(Scope.class, "s");
+        final DetachedCriteria detachedCriteria = DetachedCriteria.forClass(Scope.class, "s");
         detachedCriteria.add(Restrictions.in("id", scopeIds));
         return getHibernateTemplate().findByCriteria(detachedCriteria);
     }
 
     /**
-     * retrieves Scopes from the database with scopeId in given list that match
-     * the given filter.
-     * 
-     * @param scopeIds
-     *            Collection of scopeIds
-     * @param criteria
-     *            The {@link String} containing the filter criteria as CQL
-     *            query.
-     * @param offset
-     *            The index of the first result to be returned.
-     * @param maxResults
-     *            The maximal number of results to be returned.
-     * 
+     * retrieves Scopes from the database with scopeId in given list that match the given filter.
+     *
+     * @param scopeIds   Collection of scopeIds
+     * @param criteria   The {@link String} containing the filter criteria as CQL query.
+     * @param offset     The index of the first result to be returned.
+     * @param maxResults The maximal number of results to be returned.
      * @return Collection of Scopes as XML
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a SQL query
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database access error.
+     * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
+     * @throws SqlDatabaseSystemException  Thrown in case of an internal database access error.
      */
     @Override
     public Collection<Scope> retrieveScopes(
-        final Collection<String> scopeIds, final String criteria,
-        final int offset, final int maxResults)
+        final Collection<String> scopeIds, final String criteria, final int offset, final int maxResults)
         throws InvalidSearchQueryException, SqlDatabaseSystemException {
 
         if (scopeIds != null && !scopeIds.isEmpty()) {
             final DetachedCriteria detachedCriteria;
 
-            detachedCriteria = criteria != null && criteria.length() > 0 ? new ScopeFilter(criteria).toSql() : DetachedCriteria.forClass(Scope.class, "s");
+            detachedCriteria =
+                criteria != null && criteria.length() > 0 ? new ScopeFilter(criteria).toSql() : DetachedCriteria
+                    .forClass(Scope.class, "s");
             detachedCriteria.add(Restrictions.in("id", scopeIds));
 
             final Collection<Scope> scopes =
-                getHibernateTemplate().findByCriteria(detachedCriteria, offset,
-                    maxResults);
+                getHibernateTemplate().findByCriteria(detachedCriteria, offset, maxResults);
 
             if (scopes != null) {
                 return scopes;
@@ -254,25 +194,17 @@ public class SmScopesHibernateDao
 
     /**
      * See Interface for functional description.
-     * 
-     * @see SmScopesDaoInterface
-     *      #retrieveScopeIds()
-     * 
-     * @return Collection of Scope-ids
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database access error.
-     * 
      *
+     * @return Collection of Scope-ids
+     * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
+     * @see SmScopesDaoInterface #retrieveScopeIds()
      */
     @Override
-    public Collection<String> retrieveScopeIds()
-                throws SqlDatabaseSystemException {
+    public Collection<String> retrieveScopeIds() throws SqlDatabaseSystemException {
         final Collection<String> scopeIds = new ArrayList<String>();
 
-        final DetachedCriteria detachedCriteria =
-            DetachedCriteria.forClass(Scope.class, "s");
-        final Collection<Scope> scopes =
-            getHibernateTemplate().findByCriteria(detachedCriteria);
+        final DetachedCriteria detachedCriteria = DetachedCriteria.forClass(Scope.class, "s");
+        final Collection<Scope> scopes = getHibernateTemplate().findByCriteria(detachedCriteria);
 
         if (scopes != null) {
             for (final Scope scope : scopes) {
@@ -285,15 +217,13 @@ public class SmScopesHibernateDao
     }
 
     /**
-     * Wrapper of setSessionFactory to enable bean stuff generation for this
-     * bean.
-     * 
-     * @param mySessionFactory
-     *            The sessionFactory to set.
+     * Wrapper of setSessionFactory to enable bean stuff generation for this bean.
+     *
+     * @param mySessionFactory The sessionFactory to set.
      */
     public final void setMySessionFactory(final SessionFactory mySessionFactory) {
 
         setSessionFactory(mySessionFactory);
     }
-    
+
 }

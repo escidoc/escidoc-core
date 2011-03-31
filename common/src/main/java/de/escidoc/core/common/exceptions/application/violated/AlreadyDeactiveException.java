@@ -21,13 +21,11 @@
 package de.escidoc.core.common.exceptions.application.violated;
 
 /**
- * The AlreadyDeactiveException is used to indicate that the UserAccount object
- * cannot set to deactive because it already is deactive. returned
- * httpStatusCode is 409. Status code (409) indicating that the request could
- * not be completed due to a conflict with the current state of the resource.
- * 
- * @author Michael Hoppe (FIZ Karlsruhe)
+ * The AlreadyDeactiveException is used to indicate that the UserAccount object cannot set to deactive because it
+ * already is deactive. returned httpStatusCode is 409. Status code (409) indicating that the request could not be
+ * completed due to a conflict with the current state of the resource.
  *
+ * @author Michael Hoppe (FIZ Karlsruhe)
  */
 public class AlreadyDeactiveException extends RuleViolationException {
 
@@ -38,13 +36,10 @@ public class AlreadyDeactiveException extends RuleViolationException {
 
     public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_VIOLATED;
 
-    public static final String HTTP_STATUS_MESSAGE =
-        "UserAccount resource already deactive.";
+    public static final String HTTP_STATUS_MESSAGE = "UserAccount resource already deactive.";
 
     /**
      * Default constructor.
-     * 
-     *
      */
     public AlreadyDeactiveException() {
         super(HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -52,9 +47,8 @@ public class AlreadyDeactiveException extends RuleViolationException {
 
     /**
      * Constructor used to map an initial exception.
-     * 
-     * @param error
-     *            Throwable
+     *
+     * @param error Throwable
      */
     public AlreadyDeactiveException(final Throwable error) {
         super(error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -62,24 +56,19 @@ public class AlreadyDeactiveException extends RuleViolationException {
 
     /**
      * Constructs a new exception with the specified detail message.
-     * 
-     * @param message -
-     *            the detail message.
      *
+     * @param message - the detail message.
      */
     public AlreadyDeactiveException(final String message) {
         super(message, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 
     /**
-     * Constructor used to create a new Exception with the specified detail
-     * message and a mapping to an initial exception.
-     * 
-     * @param message -
-     *            the detail message.
-     * @param error
-     *            Throwable
+     * Constructor used to create a new Exception with the specified detail message and a mapping to an initial
+     * exception.
      *
+     * @param message - the detail message.
+     * @param error   Throwable
      */
     public AlreadyDeactiveException(final String message, final Throwable error) {
         super(message, error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);

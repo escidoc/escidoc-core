@@ -42,9 +42,8 @@ import java.util.List;
 
 /**
  * A role in eSciDoc.
- * 
- * @author Torsten Tetteroo
  *
+ * @author Torsten Tetteroo
  */
 public class EscidocRole extends EscidocRoleBase {
 
@@ -53,7 +52,9 @@ public class EscidocRole extends EscidocRoleBase {
      */
     private static final long serialVersionUID = 1L;
 
-    /** The name of the dummy role holding the default policies. */
+    /**
+     * The name of the dummy role holding the default policies.
+     */
     public static final String DEFAULT_USER_ROLE_ID = "escidoc:role-default-user";
 
     private transient PolicySet policySet;
@@ -62,26 +63,20 @@ public class EscidocRole extends EscidocRoleBase {
 
     /**
      * Checks if this is a limited role or an unlimited role.
-     * 
-     * @return Returns <code>true</code> if this is a limited role,
-     *         <code>false</code> else.
      *
+     * @return Returns <code>true</code> if this is a limited role, <code>false</code> else.
      */
     public boolean isLimited() {
         return getScopeDefs() != null && !getScopeDefs().isEmpty();
     }
 
     /**
-     * Gets the XACML policy set representing this eSciDoc role.<br>
-     * The policies of this role are returned in a
-     * <code>XacmlRolePolicySet</code> with the policy combining algorithm set
-     * to ordered-permit-overrides. The <code>PolicySet</code> objects are
-     * cached.
-     * 
-     * @return Returns the <code>XacmlRolePolicySet</code> of this role.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
+     * Gets the XACML policy set representing this eSciDoc role.<br> The policies of this role are returned in a
+     * <code>XacmlRolePolicySet</code> with the policy combining algorithm set to ordered-permit-overrides. The
+     * <code>PolicySet</code> objects are cached.
      *
+     * @return Returns the <code>XacmlRolePolicySet</code> of this role.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     public PolicySet getXacmlPolicySet() throws WebserverSystemException {
 
@@ -90,10 +85,8 @@ public class EscidocRole extends EscidocRoleBase {
                 this.policySet = CustomPolicyBuilder.buildXacmlRolePolicySet(this);
             }
             catch (final Exception e) {
-                throw new WebserverSystemException(StringUtility
-                    .format(
-                        "Error during getting of the role's policy set", e
-                            .getMessage()), e);
+                throw new WebserverSystemException(StringUtility.format(
+                    "Error during getting of the role's policy set", e.getMessage()), e);
             }
         }
 
@@ -102,11 +95,9 @@ public class EscidocRole extends EscidocRoleBase {
 
     /**
      * Gets the policy set id (XACML).
-     * 
-     * @return Returns the policy set id of this role.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
      *
+     * @return Returns the policy set id of this role.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     public URI getPolicySetId() throws WebserverSystemException {
 
@@ -115,9 +106,8 @@ public class EscidocRole extends EscidocRoleBase {
 
     /**
      * Gets the objectTypes of the role's scope definitions.
-     * 
-     * @return Returns the objectTypes in a <code>List</code>.
      *
+     * @return Returns the objectTypes in a <code>List</code>.
      */
     public Collection<String> getObjectTypes() {
         if (this.objectTypes == null) {
@@ -127,7 +117,8 @@ public class EscidocRole extends EscidocRoleBase {
                 for (final ScopeDef scopeDef : scopeDefs) {
                     objectTypes.add(scopeDef.getObjectType());
                 }
-            } else {
+            }
+            else {
                 this.objectTypes = new ArrayList<String>(0);
             }
         }
@@ -137,9 +128,8 @@ public class EscidocRole extends EscidocRoleBase {
 
     /**
      * Gets the href for this role.
-     * 
-     * @return Returns the href of this role.
      *
+     * @return Returns the href of this role.
      */
     public String getHref() {
 
@@ -148,20 +138,16 @@ public class EscidocRole extends EscidocRoleBase {
 
     /**
      * See Interface for functional description.
-     * 
-     * @return
+     *
      * @see Object#toString()
      */
     @Override
     public String toString() {
 
         ToStringBuilder toStringBuilder =
-            new ToStringBuilder(this).append("roleName", getRoleName()).append(
-                "id", getId());
+            new ToStringBuilder(this).append("roleName", getRoleName()).append("id", getId());
         if (isLimited()) {
-            toStringBuilder =
-                toStringBuilder.append("# Limitation Conditions",
-                    getScopeDefs().size());
+            toStringBuilder = toStringBuilder.append("# Limitation Conditions", getScopeDefs().size());
         }
         return toStringBuilder.toString();
     }

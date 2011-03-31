@@ -44,109 +44,86 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * Test the implementation of the content model filters.
- * 
+ *
  * @author André Schenk
- * 
  */
 @RunWith(value = Parameterized.class)
 public class ContentModelFilterTest extends ContentModelTestBase {
 
     private static final String XPATH_SRW_MODEL_LIST_MODEL =
-        XPATH_SRW_RESPONSE_RECORD 
-            + "/recordData/search-result-record/" 
-            + NAME_CONTENT_MODEL;
+        XPATH_SRW_RESPONSE_RECORD + "/recordData/search-result-record/" + NAME_CONTENT_MODEL;
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ContentModelFilterTest(final int transport) {
         super(transport);
     }
 
     /**
-     * Test successfully retrieving a filtered content model list filtering by
-     * created-by.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test successfully retrieving a filtered content model list filtering by created-by.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testFilterCreatedBy() throws Exception {
         String xml = createContentModel();
         String modelId = getObjidValue(xml);
         String createdBy =
-            getObjidValue(EscidocRestSoapTestBase.getDocument(xml),
-                "/content-model/properties/created-by");
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+            getObjidValue(EscidocRestSoapTestBase.getDocument(xml), "/content-model/properties/created-by");
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_IDENTIFIER + "\"=" + modelId + " and " + "\""
-            + FILTER_CREATED_BY + "\"=" + createdBy });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_IDENTIFIER + "\"=" + modelId + " and "
+            + "\"" + FILTER_CREATED_BY + "\"=" + createdBy });
 
         String result = retrieveContentModels(filterParams);
 
         assertXmlValidSrwResponse(result);
 
-        NodeList models =
-            selectNodeList(EscidocRestSoapTestBase.getDocument(result),
-                XPATH_SRW_MODEL_LIST_MODEL);
+        NodeList models = selectNodeList(EscidocRestSoapTestBase.getDocument(result), XPATH_SRW_MODEL_LIST_MODEL);
 
-        assertTrue("Wrong number of content Models matched filter criteria, "
-            + "expected 1, but was " + models.getLength(),
-            models.getLength() == 1);
-        assertEquals("Wrong content model matched filter criteria.", modelId,
-            getObjidValue(models.item(0), "/"));
+        assertTrue("Wrong number of content Models matched filter criteria, " + "expected 1, but was "
+            + models.getLength(), models.getLength() == 1);
+        assertEquals("Wrong content model matched filter criteria.", modelId, getObjidValue(models.item(0), "/"));
     }
 
     /**
-     * Test successfully retrieving a filtered content model list filtering by
-     * created-by with an unknown user. Expected is an empty content model list.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test successfully retrieving a filtered content model list filtering by created-by with an unknown user. Expected
+     * is an empty content model list.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testFilterCreatedByUnknownCreator() throws Exception {
         String xml = createContentModel();
         String modelId = getObjidValue(xml);
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_IDENTIFIER + "\"=" + modelId + " and " + "\""
-            + FILTER_CREATED_BY + "\"=escidoc:unknwonUser" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_IDENTIFIER + "\"=" + modelId + " and "
+            + "\"" + FILTER_CREATED_BY + "\"=escidoc:unknwonUser" });
 
         String result = retrieveContentModels(filterParams);
 
         assertXmlValidSrwResponse(result);
 
-        NodeList models =
-            selectNodeList(EscidocRestSoapTestBase.getDocument(result),
-                XPATH_SRW_MODEL_LIST_MODEL);
+        NodeList models = selectNodeList(EscidocRestSoapTestBase.getDocument(result), XPATH_SRW_MODEL_LIST_MODEL);
 
-        assertTrue("Wrong number of content models matched filter criteria, "
-            + "expected 0, but was " + models.getLength(),
-            models.getLength() == 0);
+        assertTrue("Wrong number of content models matched filter criteria, " + "expected 0, but was "
+            + models.getLength(), models.getLength() == 0);
     }
 
     /**
-     * Test successfully retrieving a filtered content model list filtering by
-     * content model id.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test successfully retrieving a filtered content model list filtering by content model id.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testFilterId() throws Exception {
         String xml = createContentModel();
         String modelId = getObjidValue(xml);
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_IDENTIFIER + "\"=" + modelId });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_IDENTIFIER + "\"=" + modelId });
 
         String result = retrieveContentModels(filterParams);
 
@@ -156,17 +133,14 @@ public class ContentModelFilterTest extends ContentModelTestBase {
         NodeList nl;
 
         if (getTransport() == Constants.TRANSPORT_SOAP) {
-            selectSingleNodeAsserted(resultDoc, XPATH_SRW_MODEL_LIST_MODEL
-                + "[@objid = '" + modelId + "']");
+            selectSingleNodeAsserted(resultDoc, XPATH_SRW_MODEL_LIST_MODEL + "[@objid = '" + modelId + "']");
         }
         else {
-            selectSingleNodeAsserted(resultDoc, XPATH_SRW_MODEL_LIST_MODEL
-                + "[@href = '" + Constants.CONTENT_MODEL_BASE_URI + "/"
-                + modelId + "']");
+            selectSingleNodeAsserted(resultDoc, XPATH_SRW_MODEL_LIST_MODEL + "[@href = '"
+                + Constants.CONTENT_MODEL_BASE_URI + "/" + modelId + "']");
         }
         nl = selectNodeList(resultDoc, XPATH_SRW_MODEL_LIST_MODEL);
-        assertEquals("Only one content model should be retrieved.", nl
-            .getLength(), 1);
+        assertEquals("Only one content model should be retrieved.", nl.getLength(), 1);
 
         // delete the content model
         delete(modelId);
@@ -174,19 +148,12 @@ public class ContentModelFilterTest extends ContentModelTestBase {
 
     /**
      * Test successfully retrieving an explain response.
-     * 
-     * @test.name testExplainretrieveContentModels
-     * @test.id testExplainretrieveContentModels
-     * @test.input
-     * @test.expected: valid explain response.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testExplainRetrieveContentModels() throws Exception {
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_EXPLAIN, new String[] { "" });
 
@@ -203,10 +170,9 @@ public class ContentModelFilterTest extends ContentModelTestBase {
 
     /**
      * Create a content model.
-     * 
+     *
      * @return content model XML
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     private String createContentModel() throws Exception {
         return create(getExampleTemplate("content-model-minimal-for-create.xml"));

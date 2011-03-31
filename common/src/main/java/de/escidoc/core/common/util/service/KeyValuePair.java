@@ -23,11 +23,9 @@ package de.escidoc.core.common.util.service;
 import java.io.Serializable;
 
 /**
- * Class that contains one Key-Value-Pair. Used to convert a object that
- * implements Map into KeyValuePair [].
- * 
+ * Class that contains one Key-Value-Pair. Used to convert a object that implements Map into KeyValuePair [].
+ *
  * @author Roland Werner (Accenture)
- * 
  */
 public class KeyValuePair implements Serializable {
 
@@ -39,18 +37,15 @@ public class KeyValuePair implements Serializable {
 
     /**
      * Standard Constructor.
-     * 
      */
     public KeyValuePair() {
     }
 
     /**
      * Constructor. Generates a new object of type KeyValuePair.
-     * 
-     * @param key
-     *            The key.
-     * @param value
-     *            The value.
+     *
+     * @param key   The key.
+     * @param value The value.
      */
     public KeyValuePair(final String key, final String value) {
         this.key = key;
@@ -65,8 +60,7 @@ public class KeyValuePair implements Serializable {
     }
 
     /**
-     * @param key
-     *            The key to set.
+     * @param key The key to set.
      */
     public final void setKey(final String key) {
         this.key = key;
@@ -80,8 +74,7 @@ public class KeyValuePair implements Serializable {
     }
 
     /**
-     * @param value
-     *            The value to set.
+     * @param value The value to set.
      */
     public final void setValue(final String value) {
         this.value = value;

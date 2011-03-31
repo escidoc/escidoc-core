@@ -25,36 +25,26 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 
 /**
  * Interface of the wrapper of the external user management.
- * 
+ *
  * @author Torsten Tetteroo
- * 
  */
 public interface UserManagementWrapperInterface {
 
     /**
      * Logout the User.
-     * 
-     * @throws AuthenticationException
-     *             Thrown if the authentication fails due to an invalid provided
-     *             eSciDocUserHandle.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
-     * 
+     *
+     * @throws AuthenticationException Thrown if the authentication fails due to an invalid provided eSciDocUserHandle.
+     * @throws SystemException         Thrown in case of an internal error.
      */
     void logout() throws AuthenticationException, SystemException;
 
     /**
      * Set the timeout for the provided handle.
-     * 
+     *
      * @param handle the handle
-     * @throws AuthenticationException
-     *             Thrown if the authentication fails due to an invalid provided
-     *             eSciDocUserHandle.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
-     * 
+     * @throws AuthenticationException Thrown if the authentication fails due to an invalid provided eSciDocUserHandle.
+     * @throws SystemException         Thrown in case of an internal error.
      */
-    void initHandleExpiryTimestamp(String handle) 
-        throws AuthenticationException, SystemException;
+    void initHandleExpiryTimestamp(String handle) throws AuthenticationException, SystemException;
 
 }

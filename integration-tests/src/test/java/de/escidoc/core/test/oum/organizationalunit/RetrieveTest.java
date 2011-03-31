@@ -38,16 +38,14 @@ import static org.junit.Assert.assertNotNull;
 
 /**
  * Test the mock implementation of the item resource.
- * 
+ *
  * @author Michael Schneider
- * 
  */
 @RunWith(value = Parameterized.class)
 public class RetrieveTest extends OrganizationalUnitTestBase {
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public RetrieveTest(final int transport) {
         super(transport);
@@ -55,18 +53,8 @@ public class RetrieveTest extends OrganizationalUnitTestBase {
 
     /**
      * Tests successful retrieving of an existing OrganizationalUnit.
-     * 
-     * @test.name Retrieve Organizational Unit - Success
-     * @test.id OUM_ROU-1
-     * @test.input
-     *          <ul>
-     *          <li>Id of existing organizational unit.</li>
-     *          </ul>
-     * @test.expected: XML representation of the organizational unit.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumRou1() throws Exception {
@@ -81,25 +69,13 @@ public class RetrieveTest extends OrganizationalUnitTestBase {
         catch (final Exception e) {
             failException("Retrieving existing OU failed.", e);
         }
-        assertOrganizationalUnit(retrievedXml, createdXml, startTimestamp,
-            startTimestamp);
+        assertOrganizationalUnit(retrievedXml, createdXml, startTimestamp, startTimestamp);
     }
 
     /**
-     * Tests declining retrieving an OrganizationalUnit with providing an
-     * unknown id.
-     * 
-     * @test.name Retrieve Organizational Unit - Unknown Id
-     * @test.id OUM_ROU-2
-     * @test.input
-     *          <ul>
-     *          <li>Unknown id</li>
-     *          </ul>
-     * @test.expected: OrganizationalUnitNotFoundException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests declining retrieving an OrganizationalUnit with providing an unknown id.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumRou2() throws Exception {
@@ -107,31 +83,17 @@ public class RetrieveTest extends OrganizationalUnitTestBase {
         Class ec = OrganizationalUnitNotFoundException.class;
         try {
             retrieve(UNKNOWN_ID);
-            failMissingException(
-                "Retrieving an OU with unknown id has not been declined.", ec);
+            failMissingException("Retrieving an OU with unknown id has not been declined.", ec);
         }
         catch (final Exception e) {
-            assertExceptionType(
-                "Retrieving an OU with unknown id has not been declined,"
-                    + " correctly.", ec, e);
+            assertExceptionType("Retrieving an OU with unknown id has not been declined," + " correctly.", ec, e);
         }
     }
 
     /**
-     * Tests declining retrieving an OrganizationalUnit with providing the id of
-     * a resource of another type.
-     * 
-     * @test.name Retrieve Organizational Unit - Id of Another Resource Type
-     * @test.id OUM_ROU-2-2
-     * @test.input
-     *          <ul>
-     *          <li>Id of a resource of another type</li>
-     *          </ul>
-     * @test.expected: OrganizationalUnitNotFoundException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests declining retrieving an OrganizationalUnit with providing the id of a resource of another type.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumRou2_2() throws Exception {
@@ -140,31 +102,19 @@ public class RetrieveTest extends OrganizationalUnitTestBase {
 
         try {
             retrieve(CONTEXT_ID);
-            failMissingException(
-                "Retrieving an OU with id of resource of another resource type"
-                    + " has not been declined.", ec);
+            failMissingException("Retrieving an OU with id of resource of another resource type"
+                + " has not been declined.", ec);
         }
         catch (final Exception e) {
-            assertExceptionType(
-                "Retrieving an OU with id of resource of another resource type"
-                    + " has not been declined, correctly", ec, e);
+            assertExceptionType("Retrieving an OU with id of resource of another resource type"
+                + " has not been declined, correctly", ec, e);
         }
     }
 
     /**
      * Test retrieving an OrganizationalUnit without id.
-     * 
-     * @test.name Retrieve Organizational Unit - Missing id
-     * @test.id OUM_ROU-3
-     * @test.input
-     *          <ul>
-     *          <li>No id is provided.</li>
-     *          </ul>
-     * @test.expected: MissingMethodParameterException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumROu3() throws Exception {
@@ -172,26 +122,17 @@ public class RetrieveTest extends OrganizationalUnitTestBase {
         Class ec = MissingMethodParameterException.class;
         try {
             retrieve(null);
-            failMissingException("Retrieving an OU without id"
-                + " has not been declined.", ec);
+            failMissingException("Retrieving an OU without id" + " has not been declined.", ec);
         }
         catch (final Exception e) {
-            assertExceptionType("Retrieving an OU without id"
-                + " has not been declined, correctly.", ec, e);
+            assertExceptionType("Retrieving an OU without id" + " has not been declined, correctly.", ec, e);
         }
     }
 
     /**
-     * Test retrieving the persistent organizational unit object with id
-     * "escidoc:persistent1".
-     * 
-     * @test.name Retrieve Organizational Unit - escidoc:persistent1
-     * @test.id OUM_ROU-6
-     * @test.input Id escidoc:persistent1
-     * @test.expected: XML representation of the Organizational Unit
-     * @test.status Implemented
-     * @throws Exception
-     *             If anything fails.
+     * Test retrieving the persistent organizational unit object with id "escidoc:persistent1".
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumROu6() throws Exception {
@@ -209,16 +150,9 @@ public class RetrieveTest extends OrganizationalUnitTestBase {
     }
 
     /**
-     * Test retrieving the persistent organizational unit object with id
-     * "escidoc:persistent11".
-     * 
-     * @test.name Retrieve Organizational Unit - escidoc:persistent11
-     * @test.id OUM_ROU-7
-     * @test.input Id escidoc:persistent11
-     * @test.expected: XML representation of the Organizational Unit
-     * @test.status Implemented
-     * @throws Exception
-     *             If anything fails.
+     * Test retrieving the persistent organizational unit object with id "escidoc:persistent11".
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumROu7() throws Exception {
@@ -236,16 +170,9 @@ public class RetrieveTest extends OrganizationalUnitTestBase {
     }
 
     /**
-     * Test retrieving the persistent organizational unit object with id
-     * "escidoc:persistent13".
-     * 
-     * @test.name Retrieve Organizational Unit - escidoc:persistent13
-     * @test.id OUM_ROU-8
-     * @test.input Id escidoc:persistent13
-     * @test.expected: XML representation of the Organizational Unit
-     * @test.status Implemented
-     * @throws Exception
-     *             If anything fails.
+     * Test retrieving the persistent organizational unit object with id "escidoc:persistent13".
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumROu8() throws Exception {
@@ -263,16 +190,9 @@ public class RetrieveTest extends OrganizationalUnitTestBase {
     }
 
     /**
-     * Test retrieving the persistent organizational unit object with id
-     * "escidoc:persistent1".
-     * 
-     * @test.name Retrieve Organizational Unit - escidoc:persistent1
-     * @test.id OUM_ROU-9
-     * @test.input Id escidoc:persistent1
-     * @test.expected: XML representation of the Organizational Unit
-     * @test.status Implemented
-     * @throws Exception
-     *             If anything fails.
+     * Test retrieving the persistent organizational unit object with id "escidoc:persistent1".
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumROu9() throws Exception {
@@ -290,16 +210,9 @@ public class RetrieveTest extends OrganizationalUnitTestBase {
     }
 
     /**
-     * Test retrieving the persistent organizational unit object with id
-     * "escidoc:persistent22".
-     * 
-     * @test.name Retrieve Organizational Unit - escidoc:persistent22
-     * @test.id OUM_ROU-10
-     * @test.input Id escidoc:persistent22
-     * @test.expected: XML representation of the Organizational Unit
-     * @test.status Implemented
-     * @throws Exception
-     *             If anything fails.
+     * Test retrieving the persistent organizational unit object with id "escidoc:persistent22".
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumROu10() throws Exception {

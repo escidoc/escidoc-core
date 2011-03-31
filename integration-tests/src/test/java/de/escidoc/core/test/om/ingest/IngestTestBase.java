@@ -33,9 +33,8 @@ import de.escidoc.core.test.om.OmTestBase;
 
 /**
  * Test the implementation of the ingest interface.
- * 
+ *
  * @author Steffen Wagner
- * 
  */
 public class IngestTestBase extends OmTestBase {
 
@@ -49,8 +48,7 @@ public class IngestTestBase extends OmTestBase {
     }
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public IngestTestBase(final int transport) {
         super(transport);
@@ -58,12 +56,10 @@ public class IngestTestBase extends OmTestBase {
 
     /**
      * Ingest a resource.
-     * 
-     * @param xmlData
-     *            the String containing the resource
+     *
+     * @param xmlData the String containing the resource
      * @return XML representation of result
-     * @throws Exception
-     *             Thrown if ingest fails.
+     * @throws Exception Thrown if ingest fails.
      */
     public String ingest(final String xmlData) throws Exception {
         return handleXmlResult(getIngestClient().ingest(xmlData));
@@ -72,11 +68,9 @@ public class IngestTestBase extends OmTestBase {
 
     /**
      * Delete Context.
-     * 
-     * @param id
-     *            Objid of Context.
-     * @throws Exception
-     *             Thrown if delete fails.
+     *
+     * @param id Objid of Context.
+     * @throws Exception Thrown if delete fails.
      */
     public void deleteContext(final String id) throws Exception {
         getContextClient().delete(id);

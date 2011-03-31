@@ -20,16 +20,12 @@
 
 package de.escidoc.core.common.exceptions.system;
 
-
 /**
- * The FileSystemException is used to indicate 
- * that an internal system exception with the file-system occured.
- * returned httpStatusCode is 500.
- * Status code (500) indicating an error inside 
- * the HTTP server which prevented it from fulfilling the request.
- * 
- * @author Michael Hoppe (FIZ Karlsruhe)
+ * The FileSystemException is used to indicate that an internal system exception with the file-system occured. returned
+ * httpStatusCode is 500. Status code (500) indicating an error inside the HTTP server which prevented it from
+ * fulfilling the request.
  *
+ * @author Michael Hoppe (FIZ Karlsruhe)
  */
 public class FileSystemException extends SystemException {
 
@@ -38,45 +34,43 @@ public class FileSystemException extends SystemException {
      */
     private static final long serialVersionUID = -6708356264932678991L;
 
-    public static final int HTTP_STATUS_CODE = 
-        ESCIDOC_HTTP_SC_INTERNAL_SERVER_ERROR;
+    public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_INTERNAL_SERVER_ERROR;
 
-    public static final String HTTP_STATUS_MESSAGE = 
-        "Internal File System Error";
-    
+    public static final String HTTP_STATUS_MESSAGE = "Internal File System Error";
+
     /**
      * Default constructor.
-     *
      */
     public FileSystemException() {
         super(HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
+
     /**
      * Constructor used to map an initial exception.
-     * @param error Throwable
      *
+     * @param error Throwable
      */
     public FileSystemException(final Throwable error) {
         super(error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
+
     /**
      * Constructs a new exception with the specified detail message.
-     * @param message - the detail message. 
      *
+     * @param message - the detail message.
      */
     public FileSystemException(final String message) {
         super(message, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
+
     /**
-     * Constructor used to create a new Exception
-     * with the specified detail message 
-     * and a mapping to an initial exception.
-     * @param message - the detail message. 
-     * @param error Throwable
+     * Constructor used to create a new Exception with the specified detail message and a mapping to an initial
+     * exception.
      *
+     * @param message - the detail message.
+     * @param error   Throwable
      */
-    public FileSystemException(final String message,
-                                   final Throwable error) {
+    public FileSystemException(final String message, final Throwable error) {
         super(message, error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 }

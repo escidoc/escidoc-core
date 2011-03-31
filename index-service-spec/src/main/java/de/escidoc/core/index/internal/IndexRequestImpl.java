@@ -10,17 +10,24 @@ import java.util.UUID;
 /**
  * Default implementation of {@link IndexRequest}.
  */
-@XmlRootElement(name="IndexRequest", namespace = "http://www.escidoc.de/schemas/index-service/1.0/")
-@XmlType(name="IndexRequest", namespace = "http://www.escidoc.de/schemas/index-service/1.0/")
+@XmlRootElement(name = "IndexRequest", namespace = "http://www.escidoc.de/schemas/index-service/1.0/")
+@XmlType(name = "IndexRequest", namespace = "http://www.escidoc.de/schemas/index-service/1.0/")
 public class IndexRequestImpl implements IndexRequest {
 
     private final String requestId = UUID.randomUUID().toString();
+
     private final Date creationTimestamp = new Date();
+
     private String action;
+
     private String indexName;
+
     private String resource;
+
     private String objectType;
+
     private String data;
+
     private boolean isReindexerCaller;
 
     @Override
@@ -113,22 +120,15 @@ public class IndexRequestImpl implements IndexRequest {
      *
      * @param isReindexerCaller boolean if message was sent by reindexer
      */
-    public void setIsReindexerCaller(
-            final boolean isReindexerCaller) {
+    public void setIsReindexerCaller(final boolean isReindexerCaller) {
         this.isReindexerCaller = isReindexerCaller;
     }
 
     @Override
     public String toString() {
-        return "IndexRequestImpl{" +
-                "requestId='" + this.requestId + '\'' +
-                ", creationTimestamp=" + this.creationTimestamp +
-                ", action='" + this.action + '\'' +
-                ", indexName='" + this.indexName + '\'' +
-                ", resource='" + this.resource + '\'' +
-                ", objectType='" + this.objectType + '\'' +
-                ", data='" + this.data + '\'' +
-                ", isReindexerCaller='" + this.isReindexerCaller + '\'' +
-                '}';
+        return "IndexRequestImpl{" + "requestId='" + this.requestId + '\'' + ", creationTimestamp="
+            + this.creationTimestamp + ", action='" + this.action + '\'' + ", indexName='" + this.indexName + '\''
+            + ", resource='" + this.resource + '\'' + ", objectType='" + this.objectType + '\'' + ", data='"
+            + this.data + '\'' + ", isReindexerCaller='" + this.isReindexerCaller + '\'' + '}';
     }
 }

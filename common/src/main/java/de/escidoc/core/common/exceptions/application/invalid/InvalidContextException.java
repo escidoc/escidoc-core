@@ -21,13 +21,11 @@
 package de.escidoc.core.common.exceptions.application.invalid;
 
 /**
- * The InvalidContextException is used to indicate that the given context cannot
- * get attached to the object. returned httpStatusCode is 412. Status code (412)
- * indicating that the precondition given in one or more of the request-header
+ * The InvalidContextException is used to indicate that the given context cannot get attached to the object. returned
+ * httpStatusCode is 412. Status code (412) indicating that the precondition given in one or more of the request-header
  * fields evaluated to false when it was tested on the server.
- * 
- * @author Michael Hoppe (FIZ Karlsruhe)
  *
+ * @author Michael Hoppe (FIZ Karlsruhe)
  */
 public class InvalidContextException extends ValidationException {
 
@@ -42,8 +40,6 @@ public class InvalidContextException extends ValidationException {
 
     /**
      * Default constructor.
-     * 
-     *
      */
     public InvalidContextException() {
         super(HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -51,10 +47,8 @@ public class InvalidContextException extends ValidationException {
 
     /**
      * Constructs a new exception with the specified detail message.
-     * 
-     * @param message -
-     *            the detail message.
      *
+     * @param message - the detail message.
      */
     public InvalidContextException(final String message) {
         super(message, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -62,23 +56,19 @@ public class InvalidContextException extends ValidationException {
 
     /**
      * Constructor used to map an initial exception.
-     * 
-     * @param error
-     *            Throwable
+     *
+     * @param error Throwable
      */
     public InvalidContextException(final Throwable error) {
         super(error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 
     /**
-     * Constructor used to create a new Exception with the specified detail
-     * message and a mapping to an initial exception.
-     * 
-     * @param message -
-     *            the detail message.
-     * @param error
-     *            Throwable
+     * Constructor used to create a new Exception with the specified detail message and a mapping to an initial
+     * exception.
      *
+     * @param message - the detail message.
+     * @param error   Throwable
      */
     public InvalidContextException(final String message, final Throwable error) {
         super(message, error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);

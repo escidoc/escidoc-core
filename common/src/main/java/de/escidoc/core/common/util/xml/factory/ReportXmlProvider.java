@@ -26,34 +26,27 @@ import java.util.Map;
 
 /**
  * Report renderer implementation using the velocity template engine.
- * 
- * @author Michael Hoppe
  *
+ * @author Michael Hoppe
  */
-public final class ReportXmlProvider 
-                    extends InfrastructureXmlProvider {
+public final class ReportXmlProvider extends InfrastructureXmlProvider {
 
-    private static final String REPORT_RESOURCE_NAME = 
-        "report";
+    private static final String REPORT_RESOURCE_NAME = "report";
 
-    private static final String REPORT_PATH = 
-        "/report";
+    private static final String REPORT_PATH = "/report";
 
     private static final ReportXmlProvider PROVIDER = new ReportXmlProvider();
 
     /**
      * Private constructor to prevent initialization.
-     *
-     *
      */
     private ReportXmlProvider() {
     }
 
     /**
      * Gets the Report xml PROVIDER.
-     * 
-     * @return Returns the <code>ReportXmlProvider</code> object.
      *
+     * @return Returns the <code>ReportXmlProvider</code> object.
      */
     public static ReportXmlProvider getInstance() {
         return PROVIDER;
@@ -61,21 +54,14 @@ public final class ReportXmlProvider
 
     /**
      * Gets the Report xml.
-     * 
+     *
      * @param values rendering values
      * @return String rendered xml
-     * @throws WebserverSystemException
-     *             Thrown if the instance cannot be created due to an internal
-     *             error.
-     *
+     * @throws WebserverSystemException Thrown if the instance cannot be created due to an internal error.
      */
-    public String getReportXml(
-            final Map values)
-        throws WebserverSystemException {
+    public String getReportXml(final Map values) throws WebserverSystemException {
 
-        return getXml(
-                REPORT_RESOURCE_NAME, 
-                REPORT_PATH, values);
+        return getXml(REPORT_RESOURCE_NAME, REPORT_PATH, values);
     }
 
 }

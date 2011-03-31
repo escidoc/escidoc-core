@@ -39,16 +39,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Test suite for the role escidoc:role-context-modifier.
- * Context-Modifier may
- * -retrieve, modify, delete, open, close context granted for.
- * -grant other context-scoped roles to the context (s)he has privileges for (except Context Modifier role).
- * 
- * This role is a limited role. 
-        It is restricted to a context.
- * 
+ * Test suite for the role escidoc:role-context-modifier. Context-Modifier may -retrieve, modify, delete, open, close
+ * context granted for. -grant other context-scoped roles to the context (s)he has privileges for (except Context
+ * Modifier role).
+ * <p/>
+ * This role is a limited role. It is restricted to a context.
+ *
  * @author Michael Hoppe
- * 
  */
 public class ContextModifierAbstractTest extends GrantTestBase {
 
@@ -59,37 +56,29 @@ public class ContextModifierAbstractTest extends GrantTestBase {
     protected static final String PASSWORD = PWCallback.PASSWORD;
 
     protected static String grantCreationUserOrGroupId = null;
-    
+
     private static int methodCounter = 0;
-    
+
     private static String contextId = null;
-    
+
     /**
      * The constructor.
-     * 
-     * @param transport
-     *            The transport identifier.
-     * @param handlerCode
-     *            handlerCode of either UserAccountHandler or UserGroupHandler.
-     * @param userOrGroupId
-     *            userOrGroupId for grantCreation.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param transport     The transport identifier.
+     * @param handlerCode   handlerCode of either UserAccountHandler or UserGroupHandler.
+     * @param userOrGroupId userOrGroupId for grantCreation.
+     * @throws Exception If anything fails.
      */
-    public ContextModifierAbstractTest(
-            final int transport, 
-            final int handlerCode,
-            final String userOrGroupId) throws Exception {
+    public ContextModifierAbstractTest(final int transport, final int handlerCode, final String userOrGroupId)
+        throws Exception {
         super(transport, handlerCode);
         grantCreationUserOrGroupId = userOrGroupId;
     }
 
     /**
      * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Before
     public void initialize() throws Exception {
@@ -102,9 +91,8 @@ public class ContextModifierAbstractTest extends GrantTestBase {
 
     /**
      * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @After
     public void deinitialize() throws Exception {
@@ -117,139 +105,100 @@ public class ContextModifierAbstractTest extends GrantTestBase {
 
     /**
      * prepare tests (create context).
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     public void prepare() throws Exception {
-        String contextXml = doTestCreateContext(
-                PWCallback.DEFAULT_HANDLE, 
-                "context_create.xml", 
-                null);
+        String contextXml = doTestCreateContext(PWCallback.DEFAULT_HANDLE, "context_create.xml", null);
         contextId = getObjidValue(contextXml);
-        doTestCreateGrant(null, grantCreationUserOrGroupId, 
-                Constants.CONTEXT_BASE_URI + "/" 
-                + contextId, ROLE_HREF_CONTEXT_MODIFIER, null);
+        doTestCreateGrant(null, grantCreationUserOrGroupId, Constants.CONTEXT_BASE_URI + "/" + contextId,
+            ROLE_HREF_CONTEXT_MODIFIER, null);
 
     }
 
     /**
      * Tests successfully retrieving a context.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testContextLifecycle() throws Exception {
-        String contextXml = 
-            handleResult(contextClient.retrieve(contextId));
-        contextXml = 
-            contextXml.replaceAll(
-                    "(<[^\\/>]*?)name>", "$1name>replaced");
+        String contextXml = handleResult(contextClient.retrieve(contextId));
+        contextXml = contextXml.replaceAll("(<[^\\/>]*?)name>", "$1name>replaced");
 
         contextXml = handleResult(contextClient.update(contextId, contextXml));
 
-        String lastModificationDate =
-            getLastModificationDateValue(
-                EscidocRestSoapTestBase.getDocument(contextXml));
-        contextXml = handleResult(contextClient.open(
-                contextId, getTheLastModificationParam(
-                true, contextId, 
-                "comment", lastModificationDate)));
+        String lastModificationDate = getLastModificationDateValue(EscidocRestSoapTestBase.getDocument(contextXml));
+        contextXml =
+            handleResult(contextClient.open(contextId, getTheLastModificationParam(true, contextId, "comment",
+                lastModificationDate)));
 
-        lastModificationDate =
-            getLastModificationDateValue(
-                EscidocRestSoapTestBase.getDocument(contextXml));
-        contextXml = handleResult(contextClient.close(
-                contextId, getTheLastModificationParam(
-                true, contextId, 
-                "comment", lastModificationDate)));
-        
+        lastModificationDate = getLastModificationDateValue(EscidocRestSoapTestBase.getDocument(contextXml));
+        contextXml =
+            handleResult(contextClient.close(contextId, getTheLastModificationParam(true, contextId, "comment",
+                lastModificationDate)));
+
         try {
             contextClient.delete(contextId);
-        } catch (final InvalidStatusException e) {}
+        }
+        catch (final InvalidStatusException e) {
+        }
     }
 
     /**
      * Tests declining retrieving a context.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testDeclineRetrieveContext() throws Exception {
-        doTestRetrieveContext(
-                PWCallback.DEFAULT_HANDLE, 
-                HANDLE, 
-                "context_create.xml", 
-                AuthorizationException.class);
+        doTestRetrieveContext(PWCallback.DEFAULT_HANDLE, HANDLE, "context_create.xml", AuthorizationException.class);
     }
 
     /**
      * Tests declining updating a context.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testDeclineUpdateContext() throws Exception {
-        doTestUpdateContext(
-                PWCallback.DEFAULT_HANDLE, 
-                HANDLE, 
-                "context_create.xml", 
-                AuthorizationException.class);
+        doTestUpdateContext(PWCallback.DEFAULT_HANDLE, HANDLE, "context_create.xml", AuthorizationException.class);
     }
 
     /**
      * Tests declining opening a context.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testDeclineOpenContext() throws Exception {
-        doTestOpenContext(
-                PWCallback.DEFAULT_HANDLE, 
-                HANDLE, 
-                "context_create.xml", 
-                AuthorizationException.class);
+        doTestOpenContext(PWCallback.DEFAULT_HANDLE, HANDLE, "context_create.xml", AuthorizationException.class);
     }
 
     /**
      * Tests declining closing a context.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testDeclineCloseContext() throws Exception {
-        doTestCloseContext(
-                PWCallback.DEFAULT_HANDLE, 
-                HANDLE, 
-                "context_create.xml", 
-                AuthorizationException.class);
+        doTestCloseContext(PWCallback.DEFAULT_HANDLE, HANDLE, "context_create.xml", AuthorizationException.class);
     }
 
     /**
      * Tests declining deleting a context.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testDeclineDeleteContext() throws Exception {
-        doTestDeleteContext(
-                PWCallback.DEFAULT_HANDLE, 
-                HANDLE, 
-                "context_create.xml", 
-                AuthorizationException.class);
+        doTestDeleteContext(PWCallback.DEFAULT_HANDLE, HANDLE, "context_create.xml", AuthorizationException.class);
     }
 
     /**
      * Tests creation a grant on scoped context.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testCreateGrant() throws Exception {
@@ -257,37 +206,34 @@ public class ContextModifierAbstractTest extends GrantTestBase {
             super.setClient((GrantClient) getClient(USER_ACCOUNT_HANDLER_CODE));
         }
         try {
-            doTestCreateGrant(HANDLE, TEST_USER_ACCOUNT_ID1, 
-                    Constants.CONTEXT_BASE_URI + "/" 
-                    + contextId, ROLE_HREF_ADMINISTRATOR, null);
+            doTestCreateGrant(HANDLE, TEST_USER_ACCOUNT_ID1, Constants.CONTEXT_BASE_URI + "/" + contextId,
+                ROLE_HREF_ADMINISTRATOR, null);
             revokeAllGrants(TEST_USER_ACCOUNT_ID1);
-        } finally {
+        }
+        finally {
             if (!isUserAccountTest) {
-                super.setClient(
-                    (GrantClient) getClient(USER_GROUP_HANDLER_CODE));
+                super.setClient((GrantClient) getClient(USER_GROUP_HANDLER_CODE));
             }
         }
         if (isUserAccountTest) {
             super.setClient((GrantClient) getClient(USER_GROUP_HANDLER_CODE));
         }
         try {
-            doTestCreateGrant(HANDLE, TEST_USER_GROUP_ID, 
-                    Constants.CONTEXT_BASE_URI + "/" 
-                    + contextId, ROLE_HREF_ADMINISTRATOR, null);
+            doTestCreateGrant(HANDLE, TEST_USER_GROUP_ID, Constants.CONTEXT_BASE_URI + "/" + contextId,
+                ROLE_HREF_ADMINISTRATOR, null);
             revokeAllGrants(TEST_USER_GROUP_ID);
-        } finally {
+        }
+        finally {
             if (isUserAccountTest) {
-                super.setClient(
-                    (GrantClient) getClient(USER_ACCOUNT_HANDLER_CODE));
+                super.setClient((GrantClient) getClient(USER_ACCOUNT_HANDLER_CODE));
             }
         }
     }
 
     /**
      * Tests declining creating a grant on scoped context.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testDeclineCreateGrant() throws Exception {
@@ -295,41 +241,34 @@ public class ContextModifierAbstractTest extends GrantTestBase {
             super.setClient((GrantClient) getClient(USER_ACCOUNT_HANDLER_CODE));
         }
         try {
-            doTestCreateGrant(HANDLE, TEST_USER_ACCOUNT_ID1, 
-                    Constants.CONTEXT_BASE_URI + "/" 
-                    + contextId, 
-                    ROLE_HREF_CONTEXT_MODIFIER, 
-                    AuthorizationException.class);
+            doTestCreateGrant(HANDLE, TEST_USER_ACCOUNT_ID1, Constants.CONTEXT_BASE_URI + "/" + contextId,
+                ROLE_HREF_CONTEXT_MODIFIER, AuthorizationException.class);
             revokeAllGrants(TEST_USER_ACCOUNT_ID1);
-        } finally {
+        }
+        finally {
             if (!isUserAccountTest) {
-                super.setClient(
-                    (GrantClient) getClient(USER_GROUP_HANDLER_CODE));
+                super.setClient((GrantClient) getClient(USER_GROUP_HANDLER_CODE));
             }
         }
         if (isUserAccountTest) {
             super.setClient((GrantClient) getClient(USER_GROUP_HANDLER_CODE));
         }
         try {
-            doTestCreateGrant(HANDLE, TEST_USER_GROUP_ID, 
-                    Constants.CONTEXT_BASE_URI + "/" 
-                    + contextId, 
-                    ROLE_HREF_CONTEXT_MODIFIER, 
-                    AuthorizationException.class);
+            doTestCreateGrant(HANDLE, TEST_USER_GROUP_ID, Constants.CONTEXT_BASE_URI + "/" + contextId,
+                ROLE_HREF_CONTEXT_MODIFIER, AuthorizationException.class);
             revokeAllGrants(TEST_USER_GROUP_ID);
-        } finally {
+        }
+        finally {
             if (isUserAccountTest) {
-                super.setClient(
-                    (GrantClient) getClient(USER_ACCOUNT_HANDLER_CODE));
+                super.setClient((GrantClient) getClient(USER_ACCOUNT_HANDLER_CODE));
             }
         }
     }
 
     /**
      * Tests declining creating a grant on scoped context.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testDeclineCreateGrant1() throws Exception {
@@ -337,30 +276,26 @@ public class ContextModifierAbstractTest extends GrantTestBase {
             super.setClient((GrantClient) getClient(USER_ACCOUNT_HANDLER_CODE));
         }
         try {
-            doTestCreateGrant(HANDLE, TEST_USER_ACCOUNT_ID1, 
-                    Constants.CONTEXT_BASE_URI + "/" 
-                    + CONTEXT_ID, ROLE_HREF_ADMINISTRATOR, 
-                    AuthorizationException.class);
+            doTestCreateGrant(HANDLE, TEST_USER_ACCOUNT_ID1, Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID,
+                ROLE_HREF_ADMINISTRATOR, AuthorizationException.class);
             revokeAllGrants(TEST_USER_ACCOUNT_ID1);
-        } finally {
+        }
+        finally {
             if (!isUserAccountTest) {
-                super.setClient(
-                    (GrantClient) getClient(USER_GROUP_HANDLER_CODE));
+                super.setClient((GrantClient) getClient(USER_GROUP_HANDLER_CODE));
             }
         }
         if (isUserAccountTest) {
             super.setClient((GrantClient) getClient(USER_GROUP_HANDLER_CODE));
         }
         try {
-            doTestCreateGrant(HANDLE, TEST_USER_GROUP_ID, 
-                    Constants.CONTEXT_BASE_URI + "/" 
-                    + CONTEXT_ID, ROLE_HREF_ADMINISTRATOR, 
-                    AuthorizationException.class);
+            doTestCreateGrant(HANDLE, TEST_USER_GROUP_ID, Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID,
+                ROLE_HREF_ADMINISTRATOR, AuthorizationException.class);
             revokeAllGrants(TEST_USER_GROUP_ID);
-        } finally {
+        }
+        finally {
             if (isUserAccountTest) {
-                super.setClient(
-                    (GrantClient) getClient(USER_ACCOUNT_HANDLER_CODE));
+                super.setClient((GrantClient) getClient(USER_ACCOUNT_HANDLER_CODE));
             }
         }
     }

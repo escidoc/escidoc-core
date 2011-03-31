@@ -26,89 +26,59 @@ import java.util.Map;
 
 /**
  * Interface of an fedora deviation handler via rest.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 public interface FedoraRestDeviationHandlerInterface {
 
     /**
-     * Overwrites the Fedora Method-Call export. Variable pid contains uri to
-     * resource. Calls Method-mapper with given uri to retrieve object as xml.
-     * return xml-string as byte[].
-     * 
-     * @param pid
-     *            uri to the resource.
-     * @param parameters
-     *            REST-GET-Parameters
-     * 
+     * Overwrites the Fedora Method-Call export. Variable pid contains uri to resource. Calls Method-mapper with given
+     * uri to retrieve object as xml. return xml-string as byte[].
+     *
+     * @param pid        uri to the resource.
+     * @param parameters REST-GET-Parameters
      * @return String with the fedora-object as escidoc-xml
-     * @throws Exception
-     *             ex
-     * 
+     * @throws Exception ex
      */
-    String export(
-            final String pid, 
-            final Map<String, String[]> parameters) throws Exception;
+    String export(final String pid, final Map<String, String[]> parameters) throws Exception;
 
     /**
-     * Overwrites the Fedora Method-Call getDatastreamDissemination. Variable
-     * dsID contains uri to component-content . Calls Method-mapper with given
-     * uri to retrieve content as byte[]. Fill EscidocBinaryContent with byte[] and
+     * Overwrites the Fedora Method-Call getDatastreamDissemination. Variable dsID contains uri to component-content .
+     * Calls Method-mapper with given uri to retrieve content as byte[]. Fill EscidocBinaryContent with byte[] and
      * mime-type.
-     * 
-     * @param pid
-     *            unused.
-     * @param dsID
-     *            uri to component-content
-     * @param parameters
-     *            REST-GET-Parameters.
-     * 
+     *
+     * @param pid        unused.
+     * @param dsID       uri to component-content
+     * @param parameters REST-GET-Parameters.
      * @return EscidocBinaryContent escidocBinaryContent
-     * @throws Exception
-     *             ex
-     * 
+     * @throws Exception ex
      */
-    EscidocBinaryContent getDatastreamDissemination(
-        String pid, String dsID, 
-        final Map<String, String[]> parameters) throws Exception;
+    EscidocBinaryContent getDatastreamDissemination(String pid, String dsID, final Map<String, String[]> parameters)
+        throws Exception;
 
     /**
      * writes the given xml into the cache.
-     * 
-     * @param pid
-     *            uri to the resource.
-     * @param xml
-     *            xml-representation of the object
-     * 
-     * @throws Exception
-     *             ex
-     * 
+     *
+     * @param pid uri to the resource.
+     * @param xml xml-representation of the object
+     * @throws Exception ex
      */
     void cache(final String pid, final String xml) throws Exception;
 
     /**
      * removes the given pid from the cache.
-     * 
-     * @param pid
-     *            uri to the resource.
-     * @throws Exception
-     *             ex
-     * 
+     *
+     * @param pid uri to the resource.
+     * @throws Exception ex
      */
     void removeFromCache(final String pid) throws Exception;
 
     /**
-     * replaces the given pid in the cache
-     * with the given xml.
-     * 
-     * @param pid
-     *            uri to the resource.
-     * @param xml
-     *            xml-representation of the object.
-     * @throws Exception
-     *             ex
-     * 
+     * replaces the given pid in the cache with the given xml.
+     *
+     * @param pid uri to the resource.
+     * @param xml xml-representation of the object.
+     * @throws Exception ex
      */
     void replaceInCache(final String pid, final String xml) throws Exception;
 

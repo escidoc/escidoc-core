@@ -32,21 +32,15 @@ public class StartElementWithText extends StartElement {
 
     /**
      * Start Element.
-     * 
-     * @param localName
-     *            The local name.
-     * @param namespace
-     *            The namespace.
-     * @param prefix
-     *            The prefix
-     * @param elementText
-     *            The text of the element.
-     * @param nsContext
-     *            TODO
+     *
+     * @param localName   The local name.
+     * @param namespace   The namespace.
+     * @param prefix      The prefix
+     * @param elementText The text of the element.
+     * @param nsContext   TODO
      */
-    public StartElementWithText(final String localName, final String namespace,
-        final String prefix, final String elementText,
-        final NamespaceContext nsContext) {
+    public StartElementWithText(final String localName, final String namespace, final String prefix,
+        final String elementText, final NamespaceContext nsContext) {
 
         super(localName, namespace, prefix, nsContext);
         this.elementText = elementText;

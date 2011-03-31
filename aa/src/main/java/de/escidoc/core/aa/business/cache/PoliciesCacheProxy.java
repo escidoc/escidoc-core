@@ -39,8 +39,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * This class encapsulates access to the policies cache and ensures that the
- * cache is filled when reading from it.
+ * This class encapsulates access to the policies cache and ensures that the cache is filled when reading from it.
  *
  * @author André Schenk
  */
@@ -54,28 +53,25 @@ public class PoliciesCacheProxy {
 
     /**
      * Gets the the group grants for the provided group ID.<br>
-     * 
-     * @param groupId
-     *            The group ID to use as key for HashMap.
-     * @return The grants of the group in a <code>Map</code>, or
-     *         <code>null</code>.
+     *
+     * @param groupId The group ID to use as key for HashMap.
+     * @return The grants of the group in a <code>Map</code>, or <code>null</code>.
      */
-    public Map<String, Map<String, List<RoleGrant>>> getGroupGrants(
-        final String groupId) {
-        Map<String, Map<String, List<RoleGrant>>> result =
-            PoliciesCache.getGroupGrants(groupId);
+    public Map<String, Map<String, List<RoleGrant>>> getGroupGrants(final String groupId) {
+        Map<String, Map<String, List<RoleGrant>>> result = PoliciesCache.getGroupGrants(groupId);
 
         if (result == null) {
             try {
                 result = userGroupHandler.retrieveCurrentGrantsAsMap(groupId);
                 PoliciesCache.putGroupGrants(groupId, result);
-            } catch (final Exception e) {
+            }
+            catch (final Exception e) {
                 // The caller doesn't expect to get an exception from here if
                 // the group doesn't exist.
-                if(LOGGER.isWarnEnabled()) {
+                if (LOGGER.isWarnEnabled()) {
                     LOGGER.warn("Error on retrieving grants.");
                 }
-                if(LOGGER.isDebugEnabled()) {
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Error on retrieving grants.", e);
                 }
             }
@@ -85,9 +81,8 @@ public class PoliciesCacheProxy {
 
     /**
      * Gets the the user groups for the provided userId.<br>
-     * 
-     * @param userId
-     *            The userId to use as key for HashMap.
+     *
+     * @param userId The userId to use as key for HashMap.
      * @return The groups of the user as <code>Set</code>, or <code>null</code>.
      */
     public Set<String> getUserGroups(final String userId) {
@@ -108,16 +103,12 @@ public class PoliciesCacheProxy {
 
     /**
      * Gets the the user grants for the provided user ID.<br>
-     * 
-     * @param userId
-     *            The user ID to use as key for HashMap.
-     * @return The grants of the user in a <code>Map</code>, or
-     *         <code>null</code>.
+     *
+     * @param userId The user ID to use as key for HashMap.
+     * @return The grants of the user in a <code>Map</code>, or <code>null</code>.
      */
-    public Map<String, Map<String, List<RoleGrant>>> getUserGrants(
-        final String userId) {
-        Map<String, Map<String, List<RoleGrant>>> result =
-            PoliciesCache.getUserGrants(userId);
+    public Map<String, Map<String, List<RoleGrant>>> getUserGrants(final String userId) {
+        Map<String, Map<String, List<RoleGrant>>> result = PoliciesCache.getUserGrants(userId);
 
         if (result == null) {
             try {
@@ -134,23 +125,19 @@ public class PoliciesCacheProxy {
 
     /**
      * Injects the user account handler.
-     * 
-     * @param userAccountHandler
-     *            user account handler from Spring
+     *
+     * @param userAccountHandler user account handler from Spring
      */
-    public void setUserAccountHandler(
-        final UserAccountHandlerInterface userAccountHandler) {
+    public void setUserAccountHandler(final UserAccountHandlerInterface userAccountHandler) {
         this.userAccountHandler = userAccountHandler;
     }
 
     /**
      * Injects the user group handler.
-     * 
-     * @param userGroupHandler
-     *            user group handler from Spring
+     *
+     * @param userGroupHandler user group handler from Spring
      */
-    public void setUserGroupHandler(
-        final UserGroupHandlerInterface userGroupHandler) {
+    public void setUserGroupHandler(final UserGroupHandlerInterface userGroupHandler) {
         this.userGroupHandler = userGroupHandler;
     }
 }

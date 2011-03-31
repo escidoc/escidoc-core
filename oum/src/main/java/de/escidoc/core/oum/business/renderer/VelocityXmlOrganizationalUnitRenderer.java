@@ -56,17 +56,13 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Organizational unit renderer implementation using the velocity template
- * engine.
- * 
+ * Organizational unit renderer implementation using the velocity template engine.
+ *
  * @author Michael Schneider
- * 
  */
-public class VelocityXmlOrganizationalUnitRenderer
-    implements OrganizationalUnitRendererInterface {
+public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnitRendererInterface {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(
-        VelocityXmlOrganizationalUnitRenderer.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(VelocityXmlOrganizationalUnitRenderer.class);
 
     private static final int THREE = 3;
 
@@ -86,15 +82,13 @@ public class VelocityXmlOrganizationalUnitRenderer
      * render(de.escidoc.core.oum.business.fedora.resources.OrganizationalUnit)
      */
     @Override
-    public String render(final OrganizationalUnit organizationalUnit)
-        throws SystemException {
+    public String render(final OrganizationalUnit organizationalUnit) throws SystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         addCommonValues(organizationalUnit, values);
 
         values.put("organizationalUnitName", organizationalUnit.getName());
-        values.put("organizationalUnitHref",
-            XmlUtility.getOrganizationalUnitHref(organizationalUnit.getId()));
+        values.put("organizationalUnitHref", XmlUtility.getOrganizationalUnitHref(organizationalUnit.getId()));
         values.put("organizationalUnitId", organizationalUnit.getId());
 
         addPropertiesValues(organizationalUnit, values);
@@ -107,16 +101,11 @@ public class VelocityXmlOrganizationalUnitRenderer
 
     /**
      * See Interface for functional description.
-     * 
-     * @param organizationalUnit
-     * @return
-     * @throws WebserverSystemException
-     * @see OrganizationalUnitRendererInterface#
-     *      renderProperties(de.escidoc.core.oum.business.fedora.resources.OrganizationalUnit)
+     *
+     * @see OrganizationalUnitRendererInterface# renderProperties(de.escidoc.core.oum.business.fedora.resources.OrganizationalUnit)
      */
     @Override
-    public String renderProperties(final OrganizationalUnit organizationalUnit)
-        throws WebserverSystemException {
+    public String renderProperties(final OrganizationalUnit organizationalUnit) throws WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         addCommonValues(organizationalUnit, values);
@@ -127,16 +116,11 @@ public class VelocityXmlOrganizationalUnitRenderer
 
     /**
      * See Interface for functional description.
-     * 
-     * @param organizationalUnit
-     * @return
-     * @throws WebserverSystemException
-     * @see OrganizationalUnitRendererInterface#
-     *      renderResources(de.escidoc.core.oum.business.fedora.resources.OrganizationalUnit)
+     *
+     * @see OrganizationalUnitRendererInterface# renderResources(de.escidoc.core.oum.business.fedora.resources.OrganizationalUnit)
      */
     @Override
-    public String renderResources(final OrganizationalUnit organizationalUnit)
-        throws WebserverSystemException {
+    public String renderResources(final OrganizationalUnit organizationalUnit) throws WebserverSystemException {
         final Map<String, Object> values = new HashMap<String, Object>();
         addCommonValues(organizationalUnit, values);
         values.put("isRootResources", XmlTemplateProvider.TRUE);
@@ -146,38 +130,27 @@ public class VelocityXmlOrganizationalUnitRenderer
 
     /**
      * See Interface for functional description.
-     * 
-     * @param organizationalUnit
-     * @return
-     * @throws WebserverSystemException
      */
     @Override
-    public String renderMdRecords(final OrganizationalUnit organizationalUnit)
-        throws WebserverSystemException {
+    public String renderMdRecords(final OrganizationalUnit organizationalUnit) throws WebserverSystemException {
         final Map<String, Object> values = new HashMap<String, Object>();
         addCommonValues(organizationalUnit, values);
-        values.put(XmlTemplateProvider.IS_ROOT_SUB_RESOURCE,
-            XmlTemplateProvider.TRUE);
+        values.put(XmlTemplateProvider.IS_ROOT_SUB_RESOURCE, XmlTemplateProvider.TRUE);
         addMdRecordsValues(organizationalUnit, values);
         return OrganizationalUnitXmlProvider.getInstance().getMdRecordsXml(values);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param organizationalUnit
-     *            The OrganizationalUnit.
-     * @param name
-     *            The Name of the to render MdRecord
+     *
+     * @param organizationalUnit The OrganizationalUnit.
+     * @param name               The Name of the to render MdRecord
      * @return XML representation of MdRecord.
-     * @throws WebserverSystemException
-     * @see OrganizationalUnitRendererInterface#
-     *      renderMdRecord(de.escidoc.core.oum.business.fedora.resources.OrganizationalUnit,
+     * @see OrganizationalUnitRendererInterface# renderMdRecord(de.escidoc.core.oum.business.fedora.resources.OrganizationalUnit,
      *      java.lang.String)
      */
     @Override
-    public String renderMdRecord(
-        final OrganizationalUnit organizationalUnit, final String name)
+    public String renderMdRecord(final OrganizationalUnit organizationalUnit, final String name)
         throws WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
@@ -187,23 +160,17 @@ public class VelocityXmlOrganizationalUnitRenderer
         }
         addCommonValues(organizationalUnit, values);
 
-        values.put(XmlTemplateProvider.IS_ROOT_MD_RECORD,
-            XmlTemplateProvider.TRUE);
+        values.put(XmlTemplateProvider.IS_ROOT_MD_RECORD, XmlTemplateProvider.TRUE);
         return MetadataRecordsXmlProvider.getInstance().getMdRecordXml(values);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param organizationalUnit
-     * @return
-     * @throws SystemException
-     * @see OrganizationalUnitRendererInterface#
-     *      renderParents(de.escidoc.core.oum.business.fedora.resources.OrganizationalUnit)
+     *
+     * @see OrganizationalUnitRendererInterface# renderParents(de.escidoc.core.oum.business.fedora.resources.OrganizationalUnit)
      */
     @Override
-    public String renderParents(final OrganizationalUnit organizationalUnit)
-        throws SystemException {
+    public String renderParents(final OrganizationalUnit organizationalUnit) throws SystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         addCommonValues(organizationalUnit, values);
@@ -214,47 +181,32 @@ public class VelocityXmlOrganizationalUnitRenderer
 
     /**
      * See Interface for functional description.
-     * 
-     * @param organizationalUnit
-     * @param children
-     * @return
-     * @throws SystemException
-     * @see OrganizationalUnitRendererInterface#
-     *      renderChildObjects(de.escidoc.core.oum.business.fedora.resources.OrganizationalUnit,
+     *
+     * @see OrganizationalUnitRendererInterface# renderChildObjects(de.escidoc.core.oum.business.fedora.resources.OrganizationalUnit,
      *      java.util.List)
      */
     @Override
-    public String renderChildObjects(
-        final OrganizationalUnit organizationalUnit, final List<String> children)
+    public String renderChildObjects(final OrganizationalUnit organizationalUnit, final List<String> children)
         throws SystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         addXlinkValues(values);
         addListNamespaceValues(values);
         values.put(XmlTemplateProvider.IS_ROOT_LIST, XmlTemplateProvider.TRUE);
-        values.put("listTitle", "Children of organizational unit '"
-            + organizationalUnit.getTitle() + '\'');
-        values.put("listHref", XmlUtility
-            .getOrganizationalUnitResourcesChildObjectsHref(organizationalUnit
-                .getId()));
+        values.put("listTitle", "Children of organizational unit '" + organizationalUnit.getTitle() + '\'');
+        values.put("listHref", XmlUtility.getOrganizationalUnitResourcesChildObjectsHref(organizationalUnit.getId()));
         values.put("entries", children);
         return OrganizationalUnitXmlProvider.getInstance().getChildObjectsXml(values);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param organizationalUnit
-     * @param parents
-     * @return
-     * @throws SystemException
-     * @see OrganizationalUnitRendererInterface#
-     *      renderParents(de.escidoc.core.oum.business.fedora.resources.OrganizationalUnit,
+     *
+     * @see OrganizationalUnitRendererInterface# renderParents(de.escidoc.core.oum.business.fedora.resources.OrganizationalUnit,
      *      java.util.List)
      */
     @Override
-    public String renderParentObjects(
-        final OrganizationalUnit organizationalUnit, final List<String> parents)
+    public String renderParentObjects(final OrganizationalUnit organizationalUnit, final List<String> parents)
         throws SystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
@@ -262,43 +214,30 @@ public class VelocityXmlOrganizationalUnitRenderer
         addListNamespaceValues(values);
 
         values.put(XmlTemplateProvider.IS_ROOT_LIST, XmlTemplateProvider.TRUE);
-        values.put("listTitle", "Parents of organizational unit '"
-            + organizationalUnit.getTitle() + '\'');
-        values.put("listHref", XmlUtility
-            .getOrganizationalUnitResourcesParentObjectsHref(organizationalUnit
-                .getId()));
+        values.put("listTitle", "Parents of organizational unit '" + organizationalUnit.getTitle() + '\'');
+        values.put("listHref", XmlUtility.getOrganizationalUnitResourcesParentObjectsHref(organizationalUnit.getId()));
         values.put("entries", parents);
         return OrganizationalUnitXmlProvider.getInstance().getParentObjectsXml(values);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param organizationalUnit
-     * @param pathes
-     * @return
-     * @throws SystemException
-     * @see OrganizationalUnitRendererInterface#
-     *      renderPathList(de.escidoc.core.oum.business.fedora.resources.OrganizationalUnit,
+     *
+     * @see OrganizationalUnitRendererInterface# renderPathList(de.escidoc.core.oum.business.fedora.resources.OrganizationalUnit,
      *      java.util.List)
      */
     @Override
-    public String renderPathList(
-        final OrganizationalUnit organizationalUnit,
-        final List<List<String>> pathes) throws SystemException {
+    public String renderPathList(final OrganizationalUnit organizationalUnit, final List<List<String>> pathes)
+        throws SystemException {
         final Map<String, Object> values = new HashMap<String, Object>();
         addXlinkValues(values);
         addPathListNamespaceValues(values);
 
         values.put(XmlTemplateProvider.IS_ROOT_LIST, XmlTemplateProvider.TRUE);
-        values.put("listTitle", "Path list of organizational unit '"
-            + organizationalUnit.getTitle() + '\'');
-        values.put("listHref", XmlUtility
-            .getOrganizationalUnitResourcesPathListHref(organizationalUnit
-                .getId()));
+        values.put("listTitle", "Path list of organizational unit '" + organizationalUnit.getTitle() + '\'');
+        values.put("listHref", XmlUtility.getOrganizationalUnitResourcesPathListHref(organizationalUnit.getId()));
         final Iterator<List<String>> pathIter = pathes.iterator();
-        final Collection<List<Map<String, String>>> pathList =
-            new ArrayList<List<Map<String, String>>>();
+        final Collection<List<Map<String, String>>> pathList = new ArrayList<List<Map<String, String>>>();
         while (pathIter.hasNext()) {
             pathList.add(retrieveRefValues(pathIter.next()));
         }
@@ -315,8 +254,7 @@ public class VelocityXmlOrganizationalUnitRenderer
      * .business.fedora.resources.OrganizationalUnit)
      */
     @Override
-    public String renderSuccessors(final OrganizationalUnit organizationalUnit)
-        throws SystemException {
+    public String renderSuccessors(final OrganizationalUnit organizationalUnit) throws SystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
 
@@ -325,8 +263,7 @@ public class VelocityXmlOrganizationalUnitRenderer
         addCommonValues(organizationalUnit, values);
 
         values.put("organizationalUnitName", organizationalUnit.getName());
-        values.put("organizationalUnitHref",
-            XmlUtility.getOrganizationalUnitHref(organizationalUnit.getId()));
+        values.put("organizationalUnitHref", XmlUtility.getOrganizationalUnitHref(organizationalUnit.getId()));
         values.put("organizationalUnitId", organizationalUnit.getId());
 
         addPropertiesValues(organizationalUnit, values);
@@ -335,20 +272,15 @@ public class VelocityXmlOrganizationalUnitRenderer
     }
 
     /**
-     * Returns a <code>List</code> of <code>Maps</code> containing values for
-     * the keys <code>id</code>, <code>href</code>, and <code>title</code> for
-     * every id contained in <code>ids</code>.
-     * 
-     * @param ids
-     *            The list of ids.
+     * Returns a <code>List</code> of <code>Maps</code> containing values for the keys <code>id</code>,
+     * <code>href</code>, and <code>title</code> for every id contained in <code>ids</code>.
+     *
+     * @param ids The list of ids.
      * @return The expected <code>List</code> of <code>Maps</code>.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     * @throws SystemException Thrown in case of an internal error.
      */
-    private static List<Map<String, String>> retrieveRefValues(final Collection<String> ids)
-        throws SystemException {
-        final List<Map<String, String>> entries =
-            new ArrayList<Map<String, String>>(ids.size());
+    private static List<Map<String, String>> retrieveRefValues(final Collection<String> ids) throws SystemException {
+        final List<Map<String, String>> entries = new ArrayList<Map<String, String>>(ids.size());
         for (final String id : ids) {
             final Map<String, String> entry = new HashMap<String, String>(THREE);
             entry.put("id", id);
@@ -361,30 +293,23 @@ public class VelocityXmlOrganizationalUnitRenderer
 
     /**
      * Adds the common values to the provided map.
-     * 
-     * @param organizationalUnit
-     *            The organizational unit for that data shall be created.
-     * @param values
-     *            The map to add values to.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
+     *
+     * @param organizationalUnit The organizational unit for that data shall be created.
+     * @param values             The map to add values to.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private void addCommonValues(
-        final OrganizationalUnit organizationalUnit,
-        final Map<String, Object> values) throws WebserverSystemException {
+    private void addCommonValues(final OrganizationalUnit organizationalUnit, final Map<String, Object> values)
+        throws WebserverSystemException {
 
         String lmd = null;
         try {
             lmd = organizationalUnit.getLastModificationDate();
             final DateTime t = new DateTime(lmd, DateTimeZone.UTC);
-            values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE,
-                t.toString());
+            values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, t.toString());
         }
         catch (final Exception e) {
-            throw new WebserverSystemException(
-                "Unable to parse last-modification-date '" + lmd
-                    + "' of organizational-unit '" + organizationalUnit.getId()
-                    + "'!", e);
+            throw new WebserverSystemException("Unable to parse last-modification-date '" + lmd
+                + "' of organizational-unit '" + organizationalUnit.getId() + "'!", e);
         }
         addXlinkValues(values);
         addNamespaceValues(values);
@@ -392,163 +317,119 @@ public class VelocityXmlOrganizationalUnitRenderer
 
     /**
      * Adds the xlink values to the provided map.
-     * 
-     * @param values
-     *            The map to add values to.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
+     *
+     * @param values The map to add values to.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private static void addXlinkValues(final Map<String, Object> values)
-        throws WebserverSystemException {
+    private static void addXlinkValues(final Map<String, Object> values) throws WebserverSystemException {
 
-        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL,
-            XmlUtility.getEscidocBaseUrl());
-        values.put(XmlTemplateProvider.VAR_XLINK_NAMESPACE_PREFIX,
-            Constants.XLINK_NS_PREFIX);
-        values.put(XmlTemplateProvider.VAR_XLINK_NAMESPACE,
-            Constants.XLINK_NS_URI);
+        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, XmlUtility.getEscidocBaseUrl());
+        values.put(XmlTemplateProvider.VAR_XLINK_NAMESPACE_PREFIX, Constants.XLINK_NS_PREFIX);
+        values.put(XmlTemplateProvider.VAR_XLINK_NAMESPACE, Constants.XLINK_NS_URI);
     }
 
     /**
      * Adds the namespace values to the provided map.
-     * 
-     * @param values
-     *            The map to add values to.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
+     *
+     * @param values The map to add values to.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private static void addNamespaceValues(final Map<String, Object> values)
-        throws WebserverSystemException {
+    private static void addNamespaceValues(final Map<String, Object> values) throws WebserverSystemException {
 
-        values.put("organizationalUnitNamespacePrefix",
-            Constants.ORGANIZATIONAL_UNIT_PREFIX);
-        values.put("organizationalUnitNamespace",
-            Constants.ORGANIZATIONAL_UNIT_NAMESPACE_URI);
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX,
-            Constants.PROPERTIES_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS,
-            Constants.PROPERTIES_NS_URI);
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX,
-            Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS,
-            Constants.STRUCTURAL_RELATIONS_NS_URI);
+        values.put("organizationalUnitNamespacePrefix", Constants.ORGANIZATIONAL_UNIT_PREFIX);
+        values.put("organizationalUnitNamespace", Constants.ORGANIZATIONAL_UNIT_NAMESPACE_URI);
+        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX, Constants.PROPERTIES_NS_PREFIX);
+        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS, Constants.PROPERTIES_NS_URI);
+        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
+        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
     }
 
     /**
      * Adds the list namespace values to the provided map.
-     * 
-     * @param values
-     *            The map to add values to.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
+     *
+     * @param values The map to add values to.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private static void addListNamespaceValues(final Map<String, Object> values)
-        throws WebserverSystemException {
+    private static void addListNamespaceValues(final Map<String, Object> values) throws WebserverSystemException {
 
-        values.put("organizationalUnitsNamespacePrefix",
-            Constants.ORGANIZATIONAL_UNIT_LIST_PREFIX);
-        values.put("organizationalUnitsNamespace",
-            Constants.ORGANIZATIONAL_UNIT_LIST_NAMESPACE_URI);
+        values.put("organizationalUnitsNamespacePrefix", Constants.ORGANIZATIONAL_UNIT_LIST_PREFIX);
+        values.put("organizationalUnitsNamespace", Constants.ORGANIZATIONAL_UNIT_LIST_NAMESPACE_URI);
     }
 
     /**
      * Adds the path list namespace values to the provided map.
-     * 
-     * @param values
-     *            The map to add values to.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
+     *
+     * @param values The map to add values to.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private static void addPathListNamespaceValues(final Map<String, Object> values)
-        throws WebserverSystemException {
+    private static void addPathListNamespaceValues(final Map<String, Object> values) throws WebserverSystemException {
 
-        values.put("organizationalUnitPathListNamespacePrefix",
-            Constants.ORGANIZATIONAL_UNIT_PATH_LIST_PREFIX);
-        values.put("organizationalUnitPathListNamespace",
-            Constants.ORGANIZATIONAL_UNIT_PATH_LIST_NAMESPACE_URI);
+        values.put("organizationalUnitPathListNamespacePrefix", Constants.ORGANIZATIONAL_UNIT_PATH_LIST_PREFIX);
+        values.put("organizationalUnitPathListNamespace", Constants.ORGANIZATIONAL_UNIT_PATH_LIST_NAMESPACE_URI);
 
-        values.put("organizationalUnitRefNamespacePrefix",
-            Constants.ORGANIZATIONAL_UNIT_REF_PREFIX);
-        values.put("organizationalUnitRefNamespace",
-            Constants.ORGANIZATIONAL_UNIT_REF_NAMESPACE_URI);
+        values.put("organizationalUnitRefNamespacePrefix", Constants.ORGANIZATIONAL_UNIT_REF_PREFIX);
+        values.put("organizationalUnitRefNamespace", Constants.ORGANIZATIONAL_UNIT_REF_NAMESPACE_URI);
 
     }
 
     /**
      * Adds namespace values for successor list to the provided map.
-     * 
-     * @param values
-     *            The map to add values to.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
+     *
+     * @param values The map to add values to.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private static void addSuccessorsNamespaceValues(final Map<String, Object> values)
-        throws WebserverSystemException {
+    private static void addSuccessorsNamespaceValues(final Map<String, Object> values) throws WebserverSystemException {
 
-        values.put("organizationalUnitNamespacePrefix",
-            Constants.ORGANIZATIONAL_UNIT_SUCCESSORS_PREFIX);
-        values.put("organizationalUnitNamespace",
-            Constants.ORGANIZATIONAL_UNIT_SUCCESSORS_LIST_NAMESPACE_URI);
+        values.put("organizationalUnitNamespacePrefix", Constants.ORGANIZATIONAL_UNIT_SUCCESSORS_PREFIX);
+        values.put("organizationalUnitNamespace", Constants.ORGANIZATIONAL_UNIT_SUCCESSORS_LIST_NAMESPACE_URI);
 
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX,
-            Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS,
-            Constants.STRUCTURAL_RELATIONS_NS_URI);
+        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
+        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
     }
 
     /**
      * Adds the properties values to the provided map.
-     * 
-     * @param organizationalUnit
-     *            The organizational unit for that data shall be created.
-     * @param values
-     *            The map to add values to.
+     *
+     * @param organizationalUnit The organizational unit for that data shall be created.
+     * @param values             The map to add values to.
      */
-    private static void addPropertiesValues(final OrganizationalUnit organizationalUnit,
-                                            final Map<String, Object> values) {
+    private static void addPropertiesValues(
+        final OrganizationalUnit organizationalUnit, final Map<String, Object> values) {
 
         try {
             values.put(XmlTemplateProvider.VAR_PROPERTIES_TITLE, "Properties");
-            values.put(XmlTemplateProvider.VAR_PROPERTIES_HREF,
-                XmlUtility
-                    .getOrganizationalUnitPropertiesHref(organizationalUnit
-                        .getId()));
-            values.put("organizationalUnitStatus",
-                organizationalUnit.getPublicStatus());
-            values.put("organizationalUnitCreationDate",
-                organizationalUnit.getCreationDate());
-            values.put("organizationalUnitCreatedByTitle",
-                organizationalUnit.getCreatedByTitle());
-            values.put("organizationalUnitCreatedByHref", XmlUtility
-                .getUserAccountHref(organizationalUnit.getCreatedBy()));
-            values.put("organizationalUnitCreatedById",
-                organizationalUnit.getCreatedBy());
+            values.put(XmlTemplateProvider.VAR_PROPERTIES_HREF, XmlUtility
+                .getOrganizationalUnitPropertiesHref(organizationalUnit.getId()));
+            values.put("organizationalUnitStatus", organizationalUnit.getPublicStatus());
+            values.put("organizationalUnitCreationDate", organizationalUnit.getCreationDate());
+            values.put("organizationalUnitCreatedByTitle", organizationalUnit.getCreatedByTitle());
+            values.put("organizationalUnitCreatedByHref", XmlUtility.getUserAccountHref(organizationalUnit
+                .getCreatedBy()));
+            values.put("organizationalUnitCreatedById", organizationalUnit.getCreatedBy());
 
             if (organizationalUnit.getModifiedBy() != null) {
-                values.put("organizationalUnitModifiedById",
-                    organizationalUnit.getModifiedBy());
-                values.put("organizationalUnitModifiedByTitle",
-                    organizationalUnit.getModifiedByTitle());
-                values.put("organizationalUnitModifiedByHref", XmlUtility
-                    .getUserAccountHref(organizationalUnit.getModifiedBy()));
+                values.put("organizationalUnitModifiedById", organizationalUnit.getModifiedBy());
+                values.put("organizationalUnitModifiedByTitle", organizationalUnit.getModifiedByTitle());
+                values.put("organizationalUnitModifiedByHref", XmlUtility.getUserAccountHref(organizationalUnit
+                    .getModifiedBy()));
             }
 
-            values.put(XmlTemplateProvider.VAR_NAME,
-                organizationalUnit.getName());
-            values.put(XmlTemplateProvider.VAR_DESCRIPTION,
-                organizationalUnit.getDescription());
+            values.put(XmlTemplateProvider.VAR_NAME, organizationalUnit.getName());
+            values.put(XmlTemplateProvider.VAR_DESCRIPTION, organizationalUnit.getDescription());
 
-        } catch (final TripleStoreSystemException e) {
+        }
+        catch (final TripleStoreSystemException e) {
             // actually shouldn't this happen
-            if(LOGGER.isWarnEnabled()) {
+            if (LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on syncing with TripleStore.");
             }
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on syncing with TripleStore.", e);
             }
-        } catch (final WebserverSystemException e) {
+        }
+        catch (final WebserverSystemException e) {
             // actually shouldn't this happen
-            if(LOGGER.isWarnEnabled()) {
+            if (LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on syncing with TripleStore.");
             }
             if (LOGGER.isDebugEnabled()) {
@@ -557,35 +438,26 @@ public class VelocityXmlOrganizationalUnitRenderer
         }
 
         if (organizationalUnit.hasChildren()) {
-            values.put("organizationalUnitHasChildren",
-                XmlTemplateProvider.TRUE);
+            values.put("organizationalUnitHasChildren", XmlTemplateProvider.TRUE);
         }
         else {
-            values.put("organizationalUnitHasChildren",
-                XmlTemplateProvider.FALSE);
+            values.put("organizationalUnitHasChildren", XmlTemplateProvider.FALSE);
         }
     }
 
     /**
      * Add values of MdRecords to the value map.
-     * 
-     * @param organizationalUnit
-     *            The OrganizationalUnit.
-     * @param values
-     *            The value map which is to extend.
-     * @throws WebserverSystemException
-     *             Thrown if mapping of MdRecord failed.
+     *
+     * @param organizationalUnit The OrganizationalUnit.
+     * @param values             The value map which is to extend.
+     * @throws WebserverSystemException Thrown if mapping of MdRecord failed.
      */
-    private void addMdRecordsValues(
-        final OrganizationalUnit organizationalUnit,
-        final Map<String, Object> values) throws WebserverSystemException {
+    private void addMdRecordsValues(final OrganizationalUnit organizationalUnit, final Map<String, Object> values)
+        throws WebserverSystemException {
 
-        values.put(XmlTemplateProvider.MD_RECRORDS_NAMESPACE_PREFIX,
-            Constants.METADATARECORDS_NAMESPACE_PREFIX);
-        values.put(XmlTemplateProvider.MD_RECORDS_NAMESPACE,
-            Constants.METADATARECORDS_NAMESPACE_URI);
-        values.put("mdRecordsHref", XmlUtility
-            .getOrganizationalUnitMdRecordsHref(organizationalUnit.getId()));
+        values.put(XmlTemplateProvider.MD_RECRORDS_NAMESPACE_PREFIX, Constants.METADATARECORDS_NAMESPACE_PREFIX);
+        values.put(XmlTemplateProvider.MD_RECORDS_NAMESPACE, Constants.METADATARECORDS_NAMESPACE_URI);
+        values.put("mdRecordsHref", XmlUtility.getOrganizationalUnitMdRecordsHref(organizationalUnit.getId()));
 
         values.put("mdRecordsTitle", "Metadata");
 
@@ -600,77 +472,56 @@ public class VelocityXmlOrganizationalUnitRenderer
                     mdRecord = organizationalUnit.getMdRecord(mdRecordName);
                 }
                 catch (final Exception e) {
-                    throw new WebserverSystemException(
-                        "Rendering of md-record failed. ", e);
+                    throw new WebserverSystemException("Rendering of md-record failed. ", e);
                 }
                 if (!mdRecord.isDeleted()) {
-                    final Map<String, Object> mdRecordValues =
-                        new HashMap<String, Object>();
+                    final Map<String, Object> mdRecordValues = new HashMap<String, Object>();
                     addCommonValues(organizationalUnit, mdRecordValues);
-                    addMdRecordValues(organizationalUnit, mdRecordName,
-                        mdRecordValues);
-                    mdRecordValues.put(
-                        XmlTemplateProvider.IS_ROOT_SUB_RESOURCE,
-                        XmlTemplateProvider.FALSE);
-                    mdRecordsContent.append(MetadataRecordsXmlProvider
-                                .getInstance().getMdRecordXml(mdRecordValues));
+                    addMdRecordValues(organizationalUnit, mdRecordName, mdRecordValues);
+                    mdRecordValues.put(XmlTemplateProvider.IS_ROOT_SUB_RESOURCE, XmlTemplateProvider.FALSE);
+                    mdRecordsContent.append(MetadataRecordsXmlProvider.getInstance().getMdRecordXml(mdRecordValues));
                 }
             }
             values.put(XmlTemplateProvider.VAR_MD_RECORDS_CONTENT, mdRecordsContent.toString());
         }
         catch (final SystemException e) {
-            throw new WebserverSystemException(
-                "Rendering of md-records failed. ", e);
+            throw new WebserverSystemException("Rendering of md-records failed. ", e);
         }
 
     }
 
     /**
      * Add values of MdRecord to value Map.
-     * 
-     * @param organizationalUnit
-     *            The Orgnaizational Unit.
-     * @param name
-     *            Name of MdRecord for which the map is to compile.
-     * @param values
-     *            Map of values which is to extend.
-     * @throws WebserverSystemException
-     *             Thrown if conversion of characters to default encoding
-     *             failed.
+     *
+     * @param organizationalUnit The Orgnaizational Unit.
+     * @param name               Name of MdRecord for which the map is to compile.
+     * @param values             Map of values which is to extend.
+     * @throws WebserverSystemException Thrown if conversion of characters to default encoding failed.
      */
     private void addMdRecordValues(
-        final OrganizationalUnit organizationalUnit, final String name,
-        final Map<String, Object> values) throws WebserverSystemException {
+        final OrganizationalUnit organizationalUnit, final String name, final Map<String, Object> values)
+        throws WebserverSystemException {
 
         final Datastream mdRecord;
         try {
             mdRecord = organizationalUnit.getMdRecord(name);
         }
         catch (final Exception e) {
-            throw new WebserverSystemException(
-                "Rendering of md-record failed. ", e);
+            throw new WebserverSystemException("Rendering of md-record failed. ", e);
         }
         addCommonValues(organizationalUnit, values);
-        values.put(
-            XmlTemplateProvider.VAR_MD_RECORD_HREF,
-            XmlUtility.getOrganizationalUnitMdRecordHref(
-                organizationalUnit.getId(), mdRecord.getName()));
+        values.put(XmlTemplateProvider.VAR_MD_RECORD_HREF, XmlUtility.getOrganizationalUnitMdRecordHref(
+            organizationalUnit.getId(), mdRecord.getName()));
         values.put(XmlTemplateProvider.MD_RECORD_NAME, mdRecord.getName());
-        values.put(XmlTemplateProvider.VAR_MD_RECORD_TITLE, mdRecord.getName()
-            + " metadata set.");
-        values.put(XmlTemplateProvider.MD_RECRORDS_NAMESPACE_PREFIX,
-            Constants.METADATARECORDS_NAMESPACE_PREFIX);
-        values.put(XmlTemplateProvider.MD_RECORDS_NAMESPACE,
-            Constants.METADATARECORDS_NAMESPACE_URI);
-        values.put(XmlTemplateProvider.IS_ROOT_MD_RECORD,
-            XmlTemplateProvider.FALSE);
+        values.put(XmlTemplateProvider.VAR_MD_RECORD_TITLE, mdRecord.getName() + " metadata set.");
+        values.put(XmlTemplateProvider.MD_RECRORDS_NAMESPACE_PREFIX, Constants.METADATARECORDS_NAMESPACE_PREFIX);
+        values.put(XmlTemplateProvider.MD_RECORDS_NAMESPACE, Constants.METADATARECORDS_NAMESPACE_URI);
+        values.put(XmlTemplateProvider.IS_ROOT_MD_RECORD, XmlTemplateProvider.FALSE);
         try {
-            values.put(XmlTemplateProvider.MD_RECORD_CONTENT,
-                mdRecord.toStringUTF8());
+            values.put(XmlTemplateProvider.MD_RECORD_CONTENT, mdRecord.toStringUTF8());
         }
         catch (final EncodingSystemException e) {
-            throw new WebserverSystemException(
-                "Rendering of md-record failed. ", e);
+            throw new WebserverSystemException("Rendering of md-record failed. ", e);
         }
         final List<String> altIds = mdRecord.getAlternateIDs();
         if (!"unknown".equals(altIds.get(1))) {
@@ -684,50 +535,37 @@ public class VelocityXmlOrganizationalUnitRenderer
 
     /**
      * Adds the resource values to the provided map.
-     * 
-     * @param organizationalUnit
-     *            The organizational unit for that data shall be created.
-     * @param values
-     *            The map to add values to.
+     *
+     * @param organizationalUnit The organizational unit for that data shall be created.
+     * @param values             The map to add values to.
      */
     private static void addResourcesValues(final FedoraResource organizationalUnit, final Map<String, Object> values) {
         values.put(XmlTemplateProvider.RESOURCES_TITLE, "Resources");
-        values.put("resourcesHref", XmlUtility
-            .getOrganizationalUnitResourcesHref(organizationalUnit.getId()));
-        values.put("parentObjectsHref", XmlUtility
-            .getOrganizationalUnitResourcesParentObjectsHref(organizationalUnit
-                .getId()));
-        values.put("childObjectsHref", XmlUtility
-            .getOrganizationalUnitResourcesChildObjectsHref(organizationalUnit
-                .getId()));
-        values.put("pathListHref", XmlUtility
-            .getOrganizationalUnitResourcesPathListHref(organizationalUnit
-                .getId()));
+        values.put("resourcesHref", XmlUtility.getOrganizationalUnitResourcesHref(organizationalUnit.getId()));
+        values.put("parentObjectsHref", XmlUtility.getOrganizationalUnitResourcesParentObjectsHref(organizationalUnit
+            .getId()));
+        values.put("childObjectsHref", XmlUtility.getOrganizationalUnitResourcesChildObjectsHref(organizationalUnit
+            .getId()));
+        values.put("pathListHref", XmlUtility.getOrganizationalUnitResourcesPathListHref(organizationalUnit.getId()));
         values.put(XmlTemplateProvider.SUCCESSORS_HREF, XmlUtility
-            .getOrganizationalUnitResourcesSuccessorsHref(organizationalUnit
-                .getId()));
+            .getOrganizationalUnitResourcesSuccessorsHref(organizationalUnit.getId()));
 
     }
 
     /**
      * Adds the parents values to the provided map.
-     * 
-     * @param organizationalUnit
-     *            The organizational unit for that data shall be created.
-     * @param values
-     *            The map to add values to.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     *
+     * @param organizationalUnit The organizational unit for that data shall be created.
+     * @param values             The map to add values to.
+     * @throws SystemException Thrown in case of an internal error.
      */
     private static void addParentsValues(final OrganizationalUnit organizationalUnit, final Map<String, Object> values)
-            throws SystemException {
-        values.put("parentsHref", XmlUtility
-            .getOrganizationalUnitParentsHref(organizationalUnit.getId()));
+        throws SystemException {
+        values.put("parentsHref", XmlUtility.getOrganizationalUnitParentsHref(organizationalUnit.getId()));
         values.put("parentsTitle", "Parents");
         final List<String> ids = organizationalUnit.getParents();
         final Iterator<String> idIter = ids.iterator();
-        final Collection<Map<String, String>> entries =
-            new ArrayList<Map<String, String>>(ids.size());
+        final Collection<Map<String, String>> entries = new ArrayList<Map<String, String>>(ids.size());
         while (idIter.hasNext()) {
             final Map<String, String> entry = new HashMap<String, String>(THREE);
             final String id = idIter.next();
@@ -744,16 +582,13 @@ public class VelocityXmlOrganizationalUnitRenderer
 
     /**
      * Adds predecessor values to the provided map.
-     * 
-     * @param organizationalUnit
-     *            The organizational unit for that data shall be created.
-     * @param values
-     *            The map to add values to.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     *
+     * @param organizationalUnit The organizational unit for that data shall be created.
+     * @param values             The map to add values to.
+     * @throws SystemException Thrown in case of an internal error.
      */
-    private static void addPredecessorsValues(final OrganizationalUnit organizationalUnit,
-                                              final Map<String, Object> values) throws SystemException {
+    private static void addPredecessorsValues(
+        final OrganizationalUnit organizationalUnit, final Map<String, Object> values) throws SystemException {
 
         values.put(XmlTemplateProvider.PREDECESSORS_HREF, XmlUtility
             .getOrganizationalUnitPredecessorsHref(organizationalUnit.getId()));
@@ -762,21 +597,16 @@ public class VelocityXmlOrganizationalUnitRenderer
         final List<Predecessor> predecessors = organizationalUnit.getPredecessors();
         final Iterator<Predecessor> idIter = predecessors.iterator();
 
-        final Collection<Map<String, String>> entries =
-            new ArrayList<Map<String, String>>(predecessors.size());
+        final Collection<Map<String, String>> entries = new ArrayList<Map<String, String>>(predecessors.size());
 
         while (idIter.hasNext()) {
-            final Map<String, String> entry =
-                new HashMap<String, String>(PREDECESSOR_SET_SIZE);
+            final Map<String, String> entry = new HashMap<String, String>(PREDECESSOR_SET_SIZE);
 
             final Predecessor pred = idIter.next();
             entry.put(XmlTemplateProvider.OBJID, pred.getObjid());
-            entry.put(XmlTemplateProvider.HREF,
-                XmlUtility.getOrganizationalUnitHref(pred.getObjid()));
-            entry.put(XmlTemplateProvider.TITLE, TripleStoreUtility
-                .getInstance().getTitle(pred.getObjid()));
-            entry.put(XmlTemplateProvider.PREDECESSOR_FORM, pred
-                .getForm().getLabel());
+            entry.put(XmlTemplateProvider.HREF, XmlUtility.getOrganizationalUnitHref(pred.getObjid()));
+            entry.put(XmlTemplateProvider.TITLE, TripleStoreUtility.getInstance().getTitle(pred.getObjid()));
+            entry.put(XmlTemplateProvider.PREDECESSOR_FORM, pred.getForm().getLabel());
 
             entries.add(entry);
         }
@@ -787,16 +617,13 @@ public class VelocityXmlOrganizationalUnitRenderer
 
     /**
      * Adds successor values to the provided map.
-     * 
-     * @param organizationalUnit
-     *            The organizational unit for that data shall be created.
-     * @param values
-     *            The map to add values to.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     *
+     * @param organizationalUnit The organizational unit for that data shall be created.
+     * @param values             The map to add values to.
+     * @throws SystemException Thrown in case of an internal error.
      */
-    private static void addSuccessorsValues(final OrganizationalUnit organizationalUnit,
-                                            final Map<String, Object> values) throws SystemException {
+    private static void addSuccessorsValues(
+        final OrganizationalUnit organizationalUnit, final Map<String, Object> values) throws SystemException {
 
         values.put(XmlTemplateProvider.SUCCESSORS_HREF, XmlUtility
             .getOrganizationalUnitSuccessorsHref(organizationalUnit.getId()));
@@ -808,21 +635,16 @@ public class VelocityXmlOrganizationalUnitRenderer
         }
         final Iterator<Predecessor> idIter = successors.iterator();
 
-        final Collection<Map<String, String>> entries =
-            new ArrayList<Map<String, String>>(successors.size());
+        final Collection<Map<String, String>> entries = new ArrayList<Map<String, String>>(successors.size());
 
         while (idIter.hasNext()) {
-            final Map<String, String> entry =
-                new HashMap<String, String>(PREDECESSOR_SET_SIZE);
+            final Map<String, String> entry = new HashMap<String, String>(PREDECESSOR_SET_SIZE);
 
             final Predecessor pred = idIter.next();
             entry.put(XmlTemplateProvider.OBJID, pred.getObjid());
-            entry.put(XmlTemplateProvider.HREF,
-                XmlUtility.getOrganizationalUnitHref(pred.getObjid()));
-            entry.put(XmlTemplateProvider.TITLE, TripleStoreUtility
-                .getInstance().getTitle(pred.getObjid()));
-            entry.put(XmlTemplateProvider.SUCCESSOR_FORM, pred
-                .getForm().getLabel());
+            entry.put(XmlTemplateProvider.HREF, XmlUtility.getOrganizationalUnitHref(pred.getObjid()));
+            entry.put(XmlTemplateProvider.TITLE, TripleStoreUtility.getInstance().getTitle(pred.getObjid()));
+            entry.put(XmlTemplateProvider.SUCCESSOR_FORM, pred.getForm().getLabel());
 
             entries.add(entry);
         }

@@ -21,92 +21,41 @@ import java.util.Map;
  */
 public interface ReportDefinitionHandlerLocal extends EJBLocalObject {
 
-    String create(String xmlData, SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            XmlSchemaValidationException,
-            XmlCorruptedException,
-            InvalidSqlException,
-            MissingMethodParameterException,
-            ScopeNotFoundException,
-            ScopeContextViolationException,
-            SystemException;
+    String create(String xmlData, SecurityContext securityContext) throws AuthenticationException,
+        AuthorizationException, XmlSchemaValidationException, XmlCorruptedException, InvalidSqlException,
+        MissingMethodParameterException, ScopeNotFoundException, ScopeContextViolationException, SystemException;
 
-    String create(String xmlData, String authHandle, Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            XmlSchemaValidationException,
-            XmlCorruptedException,
-            InvalidSqlException,
-            MissingMethodParameterException,
-            ScopeNotFoundException,
-            ScopeContextViolationException,
-            SystemException;
+    String create(String xmlData, String authHandle, Boolean restAccess) throws AuthenticationException,
+        AuthorizationException, XmlSchemaValidationException, XmlCorruptedException, InvalidSqlException,
+        MissingMethodParameterException, ScopeNotFoundException, ScopeContextViolationException, SystemException;
 
-    void delete(String id, SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            ReportDefinitionNotFoundException,
-            MissingMethodParameterException,
-            SystemException;
+    void delete(String id, SecurityContext securityContext) throws AuthenticationException, AuthorizationException,
+        ReportDefinitionNotFoundException, MissingMethodParameterException, SystemException;
 
-    void delete(String id, String authHandle, Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            ReportDefinitionNotFoundException,
-            MissingMethodParameterException,
-            SystemException;
+    void delete(String id, String authHandle, Boolean restAccess) throws AuthenticationException,
+        AuthorizationException, ReportDefinitionNotFoundException, MissingMethodParameterException, SystemException;
 
-    String retrieve(String id, SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            ReportDefinitionNotFoundException,
-            MissingMethodParameterException,
-            SystemException;
+    String retrieve(String id, SecurityContext securityContext) throws AuthenticationException, AuthorizationException,
+        ReportDefinitionNotFoundException, MissingMethodParameterException, SystemException;
 
-    String retrieve(String id, String authHandle, Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            ReportDefinitionNotFoundException,
-            MissingMethodParameterException,
-            SystemException;
+    String retrieve(String id, String authHandle, Boolean restAccess) throws AuthenticationException,
+        AuthorizationException, ReportDefinitionNotFoundException, MissingMethodParameterException, SystemException;
 
-    String retrieveReportDefinitions(Map filter, SecurityContext securityContext)
-            throws InvalidSearchQueryException,
-            MissingMethodParameterException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException;
+    String retrieveReportDefinitions(Map filter, SecurityContext securityContext) throws InvalidSearchQueryException,
+        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
 
     String retrieveReportDefinitions(Map filter, String authHandle, Boolean restAccess)
-            throws InvalidSearchQueryException,
-            MissingMethodParameterException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException;
+        throws InvalidSearchQueryException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException;
 
-    String update(String id, String xmlData, SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            ReportDefinitionNotFoundException,
-            MissingMethodParameterException,
-            ScopeNotFoundException,
-            InvalidSqlException,
-            ScopeContextViolationException,
-            XmlSchemaValidationException,
-            XmlCorruptedException,
-            SystemException;
+    String update(String id, String xmlData, SecurityContext securityContext) throws AuthenticationException,
+        AuthorizationException, ReportDefinitionNotFoundException, MissingMethodParameterException,
+        ScopeNotFoundException, InvalidSqlException, ScopeContextViolationException, XmlSchemaValidationException,
+        XmlCorruptedException, SystemException;
 
-    String update(String id, String xmlData, String authHandle, Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            ReportDefinitionNotFoundException,
-            MissingMethodParameterException,
-            ScopeNotFoundException,
-            InvalidSqlException,
-            ScopeContextViolationException,
-            XmlSchemaValidationException,
-            XmlCorruptedException,
-            SystemException;
+    String update(String id, String xmlData, String authHandle, Boolean restAccess) throws AuthenticationException,
+        AuthorizationException, ReportDefinitionNotFoundException, MissingMethodParameterException,
+        ScopeNotFoundException, InvalidSqlException, ScopeContextViolationException, XmlSchemaValidationException,
+        XmlCorruptedException, SystemException;
 
 }

@@ -35,16 +35,14 @@ import org.junit.runners.JUnit4;
 
 /**
  * Testsuite for the UserManagementWrapper with SOAP transport.
- * 
+ *
  * @author Torsten Tetteroo
- * 
  */
 @RunWith(JUnit4.class)
 public class UserManagementWrapperSoapTest extends UserManagementWrapperAbstractTest {
 
     /**
      * Constructor.
-     * 
      */
     public UserManagementWrapperSoapTest() throws Exception {
         super(Constants.TRANSPORT_SOAP);

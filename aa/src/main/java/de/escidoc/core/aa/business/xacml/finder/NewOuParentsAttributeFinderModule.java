@@ -48,66 +48,48 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 /**
- * Attribute finder module implementation that resolves the hierarchical parents
- * of a new organizational-unit.<br>
- * 
- * Supported Attributes:<br>
- * -info:escidoc/names:aa:1.0:resource:organizational-unit:hierarchical-parents-
- * new<br>
- * the parents of the new organizational-unit (hierarchical), multi value
- * attribute
- * 
+ * Attribute finder module implementation that resolves the hierarchical parents of a new organizational-unit.<br>
+ * <p/>
+ * Supported Attributes:<br> -info:escidoc/names:aa:1.0:resource:organizational-unit:hierarchical-parents- new<br> the
+ * parents of the new organizational-unit (hierarchical), multi value attribute
+ *
  * @author Michael Hoppe
  */
-public class NewOuParentsAttributeFinderModule
-    extends AbstractAttributeFinderModule {
+public class NewOuParentsAttributeFinderModule extends AbstractAttributeFinderModule {
 
     private static final Pattern SPLIT_PATTERN = Pattern.compile("\\s+");
 
     private static final String ATTR_HIERARCHICAL_PARENTS_NEW =
-        AttributeIds.ORGANIZATIONAL_UNIT_ATTR_PREFIX
-            + "hierarchical-parents-new";
+        AttributeIds.ORGANIZATIONAL_UNIT_ATTR_PREFIX + "hierarchical-parents-new";
 
-    private static final String ATTR_PARENT_NEW =
-        AttributeIds.ORGANIZATIONAL_UNIT_ATTR_PREFIX + "parent-new";
+    private static final String ATTR_PARENT_NEW = AttributeIds.ORGANIZATIONAL_UNIT_ATTR_PREFIX + "parent-new";
 
-    private static final Pattern PATTERN_VALID_ATTRIBUTE_ID = Pattern
-        .compile(ATTR_HIERARCHICAL_PARENTS_NEW);
+    private static final Pattern PATTERN_VALID_ATTRIBUTE_ID = Pattern.compile(ATTR_HIERARCHICAL_PARENTS_NEW);
 
     private TripleStoreAttributeFinderModule tripleStoreAttributeFinderModule;
 
-    private final MapResult hierarchicalParentMapResult = new MapResult(
-        TripleStoreUtility.PROP_PARENT, false, true, true);
+    private final MapResult hierarchicalParentMapResult =
+        new MapResult(TripleStoreUtility.PROP_PARENT, false, true, true);
 
     /**
      * See Interface for functional description.
-     * 
-     * @param attributeIdValue
-     *            attributeIdValue
-     * @param ctx
-     *            ctx
-     * @param resourceId
-     *            resourceId
-     * @param resourceObjid
-     *            resourceObjid
-     * @param resourceVersionNumber
-     *            resourceVersionNumber
-     * @param designatorType
-     *            designatorType
-     * @return boolean
-     * @throws EscidocException
-     *             e
      *
+     * @param attributeIdValue      attributeIdValue
+     * @param ctx                   ctx
+     * @param resourceId            resourceId
+     * @param resourceObjid         resourceObjid
+     * @param resourceVersionNumber resourceVersionNumber
+     * @param designatorType        designatorType
+     * @return boolean
+     * @throws EscidocException e
      */
     @Override
     protected boolean assertAttribute(
-        final String attributeIdValue, final EvaluationCtx ctx,
-        final String resourceId, final String resourceObjid,
-        final String resourceVersionNumber, final int designatorType)
-        throws EscidocException {
+        final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
+        final String resourceVersionNumber, final int designatorType) throws EscidocException {
 
-        if (!super.assertAttribute(attributeIdValue, ctx, resourceId,
-            resourceObjid, resourceVersionNumber, designatorType)) {
+        if (!super.assertAttribute(attributeIdValue, ctx, resourceId, resourceObjid, resourceVersionNumber,
+            designatorType)) {
 
             return false;
         }
@@ -118,34 +100,25 @@ public class NewOuParentsAttributeFinderModule
 
     /**
      * See Interface for functional description.
-     * 
-     * @param attributeIdValue
-     *            attributeIdValue
-     * @param ctx
-     *            ctx
-     * @param resourceId
-     *            resourceId
-     * @param resourceObjid
-     *            resourceObjid
-     * @param resourceVersionNumber
-     *            resourceVersionNumber
-     * @return Object[]
-     * @throws EscidocException
-     *             e
      *
+     * @param attributeIdValue      attributeIdValue
+     * @param ctx                   ctx
+     * @param resourceId            resourceId
+     * @param resourceObjid         resourceObjid
+     * @param resourceVersionNumber resourceVersionNumber
+     * @return Object[]
+     * @throws EscidocException e
      */
     @Override
     protected Object[] resolveLocalPart(
-        final String attributeIdValue, final EvaluationCtx ctx,
-        final String resourceId, final String resourceObjid,
+        final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
         final String resourceVersionNumber) throws EscidocException {
 
         try {
             if (attributeIdValue.equals(ATTR_HIERARCHICAL_PARENTS_NEW)) {
                 final Iterable<String> parentIds =
-                    new ArrayList<String>(
-                        FinderModuleHelper.retrieveMultiResourceAttribute(ctx,
-                            new URI(ATTR_PARENT_NEW), false));
+                    new ArrayList<String>(FinderModuleHelper.retrieveMultiResourceAttribute(ctx, new URI(
+                        ATTR_PARENT_NEW), false));
                 final List<String> expandedParentIds = new ArrayList<String>();
                 for (final String parentId : parentIds) {
                     final String[] expandedParentArr = SPLIT_PATTERN.split(parentId);
@@ -161,22 +134,20 @@ public class NewOuParentsAttributeFinderModule
                     cachedAttribute.addAll(expandedParentIds);
                 }
                 cachedAttribute =
-                    tripleStoreAttributeFinderModule
-                        .getHierarchicalCachedAttributes(expandedParentIds,
-                            cachedAttribute, this.hierarchicalParentMapResult);
+                    tripleStoreAttributeFinderModule.getHierarchicalCachedAttributes(expandedParentIds,
+                        cachedAttribute, this.hierarchicalParentMapResult);
 
                 if (StringUtils.isNotEmpty(resourceId)) {
                     cachedAttribute.add(resourceId);
                 }
-                final List<StringAttribute> stringAttributes =
-                    new ArrayList<StringAttribute>();
+                final List<StringAttribute> stringAttributes = new ArrayList<StringAttribute>();
 
                 for (final String stringAttribute : cachedAttribute) {
                     stringAttributes.add(new StringAttribute(stringAttribute));
                 }
 
-                final EvaluationResult result = new EvaluationResult(new BagAttribute(
-                        Constants.URI_XMLSCHEMA_STRING, stringAttributes));
+                final EvaluationResult result =
+                    new EvaluationResult(new BagAttribute(Constants.URI_XMLSCHEMA_STRING, stringAttributes));
 
                 return new Object[] { result, attributeIdValue };
             }
@@ -192,13 +163,12 @@ public class NewOuParentsAttributeFinderModule
 
     /**
      * Injects the triple store utility bean.
-     * 
+     *
      * @param tripleStoreAttributeFinderModule
-     *            The {@link TripleStoreAttributeFinderModule}.
+     *         The {@link TripleStoreAttributeFinderModule}.
      */
     public void setTripleStoreAttributeFinderModule(
         final TripleStoreAttributeFinderModule tripleStoreAttributeFinderModule) {
-        this.tripleStoreAttributeFinderModule =
-            tripleStoreAttributeFinderModule;
+        this.tripleStoreAttributeFinderModule = tripleStoreAttributeFinderModule;
     }
 }

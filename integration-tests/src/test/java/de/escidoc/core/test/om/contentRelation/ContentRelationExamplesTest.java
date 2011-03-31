@@ -35,16 +35,14 @@ import org.w3c.dom.Document;
 
 /**
  * Test content relation create implementation.
- * 
+ *
  * @author Steffen Wagner
- * 
  */
 @RunWith(value = Parameterized.class)
 public class ContentRelationExamplesTest extends ContentRelationTestBase {
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ContentRelationExamplesTest(final int transport) {
         super(transport);
@@ -52,28 +50,23 @@ public class ContentRelationExamplesTest extends ContentRelationTestBase {
 
     /**
      * Test creating example content relation.
-     * 
-     * @throws Exception
-     *             Thrown if creating failed or not all values are like
-     *             expected.
+     *
+     * @throws Exception Thrown if creating failed or not all values are like expected.
      */
     @Test
     public void testCreateExample01() throws Exception {
 
-        String contentRelationXml =
-            getExampleTemplate("content-relation-01.xml");
+        String contentRelationXml = getExampleTemplate("content-relation-01.xml");
         String xml = create(contentRelationXml);
         String relationId = getObjidValue(xml);
 
         assertXmlValidContentRelation(xml);
         Document crDoc = getDocument(xml);
-        selectSingleNodeAsserted(crDoc,
-            "/content-relation/md-records/md-record[@name='escidoc']/bla");
+        selectSingleNodeAsserted(crDoc, "/content-relation/md-records/md-record[@name='escidoc']/bla");
 
         String xml1 = retrieve(relationId);
         assertXmlValidContentRelation(xml1);
         crDoc = getDocument(xml1);
-        selectSingleNodeAsserted(crDoc,
-            "/content-relation/md-records/md-record[@name='escidoc']/bla");
+        selectSingleNodeAsserted(crDoc, "/content-relation/md-records/md-record[@name='escidoc']/bla");
     }
 }

@@ -39,57 +39,40 @@ import java.util.Map;
 
 /**
  * Interface of an organizational unit fedora resource.
- * 
+ *
  * @author Michael Schneider
- * 
  */
 public interface OrganizationalUnitInterface extends FedoraResource {
 
     /**
-     * 
      * @return A Map containing the metadata datastreams of this resource.
-     * @throws FedoraSystemException
-     *             Thrown if access to fedora fails.
-     * @throws IntegritySystemException
-     *             Thrown if an expected metadata datastream was not found.
+     * @throws FedoraSystemException    Thrown if access to fedora fails.
+     * @throws IntegritySystemException Thrown if an expected metadata datastream was not found.
      */
-    Map<String, Datastream> getMdRecords() throws FedoraSystemException,
-        IntegritySystemException;
+    Map<String, Datastream> getMdRecords() throws FedoraSystemException, IntegritySystemException;
 
     /**
-     * 
-     * @param mdRecords
-     *            A Map containing the metadata datastreams of this resource.
-     * @throws SystemException
-     *             Thrown if access to fedora fails.
+     * @param mdRecords A Map containing the metadata datastreams of this resource.
+     * @throws SystemException Thrown if access to fedora fails.
      */
-    void setMdRecords(final Map<String, Datastream> mdRecords)
-        throws SystemException;
+    void setMdRecords(final Map<String, Datastream> mdRecords) throws SystemException;
 
     /**
      * Retrieve a specific metadata datastream.
-     * 
-     * @param name
-     *            The name of the exprected metadata datastream.
+     *
+     * @param name The name of the exprected metadata datastream.
      * @return The metadata datastream.
-     * @throws FedoraSystemException
-     *             Thrown if access to fedora fails.
-     * @throws StreamNotFoundException
-     *             Thrown if the metadata datastream was not found.
+     * @throws FedoraSystemException   Thrown if access to fedora fails.
+     * @throws StreamNotFoundException Thrown if the metadata datastream was not found.
      */
-    Datastream getMdRecord(String name) throws FedoraSystemException,
-        StreamNotFoundException;
+    Datastream getMdRecord(String name) throws FedoraSystemException, StreamNotFoundException;
 
     /**
      * Add or update a metadata datastream.
-     * 
-     * @param name
-     *            The name of the metadata datastream.
-     * @param ds
-     *            The new/updated metadata datastream.
-     * @throws SystemException
-     *             Thrown if access to fedora fails.
+     *
+     * @param name The name of the metadata datastream.
+     * @param ds   The new/updated metadata datastream.
+     * @throws SystemException Thrown if access to fedora fails.
      */
-    void setMdRecord(final String name, final Datastream ds)
-        throws SystemException;
+    void setMdRecord(final String name, final Datastream ds) throws SystemException;
 }

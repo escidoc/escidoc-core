@@ -26,11 +26,9 @@ import de.escidoc.core.common.exceptions.system.PidSystemException;
 import de.escidoc.core.common.persistence.PIDSystem;
 
 /**
- * Delivering of fake identifier of a PID System to check implementation without
- * creating real Persistent Identifier.
- * 
+ * Delivering of fake identifier of a PID System to check implementation without creating real Persistent Identifier.
+ *
  * @author Frank Schwichtenberg
- * 
  */
 public class DummyPIDGenerator implements PIDSystem {
 
@@ -49,12 +47,11 @@ public class DummyPIDGenerator implements PIDSystem {
      *      java.lang.String)
      */
     @Override
-    public String assignPID(final String systemID, final String param)
-        throws PidSystemException, MissingMethodParameterException {
+    public String assignPID(final String systemID, final String param) throws PidSystemException,
+        MissingMethodParameterException {
 
         if (param == null) {
-            throw new MissingMethodParameterException(
-                "Invalid param structure.");
+            throw new MissingMethodParameterException("Invalid param structure.");
         }
 
         return generatePID(systemID);
@@ -83,31 +80,26 @@ public class DummyPIDGenerator implements PIDSystem {
      */
     @Override
     public void neverGeneratePID(final String pid) {
-        throw new UnsupportedOperationException(
-            "Method neverGeneratePID() not supported by DummyPIDGenerator.");
+        throw new UnsupportedOperationException("Method neverGeneratePID() not supported by DummyPIDGenerator.");
     }
 
     /**
      * Set the globalPrefix for generated PIDs.
-     * 
-     * @param globalPrefix
-     *            The globalPrefix for generated PIDs
+     *
+     * @param globalPrefix The globalPrefix for generated PIDs
      * @throws MissingMethodParameterException
-     *             If <code>globalPrefix</code> is null.
+     *          If <code>globalPrefix</code> is null.
      */
-    public void setGlobalPrefix(final String globalPrefix)
-        throws MissingMethodParameterException {
+    public void setGlobalPrefix(final String globalPrefix) throws MissingMethodParameterException {
         Utility.checkNotNull(globalPrefix, "global prefix for PID");
         this.globalPrefix = globalPrefix;
     }
 
     /**
-     * Set the localPrefix for generated PIDs. This a part of the PID between
-     * the global prefix and the system id. Default is "test" to indicate that
-     * the generated (Dummy-)PIDs are not registered.
-     * 
-     * @param localPrefix
-     *            The localPrefix for generated PIDs
+     * Set the localPrefix for generated PIDs. This a part of the PID between the global prefix and the system id.
+     * Default is "test" to indicate that the generated (Dummy-)PIDs are not registered.
+     *
+     * @param localPrefix The localPrefix for generated PIDs
      */
     public void setLocalPrefix(final String localPrefix) {
         this.localPrefix = localPrefix;
@@ -115,28 +107,24 @@ public class DummyPIDGenerator implements PIDSystem {
 
     /**
      * Set the separator between the parts of generated PIDs. Default is "/".
-     * 
-     * @param separator
-     *            The separator for generated PIDs
+     *
+     * @param separator The separator for generated PIDs
      * @throws MissingMethodParameterException
-     *             If <code>separator</code> is null.
+     *          If <code>separator</code> is null.
      */
-    public void setSeparator(final String separator)
-        throws MissingMethodParameterException {
+    public void setSeparator(final String separator) throws MissingMethodParameterException {
         Utility.checkNotNull(separator, "separator");
         this.separator = separator;
     }
 
     /**
      * Set the separator between the parts of generated PIDs. Default is "/".
-     * 
-     * @param pidNamespace
-     *            The name space for generated PIDs
+     *
+     * @param pidNamespace The name space for generated PIDs
      * @throws MissingMethodParameterException
-     *             If <code>pidNamespace</code> is null.
+     *          If <code>pidNamespace</code> is null.
      */
-    public void setPidNamespace(final String pidNamespace)
-        throws MissingMethodParameterException {
+    public void setPidNamespace(final String pidNamespace) throws MissingMethodParameterException {
         Utility.checkNotNull(pidNamespace, "namespace for PID");
         this.pidNamespace = pidNamespace;
     }

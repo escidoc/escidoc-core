@@ -28,101 +28,60 @@ import java.util.Map;
 
 /**
  * Interface of an item foxml renderer.
- * 
- * @author Rozita Friedman
  *
+ * @author Rozita Friedman
  */
 public interface ItemFoXmlRendererInterface {
 
     /**
      * Gets the foxml representation of an item.
-     * 
-     * @param values
-     *            The values of the item.
-     * @param itemId
-     * @param lastModificationDate
-     * @param components
-     * @param properties
-     * @param contentRelations
-     * @param propertiesAsReferences
-     * @param propertiesVersion
-     * @return Returns the foxml representation of the item.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
      *
+     * @param values The values of the item.
+     * @return Returns the foxml representation of the item.
+     * @throws SystemException Thrown in case of an internal error.
      */
     String renderItem(
-        final Map<String, Object> values, final String itemId,
-        final String lastModificationDate, final String[] components,
-        final Map<String, String> properties,
-        final List<Map<String, String>> contentRelations,
-        final Map<String, String> propertiesAsReferences,
+        final Map<String, Object> values, final String itemId, final String lastModificationDate,
+        final String[] components, final Map<String, String> properties,
+        final List<Map<String, String>> contentRelations, final Map<String, String> propertiesAsReferences,
         final Map<String, String> propertiesVersion) throws SystemException;
 
     /**
      * Gets the foxml representation of a component.
-     * 
-     * @param values
-     *            The values of the component.
-     * @return Returns the foxml representation of the component.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
      *
+     * @param values The values of the component.
+     * @return Returns the foxml representation of the component.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    String renderComponent(final Map<String, Object> values)
-        throws WebserverSystemException;
+    String renderComponent(final Map<String, Object> values) throws WebserverSystemException;
 
     /**
      * Render RELS-EXT of an Item.
-     * 
-     * @param components
-     * @param properties
-     * @param title
-     * @param members
-     * @param adminDescriptorId
-     * @param itemId
-     * @param id
-     * @param lastModificationDate
-     * @param contentRelations
-     * @param propertiesAsReferences
-     * @param propertiesVersion
-     * @param comment
+     *
      * @return RELS-EXT XML representation of Item
-     * 
-     * @throws WebserverSystemException
-     *             Thrown in case of internal error.
+     * @throws WebserverSystemException Thrown in case of internal error.
      */
     String renderItemRelsExt(
-        final String id, final String lastModificationDate,
-        final String[] components, final Map<String, String> properties,
-        final List<Map<String, String>> contentRelations,
-        final Map<String, String> propertiesAsReferences,
-        final Map<String, String> propertiesVersion)
+        final String id, final String lastModificationDate, final String[] components,
+        final Map<String, String> properties, final List<Map<String, String>> contentRelations,
+        final Map<String, String> propertiesAsReferences, final Map<String, String> propertiesVersion)
         throws WebserverSystemException;
 
     /**
      * Render RELS-EXT of a Component.
-     * 
-     * @param id
-     *            Objid of Component.
-     * @param properties
-     *            Component properties
-     * @param inCreate
-     *            Set true if Component is to create, false if it's an update.
+     *
+     * @param id         Objid of Component.
+     * @param properties Component properties
+     * @param inCreate   Set true if Component is to create, false if it's an update.
      * @return RELS-EXT XML representation of Component
-     * 
-     * @throws WebserverSystemException
-     *             Thrown in case of internal error.
+     * @throws WebserverSystemException Thrown in case of internal error.
      */
-    String renderComponentRelsExt(
-        final String id, final Map<String, String> properties,
-        final boolean inCreate) throws WebserverSystemException;
-
-    String renderDefaultDc(final String componentId)
+    String renderComponentRelsExt(final String id, final Map<String, String> properties, final boolean inCreate)
         throws WebserverSystemException;
 
+    String renderDefaultDc(final String componentId) throws WebserverSystemException;
+
     String renderWov(
-        final String id, final String title, final String versionNo,
-        final String lastModificationDate, final String versionStatus,
-        final String comment) throws WebserverSystemException;
+        final String id, final String title, final String versionNo, final String lastModificationDate,
+        final String versionStatus, final String comment) throws WebserverSystemException;
 }

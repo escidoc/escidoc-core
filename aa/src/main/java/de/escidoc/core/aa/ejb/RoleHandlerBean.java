@@ -35,15 +35,19 @@ import java.util.Map;
 public class RoleHandlerBean implements SessionBean {
 
     RoleHandlerInterface service;
+
     SessionContext sessionCtx;
+
     private static final Logger LOGGER = LoggerFactory.getLogger(RoleHandlerBean.class);
 
     public void ejbCreate() throws CreateException {
         try {
             final BeanFactoryLocator beanFactoryLocator = SingletonBeanFactoryLocator.getInstance();
-            final BeanFactory factory = beanFactoryLocator.useBeanFactory("RoleHandler.spring.ejb.context").getFactory();
+            final BeanFactory factory =
+                beanFactoryLocator.useBeanFactory("RoleHandler.spring.ejb.context").getFactory();
             this.service = (RoleHandlerInterface) factory.getBean("service.RoleHandler");
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             LOGGER.error("ejbCreate(): Exception RoleHandlerComponent: " + e);
             throw new CreateException(e.getMessage());
         }
@@ -64,199 +68,152 @@ public class RoleHandlerBean implements SessionBean {
 
     }
 
-    public String create(final String xmlData,
-                                   final SecurityContext securityContext)
-            throws UniqueConstraintViolationException,
-            XmlCorruptedException,
-            XmlSchemaValidationException,
-            MissingMethodParameterException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException {
+    public String create(final String xmlData, final SecurityContext securityContext)
+        throws UniqueConstraintViolationException, XmlCorruptedException, XmlSchemaValidationException,
+        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.create(xmlData);
     }
 
     public String create(final String xmlData, final String authHandle, final Boolean restAccess)
-            throws UniqueConstraintViolationException,
-            XmlCorruptedException,
-            XmlSchemaValidationException,
-            MissingMethodParameterException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException {
+        throws UniqueConstraintViolationException, XmlCorruptedException, XmlSchemaValidationException,
+        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.create(xmlData);
     }
 
-    public void delete(final String id, final SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            RoleNotFoundException,
-            RoleInUseViolationException,
-            SystemException {
+    public void delete(final String id, final SecurityContext securityContext) throws AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, RoleNotFoundException, RoleInUseViolationException,
+        SystemException {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         service.delete(id);
     }
 
     public void delete(final String id, final String authHandle, final Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            RoleNotFoundException,
-            RoleInUseViolationException,
-            SystemException {
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException, RoleNotFoundException,
+        RoleInUseViolationException, SystemException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         service.delete(id);
     }
 
-    public String retrieve(final String id,
-                                     final SecurityContext securityContext)
-            throws RoleNotFoundException,
-            MissingMethodParameterException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException {
+    public String retrieve(final String id, final SecurityContext securityContext) throws RoleNotFoundException,
+        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.retrieve(id);
     }
 
     public String retrieve(final String id, final String authHandle, final Boolean restAccess)
-            throws RoleNotFoundException,
-            MissingMethodParameterException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException {
+        throws RoleNotFoundException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
+        SystemException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.retrieve(id);
     }
 
-    public String retrieveResources(final String id,
-                                              final SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            RoleNotFoundException,
-            SystemException {
+    public String retrieveResources(final String id, final SecurityContext securityContext)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException, RoleNotFoundException,
+        SystemException {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.retrieveResources(id);
     }
 
-    public String retrieveResources(final String id, final String authHandle,
-                                              final Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            RoleNotFoundException,
-            SystemException {
+    public String retrieveResources(final String id, final String authHandle, final Boolean restAccess)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException, RoleNotFoundException,
+        SystemException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.retrieveResources(id);
     }
 
-    public String update(final String id, final String xmlData,
-                                   final SecurityContext securityContext)
-            throws RoleNotFoundException,
-            XmlCorruptedException,
-            XmlSchemaValidationException,
-            MissingAttributeValueException,
-            UniqueConstraintViolationException,
-            OptimisticLockingException,
-            MissingMethodParameterException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException {
+    public String update(final String id, final String xmlData, final SecurityContext securityContext)
+        throws RoleNotFoundException, XmlCorruptedException, XmlSchemaValidationException,
+        MissingAttributeValueException, UniqueConstraintViolationException, OptimisticLockingException,
+        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.update(id, xmlData);
     }
 
-    public String update(final String id, final String xmlData, final String authHandle,
-                                   final Boolean restAccess)
-            throws RoleNotFoundException,
-            XmlCorruptedException,
-            XmlSchemaValidationException,
-            MissingAttributeValueException,
-            UniqueConstraintViolationException,
-            OptimisticLockingException,
-            MissingMethodParameterException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException {
+    public String update(final String id, final String xmlData, final String authHandle, final Boolean restAccess)
+        throws RoleNotFoundException, XmlCorruptedException, XmlSchemaValidationException,
+        MissingAttributeValueException, UniqueConstraintViolationException, OptimisticLockingException,
+        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.update(id, xmlData);
     }
 
-    public String retrieveRoles(final Map filter,
-                                          final SecurityContext securityContext)
-            throws MissingMethodParameterException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException,
-            InvalidSearchQueryException {
+    public String retrieveRoles(final Map filter, final SecurityContext securityContext)
+        throws MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException,
+        InvalidSearchQueryException {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.retrieveRoles(filter);
     }
 
-    public String retrieveRoles(final Map filter, final String authHandle,
-                                          final Boolean restAccess)
-            throws MissingMethodParameterException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException,
-            InvalidSearchQueryException {
+    public String retrieveRoles(final Map filter, final String authHandle, final Boolean restAccess)
+        throws MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException,
+        InvalidSearchQueryException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.retrieveRoles(filter);

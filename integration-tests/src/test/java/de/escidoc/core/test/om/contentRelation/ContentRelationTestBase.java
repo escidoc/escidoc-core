@@ -48,20 +48,17 @@ import static org.junit.Assert.fail;
 
 /**
  * Test the handler of the content relation resource.
- * 
+ *
  * @author Steffen Wagner
- * 
  */
 public class ContentRelationTestBase extends OmTestBase {
 
     protected static final String XPATH_CONTENT_RELATION = "/content-relation";
 
-    protected static final String XPATH_CONTENT_RELATION_XLINK_HREF =
-        XPATH_CONTENT_RELATION + PART_XLINK_HREF;
+    protected static final String XPATH_CONTENT_RELATION_XLINK_HREF = XPATH_CONTENT_RELATION + PART_XLINK_HREF;
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ContentRelationTestBase(final int transport) {
         super(transport);
@@ -78,27 +75,22 @@ public class ContentRelationTestBase extends OmTestBase {
 
     /**
      * Test retrieving the properties of an Content Relation.
-     * 
-     * @param id
-     *            The id of the Content Relation.
+     *
+     * @param id The id of the Content Relation.
      * @return The retrieved properties.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     protected String retrieveProperties(final String id) throws Exception {
 
-        return handleXmlResult(getContentRelationClient()
-            .retrieveProperties(id));
+        return handleXmlResult(getContentRelationClient().retrieveProperties(id));
     }
 
     /**
      * Test retrieving the md-records of an Content Relation.
-     * 
-     * @param id
-     *            The id of the Content Relation.
+     *
+     * @param id The id of the Content Relation.
      * @return The retrieved md-records.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     protected String retrieveMdRecords(final String id) throws Exception {
 
@@ -107,34 +99,24 @@ public class ContentRelationTestBase extends OmTestBase {
 
     /**
      * Assign a objectPID to the Content Relation.
-     * 
-     * @param id
-     *            The id of the Content Relation.
-     * @param param
-     *            The PID parameter.
+     *
+     * @param id    The id of the Content Relation.
+     * @param param The PID parameter.
      * @return The assignment method response.
-     * @throws Exception
-     *             Thrown if anything fails.
+     * @throws Exception Thrown if anything fails.
      */
-    public String assignObjectPid(final String id, final String param)
-        throws Exception {
+    public String assignObjectPid(final String id, final String param) throws Exception {
 
-        return handleXmlResult(getContentRelationClient().assignObjectPid(id,
-            param));
+        return handleXmlResult(getContentRelationClient().assignObjectPid(id, param));
     }
 
     /**
      * Test locking a content relation.
-     * 
-     * @param id
-     *            The id of the content relation.
-     * @param param
-     *            The param indicating the last-modifiaction-date of the content
-     *            relation.
-     * @return result XML with (at least) last modification date of the
-     *         resource.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param id    The id of the content relation.
+     * @param param The param indicating the last-modifiaction-date of the content relation.
+     * @return result XML with (at least) last modification date of the resource.
+     * @throws Exception If anything fails.
      */
     public String lock(final String id, final String param) throws Exception {
 
@@ -148,16 +130,11 @@ public class ContentRelationTestBase extends OmTestBase {
 
     /**
      * Test unlocking a content relation in the mock framework.
-     * 
-     * @param id
-     *            The id of the content relation.
-     * @param param
-     *            The param indicating the last-modifiaction-date of the content
-     *            relation.
-     * @return result XML with (at least) last modification date of the
-     *         resource.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param id    The id of the content relation.
+     * @param param The param indicating the last-modifiaction-date of the content relation.
+     * @return result XML with (at least) last modification date of the resource.
+     * @throws Exception If anything fails.
      */
     public String unlock(final String id, final String param) throws Exception {
 
@@ -171,67 +148,50 @@ public class ContentRelationTestBase extends OmTestBase {
 
     /**
      * Test retrieving a md-record of an Content Relation with a provided name.
-     * 
-     * @param id
-     *            The id of the Content Relation.
-     * @param name
-     *            The name of the md-record.
+     *
+     * @param id   The id of the Content Relation.
+     * @param name The name of the md-record.
      * @return The retrieved md-record.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    protected String retrieveMdRecord(final String id, final String name)
-        throws Exception {
+    protected String retrieveMdRecord(final String id, final String name) throws Exception {
 
-        return handleXmlResult(getContentRelationClient().retrieveMdRecord(id,
-            name));
+        return handleXmlResult(getContentRelationClient().retrieveMdRecord(id, name));
     }
 
     /**
      * Test submitting of a Content Relation.
-     * 
-     * @param id
-     *            The id of the Content Relation.
-     * @param param
-     *            param containing last mod date
+     *
+     * @param id    The id of the Content Relation.
+     * @param param param containing last mod date
      * @return modified last mod date after summit.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    protected String submit(final String id, final String param)
-        throws Exception {
+    protected String submit(final String id, final String param) throws Exception {
         return handleXmlResult(getContentRelationClient().submit(id, param));
     }
 
     /**
      * Test revising of a Content Relation.
-     * 
-     * @param id
-     *            The id of the Content Relation.
-     * @param param
-     *            param containing last mod date
+     *
+     * @param id    The id of the Content Relation.
+     * @param param param containing last mod date
      * @return modified last mod date after revise.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    protected String revise(final String id, final String param)
-        throws Exception {
+    protected String revise(final String id, final String param) throws Exception {
         return handleXmlResult(getContentRelationClient().revise(id, param));
     }
 
     /**
      * Test releasing of a Content Relation.
-     * 
-     * @param id
-     *            The id of the Content Relation.
-     * @param param
-     *            param containing last mod date
+     *
+     * @param id    The id of the Content Relation.
+     * @param param param containing last mod date
      * @return modified last mod date after release.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    protected String release(final String id, final String param)
-        throws Exception {
+    protected String release(final String id, final String param) throws Exception {
         return handleXmlResult(getContentRelationClient().release(id, param));
     }
 
@@ -292,29 +252,22 @@ public class ContentRelationTestBase extends OmTestBase {
 
     /**
      * Test retrieving the list of content relations.
-     * 
-     * @param filter
-     *            CQL filter
-     * 
+     *
+     * @param filter CQL filter
      * @return The retrieved content relations.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    public String retrieveContentRelations(final Map<String, String[]> filter)
-        throws Exception {
+    public String retrieveContentRelations(final Map<String, String[]> filter) throws Exception {
 
-        return handleXmlResult(getContentRelationClient()
-            .retrieveContentRelations(filter));
+        return handleXmlResult(getContentRelationClient().retrieveContentRelations(filter));
     }
 
     /**
      * Test retrieving the resources of an Item.
-     * 
-     * @param id
-     *            The id of the container.
+     *
+     * @param id The id of the container.
      * @return The retrieved resources.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     @Override
     public String retrieveResources(final String id) throws Exception {
@@ -548,85 +501,71 @@ public class ContentRelationTestBase extends OmTestBase {
 
     /**
      * Create an Content Relation from template.
-     * 
-     * @param templateName
-     *            The name of the Content Relation template (file).
+     *
+     * @param templateName The name of the Content Relation template (file).
      * @return objid of the Item.
-     * @throws Exception
-     *             Thrown if creation of Item or extraction of objid fails.
+     * @throws Exception Thrown if creation of Item or extraction of objid fails.
      */
-    public String createContainerFromTemplate(final String templateName)
-        throws Exception {
+    public String createContainerFromTemplate(final String templateName) throws Exception {
 
         // create an item and save the id
         String xmlData = getContainerTemplate(templateName);
 
-        String theContainerXml =
-            handleXmlResult(getContentRelationClient().create(xmlData));
+        String theContainerXml = handleXmlResult(getContentRelationClient().create(xmlData));
         return getObjidValue(theContainerXml);
     }
 
     /**
      * Create an Item from template.
-     * 
-     * @param templateName
-     *            The name of the Item template (file).
+     *
+     * @param templateName The name of the Item template (file).
      * @return objid of the Item.
-     * @throws Exception
-     *             Thrown if creation of Item or extraction of objid fails.
+     * @throws Exception Thrown if creation of Item or extraction of objid fails.
      */
-    public String createItemFromTemplate(final String templateName)
-        throws Exception {
+    public String createItemFromTemplate(final String templateName) throws Exception {
 
         // create an item and save the id
         String xmlData =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
-                + "/" + getTransport(false), templateName);
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false), templateName);
 
         String theItemXml = handleXmlResult(getItemClient().create(xmlData));
         return getObjidValue(theItemXml);
     }
 
     /**
-     * Get a Content Relation template. The template is pulled automatically
-     * from the rest/soap directory of the container template basedir.
-     * 
-     * @param templateName
-     *            The name of the Content Relation template (file).
+     * Get a Content Relation template. The template is pulled automatically from the rest/soap directory of the
+     * container template basedir.
+     *
+     * @param templateName The name of the Content Relation template (file).
      * @return The String representation of the template.
-     * @throws Exception
-     *             Thrown if anything fails.
+     * @throws Exception Thrown if anything fails.
      */
-    public String getContainerTemplate(final String templateName)
-        throws Exception {
+    public String getContainerTemplate(final String templateName) throws Exception {
 
-        return EscidocRestSoapTestBase.getTemplateAsString(
-            TEMPLATE_CONTAINER_PATH + "/" + getTransport(false), templateName);
+        return EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_CONTAINER_PATH + "/" + getTransport(false),
+            templateName);
 
     }
 
     /**
-     * Get a Item template. The template is pulled automatically from the
-     * rest/soap directory of the Item template basedir.
-     * 
-     * @param templateName
-     *            The name of the Item template (file).
+     * Get a Item template. The template is pulled automatically from the rest/soap directory of the Item template
+     * basedir.
+     *
+     * @param templateName The name of the Item template (file).
      * @return The String representation of the template.
-     * @throws Exception
-     *             Thrown if anything fails.
+     * @throws Exception Thrown if anything fails.
      */
     public String getItemTemplate(final String templateName) throws Exception {
 
-        return EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
-            + "/" + getTransport(false), templateName);
+        return EscidocRestSoapTestBase
+            .getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false), templateName);
 
     }
 
     /**
      * Convert a NodeList to a List.
-     * 
-     * @param nl
-     *            The NodeList.
+     *
+     * @param nl The NodeList.
      * @return List
      */
     public List<String> nodeList2List(final NodeList nl) {
@@ -640,12 +579,10 @@ public class ContentRelationTestBase extends OmTestBase {
 
     /**
      * Convert a NodeList to a List.
-     * 
-     * @param nl
-     *            The NodeList.
+     *
+     * @param nl The NodeList.
      * @return List with resource references
-     * @throws Exception
-     *             Thrown if extracting of values from XML failed.
+     * @throws Exception Thrown if extracting of values from XML failed.
      */
     public List<String> nodeListSOAP2List(final NodeList nl) throws Exception {
 
@@ -666,8 +603,7 @@ public class ContentRelationTestBase extends OmTestBase {
             else if (nodeName.contains(":container")) {
                 value = Constants.CONTAINER_BASE_URI + "/" + objid;
             }
-            else if (nodeName.contains(":modified-by")
-                || nodeName.contains(":created-by")) {
+            else if (nodeName.contains(":modified-by") || nodeName.contains(":created-by")) {
                 value = Constants.USER_ACCOUNT_BASE_URI + "/" + objid;
             }
             else if (nodeName.contains(":content-model")) {
@@ -677,11 +613,9 @@ public class ContentRelationTestBase extends OmTestBase {
                 value = Constants.CONTEXT_BASE_URI + "/" + objid;
             }
             else {
-                if (!nodeName.contains("latest-version")
-                    && !nodeName.contains("version")) {
-                    throw new Exception(
-                        "unknown resource type with node name '" + nodeName
-                            + "' and objid='" + objid + "'.");
+                if (!nodeName.contains("latest-version") && !nodeName.contains("version")) {
+                    throw new Exception("unknown resource type with node name '" + nodeName + "' and objid='" + objid
+                        + "'.");
                 }
             }
 
@@ -694,18 +628,14 @@ public class ContentRelationTestBase extends OmTestBase {
 
     /**
      * Compares if the content of two lists equals.
-     * 
+     * <p/>
      * WARNING: side effect, elements are removed from the second list
-     * 
-     * @param msg
-     *            Message for the exception.
-     * @param arg0
-     *            List one.
-     * @param arg1
-     *            List two.
+     *
+     * @param msg  Message for the exception.
+     * @param arg0 List one.
+     * @param arg1 List two.
      */
-    public void assertListContentEqual(
-        final String msg, final List<String> arg0, final List<String> arg1) {
+    public void assertListContentEqual(final String msg, final List<String> arg0, final List<String> arg1) {
 
         Iterator<String> it = arg0.iterator();
         while (it.hasNext()) {
@@ -724,13 +654,10 @@ public class ContentRelationTestBase extends OmTestBase {
 
     /**
      * Add certain grants to userid.
-     * 
-     * @param userId
-     *            Userid
-     * @throws Exception
+     *
+     * @param userId Userid
      */
-    public void addContentRelationManagerGrant(final String userId)
-        throws Exception {
+    public void addContentRelationManagerGrant(final String userId) throws Exception {
 
         UserAccountClient uac = new UserAccountClient(getTransport());
         // check if user has this role already
@@ -741,9 +668,8 @@ public class ContentRelationTestBase extends OmTestBase {
 
         // set content-relation-manager grant to user
         String grantXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_BASE_PATH
-                + "/om/template/aa/user-account/" + getTransport(false),
-                "create_content_relation_manager_grant.xml");
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_BASE_PATH + "/om/template/aa/user-account/"
+                + getTransport(false), "create_content_relation_manager_grant.xml");
 
         try {
             handleXmlResult(uac.createGrant(userId, grantXml));
@@ -755,13 +681,10 @@ public class ContentRelationTestBase extends OmTestBase {
 
     /**
      * Add certain grants to userid.
-     * 
-     * @param userId
-     *            Userid
-     * @throws Exception
+     *
+     * @param userId Userid
      */
-    public void addContentRelationModifierGrant(final String userId)
-        throws Exception {
+    public void addContentRelationModifierGrant(final String userId) throws Exception {
 
         UserAccountClient uac = new UserAccountClient(getTransport());
         // check if user has this role already
@@ -772,9 +695,8 @@ public class ContentRelationTestBase extends OmTestBase {
 
         // set content-relation-manager grant to user
         String grantXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_BASE_PATH
-                + "/om/template/aa/user-account/" + getTransport(false),
-                "create_content_relation_modifier_grant.xml");
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_BASE_PATH + "/om/template/aa/user-account/"
+                + getTransport(false), "create_content_relation_modifier_grant.xml");
         // set objid/href of user to template
         grantXml = grantXml.replace("###USER_ID###", userId);
 
@@ -788,19 +710,15 @@ public class ContentRelationTestBase extends OmTestBase {
 
     /**
      * Successfully creates an UserAccount.
-     * 
-     * @param templateName
-     *            The name of the template.
+     *
+     * @param templateName The name of the template.
      * @return Returns the UserAccount document.
-     * @throws Exception
-     *             If anything fails
+     * @throws Exception If anything fails
      */
-    public String[] createUserWithContentRelationRole(final String templateName)
-        throws Exception {
+    public String[] createUserWithContentRelationRole(final String templateName) throws Exception {
 
         final Document toBeCreatedDocument =
-            EscidocRestSoapTestBase.getTemplateAsDocument(
-                TEMPLATE_USER_ACCOUNT_PATH, templateName);
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_USER_ACCOUNT_PATH, templateName);
         String loginName = insertUniqueLoginName(toBeCreatedDocument);
 
         final String toBeCreatedXml = toString(toBeCreatedDocument, false);
@@ -820,22 +738,17 @@ public class ContentRelationTestBase extends OmTestBase {
     }
 
     /**
-     * Inserts a unique loginname into the provided document by adding the
-     * current timestamp to the contained loginname.
-     * 
-     * @param document
-     *            The document.
+     * Inserts a unique loginname into the provided document by adding the current timestamp to the contained
+     * loginname.
+     *
+     * @param document The document.
      * @return The inserted login name.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    protected String insertUniqueLoginName(final Document document)
-        throws Exception {
+    protected String insertUniqueLoginName(final Document document) throws Exception {
 
-        assertXmlExists("No login-name found in template data. ", document,
-            "/user-account/properties/login-name");
-        final Node loginNameNode =
-            selectSingleNode(document, "/user-account/properties/login-name");
+        assertXmlExists("No login-name found in template data. ", document, "/user-account/properties/login-name");
+        final Node loginNameNode = selectSingleNode(document, "/user-account/properties/login-name");
         String loginname = loginNameNode.getTextContent().trim();
         loginname += System.currentTimeMillis();
 

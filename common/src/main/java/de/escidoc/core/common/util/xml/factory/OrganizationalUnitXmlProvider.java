@@ -26,14 +26,10 @@ import java.util.Map;
 
 /**
  * OrganizationalUnitXmlProvider.
- * 
- * 
  */
-public final class OrganizationalUnitXmlProvider
-    extends InfrastructureXmlProvider {
+public final class OrganizationalUnitXmlProvider extends InfrastructureXmlProvider {
 
-    private static final String ORGANIZATIONAL_UNIT_PATH =
-        "/organizational-unit";
+    private static final String ORGANIZATIONAL_UNIT_PATH = "/organizational-unit";
 
     private static final String PROPERTIES_PATH = ORGANIZATIONAL_UNIT_PATH;
 
@@ -45,14 +41,11 @@ public final class OrganizationalUnitXmlProvider
 
     private static final String SUCCESSORS_PATH = ORGANIZATIONAL_UNIT_PATH;
 
-    private static final String ORGANIZATIONAL_UNIT_LIST_PATH =
-        ORGANIZATIONAL_UNIT_PATH;
+    private static final String ORGANIZATIONAL_UNIT_LIST_PATH = ORGANIZATIONAL_UNIT_PATH;
 
-    private static final String ORGANIZATIONAL_UNIT_PATH_LIST_PATH =
-        ORGANIZATIONAL_UNIT_PATH;
+    private static final String ORGANIZATIONAL_UNIT_PATH_LIST_PATH = ORGANIZATIONAL_UNIT_PATH;
 
-    private static final String ORGANIZATIONAL_UNIT_RESOURCE_NAME =
-        "organizational-unit";
+    private static final String ORGANIZATIONAL_UNIT_RESOURCE_NAME = "organizational-unit";
 
     private static final String PROPERTIES_RESOURCE_NAME = "properties";
 
@@ -64,96 +57,77 @@ public final class OrganizationalUnitXmlProvider
 
     private static final String SUCCESSORS_RESOURCE_NAME = "successors";
 
-    private static final String ORGANIZATIONAL_UNIT_LIST_RESOURCE_NAME =
-        "organizational-unit-list";
+    private static final String ORGANIZATIONAL_UNIT_LIST_RESOURCE_NAME = "organizational-unit-list";
 
-    private static final String ORGANIZATIONAL_UNIT_PATH_LIST_RESOURCE_NAME =
-        "organizational-unit-path-list";
+    private static final String ORGANIZATIONAL_UNIT_PATH_LIST_RESOURCE_NAME = "organizational-unit-path-list";
 
     private static final OrganizationalUnitXmlProvider PROVIDER = new OrganizationalUnitXmlProvider();
 
     /**
      * Private constructor to prevent initialization.
-     * 
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
+     *
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     private OrganizationalUnitXmlProvider() {
     }
 
     /**
      * Get instance of OrganizationalUnitXmlProvider.
-     * 
+     *
      * @return OrganizationalUnitXmlProvider
-     * @throws WebserverSystemException
      */
     public static OrganizationalUnitXmlProvider getInstance() {
         return PROVIDER;
     }
 
-    public String getOrganizationalUnitXml(final Map values)
-        throws WebserverSystemException {
+    public String getOrganizationalUnitXml(final Map values) throws WebserverSystemException {
 
-        return getXml(ORGANIZATIONAL_UNIT_RESOURCE_NAME,
-            ORGANIZATIONAL_UNIT_PATH, values);
+        return getXml(ORGANIZATIONAL_UNIT_RESOURCE_NAME, ORGANIZATIONAL_UNIT_PATH, values);
     }
 
-    public String getPropertiesXml(final Map values)
-        throws WebserverSystemException {
+    public String getPropertiesXml(final Map values) throws WebserverSystemException {
 
         return getXml(PROPERTIES_RESOURCE_NAME, PROPERTIES_PATH, values);
     }
 
-    public String getResourcesXml(final Map values)
-        throws WebserverSystemException {
+    public String getResourcesXml(final Map values) throws WebserverSystemException {
 
         return getXml(RESOURCES_RESOURCE_NAME, RESOURCES_PATH, values);
     }
 
-    public String getMdRecordsXml(final Map values)
-        throws WebserverSystemException {
+    public String getMdRecordsXml(final Map values) throws WebserverSystemException {
 
         return getXml(MD_RECORDS_RESOURCE_NAME, COMMON_PATH, values);
     }
 
-    public String getParentsXml(final Map values)
-        throws WebserverSystemException {
+    public String getParentsXml(final Map values) throws WebserverSystemException {
 
         return getXml(PARENTS_RESOURCE_NAME, PARENT_OUS_PATH, values);
     }
 
-    public String getChildObjectsXml(final Map values)
-        throws WebserverSystemException {
+    public String getChildObjectsXml(final Map values) throws WebserverSystemException {
 
-        return getXml(ORGANIZATIONAL_UNIT_LIST_RESOURCE_NAME,
-            ORGANIZATIONAL_UNIT_LIST_PATH, values);
+        return getXml(ORGANIZATIONAL_UNIT_LIST_RESOURCE_NAME, ORGANIZATIONAL_UNIT_LIST_PATH, values);
     }
 
-    public String getParentObjectsXml(final Map values)
-        throws WebserverSystemException {
+    public String getParentObjectsXml(final Map values) throws WebserverSystemException {
 
-        return getXml(ORGANIZATIONAL_UNIT_LIST_RESOURCE_NAME,
-            ORGANIZATIONAL_UNIT_LIST_PATH, values);
+        return getXml(ORGANIZATIONAL_UNIT_LIST_RESOURCE_NAME, ORGANIZATIONAL_UNIT_LIST_PATH, values);
     }
 
-    public String getPathListXml(final Map values)
-        throws WebserverSystemException {
+    public String getPathListXml(final Map values) throws WebserverSystemException {
 
-        return getXml(ORGANIZATIONAL_UNIT_PATH_LIST_RESOURCE_NAME,
-            ORGANIZATIONAL_UNIT_PATH_LIST_PATH, values);
+        return getXml(ORGANIZATIONAL_UNIT_PATH_LIST_RESOURCE_NAME, ORGANIZATIONAL_UNIT_PATH_LIST_PATH, values);
     }
 
     /**
      * Get list of successors of Orgnaizational Unit as XML.
-     * 
-     * @param values
-     *            value map.
+     *
+     * @param values value map.
      * @return XML representation of Organizational Unit successors.
-     * @throws WebserverSystemException
-     *             Thrown if rendering failed.
+     * @throws WebserverSystemException Thrown if rendering failed.
      */
-    public String getSuccessorsXml(final Map values)
-        throws WebserverSystemException {
+    public String getSuccessorsXml(final Map values) throws WebserverSystemException {
 
         return getXml(SUCCESSORS_RESOURCE_NAME, SUCCESSORS_PATH, values);
     }

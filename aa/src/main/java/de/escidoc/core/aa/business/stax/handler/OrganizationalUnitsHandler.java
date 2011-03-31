@@ -40,17 +40,11 @@ import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.handler.LinkCollectionStaxHandler;
 
 /**
- * Stax handler that manages the organizational-units of a user account.<br>
- * This handler is a specialization of {@link LinkCollectionStaxHandler} and
- * verifies
- * <ul>
- * <li>each addressed organizational unit references an existing organizational
- * unit.</li>
- * <li>the public-status of the organizational unit is &quot;opened&quot;
- * </ul>
- * 
- * @author Torsten Tetteroo
+ * Stax handler that manages the organizational-units of a user account.<br> This handler is a specialization of {@link
+ * LinkCollectionStaxHandler} and verifies <ul> <li>each addressed organizational unit references an existing
+ * organizational unit.</li> <li>the public-status of the organizational unit is &quot;opened&quot; </ul>
  *
+ * @author Torsten Tetteroo
  */
 public class OrganizationalUnitsHandler extends LinkCollectionStaxHandler {
 
@@ -63,44 +57,29 @@ public class OrganizationalUnitsHandler extends LinkCollectionStaxHandler {
 
     /**
      * The constructor.
-     * 
-     * @param tsu
-     *            The triple store utility to retrieve organizational units
-     *            properties.
      *
+     * @param tsu The triple store utility to retrieve organizational units properties.
      */
     public OrganizationalUnitsHandler(final TripleStoreUtility tsu) {
 
-        super(XmlUtility.XPATH_USER_ACCOUNT_ORGANIZATIONAL_UNIT,
-            XmlUtility.BASE_ORGANIZATIONAL_UNIT,
+        super(XmlUtility.XPATH_USER_ACCOUNT_ORGANIZATIONAL_UNIT, XmlUtility.BASE_ORGANIZATIONAL_UNIT,
             OrganizationalUnitNotFoundException.class);
         this.tsu = tsu;
     }
 
-
-
     /**
      * See Interface for functional description.
-     * 
-     * @param element
-     * @return
-     * @throws EscidocException
-     * @see LinkCollectionStaxHandler
-     *      #endLinkElement(de.escidoc.core.common.util.xml.stax.events.EndElement)
      *
+     * @see LinkCollectionStaxHandler #endLinkElement(de.escidoc.core.common.util.xml.stax.events.EndElement)
      */
     @Override
-    public EndElement endLinkElement(final EndElement element)
-        throws EscidocException {
+    public EndElement endLinkElement(final EndElement element) throws EscidocException {
 
         Utility.getInstance().checkIsOrganizationalUnit(getObjid());
         if (!Constants.STATUS_OU_OPENED.equals(tsu.getPublicStatus(getObjid()))) {
-            throw new InvalidStatusException(StringUtility
-                .format(ERR_MSG_OU_NOT_OPENED,
-                    getObjid()));
+            throw new InvalidStatusException(StringUtility.format(ERR_MSG_OU_NOT_OPENED, getObjid()));
         }
         return super.endLinkElement(element);
     }
-
 
 }

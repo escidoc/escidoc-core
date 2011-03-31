@@ -9,6 +9,7 @@ import javax.ejb.EJBLocalHome;
 public interface UserManagementWrapperLocalHome extends EJBLocalHome {
 
     String COMP_NAME = "java:comp/env/ejb/UserManagementWrapperLocal";
+
     String JNDI_NAME = "ejb/UserManagementWrapperLocal";
 
     UserManagementWrapperLocal create() throws CreateException;

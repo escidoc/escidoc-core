@@ -21,13 +21,11 @@
 package de.escidoc.core.common.exceptions.application.violated;
 
 /**
- * The ReadonlyElementViolationException is used to indicate that a read only
- * Element was set by the user. returned httpStatusCode is 409. Status code
- * (409) indicating that the request could not be completed due to a conflict
- * with the current state of the resource.
- * 
- * @author Michael Hoppe (FIZ Karlsruhe)
+ * The ReadonlyElementViolationException is used to indicate that a read only Element was set by the user. returned
+ * httpStatusCode is 409. Status code (409) indicating that the request could not be completed due to a conflict with
+ * the current state of the resource.
  *
+ * @author Michael Hoppe (FIZ Karlsruhe)
  */
 public class ReadonlyViolationException extends RuleViolationException {
 
@@ -42,8 +40,6 @@ public class ReadonlyViolationException extends RuleViolationException {
 
     /**
      * Default constructor.
-     * 
-     *
      */
     public ReadonlyViolationException() {
         super(HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -51,9 +47,8 @@ public class ReadonlyViolationException extends RuleViolationException {
 
     /**
      * Constructor used to map an initial exception.
-     * 
-     * @param error
-     *            Throwable
+     *
+     * @param error Throwable
      */
     public ReadonlyViolationException(final Throwable error) {
         super(error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -61,93 +56,67 @@ public class ReadonlyViolationException extends RuleViolationException {
 
     /**
      * Constructs a new exception with the specified detail message.
-     * 
-     * @param message -
-     *            the detail message.
      *
+     * @param message - the detail message.
      */
     public ReadonlyViolationException(final String message) {
         super(message, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 
     /**
-     * Constructor used to create a new Exception with the specified detail
-     * message and a mapping to an initial exception.
-     * 
-     * @param message -
-     *            the detail message.
-     * @param error
-     *            Throwable
+     * Constructor used to create a new Exception with the specified detail message and a mapping to an initial
+     * exception.
      *
+     * @param message - the detail message.
+     * @param error   Throwable
      */
-    public ReadonlyViolationException(final String message,
-        final Throwable error) {
+    public ReadonlyViolationException(final String message, final Throwable error) {
         super(message, error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 
     /**
      * Default constructor.
-     * 
-     * @param httpStatusCode
-     *            the http status code
-     * @param httpStatusMsg
-     *            the http status message
      *
+     * @param httpStatusCode the http status code
+     * @param httpStatusMsg  the http status message
      */
-    public ReadonlyViolationException(final int httpStatusCode,
-        final String httpStatusMsg) {
+    public ReadonlyViolationException(final int httpStatusCode, final String httpStatusMsg) {
         super(httpStatusCode, httpStatusMsg);
     }
 
     /**
-     * Constructor used to create a new Exception with the specified detail
-     * message and a mapping to an initial exception.
-     * 
-     * @param message
-     *            the detail message.
-     * @param cause
-     *            Throwable
-     * @param httpStatusCode
-     *            the http status code
-     * @param httpStatusMsg
-     *            the http status message
+     * Constructor used to create a new Exception with the specified detail message and a mapping to an initial
+     * exception.
      *
+     * @param message        the detail message.
+     * @param cause          Throwable
+     * @param httpStatusCode the http status code
+     * @param httpStatusMsg  the http status message
      */
-    public ReadonlyViolationException(final String message,
-        final Throwable cause, final int httpStatusCode,
+    public ReadonlyViolationException(final String message, final Throwable cause, final int httpStatusCode,
         final String httpStatusMsg) {
         super(message, cause, httpStatusCode, httpStatusMsg);
     }
 
     /**
      * Constructs a new exception with the specified detail message.
-     * 
-     * @param message
-     *            the detail message.
-     * @param httpStatusCode
-     *            the http status code
-     * @param httpStatusMsg
-     *            the http status message
      *
+     * @param message        the detail message.
+     * @param httpStatusCode the http status code
+     * @param httpStatusMsg  the http status message
      */
-    public ReadonlyViolationException(final String message,
-        final int httpStatusCode, final String httpStatusMsg) {
+    public ReadonlyViolationException(final String message, final int httpStatusCode, final String httpStatusMsg) {
         super(message, httpStatusCode, httpStatusMsg);
     }
 
     /**
      * Constructor used to map an initial exception.
-     * 
-     * @param cause
-     *            Throwable
-     * @param httpStatusCode
-     *            the http status code
-     * @param httpStatusMsg
-     *            the http status message
      *
+     * @param cause          Throwable
+     * @param httpStatusCode the http status code
+     * @param httpStatusMsg  the http status message
      */
-    public ReadonlyViolationException(final Throwable cause,
-        final int httpStatusCode, final String httpStatusMsg) {
+    public ReadonlyViolationException(final Throwable cause, final int httpStatusCode, final String httpStatusMsg) {
         super(cause, httpStatusCode, httpStatusMsg);
     }
 

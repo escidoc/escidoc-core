@@ -31,14 +31,11 @@ import java.util.Map;
 
 /**
  * FoXML representations of the Content Relation resource.<br/>
- * 
- * @see http://colab.mpdl.mpg.de/mediawiki/ESciDoc_Content_Relations_Concept
- * 
+ *
  * @author Steffen Wagner
- * 
+ * @see http://colab.mpdl.mpg.de/mediawiki/ESciDoc_Content_Relations_Concept
  */
-public final class ContentRelationFoXmlProvider
-    extends InfrastructureFoXmlProvider {
+public final class ContentRelationFoXmlProvider extends InfrastructureFoXmlProvider {
 
     private static final ContentRelationFoXmlProvider PROVIDER = new ContentRelationFoXmlProvider();
 
@@ -46,8 +43,7 @@ public final class ContentRelationFoXmlProvider
     private static final String VL_CONTENT_RELATION_PATH = "content-relation";
 
     // velocity template path
-    private static final String VL_CONTENT_RELATION_RESOURCE_NAME =
-        "content-relation";
+    private static final String VL_CONTENT_RELATION_RESOURCE_NAME = "content-relation";
 
     // velocity template path
     private static final String VL_RELS_EXT_RESOURCE_NAME = "rels-ext";
@@ -60,7 +56,7 @@ public final class ContentRelationFoXmlProvider
 
     /**
      * Gets the ContentRelationFoXmlProvider PROVIDER.
-     * 
+     *
      * @return Returns the <code>ContentRelationFoXmlProvider</code> object.
      */
     public static ContentRelationFoXmlProvider getInstance() {
@@ -69,20 +65,16 @@ public final class ContentRelationFoXmlProvider
 
     /**
      * Get FoXML of ContentRelation resource.
-     * 
-     * @param cr
-     *            The ContentRelation
+     *
+     * @param cr The ContentRelation
      * @return FoXML representation of the ContentRelation
-     * @throws SystemException
-     *             Thrown if character encoding failed of mdrecord failed.
+     * @throws SystemException Thrown if character encoding failed of mdrecord failed.
      */
-    public String getFoXml(final ContentRelationCreate cr)
-        throws SystemException {
+    public String getFoXml(final ContentRelationCreate cr) throws SystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
 
-        values.put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER, cr
-            .getBuildNumber());
+        values.put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER, cr.getBuildNumber());
 
         values.put(XmlTemplateProvider.OBJID, cr.getObjid());
         values.put(XmlTemplateProvider.TITLE, cr.getProperties().getTitle());
@@ -92,118 +84,89 @@ public final class ContentRelationFoXmlProvider
         values.putAll(getRelsExtNamespaceValues());
 
         // add Metadata as Map
-        values.put(XmlTemplateProvider.MD_RECORDS, getMetadataRecordsMap(cr
-            .getMetadataRecords()));
+        values.put(XmlTemplateProvider.MD_RECORDS, getMetadataRecordsMap(cr.getMetadataRecords()));
 
         // DC (inclusive mapping)-------------------------
-        final MdRecordCreate defaultMd =
-            cr
-                .getMetadataRecord(XmlTemplateProvider.DEFAULT_METADATA_FOR_DC_MAPPING);
+        final MdRecordCreate defaultMd = cr.getMetadataRecord(XmlTemplateProvider.DEFAULT_METADATA_FOR_DC_MAPPING);
         if (defaultMd != null) {
             final String dcXml = cr.getDC(defaultMd, null);
             values.put(XmlTemplateProvider.DC, dcXml);
         }
         values.put(XmlTemplateProvider.IN_CREATE, XmlTemplateProvider.TRUE);
 
-        return getXml(VL_CONTENT_RELATION_RESOURCE_NAME,
-            VL_CONTENT_RELATION_PATH, values);
+        return getXml(VL_CONTENT_RELATION_RESOURCE_NAME, VL_CONTENT_RELATION_PATH, values);
     }
 
     /**
      * Get RELS-EXT for Content Relation.
-     * 
-     * @param cr
-     *            The ContentRelation
+     *
+     * @param cr The ContentRelation
      * @return XML representation of RELS-EXT
-     * @throws WebserverSystemException
-     *             Thrown if rendering failed.
+     * @throws WebserverSystemException Thrown if rendering failed.
      */
-    public String getRelsExt(final ContentRelationCreate cr)
-        throws WebserverSystemException {
+    public String getRelsExt(final ContentRelationCreate cr) throws WebserverSystemException {
 
         final Map<String, String> values = getRelsExtValueMap(cr);
         values.putAll(getRelsExtNamespaceValues());
-        values.put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER, cr
-            .getBuildNumber());
+        values.put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER, cr.getBuildNumber());
 
         values.put(XmlTemplateProvider.OBJID, cr.getObjid());
         values.put(XmlTemplateProvider.TITLE, cr.getProperties().getTitle());
-        return getXml(VL_RELS_EXT_RESOURCE_NAME, VL_CONTENT_RELATION_PATH,
-            values);
+        return getXml(VL_RELS_EXT_RESOURCE_NAME, VL_CONTENT_RELATION_PATH, values);
     }
 
     /**
-     * Prepare all for rels-ext relevant values from ContentRelation resource
-     * within a Map (where keys are valid for used velocity templates).
-     * 
-     * @param cr
-     *            The ContentRelation object.
+     * Prepare all for rels-ext relevant values from ContentRelation resource within a Map (where keys are valid for
+     * used velocity templates).
+     *
+     * @param cr The ContentRelation object.
      * @return Map with rels-ext relevant values and velocity valid key names.
      */
     private static Map<String, String> getRelsExtValueMap(final ContentRelationCreate cr) {
 
         final Map<String, String> values = new HashMap<String, String>();
 
-        values.put(XmlTemplateProvider.CREATED_BY_ID, cr
-            .getProperties().getCreatedById());
-        values.put(XmlTemplateProvider.CREATED_BY_TITLE, cr
-            .getProperties().getCreatedByName());
+        values.put(XmlTemplateProvider.CREATED_BY_ID, cr.getProperties().getCreatedById());
+        values.put(XmlTemplateProvider.CREATED_BY_TITLE, cr.getProperties().getCreatedByName());
 
-        values.put(XmlTemplateProvider.MODIFIED_BY_ID, cr
-            .getProperties().getModifiedById());
-        values.put(XmlTemplateProvider.MODIFIED_BY_TITLE, cr
-            .getProperties().getModifiedByName());
+        values.put(XmlTemplateProvider.MODIFIED_BY_ID, cr.getProperties().getModifiedById());
+        values.put(XmlTemplateProvider.MODIFIED_BY_TITLE, cr.getProperties().getModifiedByName());
 
-        values.put(XmlTemplateProvider.PUBLIC_STATUS, cr
-            .getProperties().getStatus().toString());
-        values.put(XmlTemplateProvider.PUBLIC_STATUS_COMMENT, cr
-            .getProperties().getStatusComment());
+        values.put(XmlTemplateProvider.PUBLIC_STATUS, cr.getProperties().getStatus().toString());
+        values.put(XmlTemplateProvider.PUBLIC_STATUS_COMMENT, cr.getProperties().getStatusComment());
 
         // relation (type, description, subject(s), object(s))
-        values.put(XmlTemplateProvider.CONTENT_RELATION_TYPE, cr
-            .getType().toString());
-        values.put(XmlTemplateProvider.CONTENT_RELATION_DESCRIPTION, cr
-            .getProperties().getDescription());
-        values.put(XmlTemplateProvider.CONTENT_RELATION_SUBJECT_ID, cr
-            .getSubject());
-        values.put(XmlTemplateProvider.CONTENT_RELATION_OBJECT_ID, cr
-            .getObject());
-        values.put(XmlTemplateProvider.CONTENT_RELATION_SUBJECT_VERSION_NUMBER,
-            cr.getSubjectVersion());
-        values.put(XmlTemplateProvider.CONTENT_RELATION_OBJECT_VERSION_NUMBER,
-            cr.getObjectVersion());
+        values.put(XmlTemplateProvider.CONTENT_RELATION_TYPE, cr.getType().toString());
+        values.put(XmlTemplateProvider.CONTENT_RELATION_DESCRIPTION, cr.getProperties().getDescription());
+        values.put(XmlTemplateProvider.CONTENT_RELATION_SUBJECT_ID, cr.getSubject());
+        values.put(XmlTemplateProvider.CONTENT_RELATION_OBJECT_ID, cr.getObject());
+        values.put(XmlTemplateProvider.CONTENT_RELATION_SUBJECT_VERSION_NUMBER, cr.getSubjectVersion());
+        values.put(XmlTemplateProvider.CONTENT_RELATION_OBJECT_VERSION_NUMBER, cr.getObjectVersion());
 
         return values;
     }
 
     /**
      * Getting Namespaces for RelsExt as Map.
-     * 
+     *
      * @return HashMap with namespace values for XML representation.
      */
     private static Map<String, String> getRelsExtNamespaceValues() {
 
         final Map<String, String> values = new HashMap<String, String>();
 
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX,
-            Constants.PROPERTIES_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS,
-            Constants.PROPERTIES_NS_URI);
+        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX, Constants.PROPERTIES_NS_PREFIX);
+        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS, Constants.PROPERTIES_NS_URI);
 
-        values.put(XmlTemplateProvider.ESCIDOC_RELATION_NS_PREFIX,
-            Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_RELATION_NS,
-            Constants.STRUCTURAL_RELATIONS_NS_URI);
+        values.put(XmlTemplateProvider.ESCIDOC_RELATION_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
+        values.put(XmlTemplateProvider.ESCIDOC_RELATION_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
 
         values.put(XmlTemplateProvider.CONTENT_RELATION_NAMESPACE_PREFIX,
             Constants.CONTENT_RELATIONS_NEW_NS_PREFIX_IN_RELSEXT);
-        values.put(XmlTemplateProvider.CONTENT_RELATION_NAMESPACE,
-            Constants.CONTENT_RELATION_NAMESPACE_URI + '/');
+        values.put(XmlTemplateProvider.CONTENT_RELATION_NAMESPACE, Constants.CONTENT_RELATION_NAMESPACE_URI + '/');
 
-        values.put(XmlTemplateProvider.ESCIDOC_RESOURCE_NS_PREFIX,
-            Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_RESOURCE_NS,
-            Constants.RESOURCES_NS_URI);
+        values.put(XmlTemplateProvider.ESCIDOC_RESOURCE_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
+        values.put(XmlTemplateProvider.ESCIDOC_RESOURCE_NS, Constants.RESOURCES_NS_URI);
 
         return values;
     }

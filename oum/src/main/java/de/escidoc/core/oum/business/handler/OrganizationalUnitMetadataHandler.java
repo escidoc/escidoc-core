@@ -45,13 +45,10 @@ import java.util.Map;
 
 /**
  * The MetadataHandler.
- * 
- * @author Michael Schneider
- * 
  *
+ * @author Michael Schneider
  */
-public class OrganizationalUnitMetadataHandler
-    extends OrganizationalUnitHandlerBase {
+public class OrganizationalUnitMetadataHandler extends OrganizationalUnitHandlerBase {
 
     private static final String UNKNOWN = "unknown";
 
@@ -73,8 +70,7 @@ public class OrganizationalUnitMetadataHandler
 
     private String escidocMetadataRecordNameSpace;
 
-    private final Map<String, Map<String, String>> metadataAttributes =
-        new HashMap<String, Map<String, String>>();
+    private final Map<String, Map<String, String>> metadataAttributes = new HashMap<String, Map<String, String>>();
 
     private static final String MANDATORY_MD_RECORD_NAME = "escidoc";
 
@@ -82,35 +78,26 @@ public class OrganizationalUnitMetadataHandler
 
     /**
      * Instantiate a MetaDataHandler.
-     * 
-     * @param parser
-     *            The parser.
-     * @param rootPath
-     *            XML root element path
      *
+     * @param parser   The parser.
+     * @param rootPath XML root element path
      */
-    public OrganizationalUnitMetadataHandler(final StaxParser parser,
-        final String rootPath) {
+    public OrganizationalUnitMetadataHandler(final StaxParser parser, final String rootPath) {
         super(null, parser);
         this.rootPath = rootPath == null || "/".equals(rootPath) ? "" : rootPath;
     }
 
     /**
      * Handle the start of an element.
-     * 
-     * @param element
-     *            The element.
-     * @return The element.
-     * @throws MissingAttributeValueException
-     * @throws MissingAttributeValueException
-     *             If a required attribute is missing.
-     * @see DefaultHandler#startElement
-     *      (de.escidoc.core.common.util.xml.stax.events.StartElement)
      *
+     * @param element The element.
+     * @return The element.
+     * @throws MissingAttributeValueException If a required attribute is missing.
+     * @see DefaultHandler#startElement (de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
-    public StartElement startElement(final StartElement element)
-        throws InvalidXmlException, MissingAttributeValueException {
+    public StartElement startElement(final StartElement element) throws InvalidXmlException,
+        MissingAttributeValueException {
 
         final String elementName = element.getLocalName();
 
@@ -122,7 +109,7 @@ public class OrganizationalUnitMetadataHandler
 
                 if (currentMdRecordName.length() == 0) {
                     throw new MissingAttributeValueException("The value of attribute 'name' of the element "
-                            + elementName + " was not set!");
+                        + elementName + " was not set!");
 
                 }
                 else if (MANDATORY_MD_RECORD_NAME.equals(this.currentMdRecordName)) {
@@ -130,26 +117,28 @@ public class OrganizationalUnitMetadataHandler
                 }
             }
             catch (final NoSuchAttributeException e) {
-                throw new MissingAttributeValueException("The mandatory attribute 'name' of the element "
-                        + elementName + " was not found!", e);
+                throw new MissingAttributeValueException("The mandatory attribute 'name' of the element " + elementName
+                    + " was not found!", e);
             }
             final Map<String, String> md = new HashMap<String, String>();
             final int indexOfType = element.indexOfAttribute(null, TYPE);
             if (indexOfType == -1) {
                 md.put("type", UNKNOWN);
-            } else {
+            }
+            else {
                 md.put("type", element.getAttribute(indexOfType).getValue());
             }
             final int indexOfSchema = element.indexOfAttribute(null, SCHEMA);
             if (indexOfSchema == -1) {
                 md.put(SCHEMA, UNKNOWN);
-            } else {
+            }
+            else {
                 md.put(SCHEMA, element.getAttribute(indexOfSchema).getValue());
             }
             metadataAttributes.put(this.currentMdRecordName, md);
 
         }
-        else if (this.insideMdRecord && ! this.rootMetadataElementFound) {
+        else if (this.insideMdRecord && !this.rootMetadataElementFound) {
             this.rootMetadataElementFound = true;
             if (this.currentMdRecordName.equals(MANDATORY_MD_RECORD_NAME)) {
                 this.escidocMetadataRecordNameSpace = element.getNamespace();
@@ -160,50 +149,39 @@ public class OrganizationalUnitMetadataHandler
 
     /**
      * Handle the end of an element.
-     * 
-     * @param element
-     *            The element.
-     * @return The element.
-     * @see DefaultHandler#endElement
-     *      (de.escidoc.core.common.util.xml.stax.events.EndElement)
      *
+     * @param element The element.
+     * @return The element.
+     * @see DefaultHandler#endElement (de.escidoc.core.common.util.xml.stax.events.EndElement)
      */
     @Override
-    public EndElement endElement(final EndElement element)
-        throws MissingMdRecordException {
+    public EndElement endElement(final EndElement element) throws MissingMdRecordException {
 
         if (getMdRecordPath().equals(getParser().getCurPath())) {
             this.insideMdRecord = false;
             this.rootMetadataElementFound = false;
             this.currentMdRecordName = null;
         }
-        else if (getMdRecordsPath().equals(getParser().getCurPath())
-            && ! this.mandatoryMdRecordFound) {
-            throw new MissingMdRecordException("Mandatory md-record with a name "
-                    + MANDATORY_MD_RECORD_NAME + " is missing.");
+        else if (getMdRecordsPath().equals(getParser().getCurPath()) && !this.mandatoryMdRecordFound) {
+            throw new MissingMdRecordException("Mandatory md-record with a name " + MANDATORY_MD_RECORD_NAME
+                + " is missing.");
         }
         return element;
     }
 
     /**
      * Handle the character section of an element.
-     * 
-     * @param s
-     *            The contents of the character section.
-     * @param element
-     *            The element.
-     * @return The character section.
-     * @see DefaultHandler#characters
-     *      (java.lang.String,
-     *      de.escidoc.core.common.util.xml.stax.events.StartElement)
      *
+     * @param s       The contents of the character section.
+     * @param element The element.
+     * @return The character section.
+     * @see DefaultHandler#characters (java.lang.String, de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
     public String characters(final String s, final StartElement element) {
 
-        if (MANDATORY_MD_RECORD_NAME.equals(this.currentMdRecordName)
-            && "title".equals(element.getLocalName())
-                && Constants.DC_NS_URI.equals(element.getNamespace())) {
+        if (MANDATORY_MD_RECORD_NAME.equals(this.currentMdRecordName) && "title".equals(element.getLocalName())
+            && Constants.DC_NS_URI.equals(element.getNamespace())) {
             this.dcTitle = s;
         }
         return s;
@@ -217,9 +195,8 @@ public class OrganizationalUnitMetadataHandler
     }
 
     /**
-     * Retrieves a namespace uri of a child element of "md-record" element,
-     * whose attribute "name" set to "escidoc".
-     * 
+     * Retrieves a namespace uri of a child element of "md-record" element, whose attribute "name" set to "escidoc".
+     *
      * @return Namespace of MetadataRecord
      */
     public String getEscidocMetadataRecordNameSpace() {

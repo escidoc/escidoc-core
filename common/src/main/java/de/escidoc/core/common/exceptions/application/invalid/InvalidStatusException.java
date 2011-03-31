@@ -21,13 +21,11 @@
 package de.escidoc.core.common.exceptions.application.invalid;
 
 /**
- * The InvalidStatusException is used to indicate that the status of the object
- * is not valid for executing the action. returned httpStatusCode is 412. Status
- * code (412) indicating that the precondition given in one or more of the
+ * The InvalidStatusException is used to indicate that the status of the object is not valid for executing the action.
+ * returned httpStatusCode is 412. Status code (412) indicating that the precondition given in one or more of the
  * request-header fields evaluated to false when it was tested on the server.
- * 
- * @author Michael Hoppe (FIZ Karlsruhe)
  *
+ * @author Michael Hoppe (FIZ Karlsruhe)
  */
 public class InvalidStatusException extends ValidationException {
 
@@ -42,8 +40,6 @@ public class InvalidStatusException extends ValidationException {
 
     /**
      * Default constructor.
-     * 
-     *
      */
     public InvalidStatusException() {
         super(HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -51,9 +47,8 @@ public class InvalidStatusException extends ValidationException {
 
     /**
      * Constructor used to map an initial exception.
-     * 
-     * @param error
-     *            Throwable
+     *
+     * @param error Throwable
      */
     public InvalidStatusException(final Throwable error) {
         super(error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -61,24 +56,19 @@ public class InvalidStatusException extends ValidationException {
 
     /**
      * Constructs a new exception with the specified detail message.
-     * 
-     * @param message -
-     *            the detail message.
      *
+     * @param message - the detail message.
      */
     public InvalidStatusException(final String message) {
         super(message, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 
     /**
-     * Constructor used to create a new Exception with the specified detail
-     * message and a mapping to an initial exception.
-     * 
-     * @param message -
-     *            the detail message.
-     * @param error
-     *            Throwable
+     * Constructor used to create a new Exception with the specified detail message and a mapping to an initial
+     * exception.
      *
+     * @param message - the detail message.
+     * @param error   Throwable
      */
     public InvalidStatusException(final String message, final Throwable error) {
         super(message, error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);

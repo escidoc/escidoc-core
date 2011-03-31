@@ -42,13 +42,11 @@ import static org.junit.Assert.fail;
 
 /**
  * Test the mock implementation of the item resource.
- * 
+ *
  * @author Michael Schneider
- * 
  */
 @RunWith(value = Parameterized.class)
-public class ItemComponentExternalContentTest extends ItemTestBase
-    implements ItemXpathsProvider {
+public class ItemComponentExternalContentTest extends ItemTestBase implements ItemXpathsProvider {
 
     private static final String STORAGE_EXTERNAL_MANAGED = "external-managed";
 
@@ -65,108 +63,81 @@ public class ItemComponentExternalContentTest extends ItemTestBase
     private String urlAfterCreate = null;
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ItemComponentExternalContentTest(final int transport) {
         super(transport);
     }
 
     /**
-     * Test successfully creating an item with a component containing a binary
-     * content,referenced by an URL, and the attribute 'storage' set to
-     * 'external-url'.
-     * 
-     * @throws Exception
+     * Test successfully creating an item with a component containing a binary content,referenced by an URL, and the
+     * attribute 'storage' set to 'external-url'.
      */
     @Test
-    public void testCreateItemWithExternalBinaryContentAndExternalExternalUrl()
-        throws Exception {
+    public void testCreateItemWithExternalBinaryContentAndExternalExternalUrl() throws Exception {
 
         createItemWithExternalBinaryContent(STORAGE_EXTERNAL_URL);
 
-        assertEquals("The attribute 'href' has a wrong value", urlBeforeCreate,
-            urlAfterCreate);
+        assertEquals("The attribute 'href' has a wrong value", urlBeforeCreate, urlAfterCreate);
     }
 
     /**
-     * Test successfully creating an item with a component containing a binary
-     * content,referenced by an URL, and the attribute 'storage' set to
-     * 'external-managed'.
-     * 
-     * @throws Exception
+     * Test successfully creating an item with a component containing a binary content,referenced by an URL, and the
+     * attribute 'storage' set to 'external-managed'.
      */
     @Test
-    public void testCreateItemWithExternalBinaryContentAndExternalManaged()
-        throws Exception {
+    public void testCreateItemWithExternalBinaryContentAndExternalManaged() throws Exception {
         createItemWithExternalBinaryContent(STORAGE_EXTERNAL_MANAGED);
     }
 
     /**
-     * Test declining creating an item with a component containing a binary
-     * content inline, and the attribute 'storage' set to 'external-url'.
-     * 
-     * @throws Exception
+     * Test declining creating an item with a component containing a binary content inline, and the attribute 'storage'
+     * set to 'external-url'.
      */
     @Test
-    public void testCreateItemWithExternalUrlStorageAndInlineBinary()
-        throws Exception {
+    public void testCreateItemWithExternalUrlStorageAndInlineBinary() throws Exception {
         createItemWithExternalStorageAndInlineBinary(STORAGE_EXTERNAL_URL);
     }
 
     /**
-     * Test declining creating an item with a component containing a binary
-     * content inline, and the attribute 'storage' set to 'external-managed'.
-     * 
-     * @throws Exception
+     * Test declining creating an item with a component containing a binary content inline, and the attribute 'storage'
+     * set to 'external-managed'.
      */
     @Test
-    public void testCreateItemWithExternalManagedStorageAndInlineBinary()
-        throws Exception {
+    public void testCreateItemWithExternalManagedStorageAndInlineBinary() throws Exception {
         createItemWithExternalStorageAndInlineBinary(STORAGE_EXTERNAL_MANAGED);
     }
 
-    private void createItemWithExternalStorageAndInlineBinary(
-        final String storage) throws Exception {
+    private void createItemWithExternalStorageAndInlineBinary(final String storage) throws Exception {
         Document item =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
-                + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                "escidoc_item_198_for_create.xml");
         String storageBeforeCreate = storage;
         Document newItem =
-            (Document) substitute(item,
-                "/item/components/component[1]/content/@storage",
-                storageBeforeCreate);
-        Node itemWithoutSecondComponent =
-            deleteElement(newItem, "/item/components/component[2]");
+            (Document) substitute(item, "/item/components/component[1]/content/@storage", storageBeforeCreate);
+        Node itemWithoutSecondComponent = deleteElement(newItem, "/item/components/component[2]");
         String xmlData = toString(itemWithoutSecondComponent, false);
         try {
             theItemXml = create(xmlData);
-            fail("No exception occurred on create item with the attribute"
-                + " storage set to " + storage + " and inline binary content.");
+            fail("No exception occurred on create item with the attribute" + " storage set to " + storage
+                + " and inline binary content.");
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                "InvalidContentException", InvalidContentException.class, e);
+            EscidocRestSoapTestBase.assertExceptionType("InvalidContentException", InvalidContentException.class, e);
         }
     }
 
     /**
-     * Test declining creating an item with a component which has no attribute
-     * 'storage' in a content element.
-     * 
-     * @throws Exception
+     * Test declining creating an item with a component which has no attribute 'storage' in a content element.
      */
     @Test
     public void testCreateItemWithoutAttributeStorage() throws Exception {
         Document item =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
-                + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                "escidoc_item_198_for_create.xml");
 
-        Document newItem =
-            (Document) deleteAttribute(item,
-                "/item/components/component[1]/content/@storage");
-        Node itemWithoutSecondComponent =
-            deleteElement(newItem, "/item/components/component[2]");
+        Document newItem = (Document) deleteAttribute(item, "/item/components/component[1]/content/@storage");
+        Node itemWithoutSecondComponent = deleteElement(newItem, "/item/components/component[2]");
         String xmlData = toString(itemWithoutSecondComponent, false);
         try {
             theItemXml = create(xmlData);
@@ -174,163 +145,120 @@ public class ItemComponentExternalContentTest extends ItemTestBase
                 + "the attribute 'storage' in element 'content'");
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                "InvalidContentException", InvalidContentException.class, e);
+            EscidocRestSoapTestBase.assertExceptionType("InvalidContentException", InvalidContentException.class, e);
         }
     }
 
     /**
-     * Test successfully updating an item with a component containing a binary
-     * content inline, and the attribute 'storage' set to 'external-url'. The
-     * attribute storage was set to 'internal-managed' while create.
-     * 
-     * @throws Exception
+     * Test successfully updating an item with a component containing a binary content inline, and the attribute
+     * 'storage' set to 'external-url'. The attribute storage was set to 'internal-managed' while create.
      */
     @Test
-    public void testUpdateItemWithExternalUrlStorageAndInlineBinary()
-        throws Exception {
+    public void testUpdateItemWithExternalUrlStorageAndInlineBinary() throws Exception {
         updateItemWithExternalStorageAndInlineBinary(STORAGE_EXTERNAL_URL);
     }
 
     /**
-     * Test successfully updating an item with a component containing a binary
-     * content inline, and the attribute 'storage' set to 'external-managed'.
-     * The attribute storage was set to 'internal-managed' while create.
-     * 
-     * @throws Exception
+     * Test successfully updating an item with a component containing a binary content inline, and the attribute
+     * 'storage' set to 'external-managed'. The attribute storage was set to 'internal-managed' while create.
      */
     @Test
-    public void testUpdateItemWithExternalManagedStorageAndInlineBinary()
-        throws Exception {
+    public void testUpdateItemWithExternalManagedStorageAndInlineBinary() throws Exception {
         updateItemWithExternalStorageAndInlineBinary(STORAGE_EXTERNAL_MANAGED);
     }
 
-    private void updateItemWithExternalStorageAndInlineBinary(
-        final String storage) throws Exception {
+    private void updateItemWithExternalStorageAndInlineBinary(final String storage) throws Exception {
         Document item =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
-                + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                "escidoc_item_198_for_create.xml");
 
-        Node itemWithoutSecondComponent =
-            deleteElement(item, "/item/components/component[2]");
+        Node itemWithoutSecondComponent = deleteElement(item, "/item/components/component[2]");
         String xmlData = toString(itemWithoutSecondComponent, false);
         // System.out.println("item " + xmlData);
         theItemXml = create(xmlData);
-        theItemId =
-            getObjidValue(EscidocRestSoapTestBase.getDocument(theItemXml));
+        theItemId = getObjidValue(EscidocRestSoapTestBase.getDocument(theItemXml));
         assertXmlValidItem(xmlData);
         Document createdItem = getDocument(theItemXml);
         if (getTransport(true).equals("REST")) {
             String componentHrefValue =
-                selectSingleNode(createdItem,
-                    "/item/components/component/@href").getNodeValue();
+                selectSingleNode(createdItem, "/item/components/component/@href").getNodeValue();
             componentId = getObjidFromHref(componentHrefValue);
         }
         else {
-            componentId =
-                selectSingleNode(createdItem,
-                    "/item/components/component/@objid").getNodeValue();
+            componentId = selectSingleNode(createdItem, "/item/components/component/@objid").getNodeValue();
         }
-        Node withUpdatedStorage =
-            substitute(createdItem,
-                "/item/components/component/content/@storage", storage);
+        Node withUpdatedStorage = substitute(createdItem, "/item/components/component/content/@storage", storage);
         String toUpdate = toString(withUpdatedStorage, true);
         update(theItemId, toUpdate);
     }
 
     /**
-     * Test successfully updating an item with a component containing a binary
-     * content inline, and missing attribute 'storage'. The attribute storage
-     * was set to 'internal-managed' while create.
-     * 
-     * @throws Exception
+     * Test successfully updating an item with a component containing a binary content inline, and missing attribute
+     * 'storage'. The attribute storage was set to 'internal-managed' while create.
      */
     @Test
-    public void testUpdateItemWithoutStorageAttributeOnUpdateAndInlineBinary()
-        throws Exception {
+    public void testUpdateItemWithoutStorageAttributeOnUpdateAndInlineBinary() throws Exception {
         Document item =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
-                + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                "escidoc_item_198_for_create.xml");
 
-        Node itemWithoutSecondComponent =
-            deleteElement(item, "/item/components/component[2]");
+        Node itemWithoutSecondComponent = deleteElement(item, "/item/components/component[2]");
         String xmlData = toString(itemWithoutSecondComponent, false);
         // System.out.println("item " + xmlData);
         theItemXml = create(xmlData);
-        theItemId =
-            getObjidValue(EscidocRestSoapTestBase.getDocument(theItemXml));
+        theItemId = getObjidValue(EscidocRestSoapTestBase.getDocument(theItemXml));
         assertXmlValidItem(xmlData);
         Document createdItem = getDocument(theItemXml);
         if (getTransport(true).equals("REST")) {
             String componentHrefValue =
-                selectSingleNode(createdItem,
-                    "/item/components/component/@href").getNodeValue();
+                selectSingleNode(createdItem, "/item/components/component/@href").getNodeValue();
             componentId = getObjidFromHref(componentHrefValue);
         }
         else {
-            componentId =
-                selectSingleNode(createdItem,
-                    "/item/components/component/@objid").getNodeValue();
+            componentId = selectSingleNode(createdItem, "/item/components/component/@objid").getNodeValue();
         }
-        Node withoutStorage =
-            deleteAttribute(createdItem,
-                "/item/components/component/content/@storage");
+        Node withoutStorage = deleteAttribute(createdItem, "/item/components/component/content/@storage");
         String toUpdate = toString(withoutStorage, true);
         update(theItemId, toUpdate);
     }
 
     /**
-     * Test declining updating an item with a component containing a binary
-     * content inline, and the attribute 'storage' set to 'internal-managed'.
-     * The attribute storage was set to 'external-url' while create.
-     * 
-     * @throws Exception
+     * Test declining updating an item with a component containing a binary content inline, and the attribute 'storage'
+     * set to 'internal-managed'. The attribute storage was set to 'external-url' while create.
      */
     @Test
-    public void testUpdateItemWithStorageExternalUrlAndInlineBinary()
-        throws Exception {
+    public void testUpdateItemWithStorageExternalUrlAndInlineBinary() throws Exception {
         updateItemWithInternalManagedAndInlineBinary(STORAGE_EXTERNAL_URL);
     }
 
     /**
-     * Test declining updating an item with a component containing a binary
-     * content inline, and the attribute 'storage' set to 'internal-managed'.
-     * The attribute storage was set to 'external-managed' while create.
-     * 
-     * @throws Exception
+     * Test declining updating an item with a component containing a binary content inline, and the attribute 'storage'
+     * set to 'internal-managed'. The attribute storage was set to 'external-managed' while create.
      */
     @Test
-    public void testUpdateItemWithStorageExternalManagedAndInlineBinary()
-        throws Exception {
+    public void testUpdateItemWithStorageExternalManagedAndInlineBinary() throws Exception {
         updateItemWithInternalManagedAndInlineBinary(STORAGE_EXTERNAL_MANAGED);
     }
 
-    private void updateItemWithInternalManagedAndInlineBinary(String storage)
-        throws Exception {
+    private void updateItemWithInternalManagedAndInlineBinary(String storage) throws Exception {
         Document item =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
-                + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                "escidoc_item_198_for_create.xml");
 
-        Node itemWithoutSecondComponent =
-            deleteElement(item, "/item/components/component[1]");
+        Node itemWithoutSecondComponent = deleteElement(item, "/item/components/component[1]");
         Node itemWithContentExternalUrl =
-            substitute(itemWithoutSecondComponent,
-                "/item/components/component/content/@storage", storage);
+            substitute(itemWithoutSecondComponent, "/item/components/component/content/@storage", storage);
         String xmlData = toString(itemWithContentExternalUrl, false);
         // System.out.println("item " + xmlData);
         theItemXml = create(xmlData);
-        theItemId =
-            getObjidValue(EscidocRestSoapTestBase.getDocument(theItemXml));
+        theItemId = getObjidValue(EscidocRestSoapTestBase.getDocument(theItemXml));
         assertXmlValidItem(xmlData);
         Document createdItem = getDocument(theItemXml);
 
         Node withUpdatedStorage =
-            substitute(createdItem,
-                "/item/components/component/content/@storage",
-                "internal-managed");
+            substitute(createdItem, "/item/components/component/content/@storage", "internal-managed");
         Node withUpdatedStorageAndBinaryInline =
-            substitute(withUpdatedStorage,
-                "/item/components/component/content", "ksd asda�f ad�fa  da sa");
+            substitute(withUpdatedStorage, "/item/components/component/content", "ksd asda�f ad�fa  da sa");
 
         String toUpdate = toString(withUpdatedStorageAndBinaryInline, true);
         // System.out.println("to update " + toUpdate);
@@ -341,68 +269,54 @@ public class ItemComponentExternalContentTest extends ItemTestBase
                 + "create and inline binary content while update.");
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                "InvalidContentException", InvalidContentException.class, e);
+            EscidocRestSoapTestBase.assertExceptionType("InvalidContentException", InvalidContentException.class, e);
         }
 
     }
 
     /**
-     * Test declining Adding of a new Component with content inline and missing
-     * attribute 'storage'.
-     * 
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test declining Adding of a new Component with content inline and missing attribute 'storage'.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testAddingComponentWithoutAttributeStorage() throws Exception {
         Document item =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
-                + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                "escidoc_item_198_for_create.xml");
 
-        Node itemWithoutSecondComponent =
-            deleteElement(item, "/item/components/component[2]");
+        Node itemWithoutSecondComponent = deleteElement(item, "/item/components/component[2]");
         String xmlData = toString(itemWithoutSecondComponent, false);
         // System.out.println("item " + xmlData);
         theItemXml = create(xmlData);
-        theItemId =
-            getObjidValue(EscidocRestSoapTestBase.getDocument(theItemXml));
+        theItemId = getObjidValue(EscidocRestSoapTestBase.getDocument(theItemXml));
         assertXmlValidItem(xmlData);
         // Document curItem = EscidocRestSoapTestBase.getDocument(theItemXml);
 
         // get new component from template
         String templateComponentXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
-                + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
                 "escidoc_item_198_for_create_2_Component_Md-Records.xml");
         Node itemWithFirstComponentWithoutAttributeStorage =
-            deleteAttribute(
-                EscidocRestSoapTestBase.getDocument(templateComponentXml),
+            deleteAttribute(EscidocRestSoapTestBase.getDocument(templateComponentXml),
                 "/item/components/component[1]/content/@storage");
         Node newComponent =
-            selectSingleNode(itemWithFirstComponentWithoutAttributeStorage,
-                "/item/components/component[1]");
+            selectSingleNode(itemWithFirstComponentWithoutAttributeStorage, "/item/components/component[1]");
 
         // add new component to item
         // string op start
-        String theItemXmlWith1AddComp =
-            insertNamespacesInRootElement(theItemXml);
+        String theItemXmlWith1AddComp = insertNamespacesInRootElement(theItemXml);
         theItemXmlWith1AddComp =
-            theItemXmlWith1AddComp.replaceFirst(
-                "</escidocComponents:components>", toString(newComponent, true)
-                    + "</escidocComponents:components>");
+            theItemXmlWith1AddComp.replaceFirst("</escidocComponents:components>", toString(newComponent, true)
+                + "</escidocComponents:components>");
 
         String newItemXml = theItemXmlWith1AddComp; // toString(curItem, false);
         try {
             update(theItemId, newItemXml);
-            fail("No exception occurred on update item with a new component "
-                + "without content attribute 'storage'");
+            fail("No exception occurred on update item with a new component " + "without content attribute 'storage'");
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                "InvalidContentException", InvalidContentException.class, e);
+            EscidocRestSoapTestBase.assertExceptionType("InvalidContentException", InvalidContentException.class, e);
         }
     }
 }

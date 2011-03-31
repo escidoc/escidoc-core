@@ -53,9 +53,8 @@ import static org.junit.Assert.fail;
 
 /**
  * Test the implementation of the Report resource.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 @RunWith(value = Parameterized.class)
 public class ReportTest extends ReportTestBase {
@@ -63,32 +62,27 @@ public class ReportTest extends ReportTestBase {
     private ReportDefinitionTest reportDefinition = null;
 
     private AggregationDefinitionTest aggregationDefinition = null;
-    
+
     private static final int aggregationDefinitionsCount = 3;
 
     private static final int reportDefinitionsCount = 5;
 
-    private static String[][] reportDefinitionIds = 
-        new String[aggregationDefinitionsCount][reportDefinitionsCount];
+    private static String[][] reportDefinitionIds = new String[aggregationDefinitionsCount][reportDefinitionsCount];
 
-    private static String[] aggregationDefinitionIds = 
-        new String[aggregationDefinitionsCount];
+    private static String[] aggregationDefinitionIds = new String[aggregationDefinitionsCount];
 
     private static int methodCounter = 0;
 
-    private static final String PREPROCESSING_URL = 
-                "jmx-console/HtmlAdaptor?action=invokeOp"
-        + "&name=eSciDocCore%3Aname%3DStatisticPreprocessorService"
-        + "&methodIndex=${methodIndex}&arg0=";
-    
+    private static final String PREPROCESSING_URL =
+        "jmx-console/HtmlAdaptor?action=invokeOp" + "&name=eSciDocCore%3Aname%3DStatisticPreprocessorService"
+            + "&methodIndex=${methodIndex}&arg0=";
+
     private static final String STATISTIC_PREPROCESSOR_METHOD_INDEX = "0";
-    
-    private static final Pattern METHOD_INDEX_PATTERN = 
-                    Pattern.compile("\\$\\{methodIndex\\}");
+
+    private static final Pattern METHOD_INDEX_PATTERN = Pattern.compile("\\$\\{methodIndex\\}");
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ReportTest(final int transport) {
         super(transport);
@@ -96,9 +90,8 @@ public class ReportTest extends ReportTestBase {
 
     /**
      * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Before
     public void initialize() throws Exception {
@@ -117,9 +110,8 @@ public class ReportTest extends ReportTestBase {
 
     /**
      * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @After
     public void deinitialize() throws Exception {
@@ -134,21 +126,16 @@ public class ReportTest extends ReportTestBase {
 
     /**
      * Creates report-definitions for tests.
-     * 
      */
     private void createReportDefinitions() {
         try {
             for (int i = 1; i < reportDefinitionsCount + 1; i++) {
                 for (int j = 0; j < aggregationDefinitionsCount; j++) {
                     String xml =
-                        getTemplateAsFixedReportDefinitionString(
-                            TEMPLATE_REP_DEF_PATH,
-                            "escidoc_report_definition_for_report_test" + i
-                                + ".xml");
-                    xml = replaceElementPrimKey(xml, "scope", 
-                                EscidocTestBase.STATISTIC_SCOPE_ID1);
-                    xml =
-                        replaceTableNames(xml, aggregationDefinitionIds[j].toString());
+                        getTemplateAsFixedReportDefinitionString(TEMPLATE_REP_DEF_PATH,
+                            "escidoc_report_definition_for_report_test" + i + ".xml");
+                    xml = replaceElementPrimKey(xml, "scope", EscidocTestBase.STATISTIC_SCOPE_ID1);
+                    xml = replaceTableNames(xml, aggregationDefinitionIds[j].toString());
                     String result = reportDefinition.create(xml);
                     reportDefinitionIds[j][i - 1] = getPrimKey(result);
                 }
@@ -161,30 +148,16 @@ public class ReportTest extends ReportTestBase {
 
     /**
      * explain operation without parameters for existing database xyz.
-     * 
-     * @test.name explain (1)
-     * @test.id SB_EX-1
-     * @test.input
-     * @test.inputDescription
-     * @test.expected explain plan for the corresponding database according
-     *                ZeeRex Schema
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
-    public void createAggregationDefinition(
-            final String fileName, final int aggregationDefinitionNumber)
-                                                        throws Exception {
-        String xml =
-            getTemplateAsFixedAggregationDefinitionString(TEMPLATE_AGG_DEF_PATH,
-                fileName);
-        xml = replaceElementPrimKey(xml, "scope", 
-                EscidocTestBase.STATISTIC_SCOPE_ID1);
+    public void createAggregationDefinition(final String fileName, final int aggregationDefinitionNumber)
+        throws Exception {
+        String xml = getTemplateAsFixedAggregationDefinitionString(TEMPLATE_AGG_DEF_PATH, fileName);
+        xml = replaceElementPrimKey(xml, "scope", EscidocTestBase.STATISTIC_SCOPE_ID1);
         try {
             String result = aggregationDefinition.create(xml);
-            aggregationDefinitionIds[aggregationDefinitionNumber] 
-                                                 = getPrimKey(result);
+            aggregationDefinitionIds[aggregationDefinitionNumber] = getPrimKey(result);
         }
         catch (final Exception e) {
             fail("Exception occured " + e.toString());
@@ -193,45 +166,36 @@ public class ReportTest extends ReportTestBase {
 
     /**
      * triggers preprocessing via jmx-console.
-     * 
+     *
      * @param methodIndex methodIndex
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    private void triggerPreprocessing(
-            final String methodIndex) throws Exception {
+    private void triggerPreprocessing(final String methodIndex) throws Exception {
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.DAY_OF_MONTH, 1);
         cal.set(Calendar.MONTH, 1);
         cal.set(Calendar.YEAR, 2009);
-        
-        String urlParameters =
-            PREPROCESSING_URL + cal.getTimeInMillis();
-        
-        Matcher methodIndexMatcher = 
-            METHOD_INDEX_PATTERN.matcher(urlParameters);
+
+        String urlParameters = PREPROCESSING_URL + cal.getTimeInMillis();
+
+        Matcher methodIndexMatcher = METHOD_INDEX_PATTERN.matcher(urlParameters);
         urlParameters = methodIndexMatcher.replaceAll(methodIndex);
 
         String httpUrl =
-            HttpHelper.createUrl(Constants.PROTOCOL, Constants.HOST_PORT,
-                Constants.ESCIDOC_BASE_URI + urlParameters);
+            HttpHelper.createUrl(Constants.PROTOCOL, Constants.HOST_PORT, Constants.ESCIDOC_BASE_URI + urlParameters);
         long time = System.currentTimeMillis();
-        HttpResponse result = 
-            HttpHelper.executeHttpRequest(
-                    Constants.HTTP_METHOD_GET, httpUrl, null,
-            "", null);
+        HttpResponse result = HttpHelper.executeHttpRequest(Constants.HTTP_METHOD_GET, httpUrl, null, "", null);
         String response = EntityUtils.toString(result.getEntity(), HTTP.UTF_8);
-        response = " preprocessing needed " 
-                + (System.currentTimeMillis() - time) + response;
+        response = " preprocessing needed " + (System.currentTimeMillis() - time) + response;
         try {
-            assertMatches(
-                    "String does not match es expected. " + response, 
-                    "Operation completed successfully without a return value", 
-                    response);
-        } catch (final AssertionError e) {
+            assertMatches("String does not match es expected. " + response,
+                "Operation completed successfully without a return value", response);
+        }
+        catch (final AssertionError e) {
             if (methodIndex.equals(STATISTIC_PREPROCESSOR_METHOD_INDEX)) {
                 triggerPreprocessing("1");
-            } else {
+            }
+            else {
                 throw e;
             }
         }
@@ -239,33 +203,25 @@ public class ReportTest extends ReportTestBase {
 
     /**
      * triggers preprocessing via framework-interface.
-     * 
+     *
      * @param aggrDefinitionId aggrDefinitionId
-     * @param date date
-     * @throws Exception
-     *             If anything fails.
+     * @param date             date
+     * @throws Exception If anything fails.
      */
-    private void triggerPreprocessing(
-            final String aggrDefinitionId, 
-                final String date) throws Exception {
+    private void triggerPreprocessing(final String aggrDefinitionId, final String date) throws Exception {
         String preprocessingInformationXml =
-            EscidocRestSoapTestBase.getTemplateAsString(
-                    TEMPLATE_PREPROCESSING_INFO_PATH,
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_PREPROCESSING_INFO_PATH,
                 "escidoc_preprocessing_information1.xml");
-        Document doc = 
-            EscidocRestSoapTestBase.
-                getDocument(preprocessingInformationXml);
+        Document doc = EscidocRestSoapTestBase.getDocument(preprocessingInformationXml);
         substitute(doc, "/preprocessing-information/start-date", date);
         substitute(doc, "/preprocessing-information/end-date", date);
-        getPreprocessingClient().preprocess(
-                aggrDefinitionId, toString(doc, false));
+        getPreprocessingClient().preprocess(aggrDefinitionId, toString(doc, false));
     }
 
     /**
      * delete report-definitions.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     public void deleteReportDefinitions() throws Exception {
         for (int i = 0; i < reportDefinitionIds.length; i++) {
@@ -277,9 +233,8 @@ public class ReportTest extends ReportTestBase {
 
     /**
      * delete aggregation-definition.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     public void deleteAggregationDefinition() throws Exception {
         for (int i = 0; i < aggregationDefinitionIds.length; i++) {
@@ -288,19 +243,16 @@ public class ReportTest extends ReportTestBase {
     }
 
     /**
-     * retrieve reports with all report-definitionids and compare it to
-     * escidoc_expected_reports.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * retrieve reports with all report-definitionids and compare it to escidoc_expected_reports.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSMRP1() throws Exception {
         StringBuffer results = new StringBuffer("");
         // Always use same report_parameters.xml
         String xml =
-            getTemplateAsFixedReportParametersString(
-                TEMPLATE_REP_PARAMETERS_PATH, "escidoc_report_parameters1.xml");
+            getTemplateAsFixedReportParametersString(TEMPLATE_REP_PARAMETERS_PATH, "escidoc_report_parameters1.xml");
 
         for (int i = 0; i < aggregationDefinitionIds.length; i++) {
             results.append(checkReport(i, 0, 1, xml));
@@ -335,9 +287,7 @@ public class ReportTest extends ReportTestBase {
 
         // check reportDefinition with wrong placeholder////////////////////////
         try {
-            xml =
-                replaceElementPrimKey(xml, "report-definition",
-                    reportDefinitionIds[0][4].toString());
+            xml = replaceElementPrimKey(xml, "report-definition", reportDefinitionIds[0][4].toString());
             retrieve(xml);
             results.append("NO EXCEPTION");
 
@@ -346,7 +296,8 @@ public class ReportTest extends ReportTestBase {
             String exceptionType = e.getClass().getSimpleName();
             if (exceptionType.equals("MissingMethodParameterException")) {
                 results.append("OK");
-            } else {
+            }
+            else {
                 System.out.println(exceptionType);
                 results.append("WRONG");
             }
@@ -359,23 +310,13 @@ public class ReportTest extends ReportTestBase {
             }
         }
         assertion.append("OK");
-        assertEquals("results not as expected: " + results.toString(), 
-            assertion.toString(), results.toString());
+        assertEquals("results not as expected: " + results.toString(), assertion.toString(), results.toString());
     }
 
     /**
      * Tests declining retrieving a report with providing corrupted xml.
-     * 
-     * @test.name Default Policies - Corrupted Xml.
-     * @test.id SM_Rrp-2
-     * @test.input
-     *          <ul>
-     *          <li>Corrupted xml.</li>
-     *          </ul>
-     * @test.expected: InvalidXmlException
-     * @test.status Implemented
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSMRP2() throws Exception {
@@ -384,73 +325,52 @@ public class ReportTest extends ReportTestBase {
         try {
             retrieve("Corrupted");
             EscidocRestSoapTestBase.failMissingException(
-                "Retrieving report with providing corrupted xml not declined.",
-                ec);
+                "Retrieving report with providing corrupted xml not declined.", ec);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                "Retrieving report with providing corrupted xml not declined,"
-                    + " properly.", ec, e);
+            EscidocRestSoapTestBase.assertExceptionType("Retrieving report with providing corrupted xml not declined,"
+                + " properly.", ec, e);
         }
     }
 
     /**
      * Tests declining retrieving a report without providing xml.
-     * 
-     * @test.name Default Policies - No Xml.
-     * @test.id SM_Rrp-3
-     * @test.input
-     *          <ul>
-     *          <li>No parameter xml is provided.</li>
-     *          </ul>
-     * @test.expected: InvalidXmlException
-     * @test.status Implemented
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSMRP3() throws Exception {
 
-        final Class<MissingMethodParameterException> ec =
-            MissingMethodParameterException.class;
+        final Class<MissingMethodParameterException> ec = MissingMethodParameterException.class;
         try {
             retrieve(null);
-            EscidocRestSoapTestBase.failMissingException(
-                "Retrieving report without providing xml not declined.", ec);
+            EscidocRestSoapTestBase.failMissingException("Retrieving report without providing xml not declined.", ec);
         }
         catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
-                "Retrieving report without providing corrupted xml not declined,"
-                    + " properly.", ec, e);
+                "Retrieving report without providing corrupted xml not declined," + " properly.", ec, e);
         }
     }
-    
+
     /**
      * retrieve report and check it.
-     * 
-     * @param repDefIndex index
+     *
+     * @param repDefIndex   index
      * @param expectedIndex index
-     * @param xml report-parameters
+     * @param xml           report-parameters
      * @return String result
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    private String checkReport(
-        final int aggDefIndex, 
-        final int repDefIndex, 
-        final int expectedIndex, 
-        final String xml) throws Exception {
+    private String checkReport(final int aggDefIndex, final int repDefIndex, final int expectedIndex, final String xml)
+        throws Exception {
         String xml1 =
-            replaceElementPrimKey(xml, "report-definition",
-                reportDefinitionIds[aggDefIndex][repDefIndex].toString());
+            replaceElementPrimKey(xml, "report-definition", reportDefinitionIds[aggDefIndex][repDefIndex].toString());
         String result = retrieve(xml1);
 
         String expected =
-            getTemplateAsFixedReportString(TEMPLATE_REPORT_PATH,
-                "escidoc_expected_report" + aggDefIndex 
-                + "_" + expectedIndex + ".xml");
-        if (!result.matches("(?s).*" 
-                + reportDefinitionIds[aggDefIndex][repDefIndex].toString() + ".*")) {
+            getTemplateAsFixedReportString(TEMPLATE_REPORT_PATH, "escidoc_expected_report" + aggDefIndex + "_"
+                + expectedIndex + ".xml");
+        if (!result.matches("(?s).*" + reportDefinitionIds[aggDefIndex][repDefIndex].toString() + ".*")) {
             return "WRONG";
         }
         expected = replaceYear(expected, "2009");
@@ -461,10 +381,11 @@ public class ReportTest extends ReportTestBase {
         expected = expected.replaceFirst(".*?<report:report-record.*?>", "");
         if (expected.equals(result)) {
             return "OK";
-        } else {
+        }
+        else {
             System.out.println(repDefIndex + expectedIndex + result);
             return "WRONG";
         }
-        
+
     }
 }

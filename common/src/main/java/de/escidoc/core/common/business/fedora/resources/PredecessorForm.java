@@ -22,20 +22,19 @@ package de.escidoc.core.common.business.fedora.resources;
 
 /**
  * Enumeration to describe all forms of predecessors.
- * 
+ *
  * @author Steffen Wagner
  */
 public enum PredecessorForm {
-    SPLITTING("splitting"), FUSION("fusion"), SPIN_OFF("spin-off"), AFFILIATION(
-        "affiliation"), REPLACEMENT("replacement");
+    SPLITTING("splitting"), FUSION("fusion"), SPIN_OFF("spin-off"), AFFILIATION("affiliation"), REPLACEMENT(
+        "replacement");
 
     private final String label;
 
     /**
      * Create a new object.
-     * 
-     * @param label
-     *            object label
+     *
+     * @param label object label
      */
     PredecessorForm(final String label) {
         this.label = label;
@@ -43,7 +42,7 @@ public enum PredecessorForm {
 
     /**
      * Get the label of the object.
-     * 
+     *
      * @return object label
      */
     public String getLabel() {

@@ -10,9 +10,9 @@ import java.rmi.RemoteException;
 public interface ContentModelHandlerRemoteHome extends EJBHome {
 
     String COMP_NAME = "java:comp/env/ejb/ContentModelHandler";
+
     String JNDI_NAME = "ejb/ContentModelHandler";
 
-    ContentModelHandlerRemote create()
-            throws CreateException, RemoteException;
+    ContentModelHandlerRemote create() throws CreateException, RemoteException;
 
 }

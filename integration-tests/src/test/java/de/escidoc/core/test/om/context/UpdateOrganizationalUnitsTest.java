@@ -44,9 +44,8 @@ import static org.junit.Assert.assertNull;
 
 /**
  * Test the mock implementation of the item resource.
- * 
+ *
  * @author Michael Schneider
- * 
  */
 @RunWith(value = Parameterized.class)
 public class UpdateOrganizationalUnitsTest extends ContextTestBase {
@@ -54,8 +53,7 @@ public class UpdateOrganizationalUnitsTest extends ContextTestBase {
     private String path = "";
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public UpdateOrganizationalUnitsTest(final int transport) {
         super(transport);
@@ -63,9 +61,8 @@ public class UpdateOrganizationalUnitsTest extends ContextTestBase {
 
     /**
      * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Before
     public void setUp() throws Exception {
@@ -74,17 +71,14 @@ public class UpdateOrganizationalUnitsTest extends ContextTestBase {
 
     /**
      * Successfully test. Removing an Organizational Units to a Context.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOmContextDelOU() throws Exception {
         Document context =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTEXT_PATH
-                + this.path, "context_create.xml");
-        substitute(context, "/context/properties/name",
-            getUniqueName("PubMan Context "));
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTEXT_PATH + this.path, "context_create.xml");
+        substitute(context, "/context/properties/name", getUniqueName("PubMan Context "));
         String template = toString(context, false);
 
         String created = create(template);
@@ -94,9 +88,7 @@ public class UpdateOrganizationalUnitsTest extends ContextTestBase {
         String id = getObjidValue(createdDoc);
 
         // remove second OU from Context
-        Node node =
-            selectSingleNode(createdDoc,
-                "/context/properties/organizational-units/organizational-unit");
+        Node node = selectSingleNode(createdDoc, "/context/properties/organizational-units/organizational-unit");
         node.getParentNode().removeChild(node);
 
         // get id from removed OU
@@ -115,11 +107,9 @@ public class UpdateOrganizationalUnitsTest extends ContextTestBase {
         String newContext = update(id, created);
 
         // assert second OU does was removed from Context
-        Document newContextDoc =
-            EscidocRestSoapTestBase.getDocument(newContext);
+        Document newContextDoc = EscidocRestSoapTestBase.getDocument(newContext);
 
-        String xpath =
-            "/context/properties/organizational-units/organizational-unit";
+        String xpath = "/context/properties/organizational-units/organizational-unit";
         if (getTransport() == Constants.TRANSPORT_REST) {
             xpath += "[@href = '" + attrId + "']";
         }
@@ -133,22 +123,17 @@ public class UpdateOrganizationalUnitsTest extends ContextTestBase {
 
     /**
      * Successfully test. Adding an Organizational Units to a Context.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOmContextAddOU() throws Exception {
         Document context =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTEXT_PATH
-                + this.path, "context_create.xml");
-        substitute(context, "/context/properties/name",
-            getUniqueName("PubMan Context "));
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTEXT_PATH + this.path, "context_create.xml");
+        substitute(context, "/context/properties/name", getUniqueName("PubMan Context "));
 
         // remove second OU from Context
-        Node node =
-            selectSingleNode(context,
-                "/context/properties/organizational-units/organizational-unit");
+        Node node = selectSingleNode(context, "/context/properties/organizational-units/organizational-unit");
 
         String attrId = null;
         // String debug = toString(node, false);
@@ -171,9 +156,7 @@ public class UpdateOrganizationalUnitsTest extends ContextTestBase {
         String id = getObjidValue(createdDoc);
 
         // add new OU to properties/org-units
-        Node ou =
-            selectSingleNode(createdDoc,
-                "/context/properties/organizational-units/organizational-unit");
+        Node ou = selectSingleNode(createdDoc, "/context/properties/organizational-units/organizational-unit");
         Node newOu = ou.cloneNode(true);
 
         String xpath = "";
@@ -186,9 +169,7 @@ public class UpdateOrganizationalUnitsTest extends ContextTestBase {
 
         substitute(newOu, xpath, attrId);
 
-        Node ous =
-            selectSingleNode(createdDoc,
-                "/context/properties/organizational-units");
+        Node ous = selectSingleNode(createdDoc, "/context/properties/organizational-units");
 
         ous.appendChild(newOu);
 
@@ -196,13 +177,11 @@ public class UpdateOrganizationalUnitsTest extends ContextTestBase {
         String newContext = update(id, template);
 
         // assert second OU does was removed from Context
-        Document newContextDoc =
-            EscidocRestSoapTestBase.getDocument(newContext);
+        Document newContextDoc = EscidocRestSoapTestBase.getDocument(newContext);
 
         // assert number of OUs == 2
         NodeList updatedOus =
-            selectNodeList(newContextDoc,
-                "/context/properties/organizational-units/organizational-unit");
+            selectNodeList(newContextDoc, "/context/properties/organizational-units/organizational-unit");
         assertEquals("Missing new OU after update", 2, updatedOus.getLength());
 
         xpath = "/context/properties/organizational-units/organizational-unit";
@@ -219,22 +198,17 @@ public class UpdateOrganizationalUnitsTest extends ContextTestBase {
 
     /**
      * Successfully test. Replacing an Organizational Units in a Context.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOmContextReplaceOU() throws Exception {
         Document context =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTEXT_PATH
-                + this.path, "context_create.xml");
-        substitute(context, "/context/properties/name",
-            getUniqueName("PubMan Context "));
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTEXT_PATH + this.path, "context_create.xml");
+        substitute(context, "/context/properties/name", getUniqueName("PubMan Context "));
 
         // remove second OU from Context
-        Node node =
-            selectSingleNode(context,
-                "/context/properties/organizational-units/organizational-unit");
+        Node node = selectSingleNode(context, "/context/properties/organizational-units/organizational-unit");
 
         String attrId = null;
         // String debug = toString(node, false);
@@ -257,13 +231,11 @@ public class UpdateOrganizationalUnitsTest extends ContextTestBase {
         String id = getObjidValue(createdDoc);
 
         NodeList createdOus =
-            selectNodeList(createdDoc,
-                "/context/properties/organizational-units/organizational-unit");
+            selectNodeList(createdDoc, "/context/properties/organizational-units/organizational-unit");
         assertEquals("More than one OUs created", createdOus.getLength(), 1);
 
         // replace id
-        String xpath =
-            "/context/properties/organizational-units/organizational-unit/";
+        String xpath = "/context/properties/organizational-units/organizational-unit/";
         if (getTransport() == Constants.TRANSPORT_REST) {
             xpath += "@href";
         }
@@ -274,22 +246,18 @@ public class UpdateOrganizationalUnitsTest extends ContextTestBase {
         substitute(createdDoc, xpath, attrId);
 
         // assert that update Context has only one OU
-        NodeList updateOu =
-            selectNodeList(createdDoc,
-                "/context/properties/organizational-units/organizational-unit");
+        NodeList updateOu = selectNodeList(createdDoc, "/context/properties/organizational-units/organizational-unit");
         assertEquals("More than one OUs for update", 1, updateOu.getLength());
 
         created = toString(createdDoc, false);
         String newContext = update(id, created);
 
         // assert that the OU was replaced in Context
-        Document newContextDoc =
-            EscidocRestSoapTestBase.getDocument(newContext);
+        Document newContextDoc = EscidocRestSoapTestBase.getDocument(newContext);
 
         // assert that only one OU is part of Context after OU
         NodeList updatedOus =
-            selectNodeList(newContextDoc,
-                "/context/properties/organizational-units/organizational-unit");
+            selectNodeList(newContextDoc, "/context/properties/organizational-units/organizational-unit");
         assertEquals("Only one OU after update", updatedOus.getLength(), 1);
 
         // assert that the single OU has the right id

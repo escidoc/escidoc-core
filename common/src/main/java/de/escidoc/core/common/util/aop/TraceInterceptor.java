@@ -30,7 +30,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.StringWriter;
 
-
 @Aspect
 public class TraceInterceptor {
 
@@ -38,10 +37,9 @@ public class TraceInterceptor {
 
     private static final int DEPTH_SPACES = 2;
 
-    @Around("execution(public * de.escidoc.core..*.* (..))" +
-            " && !within(de.escidoc.core.common.util.aop..*)")
+    @Around("execution(public * de.escidoc.core..*.* (..))" + " && !within(de.escidoc.core.common.util.aop..*)")
     public Object traceMethod(final ProceedingJoinPoint joinPoint) throws Throwable {
-        if(LOGGER.isDebugEnabled()) {
+        if (LOGGER.isDebugEnabled()) {
             final StaticPart staticPart = joinPoint.getStaticPart();
             final Signature signature = staticPart.getSignature();
             final String depthString = getDepthString();
@@ -50,7 +48,8 @@ public class TraceInterceptor {
                 final Object returnValue = joinPoint.proceed();
                 LOGGER.debug(createMessage(false, depthString, signature));
                 return returnValue;
-            } catch(final Exception e) {
+            }
+            catch (final Exception e) {
                 LOGGER.debug(createExceptionMessage(depthString, e));
                 throw e;
             }
@@ -62,10 +61,11 @@ public class TraceInterceptor {
         final StringWriter inMessage = new StringWriter();
         inMessage.append('[').append(String.valueOf(Thread.currentThread().getId())).append(']');
         inMessage.append(depthString);
-        if(in) {
+        if (in) {
             inMessage.append(">> ");
             TraceDepthThreadLocal.increaseDepth();
-        } else {
+        }
+        else {
             inMessage.append("<< ");
             TraceDepthThreadLocal.decreaseDepth();
         }
@@ -81,11 +81,10 @@ public class TraceInterceptor {
         return message.toString();
     }
 
-
     private String getDepthString() {
         final StringWriter depthStringWriter = new StringWriter(TraceDepthThreadLocal.getDepth() * DEPTH_SPACES);
-        for(int i = 0; i < TraceDepthThreadLocal.getDepth(); i++) {
-            for(int j = 0; j < DEPTH_SPACES; j++) {
+        for (int i = 0; i < TraceDepthThreadLocal.getDepth(); i++) {
+            for (int j = 0; j < DEPTH_SPACES; j++) {
                 depthStringWriter.append(' ');
             }
         }

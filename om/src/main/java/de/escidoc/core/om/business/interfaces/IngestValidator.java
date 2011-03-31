@@ -32,25 +32,19 @@ import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.exceptions.EscidocException;
 
 /**
- * This interface abstracts the validation process from the ingestion.
- * The validation process and the information the validation is based on
- * may very well be subject to change as eSciDoc evolves, so the 
- * validation should be flexible enough.
- * 
+ * This interface abstracts the validation process from the ingestion. The validation process and the information the
+ * validation is based on may very well be subject to change as eSciDoc evolves, so the validation should be flexible
+ * enough.
+ *
  * @author Kai Strnad
- * 
  */
 public interface IngestValidator {
 
     /**
      * Check if the given resource is valid assuming the given resource type.
-     * 
-     * @param xmlData
-     * @param resourceType
+     *
      * @return if the resource is valid.
-     * @throws EscidocException
      */
-    boolean isResourceValid(String xmlData, ResourceType resourceType)
-	    throws EscidocException;
-    
+    boolean isResourceValid(String xmlData, ResourceType resourceType) throws EscidocException;
+
 }

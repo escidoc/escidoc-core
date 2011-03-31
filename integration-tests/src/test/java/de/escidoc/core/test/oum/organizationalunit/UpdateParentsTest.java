@@ -43,28 +43,23 @@ import org.w3c.dom.Node;
 
 /**
  * Test the implementation of the organizational-unit resource.
- * 
+ *
  * @author Michael Schneider
- * 
- * 
  */
 @RunWith(value = Parameterized.class)
 public class UpdateParentsTest extends OrganizationalUnitTestBase {
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public UpdateParentsTest(final int transport) {
         super(transport);
     }
 
     /**
-     * Test successfully updating parent relation of an Organizational Unit by
-     * using the general update method.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test successfully updating parent relation of an Organizational Unit by using the general update method.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testUpdateParentRelation01() throws Exception {
@@ -80,21 +75,16 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
 
         Document ou2doc = getDocument(ou2xml);
 
-        Element parent =
-            ou2doc.createElementNS(
-                "http://escidoc.de/core/01/structural-relations/",
-                "srel:parent");
+        Element parent = ou2doc.createElementNS("http://escidoc.de/core/01/structural-relations/", "srel:parent");
 
         if (getTransport() == Constants.TRANSPORT_SOAP) {
             parent.setAttribute("objid", ou1id);
         }
         else {
-            parent.setAttribute("xlink:href", "/oum/organizational-unit/"
-                + ou1id);
+            parent.setAttribute("xlink:href", "/oum/organizational-unit/" + ou1id);
         }
 
-        Node parents =
-            selectSingleNode(ou2doc, XPATH_ORGANIZATIONAL_UNIT_PARENTS);
+        Node parents = selectSingleNode(ou2doc, XPATH_ORGANIZATIONAL_UNIT_PARENTS);
         parents.appendChild(parent);
 
         String tmp = toString(ou2doc, true);
@@ -103,24 +93,19 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
 
         // assert updated values
         if (getTransport() == Constants.TRANSPORT_SOAP) {
-            assertXmlExists("Missing one parent", ou2doc,
-                XPATH_ORGANIZATIONAL_UNIT_PARENT + "[@objid='" + ou1id + "']");
+            assertXmlExists("Missing one parent", ou2doc, XPATH_ORGANIZATIONAL_UNIT_PARENT + "[@objid='" + ou1id + "']");
         }
         else {
-            assertXmlExists("Missing one parent", ou2doc,
-                XPATH_ORGANIZATIONAL_UNIT_PARENT
-                    + "[@href='/oum/organizational-unit/" + ou1id + "']");
+            assertXmlExists("Missing one parent", ou2doc, XPATH_ORGANIZATIONAL_UNIT_PARENT
+                + "[@href='/oum/organizational-unit/" + ou1id + "']");
         }
-        assertXmlExists("Wrong number of parents", ou2doc,
-            XPATH_ORGANIZATIONAL_UNIT_PARENTS + "[count(./parent)='1']");
+        assertXmlExists("Wrong number of parents", ou2doc, XPATH_ORGANIZATIONAL_UNIT_PARENTS + "[count(./parent)='1']");
     }
 
     /**
-     * Test successfully updating parent relation of an Organizational Unit by
-     * using the general update method.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test successfully updating parent relation of an Organizational Unit by using the general update method.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testUpdateParentRelation02() throws Exception {
@@ -137,17 +122,13 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
         String parentsXml = retrieveParents(ou2id);
         Document ou2parents = getDocument(parentsXml);
 
-        Element parent =
-            ou2parents.createElementNS(
-                "http://escidoc.de/core/01/structural-relations/",
-                "srel:parent");
+        Element parent = ou2parents.createElementNS("http://escidoc.de/core/01/structural-relations/", "srel:parent");
 
         if (getTransport() == Constants.TRANSPORT_SOAP) {
             parent.setAttribute("objid", ou1id);
         }
         else {
-            parent.setAttribute("xlink:href", "/oum/organizational-unit/"
-                + ou1id);
+            parent.setAttribute("xlink:href", "/oum/organizational-unit/" + ou1id);
         }
 
         Node parents = selectSingleNode(ou2parents, "/parents");
@@ -159,48 +140,31 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
 
         // assert updated values
         if (getTransport() == Constants.TRANSPORT_SOAP) {
-            assertXmlExists("Missing one parent", ou2parents,
-                "/parents/parent[@objid='" + ou1id + "']");
+            assertXmlExists("Missing one parent", ou2parents, "/parents/parent[@objid='" + ou1id + "']");
         }
         else {
-            assertXmlExists("Missing one parent", ou2parents,
-                "/parents/parent[@href='/oum/organizational-unit/" + ou1id
-                    + "']");
+            assertXmlExists("Missing one parent", ou2parents, "/parents/parent[@href='/oum/organizational-unit/"
+                + ou1id + "']");
         }
-        assertXmlExists("Wrong number of parents", ou2parents,
-            "/parents[count(./parent)='1']");
+        assertXmlExists("Wrong number of parents", ou2parents, "/parents[count(./parent)='1']");
     }
 
     /**
-     * Test declining updating the parents sub resource of an organizational
-     * unit with non existing id.
-     * 
-     * @test.name Update Parent Ous - Unknown id
-     * @test.id OUM-UPOU-2-1
-     * @test.input <ul>
-     *             <li>Non existing id</li>
-     *             <li>Parent Ous XML representation</li>
-     *             </ul>
-     * @test.expected: OrganizationalUnitNotFoundException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test declining updating the parents sub resource of an organizational unit with non existing id.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void test_OUM_UPOU_2_1() throws Exception {
 
-        final Class<OrganizationalUnitNotFoundException> ec =
-            OrganizationalUnitNotFoundException.class;
+        final Class<OrganizationalUnitNotFoundException> ec = OrganizationalUnitNotFoundException.class;
         final String createdXml = createSuccessfully("escidoc_ou_create.xml");
         final String id = getObjidValue(createdXml);
         final String toBeUpdatedXml = retrieveParents(id);
         try {
             updateParentOus(UNKNOWN_ID, toBeUpdatedXml);
 
-            failMissingException(
-                "No exception occured on update of parents with non existing id.",
-                ec);
+            failMissingException("No exception occured on update of parents with non existing id.", ec);
         }
         catch (final Exception e) {
             assertExceptionType(ec, e);
@@ -213,34 +177,27 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
     @Test
     public void test_UpdateParentsOfOuInStatusOpened() throws Exception {
         final Class<InvalidStatusException> ec = InvalidStatusException.class;
-        final String createdNewParentXml =
-            createSuccessfully("escidoc_ou_create.xml");
+        final String createdNewParentXml = createSuccessfully("escidoc_ou_create.xml");
         final String id = getObjidValue(createdNewParentXml);
         createOuHierarchie();
-        open(this.ouTop1Id, getTheLastModificationParam(true, this.ouTop1Id,
-            "Opened organizational unit '" + this.ouTop1Id + "'."));
-        open(this.ouChild1ParentId, getTheLastModificationParam(true,
-            this.ouChild1ParentId, "Opened organizational unit '"
-                + this.ouChild1ParentId + "'."));
+        open(this.ouTop1Id, getTheLastModificationParam(true, this.ouTop1Id, "Opened organizational unit '"
+            + this.ouTop1Id + "'."));
+        open(this.ouChild1ParentId, getTheLastModificationParam(true, this.ouChild1ParentId,
+            "Opened organizational unit '" + this.ouChild1ParentId + "'."));
 
         final String createdXml = retrieve(this.ouChild1ParentId);
         Document createdDocument = getDocument(createdXml);
         if (getTransport() == Constants.TRANSPORT_REST) {
-            substitute(createdDocument,
-                XPATH_ORGANIZATIONAL_UNIT_PARENT_XLINK_HREF,
-                "/ir/organizational-unit/" + id);
+            substitute(createdDocument, XPATH_ORGANIZATIONAL_UNIT_PARENT_XLINK_HREF, "/ir/organizational-unit/" + id);
         }
         else if (getTransport() == Constants.TRANSPORT_SOAP) {
-            substitute(createdDocument, XPATH_ORGANIZATIONAL_UNIT_PARENT_OBJID,
-                id);
+            substitute(createdDocument, XPATH_ORGANIZATIONAL_UNIT_PARENT_OBJID, id);
         }
         String toBeUpdatedXml = toString(createdDocument, true);
         try {
             update(this.ouChild1ParentId, toBeUpdatedXml);
 
-            failMissingException(
-                "No exception occured on update of parents of an OU "
-                    + "in status opened.", ec);
+            failMissingException("No exception occured on update of parents of an OU " + "in status opened.", ec);
         }
         catch (final Exception e) {
             assertExceptionType(ec, e);
@@ -248,34 +205,20 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
     }
 
     /**
-     * Test declining updating the parents sub resource of an organizational
-     * with id of a resource of another type.
-     * 
-     * @test.name Update Parent Ous - Id of another resource type
-     * @test.id OUM-UPOU-2-2
-     * @test.input <ul>
-     *             <li>Existing id of a resource of another resource type</li>
-     *             <li>Parent Ous XML representation</li>
-     *             </ul>
-     * @test.expected: OrganizationalUnitNotFoundException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test declining updating the parents sub resource of an organizational with id of a resource of another type.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void test_OUM_UPOU_2_2() throws Exception {
 
-        final Class<OrganizationalUnitNotFoundException> ec =
-            OrganizationalUnitNotFoundException.class;
+        final Class<OrganizationalUnitNotFoundException> ec = OrganizationalUnitNotFoundException.class;
 
         final String ouXml = createSuccessfully("escidoc_ou_create.xml");
 
         try {
             updateParentOus(CONTEXT_ID, retrieveParents(getObjidValue(ouXml)));
-            failMissingException(
-                "No exception occured on update with id of resoure of"
-                    + " another type.", ec);
+            failMissingException("No exception occured on update with id of resoure of" + " another type.", ec);
         }
         catch (final Exception e) {
             assertExceptionType(ec, e);
@@ -283,22 +226,10 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
     }
 
     /**
-     * Test declining updating the parents sub resource of an organizational
-     * with wrong last modification date (too old).
-     * 
-     * @test.name Update Parent Ous - Optimistic locking error - Too Old
-     * @test.id OUM-UPOU-3-1
-     * @test.input <ul>
-     *             <li>Valid id of organizational unit</li>
-     *             <li>Parent Ous XML representation with set last modification
-     *             date that is older than the last modification date of the
-     *             organizational unit</li>
-     *             </ul>
-     * @test.expected: OptimisticLockingException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test declining updating the parents sub resource of an organizational with wrong last modification date (too
+     * old).
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void test_OUM_UPOU_3_1() throws Exception {
@@ -309,12 +240,11 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
         final String toBeUpdatedXml = retrieveParents(id);
 
         final Document toBeUpdatedDocument =
-            (Document) substitute(getDocument(toBeUpdatedXml), XPATH_PARENTS
-                + "/" + PART_LAST_MODIFICATION_DATE, "2005-01-30T11:36:42.015Z");
+            (Document) substitute(getDocument(toBeUpdatedXml), XPATH_PARENTS + "/" + PART_LAST_MODIFICATION_DATE,
+                "2005-01-30T11:36:42.015Z");
         try {
             updateParentOus(id, toString(toBeUpdatedDocument, false));
-            failMissingException(
-                "No exception occured on update with wrong time stamp.", ec);
+            failMissingException("No exception occured on update with wrong time stamp.", ec);
         }
         catch (final Exception e) {
             assertExceptionType(ec, e);
@@ -322,22 +252,10 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
     }
 
     /**
-     * Test declining updating the parents sub resource of an organizational
-     * with wrong last modification date (more recent).
-     * 
-     * @test.name Update Parent Ous - Optimistic locking error - More recent
-     * @test.id OUM-UPOU-3-2
-     * @test.input <ul>
-     *             <li>Valid id of organizational unit</li>
-     *             <li>Parent Ous XML representation with set last modification
-     *             date that is more recent than the last modification date of
-     *             the organizational unit</li>
-     *             </ul>
-     * @test.expected: OptimisticLockingException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test declining updating the parents sub resource of an organizational with wrong last modification date (more
+     * recent).
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void test_OUM_UPOU_3_2() throws Exception {
@@ -348,13 +266,12 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
         final String toBeUpdatedXml = retrieveParents(id);
 
         final Document toBeUpdatedDocument =
-            (Document) substitute(getDocument(toBeUpdatedXml), XPATH_PARENTS
-                + "/" + PART_LAST_MODIFICATION_DATE, getNowAsTimestamp());
+            (Document) substitute(getDocument(toBeUpdatedXml), XPATH_PARENTS + "/" + PART_LAST_MODIFICATION_DATE,
+                getNowAsTimestamp());
 
         try {
             updateParentOus(id, toString(toBeUpdatedDocument, false));
-            failMissingException(
-                "No exception occured on update with wrong time stamp.", ec);
+            failMissingException("No exception occured on update with wrong time stamp.", ec);
         }
         catch (final Exception e) {
             assertExceptionType(ec, e);
@@ -362,26 +279,14 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
     }
 
     /**
-     * Test declining updating the parents sub resource of an organizational
-     * with missing id.
-     * 
-     * @test.name Update Parent Ous - Missing method parameter error - Missing
-     *            id
-     * @test.id OUM-UPOU-4-1
-     * @test.input <ul>
-     *             <li>Missing id of organizational unit</li>
-     *             </ul>
-     * @test.expected: MissingMethodParameterException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test declining updating the parents sub resource of an organizational with missing id.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void test_OUM_UPOU_4_1() throws Exception {
 
-        final Class<MissingMethodParameterException> ec =
-            MissingMethodParameterException.class;
+        final Class<MissingMethodParameterException> ec = MissingMethodParameterException.class;
 
         final String createdXml = createSuccessfully("escidoc_ou_create.xml");
         final String id = getObjidValue(createdXml);
@@ -389,8 +294,7 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
 
         try {
             updateParentOus(null, toBeUpdatedXml);
-            failMissingException(
-                "No exception occured on update with missing id.", ec);
+            failMissingException("No exception occured on update with missing id.", ec);
         }
         catch (final Exception e) {
             assertExceptionType(ec, e);
@@ -398,37 +302,22 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
     }
 
     /**
-     * Test declining updating the parents sub resource of an organizational
-     * with missing parents xml.
-     * 
-     * @test.name Update Parent Ous - Missing method parameter error - Missing
-     *            parents
-     * @test.id OUM-UPOU-4-2
-     * @test.input <ul>
-     *             <li>Valid id of organizational unit</li>
-     *             <li>Missing Parent Ous XML representation</li>
-     *             </ul>
-     * @test.expected: MissingMethodParameterException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test declining updating the parents sub resource of an organizational with missing parents xml.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void test_OUM_UPOU_4_2() throws Exception {
 
-        final Class<MissingMethodParameterException> ec =
-            MissingMethodParameterException.class;
+        final Class<MissingMethodParameterException> ec = MissingMethodParameterException.class;
 
-        final String toBeUpdatedXml =
-            createSuccessfully("escidoc_ou_create.xml");
+        final String toBeUpdatedXml = createSuccessfully("escidoc_ou_create.xml");
         final String id = getObjidValue(toBeUpdatedXml);
 
         try {
             updateParentOus(id, null);
 
-            failMissingException("No exception occured on update with missing "
-                + "organization-details xml.", ec);
+            failMissingException("No exception occured on update with missing " + "organization-details xml.", ec);
         }
         catch (final Exception e) {
             assertExceptionType(ec, e);
@@ -436,17 +325,9 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
     }
 
     /**
-     * Test declining updating the parents sub resource of an organizational
-     * with corrupt xml.
-     * 
-     * @test.name Update Parent Ous - Corrupt Xml
-     * @test.id OUM-UPOU-5-1
-     * @test.input Corrupted Xml.
-     * @test.expected: XmlCorruptedException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test declining updating the parents sub resource of an organizational with corrupt xml.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void test_OUM_UPOU_5_1() throws Exception {
@@ -458,8 +339,7 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
         final String id = getObjidValue(toBeUpdatedDocument);
         try {
             updateParentOus(id, "<org");
-            failMissingException(
-                "No exception occured on update with corrupted xml.", ec);
+            failMissingException("No exception occured on update with corrupted xml.", ec);
         }
         catch (final Exception e) {
             assertExceptionType(ec, e);
@@ -467,17 +347,10 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
     }
 
     /**
-     * Test declining updating the parents sub resource of an organizational
-     * with wrong root element (organizational-unit) in xml.
-     * 
-     * @test.name Update Parent Ous - Invalid Xml
-     * @test.id OUM-UPOU-5-2
-     * @test.input Invalid Xml.
-     * @test.expected: InvalidXmlException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test declining updating the parents sub resource of an organizational with wrong root element
+     * (organizational-unit) in xml.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void test_OUM_UPOU_5_2() throws Exception {
@@ -489,8 +362,7 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
         final String id = getObjidValue(toBeUpdatedDocument);
         try {
             updateParentOus(id, createdXml);
-            failMissingException(
-                "No exception occured on update with corrupted xml.", ec);
+            failMissingException("No exception occured on update with corrupted xml.", ec);
         }
         catch (final Exception e) {
             assertExceptionType(ec, e);
@@ -498,17 +370,10 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
     }
 
     /**
-     * Test declining updating the parents sub resource of an organizational
-     * with wrong root element (<unknown/>) in xml.
-     * 
-     * @test.name Update Parent Ous - Invalid Xml
-     * @test.id OUM-UPOU-5-3
-     * @test.input Invalid Xml.
-     * @test.expected: InvalidXmlException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test declining updating the parents sub resource of an organizational with wrong root element (<unknown/>) in
+     * xml.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void test_OUM_UPOU_5_3() throws Exception {
@@ -520,8 +385,7 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
         final String id = getObjidValue(toBeUpdatedDocument);
         try {
             updateParentOus(id, "<unknown/>");
-            failMissingException(
-                "No exception occured on update with corrupted xml.", ec);
+            failMissingException("No exception occured on update with corrupted xml.", ec);
         }
         catch (final Exception e) {
             assertExceptionType(ec, e);

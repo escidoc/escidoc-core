@@ -27,9 +27,8 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Velocity Logger with no output.
- * 
+ *
  * @author Steffen Wagner
- * 
  */
 public class VelocityOutputLogger implements LogChute {
 
@@ -37,11 +36,9 @@ public class VelocityOutputLogger implements LogChute {
 
     /**
      * Init Velocity logger.
-     * 
-     * @param arg0
-     *            RuntimeServices
-     * @throws Exception
-     *             Shouldn't happen.
+     *
+     * @param arg0 RuntimeServices
+     * @throws Exception Shouldn't happen.
      */
     @Override
     public void init(final RuntimeServices arg0) throws Exception {
@@ -49,9 +46,8 @@ public class VelocityOutputLogger implements LogChute {
 
     /**
      * Check if log level is enabled.
-     * 
-     * @param arg0
-     *            log level which is to check
+     *
+     * @param arg0 log level which is to check
      * @return true if log level is enabled, false otherwise
      */
     @Override
@@ -61,32 +57,27 @@ public class VelocityOutputLogger implements LogChute {
 
     /**
      * LOGGER.
-     * 
-     * @param arg0
-     *            log level
-     * @param arg1
-     *            log message
-     * @param arg2
-     *            Exception
+     *
+     * @param arg0 log level
+     * @param arg1 log message
+     * @param arg2 Exception
      */
     @Override
     public void log(final int arg0, final String arg1, final Throwable arg2) {
-        if(LOGGER.isDebugEnabled()) {
+        if (LOGGER.isDebugEnabled()) {
             LOGGER.debug(arg1);
         }
     }
 
     /**
      * LOGGER.
-     * 
-     * @param arg0
-     *            log level
-     * @param arg1
-     *            log message
+     *
+     * @param arg0 log level
+     * @param arg1 log message
      */
     @Override
     public void log(final int arg0, final String arg1) {
-        if(LOGGER.isDebugEnabled()) {
+        if (LOGGER.isDebugEnabled()) {
             LOGGER.debug(arg1);
         }
     }

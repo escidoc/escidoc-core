@@ -50,176 +50,115 @@ import java.net.MalformedURLException;
 
 /**
  * Interface of a business handler of the content type resource.
- * 
+ *
  * @author Torsten Tetteroo
- * 
  */
 public interface ContentModelHandlerInterface extends IngestableResource {
 
     /**
      * Create a content model.
-     * 
-     * @param xmlData
-     *            The xml representation of the content model.
+     *
+     * @param xmlData The xml representation of the content model.
      * @return The xml representation of the created content model.
-     * @throws SystemException
-     *             If an internal error occured.
-     * @throws XMLStreamException
-     * @throws MalformedURLException
-     * @throws MissingAttributeValueException
-     * @throws InvalidContentException
-     * @throws XmlCorruptedException
+     * @throws SystemException If an internal error occured.
      */
-    String create(String xmlData) throws SystemException,
-        InvalidContentException, MissingAttributeValueException,
+    String create(String xmlData) throws SystemException, InvalidContentException, MissingAttributeValueException,
         XmlCorruptedException;
 
     /**
      * Deletes the specified content model.
-     * 
-     * @param id
-     *            The id of the content model.
-     * @throws ContentModelNotFoundException
-     *             If the specified content model was not found.
-     * @throws SystemException
-     *             If an internal error occured.
-     * @throws LockingException
-     * @throws InvalidStatusException
-     * @throws ResourceInUseException
+     *
+     * @param id The id of the content model.
+     * @throws ContentModelNotFoundException If the specified content model was not found.
+     * @throws SystemException               If an internal error occured.
      */
-    void delete(String id) throws ContentModelNotFoundException,
-        SystemException, LockingException, InvalidStatusException,
-        ResourceInUseException;
+    void delete(String id) throws ContentModelNotFoundException, SystemException, LockingException,
+        InvalidStatusException, ResourceInUseException;
 
     /**
      * Retrieves the specified content model.
-     * 
-     * @param id
-     *            The id of the content model.
+     *
+     * @param id The id of the content model.
      * @return Returns the XML representation of the content model.
-     * @throws ContentModelNotFoundException
-     *             If the specified content model was not found.
-     * @throws SystemException
-     *             If an internal error occured.
+     * @throws ContentModelNotFoundException If the specified content model was not found.
+     * @throws SystemException               If an internal error occured.
      */
-    String retrieve(String id) throws ContentModelNotFoundException,
-        SystemException;
+    String retrieve(String id) throws ContentModelNotFoundException, SystemException;
 
     /**
      * Retrieves the properties of the specified content model.
-     * 
-     * @param id
-     *            The id of the content model.
-     * @return Returns the XML representation of the properties of the content
-     *         model.
-     * @throws ContentModelNotFoundException
-     *             If the specified content model was not found.
-     * @throws SystemException
-     *             If an internal error occured.
+     *
+     * @param id The id of the content model.
+     * @return Returns the XML representation of the properties of the content model.
+     * @throws ContentModelNotFoundException If the specified content model was not found.
+     * @throws SystemException               If an internal error occured.
      */
-    String retrieveProperties(final String id)
-        throws ContentModelNotFoundException, SystemException;
+    String retrieveProperties(final String id) throws ContentModelNotFoundException, SystemException;
 
     /**
      * Retrieves the content-streams of the specified content model.
-     * 
-     * @param id
-     *            The id of the content model.
-     * @return Returns the XML representation of the content-streams of the
-     *         content model.
-     * @throws ContentModelNotFoundException
-     *             If the specified content model was not found.
-     * @throws SystemException
-     *             If an internal error occured.
+     *
+     * @param id The id of the content model.
+     * @return Returns the XML representation of the content-streams of the content model.
+     * @throws ContentModelNotFoundException If the specified content model was not found.
+     * @throws SystemException               If an internal error occured.
      */
-    String retrieveContentStreams(final String id)
-        throws ContentModelNotFoundException, SystemException;
+    String retrieveContentStreams(final String id) throws ContentModelNotFoundException, SystemException;
 
     /**
      * Retrieves the specified content-stream of the specified content model.
-     * 
-     * @param id
-     *            The id of the content model.
-     * @param name
-     *            The name of the content-stream.
-     * @return Returns the XML representation of the specified content-stream of
-     *         the content model.
-     * @throws ContentModelNotFoundException
-     *             If the specified content model was not found.
-     * @throws SystemException
-     *             If an internal error occured.
+     *
+     * @param id   The id of the content model.
+     * @param name The name of the content-stream.
+     * @return Returns the XML representation of the specified content-stream of the content model.
+     * @throws ContentModelNotFoundException If the specified content model was not found.
+     * @throws SystemException               If an internal error occured.
      */
-    String retrieveContentStream(final String id, final String name)
-        throws ContentModelNotFoundException, SystemException;
+    String retrieveContentStream(final String id, final String name) throws ContentModelNotFoundException,
+        SystemException;
 
-    EscidocBinaryContent retrieveContentStreamContent(
-        final String id, final String name)
-        throws ContentModelNotFoundException, SystemException,
-        ContentStreamNotFoundException, InvalidStatusException;
+    EscidocBinaryContent retrieveContentStreamContent(final String id, final String name)
+        throws ContentModelNotFoundException, SystemException, ContentStreamNotFoundException, InvalidStatusException;
 
     /**
      * Retrieves the resources of the specified content model.
-     * 
-     * @param id
-     *            The id of the content model.
-     * @return Returns the XML representation of the resources of the content
-     *         model.
-     * @throws ContentModelNotFoundException
-     *             If the specified content model was not found.
-     * @throws SystemException
-     *             If an internal error occured.
+     *
+     * @param id The id of the content model.
+     * @return Returns the XML representation of the resources of the content model.
+     * @throws ContentModelNotFoundException If the specified content model was not found.
+     * @throws SystemException               If an internal error occured.
      */
-    String retrieveResources(final String id)
-        throws ContentModelNotFoundException, SystemException;
+    String retrieveResources(final String id) throws ContentModelNotFoundException, SystemException;
 
-    String retrieveVersionHistory(final String id)
-        throws ContentModelNotFoundException, SystemException;
+    String retrieveVersionHistory(final String id) throws ContentModelNotFoundException, SystemException;
 
     /**
      * Retrieves a filtered list of Content Models.
-     * 
-     * @param parameters
-     *            parameters from the SRU request
-     * 
+     *
+     * @param parameters parameters from the SRU request
      * @return Returns XML representation of the list of Content Model objects.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     * @throws SystemException Thrown in case of an internal error.
      */
-    String retrieveContentModels(final SRURequestParameters parameters)
-        throws SystemException;
+    String retrieveContentModels(final SRURequestParameters parameters) throws SystemException;
 
     /**
      * Updates the specified content model with the provided data.
-     * 
-     * @param id
-     *            The id of the content model.
-     * @param xmlData
-     *            The updated xml representation of the content model.
+     *
+     * @param id      The id of the content model.
+     * @param xmlData The updated xml representation of the content model.
      * @return Returns the xml representation of the updated resource.
-     * @throws ContentModelNotFoundException
-     *             If the specified content model was not found.
-     * @throws InvalidXmlException
-     *             If the schema validation fails.
-     * @throws OptimisticLockingException
-     *             If the content model was chaged in the meantime.
-     * @throws SystemException
-     *             If an internal error occured.
-     * @throws ReadonlyVersionException
-     * @throws XMLStreamException
-     * @throws InvalidContentException
-     * @throws MissingAttributeValueException
+     * @throws ContentModelNotFoundException If the specified content model was not found.
+     * @throws InvalidXmlException           If the schema validation fails.
+     * @throws OptimisticLockingException    If the content model was chaged in the meantime.
+     * @throws SystemException               If an internal error occured.
      */
-    String update(String id, String xmlData)
-        throws ContentModelNotFoundException, InvalidXmlException,
-        OptimisticLockingException, SystemException, ReadonlyVersionException,
-        MissingAttributeValueException, InvalidContentException;
+    String update(String id, String xmlData) throws ContentModelNotFoundException, InvalidXmlException,
+        OptimisticLockingException, SystemException, ReadonlyVersionException, MissingAttributeValueException,
+        InvalidContentException;
 
-    EscidocBinaryContent retrieveMdRecordDefinitionSchemaContent(
-        final String id, final String name)
+    EscidocBinaryContent retrieveMdRecordDefinitionSchemaContent(final String id, final String name)
         throws ContentModelNotFoundException, SystemException;
 
-    EscidocBinaryContent retrieveResourceDefinitionXsltContent(
-        final String id, final String name)
-        throws ContentModelNotFoundException, SystemException,
-        ResourceNotFoundException;
+    EscidocBinaryContent retrieveResourceDefinitionXsltContent(final String id, final String name)
+        throws ContentModelNotFoundException, SystemException, ResourceNotFoundException;
 }

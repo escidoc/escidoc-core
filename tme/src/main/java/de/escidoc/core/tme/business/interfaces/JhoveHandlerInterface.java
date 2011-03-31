@@ -36,32 +36,24 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 
 /**
  * Service interface of an Technical metadata extraction handler.
- * 
+ *
  * @author Michael Schneider
- * @tme
- * 
  */
 public interface JhoveHandlerInterface {
 
     /**
      * Identify the format of the given file and extract the metadata.
-     * 
-     * @param requests
-     *            The list of files to examine.
+     *
+     * @param requests The list of files to examine.
      * @return A list with jhove results for the files.
-     * @throws AuthenticationException
-     *             TODO
-     * @throws AuthorizationException
-     *             TODO
+     * @throws AuthenticationException TODO
+     * @throws AuthorizationException  TODO
      * @throws MissingMethodParameterException
-     *             TODO
-     * @throws SystemException
-     *             TODO
-     * @throws TmeException
-     *             TODO
+     *                                 TODO
+     * @throws SystemException         TODO
+     * @throws TmeException            TODO
      */
-    String extract(final String requests) throws AuthenticationException,
-        AuthorizationException, MissingMethodParameterException,
-        SystemException, TmeException;
+    String extract(final String requests) throws AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, SystemException, TmeException;
 
 }

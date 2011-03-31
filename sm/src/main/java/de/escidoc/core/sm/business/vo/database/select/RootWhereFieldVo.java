@@ -34,11 +34,11 @@ import de.escidoc.core.sm.business.vo.database.DatabaseConventionChecker;
 
 /**
  * Holds all values needed to represent a field in an root where-clause.
- * 
- * @author Michael Hoppe
  *
+ * @author Michael Hoppe
  */
 public class RootWhereFieldVo {
+
     private String tableName;
 
     private String fieldName;
@@ -62,20 +62,17 @@ public class RootWhereFieldVo {
     }
 
     /**
-     * @param fieldName
-     *            the fieldName to set
+     * @param fieldName the fieldName to set
      * @throws SqlDatabaseSystemException databaseException
      */
-    public void setFieldName(final String fieldName) 
-                        throws SqlDatabaseSystemException {
+    public void setFieldName(final String fieldName) throws SqlDatabaseSystemException {
         DatabaseConventionChecker.checkName(fieldName);
         this.fieldName = fieldName;
     }
 
     /**
-     * can be text, numeric, date, daydate, xpath-boolean, xpath-string,
-     * xpath-numeric, free-sql.
-     * 
+     * can be text, numeric, date, daydate, xpath-boolean, xpath-string, xpath-numeric, free-sql.
+     *
      * @return the fieldType
      */
     public String getFieldType() {
@@ -83,16 +80,12 @@ public class RootWhereFieldVo {
     }
 
     /**
-     * can be text, numeric, date, daydate, xpath-boolean, xpath-string,
-     * xpath-numeric, free-sql.
-     * 
-     * @param fieldType
-     *            the fieldType to set
-     * @throws SqlDatabaseSystemException
-     *             e
+     * can be text, numeric, date, daydate, xpath-boolean, xpath-string, xpath-numeric, free-sql.
+     *
+     * @param fieldType the fieldType to set
+     * @throws SqlDatabaseSystemException e
      */
-    public void setFieldType(final String fieldType)
-        throws SqlDatabaseSystemException {
+    public void setFieldType(final String fieldType) throws SqlDatabaseSystemException {
         if (fieldType == null || !fieldType.equals(Constants.DATABASE_FIELD_TYPE_TEXT)
             && !fieldType.equals(Constants.DATABASE_FIELD_TYPE_NUMERIC)
             && !fieldType.equals(Constants.DATABASE_FIELD_TYPE_DATE)
@@ -114,8 +107,7 @@ public class RootWhereFieldVo {
     }
 
     /**
-     * @param fieldValue
-     *            the fieldValue to set
+     * @param fieldValue the fieldValue to set
      */
     public void setFieldValue(final String fieldValue) {
         this.fieldValue = fieldValue;
@@ -123,7 +115,7 @@ public class RootWhereFieldVo {
 
     /**
      * can be =,<,>.
-     * 
+     *
      * @return the operator
      */
     public String getOperator() {
@@ -132,16 +124,13 @@ public class RootWhereFieldVo {
 
     /**
      * can be =,<,>.
-     * 
-     * @param operator
-     *            the operator to set
-     * @throws SqlDatabaseSystemException
-     *             e
+     *
+     * @param operator the operator to set
+     * @throws SqlDatabaseSystemException e
      */
-    public void setOperator(final String operator)
-        throws SqlDatabaseSystemException {
+    public void setOperator(final String operator) throws SqlDatabaseSystemException {
         if (operator == null || !operator.equals(Constants.DATABASE_OPERATOR_EQUALS)
-        		&& !operator.equals(Constants.DATABASE_OPERATOR_LESS)
+            && !operator.equals(Constants.DATABASE_OPERATOR_LESS)
             && !operator.equals(Constants.DATABASE_OPERATOR_GREATER)) {
             throw new SqlDatabaseSystemException("wrong operator given");
         }
@@ -156,12 +145,10 @@ public class RootWhereFieldVo {
     }
 
     /**
-     * @param tableName
-     *            the tableName to set
+     * @param tableName the tableName to set
      * @throws SqlDatabaseSystemException databaseException
      */
-    public void setTableName(final String tableName) 
-                        throws SqlDatabaseSystemException {
+    public void setTableName(final String tableName) throws SqlDatabaseSystemException {
         DatabaseConventionChecker.checkName(tableName);
         this.tableName = tableName;
     }
@@ -174,8 +161,7 @@ public class RootWhereFieldVo {
     }
 
     /**
-     * @param xpath
-     *            the xpath to set
+     * @param xpath the xpath to set
      */
     public void setXpath(final String xpath) {
         this.xpath = xpath;

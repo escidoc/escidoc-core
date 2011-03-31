@@ -21,11 +21,9 @@
 package de.escidoc.core.common.exceptions.application.violated;
 
 /**
- * Exception to indicate that a role that shall be deleted is referenced by a
- * role grant.
- * 
- * @author Torsten Tetteroo
+ * Exception to indicate that a role that shall be deleted is referenced by a role grant.
  *
+ * @author Torsten Tetteroo
  */
 public class RoleInUseViolationException extends RuleViolationException {
 
@@ -36,13 +34,10 @@ public class RoleInUseViolationException extends RuleViolationException {
 
     public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_VIOLATED;
 
-    public static final String HTTP_STATUS_MESSAGE =
-        "Role in use, referenced by a role grant.";
+    public static final String HTTP_STATUS_MESSAGE = "Role in use, referenced by a role grant.";
 
     /**
      * Default constructor.
-     * 
-     *
      */
     public RoleInUseViolationException() {
         super(HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -50,9 +45,8 @@ public class RoleInUseViolationException extends RuleViolationException {
 
     /**
      * Constructor used to map an initial exception.
-     * 
-     * @param error
-     *            Throwable
+     *
+     * @param error Throwable
      */
     public RoleInUseViolationException(final Throwable error) {
         super(error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -60,27 +54,21 @@ public class RoleInUseViolationException extends RuleViolationException {
 
     /**
      * Constructs a new exception with the specified detail message.
-     * 
-     * @param message -
-     *            the detail message.
      *
+     * @param message - the detail message.
      */
     public RoleInUseViolationException(final String message) {
         super(message, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 
     /**
-     * Constructor used to create a new Exception with the specified detail
-     * message and a mapping to an initial exception.
-     * 
-     * @param message -
-     *            the detail message.
-     * @param error
-     *            Throwable
+     * Constructor used to create a new Exception with the specified detail message and a mapping to an initial
+     * exception.
      *
+     * @param message - the detail message.
+     * @param error   Throwable
      */
-    public RoleInUseViolationException(final String message,
-        final Throwable error) {
+    public RoleInUseViolationException(final String message, final Throwable error) {
         super(message, error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 }

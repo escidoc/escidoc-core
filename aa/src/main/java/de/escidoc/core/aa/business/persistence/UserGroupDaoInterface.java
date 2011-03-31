@@ -37,255 +37,167 @@ import java.util.Map;
 
 /**
  * Interface of an data access object to access user group data.
- * 
- * @author André Schenk
  *
+ * @author André Schenk
  */
 public interface UserGroupDaoInterface {
+
     /**
      * Delete the user group member.
-     * 
+     *
      * @param userGroupMember user group object to delete
-     *
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database access error.
-     *
+     * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
-    void delete(final UserGroupMember userGroupMember) 
-                        throws SqlDatabaseSystemException;
+    void delete(final UserGroupMember userGroupMember) throws SqlDatabaseSystemException;
 
     /**
      * Delete the user group.
-     * 
+     *
      * @param userGroup user group object to delete
-     *
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database access error.
-     *
+     * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
     void delete(final UserGroup userGroup) throws SqlDatabaseSystemException;
 
     /**
-     * Retrieves currently valid grant of the provided user group for the
-     * specified role and (optional) id.
-     * 
-     * @param userGroup user group owning the grants that shall be retrieved
-     * @param role role that is granted to the user group
-     * @param objId id of the object for that the role is granted to the user
-     *              group
-     * 
-     * @return Returns the found <code>Grant</code> object or
-     *         <code>null</code>.
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database access error.
+     * Retrieves currently valid grant of the provided user group for the specified role and (optional) id.
      *
+     * @param userGroup user group owning the grants that shall be retrieved
+     * @param role      role that is granted to the user group
+     * @param objId     id of the object for that the role is granted to the user group
+     * @return Returns the found <code>Grant</code> object or <code>null</code>.
+     * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
-    RoleGrant retrieveCurrentGrant(
-        final UserGroup userGroup, final EscidocRole role,
-        final String objId) throws SqlDatabaseSystemException;
+    RoleGrant retrieveCurrentGrant(final UserGroup userGroup, final EscidocRole role, final String objId)
+        throws SqlDatabaseSystemException;
 
     /**
-     * Retrieves current grants for a List of groupIds.
-     * Returns current Grants as HashMap with 
-     * key: userGroupId
-     * valus: List of RoleGrants
-     * 
-     * @param groupIds ids of the userGroups
-     * 
-     * @return Returns the found Grants in a HashMap.
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database access error.
+     * Retrieves current grants for a List of groupIds. Returns current Grants as HashMap with key: userGroupId valus:
+     * List of RoleGrants
      *
+     * @param groupIds ids of the userGroups
+     * @return Returns the found Grants in a HashMap.
+     * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
-    Map<String, List<RoleGrant>> retrieveCurrentGrants(
-            final List<String> groupIds) throws SqlDatabaseSystemException;
+    Map<String, List<RoleGrant>> retrieveCurrentGrants(final List<String> groupIds) throws SqlDatabaseSystemException;
 
     /**
      * Retrieves a grant.
-     * 
-     * @param grantId The id of the grant that shall be retrieved.
-     * 
-     * @return Returns the found <code>Grant</code> object or
-     *         <code>null</code>.
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database access error.
      *
+     * @param grantId The id of the grant that shall be retrieved.
+     * @return Returns the found <code>Grant</code> object or <code>null</code>.
+     * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
-    RoleGrant retrieveGrant(final String grantId)
-        throws SqlDatabaseSystemException;
+    RoleGrant retrieveGrant(final String grantId) throws SqlDatabaseSystemException;
 
     /**
-     * Retrieves the grants of a user group.<br>
-     * The grants will be sorted by related role and related object.
-     * 
+     * Retrieves the grants of a user group.<br> The grants will be sorted by related role and related object.
+     *
      * @param groupId The id of the user group whose grants shall be retrieved.
-     *
      * @return Returns sorted List of <code>Grant</code> objects.
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database access error.
-     *
+     * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
-    List<RoleGrant> retrieveGrants(final String groupId)
-        throws SqlDatabaseSystemException;
+    List<RoleGrant> retrieveGrants(final String groupId) throws SqlDatabaseSystemException;
 
     /**
      * Retrieves a user group.
-     * 
+     *
      * @param groupId The id of the user group that shall be retrieved.
-     * 
-     * @return Returns the found <code>UserGroup</code> object or
-     *         <code>null</code>.
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database access error.
-     *
+     * @return Returns the found <code>UserGroup</code> object or <code>null</code>.
+     * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
-    UserGroup retrieveUserGroup(final String groupId)
-        throws SqlDatabaseSystemException;
+    UserGroup retrieveUserGroup(final String groupId) throws SqlDatabaseSystemException;
 
     /**
-     * Retrieves {@link UserGroup}
-     * objects using the provided values for filtering.
-     * 
-     * @param criteria
-     *            The {@link Map} containing the filter criteria. This object is
-     *            kept as provided by this method.
-     * @param offset
-     *            The index of the first result to be returned.
-     * @param maxResults
-     *            The maximal number of results to be returned.
-     * @param orderBy
-     *            The predicate that shall be used for ordering.
-     * @param sorting
-     *            The kind of ordering, i.e. ascending or descending.
-     * 
-     * @return Returns <code>List</code> of
-     *         {@link UserGroup}
-     *         objects selected by the provided parameters. If no parameter is
-     *         provided, all user account objects are returned.
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database access error.
+     * Retrieves {@link UserGroup} objects using the provided values for filtering.
      *
+     * @param criteria   The {@link Map} containing the filter criteria. This object is kept as provided by this
+     *                   method.
+     * @param offset     The index of the first result to be returned.
+     * @param maxResults The maximal number of results to be returned.
+     * @param orderBy    The predicate that shall be used for ordering.
+     * @param sorting    The kind of ordering, i.e. ascending or descending.
+     * @return Returns <code>List</code> of {@link UserGroup} objects selected by the provided parameters. If no
+     *         parameter is provided, all user account objects are returned.
+     * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
     List<UserGroup> retrieveUserGroups(
-        final Map<String, Object> criteria, final int offset,
-        final int maxResults, final String orderBy, final ListSorting sorting)
-        throws SqlDatabaseSystemException;
+        final Map<String, Object> criteria, final int offset, final int maxResults, final String orderBy,
+        final ListSorting sorting) throws SqlDatabaseSystemException;
 
     /**
-     * Retrieves {@link UserGroup}
-     * objects using the provided values for filtering.
-     * 
-     * @param criteria
-     *            The {@link String} containing the filter criteria as CQL query.
-     * @param offset
-     *            The index of the first result to be returned.
-     * @param maxResults
-     *            The maximal number of results to be returned.
-     * 
-     * @return Returns <code>List</code> of
-     *         {@link UserGroup}
-     *         objects selected by the provided parameters. If no parameter is
-     *         provided, all user account objects are returned.
-     * @throws InvalidSearchQueryException thrown if the given search query could
-     *                                     not be translated into a SQL query
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database access error.
+     * Retrieves {@link UserGroup} objects using the provided values for filtering.
      *
+     * @param criteria   The {@link String} containing the filter criteria as CQL query.
+     * @param offset     The index of the first result to be returned.
+     * @param maxResults The maximal number of results to be returned.
+     * @return Returns <code>List</code> of {@link UserGroup} objects selected by the provided parameters. If no
+     *         parameter is provided, all user account objects are returned.
+     * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
+     * @throws SqlDatabaseSystemException  Thrown in case of an internal database access error.
      */
-    List<UserGroup> retrieveUserGroups(
-        final String criteria, final int offset, final int maxResults)
+    List<UserGroup> retrieveUserGroups(final String criteria, final int offset, final int maxResults)
         throws InvalidSearchQueryException, SqlDatabaseSystemException;
 
     /**
-     * Retrieves {@link UserGroupMember}
-     * objects using the provided values for filtering.
-     * 
-     * @param criteria
-     *            The {@link Map} containing the filter criteria. This object is
-     *            kept as provided by this method.
-     * @return Returns <code>List</code> of
-     *         {@link UserGroupMember}
-     *         objects selected by the provided parameters. If no parameter is
-     *         provided, all user group member objects are returned.
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database access error.
+     * Retrieves {@link UserGroupMember} objects using the provided values for filtering.
      *
+     * @param criteria The {@link Map} containing the filter criteria. This object is kept as provided by this method.
+     * @return Returns <code>List</code> of {@link UserGroupMember} objects selected by the provided parameters. If no
+     *         parameter is provided, all user group member objects are returned.
+     * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
-    List<UserGroupMember> retrieveUserGroupMembers(
-        final Map<String, Object> criteria)
+    List<UserGroupMember> retrieveUserGroupMembers(final Map<String, Object> criteria)
         throws SqlDatabaseSystemException;
 
     /**
      * Save the provided grant.
-     * 
+     *
      * @param grant <code>Grant</code> object to save
-     *
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database access error.
-     *
+     * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
     void save(final RoleGrant grant) throws SqlDatabaseSystemException;
 
     /**
      * Save the provided user group data.
-     * 
-     * @param userGroup user group data object to save
-     * 
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database access error.
      *
+     * @param userGroup user group data object to save
+     * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
     void save(final UserGroup userGroup) throws SqlDatabaseSystemException;
 
     /**
      * Save the provided user group member data.
-     * 
-     * @param userGroupMember user group member data object to save
-     * 
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database access error.
      *
+     * @param userGroupMember user group member data object to save
+     * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
-    void save(final UserGroupMember userGroupMember) 
-                        throws SqlDatabaseSystemException;
+    void save(final UserGroupMember userGroupMember) throws SqlDatabaseSystemException;
 
     /**
      * Update the provided grant.
-     * 
+     *
      * @param grant <code>Grant</code> object to save
-     *
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database access error.
-     *
+     * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
     void update(final RoleGrant grant) throws SqlDatabaseSystemException;
 
     /**
      * Update the provided user group data.
-     * 
-     * @param userGroup user group data object to save
-     * 
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database access error.
      *
+     * @param userGroup user group data object to save
+     * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
     void update(final UserGroup userGroup) throws SqlDatabaseSystemException;
-    
-    UserGroup findUsergroupByLabel(final String label)
-        throws SqlDatabaseSystemException;
+
+    UserGroup findUsergroupByLabel(final String label) throws SqlDatabaseSystemException;
 
     /**
-     * Checks if a user group with the provided id exists.<br>
-     * The group is identified by either the id or the label.
-     * 
-     * @param identityInfo
-     *            The id or label of the group.
-     * @return Returns <code>true</code> if a user group with the provided
-     *         identifier exists, else <code>false</code>.
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database access error.
+     * Checks if a user group with the provided id exists.<br> The group is identified by either the id or the label.
+     *
+     * @param identityInfo The id or label of the group.
+     * @return Returns <code>true</code> if a user group with the provided identifier exists, else <code>false</code>.
+     * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
-    boolean userGroupExists(final String identityInfo)
-        throws SqlDatabaseSystemException;
+    boolean userGroupExists(final String identityInfo) throws SqlDatabaseSystemException;
 
 }

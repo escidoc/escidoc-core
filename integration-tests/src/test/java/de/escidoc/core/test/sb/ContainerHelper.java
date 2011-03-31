@@ -33,26 +33,22 @@ import de.escidoc.core.test.om.container.ContainerTestBase;
 
 /**
  * Call the Container-Service.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 public class ContainerHelper extends ContainerTestBase {
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ContainerHelper(final int transport) {
         super(transport);
     }
 
     /**
-     * @param xml
-     *            The container as xml.
+     * @param xml The container as xml.
      * @return String container-xml
-     * @exception Exception
-     *                e
+     * @throws Exception e
      */
     @Override
     public String create(final String xml) throws Exception {
@@ -60,11 +56,9 @@ public class ContainerHelper extends ContainerTestBase {
     }
 
     /**
-     * @param id
-     *            The container-id.
+     * @param id The container-id.
      * @return String container-xml
-     * @exception Exception
-     *                e
+     * @throws Exception e
      */
     @Override
     public String retrieve(final String id) throws Exception {
@@ -72,10 +66,8 @@ public class ContainerHelper extends ContainerTestBase {
     }
 
     /**
-     * @param id
-     *            The container-id.
-     * @exception Exception
-     *                e
+     * @param id The container-id.
+     * @throws Exception e
      */
     @Override
     public void delete(final String id) throws Exception {
@@ -83,85 +75,63 @@ public class ContainerHelper extends ContainerTestBase {
     }
 
     /**
-     * @param id
-     *            The container-id.
-     * @param lastModDate
-     *            The last-modification-date.
+     * @param id          The container-id.
+     * @param lastModDate The last-modification-date.
      * @return last-modification-date within a XML structure refering result.xsd
-     * @exception Exception
-     *                e
+     * @throws Exception e
      */
     @Override
-    public String submit(final String id, final String lastModDate)
-        throws Exception {
+    public String submit(final String id, final String lastModDate) throws Exception {
         return super.submit(id, lastModDate);
     }
 
     /**
-     * @param id
-     *            The Container-id.
-     * @param lastModDate
-     *            The last-modification-date.
+     * @param id          The Container-id.
+     * @param lastModDate The last-modification-date.
      * @return XML result structure with at least last-modification-date
-     * @exception Exception
-     *                e
+     * @throws Exception e
      */
-    public String revise(final String id, final String lastModDate)
-        throws Exception {
+    public String revise(final String id, final String lastModDate) throws Exception {
         return super.revise(id, lastModDate);
     }
 
     /**
-     * @param id
-     *            The container-id.
-     * @param lastModDate
-     *            The last-modification-date.
+     * @param id          The container-id.
+     * @param lastModDate The last-modification-date.
      * @return last-modification-date within a XML structure refering result.xsd
-     * @exception Exception
-     *                e
+     * @throws Exception e
      */
     @Override
-    public String release(final String id, final String lastModDate)
-        throws Exception {
+    public String release(final String id, final String lastModDate) throws Exception {
         return super.release(id, lastModDate);
     }
 
     /**
-     * @param id
-     *            The container-id.
-     * @param lastModDate
-     *            The last-modification-date.
+     * @param id          The container-id.
+     * @param lastModDate The last-modification-date.
      * @return last-modification-date within a XML structure refering result.xsd
-     * @exception Exception
-     *                e
+     * @throws Exception e
      */
     @Override
-    public String withdraw(final String id, final String lastModDate)
-        throws Exception {
+    public String withdraw(final String id, final String lastModDate) throws Exception {
         return super.withdraw(id, lastModDate);
     }
 
     /**
-     * @param containerId
-     *            The container-id.
-     * @param xml
-     *            The item-xml.
+     * @param containerId The container-id.
+     * @param xml         The item-xml.
      * @return last-modification-date within a XML structure refering result.xsd
-     * @exception Exception
-     *                e
+     * @throws Exception e
      */
     @Override
-    public String createItem(final String containerId, final String xml)
-        throws Exception {
+    public String createItem(final String containerId, final String xml) throws Exception {
         return super.createItem(containerId, xml);
     }
 
     /**
-     * @param id
-     *            The container-id.
+     * @param id The container-id.
      * @return Returns the assigned version pid in an XML structure.
-     * @exception Exception
-     *                e
+     * @throws Exception e
      */
     public String assignVersionPid(final String id) throws Exception {
 
@@ -169,27 +139,22 @@ public class ContainerHelper extends ContainerTestBase {
         try {
             pidParam =
                 "<param last-modification-date=\""
-                    + getLastModificationDateValue(EscidocRestSoapTestBase
-                        .getDocument(retrieve(id))) + "\" >"
+                    + getLastModificationDateValue(EscidocRestSoapTestBase.getDocument(retrieve(id))) + "\" >"
                     + "<url>http://escidoc.de</url>" + "</param>";
         }
         catch (final RuntimeException e) {
-            EscidocRestSoapTestBase.failException(
-                "Failed to retrieve last modification date of item " + id, e);
+            EscidocRestSoapTestBase.failException("Failed to retrieve last modification date of item " + id, e);
         }
         return super.assignVersionPid(id, pidParam);
     }
 
     /**
-     * @param xmlName
-     *            String name of xml file
+     * @param xmlName String name of xml file
      * @return String path to container-xmls.
-     * @exception Exception
-     *                e
+     * @throws Exception e
      */
     public String getTemplateAsString(final String xmlName) throws Exception {
-        return EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH,
-            xmlName);
+        return EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH, xmlName);
     }
 
 }

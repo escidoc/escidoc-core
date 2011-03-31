@@ -9,6 +9,7 @@ import javax.ejb.EJBLocalHome;
 public interface JhoveHandlerLocalHome extends EJBLocalHome {
 
     String COMP_NAME = "java:comp/env/ejb/JhoveHandlerLocal";
+
     String JNDI_NAME = "ejb/JhoveHandlerLocal";
 
     JhoveHandlerLocal create() throws CreateException;

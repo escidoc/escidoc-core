@@ -38,41 +38,28 @@ import static org.junit.Assert.fail;
 
 /**
  * Item tests with SOAP transport.
- * 
+ *
  * @author Michael Schneider
- * 
  */
 public class ItemUpdateSoapTest extends ItemTestBase {
 
     /**
      * Constructor.
-     * 
      */
     public ItemUpdateSoapTest() {
         super(Constants.TRANSPORT_SOAP);
     }
 
     /**
-     * No ItemID provided. Only SOAP because with REST an update without id is
-     * the same as a create request.
-     * 
-     * @test.name No Content Item ID provided
-     * @test.id OM_UCI_9
-     * @test.input XML item with attribute objid set empty
-     * @test.expected Error message
-     *                de.escidoc.core.common.exceptions.application.notfound.MissingMethodParameterException
-     * 
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * No ItemID provided. Only SOAP because with REST an update without id is the same as a create request.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOM_UCI_9() throws Exception {
         try {
-            update(null, create(EscidocRestSoapTestBase.getTemplateAsString(
-                TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "escidoc_item_198_for_create.xml")));
+            update(null, create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/"
+                + getTransport(false), "escidoc_item_198_for_create.xml")));
         }
         catch (final MissingMethodParameterException e) {
             return;

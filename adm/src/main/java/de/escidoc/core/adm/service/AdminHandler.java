@@ -36,8 +36,8 @@ import de.escidoc.core.common.exceptions.application.security.AuthorizationExcep
 import de.escidoc.core.common.exceptions.system.SystemException;
 
 /**
- * Administration tool that rebuilds the search index, rebuilds the resource
- * cache and deletes objects physically from the repository.
+ * Administration tool that rebuilds the search index, rebuilds the resource cache and deletes objects physically from
+ * the repository.
  *
  * @author André Schenk
  */
@@ -46,194 +46,141 @@ public class AdminHandler implements AdminHandlerInterface {
     private de.escidoc.core.adm.business.admin.AdminHandler business;
 
     /**
-     * Delete a list of objects given by their object id's from Fedora. In case
-     * of items this method will also delete all depending components of the
-     * given items. The deletion runs synchronously and returns some useful
-     * information for the user, e.g. the total number of objects deleted.
-     * 
-     * @param taskParam
-     *            list of object id's to be deleted boolean value to signal if
-     *            the search index and the resource cache have to be kept in
-     *            sync. If this value is set to false then the re-indexing and
-     *            re-caching should be run manually afterwards.
-     * 
+     * Delete a list of objects given by their object id's from Fedora. In case of items this method will also delete
+     * all depending components of the given items. The deletion runs synchronously and returns some useful information
+     * for the user, e.g. the total number of objects deleted.
+     *
+     * @param taskParam list of object id's to be deleted boolean value to signal if the search index and the resource
+     *                  cache have to be kept in sync. If this value is set to false then the re-indexing and re-caching
+     *                  should be run manually afterwards.
      * @return total number of objects deleted, ...
-     * @throws InvalidXmlException
-     *             thrown if the taskParam has an invalid structure
-     * @throws SystemException
-     *             thrown in case of an internal error
-     * @throws AuthenticationException
-     *             Thrown if the authentication fails due to an invalid provided
-     *             eSciDoc user handle.
-     * @throws AuthorizationException
-     *             Thrown if authorization fails.
+     * @throws InvalidXmlException     thrown if the taskParam has an invalid structure
+     * @throws SystemException         thrown in case of an internal error
+     * @throws AuthenticationException Thrown if the authentication fails due to an invalid provided eSciDoc user
+     *                                 handle.
+     * @throws AuthorizationException  Thrown if authorization fails.
      */
     @Override
-    public String deleteObjects(final String taskParam)
-        throws InvalidXmlException, SystemException, AuthenticationException,
-        AuthorizationException {
+    public String deleteObjects(final String taskParam) throws InvalidXmlException, SystemException,
+        AuthenticationException, AuthorizationException {
         return business.deleteObjects(taskParam);
     }
 
     /**
      * Get the current status of the running/finished purging process.
-     * 
+     *
      * @return current status (how many objects are still in the queue)
-     * @throws SystemException
-     *             thrown in case of an internal error
-     * @throws AuthenticationException
-     *             Thrown if the authentication fails due to an invalid provided
-     *             eSciDoc user handle.
-     * @throws AuthorizationException
-     *             Thrown if authorization fails.
+     * @throws SystemException         thrown in case of an internal error
+     * @throws AuthenticationException Thrown if the authentication fails due to an invalid provided eSciDoc user
+     *                                 handle.
+     * @throws AuthorizationException  Thrown if authorization fails.
      */
     @Override
-    public String getPurgeStatus() throws SystemException,
-        AuthenticationException, AuthorizationException {
+    public String getPurgeStatus() throws SystemException, AuthenticationException, AuthorizationException {
         return business.getPurgeStatus();
     }
 
     /**
      * Get the current status of the running/finished reindexing process.
-     * 
+     *
      * @return current status (how many objects are still in the queue)
-     * @throws SystemException
-     *             thrown in case of an internal error
-     * @throws AuthenticationException
-     *             Thrown if the authentication fails due to an invalid provided
-     *             eSciDoc user handle.
-     * @throws AuthorizationException
-     *             Thrown if authorization fails.
+     * @throws SystemException         thrown in case of an internal error
+     * @throws AuthenticationException Thrown if the authentication fails due to an invalid provided eSciDoc user
+     *                                 handle.
+     * @throws AuthorizationException  Thrown if authorization fails.
      */
     @Override
-    public String getReindexStatus() throws SystemException,
-        AuthenticationException, AuthorizationException {
+    public String getReindexStatus() throws SystemException, AuthenticationException, AuthorizationException {
         return business.getReindexStatus();
     }
 
     /**
-     * decrease the type of the current status of the running reindexing process
-     * by 1.
-     * 
-     * @param objectTypeXml
-     *            object-type to decrease
-     * @throws InvalidXmlException
-     *             thrown if given xml is invalid
-     * @throws SystemException
-     *             thrown in case of an internal error
-     * @throws AuthenticationException
-     *             Thrown if the authentication fails due to an invalid provided
-     *             eSciDoc user handle.
-     * @throws AuthorizationException
-     *             Thrown if authorization fails.
+     * decrease the type of the current status of the running reindexing process by 1.
+     *
+     * @param objectTypeXml object-type to decrease
+     * @throws InvalidXmlException     thrown if given xml is invalid
+     * @throws SystemException         thrown in case of an internal error
+     * @throws AuthenticationException Thrown if the authentication fails due to an invalid provided eSciDoc user
+     *                                 handle.
+     * @throws AuthorizationException  Thrown if authorization fails.
      */
     @Override
-    public void decreaseReindexStatus(final String objectTypeXml)
-        throws InvalidXmlException, SystemException, AuthenticationException,
-        AuthorizationException {
+    public void decreaseReindexStatus(final String objectTypeXml) throws InvalidXmlException, SystemException,
+        AuthenticationException, AuthorizationException {
         business.decreaseReindexStatus(objectTypeXml);
     }
 
     /**
-     * Reinitialize the search index. The initialization runs synchronously and
-     * returns some useful information for the user, e.g. the total number of
-     * objects found.
-     * 
-     * @param clearIndex
-     *            clear the index before adding objects to it
-     * @param indexNamePrefix
-     *            name of the index (may be null for "all indexes")
-     * 
+     * Reinitialize the search index. The initialization runs synchronously and returns some useful information for the
+     * user, e.g. the total number of objects found.
+     *
+     * @param clearIndex      clear the index before adding objects to it
+     * @param indexNamePrefix name of the index (may be null for "all indexes")
      * @return total number of objects found, ...
-     * @throws SystemException
-     *             Thrown if a framework internal error occurs.
-     * @throws InvalidSearchQueryException
-     *             thrown if a given search query could not be translated into a
-     *             SQL query
-     * @throws AuthenticationException
-     *             Thrown if the authentication fails due to an invalid provided
-     *             eSciDoc user handle.
-     * @throws AuthorizationException
-     *             Thrown if authorization fails.
+     * @throws SystemException             Thrown if a framework internal error occurs.
+     * @throws InvalidSearchQueryException thrown if a given search query could not be translated into a SQL query
+     * @throws AuthenticationException     Thrown if the authentication fails due to an invalid provided eSciDoc user
+     *                                     handle.
+     * @throws AuthorizationException      Thrown if authorization fails.
      */
     @Override
-    public String reindex(final String clearIndex, final String indexNamePrefix)
-        throws SystemException, InvalidSearchQueryException,
-        AuthenticationException, AuthorizationException {
+    public String reindex(final String clearIndex, final String indexNamePrefix) throws SystemException,
+        InvalidSearchQueryException, AuthenticationException, AuthorizationException {
         return business.reindex(Boolean.valueOf(clearIndex), indexNamePrefix);
     }
 
     /**
      * Ingest the AdminHandler business object.
-     * 
-     * @param business
-     *            AdminHandler business object to be ingested
+     *
+     * @param business AdminHandler business object to be ingested
      */
-    public void setBusiness(
-        final de.escidoc.core.adm.business.admin.AdminHandler business) {
+    public void setBusiness(final de.escidoc.core.adm.business.admin.AdminHandler business) {
         this.business = business;
     }
 
     /**
      * Provides a xml structure containing the index-configuration.
-     * 
+     *
      * @return xml structure with index configuration
-     * @throws SystemException
-     *             Thrown if a framework internal error occurs.
-     * @throws AuthenticationException
-     *             Thrown if the authentication fails due to an invalid provided
-     *             eSciDoc user handle.
-     * @throws AuthorizationException
-     *             Thrown if authorization fails.
+     * @throws SystemException         Thrown if a framework internal error occurs.
+     * @throws AuthenticationException Thrown if the authentication fails due to an invalid provided eSciDoc user
+     *                                 handle.
+     * @throws AuthorizationException  Thrown if authorization fails.
      */
     @Override
-    public String getIndexConfiguration() throws SystemException,
-        AuthenticationException, AuthorizationException {
+    public String getIndexConfiguration() throws SystemException, AuthenticationException, AuthorizationException {
         return this.business.getIndexConfiguration();
     }
 
     /**
-     * Provides a xml structure containing public configuration properties of
-     * escidoc-core framework and the earliest creation date of Escidoc
-     * repository objects.
-     * 
+     * Provides a xml structure containing public configuration properties of escidoc-core framework and the earliest
+     * creation date of Escidoc repository objects.
+     *
      * @return xml structure with escidoc configuration properties
-     * @throws SystemException
-     *             Thrown if a framework internal error occurs.
-     * @throws AuthenticationException
-     *             Thrown if the authentication fails due to an invalid provided
-     *             eSciDoc user handle.
-     * @throws AuthorizationException
-     *             Thrown if authorization fails.
+     * @throws SystemException         Thrown if a framework internal error occurs.
+     * @throws AuthenticationException Thrown if the authentication fails due to an invalid provided eSciDoc user
+     *                                 handle.
+     * @throws AuthorizationException  Thrown if authorization fails.
      */
     @Override
-    public String getRepositoryInfo() throws SystemException,
-        AuthenticationException, AuthorizationException {
+    public String getRepositoryInfo() throws SystemException, AuthenticationException, AuthorizationException {
         return this.business.getRepositoryInfo();
     }
 
     /**
      * Loads an set of examples objects into the framework.
-     * 
-     * @param type
-     *            Specifies the type of example set which is to load.
-     * 
+     *
+     * @param type Specifies the type of example set which is to load.
      * @return some useful information
-     * @throws SystemException
-     *             Thrown if a framework internal error occurs.
-     * @throws InvalidSearchQueryException
-     *             thrown if a given search query could not be translated into a
-     *             SQL query
-     * @throws AuthenticationException
-     *             Thrown if the authentication fails due to an invalid provided
-     *             eSciDoc user handle.
-     * @throws AuthorizationException
-     *             Thrown if authorization fails.
+     * @throws SystemException             Thrown if a framework internal error occurs.
+     * @throws InvalidSearchQueryException thrown if a given search query could not be translated into a SQL query
+     * @throws AuthenticationException     Thrown if the authentication fails due to an invalid provided eSciDoc user
+     *                                     handle.
+     * @throws AuthorizationException      Thrown if authorization fails.
      */
     @Override
     @Deprecated
-    public String loadExamples(final String type)
-        throws InvalidSearchQueryException, SystemException,
+    public String loadExamples(final String type) throws InvalidSearchQueryException, SystemException,
         AuthenticationException, AuthorizationException {
         return this.business.loadExamples(type);
     }

@@ -27,80 +27,58 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Stax handler implementation that handles a "collection" of link elements,
- * e.g. organizational units of an user account.<br>
- * This handler specializes {@link LinkStaxHandler}.
- * 
- * @see LinkStaxHandler
- * @author Torsten Tetteroo
+ * Stax handler implementation that handles a "collection" of link elements, e.g. organizational units of an user
+ * account.<br> This handler specializes {@link LinkStaxHandler}.
  *
- * 
+ * @author Torsten Tetteroo
+ * @see LinkStaxHandler
  */
 public class LinkCollectionStaxHandler extends LinkStaxHandler {
-    
+
     private final List<String> hrefs = new ArrayList<String>();
+
     private final List<String> objids = new ArrayList<String>();
+
     private int index;
-    
+
     /**
      * The constructor.
-     * 
-     * @param linkElementPath
-     *            The path to the link elements that shall be handled by this
-     *            handler.
      *
+     * @param linkElementPath The path to the link elements that shall be handled by this handler.
      */
     public LinkCollectionStaxHandler(final String linkElementPath) {
 
         super(linkElementPath);
     }
-    
+
     /**
-     * Constructs a LinkCollectionStaxHandler that checks the base uri
-     * of the link.
-     * 
-     * @param elementPath
-     *            The path to the link elements that shall be handled by this
-     *            handler.
-     * @param hrefBaseUri
-     *            The base uri of the href pointing to the objects that are
-     *            referenced by the links that shall be parsed by this handler.
-     *            In case of REST, this value is used to check the provided
-     *            href. In case of SOAP it is ignored.
-     * @param exceptionClass
-     *            The type of the exception to throw if href base uri is not
-     *            matched in case of REST. This parameter must not be
-     *            <code>null</code> and must be an instance of
-     *            {@link EscidocException}, but this is not checked!.
+     * Constructs a LinkCollectionStaxHandler that checks the base uri of the link.
      *
+     * @param elementPath    The path to the link elements that shall be handled by this handler.
+     * @param hrefBaseUri    The base uri of the href pointing to the objects that are referenced by the links that
+     *                       shall be parsed by this handler. In case of REST, this value is used to check the provided
+     *                       href. In case of SOAP it is ignored.
+     * @param exceptionClass The type of the exception to throw if href base uri is not matched in case of REST. This
+     *                       parameter must not be <code>null</code> and must be an instance of {@link
+     *                       EscidocException}, but this is not checked!.
      */
-    public LinkCollectionStaxHandler(final String elementPath,
-        final String hrefBaseUri, final Class exceptionClass) {
+    public LinkCollectionStaxHandler(final String elementPath, final String hrefBaseUri, final Class exceptionClass) {
 
         super(elementPath, hrefBaseUri, exceptionClass);
     }
 
-
-    
     /**
      * See Interface for functional description.
-     * 
-     * @param element
-     * @return
-     * @throws EscidocException
-     * @see LinkStaxHandler
-     *      #endLinkElement
-     *      (de.escidoc.core.common.util.xml.stax.events.EndElement)
      *
+     * @see LinkStaxHandler #endLinkElement (de.escidoc.core.common.util.xml.stax.events.EndElement)
      */
     @Override
-    public EndElement endLinkElement(final EndElement element)
-        throws EscidocException {
+    public EndElement endLinkElement(final EndElement element) throws EscidocException {
 
         hrefs.add(getHref());
         objids.add(getObjid());
         this.index++;
-        
+
         return super.endLinkElement(element);
     }
 
@@ -124,6 +102,5 @@ public class LinkCollectionStaxHandler extends LinkStaxHandler {
     public int getIndex() {
         return this.index;
     }
-    
 
 }

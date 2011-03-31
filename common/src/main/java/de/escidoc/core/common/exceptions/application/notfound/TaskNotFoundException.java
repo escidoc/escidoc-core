@@ -21,13 +21,11 @@
 package de.escidoc.core.common.exceptions.application.notfound;
 
 /**
- * The TaskNotFoundException is used to indicate that a task with the given
- * taskInstanceId is null or does not exist in the System. returned
- * httpStatusCode is 404. Status code (404) indicating that the requested
- * resource is not available.
- * 
- * @author Michael Hoppe (FIZ Karlsruhe)
+ * The TaskNotFoundException is used to indicate that a task with the given taskInstanceId is null or does not exist in
+ * the System. returned httpStatusCode is 404. Status code (404) indicating that the requested resource is not
+ * available.
  *
+ * @author Michael Hoppe (FIZ Karlsruhe)
  */
 public class TaskNotFoundException extends ResourceNotFoundException {
 
@@ -42,8 +40,6 @@ public class TaskNotFoundException extends ResourceNotFoundException {
 
     /**
      * Default constructor.
-     * 
-     *
      */
     public TaskNotFoundException() {
         super(HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -51,9 +47,8 @@ public class TaskNotFoundException extends ResourceNotFoundException {
 
     /**
      * Constructor used to map an initial exception.
-     * 
-     * @param error
-     *            Throwable
+     *
+     * @param error Throwable
      */
     public TaskNotFoundException(final Throwable error) {
         super(error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -61,24 +56,19 @@ public class TaskNotFoundException extends ResourceNotFoundException {
 
     /**
      * Constructs a new exception with the specified detail message.
-     * 
-     * @param message -
-     *            the detail message.
      *
+     * @param message - the detail message.
      */
     public TaskNotFoundException(final String message) {
         super(message, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 
     /**
-     * Constructor used to create a new Exception with the specified detail
-     * message and a mapping to an initial exception.
-     * 
-     * @param message -
-     *            the detail message.
-     * @param error
-     *            Throwable
+     * Constructor used to create a new Exception with the specified detail message and a mapping to an initial
+     * exception.
      *
+     * @param message - the detail message.
+     * @param error   Throwable
      */
     public TaskNotFoundException(final String message, final Throwable error) {
         super(message, error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);

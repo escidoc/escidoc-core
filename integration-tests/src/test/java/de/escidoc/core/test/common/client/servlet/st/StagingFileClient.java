@@ -34,88 +34,62 @@ import de.escidoc.core.test.common.client.servlet.Constants;
 import java.io.InputStream;
 
 /**
- * This client offers access methods to the escidoc REST interface of the
- * StagingFile resource.
- * 
+ * This client offers access methods to the escidoc REST interface of the StagingFile resource.
+ *
  * @author Torsten Tetteroo
- * 
  */
 public class StagingFileClient extends ClientBase {
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public StagingFileClient(final int transport) {
         super(transport);
         if (transport != Constants.TRANSPORT_REST) {
-            throw new RuntimeException("Transport not provided [" + transport
-                + "]");
+            throw new RuntimeException("Transport not provided [" + transport + "]");
         }
     }
 
     /**
      * Create a StagingFile in the escidoc framework.
-     * 
-     * @param binaryContent
-     *            The binary content of the staging file.
-     * @param mimeType
-     *            The mime type of the data.
-     * @param filename
-     *            The name of the file.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param binaryContent The binary content of the staging file.
+     * @param mimeType      The mime type of the data.
+     * @param filename      The name of the file.
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
-    public Object create(
-        final InputStream binaryContent, final String mimeType,
-        final String filename) throws Exception {
+    public Object create(final InputStream binaryContent, final String mimeType, final String filename)
+        throws Exception {
 
-        return callEsciDocWithBinaryContent("StagingFile.create",
-            METHOD_CREATE, Constants.HTTP_METHOD_PUT,
-            Constants.STAGING_FILE_BASE_URI, new String[] {}, binaryContent,
-            mimeType, filename);
+        return callEsciDocWithBinaryContent("StagingFile.create", METHOD_CREATE, Constants.HTTP_METHOD_PUT,
+            Constants.STAGING_FILE_BASE_URI, new String[] {}, binaryContent, mimeType, filename);
     }
 
     /**
      * Retrieve the binary content of a StagingFile.
-     * 
-     * @param id
-     *            The id of the StagingFile.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param id The id of the StagingFile.
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     public Object retrieve(final String id) throws Exception {
 
-        return callEsciDoc("StagingFile.retrieve", METHOD_RETRIEVE,
-            Constants.HTTP_METHOD_GET, Constants.STAGING_FILE_BASE_URI,
-            new String[] { id }, null);
+        return callEsciDoc("StagingFile.retrieve", METHOD_RETRIEVE, Constants.HTTP_METHOD_GET,
+            Constants.STAGING_FILE_BASE_URI, new String[] { id }, null);
     }
-
 
     /**
      * See Interface for functional description.
-     * 
-     * @param label
-     * @param soapMethod
-     * @return
-     * @throws Exception
-     * @see de.escidoc.core.test.common.client.servlet.ClientBase
-     *      #callSoapMethod(java.lang.String, java.lang.String,
-     *      java.lang.String, java.lang.String, java.lang.String,
-     *      java.lang.Object)
+     *
+     * @see de.escidoc.core.test.common.client.servlet.ClientBase #callSoapMethod(java.lang.String, java.lang.String,
+     *      java.lang.String, java.lang.String, java.lang.String, java.lang.Object)
      */
     @Override
-    protected Object callSoapMethod(
-        final String label, final String soapMethod, final Object[] params)
+    protected Object callSoapMethod(final String label, final String soapMethod, final Object[] params)
         throws Exception {
 
         throw new UnsupportedOperationException("SOAP not supported");
     }
-
-
 
 }

@@ -28,8 +28,7 @@ public interface EscidocServiceRedirectInterface {
     String getRedirectUrl();
 
     /**
-     * @param redirectUrl
-     *            the redirectUrl to set
+     * @param redirectUrl the redirectUrl to set
      */
     void setRedirectUrl(final String redirectUrl);
 
@@ -39,8 +38,7 @@ public interface EscidocServiceRedirectInterface {
     String getContent();
 
     /**
-     * @param content
-     *            the content to set
+     * @param content the content to set
      */
     void setContent(final String content);
 

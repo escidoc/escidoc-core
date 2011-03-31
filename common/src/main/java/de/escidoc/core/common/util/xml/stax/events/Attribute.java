@@ -26,10 +26,9 @@ import javax.xml.stream.XMLStreamReader;
 
 /**
  * Attribute.
- * 
- * 
  */
 public class Attribute {
+
     private String localName;
 
     private String namespace;
@@ -50,18 +49,13 @@ public class Attribute {
 
     /**
      * Attribute.
-     * 
-     * @param localName
-     *            The local name.
-     * @param namespace
-     *            The namespace.
-     * @param prefix
-     *            The prefix.
-     * @param value
-     *            The attribute value.
+     *
+     * @param localName The local name.
+     * @param namespace The namespace.
+     * @param prefix    The prefix.
+     * @param value     The attribute value.
      */
-    public Attribute(final String localName, final String namespace,
-        final String prefix, final String value) {
+    public Attribute(final String localName, final String namespace, final String prefix, final String value) {
 
         this.localName = localName;
         this.namespace = namespace;
@@ -71,16 +65,12 @@ public class Attribute {
 
     /**
      * Attribute.
-     * 
-     * @param parser
-     *            The parser.
-     * @param index
-     *            The index.
-     * @throws XmlParserSystemException
-     *             Thrown if parsing failed.
+     *
+     * @param parser The parser.
+     * @param index  The index.
+     * @throws XmlParserSystemException Thrown if parsing failed.
      */
-    public Attribute(final XMLStreamReader parser, final int index)
-        throws XmlParserSystemException {
+    public Attribute(final XMLStreamReader parser, final int index) throws XmlParserSystemException {
 
         this.localName = parser.getAttributeLocalName(index);
         this.namespace = parser.getAttributeNamespace(index);
@@ -90,7 +80,7 @@ public class Attribute {
 
     /**
      * Get the local name (node).
-     * 
+     *
      * @return local name
      */
     public String getLocalName() {
@@ -99,9 +89,8 @@ public class Attribute {
 
     /**
      * Set the local (node) name.
-     * 
-     * @param localName
-     *            The name of the node.
+     *
+     * @param localName The name of the node.
      */
     public void setLocalName(final String localName) {
         this.localName = localName;
@@ -109,7 +98,7 @@ public class Attribute {
 
     /**
      * Get the namespace.
-     * 
+     *
      * @return namespace
      */
     public String getNamespace() {
@@ -118,9 +107,8 @@ public class Attribute {
 
     /**
      * Set the namespace.
-     * 
-     * @param namespace
-     *            The new namespace.
+     *
+     * @param namespace The new namespace.
      */
     public void setNamespace(final String namespace) {
         this.namespace = namespace;
@@ -128,7 +116,7 @@ public class Attribute {
 
     /**
      * Get the prefix.
-     * 
+     *
      * @return prefix
      */
     public String getPrefix() {
@@ -137,9 +125,8 @@ public class Attribute {
 
     /**
      * Set the prefix.
-     * 
-     * @param prefix
-     *            The prefix
+     *
+     * @param prefix The prefix
      */
     public void setPrefix(final String prefix) {
         this.prefix = prefix;
@@ -147,7 +134,7 @@ public class Attribute {
 
     /**
      * Get the attribute value.
-     * 
+     *
      * @return value of attribute
      */
     public String getValue() {
@@ -156,9 +143,8 @@ public class Attribute {
 
     /**
      * Set the value of the attribute.
-     * 
-     * @param value
-     *            attribute value
+     *
+     * @param value attribute value
      */
     public void setValue(final String value) {
         this.value = value;

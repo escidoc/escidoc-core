@@ -22,97 +22,46 @@ import java.util.Map;
  */
 public interface ReportDefinitionHandlerService extends Remote {
 
-    String create(String xmlData,
-                            SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            XmlSchemaValidationException,
-            XmlCorruptedException,
-            InvalidSqlException,
-            MissingMethodParameterException,
-            ScopeNotFoundException,
-            ScopeContextViolationException,
-            SystemException, RemoteException;
+    String create(String xmlData, SecurityContext securityContext) throws AuthenticationException,
+        AuthorizationException, XmlSchemaValidationException, XmlCorruptedException, InvalidSqlException,
+        MissingMethodParameterException, ScopeNotFoundException, ScopeContextViolationException, SystemException,
+        RemoteException;
 
-    String create(String xmlData, String authHandle, Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            XmlSchemaValidationException,
-            XmlCorruptedException,
-            InvalidSqlException,
-            MissingMethodParameterException,
-            ScopeNotFoundException,
-            ScopeContextViolationException,
-            SystemException, RemoteException;
+    String create(String xmlData, String authHandle, Boolean restAccess) throws AuthenticationException,
+        AuthorizationException, XmlSchemaValidationException, XmlCorruptedException, InvalidSqlException,
+        MissingMethodParameterException, ScopeNotFoundException, ScopeContextViolationException, SystemException,
+        RemoteException;
 
-    void delete(String id, SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            ReportDefinitionNotFoundException,
-            MissingMethodParameterException,
-            SystemException, RemoteException;
+    void delete(String id, SecurityContext securityContext) throws AuthenticationException, AuthorizationException,
+        ReportDefinitionNotFoundException, MissingMethodParameterException, SystemException, RemoteException;
 
-    void delete(String id, String authHandle, Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            ReportDefinitionNotFoundException,
-            MissingMethodParameterException,
-            SystemException, RemoteException;
+    void delete(String id, String authHandle, Boolean restAccess) throws AuthenticationException,
+        AuthorizationException, ReportDefinitionNotFoundException, MissingMethodParameterException, SystemException,
+        RemoteException;
 
-    String retrieve(String id, SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            ReportDefinitionNotFoundException,
-            MissingMethodParameterException,
-            SystemException, RemoteException;
+    String retrieve(String id, SecurityContext securityContext) throws AuthenticationException, AuthorizationException,
+        ReportDefinitionNotFoundException, MissingMethodParameterException, SystemException, RemoteException;
 
-    String retrieve(String id, String authHandle, Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            ReportDefinitionNotFoundException,
-            MissingMethodParameterException,
-            SystemException, RemoteException;
+    String retrieve(String id, String authHandle, Boolean restAccess) throws AuthenticationException,
+        AuthorizationException, ReportDefinitionNotFoundException, MissingMethodParameterException, SystemException,
+        RemoteException;
 
-    String retrieveReportDefinitions(Map filter,
-                                               SecurityContext securityContext)
-            throws InvalidSearchQueryException,
-            MissingMethodParameterException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException, RemoteException;
+    String retrieveReportDefinitions(Map filter, SecurityContext securityContext) throws InvalidSearchQueryException,
+        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException,
+        RemoteException;
 
-    String retrieveReportDefinitions(Map filter, String authHandle,
-                                               Boolean restAccess)
-            throws InvalidSearchQueryException,
-            MissingMethodParameterException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException, RemoteException;
+    String retrieveReportDefinitions(Map filter, String authHandle, Boolean restAccess)
+        throws InvalidSearchQueryException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException, RemoteException;
 
-    String update(String id, String xmlData,
-                            SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            ReportDefinitionNotFoundException,
-            MissingMethodParameterException,
-            ScopeNotFoundException,
-            InvalidSqlException,
-            ScopeContextViolationException,
-            XmlSchemaValidationException,
-            XmlCorruptedException,
-            SystemException, RemoteException;
+    String update(String id, String xmlData, SecurityContext securityContext) throws AuthenticationException,
+        AuthorizationException, ReportDefinitionNotFoundException, MissingMethodParameterException,
+        ScopeNotFoundException, InvalidSqlException, ScopeContextViolationException, XmlSchemaValidationException,
+        XmlCorruptedException, SystemException, RemoteException;
 
-    String update(String id, String xmlData, String authHandle,
-                            Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            ReportDefinitionNotFoundException,
-            MissingMethodParameterException,
-            ScopeNotFoundException,
-            InvalidSqlException,
-            ScopeContextViolationException,
-            XmlSchemaValidationException,
-            XmlCorruptedException,
-            SystemException, RemoteException;
+    String update(String id, String xmlData, String authHandle, Boolean restAccess) throws AuthenticationException,
+        AuthorizationException, ReportDefinitionNotFoundException, MissingMethodParameterException,
+        ScopeNotFoundException, InvalidSqlException, ScopeContextViolationException, XmlSchemaValidationException,
+        XmlCorruptedException, SystemException, RemoteException;
 
 }

@@ -38,34 +38,26 @@ import java.net.URI;
 
 /**
  * Class holding the data of a policy reference.
- * 
- * @author Torsten Tetteroo
  *
+ * @author Torsten Tetteroo
  */
 public class XacmlPolicyReference extends PolicyReference {
 
     /**
      * The constructor.
-     * 
-     * @param referenceId
-     *            The id of the referenced policy or policy set.
-     * @param type
-     *            The type of the reference as specified in
-     *            <code>PolicyReference</code>.
-     * @param finder
-     *            The policy finder to use for resolving the reference.
+     *
+     * @param referenceId The id of the referenced policy or policy set.
+     * @param type        The type of the reference as specified in <code>PolicyReference</code>.
+     * @param finder      The policy finder to use for resolving the reference.
      */
-    public XacmlPolicyReference(final URI referenceId, final int type,
-        final PolicyFinder finder) {
+    public XacmlPolicyReference(final URI referenceId, final int type, final PolicyFinder finder) {
 
         super(referenceId, type, finder);
     }
 
-
     /**
      * See Interface for functional description.
-     * 
-     * @return
+     *
      * @see Object#toString()
      */
     public String toString() {
@@ -74,7 +66,8 @@ public class XacmlPolicyReference extends PolicyReference {
         try {
             encode(writer, new Indenter());
             returnValue = writer.toString();
-        } finally {
+        }
+        finally {
             IOUtils.closeStream(writer);
         }
         return returnValue;

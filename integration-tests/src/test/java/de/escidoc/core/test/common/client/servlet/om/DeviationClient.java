@@ -38,15 +38,13 @@ import java.net.URL;
 
 /**
  * Offers access methods to the escidoc interfaces.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 public class DeviationClient extends ClientBase {
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public DeviationClient(final int transport) {
         super(transport);
@@ -54,48 +52,41 @@ public class DeviationClient extends ClientBase {
 
     /**
      * get a resource xml.
-     * 
-     * @param id
-     *            the id of the resource.
+     *
+     * @param id the id of the resource.
      * @return The FOXML as String.
-     * @throws Exception
-     *             If the service call fails.
+     * @throws Exception If the service call fails.
      */
     public String export(final String id) throws Exception {
         if (getTransport() == Constants.TRANSPORT_REST) {
-            com.yourmediashelf.fedora.client.FedoraClient restClient = 
-                getFedoraRestClient();
-            FedoraResponse response = 
-                com.yourmediashelf.fedora.client.FedoraClient
-                .export(id).format(Constants.FOXML_FORMAT)
-                            .context("public").execute(restClient);
+            com.yourmediashelf.fedora.client.FedoraClient restClient = getFedoraRestClient();
+            FedoraResponse response =
+                com.yourmediashelf.fedora.client.FedoraClient.export(id).format(Constants.FOXML_FORMAT).context(
+                    "public").execute(restClient);
             return toString(response.getEntityInputStream());
-        } else {
+        }
+        else {
             return null;
         }
     }
 
     /**
      * get a binary datastream as String.
-     * 
-     * @param id
-     *            the id of the resource.
-     * @param componentId
-     *            the id of the component.
+     *
+     * @param id          the id of the resource.
+     * @param componentId the id of the component.
      * @return The Datastream as String.
-     * @throws Exception
-     *             If the service call fails.
+     * @throws Exception If the service call fails.
      */
-    public String getDatastreamDissimination(
-            final String id, final String componentId) throws Exception {
+    public String getDatastreamDissimination(final String id, final String componentId) throws Exception {
         if (getTransport() == Constants.TRANSPORT_REST) {
-            com.yourmediashelf.fedora.client.FedoraClient restClient = 
-                getFedoraRestClient();
-            FedoraResponse response = 
-                com.yourmediashelf.fedora.client.FedoraClient
-                .getDatastreamDissemination(id, componentId).execute(restClient);
+            com.yourmediashelf.fedora.client.FedoraClient restClient = getFedoraRestClient();
+            FedoraResponse response =
+                com.yourmediashelf.fedora.client.FedoraClient.getDatastreamDissemination(id, componentId).execute(
+                    restClient);
             return toString(response.getEntityInputStream());
-        } else {
+        }
+        else {
             return null;
 
         }
@@ -103,42 +94,33 @@ public class DeviationClient extends ClientBase {
 
     /**
      * get the fedora describe xml.
-     * 
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     public String describeFedora() throws Exception {
         if (getTransport() == Constants.TRANSPORT_REST) {
-            com.yourmediashelf.fedora.client.FedoraClient restClient = 
-                getFedoraRestClient();
-            FedoraResponse response = 
-                com.yourmediashelf.fedora.client.FedoraClient
-                .describeRepository().xml(true).execute(restClient);
+            com.yourmediashelf.fedora.client.FedoraClient restClient = getFedoraRestClient();
+            FedoraResponse response =
+                com.yourmediashelf.fedora.client.FedoraClient.describeRepository().xml(true).execute(restClient);
             return toString(response.getEntityInputStream());
-        } else {
+        }
+        else {
             return null;
         }
     }
 
     /**
      * get the fedora API A.
-     * 
+     *
      * @return FedoraAPIA
-     * @throws Exception
-     *             If the service call fails.
+     * @throws Exception If the service call fails.
      */
-    private static com.yourmediashelf.fedora.client.FedoraClient 
-                getFedoraRestClient()
-                        throws Exception {
-        com.yourmediashelf.fedora.client.FedoraClient restClient = 
-            new com.yourmediashelf.fedora.client.FedoraClient(
-                new FedoraCredentials(
-                    new URL(Constants.PROTOCOL + "://"
-                        + Constants.HOST_PORT + "/fedoradeviation"), 
-                    "", PWCallback.DEFAULT_HANDLE));
+    private static com.yourmediashelf.fedora.client.FedoraClient getFedoraRestClient() throws Exception {
+        com.yourmediashelf.fedora.client.FedoraClient restClient =
+            new com.yourmediashelf.fedora.client.FedoraClient(new FedoraCredentials(new URL(Constants.PROTOCOL + "://"
+                + Constants.HOST_PORT + "/fedoradeviation"), "", PWCallback.DEFAULT_HANDLE));
         return restClient;
     }
-    
+
 }

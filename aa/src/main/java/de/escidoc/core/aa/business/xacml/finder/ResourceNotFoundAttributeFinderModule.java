@@ -39,81 +39,50 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Attribute finder module implementation that checks if a resource object
- * addressed by the resource-id exists and is of the object type addressed by
- * the id of the attribute that currently shall be resolved.<br>
- * This finder module returns either an empty <code>EvaluationResult</code> if
- * the resource exists and is of the expected type, or it returns an
- * <code>EvaluationResult</code> reporting the appropriate
- * <code>ResourceNotFoundException.</code> This finder module must be the first
- * eSciDoc specific finder module in the chain, but must be placed after the
- * 'standard' finder modules.
- * 
+ * Attribute finder module implementation that checks if a resource object addressed by the resource-id exists and is of
+ * the object type addressed by the id of the attribute that currently shall be resolved.<br> This finder module returns
+ * either an empty <code>EvaluationResult</code> if the resource exists and is of the expected type, or it returns an
+ * <code>EvaluationResult</code> reporting the appropriate <code>ResourceNotFoundException.</code> This finder module
+ * must be the first eSciDoc specific finder module in the chain, but must be placed after the 'standard' finder
+ * modules.
+ *
  * @author Torsten Tetteroo
  */
-public class ResourceNotFoundAttributeFinderModule
-    extends AbstractAttributeFinderModule {
+public class ResourceNotFoundAttributeFinderModule extends AbstractAttributeFinderModule {
 
     /**
-     * Pattern matching object-type attribute ids or resource identifiers
-     * (...-id) attribute ids.
+     * Pattern matching object-type attribute ids or resource identifiers (...-id) attribute ids.
      */
     private static final Pattern PATTERN_OBJECT_TYPE_OR_RESOURCE_IDENTIFIER =
-        Pattern.compile(AttributeIds.URN_OBJECT_TYPE + ".*|"
-            + AttributeIds.RESOURCE_ATTR_PREFIX + "[^:]+-id.*");
+        Pattern.compile(AttributeIds.URN_OBJECT_TYPE + ".*|" + AttributeIds.RESOURCE_ATTR_PREFIX + "[^:]+-id.*");
 
     private static final String ERROR_MSG_RESOURCE_NOT_FOUND_DUE_TO_WRONG_TYPE =
         "The resource with the specified id is not of the expected type.";
 
-
-
     /**
      * See Interface for functional description.
-     * 
-     * @param attributeIdValue
-     * @param ctx
-     * @param resourceId
-     * @param resourceObjid
-     * @param resourceVersionNumber
-     * @param designatorType
-     * @return
-     * @throws EscidocException
-     *
      */
     @Override
     protected boolean assertAttribute(
-        final String attributeIdValue, final EvaluationCtx ctx,
-        final String resourceId, final String resourceObjid,
-        final String resourceVersionNumber, final int designatorType)
-        throws EscidocException {
+        final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
+        final String resourceVersionNumber, final int designatorType) throws EscidocException {
 
-        if (!super.assertAttribute(attributeIdValue, ctx, resourceId,
-            resourceObjid, resourceVersionNumber, designatorType)) {
+        if (!super.assertAttribute(attributeIdValue, ctx, resourceId, resourceObjid, resourceVersionNumber,
+            designatorType)) {
             return false;
         }
 
-        return !(FinderModuleHelper.isNewResourceId(resourceId)
-                || PATTERN_OBJECT_TYPE_OR_RESOURCE_IDENTIFIER.matcher(
-                attributeIdValue).find());
+        return !(FinderModuleHelper.isNewResourceId(resourceId) || PATTERN_OBJECT_TYPE_OR_RESOURCE_IDENTIFIER.matcher(
+            attributeIdValue).find());
 
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param attributeIdValue
-     * @param ctx
-     * @param resourceId
-     * @param resourceObjid
-     * @param resourceVersionNumber
-     * @return
-     * @throws EscidocException
-     *
      */
     @Override
     protected Object[] resolveLocalPart(
-        final String attributeIdValue, final EvaluationCtx ctx,
-        final String resourceId, final String resourceObjid,
+        final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
         final String resourceVersionNumber) throws EscidocException {
 
         // check if the object identified by resource-id is of the expected
@@ -125,10 +94,8 @@ public class ResourceNotFoundAttributeFinderModule
             final String expectedObjectType = matcher.group(2);
             if (!resourceObjectType.equals(expectedObjectType)) {
                 final String emsg =
-                    StringUtility.format(
-                        ERROR_MSG_RESOURCE_NOT_FOUND_DUE_TO_WRONG_TYPE,
-                        resourceId, "expectedObjectType:" + expectedObjectType
-                            + ", attributeIdValue:" + attributeIdValue
+                    StringUtility.format(ERROR_MSG_RESOURCE_NOT_FOUND_DUE_TO_WRONG_TYPE, resourceId,
+                        "expectedObjectType:" + expectedObjectType + ", attributeIdValue:" + attributeIdValue
                             + ", resourceObjectType:" + resourceObjectType);
                 throw new ResourceNotFoundException(emsg);
             }
@@ -137,7 +104,5 @@ public class ResourceNotFoundAttributeFinderModule
         // always return null (empty result) if no error occurred.
         return null;
     }
-
-
 
 }

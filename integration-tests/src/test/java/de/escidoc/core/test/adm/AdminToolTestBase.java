@@ -35,9 +35,8 @@ import de.escidoc.core.test.security.client.PWCallback;
 
 /**
  * Test suite for the DeleteObjects method of the admin tool.
- * 
+ *
  * @author André Schenk
- * 
  */
 public class AdminToolTestBase extends EscidocRestSoapTestBase {
 
@@ -47,12 +46,9 @@ public class AdminToolTestBase extends EscidocRestSoapTestBase {
 
     /**
      * The constructor.
-     * 
-     * @param transport
-     *            The transport identifier.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param transport The transport identifier.
+     * @throws Exception If anything fails.
      */
     public AdminToolTestBase(final int transport) throws Exception {
         super(transport);
@@ -63,13 +59,10 @@ public class AdminToolTestBase extends EscidocRestSoapTestBase {
 
     /**
      * Create an item.
-     * 
-     * @param xml
-     *            item XML
-     * 
+     *
+     * @param xml item XML
      * @return created item
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     protected String createItem(final String xml) throws Exception {
         return handleXmlResult(itemClient.create(xml));
@@ -77,13 +70,10 @@ public class AdminToolTestBase extends EscidocRestSoapTestBase {
 
     /**
      * Delete objects from Fedora, resource cache and search index.
-     * 
-     * @param xml
-     *            XML with the object ids
+     *
+     * @param xml XML with the object ids
      * @return current status as string (some statistics)
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     protected String deleteObjects(final String xml) throws Exception {
         return handleXmlResult(adminClient.deleteObjects(xml));
@@ -91,10 +81,9 @@ public class AdminToolTestBase extends EscidocRestSoapTestBase {
 
     /**
      * Get the current status of the purge process.
-     * 
+     *
      * @return current status as string (some statistics)
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     protected String getPurgeStatus() throws Exception {
         return handleXmlResult(adminClient.getPurgeStatus());
@@ -102,10 +91,9 @@ public class AdminToolTestBase extends EscidocRestSoapTestBase {
 
     /**
      * Get some information about the repository.
-     * 
+     *
      * @return repository information
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     protected String getRepositoryInfo() throws Exception {
         return handleXmlResult(adminClient.getRepositoryInfo());
@@ -113,12 +101,10 @@ public class AdminToolTestBase extends EscidocRestSoapTestBase {
 
     /**
      * Load the example objects into the repository.
-     * 
-     * @param type
-     *            examples type (only "common" allowed at the moment)
+     *
+     * @param type examples type (only "common" allowed at the moment)
      * @return some information about the created objects
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     protected String loadExamples(final String type) throws Exception {
         return handleXmlResult(adminClient.loadExamples(type));
@@ -126,10 +112,9 @@ public class AdminToolTestBase extends EscidocRestSoapTestBase {
 
     /**
      * Get some information about the repository.
-     * 
+     *
      * @return repository information
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     protected String getIndexConfiguration() throws Exception {
         return handleXmlResult(adminClient.getIndexConfiguration());
@@ -137,13 +122,10 @@ public class AdminToolTestBase extends EscidocRestSoapTestBase {
 
     /**
      * Retrieve an item.
-     * 
-     * @param id
-     *            item id
-     * 
+     *
+     * @param id item id
      * @return item XML
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     protected String retrieveItem(final String id) throws Exception {
         return handleXmlResult(itemClient.retrieve(id));
@@ -151,16 +133,12 @@ public class AdminToolTestBase extends EscidocRestSoapTestBase {
 
     /**
      * Retrieve an item.
-     * 
-     * @param id
-     *            item id
-     * 
+     *
+     * @param id item id
      * @return item XML
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    protected String reindex(final boolean clearIndex, final String indexName)
-        throws Exception {
+    protected String reindex(final boolean clearIndex, final String indexName) throws Exception {
         return handleXmlResult(adminClient.reindex(clearIndex, indexName));
     }
 }

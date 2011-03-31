@@ -32,100 +32,84 @@ import java.util.HashMap;
  */
 public class IndexingCacheHandler {
 
-    private FedoraRestDeviationHandlerInterface 
-                        fedoraRestDeviationHandler;
+    private FedoraRestDeviationHandlerInterface fedoraRestDeviationHandler;
 
     /**
      * removes object + subobjects with given id from cache.
      *
-     * @param id
-     *            resource id
-     * @throws SystemException
-     *             The resource could not be removed.
+     * @param id resource id
+     * @throws SystemException The resource could not be removed.
      */
-    public void removeIdFromCache(final String id)
-                                throws SystemException {
+    public void removeIdFromCache(final String id) throws SystemException {
         try {
             fedoraRestDeviationHandler.removeFromCache(id);
-        } catch (final Exception e) {
+        }
+        catch (final Exception e) {
             throw new SystemException(e);
         }
-   }
+    }
 
     /**
      * removes object + subobjects with given id from cache.
      *
-     * @param id
-     *            resource id
-     * @param xml
-     *            xml
-     * @throws SystemException
-     *             The resource could not be removed.
+     * @param id  resource id
+     * @param xml xml
+     * @throws SystemException The resource could not be removed.
      */
-    public void replaceObjectInCache(
-        final String id, final String xml)
-                                throws SystemException {
+    public void replaceObjectInCache(final String id, final String xml) throws SystemException {
         try {
             fedoraRestDeviationHandler.replaceInCache(id, xml);
-        } catch (final Exception e) {
+        }
+        catch (final Exception e) {
             throw new SystemException(e);
         }
-   }
+    }
 
     /**
      * writes object with given id into cache.
      *
-     * @param id
-     *            resource id
-     * @param xml
-     *            xml
-     * @throws SystemException
-     *             The resource could not be removed.
+     * @param id  resource id
+     * @param xml xml
+     * @throws SystemException The resource could not be removed.
      */
-    public void writeObjectInCache(final String id, final String xml)
-                                throws SystemException {
+    public void writeObjectInCache(final String id, final String xml) throws SystemException {
         try {
             fedoraRestDeviationHandler.cache(id, xml);
-        } catch (final Exception e) {
+        }
+        catch (final Exception e) {
             throw new SystemException(e);
         }
-   }
+    }
 
     /**
      * writes object with given id into cache.
      *
-     * @param id
-     *            resource id
+     * @param id resource id
      * @return String xml-representation of requested object
-     * @throws SystemException
-     *             The resource could not be removed.
+     * @throws SystemException The resource could not be removed.
      */
-    public String retrieveObjectFromCache(final String id)
-                                throws SystemException {
+    public String retrieveObjectFromCache(final String id) throws SystemException {
         try {
-            final String xml =
-                fedoraRestDeviationHandler.export(id, new HashMap(0));
+            final String xml = fedoraRestDeviationHandler.export(id, new HashMap(0));
             if (xml != null) {
                 return xml;
-            } else {
+            }
+            else {
                 throw new SystemException("Couldnt retrieve object with id " + id);
             }
-        } catch (final Exception e) {
+        }
+        catch (final Exception e) {
             throw new SystemException(e);
         }
-   }
+    }
 
     /**
      * Setting the fedoraRestDeviationHandler.
-     * 
-     * @param fedoraRestDeviationHandler
-     *            The fedorarestDeviationHandler to set.
+     *
+     * @param fedoraRestDeviationHandler The fedorarestDeviationHandler to set.
      */
-    public final void setFedoraRestDeviationHandler(
-        final FedoraRestDeviationHandlerInterface 
-        fedoraRestDeviationHandler) {
-        this.fedoraRestDeviationHandler 
-                = fedoraRestDeviationHandler;
+    public final void setFedoraRestDeviationHandler(final FedoraRestDeviationHandlerInterface fedoraRestDeviationHandler) {
+        this.fedoraRestDeviationHandler = fedoraRestDeviationHandler;
     }
 
 }

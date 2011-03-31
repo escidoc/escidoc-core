@@ -32,18 +32,15 @@ import org.apache.http.HttpResponse;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
-
 /**
  * Base class for report tests.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 public class ReportTestBase extends SmTestBase {
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ReportTestBase(final int transport) {
         super(transport);
@@ -51,12 +48,10 @@ public class ReportTestBase extends SmTestBase {
 
     /**
      * Test retrieving an report from the mock framework.
-     * 
-     * @param xml
-     *            Treport-parameters xml.
+     *
+     * @param xml Treport-parameters xml.
      * @return The retrieved report.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     public String retrieve(final String xml) throws Exception {
 

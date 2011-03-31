@@ -32,16 +32,20 @@ import java.util.Map;
 public class AggregationDefinitionHandlerBean implements SessionBean {
 
     AggregationDefinitionHandlerInterface service;
+
     SessionContext sessionCtx;
+
     private static final Logger LOGGER = LoggerFactory.getLogger(AggregationDefinitionHandlerBean.class);
 
     public void ejbCreate() throws CreateException {
         try {
             final BeanFactoryLocator beanFactoryLocator = SingletonBeanFactoryLocator.getInstance();
             final BeanFactory factory =
-                    beanFactoryLocator.useBeanFactory("AggregationDefinitionHandler.spring.ejb.context").getFactory();
-            this.service = (AggregationDefinitionHandlerInterface) factory.getBean("service.AggregationDefinitionHandler");
-        } catch(Exception e) {
+                beanFactoryLocator.useBeanFactory("AggregationDefinitionHandler.spring.ejb.context").getFactory();
+            this.service =
+                (AggregationDefinitionHandlerInterface) factory.getBean("service.AggregationDefinitionHandler");
+        }
+        catch (Exception e) {
             LOGGER.error("ejbCreate(): Exception AggregationDefinitionHandlerComponent: " + e);
             throw new CreateException(e.getMessage());
         }
@@ -62,125 +66,101 @@ public class AggregationDefinitionHandlerBean implements SessionBean {
 
     }
 
-    public String create(final String xmlData,
-                                   final SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            XmlSchemaValidationException,
-            XmlCorruptedException,
-            MissingMethodParameterException,
-            ScopeNotFoundException,
-            SystemException {
+    public String create(final String xmlData, final SecurityContext securityContext) throws AuthenticationException,
+        AuthorizationException, XmlSchemaValidationException, XmlCorruptedException, MissingMethodParameterException,
+        ScopeNotFoundException, SystemException {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.create(xmlData);
     }
 
     public String create(final String xmlData, final String authHandle, final Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            XmlSchemaValidationException,
-            XmlCorruptedException,
-            MissingMethodParameterException,
-            ScopeNotFoundException,
-            SystemException {
+        throws AuthenticationException, AuthorizationException, XmlSchemaValidationException, XmlCorruptedException,
+        MissingMethodParameterException, ScopeNotFoundException, SystemException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.create(xmlData);
     }
 
-    public void delete(final String id, final SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            AggregationDefinitionNotFoundException,
-            MissingMethodParameterException,
-            SystemException {
+    public void delete(final String id, final SecurityContext securityContext) throws AuthenticationException,
+        AuthorizationException, AggregationDefinitionNotFoundException, MissingMethodParameterException,
+        SystemException {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         service.delete(id);
     }
 
     public void delete(final String id, final String authHandle, final Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            AggregationDefinitionNotFoundException,
-            MissingMethodParameterException,
-            SystemException {
+        throws AuthenticationException, AuthorizationException, AggregationDefinitionNotFoundException,
+        MissingMethodParameterException, SystemException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         service.delete(id);
     }
 
-    public String retrieve(final String id,
-                                     final SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            AggregationDefinitionNotFoundException,
-            MissingMethodParameterException,
-            SystemException {
+    public String retrieve(final String id, final SecurityContext securityContext) throws AuthenticationException,
+        AuthorizationException, AggregationDefinitionNotFoundException, MissingMethodParameterException,
+        SystemException {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.retrieve(id);
     }
 
     public String retrieve(final String id, final String authHandle, final Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            AggregationDefinitionNotFoundException,
-            MissingMethodParameterException,
-            SystemException {
+        throws AuthenticationException, AuthorizationException, AggregationDefinitionNotFoundException,
+        MissingMethodParameterException, SystemException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.retrieve(id);
     }
 
-    public String retrieveAggregationDefinitions(final Map parameters,
-                                                           final SecurityContext securityContext)
-            throws InvalidSearchQueryException,
-            MissingMethodParameterException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException {
+    public String retrieveAggregationDefinitions(final Map parameters, final SecurityContext securityContext)
+        throws InvalidSearchQueryException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.retrieveAggregationDefinitions(parameters);
     }
 
-    public String retrieveAggregationDefinitions(final Map parameters, final String authHandle,
-                                                           final Boolean restAccess)
-            throws InvalidSearchQueryException,
-            MissingMethodParameterException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException {
+    public String retrieveAggregationDefinitions(final Map parameters, final String authHandle, final Boolean restAccess)
+        throws InvalidSearchQueryException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.retrieveAggregationDefinitions(parameters);

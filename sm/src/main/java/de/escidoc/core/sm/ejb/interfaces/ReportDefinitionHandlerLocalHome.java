@@ -9,6 +9,7 @@ import javax.ejb.EJBLocalHome;
 public interface ReportDefinitionHandlerLocalHome extends EJBLocalHome {
 
     String COMP_NAME = "java:comp/env/ejb/ReportDefinitionHandlerLocal";
+
     String JNDI_NAME = "ejb/ReportDefinitionHandlerLocal";
 
     ReportDefinitionHandlerLocal create() throws CreateException;

@@ -47,9 +47,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
 /**
- * 
  * @author Michael Schneider
- * 
  */
 @RunWith(value = Parameterized.class)
 public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
@@ -67,8 +65,7 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
     private static int componentNo = 2;
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ItemRetrieveComponentPropertiesTest(final int transport) {
         super(transport);
@@ -76,25 +73,20 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
 
     /**
      * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Before
     public void setUp() throws Exception {
         itemXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
-                + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                "escidoc_item_198_for_create.xml");
         createdItem = EscidocRestSoapTestBase.getDocument(create(itemXml));
         itemId = getObjidValue(createdItem);
         componentNo = 1;
-        componentId =
-            getObjidValue(getTransport(), createdItem,
-                "/item/components/component[1]");
+        componentId = getObjidValue(getTransport(), createdItem, "/item/components/component[1]");
         // getComponentObjidValue(createdItem, 1);
-        Node node =
-            selectSingleNode(createdItem,
-                "/item/components/component[1]/properties/description");
+        Node node = selectSingleNode(createdItem, "/item/components/component[1]/properties/description");
         if (node == null) {
             componentNo = 2;
         }
@@ -102,11 +94,8 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
 
     /**
      * Test successfully retrieving the properties of a component of an item.
-     * 
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOMRCP1() throws Exception {
@@ -117,65 +106,44 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
         // System.out.println("description " + description.getTextContent());
         // }
         componentId =
-            getObjidValue(
-                getTransport(),
-                createdItem,
+            getObjidValue(getTransport(), createdItem,
                 "/item/components/component[md-records/md-record[@name='escidoc']//description]");
 
         String properties = retrieveComponentProperties(itemId, componentId);
 
         Node escidocMdRecordWithDescription =
-            selectSingleNode(
-                EscidocRestSoapTestBase.getDocument(itemXml),
+            selectSingleNode(EscidocRestSoapTestBase.getDocument(itemXml),
                 "/item/components/component/md-records/md-record[@name='escidoc' and *//description]");
-        String escidocMdRecordWithDescriptionTemplate =
-            toString(escidocMdRecordWithDescription, false);
+        String escidocMdRecordWithDescriptionTemplate = toString(escidocMdRecordWithDescription, false);
 
         String templateProperties =
-            toString(
-                selectSingleNode(
-                    EscidocRestSoapTestBase.getDocument(itemXml),
-                    "/item/components/component[md-records/md-record[@name='escidoc']//description]/properties"),
-                true);
-        assertComponentProperties(properties, templateProperties,
-            escidocMdRecordWithDescriptionTemplate, "/ir/item/" + itemId
-                + "/components/component/" + componentId + "/properties",
+            toString(selectSingleNode(EscidocRestSoapTestBase.getDocument(itemXml),
+                "/item/components/component[md-records/md-record[@name='escidoc']//description]/properties"), true);
+        assertComponentProperties(properties, templateProperties, escidocMdRecordWithDescriptionTemplate, "/ir/item/"
+            + itemId + "/components/component/" + componentId + "/properties",
             getLastModificationDateValue(createdItem), startTimestamp);
 
         componentId =
-            getObjidValue(
-                getTransport(),
-                createdItem,
+            getObjidValue(getTransport(), createdItem,
                 "/item/components/component[not(md-records/md-record[@name='escidoc']//description)]");
 
         properties = retrieveComponentProperties(itemId, componentId);
 
         Node escidocMdRecordWithoutDescription =
-            selectSingleNode(
-                EscidocRestSoapTestBase.getDocument(itemXml),
+            selectSingleNode(EscidocRestSoapTestBase.getDocument(itemXml),
                 "/item/components/component/md-records/md-record[@name='escidoc' and not(*//description)]");
-        String escidocMdRecordWithoutDescriptionTemplate =
-            toString(escidocMdRecordWithoutDescription, false);
-        assertComponentProperties(
-            properties,
-            toString(
-                selectSingleNode(
-                    EscidocRestSoapTestBase.getDocument(itemXml),
-                    "/item/components/component[not(md-records/md-record[@name='escidoc']//description)]/properties"),
-                true), escidocMdRecordWithoutDescriptionTemplate, "/ir/item/"
-                + itemId + "/components/component/" + componentId
-                + "/properties", getLastModificationDateValue(createdItem),
-            startTimestamp);
+        String escidocMdRecordWithoutDescriptionTemplate = toString(escidocMdRecordWithoutDescription, false);
+        assertComponentProperties(properties, toString(selectSingleNode(EscidocRestSoapTestBase.getDocument(itemXml),
+            "/item/components/component[not(md-records/md-record[@name='escidoc']//description)]/properties"), true),
+            escidocMdRecordWithoutDescriptionTemplate, "/ir/item/" + itemId + "/components/component/" + componentId
+                + "/properties", getLastModificationDateValue(createdItem), startTimestamp);
 
     }
 
     /**
      * Test retrieving the properties of a component of an unknown item.
-     * 
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOMRCP2a() throws Exception {
@@ -192,11 +160,8 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
 
     /**
      * Test retrieving the properties of an unknown component of an item.
-     * 
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOMRCP2b() throws Exception {
@@ -212,13 +177,9 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
     }
 
     /**
-     * Test retrieving the properties the properties of a component of an item
-     * with missing item id.
-     * 
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test retrieving the properties the properties of a component of an item with missing item id.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOMRCP3a() throws Exception {
@@ -234,13 +195,9 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
     }
 
     /**
-     * Test retrieving the properties the properties of a component of an item
-     * with missing component id.
-     * 
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test retrieving the properties the properties of a component of an item with missing component id.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOMRCP3b() throws Exception {
@@ -255,55 +212,40 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
     }
 
     /**
-     * Assert the xmlComponentProperties match the expected
-     * xmlTemplateComponentProperties.
-     * 
-     * @param xmlComponentProperties
-     *            The retrieved properties.
-     * @param xmlTemplateComponentProperties
-     *            The expected properties.
+     * Assert the xmlComponentProperties match the expected xmlTemplateComponentProperties.
+     *
+     * @param xmlComponentProperties         The retrieved properties.
+     * @param xmlTemplateComponentProperties The expected properties.
      * @param templateComponentEscidocMdRecord
-     *            TODO
-     * @param expectedHRef
-     *            The expected href.
+     *                                       TODO
+     * @param expectedHRef                   The expected href.
      * @param expectedLastModificationTimestamp
-     *            The last-modification timestamp of the item.
-     * @param timestampBeforeCreation
-     *            A timestamp before the creation of the item/component.
-     * @throws Exception
-     *             If anything fails.
+     *                                       The last-modification timestamp of the item.
+     * @param timestampBeforeCreation        A timestamp before the creation of the item/component.
+     * @throws Exception If anything fails.
      */
     private void assertComponentProperties(
-        final String xmlComponentProperties,
-        final String xmlTemplateComponentProperties,
-        final String templateComponentEscidocMdRecord,
-        final String expectedHRef,
-        final String expectedLastModificationTimestamp,
-        final String timestampBeforeCreation) throws Exception {
+        final String xmlComponentProperties, final String xmlTemplateComponentProperties,
+        final String templateComponentEscidocMdRecord, final String expectedHRef,
+        final String expectedLastModificationTimestamp, final String timestampBeforeCreation) throws Exception {
 
-        Document createdProperties =
-            EscidocRestSoapTestBase.getDocument(xmlComponentProperties);
+        Document createdProperties = EscidocRestSoapTestBase.getDocument(xmlComponentProperties);
         if (getTransport() == Constants.TRANSPORT_REST) {
             String href = getRootElementHrefValue(createdProperties);
             if ("".equals(href)) {
                 href = null;
             }
-            assertNotNull(
-                "Component Properties error: href attribute was not set!", href);
-            assertEquals("Component Properties error: href has wrong value!",
-                expectedHRef, href);
+            assertNotNull("Component Properties error: href attribute was not set!", href);
+            assertEquals("Component Properties error: href has wrong value!", expectedHRef, href);
         }
-        String rootLastModificationDate =
-            getLastModificationDateValue(createdProperties);
+        String rootLastModificationDate = getLastModificationDateValue(createdProperties);
         if ("".equals(rootLastModificationDate)) {
             rootLastModificationDate = null;
         }
-        assertNotNull(
-            "Component Properties error: last-modification-date attribute "
-                + "was not set!", rootLastModificationDate);
-        assertXmlExists(
-            "Component Properties error: creation-date was not set!",
-            createdProperties, "/properties/creation-date");
+        assertNotNull("Component Properties error: last-modification-date attribute " + "was not set!",
+            rootLastModificationDate);
+        assertXmlExists("Component Properties error: creation-date was not set!", createdProperties,
+            "/properties/creation-date");
         // assertXmlExists(
         // "Component Properties error: last-modification-date was not set "
         // + "in properties!", createdProperties,
@@ -311,16 +253,12 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
         // assertXmlExists(
         // "Component Properties error: valid-status was not set!",
         // createdProperties, "/properties/valid-status");
-        assertXmlExists(
-            "Component Properties error: visibilty was not set in properties!",
-            createdProperties, "/properties/visibility");
-        assertXmlExists(
-            "Component Properties error: creator was not set in properties!",
-            createdProperties, "/properties/created-by");
-        assertXmlExists(
-            "Component Properties error: content-category was not set in "
-                + "properties!", createdProperties,
-            "/properties/content-category");
+        assertXmlExists("Component Properties error: visibilty was not set in properties!", createdProperties,
+            "/properties/visibility");
+        assertXmlExists("Component Properties error: creator was not set in properties!", createdProperties,
+            "/properties/created-by");
+        assertXmlExists("Component Properties error: content-category was not set in " + "properties!",
+            createdProperties, "/properties/content-category");
         // assertXmlExists(
         // "Component Properties error: file-name was not set in properties!",
         // createdProperties, "/properties/file-name");
@@ -329,55 +267,37 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
         // "Component Properties error: file-size was not set in properties!",
         // createdProperties, "/properties/file-size");
 
-        String creationDate =
-            selectSingleNode(createdProperties, "/properties/creation-date")
-                .getTextContent();
-        LOGGER.debug("assertTimestampIsEqualOrAfter( " + creationDate + ", "
-            + timestampBeforeCreation + ")");
-        assertTimestampIsEqualOrAfter(
-            "Component Properties error: creation-date is not as expected!",
-            creationDate, timestampBeforeCreation);
+        String creationDate = selectSingleNode(createdProperties, "/properties/creation-date").getTextContent();
+        LOGGER.debug("assertTimestampIsEqualOrAfter( " + creationDate + ", " + timestampBeforeCreation + ")");
+        assertTimestampIsEqualOrAfter("Component Properties error: creation-date is not as expected!", creationDate,
+            timestampBeforeCreation);
 
-        assertReferencingElement("Invalid created-by. ", createdProperties,
-            "/properties/created-by", Constants.USER_ACCOUNT_BASE_URI);
+        assertReferencingElement("Invalid created-by. ", createdProperties, "/properties/created-by",
+            Constants.USER_ACCOUNT_BASE_URI);
 
-        Document template =
-            EscidocRestSoapTestBase.getDocument(xmlTemplateComponentProperties);
-        Document mdRecord =
-            EscidocRestSoapTestBase
-                .getDocument(templateComponentEscidocMdRecord);
+        Document template = EscidocRestSoapTestBase.getDocument(xmlTemplateComponentProperties);
+        Document mdRecord = EscidocRestSoapTestBase.getDocument(templateComponentEscidocMdRecord);
         if (selectSingleNode(mdRecord, "/md-record//description") != null) {
-            assertXmlExists(
-                "Component Properties error: description was not set in properties!",
-                createdProperties, "/properties/description");
+            assertXmlExists("Component Properties error: description was not set in properties!", createdProperties,
+                "/properties/description");
 
             String decriptionInProperties =
-                selectSingleNode(createdProperties, "/properties/description")
-                    .getTextContent();
-            String decriptionInEscidocmdRecord =
-                selectSingleNode(mdRecord, "/md-record//description")
-                    .getTextContent();
-            assertEquals(
-                "Component Properties error: description was changed!",
-                decriptionInProperties, decriptionInEscidocmdRecord);
+                selectSingleNode(createdProperties, "/properties/description").getTextContent();
+            String decriptionInEscidocmdRecord = selectSingleNode(mdRecord, "/md-record//description").getTextContent();
+            assertEquals("Component Properties error: description was changed!", decriptionInProperties,
+                decriptionInEscidocmdRecord);
         }
         // System.out.println("md-record "+ templateComponentEscidocMdRecord);
         // System.out.println(selectSingleNode(mdRecord,
         // "/md-record//title").getTextContent());
         if (selectSingleNode(mdRecord, "/md-record//title") != null) {
-            assertXmlExists(
-                "Component Properties error: 'file-name' was not set in properties!",
-                createdProperties, "/properties/file-name");
+            assertXmlExists("Component Properties error: 'file-name' was not set in properties!", createdProperties,
+                "/properties/file-name");
 
-            String fileNameInProperties =
-                selectSingleNode(createdProperties, "/properties/file-name")
-                    .getTextContent();
-            String fileNameInEscidocmdRecord =
-                selectSingleNode(mdRecord, "/md-record//title")
-                    .getTextContent();
-            assertEquals(
-                "Component Properties error: description was changed!",
-                fileNameInProperties, fileNameInEscidocmdRecord);
+            String fileNameInProperties = selectSingleNode(createdProperties, "/properties/file-name").getTextContent();
+            String fileNameInEscidocmdRecord = selectSingleNode(mdRecord, "/md-record//title").getTextContent();
+            assertEquals("Component Properties error: description was changed!", fileNameInProperties,
+                fileNameInEscidocmdRecord);
         }
         // if (selectSingleNode(template, "/properties/locator-url") != null) {
         // assertXmlExists(
@@ -387,49 +307,41 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
         // "Component Properties error: locator-url was changed!",
         // template, createdProperties, "/properties/locator-url");
         // }
-        assertXmlEquals("Component Properties error: status was changed!",
-            template, createdProperties, "/properties/status");
-        assertXmlEquals("Component Properties error: visibility was changed!",
-            template, createdProperties, "/properties/visibility");
+        assertXmlEquals("Component Properties error: status was changed!", template, createdProperties,
+            "/properties/status");
+        assertXmlEquals("Component Properties error: visibility was changed!", template, createdProperties,
+            "/properties/visibility");
 
-        assertXmlEquals(
-            "Component Properties error: content-category was changed!",
-            template, createdProperties, "/properties/content-category");
+        assertXmlEquals("Component Properties error: content-category was changed!", template, createdProperties,
+            "/properties/content-category");
         // assertXmlEquals("Component Properties error: file-name was changed!",
         // template, createdProperties, "/properties/file-name");
 
         if (selectSingleNode(template, "/properties/mime-type") != null) {
-            assertXmlExists(
-                "Component Properties error: mime-type was not set in properties!",
-                createdProperties, "/properties/mime-type");
-            assertXmlEquals(
-                "Component Properties error: mime-type was changed!", template,
-                createdProperties, "/properties/mime-type");
+            assertXmlExists("Component Properties error: mime-type was not set in properties!", createdProperties,
+                "/properties/mime-type");
+            assertXmlEquals("Component Properties error: mime-type was changed!", template, createdProperties,
+                "/properties/mime-type");
         }
         // assertXmlEquals("Component Properties error: file-size was changed!",
         // template, createdProperties, "/properties/file-size");
     }
 
     /**
-     * Test if the component properties element wrongly contains conditional
-     * root attributes when retrieving a component.
+     * Test if the component properties element wrongly contains conditional root attributes when retrieving a
+     * component.
      */
     @Test
     public void testIssue1021() throws Exception {
-        final Document component =
-            EscidocRestSoapTestBase.getDocument(retrieveComponent(itemId,
-                componentId));
+        final Document component = EscidocRestSoapTestBase.getDocument(retrieveComponent(itemId, componentId));
 
-        assertXmlNotExists(
-            "properties element contains conditional root attribute",
-            component, "/component/properties/@last-modification-date");
+        assertXmlNotExists("properties element contains conditional root attribute", component,
+            "/component/properties/@last-modification-date");
 
         final Document componentProperties =
-            EscidocRestSoapTestBase.getDocument(retrieveComponentProperties(
-                itemId, componentId));
+            EscidocRestSoapTestBase.getDocument(retrieveComponentProperties(itemId, componentId));
 
-        assertXmlExists(
-            "properties element does not contain conditional root attribute",
-            componentProperties, "/properties/@last-modification-date");
+        assertXmlExists("properties element does not contain conditional root attribute", componentProperties,
+            "/properties/@last-modification-date");
     }
 }

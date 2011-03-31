@@ -49,22 +49,18 @@ import java.io.IOException;
 
 /**
  * Handle Component XML to obtain all required Component values.
- * 
+ *
  * @author Steffen Wagner
- * 
  */
 public class ComponentHandler extends DefaultHandler {
 
-    private static final Logger LOGGER =
-        LoggerFactory.getLogger(ComponentHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ComponentHandler.class);
 
     private static final String XPATH_COMPONENT = "/item/components/component";
 
-    private static final String XPATH_COMPONENT_PROPERTIES =
-        XPATH_COMPONENT + "/properties";
+    private static final String XPATH_COMPONENT_PROPERTIES = XPATH_COMPONENT + "/properties";
 
-    private static final String XPATH_COMPONENT_METADATA =
-        XPATH_COMPONENT + "/md-records/md-record";
+    private static final String XPATH_COMPONENT_METADATA = XPATH_COMPONENT + "/md-records/md-record";
 
     private static final String XPATH_COMPONENT_CONTENT = XPATH_COMPONENT + "/content";
 
@@ -86,10 +82,8 @@ public class ComponentHandler extends DefaultHandler {
 
     /**
      * ComponentHandler.
-     * 
-     * @param parser
-     *            StAX parser.
-     * @param item
+     *
+     * @param parser StAX parser.
      */
     public ComponentHandler(final StaxParser parser, final ItemCreate item) {
         this.parser = parser;
@@ -98,19 +92,13 @@ public class ComponentHandler extends DefaultHandler {
 
     /**
      * Parser hits an XML start element.
-     * 
-     * @param element
-     *            StAX StartElement
+     *
+     * @param element StAX StartElement
      * @return StAX StartElement
-     * @throws MissingAttributeValueException
-     * @throws XMLStreamException
-     * @throws WebserverSystemException
-     * @throws IOException
      */
     @Override
-    public StartElement startElement(final StartElement element)
-        throws InvalidContentException, MissingAttributeValueException,
-        XMLStreamException, WebserverSystemException, IOException {
+    public StartElement startElement(final StartElement element) throws InvalidContentException,
+        MissingAttributeValueException, XMLStreamException, WebserverSystemException, IOException {
 
         if (this.parsingProperties) {
             this.propertiesHandler.startElement(element);
@@ -124,30 +112,26 @@ public class ComponentHandler extends DefaultHandler {
         else {
             final String currentPath = parser.getCurPath();
             if (XPATH_COMPONENT_PROPERTIES.equals(currentPath)) {
-                if(LOGGER.isDebugEnabled()) {
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Parser reached " + XPATH_COMPONENT_PROPERTIES);
                 }
                 // creating a new Component shows that the parser is within a
                 // component element.
                 this.parsingProperties = true;
-                this.propertiesHandler =
-                    new ComponentPropertiesHandler2(this.parser);
+                this.propertiesHandler = new ComponentPropertiesHandler2(this.parser);
                 this.propertiesHandler.startElement(element);
             }
             else if (XPATH_COMPONENT_METADATA.equals(currentPath)) {
                 this.parsingMetaData = true;
                 this.metadataHandler =
-                    new MetadataHandler2(this.parser,
-                        "/item/components/component/md-records/md-record");
+                    new MetadataHandler2(this.parser, "/item/components/component/md-records/md-record");
                 this.metadataHandler.startElement(element);
             }
             else if (XPATH_COMPONENT_CONTENT.equals(currentPath)) {
                 this.parsingContent = true;
                 this.content = new BinaryContent();
-                this.content.setStorageType(getAttributeValue(element, null,
-                    "storage"));
-                this.content.setDataLocation(getAttributeValue(element,
-                    Constants.XLINK_NS_URI, "href"));
+                this.content.setStorageType(getAttributeValue(element, null, "storage"));
+                this.content.setDataLocation(getAttributeValue(element, Constants.XLINK_NS_URI, "href"));
             }
         }
 
@@ -156,41 +140,35 @@ public class ComponentHandler extends DefaultHandler {
 
     /**
      * Parser hits an XML end element.
-     * 
-     * @param element
-     *            StAX EndElement
+     *
+     * @param element StAX EndElement
      * @return StAX EndElement
-     * @throws MissingContentException
-     * @throws XMLStreamException
-     *             Thrown if writting event failed.
+     * @throws XMLStreamException Thrown if writting event failed.
      */
     @Override
-    public EndElement endElement(final EndElement element)
-        throws WebserverSystemException {
+    public EndElement endElement(final EndElement element) throws WebserverSystemException {
 
         final String currentPath = parser.getCurPath();
 
         if (XPATH_COMPONENT_PROPERTIES.equals(currentPath)) {
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Parser reached end of " + XPATH_COMPONENT_PROPERTIES);
             }
             // parser leaves the XML component element
             this.parsingProperties = false;
             this.propertiesHandler.endElement(element);
-            this.component
-                .setProperties(this.propertiesHandler.getProperties());
+            this.component.setProperties(this.propertiesHandler.getProperties());
             this.propertiesHandler = null;
         }
         else if (XPATH_COMPONENT_METADATA.equals(currentPath)) {
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Parser reached end of " + XPATH_COMPONENT_METADATA);
             }
             // parser leaves the XML md-records element
             this.parsingMetaData = false;
 
             this.metadataHandler.endElement(element);
-            this.component
-                .addMdRecord(this.metadataHandler.getMetadataRecord());
+            this.component.addMdRecord(this.metadataHandler.getMetadataRecord());
             this.metadataHandler = null;
         }
         else if (XPATH_COMPONENT_CONTENT.equals(currentPath)) {
@@ -206,20 +184,13 @@ public class ComponentHandler extends DefaultHandler {
     }
 
     /**
-     * @param s
-     *            Character of StAX character element
-     * @param element
-     *            StAX StartElement
+     * @param s       Character of StAX character element
+     * @param element StAX StartElement
      * @return Character of StAX character element
-     * @throws WebserverSystemException
-     * @throws MissingElementValueException
-     * @throws XMLStreamException
-     * 
      */
     @Override
-    public String characters(final String s, final StartElement element)
-        throws InvalidContentException, MissingElementValueException,
-        WebserverSystemException, XMLStreamException {
+    public String characters(final String s, final StartElement element) throws InvalidContentException,
+        MissingElementValueException, WebserverSystemException, XMLStreamException {
 
         if (this.parsingProperties) {
             this.propertiesHandler.characters(s, element);
@@ -235,10 +206,9 @@ public class ComponentHandler extends DefaultHandler {
 
     /**
      * Get the Component.
-     * 
-     * Attention! ComponentCreate is only a transition object. Later
-     * implementation has to return the Component class.
-     * 
+     * <p/>
+     * Attention! ComponentCreate is only a transition object. Later implementation has to return the Component class.
+     *
      * @return Component
      */
     public ComponentCreate getComponent() {

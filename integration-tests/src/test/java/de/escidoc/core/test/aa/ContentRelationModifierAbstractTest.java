@@ -37,9 +37,8 @@ import org.junit.Test;
 
 /**
  * Test suite for the role ContentRelationManager.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 public class ContentRelationModifierAbstractTest extends GrantTestBase {
 
@@ -50,35 +49,27 @@ public class ContentRelationModifierAbstractTest extends GrantTestBase {
     private static final String PASSWORD = PWCallback.PASSWORD;
 
     protected static String grantCreationUserOrGroupId = null;
-    
+
     private static int methodCounter = 0;
-    
+
     /**
      * The constructor.
-     * 
-     * @param transport
-     *            The transport identifier.
-     * @param handlerCode
-     *            handlerCode of either UserAccountHandler or UserGroupHandler.
-     * @param userOrGroupId
-     *            userOrGroupId for grantCreation.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param transport     The transport identifier.
+     * @param handlerCode   handlerCode of either UserAccountHandler or UserGroupHandler.
+     * @param userOrGroupId userOrGroupId for grantCreation.
+     * @throws Exception If anything fails.
      */
-    public ContentRelationModifierAbstractTest(
-            final int transport, 
-            final int handlerCode,
-            final String userOrGroupId) throws Exception {
+    public ContentRelationModifierAbstractTest(final int transport, final int handlerCode, final String userOrGroupId)
+        throws Exception {
         super(transport, handlerCode);
         grantCreationUserOrGroupId = userOrGroupId;
     }
 
     /**
      * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Before
     public void initialize() throws Exception {
@@ -90,9 +81,8 @@ public class ContentRelationModifierAbstractTest extends GrantTestBase {
 
     /**
      * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @After
     public void deinitialize() throws Exception {
@@ -101,414 +91,270 @@ public class ContentRelationModifierAbstractTest extends GrantTestBase {
 
     /**
      * Tests declining creating a content-relation by a anonymous user.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testCreateContentRelationDecline() throws Exception {
-        doTestCreateContentRelation(
-                HANDLE, AuthorizationException.class);
+        doTestCreateContentRelation(HANDLE, AuthorizationException.class);
     }
 
     /**
-     * Tests updating a content-relation by a content-relation-modifier
-     * who has scope on content-relation.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests updating a content-relation by a content-relation-modifier who has scope on content-relation.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testUpdateContentRelation() throws Exception {
-        String createdXml = 
-            prepareContentRelation(
-                    PWCallback.DEFAULT_HANDLE, 
-                    STATUS_PENDING, null, null,  false, false);
-        doTestCreateGrant(PWCallback.DEFAULT_HANDLE, 
-                grantCreationUserOrGroupId, 
-                Constants.CONTENT_RELATION_BASE_URI + "/" 
-                + getObjidValue(createdXml), 
-                ROLE_HREF_CONTENT_RELATION_MODIFIER, null);
-        doTestUpdateContentRelation(
-                HANDLE, null, STATUS_PENDING, 
-                getObjidValue(createdXml), null, null);
+        String createdXml = prepareContentRelation(PWCallback.DEFAULT_HANDLE, STATUS_PENDING, null, null, false, false);
+        doTestCreateGrant(PWCallback.DEFAULT_HANDLE, grantCreationUserOrGroupId, Constants.CONTENT_RELATION_BASE_URI
+            + "/" + getObjidValue(createdXml), ROLE_HREF_CONTENT_RELATION_MODIFIER, null);
+        doTestUpdateContentRelation(HANDLE, null, STATUS_PENDING, getObjidValue(createdXml), null, null);
     }
 
     /**
-     * Tests declining updating a content-relation by a content-relation-modifier
-     * who has no scope on content-relation.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests declining updating a content-relation by a content-relation-modifier who has no scope on content-relation.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testUpdateContentRelationDecline() throws Exception {
-        String createdXml = 
-            prepareContentRelation(
-                    PWCallback.DEFAULT_HANDLE, 
-                    STATUS_PENDING, null, null,  false, false);
-        doTestCreateGrant(PWCallback.DEFAULT_HANDLE, 
-                grantCreationUserOrGroupId, null, 
-                ROLE_HREF_CONTENT_RELATION_MODIFIER, null);
-        doTestUpdateContentRelation(
-                HANDLE, null, STATUS_PENDING, 
-                getObjidValue(createdXml), null, AuthorizationException.class);
+        String createdXml = prepareContentRelation(PWCallback.DEFAULT_HANDLE, STATUS_PENDING, null, null, false, false);
+        doTestCreateGrant(PWCallback.DEFAULT_HANDLE, grantCreationUserOrGroupId, null,
+            ROLE_HREF_CONTENT_RELATION_MODIFIER, null);
+        doTestUpdateContentRelation(HANDLE, null, STATUS_PENDING, getObjidValue(createdXml), null,
+            AuthorizationException.class);
     }
 
     /**
-     * Tests deleting a content-relation by a content-relation-modifier
-     * who has scope on content-relation.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests deleting a content-relation by a content-relation-modifier who has scope on content-relation.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testDeleteContentRelation() throws Exception {
-        String createdXml = 
-            prepareContentRelation(
-                    PWCallback.DEFAULT_HANDLE, 
-                    STATUS_PENDING, null, null,  false, false);
-        doTestCreateGrant(PWCallback.DEFAULT_HANDLE, 
-                grantCreationUserOrGroupId, 
-                Constants.CONTENT_RELATION_BASE_URI + "/" 
-                + getObjidValue(createdXml), 
-                ROLE_HREF_CONTENT_RELATION_MODIFIER, null);
-        doTestDeleteContentRelation(
-                HANDLE, null, STATUS_PENDING, 
-                getObjidValue(createdXml), null);
+        String createdXml = prepareContentRelation(PWCallback.DEFAULT_HANDLE, STATUS_PENDING, null, null, false, false);
+        doTestCreateGrant(PWCallback.DEFAULT_HANDLE, grantCreationUserOrGroupId, Constants.CONTENT_RELATION_BASE_URI
+            + "/" + getObjidValue(createdXml), ROLE_HREF_CONTENT_RELATION_MODIFIER, null);
+        doTestDeleteContentRelation(HANDLE, null, STATUS_PENDING, getObjidValue(createdXml), null);
     }
 
     /**
-     * Tests declining deleting a content-relation by a content-relation-modifier
-     * who has no scope on content-relation.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests declining deleting a content-relation by a content-relation-modifier who has no scope on content-relation.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testDeleteContentRelationDecline() throws Exception {
-        String createdXml = 
-            prepareContentRelation(
-                    PWCallback.DEFAULT_HANDLE, 
-                    STATUS_PENDING, null, null,  false, false);
-        doTestCreateGrant(PWCallback.DEFAULT_HANDLE, 
-                grantCreationUserOrGroupId, null, 
-                ROLE_HREF_CONTENT_RELATION_MODIFIER, null);
-        doTestDeleteContentRelation(
-                HANDLE, null, STATUS_PENDING, 
-                getObjidValue(createdXml), AuthorizationException.class);
+        String createdXml = prepareContentRelation(PWCallback.DEFAULT_HANDLE, STATUS_PENDING, null, null, false, false);
+        doTestCreateGrant(PWCallback.DEFAULT_HANDLE, grantCreationUserOrGroupId, null,
+            ROLE_HREF_CONTENT_RELATION_MODIFIER, null);
+        doTestDeleteContentRelation(HANDLE, null, STATUS_PENDING, getObjidValue(createdXml),
+            AuthorizationException.class);
     }
 
     /**
-     * Tests locking a content-relation by a content-relation-modifier
-     * who has scope on content-relation.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests locking a content-relation by a content-relation-modifier who has scope on content-relation.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testLockContentRelation() throws Exception {
-        String createdXml = 
-            prepareContentRelation(
-                    PWCallback.DEFAULT_HANDLE, 
-                    STATUS_SUBMITTED, null, null,  false, false);
-        doTestCreateGrant(PWCallback.DEFAULT_HANDLE, 
-                grantCreationUserOrGroupId, 
-                Constants.CONTENT_RELATION_BASE_URI + "/" 
-                + getObjidValue(createdXml), 
-                ROLE_HREF_CONTENT_RELATION_MODIFIER, null);
-        doTestLockContentRelation(
-                HANDLE, null, STATUS_SUBMITTED, getObjidValue(createdXml), null);
+        String createdXml =
+            prepareContentRelation(PWCallback.DEFAULT_HANDLE, STATUS_SUBMITTED, null, null, false, false);
+        doTestCreateGrant(PWCallback.DEFAULT_HANDLE, grantCreationUserOrGroupId, Constants.CONTENT_RELATION_BASE_URI
+            + "/" + getObjidValue(createdXml), ROLE_HREF_CONTENT_RELATION_MODIFIER, null);
+        doTestLockContentRelation(HANDLE, null, STATUS_SUBMITTED, getObjidValue(createdXml), null);
     }
 
     /**
-     * Tests declining locking a content-relation by a content-relation-modifier
-     * who has no scope on content-relation.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests declining locking a content-relation by a content-relation-modifier who has no scope on content-relation.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testLockContentRelationDecline() throws Exception {
-        String createdXml = 
-            prepareContentRelation(
-                    PWCallback.DEFAULT_HANDLE, 
-                    STATUS_SUBMITTED, null, null,  false, false);
-        doTestCreateGrant(PWCallback.DEFAULT_HANDLE, 
-                grantCreationUserOrGroupId, 
-                null, 
-                ROLE_HREF_CONTENT_RELATION_MODIFIER, null);
-        doTestLockContentRelation(
-                HANDLE, null, STATUS_SUBMITTED, 
-                getObjidValue(createdXml), AuthorizationException.class);
+        String createdXml =
+            prepareContentRelation(PWCallback.DEFAULT_HANDLE, STATUS_SUBMITTED, null, null, false, false);
+        doTestCreateGrant(PWCallback.DEFAULT_HANDLE, grantCreationUserOrGroupId, null,
+            ROLE_HREF_CONTENT_RELATION_MODIFIER, null);
+        doTestLockContentRelation(HANDLE, null, STATUS_SUBMITTED, getObjidValue(createdXml),
+            AuthorizationException.class);
     }
 
     /**
-     * Tests unlocking a content-relation by a content-relation-modifier
-     * who has scope on content-relation.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests unlocking a content-relation by a content-relation-modifier who has scope on content-relation.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testUnlockContentRelation() throws Exception {
-        String createdXml = 
-            prepareContentRelation(
-                    PWCallback.DEFAULT_HANDLE, 
-                    STATUS_SUBMITTED, null, null,  false, false);
-        doTestCreateGrant(PWCallback.DEFAULT_HANDLE, 
-                grantCreationUserOrGroupId, 
-                Constants.CONTENT_RELATION_BASE_URI + "/" 
-                + getObjidValue(createdXml), 
-                ROLE_HREF_CONTENT_RELATION_MODIFIER, null);
-        doTestUnlockContentRelation(
-                HANDLE, null, STATUS_SUBMITTED, getObjidValue(createdXml), null);
+        String createdXml =
+            prepareContentRelation(PWCallback.DEFAULT_HANDLE, STATUS_SUBMITTED, null, null, false, false);
+        doTestCreateGrant(PWCallback.DEFAULT_HANDLE, grantCreationUserOrGroupId, Constants.CONTENT_RELATION_BASE_URI
+            + "/" + getObjidValue(createdXml), ROLE_HREF_CONTENT_RELATION_MODIFIER, null);
+        doTestUnlockContentRelation(HANDLE, null, STATUS_SUBMITTED, getObjidValue(createdXml), null);
     }
 
     /**
-     * Tests declining unlocking a content-relation by a content-relation-modifier
-     * who has no scope on content-relation.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests declining unlocking a content-relation by a content-relation-modifier who has no scope on
+     * content-relation.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testUnlockContentRelationDecline() throws Exception {
-        String createdXml = 
-            prepareContentRelation(
-                    PWCallback.DEFAULT_HANDLE, 
-                    STATUS_SUBMITTED, null, null,  false, false);
-        doTestCreateGrant(PWCallback.DEFAULT_HANDLE, 
-                grantCreationUserOrGroupId, 
-                null, 
-                ROLE_HREF_CONTENT_RELATION_MODIFIER, null);
-        doTestUnlockContentRelation(
-                HANDLE, null, STATUS_SUBMITTED, 
-                getObjidValue(createdXml), AuthorizationException.class);
+        String createdXml =
+            prepareContentRelation(PWCallback.DEFAULT_HANDLE, STATUS_SUBMITTED, null, null, false, false);
+        doTestCreateGrant(PWCallback.DEFAULT_HANDLE, grantCreationUserOrGroupId, null,
+            ROLE_HREF_CONTENT_RELATION_MODIFIER, null);
+        doTestUnlockContentRelation(HANDLE, null, STATUS_SUBMITTED, getObjidValue(createdXml),
+            AuthorizationException.class);
     }
 
     /**
-     * Tests assigning an object-pid to 
-     * a content-relation by a content-relation-modifier
-     * who has scope on content-relation.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests assigning an object-pid to a content-relation by a content-relation-modifier who has scope on
+     * content-relation.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testAssignObjectPidContentRelation() throws Exception {
-        String createdXml = 
-            prepareContentRelation(
-                    PWCallback.DEFAULT_HANDLE, 
-                    STATUS_SUBMITTED, null, null,  false, false);
-        doTestCreateGrant(PWCallback.DEFAULT_HANDLE, 
-                grantCreationUserOrGroupId, 
-                Constants.CONTENT_RELATION_BASE_URI + "/" 
-                + getObjidValue(createdXml), 
-                ROLE_HREF_CONTENT_RELATION_MODIFIER, null);
-        doTestContentRelationAssignObjectPid(
-                HANDLE, null, STATUS_SUBMITTED, getObjidValue(createdXml), null);
+        String createdXml =
+            prepareContentRelation(PWCallback.DEFAULT_HANDLE, STATUS_SUBMITTED, null, null, false, false);
+        doTestCreateGrant(PWCallback.DEFAULT_HANDLE, grantCreationUserOrGroupId, Constants.CONTENT_RELATION_BASE_URI
+            + "/" + getObjidValue(createdXml), ROLE_HREF_CONTENT_RELATION_MODIFIER, null);
+        doTestContentRelationAssignObjectPid(HANDLE, null, STATUS_SUBMITTED, getObjidValue(createdXml), null);
     }
 
     /**
-     * Tests declining assigning an object-pid to 
-     * a content-relation by a content-relation-modifier
-     * who has no scope on content-relation.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests declining assigning an object-pid to a content-relation by a content-relation-modifier who has no scope on
+     * content-relation.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testAssignObjectPidContentRelationDecline() throws Exception {
-        String createdXml = 
-            prepareContentRelation(
-                    PWCallback.DEFAULT_HANDLE, 
-                    STATUS_SUBMITTED, null, null,  false, false);
-        doTestCreateGrant(PWCallback.DEFAULT_HANDLE, 
-                grantCreationUserOrGroupId, 
-                null, 
-                ROLE_HREF_CONTENT_RELATION_MODIFIER, null);
-        doTestContentRelationAssignObjectPid(
-                HANDLE, null, STATUS_SUBMITTED, 
-                getObjidValue(createdXml), AuthorizationException.class);
+        String createdXml =
+            prepareContentRelation(PWCallback.DEFAULT_HANDLE, STATUS_SUBMITTED, null, null, false, false);
+        doTestCreateGrant(PWCallback.DEFAULT_HANDLE, grantCreationUserOrGroupId, null,
+            ROLE_HREF_CONTENT_RELATION_MODIFIER, null);
+        doTestContentRelationAssignObjectPid(HANDLE, null, STATUS_SUBMITTED, getObjidValue(createdXml),
+            AuthorizationException.class);
     }
 
     /**
-     * Tests submitting a content-relation by a content-relation-modifier
-     * who has scope on content-relation.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests submitting a content-relation by a content-relation-modifier who has scope on content-relation.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSubmitContentRelation() throws Exception {
-        String createdXml = 
-            prepareContentRelation(
-                    PWCallback.DEFAULT_HANDLE, 
-                    STATUS_PENDING, null, null,  false, false);
-        doTestCreateGrant(PWCallback.DEFAULT_HANDLE, 
-                grantCreationUserOrGroupId, 
-                Constants.CONTENT_RELATION_BASE_URI + "/" 
-                + getObjidValue(createdXml), 
-                ROLE_HREF_CONTENT_RELATION_MODIFIER, null);
-        doTestSubmitContentRelation(
-                HANDLE, null, getObjidValue(createdXml), null);
+        String createdXml = prepareContentRelation(PWCallback.DEFAULT_HANDLE, STATUS_PENDING, null, null, false, false);
+        doTestCreateGrant(PWCallback.DEFAULT_HANDLE, grantCreationUserOrGroupId, Constants.CONTENT_RELATION_BASE_URI
+            + "/" + getObjidValue(createdXml), ROLE_HREF_CONTENT_RELATION_MODIFIER, null);
+        doTestSubmitContentRelation(HANDLE, null, getObjidValue(createdXml), null);
     }
 
     /**
-     * Tests declining submitting a content-relation by a content-relation-modifier
-     * who has no scope on content-relation.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests declining submitting a content-relation by a content-relation-modifier who has no scope on
+     * content-relation.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSubmitContentRelationDecline() throws Exception {
-        String createdXml = 
-            prepareContentRelation(
-                    PWCallback.DEFAULT_HANDLE, 
-                    STATUS_PENDING, null, null,  false, false);
-        doTestCreateGrant(PWCallback.DEFAULT_HANDLE, 
-                grantCreationUserOrGroupId, 
-                null, 
-                ROLE_HREF_CONTENT_RELATION_MODIFIER, null);
-        doTestSubmitContentRelation(
-                HANDLE, null, 
-                getObjidValue(createdXml), AuthorizationException.class);
+        String createdXml = prepareContentRelation(PWCallback.DEFAULT_HANDLE, STATUS_PENDING, null, null, false, false);
+        doTestCreateGrant(PWCallback.DEFAULT_HANDLE, grantCreationUserOrGroupId, null,
+            ROLE_HREF_CONTENT_RELATION_MODIFIER, null);
+        doTestSubmitContentRelation(HANDLE, null, getObjidValue(createdXml), AuthorizationException.class);
     }
 
     /**
-     * Tests releasing a content-relation by a content-relation-modifier
-     * who has scope on content-relation.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests releasing a content-relation by a content-relation-modifier who has scope on content-relation.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testReleaseContentRelation() throws Exception {
-        String createdXml = 
-            prepareContentRelation(
-                    PWCallback.DEFAULT_HANDLE, 
-                    STATUS_SUBMITTED, null, null,  false, false);
-        doTestCreateGrant(PWCallback.DEFAULT_HANDLE, 
-                grantCreationUserOrGroupId, 
-                Constants.CONTENT_RELATION_BASE_URI + "/" 
-                + getObjidValue(createdXml), 
-                ROLE_HREF_CONTENT_RELATION_MODIFIER, null);
-        doTestReleaseContentRelation(
-                HANDLE, null, getObjidValue(createdXml), null);
+        String createdXml =
+            prepareContentRelation(PWCallback.DEFAULT_HANDLE, STATUS_SUBMITTED, null, null, false, false);
+        doTestCreateGrant(PWCallback.DEFAULT_HANDLE, grantCreationUserOrGroupId, Constants.CONTENT_RELATION_BASE_URI
+            + "/" + getObjidValue(createdXml), ROLE_HREF_CONTENT_RELATION_MODIFIER, null);
+        doTestReleaseContentRelation(HANDLE, null, getObjidValue(createdXml), null);
     }
 
     /**
-     * Tests declining releasing a content-relation by a content-relation-modifier
-     * who has no scope on content-relation.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests declining releasing a content-relation by a content-relation-modifier who has no scope on
+     * content-relation.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testReleaseContentRelationDecline() throws Exception {
-        String createdXml = 
-            prepareContentRelation(
-                    PWCallback.DEFAULT_HANDLE, 
-                    STATUS_SUBMITTED, null, null,  false, false);
-        doTestCreateGrant(PWCallback.DEFAULT_HANDLE, 
-                grantCreationUserOrGroupId, 
-                null, 
-                ROLE_HREF_CONTENT_RELATION_MODIFIER, null);
-        doTestReleaseContentRelation(
-                HANDLE, null, 
-                getObjidValue(createdXml), AuthorizationException.class);
+        String createdXml =
+            prepareContentRelation(PWCallback.DEFAULT_HANDLE, STATUS_SUBMITTED, null, null, false, false);
+        doTestCreateGrant(PWCallback.DEFAULT_HANDLE, grantCreationUserOrGroupId, null,
+            ROLE_HREF_CONTENT_RELATION_MODIFIER, null);
+        doTestReleaseContentRelation(HANDLE, null, getObjidValue(createdXml), AuthorizationException.class);
     }
 
     /**
-     * Tests revising a content-relation by a content-relation-modifier
-     * who has scope on content-relation.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests revising a content-relation by a content-relation-modifier who has scope on content-relation.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testReviseContentRelation() throws Exception {
-        String createdXml = 
-            prepareContentRelation(
-                    PWCallback.DEFAULT_HANDLE, 
-                    STATUS_SUBMITTED, null, null,  false, false);
-        doTestCreateGrant(PWCallback.DEFAULT_HANDLE, 
-                grantCreationUserOrGroupId, 
-                Constants.CONTENT_RELATION_BASE_URI + "/" 
-                + getObjidValue(createdXml), 
-                ROLE_HREF_CONTENT_RELATION_MODIFIER, null);
-        doTestReviseContentRelation(
-                HANDLE, null, getObjidValue(createdXml), null);
+        String createdXml =
+            prepareContentRelation(PWCallback.DEFAULT_HANDLE, STATUS_SUBMITTED, null, null, false, false);
+        doTestCreateGrant(PWCallback.DEFAULT_HANDLE, grantCreationUserOrGroupId, Constants.CONTENT_RELATION_BASE_URI
+            + "/" + getObjidValue(createdXml), ROLE_HREF_CONTENT_RELATION_MODIFIER, null);
+        doTestReviseContentRelation(HANDLE, null, getObjidValue(createdXml), null);
     }
 
     /**
-     * Tests declining revising a content-relation by a content-relation-modifier
-     * who has no scope on content-relation.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests declining revising a content-relation by a content-relation-modifier who has no scope on content-relation.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testReviseContentRelationDecline() throws Exception {
-        String createdXml = 
-            prepareContentRelation(
-                    PWCallback.DEFAULT_HANDLE, 
-                    STATUS_SUBMITTED, null, null,  false, false);
-        doTestCreateGrant(PWCallback.DEFAULT_HANDLE, 
-                grantCreationUserOrGroupId, 
-                null, 
-                ROLE_HREF_CONTENT_RELATION_MODIFIER, null);
-        doTestReviseContentRelation(
-                HANDLE, null, 
-                getObjidValue(createdXml), AuthorizationException.class);
+        String createdXml =
+            prepareContentRelation(PWCallback.DEFAULT_HANDLE, STATUS_SUBMITTED, null, null, false, false);
+        doTestCreateGrant(PWCallback.DEFAULT_HANDLE, grantCreationUserOrGroupId, null,
+            ROLE_HREF_CONTENT_RELATION_MODIFIER, null);
+        doTestReviseContentRelation(HANDLE, null, getObjidValue(createdXml), AuthorizationException.class);
     }
 
     /**
-     * Tests retrieving a content-relation by a content-relation-modifier
-     * who has scope on content-relation.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests retrieving a content-relation by a content-relation-modifier who has scope on content-relation.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveContentRelation() throws Exception {
-        String createdXml = 
-            prepareContentRelation(
-                    PWCallback.DEFAULT_HANDLE, 
-                    STATUS_SUBMITTED, null, null,  false, false);
-        doTestCreateGrant(PWCallback.DEFAULT_HANDLE, 
-                grantCreationUserOrGroupId, 
-                Constants.CONTENT_RELATION_BASE_URI + "/" 
-                + getObjidValue(createdXml), 
-                ROLE_HREF_CONTENT_RELATION_MODIFIER, null);
-        doTestRetrieveContentRelation(
-                HANDLE, null, STATUS_SUBMITTED, 
-                getObjidValue(createdXml), false, null, null);
+        String createdXml =
+            prepareContentRelation(PWCallback.DEFAULT_HANDLE, STATUS_SUBMITTED, null, null, false, false);
+        doTestCreateGrant(PWCallback.DEFAULT_HANDLE, grantCreationUserOrGroupId, Constants.CONTENT_RELATION_BASE_URI
+            + "/" + getObjidValue(createdXml), ROLE_HREF_CONTENT_RELATION_MODIFIER, null);
+        doTestRetrieveContentRelation(HANDLE, null, STATUS_SUBMITTED, getObjidValue(createdXml), false, null, null);
     }
 
     /**
-     * Tests declining retrieving a content-relation by a content-relation-modifier
-     * who has no scope on content-relation.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests declining retrieving a content-relation by a content-relation-modifier who has no scope on
+     * content-relation.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveContentRelationDecline() throws Exception {
-        String createdXml = 
-            prepareContentRelation(
-                    PWCallback.DEFAULT_HANDLE, 
-                    STATUS_SUBMITTED, null, null,  false, false);
-        doTestCreateGrant(PWCallback.DEFAULT_HANDLE, 
-                grantCreationUserOrGroupId, 
-                null, 
-                ROLE_HREF_CONTENT_RELATION_MODIFIER, null);
-        doTestRetrieveContentRelation(
-                HANDLE, null, STATUS_SUBMITTED, 
-                getObjidValue(createdXml), false, null, 
-                AuthorizationException.class);
+        String createdXml =
+            prepareContentRelation(PWCallback.DEFAULT_HANDLE, STATUS_SUBMITTED, null, null, false, false);
+        doTestCreateGrant(PWCallback.DEFAULT_HANDLE, grantCreationUserOrGroupId, null,
+            ROLE_HREF_CONTENT_RELATION_MODIFIER, null);
+        doTestRetrieveContentRelation(HANDLE, null, STATUS_SUBMITTED, getObjidValue(createdXml), false, null,
+            AuthorizationException.class);
     }
 
 }

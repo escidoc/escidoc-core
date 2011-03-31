@@ -41,16 +41,14 @@ import java.util.Vector;
 
 /**
  * Test the mock implementation of the item resource.
- * 
+ *
  * @author Michael Schneider
- * 
  */
 @RunWith(value = Parameterized.class)
 public class ContentModelExamplesTest extends ContentModelTestBase {
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ContentModelExamplesTest(final int transport) {
         super(transport);
@@ -58,14 +56,12 @@ public class ContentModelExamplesTest extends ContentModelTestBase {
 
     /**
      * Test creating a ContentModel with minimal content.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testCmCreateMinimal() throws Exception {
-        String cmXml =
-            getExampleTemplate("content-model-minimal-for-create.xml");
+        String cmXml = getExampleTemplate("content-model-minimal-for-create.xml");
         String createdXML = create(cmXml);
         String retrievedXML = retrieve(getObjidValue(createdXML));
 
@@ -73,67 +69,52 @@ public class ContentModelExamplesTest extends ContentModelTestBase {
 
         // get values from template
         Document contentModel = getDocument(cmXml);
-        String title =
-            selectSingleNode(contentModel,
-                "/content-model/properties/name/text()").getNodeValue();
+        String title = selectSingleNode(contentModel, "/content-model/properties/name/text()").getNodeValue();
         String description =
-            selectSingleNode(contentModel,
-                "/content-model/properties/description/text()").getNodeValue();
+            selectSingleNode(contentModel, "/content-model/properties/description/text()").getNodeValue();
 
         NodeList mdRecordDefinitionNames =
-            selectNodeList(contentModel,
-                "/content-model/md-record-definitions/md-record-definition/@name");
+            selectNodeList(contentModel, "/content-model/md-record-definitions/md-record-definition/@name");
         Map<String, String> mdRecordDefinitions = new HashMap<String, String>();
         int c = mdRecordDefinitionNames.getLength();
         for (int i = 0; i < c; i++) {
             String name = mdRecordDefinitionNames.item(i).getNodeValue();
             String xsd =
-                selectSingleNode(
-                    contentModel,
-                    "/content-model/md-record-definitions/md-record-definition[@name = '"
-                        + name + "']/schema/@href").getNodeValue();
+                selectSingleNode(contentModel,
+                    "/content-model/md-record-definitions/md-record-definition[@name = '" + name + "']/schema/@href")
+                    .getNodeValue();
             mdRecordDefinitions.put(name, xsd);
         }
 
         NodeList resourceDefinitionNames =
-            selectNodeList(contentModel,
-                "/content-model/resource-definitions/resource-definition/@name");
+            selectNodeList(contentModel, "/content-model/resource-definitions/resource-definition/@name");
         List<String> resourceDefinitions = new Vector<String>();
         c = resourceDefinitionNames.getLength();
         for (int i = 0; i < c; i++) {
-            resourceDefinitions.add(resourceDefinitionNames
-                .item(i).getNodeValue());
+            resourceDefinitions.add(resourceDefinitionNames.item(i).getNodeValue());
         }
 
         NodeList contentStreamNames =
-            selectNodeList(contentModel,
-                "/content-model/content-streams/content-stream/@name");
-        List<List<String>> contentStreamDefinitions =
-            new Vector<List<String>>();
+            selectNodeList(contentModel, "/content-model/content-streams/content-stream/@name");
+        List<List<String>> contentStreamDefinitions = new Vector<List<String>>();
         c = contentStreamNames.getLength();
         for (int i = 0; i < c; i++) {
             String name = contentStreamNames.item(i).getNodeValue();
             List<String> contentStreamDefinition = new Vector<String>();
             contentStreamDefinition.add(0, name);
-            contentStreamDefinition.add(1, selectSingleNode(
-                contentModel,
-                "/content-model/content-streams/content-stream[@name = '"
-                    + name + "']/@mime-type").getNodeValue());
-            contentStreamDefinition.add(2, selectSingleNode(
-                contentModel,
-                "/content-model/content-streams/content-stream[@name = '"
-                    + name + "']/@storage").getNodeValue());
+            contentStreamDefinition.add(1, selectSingleNode(contentModel,
+                "/content-model/content-streams/content-stream[@name = '" + name + "']/@mime-type").getNodeValue());
+            contentStreamDefinition.add(2, selectSingleNode(contentModel,
+                "/content-model/content-streams/content-stream[@name = '" + name + "']/@storage").getNodeValue());
             contentStreamDefinitions.add(contentStreamDefinition);
         }
 
         // validate created
-        validateContentModel(createdXML, title, description,
-            mdRecordDefinitions, resourceDefinitions, contentStreamDefinitions,
-            false);
+        validateContentModel(createdXML, title, description, mdRecordDefinitions, resourceDefinitions,
+            contentStreamDefinitions, false);
         // validate retrieved
-        validateContentModel(retrievedXML, title, description,
-            mdRecordDefinitions, resourceDefinitions, contentStreamDefinitions,
-            false);
+        validateContentModel(retrievedXML, title, description, mdRecordDefinitions, resourceDefinitions,
+            contentStreamDefinitions, false);
 
     }
 }

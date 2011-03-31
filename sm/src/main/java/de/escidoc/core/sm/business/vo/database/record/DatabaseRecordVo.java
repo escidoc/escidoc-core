@@ -35,10 +35,11 @@ import java.util.Collection;
 
 /**
  * Holds all values needed to represent one database-record.
- * 
+ *
  * @author Michael Hoppe
  */
 public class DatabaseRecordVo {
+
     private String tableName;
 
     private Collection<DatabaseRecordFieldVo> databaseRecordFieldVos;
@@ -51,11 +52,9 @@ public class DatabaseRecordVo {
     }
 
     /**
-     * @param databaseRecordFieldVos
-     *            the databaseRecordFieldVos to set
+     * @param databaseRecordFieldVos the databaseRecordFieldVos to set
      */
-    public void setDatabaseRecordFieldVos(
-        final Collection<DatabaseRecordFieldVo> databaseRecordFieldVos) {
+    public void setDatabaseRecordFieldVos(final Collection<DatabaseRecordFieldVo> databaseRecordFieldVos) {
         this.databaseRecordFieldVos = databaseRecordFieldVos;
     }
 
@@ -67,12 +66,10 @@ public class DatabaseRecordVo {
     }
 
     /**
-     * @param tableName
-     *            the tableName to set
+     * @param tableName the tableName to set
      * @throws SqlDatabaseSystemException databaseException
      */
-    public void setTableName(final String tableName) 
-                        throws SqlDatabaseSystemException {
+    public void setTableName(final String tableName) throws SqlDatabaseSystemException {
         DatabaseConventionChecker.checkName(tableName);
         this.tableName = tableName;
     }

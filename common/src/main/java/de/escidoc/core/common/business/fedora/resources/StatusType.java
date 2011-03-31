@@ -24,9 +24,8 @@ import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusExcept
 
 /**
  * All types of public-status, version status.
- * 
+ *
  * @author Steffen Wagner
- * 
  */
 public enum StatusType {
 
@@ -34,7 +33,7 @@ public enum StatusType {
 
     /**
      * Get name of status.
-     * 
+     *
      * @return StatusType as String.
      */
     @Override
@@ -59,15 +58,12 @@ public enum StatusType {
 
     /**
      * Convert status from String to Enum type.
-     * 
-     * @param type
-     *            object/version status type as String.
+     *
+     * @param type object/version status type as String.
      * @return StatusType
-     * @throws InvalidStatusException
-     *             Thrown if unknown or invalid status type was set.
+     * @throws InvalidStatusException Thrown if unknown or invalid status type was set.
      */
-    public static StatusType getStatusType(final String type)
-        throws InvalidStatusException {
+    public static StatusType getStatusType(final String type) throws InvalidStatusException {
 
         if (type != null) {
             if (type.equals(PENDING.toString())) {

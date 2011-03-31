@@ -32,48 +32,27 @@ import org.junit.runner.RunWith;
 
 /**
  * The AA test suite (REST).
- * 
+ *
  * @author Torsten Tetteroo
- * 
  */
 @RunWith(org.junit.runners.Suite.class)
-@org.junit.runners.Suite.SuiteClasses({
-        AdministratorRestTest.class,
-        DefaultPoliciesRestTest.class,
-        DepositorRestTest.class,
-        ModeratorRestTest.class,
-        PrivilegedViewerRestTest.class,
-        StatisticEditorRestTest.class,
-        StatisticReaderRestTest.class,
-        CollaboratorRestTest.class,
-        CollaboratorModifierRestTest.class,
-        CollaboratorModifierAddRemoveMembersRestTest.class,
-        CollaboratorModifierAddRemoveAnyMembersRestTest.class,
-        CollaboratorModifierUpdateDirectMembersRestTest.class,
-        CollaboratorModifierUpdateAnyMembersRestTest.class,
-        ContentRelationManagerRestTest.class,
-        ContentRelationModifierRestTest.class,
-        AudienceRestTest.class,
-        UserGroupAdminRestTest.class,
-        UserGroupInspectorRestTest.class,
-        UserAccountAdminRestTest.class,
-        UserAccountInspectorRestTest.class,
-        OrgUnitAdminRestTest.class,
-        ContextAdminRestTest.class,
-        ContextModifierRestTest.class,
-        
-        PdpRestTest.class,
-        RoleRestTest.class,
-        
-        UserAccountGrantRestTest.class,
-        UserAccountRestTest.class,
-        UserAttributeRestTest.class,
-        UserManagementWrapperRestTest.class,
-        UserPreferenceRestTest.class,
-        UserGroupRestTest.class,
-        UserGroupGrantRestTest.class,
-        
-        GrantFilterRestTest.class
-        })
+@org.junit.runners.Suite.SuiteClasses( { AdministratorRestTest.class, DefaultPoliciesRestTest.class,
+    DepositorRestTest.class, ModeratorRestTest.class, PrivilegedViewerRestTest.class, StatisticEditorRestTest.class,
+    StatisticReaderRestTest.class, CollaboratorRestTest.class, CollaboratorModifierRestTest.class,
+    CollaboratorModifierAddRemoveMembersRestTest.class, CollaboratorModifierAddRemoveAnyMembersRestTest.class,
+    CollaboratorModifierUpdateDirectMembersRestTest.class, CollaboratorModifierUpdateAnyMembersRestTest.class,
+    ContentRelationManagerRestTest.class, ContentRelationModifierRestTest.class, AudienceRestTest.class,
+    UserGroupAdminRestTest.class, UserGroupInspectorRestTest.class, UserAccountAdminRestTest.class,
+    UserAccountInspectorRestTest.class, OrgUnitAdminRestTest.class, ContextAdminRestTest.class,
+    ContextModifierRestTest.class,
+
+    PdpRestTest.class, RoleRestTest.class,
+
+    UserAccountGrantRestTest.class, UserAccountRestTest.class, UserAttributeRestTest.class,
+    UserManagementWrapperRestTest.class, UserPreferenceRestTest.class, UserGroupRestTest.class,
+    UserGroupGrantRestTest.class,
+
+    GrantFilterRestTest.class })
 public class Suite {
+
 }

@@ -19,7 +19,7 @@
  */
 
 /**
- * 
+ *
  */
 package de.escidoc.core.common.util.stax.handler.item;
 
@@ -40,11 +40,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * ComponentPropertiesUpdateHandler handles XML with properties section for
- * eSciDoc Component.
- * 
+ * ComponentPropertiesUpdateHandler handles XML with properties section for eSciDoc Component.
+ *
  * @author Frank Schwichtenberg
- * 
  */
 public class ComponentPropertiesUpdateHandler extends DefaultHandler {
 
@@ -58,12 +56,10 @@ public class ComponentPropertiesUpdateHandler extends DefaultHandler {
 
     // names of elements that must be deleted if they do not occur
     private static final String[] expectedElements =
-        { TripleStoreUtility.PROP_MIME_TYPE,
-            TripleStoreUtility.PROP_VALID_STATUS };
+        { TripleStoreUtility.PROP_MIME_TYPE, TripleStoreUtility.PROP_VALID_STATUS };
 
-    public ComponentPropertiesUpdateHandler(final Component component,
-        final String propertiesPath, final StaxParser parser)
-        throws TripleStoreSystemException, WebserverSystemException {
+    public ComponentPropertiesUpdateHandler(final Component component, final String propertiesPath,
+        final StaxParser parser) throws TripleStoreSystemException, WebserverSystemException {
 
         this.parser = parser;
         this.propertiesPath = propertiesPath;
@@ -74,10 +70,8 @@ public class ComponentPropertiesUpdateHandler extends DefaultHandler {
         this.expected = new ArrayList<String>(Arrays.asList(expectedElements));
     }
 
-    public ComponentPropertiesUpdateHandler(
-        final Map<String, String> properties, final String propertiesPath,
-        final StaxParser parser) throws TripleStoreSystemException,
-        WebserverSystemException {
+    public ComponentPropertiesUpdateHandler(final Map<String, String> properties, final String propertiesPath,
+        final StaxParser parser) throws TripleStoreSystemException, WebserverSystemException {
 
         this.parser = parser;
         this.propertiesPath = propertiesPath;
@@ -89,8 +83,8 @@ public class ComponentPropertiesUpdateHandler extends DefaultHandler {
     }
 
     @Override
-    public String characters(final String data, final StartElement element)
-        throws InvalidContentException, WebserverSystemException {
+    public String characters(final String data, final StartElement element) throws InvalidContentException,
+        WebserverSystemException {
         final String curPath = parser.getCurPath();
 
         if (curPath.startsWith(this.propertiesPath)) {
@@ -107,22 +101,19 @@ public class ComponentPropertiesUpdateHandler extends DefaultHandler {
                     properties.put(TripleStoreUtility.PROP_VISIBILITY, data);
                 }
                 else {
-                    throw new InvalidContentException("Components.properties."
-                        + Elements.ELEMENT_VISIBILITY + " has invalid value.");
+                    throw new InvalidContentException("Components.properties." + Elements.ELEMENT_VISIBILITY
+                        + " has invalid value.");
                 }
             }
             // content-category
-            else if (curPath.equals(this.propertiesPath + '/'
-                + Elements.ELEMENT_COMPONENT_CONTENT_CATEGORY)) {
+            else if (curPath.equals(this.propertiesPath + '/' + Elements.ELEMENT_COMPONENT_CONTENT_CATEGORY)) {
                 // ensure there is a value and save
                 if (data.length() > 0) {
-                    properties.put(TripleStoreUtility.PROP_CONTENT_CATEGORY,
-                        data);
+                    properties.put(TripleStoreUtility.PROP_CONTENT_CATEGORY, data);
                 }
                 else {
                     throw new InvalidContentException("Components.properties."
-                        + Elements.ELEMENT_COMPONENT_CONTENT_CATEGORY
-                        + " has invalid value.");
+                        + Elements.ELEMENT_COMPONENT_CONTENT_CATEGORY + " has invalid value.");
                 }
             }
             else if (curPath.equals(this.propertiesPath + "/mime-type")) {

@@ -22,9 +22,8 @@ package de.escidoc.core.common.util.security.persistence;
 
 /**
  * Class holding information of an invocation mapping.
- * 
+ *
  * @author Torsten Tetteroo
- * 
  */
 public class InvocationMapping extends InvocationMappingBase {
 
@@ -33,8 +32,7 @@ public class InvocationMapping extends InvocationMappingBase {
     public static final int COMPLEX_ATTRIBUTE_MAPPING = 1;
 
     /**
-     * Mandatory attribute from xml data. If this attribute is not found, an
-     * exception should be thrown.
+     * Mandatory attribute from xml data. If this attribute is not found, an exception should be thrown.
      */
     public static final int XML_ATTRIBUTE_MAPPING = 2;
 
@@ -49,45 +47,29 @@ public class InvocationMapping extends InvocationMappingBase {
 
     public static final String SUBRESOURCE_PATTERN = ".*-id";
 
-
     /**
      * Creates a invocation mapping for single parameter .
-     * @param id
-     * @param path
-     * @param position
-     * @param attributeType
-     * @param mappingType
-     * @param value
      */
-    public InvocationMapping(final String id, final String path,
-        final int position, final String attributeType, final int mappingType,
-        final String value) {
+    public InvocationMapping(final String id, final String path, final int position, final String attributeType,
+        final int mappingType, final String value) {
 
-        super(id, path, position, attributeType, mappingType, false, value,
-            null);
+        super(id, path, position, attributeType, mappingType, false, value, null);
 
     }
 
     /**
      * Creates an invocation mapping.
-     * @param id
-     * @param path
-     * @param position
-     * @param attributeType
-     * @param mappingType
-     * @param multipleValue
-     * @param value
      */
-    public InvocationMapping(final String id, final String path,
-        final int position, final String attributeType, final int mappingType,
-        final boolean multipleValue, final String value) {
+    public InvocationMapping(final String id, final String path, final int position, final String attributeType,
+        final int mappingType, final boolean multipleValue, final String value) {
 
-        super(id, path, position, attributeType, mappingType, multipleValue,
-            value, null);
+        super(id, path, position, attributeType, mappingType, multipleValue, value, null);
 
     }
 
-    /** The default constructor. */
+    /**
+     * The default constructor.
+     */
     public InvocationMapping() {
     }
 }

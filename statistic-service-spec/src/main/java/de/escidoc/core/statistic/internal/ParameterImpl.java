@@ -18,14 +18,12 @@ import java.util.GregorianCalendar;
  * Default implementation of {@link Parameter}.
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name="parameter", namespace="http://www.escidoc.de/schemas/commontypes/0.3",
-        propOrder = {"datevalue",
-                "stringvalue",
-                "decimalvalue"
-})
+@XmlType(name = "parameter", namespace = "http://www.escidoc.de/schemas/commontypes/0.3", propOrder = { "datevalue",
+    "stringvalue", "decimalvalue" })
 public class ParameterImpl implements Parameter {
 
     private static final String VALUE_FALSE = "0"; // NON-NLS
+
     private static final String VALUE_TRUE = "1"; // NON-NLS
 
     @XmlAttribute(required = true)
@@ -41,15 +39,13 @@ public class ParameterImpl implements Parameter {
     /**
      * Public constructor to allow JAXB serialisation.
      */
-    public ParameterImpl(){
+    public ParameterImpl() {
     }
 
     /**
      * Instantiate a new {@link Parameter} instance using the given name and date value.
      *
      * @param name the name of the parameter
-     * @param value
-     * @value value the date value of the parameter
      */
     public ParameterImpl(final String name, final ReadableInstant value) {
         this.name = name;
@@ -57,7 +53,8 @@ public class ParameterImpl implements Parameter {
         gregorianCalendar.setTimeInMillis(value.getMillis());
         try {
             this.datevalue = DatatypeFactory.newInstance().newXMLGregorianCalendar(gregorianCalendar);
-        } catch (final DatatypeConfigurationException e) {
+        }
+        catch (final DatatypeConfigurationException e) {
             throw new IllegalStateException("Error on instantiating datatype factory.", e);
         }
     }
@@ -66,8 +63,6 @@ public class ParameterImpl implements Parameter {
      * Instantiate a new {@link Parameter} instance using the given name and string value.
      *
      * @param name the name of the parameter
-     * @param value
-     * @value value the string value of the parameter
      */
     public ParameterImpl(final String name, final String value) {
         this.name = name;
@@ -78,8 +73,6 @@ public class ParameterImpl implements Parameter {
      * Instantiate a new {@link Parameter} instance using the given name and decimal value.
      *
      * @param name the name of the parameter
-     * @param value
-     * @value value the decimal value of the parameter
      */
     public ParameterImpl(final String name, final BigDecimal value) {
         this.name = name;
@@ -90,8 +83,6 @@ public class ParameterImpl implements Parameter {
      * Instantiate a new {@link Parameter} instance using the given name and boolean value.
      *
      * @param name the name of the parameter
-     * @param value
-     * @value value the boolean value of the parameter
      */
     public ParameterImpl(final String name, final boolean value) {
         this.name = name;
@@ -120,11 +111,7 @@ public class ParameterImpl implements Parameter {
 
     @Override
     public String toString() {
-        return "ParameterImpl{" +
-                "name='" + this.name + '\'' +
-                ", datevalue=" + this.datevalue +
-                ", stringvalue='" + this.stringvalue + '\'' +
-                ", decimalvalue=" + this.decimalvalue +
-                '}';
+        return "ParameterImpl{" + "name='" + this.name + '\'' + ", datevalue=" + this.datevalue + ", stringvalue='"
+            + this.stringvalue + '\'' + ", decimalvalue=" + this.decimalvalue + '}';
     }
 }

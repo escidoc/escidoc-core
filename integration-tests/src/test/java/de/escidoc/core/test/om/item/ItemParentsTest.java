@@ -42,24 +42,22 @@ import org.w3c.dom.Document;
 
 /**
  * Test retrieving parents of the Container resource.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 @RunWith(value = Parameterized.class)
 public class ItemParentsTest extends ItemTestBase {
 
     private static ContainerTestBase containerTestBase;
-    
+
     private static String[] containerIds = new String[3];
-    
+
     private static String[] itemIds = new String[4];
-    
+
     private static int methodCounter = 0;
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ItemParentsTest(final int transport) {
         super(transport);
@@ -68,9 +66,8 @@ public class ItemParentsTest extends ItemTestBase {
 
     /**
      * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Before
     public void initialize() throws Exception {
@@ -81,9 +78,8 @@ public class ItemParentsTest extends ItemTestBase {
 
     /**
      * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @After
     public void deinitialize() throws Exception {
@@ -94,21 +90,16 @@ public class ItemParentsTest extends ItemTestBase {
 
     /**
      * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     private void prepare() throws Exception {
-        String containerData =
-            containerTestBase.getContainerTemplate("create_container.xml");
-        String itemData =
-            getItemTemplate("create_item_minimal.xml");
+        String containerData = containerTestBase.getContainerTemplate("create_container.xml");
+        String itemData = getItemTemplate("create_item_minimal.xml");
 
-        String taskParam =
-            "<param last-modification-date=\"${lastModificationDate}\">"
-            + "${idParams}</param>";
+        String taskParam = "<param last-modification-date=\"${lastModificationDate}\">" + "${idParams}</param>";
         String idParam = "<id>${id}</id>";
-        
+
         String containerXml = null;
         String itemXml = null;
 
@@ -120,60 +111,44 @@ public class ItemParentsTest extends ItemTestBase {
             itemXml = create(itemData);
             itemIds[i] = getObjidValue(itemXml);
         }
-        
+
         //Add members to containerIds[0]
         StringBuffer idParams = new StringBuffer("");
         for (int i = 0; i < 2; i++) {
-            idParams.append(idParam.replaceFirst("\\$\\{id\\}", 
-                                    itemIds[i]));
+            idParams.append(idParam.replaceFirst("\\$\\{id\\}", itemIds[i]));
         }
-        String replacedTaskParam = taskParam.replaceFirst(
-                "\\$\\{lastModificationDate\\}", 
-                containerTestBase.getTheLastModificationDate(containerIds[0]));
-        replacedTaskParam = replacedTaskParam.replaceFirst(
-                "\\$\\{idParams\\}", idParams.toString());
+        String replacedTaskParam =
+            taskParam.replaceFirst("\\$\\{lastModificationDate\\}", containerTestBase
+                .getTheLastModificationDate(containerIds[0]));
+        replacedTaskParam = replacedTaskParam.replaceFirst("\\$\\{idParams\\}", idParams.toString());
         containerTestBase.addMembers(containerIds[0], replacedTaskParam);
 
         //Add members to containerIds[1]
         idParams = new StringBuffer("");
         for (int i = 0; i < 3; i++) {
-            idParams.append(idParam.replaceFirst("\\$\\{id\\}", 
-                                    itemIds[i]));
+            idParams.append(idParam.replaceFirst("\\$\\{id\\}", itemIds[i]));
         }
-        replacedTaskParam = taskParam.replaceFirst(
-                "\\$\\{lastModificationDate\\}", 
-                containerTestBase.getTheLastModificationDate(containerIds[1]));
-        replacedTaskParam = replacedTaskParam.replaceFirst(
-                "\\$\\{idParams\\}", idParams.toString());
+        replacedTaskParam =
+            taskParam.replaceFirst("\\$\\{lastModificationDate\\}", containerTestBase
+                .getTheLastModificationDate(containerIds[1]));
+        replacedTaskParam = replacedTaskParam.replaceFirst("\\$\\{idParams\\}", idParams.toString());
         containerTestBase.addMembers(containerIds[1], replacedTaskParam);
 
         //Add members to containerIds[2]
         idParams = new StringBuffer("");
-        idParams.append(idParam.replaceFirst("\\$\\{id\\}", 
-                itemIds[0]));
-        replacedTaskParam = taskParam.replaceFirst(
-                "\\$\\{lastModificationDate\\}", 
-                containerTestBase.getTheLastModificationDate(containerIds[2]));
-        replacedTaskParam = replacedTaskParam.replaceFirst(
-                "\\$\\{idParams\\}", idParams.toString());
+        idParams.append(idParam.replaceFirst("\\$\\{id\\}", itemIds[0]));
+        replacedTaskParam =
+            taskParam.replaceFirst("\\$\\{lastModificationDate\\}", containerTestBase
+                .getTheLastModificationDate(containerIds[2]));
+        replacedTaskParam = replacedTaskParam.replaceFirst("\\$\\{idParams\\}", idParams.toString());
         containerTestBase.addMembers(containerIds[2], replacedTaskParam);
 
     }
 
     /**
      * Test successful retrieving parents of an item.
-     * 
-     * @test.name Retrieve Parents of Item
-     * @test.id testRetrieveParents
-     * @test.input
-     *          <ul>
-     *          <li>id of an existing item</li>
-     *          </ul>
-     * @test.expected: Parents, no exception.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveParents() throws Exception {
@@ -181,43 +156,18 @@ public class ItemParentsTest extends ItemTestBase {
         assertXmlValidParents(parentsXml);
         Document parentsDoc = getDocument(parentsXml);
         assertNodeCount(parentsXml, "/parents/parent", 3);
-        assertXmlExists("expected container not found", 
-                parentsDoc, 
-                "/parents/parent[@objid='" 
-                + containerIds[0] 
-                + "']|/parents/parent[@href='" 
-                + Constants.CONTAINER_BASE_URI 
-                + "/" + containerIds[0] + "']");
-        assertXmlExists("expected container not found", 
-                parentsDoc, 
-                "/parents/parent[@objid='" 
-                + containerIds[1] 
-                + "']|/parents/parent[@href='" 
-                + Constants.CONTAINER_BASE_URI 
-                + "/" + containerIds[1] + "']");
-        assertXmlExists("expected container not found", 
-                parentsDoc, 
-                "/parents/parent[@objid='" 
-                + containerIds[2] 
-                + "']|/parents/parent[@href='" 
-                + Constants.CONTAINER_BASE_URI 
-                + "/" + containerIds[2] + "']");
+        assertXmlExists("expected container not found", parentsDoc, "/parents/parent[@objid='" + containerIds[0]
+            + "']|/parents/parent[@href='" + Constants.CONTAINER_BASE_URI + "/" + containerIds[0] + "']");
+        assertXmlExists("expected container not found", parentsDoc, "/parents/parent[@objid='" + containerIds[1]
+            + "']|/parents/parent[@href='" + Constants.CONTAINER_BASE_URI + "/" + containerIds[1] + "']");
+        assertXmlExists("expected container not found", parentsDoc, "/parents/parent[@objid='" + containerIds[2]
+            + "']|/parents/parent[@href='" + Constants.CONTAINER_BASE_URI + "/" + containerIds[2] + "']");
     }
 
     /**
      * Test successful retrieving parents of an item.
-     * 
-     * @test.name Retrieve Parents of Item1
-     * @test.id testRetrieveParents1
-     * @test.input
-     *          <ul>
-     *          <li>id of an existing item</li>
-     *          </ul>
-     * @test.expected: Parents, no exception.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveParents1() throws Exception {
@@ -225,43 +175,18 @@ public class ItemParentsTest extends ItemTestBase {
         assertXmlValidParents(parentsXml);
         Document parentsDoc = getDocument(parentsXml);
         assertNodeCount(parentsXml, "/parents/parent", 2);
-        assertXmlExists("expected container not found", 
-                parentsDoc, 
-                "/parents/parent[@objid='" 
-                + containerIds[0] 
-                + "']|/parents/parent[@href='" 
-                + Constants.CONTAINER_BASE_URI 
-                + "/" + containerIds[0] + "']");
-        assertXmlExists("expected container not found", 
-                parentsDoc, 
-                "/parents/parent[@objid='" 
-                + containerIds[1] 
-                + "']|/parents/parent[@href='" 
-                + Constants.CONTAINER_BASE_URI 
-                + "/" + containerIds[1] + "']");
-        assertXmlNotExists("non-expected container found", 
-                parentsDoc, 
-                "/parents/parent[@objid='" 
-                + containerIds[2] 
-                + "']|/parents/parent[@href='" 
-                + Constants.CONTAINER_BASE_URI 
-                + "/" + containerIds[2] + "']");
+        assertXmlExists("expected container not found", parentsDoc, "/parents/parent[@objid='" + containerIds[0]
+            + "']|/parents/parent[@href='" + Constants.CONTAINER_BASE_URI + "/" + containerIds[0] + "']");
+        assertXmlExists("expected container not found", parentsDoc, "/parents/parent[@objid='" + containerIds[1]
+            + "']|/parents/parent[@href='" + Constants.CONTAINER_BASE_URI + "/" + containerIds[1] + "']");
+        assertXmlNotExists("non-expected container found", parentsDoc, "/parents/parent[@objid='" + containerIds[2]
+            + "']|/parents/parent[@href='" + Constants.CONTAINER_BASE_URI + "/" + containerIds[2] + "']");
     }
 
     /**
      * Test successful retrieving parents of an item.
-     * 
-     * @test.name Retrieve Parents of Item2
-     * @test.id testRetrieveParents2
-     * @test.input
-     *          <ul>
-     *          <li>id of an existing item</li>
-     *          </ul>
-     * @test.expected: Parents, no exception.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveParents2() throws Exception {
@@ -269,43 +194,18 @@ public class ItemParentsTest extends ItemTestBase {
         assertXmlValidParents(parentsXml);
         Document parentsDoc = getDocument(parentsXml);
         assertNodeCount(parentsXml, "/parents/parent", 1);
-        assertXmlNotExists("non-expected container found", 
-                parentsDoc, 
-                "/parents/parent[@objid='" 
-                + containerIds[0] 
-                + "']|/parents/parent[@href='" 
-                + Constants.CONTAINER_BASE_URI 
-                + "/" + containerIds[0] + "']");
-        assertXmlExists("expected container not found", 
-                parentsDoc, 
-                "/parents/parent[@objid='" 
-                + containerIds[1] 
-                + "']|/parents/parent[@href='" 
-                + Constants.CONTAINER_BASE_URI 
-                + "/" + containerIds[1] + "']");
-        assertXmlNotExists("non-expected container found", 
-                parentsDoc, 
-                "/parents/parent[@objid='" 
-                + containerIds[2] 
-                + "']|/parents/parent[@href='" 
-                + Constants.CONTAINER_BASE_URI 
-                + "/" + containerIds[2] + "']");
+        assertXmlNotExists("non-expected container found", parentsDoc, "/parents/parent[@objid='" + containerIds[0]
+            + "']|/parents/parent[@href='" + Constants.CONTAINER_BASE_URI + "/" + containerIds[0] + "']");
+        assertXmlExists("expected container not found", parentsDoc, "/parents/parent[@objid='" + containerIds[1]
+            + "']|/parents/parent[@href='" + Constants.CONTAINER_BASE_URI + "/" + containerIds[1] + "']");
+        assertXmlNotExists("non-expected container found", parentsDoc, "/parents/parent[@objid='" + containerIds[2]
+            + "']|/parents/parent[@href='" + Constants.CONTAINER_BASE_URI + "/" + containerIds[2] + "']");
     }
 
     /**
      * Test successful retrieving parents of an item.
-     * 
-     * @test.name Retrieve Parents of Item3
-     * @test.id testRetrieveParents3
-     * @test.input
-     *          <ul>
-     *          <li>id of an existing item</li>
-     *          </ul>
-     * @test.expected: Parents, no exception.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveParents3() throws Exception {
@@ -316,56 +216,34 @@ public class ItemParentsTest extends ItemTestBase {
 
     /**
      * Test declining retrieving parents of an item with wrong itemId.
-     * 
-     * @test.name Retrieve Parents of Item
-     * @test.id testDecliningRetrieveParentsWithWrongId
-     * @test.input
-     *          <ul>
-     *          <li>id of an non-existing item</li>
-     *          </ul>
-     * @test.expected: ItemNotFoundException.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testDecliningRetrieveParentsWithWrongId() throws Exception {
         try {
             retrieveParents("wrongId");
-            EscidocRestSoapTestBase
-            .failMissingException(ItemNotFoundException.class);
-        } catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                    ItemNotFoundException.class, e);
+            EscidocRestSoapTestBase.failMissingException(ItemNotFoundException.class);
+        }
+        catch (final Exception e) {
+            EscidocRestSoapTestBase.assertExceptionType(ItemNotFoundException.class, e);
         }
     }
 
     /**
-    * Test declining retrieving parents of an item with itemId null.
-    * 
-    * @test.name Retrieve Parents of Item
-    * @test.id testDecliningRetrieveParentsWithNoId
-    * @test.input
-    *          <ul>
-    *          <li>id null</li>
-    *          </ul>
-    * @test.expected: MissingMethodParameterException.
-    * @test.status Implemented
-    * 
-    * @throws Exception
-    *             If anything fails.
-    */
-   @Test
-   public void testDecliningRetrieveParentsWithNoId() throws Exception {
-       try {
-           retrieveParents(null);
-           EscidocRestSoapTestBase
-           .failMissingException(MissingMethodParameterException.class);
-       } catch (final Exception e) {
-           EscidocRestSoapTestBase.assertExceptionType(
-                   MissingMethodParameterException.class, e);
-       }
-   }
+     * Test declining retrieving parents of an item with itemId null.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testDecliningRetrieveParentsWithNoId() throws Exception {
+        try {
+            retrieveParents(null);
+            EscidocRestSoapTestBase.failMissingException(MissingMethodParameterException.class);
+        }
+        catch (final Exception e) {
+            EscidocRestSoapTestBase.assertExceptionType(MissingMethodParameterException.class, e);
+        }
+    }
 
 }

@@ -9,6 +9,7 @@ import javax.ejb.EJBLocalHome;
 public interface ContainerHandlerLocalHome extends EJBLocalHome {
 
     String COMP_NAME = "java:comp/env/ejb/ContainerHandlerLocal";
+
     String JNDI_NAME = "ejb/ContainerHandlerLocal";
 
     ContainerHandlerLocal create() throws CreateException;

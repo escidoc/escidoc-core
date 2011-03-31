@@ -9,6 +9,7 @@ import javax.ejb.EJBLocalHome;
 public interface StatisticDataHandlerLocalHome extends EJBLocalHome {
 
     String COMP_NAME = "java:comp/env/ejb/StatisticDataHandlerLocal";
+
     String JNDI_NAME = "ejb/StatisticDataHandlerLocal";
 
     StatisticDataHandlerLocal create() throws CreateException;

@@ -42,20 +42,17 @@ import java.util.Iterator;
 import java.util.Vector;
 
 /**
- * Tool to purge all escidoc resources from Fedora Repository. Precondition is a
- * running TripleStore where Fedora has written the Triples and, of course, a
- * running Fedora.
- * 
+ * Tool to purge all escidoc resources from Fedora Repository. Precondition is a running TripleStore where Fedora has
+ * written the Triples and, of course, a running Fedora.
+ *
  * @author Steffen Wagner
- * 
  */
 public class PurgeRepository {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PurgeRepository.class);
 
     /**
-     * @param args
-     *            Program arguments.
+     * @param args Program arguments.
      */
     public static void main(final String[] args) {
 
@@ -70,10 +67,9 @@ public class PurgeRepository {
 
     /**
      * Purging all resources with escidoc prefix.
-     * 
+     *
      * @return Number of purged objects.
-     * @throws Exception
-     *             Throws Exception if TripleStore of Fedora request failed.
+     * @throws Exception Throws Exception if TripleStore of Fedora request failed.
      */
     private static int purgeAllEscidoc() throws Exception {
 
@@ -81,8 +77,7 @@ public class PurgeRepository {
 
         Client fedoraClient = new Client();
 
-        Vector<String> objids =
-            obtainObjidsFromTripleStore("<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>");
+        Vector<String> objids = obtainObjidsFromTripleStore("<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>");
 
         Iterator<String> it = objids.iterator();
         int toRemove = objids.size();
@@ -99,28 +94,22 @@ public class PurgeRepository {
     }
 
     /**
-     * Obtains all objid which fit to the TripleStore predicate and cuts of the
-     * objid.
-     * 
-     * @param trsPredicate
-     *            TripleStore Predicate
+     * Obtains all objid which fit to the TripleStore predicate and cuts of the objid.
+     *
+     * @param trsPredicate TripleStore Predicate
      * @return Vector with all objids (Fedora PIDs) which fit to the Predicate.
-     * @throws Exception
      */
-    private static Vector<String> obtainObjidsFromTripleStore(
-        final String trsPredicate) throws Exception {
+    private static Vector<String> obtainObjidsFromTripleStore(final String trsPredicate) throws Exception {
 
         Vector<String> objids = new Vector<String>();
 
         // call value from TripleStore
         TripleStoreTestBase tripleStore = new TripleStoreTestBase();
-        String result =
-            tripleStore.requestMPT("* " + trsPredicate + " *", "RDF/XML");
+        String result = tripleStore.requestMPT("* " + trsPredicate + " *", "RDF/XML");
         Document resultDoc = EscidocRestSoapTestBase.getDocument(result);
 
         // obtain objids
-        NodeList nl =
-            XPathAPI.selectNodeList(resultDoc, "/RDF/Description/@about");
+        NodeList nl = XPathAPI.selectNodeList(resultDoc, "/RDF/Description/@about");
 
         int nlSize = nl.getLength();
         for (int i = 0; i < nlSize; i++) {

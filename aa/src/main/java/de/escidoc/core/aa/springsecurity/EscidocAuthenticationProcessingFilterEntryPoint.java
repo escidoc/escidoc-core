@@ -38,32 +38,27 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Overwrites AuthenticationProcessingFilterEntryPoint
- * to enable to use absolute urls for the login-form.
- * 
- * @author Michael Hoppe
+ * Overwrites AuthenticationProcessingFilterEntryPoint to enable to use absolute urls for the login-form.
  *
+ * @author Michael Hoppe
  */
-public class EscidocAuthenticationProcessingFilterEntryPoint extends
-        AuthenticationProcessingFilterEntryPoint {
-    private static final Logger LOGGER = LoggerFactory.getLogger(
-            AuthenticationProcessingFilterEntryPoint.class);
+public class EscidocAuthenticationProcessingFilterEntryPoint extends AuthenticationProcessingFilterEntryPoint {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationProcessingFilterEntryPoint.class);
 
     /**
      * Get url to login-page from configuration.
-     * 
-     * @param request servlet-request
-     * @param response servlet-response
+     *
+     * @param request       servlet-request
+     * @param response      servlet-response
      * @param authException exception
      * @return String url to login-form
-     *
      */
     @Override
-    protected String buildRedirectUrlToLoginPage(final HttpServletRequest request,
-            final HttpServletResponse response,
-            final AuthenticationException authException) {
-        final String loginForm =
-            determineUrlToUseForThisRequest(request, response, authException);
+    protected String buildRedirectUrlToLoginPage(
+        final HttpServletRequest request, final HttpServletResponse response,
+        final AuthenticationException authException) {
+        final String loginForm = determineUrlToUseForThisRequest(request, response, authException);
         if (loginForm.startsWith("http://") || loginForm.startsWith("https://")) {
             return loginForm;
         }
@@ -76,16 +71,13 @@ public class EscidocAuthenticationProcessingFilterEntryPoint extends
         urlBuilder.setContextPath(request.getContextPath());
         urlBuilder.setPathInfo(loginForm);
         if (isForceHttps() && "http".equals(scheme)) {
-            final Integer httpsPort = getPortMapper()
-                    .lookupHttpsPort(serverPort);
+            final Integer httpsPort = getPortMapper().lookupHttpsPort(serverPort);
             if (httpsPort != null) {
                 urlBuilder.setScheme("https");
                 urlBuilder.setPort(httpsPort);
-            } else {
-                LOGGER.warn(
-                        "Unable to redirect to HTTPS as "
-                        + "no port mapping found for HTTP port " 
-                        + serverPort);
+            }
+            else {
+                LOGGER.warn("Unable to redirect to HTTPS as " + "no port mapping found for HTTP port " + serverPort);
             }
         }
         return urlBuilder.getUrl();

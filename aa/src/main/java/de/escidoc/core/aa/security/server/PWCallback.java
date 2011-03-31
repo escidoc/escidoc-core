@@ -40,48 +40,43 @@ import java.lang.reflect.Method;
 /**
  * Currently not used.
  * <p/>
- * 
- * This class is invoked on server side if the webservice description defines
- * its invocation. Can be used to make a pre-check on the provided username (but
- * the real check is done in the SecurityInterceptor).
- * 
+ * <p/>
+ * This class is invoked on server side if the webservice description defines its invocation. Can be used to make a
+ * pre-check on the provided username (but the real check is done in the SecurityInterceptor).
+ *
  * @author Bernhard Kraus (Accenture)
  */
 public class PWCallback implements CallbackHandler {
 
-    /** The logger. */
+    /**
+     * The logger.
+     */
     private static final Logger LOGGER = LoggerFactory.getLogger(PWCallback.class);
 
     /**
      * The handle class of the callback handler.
-     * 
-     * @param callbacks
-     *            the WSPasswordCallback implementation
-     * @throws IOException
-     *             Exception
-     * @throws UnsupportedCallbackException
-     *             Exception
+     *
+     * @param callbacks the WSPasswordCallback implementation
+     * @throws IOException                  Exception
+     * @throws UnsupportedCallbackException Exception
      */
     @Override
-    public void handle(final Callback[] callbacks) throws IOException,
-        UnsupportedCallbackException {
+    public void handle(final Callback[] callbacks) throws IOException, UnsupportedCallbackException {
         for (final Callback callback : callbacks) {
 
             try {
-                final Method method =
-                        callback.getClass().getMethod("getIdentifer",
-                                (Class[]) null);
+                final Method method = callback.getClass().getMethod("getIdentifer", (Class[]) null);
 
-                final String name =
-                        (String) method.invoke(callback);
+                final String name = (String) method.invoke(callback);
 
                 LOGGER.debug("The CallbackHandler server-side: " + name);
 
-            } catch (final Exception ex) {
-                if(LOGGER.isWarnEnabled()) {
+            }
+            catch (final Exception ex) {
+                if (LOGGER.isWarnEnabled()) {
                     LOGGER.warn("Error on invoking callback handeler.");
                 }
-                if(LOGGER.isDebugEnabled()) {
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Error on invoking callback handeler.", ex);
                 }
             }

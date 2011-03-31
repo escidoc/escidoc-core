@@ -29,11 +29,10 @@ import org.hibernate.id.IdentifierGenerator;
 import java.io.Serializable;
 
 /**
- * Implementation of a hibernate id generator.<br>
- * This implementation fetches the ids from the {@link EscidocIdProvider}.
- * 
+ * Implementation of a hibernate id generator.<br> This implementation fetches the ids from the {@link
+ * EscidocIdProvider}.
+ *
  * @author Torsten Tetteroo
- * 
  */
 public class EscidocIdGenerator implements IdentifierGenerator {
 
@@ -41,20 +40,11 @@ public class EscidocIdGenerator implements IdentifierGenerator {
 
     private EscidocIdProvider idProvider;
 
-
-
     /**
      * See Interface for functional description.
-     * 
-     * @param arg0
-     * @param arg1
-     * @return
-     * @throws HibernateException
-     *
      */
     @Override
-    public Serializable generate(
-        final SessionImplementor sessionImplementor, final Object arg1) {
+    public Serializable generate(final SessionImplementor sessionImplementor, final Object arg1) {
 
         try {
             return getIdProvider().getNextPid();
@@ -65,23 +55,18 @@ public class EscidocIdGenerator implements IdentifierGenerator {
 
     }
 
-
-
     /**
      * Gets (an initializes if needed) the {@link EscidocIdProvider}.
-     * 
-     * @return Returns the  object.
-     * @throws SystemException
-     *             Thrown in case of an internal system error.
      *
+     * @return Returns the  object.
+     * @throws SystemException Thrown in case of an internal system error.
      */
     public EscidocIdProvider getIdProvider() throws SystemException {
 
         if (this.idProvider == null) {
             this.idProvider =
-                (EscidocIdProvider) BeanLocator.getBean(
-                    BeanLocator.COMMON_FACTORY_ID,
-                    EscidocIdProvider.SPRING_BEAN_ID);
+                (EscidocIdProvider) BeanLocator
+                    .getBean(BeanLocator.COMMON_FACTORY_ID, EscidocIdProvider.SPRING_BEAN_ID);
         }
         return this.idProvider;
     }

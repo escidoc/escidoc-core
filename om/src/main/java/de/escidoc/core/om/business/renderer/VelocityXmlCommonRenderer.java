@@ -48,35 +48,21 @@ import java.util.List;
 import java.util.Map;
 
 public class VelocityXmlCommonRenderer {
+
     /**
      * Adds content relations values to the provided map.
-     * 
-     * @param relations
-     *            Vector with relation maps
-     * @param href
-     *            href of resource
-     * @param values
-     *            The map to add values to.
-     * @throws WebserverSystemException
-     * @throws XmlParserSystemException
-     * @throws IntegritySystemException
-     * @throws FedoraSystemException
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
-     * @throws TripleStoreSystemException
+     *
+     * @param relations Vector with relation maps
+     * @param href      href of resource
+     * @param values    The map to add values to.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     public void addRelationsValues(
-        final List<Map<String, String>> relations, final String href,
-        final Map<String, Object> values)
-        throws FedoraSystemException, IntegritySystemException,
-        XmlParserSystemException, WebserverSystemException,
+        final List<Map<String, String>> relations, final String href, final Map<String, Object> values)
+        throws FedoraSystemException, IntegritySystemException, XmlParserSystemException, WebserverSystemException,
         TripleStoreSystemException {
 
-        values
-            .put(
-                "contentRelationsHref",
-                href
-                    + de.escidoc.core.common.business.fedora.Constants.RELATIONS_URL_PART);
+        values.put("contentRelationsHref", href + de.escidoc.core.common.business.fedora.Constants.RELATIONS_URL_PART);
 
         List<Map<String, String>> entries = null;
         if (relations != null && !relations.isEmpty()) {
@@ -89,18 +75,14 @@ public class VelocityXmlCommonRenderer {
                 final String predicate = relation.get("predicate");
                 entry.put("targetId", targetId);
                 entry.put("predicate", predicate);
-                final String objectType =
-                    TripleStoreUtility.getInstance().getObjectType(targetId);
+                final String objectType = TripleStoreUtility.getInstance().getObjectType(targetId);
                 if (objectType.endsWith("Item")) {
-                    entry.put("targetHref", XmlUtility.BASE_OM + "item/"
-                        + targetId);
+                    entry.put("targetHref", XmlUtility.BASE_OM + "item/" + targetId);
                 }
                 else {
-                    entry.put("targetHref", XmlUtility.BASE_OM + "container/"
-                        + targetId);
+                    entry.put("targetHref", XmlUtility.BASE_OM + "container/" + targetId);
                 }
-                final String targetTitle =
-                    TripleStoreUtility.getInstance().getTitle(targetId);
+                final String targetTitle = TripleStoreUtility.getInstance().getTitle(targetId);
                 entry.put("targetTitle", targetTitle);
                 entries.add(entry);
             }
@@ -110,65 +92,44 @@ public class VelocityXmlCommonRenderer {
         }
     }
 
-    protected void addXlinkValues(final Map values)
-        throws WebserverSystemException {
+    protected void addXlinkValues(final Map values) throws WebserverSystemException {
 
-        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, XmlUtility
-            .getEscidocBaseUrl());
-        values.put(XmlTemplateProvider.VAR_XLINK_NAMESPACE_PREFIX,
-            Constants.XLINK_NS_PREFIX);
-        values.put(XmlTemplateProvider.VAR_XLINK_NAMESPACE,
-            Constants.XLINK_NS_URI);
+        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, XmlUtility.getEscidocBaseUrl());
+        values.put(XmlTemplateProvider.VAR_XLINK_NAMESPACE_PREFIX, Constants.XLINK_NS_PREFIX);
+        values.put(XmlTemplateProvider.VAR_XLINK_NAMESPACE, Constants.XLINK_NS_URI);
     }
 
-    protected void addRelationsNamespaceValues(final Map values)
-        throws WebserverSystemException {
-        values.put("contentRelationsNamespacePrefix",
-            Constants.CONTENT_RELATIONS_NAMESPACE_PREFIX);
-        values.put("contentRelationsNamespace",
-            Constants.CONTENT_RELATIONS_NAMESPACE_URI);
+    protected void addRelationsNamespaceValues(final Map values) throws WebserverSystemException {
+        values.put("contentRelationsNamespacePrefix", Constants.CONTENT_RELATIONS_NAMESPACE_PREFIX);
+        values.put("contentRelationsNamespace", Constants.CONTENT_RELATIONS_NAMESPACE_URI);
 
     }
 
-    protected void addStructuralRelationsValues(final Map values)
-        throws WebserverSystemException {
-        values
-            .put(
-                XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX,
-                Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
-        values
-            .put(
-                XmlTemplateProvider.ESCIDOC_SREL_NS,
-                Constants.STRUCTURAL_RELATIONS_NS_URI);
+    protected void addStructuralRelationsValues(final Map values) throws WebserverSystemException {
+        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
+        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
     }
 
-    protected void addParentsNamespaceValues(final Map values)
-        throws WebserverSystemException {
-        values
-            .put("parentsNamespacePrefix", Constants.PARENTS_NAMESPACE_PREFIX);
+    protected void addParentsNamespaceValues(final Map values) throws WebserverSystemException {
+        values.put("parentsNamespacePrefix", Constants.PARENTS_NAMESPACE_PREFIX);
         values.put("parentsNamespace", Constants.PARENTS_NAMESPACE_URI);
 
     }
 
     /**
      * Adds the common values to the provided map.
-     * 
-     * @param resource
-     *            The resource for that data shall be created.
-     * @param values
-     *            The map to add values to.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
+     *
+     * @param resource The resource for that data shall be created.
+     * @param values   The map to add values to.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    protected void addCommonValues(
-        final GenericVersionableResourcePid resource, final Map values)
+    protected void addCommonValues(final GenericVersionableResourcePid resource, final Map values)
         throws WebserverSystemException {
 
         final String lmd;
         try {
             lmd = resource.getLastModificationDate();
         }
-
         catch (final FedoraSystemException e1) {
             throw new WebserverSystemException(e1);
         }
@@ -179,9 +140,8 @@ public class VelocityXmlCommonRenderer {
             values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, n);
         }
         catch (final ParseException e) {
-            throw new WebserverSystemException(
-                "Unable to parse last-modification-date '" + lmd
-                    + "' of resource '" + resource.getId() + "'!", e);
+            throw new WebserverSystemException("Unable to parse last-modification-date '" + lmd + "' of resource '"
+                + resource.getId() + "'!", e);
         }
         addXlinkValues(values);
 

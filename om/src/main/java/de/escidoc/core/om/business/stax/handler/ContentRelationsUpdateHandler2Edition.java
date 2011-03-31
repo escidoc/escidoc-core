@@ -50,11 +50,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 
- * 
  * @author Rozita Friedman
- * 
- *
  */
 public class ContentRelationsUpdateHandler2Edition extends DefaultHandler {
 
@@ -72,10 +68,8 @@ public class ContentRelationsUpdateHandler2Edition extends DefaultHandler {
 
     /**
      * Instantiate a ContentRelationsCreateHandler.
-     * 
-     * @param parser
-     *            The parser.
      *
+     * @param parser The parser.
      */
     public ContentRelationsUpdateHandler2Edition(final StaxParser parser) {
         this.parser = parser;
@@ -83,18 +77,14 @@ public class ContentRelationsUpdateHandler2Edition extends DefaultHandler {
 
     /**
      * Handle the start of an element.
-     * 
-     * @param element
-     *            The element.
-     * @return The element.
      *
+     * @param element The element.
+     * @return The element.
      */
     @Override
-    public StartElement startElement(final StartElement element)
-        throws InvalidContentException, ReferencedResourceNotFoundException,
-        RelationPredicateNotFoundException, WebserverSystemException,
-        TripleStoreSystemException, EncodingSystemException,
-        XmlParserSystemException, InvalidXmlException {
+    public StartElement startElement(final StartElement element) throws InvalidContentException,
+        ReferencedResourceNotFoundException, RelationPredicateNotFoundException, WebserverSystemException,
+        TripleStoreSystemException, EncodingSystemException, XmlParserSystemException, InvalidXmlException {
         final String currentPath = parser.getCurPath();
         String contentRelationPath = "/item/relations/relation";
         if (currentPath.startsWith(CONTAINER)) {
@@ -105,15 +95,13 @@ public class ContentRelationsUpdateHandler2Edition extends DefaultHandler {
         if (contentRelationPath.equals(currentPath) && indexInherited < 0) {
             this.inContentRelation = true;
             final int indexOfObjId = element.indexOfAttribute(null, "objid");
-            final int indexOfHref =
-                element.indexOfAttribute(Constants.XLINK_URI, "href");
+            final int indexOfHref = element.indexOfAttribute(Constants.XLINK_URI, "href");
             String href = null;
             if (indexOfHref != -1) {
                 href = element.getAttribute(indexOfHref).getValue();
                 if (href.length() == 0) {
-                    throw new InvalidContentException("The value of attribute 'xlink:href' of "
-                            + " the element '" + theName
-                            + "' may not be an empty string");
+                    throw new InvalidContentException("The value of attribute 'xlink:href' of " + " the element '"
+                        + theName + "' may not be an empty string");
                 }
             }
 
@@ -121,8 +109,8 @@ public class ContentRelationsUpdateHandler2Edition extends DefaultHandler {
             if (indexOfObjId != -1) {
                 objid = element.getAttribute(indexOfObjId).getValue();
                 if (objid.length() == 0) {
-                    throw new InvalidContentException("The value of attribute 'objid' of " + " the element '"
-                            + theName + "' may not be an empty string");
+                    throw new InvalidContentException("The value of attribute 'objid' of " + " the element '" + theName
+                        + "' may not be an empty string");
                 }
             }
             checkRefElement(objid, href);
@@ -139,11 +127,9 @@ public class ContentRelationsUpdateHandler2Edition extends DefaultHandler {
 
     /**
      * Handle the end of an element.
-     * 
-     * @param element
-     *            The element.
-     * @return The element.
      *
+     * @param element The element.
+     * @return The element.
      */
     @Override
     public EndElement endElement(final EndElement element) {
@@ -166,44 +152,38 @@ public class ContentRelationsUpdateHandler2Edition extends DefaultHandler {
         return this.relationsData;
     }
 
-    private void checkRefElement(final String objectId, final String href)
-        throws InvalidContentException, TripleStoreSystemException,
-        WebserverSystemException, ReferencedResourceNotFoundException {
+    private void checkRefElement(final String objectId, final String href) throws InvalidContentException,
+        TripleStoreSystemException, WebserverSystemException, ReferencedResourceNotFoundException {
         this.targetId = null;
         this.targetId = href != null ? Utility.getId(href) : objectId;
-        final String targetIdWithoutVersion =
-            XmlUtility.getObjidWithoutVersion(this.targetId);
-        String targetVersion =
-            targetId.replaceFirst(targetIdWithoutVersion, "");
+        final String targetIdWithoutVersion = XmlUtility.getObjidWithoutVersion(this.targetId);
+        String targetVersion = targetId.replaceFirst(targetIdWithoutVersion, "");
         if (targetVersion.length() > 0) {
             throw new InvalidContentException("A relation target may not be referenced by an "
-                    + " identifier containing a version number. Use a floating "
-                    + "identifier like 'escidoc:123' to reference a target");
+                + " identifier containing a version number. Use a floating "
+                + "identifier like 'escidoc:123' to reference a target");
         }
         if (!TripleStoreUtility.getInstance().exists(this.targetId)) {
             throw new ReferencedResourceNotFoundException("Related target resource with id " + this.targetId
-                    + " does not exist.");
+                + " does not exist.");
         }
-        final String targetObjectType =
-            TripleStoreUtility.getInstance().getObjectType(this.targetId);
+        final String targetObjectType = TripleStoreUtility.getInstance().getObjectType(this.targetId);
         if (!Constants.ITEM_OBJECT_TYPE.equals(targetObjectType)
             && !Constants.CONTAINER_OBJECT_TYPE.equals(targetObjectType)) {
             throw new InvalidContentException("A related resource has to be either 'item' or 'container'. "
-                    + "A object with id " + this.targetId
-                    + " is neither 'item' nor 'container' ");
+                + "A object with id " + this.targetId + " is neither 'item' nor 'container' ");
         }
         if (href != null) {
-            if (targetObjectType.equals(Constants.ITEM_OBJECT_TYPE)
-                && !href.equals("/ir/item/" + this.targetId)) {
+            if (targetObjectType.equals(Constants.ITEM_OBJECT_TYPE) && !href.equals("/ir/item/" + this.targetId)) {
                 throw new InvalidContentException("The 'href' attribute, which represents"
-                        + " a target rest-url has a wrong syntax. The url has to look like: "
-                        + "/ir/item/" + this.targetId);
+                    + " a target rest-url has a wrong syntax. The url has to look like: " + "/ir/item/" + this.targetId);
 
-            } else if (targetObjectType.equals(Constants.CONTAINER_OBJECT_TYPE)
+            }
+            else if (targetObjectType.equals(Constants.CONTAINER_OBJECT_TYPE)
                 && !href.equals("/ir/container/" + this.targetId)) {
                 throw new InvalidContentException("The 'href' attribute, which represents"
-                        + " a target rest-url has a wrong syntax. The url has to look like: "
-                        + "/ir/container/" + this.targetId);
+                    + " a target rest-url has a wrong syntax. The url has to look like: " + "/ir/container/"
+                    + this.targetId);
 
             }
         }

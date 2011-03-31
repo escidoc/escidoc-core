@@ -50,99 +50,80 @@ import static org.junit.Assert.fail;
 
 /**
  * Test the mock implementation of the item resource.
- * 
+ *
  * @author Michael Schneider
- * 
  */
 @RunWith(value = Parameterized.class)
 public class ItemFilterTest extends ItemTestBase {
 
-    public static final String FILTER_CREATED_BY = STRUCTURAL_RELATIONS_NS_URI
-        + NAME_CREATED_BY;
+    public static final String FILTER_CREATED_BY = STRUCTURAL_RELATIONS_NS_URI + NAME_CREATED_BY;
 
     private String theItemXml;
 
     private String theItemId;
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ItemFilterTest(final int transport) {
         super(transport);
     }
 
     /**
-     * Test successfully retrieving a filtered item-list filtering by
-     * created-by.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test successfully retrieving a filtered item-list filtering by created-by.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testFilterCreatedBy() throws Exception {
         theItemId = createItem();
 
         String createdBy =
-            getObjidValue(EscidocRestSoapTestBase.getDocument(theItemXml),
-                "/item/properties/created-by");
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+            getObjidValue(EscidocRestSoapTestBase.getDocument(theItemXml), "/item/properties/created-by");
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_IDENTIFIER + "\"=" + theItemId + " and "
-            + "\"/properties/public-status\"=pending and "
-            + "\"/properties/created-by/id\"=" + createdBy });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_IDENTIFIER + "\"=" + theItemId + " and "
+            + "\"/properties/public-status\"=pending and " + "\"/properties/created-by/id\"=" + createdBy });
 
         String result = retrieveItems(filterParams);
 
         assertXmlValidSrwResponse(result);
 
-        NodeList items =
-            selectNodeList(EscidocRestSoapTestBase.getDocument(result),
-                XPATH_SRW_ITEM_LIST_ITEM);
+        NodeList items = selectNodeList(EscidocRestSoapTestBase.getDocument(result), XPATH_SRW_ITEM_LIST_ITEM);
 
-        assertTrue(
-            "Wrong number of items matched filter criteria, expected 1, but was "
-                + items.getLength(), items.getLength() == 1);
-        assertEquals("Wrong item matched filter criteria.", theItemId,
-            getObjidValue(items.item(0), "/"));
+        assertTrue("Wrong number of items matched filter criteria, expected 1, but was " + items.getLength(), items
+            .getLength() == 1);
+        assertEquals("Wrong item matched filter criteria.", theItemId, getObjidValue(items.item(0), "/"));
     }
 
     /**
-     * Test successfully retrieving a filtered item-list filtering by created-by
-     * with an unknown user. Expected is an empty item-list.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test successfully retrieving a filtered item-list filtering by created-by with an unknown user. Expected is an
+     * empty item-list.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testFilterCreatedByUnknownCreator() throws Exception {
         theItemId = createItem();
 
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_IDENTIFIER + "\"=" + theItemId + " and " + "\""
-            + FILTER_URI_PUBLIC_STATUS + "\"=pending and " + "\""
-            + FILTER_CREATED_BY + "\"=escidoc:unknwonUser" });
+        filterParams.put(FILTER_PARAMETER_QUERY,
+            new String[] { "\"" + FILTER_IDENTIFIER + "\"=" + theItemId + " and " + "\"" + FILTER_URI_PUBLIC_STATUS
+                + "\"=pending and " + "\"" + FILTER_CREATED_BY + "\"=escidoc:unknwonUser" });
 
         String result = retrieveItems(filterParams);
 
         assertXmlValidSrwResponse(result);
 
-        NodeList items =
-            selectNodeList(EscidocRestSoapTestBase.getDocument(result),
-                XPATH_SRW_ITEM_LIST_ITEM);
+        NodeList items = selectNodeList(EscidocRestSoapTestBase.getDocument(result), XPATH_SRW_ITEM_LIST_ITEM);
 
-        assertTrue(
-            "Wrong number of items matched filter criteria, expected 0, but was "
-                + items.getLength(), items.getLength() == 0);
+        assertTrue("Wrong number of items matched filter criteria, expected 0, but was " + items.getLength(), items
+            .getLength() == 0);
     }
 
     /**
-     * 
+     *
      * @throws Exception
      */
     @Test
@@ -150,11 +131,9 @@ public class ItemFilterTest extends ItemTestBase {
         // create an item and save the id
         theItemId = createItem();
 
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_IDENTIFIER + "\"=" + theItemId + " and "
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_IDENTIFIER + "\"=" + theItemId + " and "
             + "\"/properties/public-status\"=pending" });
 
         String result = retrieveItems(filterParams);
@@ -165,13 +144,11 @@ public class ItemFilterTest extends ItemTestBase {
 
         NodeList nl;
         if (getTransport() == Constants.TRANSPORT_SOAP) {
-            selectSingleNodeAsserted(resultDoc, XPATH_SRW_ITEM_LIST_ITEM
-                + "[@objid = '" + theItemId + "']");
+            selectSingleNodeAsserted(resultDoc, XPATH_SRW_ITEM_LIST_ITEM + "[@objid = '" + theItemId + "']");
         }
         else {
-            selectSingleNodeAsserted(resultDoc, XPATH_SRW_ITEM_LIST_ITEM
-                + "[@href = '" + Constants.ITEM_BASE_URI + "/" + theItemId
-                + "']");
+            selectSingleNodeAsserted(resultDoc, XPATH_SRW_ITEM_LIST_ITEM + "[@href = '" + Constants.ITEM_BASE_URI + "/"
+                + theItemId + "']");
         }
         nl = selectNodeList(resultDoc, XPATH_SRW_ITEM_LIST_ITEM);
         assertEquals("Only one item should be retrieved.", nl.getLength(), 1);
@@ -181,7 +158,7 @@ public class ItemFilterTest extends ItemTestBase {
     }
 
     /**
-     * 
+     *
      */
     @Test
     public void testFilterItemRefsReleasedVersion() throws Exception {
@@ -190,7 +167,7 @@ public class ItemFilterTest extends ItemTestBase {
     }
 
     /**
-     * 
+     *
      * @throws Exception
      */
     @Test
@@ -222,47 +199,38 @@ public class ItemFilterTest extends ItemTestBase {
 
     @Test
     public void testFilterItemsUserRole() throws Exception {
-        doTestFilterItemsUserRole(PWCallback.ID_PREFIX
-            + PWCallback.DEFAULT_HANDLE, null);
+        doTestFilterItemsUserRole(PWCallback.ID_PREFIX + PWCallback.DEFAULT_HANDLE, null);
     }
 
     @Test
     public void testFilterItemsUserRoleAdmin() throws Exception {
-        doTestFilterItemsUserRole(PWCallback.ID_PREFIX
-            + PWCallback.DEFAULT_HANDLE, "System-Administrator");
+        doTestFilterItemsUserRole(PWCallback.ID_PREFIX + PWCallback.DEFAULT_HANDLE, "System-Administrator");
     }
 
     /**
-     * Test filtering for items with record packing = "string". The result
-     * should be a valid SRW response.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test filtering for items with record packing = "string". The result should be a valid SRW response.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testFilterRecordPacking() throws Exception {
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams
-            .put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "10" });
-        filterParams.put(FILTER_PARAMETER_RECORDPACKING,
-            new String[] { "string" });
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "10" });
+        filterParams.put(FILTER_PARAMETER_RECORDPACKING, new String[] { "string" });
         assertXmlValidSrwResponse(retrieveItems(filterParams));
     }
 
     /**
      * Test filtering with a large XML filter.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testIssue637() throws Exception {
         final int count = 50;
         StringBuffer filter = new StringBuffer();
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
         for (int index = 1; index <= count; index++) {
             String itemId = createItem();
@@ -272,38 +240,29 @@ public class ItemFilterTest extends ItemTestBase {
             }
             filter.append("\"" + FILTER_IDENTIFIER + "\"=" + itemId);
         }
-        filterParams.put(FILTER_PARAMETER_QUERY,
-            new String[] { filter.toString() });
-        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS,
-            new String[] { String.valueOf(count) });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { filter.toString() });
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { String.valueOf(count) });
 
         String result = retrieveItems(filterParams);
 
         assertXmlValidSrwResponse(result);
 
-        NodeList items =
-            selectNodeList(EscidocRestSoapTestBase.getDocument(result),
-                XPATH_SRW_ITEM_LIST_ITEM);
-        assertTrue("Wrong number of items matched filter criteria, expected "
-            + count + ", but was " + items.getLength(),
-            items.getLength() == count);
+        NodeList items = selectNodeList(EscidocRestSoapTestBase.getDocument(result), XPATH_SRW_ITEM_LIST_ITEM);
+        assertTrue("Wrong number of items matched filter criteria, expected " + count + ", but was "
+            + items.getLength(), items.getLength() == count);
     }
 
     /**
-     * Create an item as depositor and check if it will be found afterwards when
-     * filtering for all items.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Create an item as depositor and check if it will be found afterwards when filtering for all items.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testIssue898() throws Exception {
         try {
-            final Map<String, String[]> filterParams =
-                new HashMap<String, String[]>();
+            final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-            filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS,
-                new String[] { "1" });
+            filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "1" });
 
             PWCallback.setHandle(PWCallback.DEPOSITOR_HANDLE);
 
@@ -319,10 +278,8 @@ public class ItemFilterTest extends ItemTestBase {
 
             int newItems = getNumberOfRecords(result);
 
-            assertTrue(
-                "Wrong number of items matched filter criteria, expected "
-                    + (oldItems + 1) + ", but was " + newItems,
-                newItems == oldItems + 1);
+            assertTrue("Wrong number of items matched filter criteria, expected " + (oldItems + 1) + ", but was "
+                + newItems, newItems == oldItems + 1);
         }
         finally {
             PWCallback.resetHandle();
@@ -330,12 +287,10 @@ public class ItemFilterTest extends ItemTestBase {
     }
 
     /**
-     * Create a set of hierarchical containers containing items, give the test
-     * user hierarchical access to the top level container and check if he is
-     * able to see all items.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Create a set of hierarchical containers containing items, give the test user hierarchical access to the top level
+     * container and check if he is able to see all items.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testIssue902() throws Exception {
@@ -348,11 +303,9 @@ public class ItemFilterTest extends ItemTestBase {
             // search for all items
             PWCallback.setHandle(PWCallback.TEST_HANDLE);
 
-            final Map<String, String[]> filterParams =
-                new HashMap<String, String[]>();
+            final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-            filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS,
-                new String[] { "1" });
+            filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "1" });
 
             String result = retrieveItems(filterParams);
 
@@ -363,54 +316,39 @@ public class ItemFilterTest extends ItemTestBase {
 
             // create container and item hierarchy
             String containerXml =
-                EscidocRestSoapTestBase.getTemplateAsString(
-                    TEMPLATE_CONTAINER_PATH + "/" + getTransport(false),
+                EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_CONTAINER_PATH + "/" + getTransport(false),
                     "create_container_WithoutMembers_v1.1.xml");
             String itemXml =
-                EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
-                    + "/" + getTransport(false),
+                EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
                     "escidoc_item_198_for_create.xml");
             String c1 = createContainer();
 
             getContainerClient().createItem(c1, itemXml);
-            String c11 =
-                getObjidValue(handleXmlResult(getContainerClient()
-                    .createContainer(c1, containerXml)));
+            String c11 = getObjidValue(handleXmlResult(getContainerClient().createContainer(c1, containerXml)));
             getContainerClient().createItem(c11, itemXml);
             getContainerClient().createItem(c11, itemXml);
-            String c12 =
-                getObjidValue(handleXmlResult(getContainerClient()
-                    .createContainer(c1, containerXml)));
+            String c12 = getObjidValue(handleXmlResult(getContainerClient().createContainer(c1, containerXml)));
             getContainerClient().createItem(c12, itemXml);
             getContainerClient().createItem(c12, itemXml);
-            String c13 =
-                getObjidValue(handleXmlResult(getContainerClient()
-                    .createContainer(c1, containerXml)));
+            String c13 = getObjidValue(handleXmlResult(getContainerClient().createContainer(c1, containerXml)));
             getContainerClient().createItem(c13, itemXml);
 
             // give the user access right to the top level container
             String grantXml =
-                getTemplateAsString(TEMPLATE_USER_ACCOUNT_PATH,
-                    "escidoc_replaceable_grant_for_create.xml");
+                getTemplateAsString(TEMPLATE_USER_ACCOUNT_PATH, "escidoc_replaceable_grant_for_create.xml");
             grantXml =
-                grantXml
-                    .replaceAll("\\$\\{rolehref\\}",
-                        "/aa/role/escidoc:role-collaborator-modifier-container-add-remove-any-members");
-            grantXml =
-                grantXml
-                    .replaceAll("\\$\\{scopehref\\}", "/ir/container/" + c1);
+                grantXml.replaceAll("\\$\\{rolehref\\}",
+                    "/aa/role/escidoc:role-collaborator-modifier-container-add-remove-any-members");
+            grantXml = grantXml.replaceAll("\\$\\{scopehref\\}", "/ir/container/" + c1);
 
-            Document grantDocument =
-                EscidocRestSoapTestBase.getDocument(grantXml);
+            Document grantDocument = EscidocRestSoapTestBase.getDocument(grantXml);
 
             fixLinkAttributes(grantDocument, XPATH_GRANT_ROLE);
             fixLinkAttributes(grantDocument, XPATH_GRANT_OBJECT);
 
-            UserAccountClient userAccountClient =
-                new UserAccountClient(getTransport());
+            UserAccountClient userAccountClient = new UserAccountClient(getTransport());
 
-            userAccountClient.createGrant(USER_ID,
-                toString(grantDocument, false));
+            userAccountClient.createGrant(USER_ID, toString(grantDocument, false));
 
             // search for all items again
             PWCallback.setHandle(PWCallback.TEST_HANDLE);
@@ -419,10 +357,8 @@ public class ItemFilterTest extends ItemTestBase {
 
             int newItems = getNumberOfRecords(result);
 
-            assertTrue(
-                "Wrong number of items matched filter criteria, expected "
-                    + (oldItems + 6) + ", but was " + newItems,
-                newItems == oldItems + 6);
+            assertTrue("Wrong number of items matched filter criteria, expected " + (oldItems + 6) + ", but was "
+                + newItems, newItems == oldItems + 6);
         }
         finally {
             PWCallback.resetHandle();
@@ -430,12 +366,10 @@ public class ItemFilterTest extends ItemTestBase {
     }
 
     /**
-     * Create a user group, add the test user to the user group, give the user
-     * group access to a context, create an item within that context and check
-     * if he is able to see the item.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Create a user group, add the test user to the user group, give the user group access to a context, create an item
+     * within that context and check if he is able to see the item.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testIssue905() throws Exception {
@@ -448,64 +382,45 @@ public class ItemFilterTest extends ItemTestBase {
 
             // create user group
             Document userGroup =
-                EscidocRestSoapTestBase.getTemplateAsDocument(
-                    TEMPLATE_USER_GROUP_PATH,
+                EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_USER_GROUP_PATH,
                     "escidoc_usergroup_for_create.xml");
-            Node labelNode =
-                selectSingleNode(userGroup, "/user-group/properties/label");
+            Node labelNode = selectSingleNode(userGroup, "/user-group/properties/label");
 
-            labelNode.setTextContent(labelNode.getTextContent().trim()
-                + System.currentTimeMillis());
+            labelNode.setTextContent(labelNode.getTextContent().trim() + System.currentTimeMillis());
 
-            UserGroupClient userGroupClient =
-                new UserGroupClient(getTransport());
-            String userGroupXml =
-                handleXmlResult(userGroupClient.create(toString(userGroup,
-                    false)));
+            UserGroupClient userGroupClient = new UserGroupClient(getTransport());
+            String userGroupXml = handleXmlResult(userGroupClient.create(toString(userGroup, false)));
 
             userGroup = EscidocRestSoapTestBase.getDocument(userGroupXml);
 
             String userGroupId = getObjidValue(userGroupXml);
 
             // add test user to user group
-            String taskParam =
-                "<param last-modification-date=\""
-                    + getLastModificationDateValue(userGroup) + "\">";
+            String taskParam = "<param last-modification-date=\"" + getLastModificationDateValue(userGroup) + "\">";
 
-            taskParam +=
-                "<selector name=\"user-account\" type=\"internal\">" + USER_ID
-                    + "</selector>";
+            taskParam += "<selector name=\"user-account\" type=\"internal\">" + USER_ID + "</selector>";
             taskParam += "</param>";
             userGroupClient.addSelectors(userGroupId, taskParam);
 
             // give the user group access right to the item
             String grantXml =
-                getTemplateAsString(TEMPLATE_USER_ACCOUNT_PATH,
-                    "escidoc_replaceable_grant_for_create.xml");
+                getTemplateAsString(TEMPLATE_USER_ACCOUNT_PATH, "escidoc_replaceable_grant_for_create.xml");
 
-            grantXml =
-                grantXml.replaceAll("\\$\\{rolehref\\}",
-                    "/aa/role/escidoc:role-administrator");
-            grantXml =
-                grantXml.replaceAll("\\$\\{scopehref\\}", "/ir/context/"
-                    + CONTEXT_ID);
+            grantXml = grantXml.replaceAll("\\$\\{rolehref\\}", "/aa/role/escidoc:role-administrator");
+            grantXml = grantXml.replaceAll("\\$\\{scopehref\\}", "/ir/context/" + CONTEXT_ID);
 
-            Document grantDocument =
-                EscidocRestSoapTestBase.getDocument(grantXml);
+            Document grantDocument = EscidocRestSoapTestBase.getDocument(grantXml);
 
             fixLinkAttributes(grantDocument, XPATH_GRANT_ROLE);
             fixLinkAttributes(grantDocument, XPATH_GRANT_OBJECT);
-            userGroupClient.createGrant(userGroupId,
-                toString(grantDocument, false));
+            userGroupClient.createGrant(userGroupId, toString(grantDocument, false));
 
             // search for all items
             PWCallback.setHandle(PWCallback.ADMINISTRATOR_HANDLE);
 
-            final Map<String, String[]> filterParams =
-                new HashMap<String, String[]>();
+            final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-            filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS,
-                new String[] { "1" });
+            filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "1" });
 
             String result = retrieveItems(filterParams);
 
@@ -524,10 +439,8 @@ public class ItemFilterTest extends ItemTestBase {
 
             int newItems = getNumberOfRecords(result);
 
-            assertTrue(
-                "Wrong number of items matched filter criteria, expected "
-                    + (oldItems + 1) + ", but was " + newItems,
-                newItems == oldItems + 1);
+            assertTrue("Wrong number of items matched filter criteria, expected " + (oldItems + 1) + ", but was "
+                + newItems, newItems == oldItems + 1);
         }
         finally {
             PWCallback.resetHandle();
@@ -538,23 +451,19 @@ public class ItemFilterTest extends ItemTestBase {
     }
 
     /**
-     * Check if only items are returned from retrieveItems() if the filter query
-     * is not empty.
-     * 
+     * Check if only items are returned from retrieveItems() if the filter query is not empty.
+     * <p/>
      * See https://www.escidoc.org/jira/browse/INFR-1106.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testIssue1106() throws Exception {
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
         String itemId = createItem();
         String containerId = createContainer();
 
-        filterParams.put(FILTER_PARAMETER_QUERY,
-            new String[] { "\"/properties/public-status\"=pending" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"/properties/public-status\"=pending" });
 
         String result = retrieveItems(filterParams);
 
@@ -574,19 +483,12 @@ public class ItemFilterTest extends ItemTestBase {
 
     /**
      * Test successfully retrieving an explain response.
-     * 
-     * @test.name testExplainRetrieveItems
-     * @test.id testExplainRetrieveItems
-     * @test.input
-     * @test.expected: valid explain response.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testExplainRetrieveItems() throws Exception {
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_EXPLAIN, new String[] { "" });
 
@@ -602,13 +504,12 @@ public class ItemFilterTest extends ItemTestBase {
     }
 
     /**
-     * 
+     *
      * @param reqStatus
      * @param versionStatus
      * @throws Exception
      */
-    public void doTestFilterItemsStatus(
-        final String reqStatus, final boolean versionStatus) throws Exception {
+    public void doTestFilterItemsStatus(final String reqStatus, final boolean versionStatus) throws Exception {
 
         String filterName = FILTER_URI_PUBLIC_STATUS;
         String filterResultXPath = "/item/properties/public-status/text()";
@@ -618,30 +519,23 @@ public class ItemFilterTest extends ItemTestBase {
         }
 
         String list = null;
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
-        StringBuffer filter =
-            new StringBuffer("\"" + filterName + "\"=" + reqStatus);
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
+        StringBuffer filter = new StringBuffer("\"" + filterName + "\"=" + reqStatus);
 
         if (versionStatus) {
             filter.append(" and \"/properties/public-status\"=released");
         }
-        filterParams.put(FILTER_PARAMETER_QUERY,
-            new String[] { filter.toString() });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { filter.toString() });
         list = retrieveItems(filterParams);
         assertXmlValidSrwResponse(list);
 
         NodeList nodes = null;
 
         if (getTransport() == Constants.TRANSPORT_REST) {
-            nodes =
-                selectNodeList(EscidocRestSoapTestBase.getDocument(list),
-                    XPATH_SRW_ITEM_LIST_ITEM + "/@href");
+            nodes = selectNodeList(EscidocRestSoapTestBase.getDocument(list), XPATH_SRW_ITEM_LIST_ITEM + "/@href");
         }
         else if (getTransport() == Constants.TRANSPORT_SOAP) {
-            nodes =
-                selectNodeList(EscidocRestSoapTestBase.getDocument(list),
-                    XPATH_SRW_ITEM_LIST_ITEM + "/@objid");
+            nodes = selectNodeList(EscidocRestSoapTestBase.getDocument(list), XPATH_SRW_ITEM_LIST_ITEM + "/@objid");
         }
 
         for (int count = nodes.getLength() - 1; count >= 0; count--) {
@@ -657,47 +551,37 @@ public class ItemFilterTest extends ItemTestBase {
             try {
                 String item = retrieve(nodeValue);
                 String itemStatus =
-                    selectSingleNode(EscidocRestSoapTestBase.getDocument(item),
-                        filterResultXPath).getNodeValue();
+                    selectSingleNode(EscidocRestSoapTestBase.getDocument(item), filterResultXPath).getNodeValue();
                 assertEquals(reqStatus, itemStatus);
             }
             catch (final ItemNotFoundException e) {
                 if (reqStatus.equals(STATUS_WITHDRAWN)) {
-                    EscidocRestSoapTestBase.assertExceptionType(
-                        ItemNotFoundException.class, e);
+                    EscidocRestSoapTestBase.assertExceptionType(ItemNotFoundException.class, e);
                 }
                 else {
-                    fail("No item could be retrieved with id " + nodeValue
-                        + " returned by retrieveItemRefs.");
+                    fail("No item could be retrieved with id " + nodeValue + " returned by retrieveItemRefs.");
                 }
             }
 
         }
     }
 
-    public void doTestFilterItemsContentModel(final String reqCT)
-        throws Exception {
+    public void doTestFilterItemsContentModel(final String reqCT) throws Exception {
         String list = null;
 
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_URI_CONTENT_MODEL + "\"=" + reqCT });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_URI_CONTENT_MODEL + "\"=" + reqCT });
         list = retrieveItems(filterParams);
         assertXmlValidSrwResponse(list);
 
         NodeList nodes = null;
 
         if (getTransport() == Constants.TRANSPORT_REST) {
-            nodes =
-                selectNodeList(EscidocRestSoapTestBase.getDocument(list),
-                    XPATH_SRW_ITEM_LIST_ITEM + "/@href");
+            nodes = selectNodeList(EscidocRestSoapTestBase.getDocument(list), XPATH_SRW_ITEM_LIST_ITEM + "/@href");
         }
         else if (getTransport() == Constants.TRANSPORT_SOAP) {
-            nodes =
-                selectNodeList(EscidocRestSoapTestBase.getDocument(list),
-                    XPATH_SRW_ITEM_LIST_ITEM + "/@objid");
+            nodes = selectNodeList(EscidocRestSoapTestBase.getDocument(list), XPATH_SRW_ITEM_LIST_ITEM + "/@objid");
         }
 
         for (int count = nodes.getLength() - 1; count >= 0; count--) {
@@ -716,19 +600,14 @@ public class ItemFilterTest extends ItemTestBase {
 
                 if (getTransport() == Constants.TRANSPORT_REST) {
                     itemCT =
-                        selectSingleNode(
-                            EscidocRestSoapTestBase.getDocument(item),
-                            "/item/properties/content-model/@href")
-                            .getNodeValue();
-                    assertEquals(
-                        Constants.CONTENT_MODEL_BASE_URI + "/" + reqCT, itemCT);
+                        selectSingleNode(EscidocRestSoapTestBase.getDocument(item),
+                            "/item/properties/content-model/@href").getNodeValue();
+                    assertEquals(Constants.CONTENT_MODEL_BASE_URI + "/" + reqCT, itemCT);
                 }
                 else if (getTransport() == Constants.TRANSPORT_SOAP) {
                     itemCT =
-                        selectSingleNode(
-                            EscidocRestSoapTestBase.getDocument(item),
-                            "/item/properties/content-model/@objid")
-                            .getNodeValue();
+                        selectSingleNode(EscidocRestSoapTestBase.getDocument(item),
+                            "/item/properties/content-model/@objid").getNodeValue();
                     assertEquals(reqCT, itemCT);
                 }
             }
@@ -737,33 +616,26 @@ public class ItemFilterTest extends ItemTestBase {
         }
     }
 
-    public void doTestFilterItemsUserRole(
-        final String reqUser, final String reqRole) throws Exception {
+    public void doTestFilterItemsUserRole(final String reqUser, final String reqRole) throws Exception {
         String list = null;
 
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
         StringBuffer filter = new StringBuffer("\"user=" + reqUser);
 
         if (reqRole != null) {
             filter.append(" and role=" + reqRole);
         }
-        filterParams.put(FILTER_PARAMETER_QUERY,
-            new String[] { filter.toString() });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { filter.toString() });
         list = retrieveItems(filterParams);
         assertXmlValidSrwResponse(list);
 
         NodeList nodes = null;
 
         if (getTransport() == Constants.TRANSPORT_REST) {
-            nodes =
-                selectNodeList(EscidocRestSoapTestBase.getDocument(list),
-                    XPATH_SRW_ITEM_LIST_ITEM + "/@href");
+            nodes = selectNodeList(EscidocRestSoapTestBase.getDocument(list), XPATH_SRW_ITEM_LIST_ITEM + "/@href");
         }
         else if (getTransport() == Constants.TRANSPORT_SOAP) {
-            nodes =
-                selectNodeList(EscidocRestSoapTestBase.getDocument(list),
-                    XPATH_SRW_ITEM_LIST_ITEM + "/@objid");
+            nodes = selectNodeList(EscidocRestSoapTestBase.getDocument(list), XPATH_SRW_ITEM_LIST_ITEM + "/@objid");
         }
 
         for (int count = nodes.getLength() - 1; count >= 0; count--) {
@@ -792,45 +664,39 @@ public class ItemFilterTest extends ItemTestBase {
 
     /**
      * Create a container (from template).
-     * 
+     *
      * @return objid of the container
-     * @throws Exception
-     *             Thrown if creation of the container failed.
+     * @throws Exception Thrown if creation of the container failed.
      */
     private String createContainer() throws Exception {
         String xmlData =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_CONTAINER_PATH
-                + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_CONTAINER_PATH + "/" + getTransport(false),
                 "create_container_WithoutMembers_v1.1.xml");
-        String theContainerXml =
-            handleXmlResult(getContainerClient().create(xmlData));
+        String theContainerXml = handleXmlResult(getContainerClient().create(xmlData));
 
         return getObjidValue(theContainerXml);
     }
 
     /**
      * Create a Item (from template).
-     * 
+     *
      * @return Objid of Item.
-     * @throws Exception
-     *             Thrown if creation or extracting of objid failed.
+     * @throws Exception Thrown if creation or extracting of objid failed.
      */
     private String createItem() throws Exception {
         String xmlData =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
-                + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                "escidoc_item_198_for_create.xml");
         theItemXml = create(xmlData);
-        theItemId =
-            getObjidValue(EscidocRestSoapTestBase.getDocument(theItemXml));
+        theItemId = getObjidValue(EscidocRestSoapTestBase.getDocument(theItemXml));
         return theItemId;
     }
 
     /**
      * Create a Item (from template) and set it to status 'submitted'.
-     * 
+     *
      * @return Objid of Item.
-     * @throws Exception
-     *             Thrown if creation or extracting of objid failed.
+     * @throws Exception Thrown if creation or extracting of objid failed.
      */
     private String createSubmittedItem() throws Exception {
         theItemId = createItem();
@@ -840,33 +706,25 @@ public class ItemFilterTest extends ItemTestBase {
     }
 
     /**
-     * Create a Item (from template) and set it to status 'released'. If the
-     * infrastructure requiers object or version Pid to release an Item then is
-     * a dummy Pid for each type automatically assigned.
-     * 
+     * Create a Item (from template) and set it to status 'released'. If the infrastructure requiers object or version
+     * Pid to release an Item then is a dummy Pid for each type automatically assigned.
+     *
      * @return Objid of Item.
-     * @throws Exception
-     *             Thrown if creation or extracting of objid failed.
+     * @throws Exception Thrown if creation or extracting of objid failed.
      */
     private String createReleasedItem() throws Exception {
         theItemId = createSubmittedItem();
 
         String pidParam;
-        if (getItemClient().getPidConfig(
-            "cmm.Item.objectPid.setPidBeforeRelease", "true")
-            && !getItemClient().getPidConfig(
-                "cmm.Item.objectPid.releaseWithoutPid", "false")) {
-            pidParam =
-                getPidParam(theItemId, "http://somewhere" + this.theItemId);
+        if (getItemClient().getPidConfig("cmm.Item.objectPid.setPidBeforeRelease", "true")
+            && !getItemClient().getPidConfig("cmm.Item.objectPid.releaseWithoutPid", "false")) {
+            pidParam = getPidParam(theItemId, "http://somewhere" + this.theItemId);
             assignObjectPid(theItemId, pidParam);
         }
-        if (getItemClient().getPidConfig(
-            "cmm.Item.versionPid.setPidBeforeRelease", "true")
-            && !getItemClient().getPidConfig(
-                "cmm.Item.versionPid.releaseWithoutPid", "false")) {
+        if (getItemClient().getPidConfig("cmm.Item.versionPid.setPidBeforeRelease", "true")
+            && !getItemClient().getPidConfig("cmm.Item.versionPid.releaseWithoutPid", "false")) {
             String latestVersion = getLatestVersionObjidValue(theItemXml);
-            pidParam =
-                getPidParam(latestVersion, "http://somewhere" + latestVersion);
+            pidParam = getPidParam(latestVersion, "http://somewhere" + latestVersion);
             assignVersionPid(latestVersion, pidParam);
         }
 
@@ -877,10 +735,8 @@ public class ItemFilterTest extends ItemTestBase {
 
     private String createReleasedPendingItem() throws Exception {
         theItemId = createReleasedItem();
-        Document newItem =
-            EscidocRestSoapTestBase.getDocument(retrieve(theItemId));
-        selectSingleNode(newItem, "/item/properties/content-model-specific")
-            .appendChild(newItem.createElement("some"));
+        Document newItem = EscidocRestSoapTestBase.getDocument(retrieve(theItemId));
+        selectSingleNode(newItem, "/item/properties/content-model-specific").appendChild(newItem.createElement("some"));
         update(theItemId, toString(newItem, true));
 
         return theItemId;
@@ -897,15 +753,11 @@ public class ItemFilterTest extends ItemTestBase {
         theItemId = createReleasedSubmittedItem();
 
         String pidParam;
-        if (getItemClient().getPidConfig(
-            "cmm.Item.versionPid.setPidBeforeRelease", "true")
-            && !getItemClient().getPidConfig(
-                "cmm.Item.versionPid.releaseWithoutPid", "false")) {
+        if (getItemClient().getPidConfig("cmm.Item.versionPid.setPidBeforeRelease", "true")
+            && !getItemClient().getPidConfig("cmm.Item.versionPid.releaseWithoutPid", "false")) {
 
-            String latestVersion =
-                getLatestVersionObjidValue(retrieve(theItemId));
-            pidParam =
-                getPidParam(latestVersion, "http://somewhere" + latestVersion);
+            String latestVersion = getLatestVersionObjidValue(retrieve(theItemId));
+            pidParam = getPidParam(latestVersion, "http://somewhere" + latestVersion);
             assignVersionPid(latestVersion, pidParam);
         }
 
@@ -922,18 +774,14 @@ public class ItemFilterTest extends ItemTestBase {
     }
 
     /**
-     * Get the number of records from the SRW response without counting all
-     * result records explicitly.
-     * 
-     * @param srwResponse
-     *            SRW response from filter search
+     * Get the number of records from the SRW response without counting all result records explicitly.
+     *
+     * @param srwResponse SRW response from filter search
      * @return number of records
-     * @throws Exception
-     *             Thrown if parsing the SRW document failed.
+     * @throws Exception Thrown if parsing the SRW document failed.
      */
     private int getNumberOfRecords(final String srwResponse) throws Exception {
-        return Integer.parseInt(selectSingleNode(
-            EscidocRestSoapTestBase.getDocument(srwResponse),
+        return Integer.parseInt(selectSingleNode(EscidocRestSoapTestBase.getDocument(srwResponse),
             "/searchRetrieveResponse/numberOfRecords").getTextContent());
     }
 
@@ -943,44 +791,35 @@ public class ItemFilterTest extends ItemTestBase {
         try {
             PWCallback.resetHandle();
 
-            UserAccountClient userAccountClient =
-                new UserAccountClient(getTransport());
+            UserAccountClient userAccountClient = new UserAccountClient(getTransport());
 
             userAccountClient.revokeGrants(userId, "<param><filter/>"
                 + "<revocation-remark>some remark</revocation-remark></param>");
 
-            UserGroupClient userGroupClient =
-                new UserGroupClient(getTransport());
-            final Map<String, String[]> filterParams =
-                new HashMap<String, String[]>();
+            UserGroupClient userGroupClient = new UserGroupClient(getTransport());
+            final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-            filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-                + FILTER_URI_USER + "\"=" + userId });
+            filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_URI_USER + "\"=" + userId });
 
-            String groupXml =
-                handleXmlResult(userGroupClient
-                    .retrieveUserGroups(filterParams));
+            String groupXml = handleXmlResult(userGroupClient.retrieveUserGroups(filterParams));
             NodeList userGroups = null;
 
             if (getTransport() == Constants.TRANSPORT_SOAP) {
                 userGroups =
-                    selectNodeList(
-                        EscidocRestSoapTestBase.getDocument(groupXml),
-                        XPATH_SRW_USER_GROUP_LIST_USER_GROUP + "/@objid");
+                    selectNodeList(EscidocRestSoapTestBase.getDocument(groupXml), XPATH_SRW_USER_GROUP_LIST_USER_GROUP
+                        + "/@objid");
             }
             else {
                 userGroups =
-                    selectNodeList(
-                        EscidocRestSoapTestBase.getDocument(groupXml),
-                        XPATH_SRW_USER_GROUP_LIST_USER_GROUP + "/@href");
+                    selectNodeList(EscidocRestSoapTestBase.getDocument(groupXml), XPATH_SRW_USER_GROUP_LIST_USER_GROUP
+                        + "/@href");
             }
             for (int index = 0; index < userGroups.getLength(); index++) {
                 Node userGroup = userGroups.item(index);
                 String groupId = getObjidFromHref(userGroup.getNodeValue());
 
                 userGroupClient.revokeGrants(groupId, "<param><filter/>"
-                    + "<revocation-remark>some remark</revocation-remark>"
-                    + "</param>");
+                    + "<revocation-remark>some remark</revocation-remark>" + "</param>");
             }
         }
         finally {

@@ -22,104 +22,47 @@ import java.util.Map;
  */
 public interface RoleHandlerLocal extends EJBLocalObject {
 
-    String create(String xmlData, SecurityContext securityContext)
-            throws UniqueConstraintViolationException,
-            XmlCorruptedException,
-            XmlSchemaValidationException,
-            MissingMethodParameterException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException;
+    String create(String xmlData, SecurityContext securityContext) throws UniqueConstraintViolationException,
+        XmlCorruptedException, XmlSchemaValidationException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException;
 
-    String create(String xmlData, String authHandle, Boolean restAccess)
-            throws UniqueConstraintViolationException,
-            XmlCorruptedException,
-            XmlSchemaValidationException,
-            MissingMethodParameterException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException;
+    String create(String xmlData, String authHandle, Boolean restAccess) throws UniqueConstraintViolationException,
+        XmlCorruptedException, XmlSchemaValidationException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException;
 
-    void delete(String id, SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            RoleNotFoundException,
-            RoleInUseViolationException,
-            SystemException;
+    void delete(String id, SecurityContext securityContext) throws AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, RoleNotFoundException, RoleInUseViolationException, SystemException;
 
-    void delete(String id, String authHandle, Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            RoleNotFoundException,
-            RoleInUseViolationException,
-            SystemException;
+    void delete(String id, String authHandle, Boolean restAccess) throws AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, RoleNotFoundException, RoleInUseViolationException,
+        SystemException;
 
-    String retrieve(String id, SecurityContext securityContext)
-            throws RoleNotFoundException,
-            MissingMethodParameterException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException;
+    String retrieve(String id, SecurityContext securityContext) throws RoleNotFoundException,
+        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
 
-    String retrieve(String id, String authHandle, Boolean restAccess)
-            throws RoleNotFoundException,
-            MissingMethodParameterException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException;
+    String retrieve(String id, String authHandle, Boolean restAccess) throws RoleNotFoundException,
+        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
 
-    String retrieveResources(String id, SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            RoleNotFoundException,
-            SystemException;
+    String retrieveResources(String id, SecurityContext securityContext) throws AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, RoleNotFoundException, SystemException;
 
-    String retrieveResources(String id, String authHandle, Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            RoleNotFoundException,
-            SystemException;
+    String retrieveResources(String id, String authHandle, Boolean restAccess) throws AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, RoleNotFoundException, SystemException;
 
-    String update(String id, String xmlData, SecurityContext securityContext)
-            throws RoleNotFoundException,
-            XmlCorruptedException,
-            XmlSchemaValidationException,
-            MissingAttributeValueException,
-            UniqueConstraintViolationException,
-            OptimisticLockingException,
-            MissingMethodParameterException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException;
+    String update(String id, String xmlData, SecurityContext securityContext) throws RoleNotFoundException,
+        XmlCorruptedException, XmlSchemaValidationException, MissingAttributeValueException,
+        UniqueConstraintViolationException, OptimisticLockingException, MissingMethodParameterException,
+        AuthenticationException, AuthorizationException, SystemException;
 
-    String update(String id, String xmlData, String authHandle, Boolean restAccess)
-            throws RoleNotFoundException,
-            XmlCorruptedException,
-            XmlSchemaValidationException,
-            MissingAttributeValueException,
-            UniqueConstraintViolationException,
-            OptimisticLockingException,
-            MissingMethodParameterException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException;
+    String update(String id, String xmlData, String authHandle, Boolean restAccess) throws RoleNotFoundException,
+        XmlCorruptedException, XmlSchemaValidationException, MissingAttributeValueException,
+        UniqueConstraintViolationException, OptimisticLockingException, MissingMethodParameterException,
+        AuthenticationException, AuthorizationException, SystemException;
 
-    String retrieveRoles(Map filter, SecurityContext securityContext)
-            throws MissingMethodParameterException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException,
-            InvalidSearchQueryException;
+    String retrieveRoles(Map filter, SecurityContext securityContext) throws MissingMethodParameterException,
+        AuthenticationException, AuthorizationException, SystemException, InvalidSearchQueryException;
 
-    String retrieveRoles(Map filter, String authHandle, Boolean restAccess)
-            throws MissingMethodParameterException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException,
-            InvalidSearchQueryException;
+    String retrieveRoles(Map filter, String authHandle, Boolean restAccess) throws MissingMethodParameterException,
+        AuthenticationException, AuthorizationException, SystemException, InvalidSearchQueryException;
 
 }

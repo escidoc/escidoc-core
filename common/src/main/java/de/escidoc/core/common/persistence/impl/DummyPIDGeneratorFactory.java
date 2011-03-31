@@ -28,7 +28,6 @@ import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 
 /**
  * @author Frank Schwichtenberg
- * 
  */
 public class DummyPIDGeneratorFactory extends PIDSystemFactory {
 
@@ -39,8 +38,7 @@ public class DummyPIDGeneratorFactory extends PIDSystemFactory {
      * @see de.escidoc.core.common.persistence.PIDSystemFactory#getPIDGenerator()
      */
     @Override
-    public PIDSystem getPIDGenerator() throws PidSystemException,
-        MissingMethodParameterException {
+    public PIDSystem getPIDGenerator() throws PidSystemException, MissingMethodParameterException {
         if (this.pidGenerator == null) {
             getNewInstance();
         }
@@ -49,50 +47,38 @@ public class DummyPIDGeneratorFactory extends PIDSystemFactory {
     }
 
     /**
-     * Create a new instance of DummyPIDGenerator and initialize it from
-     * escidoc-core.properties.
-     * <ul>
-     * <li>escidoc-core.dummyPid.pidNamespace (default: "hdl")</li>
-     * <li>escidoc-core.dummyPid.globalPrefix (required)</li>
-     * <li>escidoc-core.dummyPid.localPrefix (default: "test")</li>
-     * <li>escidoc-core.dummyPid.seperator (default: "/")</li>
-     * </ul>
-     * 
-     * @throws PidSystemException
-     *             If the PID System connection could not be initialized.
+     * Create a new instance of DummyPIDGenerator and initialize it from escidoc-core.properties. <ul>
+     * <li>escidoc-core.dummyPid.pidNamespace (default: "hdl")</li> <li>escidoc-core.dummyPid.globalPrefix
+     * (required)</li> <li>escidoc-core.dummyPid.localPrefix (default: "test")</li> <li>escidoc-core.dummyPid.seperator
+     * (default: "/")</li> </ul>
+     *
+     * @throws PidSystemException If the PID System connection could not be initialized.
      */
     private void getNewInstance() throws PidSystemException {
         final DummyPIDGenerator dummyGenerator = new DummyPIDGenerator();
         try {
             final EscidocConfiguration conf = EscidocConfiguration.getInstance();
 
-            final String pidNamespace =
-                conf.get(EscidocConfiguration.ESCIDOC_CORE_DUMMYPID_NAMESPACE);
+            final String pidNamespace = conf.get(EscidocConfiguration.ESCIDOC_CORE_DUMMYPID_NAMESPACE);
             if (pidNamespace != null) {
                 dummyGenerator.setPidNamespace(pidNamespace);
             }
 
-            final String globalPrefix =
-                conf
-                    .get(EscidocConfiguration.ESCIDOC_CORE_DUMMYPID_GLOBALPREFIX);
+            final String globalPrefix = conf.get(EscidocConfiguration.ESCIDOC_CORE_DUMMYPID_GLOBALPREFIX);
             dummyGenerator.setGlobalPrefix(globalPrefix);
 
-            final String localPrefix =
-                conf
-                    .get(EscidocConfiguration.ESCIDOC_CORE_DUMMYPID_LOCALPREFIX);
+            final String localPrefix = conf.get(EscidocConfiguration.ESCIDOC_CORE_DUMMYPID_LOCALPREFIX);
             if (localPrefix != null) {
                 dummyGenerator.setLocalPrefix(localPrefix);
             }
 
-            final String separator =
-                conf.get(EscidocConfiguration.ESCIDOC_CORE_DUMMYPID_SEPARATOR);
+            final String separator = conf.get(EscidocConfiguration.ESCIDOC_CORE_DUMMYPID_SEPARATOR);
             if (separator != null) {
                 dummyGenerator.setSeparator(separator);
             }
         }
         catch (final Exception e) {
-            throw new PidSystemException(
-                "Can not initialise PID System.", e);
+            throw new PidSystemException("Can not initialise PID System.", e);
         }
         this.pidGenerator = dummyGenerator;
     }

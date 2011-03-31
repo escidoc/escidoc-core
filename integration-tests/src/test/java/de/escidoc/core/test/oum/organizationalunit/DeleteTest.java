@@ -44,16 +44,14 @@ import static org.junit.Assert.assertFalse;
 
 /**
  * Test delete method of OrganizationalUnitHandler.
- * 
+ *
  * @author Michael Schneider
- * 
  */
 @RunWith(value = Parameterized.class)
 public class DeleteTest extends OrganizationalUnitTestBase {
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public DeleteTest(final int transport) {
         super(transport);
@@ -61,24 +59,13 @@ public class DeleteTest extends OrganizationalUnitTestBase {
 
     /**
      * Tests successfully deleting an organizational unit without children.
-     * 
-     * @test.name Delete Organizational Unit - Success
-     * @test.id OUM_DOU-1
-     * @test.input <ul>
-     *             <li>Id of existing organizational unit without children.</li>
-     *             </ul>
-     * @test.expected: Delete returns with success. Organizational unit is
-     *                 deleted.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumDou1() throws Exception {
 
-        final Document toBeDeletedDocument =
-            getDocument(createSuccessfully("escidoc_ou_create.xml"));
+        final Document toBeDeletedDocument = getDocument(createSuccessfully("escidoc_ou_create.xml"));
         final String objid = getObjidValue(toBeDeletedDocument);
         try {
             delete(objid);
@@ -88,8 +75,7 @@ public class DeleteTest extends OrganizationalUnitTestBase {
         }
 
         // check if OU exists anymore
-        Class<OrganizationalUnitNotFoundException> ec =
-            OrganizationalUnitNotFoundException.class;
+        Class<OrganizationalUnitNotFoundException> ec = OrganizationalUnitNotFoundException.class;
         try {
             retrieve(objid);
             failMissingException(ec);
@@ -100,139 +86,87 @@ public class DeleteTest extends OrganizationalUnitTestBase {
     }
 
     /**
-     * Tests declining deleting an organizational unit with providing an unknown
-     * id.
-     * 
-     * @test.name Delete Organizational Unit - Unknown Id
-     * @test.id OUM_DOU-2-a
-     * @test.input <ul>
-     *             <li>Unknown id</li>
-     *             </ul>
-     * @test.expected: OrganizationalUnitNotFoundException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests declining deleting an organizational unit with providing an unknown id.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumDou2a() throws Exception {
 
-        final Class<OrganizationalUnitNotFoundException> ec =
-            OrganizationalUnitNotFoundException.class;
+        final Class<OrganizationalUnitNotFoundException> ec = OrganizationalUnitNotFoundException.class;
 
         try {
             delete(UNKNOWN_ID);
-            failMissingException(
-                "Deleting OU with unknown id has not been declined", ec);
+            failMissingException("Deleting OU with unknown id has not been declined", ec);
         }
         catch (final Exception e) {
-            assertExceptionType(
-                "Deleting OU with unknown id has not been declined, correctly.",
-                ec, e);
+            assertExceptionType("Deleting OU with unknown id has not been declined, correctly.", ec, e);
         }
     }
 
     /**
-     * Tests declining deleting an organizational unit with providing an id of
-     * an existing resource of another type.
-     * 
-     * @test.name Delete Organizational Unit - Id of Another Resource Type
-     * @test.id OUM_DOU-2-b
-     * @test.input <ul>
-     *             <li>Id of an existing resource of another type.</li>
-     *             </ul>
-     * @test.expected: OrganizationalUnitNotFoundException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests declining deleting an organizational unit with providing an id of an existing resource of another type.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumDou2b() throws Exception {
 
-        final Class<OrganizationalUnitNotFoundException> ec =
-            OrganizationalUnitNotFoundException.class;
+        final Class<OrganizationalUnitNotFoundException> ec = OrganizationalUnitNotFoundException.class;
 
         try {
             delete(CONTEXT_ID);
-            failMissingException(
-                "Deleting OU with id of an existing resource of another type"
-                    + " has not been declined", ec);
+            failMissingException("Deleting OU with id of an existing resource of another type"
+                + " has not been declined", ec);
         }
         catch (final Exception e) {
-            assertExceptionType(
-                "Deleting OU with id of an existing resource of another type"
-                    + " has not been declined, correctly.", ec, e);
+            assertExceptionType("Deleting OU with id of an existing resource of another type"
+                + " has not been declined, correctly.", ec, e);
         }
     }
 
     /**
      * Tests declining deleting an organizational unit without providing an id.
-     * 
-     * @test.name Delete Organizational Unit - Missing Id
-     * @test.id OUM_DOU-3
-     * @test.input <ul>
-     *             <li>No id is provided.</li>
-     *             </ul>
-     * @test.expected: MissingMethodParameterException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumDou3() throws Exception {
 
-        final Class<MissingMethodParameterException> ec =
-            MissingMethodParameterException.class;
+        final Class<MissingMethodParameterException> ec = MissingMethodParameterException.class;
 
         try {
             delete(null);
-            failMissingException(
-                "Deleting OU with id of an existing resource of another type"
-                    + " has not been declined", ec);
+            failMissingException("Deleting OU with id of an existing resource of another type"
+                + " has not been declined", ec);
         }
         catch (final Exception e) {
-            assertExceptionType(
-                "Deleting OU with id of an existing resource of another type"
-                    + " has not been declined, correctly.", ec, e);
+            assertExceptionType("Deleting OU with id of an existing resource of another type"
+                + " has not been declined, correctly.", ec, e);
         }
     }
 
     /**
      * Tests declining deleting an organizational unit with children.
-     * 
-     * @test.name Delete Organizational Unit - With Children
-     * @test.id OUM_DOU-4-a
-     * @test.input <ul>
-     *             <li>Id of existing organizational unit with children.</li>
-     *             </ul>
-     * @test.expected: OrganizationalUnitHasChildrenException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumDou4a() throws Exception {
 
-        final Class<OrganizationalUnitHasChildrenException> ec =
-            OrganizationalUnitHasChildrenException.class;
+        final Class<OrganizationalUnitHasChildrenException> ec = OrganizationalUnitHasChildrenException.class;
 
         // create parent ou
-        final Document toBeDeletedDocument =
-            getDocument(createSuccessfully("escidoc_ou_create.xml"));
+        final Document toBeDeletedDocument = getDocument(createSuccessfully("escidoc_ou_create.xml"));
         final String parentId = getObjidValue(toBeDeletedDocument);
 
         // create child ou
-        createSuccessfullyChild("escidoc_ou_create.xml",
-            new String[] { parentId });
+        createSuccessfullyChild("escidoc_ou_create.xml", new String[] { parentId });
 
         // delete parent ou
         try {
             delete(parentId);
-            failMissingException(
-                "Deleting OU with children has not been declined", ec);
+            failMissingException("Deleting OU with children has not been declined", ec);
         }
         catch (final Exception e) {
             assertExceptionType(ec, e);
@@ -243,25 +177,14 @@ public class DeleteTest extends OrganizationalUnitTestBase {
             retrieve(parentId);
         }
         catch (final Exception e) {
-            failException(
-                "Could not retrieve OU after declined delete request.", e);
+            failException("Could not retrieve OU after declined delete request.", e);
         }
     }
 
     /**
-     * Tests declining deleting an organizational unit which is in state
-     * 'opened'.
-     * 
-     * @test.name Delete Organizational Unit - In state 'opened'
-     * @test.id OUM_DOU-4-b
-     * @test.input <ul>
-     *             <li>Id of existing organizational unit with children.</li>
-     *             </ul>
-     * @test.expected: InvalidStatusException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests declining deleting an organizational unit which is in state 'opened'.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumDou4b() throws Exception {
@@ -269,22 +192,16 @@ public class DeleteTest extends OrganizationalUnitTestBase {
         final Class<InvalidStatusException> ec = InvalidStatusException.class;
 
         // create parent ou
-        final Document toBeDeletedDocument =
-            getDocument(createSuccessfully("escidoc_ou_create.xml"));
+        final Document toBeDeletedDocument = getDocument(createSuccessfully("escidoc_ou_create.xml"));
         final String parentId = getObjidValue(toBeDeletedDocument);
         // create child ou
-        createSuccessfullyChild("escidoc_ou_create.xml",
-            new String[] { parentId });
-        open(
-            parentId,
-            getTheLastModificationParam(true, parentId,
-                "Opened to delete, should be declined!"));
+        createSuccessfullyChild("escidoc_ou_create.xml", new String[] { parentId });
+        open(parentId, getTheLastModificationParam(true, parentId, "Opened to delete, should be declined!"));
 
         // delete parent ou
         try {
             delete(parentId);
-            failMissingException(
-                "Deleting OU with children has not been declined", ec);
+            failMissingException("Deleting OU with children has not been declined", ec);
         }
         catch (final Exception e) {
             assertExceptionType(ec, e);
@@ -295,25 +212,14 @@ public class DeleteTest extends OrganizationalUnitTestBase {
             retrieve(parentId);
         }
         catch (final Exception e) {
-            failException(
-                "Could not retrieve OU after declined delete request.", e);
+            failException("Could not retrieve OU after declined delete request.", e);
         }
     }
 
     /**
-     * Tests declining deleting an organizational unit which is in state
-     * 'opened'.
-     * 
-     * @test.name Delete Organizational Unit - In state 'opened'
-     * @test.id OUM_DOU-4-c
-     * @test.input <ul>
-     *             <li>Id of existing organizational unit without children.</li>
-     *             </ul>
-     * @test.expected: InvalidStatusException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests declining deleting an organizational unit which is in state 'opened'.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumDou4c() throws Exception {
@@ -321,19 +227,14 @@ public class DeleteTest extends OrganizationalUnitTestBase {
         final Class<InvalidStatusException> ec = InvalidStatusException.class;
 
         // create parent ou
-        final Document toBeDeletedDocument =
-            getDocument(createSuccessfully("escidoc_ou_create.xml"));
+        final Document toBeDeletedDocument = getDocument(createSuccessfully("escidoc_ou_create.xml"));
         final String id = getObjidValue(toBeDeletedDocument);
-        open(
-            id,
-            getTheLastModificationParam(true, id,
-                "Opened to delete, should be declined!"));
+        open(id, getTheLastModificationParam(true, id, "Opened to delete, should be declined!"));
 
         // delete parent ou
         try {
             delete(id);
-            failMissingException(
-                "Deleting OU with children has not been declined", ec);
+            failMissingException("Deleting OU with children has not been declined", ec);
         }
         catch (final Exception e) {
             assertExceptionType(ec, e);
@@ -344,25 +245,14 @@ public class DeleteTest extends OrganizationalUnitTestBase {
             retrieve(id);
         }
         catch (final Exception e) {
-            failException(
-                "Could not retrieve OU after declined delete request.", e);
+            failException("Could not retrieve OU after declined delete request.", e);
         }
     }
 
     /**
-     * Tests declining deleting an organizational unit which is in state
-     * 'closed'.
-     * 
-     * @test.name Delete Organizational Unit - In state 'closed'
-     * @test.id OUM_DOU-4-d
-     * @test.input <ul>
-     *             <li>Id of existing organizational unit without children.</li>
-     *             </ul>
-     * @test.expected: InvalidStatusException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests declining deleting an organizational unit which is in state 'closed'.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumDou4d() throws Exception {
@@ -374,20 +264,13 @@ public class DeleteTest extends OrganizationalUnitTestBase {
 
         getDocument(createSuccessfully("escidoc_ou_create.xml"));
         final String id = getObjidValue(toBeDeletedDocument);
-        open(
-            id,
-            getTheLastModificationParam(true, id,
-                "Opened to delete, should be declined!"));
-        close(
-            id,
-            getTheLastModificationParam(true, id,
-                "Closed to delete, should be declined!"));
+        open(id, getTheLastModificationParam(true, id, "Opened to delete, should be declined!"));
+        close(id, getTheLastModificationParam(true, id, "Closed to delete, should be declined!"));
 
         // delete parent ou
         try {
             delete(id);
-            failMissingException(
-                "Deleting OU with children has not been declined", ec);
+            failMissingException("Deleting OU with children has not been declined", ec);
         }
         catch (final Exception e) {
             assertExceptionType(ec, e);
@@ -398,40 +281,33 @@ public class DeleteTest extends OrganizationalUnitTestBase {
             retrieve(id);
         }
         catch (final Exception e) {
-            failException(
-                "Could not retrieve OU after declined delete request.", e);
+            failException("Could not retrieve OU after declined delete request.", e);
         }
     }
 
     /**
-     * INFR-1075: Check if a parent OU gets updated in Lucene if a client OU has
-     * been deleted.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * INFR-1075: Check if a parent OU gets updated in Lucene if a client OU has been deleted.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testDeleteChildOU() throws Exception {
         // create parent OU
-        final Document parentOu =
-            getDocument(createSuccessfully("escidoc_ou_create.xml"));
+        final Document parentOu = getDocument(createSuccessfully("escidoc_ou_create.xml"));
         final String parentOuId = getObjidValue(parentOu);
 
         // create child OU
         final Document childOu =
-            getDocument(createSuccessfullyChild("escidoc_ou_create.xml",
-                new String[] { parentOuId }));
+            getDocument(createSuccessfullyChild("escidoc_ou_create.xml", new String[] { parentOuId }));
         final String childOuId = getObjidValue(childOu);
 
         // delete child OU
         delete(childOuId);
 
         // check property "hasChildren" of parent OU
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_IDENTIFIER + "\"=" + parentOuId });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_IDENTIFIER + "\"=" + parentOuId });
 
         String ouListXml = retrieveOrganizationalUnits(filterParams);
 
@@ -439,13 +315,9 @@ public class DeleteTest extends OrganizationalUnitTestBase {
 
         Document createdDoc = getDocument(ouListXml);
 
-        assertFalse(
-            "property hasChildren should be false",
-            Boolean.valueOf(selectSingleNode(
-                createdDoc,
-                XPATH_SRW_RESPONSE_RECORD + "[1]"
-                    + XPATH_SRW_RESPONSE_OBJECT_SUBPATH
-                    + XPATH_ORGANIZATIONAL_UNIT_PROPERTIES + "/"
-                    + NAME_HAS_CHILDREN).getTextContent()));
+        assertFalse("property hasChildren should be false", Boolean.valueOf(selectSingleNode(
+            createdDoc,
+            XPATH_SRW_RESPONSE_RECORD + "[1]" + XPATH_SRW_RESPONSE_OBJECT_SUBPATH
+                + XPATH_ORGANIZATIONAL_UNIT_PROPERTIES + "/" + NAME_HAS_CHILDREN).getTextContent()));
     }
 }

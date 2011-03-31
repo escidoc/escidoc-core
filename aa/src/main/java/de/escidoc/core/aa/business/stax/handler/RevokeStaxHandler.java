@@ -40,13 +40,10 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import java.util.Date;
 
 /**
- * Stax handler implementation that handles the revocation of a grant. It
- * revokes the grant and extracts the revocation remark from the parsed xml data
- * and sets it in the grant.
- * 
+ * Stax handler implementation that handles the revocation of a grant. It revokes the grant and extracts the revocation
+ * remark from the parsed xml data and sets it in the grant.
  *
  * @author Torsten Tetteroo
- * 
  */
 public class RevokeStaxHandler extends UserAccountStaxHandlerBase {
 
@@ -54,20 +51,13 @@ public class RevokeStaxHandler extends UserAccountStaxHandlerBase {
 
     /**
      * The constructor.
-     * 
-     * @param grant
-     *            The <code>RoleGrant</code> to handle.
-     * @param dao
-     *            The data access object to retrieve <code>Grant</code>
-     *            objects.
-     * 
-     * @throws AlreadyRevokedException
-     *             Thrown if the provided garnt is already revoked.
-     * @throws SystemException Thrown in case of an internal error.
      *
+     * @param grant The <code>RoleGrant</code> to handle.
+     * @param dao   The data access object to retrieve <code>Grant</code> objects.
+     * @throws AlreadyRevokedException Thrown if the provided garnt is already revoked.
+     * @throws SystemException         Thrown in case of an internal error.
      */
-    public RevokeStaxHandler(final RoleGrant grant,
-        final UserAccountDaoInterface dao) throws AlreadyRevokedException,
+    public RevokeStaxHandler(final RoleGrant grant, final UserAccountDaoInterface dao) throws AlreadyRevokedException,
         SystemException {
 
         super(grant, false);
@@ -77,16 +67,10 @@ public class RevokeStaxHandler extends UserAccountStaxHandlerBase {
         }
     }
 
-
-
     /**
      * See Interface for functional description.
-     * 
-     * @param element
-     * @return
-     * @see DefaultHandler
-     *      #startElement(de.escidoc.core.common.util.xml.stax.events.StartElement)
      *
+     * @see DefaultHandler #startElement(de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
     public StartElement startElement(final StartElement element) {
@@ -100,14 +84,8 @@ public class RevokeStaxHandler extends UserAccountStaxHandlerBase {
 
     /**
      * See Interface for functional description.
-     * 
-     * @param s
-     * @param element
-     * @return
-     * @see DefaultHandler
-     *      #characters(java.lang.String,
-     *      de.escidoc.core.common.util.xml.stax.events.StartElement)
      *
+     * @see DefaultHandler #characters(java.lang.String, de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
     public String characters(final String s, final StartElement element) {

@@ -34,6 +34,7 @@ package de.escidoc.core.adm.business;
  * @author André Schenk
  */
 public final class Constants {
+
     /**
      * String parameter "id" used in the message queue.
      */

@@ -37,21 +37,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class contains methods for rendering the xml representations of
- * organizational units, it's sub resources, and lists.
- * 
+ * This class contains methods for rendering the xml representations of organizational units, it's sub resources, and
+ * lists.
+ *
  * @author Michael Schneider
- * 
  */
-public class OrganizationalUnitHandlerRetrieve
-    extends OrganizationalUnitHandlerBase {
+public class OrganizationalUnitHandlerRetrieve extends OrganizationalUnitHandlerBase {
 
-    /** The policy decision point used to check access privileges. */
+    /**
+     * The policy decision point used to check access privileges.
+     */
     private PolicyDecisionPointInterface pdp;
 
     /**
      * Gets the {@link PolicyDecisionPointInterface} implementation.
-     * 
+     *
      * @return PolicyDecisionPointInterface
      */
     protected PolicyDecisionPointInterface getPdp() {
@@ -61,9 +61,8 @@ public class OrganizationalUnitHandlerRetrieve
 
     /**
      * Injects the {@link PolicyDecisionPointInterface} implementation.
-     * 
-     * @param pdp
-     *            the {@link PolicyDecisionPointInterface} to be injected.
+     *
+     * @param pdp the {@link PolicyDecisionPointInterface} to be injected.
      */
     public void setPdp(final PolicyDecisionPointInterface pdp) {
 
@@ -71,13 +70,11 @@ public class OrganizationalUnitHandlerRetrieve
     }
 
     /**
-     * Get the xml representation of an organizational unit in REST or SOAP
-     * format. Whether REST or SOAP format is delivered is dependent on the
-     * transport of the original request.
-     * 
+     * Get the xml representation of an organizational unit in REST or SOAP format. Whether REST or SOAP format is
+     * delivered is dependent on the transport of the original request.
+     *
      * @return The xml representation of an organizational unit.
-     * @throws SystemException
-     *             If anything fails while rendering the xml representation.
+     * @throws SystemException If anything fails while rendering the xml representation.
      */
     protected String getOrganizationalUnitXml() throws SystemException {
 
@@ -85,14 +82,11 @@ public class OrganizationalUnitHandlerRetrieve
     }
 
     /**
-     * Get the xml representation of the properties of an organizational unit in
-     * REST or SOAP format. Whether REST or SOAP format is delivered is
-     * dependent on the transport of the original request.
-     * 
-     * @return The xml representation of the properties of an organizational
-     *         unit.
-     * @throws SystemException
-     *             If anything fails while rendering the xml representation.
+     * Get the xml representation of the properties of an organizational unit in REST or SOAP format. Whether REST or
+     * SOAP format is delivered is dependent on the transport of the original request.
+     *
+     * @return The xml representation of the properties of an organizational unit.
+     * @throws SystemException If anything fails while rendering the xml representation.
      */
     protected String getPropertiesXml() throws SystemException {
 
@@ -101,11 +95,9 @@ public class OrganizationalUnitHandlerRetrieve
 
     /**
      * Get the xml representation of the resources of an organizational unit.
-     * 
-     * @return The xml representation in REST or SOAP format of an
-     *         organizational unit.
-     * @throws SystemException
-     *             If anything fails while rendering the xml representation.
+     *
+     * @return The xml representation in REST or SOAP format of an organizational unit.
+     * @throws SystemException If anything fails while rendering the xml representation.
      */
     protected String getResourcesXml() throws SystemException {
 
@@ -113,14 +105,11 @@ public class OrganizationalUnitHandlerRetrieve
     }
 
     /**
-     * Get the xml representation of the md-records of an md-records in REST or
-     * SOAP format. Whether REST or SOAP format is delivered is dependent on the
-     * transport of the original request.
-     * 
-     * @return The xml representation of the md-records of an organizational
-     *         unit.
-     * @throws SystemException
-     *             If anything fails while rendering the xml representation.
+     * Get the xml representation of the md-records of an md-records in REST or SOAP format. Whether REST or SOAP format
+     * is delivered is dependent on the transport of the original request.
+     *
+     * @return The xml representation of the md-records of an organizational unit.
+     * @throws SystemException If anything fails while rendering the xml representation.
      */
     protected String getMdRecordsXml() throws SystemException {
 
@@ -128,16 +117,12 @@ public class OrganizationalUnitHandlerRetrieve
     }
 
     /**
-     * Get the xml representation of a single md-record in REST or SOAP format.
-     * Whether REST or SOAP format is delivered is dependent on the transport of
-     * the original request.
-     * 
-     * @param name
-     *            The name of teh md-record.
-     * @return The xml representation of the md-record of an organizational
-     *         unit.
-     * @throws SystemException
-     *             If anything fails while rendering the xml representation.
+     * Get the xml representation of a single md-record in REST or SOAP format. Whether REST or SOAP format is delivered
+     * is dependent on the transport of the original request.
+     *
+     * @param name The name of teh md-record.
+     * @return The xml representation of the md-record of an organizational unit.
+     * @throws SystemException If anything fails while rendering the xml representation.
      */
     protected String getMdRecordXml(final String name) throws SystemException {
 
@@ -145,14 +130,11 @@ public class OrganizationalUnitHandlerRetrieve
     }
 
     /**
-     * Get the xml representation of the parent ous of an organizational unit in
-     * REST or SOAP format. Whether REST or SOAP format is delivered is
-     * dependent on the transport of the original request.
-     * 
-     * @return The xml representation of the organization details of an
-     *         organizational unit.
-     * @throws SystemException
-     *             If anything fails while rendering the xml representation.
+     * Get the xml representation of the parent ous of an organizational unit in REST or SOAP format. Whether REST or
+     * SOAP format is delivered is dependent on the transport of the original request.
+     *
+     * @return The xml representation of the organization details of an organizational unit.
+     * @throws SystemException If anything fails while rendering the xml representation.
      */
     protected String getParentsXml() throws SystemException {
 
@@ -160,13 +142,11 @@ public class OrganizationalUnitHandlerRetrieve
     }
 
     /**
-     * Get the xml representation of the children of an organizational unit in
-     * REST or SOAP format. Whether REST or SOAP format is delivered is
-     * dependent on the transport of the original request.
-     * 
+     * Get the xml representation of the children of an organizational unit in REST or SOAP format. Whether REST or SOAP
+     * format is delivered is dependent on the transport of the original request.
+     *
      * @return The xml representation of the parents of an organizational unit.
-     * @throws SystemException
-     *             If anything fails while rendering the xml representation.
+     * @throws SystemException If anything fails while rendering the xml representation.
      */
     protected String getChildObjectsXml() throws SystemException {
         final List<String> children = new ArrayList<String>();
@@ -178,31 +158,27 @@ public class OrganizationalUnitHandlerRetrieve
                 childId = chidrenId;
                 setOrganizationalUnit(childId);
                 children.add(getOrganizationalUnitXml());
-            } catch (final OrganizationalUnitNotFoundException e) {
-                throw new IntegritySystemException(
-                        "Referenced child organizational unit '" + childId
-                                + "' could not be retrieved! ", e);
+            }
+            catch (final OrganizationalUnitNotFoundException e) {
+                throw new IntegritySystemException("Referenced child organizational unit '" + childId
+                    + "' could not be retrieved! ", e);
             }
         }
         try {
             setOrganizationalUnit(parentId);
         }
         catch (final OrganizationalUnitNotFoundException e) {
-            throw new IntegritySystemException("Parent organizational unit '"
-                + parentId + "' is not available! ", e);
+            throw new IntegritySystemException("Parent organizational unit '" + parentId + "' is not available! ", e);
         }
-        return getRenderer().renderChildObjects(getOrganizationalUnit(),
-            children);
+        return getRenderer().renderChildObjects(getOrganizationalUnit(), children);
     }
 
     /**
-     * Get the xml representation of the parents of an organizational unit in
-     * REST or SOAP format. Whether REST or SOAP format is delivered is
-     * dependent on the transport of the original request.
-     * 
+     * Get the xml representation of the parents of an organizational unit in REST or SOAP format. Whether REST or SOAP
+     * format is delivered is dependent on the transport of the original request.
+     *
      * @return The xml representation of the children of an organizational unit.
-     * @throws SystemException
-     *             If anything fails while rendering the xml representation.
+     * @throws SystemException If anything fails while rendering the xml representation.
      */
     protected String getParentObjectsXml() throws SystemException {
 
@@ -215,46 +191,38 @@ public class OrganizationalUnitHandlerRetrieve
                 parentId = parentsId;
                 setOrganizationalUnit(parentId);
                 parents.add(getOrganizationalUnitXml());
-            } catch (final OrganizationalUnitNotFoundException e) {
-                throw new IntegritySystemException(
-                        "Referenced parent organizational unit '" + parentId
-                                + "' could not be retrieved! ", e);
+            }
+            catch (final OrganizationalUnitNotFoundException e) {
+                throw new IntegritySystemException("Referenced parent organizational unit '" + parentId
+                    + "' could not be retrieved! ", e);
             }
         }
         try {
             setOrganizationalUnit(childId);
         }
         catch (final OrganizationalUnitNotFoundException e) {
-            throw new IntegritySystemException("Child organizational unit '"
-                + childId + "' is not available! ", e);
+            throw new IntegritySystemException("Child organizational unit '" + childId + "' is not available! ", e);
         }
-        return getRenderer().renderParentObjects(getOrganizationalUnit(),
-            parents);
+        return getRenderer().renderParentObjects(getOrganizationalUnit(), parents);
     }
 
     /**
-     * Compute the path list of an organizational and return the xml
-     * representation of the path list in REST or SOAP format. Whether REST or
-     * SOAP format is delivered is dependent on the transport of the original
-     * request.
-     * 
-     * @return The xml representation of the path list of an organizational
-     *         unit.
-     * @throws SystemException
-     *             If anything fails while rendering the xml representation.
+     * Compute the path list of an organizational and return the xml representation of the path list in REST or SOAP
+     * format. Whether REST or SOAP format is delivered is dependent on the transport of the original request.
+     *
+     * @return The xml representation of the path list of an organizational unit.
+     * @throws SystemException If anything fails while rendering the xml representation.
      */
     protected String getPathListXml() throws SystemException {
 
-        return getRenderer().renderPathList(getOrganizationalUnit(),
-            computePathes());
+        return getRenderer().renderPathList(getOrganizationalUnit(), computePathes());
     }
 
     /**
      * Compute the pathes of the actual organizaional unit.
-     * 
+     *
      * @return The pathes.
-     * @throws SystemException
-     *             If anything fails while computing the pathes.
+     * @throws SystemException If anything fails while computing the pathes.
      */
     private List<List<String>> computePathes() throws SystemException {
 

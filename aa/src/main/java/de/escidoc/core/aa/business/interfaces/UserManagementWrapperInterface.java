@@ -30,7 +30,7 @@ package de.escidoc.core.aa.business.interfaces;
 
 /**
  * Business layer interface of a wrapper of the external user management.
- * 
+ *
  * @author Torsten Tetteroo
  */
 public interface UserManagementWrapperInterface

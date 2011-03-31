@@ -9,6 +9,7 @@ import javax.ejb.EJBLocalHome;
 public interface RoleHandlerLocalHome extends EJBLocalHome {
 
     String COMP_NAME = "java:comp/env/ejb/RoleHandlerLocal";
+
     String JNDI_NAME = "ejb/RoleHandlerLocal";
 
     RoleHandlerLocal create() throws CreateException;

@@ -40,9 +40,8 @@ import org.w3c.dom.Document;
 
 /**
  * Test the task oriented method retrieveContexts.
- * 
+ *
  * @author Michael Schneider
- * 
  */
 @RunWith(value = Parameterized.class)
 public class AdminDescriptorsTest extends ContextTestBase {
@@ -54,8 +53,7 @@ public class AdminDescriptorsTest extends ContextTestBase {
     private static String contextXml = null;
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public AdminDescriptorsTest(final int transport) {
         super(transport);
@@ -64,61 +62,47 @@ public class AdminDescriptorsTest extends ContextTestBase {
 
     /**
      * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Before
     public void setUpOnce() throws Exception {
 
         if (contextId == null) {
             Document context =
-                EscidocRestSoapTestBase.getTemplateAsDocument(
-                    TEMPLATE_CONTEXT_PATH + this.path, "context_create.xml");
-            substitute(context, "/context/properties/name",
-                getUniqueName("PubMan Context "));
+                EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTEXT_PATH + this.path, "context_create.xml");
+            substitute(context, "/context/properties/name", getUniqueName("PubMan Context "));
             String template = toString(context, false);
             contextXml = create(template);
             assertXmlValidContext(contextXml);
             assertCreatedContext(contextXml, template, startTimestamp);
 
-            contextId =
-                getObjidValue(EscidocRestSoapTestBase.getDocument(contextXml));
+            contextId = getObjidValue(EscidocRestSoapTestBase.getDocument(contextXml));
 
             // open Context
-            String lastModificationDate =
-                getLastModificationDateValue(EscidocRestSoapTestBase
-                    .getDocument(contextXml));
-            this.getContextClient().open(
-                contextId,
-                getTheLastModificationParam(true, contextId, "comment",
-                    lastModificationDate));
+            String lastModificationDate = getLastModificationDateValue(EscidocRestSoapTestBase.getDocument(contextXml));
+            this.getContextClient().open(contextId,
+                getTheLastModificationParam(true, contextId, "comment", lastModificationDate));
 
             String filename = "escidoc_item_198_for_create.xml";
             if (getTransport() == Constants.TRANSPORT_REST) {
-                createItem(toString(
-                    substitute(EscidocRestSoapTestBase.getTemplateAsDocument(
-                        TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                        filename), "/item/properties/context/@href",
-                        "/ir/context/" + contextId), true));
+                createItem(toString(substitute(EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/"
+                    + getTransport(false), filename), "/item/properties/context/@href", "/ir/context/" + contextId),
+                    true));
             }
             else {
-                createItem(toString(
-                    EscidocRestSoapTestBase.getTemplateAsDocument(
-                        TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                        filename), true));
+                createItem(toString(EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/"
+                    + getTransport(false), filename), true));
             }
         }
     }
 
     /**
      * Test creating an item in the mock framework.
-     * 
-     * @param itemXml
-     *            The xml representation of the item.
+     *
+     * @param itemXml The xml representation of the item.
      * @return The created item.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     protected String createItem(final String itemXml) throws Exception {
 
@@ -127,9 +111,8 @@ public class AdminDescriptorsTest extends ContextTestBase {
 
     /**
      * Test retrieving AdminDescriptors of an existing Context.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOmReCoAdmDescs1() throws Exception {
@@ -140,9 +123,8 @@ public class AdminDescriptorsTest extends ContextTestBase {
 
     /**
      * Test retrieving AdminDescriptors of a not existing Context.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test(expected = ContextNotFoundException.class)
     public void testOmReAdmDescs2() throws Exception {
@@ -152,25 +134,22 @@ public class AdminDescriptorsTest extends ContextTestBase {
 
     /**
      * Test retrieving an AdminDescriptor of an existing Context.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOmReCoAdmDesc1() throws Exception {
 
-        String admDesc =
-            retrieveAdminDescriptor("escidoc:persistent3", "admin-descriptor");
+        String admDesc = retrieveAdminDescriptor("escidoc:persistent3", "admin-descriptor");
         assertXmlValidContext(admDesc);
     }
 
     /**
      * Test retrieving an non-existing AdminDescriptor of an existing Context.
-     * 
+     * <p/>
      * See issue INFR-1105.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test(expected = AdminDescriptorNotFoundException.class)
     public void retrieveNonExisitingAdmDesc01() throws Exception {

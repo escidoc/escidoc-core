@@ -17,22 +17,12 @@ import java.rmi.RemoteException;
  */
 public interface JhoveHandlerService extends Remote {
 
-    String extract(String requests, SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            XmlCorruptedException,
-            XmlSchemaValidationException,
-            MissingMethodParameterException,
-            SystemException,
-            TmeException, RemoteException;
+    String extract(String requests, SecurityContext securityContext) throws AuthenticationException,
+        AuthorizationException, XmlCorruptedException, XmlSchemaValidationException, MissingMethodParameterException,
+        SystemException, TmeException, RemoteException;
 
-    String extract(String requests, String authHandle, Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            XmlCorruptedException,
-            XmlSchemaValidationException,
-            MissingMethodParameterException,
-            SystemException,
-            TmeException, RemoteException;
+    String extract(String requests, String authHandle, Boolean restAccess) throws AuthenticationException,
+        AuthorizationException, XmlCorruptedException, XmlSchemaValidationException, MissingMethodParameterException,
+        SystemException, TmeException, RemoteException;
 
 }

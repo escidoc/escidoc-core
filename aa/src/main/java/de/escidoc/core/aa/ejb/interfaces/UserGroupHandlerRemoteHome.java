@@ -10,9 +10,9 @@ import java.rmi.RemoteException;
 public interface UserGroupHandlerRemoteHome extends EJBHome {
 
     String COMP_NAME = "java:comp/env/ejb/UserGroupHandler";
+
     String JNDI_NAME = "ejb/UserGroupHandler";
 
-    UserGroupHandlerRemote create()
-            throws CreateException, RemoteException;
+    UserGroupHandlerRemote create() throws CreateException, RemoteException;
 
 }

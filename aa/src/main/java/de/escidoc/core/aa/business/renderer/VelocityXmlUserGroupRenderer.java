@@ -52,11 +52,10 @@ import java.util.Map;
 
 /**
  * User group renderer implementation using the velocity template engine.
- * 
+ *
  * @author André Schenk
  */
-public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
-    implements UserGroupRendererInterface {
+public final class VelocityXmlUserGroupRenderer extends AbstractRenderer implements UserGroupRendererInterface {
 
     /**
      * Private constructor to prevent initialization.
@@ -64,18 +63,10 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
     private VelocityXmlUserGroupRenderer() {
     }
 
-
-
     /**
      * See Interface for functional description.
-     * 
-     * @param userGroup
-     * 
-     * @return
-     * @throws SystemException
-     * @see de.escidoc.core.aa.business.renderer.interfaces.
-     *      UserGroupRendererInterface#render(Map)
      *
+     * @see de.escidoc.core.aa.business.renderer.interfaces. UserGroupRendererInterface#render(Map)
      */
     @Override
     public String render(final UserGroup userGroup) throws SystemException {
@@ -88,27 +79,21 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
 
     /**
      * Adds the values of the {@link UserGroup} to the provided {@link Map}.
-     * 
-     * @param userGroup
-     *            The {@link UserGroup}.
-     * @param values
-     *            The {@link Map} to add the values to.
-     * 
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     *
+     * @param userGroup The {@link UserGroup}.
+     * @param values    The {@link Map} to add the values to.
+     * @throws SystemException Thrown in case of an internal error.
      */
     private static void addUserGroupValues(final UserGroup userGroup, final Map<String, Object> values)
         throws SystemException {
-        DateTime lmdDateTime =
-            new DateTime(userGroup.getLastModificationDate());
+        DateTime lmdDateTime = new DateTime(userGroup.getLastModificationDate());
         lmdDateTime = lmdDateTime.withZone(DateTimeZone.UTC);
         final String lmd = lmdDateTime.toString(Constants.TIMESTAMP_FORMAT);
         values.put("userGroupLastModificationDate", lmd);
         values.put("userGroupHref", userGroup.getHref());
         DateTime creationDateTime = new DateTime(userGroup.getCreationDate());
         creationDateTime = creationDateTime.withZone(DateTimeZone.UTC);
-        final String creationDate =
-            creationDateTime.toString(Constants.TIMESTAMP_FORMAT);
+        final String creationDate = creationDateTime.toString(Constants.TIMESTAMP_FORMAT);
         values.put("userGroupCreationDate", creationDate);
         values.put("userGroupName", userGroup.getName());
         values.put("userGroupLabel", userGroup.getLabel());
@@ -136,41 +121,28 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
 
     /**
      * See Interface for functional description.
-     * 
-     * @param userGroup
-     * @param currentGrants
-     * @return
-     * @throws WebserverSystemException
-     * @see de.escidoc.core.aa.business.renderer.interfaces.
-     *      UserGroupRendererInterface#renderCurrentGrants
-     *      (de.escidoc.core.aa.business.UserGroup, java.util.List)
      *
+     * @see de.escidoc.core.aa.business.renderer.interfaces. UserGroupRendererInterface#renderCurrentGrants
+     *      (de.escidoc.core.aa.business.UserGroup, java.util.List)
      */
     @Override
-    public String renderCurrentGrants(
-        final UserGroup userGroup, final List<RoleGrant> currentGrants)
+    public String renderCurrentGrants(final UserGroup userGroup, final List<RoleGrant> currentGrants)
         throws WebserverSystemException {
         final Map<String, Object> values = new HashMap<String, Object>();
 
         values.put("isRootCurrentGrants", "true");
         values.put("grantNamespacePrefix", Constants.GRANTS_NS_PREFIX);
         values.put("grantNamespace", Constants.GRANTS_NS_URI);
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX,
-            Constants.PROPERTIES_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS,
-            Constants.PROPERTIES_NS_URI);
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX,
-            Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS,
-            Constants.STRUCTURAL_RELATIONS_NS_URI);
+        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX, Constants.PROPERTIES_NS_PREFIX);
+        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS, Constants.PROPERTIES_NS_URI);
+        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
+        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
         values.put("currentGrantsTitle", "Grants of " + userGroup.getLabel());
-        values.put("currentGrantsHref",
-            XmlUtility.getUserGroupCurrentGrantsHref(userGroup.getId()));
+        values.put("currentGrantsHref", XmlUtility.getUserGroupCurrentGrantsHref(userGroup.getId()));
         if (currentGrants != null && !currentGrants.isEmpty()) {
             values.put("currentGrants", currentGrants);
         }
-        DateTime lmdDateTime =
-            new DateTime(userGroup.getLastModificationDate());
+        DateTime lmdDateTime = new DateTime(userGroup.getLastModificationDate());
         lmdDateTime = lmdDateTime.withZone(DateTimeZone.UTC);
         final String lmd = lmdDateTime.toString(Constants.TIMESTAMP_FORMAT);
         values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, lmd);
@@ -181,47 +153,33 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
 
     /**
      * See Interface for functional description.
-     * 
-     * @param grant
-     * @return
-     * @throws WebserverSystemException
-     * @see de.escidoc.core.aa.business.renderer.interfaces.
-     *      UserGroupRendererInterface#renderGrant
-     *      (de.escidoc.core.aa.business.persistence.RoleGrant)
      *
+     * @see de.escidoc.core.aa.business.renderer.interfaces. UserGroupRendererInterface#renderGrant
+     *      (de.escidoc.core.aa.business.persistence.RoleGrant)
      */
     @Override
-    public String renderGrant(final RoleGrant grant)
-        throws WebserverSystemException {
+    public String renderGrant(final RoleGrant grant) throws WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
 
         values.put("isRootGrant", XmlTemplateProvider.TRUE);
         values.put("grantNamespacePrefix", Constants.GRANTS_NS_PREFIX);
         values.put("grantNamespace", Constants.GRANTS_NS_URI);
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX,
-            Constants.PROPERTIES_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS,
-            Constants.PROPERTIES_NS_URI);
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX,
-            Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS,
-            Constants.STRUCTURAL_RELATIONS_NS_URI);
+        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX, Constants.PROPERTIES_NS_PREFIX);
+        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS, Constants.PROPERTIES_NS_URI);
+        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
+        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
         values.put("grantTitle", grant.getTitle());
         values.put("grantHref", grant.getHref());
         values.put("grantId", grant.getId());
         if (grant.getUserAccountByUserId() != null) {
-            values.put("grantUserTitle", grant
-                .getUserAccountByUserId().getName());
-            values.put("grantUserHref", grant
-                .getUserAccountByUserId().getHref());
+            values.put("grantUserTitle", grant.getUserAccountByUserId().getName());
+            values.put("grantUserHref", grant.getUserAccountByUserId().getHref());
             values.put("grantUserId", grant.getUserAccountByUserId().getId());
         }
         if (grant.getUserGroupByGroupId() != null) {
-            values.put("grantGroupTitle", grant
-                .getUserGroupByGroupId().getName());
-            values.put("grantGroupHref", grant
-                .getUserGroupByGroupId().getHref());
+            values.put("grantGroupTitle", grant.getUserGroupByGroupId().getName());
+            values.put("grantGroupHref", grant.getUserGroupByGroupId().getHref());
             values.put("grantGroupId", grant.getUserGroupByGroupId().getId());
         }
         final EscidocRole escidocRole = grant.getEscidocRole();
@@ -234,24 +192,18 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
         values.put("grantObjectRefId", grant.getObjectId());
         DateTime creationDateTime = new DateTime(grant.getCreationDate());
         creationDateTime = creationDateTime.withZone(DateTimeZone.UTC);
-        final String creationDate =
-            creationDateTime.toString(Constants.TIMESTAMP_FORMAT);
+        final String creationDate = creationDateTime.toString(Constants.TIMESTAMP_FORMAT);
         values.put("grantCreationDate", creationDate);
-        values.put("grantCreatedByTitle", grant
-            .getUserAccountByCreatorId().getName());
-        values.put("grantCreatedByHref", grant
-            .getUserAccountByCreatorId().getHref());
-        values.put("grantCreatedById", grant
-            .getUserAccountByCreatorId().getId());
+        values.put("grantCreatedByTitle", grant.getUserAccountByCreatorId().getName());
+        values.put("grantCreatedByHref", grant.getUserAccountByCreatorId().getHref());
+        values.put("grantCreatedById", grant.getUserAccountByCreatorId().getId());
         values.put("grantRemark", grant.getGrantRemark());
 
         final Date revocationDate = grant.getRevocationDate();
         if (revocationDate != null) {
-            DateTime revokationDateTime =
-                new DateTime(grant.getRevocationDate());
+            DateTime revokationDateTime = new DateTime(grant.getRevocationDate());
             revokationDateTime = revokationDateTime.withZone(DateTimeZone.UTC);
-            final String revokationDate =
-                revokationDateTime.toString(Constants.TIMESTAMP_FORMAT);
+            final String revokationDate = revokationDateTime.toString(Constants.TIMESTAMP_FORMAT);
             values.put("grantRevocationDate", revokationDate);
             final UserAccount revokedBy = grant.getUserAccountByRevokerId();
             values.put("grantRevokedByHref", revokedBy.getHref());
@@ -271,25 +223,18 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
 
     /**
      * See Interface for functional description.
-     * 
-     * @param userGroup
-     * @return
-     * @throws WebserverSystemException
-     * @see de.escidoc.core.aa.business.renderer.interfaces.
-     *      UserGroupRendererInterface
-     *      #renderResources(de.escidoc.core.aa.business.UserGroup)
      *
+     * @see de.escidoc.core.aa.business.renderer.interfaces. UserGroupRendererInterface
+     *      #renderResources(de.escidoc.core.aa.business.UserGroup)
      */
     @Override
-    public String renderResources(final UserGroup userGroup)
-        throws WebserverSystemException {
+    public String renderResources(final UserGroup userGroup) throws WebserverSystemException {
         final Map<String, Object> values = new HashMap<String, Object>();
 
         values.put("isRootResources", XmlTemplateProvider.TRUE);
         addResourcesValues(userGroup, values);
         addCommonValues(values);
-        DateTime lmdDateTime =
-            new DateTime(userGroup.getLastModificationDate());
+        DateTime lmdDateTime = new DateTime(userGroup.getLastModificationDate());
         lmdDateTime = lmdDateTime.withZone(DateTimeZone.UTC);
         final String lmd = lmdDateTime.toString(Constants.TIMESTAMP_FORMAT);
         values.put("userGroupLastModificationDate", lmd);
@@ -299,22 +244,14 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
 
     /**
      * See Interface for functional description.
-     * 
-     * @param userGroups
-     * @param recordPacking
-     *            A string to determine how the record should be escaped in the
-     *            response. Defined values are 'string' and 'xml'. The default
-     *            is 'xml'.
-     * 
-     * @return
-     * @throws WebserverSystemException
-     * @see de.escidoc.core.aa.business.renderer.interfaces.
-     *      UserGroupRendererInterface
+     *
+     * @param recordPacking A string to determine how the record should be escaped in the response. Defined values are
+     *                      'string' and 'xml'. The default is 'xml'.
+     * @see de.escidoc.core.aa.business.renderer.interfaces. UserGroupRendererInterface
      *      #renderUserGroups(de.escidoc.core.aa.business.UserGroup)
      */
     @Override
-    public String renderUserGroups(
-        final List<UserGroup> userGroups, final RecordPacking recordPacking)
+    public String renderUserGroups(final List<UserGroup> userGroups, final RecordPacking recordPacking)
         throws SystemException {
         final Map<String, Object> values = new HashMap<String, Object>();
 
@@ -332,20 +269,13 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
         return getUserGroupXmlProvider().getUserGroupsSrwXml(values);
     }
 
-
-
     /**
      * Adds the common values to the provided map.
-     * 
-     * @param values
-     *            The map to add values to.
-     * 
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
      *
+     * @param values The map to add values to.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private void addCommonValues(final Map<String, Object> values)
-        throws WebserverSystemException {
+    private void addCommonValues(final Map<String, Object> values) throws WebserverSystemException {
 
         addUserGroupNamespaceValues(values);
         addPropertiesNamespaceValues(values);
@@ -355,23 +285,18 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
 
     /**
      * Adds the user group name space values.
-     * 
-     * @param values
-     *            The {@link Map} to that the values shall be added.
      *
+     * @param values The {@link Map} to that the values shall be added.
      */
-    private static void addUserGroupNamespaceValues(
-        final Map<String, Object> values) {
+    private static void addUserGroupNamespaceValues(final Map<String, Object> values) {
         values.put("userGroupNamespacePrefix", Constants.USER_GROUP_NS_PREFIX);
         values.put("userGroupNamespace", Constants.USER_GROUP_NS_URI);
     }
 
     /**
      * Adds the user group list values to the provided map.
-     * 
-     * @param values
-     *            The map to add values to.
      *
+     * @param values The map to add values to.
      */
     private static void addUserGroupListValues(final Map<String, Object> values) {
 
@@ -381,65 +306,46 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
     }
 
     /**
-     * Adds the values related to the user groups name space to the provided
-     * {@link Map}.
-     * 
-     * @param values
-     *            The MAP to add the values to.
+     * Adds the values related to the user groups name space to the provided {@link Map}.
      *
+     * @param values The MAP to add the values to.
      */
-    private static void addUserGroupsNamespaceValues(
-        final Map<String, Object> values) {
+    private static void addUserGroupsNamespaceValues(final Map<String, Object> values) {
 
-        values.put("userGroupListNamespacePrefix",
-            Constants.USER_GROUP_LIST_NS_PREFIX);
+        values.put("userGroupListNamespacePrefix", Constants.USER_GROUP_LIST_NS_PREFIX);
         values.put("userGroupListNamespace", Constants.USER_GROUP_LIST_NS_URI);
     }
 
     /**
      * Adds the escidoc base URL to the provided map.
-     * 
-     * @param values
-     *            The map to add values to.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
      *
+     * @param values The map to add values to.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private static void addEscidocBaseUrl(final Map<String, Object> values)
-        throws WebserverSystemException {
+    private static void addEscidocBaseUrl(final Map<String, Object> values) throws WebserverSystemException {
 
-        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL,
-            XmlUtility.getEscidocBaseUrl());
+        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, XmlUtility.getEscidocBaseUrl());
     }
 
     /**
      * Adds the resources specific values to the provided map.
-     * 
-     * @param userGroup
-     *            The user group for that data shall be created.
-     * @param values
-     *            The map to add values to.
      *
+     * @param userGroup The user group for that data shall be created.
+     * @param values    The map to add values to.
      */
-    private static void addResourcesValues(
-        final UserGroup userGroup, final Map<String, Object> values) {
+    private static void addResourcesValues(final UserGroup userGroup, final Map<String, Object> values) {
 
-        values.put("resourcesHref",
-            XmlUtility.getUserGroupResourcesHref(userGroup.getId()));
-        values.put("currentGrantsHref",
-            XmlUtility.getUserGroupCurrentGrantsHref(userGroup.getId()));
+        values.put("resourcesHref", XmlUtility.getUserGroupResourcesHref(userGroup.getId()));
+        values.put("currentGrantsHref", XmlUtility.getUserGroupCurrentGrantsHref(userGroup.getId()));
     }
 
     /**
      * Gets the <code>UserGroupXmlProvider</code> object.
-     * 
-     * @return Returns the <code>UserGroupXmlProvider</code> object.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
      *
+     * @return Returns the <code>UserGroupXmlProvider</code> object.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private static UserGroupXmlProvider getUserGroupXmlProvider()
-        throws WebserverSystemException {
+    private static UserGroupXmlProvider getUserGroupXmlProvider() throws WebserverSystemException {
 
         return UserGroupXmlProvider.getInstance();
     }

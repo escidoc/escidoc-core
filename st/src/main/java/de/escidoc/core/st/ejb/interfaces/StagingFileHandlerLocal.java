@@ -16,29 +16,17 @@ import javax.ejb.EJBLocalObject;
 public interface StagingFileHandlerLocal extends EJBLocalObject {
 
     String create(EscidocBinaryContent binaryContent, SecurityContext securityContext)
-            throws MissingMethodParameterException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException;
+        throws MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
 
     String create(EscidocBinaryContent binaryContent, String authHandle, Boolean restAccess)
-            throws MissingMethodParameterException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException;
+        throws MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
 
     EscidocBinaryContent retrieve(String stagingFileId, SecurityContext securityContext)
-            throws StagingFileNotFoundException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            SystemException;
+        throws StagingFileNotFoundException, AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, SystemException;
 
     EscidocBinaryContent retrieve(String stagingFileId, String authHandle, Boolean restAccess)
-            throws StagingFileNotFoundException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            SystemException;
+        throws StagingFileNotFoundException, AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, SystemException;
 
 }

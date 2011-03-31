@@ -42,80 +42,56 @@ import java.net.URISyntaxException;
 
 /**
  * Helper class to support target creation.
- * 
+ *
  * @author Roland Werner (Accenture)
  * @author Torsten Tetteroo
- *
  */
 public final class CustomTargetBuilder {
 
     /**
-     * Standard Constructor.<br>
-     * Prevents instance creation.
-     * 
-     *
+     * Standard Constructor.<br> Prevents instance creation.
      */
     private CustomTargetBuilder() {
     }
 
     /**
      * Generates a resource match for the provided values.
-     * 
-     * @param matchId
-     *            The match id of the target match.
-     * @param attributeValue
-     *            The attribute value of the target match.
-     * @param designatorId
-     *            The designator id of the target match.
-     * @param designatorType
-     *            The designator type of the target match.
-     * @return Returns the generated <code>TargetMatch</code> object of type
-     *         <code>TargetMatch.RESOURCE</code>
-     * @throws URISyntaxException
-     *             Thrown if there is a problem with an URI.
-     * @throws UnknownIdentifierException
-     *             Thrown if there is a problem with an identifier
-     * @throws FunctionTypeException
-     *             Thrown if there is a problem with the match id.
+     *
+     * @param matchId        The match id of the target match.
+     * @param attributeValue The attribute value of the target match.
+     * @param designatorId   The designator id of the target match.
+     * @param designatorType The designator type of the target match.
+     * @return Returns the generated <code>TargetMatch</code> object of type <code>TargetMatch.RESOURCE</code>
+     * @throws URISyntaxException         Thrown if there is a problem with an URI.
+     * @throws UnknownIdentifierException Thrown if there is a problem with an identifier
+     * @throws FunctionTypeException      Thrown if there is a problem with the match id.
      */
     public static TargetMatch generateResourceMatch(
-        final String matchId, final String attributeValue,
-        final String designatorId, final String designatorType)
-        throws URISyntaxException, UnknownIdentifierException,
-        FunctionTypeException {
+        final String matchId, final String attributeValue, final String designatorId, final String designatorType)
+        throws URISyntaxException, UnknownIdentifierException, FunctionTypeException {
         final URI designatorTypeUri = new URI(designatorType);
         final URI designatorIdUri = new URI(designatorId);
-        final AttributeDesignator designator = new AttributeDesignator(AttributeDesignator.RESOURCE_TARGET,
-                designatorTypeUri, designatorIdUri, false);
+        final AttributeDesignator designator =
+            new AttributeDesignator(AttributeDesignator.RESOURCE_TARGET, designatorTypeUri, designatorIdUri, false);
         final StringAttribute value = new StringAttribute(attributeValue);
         return createTargetMatch(TargetMatch.RESOURCE, matchId, designator, value);
     }
 
     /**
      * Generates a subject match for the provided values.
-     * 
-     * @param matchId
-     *            The match id of the target match.
-     * @param attributeValue
-     *            The attribute value of the target match.
-     * @param designatorId
-     *            The designator id of the target match.
-     * @param designatorType
-     *            The designator type of the target match.
-     * @return Returns the generated <code>TargetMatch</code> object of type
-     *         <code>TargetMatch.SUBJECT</code>
-     * @throws URISyntaxException
-     *             Thrown if there is a problem with an URI.
-     * @throws UnknownIdentifierException
-     *             Thrown if there is a problem with an identifier
-     * @throws FunctionTypeException
-     *             Thrown if there is a problem with the match id.
+     *
+     * @param matchId        The match id of the target match.
+     * @param attributeValue The attribute value of the target match.
+     * @param designatorId   The designator id of the target match.
+     * @param designatorType The designator type of the target match.
+     * @return Returns the generated <code>TargetMatch</code> object of type <code>TargetMatch.SUBJECT</code>
+     * @throws URISyntaxException         Thrown if there is a problem with an URI.
+     * @throws UnknownIdentifierException Thrown if there is a problem with an identifier
+     * @throws FunctionTypeException      Thrown if there is a problem with the match id.
      */
     public static TargetMatch generateSubjectMatch(
-        final String matchId, final String attributeValue,
-        final String designatorId, final String designatorType)
-        throws URISyntaxException, UnknownIdentifierException,
-        FunctionTypeException {
+        final String matchId, final String attributeValue, final String designatorId, final String designatorType)
+        throws URISyntaxException, UnknownIdentifierException, FunctionTypeException {
 
         final StringAttribute value = new StringAttribute(attributeValue);
         AttributeDesignator designator = null;
@@ -123,36 +99,25 @@ public final class CustomTargetBuilder {
             final URI designatorTypeUri = new URI(designatorType);
             final URI designatorIdUri = new URI(designatorId);
             designator =
-                new AttributeDesignator(AttributeDesignator.SUBJECT_TARGET,
-                    designatorTypeUri, designatorIdUri, false);
+                new AttributeDesignator(AttributeDesignator.SUBJECT_TARGET, designatorTypeUri, designatorIdUri, false);
         }
 
-        return createTargetMatch(TargetMatch.SUBJECT, matchId, designator,
-            value);
+        return createTargetMatch(TargetMatch.SUBJECT, matchId, designator, value);
     }
 
     /**
      * Simple helper routine that creates a TargetMatch instance.
-     * 
-     * @param type
-     *            the type of match
-     * @param functionId
-     *            the matching function identifier
-     * @param designator
-     *            the AttributeDesignator used in this match
-     * @param value
-     *            the AttributeValue used in this match
-     * 
-     * @return the matching element
-     * @throws FunctionTypeException
-     *             Thrown if there is a problem with the provided functionId.
-     * @throws UnknownIdentifierException
-     *             Thrown if there is a problem with the provided functionId.
      *
+     * @param type       the type of match
+     * @param functionId the matching function identifier
+     * @param designator the AttributeDesignator used in this match
+     * @param value      the AttributeValue used in this match
+     * @return the matching element
+     * @throws FunctionTypeException      Thrown if there is a problem with the provided functionId.
+     * @throws UnknownIdentifierException Thrown if there is a problem with the provided functionId.
      */
     public static TargetMatch createTargetMatch(
-        final int type, final String functionId,
-        final AttributeDesignator designator, final AttributeValue value)
+        final int type, final String functionId, final AttributeDesignator designator, final AttributeValue value)
         throws UnknownIdentifierException, FunctionTypeException {
 
         final FunctionFactory factory = FunctionFactory.getTargetInstance();

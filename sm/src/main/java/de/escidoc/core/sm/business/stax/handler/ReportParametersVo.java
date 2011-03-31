@@ -34,25 +34,29 @@ import java.util.Collection;
 
 /**
  * Holds report-parameters data.
- * 
- * @author Michael Hoppe
  *
+ * @author Michael Hoppe
  */
 public class ReportParametersVo {
+
     private String reportDefinitionId;
+
     private final Collection<ParameterVo> parameterVos = new ArrayList<ParameterVo>();
+
     /**
      * @return the reportDefinitionId
      */
     public String getReportDefinitionId() {
         return this.reportDefinitionId;
     }
+
     /**
      * @param reportDefinitionId the reportDefinitionId to set
      */
     public void setReportDefinitionId(final String reportDefinitionId) {
         this.reportDefinitionId = reportDefinitionId;
     }
+
     /**
      * @return the parameterVos
      */

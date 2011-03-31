@@ -62,26 +62,25 @@ public class BuildRelsExtMemberEntriesFromTaskParamHandlerNew extends DefaultHan
     }
 
     @Override
-    public String characters(final String objid, final StartElement element)
-        throws InvalidContentException, TripleStoreSystemException,
-        WebserverSystemException {
+    public String characters(final String objid, final StartElement element) throws InvalidContentException,
+        TripleStoreSystemException, WebserverSystemException {
         final String localName = element.getLocalName();
 
         if ("id".equals(localName)) {
             if (!TripleStoreUtility.getInstance().exists(objid)) {
                 if ("add".equals(this.methodName)) {
-                throw new InvalidContentException("Object with id " + objid
-                    + " does not exist and can not be added to members of "
-                    + this.parentId + '.');
-                } else if ("remove".equals(this.methodName)) {
                     throw new InvalidContentException("Object with id " + objid
-                        + " does not exist and can not be removed from members of "
-                        + this.parentId + '.');
-                    }
+                        + " does not exist and can not be added to members of " + this.parentId + '.');
+                }
+                else if ("remove".equals(this.methodName)) {
+                    throw new InvalidContentException("Object with id " + objid
+                        + " does not exist and can not be removed from members of " + this.parentId + '.');
+                }
             }
             if (TripleStoreUtility.getInstance().isMemberOf(this.parentId, objid)) {
                 memberIdsToRemove.add(objid);
-            } else {
+            }
+            else {
                 memberIds.add(objid);
             }
         }

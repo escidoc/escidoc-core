@@ -49,7 +49,7 @@ import java.util.regex.Matcher;
 
 /**
  * An statistic Report resource handler.
- * 
+ *
  * @author Michael Hoppe
  */
 public class ReportHandler implements ReportHandlerInterface {
@@ -62,28 +62,19 @@ public class ReportHandler implements ReportHandlerInterface {
 
     /**
      * See Interface for functional description.
-     * 
-     * @see ReportHandlerInterface
-     *      #retrieve(java.lang.String)
-     * 
-     * @param xml
-     *            the xml with parameters (report-parameters.xsd).
-     * @return Returns the XML representation of the resource.
-     * 
-     * @throws ReportDefinitionNotFoundException
-     *             e.
-     * @throws MissingMethodParameterException
-     *             e.
-     * @throws InvalidSqlException
-     *             e.
-     * @throws SystemException
-     *             e.
-     * 
      *
+     * @param xml the xml with parameters (report-parameters.xsd).
+     * @return Returns the XML representation of the resource.
+     * @throws ReportDefinitionNotFoundException
+     *                             e.
+     * @throws MissingMethodParameterException
+     *                             e.
+     * @throws InvalidSqlException e.
+     * @throws SystemException     e.
+     * @see ReportHandlerInterface #retrieve(java.lang.String)
      */
     @Override
-    public String retrieve(final String xml) throws
-        ReportDefinitionNotFoundException, MissingMethodParameterException,
+    public String retrieve(final String xml) throws ReportDefinitionNotFoundException, MissingMethodParameterException,
         InvalidSqlException, SystemException {
         if (xml == null || xml.length() == 0) {
             throw new MissingMethodParameterException("xml may not be null");
@@ -91,21 +82,19 @@ public class ReportHandler implements ReportHandlerInterface {
 
         //parse
         final StaxParser sp = new StaxParser();
-        final ReportParametersStaxHandler handler =
-                new ReportParametersStaxHandler();
+        final ReportParametersStaxHandler handler = new ReportParametersStaxHandler();
         sp.addHandler(handler);
         try {
             sp.parse(xml);
-        } catch (final Exception e) {
+        }
+        catch (final Exception e) {
             throw new SystemException(e);
         }
-        
-        // Check if report-definition exists
-        final ReportDefinition reportDefinition =
-            dao.retrieve(handler.getReportParametersVo().getReportDefinitionId());
 
-        final String sql = generateSql(
-            handler.getReportParametersVo(), reportDefinition);
+        // Check if report-definition exists
+        final ReportDefinition reportDefinition = dao.retrieve(handler.getReportParametersVo().getReportDefinitionId());
+
+        final String sql = generateSql(handler.getReportParametersVo(), reportDefinition);
 
         // get Data as defined in sql
         final List results;
@@ -120,35 +109,27 @@ public class ReportHandler implements ReportHandlerInterface {
     }
 
     /**
-     * takes sql from reportDefinition, extends tablenames with db-schema-name
-     * and adds given Parameters.
-     * 
-     * @param reportParametersVo
-     *            reportParametersVo.
-     * @param reportDefinition
-     *            reportDefinition-hibernate-object.
-     * @throws MissingMethodParameterException
-     *             e
-     * 
-     * @return String sql
-     * 
+     * takes sql from reportDefinition, extends tablenames with db-schema-name and adds given Parameters.
      *
+     * @param reportParametersVo reportParametersVo.
+     * @param reportDefinition   reportDefinition-hibernate-object.
+     * @return String sql
+     * @throws MissingMethodParameterException
+     *          e
      */
-    private static String generateSql(final ReportParametersVo reportParametersVo,
-                                      final ReportDefinition reportDefinition)
+    private static String generateSql(
+        final ReportParametersVo reportParametersVo, final ReportDefinition reportDefinition)
         throws MissingMethodParameterException {
         String sql = reportDefinition.getSql();
         if (sql == null || sql.length() == 0) {
-            throw new MissingMethodParameterException(
-                "sql in reportDefinition may not be null");
+            throw new MissingMethodParameterException("sql in reportDefinition may not be null");
         }
 
         // remove CDATA and entities
         sql = sql.replaceAll("\\s+", " ");
 
         // replace Parameters in sql
-        final Collection<ParameterVo> parameterVos =
-                    reportParametersVo.getParameterVos();
+        final Collection<ParameterVo> parameterVos = reportParametersVo.getParameterVos();
         if (parameterVos != null) {
             for (final ParameterVo parameterVo : parameterVos) {
                 if (parameterVo != null) {
@@ -165,13 +146,10 @@ public class ReportHandler implements ReportHandlerInterface {
                     if (type != null) {
                         String replacementString = null;
                         if (parameterVo.getDateValue() != null) {
-                            replacementString =
-                                parameterVo.getDateValue()
-                                .toString("yyyy-MM-dd HH:mm:ss.SSS");
+                            replacementString = parameterVo.getDateValue().toString("yyyy-MM-dd HH:mm:ss.SSS");
                         }
                         else if (parameterVo.getDecimalValue() != null) {
-                            replacementString =
-                                parameterVo.getDecimalValue().toString();
+                            replacementString = parameterVo.getDecimalValue().toString();
                         }
                         else if (parameterVo.getStringValue() != null) {
                             replacementString = parameterVo.getStringValue();
@@ -180,17 +158,15 @@ public class ReportHandler implements ReportHandlerInterface {
                             replacementString = '\'' + replacementString + '\'';
                         }
                         sql =
-                            sql.replaceAll("(?s)'?\"?\\{" + parameterVo.getName()
-                                + "\\}'?\"?", 
-                                Matcher.quoteReplacement(replacementString));
+                            sql.replaceAll("(?s)'?\"?\\{" + parameterVo.getName() + "\\}'?\"?", Matcher
+                                .quoteReplacement(replacementString));
                     }
                 }
             }
         }
 
         if (sql.matches("(?s).*\\{.*")) {
-            throw new MissingMethodParameterException(
-                "could not replace all parameters in sql");
+            throw new MissingMethodParameterException("could not replace all parameters in sql");
         }
 
         return sql;
@@ -198,9 +174,8 @@ public class ReportHandler implements ReportHandlerInterface {
 
     /**
      * Setter for the dao.
-     * 
-     * @param dao
-     *            The data access object.
+     *
+     * @param dao The data access object.
      */
     public void setDao(final SmReportDefinitionsDaoInterface dao) {
         this.dao = dao;
@@ -208,23 +183,19 @@ public class ReportHandler implements ReportHandlerInterface {
 
     /**
      * Setting the directDatabaseAccessor.
-     * 
-     * @param dbAccessorIn
-     *            The directDatabaseAccessor to set.
+     *
+     * @param dbAccessorIn The directDatabaseAccessor to set.
      */
-    public final void setDirectDatabaseAccessor(
-        final DirectDatabaseAccessorInterface dbAccessorIn) {
+    public final void setDirectDatabaseAccessor(final DirectDatabaseAccessorInterface dbAccessorIn) {
         this.dbAccessor = dbAccessorIn;
     }
 
     /**
      * Injects the renderer.
-     * 
-     * @param renderer
-     *            The renderer to inject.
+     *
+     * @param renderer The renderer to inject.
      */
-    public void setRenderer(
-            final ReportRendererInterface renderer) {
+    public void setRenderer(final ReportRendererInterface renderer) {
         this.renderer = renderer;
     }
 

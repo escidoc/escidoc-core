@@ -38,42 +38,30 @@ import java.util.Map;
 
 /**
  * The interface for access to a user resource.
- * 
+ *
  * @author Michael Schneider
  */
-public interface UserAccountHandlerInterface
-    extends de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface {
+public interface UserAccountHandlerInterface extends de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface {
 
     /**
-     * Retrieves the current grants of the user with the provided id in a
-     * <code>Map</code>.
-     * 
-     * @param userId
-     *            The User Account ID.
-     * @return Returns the current Grants of the User Account in a
-     *         <code>Map</code>.
-     * @throws UserAccountNotFoundException
-     *             Thrown if no user account with the provided id exists.
-     * @throws SystemException
-     *             Thrown in case of an internal system error.
+     * Retrieves the current grants of the user with the provided id in a <code>Map</code>.
+     *
+     * @param userId The User Account ID.
+     * @return Returns the current Grants of the User Account in a <code>Map</code>.
+     * @throws UserAccountNotFoundException Thrown if no user account with the provided id exists.
+     * @throws SystemException              Thrown in case of an internal system error.
      */
-    Map<String, Map<String, List<RoleGrant>>> retrieveCurrentGrantsAsMap(
-        String userId)
+    Map<String, Map<String, List<RoleGrant>>> retrieveCurrentGrantsAsMap(String userId)
         throws UserAccountNotFoundException, SystemException;
 
     /**
      * Retrieves the current eScidoc user handles of an user.
-     * 
-     * @param userId
-     *            The User Account ID.
-     * @return Returns the current eSciDoc user handles of the specified User Account in
-     *         a <code>Set</code>.
-     * @throws UserAccountNotFoundException
-     *             Thrown if no user with the provided id exists.
-     * @throws SystemException
-     *             Thrown in case of an internal system error.
+     *
+     * @param userId The User Account ID.
+     * @return Returns the current eSciDoc user handles of the specified User Account in a <code>Set</code>.
+     * @throws UserAccountNotFoundException Thrown if no user with the provided id exists.
+     * @throws SystemException              Thrown in case of an internal system error.
      */
-    List<UserLoginData> retrieveUserHandles(String userId)
-        throws UserAccountNotFoundException, SystemException;
+    List<UserLoginData> retrieveUserHandles(String userId) throws UserAccountNotFoundException, SystemException;
 
 }

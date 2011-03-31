@@ -22,12 +22,10 @@ package de.escidoc.core.common.business.fedora.resources;
 
 /**
  * Predecessor of Organizational Unit (OU).
- * 
- * The development of an OU could be reflected within the predecessor relation.
- * An OU links to it predecessors.
- * 
+ * <p/>
+ * The development of an OU could be reflected within the predecessor relation. An OU links to it predecessors.
+ *
  * @author Steffen Wagner
- * 
  */
 public class Predecessor {
 
@@ -37,11 +35,9 @@ public class Predecessor {
 
     /**
      * Predecessor.
-     * 
-     * @param objid
-     *            Objid of predecessor OU.
-     * @param form
-     *            Form/type of predecessor.
+     *
+     * @param objid Objid of predecessor OU.
+     * @param form  Form/type of predecessor.
      */
     public Predecessor(final String objid, final PredecessorForm form) {
 

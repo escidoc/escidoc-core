@@ -9,6 +9,7 @@ import javax.ejb.EJBLocalHome;
 public interface ContentModelHandlerLocalHome extends EJBLocalHome {
 
     String COMP_NAME = "java:comp/env/ejb/ContentModelHandlerLocal";
+
     String JNDI_NAME = "ejb/ContentModelHandlerLocal";
 
     ContentModelHandlerLocal create() throws CreateException;

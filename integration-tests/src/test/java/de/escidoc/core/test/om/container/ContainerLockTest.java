@@ -48,9 +48,8 @@ import static org.junit.Assert.fail;
 
 /**
  * Test locking and unlocking a container resource.
- * 
+ *
  * @author Michael Schneider
- * 
  */
 @RunWith(value = Parameterized.class)
 public class ContainerLockTest extends ContainerTestBase {
@@ -64,16 +63,14 @@ public class ContainerLockTest extends ContainerTestBase {
     private String theSubcontainerId;
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ContainerLockTest(final int transport) {
         super(transport);
     }
 
     /**
-     * Successfully lock container, successfully update of a locked container by
-     * a lock-owner.
+     * Successfully lock container, successfully update of a locked container by a lock-owner.
      */
     @Test
     public void testOM_C_lock() throws Exception {
@@ -82,20 +79,16 @@ public class ContainerLockTest extends ContainerTestBase {
         lock(theContainerId, param);
 
         String containerXml = retrieve(theContainerId);
-        Document containerDoc =
-            EscidocRestSoapTestBase.getDocument(containerXml);
-        assertXmlEquals("Container lock status not as expected", containerDoc,
-            "/container/properties/lock-status", "locked");
-        assertXmlNotNull("lock-date", containerDoc,
-            "/container/properties/lock-date");
+        Document containerDoc = EscidocRestSoapTestBase.getDocument(containerXml);
+        assertXmlEquals("Container lock status not as expected", containerDoc, "/container/properties/lock-status",
+            "locked");
+        assertXmlNotNull("lock-date", containerDoc, "/container/properties/lock-date");
         if (Constants.TRANSPORT_REST == getTransport()) {
-            assertXmlNotNull("lock-owner", containerDoc,
-                "/container/properties/lock-owner/@href");
+            assertXmlNotNull("lock-owner", containerDoc, "/container/properties/lock-owner/@href");
 
         }
         else {
-            assertXmlNotNull("lock-owner", containerDoc,
-                "/container/properties/lock-owner/@objid");
+            assertXmlNotNull("lock-owner", containerDoc, "/container/properties/lock-owner/@objid");
         }
         assertXmlValidContainer(containerXml);
 
@@ -104,34 +97,15 @@ public class ContainerLockTest extends ContainerTestBase {
             update(theContainerId, containerXml);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Update container failed with exception. ", e);
+            EscidocRestSoapTestBase.failException("Update container failed with exception. ", e);
         }
 
     }
 
     /**
      * Successfully unlock container by the lock owner.
-     * 
-     * @test.name Unlock Container - Lock Owner
-     * @test.id OUM_ULC-1-1
-     * @test.input
-     *          <ul>
-     *          <li>Valid container id of a container that is locked.</li>
-     *          <li>valid task param with last modification date of the
-     *          container </li>
-     *          <li>Method called by the lock-owner</li>
-     *          </ul>
-     * @test.expected:
-     *          <ul>
-     *          <li>Unlock returns without exception</li>
-     *          <li>retrieved unlocked container has unlocked status and does
-     *          not contain lock information (lock-date, lock-owner)</li>
-     *          </ul>
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOM_ULC_1_1() throws Exception {
@@ -141,29 +115,26 @@ public class ContainerLockTest extends ContainerTestBase {
             lock(theContainerId, param);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Unlocking container can not be tested, locking"
-                    + " failed with exception.", e);
+            EscidocRestSoapTestBase.failException("Unlocking container can not be tested, locking"
+                + " failed with exception.", e);
         }
 
         try {
             unlock(theContainerId, param);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Unlocking container failed with exception. ", e);
+            EscidocRestSoapTestBase.failException("Unlocking container failed with exception. ", e);
         }
 
         String containerXml = retrieve(theContainerId);
-        Document containerDoc =
-            EscidocRestSoapTestBase.getDocument(containerXml);
-        assertXmlEquals("Container lock status not as expected", containerDoc,
-            "/container/properties/lock-status", "unlocked");
+        Document containerDoc = EscidocRestSoapTestBase.getDocument(containerXml);
+        assertXmlEquals("Container lock status not as expected", containerDoc, "/container/properties/lock-status",
+            "unlocked");
 
-        assertXmlNotExists("Unexpected element lock-date in unlocked item.",
-            containerDoc, "/container/properties/lock-date");
-        assertXmlNotExists("Unexpected element lock-owner in unlocked item.",
-            containerDoc, "/container/properties/lock-owner");
+        assertXmlNotExists("Unexpected element lock-date in unlocked item.", containerDoc,
+            "/container/properties/lock-date");
+        assertXmlNotExists("Unexpected element lock-owner in unlocked item.", containerDoc,
+            "/container/properties/lock-owner");
 
         assertXmlValidContainer(containerXml);
 
@@ -175,35 +146,15 @@ public class ContainerLockTest extends ContainerTestBase {
             update(theContainerId, containerXml);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Updating unlocked container failed with exception. ", e);
+            EscidocRestSoapTestBase.failException("Updating unlocked container failed with exception. ", e);
         }
 
     }
 
     /**
      * Successfully unlock container by a system administrator.
-     * 
-     * @test.name Unlock Container - System Administrator
-     * @test.id OUM_ULC-1-2
-     * @test.input
-     *          <ul>
-     *          <li>Valid container id of a container that is locked.</li>
-     *          <li>valid task param with last modification date of the
-     *          container </li>
-     *          <li>Method called by the system administrator instead of the
-     *          lock owner</li>
-     *          </ul>
-     * @test.expected:
-     *          <ul>
-     *          <li>Unlock returns without exception</li>
-     *          <li>retrieved unlocked container has unlocked status and does
-     *          not contain lock information (lock-date, lock-owner)</li>
-     *          </ul>
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOM_ULC_1_2() throws Exception {
@@ -213,9 +164,8 @@ public class ContainerLockTest extends ContainerTestBase {
             lock(theContainerId, param);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Unlocking container can not be tested, locking"
-                    + " failed with exception.", e);
+            EscidocRestSoapTestBase.failException("Unlocking container can not be tested, locking"
+                + " failed with exception.", e);
         }
 
         PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
@@ -224,20 +174,18 @@ public class ContainerLockTest extends ContainerTestBase {
             unlock(theContainerId, param);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Unlocking container failed with exception. ", e);
+            EscidocRestSoapTestBase.failException("Unlocking container failed with exception. ", e);
         }
 
         String containerXml = retrieve(theContainerId);
-        Document containerDoc =
-            EscidocRestSoapTestBase.getDocument(containerXml);
-        assertXmlEquals("Container lock status not as expected", containerDoc,
-            "/container/properties/lock-status", "unlocked");
+        Document containerDoc = EscidocRestSoapTestBase.getDocument(containerXml);
+        assertXmlEquals("Container lock status not as expected", containerDoc, "/container/properties/lock-status",
+            "unlocked");
 
-        assertXmlNotExists("Unexpected element lock-date in unlocked item.",
-            containerDoc, "/container/properties/lock-date");
-        assertXmlNotExists("Unexpected element lock-owner in unlocked item.",
-            containerDoc, "/container/properties/lock-owner");
+        assertXmlNotExists("Unexpected element lock-date in unlocked item.", containerDoc,
+            "/container/properties/lock-date");
+        assertXmlNotExists("Unexpected element lock-owner in unlocked item.", containerDoc,
+            "/container/properties/lock-owner");
 
         assertXmlValidContainer(containerXml);
 
@@ -248,30 +196,15 @@ public class ContainerLockTest extends ContainerTestBase {
             update(theContainerId, containerXml);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Updating unlocked container failed with exception. ", e);
+            EscidocRestSoapTestBase.failException("Updating unlocked container failed with exception. ", e);
         }
 
     }
 
     /**
      * Declining unlock container by a user that is not the lock owner.
-     * 
-     * @test.name Unlock Container - Not Lock Owner
-     * @test.id OUM_ULC-2
-     * @test.input
-     *          <ul>
-     *          <li>Valid container id of a container that is locked.</li>
-     *          <li>valid task param with last modification date of the
-     *          container </li>
-     *          <li>Method is neither called by the lock-owner nor a system
-     *          administrator</li>
-     *          </ul>
-     * @test.expected: AuthorizationException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOM_ULC_2() throws Exception {
@@ -283,21 +216,18 @@ public class ContainerLockTest extends ContainerTestBase {
             lock(theContainerId, param);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Unlocking container can not be tested, locking"
-                    + " failed with exception.", e);
+            EscidocRestSoapTestBase.failException("Unlocking container can not be tested, locking"
+                + " failed with exception.", e);
         }
 
         PWCallback.setHandle(PWCallback.DEPOSITOR_HANDLE);
 
         try {
             unlock(theContainerId, param);
-            EscidocRestSoapTestBase
-                .failMissingException(AuthorizationException.class);
+            EscidocRestSoapTestBase.failMissingException(AuthorizationException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                AuthorizationException.class, e);
+            EscidocRestSoapTestBase.assertExceptionType(AuthorizationException.class, e);
         }
     }
 
@@ -315,8 +245,7 @@ public class ContainerLockTest extends ContainerTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = ContainerNotFoundException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
     }
 
@@ -326,8 +255,7 @@ public class ContainerLockTest extends ContainerTestBase {
     @Test
     public void testOM_C_lockOptimisicLocking() throws Exception {
 
-        String param =
-            "<param last-modification-date=\"1970-01-01T00:00:00.000Z\" ></param>";
+        String param = "<param last-modification-date=\"1970-01-01T00:00:00.000Z\" ></param>";
 
         try {
             lock(theContainerId, param);
@@ -335,8 +263,7 @@ public class ContainerLockTest extends ContainerTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = OptimisticLockingException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
     }
 
@@ -354,16 +281,14 @@ public class ContainerLockTest extends ContainerTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
     }
 
     /**
      * Test the last modification date timestamp of the lock/unlock method.
-     * 
-     * @throws Exception
-     *             Thrown if anything failed.
+     *
+     * @throws Exception Thrown if anything failed.
      */
     @Test
     public void testLockReturnValue01() throws Exception {
@@ -376,13 +301,10 @@ public class ContainerLockTest extends ContainerTestBase {
         String lmdResultLock = getLastModificationDateValue(resultDoc);
 
         String containerXml = retrieve(theContainerId);
-        Document containerDoc =
-            EscidocRestSoapTestBase.getDocument(containerXml);
+        Document containerDoc = EscidocRestSoapTestBase.getDocument(containerXml);
         String lmdRetrieve = getLastModificationDateValue(containerDoc);
 
-        assertEquals(
-            "Last modification date of result and container not equal",
-            lmdResultLock, lmdRetrieve);
+        assertEquals("Last modification date of result and container not equal", lmdResultLock, lmdRetrieve);
 
         // now check unlock
         resultXml = unlock(theContainerId, param);
@@ -394,41 +316,32 @@ public class ContainerLockTest extends ContainerTestBase {
         containerDoc = EscidocRestSoapTestBase.getDocument(containerXml);
         lmdRetrieve = getLastModificationDateValue(containerDoc);
 
-        assertEquals(
-            "Last modification date of result and container not equal",
-            lmdResultUnlock, lmdRetrieve);
+        assertEquals("Last modification date of result and container not equal", lmdResultUnlock, lmdRetrieve);
 
         // assert that the last-modification-date of container hasn't changed
-        assertEquals(
-            "Last modification date of result and container not equal",
-            lmdResultUnlock, lmdResultLock);
+        assertEquals("Last modification date of result and container not equal", lmdResultUnlock, lmdResultLock);
     }
 
     /**
      * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Before
     public void setUp() throws Exception {
         PWCallback.setHandle(PWCallback.DEPOSITOR_HANDLE);
 
-        this.theItemId =
-            createItemFromTemplate("escidoc_item_198_for_create.xml");
+        this.theItemId = createItemFromTemplate("escidoc_item_198_for_create.xml");
 
-        String xmlData =
-            getContainerTemplate("create_container_WithoutMembers_v1.1.xml");
+        String xmlData = getContainerTemplate("create_container_WithoutMembers_v1.1.xml");
         theContainerXml = create(xmlData);
 
         this.theSubcontainerId = getObjidValue(theContainerXml);
 
-        String xmlData1 =
-            getContainerTemplate("create_container_v1.1-forItemAndforContainer.xml");
+        String xmlData1 = getContainerTemplate("create_container_v1.1-forItemAndforContainer.xml");
 
         String xmlWithItem = xmlData1.replaceAll("##ITEMID##", theItemId);
-        String xmlWithItemAndContainer =
-            xmlWithItem.replaceAll("##CONTAINERID##", theSubcontainerId);
+        String xmlWithItemAndContainer = xmlWithItem.replaceAll("##CONTAINERID##", theSubcontainerId);
         theContainerXml = create(xmlWithItemAndContainer);
 
         this.theContainerId = getObjidValue(theContainerXml);
@@ -437,9 +350,8 @@ public class ContainerLockTest extends ContainerTestBase {
 
     /**
      * Clean up after test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Override
     @After

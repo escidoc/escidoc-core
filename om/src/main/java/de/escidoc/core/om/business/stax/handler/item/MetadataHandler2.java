@@ -47,15 +47,12 @@ import java.util.Map;
 
 /**
  * The MetadataHandler. The parser handles only one Metadata Record!
- * 
- * @author Steffen Wagner
- * 
  *
+ * @author Steffen Wagner
  */
 public class MetadataHandler2 extends DefaultHandler {
 
-    private static final Logger LOGGER =
-        LoggerFactory.getLogger(MetadataHandler2.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MetadataHandler2.class);
 
     private final StaxParser parser;
 
@@ -71,11 +68,9 @@ public class MetadataHandler2 extends DefaultHandler {
 
     /**
      * Instantiate a MetaDataHandler.
-     * 
-     * @param parser
-     *            The parser.
-     * @param xpath
-     *            Metadata Records XPath (e.g. /item/md-records/md-record).
+     *
+     * @param parser The parser.
+     * @param xpath  Metadata Records XPath (e.g. /item/md-records/md-record).
      */
     public MetadataHandler2(final StaxParser parser, final String xpath) {
 
@@ -85,9 +80,8 @@ public class MetadataHandler2 extends DefaultHandler {
 
     /**
      * Set XPath for metadata record.
-     * 
-     * @param xpath
-     *            Metadata Records XPath (e.g. /item/md-records/md-record).
+     *
+     * @param xpath Metadata Records XPath (e.g. /item/md-records/md-record).
      */
     public void setMetadataRecordXPath(final String xpath) {
 
@@ -96,21 +90,16 @@ public class MetadataHandler2 extends DefaultHandler {
 
     /**
      * Handle the start of an element.
-     * 
-     * @param element
-     *            The element.
+     *
+     * @param element The element.
      * @return The element.
-     * @throws MissingAttributeValueException
-     *             If a required attribute is missing.
-     * @throws InvalidContentException
-     *             Thrown if md-record name is invalid (not unique)
-     *@throws WebserverSystemException
-     *             Thrown by MultipleExtractor
+     * @throws MissingAttributeValueException If a required attribute is missing.
+     * @throws InvalidContentException        Thrown if md-record name is invalid (not unique)
+     * @throws WebserverSystemException       Thrown by MultipleExtractor
      */
     @Override
-    public StartElement startElement(final StartElement element)
-        throws MissingAttributeValueException, WebserverSystemException,
-        InvalidContentException {
+    public StartElement startElement(final StartElement element) throws MissingAttributeValueException,
+        WebserverSystemException, InvalidContentException {
 
         if (this.parsingMetadata) {
             this.me.startElement(element);
@@ -123,14 +112,13 @@ public class MetadataHandler2 extends DefaultHandler {
         }
         else {
             final String currentPath = parser.getCurPath();
-            if (currentPath.equals(this.metadataXPath)
-                && element.indexOfAttribute(null, "inherited") < 0) {
-                if(LOGGER.isDebugEnabled()) {
+            if (currentPath.equals(this.metadataXPath) && element.indexOfAttribute(null, "inherited") < 0) {
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Parser reached " + this.metadataXPath);
                 }
                 this.parsingMetadata = true;
                 this.metadataRecord = new MdRecordCreate();
-                this.metadataRecord.setName(getAttributeValue(element, null,"name"));
+                this.metadataRecord.setName(getAttributeValue(element, null, "name"));
                 String schema = getAttributeValue(element, null, "schema");
                 if (schema == null) {
                     schema = "unknown";
@@ -143,8 +131,7 @@ public class MetadataHandler2 extends DefaultHandler {
                 this.metadataRecord.setType(mdType);
 
                 this.payloadRootElement = true;
-                this.me =
-                    new MultipleExtractor(this.metadataXPath, "name", this.parser);
+                this.me = new MultipleExtractor(this.metadataXPath, "name", this.parser);
                 this.me.startElement(element);
             }
         }
@@ -154,28 +141,23 @@ public class MetadataHandler2 extends DefaultHandler {
 
     /**
      * Handle the end of an element.
-     * 
-     * @param element
-     *            The element.
-     * @return The element.
      *
+     * @param element The element.
+     * @return The element.
      */
     @Override
-    public EndElement endElement(final EndElement element)
-        throws WebserverSystemException {
+    public EndElement endElement(final EndElement element) throws WebserverSystemException {
 
-        if (this.metadataXPath.equals(parser.getCurPath())
-            && this.parsingMetadata) {
-            if(LOGGER.isDebugEnabled()) {
+        if (this.metadataXPath.equals(parser.getCurPath()) && this.parsingMetadata) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("End of " + this.metadataXPath);
             }
             this.parsingMetadata = false;
 
             this.me.endElement(element);
-            final Map<String,?> tmp = (Map<String, ?>) this.me.getOutputStreams().get(Elements.ELEMENT_MD_RECORDS);
+            final Map<String, ?> tmp = (Map<String, ?>) this.me.getOutputStreams().get(Elements.ELEMENT_MD_RECORDS);
             try {
-                this.metadataRecord.setContent((ByteArrayOutputStream) tmp
-                    .get(this.metadataRecord.getName()));
+                this.metadataRecord.setContent((ByteArrayOutputStream) tmp.get(this.metadataRecord.getName()));
             }
             catch (final UnsupportedEncodingException e) {
                 throw new WebserverSystemException(e);
@@ -191,17 +173,13 @@ public class MetadataHandler2 extends DefaultHandler {
 
     /**
      * Handle the character section of an element.
-     * 
-     * @param s
-     *            The contents of the character section.
-     * @param element
-     *            The element.
-     * @return The character section.
      *
+     * @param s       The contents of the character section.
+     * @param element The element.
+     * @return The character section.
      */
     @Override
-    public String characters(final String s, final StartElement element)
-        throws WebserverSystemException {
+    public String characters(final String s, final StartElement element) throws WebserverSystemException {
 
         if (this.parsingMetadata) {
             this.me.characters(s, element);
@@ -212,7 +190,7 @@ public class MetadataHandler2 extends DefaultHandler {
 
     /**
      * Get data structure MetadataRecord.
-     * 
+     *
      * @return Return the MetadataRecord.
      */
     public MdRecordCreate getMetadataRecord() {

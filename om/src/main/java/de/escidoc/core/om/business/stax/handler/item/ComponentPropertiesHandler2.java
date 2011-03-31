@@ -42,17 +42,14 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Handles the Properties of one single Component.
- * 
+ *
  * @author Steffen Wagner
- * 
  */
 public class ComponentPropertiesHandler2 extends DefaultHandler {
 
-    private static final Logger LOGGER =
-        LoggerFactory.getLogger(ComponentPropertiesHandler2.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ComponentPropertiesHandler2.class);
 
-    private static final String XPATH_COMPONENT_PROPERTIES =
-        "/item/components/component/properties";
+    private static final String XPATH_COMPONENT_PROPERTIES = "/item/components/component/properties";
 
     private final ComponentProperties properties;
 
@@ -61,22 +58,17 @@ public class ComponentPropertiesHandler2 extends DefaultHandler {
     private final StaxParser parser;
 
     /**
-     * StAX Handler for Component Properties. Extracts all required values from
-     * from Component Properties XML Section by handle Events from StAX-Parser.
-     * The values are stored within a internal HashMap.
-     * 
-     * @param parser
-     * @throws WebserverSystemException
+     * StAX Handler for Component Properties. Extracts all required values from from Component Properties XML Section by
+     * handle Events from StAX-Parser. The values are stored within a internal HashMap.
      */
-    public ComponentPropertiesHandler2(final StaxParser parser)
-        throws WebserverSystemException {
+    public ComponentPropertiesHandler2(final StaxParser parser) throws WebserverSystemException {
         this.parser = parser;
         this.properties = new ComponentProperties();
     }
 
     /**
      * Get the Properties of the single Component as Map.
-     * 
+     *
      * @return Component Properties Map
      */
     public ComponentProperties getProperties() {
@@ -84,12 +76,12 @@ public class ComponentPropertiesHandler2 extends DefaultHandler {
     }
 
     /**
-	 * 
-	 */
+     *
+     */
     @Override
     public StartElement startElement(final StartElement element) {
 
-        if (! this.inside) {
+        if (!this.inside) {
             final String currentPath = parser.getCurPath();
             if (currentPath.startsWith(XPATH_COMPONENT_PROPERTIES)) {
                 this.inside = true;
@@ -99,8 +91,8 @@ public class ComponentPropertiesHandler2 extends DefaultHandler {
     }
 
     /**
-	 * 
-	 */
+     *
+     */
     @Override
     public EndElement endElement(final EndElement element) {
 
@@ -114,20 +106,19 @@ public class ComponentPropertiesHandler2 extends DefaultHandler {
     }
 
     /**
-	 * 
-	 */
+     *
+     */
     @Override
-    public String characters(final String s, final StartElement element)
-        throws MissingElementValueException, InvalidContentException,
-        WebserverSystemException {
+    public String characters(final String s, final StartElement element) throws MissingElementValueException,
+        InvalidContentException, WebserverSystemException {
 
         if (this.inside) {
             final String currentPath = element.getLocalName();
 
             if (currentPath.equals(Elements.ELEMENT_MIME_TYPE)) {
-              if (s != null && s.trim().length() > 0) {
-                this.properties.setMimeType(s);
-            }
+                if (s != null && s.trim().length() > 0) {
+                    this.properties.setMimeType(s);
+                }
             }
             else if (currentPath.equals(Elements.ELEMENT_VALID_STATUS)) {
                 if (s != null && s.length() > 0) {
@@ -137,8 +128,7 @@ public class ComponentPropertiesHandler2 extends DefaultHandler {
             else if (currentPath.equals(Elements.ELEMENT_VISIBILITY)) {
                 handleVisibility(s, currentPath);
             }
-            else if (currentPath
-                .equals(Elements.ELEMENT_COMPONENT_CONTENT_CATEGORY)) {
+            else if (currentPath.equals(Elements.ELEMENT_COMPONENT_CONTENT_CATEGORY)) {
 
                 handleContentCatagory(s, currentPath);
             }
@@ -148,38 +138,34 @@ public class ComponentPropertiesHandler2 extends DefaultHandler {
     }
 
     /**
-     * 
+     *
      * @param s
      * @param currentPath
      * @throws MissingElementValueException
      */
-    private void handleVisibility(final String s, final String currentPath)
-        throws MissingElementValueException {
+    private void handleVisibility(final String s, final String currentPath) throws MissingElementValueException {
 
         if (s != null && s.length() > 0) {
             this.properties.setVisibility(s);
         }
         else {
-            throw new MissingElementValueException("The value of element "
-                + currentPath + " is missing");
+            throw new MissingElementValueException("The value of element " + currentPath + " is missing");
         }
     }
 
     /**
-     * 
+     *
      * @param s
      * @param currentPath
      * @throws MissingElementValueException
      */
-    private void handleContentCatagory(final String s, final String currentPath)
-        throws MissingElementValueException {
+    private void handleContentCatagory(final String s, final String currentPath) throws MissingElementValueException {
 
         if (s != null && s.length() > 0) {
             this.properties.setContentCatagory(s);
         }
         else {
-            throw new MissingElementValueException("The value of element "
-                + currentPath + " is missing");
+            throw new MissingElementValueException("The value of element " + currentPath + " is missing");
         }
 
     }

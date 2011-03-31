@@ -40,58 +40,45 @@ import java.lang.reflect.Method;
 import java.util.regex.Pattern;
 
 /**
- * Customized proxy factory Bean for the Remote and Stateless EJB lookup.
- * Provides the current {@link SecurityContext} as an additional parameter in
- * methods calls.<br>
- * These extended methods must be defined in an interface that has a qualified
- * name that can be constructed from the qualified name of the business
- * interface by replacing "Interface" with "Remote" and "service.interfaces"
- * with "ejb.interfaces", e.g.
- * "de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface" ->
- * "de.escidoc.core.aa.ejb.interfaces.UserAccountHandlerRemote"
- * 
+ * Customized proxy factory Bean for the Remote and Stateless EJB lookup. Provides the current {@link SecurityContext}
+ * as an additional parameter in methods calls.<br> These extended methods must be defined in an interface that has a
+ * qualified name that can be constructed from the qualified name of the business interface by replacing "Interface"
+ * with "Remote" and "service.interfaces" with "ejb.interfaces", e.g. "de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface"
+ * -> "de.escidoc.core.aa.ejb.interfaces.UserAccountHandlerRemote"
+ *
  * @author Torsten Tetteroo
  */
-public class RemoteStatelessEjbProxyFactoryBean
-    extends SimpleRemoteStatelessSessionProxyFactoryBean {
+public class RemoteStatelessEjbProxyFactoryBean extends SimpleRemoteStatelessSessionProxyFactoryBean {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RemoteStatelessEjbProxyFactoryBean.class);
 
     /**
-     * Pattern used to replace Interface with Remote in class name to get the
-     * name of the extended interface.
+     * Pattern used to replace Interface with Remote in class name to get the name of the extended interface.
      */
-    private static final Pattern PATTERN_INTERFACE =
-        Pattern.compile("Interface");
+    private static final Pattern PATTERN_INTERFACE = Pattern.compile("Interface");
 
     /**
-     * Pattern used to replace "service.interface" with "ejb.interface" in class
-     * name to get the name of the extended interface.
+     * Pattern used to replace "service.interface" with "ejb.interface" in class name to get the name of the extended
+     * interface.
      */
-    private static final Pattern PATTERN_SERVIVE_INTERFACE =
-        Pattern.compile("service.interfaces");
+    private static final Pattern PATTERN_SERVIVE_INTERFACE = Pattern.compile("service.interfaces");
 
     private String packageName;
 
     /**
-     * The extended interface that provides the same methods as the business
-     * interface but each with an additional parameter to forward the
-     * {@link SecurityContext}.
+     * The extended interface that provides the same methods as the business interface but each with an additional
+     * parameter to forward the {@link SecurityContext}.
      */
     private Class extendedInterface;
 
     /**
      * See Interface for functional description.
-     * 
-     * @throws NamingException
-     *
      */
     @Override
     public void afterPropertiesSet() throws NamingException {
 
         try {
-            this.setJndiEnvironment(EjbFactoryBeanHelper
-                .getInitialContextJndiProperties(this.packageName));
+            this.setJndiEnvironment(EjbFactoryBeanHelper.getInitialContextJndiProperties(this.packageName));
         }
         catch (final WebserverSystemException e) {
             final NamingException ex = new NamingException(); // Ignore FindBugs
@@ -100,9 +87,8 @@ public class RemoteStatelessEjbProxyFactoryBean
         }
         final String className =
             PATTERN_SERVIVE_INTERFACE.matcher(
-                PATTERN_INTERFACE
-                    .matcher(getBusinessInterface().getName()).replaceAll(
-                        "Remote")).replaceAll("ejb.interfaces");
+                PATTERN_INTERFACE.matcher(getBusinessInterface().getName()).replaceAll("Remote")).replaceAll(
+                "ejb.interfaces");
         try {
             this.extendedInterface = Class.forName(className);
         }
@@ -117,13 +103,8 @@ public class RemoteStatelessEjbProxyFactoryBean
 
     /**
      * See Interface for functional description.
-     * 
-     * @param arg0
-     * @return
-     * @throws Throwable
-     * @see AbstractRemoteSlsbInvokerInterceptor
-     *      #invoke(org.aopalliance.intercept.MethodInvocation) // *
      *
+     * @see AbstractRemoteSlsbInvokerInterceptor #invoke(org.aopalliance.intercept.MethodInvocation) // *
      */
     @Override
     public Object invoke(final MethodInvocation arg0) throws Throwable {
@@ -136,16 +117,13 @@ public class RemoteStatelessEjbProxyFactoryBean
         final Class[] extendedArgsTypes;
 
         try {
-            final SecurityContext securityContext =
-                UserContext.getSecurityContext();
+            final SecurityContext securityContext = UserContext.getSecurityContext();
             if (securityContext == null) {
                 throw new SystemException("Security context not set.");
             }
-            final Authentication authentication =
-                securityContext.getAuthentication();
+            final Authentication authentication = securityContext.getAuthentication();
             if (authentication == null) {
-                throw new SystemException(
-                    "Security context does not hold an authentication object.");
+                throw new SystemException("Security context does not hold an authentication object.");
             }
             if (authentication.isAuthenticated()) {
                 extendedArgs = new Object[argsLength + 1];
@@ -153,9 +131,9 @@ public class RemoteStatelessEjbProxyFactoryBean
 
                 extendedArgs[argsLength] = securityContext;
                 extendedArgsTypes[argsLength] = SecurityContext.class;
-                SecurityAssociation.pushRunAsIdentity(
-                        new RunAsIdentity("Administrator", ""));
-            } else {
+                SecurityAssociation.pushRunAsIdentity(new RunAsIdentity("Administrator", ""));
+            }
+            else {
                 // user currently not authenticated. Just user name and
                 // handle/password are forwarded
                 extendedArgs = new Object[argsLength + 2];
@@ -180,14 +158,12 @@ public class RemoteStatelessEjbProxyFactoryBean
 
         final String methodName = method.getName();
         final MethodInvocation extendedMethodInvocation =
-            MethodInvocationUtils.createFromClass(null, this.extendedInterface,
-                methodName, extendedArgsTypes, extendedArgs);
+            MethodInvocationUtils.createFromClass(null, this.extendedInterface, methodName, extendedArgsTypes,
+                extendedArgs);
         if (extendedMethodInvocation == null) {
-            throw new InvocationTargetException(
-                new SystemException(
-                    StringUtility
-                        .format(
-                            "Remote Invocation failed, could not find extended target method.", this.extendedInterface, methodName, extendedArgs)));
+            throw new InvocationTargetException(new SystemException(StringUtility.format(
+                "Remote Invocation failed, could not find extended target method.", this.extendedInterface, methodName,
+                extendedArgs)));
         }
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug(StringUtility.format("Calling super.invoke", methodName, extendedArgs));
@@ -197,15 +173,11 @@ public class RemoteStatelessEjbProxyFactoryBean
 
     /**
      * Injects the package name.
-     * 
-     * @param packageName
-     *            the packageName to set
      *
+     * @param packageName the packageName to set
      */
     public void setPackageName(final String packageName) {
         this.packageName = packageName;
     }
-
-
 
 }

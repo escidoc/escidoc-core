@@ -30,21 +30,16 @@ package de.escidoc.core.om.business.interfaces;
 
 import de.escidoc.core.common.exceptions.EscidocException;
 
-
 /**
  * Interface of an resource ingest handler of the business layer.
- * 
- * @author Steffen Wagner,KST
- * 
  *
+ * @author Steffen Wagner,KST
  */
 public interface IngestHandlerInterface {
-	
+
     /**
-     * 
      * @param xmlData the string that contains the resource
      * @throws EscidocException Thrown if anything fails.
-     * @return
      */
     String ingest(String xmlData) throws EscidocException;
 

@@ -52,57 +52,52 @@ import java.util.Set;
 
 /**
  * Provides Methods used for Re-indexing.
- * 
+ *
  * @author André Schenk
  */
 public class Reindexer {
+
     /**
      * Triple store query to get a list of all containers.
      */
     private static final String CONTAINER_LIST_QUERY =
         "/risearch?type=triples&lang=spo&format=N-Triples&query=*%20%3chttp://"
-            + "www.w3.org/1999/02/22-rdf-syntax-ns%23type%3e%20%3c"
-            + ResourceType.CONTAINER.getUri() + "%3e";
+            + "www.w3.org/1999/02/22-rdf-syntax-ns%23type%3e%20%3c" + ResourceType.CONTAINER.getUri() + "%3e";
 
     /**
      * Triple store query to get a list of all Content Models.
      */
     private static final String CONTENT_MODEL_LIST_QUERY =
         "/risearch?type=triples&lang=spo&format=N-Triples&query=*%20%3chttp://"
-            + "www.w3.org/1999/02/22-rdf-syntax-ns%23type%3e%20%3c"
-            + ResourceType.CONTENT_MODEL.getUri() + "%3e";
+            + "www.w3.org/1999/02/22-rdf-syntax-ns%23type%3e%20%3c" + ResourceType.CONTENT_MODEL.getUri() + "%3e";
 
     /**
      * Triple store query to get a list of all content relations.
      */
     private static final String CONTENT_RELATION_LIST_QUERY =
         "/risearch?type=triples&lang=spo&format=N-Triples&query=*%20%3chttp://"
-            + "www.w3.org/1999/02/22-rdf-syntax-ns%23type%3e%20%3c"
-            + ResourceType.CONTENT_RELATION.getUri() + "%3e";
+            + "www.w3.org/1999/02/22-rdf-syntax-ns%23type%3e%20%3c" + ResourceType.CONTENT_RELATION.getUri() + "%3e";
 
     /**
      * Triple store query to get a list of all contexts.
      */
     private static final String CONTEXT_LIST_QUERY =
         "/risearch?type=triples&lang=spo&format=N-Triples&query=*%20%3chttp://"
-            + "www.w3.org/1999/02/22-rdf-syntax-ns%23type%3e%20%3c"
-            + ResourceType.CONTEXT.getUri() + "%3e";
+            + "www.w3.org/1999/02/22-rdf-syntax-ns%23type%3e%20%3c" + ResourceType.CONTEXT.getUri() + "%3e";
 
     /**
      * Triple store query to get a list of all items.
      */
     private static final String ITEM_LIST_QUERY =
         "/risearch?type=triples&lang=spo&format=N-Triples&query=*%20%3chttp://"
-            + "www.w3.org/1999/02/22-rdf-syntax-ns%23type%3e%20%3c"
-            + ResourceType.ITEM.getUri() + "%3e";
+            + "www.w3.org/1999/02/22-rdf-syntax-ns%23type%3e%20%3c" + ResourceType.ITEM.getUri() + "%3e";
 
     /**
      * Triple store query to get a list of all organizational units.
      */
     private static final String OU_LIST_QUERY =
         "/risearch?type=triples&lang=spo&format=N-Triples&query=*%20%3chttp://"
-            + "www.w3.org/1999/02/22-rdf-syntax-ns%23type%3e%20%3c"
-            + ResourceType.OU.getUri() + "%3e";
+            + "www.w3.org/1999/02/22-rdf-syntax-ns%23type%3e%20%3c" + ResourceType.OU.getUri() + "%3e";
 
     private FedoraUtility fedoraUtility;
 
@@ -115,24 +110,19 @@ public class Reindexer {
 
     /**
      * Check if the given index contains objects with the given resource type.
-     * 
-     * @param indexName
-     *            name of the index (may be null for "all indexes")
-     * @param type
-     *            resource type
-     * 
+     *
+     * @param indexName name of the index (may be null for "all indexes")
+     * @param type      resource type
      * @return true if the index contains objects of the given type
      */
     private boolean contains(final String indexName, final ResourceType type) {
         final boolean result;
 
-        if (indexName == null || indexName.trim().length() == 0
-            || "all".equalsIgnoreCase(indexName)) {
+        if (indexName == null || indexName.trim().length() == 0 || "all".equalsIgnoreCase(indexName)) {
             result = true;
         }
         else {
-            final Map<String, Map<String, Object>> resourceParameters =
-                objectTypeParameters.get(type.getUri());
+            final Map<String, Map<String, Object>> resourceParameters = objectTypeParameters.get(type.getUri());
             if (resourceParameters == null) {
                 return false;
             }
@@ -143,20 +133,14 @@ public class Reindexer {
     }
 
     /**
-     * @param clearIndex
-     *            clear the index before adding objects to it
-     * @param indexName
-     *            name of the index (may be null for "all indexes")
-     * 
+     * @param clearIndex clear the index before adding objects to it
+     * @param indexName  name of the index (may be null for "all indexes")
      * @return total number of objects found, ...
-     * @throws SystemException
-     *             Thrown if a framework internal error occurs.
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a SQL query
+     * @throws SystemException             Thrown if a framework internal error occurs.
+     * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
      */
-    public String reindex(final boolean clearIndex, final String indexName)
-        throws SystemException, InvalidSearchQueryException {
+    public String reindex(final boolean clearIndex, final String indexName) throws SystemException,
+        InvalidSearchQueryException {
         if ("errorTest".equals(indexName)) {
             return testReindexError();
         }
@@ -169,53 +153,43 @@ public class Reindexer {
             try {
                 // Get all Containers
                 final Collection<String> containerHrefs =
-                    getIds(indexName, ResourceType.CONTAINER,
-                        CONTAINER_LIST_QUERY, clearIndex);
+                    getIds(indexName, ResourceType.CONTAINER, CONTAINER_LIST_QUERY, clearIndex);
 
                 idListEmpty &= containerHrefs.isEmpty();
 
                 // Get all Content Models
                 final Collection<String> contentModelHrefs =
-                    getIds(indexName, ResourceType.CONTENT_MODEL,
-                        CONTENT_MODEL_LIST_QUERY, clearIndex);
+                    getIds(indexName, ResourceType.CONTENT_MODEL, CONTENT_MODEL_LIST_QUERY, clearIndex);
 
                 idListEmpty &= contentModelHrefs.isEmpty();
 
                 // Get all Content Relations
                 final Collection<String> contentRelationHrefs =
-                    getIds(indexName, ResourceType.CONTENT_RELATION,
-                        CONTENT_RELATION_LIST_QUERY, clearIndex);
+                    getIds(indexName, ResourceType.CONTENT_RELATION, CONTENT_RELATION_LIST_QUERY, clearIndex);
 
                 idListEmpty &= contentRelationHrefs.isEmpty();
 
                 // Get all Contexts
                 final Collection<String> contextHrefs =
-                    getIds(indexName, ResourceType.CONTEXT, CONTEXT_LIST_QUERY,
-                        clearIndex);
+                    getIds(indexName, ResourceType.CONTEXT, CONTEXT_LIST_QUERY, clearIndex);
 
                 idListEmpty &= contextHrefs.isEmpty();
 
                 // Get all Items
-                final Collection<String> itemHrefs =
-                    getIds(indexName, ResourceType.ITEM, ITEM_LIST_QUERY,
-                        clearIndex);
+                final Collection<String> itemHrefs = getIds(indexName, ResourceType.ITEM, ITEM_LIST_QUERY, clearIndex);
 
                 idListEmpty &= itemHrefs.isEmpty();
 
                 // Get all Organizational Units
-                final Collection<String> orgUnitHrefs =
-                    getIds(indexName, ResourceType.OU, OU_LIST_QUERY,
-                        clearIndex);
+                final Collection<String> orgUnitHrefs = getIds(indexName, ResourceType.OU, OU_LIST_QUERY, clearIndex);
 
                 idListEmpty &= orgUnitHrefs.isEmpty();
 
                 if (clearIndex) {
                     // Delete indexes
                     sendDeleteIndexMessage(ResourceType.CONTAINER, indexName);
-                    sendDeleteIndexMessage(ResourceType.CONTENT_MODEL,
-                        indexName);
-                    sendDeleteIndexMessage(ResourceType.CONTENT_RELATION,
-                        indexName);
+                    sendDeleteIndexMessage(ResourceType.CONTENT_MODEL, indexName);
+                    sendDeleteIndexMessage(ResourceType.CONTENT_RELATION, indexName);
                     sendDeleteIndexMessage(ResourceType.CONTEXT, indexName);
                     sendDeleteIndexMessage(ResourceType.ITEM, indexName);
                     sendDeleteIndexMessage(ResourceType.OU, indexName);
@@ -226,11 +200,13 @@ public class Reindexer {
                 result.append("</message>\n");
 
                 result.append("<message>\n");
-                result.append("scheduling ").append(contentModelHrefs.size()).append(" content models(s) for reindexing\n");
+                result.append("scheduling ").append(contentModelHrefs.size()).append(
+                    " content models(s) for reindexing\n");
                 result.append("</message>\n");
 
                 result.append("<message>\n");
-                result.append("scheduling ").append(contentRelationHrefs.size()).append(" content relation(s) for reindexing\n");
+                result.append("scheduling ").append(contentRelationHrefs.size()).append(
+                    " content relation(s) for reindexing\n");
                 result.append("</message>\n");
 
                 result.append("<message>\n");
@@ -242,43 +218,38 @@ public class Reindexer {
                 result.append("</message>\n");
 
                 result.append("<message>\n");
-                result.append("scheduling ").append(orgUnitHrefs.size()).append(" organizational-unit(s) for reindexing\n");
+                result.append("scheduling ").append(orgUnitHrefs.size()).append(
+                    " organizational-unit(s) for reindexing\n");
                 result.append("</message>\n");
 
                 // re-index Containers
                 for (final String containerHref : containerHrefs) {
-                    sendUpdateIndexMessage(containerHref,
-                        ResourceType.CONTAINER, indexName);
+                    sendUpdateIndexMessage(containerHref, ResourceType.CONTAINER, indexName);
                 }
 
                 // re-index Content Models
                 for (final String contentModelHref : contentModelHrefs) {
-                    sendUpdateIndexMessage(contentModelHref,
-                        ResourceType.CONTENT_MODEL, indexName);
+                    sendUpdateIndexMessage(contentModelHref, ResourceType.CONTENT_MODEL, indexName);
                 }
 
                 // re-index Content Relations
                 for (final String contentRelationHref : contentRelationHrefs) {
-                    sendUpdateIndexMessage(contentRelationHref,
-                        ResourceType.CONTENT_RELATION, indexName);
+                    sendUpdateIndexMessage(contentRelationHref, ResourceType.CONTENT_RELATION, indexName);
                 }
 
                 // re-index Contexts
                 for (final String contextHref : contextHrefs) {
-                    sendUpdateIndexMessage(contextHref, ResourceType.CONTEXT,
-                        indexName);
+                    sendUpdateIndexMessage(contextHref, ResourceType.CONTEXT, indexName);
                 }
 
                 // re-index Items
                 for (final String itemHref : itemHrefs) {
-                    sendUpdateIndexMessage(itemHref, ResourceType.ITEM,
-                        indexName);
+                    sendUpdateIndexMessage(itemHref, ResourceType.ITEM, indexName);
                 }
 
                 // re-index Organizational Units
                 for (final String orgUnitHref : orgUnitHrefs) {
-                    sendUpdateIndexMessage(orgUnitHref, ResourceType.OU,
-                        indexName);
+                    sendUpdateIndexMessage(orgUnitHref, ResourceType.OU, indexName);
                 }
             }
             finally {
@@ -295,28 +266,20 @@ public class Reindexer {
     }
 
     /**
-     * @param indexName
-     *            name of the index (may be null for "all indexes")
-     * 
+     * @param indexName name of the index (may be null for "all indexes")
      * @return total number of objects found, ...
-     * @throws SystemException
-     *             Thrown if a framework internal error occurs.
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a SQL query
+     * @throws SystemException             Thrown if a framework internal error occurs.
+     * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
      */
-    public String testReindexError() throws SystemException,
-        InvalidSearchQueryException {
+    public String testReindexError() throws SystemException, InvalidSearchQueryException {
         sendUpdateIndexMessage("nonexistingPid", ResourceType.ITEM, null);
         return "OK";
     }
 
     /**
      * Extract the subject from the given triple.
-     * 
-     * @param triple
-     *            the triple from which the subject has to be extracted
-     * 
+     *
+     * @param triple the triple from which the subject has to be extracted
      * @return the subject of the given triple
      */
     private static String getSubject(final String triple) {
@@ -333,25 +296,18 @@ public class Reindexer {
     }
 
     /**
-     * @param objectType
-     *            type of the resource.
-     * @param indexName
-     *            name of the index (may be null for "all indexes")
-     * 
+     * @param objectType type of the resource.
+     * @param indexName  name of the index (may be null for "all indexes")
      * @throws ApplicationServerSystemException
-     *             e
+     *          e
      */
-    private void sendDeleteIndexMessage(
-        final ResourceType objectType, final String indexName)
+    private void sendDeleteIndexMessage(final ResourceType objectType, final String indexName)
         throws ApplicationServerSystemException {
         try {
             final IndexRequest indexRequest =
                 IndexRequestBuilder
-                    .createIndexRequest()
-                    .withAction(
-                        Constants.INDEXER_QUEUE_ACTION_PARAMETER_CREATE_EMPTY_VALUE)
-                    .withIndexName(indexName)
-                    .withObjectType(objectType.getUri()).build();
+                    .createIndexRequest().withAction(Constants.INDEXER_QUEUE_ACTION_PARAMETER_CREATE_EMPTY_VALUE)
+                    .withIndexName(indexName).withObjectType(objectType.getUri()).build();
             this.indexService.index(indexRequest);
         }
         catch (final Exception e) {
@@ -360,21 +316,15 @@ public class Reindexer {
     }
 
     /**
-     * @param resource
-     *            String resource.
-     * 
+     * @param resource String resource.
      * @throws ApplicationServerSystemException
-     *             e
+     *          e
      */
-    public void sendDeleteObjectMessage(final String resource)
-        throws ApplicationServerSystemException {
+    public void sendDeleteObjectMessage(final String resource) throws ApplicationServerSystemException {
         try {
             final IndexRequest indexRequest =
-                IndexRequestBuilder
-                    .createIndexRequest()
-                    .withAction(
-                        Constants.INDEXER_QUEUE_ACTION_PARAMETER_DELETE_VALUE)
-                    .withResource(resource).build();
+                IndexRequestBuilder.createIndexRequest().withAction(
+                    Constants.INDEXER_QUEUE_ACTION_PARAMETER_DELETE_VALUE).withResource(resource).build();
             this.indexService.index(indexRequest);
         }
         catch (final Exception e) {
@@ -383,28 +333,19 @@ public class Reindexer {
     }
 
     /**
-     * @param resource
-     *            String resource.
-     * @param objectType
-     *            type of the resource.
-     * @param indexName
-     *            name of the index (may be null for "all indexes")
-     * 
+     * @param resource   String resource.
+     * @param objectType type of the resource.
+     * @param indexName  name of the index (may be null for "all indexes")
      * @throws ApplicationServerSystemException
-     *             e
+     *          e
      */
-    private void sendUpdateIndexMessage(
-        final String resource, final ResourceType objectType,
-        final String indexName) throws ApplicationServerSystemException {
+    private void sendUpdateIndexMessage(final String resource, final ResourceType objectType, final String indexName)
+        throws ApplicationServerSystemException {
         try {
             final IndexRequest indexRequest =
-                IndexRequestBuilder
-                    .createIndexRequest()
-                    .withAction(
-                        Constants.INDEXER_QUEUE_ACTION_PARAMETER_UPDATE_VALUE)
-                    .withIndexName(indexName).withResource(resource)
-                    .withObjectType(objectType.getUri())
-                    .withIsReindexerCaller(true).build();
+                IndexRequestBuilder.createIndexRequest().withAction(
+                    Constants.INDEXER_QUEUE_ACTION_PARAMETER_UPDATE_VALUE).withIndexName(indexName).withResource(
+                    resource).withObjectType(objectType.getUri()).withIsReindexerCaller(true).build();
             this.indexService.index(indexRequest);
         }
         catch (final Exception e) {
@@ -414,24 +355,17 @@ public class Reindexer {
 
     /**
      * Get a list of all available resources of the given type from Fedora.
-     * 
-     * @param indexName
-     *            name of the index
-     * @param type
-     *            resource type
-     * @param listQuery
-     *            Fedora query to get a list of all resources of the given type
-     * @param clearIndex
-     *            clear the index before adding objects to it
-     * 
+     *
+     * @param indexName  name of the index
+     * @param type       resource type
+     * @param listQuery  Fedora query to get a list of all resources of the given type
+     * @param clearIndex clear the index before adding objects to it
      * @return list of resource ids
-     * @throws SystemException
-     *             Thrown if eSciDoc failed to receive a resource.
+     * @throws SystemException Thrown if eSciDoc failed to receive a resource.
      */
-    private Collection<String> getIds(final String indexName,
-                                      final ResourceType type,
-                                      final String listQuery,
-                                      final boolean clearIndex) throws SystemException {
+    private Collection<String> getIds(
+        final String indexName, final ResourceType type, final String listQuery, final boolean clearIndex)
+        throws SystemException {
         final Collection<String> result = new LinkedList<String>();
         if (contains(indexName, type)) {
             BufferedReader input = null;
@@ -449,8 +383,7 @@ public class Reindexer {
                     final String subject = getSubject(line);
 
                     if (subject != null) {
-                        final String id =
-                            subject.substring(subject.indexOf('/') + 1);
+                        final String id = subject.substring(subject.indexOf('/') + 1);
 
                         if (!indexedPids.contains(id)) {
                             reindexStatus.inc(type);
@@ -458,9 +391,11 @@ public class Reindexer {
                         }
                     }
                 }
-            } catch (final IOException e) {
+            }
+            catch (final IOException e) {
                 throw new SystemException(e);
-            } finally {
+            }
+            finally {
                 IOUtils.closeStream(input);
             }
         }
@@ -469,32 +404,25 @@ public class Reindexer {
 
     /**
      * Get the current status of the running/finished reindexing process.
-     * 
+     *
      * @return current status (how many objects are still in the queue)
-     * @throws SystemException
-     *             thrown in case of an internal error
+     * @throws SystemException thrown in case of an internal error
      */
     public String getStatus() throws SystemException {
         return ReindexStatus.getInstance().toString();
     }
 
     /**
-     * @param indexingHandler
-     *            indexing handler
-     * 
-     * @throws WebserverSystemException
-     *             thrown if the index configuration could not be read
+     * @param indexingHandler indexing handler
+     * @throws WebserverSystemException thrown if the index configuration could not be read
      */
-    public void setIndexingHandler(final IndexingHandler indexingHandler)
-        throws WebserverSystemException {
+    public void setIndexingHandler(final IndexingHandler indexingHandler) throws WebserverSystemException {
         this.indexingHandler = indexingHandler;
         this.objectTypeParameters = indexingHandler.getObjectTypeParameters();
     }
 
     /**
-     * 
-     * @param indexService
-     *            index service
+     * @param indexService index service
      */
     public void setIndexService(final IndexService indexService) {
         this.indexService = indexService;
@@ -502,9 +430,8 @@ public class Reindexer {
 
     /**
      * Injects the {@link FedoraUtility}.
-     * 
-     * @param fedoraUtility
-     *            the {@link FedoraUtility} to inject.
+     *
+     * @param fedoraUtility the {@link FedoraUtility} to inject.
      */
     public void setFedoraUtility(final FedoraUtility fedoraUtility) {
         this.fedoraUtility = fedoraUtility;

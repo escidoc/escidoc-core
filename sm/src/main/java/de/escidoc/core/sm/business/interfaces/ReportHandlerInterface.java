@@ -35,30 +35,24 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 
 /**
  * Interface of an Statistic Report Handler of the business layer.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 public interface ReportHandlerInterface {
 
     /**
      * Retrieves the specified Report.
-     * 
-     * @param xml
-     *            xml with parameters (report-parameters.xsd).
+     *
+     * @param xml xml with parameters (report-parameters.xsd).
      * @return Returns the XML representation of the resource.
      * @throws ReportDefinitionNotFoundException
-     *             e.
+     *                             e.
      * @throws MissingMethodParameterException
-     *             e.
-     * @throws InvalidSqlException
-     *             e.
-     * @throws SystemException
-     *             e.
-     * 
+     *                             e.
+     * @throws InvalidSqlException e.
+     * @throws SystemException     e.
      */
-    String retrieve(String xml) throws 
-        ReportDefinitionNotFoundException, MissingMethodParameterException,
+    String retrieve(String xml) throws ReportDefinitionNotFoundException, MissingMethodParameterException,
         InvalidSqlException, SystemException;
 
 }

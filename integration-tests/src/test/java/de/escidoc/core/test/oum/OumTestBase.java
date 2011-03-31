@@ -40,9 +40,8 @@ import java.util.Arrays;
 
 /**
  * Base class for tests of the mock implementation of the OM resources.
- * 
+ *
  * @author Michael Schneider
- * 
  */
 public class OumTestBase extends EscidocRestSoapTestBase {
 
@@ -50,8 +49,7 @@ public class OumTestBase extends EscidocRestSoapTestBase {
 
     public static final String XPATH_PARENT = XPATH_PARENTS + "/" + NAME_PARENT;
 
-    public static final String XPATH_MD_RECORD = XPATH_ORGANIZATION_MD_RECORDS
-        + "/" + NAME_MD_RECORD;
+    public static final String XPATH_MD_RECORD = XPATH_ORGANIZATION_MD_RECORDS + "/" + NAME_MD_RECORD;
 
     public static final String XPATH_MD_RECORDS_ESCIDOC_MD_RECORD =
         XPATH_MD_RECORD + "[@name=\"escidoc\"]" + "/" + NAME_OU_MD_RECORD;
@@ -61,18 +59,14 @@ public class OumTestBase extends EscidocRestSoapTestBase {
     /**
      * Path of OU name in RDF/XML result of triple store.
      */
-    public static final String XPATH_TRIPLE_STORE_OU_NAME =
-        "/RDF/Description/name";
+    public static final String XPATH_TRIPLE_STORE_OU_NAME = "/RDF/Description/name";
 
-    public static final String XPATH_TRIPLE_STORE_OU_TITLE =
-        "/RDF/Description/title";
+    public static final String XPATH_TRIPLE_STORE_OU_TITLE = "/RDF/Description/title";
 
-    public static final String XPATH_TRIPLE_STORE_OU_DESCRIPTION =
-        "/RDF/Description/description";
+    public static final String XPATH_TRIPLE_STORE_OU_DESCRIPTION = "/RDF/Description/description";
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public OumTestBase(final int transport) {
         super(transport);
@@ -88,31 +82,24 @@ public class OumTestBase extends EscidocRestSoapTestBase {
 
     /**
      * Extract the objids from the given list of organizational units.
-     * 
-     * @param organizationalUnitList
-     *            The list of organizational units.
+     *
+     * @param organizationalUnitList The list of organizational units.
      * @return An array containing the extracted ids.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    protected String[] getIdsFromOrganizationalUnitList(
-        final String organizationalUnitList) throws Exception {
+    protected String[] getIdsFromOrganizationalUnitList(final String organizationalUnitList) throws Exception {
         String[] result = null;
         NodeList nodeList = null;
 
         if (getTransport() == Constants.TRANSPORT_REST) {
             nodeList =
-                selectNodeList(
-                    EscidocRestSoapTestBase.getDocument(organizationalUnitList),
-                    XPATH_SRW_ORGANIZATIONAL_UNIT_LIST_ORGANIZATIONAL_UNIT
-                        + "/@href");
+                selectNodeList(EscidocRestSoapTestBase.getDocument(organizationalUnitList),
+                    XPATH_SRW_ORGANIZATIONAL_UNIT_LIST_ORGANIZATIONAL_UNIT + "/@href");
         }
         else if (getTransport() == Constants.TRANSPORT_SOAP) {
             nodeList =
-                selectNodeList(
-                    EscidocRestSoapTestBase.getDocument(organizationalUnitList),
-                    XPATH_SRW_ORGANIZATIONAL_UNIT_LIST_ORGANIZATIONAL_UNIT
-                        + "/@objid");
+                selectNodeList(EscidocRestSoapTestBase.getDocument(organizationalUnitList),
+                    XPATH_SRW_ORGANIZATIONAL_UNIT_LIST_ORGANIZATIONAL_UNIT + "/@objid");
         }
 
         result = new String[nodeList.getLength()];
@@ -130,29 +117,20 @@ public class OumTestBase extends EscidocRestSoapTestBase {
     }
 
     /**
-     * Checks if the given arrays contain the same elements regardless of their
-     * order.
-     * 
-     * @param array1
-     *            The 1st array.
-     * @param array2
-     *            The 2nd array.
-     * 
+     * Checks if the given arrays contain the same elements regardless of their order.
+     *
+     * @param array1 The 1st array.
+     * @param array2 The 2nd array.
      * @return true if the check was successful.
      */
-    protected boolean compareContent(
-        final String[] array1, final String[] array2) {
+    protected boolean compareContent(final String[] array1, final String[] array2) {
         boolean result = true;
 
-        if ((array1 == null) || (array2 == null)
-            || (array1.length != array2.length)) {
+        if ((array1 == null) || (array2 == null) || (array1.length != array2.length)) {
             result = false;
         }
         else {
-            result =
-                ListUtils
-                    .subtract(Arrays.asList(array1), Arrays.asList(array2))
-                    .size() == 0;
+            result = ListUtils.subtract(Arrays.asList(array1), Arrays.asList(array2)).size() == 0;
         }
         return result;
 
@@ -160,31 +138,25 @@ public class OumTestBase extends EscidocRestSoapTestBase {
 
     /**
      * Extract the objids from the given list of path(s).
-     * 
-     * @param path
-     *            The path.
+     *
+     * @param path The path.
      * @return An array containing the extracted ids.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     protected String[][] getIdsFromPathList(final String path) throws Exception {
 
         String[][] result = null;
         Document createdDoc = getDocument(path);
-        NodeList pathList =
-            selectNodeList(createdDoc,
-                "/organizational-unit-path-list/organizational-unit-path");
+        NodeList pathList = selectNodeList(createdDoc, "/organizational-unit-path-list/organizational-unit-path");
         result = new String[pathList.getLength()][];
         if (getTransport() == Constants.TRANSPORT_REST) {
             for (int i = 0; i < pathList.getLength(); i++) {
                 NodeList pathElements =
-                    selectNodeList(pathList.item(i),
-                        "/organizational-unit-path-list/organizational-unit-path["
-                            + (i + 1) + "]/organizational-unit-ref/@href");
+                    selectNodeList(pathList.item(i), "/organizational-unit-path-list/organizational-unit-path["
+                        + (i + 1) + "]/organizational-unit-ref/@href");
                 String[] elements = new String[pathElements.getLength()];
                 for (int j = pathElements.getLength() - 1; j >= 0; j--) {
-                    elements[j] =
-                        getObjidFromHref(pathElements.item(j).getNodeValue());
+                    elements[j] = getObjidFromHref(pathElements.item(j).getNodeValue());
                 }
                 result[i] = elements;
             }
@@ -192,9 +164,8 @@ public class OumTestBase extends EscidocRestSoapTestBase {
         else {
             for (int i = 0; i < pathList.getLength(); i++) {
                 NodeList pathElements =
-                    selectNodeList(pathList.item(i),
-                        "/organizational-unit-path-list/organizational-unit-path["
-                            + (i + 1) + "]/organizational-unit-ref/@objid");
+                    selectNodeList(pathList.item(i), "/organizational-unit-path-list/organizational-unit-path["
+                        + (i + 1) + "]/organizational-unit-ref/@objid");
                 String[] elements = new String[pathElements.getLength()];
                 for (int j = pathElements.getLength() - 1; j >= 0; j--) {
                     elements[j] = pathElements.item(j).getNodeValue();
@@ -206,18 +177,13 @@ public class OumTestBase extends EscidocRestSoapTestBase {
     }
 
     /**
-     * Checks if the given organizational unit path lists contain the same paths
-     * and elements.
-     * 
-     * @param array1
-     *            The 1st path list.
-     * @param array2
-     *            The 2nd path list.
-     * 
+     * Checks if the given organizational unit path lists contain the same paths and elements.
+     *
+     * @param array1 The 1st path list.
+     * @param array2 The 2nd path list.
      * @return true if the check was successful.
      */
-    protected boolean comparePathLists(
-        final String[][] array1, final String[][] array2) {
+    protected boolean comparePathLists(final String[][] array1, final String[][] array2) {
         boolean result = true;
 
         if (array1.length != array2.length) {

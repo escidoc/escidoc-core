@@ -2,9 +2,8 @@ package de.escidoc.core.test;
 
 /**
  * eSciDoc test case constants.
- * 
+ *
  * @author Steffen Wagner
- * 
  */
 public class Constants {
 

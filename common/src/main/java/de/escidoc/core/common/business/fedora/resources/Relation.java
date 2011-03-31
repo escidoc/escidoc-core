@@ -19,7 +19,7 @@
  */
 
 /**
- * 
+ *
  */
 package de.escidoc.core.common.business.fedora.resources;
 
@@ -31,33 +31,23 @@ import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 
 /**
- * Implementation of a Fedora Item Object which consist of datastreams managed
- * in Fedora Digital Repository System.
- * 
+ * Implementation of a Fedora Item Object which consist of datastreams managed in Fedora Digital Repository System.
+ *
  * @author Frank Schwichtenberg
- * 
  */
-public class Relation extends GenericVersionableResource
-    implements VersionableResource {
+public class Relation extends GenericVersionableResource implements VersionableResource {
 
     /**
-     * Constructs the relation with the specified id. The datastreams are
-     * instantiated and retrieved if the related getter is called.
-     * 
-     * @param id
-     *            The id of an item managed in Fedora.
-     * @throws TripleStoreSystemException
-     *             Thrown if TripleStore access failed.
-     * @throws IntegritySystemException
-     *             Thrown if there is an integrity error with the addressed
-     *             object.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
-     * @throws ResourceNotFoundException
+     * Constructs the relation with the specified id. The datastreams are instantiated and retrieved if the related
+     * getter is called.
+     *
+     * @param id The id of an item managed in Fedora.
+     * @throws TripleStoreSystemException Thrown if TripleStore access failed.
+     * @throws IntegritySystemException   Thrown if there is an integrity error with the addressed object.
+     * @throws WebserverSystemException   Thrown in case of an internal error.
      */
-    public Relation(final String id) throws TripleStoreSystemException,
-        WebserverSystemException, IntegritySystemException,
-        ResourceNotFoundException {
+    public Relation(final String id) throws TripleStoreSystemException, WebserverSystemException,
+        IntegritySystemException, ResourceNotFoundException {
 
         super(id);
         Utility.getInstance().checkIsRelation(id);

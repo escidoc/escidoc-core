@@ -20,10 +20,9 @@
 
 package de.escidoc.core.common.business.fedora.mptstore;
 
-
 /**
  * Utility for parsing, validating, and printing strings in N-Triples format.
- * 
+ *
  * @author cwilper@cs.cornell.edu
  */
 public final class MPTStringUtil {
@@ -52,10 +51,8 @@ public final class MPTStringUtil {
 
     private static final int UC_HIGH5 = 0x10FFFF;
 
-
     private MPTStringUtil() {
     }
-
 
     public static String escapeLiteralValueForSql(final CharSequence s) {
 
@@ -99,25 +96,20 @@ public final class MPTStringUtil {
     }
 
     /**
-     * Tell whether the given character is in the "low unicode" (two-byte)
-     * range.
-     * 
-     * @param cNum
-     *            the character.
+     * Tell whether the given character is in the "low unicode" (two-byte) range.
+     *
+     * @param cNum the character.
      * @return true if it's a low unicode character.
      */
     private static boolean isLowUnicode(final int cNum) {
-        return cNum >= UC_LOW1 && cNum <= UC_HIGH1
-            || cNum == UC_LOW2 || cNum == UC_HIGH2 || cNum >= UC_LOW3 && cNum <= UC_HIGH3
-            || cNum >= UC_LOW4 && cNum <= UC_HIGH4;
+        return cNum >= UC_LOW1 && cNum <= UC_HIGH1 || cNum == UC_LOW2 || cNum == UC_HIGH2 || cNum >= UC_LOW3
+            && cNum <= UC_HIGH3 || cNum >= UC_LOW4 && cNum <= UC_HIGH4;
     }
 
     /**
-     * Tell whether the given character is in the "high unicode" (four-byte)
-     * range.
-     * 
-     * @param cNum
-     *            the character.
+     * Tell whether the given character is in the "high unicode" (four-byte) range.
+     *
+     * @param cNum the character.
      * @return true if it's a low unicode character.
      */
     private static boolean isHighUnicode(final int cNum) {
@@ -125,13 +117,10 @@ public final class MPTStringUtil {
     }
 
     /**
-     * Get an uppercase hex string of the specified length, representing the
-     * given number.
-     * 
-     * @param num
-     *            The number to represent.
-     * @param len
-     *            The desired length of the output.
+     * Get an uppercase hex string of the specified length, representing the given number.
+     *
+     * @param num The number to represent.
+     * @param len The desired length of the output.
      * @return The uppercase hex string.
      */
     private static String hexString(final int num, final int len) {

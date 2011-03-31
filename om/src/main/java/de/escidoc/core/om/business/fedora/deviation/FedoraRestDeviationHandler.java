@@ -39,36 +39,25 @@ import org.slf4j.LoggerFactory;
 import java.io.ByteArrayInputStream;
 import java.util.Map;
 
-
 /**
  * @author Michael Hoppe
  */
-public class FedoraRestDeviationHandler
-    implements FedoraRestDeviationHandlerInterface {
+public class FedoraRestDeviationHandler implements FedoraRestDeviationHandlerInterface {
 
-    private static final Logger LOGGER =
-        LoggerFactory.getLogger(FedoraRestDeviationHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FedoraRestDeviationHandler.class);
 
     /**
-     * @see de.escidoc.core.om.business.interfaces
-     *      .FedoraRestDeviationHandlerInterface #getDatastreamDissemination(
-     *      java.lang.String,java.lang.String,java.lang.String)
-     * @param pid
-     *            unused.
-     * @param dsID
-     *            uri to component-content
+     * @param pid        unused.
+     * @param dsID       uri to component-content
      * @param parameters REST-GET-Parameters.
-     * 
      * @return EscidocBinaryContent escidocBinaryContent
-     * @throws Exception
-     *             ex
-     * 
+     * @throws Exception ex
+     * @see de.escidoc.core.om.business.interfaces .FedoraRestDeviationHandlerInterface #getDatastreamDissemination(
+     *      java.lang.String,java.lang.String,java.lang.String)
      */
     @Override
     public EscidocBinaryContent getDatastreamDissemination(
-        final String pid, final String dsID, 
-        final Map<String, String[]> parameters)
-        throws Exception {
+        final String pid, final String dsID, final Map<String, String[]> parameters) throws Exception {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("PID:" + pid + ", DSID:" + dsID);
@@ -77,19 +66,18 @@ public class FedoraRestDeviationHandler
         EscidocBinaryContent escidocBinaryContent = null;
         try {
             final MIMETypedStream mimeTypedStream =
-                (MIMETypedStream) IndexerResourceCache
-                    .getInstance().getResource(dsID);
+                (MIMETypedStream) IndexerResourceCache.getInstance().getResource(dsID);
             if (mimeTypedStream != null && mimeTypedStream.getStream() != null) {
                 escidocBinaryContent = new EscidocBinaryContent();
                 escidocBinaryContent.setMimeType(mimeTypedStream.getMIMEType());
-                escidocBinaryContent.setContent(
-                		new ByteArrayInputStream(mimeTypedStream.getStream()));
+                escidocBinaryContent.setContent(new ByteArrayInputStream(mimeTypedStream.getStream()));
             }
-        } catch (final Exception e) {
-            if(LOGGER.isWarnEnabled()) {
+        }
+        catch (final Exception e) {
+            if (LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on getting datastream dissemination.");
             }
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on getting datastream dissemination.", e);
             }
             throw e;
@@ -97,30 +85,22 @@ public class FedoraRestDeviationHandler
         if (escidocBinaryContent != null) {
             return escidocBinaryContent;
         }
-        LOGGER.error(StringUtility.format(
-            "could not get resource for cache", dsID));
+        LOGGER.error(StringUtility.format("could not get resource for cache", dsID));
         // /////////////////////////////////////////////////////////////////////
 
         return null;
     }
 
     /**
-     * @see de.escidoc.core.om.business.interfaces
-     *      .FedoraRestDeviationHandlerInterface
-     *      #export(java.lang.String,java.lang.String,java.lang.String)
-     * @param pid
-     *            uri to the resource.
+     * @param pid        uri to the resource.
      * @param parameters REST-GET-Parameters.
-     * 
      * @return String String with the fedora-object as escidoc-xml
-     * @throws Exception
-     *             ex
-     * 
+     * @throws Exception ex
+     * @see de.escidoc.core.om.business.interfaces .FedoraRestDeviationHandlerInterface
+     *      #export(java.lang.String,java.lang.String,java.lang.String)
      */
     @Override
-    public String export(
-        final String pid, final Map<String, String[]> parameters)
-        throws Exception {
+    public String export(final String pid, final Map<String, String[]> parameters) throws Exception {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("PID:" + pid);
         }
@@ -143,16 +123,10 @@ public class FedoraRestDeviationHandler
 
     /**
      * writes the given xml into the cache.
-     * 
-     * @param pid
-     *            uri to the resource.
-     * @param xml
-     *            xml-representation of the object
-     * 
-     * @throws Exception
-     *             ex
-     * 
      *
+     * @param pid uri to the resource.
+     * @param xml xml-representation of the object
+     * @throws Exception ex
      */
     @Override
     public void cache(final String pid, final String xml) throws Exception {
@@ -161,13 +135,9 @@ public class FedoraRestDeviationHandler
 
     /**
      * removes the given pid from the cache.
-     * 
-     * @param pid
-     *            uri to the resource.
-     * @throws Exception
-     *             ex
-     * 
      *
+     * @param pid uri to the resource.
+     * @throws Exception ex
      */
     @Override
     public void removeFromCache(final String pid) throws Exception {
@@ -175,17 +145,11 @@ public class FedoraRestDeviationHandler
     }
 
     /**
-     * replaces the given pid in the cache
-     * with the given xml.
-     * 
-     * @param pid
-     *            uri to the resource.
-     * @param xml
-     *            xml-representation of the object.
-     * @throws Exception
-     *             ex
-     * 
+     * replaces the given pid in the cache with the given xml.
      *
+     * @param pid uri to the resource.
+     * @param xml xml-representation of the object.
+     * @throws Exception ex
      */
     @Override
     public void replaceInCache(final String pid, final String xml) throws Exception {

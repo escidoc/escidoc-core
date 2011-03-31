@@ -39,9 +39,8 @@ import de.escidoc.core.om.business.renderer.interfaces.ContextRendererInterface;
 
 /**
  * Contains base functionality to handle Fedora Context.
- * 
+ *
  * @author Steffen Wagner
- * 
  */
 public class ContextHandlerBase extends HandlerBase {
 
@@ -59,27 +58,20 @@ public class ContextHandlerBase extends HandlerBase {
     }
 
     /**
-     * Bounds a Context object to this handler. Subsequent calls to this method
-     * have no effect.
-     * 
-     * @param id
-     *            The ID of the context which should be bound to this Handler.
-     * @param id
-     * @throws ContextNotFoundException
-     *             If there is no context with <code>id</code> in the
-     *             repository.
-     * @throws SystemException
-     *             If anything else fails.
+     * Bounds a Context object to this handler. Subsequent calls to this method have no effect.
+     *
+     * @param id The ID of the context which should be bound to this Handler.
+     * @throws ContextNotFoundException If there is no context with <code>id</code> in the repository.
+     * @throws SystemException          If anything else fails.
      */
-    public void setContext(final String id) throws ContextNotFoundException,
-        SystemException {
+    public void setContext(final String id) throws ContextNotFoundException, SystemException {
 
         this.context = new Context(id);
     }
 
     /**
      * Get the Context XML Renderer.
-     * 
+     *
      * @return renderer
      */
     public ContextRendererInterface getRenderer() {
@@ -102,25 +94,18 @@ public class ContextHandlerBase extends HandlerBase {
 
     /**
      * Check Status of Context against given value.
-     * 
-     * @param status
-     *            Value of Context status which is to check.
-     * @throws InvalidStatusException
-     *             Thrown if status compares of Context not to the status
-     *             parameter.
-     * @throws SystemException
-     *             If anything else fails.
+     *
+     * @param status Value of Context status which is to check.
+     * @throws InvalidStatusException Thrown if status compares of Context not to the status parameter.
+     * @throws SystemException        If anything else fails.
      */
-    protected void checkStatus(final String status)
-        throws InvalidStatusException, SystemException {
+    protected void checkStatus(final String status) throws InvalidStatusException, SystemException {
         final String objectStatus =
-            getTripleStoreUtility().getPropertiesElements(this.context.getId(),
-                TripleStoreUtility.PROP_PUBLIC_STATUS);
+            getTripleStoreUtility().getPropertiesElements(this.context.getId(), TripleStoreUtility.PROP_PUBLIC_STATUS);
 
-        if (! objectStatus.equals(status)) {
-            throw new InvalidStatusException("Context " + context.getId()
-                + " is in " + TripleStoreUtility.PROP_PUBLIC_STATUS + " '"
-                + objectStatus + "'.");
+        if (!objectStatus.equals(status)) {
+            throw new InvalidStatusException("Context " + context.getId() + " is in "
+                + TripleStoreUtility.PROP_PUBLIC_STATUS + " '" + objectStatus + "'.");
         }
     }
 

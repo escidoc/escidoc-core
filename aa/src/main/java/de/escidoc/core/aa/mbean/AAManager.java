@@ -38,9 +38,8 @@ import org.springframework.jmx.export.annotation.ManagedResource;
 import java.io.IOException;
 
 /**
- * Managed bean to access values and operations of the authentication and
- * authorization component.
- * 
+ * Managed bean to access values and operations of the authentication and authorization component.
+ *
  * @author Torsten Tetteroo
  */
 @ManagedResource(objectName = "eSciDocCore:name=AAManager", description = "Manager of the authentication and authorization component.", log = true, logFile = "jmx.log", currencyTimeLimit = 15)
@@ -52,10 +51,7 @@ public class AAManager {
     private UserHandleCleaner userHandleCleaner;
 
     /**
-     * Cleans up the eSciDoc user handles.<br>
-     * This delegates to {@link UserHandleCleaner}.cleanUp.
-     * 
-     *
+     * Cleans up the eSciDoc user handles.<br> This delegates to {@link UserHandleCleaner}.cleanUp.
      */
     @ManagedOperation(description = "Clean up the eSciDoc user handles that have been expired.")
     public void cleanUpUserHandles() {
@@ -65,8 +61,6 @@ public class AAManager {
 
     /**
      * Removes all objects dstored in the PoliciesCache.<br>
-     * 
-     *
      */
     @ManagedOperation(description = "remove everything from the PoliciesCache.")
     public void clearPoliciesCache() {
@@ -76,24 +70,20 @@ public class AAManager {
 
     /**
      * Exposes the clean up period.
-     * 
-     * @return Returns the clean up period taken from the
-     *         {@link EscidocConfiguration}.
-     * @throws IOException
-     *             Thrown if configuration properties are not available.
+     *
+     * @return Returns the clean up period taken from the {@link EscidocConfiguration}.
+     * @throws IOException Thrown if configuration properties are not available.
      */
     @ManagedAttribute(description = "The clean up period in milli seconds.", persistPeriod = 300)
     public long getCleanUpPeriod() throws IOException {
 
-        return EscidocConfiguration.getInstance().getAsLong(
-            "escidoc-core.aa.cleanup.period");
+        return EscidocConfiguration.getInstance().getAsLong("escidoc-core.aa.cleanup.period");
     }
 
     /**
      * Gets the {@link UserHandleCleaner}.
-     * 
-     * @return Returns the {@link UserHandleCleaner}.
      *
+     * @return Returns the {@link UserHandleCleaner}.
      */
     private UserHandleCleaner getUserHandleCleaner() {
         return this.userHandleCleaner;
@@ -101,9 +91,8 @@ public class AAManager {
 
     /**
      * Injects the {@link UserHandleCleaner}.
-     * 
-     * @param userHandleCleaner
-     *            The {@link UserHandleCleaner} to inject.
+     *
+     * @param userHandleCleaner The {@link UserHandleCleaner} to inject.
      */
     public void setUserHandleCleaner(final UserHandleCleaner userHandleCleaner) {
         this.userHandleCleaner = userHandleCleaner;

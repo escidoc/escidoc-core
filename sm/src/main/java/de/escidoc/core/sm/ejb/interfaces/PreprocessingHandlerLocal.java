@@ -16,19 +16,11 @@ import javax.ejb.EJBLocalObject;
 public interface PreprocessingHandlerLocal extends EJBLocalObject {
 
     void preprocess(String aggregationDefinitionId, String xmlData, SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            XmlSchemaValidationException,
-            XmlCorruptedException,
-            MissingMethodParameterException,
-            SystemException;
+        throws AuthenticationException, AuthorizationException, XmlSchemaValidationException, XmlCorruptedException,
+        MissingMethodParameterException, SystemException;
 
     void preprocess(String aggregationDefinitionId, String xmlData, String authHandle, Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            XmlSchemaValidationException,
-            XmlCorruptedException,
-            MissingMethodParameterException,
-            SystemException;
+        throws AuthenticationException, AuthorizationException, XmlSchemaValidationException, XmlCorruptedException,
+        MissingMethodParameterException, SystemException;
 
 }

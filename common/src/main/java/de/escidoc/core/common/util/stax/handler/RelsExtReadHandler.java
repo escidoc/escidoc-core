@@ -36,14 +36,12 @@ import javax.naming.directory.NoSuchAttributeException;
 
 /**
  * Read RelsExt and stores predicate and values within a Map.
- * 
+ *
  * @author Steffen Wagner
- * 
  */
 public class RelsExtReadHandler extends DefaultHandler {
 
-    private static final Logger LOGGER = LoggerFactory
-        .getLogger(RelsExtReadHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RelsExtReadHandler.class);
 
     private final StaxParser parser;
 
@@ -71,9 +69,8 @@ public class RelsExtReadHandler extends DefaultHandler {
 
     /**
      * RelsExtReadHandler.
-     * 
-     * @param parser
-     *            The Parser.
+     *
+     * @param parser The Parser.
      */
     public RelsExtReadHandler(final StaxParser parser) {
 
@@ -88,8 +85,7 @@ public class RelsExtReadHandler extends DefaultHandler {
      * (de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
-    public StartElement startElement(final StartElement element)
-        throws WebserverSystemException {
+    public StartElement startElement(final StartElement element) throws WebserverSystemException {
 
         if (this.inTripleSection) {
             this.predicate = element.getNamespace() + element.getLocalName();
@@ -99,9 +95,7 @@ public class RelsExtReadHandler extends DefaultHandler {
             if (parser.getCurPath().equals(RDF_DESCRIPTION_PATH)) {
                 try {
                     // select subject
-                    this.subject =
-                        element.getAttributeValue(Constants.RDF_NAMESPACE_URI,
-                            RDF_ABOUT);
+                    this.subject = element.getAttributeValue(Constants.RDF_NAMESPACE_URI, RDF_ABOUT);
                     if (this.cleanIdentifier) {
                         this.subject = cleanIdentifier(this.subject);
                     }
@@ -114,8 +108,7 @@ public class RelsExtReadHandler extends DefaultHandler {
             else {
                 this.inTripleSection = true;
                 // handle the first element
-                this.predicate =
-                    element.getNamespace() + element.getLocalName();
+                this.predicate = element.getNamespace() + element.getLocalName();
             }
         }
 
@@ -131,8 +124,7 @@ public class RelsExtReadHandler extends DefaultHandler {
      * de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
-    public String characters(final String data, final StartElement element)
-        throws IntegritySystemException {
+    public String characters(final String data, final StartElement element) throws IntegritySystemException {
 
         if (this.inTripleSection && this.readCharacter) {
             this.object += data;
@@ -155,8 +147,7 @@ public class RelsExtReadHandler extends DefaultHandler {
                 this.inTripleSection = false;
             }
             else {
-                this.triples.add(new Triple(this.subject, this.predicate,
-                    this.object));
+                this.triples.add(new Triple(this.subject, this.predicate, this.object));
             }
         }
 
@@ -165,10 +156,8 @@ public class RelsExtReadHandler extends DefaultHandler {
 
     /**
      * Switch if info:fedora/ should be removed from resource object or not.
-     * 
-     * @param clean
-     *            Set true to remove info:fedora/ from object. False (default)
-     *            keeps object value untouched.
+     *
+     * @param clean Set true to remove info:fedora/ from object. False (default) keeps object value untouched.
      */
     public void cleanIdentifier(final boolean clean) {
         this.cleanIdentifier = clean;
@@ -176,7 +165,7 @@ public class RelsExtReadHandler extends DefaultHandler {
 
     /**
      * Get all from RELS-EXT obtained Triples.
-     * 
+     *
      * @return Triples
      */
     public Triples getElementValues() {
@@ -185,17 +174,14 @@ public class RelsExtReadHandler extends DefaultHandler {
 
     /**
      * Get the value of attribute resource.
-     * 
-     * @param element
-     *            The start element.
+     *
+     * @param element The start element.
      */
     private void getObjectValue(final StartElement element) {
 
         if (element.hasAttribute(Constants.RDF_NAMESPACE_URI, RDF_RESOURCE)) {
             try {
-                this.object =
-                    element.getAttributeValue(Constants.RDF_NAMESPACE_URI,
-                        RDF_RESOURCE);
+                this.object = element.getAttributeValue(Constants.RDF_NAMESPACE_URI, RDF_RESOURCE);
                 if (this.cleanIdentifier) {
                     this.object = cleanIdentifier(this.object);
                 }
@@ -209,7 +195,7 @@ public class RelsExtReadHandler extends DefaultHandler {
                     LOGGER.debug("Error on getting attribute.", e);
                 }
             }
-        } 
+        }
         else {
             this.readCharacter = true;
             this.object = "";
@@ -217,11 +203,9 @@ public class RelsExtReadHandler extends DefaultHandler {
     }
 
     /**
-     * Removes the first 12 character from String, which should remove
-     * info:fedora/.
-     * 
-     * @param identifier
-     *            The String where info:fedora/ is to remove
+     * Removes the first 12 character from String, which should remove info:fedora/.
+     *
+     * @param identifier The String where info:fedora/ is to remove
      * @return the cleaned resource identifier.
      */
     private static String cleanIdentifier(final String identifier) {

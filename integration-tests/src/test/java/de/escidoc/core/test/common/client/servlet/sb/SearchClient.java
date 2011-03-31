@@ -55,11 +55,9 @@ import java.util.List;
 import java.util.Vector;
 
 /**
- * Offers access methods to the escidoc REST and SOAP interface of the Search
- * resource. (SRW-Server)
- * 
+ * Offers access methods to the escidoc REST and SOAP interface of the Search resource. (SRW-Server)
+ *
  * @author Michael Hoppe
- * 
  */
 public class SearchClient extends ClientBase {
 
@@ -68,9 +66,7 @@ public class SearchClient extends ClientBase {
     private ExplainPort explainClient = null;
 
     /**
-     * 
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public SearchClient(final int transport) {
         super(transport);
@@ -79,19 +75,13 @@ public class SearchClient extends ClientBase {
 
     /**
      * Retrieve srw search response.
-     * 
-     * @param parameters
-     *            The http-parameters as HashMap.
-     * @param database
-     *            database where search is executed.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param parameters The http-parameters as HashMap.
+     * @param database   database where search is executed.
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
-    public Object search(
-        final HashMap<String, String> parameters, final String database)
-        throws Exception {
+    public Object search(final HashMap<String, String> parameters, final String database) throws Exception {
 
         StringBuffer paramString = new StringBuffer("?");
         for (String key : parameters.keySet()) {
@@ -100,21 +90,18 @@ public class SearchClient extends ClientBase {
             }
             String value = parameters.get(key);
             if (getTransport() == Constants.TRANSPORT_REST) {
-                value =
-                    URLEncoder.encode(value, HttpHelper.HTTP_DEFAULT_CHARSET);
+                value = URLEncoder.encode(value, HttpHelper.HTTP_DEFAULT_CHARSET);
             }
             paramString.append(key).append("=").append(value);
         }
         parameters.put("database", database);
         switch (getTransport()) {
             case Constants.TRANSPORT_REST:
-                return callEsciDoc("Sb.search", METHOD_SEARCH,
-                    Constants.HTTP_METHOD_GET, Constants.SEARCH_BASE_URI + "/"
-                        + database + paramString, new String[] {});
+                return callEsciDoc("Sb.search", METHOD_SEARCH, Constants.HTTP_METHOD_GET, Constants.SEARCH_BASE_URI
+                    + "/" + database + paramString, new String[] {});
             case Constants.TRANSPORT_SOAP:
-                return callEsciDoc("Sb.search", METHOD_SEARCH,
-                    Constants.HTTP_METHOD_GET, Constants.SEARCH_BASE_URI + "/"
-                        + database + paramString, new String[] {}, parameters);
+                return callEsciDoc("Sb.search", METHOD_SEARCH, Constants.HTTP_METHOD_GET, Constants.SEARCH_BASE_URI
+                    + "/" + database + paramString, new String[] {}, parameters);
             default:
                 return null;
         }
@@ -122,18 +109,13 @@ public class SearchClient extends ClientBase {
 
     /**
      * Retrieve srw explain response.
-     * 
-     * @param parameters
-     *            The http-parameters as HashMap.
-     * @param database
-     *            database where search is executed.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param parameters The http-parameters as HashMap.
+     * @param database   database where search is executed.
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
-    public Object explain(final HashMap parameters, final String database)
-        throws Exception {
+    public Object explain(final HashMap parameters, final String database) throws Exception {
 
         StringBuffer paramString = new StringBuffer("?");
         for (Iterator iter = parameters.keySet().iterator(); iter.hasNext();) {
@@ -143,13 +125,11 @@ public class SearchClient extends ClientBase {
         parameters.put("database", database);
         switch (getTransport()) {
             case Constants.TRANSPORT_REST:
-                return callEsciDoc("Sb.explain", METHOD_EXPLAIN,
-                    Constants.HTTP_METHOD_GET, Constants.SEARCH_BASE_URI + "/"
-                        + database + paramString, new String[] {});
+                return callEsciDoc("Sb.explain", METHOD_EXPLAIN, Constants.HTTP_METHOD_GET, Constants.SEARCH_BASE_URI
+                    + "/" + database + paramString, new String[] {});
             case Constants.TRANSPORT_SOAP:
-                return callEsciDoc("Sb.explain", METHOD_EXPLAIN,
-                    Constants.HTTP_METHOD_GET, Constants.SEARCH_BASE_URI + "/"
-                        + database + paramString, new String[] {}, parameters);
+                return callEsciDoc("Sb.explain", METHOD_EXPLAIN, Constants.HTTP_METHOD_GET, Constants.SEARCH_BASE_URI
+                    + "/" + database + paramString, new String[] {}, parameters);
             default:
                 return null;
         }
@@ -157,19 +137,13 @@ public class SearchClient extends ClientBase {
 
     /**
      * Retrieve srw scan response.
-     * 
-     * @param parameters
-     *            The http-parameters as HashMap.
-     * @param database
-     *            database where scan is executed.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param parameters The http-parameters as HashMap.
+     * @param database   database where scan is executed.
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
-    public Object scan(
-        final HashMap<String, String> parameters, final String database)
-        throws Exception {
+    public Object scan(final HashMap<String, String> parameters, final String database) throws Exception {
 
         StringBuffer paramString = new StringBuffer("?");
         for (Iterator iter = parameters.keySet().iterator(); iter.hasNext();) {
@@ -179,50 +153,41 @@ public class SearchClient extends ClientBase {
             }
             String value = parameters.get(key);
             if (getTransport() == Constants.TRANSPORT_REST) {
-                value =
-                    URLEncoder.encode(value, HttpHelper.HTTP_DEFAULT_CHARSET);
+                value = URLEncoder.encode(value, HttpHelper.HTTP_DEFAULT_CHARSET);
             }
             paramString.append(key).append("=").append(value);
         }
         parameters.put("database", database);
         switch (getTransport()) {
             case Constants.TRANSPORT_REST:
-                return callEsciDoc("Sb.scan", METHOD_SCAN,
-                    Constants.HTTP_METHOD_GET, Constants.SEARCH_BASE_URI + "/"
-                        + database + paramString, new String[] {});
+                return callEsciDoc("Sb.scan", METHOD_SCAN, Constants.HTTP_METHOD_GET, Constants.SEARCH_BASE_URI + "/"
+                    + database + paramString, new String[] {});
             case Constants.TRANSPORT_SOAP:
-                return callEsciDoc("Sb.scan", METHOD_SCAN,
-                    Constants.HTTP_METHOD_GET, Constants.SEARCH_BASE_URI + "/"
-                        + database + paramString, new String[] {}, parameters);
+                return callEsciDoc("Sb.scan", METHOD_SCAN, Constants.HTTP_METHOD_GET, Constants.SEARCH_BASE_URI + "/"
+                    + database + paramString, new String[] {}, parameters);
             default:
                 return null;
         }
     }
 
     /**
-     * @param parameters
-     *            (database, url parameters..)
+     * @param parameters (database, url parameters..)
      * @return Returns the soapClient.
-     * @throws ServiceException
-     *             If the client creation fails.
+     * @throws ServiceException If the client creation fails.
      */
-    public SRWPort getSearchClient(final HashMap parameters)
-        throws ServiceException {
+    public SRWPort getSearchClient(final HashMap parameters) throws ServiceException {
         searchClient = createSearchClient(parameters);
         return searchClient;
     }
 
     /**
      * Create the soap client.
-     * 
-     * @param parameters
-     *            (database, url parameters..)
+     *
+     * @param parameters (database, url parameters..)
      * @return The soap client.
-     * @throws ServiceException
-     *             If the client creation fails.
+     * @throws ServiceException If the client creation fails.
      */
-    private SRWPort createSearchClient(final HashMap parameters)
-        throws ServiceException {
+    private SRWPort createSearchClient(final HashMap parameters) throws ServiceException {
         SRWPort result = null;
         Vector mappings = new Vector();
         addBeanMapping(SearchRetrieveResponseType.class, mappings);
@@ -232,11 +197,9 @@ public class SearchClient extends ClientBase {
         URL url;
         try {
             String httpUrl =
-                HttpHelper
-                    .createUrl(
-                        de.escidoc.core.test.common.client.servlet.Constants.PROTOCOL,
-                        de.escidoc.core.test.common.client.servlet.Constants.HOST_PORT,
-                        "srw/search/" + parameters.get("database"));
+                HttpHelper.createUrl(de.escidoc.core.test.common.client.servlet.Constants.PROTOCOL,
+                    de.escidoc.core.test.common.client.servlet.Constants.HOST_PORT, "srw/search/"
+                        + parameters.get("database"));
 
             url = new URL(httpUrl);
         }
@@ -248,29 +211,23 @@ public class SearchClient extends ClientBase {
     }
 
     /**
-     * @param parameters
-     *            (database, url parameters..)
+     * @param parameters (database, url parameters..)
      * @return Returns the soapClient.
-     * @throws ServiceException
-     *             If the client creation fails.
+     * @throws ServiceException If the client creation fails.
      */
-    public ExplainPort getExplainClient(final HashMap parameters)
-        throws ServiceException {
+    public ExplainPort getExplainClient(final HashMap parameters) throws ServiceException {
         explainClient = createExplainClient(parameters);
         return explainClient;
     }
 
     /**
      * Create the soap client.
-     * 
-     * @param parameters
-     *            (database, url parameters..)
+     *
+     * @param parameters (database, url parameters..)
      * @return The soap client.
-     * @throws ServiceException
-     *             If the client creation fails.
+     * @throws ServiceException If the client creation fails.
      */
-    private ExplainPort createExplainClient(final HashMap parameters)
-        throws ServiceException {
+    private ExplainPort createExplainClient(final HashMap parameters) throws ServiceException {
         ExplainPort result = null;
         Vector mappings = new Vector();
         addBeanMapping(ExplainResponseType.class, mappings);
@@ -280,11 +237,9 @@ public class SearchClient extends ClientBase {
         URL url;
         try {
             String httpUrl =
-                HttpHelper
-                    .createUrl(
-                        de.escidoc.core.test.common.client.servlet.Constants.PROTOCOL,
-                        de.escidoc.core.test.common.client.servlet.Constants.HOST_PORT,
-                        "srw/search/" + parameters.get("database"));
+                HttpHelper.createUrl(de.escidoc.core.test.common.client.servlet.Constants.PROTOCOL,
+                    de.escidoc.core.test.common.client.servlet.Constants.HOST_PORT, "srw/search/"
+                        + parameters.get("database"));
             url = new URL(httpUrl);
         }
         catch (final MalformedURLException e) {
@@ -296,20 +251,15 @@ public class SearchClient extends ClientBase {
 
     /**
      * Call the soap method on the appropriate soap client.
-     * 
-     * @param label
-     *            A label for logging purposes.
-     * @param soapMethod
-     *            The soap method.
-     * @param params
-     *            Array of additional parameters.
+     *
+     * @param label      A label for logging purposes.
+     * @param soapMethod The soap method.
+     * @param params     Array of additional parameters.
      * @return The result of the soap call.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     @Override
-    protected Object callSoapMethod(
-        final String label, final String soapMethod, final Object[] params)
+    protected Object callSoapMethod(final String label, final String soapMethod, final Object[] params)
         throws Exception {
         Object result = null;
         HashMap parameters = (HashMap) params[params.length - 1];
@@ -321,64 +271,57 @@ public class SearchClient extends ClientBase {
                 request.setQuery((String) parameters.get("query"));
             }
             if (parameters.get("startRecord") != null) {
-                request.setStartRecord(new PositiveInteger((String) parameters
-                    .get("startRecord")));
+                request.setStartRecord(new PositiveInteger((String) parameters.get("startRecord")));
             }
             if (parameters.get("maximumRecords") != null) {
-                request.setMaximumRecords(new PositiveInteger(
-                    (String) parameters.get("maximumRecords")));
+                request.setMaximumRecords(new PositiveInteger((String) parameters.get("maximumRecords")));
             }
             if (parameters.get("sortKeys") != null) {
                 request.setSortKeys((String) parameters.get("sortKeys"));
             }
             if (parameters.get("recordPacking") != null) {
-                request.setRecordPacking((String) parameters
-                    .get("recordPacking"));
+                request.setRecordPacking((String) parameters.get("recordPacking"));
             }
             if (parameters.get("recordSchema") != null) {
-                request
-                    .setRecordSchema((String) parameters.get("recordSchema"));
+                request.setRecordSchema((String) parameters.get("recordSchema"));
             }
             if (parameters.get("stylesheet") != null) {
-                request.setStylesheet(new URI((String) parameters
-                    .get("stylesheet")));
+                request.setStylesheet(new URI((String) parameters.get("stylesheet")));
             }
-            if (parameters.get("x-info5-omitHighlighting") != null
-                || parameters.get("x-info5-userId") != null
+            if (parameters.get("x-info5-omitHighlighting") != null || parameters.get("x-info5-userId") != null
                 || parameters.get("x-info5-roleId") != null) {
                 List<MessageElement> list = new ArrayList<MessageElement>();
                 if (parameters.get("x-info5-omitHighlighting") != null) {
                     MessageElement messageElement = new MessageElement();
                     messageElement.setName("x-info5-omitHighlighting");
-                    messageElement.setValue((String)parameters.get("x-info5-omitHighlighting"));
+                    messageElement.setValue((String) parameters.get("x-info5-omitHighlighting"));
                     list.add(messageElement);
                 }
                 if (parameters.get("x-info5-userId") != null) {
                     MessageElement messageElement = new MessageElement();
                     messageElement.setName("x-info5-userId");
-                    messageElement.setValue((String)parameters.get("x-info5-userId"));
+                    messageElement.setValue((String) parameters.get("x-info5-userId"));
                     list.add(messageElement);
                 }
                 if (parameters.get("x-info5-roleId") != null) {
                     MessageElement messageElement = new MessageElement();
                     messageElement.setName("x-info5-roleId");
-                    messageElement.setValue((String)parameters.get("x-info5-roleId"));
+                    messageElement.setValue((String) parameters.get("x-info5-roleId"));
                     list.add(messageElement);
                 }
-                
-              MessageElement[] elements = new MessageElement[list.size()];
-              int i = 0;
-              for (MessageElement messageElement : list) {
-                  elements[i] = messageElement;
-                  i++;
-              }
-              ExtraRequestData ex = new ExtraRequestData();
-              ex.set_any(elements);
-              request.setExtraRequestData(ex);
+
+                MessageElement[] elements = new MessageElement[list.size()];
+                int i = 0;
+                for (MessageElement messageElement : list) {
+                    elements[i] = messageElement;
+                    i++;
+                }
+                ExtraRequestData ex = new ExtraRequestData();
+                ex.set_any(elements);
+                request.setExtraRequestData(ex);
 
             }
-            result =
-                getSearchClient(parameters).searchRetrieveOperation(request);
+            result = getSearchClient(parameters).searchRetrieveOperation(request);
         }
         else if (METHOD_EXPLAIN.equals(soapMethod)) {
             ExplainRequestType request = new ExplainRequestType();
@@ -392,22 +335,18 @@ public class SearchClient extends ClientBase {
                 request.setScanClause((String) parameters.get("scanClause"));
             }
             if (parameters.get("responsePosition") != null) {
-                request.setResponsePosition(new PositiveInteger(
-                    (String) parameters.get("responsePosition")));
+                request.setResponsePosition(new PositiveInteger((String) parameters.get("responsePosition")));
             }
             if (parameters.get("maximumTerms") != null) {
-                request.setMaximumTerms(new PositiveInteger((String) parameters
-                    .get("maximumTerms")));
+                request.setMaximumTerms(new PositiveInteger((String) parameters.get("maximumTerms")));
             }
             if (parameters.get("stylesheet") != null) {
-                request.setStylesheet(new URI((String) parameters
-                    .get("stylesheet")));
+                request.setStylesheet(new URI((String) parameters.get("stylesheet")));
             }
             result = getSearchClient(parameters).scanOperation(request);
         }
         else {
-            throw new Exception("Tried to call unknown SOAP method '"
-                + soapMethod + "' with label '" + label + "'");
+            throw new Exception("Tried to call unknown SOAP method '" + soapMethod + "' with label '" + label + "'");
         }
         return result;
     }

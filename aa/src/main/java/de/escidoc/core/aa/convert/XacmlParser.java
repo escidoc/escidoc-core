@@ -63,17 +63,16 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * This is a helper class to convert an XACML document into an SQL / Lucene
- * fragment.
- * 
+ * This is a helper class to convert an XACML document into an SQL / Lucene fragment.
+ *
  * @author André Schenk
  */
 public class XacmlParser {
+
     /**
      * The logger.
      */
-    private static final Logger LOGGER =
-        LoggerFactory.getLogger(XacmlParser.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(XacmlParser.class);
 
     private XacmlFunctionRoleIsGranted xacmlFunctionRoleIsGranted;
 
@@ -85,14 +84,12 @@ public class XacmlParser {
 
     private final EscidocRoleDaoInterface roleDao = new EscidocRoleDaoInterface() {
         @Override
-        public boolean roleExists(final String identifier)
-            throws SqlDatabaseSystemException {
+        public boolean roleExists(final String identifier) throws SqlDatabaseSystemException {
             return false;
         }
 
         @Override
-        public void deleteRole(final EscidocRole r)
-            throws SqlDatabaseSystemException {
+        public void deleteRole(final EscidocRole r) throws SqlDatabaseSystemException {
         }
 
         @Override
@@ -100,46 +97,37 @@ public class XacmlParser {
         }
 
         @Override
-        public EscidocRole retrieveRole(final String identifier)
-            throws SqlDatabaseSystemException {
+        public EscidocRole retrieveRole(final String identifier) throws SqlDatabaseSystemException {
             return null;
         }
 
         @Override
         public List<EscidocRole> retrieveRoles(
-            final Map<String, Object> criteria, final int offset,
-            final int maxResults, final String orderBy,
+            final Map<String, Object> criteria, final int offset, final int maxResults, final String orderBy,
             final ListSorting sorting) throws SqlDatabaseSystemException {
             return null;
         }
 
         @Override
-        public List<EscidocRole> retrieveRoles(
-            final String criteria, final int offset, final int maxResults)
+        public List<EscidocRole> retrieveRoles(final String criteria, final int offset, final int maxResults)
             throws InvalidSearchQueryException, SqlDatabaseSystemException {
             return null;
         }
 
         @Override
-        public void saveOrUpdate(final EscidocRole r)
-            throws SqlDatabaseSystemException {
+        public void saveOrUpdate(final EscidocRole r) throws SqlDatabaseSystemException {
         }
 
         @Override
-        public void deleteScopeDef(final ScopeDef scopeDef)
-            throws SqlDatabaseSystemException {
+        public void deleteScopeDef(final ScopeDef scopeDef) throws SqlDatabaseSystemException {
         }
     };
 
     /**
-     * Get an SQL fragment from the XACML translation process of the policy
-     * rules for the given resource type.
-     * 
-     * @param resourceType
-     *            resource type
-     * 
-     * @return SQL fragment representing the policy rules of the XACML document
-     *         for that resource type
+     * Get an SQL fragment from the XACML translation process of the policy rules for the given resource type.
+     *
+     * @param resourceType resource type
+     * @return SQL fragment representing the policy rules of the XACML document for that resource type
      */
     public String getPolicyRules(final ResourceType resourceType) {
         String result = "";
@@ -157,14 +145,10 @@ public class XacmlParser {
     }
 
     /**
-     * Get an SQL fragment from the XACML translation process of the role scope
-     * for the given resource type.
-     * 
-     * @param resourceType
-     *            resource type
-     * 
-     * @return SQL fragment representing the role scope of the XACML document
-     *         for that resource type
+     * Get an SQL fragment from the XACML translation process of the role scope for the given resource type.
+     *
+     * @param resourceType resource type
+     * @return SQL fragment representing the role scope of the XACML document for that resource type
      */
     public String getScopeRules(final ResourceType resourceType) {
         String result = "";
@@ -172,18 +156,15 @@ public class XacmlParser {
 
         for (final Object scope : role.getScopeDefs()) {
             if (label.equals(((ScopeDefBase) scope).getObjectType())) {
-                final String rule =
-                    values.getScope(((ScopeDefBase) scope).getAttributeId());
+                final String rule = values.getScope(((ScopeDefBase) scope).getAttributeId());
 
                 if (rule == null) {
                     if (values.ignoreScope(((ScopeDefBase) scope).getAttributeId())) {
-                        LOGGER.info("ignore scope definition "
-                            + ((ScopeDefBase) scope).getAttributeId());
+                        LOGGER.info("ignore scope definition " + ((ScopeDefBase) scope).getAttributeId());
                     }
                     else {
-                        throw new IllegalArgumentException(
-                            "no translation found for "
-                                + ((ScopeDefBase) scope).getAttributeId());
+                        throw new IllegalArgumentException("no translation found for "
+                            + ((ScopeDefBase) scope).getAttributeId());
                     }
                 }
                 else {
@@ -198,8 +179,7 @@ public class XacmlParser {
      * Initialize the XACML function factory.
      */
     private void initFactory() {
-        final FunctionFactoryProxy proxy =
-            StandardFunctionFactory.getNewFactoryProxy();
+        final FunctionFactoryProxy proxy = StandardFunctionFactory.getNewFactoryProxy();
         final FunctionFactory factory = proxy.getTargetFactory();
 
         factory.addFunction(new XacmlFunctionContains());
@@ -211,14 +191,11 @@ public class XacmlParser {
     }
 
     /**
-     * Parse the given role and convert the embedded rules which are interesting
-     * for the resource cache into SQL fragments.
-     * 
-     * @param aRole
-     *            role to be parsed
-     * 
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
+     * Parse the given role and convert the embedded rules which are interesting for the resource cache into SQL
+     * fragments.
+     *
+     * @param aRole role to be parsed
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     public void parse(final EscidocRole aRole) throws WebserverSystemException {
         this.role = aRole;
@@ -227,14 +204,11 @@ public class XacmlParser {
     }
 
     /**
-     * Parse the given XACML document and convert the embedded rules which are
-     * interesting for the resource cache into SQL fragments.
-     * 
-     * @param file
-     *            file to be parsed
-     * 
-     * @throws Exception
-     *             Thrown in case of an internal error.
+     * Parse the given XACML document and convert the embedded rules which are interesting for the resource cache into
+     * SQL fragments.
+     *
+     * @param file file to be parsed
+     * @throws Exception Thrown in case of an internal error.
      */
     public void parse(final File file) throws Exception {
         this.role = new EscidocRole();
@@ -246,8 +220,7 @@ public class XacmlParser {
             in = new BufferedInputStream(new FileInputStream(file));
 
             final StaxParser sp = new StaxParser(XmlUtility.NAME_ROLE);
-            final RolePropertiesStaxHandler propertiesHandler =
-                new RolePropertiesStaxHandler(this.role, this.roleDao);
+            final RolePropertiesStaxHandler propertiesHandler = new RolePropertiesStaxHandler(this.role, this.roleDao);
 
             sp.addHandler(propertiesHandler);
 
@@ -268,9 +241,8 @@ public class XacmlParser {
 
     /**
      * Injects the policy parser object.
-     * 
-     * @param pol
-     *            policy parser from Spring
+     *
+     * @param pol policy parser from Spring
      */
     public void setPolicyParser(final PolicyParser pol) {
         this.pol = pol;
@@ -278,12 +250,10 @@ public class XacmlParser {
 
     /**
      * Injects the {@link XacmlFunctionRoleIsGranted}.
-     * 
-     * @param xacmlFunctionRoleIsGranted
-     *            the {@link XacmlFunctionRoleIsGranted} to inject.
+     *
+     * @param xacmlFunctionRoleIsGranted the {@link XacmlFunctionRoleIsGranted} to inject.
      */
-    public void setXacmlFunctionRoleIsGranted(
-        final XacmlFunctionRoleIsGranted xacmlFunctionRoleIsGranted) {
+    public void setXacmlFunctionRoleIsGranted(final XacmlFunctionRoleIsGranted xacmlFunctionRoleIsGranted) {
 
         this.xacmlFunctionRoleIsGranted = xacmlFunctionRoleIsGranted;
     }
@@ -291,8 +261,7 @@ public class XacmlParser {
     /**
      * Injects the filter values object.
      *
-     * @param values
-     *            filter values object from Spring
+     * @param values filter values object from Spring
      */
     public void setValues(final Values values) {
         this.values = values;

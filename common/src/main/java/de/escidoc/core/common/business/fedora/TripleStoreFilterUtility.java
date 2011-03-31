@@ -30,51 +30,30 @@ import java.util.Map;
 
 public interface TripleStoreFilterUtility {
 
-    String MEMBER_RELATION_PREDICATE =
-        "<http://www.nsdl.org/ontologies/relationships/hasMember>";
+    String MEMBER_RELATION_PREDICATE = "<http://www.nsdl.org/ontologies/relationships/hasMember>";
 
-    String PARENT_RELATION_PREDICATE =
-        "<http://www.nsdl.org/ontologies/relationships/hasParent>";
+    String PARENT_RELATION_PREDICATE = "<http://www.nsdl.org/ontologies/relationships/hasParent>";
 
-    String ITEM_PREDICATE_PREFIX =
-            '<' + Constants.ITEM_PROPERTIES_NAMESPACE_URI + '/';
+    String ITEM_PREDICATE_PREFIX = '<' + Constants.ITEM_PROPERTIES_NAMESPACE_URI + '/';
 
-    String CONTAINER_PREDICATE_PREFIX =
-        "<http://www.escidoc.de/schemas/container/0.1/";
+    String CONTAINER_PREDICATE_PREFIX = "<http://www.escidoc.de/schemas/container/0.1/";
 
-    String ITEMS_CONTEXT_PREDICATE =
-        ITEM_PREDICATE_PREFIX + "context>";
+    String ITEMS_CONTEXT_PREDICATE = ITEM_PREDICATE_PREFIX + "context>";
 
-    String CONTAINERS_CONTEXT_PREDICATE =
-        CONTAINER_PREDICATE_PREFIX + "context>";
+    String CONTAINERS_CONTEXT_PREDICATE = CONTAINER_PREDICATE_PREFIX + "context>";
 
     /**
-     * 
-     * <param> <filter name="items"> <id>escidoc:23232</id>
-     * <id>escidoc:12121</id> </filter> <filter
-     * name="created-by">escidoc:14141"</filter> <filter
-     * name="related">true</filter> <filter
+     * <param> <filter name="items"> <id>escidoc:23232</id> <id>escidoc:12121</id> </filter> <filter
+     * name="created-by">escidoc:14141"</filter> <filter name="related">true</filter> <filter
      * name="public-status">submitted</filter> </param>
-     * 
+     * <p/>
      * TODO more than one id-filter (name="items" and name="containers")
-     * 
-     * @param objectType
-     * @param filterMap
-     * @param additionalQueryPart
-     * @param whereClause
-     * @throws MissingMethodParameterException
-     * 
-     * @throws SystemException
-     *             Thrown in case of an internal error that prevents the
-     *             filtering using user id and role.
-     * 
      *
-     * @return
+     * @throws SystemException Thrown in case of an internal error that prevents the filtering using user id and role.
      */
     List<String> evaluate(
-        final String objectType, final Map<String, Object> filterMap,
-        final String additionalQueryPart, final String whereClause)
-        throws SystemException, MissingMethodParameterException;
+        final String objectType, final Map<String, Object> filterMap, final String additionalQueryPart,
+        final String whereClause) throws SystemException, MissingMethodParameterException;
 
     /**
      * @param id
@@ -83,27 +62,22 @@ public interface TripleStoreFilterUtility {
      * @throws TripleStoreSystemException
      * @throws TripleStoreSystemException
      */
-    List<String> getMemberList(final String id, final String whereClause)
-        throws TripleStoreSystemException;
+    List<String> getMemberList(final String id, final String whereClause) throws TripleStoreSystemException;
 
     List<String> getContainerMemberList(
-        final String containerId, final Map<String, Object> filter, final String whereClause)
-        throws SystemException, MissingMethodParameterException;
+        final String containerId, final Map<String, Object> filter, final String whereClause) throws SystemException,
+        MissingMethodParameterException;
 
     List<String> getContextMemberList(
-        final String contextId, final Map<String, Object> filterMap, final String whereClause)
-        throws SystemException, MissingMethodParameterException;
+        final String contextId, final Map<String, Object> filterMap, final String whereClause) throws SystemException,
+        MissingMethodParameterException;
 
-    String getObjectRefs(
-        final String objectType, final Map<String, Object> filterMap, final String whereClause)
+    String getObjectRefs(final String objectType, final Map<String, Object> filterMap, final String whereClause)
         throws SystemException, MissingMethodParameterException;
 
     /**
-     * Reload possibly needed values. Generalization of setUpTableManager which
-     * is called after sync of MPT-TripleStore.
-     * 
-     * @throws TripleStoreSystemException
-     * @return
+     * Reload possibly needed values. Generalization of setUpTableManager which is called after sync of
+     * MPT-TripleStore.
      */
     Object reinitialize() throws TripleStoreSystemException;
 

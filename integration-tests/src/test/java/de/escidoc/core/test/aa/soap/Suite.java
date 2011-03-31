@@ -32,46 +32,25 @@ import org.junit.runner.RunWith;
 
 /**
  * The AA test suite (SOAP).
- * 
+ *
  * @author Torsten Tetteroo
- * 
  */
 @RunWith(org.junit.runners.Suite.class)
-@org.junit.runners.Suite.SuiteClasses({
-        AdministratorSoapTest.class,
-        DefaultPoliciesSoapTest.class,
-        DepositorSoapTest.class,
-        ModeratorSoapTest.class,
-        StatisticEditorSoapTest.class,
-        StatisticReaderSoapTest.class,
-        CollaboratorSoapTest.class,
-        CollaboratorModifierSoapTest.class,
-        CollaboratorModifierAddRemoveMembersSoapTest.class,
-        CollaboratorModifierAddRemoveAnyMembersSoapTest.class,
-        CollaboratorModifierUpdateDirectMembersSoapTest.class,
-        CollaboratorModifierUpdateAnyMembersSoapTest.class,
-        ContentRelationManagerSoapTest.class,
-        ContentRelationModifierSoapTest.class,
-        UserGroupAdminSoapTest.class,
-        UserGroupInspectorSoapTest.class,
-        UserAccountAdminSoapTest.class,
-        UserAccountInspectorSoapTest.class,
-        OrgUnitAdminSoapTest.class,
-        ContextAdminSoapTest.class,
-        ContextModifierSoapTest.class,
-        
-        PdpSoapTest.class,
-        RoleSoapTest.class,
-        
-        UserAccountGrantSoapTest.class,
-        UserAccountSoapTest.class,
-        UserAttributeSoapTest.class,
-        UserGroupSoapTest.class,
-        UserGroupGrantSoapTest.class,
-        UserManagementWrapperSoapTest.class,
-        UserPreferenceSoapTest.class,
-        
-        GrantFilterSoapTest.class
-        })
+@org.junit.runners.Suite.SuiteClasses( { AdministratorSoapTest.class, DefaultPoliciesSoapTest.class,
+    DepositorSoapTest.class, ModeratorSoapTest.class, StatisticEditorSoapTest.class, StatisticReaderSoapTest.class,
+    CollaboratorSoapTest.class, CollaboratorModifierSoapTest.class, CollaboratorModifierAddRemoveMembersSoapTest.class,
+    CollaboratorModifierAddRemoveAnyMembersSoapTest.class, CollaboratorModifierUpdateDirectMembersSoapTest.class,
+    CollaboratorModifierUpdateAnyMembersSoapTest.class, ContentRelationManagerSoapTest.class,
+    ContentRelationModifierSoapTest.class, UserGroupAdminSoapTest.class, UserGroupInspectorSoapTest.class,
+    UserAccountAdminSoapTest.class, UserAccountInspectorSoapTest.class, OrgUnitAdminSoapTest.class,
+    ContextAdminSoapTest.class, ContextModifierSoapTest.class,
+
+    PdpSoapTest.class, RoleSoapTest.class,
+
+    UserAccountGrantSoapTest.class, UserAccountSoapTest.class, UserAttributeSoapTest.class, UserGroupSoapTest.class,
+    UserGroupGrantSoapTest.class, UserManagementWrapperSoapTest.class, UserPreferenceSoapTest.class,
+
+    GrantFilterSoapTest.class })
 public class Suite {
+
 }

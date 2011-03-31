@@ -25,21 +25,18 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import java.util.Map;
 
 /**
- * XmlTemplateProvider implementation using the Velocity template engine.<br/>
- * This implementation uses the velocity singleton pattern.
- * 
- * @author André Schenk
+ * XmlTemplateProvider implementation using the Velocity template engine.<br/> This implementation uses the velocity
+ * singleton pattern.
  *
+ * @author André Schenk
  */
 public final class SetDefinitionXmlProvider extends InfrastructureXmlProvider {
 
     private static final String SET_DEFINITION_RESOURCE_NAME = "set-definition";
 
-    private static final String SET_DEFINITIONS_RESOURCE_NAME =
-        "set-definition-list";
+    private static final String SET_DEFINITIONS_RESOURCE_NAME = "set-definition-list";
 
-    private static final String SET_DEFINITIONS_SRW_RESOURCE_NAME =
-        "set-definition-srw-list";
+    private static final String SET_DEFINITIONS_SRW_RESOURCE_NAME = "set-definition-srw-list";
 
     private static final String SET_DEFINITION_PATH = "/set-definition";
 
@@ -49,20 +46,17 @@ public final class SetDefinitionXmlProvider extends InfrastructureXmlProvider {
 
     /**
      * Private constructor to prevent initialization.
-     * 
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
+     *
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     private SetDefinitionXmlProvider() {
     }
 
     /**
      * Gets the set definition xml PROVIDER.
-     * 
+     *
      * @return Returns the <code>SetDefinitionXmlProvider</code> object.
-     * @throws WebserverSystemException
-     *             Thrown if the instance cannot be created due to an internal
-     *             error.
+     * @throws WebserverSystemException Thrown if the instance cannot be created due to an internal error.
      */
     public static SetDefinitionXmlProvider getInstance() {
         return PROVIDER;
@@ -70,51 +64,36 @@ public final class SetDefinitionXmlProvider extends InfrastructureXmlProvider {
 
     /**
      * Get the XML representation for a set definition.
-     * 
-     * @param values
-     *            variables to be put into the Velocity template
-     * 
+     *
+     * @param values variables to be put into the Velocity template
      * @return XML representation for the set definition
-     * @throws WebserverSystemException
-     *             Thrown if the instance cannot be created due to an internal
-     *             error.
+     * @throws WebserverSystemException Thrown if the instance cannot be created due to an internal error.
      */
-    public String getSetDefinitionXml(final Map<String, Object> values)
-        throws WebserverSystemException {
+    public String getSetDefinitionXml(final Map<String, Object> values) throws WebserverSystemException {
 
         return getXml(SET_DEFINITION_RESOURCE_NAME, SET_DEFINITION_PATH, values);
     }
 
     /**
      * Get the XML representation for a list of set definition.
-     * 
-     * @param values
-     *            variables to be put into the Velocity template
-     * 
+     *
+     * @param values variables to be put into the Velocity template
      * @return XML representation for the list of set definition
-     * @throws WebserverSystemException
-     *             Thrown if the instance cannot be created due to an internal
-     *             error.
+     * @throws WebserverSystemException Thrown if the instance cannot be created due to an internal error.
      */
-    public String getSetDefinitionsXml(final Map<String, Object> values)
-        throws WebserverSystemException {
+    public String getSetDefinitionsXml(final Map<String, Object> values) throws WebserverSystemException {
 
         return getXml(SET_DEFINITIONS_RESOURCE_NAME, RESOURCES_PATH, values);
     }
 
     /**
      * Get the XML representation for a list of set definition.
-     * 
-     * @param values
-     *            variables to be put into the Velocity template
-     * 
+     *
+     * @param values variables to be put into the Velocity template
      * @return XML representation for the list of set definition (SRW format)
-     * @throws WebserverSystemException
-     *             Thrown if the instance cannot be created due to an internal
-     *             error.
+     * @throws WebserverSystemException Thrown if the instance cannot be created due to an internal error.
      */
-    public String getSetDefinitionsSrwXml(final Map<String, Object> values)
-        throws WebserverSystemException {
+    public String getSetDefinitionsSrwXml(final Map<String, Object> values) throws WebserverSystemException {
 
         return getXml(SET_DEFINITIONS_SRW_RESOURCE_NAME, RESOURCES_PATH, values);
     }

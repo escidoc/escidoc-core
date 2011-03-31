@@ -35,10 +35,8 @@ import java.util.Date;
 
 /**
  * A grant.
- * 
- * @author Torsten Tetteroo
- * 
  *
+ * @author Torsten Tetteroo
  */
 public class RoleGrant extends RoleGrantBase {
 
@@ -49,8 +47,6 @@ public class RoleGrant extends RoleGrantBase {
 
     /**
      * The default constructor.
-     * 
-     *
      */
     public RoleGrant() {
 
@@ -58,33 +54,31 @@ public class RoleGrant extends RoleGrantBase {
 
     /**
      * Gets the title of this role grant.
-     * 
-     * @return Returns the title.
      *
+     * @return Returns the title.
      */
     public String getTitle() {
 
         final String objectTitle = getObjectTitle();
-        return objectTitle != null ? getEscidocRole().getRoleName() + " of " + objectTitle : getEscidocRole().getRoleName();
+        return objectTitle != null ? getEscidocRole().getRoleName() + " of " + objectTitle : getEscidocRole()
+            .getRoleName();
     }
 
     /**
      * Gets the Href of this role grant.
-     * 
-     * @return Returns the Href
      *
+     * @return Returns the Href
      */
     public String getHref() {
         return this.getUserAccountByUserId() != null ? XmlUtility.getUserAccountGrantHref(this
-                .getUserAccountByUserId().getId(), this.getId()) : XmlUtility.getUserGroupGrantHref(this
-                .getUserGroupByGroupId().getId(), this.getId());
+            .getUserAccountByUserId().getId(), this.getId()) : XmlUtility.getUserGroupGrantHref(this
+            .getUserGroupByGroupId().getId(), this.getId());
     }
 
     /**
      * Gets the creation date in ISO8601 format.
-     * 
-     * @return Returns the creation date in ISO8601 format.
      *
+     * @return Returns the creation date in ISO8601 format.
      */
     public String getIso8601CreationDate() {
 
@@ -96,9 +90,8 @@ public class RoleGrant extends RoleGrantBase {
 
     /**
      * Gets the revocation date in ISO8601 format.
-     * 
-     * @return Returns the creation date in ISO8601 format.
      *
+     * @return Returns the creation date in ISO8601 format.
      */
     public String getIso8601RevocationDate() {
 
@@ -109,11 +102,10 @@ public class RoleGrant extends RoleGrantBase {
     }
 
     /**
-     * Gets the date of last modification in ISO8601 format. <br>
-     * The maximum of creation date and revocation date is returned for this.
-     * 
-     * @return Returns the creation date in ISO8601 format.
+     * Gets the date of last modification in ISO8601 format. <br> The maximum of creation date and revocation date is
+     * returned for this.
      *
+     * @return Returns the creation date in ISO8601 format.
      */
     public String getIso8601LastModificationDate() {
 
@@ -125,12 +117,9 @@ public class RoleGrant extends RoleGrantBase {
     }
 
     /**
-     * Gets date of last modification. <br>
-     * The maximum of creation date and revocation date is returned for this.
-     * 
-     * @return Returns the date of last modification.
-     * 
+     * Gets date of last modification. <br> The maximum of creation date and revocation date is returned for this.
      *
+     * @return Returns the date of last modification.
      */
     public Date getLastModificationDate() {
 

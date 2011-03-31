@@ -46,9 +46,7 @@ import java.net.URL;
 import java.net.URLConnection;
 
 /**
- * 
  * @author Rozita Friedman
- * 
  */
 public final class OntologyUtility {
 
@@ -60,23 +58,17 @@ public final class OntologyUtility {
 
     /**
      * Check if content-relations ontologie contains predicate.
-     * 
-     * @param predicateUriReference
-     *            The predicate with uri reference
+     *
+     * @param predicateUriReference The predicate with uri reference
      * @return true if predicate is defined within ontologie, false otherwise.
-     * @throws WebserverSystemException
-     * @throws EncodingSystemException
-     * @throws XmlParserSystemException
      */
-    public static boolean checkPredicate(final String predicateUriReference)
-        throws WebserverSystemException, EncodingSystemException,
-        XmlParserSystemException {
+    public static boolean checkPredicate(final String predicateUriReference) throws WebserverSystemException,
+        EncodingSystemException, XmlParserSystemException {
 
         final InputStream in;
         try {
             final String ontologyLocation =
-                EscidocConfiguration.getInstance().appendToSelfURL(
-                    "/ontologies/mpdl-ontologies/content-relations.xml");
+                EscidocConfiguration.getInstance().appendToSelfURL("/ontologies/mpdl-ontologies/content-relations.xml");
             final URLConnection conn = new URL(ontologyLocation).openConnection();
             in = conn.getInputStream();
         }
@@ -86,8 +78,7 @@ public final class OntologyUtility {
 
         final StaxParser sp = new StaxParser();
 
-        final OntologyHandler ontologyHandler =
-            new OntologyHandler(sp, predicateUriReference);
+        final OntologyHandler ontologyHandler = new OntologyHandler(sp, predicateUriReference);
         sp.addHandler(ontologyHandler);
         try {
             sp.parse(in);

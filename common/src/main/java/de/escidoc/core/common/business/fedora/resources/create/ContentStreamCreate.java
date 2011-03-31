@@ -22,13 +22,11 @@ package de.escidoc.core.common.business.fedora.resources.create;
 
 /**
  * ContentStream for create method.
- * 
- * Attention! This is only a helper class for the transition to integrate this
- * functionality into the ContentStream class.
- * 
- * 
+ * <p/>
+ * Attention! This is only a helper class for the transition to integrate this functionality into the ContentStream
+ * class.
+ *
  * @author Steffen Wagner
- * 
  */
 public class ContentStreamCreate {
 
@@ -45,9 +43,8 @@ public class ContentStreamCreate {
 
     /**
      * Add content to ContentStream.
-     * 
-     * @param content
-     *            New content of ContentStream
+     *
+     * @param content New content of ContentStream
      */
     public void setContent(final BinaryContent content) {
 
@@ -56,7 +53,7 @@ public class ContentStreamCreate {
 
     /**
      * Get content of ContentStream.
-     * 
+     *
      * @return Content of ContentStream
      */
     public BinaryContent getContent() {
@@ -65,8 +62,7 @@ public class ContentStreamCreate {
     }
 
     /**
-     * @param name
-     *            the name to set
+     * @param name the name to set
      */
     public void setName(final String name) {
         this.name = name;
@@ -80,8 +76,7 @@ public class ContentStreamCreate {
     }
 
     /**
-     * @param mimeType
-     *            the mimeType to set
+     * @param mimeType the mimeType to set
      */
     public void setMimeType(final String mimeType) {
         this.mimeType = mimeType;
@@ -95,8 +90,7 @@ public class ContentStreamCreate {
     }
 
     /**
-     * @param title
-     *            the title to set
+     * @param title the title to set
      */
     public void setTitle(final String title) {
         this.title = title;

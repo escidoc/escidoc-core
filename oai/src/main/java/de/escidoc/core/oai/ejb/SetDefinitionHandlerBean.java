@@ -32,16 +32,19 @@ import java.util.Map;
 public class SetDefinitionHandlerBean implements SessionBean {
 
     SetDefinitionHandlerInterface service;
+
     SessionContext sessionCtx;
+
     private static final Logger LOGGER = LoggerFactory.getLogger(SetDefinitionHandlerBean.class);
 
     public void ejbCreate() throws CreateException {
         try {
             final BeanFactoryLocator beanFactoryLocator = SingletonBeanFactoryLocator.getInstance();
             final BeanFactory factory =
-                    beanFactoryLocator.useBeanFactory("SetDefinitionHandler.spring.ejb.context").getFactory();
+                beanFactoryLocator.useBeanFactory("SetDefinitionHandler.spring.ejb.context").getFactory();
             this.service = (SetDefinitionHandlerInterface) factory.getBean("service.SetDefinitionHandler");
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             LOGGER.error("ejbCreate(): Exception SetDefinitionHandlerComponent: " + e);
             throw new CreateException(e.getMessage());
         }
@@ -62,159 +65,127 @@ public class SetDefinitionHandlerBean implements SessionBean {
 
     }
 
-    public String create(final String setDefinition,
-                                   final SecurityContext securityContext)
-            throws UniqueConstraintViolationException,
-            InvalidXmlException,
-            MissingMethodParameterException,
-            SystemException,
-            AuthenticationException,
-            AuthorizationException {
+    public String create(final String setDefinition, final SecurityContext securityContext)
+        throws UniqueConstraintViolationException, InvalidXmlException, MissingMethodParameterException,
+        SystemException, AuthenticationException, AuthorizationException {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.create(setDefinition);
     }
 
-    public String create(final String setDefinition, final String authHandle,
-                                   final Boolean restAccess)
-            throws UniqueConstraintViolationException,
-            InvalidXmlException,
-            MissingMethodParameterException,
-            SystemException,
-            AuthenticationException,
-            AuthorizationException {
+    public String create(final String setDefinition, final String authHandle, final Boolean restAccess)
+        throws UniqueConstraintViolationException, InvalidXmlException, MissingMethodParameterException,
+        SystemException, AuthenticationException, AuthorizationException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.create(setDefinition);
     }
 
-    public String retrieve(final String setDefinitionId,
-                                     final SecurityContext securityContext)
-            throws ResourceNotFoundException,
-            MissingMethodParameterException,
-            SystemException,
-            AuthenticationException,
-            AuthorizationException {
+    public String retrieve(final String setDefinitionId, final SecurityContext securityContext)
+        throws ResourceNotFoundException, MissingMethodParameterException, SystemException, AuthenticationException,
+        AuthorizationException {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.retrieve(setDefinitionId);
     }
 
-    public String retrieve(final String setDefinitionId, final String authHandle,
-                                     final Boolean restAccess)
-            throws ResourceNotFoundException,
-            MissingMethodParameterException,
-            SystemException,
-            AuthenticationException,
-            AuthorizationException {
+    public String retrieve(final String setDefinitionId, final String authHandle, final Boolean restAccess)
+        throws ResourceNotFoundException, MissingMethodParameterException, SystemException, AuthenticationException,
+        AuthorizationException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.retrieve(setDefinitionId);
     }
 
-    public String update(final String setDefinitionId, final String xmlData,
-                                   final SecurityContext securityContext)
-            throws ResourceNotFoundException,
-            OptimisticLockingException,
-            MissingMethodParameterException,
-            SystemException,
-            AuthenticationException,
-            AuthorizationException {
+    public String update(final String setDefinitionId, final String xmlData, final SecurityContext securityContext)
+        throws ResourceNotFoundException, OptimisticLockingException, MissingMethodParameterException, SystemException,
+        AuthenticationException, AuthorizationException {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.update(setDefinitionId, xmlData);
     }
 
-    public String update(final String setDefinitionId, final String xmlData,
-                                   final String authHandle, final Boolean restAccess)
-            throws ResourceNotFoundException,
-            OptimisticLockingException,
-            MissingMethodParameterException,
-            SystemException,
-            AuthenticationException,
-            AuthorizationException {
+    public String update(
+        final String setDefinitionId, final String xmlData, final String authHandle, final Boolean restAccess)
+        throws ResourceNotFoundException, OptimisticLockingException, MissingMethodParameterException, SystemException,
+        AuthenticationException, AuthorizationException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.update(setDefinitionId, xmlData);
     }
 
-    public void delete(final String setDefinitionId,
-                       final SecurityContext securityContext)
-            throws ResourceNotFoundException,
-            MissingMethodParameterException,
-            SystemException,
-            AuthenticationException,
-            AuthorizationException {
+    public void delete(final String setDefinitionId, final SecurityContext securityContext)
+        throws ResourceNotFoundException, MissingMethodParameterException, SystemException, AuthenticationException,
+        AuthorizationException {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         service.delete(setDefinitionId);
     }
 
     public void delete(final String setDefinitionId, final String authHandle, final Boolean restAccess)
-            throws ResourceNotFoundException,
-            MissingMethodParameterException,
-            SystemException,
-            AuthenticationException,
-            AuthorizationException {
+        throws ResourceNotFoundException, MissingMethodParameterException, SystemException, AuthenticationException,
+        AuthorizationException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         service.delete(setDefinitionId);
     }
 
-    public String retrieveSetDefinitions(final Map filter,
-                                                   final SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            InvalidSearchQueryException,
-            SystemException {
+    public String retrieveSetDefinitions(final Map filter, final SecurityContext securityContext)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        InvalidSearchQueryException, SystemException {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.retrieveSetDefinitions(filter);
     }
 
-    public String retrieveSetDefinitions(final Map filter, final String authHandle,
-                                                   final Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            InvalidSearchQueryException,
-            SystemException {
+    public String retrieveSetDefinitions(final Map filter, final String authHandle, final Boolean restAccess)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        InvalidSearchQueryException, SystemException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.retrieveSetDefinitions(filter);

@@ -35,20 +35,16 @@ import java.util.Collection;
 
 /**
  * An utility class for SM XML Handling.
- * 
+ *
  * @author Michael Hoppe
  */
 public class SmXmlUtility {
 
-
     /**
-     * Extracts aggregation-definition-prim-keys out of the table-names of the
-     * given sql.
-     * 
-     * @param sql
-     *            sql-statement of report-definition.
+     * Extracts aggregation-definition-prim-keys out of the table-names of the given sql.
+     *
+     * @param sql sql-statement of report-definition.
      * @return Collection with aggregation-definition prim keys.
-     * 
      */
     public Collection<String> extractAggregationPrimKeysFromSql(final String sql) {
         final Collection<String> primKeys = new ArrayList<String>();
@@ -60,9 +56,9 @@ public class SmXmlUtility {
                 condition = true;
             }
             final String fromClause;
-            fromClause = condition ? workSql.replaceFirst(
-                    "(?i).*?from(.*?)(where|order by|group by).*", "$1") 
-                        : workSql.replaceFirst("(?i).*?from(.*)", "$1");
+            fromClause =
+                condition ? workSql.replaceFirst("(?i).*?from(.*?)(where|order by|group by).*", "$1") : workSql
+                    .replaceFirst("(?i).*?from(.*)", "$1");
             final String[] tables = fromClause.split(",");
             for (String table : tables) {
                 if (table.matches(".*?_.*")) {
@@ -79,26 +75,20 @@ public class SmXmlUtility {
 
     /**
      * returns id of scope.
-     * 
+     *
      * @param xmlData .
      * @return String scopeId
-     * @throws XmlParserSystemException
-     *             e
-     * 
+     * @throws XmlParserSystemException e
      */
-    public String getScopeId(final String xmlData)
-        throws XmlParserSystemException {
-        return xmlData.replaceFirst("(?s).*?<[^>]*?scope.*?objid=\"(.*?)\".*",
-            "$1");
+    public String getScopeId(final String xmlData) throws XmlParserSystemException {
+        return xmlData.replaceFirst("(?s).*?<[^>]*?scope.*?objid=\"(.*?)\".*", "$1");
     }
 
     /**
-     * removes Special Signs from primKey
-     * to create a table with primKey in name.
-     * 
+     * removes Special Signs from primKey to create a table with primKey in name.
+     *
      * @param primKey primKey
      * @return String primKeyWithoutSpecialSigns
-     * 
      */
     public String convertPrimKeyToTableName(final String primKey) {
         if (primKey != null) {

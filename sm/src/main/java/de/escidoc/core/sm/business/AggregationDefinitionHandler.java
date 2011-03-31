@@ -74,8 +74,7 @@ import java.util.TreeSet;
  *
  * @author Michael Hoppe
  */
-public class AggregationDefinitionHandler
-    implements AggregationDefinitionHandlerInterface {
+public class AggregationDefinitionHandler implements AggregationDefinitionHandlerInterface {
 
     private SmAggregationDefinitionsDaoInterface dao;
 
@@ -89,26 +88,17 @@ public class AggregationDefinitionHandler
 
     /**
      * See Interface for functional description.
-     * 
-     * @see de.escidoc.core.sm.business.interfaces
-     *      .AggregationDefinitionHandlerInterface#create(java.lang.String)
-     * 
-     * @param xmlData
-     *            aggregationDefinition as xml in aggregationDefinition schema.
+     *
+     * @param xmlData aggregationDefinition as xml in aggregationDefinition schema.
      * @return Returns the XML representation of the resource.
-     * 
      * @throws MissingMethodParameterException
-     *             ex
-     * @throws ScopeNotFoundException
-     *             ex
-     * @throws SystemException
-     *             ex
-     *
-     *
+     *                                ex
+     * @throws ScopeNotFoundException ex
+     * @throws SystemException        ex
+     * @see de.escidoc.core.sm.business.interfaces .AggregationDefinitionHandlerInterface#create(java.lang.String)
      */
     @Override
-    public String create(final String xmlData)
-        throws MissingMethodParameterException, ScopeNotFoundException,
+    public String create(final String xmlData) throws MissingMethodParameterException, ScopeNotFoundException,
         SystemException {
         if (xmlData == null || xmlData.length() == 0) {
             throw new MissingMethodParameterException("xml may not be null");
@@ -116,8 +106,7 @@ public class AggregationDefinitionHandler
 
         // parse
         final StaxParser sp = new StaxParser();
-        final AggregationDefinitionStaxHandler handler =
-            new AggregationDefinitionStaxHandler(sp);
+        final AggregationDefinitionStaxHandler handler = new AggregationDefinitionStaxHandler(sp);
         sp.addHandler(handler);
         try {
             sp.parse(xmlData);
@@ -134,32 +123,27 @@ public class AggregationDefinitionHandler
         final Utility utility = new Utility();
         final AggregationDefinition aggregationDefinition = handler.getAggregationDefinition();
         aggregationDefinition.setCreatorId(utility.getCurrentUserId());
-        aggregationDefinition.setCreationDate(new Timestamp(System
-            .currentTimeMillis()));
+        aggregationDefinition.setCreationDate(new Timestamp(System.currentTimeMillis()));
         aggregationDefinition.setScope(scope);
 
         dao.save(aggregationDefinition);
         handler.setAggregationDefinition(aggregationDefinition);
 
         // AggregationStatisticDataSelectors
-        for (final AggregationStatisticDataSelector selector : handler
-            .getAggregationStatisticDataSelectors()) {
+        for (final AggregationStatisticDataSelector selector : handler.getAggregationStatisticDataSelectors()) {
             dao.save(selector);
         }
-        aggregationDefinition.setAggregationStatisticDataSelectors(handler
-            .getAggregationStatisticDataSelectors());
+        aggregationDefinition.setAggregationStatisticDataSelectors(handler.getAggregationStatisticDataSelectors());
 
         // AggregationTables
         for (final AggregationTable aggregationTable : handler.getAggregationTables()) {
             dao.save(aggregationTable);
         }
-        aggregationDefinition.setAggregationTables(handler
-            .getAggregationTables());
+        aggregationDefinition.setAggregationTables(handler.getAggregationTables());
 
         // Get databaseTableVos for all Aggregation-Tables
         // defined in Aggregation Definition
-        final Collection<DatabaseTableVo> databaseTableVos =
-            generateAggregationDatabaseTableVos(aggregationDefinition);
+        final Collection<DatabaseTableVo> databaseTableVos = generateAggregationDatabaseTableVos(aggregationDefinition);
         if (databaseTableVos != null) {
             for (final DatabaseTableVo databaseTableVo : databaseTableVos) {
                 // create aggregation table in Database
@@ -172,26 +156,18 @@ public class AggregationDefinitionHandler
 
     /**
      * See Interface for functional description.
-     * 
-     * @see de.escidoc.core.sm.business.interfaces
-     *      .AggregationDefinitionHandlerInterface #delete(java.lang.String)
-     * 
-     * @param id
-     *            resource id.
-     * 
+     *
+     * @param id resource id.
      * @throws AggregationDefinitionNotFoundException
-     *             e.
+     *                         e.
      * @throws MissingMethodParameterException
-     *             e.
-     * @throws SystemException
-     *             e.
-     *
-     *
+     *                         e.
+     * @throws SystemException e.
+     * @see de.escidoc.core.sm.business.interfaces .AggregationDefinitionHandlerInterface #delete(java.lang.String)
      */
     @Override
-    public void delete(final String id)
-        throws AggregationDefinitionNotFoundException,
-        MissingMethodParameterException, SystemException {
+    public void delete(final String id) throws AggregationDefinitionNotFoundException, MissingMethodParameterException,
+        SystemException {
         if (id == null) {
             throw new MissingMethodParameterException("id may not be null");
         }
@@ -201,14 +177,12 @@ public class AggregationDefinitionHandler
             aggregationDefinition = dao.retrieve(id);
         }
         catch (final Exception e) {
-            throw new AggregationDefinitionNotFoundException(
-                "AggregationDefinition with id " + id + " not found", e);
+            throw new AggregationDefinitionNotFoundException("AggregationDefinition with id " + id + " not found", e);
         }
 
         // Get databaseTableVos for all Aggregation-Tables
         // defined in Aggregation Definition
-        final Collection<DatabaseTableVo> databaseTableVos =
-            generateAggregationDatabaseTableVos(aggregationDefinition);
+        final Collection<DatabaseTableVo> databaseTableVos = generateAggregationDatabaseTableVos(aggregationDefinition);
 
         if (databaseTableVos != null) {
             for (final DatabaseTableVo databaseTableVo : databaseTableVos) {
@@ -216,34 +190,25 @@ public class AggregationDefinitionHandler
                 dbAccessor.dropTable(databaseTableVo);
             }
         }
-        final DatabaseSelectVo databaseSelectVo =
-            generateAggregationDatabaseRecordVoForDeletion(id);
+        final DatabaseSelectVo databaseSelectVo = generateAggregationDatabaseRecordVoForDeletion(id);
         dbAccessor.deleteRecord(databaseSelectVo);
         // /////////////////////////////////////////////////////////////////
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @see de.escidoc.core.sm.business.interfaces
-     *      .AggregationDefinitionHandlerInterface#retrieve(java.lang.String)
-     * 
-     * @param id
-     *            resource id.
-     * @return Returns the XML representation of the resource.
-     * 
-     * @throws AggregationDefinitionNotFoundException
-     *             e.
-     * @throws MissingMethodParameterException
-     *             e.
-     * @throws SystemException
-     *             e.
-     * 
      *
+     * @param id resource id.
+     * @return Returns the XML representation of the resource.
+     * @throws AggregationDefinitionNotFoundException
+     *                         e.
+     * @throws MissingMethodParameterException
+     *                         e.
+     * @throws SystemException e.
+     * @see de.escidoc.core.sm.business.interfaces .AggregationDefinitionHandlerInterface#retrieve(java.lang.String)
      */
     @Override
-    public String retrieve(final String id)
-        throws AggregationDefinitionNotFoundException,
+    public String retrieve(final String id) throws AggregationDefinitionNotFoundException,
         MissingMethodParameterException, SystemException {
         if (id == null) {
             throw new MissingMethodParameterException("id may not be null");
@@ -253,35 +218,25 @@ public class AggregationDefinitionHandler
             return renderer.render(aggregationDefinition);
         }
         catch (final NumberFormatException e) {
-            throw new AggregationDefinitionNotFoundException(
-                "AggregationDefinition with id " + id + " not found", e);
+            throw new AggregationDefinitionNotFoundException("AggregationDefinition with id " + id + " not found", e);
         }
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @see de.escidoc.core.sm.business.interfaces
-     *      .AggregationDefinitionHandlerInterface
-     *      #retrieveAggregationDefinitions(java.util.Map)
-     * 
-     * @param parameters
-     *            filter as CQL query
-     * 
+     *
+     * @param parameters filter as CQL query
      * @return Returns the XML representation of the resource-list.
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a SQL query
-     * @throws SystemException
-     *             e.
+     * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
+     * @throws SystemException             e.
+     * @see de.escidoc.core.sm.business.interfaces .AggregationDefinitionHandlerInterface
+     *      #retrieveAggregationDefinitions(java.util.Map)
      */
     @Override
-    public String retrieveAggregationDefinitions(
-        final Map<String, String[]> parameters)
+    public String retrieveAggregationDefinitions(final Map<String, String[]> parameters)
         throws InvalidSearchQueryException, SystemException {
         final String result;
-        final SRURequestParameters params =
-            new DbRequestParameters(parameters);
+        final SRURequestParameters params = new DbRequestParameters(parameters);
         final String query = params.getQuery();
         final int limit = params.getMaximumRecords();
         final int offset = params.getStartRecord();
@@ -289,17 +244,13 @@ public class AggregationDefinitionHandler
         if (params.isExplain()) {
             final Map<String, Object> values = new HashMap<String, Object>();
 
-            values.put("PROPERTY_NAMES",
-                new AggregationDefinitionFilter(null).getPropertyNames());
-            result =
-                ExplainXmlProvider
-                    .getInstance().getExplainAggregationDefinitionXml(values);
+            values.put("PROPERTY_NAMES", new AggregationDefinitionFilter(null).getPropertyNames());
+            result = ExplainXmlProvider.getInstance().getExplainAggregationDefinitionXml(values);
         }
         else if (limit == 0) {
             result =
-                renderer.renderAggregationDefinitions(
-                    new ArrayList<AggregationDefinition>(0),
-                    params.getRecordPacking());
+                renderer.renderAggregationDefinitions(new ArrayList<AggregationDefinition>(0), params
+                    .getRecordPacking());
         }
         else {
             // get all scope ids from database
@@ -309,80 +260,57 @@ public class AggregationDefinitionHandler
 
             if (scopeIds != null && !scopeIds.isEmpty()) {
                 // get scope-ids filtered by user-privileges
-                filteredScopeIds =
-                    filterUtility.filterRetrievePrivilege(
-                        Constants.SCOPE_OBJECT_TYPE, scopeIds);
+                filteredScopeIds = filterUtility.filterRetrievePrivilege(Constants.SCOPE_OBJECT_TYPE, scopeIds);
             }
             Collection<AggregationDefinition> aggregationDefinitions = null;
             if (filteredScopeIds != null && !filteredScopeIds.isEmpty()) {
                 // get aggregation-definitions as XML
-                aggregationDefinitions =
-                    dao.retrieveAggregationDefinitions(filteredScopeIds, query,
-                        offset, limit);
+                aggregationDefinitions = dao.retrieveAggregationDefinitions(filteredScopeIds, query, offset, limit);
             }
 
-            result =
-                renderer.renderAggregationDefinitions(aggregationDefinitions,
-                    params.getRecordPacking());
+            result = renderer.renderAggregationDefinitions(aggregationDefinitions, params.getRecordPacking());
         }
         return result;
     }
 
     /**
-     * Generates DatabaseTableVos for DirectDatabaseAccessor to create
-     * Aggregation-Tables as defined in aggregation-definition.
-     * 
-     * @param aggregationDefinition
-     *            aggregationDefinition binding object.
-     * @return Collection Returns Collection with DatabaseTableVo.
-     * @throws SqlDatabaseSystemException
-     *             e
-     * 
+     * Generates DatabaseTableVos for DirectDatabaseAccessor to create Aggregation-Tables as defined in
+     * aggregation-definition.
      *
+     * @param aggregationDefinition aggregationDefinition binding object.
+     * @return Collection Returns Collection with DatabaseTableVo.
+     * @throws SqlDatabaseSystemException e
      */
     private Collection<DatabaseTableVo> generateAggregationDatabaseTableVos(
-        final AggregationDefinition aggregationDefinition)
-        throws SqlDatabaseSystemException {
-        final Collection<DatabaseTableVo> databaseTableVos =
-            new ArrayList<DatabaseTableVo>();
-        for (final AggregationTable aggregationTable : aggregationDefinition
-            .getAggregationTables()) {
+        final AggregationDefinition aggregationDefinition) throws SqlDatabaseSystemException {
+        final Collection<DatabaseTableVo> databaseTableVos = new ArrayList<DatabaseTableVo>();
+        for (final AggregationTable aggregationTable : aggregationDefinition.getAggregationTables()) {
             final DatabaseTableVo databaseTableVo = new DatabaseTableVo();
-            databaseTableVo.setTableName(aggregationTable
-                .getName().toLowerCase());
+            databaseTableVo.setTableName(aggregationTable.getName().toLowerCase());
 
             // Generate Fields
-            final Collection<DatabaseTableFieldVo> databaseFieldVos =
-                new ArrayList<DatabaseTableFieldVo>();
+            final Collection<DatabaseTableFieldVo> databaseFieldVos = new ArrayList<DatabaseTableFieldVo>();
             // sort AggregationTableFields
             final Collection<AggregationTableField> sortedAggregationTableFields =
-                new TreeSet<AggregationTableField>(
-                    new AggregationTableFieldComparator());
-            sortedAggregationTableFields
-                .addAll(aggregationTable
-                    .getAggregationTableFields());
+                new TreeSet<AggregationTableField>(new AggregationTableFieldComparator());
+            sortedAggregationTableFields.addAll(aggregationTable.getAggregationTableFields());
 
             for (final AggregationTableField field : sortedAggregationTableFields) {
-                final DatabaseTableFieldVo databaseTableFieldVo =
-                    new DatabaseTableFieldVo();
-                if (field.getFieldTypeId() == Constants.COUNT_CUMULATION_FIELD_ID ||
-                        field.getFieldTypeId() == Constants.DIFFERENCE_CUMULATION_FIELD_ID ||
-                        field.getFieldTypeId() == Constants.TIME_REDUCTION_FIELD_ID) {
+                final DatabaseTableFieldVo databaseTableFieldVo = new DatabaseTableFieldVo();
+                if (field.getFieldTypeId() == Constants.COUNT_CUMULATION_FIELD_ID
+                    || field.getFieldTypeId() == Constants.DIFFERENCE_CUMULATION_FIELD_ID
+                    || field.getFieldTypeId() == Constants.TIME_REDUCTION_FIELD_ID) {
                     dbAccessor.checkReservedExpressions(field.getName());
-                    databaseTableFieldVo.setFieldName(field
-                        .getName().toLowerCase());
-                    databaseTableFieldVo
-                        .setFieldType(Constants.DATABASE_FIELD_TYPE_NUMERIC);
+                    databaseTableFieldVo.setFieldName(field.getName().toLowerCase());
+                    databaseTableFieldVo.setFieldType(Constants.DATABASE_FIELD_TYPE_NUMERIC);
                 }
                 else if (field.getFieldTypeId() == Constants.INFO_FIELD_ID) {
                     dbAccessor.checkReservedExpressions(field.getName());
-                    databaseTableFieldVo.setFieldName(field
-                        .getName().toLowerCase());
+                    databaseTableFieldVo.setFieldName(field.getName().toLowerCase());
                     databaseTableFieldVo.setFieldType(field.getDataType());
                 }
                 else {
-                    throw new SqlDatabaseSystemException(
-                        "Table-Fields may not be empty in aggregation definition");
+                    throw new SqlDatabaseSystemException("Table-Fields may not be empty in aggregation definition");
                 }
                 databaseFieldVos.add(databaseTableFieldVo);
             }
@@ -391,21 +319,16 @@ public class AggregationDefinitionHandler
             // Generate Indexes
             if (aggregationTable.getAggregationTableIndexes() != null
                 && !aggregationTable.getAggregationTableIndexes().isEmpty()) {
-                final Collection<DatabaseIndexVo> databaseIndexVos =
-                    new ArrayList<DatabaseIndexVo>();
-                for (final AggregationTableIndexe index : aggregationTable
-                    .getAggregationTableIndexes()) {
+                final Collection<DatabaseIndexVo> databaseIndexVos = new ArrayList<DatabaseIndexVo>();
+                for (final AggregationTableIndexe index : aggregationTable.getAggregationTableIndexes()) {
                     final DatabaseIndexVo databaseIndexVo = new DatabaseIndexVo();
                     databaseIndexVo.setIndexName(index.getName().toLowerCase());
                     final Collection<String> indexFields = new ArrayList<String>();
                     if (index.getAggregationTableIndexFields() != null) {
                         // sort AggregationTableIndexFields
                         final Collection<AggregationTableIndexField> sortedAggregationTableIndexFields =
-                            new TreeSet<AggregationTableIndexField>(
-                                new AggregationTableIndexFieldComparator());
-                        sortedAggregationTableIndexFields
-                            .addAll(index
-                                .getAggregationTableIndexFields());
+                            new TreeSet<AggregationTableIndexField>(new AggregationTableIndexFieldComparator());
+                        sortedAggregationTableIndexFields.addAll(index.getAggregationTableIndexFields());
                         for (final AggregationTableIndexField indexField : sortedAggregationTableIndexFields) {
                             indexFields.add(indexField.getField());
                         }
@@ -421,19 +344,14 @@ public class AggregationDefinitionHandler
     }
 
     /**
-     * Generates DatabaseSelectVo for DirectDatabaseAccessor to delete a record
-     * in table Aggregation_Definitions.
-     * 
-     * @param primKey
-     *            primKey for table aggregation_definitions.
-     * @return DatabaseSelectVo Returns DatabaseSelectVo with recordInfo.
-     * @throws SqlDatabaseSystemException
-     *             e
-     * 
+     * Generates DatabaseSelectVo for DirectDatabaseAccessor to delete a record in table Aggregation_Definitions.
      *
+     * @param primKey primKey for table aggregation_definitions.
+     * @return DatabaseSelectVo Returns DatabaseSelectVo with recordInfo.
+     * @throws SqlDatabaseSystemException e
      */
     private static DatabaseSelectVo generateAggregationDatabaseRecordVoForDeletion(final String primKey)
-            throws SqlDatabaseSystemException {
+        throws SqlDatabaseSystemException {
         final DatabaseSelectVo databaseSelectVo = new DatabaseSelectVo();
         databaseSelectVo.setSelectType(Constants.DATABASE_SELECT_TYPE_DELETE);
         final Collection<String> tablenames = new ArrayList<String>();
@@ -452,9 +370,8 @@ public class AggregationDefinitionHandler
 
     /**
      * Setter for the dao.
-     * 
-     * @param dao
-     *            The data access object.
+     *
+     * @param dao The data access object.
      */
     public void setDao(final SmAggregationDefinitionsDaoInterface dao) {
         this.dao = dao;
@@ -462,9 +379,8 @@ public class AggregationDefinitionHandler
 
     /**
      * Setter for the scopesDao.
-     * 
-     * @param scopesDao
-     *            The data access object.
+     *
+     * @param scopesDao The data access object.
      */
     public void setScopesDao(final SmScopesDaoInterface scopesDao) {
         this.scopesDao = scopesDao;
@@ -472,20 +388,17 @@ public class AggregationDefinitionHandler
 
     /**
      * Setting the directDatabaseAccessor.
-     * 
-     * @param dbAccessorIn
-     *            The directDatabaseAccessor to set.
+     *
+     * @param dbAccessorIn The directDatabaseAccessor to set.
      */
-    public final void setDirectDatabaseAccessor(
-        final DirectDatabaseAccessorInterface dbAccessorIn) {
+    public final void setDirectDatabaseAccessor(final DirectDatabaseAccessorInterface dbAccessorIn) {
         this.dbAccessor = dbAccessorIn;
     }
 
     /**
      * Setting the filterUtility.
-     * 
-     * @param filterUtility
-     *            The filterUtility to set.
+     *
+     * @param filterUtility The filterUtility to set.
      */
     public final void setFilterUtility(final SmFilterUtility filterUtility) {
         this.filterUtility = filterUtility;
@@ -493,12 +406,10 @@ public class AggregationDefinitionHandler
 
     /**
      * Injects the renderer.
-     * 
-     * @param renderer
-     *            The renderer to inject.
+     *
+     * @param renderer The renderer to inject.
      */
-    public void setRenderer(
-        final AggregationDefinitionRendererInterface renderer) {
+    public void setRenderer(final AggregationDefinitionRendererInterface renderer) {
         this.renderer = renderer;
     }
 

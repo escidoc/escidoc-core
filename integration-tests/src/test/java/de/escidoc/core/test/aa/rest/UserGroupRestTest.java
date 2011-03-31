@@ -33,22 +33,18 @@ import de.escidoc.core.test.common.client.servlet.Constants;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-
-
 /**
  * Testsuite for the UserGroup's Grants with REST transport.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 @RunWith(JUnit4.class)
-public class UserGroupRestTest extends UserGroupTest  {
+public class UserGroupRestTest extends UserGroupTest {
 
     /**
      * Constructor.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     public UserGroupRestTest() throws Exception {
         super(Constants.TRANSPORT_REST);

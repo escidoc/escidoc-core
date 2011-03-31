@@ -44,15 +44,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Stax handler implementation that handles the refrences to parent ous that
- * have to be parsed and extracted during the creation of an organizational
- * unit.<br/>
- * 
+ * Stax handler implementation that handles the refrences to parent ous that have to be parsed and extracted during the
+ * creation of an organizational unit.<br/>
+ *
  * @author Michael Schneider
- * 
  */
-public class OrganizationalUnitParentsHandler
-    extends OrganizationalUnitHandlerBase {
+public class OrganizationalUnitParentsHandler extends OrganizationalUnitHandlerBase {
 
     private final List<String> parents = new ArrayList<String>();
 
@@ -61,43 +58,28 @@ public class OrganizationalUnitParentsHandler
     private boolean rootElementPathChecked;
 
     /**
-     * 
-     * @param parser
-     *            The stax parser.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
+     * @param parser The stax parser.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    public OrganizationalUnitParentsHandler(final StaxParser parser)
-        throws WebserverSystemException {
+    public OrganizationalUnitParentsHandler(final StaxParser parser) throws WebserverSystemException {
 
         super(null, parser);
     }
 
-
     /**
      * See Interface for functional description.
-     * 
-     * @param element
-     * @return
-     * @throws MissingAttributeValueException
-     * @throws OrganizationalUnitNotFoundException
-     * @throws SystemException
-     * @throws InvalidXmlException
-     * @throws MissingAttributeValueException
-     * @see DefaultHandler#
-     *      startElement(de.escidoc.core.common.util.xml.stax.events.StartElement)
+     *
+     * @see DefaultHandler# startElement(de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
-    public StartElement startElement(final StartElement element)
-        throws OrganizationalUnitNotFoundException, SystemException,
-        InvalidXmlException, MissingAttributeValueException {
+    public StartElement startElement(final StartElement element) throws OrganizationalUnitNotFoundException,
+        SystemException, InvalidXmlException, MissingAttributeValueException {
 
         final String curPath = getParser().getCurPath();
-        if (! this.rootElementPathChecked) {
+        if (!this.rootElementPathChecked) {
             if (!getParser().getCurPath().startsWith('/' + this.rootElement)) {
-                throw new XmlCorruptedException("Root element is "
-                    + element.getLocalName() + " not as expected" + this.rootElement
-                    + "! ");
+                throw new XmlCorruptedException("Root element is " + element.getLocalName() + " not as expected"
+                    + this.rootElement + "! ");
             }
             this.rootElementPathChecked = true;
         }
@@ -110,21 +92,14 @@ public class OrganizationalUnitParentsHandler
 
     /**
      * See Interface for functional description.
-     * 
-     * @param element
-     * @return
-     * @throws InvalidXmlException
-     * @see DefaultHandler#
-     *      endElement(de.escidoc.core.common.util.xml.stax.events.EndElement)
+     *
+     * @see DefaultHandler# endElement(de.escidoc.core.common.util.xml.stax.events.EndElement)
      */
     @Override
-    public EndElement endElement(final EndElement element)
-        throws InvalidXmlException {
+    public EndElement endElement(final EndElement element) throws InvalidXmlException {
 
         return element;
     }
-
-
 
     /**
      * @return the parentOus
@@ -134,8 +109,7 @@ public class OrganizationalUnitParentsHandler
     }
 
     /**
-     * @param rootElement
-     *            the rootElement to set
+     * @param rootElement the rootElement to set
      */
     public void setRootElement(final String rootElement) {
         this.rootElement = rootElement;

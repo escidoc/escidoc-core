@@ -36,9 +36,8 @@ import java.util.List;
 
 /**
  * Interface of a role renderer.
- * 
- * @author Torsten Tetteroo
  *
+ * @author Torsten Tetteroo
  */
 public interface RoleRendererInterface {
 
@@ -48,47 +47,32 @@ public interface RoleRendererInterface {
 
     /**
      * Gets the representation of a role.
-     * 
-     * @param role
-     *            The role to render.
-     * @return Returns the XML representation of the role.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
      *
+     * @param role The role to render.
+     * @return Returns the XML representation of the role.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     String render(final EscidocRole role) throws WebserverSystemException;
 
     /**
      * Gets the representation of the "resources" sub resource of a role.
-     * 
-     * @param role
-     *            The role to render.
-     * @return Returns the XML representation of the "resources" sub resource of
-     *         a role.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
      *
+     * @param role The role to render.
+     * @return Returns the XML representation of the "resources" sub resource of a role.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    String renderResources(final EscidocRole role)
-        throws WebserverSystemException;
+    String renderResources(final EscidocRole role) throws WebserverSystemException;
 
     /**
      * Gets the representation of the list of roles.
-     * 
-     * @param roles
-     *            The roles to render.
-     * @param recordPacking
-     *            A string to determine how the record should be escaped in the
-     *            response. Defined values are 'string' and 'xml'. The default
-     *            is 'xml'.
-     * 
-     * @return Returns the XML representation of the list of roles.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
      *
+     * @param roles         The roles to render.
+     * @param recordPacking A string to determine how the record should be escaped in the response. Defined values are
+     *                      'string' and 'xml'. The default is 'xml'.
+     * @return Returns the XML representation of the list of roles.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    String renderRoles(
-        final List<EscidocRole> roles, final RecordPacking recordPacking)
+    String renderRoles(final List<EscidocRole> roles, final RecordPacking recordPacking)
         throws WebserverSystemException;
 
 }

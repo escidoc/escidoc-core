@@ -40,8 +40,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLEncoder;
 
-public class ShibbolethAuthenticationEntryPoint
-    implements AuthenticationEntryPoint {
+public class ShibbolethAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     private String serviceProviderBaseUrl;
 
@@ -49,9 +48,8 @@ public class ShibbolethAuthenticationEntryPoint
 
     @Override
     public void commence(
-        final ServletRequest request, final ServletResponse response,
-        final AuthenticationException authException) throws IOException,
-        ServletException {
+        final ServletRequest request, final ServletResponse response, final AuthenticationException authException)
+        throws IOException, ServletException {
         final HttpServletRequest httpRequest = (HttpServletRequest) request;
         // FIXME:URL!!!
         final StringBuilder target = new StringBuilder(this.serviceProviderBaseUrl).append("aa/login");
@@ -62,40 +60,36 @@ public class ShibbolethAuthenticationEntryPoint
             target.append(queryString);
         }
         final String redirectUrl;
-        redirectUrl = httpRequest.getHeader(ShibbolethDetails.SHIB_SESSION_ID) == null ? target.toString() :
-                this.serviceProviderBaseUrl
+        redirectUrl =
+            httpRequest.getHeader(ShibbolethDetails.SHIB_SESSION_ID) == null ? target.toString() : this.serviceProviderBaseUrl
                 + this.sessionInitiatorPath
                 + "?target="
-                + URLEncoder.encode(target.toString(),
-                XmlUtility.CHARACTER_ENCODING);
-        if(response instanceof HttpServletResponse) {
+                + URLEncoder.encode(target.toString(), XmlUtility.CHARACTER_ENCODING);
+        if (response instanceof HttpServletResponse) {
             ((HttpServletResponse) response).sendRedirect(redirectUrl);
         }
     }
 
     /**
      * Injects the base url of the service provider.
-     * 
-     * @param serviceProviderBaseUrl
-     *            The serviceProviderBaseUrl to inject.
      *
+     * @param serviceProviderBaseUrl The serviceProviderBaseUrl to inject.
      */
     public void setServiceProviderBaseUrl(final String serviceProviderBaseUrl) {
 
-        this.serviceProviderBaseUrl = serviceProviderBaseUrl.endsWith("/") ? serviceProviderBaseUrl : serviceProviderBaseUrl + '/';
+        this.serviceProviderBaseUrl =
+            serviceProviderBaseUrl.endsWith("/") ? serviceProviderBaseUrl : serviceProviderBaseUrl + '/';
     }
 
     /**
-     * Injects the path to the session initiator. This path is relative to the
-     * service provider base URL.
-     * 
-     * @param sessionInitiatorPath
-     *            The sessionInitiatorPath to inject.
+     * Injects the path to the session initiator. This path is relative to the service provider base URL.
      *
+     * @param sessionInitiatorPath The sessionInitiatorPath to inject.
      */
     public void setSessionInitiatorPath(final String sessionInitiatorPath) {
 
-        this.sessionInitiatorPath = sessionInitiatorPath.startsWith("/") ? sessionInitiatorPath.substring(1) : sessionInitiatorPath;
+        this.sessionInitiatorPath =
+            sessionInitiatorPath.startsWith("/") ? sessionInitiatorPath.substring(1) : sessionInitiatorPath;
     }
 
 }

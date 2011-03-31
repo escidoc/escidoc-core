@@ -53,30 +53,24 @@ import javax.xml.stream.XMLStreamException;
 import java.io.UnsupportedEncodingException;
 
 /**
- * Handle Item XML to obtain all required values (Properties, Metadata,
- * Components, Content-Model-Specific, .. ).
- * 
+ * Handle Item XML to obtain all required values (Properties, Metadata, Components, Content-Model-Specific, .. ).
+ *
  * @author Steffen Wagner
- * 
  */
 public class ContentModelCreateHandler extends DefaultHandler {
 
-    private static final Logger LOGGER =
-        LoggerFactory.getLogger(ContentModelCreateHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ContentModelCreateHandler.class);
 
     private static final String XPATH_CONTENT_MODEL = "/content-model";
 
-    private static final String XPATH_CONTENT_MODEL_PROPERTIES =
-        XPATH_CONTENT_MODEL + "/properties";
+    private static final String XPATH_CONTENT_MODEL_PROPERTIES = XPATH_CONTENT_MODEL + "/properties";
 
-    private static final String XPATH_CONTENT_MODEL_METADATA =
-        XPATH_CONTENT_MODEL + "/md-record-definitions";
+    private static final String XPATH_CONTENT_MODEL_METADATA = XPATH_CONTENT_MODEL + "/md-record-definitions";
 
     private static final String XPATH_CONTENT_MODEL_RESOURCE_DEFINITIONS =
         XPATH_CONTENT_MODEL + "/resource-definitions";
 
-    private static final String XPATH_CONTENT_MODEL_CONTENT_STREAMS =
-        XPATH_CONTENT_MODEL + "/content-streams";
+    private static final String XPATH_CONTENT_MODEL_CONTENT_STREAMS = XPATH_CONTENT_MODEL + "/content-streams";
 
     private final StaxParser parser;
 
@@ -100,14 +94,11 @@ public class ContentModelCreateHandler extends DefaultHandler {
 
     /**
      * ItemHandler.
-     * 
-     * @param parser
-     *            StAX Parser.
-     * @throws WebserverSystemException
-     *             If internal error occurs.
+     *
+     * @param parser StAX Parser.
+     * @throws WebserverSystemException If internal error occurs.
      */
-    public ContentModelCreateHandler(final StaxParser parser)
-        throws WebserverSystemException {
+    public ContentModelCreateHandler(final StaxParser parser) throws WebserverSystemException {
 
         this.parser = parser;
         this.contentModel = new ContentModelCreate();
@@ -115,24 +106,14 @@ public class ContentModelCreateHandler extends DefaultHandler {
 
     /**
      * Parser hits an XML start element.
-     * 
-     * @param element
-     *            StAX Parser StartElement
+     *
+     * @param element StAX Parser StartElement
      * @return StartElement The StartElement.
-     * @throws MissingAttributeValueException
-     * @throws XMLStreamException
-     * @throws WebserverSystemException
-     * @throws ContextNotFoundException
-     * @throws ContentModelNotFoundException
-     * @throws ReadonlyElementViolationException
-     * @throws ReadonlyAttributeViolationException
      */
     @Override
-    public StartElement startElement(final StartElement element)
-        throws InvalidContentException, MissingAttributeValueException,
-        ReadonlyAttributeViolationException, ReadonlyElementViolationException,
-        ContentModelNotFoundException, ContextNotFoundException,
-        WebserverSystemException {
+    public StartElement startElement(final StartElement element) throws InvalidContentException,
+        MissingAttributeValueException, ReadonlyAttributeViolationException, ReadonlyElementViolationException,
+        ContentModelNotFoundException, ContextNotFoundException, WebserverSystemException {
 
         if (this.parsingProperties) {
             this.propertiesHandler.startElement(element);
@@ -150,34 +131,28 @@ public class ContentModelCreateHandler extends DefaultHandler {
             final String currentPath = parser.getCurPath();
 
             if (XPATH_CONTENT_MODEL_PROPERTIES.equals(currentPath)) {
-                if(LOGGER.isDebugEnabled()) {
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Parser reached " + XPATH_CONTENT_MODEL_PROPERTIES);
                 }
                 this.parsingProperties = true;
-                this.propertiesHandler =
-                    new ContentModelPropertiesHandler(this.parser);
+                this.propertiesHandler = new ContentModelPropertiesHandler(this.parser);
                 this.propertiesHandler.startElement(element);
             }
             else if (XPATH_CONTENT_MODEL_METADATA.equals(currentPath)) {
                 this.parsingMetaData = true;
-                this.metadataHandler =
-                    new MdRecordDefinitionHandler(this.parser,
-                        XPATH_CONTENT_MODEL_METADATA);
+                this.metadataHandler = new MdRecordDefinitionHandler(this.parser, XPATH_CONTENT_MODEL_METADATA);
                 this.metadataHandler.startElement(element);
             }
-            else if (XPATH_CONTENT_MODEL_RESOURCE_DEFINITIONS
-                .equals(currentPath)) {
+            else if (XPATH_CONTENT_MODEL_RESOURCE_DEFINITIONS.equals(currentPath)) {
                 this.parsingResourceDefinitions = true;
                 this.resourceDefinitionHandler =
-                    new ResourceDefinitionHandler(this.parser,
-                        XPATH_CONTENT_MODEL_RESOURCE_DEFINITIONS);
+                    new ResourceDefinitionHandler(this.parser, XPATH_CONTENT_MODEL_RESOURCE_DEFINITIONS);
                 this.resourceDefinitionHandler.startElement(element);
             }
             else if (XPATH_CONTENT_MODEL_CONTENT_STREAMS.equals(currentPath)) {
                 this.parsingContentStreams = true;
                 this.contentStreamsHandler =
-                    new ContentStreamsHandler(this.parser,
-                        XPATH_CONTENT_MODEL_CONTENT_STREAMS);
+                    new ContentStreamsHandler(this.parser, XPATH_CONTENT_MODEL_CONTENT_STREAMS);
                 this.contentStreamsHandler.startElement(element);
             }
         }
@@ -187,67 +162,50 @@ public class ContentModelCreateHandler extends DefaultHandler {
 
     /**
      * Parser hits an XML end element.
-     * 
-     * @param element
-     *            StAX EndElement
+     *
+     * @param element StAX EndElement
      * @return StAX EndElement
-     * 
-     * @throws XMLStreamException
-     * @throws SystemException
-     * @throws ContentModelNotFoundException
-     * @throws ContextNotFoundException
-     * @throws MissingAttributeValueException
-     * @throws InvalidXmlException
-     * @throws UnsupportedEncodingException
-     * @throws SystemException
      */
     @Override
-    public EndElement endElement(final EndElement element)
-        throws MissingContentException, InvalidXmlException,
-        MissingAttributeValueException, ContextNotFoundException,
-        ContentModelNotFoundException, UnsupportedEncodingException,
-        SystemException, InvalidContentException {
+    public EndElement endElement(final EndElement element) throws MissingContentException, InvalidXmlException,
+        MissingAttributeValueException, ContextNotFoundException, ContentModelNotFoundException,
+        UnsupportedEncodingException, SystemException, InvalidContentException {
 
         final String currentPath = parser.getCurPath();
 
         if (XPATH_CONTENT_MODEL_PROPERTIES.equals(currentPath)) {
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Parser reached end of " + XPATH_CONTENT_MODEL_PROPERTIES);
             }
             // parser leaves the XML component element
             this.parsingProperties = false;
             this.propertiesHandler.endElement(element);
-            this.contentModel.setProperties(this.propertiesHandler
-                .getProperties());
+            this.contentModel.setProperties(this.propertiesHandler.getProperties());
             this.propertiesHandler = null;
         }
         else if (XPATH_CONTENT_MODEL_METADATA.equals(currentPath)) {
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Parser reached end of " + XPATH_CONTENT_MODEL_METADATA);
             }
             // parser leaves the XML md-records element
             this.parsingMetaData = false;
-            this.contentModel.setMdRecordDefinitions(this.metadataHandler
-                .getMdRecordDefinitions());
+            this.contentModel.setMdRecordDefinitions(this.metadataHandler.getMdRecordDefinitions());
             this.metadataHandler = null;
         }
         else if (XPATH_CONTENT_MODEL_CONTENT_STREAMS.equals(currentPath)) {
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Parser reached end of " + XPATH_CONTENT_MODEL_CONTENT_STREAMS);
             }
             this.parsingContentStreams = false;
-            this.contentModel.setContentStreams(this.contentStreamsHandler
-                .getContentStreams());
+            this.contentModel.setContentStreams(this.contentStreamsHandler.getContentStreams());
             this.contentStreamsHandler = null;
         }
         else if (XPATH_CONTENT_MODEL_RESOURCE_DEFINITIONS.equals(currentPath)) {
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Parser reached end of " + XPATH_CONTENT_MODEL_RESOURCE_DEFINITIONS);
             }
             this.parsingResourceDefinitions = false;
-            this.contentModel
-                .setResourceDefinitions(this.resourceDefinitionHandler
-                    .getResourceDefinitions());
+            this.contentModel.setResourceDefinitions(this.resourceDefinitionHandler.getResourceDefinitions());
             this.resourceDefinitionHandler = null;
         }
         else {
@@ -270,23 +228,14 @@ public class ContentModelCreateHandler extends DefaultHandler {
 
     /**
      * Parser hits an XML character element.
-     * 
-     * @param s
-     *            XML character element.
-     * @param element
-     *            StAX StartElement
+     *
+     * @param s       XML character element.
+     * @param element StAX StartElement
      * @return XML character element.
-     * 
-     * @throws WebserverSystemException
-     * @throws MissingElementValueException
-     * @throws XMLStreamException
-     * @throws InvalidStatusException
-     * 
      */
     @Override
-    public String characters(final String s, final StartElement element)
-        throws InvalidContentException, MissingElementValueException,
-        WebserverSystemException, InvalidStatusException {
+    public String characters(final String s, final StartElement element) throws InvalidContentException,
+        MissingElementValueException, WebserverSystemException, InvalidStatusException {
 
         if (this.parsingProperties) {
             this.propertiesHandler.characters(s, element);
@@ -303,10 +252,9 @@ public class ContentModelCreateHandler extends DefaultHandler {
 
     /**
      * Get the Item.
-     * 
-     * Attention! ItemCreate is only a transition object. Later implementation
-     * has to return the Item class.
-     * 
+     * <p/>
+     * Attention! ItemCreate is only a transition object. Later implementation has to return the Item class.
+     *
      * @return Component
      */
     public ContentModelCreate getContentModel() {

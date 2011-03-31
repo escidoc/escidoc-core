@@ -31,14 +31,13 @@ import java.io.UnsupportedEncodingException;
 
 /**
  * Utility-Class that creates the escidocCookie containing the userHandle.
- * 
- * @author Michael Hoppe
  *
+ * @author Michael Hoppe
  */
 public final class UserHandleCookieUtil {
+
     /**
-     * The time span a cookie holding an eSciDoc user handle is valid (in
-     * seconds). -1 means valid until browser ends.
+     * The time span a cookie holding an eSciDoc user handle is valid (in seconds). -1 means valid until browser ends.
      */
     private static int escidocCookieLifetime = Integer.MIN_VALUE;
 
@@ -49,24 +48,17 @@ public final class UserHandleCookieUtil {
     }
 
     /**
-     * Creates an authentication cookie holding the provided eSciDoc user
-     * handle.<br>
-     * The cookie is valid for all locations of the eSciDoc domain. Its max age
-     * is set to the value of the configuration parameter
+     * Creates an authentication cookie holding the provided eSciDoc user handle.<br> The cookie is valid for all
+     * locations of the eSciDoc domain. Its max age is set to the value of the configuration parameter
      * escidoc.userHandle.cookie.lifetime.
-     * 
-     * @param handle
-     *            The eSciDocUserHandle.
+     *
+     * @param handle The eSciDocUserHandle.
      * @return Returns the created {@link Cookie}.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error (configuration parameter
-     *             not retrievable).
+     * @throws WebserverSystemException Thrown in case of an internal error (configuration parameter not retrievable).
      */
-    public static Cookie createAuthCookie(final String handle)
-        throws WebserverSystemException {
+    public static Cookie createAuthCookie(final String handle) throws WebserverSystemException {
 
-        final Cookie authCookie =
-            new Cookie(EscidocServlet.COOKIE_LOGIN, handle);
+        final Cookie authCookie = new Cookie(EscidocServlet.COOKIE_LOGIN, handle);
 
         authCookie.setMaxAge(getEscidocCookieLifetime());
 
@@ -77,28 +69,19 @@ public final class UserHandleCookieUtil {
 
     /**
      * @return the escidocCookieLifetime.
-     * @throws WebserverSystemException
-     *             Thrown if access to configuration properties fails.
+     * @throws WebserverSystemException Thrown if access to configuration properties fails.
      */
-    public static int getEscidocCookieLifetime()
-        throws WebserverSystemException {
+    public static int getEscidocCookieLifetime() throws WebserverSystemException {
 
         if (escidocCookieLifetime == Integer.MIN_VALUE) {
             try {
                 escidocCookieLifetime =
-                    Integer
-                        .parseInt(EscidocConfiguration
-                            .getInstance()
-                            .get(
-                                EscidocConfiguration.ESCIDOC_CORE_USERHANDLE_COOKIE_LIFETIME));
+                    Integer.parseInt(EscidocConfiguration.getInstance().get(
+                        EscidocConfiguration.ESCIDOC_CORE_USERHANDLE_COOKIE_LIFETIME));
             }
             catch (final Exception e) {
-                throw new WebserverSystemException(
-                    StringUtility
-                        .format(
-                            "Can't get configuration parameter",
-                            EscidocConfiguration.ESCIDOC_CORE_USERHANDLE_COOKIE_LIFETIME,
-                            e.getMessage()), e);
+                throw new WebserverSystemException(StringUtility.format("Can't get configuration parameter",
+                    EscidocConfiguration.ESCIDOC_CORE_USERHANDLE_COOKIE_LIFETIME, e.getMessage()), e);
             }
         }
         return escidocCookieLifetime;
@@ -106,43 +89,37 @@ public final class UserHandleCookieUtil {
 
     /**
      * Create Base46-Encoded userHandle.
-     * 
-     * @param userHandle
-     *            userHandle
-     * @throws WebserverSystemException e
+     *
+     * @param userHandle userHandle
      * @return the encoded userHandle.
+     * @throws WebserverSystemException e
      */
-    public static String createEncodedUserHandle(final String userHandle) 
-                                throws WebserverSystemException {
+    public static String createEncodedUserHandle(final String userHandle) throws WebserverSystemException {
         try {
-            return new String(Base64.encodeBase64(
-                userHandle.getBytes(XmlUtility.CHARACTER_ENCODING)), 
+            return new String(Base64.encodeBase64(userHandle.getBytes(XmlUtility.CHARACTER_ENCODING)),
                 XmlUtility.CHARACTER_ENCODING);
-        } catch (final UnsupportedEncodingException e) {
-            throw new WebserverSystemException(
-                StringUtility
-                    .format(
-                        "Can't encode UserHandle Base64",
-                        e.getMessage()), e);
+        }
+        catch (final UnsupportedEncodingException e) {
+            throw new WebserverSystemException(StringUtility.format("Can't encode UserHandle Base64", e.getMessage()),
+                e);
         }
     }
 
     /**
      * Create Base46-Encoded userHandle.
-     * 
-     * @param userHandle
-     *            userHandle
-     * @throws WebserverSystemException e
+     *
+     * @param userHandle userHandle
      * @return the decoded userHandle.
+     * @throws WebserverSystemException e
      */
-    public static String createDecodedUserHandle(final String userHandle) 
-                                throws WebserverSystemException {
+    public static String createDecodedUserHandle(final String userHandle) throws WebserverSystemException {
         try {
             return new String(Base64.decodeBase64(userHandle.getBytes(XmlUtility.CHARACTER_ENCODING)),
                 XmlUtility.CHARACTER_ENCODING);
-        } catch (final UnsupportedEncodingException e) {
-            throw new WebserverSystemException(
-                StringUtility.format("Can't decode UserHandle Base64", e.getMessage()), e);
+        }
+        catch (final UnsupportedEncodingException e) {
+            throw new WebserverSystemException(StringUtility.format("Can't decode UserHandle Base64", e.getMessage()),
+                e);
         }
     }
 

@@ -24,15 +24,19 @@ import java.rmi.RemoteException;
 public class IngestHandlerBean implements SessionBean {
 
     IngestHandlerInterface service;
+
     SessionContext sessionCtx;
+
     private static final Logger LOGGER = LoggerFactory.getLogger(IngestHandlerBean.class);
 
     public void ejbCreate() throws CreateException {
         try {
             final BeanFactoryLocator beanFactoryLocator = SingletonBeanFactoryLocator.getInstance();
-            final BeanFactory factory = beanFactoryLocator.useBeanFactory("IngestHandler.spring.ejb.context").getFactory();
+            final BeanFactory factory =
+                beanFactoryLocator.useBeanFactory("IngestHandler.spring.ejb.context").getFactory();
             this.service = (IngestHandlerInterface) factory.getBean("service.IngestHandler");
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             LOGGER.error("ejbCreate(): Exception IngestHandlerComponent: " + e);
             throw new CreateException(e.getMessage());
         }
@@ -53,23 +57,23 @@ public class IngestHandlerBean implements SessionBean {
 
     }
 
-    public String ingest(final String xmlData,
-                                   final SecurityContext securityContext)
-            throws EscidocException {
+    public String ingest(final String xmlData, final SecurityContext securityContext) throws EscidocException {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.ingest(xmlData);
     }
 
     public String ingest(final String xmlData, final String authHandle, final Boolean restAccess)
-            throws EscidocException {
+        throws EscidocException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.ingest(xmlData);

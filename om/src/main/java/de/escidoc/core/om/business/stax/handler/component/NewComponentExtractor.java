@@ -67,8 +67,7 @@ public class NewComponentExtractor extends DefaultHandler {
     }
 
     @Override
-    public String characters(final String data, final StartElement element)
-        throws XMLStreamException {
+    public String characters(final String data, final StartElement element) throws XMLStreamException {
         if (this.inside) {
             writer.writeCharacters(data);
         }
@@ -86,11 +85,8 @@ public class NewComponentExtractor extends DefaultHandler {
             final String ns = element.getNamespace();
             List nsTrace = (List) nsuris.get(ns);
 
-            if (nsTrace != null
-                && (nsTrace.get(2) == null || nsTrace.get(2).equals(
-                    element.getPrefix()))
-                && nsTrace.get(1).equals(element.getLocalName())
-                && (Integer) nsTrace.get(0) == this.deepLevel + 1) {
+            if (nsTrace != null && (nsTrace.get(2) == null || nsTrace.get(2).equals(element.getPrefix()))
+                && nsTrace.get(1).equals(element.getLocalName()) && (Integer) nsTrace.get(0) == this.deepLevel + 1) {
 
                 nsuris.remove(ns);
 
@@ -123,8 +119,7 @@ public class NewComponentExtractor extends DefaultHandler {
     }
 
     @Override
-    public StartElement startElement(final StartElement element)
-        throws XMLStreamException {
+    public StartElement startElement(final StartElement element) throws XMLStreamException {
         final String curPath = parser.getCurPath();
         if (this.inside) {
             this.deepLevel++;
@@ -133,22 +128,18 @@ public class NewComponentExtractor extends DefaultHandler {
             final int attCount = element.getAttributeCount();
             for (int i = 0; i < attCount; i++) {
                 final Attribute curAtt = element.getAttribute(i);
-                writeAttribute(curAtt.getNamespace(), element.getLocalName(),
-                    curAtt.getLocalName(), curAtt.getValue(), curAtt
-                        .getPrefix());
+                writeAttribute(curAtt.getNamespace(), element.getLocalName(), curAtt.getLocalName(), curAtt.getValue(),
+                    curAtt.getPrefix());
             }
         }
         else {
             if (curPath.endsWith("components/component")) {
                 final int indexObjid = element.indexOfAttribute(null, "objid");
-                final int indexHref =
-                    element.indexOfAttribute(Constants.XLINK_NS_URI, "href");
-                if (!(indexObjid > -1 && element
-                    .getAttribute(indexObjid).getValue().length() > 0
-                    || indexHref > -1 && Utility.getId(
-                        element.getAttribute(indexHref).getValue()).length() > 0)) {
+                final int indexHref = element.indexOfAttribute(Constants.XLINK_NS_URI, "href");
+                if (!(indexObjid > -1 && element.getAttribute(indexObjid).getValue().length() > 0 || indexHref > -1
+                    && Utility.getId(element.getAttribute(indexHref).getValue()).length() > 0)) {
 
-                      // start new component if there is no ID
+                    // start new component if there is no ID
                     final ByteArrayOutputStream out = new ByteArrayOutputStream();
 
                     this.writer = XmlUtility.createXmlStreamWriter(out);
@@ -161,8 +152,7 @@ public class NewComponentExtractor extends DefaultHandler {
                     final int attCount = element.getAttributeCount();
                     for (int i = 0; i < attCount; i++) {
                         final Attribute curAtt = element.getAttribute(i);
-                        writeAttribute(curAtt.getNamespace(), element
-                            .getLocalName(), curAtt.getLocalName(), curAtt
+                        writeAttribute(curAtt.getNamespace(), element.getLocalName(), curAtt.getLocalName(), curAtt
                             .getValue(), curAtt.getPrefix());
                     }
                 }
@@ -186,10 +176,12 @@ public class NewComponentExtractor extends DefaultHandler {
                 if (deepLevelInMAp >= this.deepLevel) {
                     writer.writeStartElement(prefix, name, uri);
                     writer.writeNamespace(prefix, uri);
-                } else {
+                }
+                else {
                     writer.writeStartElement(prefix, name, uri);
                 }
-            } else {
+            }
+            else {
                 final List namespaceTrace = new ArrayList();
                 namespaceTrace.add(this.deepLevel);
                 namespaceTrace.add(name);
@@ -206,8 +198,8 @@ public class NewComponentExtractor extends DefaultHandler {
     }
 
     private void writeAttribute(
-        final String uri, final String elementName, final String attributeName,
-        final String attributeValue, String prefix) throws XMLStreamException {
+        final String uri, final String elementName, final String attributeName, final String attributeValue,
+        String prefix) throws XMLStreamException {
 
         if (uri != null) {
             if (nsuris.containsKey(uri)) {
@@ -216,7 +208,8 @@ public class NewComponentExtractor extends DefaultHandler {
                 if (!prefixTrace.equals(prefix)) {
                     prefix = prefixTrace;
                 }
-            } else {
+            }
+            else {
                 final List namespaceTrace = new ArrayList();
                 namespaceTrace.add(this.deepLevel);
                 namespaceTrace.add(elementName);

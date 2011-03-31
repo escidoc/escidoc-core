@@ -43,16 +43,14 @@ import static org.junit.Assert.assertFalse;
 
 /**
  * Test the mock implementation of the item resource.
- * 
+ *
  * @author Michael Schneider
- * 
  */
 @RunWith(value = Parameterized.class)
 public class ContentModelCreateTest extends ContentModelTestBase {
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ContentModelCreateTest(final int transport) {
         super(transport);
@@ -60,142 +58,118 @@ public class ContentModelCreateTest extends ContentModelTestBase {
 
     /**
      * Test creating a ContentModel with minimal content.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testCmCreateMinimal() throws Exception {
         Document contentModel =
-            EscidocRestSoapTestBase.getTemplateAsDocument(
-                TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
                 "content-model-minimal-for-create.xml");
 
         String cmXml = toString(contentModel, false);
         String createdXML = create(cmXml);
 
-        validateContentModel(createdXML, getContentModelTitle(contentModel),
-            getContentModelDescription(contentModel),
-            getContentModelMdRecordDefinitions(contentModel),
-            getContentModelResourceDefinitions(contentModel),
+        validateContentModel(createdXML, getContentModelTitle(contentModel), getContentModelDescription(contentModel),
+            getContentModelMdRecordDefinitions(contentModel), getContentModelResourceDefinitions(contentModel),
             getContentModelContentStreamDefinitions(contentModel), false);
 
         String retrievedXML = retrieve(getObjidValue(createdXML));
 
         validateContentModel(retrievedXML, getContentModelTitle(contentModel),
-            getContentModelDescription(contentModel),
-            getContentModelMdRecordDefinitions(contentModel),
-            getContentModelResourceDefinitions(contentModel),
-            getContentModelContentStreamDefinitions(contentModel), false);
+            getContentModelDescription(contentModel), getContentModelMdRecordDefinitions(contentModel),
+            getContentModelResourceDefinitions(contentModel), getContentModelContentStreamDefinitions(contentModel),
+            false);
     }
 
     /**
      * Test creating a ContentModel with full content.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testCmCreateAll() throws Exception {
         Document contentModel =
-            EscidocRestSoapTestBase.getTemplateAsDocument(
-                TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
                 "content-model-all-for-create.xml");
 
         String title = getContentModelTitle(contentModel);
         String description = getContentModelDescription(contentModel);
 
-        Map<String, String> mdRecordDefinitions =
-            getContentModelMdRecordDefinitions(contentModel);
+        Map<String, String> mdRecordDefinitions = getContentModelMdRecordDefinitions(contentModel);
 
-        List<String> resourceDefinitions =
-            getContentModelResourceDefinitions(contentModel);
+        List<String> resourceDefinitions = getContentModelResourceDefinitions(contentModel);
 
-        List<List<String>> contentStreamDefinitions =
-            getContentModelContentStreamDefinitions(contentModel);
+        List<List<String>> contentStreamDefinitions = getContentModelContentStreamDefinitions(contentModel);
 
         String contentModelXml = toString(contentModel, false);
         String createdXML = create(contentModelXml);
 
         // validate
-        validateContentModel(createdXML, title, description,
-            mdRecordDefinitions, resourceDefinitions, contentStreamDefinitions,
-            true);
+        validateContentModel(createdXML, title, description, mdRecordDefinitions, resourceDefinitions,
+            contentStreamDefinitions, true);
 
     }
 
     /**
      * Test creating a ContentModel from a previously retrieved representation.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testCmmCCm1() throws Exception {
 
         Document contentModel =
-            EscidocRestSoapTestBase.getTemplateAsDocument(
-                TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
                 "content-model-asRetrieved.xml");
         String cmXml = toString(contentModel, false);
         String createdXML = create(cmXml);
 
         retrieve(getObjidValue(createdXML));
 
-        validateContentModel(createdXML, getContentModelTitle(contentModel),
-            getContentModelDescription(contentModel),
-            getContentModelMdRecordDefinitions(contentModel),
-            getContentModelResourceDefinitions(contentModel),
+        validateContentModel(createdXML, getContentModelTitle(contentModel), getContentModelDescription(contentModel),
+            getContentModelMdRecordDefinitions(contentModel), getContentModelResourceDefinitions(contentModel),
             getContentModelContentStreamDefinitions(contentModel), false);
     }
 
     /**
-     * Test creating a ContentModel from a previously created ContentModels
-     * representation.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test creating a ContentModel from a previously created ContentModels representation.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testCreateFromRetrieve() throws Exception {
 
         Document contentModel =
-            EscidocRestSoapTestBase.getTemplateAsDocument(
-                TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
                 "content-model-all-for-create.xml");
         String title = getContentModelTitle(contentModel);
         String description = getContentModelDescription(contentModel);
-        Map<String, String> mdRecordDefinitions =
-            getContentModelMdRecordDefinitions(contentModel);
-        List<String> resourceDefinitions =
-            getContentModelResourceDefinitions(contentModel);
-        List<List<String>> contentStreamDefinitions =
-            getContentModelContentStreamDefinitions(contentModel);
+        Map<String, String> mdRecordDefinitions = getContentModelMdRecordDefinitions(contentModel);
+        List<String> resourceDefinitions = getContentModelResourceDefinitions(contentModel);
+        List<List<String>> contentStreamDefinitions = getContentModelContentStreamDefinitions(contentModel);
 
         String cmXml = toString(contentModel, false);
         String createdXML = create(cmXml);
 
-        validateContentModel(createdXML, title, description,
-            mdRecordDefinitions, resourceDefinitions, contentStreamDefinitions,
-            true);
+        validateContentModel(createdXML, title, description, mdRecordDefinitions, resourceDefinitions,
+            contentStreamDefinitions, true);
 
         createdXML = create(retrieve(getObjidValue(createdXML)));
-        validateContentModel(createdXML, title, description,
-            mdRecordDefinitions, resourceDefinitions, contentStreamDefinitions,
-            true);
+        validateContentModel(createdXML, title, description, mdRecordDefinitions, resourceDefinitions,
+            contentStreamDefinitions, true);
 
     }
 
     /**
      * Test creating an ContentModel without xml.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testCmmCCm3() throws Exception {
 
-        Class< ? > ec = MissingMethodParameterException.class;
+        Class<?> ec = MissingMethodParameterException.class;
         try {
             create(null);
             EscidocRestSoapTestBase.failMissingException(ec);
@@ -206,34 +180,30 @@ public class ContentModelCreateTest extends ContentModelTestBase {
     }
 
     /**
-     * Test unexpected parser exception instead of InvalidXmlException during
-     * create (see issue INFR-911).
-     * 
-     * @throws Exception
-     *             Thrown if behavior is not as expected.
+     * Test unexpected parser exception instead of InvalidXmlException during create (see issue INFR-911).
+     *
+     * @throws Exception Thrown if behavior is not as expected.
      */
-    @Test(expected=InvalidXmlException.class)
+    @Test(expected = InvalidXmlException.class)
     public void testInvalidXml() throws Exception {
 
         /*
          * The infrastructure has thrown an unexpected parser exception during
          * creation if a non XML data structure is send (e.g. String).
          */
-         create("laber-rababer");
+        create("laber-rababer");
     }
 
     /**
      * Test links in Version History.
-     * 
+     * <p/>
      * See Issue INFR-942.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     public void contentModelVersionHistory() throws Exception {
         Document contentModel =
-            EscidocRestSoapTestBase.getTemplateAsDocument(
-                TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
                 "content-model-minimal-for-create.xml");
 
         String cmXml = toString(contentModel, false);

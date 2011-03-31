@@ -34,22 +34,19 @@ import java.util.Map;
 
 /**
  * Interface of a admin renderer.
- * 
+ *
  * @author Michael Hoppe
  */
 public interface AdminRendererInterface {
 
     /**
      * Gets the index-configuration as xml.
-     * 
-     * @param indexConfiguration
-     *            The indexConfiguration to render.
+     *
+     * @param indexConfiguration The indexConfiguration to render.
      * @return Returns the XML representation of the indexConfiguration.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    String renderIndexConfiguration(final Map<String, Map<String, 
-            Map<String, Object>>> indexConfiguration) 
-                                        throws WebserverSystemException;
+    String renderIndexConfiguration(final Map<String, Map<String, Map<String, Object>>> indexConfiguration)
+        throws WebserverSystemException;
 
 }

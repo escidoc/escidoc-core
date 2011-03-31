@@ -76,7 +76,7 @@ import java.util.Map;
 
 /**
  * Interface of an item handler of the business layer.
- * 
+ *
  * @author Torsten Tetteroo
  */
 public interface ItemHandlerInterface extends IngestableResource {
@@ -85,192 +85,108 @@ public interface ItemHandlerInterface extends IngestableResource {
 
     /**
      * Retrieves a filtered list of items.
-     * 
-     * @param parameters
-     *            parameters from the SRU request
-     * 
+     *
+     * @param parameters parameters from the SRU request
      * @return Returns the XML representation of list of found items.
-     * @throws SystemException
-     *             If an unexpected error occurs.
+     * @throws SystemException If an unexpected error occurs.
      */
-    String retrieveItems(final SRURequestParameters parameters)
-        throws SystemException;
+    String retrieveItems(final SRURequestParameters parameters) throws SystemException;
 
     /**
-     * The method creates new Fedora objects for a content item and content
-     * components contained in a provided xml string. First the provided xml
-     * string is validated against item xml schema. Then the provided xml is
-     * processed by a StaxParser with a PrepareHandler to find out the number of
-     * content components in provided xml string and to fetch a component binary
-     * content or respectively urls to the binary content. Then it triggers the
-     * Fedora service getNextPid() to allocate pids for fedora objects which
-     * will represent the content item and provided number of content
-     * components. After that it triggers the method retrieve() of the
-     * UserHandler component to get an accountId of the caller of the create()
-     * method. Then provided xml is processed again by the StaxParser with
-     * Handler, which splits the xml in to datastreams, modifies them and
-     * fetches some data for RELS-EXT datastream. The modified datastreams
-     * contain now REST access urls, and some item/component properties are set.
-     * Following it calls the method ItemCreator.handleComponent() for each
-     * content component, which handles component datastreams, requests JHOVE
-     * Servlet to get a metadata about binary content, build FOXML for a
-     * component using an allocated pid and store it in to fedora using fedora
-     * service ingest(). Then it calls the method ItemCreator.buildItemFoxml()
-     * and store FOXML for the item in to fedora. The return value is a xml
-     * string which consists of modified datastreams of item and components
-     * supplemented with created date and last modified date.
-     * 
-     * @param xmlData
-     *            provided xml string
-     * @return xml string containing rest access urls and certain properties See
-     *         Interface for functional description.
-     * 
-     * @throws AuthorizationException
-     *             Thrown if the authorization fails.
-     * @throws MissingContentException
-     * @throws ContextNotFoundException
-     * @throws ContentTypeNotFoundException
-     * @throws ReadonlyElementViolationException
-     * @throws MissingAttributeValueException
-     * @throws XmlSchemaValidationException
-     * @throws MissingElementValueException
-     * @throws ReadonlyAttributeViolationException
-     * @throws XmlCorruptedException
-     *             Thrown if provided data is corrupted.
-     * @throws MissingMethodParameterException
-     * @throws FileNotFoundException
-     * @throws InvalidStatusException
-     *             Thrown in case of an invalid status.
-     * @throws SystemException
-     *             If an unexpected error occurs.
-     * @throws InvalidContentException
-     * @throws ReferencedResourceNotFoundException
+     * The method creates new Fedora objects for a content item and content components contained in a provided xml
+     * string. First the provided xml string is validated against item xml schema. Then the provided xml is processed by
+     * a StaxParser with a PrepareHandler to find out the number of content components in provided xml string and to
+     * fetch a component binary content or respectively urls to the binary content. Then it triggers the Fedora service
+     * getNextPid() to allocate pids for fedora objects which will represent the content item and provided number of
+     * content components. After that it triggers the method retrieve() of the UserHandler component to get an accountId
+     * of the caller of the create() method. Then provided xml is processed again by the StaxParser with Handler, which
+     * splits the xml in to datastreams, modifies them and fetches some data for RELS-EXT datastream. The modified
+     * datastreams contain now REST access urls, and some item/component properties are set. Following it calls the
+     * method ItemCreator.handleComponent() for each content component, which handles component datastreams, requests
+     * JHOVE Servlet to get a metadata about binary content, build FOXML for a component using an allocated pid and
+     * store it in to fedora using fedora service ingest(). Then it calls the method ItemCreator.buildItemFoxml() and
+     * store FOXML for the item in to fedora. The return value is a xml string which consists of modified datastreams of
+     * item and components supplemented with created date and last modified date.
+     *
+     * @param xmlData provided xml string
+     * @return xml string containing rest access urls and certain properties See Interface for functional description.
+     * @throws AuthorizationException Thrown if the authorization fails.
+     * @throws XmlCorruptedException  Thrown if provided data is corrupted.
+     * @throws InvalidStatusException Thrown in case of an invalid status.
+     * @throws SystemException        If an unexpected error occurs.
      * @throws RelationPredicateNotFoundException
-     *             cf. Interface
-     * @throws de.escidoc.core.common.exceptions.application.missing.MissingMdRecordException
-     * @throws de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException
+     *                                cf. Interface
      */
-    String create(String xmlData) throws MissingContentException,
-        ContextNotFoundException, ContentModelNotFoundException,
-        ReadonlyElementViolationException, MissingAttributeValueException,
-        MissingElementValueException, ReadonlyAttributeViolationException,
-        XmlCorruptedException, MissingMethodParameterException,
-        FileNotFoundException, SystemException, InvalidContentException,
-        ReferencedResourceNotFoundException,
-        RelationPredicateNotFoundException, MissingMdRecordException,
+    String create(String xmlData) throws MissingContentException, ContextNotFoundException,
+        ContentModelNotFoundException, ReadonlyElementViolationException, MissingAttributeValueException,
+        MissingElementValueException, ReadonlyAttributeViolationException, XmlCorruptedException,
+        MissingMethodParameterException, FileNotFoundException, SystemException, InvalidContentException,
+        ReferencedResourceNotFoundException, RelationPredicateNotFoundException, MissingMdRecordException,
         InvalidStatusException, AuthorizationException;
 
     /**
      * Deletes the specified resource.
-     * 
-     * @param id
-     *            The id of the resource.
-     * @throws ItemNotFoundException
-     *             Thrown if an item with the specified id could not be found.
-     * @throws AlreadyPublishedException
-     *             Thrown if the item with the specified id has been published.
-     * @throws LockingException
-     *             Thrown if Item is locked.
-     * @throws InvalidStatusException
-     *             Thrown if Item has invalid status to delete
+     *
+     * @param id The id of the resource.
+     * @throws ItemNotFoundException     Thrown if an item with the specified id could not be found.
+     * @throws AlreadyPublishedException Thrown if the item with the specified id has been published.
+     * @throws LockingException          Thrown if Item is locked.
+     * @throws InvalidStatusException    Thrown if Item has invalid status to delete
      * @throws MissingMethodParameterException
-     *             Thrown if method parameter is missing
-     * @throws SystemException
-     *             If an unexpected error occurs.
-     * @throws AuthorizationException
-     *             Thrown if the authorization fails.
+     *                                   Thrown if method parameter is missing
+     * @throws SystemException           If an unexpected error occurs.
+     * @throws AuthorizationException    Thrown if the authorization fails.
      */
-    void delete(String id) throws ItemNotFoundException,
-        AlreadyPublishedException, LockingException, InvalidStatusException,
-        MissingMethodParameterException, SystemException,
-        AuthorizationException;
+    void delete(String id) throws ItemNotFoundException, AlreadyPublishedException, LockingException,
+        InvalidStatusException, MissingMethodParameterException, SystemException, AuthorizationException;
 
     /**
      * Retrieves the specified resource.
-     * 
-     * @param id
-     *            The id of the resource.
+     *
+     * @param id The id of the resource.
      * @return Returns the XML representation of the resource.
-     * @throws ItemNotFoundException
-     *             Thrown if an item with the specified id could not be found.
+     * @throws ItemNotFoundException      Thrown if an item with the specified id could not be found.
      * @throws MissingMethodParameterException
-     *             Thrown if method parameter is missing
-     * @throws ComponentNotFoundException
-     *             Thrown if a component with the specified id could not be
-     *             found.
-     * @throws SystemException
-     *             If an unexpected error occurs.
-     * @throws AuthorizationException
-     *             Thrown if the authorization fails.
+     *                                    Thrown if method parameter is missing
+     * @throws ComponentNotFoundException Thrown if a component with the specified id could not be found.
+     * @throws SystemException            If an unexpected error occurs.
+     * @throws AuthorizationException     Thrown if the authorization fails.
      */
-    String retrieve(String id) throws ItemNotFoundException,
-        ComponentNotFoundException, MissingMethodParameterException,
-        SystemException, AuthorizationException;
+    String retrieve(String id) throws ItemNotFoundException, ComponentNotFoundException,
+        MissingMethodParameterException, SystemException, AuthorizationException;
 
     /**
      * Updates the specified resource with the provided data.
-     * 
-     * @param id
-     *            The id of the resource.
-     * @param xmlData
-     *            The new data of the resource.
+     *
+     * @param id      The id of the resource.
+     * @param xmlData The new data of the resource.
      * @return Returns the XML representation of the updated resource.
-     * @throws ItemNotFoundException
-     *             Thrown if an item with the specified id could not be found.
-     * @throws FileNotFoundException
-     *             Thrown if a file could not be found.
-     * @throws InvalidContextException
-     *             TODO
-     * @throws InvalidStatusException
-     *             Thrown in case of an invalid status.
-     * @throws LockingException
-     *             Thrown if Item is locked.
-     * @throws XmlSchemaValidationException
-     *             Thrown if the schema validation of the provided data fails.
-     * @throws NotPublishedException
-     *             Thrown if the status shall be changed to withdrawn but the
-     *             item has not been published.
-     * @throws MissingLicenceException
-     *             Thrown if the status shall be changed to published but a
-     *             license is missing.
-     * @throws ComponentNotFoundException
-     *             Thrown if a component with the specified id could not be
-     *             found.
-     * @throws AlreadyPublishedException
-     * @throws ReadonlyAttributeViolationException
-     * @throws InvalidXmlException
+     * @throws ItemNotFoundException        Thrown if an item with the specified id could not be found.
+     * @throws FileNotFoundException        Thrown if a file could not be found.
+     * @throws InvalidContextException      TODO
+     * @throws InvalidStatusException       Thrown in case of an invalid status.
+     * @throws LockingException             Thrown if Item is locked.
+     * @throws XmlSchemaValidationException Thrown if the schema validation of the provided data fails.
+     * @throws NotPublishedException        Thrown if the status shall be changed to withdrawn but the item has not been
+     *                                      published.
+     * @throws MissingLicenceException      Thrown if the status shall be changed to published but a license is
+     *                                      missing.
+     * @throws ComponentNotFoundException   Thrown if a component with the specified id could not be found.
      * @throws MissingMethodParameterException
-     *             Thrown if method parameter is missing
-     * @throws InvalidContentException
-     * @throws SystemException
-     *             If an unexpected error occurs.
-     * @throws OptimisticLockingException
-     *             Thrown if an optimistic locking error occurs.
-     * @throws ReadonlyViolationException
-     *             TODO
-     * @throws ReadonlyVersionException
-     * @throws MissingAttributeValueException
-     * @throws AuthorizationException
-     *             Thrown if the authorization fails.
-     * @throws de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException
-     * @throws de.escidoc.core.common.exceptions.application.missing.MissingMdRecordException
-     * @throws de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException
-     * @throws de.escidoc.core.common.exceptions.application.missing.MissingContentException
-     * @throws de.escidoc.core.common.exceptions.application.violated.AlreadyExistsException
-     * @throws de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException
+     *                                      Thrown if method parameter is missing
+     * @throws SystemException              If an unexpected error occurs.
+     * @throws OptimisticLockingException   Thrown if an optimistic locking error occurs.
+     * @throws ReadonlyViolationException   TODO
+     * @throws AuthorizationException       Thrown if the authorization fails.
      */
-    String update(String id, String xmlData) throws ItemNotFoundException,
-        FileNotFoundException, InvalidContextException, InvalidStatusException,
-        LockingException, XmlSchemaValidationException, NotPublishedException,
-        MissingLicenceException, ComponentNotFoundException,
-        MissingContentException, ReadonlyElementViolationException,
-        ReadonlyAttributeViolationException, InvalidXmlException,
-        MissingMethodParameterException, InvalidContentException,
-        SystemException, OptimisticLockingException, AlreadyExistsException,
-        ReadonlyViolationException, ReferencedResourceNotFoundException,
-        RelationPredicateNotFoundException, ReadonlyVersionException,
-        MissingAttributeValueException, MissingMdRecordException,
-        AuthorizationException;
+    String update(String id, String xmlData) throws ItemNotFoundException, FileNotFoundException,
+        InvalidContextException, InvalidStatusException, LockingException, XmlSchemaValidationException,
+        NotPublishedException, MissingLicenceException, ComponentNotFoundException, MissingContentException,
+        ReadonlyElementViolationException, ReadonlyAttributeViolationException, InvalidXmlException,
+        MissingMethodParameterException, InvalidContentException, SystemException, OptimisticLockingException,
+        AlreadyExistsException, ReadonlyViolationException, ReferencedResourceNotFoundException,
+        RelationPredicateNotFoundException, ReadonlyVersionException, MissingAttributeValueException,
+        MissingMdRecordException, AuthorizationException;
 
     //
     // Subresources
@@ -282,196 +198,111 @@ public interface ItemHandlerInterface extends IngestableResource {
 
     /**
      * Creates the subresource component.
-     * 
-     * @param id
-     *            The id of the resource.
-     * @param xmlData
-     *            The new value of the subresource.
+     *
+     * @param id      The id of the resource.
+     * @param xmlData The new value of the subresource.
      * @return Returns the value of the subresource.
-     * @throws ItemNotFoundException
-     *             Thrown if an item with the specified id could not be found.
-     * @throws LockingException
-     *             Thrown if Item is locked.
-     * @throws InvalidStatusException
-     *             Thrown in case of an invalid status.
+     * @throws ItemNotFoundException        Thrown if an item with the specified id could not be found.
+     * @throws LockingException             Thrown if Item is locked.
+     * @throws InvalidStatusException       Thrown in case of an invalid status.
      * @throws MissingMethodParameterException
-     *             If a mandatory element value is missing.
-     * @throws FileNotFoundException
-     *             thrown if a file could not be found.
-     * @throws SystemException
-     *             If an unexpected error occurs.
-     * @throws XmlSchemaValidationException
-     *             Thrown if the schema validation of the provided data fails.
-     * @throws ReadonlyViolationException
-     * @throws OptimisticLockingException
-     *             Thrown in case of an optimistic locking error.
-     * @throws MissingAttributeValueException
-     * @throws de.escidoc.core.common.exceptions.application.violated.ReadonlyAttributeViolationException
-     * @throws de.escidoc.core.common.exceptions.application.missing.MissingContentException
-     * @throws de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundException
-     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
-     * @throws de.escidoc.core.common.exceptions.application.missing.MissingElementValueException
+     *                                      If a mandatory element value is missing.
+     * @throws FileNotFoundException        thrown if a file could not be found.
+     * @throws SystemException              If an unexpected error occurs.
+     * @throws XmlSchemaValidationException Thrown if the schema validation of the provided data fails.
+     * @throws OptimisticLockingException   Thrown in case of an optimistic locking error.
      */
-    String createComponent(final String id, final String xmlData)
-        throws ItemNotFoundException, ComponentNotFoundException,
-        MissingContentException, LockingException,
-        MissingElementValueException, InvalidXmlException,
-        InvalidStatusException, MissingMethodParameterException,
-        FileNotFoundException, InvalidContentException,
-        ReadonlyAttributeViolationException, SystemException,
-        XmlSchemaValidationException, ReadonlyViolationException,
-        OptimisticLockingException, MissingAttributeValueException;
+    String createComponent(final String id, final String xmlData) throws ItemNotFoundException,
+        ComponentNotFoundException, MissingContentException, LockingException, MissingElementValueException,
+        InvalidXmlException, InvalidStatusException, MissingMethodParameterException, FileNotFoundException,
+        InvalidContentException, ReadonlyAttributeViolationException, SystemException, XmlSchemaValidationException,
+        ReadonlyViolationException, OptimisticLockingException, MissingAttributeValueException;
 
     /**
      * Delete a Component of an Item.
-     * 
-     * @param itemId
-     *            The item id.
-     * @param componentId
-     *            The component id.
-     * 
-     * @throws ItemNotFoundException
-     *             Thrown if an item with the specified id could not be found.
-     * @throws ComponentNotFoundException
-     *             Thrown if a component with the specified id could not be
-     *             found.
-     * @throws LockingException
-     *             Thrown if Item is locked.
-     * @throws AlreadyPublishedException
+     *
+     * @param itemId      The item id.
+     * @param componentId The component id.
+     * @throws ItemNotFoundException      Thrown if an item with the specified id could not be found.
+     * @throws ComponentNotFoundException Thrown if a component with the specified id could not be found.
+     * @throws LockingException           Thrown if Item is locked.
      * @throws MissingMethodParameterException
-     *             If a mandatory element value is missing.
-     * @throws SystemException
-     *             If an unexpected error occurs.
-     * @throws InvalidStatusException
-     *             Thrown in case of an invalid status.
+     *                                    If a mandatory element value is missing.
+     * @throws SystemException            If an unexpected error occurs.
+     * @throws InvalidStatusException     Thrown in case of an invalid status.
      */
-    void deleteComponent(final String itemId, final String componentId)
-        throws ItemNotFoundException, ComponentNotFoundException,
-        LockingException, MissingMethodParameterException, SystemException,
+    void deleteComponent(final String itemId, final String componentId) throws ItemNotFoundException,
+        ComponentNotFoundException, LockingException, MissingMethodParameterException, SystemException,
         InvalidStatusException;
 
     /**
      * Retrieves the subresource component.
-     * 
-     * @param id
-     *            The id of the resource.
-     * @param componentId
-     *            The id of the component subresource.
+     *
+     * @param id          The id of the resource.
+     * @param componentId The id of the component subresource.
      * @return Returns the value of the subresource.
-     * @throws ItemNotFoundException
-     *             Thrown if an item with the specified id could not be found.
-     * @throws ComponentNotFoundException
-     *             Thrown if a component with the specified id could not be
-     *             found.
+     * @throws ItemNotFoundException      Thrown if an item with the specified id could not be found.
+     * @throws ComponentNotFoundException Thrown if a component with the specified id could not be found.
      * @throws MissingMethodParameterException
-     *             If a mandatory element value is missing.
-     * @throws SystemException
-     *             If an unexpected error occurs.
-     * @throws AuthorizationException
-     *             Thrown if the authorization fails.
+     *                                    If a mandatory element value is missing.
+     * @throws SystemException            If an unexpected error occurs.
+     * @throws AuthorizationException     Thrown if the authorization fails.
      */
-    String retrieveComponent(final String id, final String componentId)
-        throws ItemNotFoundException, ComponentNotFoundException,
-        MissingMethodParameterException, SystemException,
-        AuthorizationException;
+    String retrieveComponent(final String id, final String componentId) throws ItemNotFoundException,
+        ComponentNotFoundException, MissingMethodParameterException, SystemException, AuthorizationException;
 
     /**
      * Retrieves md-records of the subresource component.
-     * 
-     * @param id
-     * @param componentId
-     * @return
-     * @throws ItemNotFoundException
-     *             Thrown if an item with the specified id could not be found.
-     * @throws ComponentNotFoundException
-     *             Thrown if a component with the specified id could not be
-     *             found.
-     * @throws AuthorizationException
-     *             Thrown if the authorization fails.
+     *
+     * @throws ItemNotFoundException      Thrown if an item with the specified id could not be found.
+     * @throws ComponentNotFoundException Thrown if a component with the specified id could not be found.
+     * @throws AuthorizationException     Thrown if the authorization fails.
      * @throws MissingMethodParameterException
-     *             If a mandatory element value is missing.
-     * @throws SystemException
-     *             If an unexpected error occurs.
+     *                                    If a mandatory element value is missing.
+     * @throws SystemException            If an unexpected error occurs.
      */
-    String retrieveComponentMdRecords(final String id, final String componentId)
-        throws ItemNotFoundException, ComponentNotFoundException,
-        MissingMethodParameterException, SystemException,
-        AuthorizationException;
+    String retrieveComponentMdRecords(final String id, final String componentId) throws ItemNotFoundException,
+        ComponentNotFoundException, MissingMethodParameterException, SystemException, AuthorizationException;
 
     /**
      * Retrieves a md-record of the subresource component.
-     * 
-     * @param id
-     * @param componentId
-     * @param mdRecordId
-     * @return
-     * @throws ItemNotFoundException
-     *             Thrown if an item with the specified id could not be found.
-     * @throws ComponentNotFoundException
-     *             Thrown if a component with the specified id could not be
-     *             found.
-     * @throws MdRecordNotFoundException
-     * @throws AuthorizationException
+     *
+     * @throws ItemNotFoundException      Thrown if an item with the specified id could not be found.
+     * @throws ComponentNotFoundException Thrown if a component with the specified id could not be found.
      * @throws MissingMethodParameterException
-     *             If a mandatory element value is missing.
-     * @throws SystemException
-     *             If an unexpected error occurs.
+     *                                    If a mandatory element value is missing.
+     * @throws SystemException            If an unexpected error occurs.
      */
-    String retrieveComponentMdRecord(
-        final String id, final String componentId, final String mdRecordId)
-        throws ItemNotFoundException, ComponentNotFoundException,
-        MdRecordNotFoundException, MissingMethodParameterException,
-        SystemException, AuthorizationException;
+    String retrieveComponentMdRecord(final String id, final String componentId, final String mdRecordId)
+        throws ItemNotFoundException, ComponentNotFoundException, MdRecordNotFoundException,
+        MissingMethodParameterException, SystemException, AuthorizationException;
 
     /**
      * Updates the subresource component.
-     * 
-     * @param id
-     *            The id of the resource.
-     * @param componentId
-     *            The id of the component subresource.
-     * @param xmlData
-     *            The new value of the subresource.
+     *
+     * @param id          The id of the resource.
+     * @param componentId The id of the component subresource.
+     * @param xmlData     The new value of the subresource.
      * @return Returns the value of the subresource.
-     * @throws ItemNotFoundException
-     *             Thrown if an item with the specified id could not be found.
-     * @throws ComponentNotFoundException
-     *             Thrown if a component with the specified id could not be
-     *             found.
-     * @throws LockingException
-     *             Thrown if Item is locked
-     * @throws XmlSchemaValidationException
-     *             Thrown if the schema validation of the provided data fails.
-     * @throws FileNotFoundException
-     *             thrown if a file could not be found.
-     * @throws InvalidStatusException
-     *             Thrown in case of an invalid status.
+     * @throws ItemNotFoundException        Thrown if an item with the specified id could not be found.
+     * @throws ComponentNotFoundException   Thrown if a component with the specified id could not be found.
+     * @throws LockingException             Thrown if Item is locked
+     * @throws XmlSchemaValidationException Thrown if the schema validation of the provided data fails.
+     * @throws FileNotFoundException        thrown if a file could not be found.
+     * @throws InvalidStatusException       Thrown in case of an invalid status.
      * @throws MissingMethodParameterException
-     *             If a mandatory element value is missing.
-     * @throws SystemException
-     *             If an unexpected error occurs.
-     * @throws OptimisticLockingException
-     *             Thrown in case of an optimistic locking error.
-     * @throws ReadonlyViolationException
-     *             TODO
-     * @throws InvalidContentException
-     * @throws MissingContentException
-     * @throws ReadonlyVersionException
-     * @throws AuthorizationException
-     *             Thrown if the authorization fails.
-     * @throws de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException
-     * @throws de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException
+     *                                      If a mandatory element value is missing.
+     * @throws SystemException              If an unexpected error occurs.
+     * @throws OptimisticLockingException   Thrown in case of an optimistic locking error.
+     * @throws ReadonlyViolationException   TODO
+     * @throws AuthorizationException       Thrown if the authorization fails.
      */
-    String updateComponent(
-        final String id, final String componentId, final String xmlData)
-        throws ItemNotFoundException, ComponentNotFoundException,
-        LockingException, XmlSchemaValidationException, FileNotFoundException,
-        ReadonlyElementViolationException, MissingAttributeValueException,
-        InvalidStatusException, MissingMethodParameterException,
-        SystemException, OptimisticLockingException, InvalidXmlException,
-        ReadonlyViolationException, MissingContentException,
-        InvalidContentException, ReadonlyVersionException,
-        AuthorizationException;
+    String updateComponent(final String id, final String componentId, final String xmlData)
+        throws ItemNotFoundException, ComponentNotFoundException, LockingException, XmlSchemaValidationException,
+        FileNotFoundException, ReadonlyElementViolationException, MissingAttributeValueException,
+        InvalidStatusException, MissingMethodParameterException, SystemException, OptimisticLockingException,
+        InvalidXmlException, ReadonlyViolationException, MissingContentException, InvalidContentException,
+        ReadonlyVersionException, AuthorizationException;
 
     //
     // Subresource - components
@@ -479,158 +310,94 @@ public interface ItemHandlerInterface extends IngestableResource {
 
     /**
      * Retrieves the subresource components.
-     * 
-     * @param id
-     *            The id of the resource.
+     *
+     * @param id The id of the resource.
      * @return Returns the value of the subresource.
-     * @throws ItemNotFoundException
-     *             Thrown if an item with the specified id could not be found.
-     * @throws ComponentNotFoundException
-     *             Thrown if a component with the specified id could not be
-     *             found.
+     * @throws ItemNotFoundException      Thrown if an item with the specified id could not be found.
+     * @throws ComponentNotFoundException Thrown if a component with the specified id could not be found.
      * @throws MissingMethodParameterException
-     *             If a mandatory element value is missing.
-     * @throws SystemException
-     *             If an unexpected error occurs.
-     * @throws AuthorizationException
-     *             Thrown if the authorization fails.
+     *                                    If a mandatory element value is missing.
+     * @throws SystemException            If an unexpected error occurs.
+     * @throws AuthorizationException     Thrown if the authorization fails.
      */
-    String retrieveComponents(final String id) throws ItemNotFoundException,
-        ComponentNotFoundException, MissingMethodParameterException,
-        SystemException, AuthorizationException;
+    String retrieveComponents(final String id) throws ItemNotFoundException, ComponentNotFoundException,
+        MissingMethodParameterException, SystemException, AuthorizationException;
 
     /**
-     * 
-     * @param id
-     * @param componentId
-     * @return
-     * @throws ItemNotFoundException
-     *             Thrown if an item with the specified id could not be found.
-     * @throws ComponentNotFoundException
-     *             Thrown if a component with the specified id could not be
-     *             found.
+     * @throws ItemNotFoundException      Thrown if an item with the specified id could not be found.
+     * @throws ComponentNotFoundException Thrown if a component with the specified id could not be found.
      * @throws MissingMethodParameterException
-     *             If a mandatory element value is missing.
-     * @throws SystemException
-     *             If an unexpected error occurs.
-     * @throws AuthorizationException
-     *             Thrown if the authorization fails.
+     *                                    If a mandatory element value is missing.
+     * @throws SystemException            If an unexpected error occurs.
+     * @throws AuthorizationException     Thrown if the authorization fails.
      */
-    String retrieveComponentProperties(final String id, final String componentId)
-        throws ItemNotFoundException, ComponentNotFoundException,
-        MissingMethodParameterException, SystemException,
-        AuthorizationException;
+    String retrieveComponentProperties(final String id, final String componentId) throws ItemNotFoundException,
+        ComponentNotFoundException, MissingMethodParameterException, SystemException, AuthorizationException;
 
     //
     // Content
     //
 
     /**
-     * Retrieves a content subresource.<br>
-     * This subresource provides access to the binary content of an item.
-     * 
-     * @param id
-     *            The id of the resource.
-     * @param contentId
-     *            The id of the binary content that shall be retrieved.
+     * Retrieves a content subresource.<br> This subresource provides access to the binary content of an item.
+     *
+     * @param id        The id of the resource.
+     * @param contentId The id of the binary content that shall be retrieved.
      * @return Returns the binary content.
-     * @throws ItemNotFoundException
-     *             Thrown if an item with the specified id could not be found.
-     * @throws ComponentNotFoundException
-     *             Thrown if the component containing the content cannot be
-     *             found.
+     * @throws ItemNotFoundException      Thrown if an item with the specified id could not be found.
+     * @throws ComponentNotFoundException Thrown if the component containing the content cannot be found.
      * @throws MissingMethodParameterException
-     *             If a mandatory element value is missing.
-     * @throws SystemException
-     *             If an unexpected error occurs.
-     * @throws InvalidStatusException
-     *             Thrown in case of an invalid status.
-     * @throws AuthorizationException
-     *             Thrown if the authorization fails.
+     *                                    If a mandatory element value is missing.
+     * @throws SystemException            If an unexpected error occurs.
+     * @throws InvalidStatusException     Thrown in case of an invalid status.
+     * @throws AuthorizationException     Thrown if the authorization fails.
      */
-    EscidocBinaryContent retrieveContent(final String id, final String contentId)
-        throws ItemNotFoundException, ComponentNotFoundException,
-        MissingMethodParameterException, SystemException,
-        InvalidStatusException, ResourceNotFoundException,
-        AuthorizationException;
+    EscidocBinaryContent retrieveContent(final String id, final String contentId) throws ItemNotFoundException,
+        ComponentNotFoundException, MissingMethodParameterException, SystemException, InvalidStatusException,
+        ResourceNotFoundException, AuthorizationException;
 
     /**
-     * 
-     * @param itemId
-     * @param name
-     * @return
-     * @throws ItemNotFoundException
-     *             Thrown if an item with the specified id could not be found.
-     * @throws SystemException
-     *             If an unexpected error occurs.
-     * @throws ContentStreamNotFoundException
-     * @throws AuthorizationException
-     *             Thrown if the authorization fails.
+     * @throws ItemNotFoundException  Thrown if an item with the specified id could not be found.
+     * @throws SystemException        If an unexpected error occurs.
+     * @throws AuthorizationException Thrown if the authorization fails.
      */
-    EscidocBinaryContent retrieveContentStreamContent(
-        final String itemId, final String name) throws ItemNotFoundException,
-        SystemException, ContentStreamNotFoundException, AuthorizationException;
+    EscidocBinaryContent retrieveContentStreamContent(final String itemId, final String name)
+        throws ItemNotFoundException, SystemException, ContentStreamNotFoundException, AuthorizationException;
 
     /**
-     * Retrieves a content subresource.<br>
-     * This subresource provides access to the binary content of an item.
-     * 
-     * @param id
-     *            The id of the resource.
-     * @param contentId
-     *            The id of the binary content that shall be retrieved.
-     * @param transformer
-     *            The transformation service.
-     * @param param
-     *            parameter for the transformation service as GET parameter
-     *            String (param1=val1&param2=val2).
+     * Retrieves a content subresource.<br> This subresource provides access to the binary content of an item.
+     *
+     * @param id          The id of the resource.
+     * @param contentId   The id of the binary content that shall be retrieved.
+     * @param transformer The transformation service.
+     * @param param       parameter for the transformation service as GET parameter String (param1=val1&param2=val2).
      * @return Returns the binary content.
-     * @throws ItemNotFoundException
-     *             Thrown if an item with the specified id could not be found.
-     * @throws ComponentNotFoundException
-     *             Thrown if the component containing the content cannot be
-     *             found.
+     * @throws ItemNotFoundException      Thrown if an item with the specified id could not be found.
+     * @throws ComponentNotFoundException Thrown if the component containing the content cannot be found.
      * @throws MissingMethodParameterException
-     *             If a mandatory element value is missing.
-     * @throws SystemException
-     *             If an unexpected error occurs.
-     * @throws InvalidStatusException
-     *             Thrown in case of an invalid status.
-     * @throws AuthorizationException
-     *             Thrown if the authorization fails.
+     *                                    If a mandatory element value is missing.
+     * @throws SystemException            If an unexpected error occurs.
+     * @throws InvalidStatusException     Thrown in case of an invalid status.
+     * @throws AuthorizationException     Thrown if the authorization fails.
      */
     EscidocBinaryContent retrieveContent(
-        final String id, final String contentId, final String transformer,
-        final String param) throws ItemNotFoundException,
-        ComponentNotFoundException, MissingMethodParameterException,
-        SystemException, InvalidStatusException, AuthorizationException;
+        final String id, final String contentId, final String transformer, final String param)
+        throws ItemNotFoundException, ComponentNotFoundException, MissingMethodParameterException, SystemException,
+        InvalidStatusException, AuthorizationException;
 
     /**
-     * 
-     * @param id
-     * @param componentId
-     * @param transformer
-     * @param clientService
-     * @return
-     * @throws ItemNotFoundException
-     *             Thrown if an item with the specified id could not be found.
-     * @throws ComponentNotFoundException
-     *             Thrown if a component with the specified id could not be
-     *             found.
+     * @throws ItemNotFoundException      Thrown if an item with the specified id could not be found.
+     * @throws ComponentNotFoundException Thrown if a component with the specified id could not be found.
      * @throws MissingMethodParameterException
-     *             If a mandatory element value is missing.
-     * @throws SystemException
-     *             If an unexpected error occurs.
-     * @throws InvalidStatusException
-     *             Thrown in case of an invalid status.
-     * @throws AuthorizationException
-     *             Thrown if the authorization fails.
+     *                                    If a mandatory element value is missing.
+     * @throws SystemException            If an unexpected error occurs.
+     * @throws InvalidStatusException     Thrown in case of an invalid status.
+     * @throws AuthorizationException     Thrown if the authorization fails.
      */
     EscidocServiceRedirectInterface redirectContentService(
-        final String id, final String componentId, final String transformer,
-        final String clientService) throws ItemNotFoundException,
-        ComponentNotFoundException, MissingMethodParameterException,
-        SystemException, InvalidStatusException, AuthorizationException;
+        final String id, final String componentId, final String transformer, final String clientService)
+        throws ItemNotFoundException, ComponentNotFoundException, MissingMethodParameterException, SystemException,
+        InvalidStatusException, AuthorizationException;
 
     //
     // Subresource - metadata record
@@ -638,190 +405,108 @@ public interface ItemHandlerInterface extends IngestableResource {
 
     /**
      * Creates the subresource metadata record.
-     * 
-     * @param id
-     *            The id of the resource.
-     * @param xmlData
-     *            The new value of the subresource.
+     *
+     * @param id      The id of the resource.
+     * @param xmlData The new value of the subresource.
      * @return Returns the value of the subresource.
-     * @throws ItemNotFoundException
-     *             Thrown if an item with the specified id could not be found.
-     * @throws XmlSchemaNotFoundException
-     *             Thrown if the schema specified in the data could not be
-     *             found.
-     * @throws XmlSchemaValidationException
-     *             Thrown if the schema validation of the provided metadata
-     *             fails.
-     * @throws LockingException
-     *             Thrown if Item is locked.
-     * @throws InvalidStatusException
-     *             Thrown in case of an invalid status.
+     * @throws ItemNotFoundException        Thrown if an item with the specified id could not be found.
+     * @throws XmlSchemaNotFoundException   Thrown if the schema specified in the data could not be found.
+     * @throws XmlSchemaValidationException Thrown if the schema validation of the provided metadata fails.
+     * @throws LockingException             Thrown if Item is locked.
+     * @throws InvalidStatusException       Thrown in case of an invalid status.
      * @throws MissingMethodParameterException
-     *             If a mandatory element value is missing.
-     * @throws SystemException
-     *             If an unexpected error occurs.
-     * @throws InvalidXmlException
-     * @throws ComponentNotFoundException
-     *             Thrown if a component with the specified id could not be
-     *             found.
-     * @throws AuthorizationException
-     *             Thrown if the authorization fails.
-     * @throws de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException
+     *                                      If a mandatory element value is missing.
+     * @throws SystemException              If an unexpected error occurs.
+     * @throws ComponentNotFoundException   Thrown if a component with the specified id could not be found.
+     * @throws AuthorizationException       Thrown if the authorization fails.
      */
     @Deprecated
-    String createMetadataRecord(final String id, final String xmlData)
-        throws ItemNotFoundException, ComponentNotFoundException,
-        XmlSchemaNotFoundException, XmlSchemaValidationException,
-        LockingException, MissingAttributeValueException,
-        InvalidStatusException, MissingMethodParameterException,
-        SystemException, InvalidXmlException, AuthorizationException;
+    String createMetadataRecord(final String id, final String xmlData) throws ItemNotFoundException,
+        ComponentNotFoundException, XmlSchemaNotFoundException, XmlSchemaValidationException, LockingException,
+        MissingAttributeValueException, InvalidStatusException, MissingMethodParameterException, SystemException,
+        InvalidXmlException, AuthorizationException;
 
     /**
      * Creates the subresource metadata record.
-     * 
-     * @param id
-     *            The id of the resource.
-     * @param xmlData
-     *            The new value of the subresource.
+     *
+     * @param id      The id of the resource.
+     * @param xmlData The new value of the subresource.
      * @return Returns the value of the subresource.
-     * @throws ItemNotFoundException
-     *             Thrown if an item with the specified id could not be found.
-     * @throws XmlSchemaNotFoundException
-     *             Thrown if the schema specified in the data could not be
-     *             found.
-     * @throws XmlSchemaValidationException
-     *             Thrown if the schema validation of the provided metadata
-     *             fails.
-     * @throws LockingException
-     *             Thrown if Item is locked.
-     * @throws InvalidStatusException
-     *             Thrown in case of an invalid status.
+     * @throws ItemNotFoundException        Thrown if an item with the specified id could not be found.
+     * @throws XmlSchemaNotFoundException   Thrown if the schema specified in the data could not be found.
+     * @throws XmlSchemaValidationException Thrown if the schema validation of the provided metadata fails.
+     * @throws LockingException             Thrown if Item is locked.
+     * @throws InvalidStatusException       Thrown in case of an invalid status.
      * @throws MissingMethodParameterException
-     *             If a mandatory element value is missing.
-     * @throws SystemException
-     *             If an unexpected error occurs.
-     * @throws InvalidXmlException
-     * @throws ComponentNotFoundException
-     *             Thrown if a component with the specified id could not be
-     *             found.
-     * @throws AuthorizationException
-     *             Thrown if the authorization fails.
-     * @throws de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException
+     *                                      If a mandatory element value is missing.
+     * @throws SystemException              If an unexpected error occurs.
+     * @throws ComponentNotFoundException   Thrown if a component with the specified id could not be found.
+     * @throws AuthorizationException       Thrown if the authorization fails.
      */
-    String createMdRecord(final String id, final String xmlData)
-        throws ItemNotFoundException, SystemException,
-        XmlSchemaValidationException, LockingException,
-        MissingAttributeValueException, InvalidStatusException,
+    String createMdRecord(final String id, final String xmlData) throws ItemNotFoundException, SystemException,
+        XmlSchemaValidationException, LockingException, MissingAttributeValueException, InvalidStatusException,
         ComponentNotFoundException, AuthorizationException;
 
     /**
      * Retrieves the subresource metadata record.
-     * 
-     * @param id
-     *            The id of the resource.
-     * @param mdRecordId
-     *            The id of the metdata record subresource.
+     *
+     * @param id         The id of the resource.
+     * @param mdRecordId The id of the metdata record subresource.
      * @return Returns the value of the subresource.
-     * @throws ItemNotFoundException
-     *             Thrown if an item with the specified id could not be found.
-     * @throws MdRecordNotFoundException
-     *             Thrown if the item does not have the specified metadata
-     *             record.
+     * @throws ItemNotFoundException     Thrown if an item with the specified id could not be found.
+     * @throws MdRecordNotFoundException Thrown if the item does not have the specified metadata record.
      * @throws MissingMethodParameterException
-     *             If a mandatory element value is missing.
-     * @throws SystemException
-     *             If an unexpected error occurs.
-     * @throws AuthorizationException
-     *             Thrown if the authorization fails.
+     *                                   If a mandatory element value is missing.
+     * @throws SystemException           If an unexpected error occurs.
+     * @throws AuthorizationException    Thrown if the authorization fails.
      */
-    String retrieveMdRecord(final String id, final String mdRecordId)
-        throws ItemNotFoundException, MdRecordNotFoundException,
-        MissingMethodParameterException, SystemException,
-        AuthorizationException;
+    String retrieveMdRecord(final String id, final String mdRecordId) throws ItemNotFoundException,
+        MdRecordNotFoundException, MissingMethodParameterException, SystemException, AuthorizationException;
 
     /**
-     * 
-     * @param id
-     * @param mdRecordId
-     * @return
-     * @throws ItemNotFoundException
-     *             Thrown if an item with the specified id could not be found.
-     * @throws MdRecordNotFoundException
+     * @throws ItemNotFoundException  Thrown if an item with the specified id could not be found.
      * @throws MissingMethodParameterException
-     *             If a mandatory element value is missing.
-     * @throws SystemException
-     *             If an unexpected error occurs.
-     * @throws AuthorizationException
-     *             Thrown if the authorization fails.
+     *                                If a mandatory element value is missing.
+     * @throws SystemException        If an unexpected error occurs.
+     * @throws AuthorizationException Thrown if the authorization fails.
      */
-    String retrieveMdRecordContent(final String id, final String mdRecordId)
-        throws ItemNotFoundException, MdRecordNotFoundException,
-        MissingMethodParameterException, SystemException,
-        AuthorizationException;
+    String retrieveMdRecordContent(final String id, final String mdRecordId) throws ItemNotFoundException,
+        MdRecordNotFoundException, MissingMethodParameterException, SystemException, AuthorizationException;
 
     /**
-     * 
-     * @param id
-     * @return
-     * @throws ItemNotFoundException
-     *             Thrown if an item with the specified id could not be found.
+     * @throws ItemNotFoundException  Thrown if an item with the specified id could not be found.
      * @throws MissingMethodParameterException
-     *             If a mandatory element value is missing.
-     * @throws SystemException
-     *             If an unexpected error occurs.
-     * @throws MdRecordNotFoundException
-     * @throws AuthorizationException
-     *             Thrown if the authorization fails.
+     *                                If a mandatory element value is missing.
+     * @throws SystemException        If an unexpected error occurs.
+     * @throws AuthorizationException Thrown if the authorization fails.
      */
-    String retrieveDcRecordContent(final String id)
-        throws ItemNotFoundException, MissingMethodParameterException,
+    String retrieveDcRecordContent(final String id) throws ItemNotFoundException, MissingMethodParameterException,
         SystemException, MdRecordNotFoundException, AuthorizationException;
 
     /**
      * Updates the subresource metadata record.
-     * 
-     * @param id
-     *            The id of the resource.
-     * @param mdRecordId
-     *            The id of the metdata record subresource.
-     * @param xmlData
-     *            The new value of the subresource.
+     *
+     * @param id         The id of the resource.
+     * @param mdRecordId The id of the metdata record subresource.
+     * @param xmlData    The new value of the subresource.
      * @return Returns the value of the subresource.
-     * @throws ItemNotFoundException
-     *             Thrown if an item with the specified id could not be found.
-     * @throws XmlSchemaNotFoundException
-     *             Thrown if the specified schema could not be found.
-     * @throws XmlSchemaValidationException
-     *             Thrown if the schema validation of the provided metadata
-     *             fails.
-     * @throws LockingException
-     *             Thrown if Item is locked
-     * @throws InvalidContentException
-     * @throws MdRecordNotFoundException
-     * @throws InvalidStatusException
-     *             Thrown in case of an invalid status.
+     * @throws ItemNotFoundException        Thrown if an item with the specified id could not be found.
+     * @throws XmlSchemaNotFoundException   Thrown if the specified schema could not be found.
+     * @throws XmlSchemaValidationException Thrown if the schema validation of the provided metadata fails.
+     * @throws LockingException             Thrown if Item is locked
+     * @throws InvalidStatusException       Thrown in case of an invalid status.
      * @throws MissingMethodParameterException
-     *             If a mandatory element value is missing.
-     * @throws SystemException
-     *             If an unexpected error occurs.
-     * @throws OptimisticLockingException
-     *             Thrown in case of an optimistic locking error.
-     * @throws InvalidXmlException
-     * @throws ReadonlyViolationException
-     *             TODO
-     * @throws ReadonlyVersionException
-     * @throws AuthorizationException
-     *             Thrown if the authorization fails.
+     *                                      If a mandatory element value is missing.
+     * @throws SystemException              If an unexpected error occurs.
+     * @throws OptimisticLockingException   Thrown in case of an optimistic locking error.
+     * @throws ReadonlyViolationException   TODO
+     * @throws AuthorizationException       Thrown if the authorization fails.
      */
-    String updateMetadataRecord(
-        final String id, final String mdRecordId, final String xmlData)
-        throws ItemNotFoundException, XmlSchemaNotFoundException,
-        XmlSchemaValidationException, LockingException,
-        InvalidContentException, MdRecordNotFoundException,
-        InvalidStatusException, MissingMethodParameterException,
-        SystemException, OptimisticLockingException, InvalidXmlException,
-        ReadonlyViolationException, ReadonlyVersionException,
-        AuthorizationException;
+    String updateMetadataRecord(final String id, final String mdRecordId, final String xmlData)
+        throws ItemNotFoundException, XmlSchemaNotFoundException, XmlSchemaValidationException, LockingException,
+        InvalidContentException, MdRecordNotFoundException, InvalidStatusException, MissingMethodParameterException,
+        SystemException, OptimisticLockingException, InvalidXmlException, ReadonlyViolationException,
+        ReadonlyVersionException, AuthorizationException;
 
     //
     // Subresource - metadata records
@@ -829,135 +514,83 @@ public interface ItemHandlerInterface extends IngestableResource {
 
     /**
      * Retrieves the subresource metadata records.
-     * 
-     * @param id
-     *            The id of the resource.
+     *
+     * @param id The id of the resource.
      * @return Returns the value of the subresource.
-     * @throws ItemNotFoundException
-     *             Thrown if an item with the specified id could not be found.
+     * @throws ItemNotFoundException  Thrown if an item with the specified id could not be found.
      * @throws MissingMethodParameterException
-     *             If a mandatory element value is missing.
-     * @throws SystemException
-     *             If an unexpected error occurs.
-     * @throws AuthorizationException
-     *             Thrown if the authorization fails.
+     *                                If a mandatory element value is missing.
+     * @throws SystemException        If an unexpected error occurs.
+     * @throws AuthorizationException Thrown if the authorization fails.
      */
-    String retrieveMdRecords(final String id) throws ItemNotFoundException,
-        MissingMethodParameterException, SystemException,
-        AuthorizationException;
+    String retrieveMdRecords(final String id) throws ItemNotFoundException, MissingMethodParameterException,
+        SystemException, AuthorizationException;
 
     //
     // Subresource - content-streams
     //
 
     /**
-     * Retrieves the subresource content streams containing a XML representation
-     * of each content stream.
-     * 
-     * @param id
-     *            The id of the resource.
-     * 
+     * Retrieves the subresource content streams containing a XML representation of each content stream.
+     *
+     * @param id The id of the resource.
      * @return Returns the value of the subresource.
-     * @throws SystemException
-     *             If an unexpected error occurs.
-     * @throws ItemNotFoundException
-     *             Thrown if an item with the specified id could not be found.
-     * @throws AuthorizationException
-     *             Thrown if the authorization fails.
+     * @throws SystemException        If an unexpected error occurs.
+     * @throws ItemNotFoundException  Thrown if an item with the specified id could not be found.
+     * @throws AuthorizationException Thrown if the authorization fails.
      */
-    String retrieveContentStreams(final String id)
-        throws ItemNotFoundException, SystemException, AuthorizationException;
+    String retrieveContentStreams(final String id) throws ItemNotFoundException, SystemException,
+        AuthorizationException;
 
     /**
-     * 
-     * @param id
-     * @param xmlData
-     * @return
-     * @throws ItemNotFoundException
-     *             Thrown if an item with the specified id could not be found.
-     * @throws SystemException
-     *             If an unexpected error occurs.
+     * @throws ItemNotFoundException Thrown if an item with the specified id could not be found.
+     * @throws SystemException       If an unexpected error occurs.
      */
-    String updateContentStreams(final String id, final String xmlData)
-        throws ItemNotFoundException, SystemException;
+    String updateContentStreams(final String id, final String xmlData) throws ItemNotFoundException, SystemException;
 
     /**
-     * 
-     * @param id
-     * @throws ItemNotFoundException
-     *             Thrown if an item with the specified id could not be found.
-     * @throws SystemException
-     *             If an unexpected error occurs.
+     * @throws ItemNotFoundException Thrown if an item with the specified id could not be found.
+     * @throws SystemException       If an unexpected error occurs.
      */
-    void deleteContentStreams(final String id) throws ItemNotFoundException,
-        SystemException;
+    void deleteContentStreams(final String id) throws ItemNotFoundException, SystemException;
 
     /**
-     * Retrieves a XML representation of the content stream specified by
-     * <code>name</code>.
-     * 
-     * @param id
-     *            The id of the resource.
-     * @param name
-     *            The name of the content stream subresource.
-     * 
+     * Retrieves a XML representation of the content stream specified by <code>name</code>.
+     *
+     * @param id   The id of the resource.
+     * @param name The name of the content stream subresource.
      * @return Returns the value of the subresource.
-     * @throws SystemException
-     * @throws ItemNotFoundException
-     *             Thrown if an item with the specified id could not be found.
-     * @throws ContentStreamNotFoundException
-     * @throws AuthorizationException
-     *             Thrown if the authorization fails.
+     * @throws ItemNotFoundException  Thrown if an item with the specified id could not be found.
+     * @throws AuthorizationException Thrown if the authorization fails.
      */
-    String retrieveContentStream(final String id, final String name)
-        throws ItemNotFoundException, SystemException,
+    String retrieveContentStream(final String id, final String name) throws ItemNotFoundException, SystemException,
         ContentStreamNotFoundException, AuthorizationException;
 
     /**
-     * 
-     * @param id
-     * @param name
-     * @param xml
-     * @return
-     * @throws ItemNotFoundException
-     *             Thrown if an item with the specified id could not be found.
-     * @throws SystemException
-     *             If an unexpected error occurs.
-     * @throws ContentStreamNotFoundException
+     * @throws ItemNotFoundException Thrown if an item with the specified id could not be found.
+     * @throws SystemException       If an unexpected error occurs.
      */
-    String updateContentStream(
-        final String id, final String name, final String xml)
-        throws ItemNotFoundException, SystemException,
-        ContentStreamNotFoundException;
+    String updateContentStream(final String id, final String name, final String xml) throws ItemNotFoundException,
+        SystemException, ContentStreamNotFoundException;
 
     /**
-     * 
-     * @param id
-     * @param name
-     * @throws ItemNotFoundException
-     *             Thrown if an item with the specified id could not be found.
-     * @throws SystemException
-     *             If an unexpected error occurs.
-     * @throws ContentStreamNotFoundException
+     * @throws ItemNotFoundException Thrown if an item with the specified id could not be found.
+     * @throws SystemException       If an unexpected error occurs.
      */
-    void deleteContentStream(final String id, final String name)
-        throws ItemNotFoundException, SystemException,
+    void deleteContentStream(final String id, final String name) throws ItemNotFoundException, SystemException,
         ContentStreamNotFoundException;
 
     /**
      * Creates a content stream in the resource specified.
-     * 
-     * @param id
-     *            The id of the resource.
-     * @param xmlData
-     *            The XML representation of the new content stream subresource.
-     * 
+     *
+     * @param id      The id of the resource.
+     * @param xmlData The XML representation of the new content stream subresource.
      * @return Returns the value of the subresource.
      */
     String createContentStream(final String id, final String xmlData);
 
     /**
-     * 
+     *
      * @param id
      * @param xmlData
      * @return
@@ -970,516 +603,293 @@ public interface ItemHandlerInterface extends IngestableResource {
 
     /**
      * Retrieves the subresource properties.
-     * 
-     * @param id
-     *            The id of the resource.
+     *
+     * @param id The id of the resource.
      * @return Returns the value of the subresource.
-     * @throws ItemNotFoundException
-     *             Thrown if an item with the specified id could not be found.
+     * @throws ItemNotFoundException Thrown if an item with the specified id could not be found.
      * @throws MissingMethodParameterException
-     *             If a mandatory element value is missing.
-     * @throws SystemException
-     *             If an unexpected error occurs.
+     *                               If a mandatory element value is missing.
+     * @throws SystemException       If an unexpected error occurs.
      */
-    String retrieveProperties(final String id) throws ItemNotFoundException,
-        MissingMethodParameterException, SystemException;
+    String retrieveProperties(final String id) throws ItemNotFoundException, MissingMethodParameterException,
+        SystemException;
 
     //
     // Subresource - resources
     //
+
     /**
      * Retrieves the subresource resources.
-     * 
-     * @param id
-     *            The id of the resource.
+     *
+     * @param id The id of the resource.
      * @return Returns the value of the subresource.
-     * 
-     * @throws ItemNotFoundException
-     *             Thrown if an item with the specified id could not be found.
+     * @throws ItemNotFoundException Thrown if an item with the specified id could not be found.
      * @throws MissingMethodParameterException
-     *             If a mandatory element value is missing.
-     * @throws SystemException
-     *             If an unexpected error occurs.
+     *                               If a mandatory element value is missing.
+     * @throws SystemException       If an unexpected error occurs.
      */
-    String retrieveResources(final String id) throws ItemNotFoundException,
-        MissingMethodParameterException, SystemException;
-
-    /**
-     * Retrieve the version history subresource.
-     * 
-     * @param id
-     *            The id of the resource.
-     * @return Returns the value of the subresource.
-     * 
-     * @throws ItemNotFoundException
-     *             Thrown if an item with the specified id could not be found.
-     * @throws SystemException
-     *             Thrown in case of internal error.
-     */
-    String retrieveVersionHistory(final String id)
-        throws ItemNotFoundException, SystemException;
-
-    /**
-     * 
-     * @param id
-     * @return
-     * @throws ItemNotFoundException
-     * @throws SystemException
-     *             Thrown if a framework internal error occurs.
-     */
-    String retrieveParents(final String id) throws ItemNotFoundException,
+    String retrieveResources(final String id) throws ItemNotFoundException, MissingMethodParameterException,
         SystemException;
 
     /**
-     * Publish an Item.
-     * 
-     * @param id
-     *            The id of the Item.
-     * @param taskParam
-     *            The timestamp of the last modification of the item. Necessary
-     *            for optimistic locking purpose.
-     * @return last-modification-date within XML (result.xsd)
-     * 
-     * @throws ItemNotFoundException
-     *             Thrown if an item with the specified id could not be found.
-     * @throws LockingException
-     *             Thrown if the Item is lock through another user.
-     * @throws InvalidStatusException
-     *             Thrown in case of an invalid status.
-     * @throws MissingMethodParameterException
-     *             If a mandatory element value is missing.
-     * @throws SystemException
-     *             If an unexpected error occurs.
-     * @throws OptimisticLockingException
-     *             Thrown in case of an optimistic locking error.
-     * @throws ReadonlyViolationException
-     *             TODO
-     * @throws ReadonlyVersionException
-     * @throws InvalidXmlException
-     *             TODO
-     * @throws InvalidContentException
-     * @throws ComponentNotFoundException
-     *             Thrown if a component with the specified id could not be
-     *             found.
+     * Retrieve the version history subresource.
+     *
+     * @param id The id of the resource.
+     * @return Returns the value of the subresource.
+     * @throws ItemNotFoundException Thrown if an item with the specified id could not be found.
+     * @throws SystemException       Thrown in case of internal error.
      */
-    String release(final String id, final String taskParam)
-        throws ItemNotFoundException, ComponentNotFoundException,
-        LockingException, InvalidStatusException,
-        MissingMethodParameterException, SystemException,
-        OptimisticLockingException, ReadonlyViolationException,
-        ReadonlyVersionException, InvalidXmlException;
+    String retrieveVersionHistory(final String id) throws ItemNotFoundException, SystemException;
+
+    /**
+     * @throws SystemException Thrown if a framework internal error occurs.
+     */
+    String retrieveParents(final String id) throws ItemNotFoundException, SystemException;
+
+    /**
+     * Publish an Item.
+     *
+     * @param id        The id of the Item.
+     * @param taskParam The timestamp of the last modification of the item. Necessary for optimistic locking purpose.
+     * @return last-modification-date within XML (result.xsd)
+     * @throws ItemNotFoundException      Thrown if an item with the specified id could not be found.
+     * @throws LockingException           Thrown if the Item is lock through another user.
+     * @throws InvalidStatusException     Thrown in case of an invalid status.
+     * @throws MissingMethodParameterException
+     *                                    If a mandatory element value is missing.
+     * @throws SystemException            If an unexpected error occurs.
+     * @throws OptimisticLockingException Thrown in case of an optimistic locking error.
+     * @throws ReadonlyViolationException TODO
+     * @throws InvalidXmlException        TODO
+     * @throws ComponentNotFoundException Thrown if a component with the specified id could not be found.
+     */
+    String release(final String id, final String taskParam) throws ItemNotFoundException, ComponentNotFoundException,
+        LockingException, InvalidStatusException, MissingMethodParameterException, SystemException,
+        OptimisticLockingException, ReadonlyViolationException, ReadonlyVersionException, InvalidXmlException;
 
     /**
      * Submit an Item.
-     * 
-     * @param id
-     *            The id of the Item.
-     * @param taskParam
-     *            The timestamp of the last modification of the item. Necessary
-     *            for optimistic locking purpose.
+     *
+     * @param id        The id of the Item.
+     * @param taskParam The timestamp of the last modification of the item. Necessary for optimistic locking purpose.
      * @return last-modification-date within XML (result.xsd)
-     * 
-     * @throws ItemNotFoundException
-     *             Thrown if an item with the specified id could not be found.
-     * @throws LockingException
-     *             Thrown if Item is locked
-     * @throws InvalidStatusException
-     *             Thrown in case of an invalid status.
+     * @throws ItemNotFoundException      Thrown if an item with the specified id could not be found.
+     * @throws LockingException           Thrown if Item is locked
+     * @throws InvalidStatusException     Thrown in case of an invalid status.
      * @throws MissingMethodParameterException
-     *             If a mandatory element value is missing.
-     * @throws SystemException
-     *             If an unexpected error occurs.
-     * @throws OptimisticLockingException
-     *             Thrown in case of an optimistic locking error.
-     * @throws ReadonlyViolationException
-     *             TODO
-     * @throws ReadonlyVersionException
-     * @throws InvalidXmlException
-     *             TODO
-     * @throws InvalidContentException
-     * @throws ComponentNotFoundException
-     *             Thrown if a component with the specified id could not be
-     *             found.
+     *                                    If a mandatory element value is missing.
+     * @throws SystemException            If an unexpected error occurs.
+     * @throws OptimisticLockingException Thrown in case of an optimistic locking error.
+     * @throws ReadonlyViolationException TODO
+     * @throws InvalidXmlException        TODO
+     * @throws ComponentNotFoundException Thrown if a component with the specified id could not be found.
      */
-    String submit(final String id, final String taskParam)
-        throws ItemNotFoundException, ComponentNotFoundException,
-        LockingException, InvalidStatusException,
-        MissingMethodParameterException, SystemException,
-        OptimisticLockingException, ReadonlyViolationException,
-        ReadonlyVersionException, InvalidXmlException;
+    String submit(final String id, final String taskParam) throws ItemNotFoundException, ComponentNotFoundException,
+        LockingException, InvalidStatusException, MissingMethodParameterException, SystemException,
+        OptimisticLockingException, ReadonlyViolationException, ReadonlyVersionException, InvalidXmlException;
 
     /**
      * Set an Item in revision.
-     * 
-     * @param id
-     *            The id of the Item.
-     * @param param
-     *            The timestamp of the last modification of the item. Necessary
-     *            for optimistic locking purpose.
+     *
+     * @param id    The id of the Item.
+     * @param param The timestamp of the last modification of the item. Necessary for optimistic locking purpose.
      * @return last-modification-date within XML (result.xsd)
-     * 
-     * @throws ItemNotFoundException
-     *             Thrown if an item with the specified id could not be found.
-     * @throws LockingException
-     *             Thrown if Item is locked
-     * @throws InvalidStatusException
-     *             Thrown in case of an invalid status.
+     * @throws ItemNotFoundException      Thrown if an item with the specified id could not be found.
+     * @throws LockingException           Thrown if Item is locked
+     * @throws InvalidStatusException     Thrown in case of an invalid status.
      * @throws MissingMethodParameterException
-     *             If a mandatory element value is missing.
-     * @throws SystemException
-     *             If an unexpected error occurs.
-     * @throws OptimisticLockingException
-     *             Thrown in case of an optimistic locking error.
-     * @throws ReadonlyViolationException
-     *             TODO
-     * @throws ReadonlyVersionException
-     * @throws XmlCorruptedException
-     *             TODO
-     * @throws ComponentNotFoundException
-     *             Thrown if a component with the specified id could not be
-     *             found.
+     *                                    If a mandatory element value is missing.
+     * @throws SystemException            If an unexpected error occurs.
+     * @throws OptimisticLockingException Thrown in case of an optimistic locking error.
+     * @throws ReadonlyViolationException TODO
+     * @throws XmlCorruptedException      TODO
+     * @throws ComponentNotFoundException Thrown if a component with the specified id could not be found.
      */
-    String revise(final String id, final String param)
-        throws ItemNotFoundException, ComponentNotFoundException,
-        LockingException, InvalidStatusException,
-        MissingMethodParameterException, SystemException,
-        OptimisticLockingException, ReadonlyViolationException,
-        ReadonlyVersionException, XmlCorruptedException;
+    String revise(final String id, final String param) throws ItemNotFoundException, ComponentNotFoundException,
+        LockingException, InvalidStatusException, MissingMethodParameterException, SystemException,
+        OptimisticLockingException, ReadonlyViolationException, ReadonlyVersionException, XmlCorruptedException;
 
     /**
      * Withdraw an Item.
-     * 
-     * @param id
-     *            The id of the Item.
-     * @param taskParam
-     *            The timestamp of the last modification of the item. Necessary
-     *            for optimistic locking purpose.
+     *
+     * @param id        The id of the Item.
+     * @param taskParam The timestamp of the last modification of the item. Necessary for optimistic locking purpose.
      * @return last-modification-date within XML (result.xsd)
-     * 
-     * @throws ItemNotFoundException
-     *             Thrown if an item with the specified id could not be found.
-     * @throws NotPublishedException
-     *             Thrown if the status shall be changed to withdrawn but the
-     *             item has not been published.
-     * @throws LockingException
-     *             Thrown if Item is locked
-     * @throws InvalidStatusException
-     *             Thrown in case of an invalid status.
+     * @throws ItemNotFoundException      Thrown if an item with the specified id could not be found.
+     * @throws NotPublishedException      Thrown if the status shall be changed to withdrawn but the item has not been
+     *                                    published.
+     * @throws LockingException           Thrown if Item is locked
+     * @throws InvalidStatusException     Thrown in case of an invalid status.
      * @throws MissingMethodParameterException
-     *             If a mandatory element value is missing.
-     * @throws SystemException
-     *             If an unexpected error occurs.
-     * @throws OptimisticLockingException
-     *             Thrown in case of an optimistic locking error.
-     * @throws ReadonlyViolationException
-     *             TODO
-     * @throws ReadonlyVersionException
-     * @throws InvalidXmlException
-     *             TODO
-     * @throws ComponentNotFoundException
-     *             Thrown if a component with the specified id could not be
-     *             found.
-     * @throws de.escidoc.core.common.exceptions.application.violated.AlreadyWithdrawnException
+     *                                    If a mandatory element value is missing.
+     * @throws SystemException            If an unexpected error occurs.
+     * @throws OptimisticLockingException Thrown in case of an optimistic locking error.
+     * @throws ReadonlyViolationException TODO
+     * @throws InvalidXmlException        TODO
+     * @throws ComponentNotFoundException Thrown if a component with the specified id could not be found.
      */
-    String withdraw(final String id, final String taskParam)
-        throws ItemNotFoundException, ComponentNotFoundException,
-        NotPublishedException, LockingException, AlreadyWithdrawnException,
-        InvalidStatusException, MissingMethodParameterException,
-        SystemException, OptimisticLockingException,
-        ReadonlyViolationException, ReadonlyVersionException,
-        InvalidXmlException;
+    String withdraw(final String id, final String taskParam) throws ItemNotFoundException, ComponentNotFoundException,
+        NotPublishedException, LockingException, AlreadyWithdrawnException, InvalidStatusException,
+        MissingMethodParameterException, SystemException, OptimisticLockingException, ReadonlyViolationException,
+        ReadonlyVersionException, InvalidXmlException;
 
     /**
      * Lock an Item for offline work.
-     * 
-     * @param id
-     *            The id of the Item.
-     * @param taskParam
-     *            The timestamp of the last modification of the item. Necessary
-     *            for optimistic locking purpose.
+     *
+     * @param id        The id of the Item.
+     * @param taskParam The timestamp of the last modification of the item. Necessary for optimistic locking purpose.
      * @return last-modification-date within XML (result.xsd)
-     * 
-     * @throws ItemNotFoundException
-     *             Thrown if an item with the specified id could not be found.
-     * @throws LockingException
-     *             Thrown if Item is locked
-     * @throws InvalidContentException
+     * @throws ItemNotFoundException      Thrown if an item with the specified id could not be found.
+     * @throws LockingException           Thrown if Item is locked
      * @throws MissingMethodParameterException
-     *             If a mandatory element value is missing.
-     * @throws SystemException
-     *             If an unexpected error occurs.
-     * @throws OptimisticLockingException
-     *             Thrown in case of an optimistic locking error.
-     * @throws InvalidXmlException
-     *             TODO
-     * @throws InvalidStatusException
-     *             Thrown if Item is in status withdawn.
-     * @throws ComponentNotFoundException
-     *             Thrown if a component with the specified id could not be
-     *             found.
+     *                                    If a mandatory element value is missing.
+     * @throws SystemException            If an unexpected error occurs.
+     * @throws OptimisticLockingException Thrown in case of an optimistic locking error.
+     * @throws InvalidXmlException        TODO
+     * @throws InvalidStatusException     Thrown if Item is in status withdawn.
+     * @throws ComponentNotFoundException Thrown if a component with the specified id could not be found.
      */
-    String lock(final String id, final String taskParam)
-        throws ItemNotFoundException, ComponentNotFoundException,
-        LockingException, InvalidContentException,
-        MissingMethodParameterException, SystemException,
+    String lock(final String id, final String taskParam) throws ItemNotFoundException, ComponentNotFoundException,
+        LockingException, InvalidContentException, MissingMethodParameterException, SystemException,
         OptimisticLockingException, InvalidXmlException, InvalidStatusException;
 
     /**
      * Unlock an Item.
-     * 
-     * @param id
-     *            The id of the Item.
-     * @param taskParam
-     *            The timestamp of the last modification of the item. Necessary
-     *            for optimistic locking purpose.
+     *
+     * @param id        The id of the Item.
+     * @param taskParam The timestamp of the last modification of the item. Necessary for optimistic locking purpose.
      * @return last-modification-date within XML (result.xsd)
-     * 
-     * @throws ItemNotFoundException
-     *             Thrown if an item with the specified id could not be found.
-     * @throws ComponentNotFoundException
-     *             Thrown if a component with the specified id could not be
-     *             found.
-     * @throws LockingException
-     *             Thrown if Item is locked
+     * @throws ItemNotFoundException      Thrown if an item with the specified id could not be found.
+     * @throws ComponentNotFoundException Thrown if a component with the specified id could not be found.
+     * @throws LockingException           Thrown if Item is locked
      * @throws MissingMethodParameterException
-     *             If a mandatory element value is missing.
-     * @throws SystemException
-     *             If an unexpected error occurs.
-     * @throws OptimisticLockingException
-     *             Thrown in case of an optimistic locking error.
-     * @throws InvalidXmlException
-     *             TODO
+     *                                    If a mandatory element value is missing.
+     * @throws SystemException            If an unexpected error occurs.
+     * @throws OptimisticLockingException Thrown in case of an optimistic locking error.
+     * @throws InvalidXmlException        TODO
      */
-    String unlock(final String id, final String taskParam)
-        throws ItemNotFoundException, ComponentNotFoundException,
-        LockingException, MissingMethodParameterException, SystemException,
-        OptimisticLockingException, InvalidXmlException;
+    String unlock(final String id, final String taskParam) throws ItemNotFoundException, ComponentNotFoundException,
+        LockingException, MissingMethodParameterException, SystemException, OptimisticLockingException,
+        InvalidXmlException;
 
     /**
-     * 
-     * @param id
-     * @param taskParam
-     * @return
-     * @throws ItemNotFoundException
-     *             Thrown if an item with the specified id could not be found.
-     * @throws ContextNotFoundException
-     * @throws InvalidContentException
-     * @throws LockingException
-     * @throws InvalidStatusException
-     *             Thrown in case of an invalid status.
+     * @throws ItemNotFoundException  Thrown if an item with the specified id could not be found.
+     * @throws InvalidStatusException Thrown in case of an invalid status.
      * @throws MissingMethodParameterException
-     *             If a mandatory element value is missing.
-     * @throws SystemException
-     *             If an unexpected error occurs.
+     *                                If a mandatory element value is missing.
+     * @throws SystemException        If an unexpected error occurs.
      */
-    String moveToContext(final String id, String taskParam)
-        throws ItemNotFoundException, ContextNotFoundException,
-        InvalidContentException, LockingException, InvalidStatusException,
-        MissingMethodParameterException, SystemException;
+    String moveToContext(final String id, String taskParam) throws ItemNotFoundException, ContextNotFoundException,
+        InvalidContentException, LockingException, InvalidStatusException, MissingMethodParameterException,
+        SystemException;
 
     /**
      * Assign a Persistent Identifier to a definied object version.
-     * 
-     * @param id
-     *            The id of the item.
-     * @param taskParam
-     *            Taskparameter XML containing the URL the should be assigned
-     *            to:
-     * @return last-modification-date within XML (result.xsd) including <pid>new
-     *         pid</pid>
-     * 
-     * @throws ItemNotFoundException
-     *             Thrown if an item with the specified id could not be found.
-     * @throws ComponentNotFoundException
-     *             Thrown if a component with the specified id could not be
-     *             found.
-     * @throws LockingException
-     *             Thrown if Item is locked
+     *
+     * @param id        The id of the item.
+     * @param taskParam Taskparameter XML containing the URL the should be assigned to:
+     * @return last-modification-date within XML (result.xsd) including <pid>new pid</pid>
+     * @throws ItemNotFoundException      Thrown if an item with the specified id could not be found.
+     * @throws ComponentNotFoundException Thrown if a component with the specified id could not be found.
+     * @throws LockingException           Thrown if Item is locked
      * @throws MissingMethodParameterException
-     *             If a mandatory element value is missing.
-     * @throws SystemException
-     *             If an unexpected error occurs.
-     * @throws OptimisticLockingException
-     *             Thrown in case of an optimistic locking error.
-     * @throws InvalidStatusException
-     *             Thrown in case of an invalid status.
-     * @throws ReadonlyVersionException
-     *             Thrown if a provided item version id is not a latest version.
-     * @throws XmlCorruptedException
-     *             TODO
+     *                                    If a mandatory element value is missing.
+     * @throws SystemException            If an unexpected error occurs.
+     * @throws OptimisticLockingException Thrown in case of an optimistic locking error.
+     * @throws InvalidStatusException     Thrown in case of an invalid status.
+     * @throws ReadonlyVersionException   Thrown if a provided item version id is not a latest version.
+     * @throws XmlCorruptedException      TODO
      */
-    String assignVersionPid(final String id, final String taskParam)
-        throws ItemNotFoundException, ComponentNotFoundException,
-        LockingException, MissingMethodParameterException, SystemException,
-        OptimisticLockingException, InvalidStatusException,
-        XmlCorruptedException, ReadonlyVersionException;
+    String assignVersionPid(final String id, final String taskParam) throws ItemNotFoundException,
+        ComponentNotFoundException, LockingException, MissingMethodParameterException, SystemException,
+        OptimisticLockingException, InvalidStatusException, XmlCorruptedException, ReadonlyVersionException;
 
     /**
      * Assign a Persistent Identifier with objectPID to Item.
-     * 
-     * @param id
-     *            The id of the item.
-     * @param taskParam
-     *            XML param structure <param>
-     *            <url>http://some.url/resource</url> </param>
-     * 
+     *
+     * @param id        The id of the item.
+     * @param taskParam XML param structure <param> <url>http://some.url/resource</url> </param>
      * @return pid as xml snippet <param><pid>somePid</pid></param>
-     * @throws ItemNotFoundException
-     *             Thrown if an item with the specified id could not be found.
-     * @throws LockingException
-     *             Thrown if Item is locked
+     * @throws ItemNotFoundException      Thrown if an item with the specified id could not be found.
+     * @throws LockingException           Thrown if Item is locked
      * @throws MissingMethodParameterException
-     *             If a mandatory element value is missing.
-     * @throws SystemException
-     *             If an unexpected error occurs.
-     * @throws OptimisticLockingException
-     *             Thrown in case of an optimistic locking error.
-     * @throws PidSystemException
-     *             Thrown if access to PID System failed.
-     * @throws InvalidStatusException
-     *             Thrown in case of an invalid status.
-     * @throws XmlCorruptedException
-     *             TODO
-     * @throws ComponentNotFoundException
-     *             Thrown if a component with the specified id could not be
-     *             found.
+     *                                    If a mandatory element value is missing.
+     * @throws SystemException            If an unexpected error occurs.
+     * @throws OptimisticLockingException Thrown in case of an optimistic locking error.
+     * @throws PidSystemException         Thrown if access to PID System failed.
+     * @throws InvalidStatusException     Thrown in case of an invalid status.
+     * @throws XmlCorruptedException      TODO
+     * @throws ComponentNotFoundException Thrown if a component with the specified id could not be found.
      */
-    String assignObjectPid(final String id, final String taskParam)
-        throws ItemNotFoundException, ComponentNotFoundException,
-        LockingException, MissingMethodParameterException, SystemException,
-        OptimisticLockingException, PidSystemException, InvalidStatusException,
-        XmlCorruptedException;
+    String assignObjectPid(final String id, final String taskParam) throws ItemNotFoundException,
+        ComponentNotFoundException, LockingException, MissingMethodParameterException, SystemException,
+        OptimisticLockingException, PidSystemException, InvalidStatusException, XmlCorruptedException;
 
     /**
      * Assigns a Persistent Identifier to the Content.
-     * 
-     * @param id
-     *            The ID of the Item.
-     * @param componentId
-     *            The ID of the Component.
-     * @param taskParam
-     *            XML param structure <param>
-     *            <url>http://some.url/resource</url> </param>
+     *
+     * @param id          The ID of the Item.
+     * @param componentId The ID of the Component.
+     * @param taskParam   XML param structure <param> <url>http://some.url/resource</url> </param>
      * @return pid as xml snippet <param><pid>somePid</pid></param>
-     * @throws ItemNotFoundException
-     *             Thrown if the Item could not be found under provided id.
-     * @throws LockingException
-     *             Thrown if the Item is locked.
+     * @throws ItemNotFoundException      Thrown if the Item could not be found under provided id.
+     * @throws LockingException           Thrown if the Item is locked.
      * @throws MissingMethodParameterException
-     *             Thrown if not all method parameter are provided.
-     * @throws OptimisticLockingException
-     *             Thrown if the resource has changed during method call.
-     * @throws PidSystemException
-     *             Thrown if the external PID System communication failed.
-     * @throws InvalidStatusException
-     *             Thrown if the Item status is invalid to assign a PID.
-     * @throws XmlCorruptedException
-     *             Thorwn if taskParam is invalid XML.
-     * @throws ComponentNotFoundException
-     *             Thrown if the Component could not be found under provided id.
-     * @throws ReadonlyVersionException
-     *             Thrown if a provided item version id is not a latest version.
-     * @throws SystemException
-     *             Thrown in case of internal failure.
+     *                                    Thrown if not all method parameter are provided.
+     * @throws OptimisticLockingException Thrown if the resource has changed during method call.
+     * @throws PidSystemException         Thrown if the external PID System communication failed.
+     * @throws InvalidStatusException     Thrown if the Item status is invalid to assign a PID.
+     * @throws XmlCorruptedException      Thorwn if taskParam is invalid XML.
+     * @throws ComponentNotFoundException Thrown if the Component could not be found under provided id.
+     * @throws ReadonlyVersionException   Thrown if a provided item version id is not a latest version.
+     * @throws SystemException            Thrown in case of internal failure.
      */
-    String assignContentPid(
-        final String id, final String componentId, final String taskParam)
-        throws ItemNotFoundException, LockingException,
-        MissingMethodParameterException, SystemException,
-        OptimisticLockingException, PidSystemException, InvalidStatusException,
-        XmlCorruptedException, ComponentNotFoundException,
-        ReadonlyVersionException;
+    String assignContentPid(final String id, final String componentId, final String taskParam)
+        throws ItemNotFoundException, LockingException, MissingMethodParameterException, SystemException,
+        OptimisticLockingException, PidSystemException, InvalidStatusException, XmlCorruptedException,
+        ComponentNotFoundException, ReadonlyVersionException;
 
     /**
      * Retrieves the subresource relations.
-     * 
-     * @param id
-     *            The id of the resource.
+     *
+     * @param id The id of the resource.
      * @return Returns the value of the subresource.
-     * @throws ItemNotFoundException
-     *             Thrown if an item with the specified id could not be found.
+     * @throws ItemNotFoundException Thrown if an item with the specified id could not be found.
      * @throws MissingMethodParameterException
-     *             If a mandatory element value is missing.
-     * @throws SystemException
-     *             If an unexpected error occurs.
+     *                               If a mandatory element value is missing.
+     * @throws SystemException       If an unexpected error occurs.
      */
-    String retrieveRelations(final String id) throws ItemNotFoundException,
-        MissingMethodParameterException, SystemException;
+    String retrieveRelations(final String id) throws ItemNotFoundException, MissingMethodParameterException,
+        SystemException;
 
     /**
-     * 
-     * @param id
-     * @param taskParameter
      * @return last-modification-date within XML (result.xsd)
-     * 
-     * @throws ReadonlyVersionException
-     * @throws ComponentNotFoundException
-     *             Thrown if a component with the specified id could not be
-     *             found.
-     * @throws InvalidStatusException
-     *             Thrown in case of an invalid status.
-     * @throws SystemException
-     *             If an unexpected error occurs.
-     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException
-     * @throws de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException
-     * @throws de.escidoc.core.common.exceptions.application.violated.ReadonlyAttributeViolationException
-     * @throws de.escidoc.core.common.exceptions.application.notfound.ItemNotFoundException
-     * @throws de.escidoc.core.common.exceptions.application.violated.ReadonlyViolationException
-     * @throws de.escidoc.core.common.exceptions.application.violated.AlreadyExistsException
-     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
-     * @throws de.escidoc.core.common.exceptions.application.violated.LockingException
-     * @throws de.escidoc.core.common.exceptions.application.missing.MissingElementValueException
-     * @throws de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException
-     * @throws de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException
+     * @throws ComponentNotFoundException Thrown if a component with the specified id could not be found.
+     * @throws InvalidStatusException     Thrown in case of an invalid status.
+     * @throws SystemException            If an unexpected error occurs.
      */
-    String addContentRelations(final String id, final String taskParameter)
-        throws SystemException, ItemNotFoundException,
-        ComponentNotFoundException, OptimisticLockingException,
-        ReferencedResourceNotFoundException,
-        RelationPredicateNotFoundException, AlreadyExistsException,
-        InvalidStatusException, InvalidXmlException,
-        ReadonlyAttributeViolationException, MissingElementValueException,
-        LockingException, ReadonlyViolationException, InvalidContentException,
-        ReadonlyVersionException;
+    String addContentRelations(final String id, final String taskParameter) throws SystemException,
+        ItemNotFoundException, ComponentNotFoundException, OptimisticLockingException,
+        ReferencedResourceNotFoundException, RelationPredicateNotFoundException, AlreadyExistsException,
+        InvalidStatusException, InvalidXmlException, ReadonlyAttributeViolationException, MissingElementValueException,
+        LockingException, ReadonlyViolationException, InvalidContentException, ReadonlyVersionException;
 
     /**
-     * 
-     * @param id
-     * @param param
      * @return last-modification-date within XML (result.xsd)
-     * 
-     * @throws SystemException
-     *             If an unexpected error occurs.
-     * @throws ItemNotFoundException
-     *             Thrown if an item with the specified id could not be found.
-     * @throws OptimisticLockingException
-     *             Thrown in case of an optimistic locking error.
-     * @throws InvalidStatusException
-     *             Thrown in case of an invalid status.
-     * @throws MissingElementValueException
-     * @throws ComponentNotFoundException
-     *             Thrown if a component with the specified id could not be
-     *             found.
-     * @throws InvalidContentException
-     * @throws InvalidXmlException
-     *             Thrown if taskParam is invalid XML.
-     * @throws ContentRelationNotFoundException
-     * @throws AlreadyDeletedException
-     * @throws LockingException
-     *             Thrown if Item is locked
-     * @throws ReadonlyViolationException
-     * @throws ReadonlyVersionException
+     * @throws SystemException            If an unexpected error occurs.
+     * @throws ItemNotFoundException      Thrown if an item with the specified id could not be found.
+     * @throws OptimisticLockingException Thrown in case of an optimistic locking error.
+     * @throws InvalidStatusException     Thrown in case of an invalid status.
+     * @throws ComponentNotFoundException Thrown if a component with the specified id could not be found.
+     * @throws InvalidXmlException        Thrown if taskParam is invalid XML.
+     * @throws LockingException           Thrown if Item is locked
      */
-    String removeContentRelations(final String id, final String param)
-        throws SystemException, ItemNotFoundException,
-        ComponentNotFoundException, OptimisticLockingException,
-        InvalidStatusException, MissingElementValueException,
-        InvalidContentException, InvalidXmlException,
-        ContentRelationNotFoundException, AlreadyDeletedException,
+    String removeContentRelations(final String id, final String param) throws SystemException, ItemNotFoundException,
+        ComponentNotFoundException, OptimisticLockingException, InvalidStatusException, MissingElementValueException,
+        InvalidContentException, InvalidXmlException, ContentRelationNotFoundException, AlreadyDeletedException,
         LockingException, ReadonlyViolationException, ReadonlyVersionException;
 
     EscidocBinaryContent retrieveResource(
-        final String id, final String resourceName,
-        final Map<String, String[]> parameters) throws SystemException,
+        final String id, final String resourceName, final Map<String, String[]> parameters) throws SystemException,
         ItemNotFoundException, OperationNotFoundException;
 }

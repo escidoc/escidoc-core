@@ -25,15 +25,13 @@
  * fuer wissenschaftlich-technische Information mbH and Max-Planck-
  * Gesellschaft zur Foerderung der Wissenschaft e.V.
  * All rights reserved.  Use is subject to license terms.
- */ 
+ */
 package de.escidoc.core.aa.business.persistence;
 
 /**
  * A user attribute.
- * 
+ *
  * @author Michael Hoppe
- *
- *
  */
 public class UserAttribute extends UserAttributeBase {
 
@@ -44,8 +42,6 @@ public class UserAttribute extends UserAttributeBase {
 
     /**
      * The default constructor.
-     * 
-     *
      */
     public UserAttribute() {
     }

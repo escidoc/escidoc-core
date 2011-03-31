@@ -21,14 +21,11 @@
 package de.escidoc.core.common.exceptions.application.invalid;
 
 /**
- * The ReferenceCycleException is used to indicate that one of the objects that
- * shall get inherited into another one is the other one. returned
- * httpStatusCode is 412. Status code (412) indicating that the precondition
- * given in one or more of the request-header fields evaluated to false when it
- * was tested on the server.
- * 
- * @author Michael Hoppe (FIZ Karlsruhe)
+ * The ReferenceCycleException is used to indicate that one of the objects that shall get inherited into another one is
+ * the other one. returned httpStatusCode is 412. Status code (412) indicating that the precondition given in one or
+ * more of the request-header fields evaluated to false when it was tested on the server.
  *
+ * @author Michael Hoppe (FIZ Karlsruhe)
  */
 public class ReferenceCycleException extends ValidationException {
 
@@ -43,8 +40,6 @@ public class ReferenceCycleException extends ValidationException {
 
     /**
      * Default constructor.
-     * 
-     *
      */
     public ReferenceCycleException() {
         super(HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -52,9 +47,8 @@ public class ReferenceCycleException extends ValidationException {
 
     /**
      * Constructor used to map an initial exception.
-     * 
-     * @param error
-     *            Throwable
+     *
+     * @param error Throwable
      */
     public ReferenceCycleException(final Throwable error) {
         super(error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -62,24 +56,19 @@ public class ReferenceCycleException extends ValidationException {
 
     /**
      * Constructs a new exception with the specified detail message.
-     * 
-     * @param message -
-     *            the detail message.
      *
+     * @param message - the detail message.
      */
     public ReferenceCycleException(final String message) {
         super(message, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 
     /**
-     * Constructor used to create a new Exception with the specified detail
-     * message and a mapping to an initial exception.
-     * 
-     * @param message -
-     *            the detail message.
-     * @param error
-     *            Throwable
+     * Constructor used to create a new Exception with the specified detail message and a mapping to an initial
+     * exception.
      *
+     * @param message - the detail message.
+     * @param error   Throwable
      */
     public ReferenceCycleException(final String message, final Throwable error) {
         super(message, error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);

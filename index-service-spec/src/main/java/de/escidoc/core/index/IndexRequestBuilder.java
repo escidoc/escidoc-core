@@ -72,4 +72,3 @@ public abstract class IndexRequestBuilder {
     public abstract IndexRequest build();
 
 }
-

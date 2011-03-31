@@ -45,15 +45,12 @@ import java.util.List;
 
 /**
  * Class holding the data of an XACML Policy Set.
- * 
- * @author Torsten Tetteroo
- * 
  *
+ * @author Torsten Tetteroo
  */
 public class XacmlPolicySet extends PolicySet implements Serializable {
 
-    private static final CombiningAlgFactory factory = CombiningAlgFactory
-        .getInstance();
+    private static final CombiningAlgFactory factory = CombiningAlgFactory.getInstance();
 
     public static final String DEFAULT_POLICY_SET_ID = "Default-Policies";
 
@@ -70,122 +67,75 @@ public class XacmlPolicySet extends PolicySet implements Serializable {
 
     /**
      * Creates an <code>XacmlPolicySet</code> object.
-     * 
-     * @param policySetId
-     *            The id of the policy set.
-     * @param combiningAlgorithmId
-     *            The <code>PolicyCombiningAlgorithm</code>.
-     * @param description
-     *            The description of the policy set.
-     * @param policies
-     *            The contained Policy or PolicySet objects.
-     * @throws URISyntaxException
-     *             Thrown if a provided URI is invalid.
-     * @throws UnknownIdentifierException
-     *             Thrown if the provided combinig algorithm id is inknown.
-     * 
      *
+     * @param policySetId          The id of the policy set.
+     * @param combiningAlgorithmId The <code>PolicyCombiningAlgorithm</code>.
+     * @param description          The description of the policy set.
+     * @param policies             The contained Policy or PolicySet objects.
+     * @throws URISyntaxException         Thrown if a provided URI is invalid.
+     * @throws UnknownIdentifierException Thrown if the provided combinig algorithm id is inknown.
      */
-    public XacmlPolicySet(final String policySetId,
-        final String combiningAlgorithmId, final String description,
-        final List policies) throws URISyntaxException,
-        UnknownIdentifierException {
+    public XacmlPolicySet(final String policySetId, final String combiningAlgorithmId, final String description,
+        final List policies) throws URISyntaxException, UnknownIdentifierException {
 
-        this(policySetId, combiningAlgorithmId, description, null, null,
-            policies);
+        this(policySetId, combiningAlgorithmId, description, null, null, policies);
     }
 
     /**
      * Creates an <code>XacmlPolicySet</code> object.
-     * 
-     * @param policySetId
-     *            The id of the policy set.
-     * @param combiningAlgorithmId
-     *            The <code>PolicyCombiningAlgorithm</code>.
-     * @param description
-     *            The description of the policy set.
-     * @param targetSubjects
-     *            The subjects part of the target of the policy set.
-     * @param targetResources
-     *            The resources part of the target of the policy set.
-     * @param policies
-     *            The contained Policy or PolicySet objects.
-     * @throws URISyntaxException
-     *             Thrown if a provided URI is invalid.
-     * @throws UnknownIdentifierException
-     *             Thrown if the provided combinig algorithm id is inknown.
-     * 
      *
+     * @param policySetId          The id of the policy set.
+     * @param combiningAlgorithmId The <code>PolicyCombiningAlgorithm</code>.
+     * @param description          The description of the policy set.
+     * @param targetSubjects       The subjects part of the target of the policy set.
+     * @param targetResources      The resources part of the target of the policy set.
+     * @param policies             The contained Policy or PolicySet objects.
+     * @throws URISyntaxException         Thrown if a provided URI is invalid.
+     * @throws UnknownIdentifierException Thrown if the provided combinig algorithm id is inknown.
      */
-    public XacmlPolicySet(final String policySetId,
-        final String combiningAlgorithmId, final String description,
-        final List targetSubjects, final List targetResources,
-        final List policies) throws URISyntaxException,
+    public XacmlPolicySet(final String policySetId, final String combiningAlgorithmId, final String description,
+        final List targetSubjects, final List targetResources, final List policies) throws URISyntaxException,
         UnknownIdentifierException {
 
-        super(new URI(policySetId),
-            getPolicyCombiningAlgorithm(combiningAlgorithmId), description,
-            new XacmlTarget(targetSubjects, targetResources,
-                new ArrayList<Action>()), policies);
+        super(new URI(policySetId), getPolicyCombiningAlgorithm(combiningAlgorithmId), description, new XacmlTarget(
+            targetSubjects, targetResources, new ArrayList<Action>()), policies);
     }
 
     /**
      * Creates an <code>XacmlPolicySet</code> object.
-     * 
-     * @param policySetId
-     *            The id of the policy set.
-     * @param combiningAlgorithmId
-     *            The <code>PolicyCombiningAlgorithm</code>.
-     * @param description
-     *            The description of the policy set.
-     * @param target
-     *            The target of the policy set.
-     * @param policies
-     *            The contained Policy or PolicySet objects.
-     * @throws URISyntaxException
-     *             Thrown if a provided URI is invalid.
-     * @throws UnknownIdentifierException
-     *             Thrown if the provided combinig algorithm id is inknown.
-     * 
      *
+     * @param policySetId          The id of the policy set.
+     * @param combiningAlgorithmId The <code>PolicyCombiningAlgorithm</code>.
+     * @param description          The description of the policy set.
+     * @param target               The target of the policy set.
+     * @param policies             The contained Policy or PolicySet objects.
+     * @throws URISyntaxException         Thrown if a provided URI is invalid.
+     * @throws UnknownIdentifierException Thrown if the provided combinig algorithm id is inknown.
      */
-    public XacmlPolicySet(final String policySetId,
-        final String combiningAlgorithmId, final String description,
-        final Target target, final List policies) throws URISyntaxException,
-        UnknownIdentifierException {
+    public XacmlPolicySet(final String policySetId, final String combiningAlgorithmId, final String description,
+        final Target target, final List policies) throws URISyntaxException, UnknownIdentifierException {
 
-        super(new URI(policySetId),
-            getPolicyCombiningAlgorithm(combiningAlgorithmId), description,
-            target, policies);
+        super(new URI(policySetId), getPolicyCombiningAlgorithm(combiningAlgorithmId), description, target, policies);
     }
 
     /**
-     * Gets the <code>PolicyCombiningAlgorithm</code> object for the provided
-     * combining algorithm id.
-     * 
-     * @param combiningAlgorithmId
-     *            The id of the combining algorithm.
+     * Gets the <code>PolicyCombiningAlgorithm</code> object for the provided combining algorithm id.
+     *
+     * @param combiningAlgorithmId The id of the combining algorithm.
      * @return Returns the <code>PolicyCombiningAlgorithm</code> object.
-     * @throws UnknownIdentifierException
-     *             Thrown if the provided identifier is unknown.
-     * @throws URISyntaxException
-     *             Thrown if no URI can be generated for the provided id.
-     *
+     * @throws UnknownIdentifierException Thrown if the provided identifier is unknown.
+     * @throws URISyntaxException         Thrown if no URI can be generated for the provided id.
      */
-    private static PolicyCombiningAlgorithm getPolicyCombiningAlgorithm(
-        final String combiningAlgorithmId) throws UnknownIdentifierException,
-        URISyntaxException {
+    private static PolicyCombiningAlgorithm getPolicyCombiningAlgorithm(final String combiningAlgorithmId)
+        throws UnknownIdentifierException, URISyntaxException {
 
-        return (PolicyCombiningAlgorithm) factory.createAlgorithm(new URI(
-            combiningAlgorithmId));
+        return (PolicyCombiningAlgorithm) factory.createAlgorithm(new URI(combiningAlgorithmId));
 
     }
-
 
     /**
      * See Interface for functional description.
-     * 
-     * @return
+     *
      * @see Object#toString()
      */
     @Override
@@ -198,6 +148,5 @@ public class XacmlPolicySet extends PolicySet implements Serializable {
             return super.toString();
         }
     }
-
 
 }

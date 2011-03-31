@@ -52,21 +52,15 @@ import java.util.Map;
 
 /**
  * Role renderer implementation using the velocity template engine.
- * 
+ *
  * @author Torsten Tetteroo
  */
-public class VelocityXmlRoleRenderer extends AbstractRenderer
-    implements RoleRendererInterface {
+public class VelocityXmlRoleRenderer extends AbstractRenderer implements RoleRendererInterface {
 
     /**
      * See Interface for functional description.
-     * 
-     * @param role
-     * @return
-     * @throws WebserverSystemException
-     * @see RoleRendererInterface
-     *      #render(de.escidoc.core.aa.business.persistence.EscidocRole)
      *
+     * @see RoleRendererInterface #render(de.escidoc.core.aa.business.persistence.EscidocRole)
      */
     @Override
     public String render(final EscidocRole role) throws WebserverSystemException {
@@ -79,24 +73,17 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
 
     /**
      * See Interface for functional description.
-     * 
-     * @param role
-     * @return
-     * @throws WebserverSystemException
-     *
      */
     @Override
-    public String renderResources(final EscidocRole role)
-        throws WebserverSystemException {
+    public String renderResources(final EscidocRole role) throws WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         values.put("isRootResources", "true");
 
         addCommonValues(values);
-        values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE,
-            Iso8601Util.getIso8601(role.getLastModificationDate()));
-        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL,
-            XmlUtility.getEscidocBaseUrl());
+        values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, Iso8601Util.getIso8601(role
+            .getLastModificationDate()));
+        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, XmlUtility.getEscidocBaseUrl());
         addResourcesValues(role, values);
 
         return getRoleXmlProvider().getResourcesXml(values);
@@ -104,19 +91,12 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
 
     /**
      * See Interface for functional description.
-     * 
-     * @param roles
-     * @param recordPacking
-     *            A string to determine how the record should be escaped in the
-     *            response. Defined values are 'string' and 'xml'. The default
-     *            is 'xml'.
-     * 
-     * @return
-     * @throws WebserverSystemException
+     *
+     * @param recordPacking A string to determine how the record should be escaped in the response. Defined values are
+     *                      'string' and 'xml'. The default is 'xml'.
      */
     @Override
-    public String renderRoles(
-        final List<EscidocRole> roles, final RecordPacking recordPacking)
+    public String renderRoles(final List<EscidocRole> roles, final RecordPacking recordPacking)
         throws WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
@@ -124,8 +104,7 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
         addRoleListValues(values);
         values.put("recordPacking", recordPacking);
 
-        final Collection<Map<String, Object>> rolesValues =
-            new ArrayList<Map<String, Object>>(roles.size());
+        final Collection<Map<String, Object>> rolesValues = new ArrayList<Map<String, Object>>(roles.size());
         for (final EscidocRole escidocRole : roles) {
             final Map<String, Object> roleValues = new HashMap<String, Object>();
             addRoleValues(escidocRole, roleValues);
@@ -137,16 +116,11 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
 
     /**
      * Adds the common values to the provided map.
-     * 
-     * @param values
-     *            The map to add values to.
-     * 
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
      *
+     * @param values The map to add values to.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private void addCommonValues(final Map<String, Object> values)
-        throws WebserverSystemException {
+    private void addCommonValues(final Map<String, Object> values) throws WebserverSystemException {
 
         values.put("roleNamespacePrefix", Constants.ROLE_NS_PREFIX);
         values.put("roleNamespace", Constants.ROLE_NS_URI);
@@ -157,21 +131,15 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
     }
 
     /**
-     * Adds the values of the role that shall be rendered to the provided
-     * {@link Map}.
-     * 
-     * @param role
-     * @param values
-     * @throws WebserverSystemException
+     * Adds the values of the role that shall be rendered to the provided {@link Map}.
      */
     @SuppressWarnings("unchecked")
     private static void addRoleValues(final EscidocRole role, final Map<String, Object> values)
         throws WebserverSystemException {
 
-        values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE,
-            Iso8601Util.getIso8601(role.getLastModificationDate()));
-        values.put(XmlTemplateProvider.VAR_CREATION_DATE,
-            Iso8601Util.getIso8601(role.getCreationDate()));
+        values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, Iso8601Util.getIso8601(role
+            .getLastModificationDate()));
+        values.put(XmlTemplateProvider.VAR_CREATION_DATE, Iso8601Util.getIso8601(role.getCreationDate()));
         values.put(XmlTemplateProvider.VAR_DESCRIPTION, role.getDescription());
 
         values.put("roleId", role.getId());
@@ -183,8 +151,7 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
         final UserAccount modifiedBy = role.getUserAccountByModifiedById();
         values.put("roleModifiedById", modifiedBy.getId());
         values.put("roleModifiedByHref", modifiedBy.getHref());
-        values.put("roleModifiedByTitle", role
-            .getUserAccountByCreatorId().getName());
+        values.put("roleModifiedByTitle", role.getUserAccountByCreatorId().getName());
 
         values.put("roleHref", XmlUtility.getRoleHref(role.getId()));
         values.put("roleIsLimited", role.isLimited());
@@ -210,17 +177,12 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
 
     /**
      * Adds the xacml policy values to the provided map.
-     * 
-     * @param role
-     *            The role for that data shall be created.
-     * @param values
-     *            The map to add values to.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
      *
+     * @param role   The role for that data shall be created.
+     * @param values The map to add values to.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private static void addPolicyValues(
-        final EscidocRole role, final Map<String, Object> values)
+    private static void addPolicyValues(final EscidocRole role, final Map<String, Object> values)
         throws WebserverSystemException {
 
         // There seems to be a problem in XacmlPolicy.encode that does not
@@ -232,33 +194,25 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
         final Iterator<EscidocPolicy> iter = policies.iterator();
         if (iter.hasNext()) {
             final EscidocPolicy policy = iter.next();
-            values.put("policy",
-                CustomPolicyBuilder.insertXacmlPrefix(policy.getXml()));
+            values.put("policy", CustomPolicyBuilder.insertXacmlPrefix(policy.getXml()));
         }
     }
 
     /**
      * Adds the resources specific values to the provided map.
-     * 
-     * @param role
-     *            The role for that data shall be created.
-     * @param values
-     *            The map to add values to.
      *
+     * @param role   The role for that data shall be created.
+     * @param values The map to add values to.
      */
-    private static void addResourcesValues(
-        final EscidocRole role, final Map<String, Object> values) {
+    private static void addResourcesValues(final EscidocRole role, final Map<String, Object> values) {
 
-        values.put(XmlTemplateProvider.VAR_RESOURCES_HREF,
-            ROLE_URL_BASE + role.getId() + RESOURCES_URL_PART);
+        values.put(XmlTemplateProvider.VAR_RESOURCES_HREF, ROLE_URL_BASE + role.getId() + RESOURCES_URL_PART);
     }
 
     /**
      * Adds the role list values to the provided map.
-     * 
-     * @param values
-     *            The map to add values to.
      *
+     * @param values The map to add values to.
      */
     private static void addRoleListValues(final Map<String, Object> values) {
 
@@ -269,12 +223,9 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
     }
 
     /**
-     * Adds the values related to the names space of roles to the provided
-     * {@link Map}.
-     * 
-     * @param values
-     *            The {@link Map} to add the values to
-     * .
+     * Adds the values related to the names space of roles to the provided {@link Map}.
+     *
+     * @param values The {@link Map} to add the values to .
      */
     private static void addRolesNamespaceValues(final Map<String, Object> values) {
         values.put("roleListNamespacePrefix", Constants.ROLE_LIST_NS_PREFIX);
@@ -282,30 +233,22 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
     }
 
     /**
-     * Adds the values for the name space declaration to the provided
-     * {@link Map}.
-     * 
-     * @param values
-     *            The {@link Map} to add the values to.
+     * Adds the values for the name space declaration to the provided {@link Map}.
      *
+     * @param values The {@link Map} to add the values to.
      */
     private static void addXacmlNamespaceValues(final Map<String, Object> values) {
-        values.put(XmlTemplateProvider.VAR_XACML_POLICY_NAMESPACE_PREFIX,
-            Constants.XACML_POLICY_NS_PREFIX);
-        values.put(XmlTemplateProvider.VAR_XACML_POLICY_NAMESPACE,
-            Constants.XACML_POLICY_NS_URI);
+        values.put(XmlTemplateProvider.VAR_XACML_POLICY_NAMESPACE_PREFIX, Constants.XACML_POLICY_NS_PREFIX);
+        values.put(XmlTemplateProvider.VAR_XACML_POLICY_NAMESPACE, Constants.XACML_POLICY_NS_URI);
     }
 
     /**
      * Gets the {@link RoleXmlProvider} object.
-     * 
-     * @return Returns the {@link RoleXmlProvider} object.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
      *
+     * @return Returns the {@link RoleXmlProvider} object.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private static RoleXmlProvider getRoleXmlProvider()
-        throws WebserverSystemException {
+    private static RoleXmlProvider getRoleXmlProvider() throws WebserverSystemException {
 
         return RoleXmlProvider.getInstance();
     }

@@ -73,9 +73,8 @@ import static junit.framework.Assert.assertTrue;
 
 /**
  * Helper class providing executing of http requests.
- * 
+ *
  * @author Torsten Tetteroo
- * 
  */
 public final class HttpHelper {
 
@@ -94,63 +93,44 @@ public final class HttpHelper {
     }
 
     /**
-     * Execute a http method.<br>
-     * If neccessary, this method performs the login using valid login data of
-     * an existing account.
-     * 
-     * @param method
-     *            The http method.
-     * @param url
-     *            The url.
-     * @param body
-     *            The request body.
-     * @param mimeType
-     *            The MIME type.
-     * @param parameters
-     *            The request parameters.
-     * 
+     * Execute a http method.<br> If neccessary, this method performs the login using valid login data of an existing
+     * account.
+     *
+     * @param method     The http method.
+     * @param url        The url.
+     * @param body       The request body.
+     * @param mimeType   The MIME type.
+     * @param parameters The request parameters.
      * @return The resulting http method.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     public static HttpResponse executeHttpRequest(
-        final String method, final String url, final Object body,
-        final String mimeType, final Map<String, String[]> parameters) throws Exception {
+        final String method, final String url, final Object body, final String mimeType,
+        final Map<String, String[]> parameters) throws Exception {
         return executeHttpRequest(new DefaultHttpClient(), method, url, body, mimeType, parameters);
     }
 
     /**
      * Execute an http method.
-     * 
-     * @param client
-     *            The http client.
-     * @param method
-     *            The http method.
-     * @param url
-     *            The url.
-     * @param body
-     *            The request body.
-     * @param mimeType
-     *            The MIME type.
-     * @param parameters
-     *            The request parameters.
-     * 
+     *
+     * @param client     The http client.
+     * @param method     The http method.
+     * @param url        The url.
+     * @param body       The request body.
+     * @param mimeType   The MIME type.
+     * @param parameters The request parameters.
      * @return The http Response.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     public static HttpResponse executeHttpRequest(
-        DefaultHttpClient client, final String method, final String url,
-        final Object body, final String mimeType,
+        DefaultHttpClient client, final String method, final String url, final Object body, final String mimeType,
         final Map<String, String[]> parameters) throws Exception {
         HttpResponse result = null;
-        
-        if(client==null)
-        {
+
+        if (client == null) {
             client = new DefaultHttpClient();
-        }    
-        
-        
+        }
+
         if (method != null) {
             if (method.toUpperCase().equals(Constants.HTTP_METHOD_DELETE)) {
                 result = doDelete(client, url);
@@ -169,108 +149,84 @@ public final class HttpHelper {
     }
 
     /**
-     * Execute a http delete request on the given url.<br>
-     * If neccessary, this method performs the login using the provided login
-     * data. If login name is <code>null</code> or the password is
-     * <code>null</code>, the login step is skipped.
-     * 
-     * @param client
-     *            The http client.
-     * @param url
-     *            The url.
+     * Execute a http delete request on the given url.<br> If neccessary, this method performs the login using the
+     * provided login data. If login name is <code>null</code> or the password is <code>null</code>, the login step is
+     * skipped.
+     *
+     * @param client The http client.
+     * @param url    The url.
      * @return The resulting http method.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    public static HttpResponse doDelete(
-        final HttpClient client, final String url) throws Exception {
+    public static HttpResponse doDelete(final HttpClient client, final String url) throws Exception {
 
         final HttpDelete method = new HttpDelete(url);
         PWCallback.addEscidocUserHandleCokie(method);
         HttpResponse httpRes = client.execute(method);
-        return httpRes ;
+        return httpRes;
     }
 
     /**
-     * Execute a http get request on the given url.<br>
-     * If neccessary, this method performs the login using the provided login
-     * data. If login name is <code>null</code> or the password is
-     * <code>null</code>, the login step is skipped.
-     * 
-     * @param client
-     *            The http client.
-     * @param url
-     *            The url.
-     * @param parameters
-     *            The request parameters.
-     * 
+     * Execute a http get request on the given url.<br> If neccessary, this method performs the login using the provided
+     * login data. If login name is <code>null</code> or the password is <code>null</code>, the login step is skipped.
+     *
+     * @param client     The http client.
+     * @param url        The url.
+     * @param parameters The request parameters.
      * @return The resulting http method.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    public static HttpResponse doGet(
-        final HttpClient client, final String url,
-        final Map<String, String[]> parameters) throws Exception {
+    public static HttpResponse doGet(final HttpClient client, final String url, final Map<String, String[]> parameters)
+        throws Exception {
 
         final HttpGet httpGet;
-        
+
         if (parameters != null) {
-      
-            List<NameValuePair> queryParameters =
-                new ArrayList<NameValuePair>();
+
+            List<NameValuePair> queryParameters = new ArrayList<NameValuePair>();
 
             for (String parameter : parameters.keySet()) {
                 for (String value : parameters.get(parameter)) {
                     queryParameters.add(new BasicNameValuePair(parameter, value));
                 }
-            }             
-            
+            }
+
             String formatted = URLEncodedUtils.format(queryParameters, "UTF-8");
-         
+
             httpGet = new HttpGet(url + "?" + formatted);
         }
-        else
-        {
+        else {
             httpGet = new HttpGet(url);
         }
-               
-     
-        PWCallback.addEscidocUserHandleCokie(httpGet);  
+
+        PWCallback.addEscidocUserHandleCokie(httpGet);
         HttpResponse httpRes = client.execute(httpGet);
         return httpRes;
     }
 
     /**
-     * Execute a http post request on the given url.<br>
-     * If neccessary, this method performs the login using the provided login
-     * data. If login name is <code>null</code> or the password is
-     * <code>null</code>, the login step is skipped.
-     * 
-     * @param httpClient
-     *            The http client.
-     * @param url
-     *            The url.
-     * @param body
-     *            The request body.
-     * @param mimeType
-     *            The mime type of the data, in case of binary content.
-     *            The name of the file, in case of binary content.
+     * Execute a http post request on the given url.<br> If neccessary, this method performs the login using the
+     * provided login data. If login name is <code>null</code> or the password is <code>null</code>, the login step is
+     * skipped.
+     *
+     * @param httpClient The http client.
+     * @param url        The url.
+     * @param body       The request body.
+     * @param mimeType   The mime type of the data, in case of binary content. The name of the file, in case of binary
+     *                   content.
      * @return The resulting http method.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     public static HttpResponse doPost(
-        final DefaultHttpClient httpClient, final String url, final Object body,
-        final String mimeType) throws Exception {
+        final DefaultHttpClient httpClient, final String url, final Object body, final String mimeType)
+        throws Exception {
         final HttpPost httpPost = new HttpPost(url);
         HttpEntity requestEntity = null;
         if (body instanceof String) {
-            requestEntity =
-                new StringEntity((String) body,
-                    HTTP_DEFAULT_CONTENT_TYPE, HTTP_DEFAULT_CHARSET);
-       }
+            requestEntity = new StringEntity((String) body, HTTP_DEFAULT_CONTENT_TYPE, HTTP_DEFAULT_CHARSET);
+        }
         else if (body instanceof InputStream) {
-            requestEntity = new InputStreamEntity((InputStream) body,-1);
+            requestEntity = new InputStreamEntity((InputStream) body, -1);
             // old client: method.setRequestBody((InputStream) body);
             httpPost.setHeader("Content-Type", mimeType);
             // FIXME: handle filename?
@@ -281,43 +237,32 @@ public final class HttpHelper {
         httpClient.removeRequestInterceptorByClass(RequestAddCookies.class);
         httpClient.removeResponseInterceptorByClass(ResponseProcessCookies.class);
 
-        
         HttpResponse httpRes = httpClient.execute(httpPost);
         return httpRes;
     }
 
     /**
-     * Execute a http put request on the given url.<br>
-     * If neccessary, this method performs the login using the provided login
-     * data. If login name is <code>null</code> or the password is
-     * <code>null</code>, the login step is skipped.
-     * 
-     * @param client
-     *            The http client.
-     * @param url
-     *            The url.
-     * @param body
-     *            The request body.
-     * @param mimeType
-     *            The mime type of the data, in case of binary content.
+     * Execute a http put request on the given url.<br> If neccessary, this method performs the login using the provided
+     * login data. If login name is <code>null</code> or the password is <code>null</code>, the login step is skipped.
+     *
+     * @param client   The http client.
+     * @param url      The url.
+     * @param body     The request body.
+     * @param mimeType The mime type of the data, in case of binary content.
      * @return The resulting http method.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     public static HttpResponse doPut(
-        final DefaultHttpClient client, final String url, final Object body,
-        final String mimeType) throws Exception {
+        final DefaultHttpClient client, final String url, final Object body, final String mimeType) throws Exception {
         final HttpPut httpPut = new HttpPut(url);
         HttpEntity requestEntity = null;
         if (body instanceof String) {
-            requestEntity =
-                new StringEntity((String) body,
-                    HTTP_DEFAULT_CONTENT_TYPE, HTTP_DEFAULT_CHARSET);
-          
+            requestEntity = new StringEntity((String) body, HTTP_DEFAULT_CONTENT_TYPE, HTTP_DEFAULT_CHARSET);
+
         }
         else if (body instanceof InputStream) {
-            requestEntity = new InputStreamEntity(((InputStream)body),-1);
-            httpPut.setHeader(HTTP_HEADER_CONTENT_TYPE, mimeType);       
+            requestEntity = new InputStreamEntity(((InputStream) body), -1);
+            httpPut.setHeader(HTTP_HEADER_CONTENT_TYPE, mimeType);
         }
         httpPut.setEntity(requestEntity);
         PWCallback.addEscidocUserHandleCokie(httpPut);
@@ -327,9 +272,8 @@ public final class HttpHelper {
 
     /**
      * Get a cookie from the http client.
-     * 
-     * @param client
-     *            The http client.
+     *
+     * @param client The http client.
      * @return The cookie.
      */
     public static Cookie getCookie(final HttpClient client) {
@@ -337,28 +281,25 @@ public final class HttpHelper {
         // FIXME: this needs rework as the cookie support is disabled for the
         // client.
         Cookie result = null;
-        final List<Cookie> cookies = ((DefaultHttpClient)client).getCookieStore().getCookies();
+        final List<Cookie> cookies = ((DefaultHttpClient) client).getCookieStore().getCookies();
         ListIterator<Cookie> iter = cookies.listIterator();
-        while(iter.hasNext()) 
-        {
+        while (iter.hasNext()) {
             final Cookie cookie = iter.next();
-          if (cookie.getName().equals(ESCIDOC_COOKIE)) {
-              result = cookie;
-              break;
-          }
-            
-        }    
-  
+            if (cookie.getName().equals(ESCIDOC_COOKIE)) {
+                result = cookie;
+                break;
+            }
+
+        }
+
         return result;
     }
 
     /**
      * Create an url.
-     * 
-     * @param protocol
-     *            The protocol.
-     * @param host
-     *            The host.
+     *
+     * @param protocol The protocol.
+     * @param host     The host.
      * @return The resulting url.
      */
     private static String createUrl(final String protocol, final String host) {
@@ -375,17 +316,13 @@ public final class HttpHelper {
 
     /**
      * Create an url.
-     * 
-     * @param protocol
-     *            The protocol.
-     * @param host
-     *            The host.
-     * @param baseUri
-     *            The base uri.
+     *
+     * @param protocol The protocol.
+     * @param host     The host.
+     * @param baseUri  The base uri.
      * @return The resulting url.
      */
-    public static String createUrl(
-        final String protocol, final String host, final String baseUri) {
+    public static String createUrl(final String protocol, final String host, final String baseUri) {
 
         String result = createUrl(protocol, host);
         if (baseUri != null) {
@@ -399,21 +336,16 @@ public final class HttpHelper {
 
     /**
      * Create an url.
-     * 
-     * @param protocol
-     *            The protocol.
-     * @param host
-     *            The host.
-     * @param baseUri
-     *            The base uri.
-     * @param pathElements
-     *            The elements describing the path to the (sub) resource: id,
-     *            subresourceName1, subresourceId2, ...
+     *
+     * @param protocol     The protocol.
+     * @param host         The host.
+     * @param baseUri      The base uri.
+     * @param pathElements The elements describing the path to the (sub) resource: id, subresourceName1, subresourceId2,
+     *                     ...
      * @return The resulting url.
      */
     public static String createUrl(
-        final String protocol, final String host, final String baseUri,
-        final String[] pathElements) {
+        final String protocol, final String host, final String baseUri, final String[] pathElements) {
 
         String result = createUrl(protocol, host, baseUri);
         for (int i = 0; i < pathElements.length; i++) {
@@ -430,25 +362,18 @@ public final class HttpHelper {
 
     /**
      * Create an url.
-     * 
-     * @param protocol
-     *            The protocol.
-     * @param host
-     *            The host.
-     * @param baseUri
-     *            The base uri.
-     * @param pathElements
-     *            Elements of path
-     * @param parameter
-     *            The parameter.
-     * @param encodeParam
-     *            set true if parameter are to encode
+     *
+     * @param protocol     The protocol.
+     * @param host         The host.
+     * @param baseUri      The base uri.
+     * @param pathElements Elements of path
+     * @param parameter    The parameter.
+     * @param encodeParam  set true if parameter are to encode
      * @return The resulting url.
      */
     public static String createUrl(
-        final String protocol, final String host, final String baseUri,
-        final String[] pathElements, final String parameter,
-        final boolean encodeParam) {
+        final String protocol, final String host, final String baseUri, final String[] pathElements,
+        final String parameter, final boolean encodeParam) {
 
         String result = createUrl(protocol, host, baseUri);
         for (int i = 0; i < pathElements.length; i++) {
@@ -472,89 +397,64 @@ public final class HttpHelper {
 
     /**
      * Create an url.
-     * 
-     * @param protocol
-     *            The protocol.
-     * @param host
-     *            The host.
-     * @param baseUri
-     *            The base uri.
-     * @param id
-     *            The id to append.
+     *
+     * @param protocol The protocol.
+     * @param host     The host.
+     * @param baseUri  The base uri.
+     * @param id       The id to append.
      * @return The resulting url.
      */
-    public static String createUrl(
-        final String protocol, final String host, final String baseUri,
-        final String id) {
+    public static String createUrl(final String protocol, final String host, final String baseUri, final String id) {
 
         return createUrl(protocol, host, baseUri, new String[] { id });
     }
 
     /**
      * Create an url.
-     * 
-     * @param protocol
-     *            The protocol.
-     * @param host
-     *            The host.
-     * @param baseUri
-     *            The base uri.
-     * @param id
-     *            The id to append.
-     * @param subResourceName
-     *            the sub resource name.
+     *
+     * @param protocol        The protocol.
+     * @param host            The host.
+     * @param baseUri         The base uri.
+     * @param id              The id to append.
+     * @param subResourceName the sub resource name.
      * @return The resulting url.
      */
     public static String createUrl(
-        final String protocol, final String host, final String baseUri,
-        final String id, final String subResourceName) {
+        final String protocol, final String host, final String baseUri, final String id, final String subResourceName) {
 
-        return createUrl(protocol, host, baseUri, new String[] { id,
-            subResourceName });
+        return createUrl(protocol, host, baseUri, new String[] { id, subResourceName });
     }
 
     public static String createUrl(
-        final String protocol, final String host, final String baseUri,
-        final String id, final String subResourceName, final String parameter,
-        final boolean encodeParam) {
+        final String protocol, final String host, final String baseUri, final String id, final String subResourceName,
+        final String parameter, final boolean encodeParam) {
 
-        return createUrl(protocol, host, baseUri, new String[] { id,
-            subResourceName }, parameter, encodeParam);
+        return createUrl(protocol, host, baseUri, new String[] { id, subResourceName }, parameter, encodeParam);
     }
 
     /**
      * Create an url.
-     * 
-     * @param protocol
-     *            The protocol.
-     * @param host
-     *            The host.
-     * @param baseUri
-     *            The base uri.
-     * @param id
-     *            The id to append.
-     * @param subResourceName
-     *            the sub resource name.
-     * @param subResourceId
-     *            the sub resource id to append.
+     *
+     * @param protocol        The protocol.
+     * @param host            The host.
+     * @param baseUri         The base uri.
+     * @param id              The id to append.
+     * @param subResourceName the sub resource name.
+     * @param subResourceId   the sub resource id to append.
      * @return The resulting url.
      */
     public static String createUrl(
-        final String protocol, final String host, final String baseUri,
-        final String id, final String subResourceName,
+        final String protocol, final String host, final String baseUri, final String id, final String subResourceName,
         final String subResourceId) {
 
-        return createUrl(protocol, host, baseUri, new String[] { id,
-            subResourceName, subResourceId });
+        return createUrl(protocol, host, baseUri, new String[] { id, subResourceName, subResourceId });
     }
 
     /**
      * Add a part to the given url.
-     * 
-     * @param url
-     *            The url.
-     * @param append
-     *            The part to append to the url.
+     *
+     * @param url    The url.
+     * @param append The part to append to the url.
      * @return The resulting url.
      */
     public static String concatUrl(final String url, final String append) {
@@ -588,17 +488,13 @@ public final class HttpHelper {
 
     /**
      * Add a parameter to the given url.
-     * 
-     * @param url
-     *            The url.
-     * @param param
-     *            The name of the parameter.
-     * @param value
-     *            The value of teh parameter.
+     *
+     * @param url   The url.
+     * @param param The name of the parameter.
+     * @param value The value of teh parameter.
      * @return The url containing the new parameter.
      */
-    public static String addParam(
-        final String url, final String param, final String value) {
+    public static String addParam(final String url, final String param, final String value) {
         String result = url;
         if (result.indexOf("?") == -1) {
             result += "?";
@@ -611,200 +507,145 @@ public final class HttpHelper {
     }
 
     /**
-     * Performs the login.<br>
-     * The provided values must not be <code>null</code>.
-     * 
-     * @param client
-     *            The http client to use.
-     * @param login
-     *            The login name.
-     * @param password
-     *            The password.
-     * @param expectedAuthenticationFailure
-     *            Flag indicating that the provided values should cause a failed
-     *            authentication, i.e. login page will be presented to the user
-     *            as the result.
-     * @param accountIsDeactivated
-     *            Flag indicating that the authenticated user account should be
-     *            deactivated.
-     * @param targetUrl
-     *            The target url to that the user shall be redirected.
-     * @param encodeTargetUrlSlashes
-     *            Flag indicating that the slashes contained in the targetUrl
-     *            shall be encoded (<code>true</code>) or shall not be encoded (
-     *            <code>false</code>).
-     * @return Returns the http method holding the result of the login, either
-     *         the redirect to the target, the redirect to repeated login or the
-     *         'Deactivated User Account' page.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Performs the login.<br> The provided values must not be <code>null</code>.
+     *
+     * @param client                        The http client to use.
+     * @param login                         The login name.
+     * @param password                      The password.
+     * @param expectedAuthenticationFailure Flag indicating that the provided values should cause a failed
+     *                                      authentication, i.e. login page will be presented to the user as the
+     *                                      result.
+     * @param accountIsDeactivated          Flag indicating that the authenticated user account should be deactivated.
+     * @param targetUrl                     The target url to that the user shall be redirected.
+     * @param encodeTargetUrlSlashes        Flag indicating that the slashes contained in the targetUrl shall be encoded
+     *                                      (<code>true</code>) or shall not be encoded ( <code>false</code>).
+     * @return Returns the http method holding the result of the login, either the redirect to the target, the redirect
+     *         to repeated login or the 'Deactivated User Account' page.
+     * @throws Exception If anything fails.
      */
     public static HttpResponse performLogin(
         final DefaultHttpClient client, final String login, final String password,
-        final boolean expectedAuthenticationFailure,
-        final boolean accountIsDeactivated, final String targetUrl,
+        final boolean expectedAuthenticationFailure, final boolean accountIsDeactivated, final String targetUrl,
         final boolean encodeTargetUrlSlashes) throws Exception {
 
         if (login == null || password == null) {
-            throw new IllegalArgumentException(
-                "login name and password must be provided.");
+            throw new IllegalArgumentException("login name and password must be provided.");
         }
-        HttpResponse httpRes=null;
+        HttpResponse httpRes = null;
 
         // clear cookies in order to perform complete login
         client.getCookieStore().clear();
 
-            final String loginServletUrl =
-                "http://" + Constants.HOST_PORT + "/aa/login?target="
-                    + encodeUrlParameter(targetUrl, encodeTargetUrlSlashes);
-            final HttpGet loginMethod = new HttpGet(loginServletUrl);
-            httpRes = client.execute(loginMethod);
-            int status = httpRes.getStatusLine().getStatusCode();
-            assertEquals("...", HttpServletResponse.SC_MOVED_TEMPORARILY, status);
-            final Header location = httpRes.getFirstHeader("Location");
-            assertNotNull("No location header received. ", location);
-            final HttpGet gMethod = new HttpGet(location.getValue());
-            httpRes = client.execute(gMethod);
-            status = httpRes.getStatusLine().getStatusCode();            
-            // spring security filter will redirect to login form as no login
-            // parameters are sent
-            // TODO mare  ResourceProvider.getContentsFromInputStream noch nötig?  
-            final String responseBody =
-                ResourceProvider.getContentsFromInputStream(httpRes.getEntity().getContent());
-            assertEquals(
-                "Unexpected status of LoginServlet response, ",
-                HttpServletResponse.SC_OK,status);
-            assertNotNull("No response body received, ", responseBody);
-            assertTrue("Response does not contain the expected login"
-                + " page. ",
-                responseBody.indexOf("<input type=\"password\"") != -1);
+        final String loginServletUrl =
+            "http://" + Constants.HOST_PORT + "/aa/login?target="
+                + encodeUrlParameter(targetUrl, encodeTargetUrlSlashes);
+        final HttpGet loginMethod = new HttpGet(loginServletUrl);
+        httpRes = client.execute(loginMethod);
+        int status = httpRes.getStatusLine().getStatusCode();
+        assertEquals("...", HttpServletResponse.SC_MOVED_TEMPORARILY, status);
+        final Header location = httpRes.getFirstHeader("Location");
+        assertNotNull("No location header received. ", location);
+        final HttpGet gMethod = new HttpGet(location.getValue());
+        httpRes = client.execute(gMethod);
+        status = httpRes.getStatusLine().getStatusCode();
+        // spring security filter will redirect to login form as no login
+        // parameters are sent
+        // TODO mare  ResourceProvider.getContentsFromInputStream noch nötig?
+        final String responseBody = ResourceProvider.getContentsFromInputStream(httpRes.getEntity().getContent());
+        assertEquals("Unexpected status of LoginServlet response, ", HttpServletResponse.SC_OK, status);
+        assertNotNull("No response body received, ", responseBody);
+        assertTrue("Response does not contain the expected login" + " page. ", responseBody
+            .indexOf("<input type=\"password\"") != -1);
 
-            // Second step: Send filled login form
-            final HttpPost postMethod =
-                new HttpPost(
-                    ("http://" + Constants.HOST_PORT + "/aa/j_spring_security_check"));
+        // Second step: Send filled login form
+        final HttpPost postMethod = new HttpPost(("http://" + Constants.HOST_PORT + "/aa/j_spring_security_check"));
 
-            List<NameValuePair> formparams = new ArrayList<NameValuePair>();
-            formparams.add(new BasicNameValuePair(Constants.PARAM_UM_LOGIN_NAME, login));
-            formparams.add(new BasicNameValuePair(Constants.PARAM_UM_LOGIN_PASSWORD, password));
-            UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formparams, HTTP.UTF_8);
-            postMethod.setEntity(entity);
+        List<NameValuePair> formparams = new ArrayList<NameValuePair>();
+        formparams.add(new BasicNameValuePair(Constants.PARAM_UM_LOGIN_NAME, login));
+        formparams.add(new BasicNameValuePair(Constants.PARAM_UM_LOGIN_PASSWORD, password));
+        UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formparams, HTTP.UTF_8);
+        postMethod.setEntity(entity);
 
-            
-            httpRes = client.execute(postMethod);
-            status = httpRes.getStatusLine().getStatusCode();
-            // spring security filter will either redirect to login servlet or
-            // to repeated login form
-            final Header locationHeader =
-                httpRes.getFirstHeader("Location");
-            assertEquals("No redirect received",
-                HttpStatus.SC_MOVED_TEMPORARILY, status);
-            assertNotNull("No location header received. ",
-                locationHeader);
-            
-          final String retrievedRedirectUrl = locationHeader.getValue();
-            
-            // assert redirect
-            if (expectedAuthenticationFailure) {
-                // redirect to repeated login page
-                assertEquals(
-                        "Unexpected redirect from spring security after expected"
-                            + " failed authentication", "http://"
-                            + Constants.HOST_PORT
-                            + "/aa/login/login-repeated.html",
-                        retrievedRedirectUrl);
+        httpRes = client.execute(postMethod);
+        status = httpRes.getStatusLine().getStatusCode();
+        // spring security filter will either redirect to login servlet or
+        // to repeated login form
+        final Header locationHeader = httpRes.getFirstHeader("Location");
+        assertEquals("No redirect received", HttpStatus.SC_MOVED_TEMPORARILY, status);
+        assertNotNull("No location header received. ", locationHeader);
+
+        final String retrievedRedirectUrl = locationHeader.getValue();
+
+        // assert redirect
+        if (expectedAuthenticationFailure) {
+            // redirect to repeated login page
+            assertEquals("Unexpected redirect from spring security after expected" + " failed authentication",
+                "http://" + Constants.HOST_PORT + "/aa/login/login-repeated.html", retrievedRedirectUrl);
+            return httpRes;
+        }
+        else {
+            // correct values have been sent, redirected to login servlet.
+            // Follow redirect
+            assertEquals("Wrong redirect, expected redirect to login servlet", loginServletUrl, retrievedRedirectUrl);
+            final HttpPost redirectMethod = new HttpPost(retrievedRedirectUrl);
+            httpRes = client.execute(redirectMethod);
+
+            if (accountIsDeactivated) {
+                // correct values have been sent, user account is deactived.
+                // page with info about deactivated account is presented
+                EscidocRestSoapTestBase.assertHttpStatus("Wrong status for expected 'Deactivated User Account' page.",
+                    HttpServletResponse.SC_OK, httpRes);
+                assertNull(httpRes.getFirstHeader("Location"));
+
+                // FIXME: add assertion for page content
+                final String deactivatedUserAccountPageBody =
+                    ResourceProvider.getContentsFromInputStream(httpRes.getEntity().getContent());
+                assertNotNull("No response body received, ", deactivatedUserAccountPageBody);
+                assertTrue("Response does not contain the expected information" + " about deactivated account page. ",
+                    deactivatedUserAccountPageBody.indexOf("Your account has been deactivated") != -1);
+
                 return httpRes;
             }
             else {
-                // correct values have been sent, redirected to login servlet.
-                // Follow redirect
-                assertEquals(
-                    "Wrong redirect, expected redirect to login servlet",
-                    loginServletUrl, retrievedRedirectUrl);
-                final HttpPost redirectMethod =
-                    new HttpPost(retrievedRedirectUrl);
-                httpRes = client.execute(redirectMethod);
-
-                if (accountIsDeactivated) {
-                    // correct values have been sent, user account is deactived.
-                    // page with info about deactivated account is presented
-                    EscidocRestSoapTestBase
-                        .assertHttpStatus(
-                            "Wrong status for expected 'Deactivated User Account' page.",
-                            HttpServletResponse.SC_OK, httpRes);
-                    assertNull(httpRes.getFirstHeader("Location"));
-                      
-                    // FIXME: add assertion for page content
-                    final String deactivatedUserAccountPageBody =
-                        ResourceProvider
-                            .getContentsFromInputStream(httpRes.getEntity().getContent()
-                                );
-                    assertNotNull("No response body received, ",
-                        deactivatedUserAccountPageBody);
-                    assertTrue(
-                            "Response does not contain the expected information"
-                                + " about deactivated account page. ",
-                            deactivatedUserAccountPageBody
-                                .indexOf("Your account has been deactivated") != -1);
-
-                    return httpRes;
+                // user account is active, login servlet creates user handle
+                // and redirects to target
+                if (!StringUtils.isEmpty(targetUrl)) {
+                    EscidocRestSoapTestBase.assertHttpStatus("", HttpServletResponse.SC_SEE_OTHER, httpRes);
+                    assertNotNull(httpRes.getFirstHeader("Location"));
                 }
                 else {
-                    // user account is active, login servlet creates user handle
-                    // and redirects to target
-                    if (!StringUtils.isEmpty(targetUrl)) {
-                        EscidocRestSoapTestBase.assertHttpStatus("",
-                                HttpServletResponse.SC_SEE_OTHER, httpRes);
-                        assertNotNull(httpRes
-                                .getFirstHeader("Location"));
-                    } else {
-                        EscidocRestSoapTestBase.assertHttpStatus("",
-                                HttpServletResponse.SC_OK, httpRes);
-                    }
-                    assertNotNull(httpRes
-                        .getFirstHeader("Set-Cookie"));
-
-                    return httpRes;
+                    EscidocRestSoapTestBase.assertHttpStatus("", HttpServletResponse.SC_OK, httpRes);
                 }
+                assertNotNull(httpRes.getFirstHeader("Set-Cookie"));
+
+                return httpRes;
             }
+        }
 
     }
 
-
-
     /**
-     * Performs the logout.<br>
-     * The provided values must not be <code>null</code>.
-     * 
-     * @param client
-     *            The http client to use.
-     * @param targetUrl
-     *            The url to that the user shall be redirected after logout.
-     *            This may be <code>null</code> indicating no redirect shall
-     *            occur.
-     * @param userHandle
-     *            The eSciDOc user handle that shall be sent in the cookie of
-     *            the logout request. If this is <code>null</code>, no eSciDOc
-     *            cookie holding a handle is sent in the logout request.
-     * @param encodeTargetUrlSlashes
-     *            Flag indicating that the slashes contained in the targetUrl
-     *            shall be encoded (<code>true</code>) or shall not be encoded (
-     *            <code>false</code>).
-     * @return Returns the http method holding the result of the logout, either
-     *         the redirect to the target or just the 'Logged Out' page.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Performs the logout.<br> The provided values must not be <code>null</code>.
+     *
+     * @param client                 The http client to use.
+     * @param targetUrl              The url to that the user shall be redirected after logout. This may be
+     *                               <code>null</code> indicating no redirect shall occur.
+     * @param userHandle             The eSciDOc user handle that shall be sent in the cookie of the logout request. If
+     *                               this is <code>null</code>, no eSciDOc cookie holding a handle is sent in the logout
+     *                               request.
+     * @param encodeTargetUrlSlashes Flag indicating that the slashes contained in the targetUrl shall be encoded
+     *                               (<code>true</code>) or shall not be encoded ( <code>false</code>).
+     * @return Returns the http method holding the result of the logout, either the redirect to the target or just the
+     *         'Logged Out' page.
+     * @throws Exception If anything fails.
      */
     public static HttpResponse performLogout(
-        final DefaultHttpClient client, final String targetUrl,
-        final String userHandle, final boolean encodeTargetUrlSlashes)
-        throws Exception {
+        final DefaultHttpClient client, final String targetUrl, final String userHandle,
+        final boolean encodeTargetUrlSlashes) throws Exception {
 
         // cookies aware
-        final String savedCookiePolicy =(String) client.getParams().getParameter(ClientPNames.COOKIE_POLICY);
-        client.getParams().setParameter(ClientPNames.COOKIE_POLICY,CookiePolicy.BROWSER_COMPATIBILITY);
+        final String savedCookiePolicy = (String) client.getParams().getParameter(ClientPNames.COOKIE_POLICY);
+        client.getParams().setParameter(ClientPNames.COOKIE_POLICY, CookiePolicy.BROWSER_COMPATIBILITY);
 
         // do not follow redirects
         try {
@@ -813,8 +654,7 @@ public final class HttpHelper {
             // FIXME: removed fixed URL
             final String logoutServletUrl;
             if (targetUrl == null) {
-                logoutServletUrl =
-                    "http://" + Constants.HOST_PORT + "/aa/logout";
+                logoutServletUrl = "http://" + Constants.HOST_PORT + "/aa/logout";
             }
             else {
                 logoutServletUrl =
@@ -824,63 +664,52 @@ public final class HttpHelper {
             final HttpGet logoutMethod = new HttpGet((logoutServletUrl));
             // handled automatically in new Httpclient
             //logoutMethod.setFollowRedirects(false);
-            BasicClientCookie cookie = new BasicClientCookie(ESCIDOC_COOKIE,null);
-            
+            BasicClientCookie cookie = new BasicClientCookie(ESCIDOC_COOKIE, null);
+
             if (userHandle == null) {
 
-                cookie.setDomain( Constants.HOST);
+                cookie.setDomain(Constants.HOST);
                 cookie.setPath("/");
-       
+
                 cookie.setSecure(false);
                 client.getCookieStore().addCookie(cookie);
-                
-                     
+
             }
             //String domain, String name, String value, String path, int maxAge, boolean secure
             else {
                 cookie.setValue(userHandle);
-                cookie.setDomain( Constants.HOST);
+                cookie.setDomain(Constants.HOST);
                 cookie.setPath("/");
-       
+
                 cookie.setSecure(false);
-                client.getCookieStore().addCookie(cookie);          
+                client.getCookieStore().addCookie(cookie);
             }
 
             return client.execute(logoutMethod);
 
         }
         finally {
-            client.getParams().setParameter(ClientPNames.COOKIE_POLICY,savedCookiePolicy);
+            client.getParams().setParameter(ClientPNames.COOKIE_POLICY, savedCookiePolicy);
         }
     }
 
     /**
      * Encode the provided url parameter value.
-     * 
-     * @param parameterValue
-     *            The Url parameter value.
-     * @param encodeSlashes
-     *            Flag indicating that the slashes contained in the parameter
-     *            shall be encoded (<code>true</code>) or shall not be encoded (
-     *            <code>false</code>).
-     * @return
-     * @throws UnsupportedEncodingException
+     *
+     * @param parameterValue The Url parameter value.
+     * @param encodeSlashes  Flag indicating that the slashes contained in the parameter shall be encoded
+     *                       (<code>true</code>) or shall not be encoded ( <code>false</code>).
      */
-    private static String encodeUrlParameter(
-        final String parameterValue, final boolean encodeSlashes)
+    private static String encodeUrlParameter(final String parameterValue, final boolean encodeSlashes)
         throws UnsupportedEncodingException {
 
         final String encoded;
         if (encodeSlashes) {
-            encoded =
-                URLEncoder.encode(parameterValue,
-                    EscidocTestBase.DEFAULT_CHARSET);
+            encoded = URLEncoder.encode(parameterValue, EscidocTestBase.DEFAULT_CHARSET);
 
         }
         else {
-            encoded =
-                URLEncoder.encode(parameterValue,
-                    EscidocTestBase.DEFAULT_CHARSET).replaceAll("%2F", "/");
+            encoded = URLEncoder.encode(parameterValue, EscidocTestBase.DEFAULT_CHARSET).replaceAll("%2F", "/");
         }
         return encoded;
     }

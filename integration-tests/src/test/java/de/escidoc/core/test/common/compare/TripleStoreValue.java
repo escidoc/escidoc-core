@@ -44,19 +44,16 @@ import static junit.framework.Assert.assertNull;
 
 /**
  * Methods to compare values with TripleStore values.
- * 
+ *
  * @author Steffen Wagner
- * 
  */
 public class TripleStoreValue {
 
     private int transport = 0;
 
     /**
-     * @param transport
-     *            The transport protocol (REST/SOAP)
-     * @throws Exception
-     *             Thrown if loading configuration from properties failed.
+     * @param transport The transport protocol (REST/SOAP)
+     * @throws Exception Thrown if loading configuration from properties failed.
      */
     public TripleStoreValue(final int transport) throws Exception {
 
@@ -65,11 +62,9 @@ public class TripleStoreValue {
 
     /**
      * Test TripleStore values of Item.
-     * 
-     * @param xmlItem
-     *            Item as XML Document representation
-     * @throws Exception
-     *             Thrown if timestamp handling shows failure.
+     *
+     * @param xmlItem Item as XML Document representation
+     * @throws Exception Thrown if timestamp handling shows failure.
      */
     public void itemTripleStoreValues(final Document xmlItem) throws Exception {
 
@@ -86,11 +81,8 @@ public class TripleStoreValue {
         String coreVersion = etb.obtainFrameworkVersion();
 
         // check build number
-        compareValueWithTripleStore(
-            Select.getObjidValueWithoutVersion(xmlItem, getTransport()),
-            coreVersion,
-            "/RDF/Description/build",
-            "<http://escidoc.de/core/01/system/build>");
+        compareValueWithTripleStore(Select.getObjidValueWithoutVersion(xmlItem, getTransport()), coreVersion,
+            "/RDF/Description/build", "<http://escidoc.de/core/01/system/build>");
 
         // check last-modification-date
         // FIXME this is problematic because the timestamp is not within the
@@ -100,98 +92,75 @@ public class TripleStoreValue {
         // "<http://escidoc.de/core/01/properties/version/date>");
 
         // check public-status
-        compareDocumentValueWithTripleStore(xmlItem,
-            "/item/properties/public-status", "/RDF/Description/public-status",
-            "<http://escidoc.de/core/01/properties/public-status>");
+        compareDocumentValueWithTripleStore(xmlItem, "/item/properties/public-status",
+            "/RDF/Description/public-status", "<http://escidoc.de/core/01/properties/public-status>");
 
         // check public-status-comment
-        compareDocumentValueWithTripleStore(xmlItem,
-            "/item/properties/public-status-comment",
-            "/RDF/Description/public-status-comment",
-            "<http://escidoc.de/core/01/properties/public-status-comment>");
+        compareDocumentValueWithTripleStore(xmlItem, "/item/properties/public-status-comment",
+            "/RDF/Description/public-status-comment", "<http://escidoc.de/core/01/properties/public-status-comment>");
 
         // check resource type
-        compareValueWithTripleStore(Select.getObjidValue(xmlItem,
-            getTransport()), "http://escidoc.de/core/01/resources/Item",
-            "/RDF/Description/type/@resource",
+        compareValueWithTripleStore(Select.getObjidValue(xmlItem, getTransport()),
+            "http://escidoc.de/core/01/resources/Item", "/RDF/Description/type/@resource",
             "<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>");
 
         // check version status
-        compareDocumentValueWithTripleStore(xmlItem,
-            "/item/properties/version/status", "/RDF/Description/status",
+        compareDocumentValueWithTripleStore(xmlItem, "/item/properties/version/status", "/RDF/Description/status",
             "<http://escidoc.de/core/01/properties/version/status>");
 
         // check created-by
         if (getTransport() == Constants.TRANSPORT_REST) {
-            compareDocumentValueWithTripleStore(xmlItem,
-                "/item/properties/created-by/@href",
-                "/RDF/Description/created-by/@resource",
-                "<http://escidoc.de/core/01/structural-relations/created-by>");
+            compareDocumentValueWithTripleStore(xmlItem, "/item/properties/created-by/@href",
+                "/RDF/Description/created-by/@resource", "<http://escidoc.de/core/01/structural-relations/created-by>");
         }
         else {
-            compareDocumentValueWithTripleStore(xmlItem,
-                "/item/properties/created-by/@objid",
-                "/RDF/Description/created-by/@resource",
-                "<http://escidoc.de/core/01/structural-relations/created-by>");
+            compareDocumentValueWithTripleStore(xmlItem, "/item/properties/created-by/@objid",
+                "/RDF/Description/created-by/@resource", "<http://escidoc.de/core/01/structural-relations/created-by>");
         }
 
         // check created-by-title
         if (getTransport() == Constants.TRANSPORT_REST) {
-            compareDocumentValueWithTripleStore(xmlItem,
-                "/item/properties/created-by/@title",
-                "/RDF/Description/created-by-title",
-                "<http://escidoc.de/core/01/properties/created-by-title>");
+            compareDocumentValueWithTripleStore(xmlItem, "/item/properties/created-by/@title",
+                "/RDF/Description/created-by-title", "<http://escidoc.de/core/01/properties/created-by-title>");
         }
 
         // check modifier
         if (XPathAPI.selectSingleNode(xmlItem, "/item/properties/modified-by") != null) {
             // check modified-by
-            compareDocumentValueWithTripleStore(xmlItem,
-                "/item/properties/modified-by", "/RDF/Description/modified-by",
-                "<http://escidoc.de/core/01/structural-relations/modified-by>");
+            compareDocumentValueWithTripleStore(xmlItem, "/item/properties/modified-by",
+                "/RDF/Description/modified-by", "<http://escidoc.de/core/01/structural-relations/modified-by>");
 
             // check modified-by-title
             if (getTransport() == Constants.TRANSPORT_REST) {
-                compareDocumentValueWithTripleStore(xmlItem,
-                    "/item/properties/modified-by/@title",
-                    "/RDF/Description/modified-by-title",
-                    "<http://escidoc.de/core/01/properties/modified-by-title>");
+                compareDocumentValueWithTripleStore(xmlItem, "/item/properties/modified-by/@title",
+                    "/RDF/Description/modified-by-title", "<http://escidoc.de/core/01/properties/modified-by-title>");
             }
         }
 
         // check content-model
-        compareDocumentValueWithTripleStore(xmlItem,
-            "/item/properties/content-model", "/RDF/Description/content-model",
-            "<http://escidoc.de/core/01/structural-relations/content-model>");
+        compareDocumentValueWithTripleStore(xmlItem, "/item/properties/content-model",
+            "/RDF/Description/content-model", "<http://escidoc.de/core/01/structural-relations/content-model>");
 
         // check content-model-title
         if (getTransport() == Constants.TRANSPORT_REST) {
-            compareDocumentValueWithTripleStore(xmlItem,
-                "/item/properties/content-model/@title",
-                "/RDF/Description/content-model-title",
-                "<http://escidoc.de/core/01/properties/content-model-title>");
+            compareDocumentValueWithTripleStore(xmlItem, "/item/properties/content-model/@title",
+                "/RDF/Description/content-model-title", "<http://escidoc.de/core/01/properties/content-model-title>");
         }
 
         // check context
         if (getTransport() == Constants.TRANSPORT_REST) {
-            compareDocumentValueWithTripleStore(xmlItem,
-                "/item/properties/context/@href",
-                "/RDF/Description/context/@resource",
-                "<http://escidoc.de/core/01/structural-relations/context>");
+            compareDocumentValueWithTripleStore(xmlItem, "/item/properties/context/@href",
+                "/RDF/Description/context/@resource", "<http://escidoc.de/core/01/structural-relations/context>");
         }
         else {
-            compareDocumentValueWithTripleStore(xmlItem,
-                "/item/properties/context/@objid",
-                "/RDF/Description/context/@resource",
-                "<http://escidoc.de/core/01/structural-relations/context>");
+            compareDocumentValueWithTripleStore(xmlItem, "/item/properties/context/@objid",
+                "/RDF/Description/context/@resource", "<http://escidoc.de/core/01/structural-relations/context>");
         }
 
         // check context-title (if rest)
         if (getTransport() == Constants.TRANSPORT_REST) {
-            compareDocumentValueWithTripleStore(xmlItem,
-                "/item/properties/context/@title",
-                "/RDF/Description/context-title",
-                "<http://escidoc.de/core/01/properties/context-title>");
+            compareDocumentValueWithTripleStore(xmlItem, "/item/properties/context/@title",
+                "/RDF/Description/context-title", "<http://escidoc.de/core/01/properties/context-title>");
         }
 
         /*
@@ -202,38 +171,30 @@ public class TripleStoreValue {
          */
 
         // check version number
-        compareDocumentValueWithTripleStore(xmlItem,
-            "/item/properties/version/number", "/RDF/Description/number",
+        compareDocumentValueWithTripleStore(xmlItem, "/item/properties/version/number", "/RDF/Description/number",
             "<http://escidoc.de/core/01/properties/version/number>");
 
         // check version date
-        compareDocumentValueWithTripleStore(xmlItem,
-            "/item/properties/version/date", "/RDF/Description/date",
+        compareDocumentValueWithTripleStore(xmlItem, "/item/properties/version/date", "/RDF/Description/date",
             "<http://escidoc.de/core/01/properties/version/date>");
 
         // check version status
-        compareDocumentValueWithTripleStore(xmlItem,
-            "/item/properties/version/status", "/RDF/Description/status",
+        compareDocumentValueWithTripleStore(xmlItem, "/item/properties/version/status", "/RDF/Description/status",
             "<http://escidoc.de/core/01/properties/version/status>");
 
         // check version valid-status
-        if (XPathAPI.selectSingleNode(xmlItem,
-            "/item/properties/version/valid-status") != null) {
-            compareDocumentValueWithTripleStore(xmlItem,
-                "/item/properties/version/valid-status",
-                "/RDF/Description/valid-status",
-                "<http://escidoc.de/core/01/properties/version/valid-status>");
+        if (XPathAPI.selectSingleNode(xmlItem, "/item/properties/version/valid-status") != null) {
+            compareDocumentValueWithTripleStore(xmlItem, "/item/properties/version/valid-status",
+                "/RDF/Description/valid-status", "<http://escidoc.de/core/01/properties/version/valid-status>");
         }
 
         // check version comment
-        compareDocumentValueWithTripleStore(xmlItem,
-            "/item/properties/version/comment", "/RDF/Description/comment",
+        compareDocumentValueWithTripleStore(xmlItem, "/item/properties/version/comment", "/RDF/Description/comment",
             "<http://escidoc.de/core/01/properties/version/comment>");
 
         // check version pid
         if (XPathAPI.selectSingleNode(xmlItem, "/item/properties/version/pid") != null) {
-            compareDocumentValueWithTripleStore(xmlItem,
-                "/item/properties/version/pid", "/RDF/Description/pid",
+            compareDocumentValueWithTripleStore(xmlItem, "/item/properties/version/pid", "/RDF/Description/pid",
                 "<http://escidoc.de/core/01/properties/version/pid>");
         }
 
@@ -242,13 +203,11 @@ public class TripleStoreValue {
          */
         if (XPathAPI.selectSingleNode(xmlItem, "/item/properties/release") != null) {
             // check latest release number
-            compareDocumentValueWithTripleStore(xmlItem,
-                "/item/properties/release/number", "/RDF/Description/number",
+            compareDocumentValueWithTripleStore(xmlItem, "/item/properties/release/number", "/RDF/Description/number",
                 "<http://escidoc.de/core/01/properties/release/number>");
 
             // check latest release date
-            compareDocumentValueWithTripleStore(xmlItem,
-                "/item/properties/release/date", "/RDF/Description/date",
+            compareDocumentValueWithTripleStore(xmlItem, "/item/properties/release/date", "/RDF/Description/date",
                 "<http://escidoc.de/core/01/properties/release/date>");
         }
 
@@ -259,104 +218,75 @@ public class TripleStoreValue {
 
     /**
      * Compares a value with the corresponding value in TripleStore.
-     * 
-     * @param objid
-     *            objid of resource (for TripleStore subject).
-     * @param value
-     *            value which is to compare.
-     * @param trsXPath
-     *            XPath to the values in the TripleStore response.
-     * @param trsPredicate
-     *            TripleStore Predicate of the value.
-     * @throws Exception
-     *             Thrown if the value not exist (Either document or
-     *             TripleStore) or both values are different.
+     *
+     * @param objid        objid of resource (for TripleStore subject).
+     * @param value        value which is to compare.
+     * @param trsXPath     XPath to the values in the TripleStore response.
+     * @param trsPredicate TripleStore Predicate of the value.
+     * @throws Exception Thrown if the value not exist (Either document or TripleStore) or both values are different.
      */
     public void compareValueWithTripleStore(
-        final String objid, final String value, final String trsXPath,
-        final String trsPredicate) throws Exception {
+        final String objid, final String value, final String trsXPath, final String trsPredicate) throws Exception {
 
         String itemId = Select.getObjidValueWithoutVersion(objid);
         // call value from TripleStore
         TripleStoreTestBase tripleStore = new TripleStoreTestBase();
-        String result =
-            tripleStore.requestMPT("<info:fedora/" + itemId + "> "
-                + trsPredicate + " *", "RDF/XML");
+        String result = tripleStore.requestMPT("<info:fedora/" + itemId + "> " + trsPredicate + " *", "RDF/XML");
         Document resultDoc = EscidocRestSoapTestBase.getDocument(result);
 
         if (value != null) {
             // make sure only one value exist in TripleStore
             assertEquals("Value for predicate '" + trsPredicate
-                + "' not exists exactly one time in TripleStore (objid='"
-                + itemId + "')", 1, XPathAPI
-                .selectNodeList(resultDoc, trsXPath).getLength());
+                + "' not exists exactly one time in TripleStore (objid='" + itemId + "')", 1, XPathAPI.selectNodeList(
+                resultDoc, trsXPath).getLength());
 
             // compare values
-            Node tripleStoreValue =
-                XPathAPI.selectSingleNode(resultDoc, trsXPath);
+            Node tripleStoreValue = XPathAPI.selectSingleNode(resultDoc, trsXPath);
             assertNotNull("Value not in TripleStore", tripleStoreValue);
-            assertEquals(
-                "Values differ between required and TripleStore (objid='"
-                    + itemId + "', predicate='" + trsPredicate + "'", value,
-                tripleStoreValue.getTextContent());
+            assertEquals("Values differ between required and TripleStore (objid='" + itemId + "', predicate='"
+                + trsPredicate + "'", value, tripleStoreValue.getTextContent());
         }
         else {
             // value must not exist in tripleStore
-            assertNull("Value for predicate '" + trsPredicate
-                + "' must not exists in TripleStore (objid='" + itemId + "')",
-                XPathAPI.selectSingleNode(resultDoc, trsXPath));
+            assertNull("Value for predicate '" + trsPredicate + "' must not exists in TripleStore (objid='" + itemId
+                + "')", XPathAPI.selectSingleNode(resultDoc, trsXPath));
 
         }
     }
 
     /**
      * Counts the number of triples for the provided object.
-     * 
-     * @param objid
-     *            Id of the object.
+     *
+     * @param objid Id of the object.
      * @return number of triples for this object.
-     * @throws Exception
-     *             Thrown if request or counting failed.
+     * @throws Exception Thrown if request or counting failed.
      */
     public int countTriples(final String objid) throws Exception {
 
         String itemId = Select.getObjidValueWithoutVersion(objid);
         // call value from TripleStore
         TripleStoreTestBase tripleStore = new TripleStoreTestBase();
-        String result =
-            tripleStore.requestMPT("<info:fedora/" + itemId + "> * *",
-                "RDF/XML");
+        String result = tripleStore.requestMPT("<info:fedora/" + itemId + "> * *", "RDF/XML");
         Document resultDoc = EscidocRestSoapTestBase.getDocument(result);
 
-        return XPathAPI
-            .selectNodeList(resultDoc, "/RDF/Description/*").getLength();
+        return XPathAPI.selectNodeList(resultDoc, "/RDF/Description/*").getLength();
     }
 
     /**
-     * Compare a value between the document an the responding value in
-     * TripleStore.
-     * 
-     * @param xmlItem
-     *            The XML Document which is to compare with the corresponding
-     *            values in TripleStore.
-     * @param docXPath
-     *            XPath to the Element (which is to compare) in the Document.
-     * @param trsXPath
-     *            XPath to the values in the TripleStore response.
-     * @param trsPredicate
-     *            TripleStore Predicate of the value.
-     * @throws Exception
-     *             Thrown if the value not exist (Either document or
-     *             TripleStore) or both values are different.
+     * Compare a value between the document an the responding value in TripleStore.
+     *
+     * @param xmlItem      The XML Document which is to compare with the corresponding values in TripleStore.
+     * @param docXPath     XPath to the Element (which is to compare) in the Document.
+     * @param trsXPath     XPath to the values in the TripleStore response.
+     * @param trsPredicate TripleStore Predicate of the value.
+     * @throws Exception Thrown if the value not exist (Either document or TripleStore) or both values are different.
      */
     public void compareDocumentValueWithTripleStore(
-        final Document xmlItem, final String docXPath, final String trsXPath,
-        final String trsPredicate) throws Exception {
+        final Document xmlItem, final String docXPath, final String trsXPath, final String trsPredicate)
+        throws Exception {
 
-        String itemId =
-            Select.getObjidValueWithoutVersion(xmlItem, getTransport());
-        String value =
-            Assert.selectSingleNodeAsserted(xmlItem, docXPath).getTextContent();
+        String itemId = Select.getObjidValueWithoutVersion(xmlItem, getTransport());
+        String value = Assert.selectSingleNodeAsserted(xmlItem, docXPath).getTextContent();
 
         // if we compare identifier in href form
         if (value.startsWith("/")) {
@@ -373,8 +303,7 @@ public class TripleStoreValue {
     }
 
     /**
-     * @param transport
-     *            the transport to set
+     * @param transport the transport to set
      */
     public void setTransport(final int transport) {
         this.transport = transport;

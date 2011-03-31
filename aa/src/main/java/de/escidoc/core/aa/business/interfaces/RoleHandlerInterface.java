@@ -30,11 +30,9 @@ package de.escidoc.core.aa.business.interfaces;
 
 /**
  * Interface of business layer handler that manages Roles.
- * 
+ *
  * @author Torsten Tetteroo
- * 
  */
-public interface RoleHandlerInterface
-    extends de.escidoc.core.aa.service.interfaces.RoleHandlerInterface {
+public interface RoleHandlerInterface extends de.escidoc.core.aa.service.interfaces.RoleHandlerInterface {
 
 }

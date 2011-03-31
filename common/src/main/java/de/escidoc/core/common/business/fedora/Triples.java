@@ -26,9 +26,8 @@ import java.util.List;
 
 /**
  * Simple data structure to handle Triples.
- * 
+ *
  * @author Steffen Wagner
- * 
  */
 public class Triples {
 
@@ -40,9 +39,8 @@ public class Triples {
 
     /**
      * Triples.
-     * 
-     * @param triples
-     *            The list of triples.
+     *
+     * @param triples The list of triples.
      */
     public Triples(final List<Triple> triples) {
         this.triples = triples;
@@ -50,7 +48,7 @@ public class Triples {
 
     /**
      * Get list of Triples.
-     * 
+     *
      * @return triples
      */
     public List<Triple> getTriples() {
@@ -60,9 +58,8 @@ public class Triples {
 
     /**
      * Set list of Triples.
-     * 
-     * @param triples
-     *            The new triple list.
+     *
+     * @param triples The new triple list.
      */
     public void setTriples(final List<Triple> triples) {
 
@@ -70,11 +67,9 @@ public class Triples {
     }
 
     /**
-     * Add triple to list. The triple is added even if the same triple is
-     * already in the list.
-     * 
-     * @param triple
-     *            New triple.
+     * Add triple to list. The triple is added even if the same triple is already in the list.
+     *
+     * @param triple New triple.
      */
     public void add(final Triple triple) {
 
@@ -83,9 +78,8 @@ public class Triples {
 
     /**
      * Delete the first equal entry of the list.
-     * 
-     * @param triple
-     *            The triple which is to delete.
+     *
+     * @param triple The triple which is to delete.
      */
     public void del(final Triple triple) {
 
@@ -94,9 +88,8 @@ public class Triples {
 
     /**
      * Delete all equal entry of the list.
-     * 
-     * @param triple
-     *            The triple which is to delete.
+     *
+     * @param triple The triple which is to delete.
      */
     public void delTriples(final Triple triple) {
 
@@ -117,13 +110,10 @@ public class Triples {
 
     /**
      * Delete a Triple from the list.
-     * 
-     * @param triple
-     *            The triple which is to delete.
-     * @param firstHit
-     *            Set true if only the first Triple which compares to the
-     *            parameter is removed. False to remove all equal entries from
-     *            the list (expensive opereation for long list).
+     *
+     * @param triple   The triple which is to delete.
+     * @param firstHit Set true if only the first Triple which compares to the parameter is removed. False to remove all
+     *                 equal entries from the list (expensive opereation for long list).
      */
     private void delTriple(final Triple triple, final boolean firstHit) {
 

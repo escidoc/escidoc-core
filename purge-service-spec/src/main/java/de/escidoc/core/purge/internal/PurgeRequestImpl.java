@@ -10,12 +10,14 @@ import java.util.UUID;
 /**
  * Default implementation of {@link PurgeRequest}.
  */
-@XmlRootElement(name="PurgeRequest", namespace = "http://www.escidoc.de/schemas/purge-service/1.0/")
-@XmlType(name="PurgeRequest", namespace = "http://www.escidoc.de/schemas/purge-service/1.0/")
+@XmlRootElement(name = "PurgeRequest", namespace = "http://www.escidoc.de/schemas/purge-service/1.0/")
+@XmlType(name = "PurgeRequest", namespace = "http://www.escidoc.de/schemas/purge-service/1.0/")
 public class PurgeRequestImpl implements PurgeRequest {
 
     private final String requestId = UUID.randomUUID().toString();
+
     private final Date creationTimestamp = new Date();
+
     private String resourceId;
 
     @Override
@@ -44,10 +46,7 @@ public class PurgeRequestImpl implements PurgeRequest {
 
     @Override
     public String toString() {
-        return "PurgeRequestImpl{" +
-                "requestId='" + this.requestId + '\'' +
-                ", creationTimestamp=" + this.creationTimestamp +
-                ", resourceId='" + this.resourceId + '\'' +
-                '}';
+        return "PurgeRequestImpl{" + "requestId='" + this.requestId + '\'' + ", creationTimestamp="
+            + this.creationTimestamp + ", resourceId='" + this.resourceId + '\'' + '}';
     }
 }

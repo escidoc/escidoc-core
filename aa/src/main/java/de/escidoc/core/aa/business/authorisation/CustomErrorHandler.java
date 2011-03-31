@@ -37,12 +37,11 @@ import org.xml.sax.SAXParseException;
 /**
  * This is a error handler class used when parsing a policy using SAX.
  * <p/>
- * 
- * This class is used in class DatabasePolicyFinderModule when creating a policy
- * via loadPolicy, which "loads" the policy from an XML string. This is an
- * alternative implementation of the Policy Loading mechanism that is currently
+ * <p/>
+ * This class is used in class DatabasePolicyFinderModule when creating a policy via loadPolicy, which "loads" the
+ * policy from an XML string. This is an alternative implementation of the Policy Loading mechanism that is currently
  * not in use.
- * 
+ *
  * @author ROW (Accenture)
  */
 public class CustomErrorHandler implements ErrorHandler {
@@ -52,34 +51,27 @@ public class CustomErrorHandler implements ErrorHandler {
 
     /**
      * Standard handler routine for the XML parsing.
-     * 
-     * @param exception
-     *            information on what caused the problem
-     * @throws SAXException
-     *             exception
+     *
+     * @param exception information on what caused the problem
+     * @throws SAXException exception
      */
     @Override
     public void warning(final SAXParseException exception) throws SAXException {
         if (LOGGER.isWarnEnabled()) {
-            LOGGER.warn("Warning on line " + exception.getLineNumber()
-                + ": " + exception.getMessage());
+            LOGGER.warn("Warning on line " + exception.getLineNumber() + ": " + exception.getMessage());
         }
     }
 
     /**
      * Standard handler routine for the XML parsing.
-     * 
-     * @param exception
-     *            information on what caused the problem
-     * 
-     * @throws SAXException
-     *             always to halt parsing on errors
+     *
+     * @param exception information on what caused the problem
+     * @throws SAXException always to halt parsing on errors
      */
     @Override
     public void error(final SAXParseException exception) throws SAXException {
         if (LOGGER.isErrorEnabled()) {
-            LOGGER.error("Error on line " + exception.getLineNumber() + ": "
-                + exception.getMessage() + " ... "
+            LOGGER.error("Error on line " + exception.getLineNumber() + ": " + exception.getMessage() + " ... "
                 + "Policy will not be available");
         }
 
@@ -88,19 +80,14 @@ public class CustomErrorHandler implements ErrorHandler {
 
     /**
      * Standard handler routine for the XML parsing.
-     * 
-     * @param exception
-     *            information on what caused the problem
-     * 
-     * @throws SAXException
-     *             always to halt parsing on errors
+     *
+     * @param exception information on what caused the problem
+     * @throws SAXException always to halt parsing on errors
      */
     @Override
-    public void fatalError(final SAXParseException exception)
-        throws SAXException {
+    public void fatalError(final SAXParseException exception) throws SAXException {
         if (LOGGER.isErrorEnabled()) {
-            LOGGER.error("Fatal error on line " + exception.getLineNumber()
-                + ": " + exception.getMessage() + " ... "
+            LOGGER.error("Fatal error on line " + exception.getLineNumber() + ": " + exception.getMessage() + " ... "
                 + "Policy will not be available");
         }
 

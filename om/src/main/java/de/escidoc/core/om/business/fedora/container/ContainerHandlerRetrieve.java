@@ -42,42 +42,33 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import java.io.UnsupportedEncodingException;
 
 /**
- * The class contains methods, which invoke the rendering methods for container
- * its subresources and lists and methods which retrieve constituent parts to
- * render from.
- * 
+ * The class contains methods, which invoke the rendering methods for container its subresources and lists and methods
+ * which retrieve constituent parts to render from.
+ *
  * @author Rozita Friedman
- * 
  */
 public class ContainerHandlerRetrieve extends ContainerHandlerBase {
+
     /**
      * Retrieves the container xml representation.
-     * 
-     * @param container
-     *            instance of Container
+     *
+     * @param container instance of Container
      * @return String with container xml
-     * @throws SystemException
      */
-    protected String getContainerXml(final Container container)
-        throws SystemException {
+    protected String getContainerXml(final Container container) throws SystemException {
 
         return getRenderer().render(container);
     }
 
     /**
      * Retrieves a content-model-specific datastream.
-     * 
+     *
      * @return content-model-specific datastream
-     * @throws FedoraSystemException
-     *             If Fedora reports an error.
-     * @throws StreamNotFoundException
-     *             If content-model-specific datastream does not exist.
-     * @throws EncodingSystemException
-     *             if "UTF-8" encoding is not supported
-     * @throws WebserverSystemException
+     * @throws FedoraSystemException   If Fedora reports an error.
+     * @throws StreamNotFoundException If content-model-specific datastream does not exist.
+     * @throws EncodingSystemException if "UTF-8" encoding is not supported
      */
-    public String getCts() throws FedoraSystemException,
-        StreamNotFoundException, EncodingSystemException,
+    public String getCts() throws FedoraSystemException, StreamNotFoundException, EncodingSystemException,
         WebserverSystemException {
 
         final Container container = getContainer();
@@ -94,75 +85,54 @@ public class ContainerHandlerRetrieve extends ContainerHandlerBase {
 
     /**
      * Retrieves a xml representation of container subresource "relations".
-     * 
-     * @param container
-     *            instance of Container
+     *
+     * @param container instance of Container
      * @return String with relations xml
-     * @throws WebserverSystemException
-     * @throws SystemException
      */
-    protected String getRelationsXml(final Container container)
-        throws WebserverSystemException, SystemException {
+    protected String getRelationsXml(final Container container) throws WebserverSystemException, SystemException {
 
         return getRenderer().renderRelations(container);
     }
 
     /**
      * Retrieves a xml representation of container subresource "md-record".
-     * 
-     * @param mdRecordId
-     *            The name of the mdrecord element.
+     *
+     * @param mdRecordId The name of the mdrecord element.
      * @return String with md-record xml
-     * @throws EncodingSystemException
-     * @throws FedoraSystemException
-     * @throws IntegritySystemException
-     * @throws WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.application.notfound.MdRecordNotFoundException
      */
-    protected String getMetadataRecordXml(final String mdRecordId)
-        throws EncodingSystemException, FedoraSystemException,
-        WebserverSystemException, MdRecordNotFoundException {
+    protected String getMetadataRecordXml(final String mdRecordId) throws EncodingSystemException,
+        FedoraSystemException, WebserverSystemException, MdRecordNotFoundException {
 
         try {
             final Datastream mdRecord = getContainer().getMdRecord(mdRecordId);
-            final String metadataRecord =
-                getRenderer().renderMetadataRecord(getContainer(), mdRecord,
-                    true);
+            final String metadataRecord = getRenderer().renderMetadataRecord(getContainer(), mdRecord, true);
             if (metadataRecord.length() == 0) {
-                throw new MdRecordNotFoundException("Md-record with a name  "
-                    + mdRecordId + " does not exist in the Container with Id "
-                    + getContainer().getId());
+                throw new MdRecordNotFoundException("Md-record with a name  " + mdRecordId
+                    + " does not exist in the Container with Id " + getContainer().getId());
             }
             return metadataRecord;
 
         }
         catch (final StreamNotFoundException e) {
-            throw new MdRecordNotFoundException("Md-record with a name  "
-                + mdRecordId + " does not exist in the Container with Id "
-                + getContainer().getId(), e);
+            throw new MdRecordNotFoundException("Md-record with a name  " + mdRecordId
+                + " does not exist in the Container with Id " + getContainer().getId(), e);
         }
 
     }
 
     /**
      * Retrieves a xml representation of container subresource "md-records".
-     * 
+     *
      * @return String with md-records xml
-     * @throws EncodingSystemException
-     * @throws FedoraSystemException
-     * @throws WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
-    protected String getMetadataRecordsXml() throws EncodingSystemException,
-        FedoraSystemException, WebserverSystemException,
-        IntegritySystemException {
+    protected String getMetadataRecordsXml() throws EncodingSystemException, FedoraSystemException,
+        WebserverSystemException, IntegritySystemException {
         final Container container = getContainer();
         return getRenderer().renderMetadataRecords(container);
 
     }
 
-    public String retrieveMdRecord(final String name)
-        throws FedoraSystemException, WebserverSystemException {
+    public String retrieveMdRecord(final String name) throws FedoraSystemException, WebserverSystemException {
         try {
             return getContainer().getMdRecord(name).toString();
         }
@@ -171,8 +141,7 @@ public class ContainerHandlerRetrieve extends ContainerHandlerBase {
         }
     }
 
-    public String retrieveDc(final String name) throws FedoraSystemException,
-        WebserverSystemException {
+    public String retrieveDc(final String name) throws FedoraSystemException, WebserverSystemException {
         try {
             return getContainer().getDc().toString();
         }
@@ -183,24 +152,19 @@ public class ContainerHandlerRetrieve extends ContainerHandlerBase {
 
     /**
      * Retrieves a xml representation of container subresource "properties".
-     * 
-     * @param container
-     *            instance of Container
+     *
+     * @param container instance of Container
      * @return String with properties xml
-     * @throws WebserverSystemException
-     * @throws SystemException
      */
-    protected String getPropertiesXml(final Container container)
-        throws WebserverSystemException, SystemException {
+    protected String getPropertiesXml(final Container container) throws WebserverSystemException, SystemException {
 
         return getRenderer().renderProperties(container);
     }
 
     /**
      * Retrieves a xml representation of container subresource "resources".
-     * 
+     *
      * @return String with resources xml
-     * @throws WebserverSystemException
      */
     protected String getResourcesXml() throws WebserverSystemException {
 
@@ -209,15 +173,11 @@ public class ContainerHandlerRetrieve extends ContainerHandlerBase {
 
     /**
      * Retrieves a xml representation of container subresource "struct-map".
-     * 
-     * @param container
-     *            instance of Container
+     *
+     * @param container instance of Container
      * @return String with struct-map xml
-     * @throws WebserverSystemException
-     * @throws SystemException
      */
-    protected String getStructMapXml(final Container container)
-        throws WebserverSystemException, SystemException {
+    protected String getStructMapXml(final Container container) throws WebserverSystemException, SystemException {
 
         return getRenderer().renderStructMap(container);
     }

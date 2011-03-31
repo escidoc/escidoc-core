@@ -37,27 +37,18 @@ import java.util.Map;
  */
 public class JaxbBindingHandler implements BindingHandlerInterface {
 
-    private final Map<String, JAXBContext> storedContexts =
-        new HashMap<String, JAXBContext>();
+    private final Map<String, JAXBContext> storedContexts = new HashMap<String, JAXBContext>();
 
     /**
-     * Unmarshals given xml-data to java-binding-object. Needs contextPath
-     * (package-name of binding-object).
-     * 
-     * @param xml
-     *            xml.
-     * @param contextPath
-     *            contextPath.
-     * @return Returns Java binding Object.
-     * 
-     * @throws XmlParserSystemException
-     *             ex
-     * 
+     * Unmarshals given xml-data to java-binding-object. Needs contextPath (package-name of binding-object).
      *
+     * @param xml         xml.
+     * @param contextPath contextPath.
+     * @return Returns Java binding Object.
+     * @throws XmlParserSystemException ex
      */
     @Override
-    public Object unmarshal(final String xml, final String contextPath)
-        throws XmlParserSystemException {
+    public Object unmarshal(final String xml, final String contextPath) throws XmlParserSystemException {
         try {
             // Store Context in HashMap for faster later use
             final JAXBContext jc;
@@ -78,24 +69,17 @@ public class JaxbBindingHandler implements BindingHandlerInterface {
 
     /**
      * Marshals given Object to xml-String.
-     * 
-     * @param bindingObject
-     *            bindingObject.
-     * @return String xml.
-     * 
-     * @throws XmlParserSystemException
-     *             ex
-     * 
      *
+     * @param bindingObject bindingObject.
+     * @return String xml.
+     * @throws XmlParserSystemException ex
      */
     @Override
-    public String marshal(final Object bindingObject)
-        throws XmlParserSystemException {
+    public String marshal(final Object bindingObject) throws XmlParserSystemException {
         try {
             // Initialize JAXB-Context with package-Name of binding-Object
             // Store Context in HashMap for faster later use
-            final String packageName =
-                bindingObject.getClass().getPackage().getName();
+            final String packageName = bindingObject.getClass().getPackage().getName();
             final JAXBContext jc;
             if (storedContexts.get(packageName) != null) {
                 jc = storedContexts.get(packageName);
@@ -114,8 +98,7 @@ public class JaxbBindingHandler implements BindingHandlerInterface {
             m.marshal(bindingObject, out);
 
             // MIH: workaround: reduce empty elements
-            String xml = new String(
-                out.toByteArray(), XmlUtility.CHARACTER_ENCODING);
+            String xml = new String(out.toByteArray(), XmlUtility.CHARACTER_ENCODING);
             xml = xml.replaceAll("(?s)(<[^\\/]*?)>\\s*?<\\/.*?>", "$1/>");
             return xml;
         }

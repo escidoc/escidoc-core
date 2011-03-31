@@ -31,76 +31,69 @@ import java.lang.reflect.InvocationTargetException;
 
 /**
  * Factory for PID Generator and Management Systems.
- * 
+ *
  * @author Steffen Wagner
- * 
  */
 public abstract class PIDSystemFactory {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PIDSystemFactory.class);
 
-    private static PIDSystemFactory pidSystemFactory ;
+    private static PIDSystemFactory pidSystemFactory;
 
     static {
         try {
             createNewInstanceFromConfig();
-        } catch (final PidSystemException e) {
-            if(LOGGER.isWarnEnabled()) {
+        }
+        catch (final PidSystemException e) {
+            if (LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on creating new instance of PIDSystemFactory.");
             }
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on creating new instance of PIDSystemFactory.", e);
             }
-       }
+        }
     }
 
-    private static final String defaultFactory =
-        "de.escidoc.core.common.persistence.impl.DummyPIDGeneratorFactory";
+    private static final String defaultFactory = "de.escidoc.core.common.persistence.impl.DummyPIDGeneratorFactory";
 
     /**
-     * Protected constructor as getInstance() should be used to create an
-     * instance of an PIDSystemFactory.
+     * Protected constructor as getInstance() should be used to create an instance of an PIDSystemFactory.
      */
     protected PIDSystemFactory() {
     }
 
     /**
-     * Get a new instance using the class name specified in
-     * escidoc-core.properties with 'escidoc-core.PidGeneratorFactory'.
-     * 
+     * Get a new instance using the class name specified in escidoc-core.properties with
+     * 'escidoc-core.PidGeneratorFactory'.
+     *
+     * @return An instance of the PIDGeneratorFactory class specified in escidoc-core.properties with
+     *         escidoc-core.PidGeneratorFactory.
+     * @throws PidSystemException If no instance could be returned
      * @see EscidocConfiguration
-     * 
-     * @return An instance of the PIDGeneratorFactory class specified in
-     *         escidoc-core.properties with escidoc-core.PidGeneratorFactory.
-     * @throws PidSystemException
-     *             If no instance could be returned
      */
-    public static PIDSystemFactory getInstance()
-        throws PidSystemException {
+    public static PIDSystemFactory getInstance() throws PidSystemException {
         return pidSystemFactory;
     }
 
     /**
+     * @throws PidSystemException If no instance could be returned
      * @see #getInstance()
-     * 
-     * @throws PidSystemException
-     *             If no instance could be returned
      */
     private static void createNewInstanceFromConfig() throws PidSystemException {
         String factoryClassName;
 
         try {
             factoryClassName =
-                EscidocConfiguration.getInstance().get(
-                    EscidocConfiguration.ESCIDOC_CORE_PID_SYSTEM_FACTORY);
+                EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_PID_SYSTEM_FACTORY);
             if (factoryClassName == null) {
                 factoryClassName = defaultFactory;
             }
-        } catch (final IOException e) {
-            if(LOGGER.isWarnEnabled()) {
+        }
+        catch (final IOException e) {
+            if (LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on instanziating esidoc configuration factory.");
             }
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on instanziating esidoc configuration factory.", e);
             }
             factoryClassName = defaultFactory;
@@ -118,23 +111,22 @@ public abstract class PIDSystemFactory {
         }
         catch (final IllegalAccessException e) {
             throw new PidSystemException(e);
-        } catch(NoSuchMethodException e) {
+        }
+        catch (NoSuchMethodException e) {
             throw new PidSystemException(e);
-        } catch(InvocationTargetException e) {
+        }
+        catch (InvocationTargetException e) {
             throw new PidSystemException(e);
         }
     }
 
     /**
-     * Return a PIDSystem using the underlying object model determined when the
-     * PIDSystemFactory was instantiated.
-     * 
+     * Return a PIDSystem using the underlying object model determined when the PIDSystemFactory was instantiated.
+     *
      * @return An instance of a PIDSystem.
-     * @throws PidSystemException
-     *             If no PIDSystem could be returned
+     * @throws PidSystemException If no PIDSystem could be returned
      * @throws MissingMethodParameterException
-     *             If necessary parameter are missing.
+     *                            If necessary parameter are missing.
      */
-    public abstract PIDSystem getPIDGenerator() throws PidSystemException,
-        MissingMethodParameterException;
+    public abstract PIDSystem getPIDGenerator() throws PidSystemException, MissingMethodParameterException;
 }

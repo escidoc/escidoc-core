@@ -23,31 +23,28 @@ package de.escidoc.core.common.exceptions.application.notfound;
 public class ContentStreamNotFoundException extends ResourceNotFoundException {
 
     /**
-     * 
+     *
      */
     private static final long serialVersionUID = -2584653003617447929L;
 
-    public static final String HTTP_STATUS_MESSAGE =
-        "Content stream was not found";
+    public static final String HTTP_STATUS_MESSAGE = "Content stream was not found";
 
     public ContentStreamNotFoundException() {
         // TODO Auto-generated constructor stub
     }
 
-    public ContentStreamNotFoundException(final int httpStatusCode,
-        final String httpStatusMsg) {
+    public ContentStreamNotFoundException(final int httpStatusCode, final String httpStatusMsg) {
         super(httpStatusCode, httpStatusMsg);
         // TODO Auto-generated constructor stub
     }
 
-    public ContentStreamNotFoundException(final String message, final int httpStatusCode,
-        final String httpStatusMsg) {
+    public ContentStreamNotFoundException(final String message, final int httpStatusCode, final String httpStatusMsg) {
         super(message, httpStatusCode, httpStatusMsg);
         // TODO Auto-generated constructor stub
     }
 
-    public ContentStreamNotFoundException(final String message, final Throwable cause,
-        final int httpStatusCode, final String httpStatusMsg) {
+    public ContentStreamNotFoundException(final String message, final Throwable cause, final int httpStatusCode,
+        final String httpStatusMsg) {
         super(message, cause, httpStatusCode, httpStatusMsg);
         // TODO Auto-generated constructor stub
     }
@@ -62,8 +59,7 @@ public class ContentStreamNotFoundException extends ResourceNotFoundException {
         // TODO Auto-generated constructor stub
     }
 
-    public ContentStreamNotFoundException(final Throwable cause, final int httpStatusCode,
-        final String httpStatusMsg) {
+    public ContentStreamNotFoundException(final Throwable cause, final int httpStatusCode, final String httpStatusMsg) {
         super(cause, httpStatusCode, httpStatusMsg);
         // TODO Auto-generated constructor stub
     }

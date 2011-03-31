@@ -16,22 +16,12 @@ import javax.ejb.EJBLocalObject;
  */
 public interface SemanticStoreHandlerLocal extends EJBLocalObject {
 
-    String spo(String taskParam, SecurityContext securityContext)
-            throws SystemException,
-            InvalidTripleStoreQueryException,
-            InvalidTripleStoreOutputFormatException,
-            InvalidXmlException,
-            MissingElementValueException,
-            AuthenticationException,
-            AuthorizationException;
+    String spo(String taskParam, SecurityContext securityContext) throws SystemException,
+        InvalidTripleStoreQueryException, InvalidTripleStoreOutputFormatException, InvalidXmlException,
+        MissingElementValueException, AuthenticationException, AuthorizationException;
 
-    String spo(String taskParam, String authHandle, Boolean restAccess)
-            throws SystemException,
-            InvalidTripleStoreQueryException,
-            InvalidTripleStoreOutputFormatException,
-            InvalidXmlException,
-            MissingElementValueException,
-            AuthenticationException,
-            AuthorizationException;
+    String spo(String taskParam, String authHandle, Boolean restAccess) throws SystemException,
+        InvalidTripleStoreQueryException, InvalidTripleStoreOutputFormatException, InvalidXmlException,
+        MissingElementValueException, AuthenticationException, AuthorizationException;
 
 }

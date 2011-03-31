@@ -36,47 +36,32 @@ import org.w3c.dom.Document;
 
 /**
  * Organizational Unit tests with REST transport.
- * 
+ *
  * @author Michael Schneider
- * 
  */
 public class CreateRestTest extends OrganizationalUnitTestBase {
 
     /**
      * Constructor.
-     * 
      */
     public CreateRestTest() {
         super(Constants.TRANSPORT_REST);
     }
 
     /**
-     * Test successfully creating an organizational unit with set read only
-     * attributes and elements via REST.
-     * 
-     * @test.name Create Organizational Unit - Read Only Values - REST
-     * @test.id OUM_COU-3-rest
-     * @test.input Organizational Unit XML representation with set read only
-     *             attributes and elements.
-     * @test.expected: Xml representation of successfully created organizational
-     *                 unit.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test successfully creating an organizational unit with set read only attributes and elements via REST.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumCou3_rest() throws Exception {
 
-        final String[] parentValues =
-            createSuccessfully("escidoc_ou_create.xml", 2);
+        final String[] parentValues = createSuccessfully("escidoc_ou_create.xml", 2);
 
         final Document toBeCreatedDocument =
-            getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH,
-                "escidoc_ou_create_rest_read_only.xml");
+            getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, "escidoc_ou_create_rest_read_only.xml");
         setUniqueValue(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_TITLE);
-        insertParentsElement(toBeCreatedDocument,
-            XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS, parentValues, true);
+        insertParentsElement(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS, parentValues, true);
 
         String toBeCreatedXml = toString(toBeCreatedDocument, false);
 
@@ -87,24 +72,14 @@ public class CreateRestTest extends OrganizationalUnitTestBase {
         catch (final Exception e) {
             failException("Creating OU with set read only values failed. ", e);
         }
-        assertOrganizationalUnit(createdXml, toBeCreatedXml, startTimestamp,
-            startTimestamp, false, false);
+        assertOrganizationalUnit(createdXml, toBeCreatedXml, startTimestamp, startTimestamp, false, false);
 
     }
 
     /**
-     * Test declining creating an organizational unit setting a forbidden
-     * attribute (organizational-unit/@objid).
-     * 
-     * @test.name Create Organizational Unit - Objid - REST
-     * @test.id OUM_COU-6-a-rest
-     * @test.input Organizational Unit XML representation with set objid
-     *             attribute.
-     * @test.expected: XmlSchemaValidationException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test declining creating an organizational unit setting a forbidden attribute (organizational-unit/@objid).
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumCou6a_rest() throws Exception {
@@ -112,12 +87,10 @@ public class CreateRestTest extends OrganizationalUnitTestBase {
         Class ec = XmlSchemaValidationException.class;
 
         final Document toBeCreatedDocument =
-            getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH,
-                "escidoc_ou_create.xml");
+            getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, "escidoc_ou_create.xml");
         setUniqueValue(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_TITLE);
-        addAttribute(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT,
-            createAttributeNode(toBeCreatedDocument, null, null, NAME_OBJID,
-                "escidoc:41414"));
+        addAttribute(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT, createAttributeNode(toBeCreatedDocument, null,
+            null, NAME_OBJID, "escidoc:41414"));
 
         try {
             create(toString(toBeCreatedDocument, false));

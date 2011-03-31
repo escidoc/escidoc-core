@@ -31,7 +31,7 @@ public final class ContainerXmlProvider extends InfrastructureXmlProvider {
     private static final String CONTAINER_PATH = "/container";
 
     private static final String PROPERTIES_PATH = CONTAINER_PATH;
-                                                                           
+
     private static final String RESOURCES_PATH = CONTAINER_PATH;
 
     private static final String STRUCTMAP_PATH = CONTAINER_PATH;
@@ -54,13 +54,11 @@ public final class ContainerXmlProvider extends InfrastructureXmlProvider {
 
     private static final String STRUCTMAP_RESOURCE_NAME = "struct-map";
 
-    private static final String MEMBER_REF_LIST_RESOURCE_NAME =
-        "member-ref-list";
+    private static final String MEMBER_REF_LIST_RESOURCE_NAME = "member-ref-list";
 
     private static final String TOC_VIEW_RESOURCE_NAME = "toc-view";
 
-    private static final String CONTAINER_REF_LIST_RESOURCE_NAME =
-        "container-ref-list";
+    private static final String CONTAINER_REF_LIST_RESOURCE_NAME = "container-ref-list";
 
     private static final String MEMBER_LIST_RESOURCE_NAME = "member-list";
 
@@ -72,85 +70,70 @@ public final class ContainerXmlProvider extends InfrastructureXmlProvider {
 
     /**
      * Private constructor to prevent initialization.
-     *
      */
     private ContainerXmlProvider() {
     }
 
     /**
      * Gets the role xml PROVIDER.
-     * 
-     * @return Returns the <code>UserAccountXmlProvider</code> object.
      *
+     * @return Returns the <code>UserAccountXmlProvider</code> object.
      */
     public static ContainerXmlProvider getInstance() {
         return PROVIDER;
     }
 
-    public String getContainerXml(final Map values)
-        throws WebserverSystemException {
+    public String getContainerXml(final Map values) throws WebserverSystemException {
 
         return getXml(CONTAINER_RESOURCE_NAME, CONTAINER_PATH, values);
     }
 
-    public String getPropertiesXml(final Map values)
-        throws WebserverSystemException {
+    public String getPropertiesXml(final Map values) throws WebserverSystemException {
 
         return getXml(PROPERTIES_RESOURCE_NAME, PROPERTIES_PATH, values);
     }
 
-    public String getStructMapXml(final Map values)
-        throws WebserverSystemException {
+    public String getStructMapXml(final Map values) throws WebserverSystemException {
 
         return getXml(STRUCTMAP_RESOURCE_NAME, STRUCTMAP_PATH, values);
     }
 
-    public String getMemberRefsXml(final Map values)
-        throws WebserverSystemException {
+    public String getMemberRefsXml(final Map values) throws WebserverSystemException {
 
-        return getXml(MEMBER_REF_LIST_RESOURCE_NAME, MEMBER_REF_LIST_PATH,
-            values);
+        return getXml(MEMBER_REF_LIST_RESOURCE_NAME, MEMBER_REF_LIST_PATH, values);
     }
 
-    public String getTocViewXml(final Map values)
-        throws WebserverSystemException {
+    public String getTocViewXml(final Map values) throws WebserverSystemException {
 
         return getXml(TOC_VIEW_RESOURCE_NAME, TOC_VIEW_PATH, values);
     }
 
-    public String getContainerRefsXml(final Map values)
-        throws WebserverSystemException {
+    public String getContainerRefsXml(final Map values) throws WebserverSystemException {
 
-        return getXml(CONTAINER_REF_LIST_RESOURCE_NAME,
-            CONTAINER_REF_LIST_PATH, values);
+        return getXml(CONTAINER_REF_LIST_RESOURCE_NAME, CONTAINER_REF_LIST_PATH, values);
     }
 
-    public String getMembersXml(final Map values)
-        throws WebserverSystemException {
+    public String getMembersXml(final Map values) throws WebserverSystemException {
 
         return getXml(MEMBER_LIST_RESOURCE_NAME, MEMBER_LIST_PATH, values);
     }
 
-    public String getParentsXml(final Map values)
-        throws WebserverSystemException {
+    public String getParentsXml(final Map values) throws WebserverSystemException {
 
         return getXml(PARENTS_RESOURCE_NAME, COMMON_PATH, values);
     }
 
-    public String getContainersXml(final Map values)
-        throws WebserverSystemException {
+    public String getContainersXml(final Map values) throws WebserverSystemException {
 
         return getXml(CONTAINER_LIST_RESOURCE_NAME, CONTAINER_LIST_PATH, values);
     }
 
-    public String getResourcesXml(final Map values)
-        throws WebserverSystemException {
+    public String getResourcesXml(final Map values) throws WebserverSystemException {
 
         return getXml(RESOURCES_RESOURCE_NAME, RESOURCES_PATH, values);
     }
 
-    public String structMapXml(final Map values)
-        throws WebserverSystemException {
+    public String structMapXml(final Map values) throws WebserverSystemException {
 
         return getXml(STRUCTMAP_RESOURCE_NAME, STRUCTMAP_PATH, values);
     }

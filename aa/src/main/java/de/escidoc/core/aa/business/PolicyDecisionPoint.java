@@ -126,7 +126,7 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
     private static final String ERROR_MORE_THAN_ONE_RESULT = "Error in XACML engine: More than one result returned!";
 
     private static final String ERROR_OBLIGATIONS_ARE_NOT_SUPPORTED =
-            "Error in XACML engine: Found obligations, but obligations are not" + " supported.";
+        "Error in XACML engine: Found obligations, but obligations are not" + " supported.";
 
     /**
      * The regexp pattern used to remove prefixes from the provided requests xml data.
@@ -138,7 +138,7 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
      * the corresponding index value.
      */
     private static final Pattern SPLIT_PATTERN =
-            Pattern.compile("(<Request.*?</Request *>)", Pattern.MULTILINE | Pattern.DOTALL);
+        Pattern.compile("(<Request.*?</Request *>)", Pattern.MULTILINE | Pattern.DOTALL);
 
     /**
      * The regexp pattern used to trim the provided requests xml data.
@@ -191,27 +191,28 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
         final List<EscidocRole> roles = roleDao.retrieveRoles(filter, 0, 0, null, null);
 
         roles.add(roleDao.retrieveRole(EscidocRole.DEFAULT_USER_ROLE_ID));
-        for(final EscidocRole role : roles) {
+        for (final EscidocRole role : roles) {
             xacmlParser.parse(role);
-            for(final ResourceType resourceType : ResourceType.values()) {
+            for (final ResourceType resourceType : ResourceType.values()) {
                 try {
                     final String scopeRules = xacmlParser.getScopeRules(resourceType);
                     final String policyRules = xacmlParser.getPolicyRules(resourceType);
-                    if(LOGGER.isDebugEnabled()) {
-                        LOGGER.debug("create access right (" + role.getId() + ',' + resourceType + ','
-                                + scopeRules + ',' +policyRules + ')');
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("create access right (" + role.getId() + ',' + resourceType + ',' + scopeRules
+                            + ',' + policyRules + ')');
                     }
                     accessRights.putAccessRight(resourceType, role.getId(), scopeRules, policyRules);
-                } catch(final Exception e) {
-                    final String message = "The translation from XACML to SQL failed. Please try to " +
-                            "paraphrase your policy or contact the developer team " +
-                            "to extend the conversion rules accordingly.";
+                }
+                catch (final Exception e) {
+                    final String message =
+                        "The translation from XACML to SQL failed. Please try to "
+                            + "paraphrase your policy or contact the developer team "
+                            + "to extend the conversion rules accordingly.";
                     throw new WebserverSystemException(message, e);
                 }
             }
         }
     }
-
 
     /**
      * See Interface for functional description.
@@ -219,26 +220,26 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
      * @see de.escidoc.core.aa.service.interfaces.PolicyDecisionPointInterface #evaluate(java.lang.String)
      */
     @Override
-    public boolean[] evaluateRequestList(final List<Map<String, String>> requests)
-            throws ResourceNotFoundException, MissingMethodParameterException, AuthenticationException,
-            AuthorizationException, SystemException {
+    public boolean[] evaluateRequestList(final List<Map<String, String>> requests) throws ResourceNotFoundException,
+        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
 
         final boolean[] allowedObjects = new boolean[requests.size()];
         int i = 0;
 
-        for(final Map<String, String> attributeMap : requests) {
+        for (final Map<String, String> attributeMap : requests) {
             final Iterator<Entry<String, String>> attributeUriIter = attributeMap.entrySet().iterator();
             Set<Subject> subjects = null;
             Set<Attribute> actions = null;
             final Set<Attribute> resourceAttributes = new HashSet<Attribute>();
-            while(attributeUriIter.hasNext()) {
+            while (attributeUriIter.hasNext()) {
                 final Entry<String, String> mapEntry = attributeUriIter.next();
                 final String uriString = mapEntry.getKey();
                 URI uri = uriCache.get(uriString);
-                if(uri == null) {
+                if (uri == null) {
                     try {
                         uri = new URI(uriString);
-                    } catch(URISyntaxException e) {
+                    }
+                    catch (URISyntaxException e) {
                         // FIXME: Other exception?
                         throw new SystemException(e.getMessage(), e);
                     }
@@ -248,8 +249,8 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
                 final StringAttribute attributeValue = new StringAttribute(value);
                 final Attribute attribute = new Attribute(uri, null, null, attributeValue);
 
-                if(PATTERN_SUBJECT_ID.matcher(uriString).find()) {
-                    if(subjects != null) {
+                if (PATTERN_SUBJECT_ID.matcher(uriString).find()) {
+                    if (subjects != null) {
                         // FIXME: other exception?
                         throw new SystemException("Duplicate definition of subject id");
                     }
@@ -257,14 +258,16 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
                     subjectAttributes.add(attribute);
                     subjects = new HashSet<Subject>(1);
                     subjects.add(new Subject(subjectAttributes));
-                } else if(PATTERN_ACTION_ID.matcher(uriString).find()) {
-                    if(actions != null) {
+                }
+                else if (PATTERN_ACTION_ID.matcher(uriString).find()) {
+                    if (actions != null) {
                         // FIXME: other exception?
                         throw new SystemException("Duplicate definition of action id");
                     }
                     actions = new HashSet<Attribute>(1);
                     actions.add(attribute);
-                } else {
+                }
+                else {
                     resourceAttributes.add(attribute);
                 }
             }
@@ -273,10 +276,10 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
             // checking during attribute resolving.
             final Iterator<Attribute> iter = resourceAttributes.iterator();
             final Set<Attribute> uris = new HashSet<Attribute>(resourceAttributes.size());
-            while(iter.hasNext()) {
+            while (iter.hasNext()) {
                 final Attribute attr = iter.next();
                 uris.add(new Attribute(CheckProvidedAttributeFinderModule.getAttributeId(), null, null,
-                        new StringAttribute(attr.getId().toString())));
+                    new StringAttribute(attr.getId().toString())));
             }
             final RequestCtx requestCtx = new RequestCtx(subjects, resourceAttributes, actions, uris);
 
@@ -295,8 +298,8 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
      * @see de.escidoc.core.aa.service.interfaces.PolicyDecisionPointInterface #evaluate(java.lang.String)
      */
     @Override
-    public String evaluate(final String requestsXml)
-            throws ResourceNotFoundException, XmlSchemaValidationException, XmlCorruptedException, SystemException {
+    public String evaluate(final String requestsXml) throws ResourceNotFoundException, XmlSchemaValidationException,
+        XmlCorruptedException, SystemException {
 
         XmlUtility.validate(requestsXml, XmlUtility.getPdpRequestsSchemaLocation());
 
@@ -308,7 +311,7 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
         buf.append(Constants.XACML_CONTEXT_NS_URI);
         buf.append("\">");
 
-        for(final ResponseCtx responseCtx : responseCtxs) {
+        for (final ResponseCtx responseCtx : responseCtxs) {
             final Result result = extractSingleResultWithoutObligations(responseCtx);
             final String decision;
             decision = result.getDecision() == Result.DECISION_PERMIT ? "permit" : "deny";
@@ -336,9 +339,9 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
      *      List)
      */
     @Override
-    public List<Object[]> evaluateMethodForList(final String resourceName, final String methodName,
-                                                final List<Object[]> argumentList)
-            throws ResourceNotFoundException, SystemException {
+    public List<Object[]> evaluateMethodForList(
+        final String resourceName, final String methodName, final List<Object[]> argumentList)
+        throws ResourceNotFoundException, SystemException {
 
         // convert the resourceName if provided in triple store format
         final String convertedResourceName = FinderModuleHelper.convertObjectType(resourceName, false);
@@ -349,31 +352,34 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
 
         try {
             final MethodMappingList methodMappings = cache.getMethodMappings(className, methodName);
-            for(final Object[] arguments : argumentList) {
+            for (final Object[] arguments : argumentList) {
                 boolean allowed = true;
                 final Iterator<MethodMapping> iter = methodMappings.iteratorBefore();
-                if(iter != null) {
-                    while(allowed && iter.hasNext()) {
+                if (iter != null) {
+                    while (allowed && iter.hasNext()) {
                         final List<Map<String, String>> requests =
-                                invocationParser.buildRequestsList(arguments, iter.next());
+                            invocationParser.buildRequestsList(arguments, iter.next());
                         final boolean[] accessAllowedArray = evaluateRequestList(requests);
-                        for(final boolean anAccessAllowedArray : accessAllowedArray) {
-                            if(! anAccessAllowedArray) {
+                        for (final boolean anAccessAllowedArray : accessAllowedArray) {
+                            if (!anAccessAllowedArray) {
                                 allowed = false;
                                 break;
                             }
                         }
                     }
                 }
-                if(allowed) {
+                if (allowed) {
                     ret.add(arguments);
                 }
             }
-        } catch(ResourceNotFoundException e) {
+        }
+        catch (ResourceNotFoundException e) {
             throw e;
-        } catch(SystemException e) {
+        }
+        catch (SystemException e) {
             throw e;
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new WebserverSystemException("Unhandled exception in evaluateRetrieve. ", e);
         }
 
@@ -387,7 +393,7 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
      */
     @Override
     public List<String> evaluateRetrieve(final String resourceName, final List<String> ids)
-            throws ResourceNotFoundException, SystemException {
+        throws ResourceNotFoundException, SystemException {
 
         // convert the resourceName if provided in triple store format
         final String convertedResourceName = FinderModuleHelper.convertObjectType(resourceName, false);
@@ -398,30 +404,32 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
 
         try {
             final MethodMappingList methodMappings = cache.getMethodMappings(className, "retrieve");
-            for(final String id : ids) {
+            for (final String id : ids) {
                 boolean allowed = true;
                 final Iterator<MethodMapping> iter = methodMappings.iteratorBefore();
-                if(iter != null) {
-                    while(allowed && iter.hasNext()) {
+                if (iter != null) {
+                    while (allowed && iter.hasNext()) {
                         final List<Map<String, String>> requests = invocationParser.buildRequestsList(id, iter.next());
                         allowed = evaluateRequestList(requests)[0];
                     }
                 }
-                if(allowed) {
+                if (allowed) {
                     ret.add(id);
                 }
             }
-        } catch(ResourceNotFoundException e) {
+        }
+        catch (ResourceNotFoundException e) {
             throw e;
-        } catch(SystemException e) {
+        }
+        catch (SystemException e) {
             throw e;
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new WebserverSystemException("Unhandled exception in evaluateRetrieve. ", e);
         }
 
         return ret;
     }
-
 
     /**
      * Handles the provided result.<br> This method examines the provided result. In case of an error result, it is
@@ -434,8 +442,7 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
      * @throws WebserverSystemException  Thrown in case of any error except a resource not found error.
      * @throws ResourceNotFoundException Thrown in case of a resource not found error.
      */
-    private static boolean handleResult(final Result result)
-            throws WebserverSystemException, ResourceNotFoundException {
+    private static boolean handleResult(final Result result) throws WebserverSystemException, ResourceNotFoundException {
 
         // any decision other than permit means denial, throw exception
         // From XACML spec: A PEP SHALL allow access to the resource only if a
@@ -443,54 +450,54 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
         // SHALL deny access to the resource in all other cases.An XACML
         // response of "Permit" SHALL be considered valid only if the PEP
         // understands all of the obligations contained in the response.
-        if(result.getDecision() == Result.DECISION_PERMIT) {
+        if (result.getDecision() == Result.DECISION_PERMIT) {
             return true;
-        } else {
+        }
+        else {
             final Status status = result.getStatus();
             final String statusCode = (String) status.getCode().get(0);
-            if(! statusCode.equals(Status.STATUS_OK)) {
+            if (!statusCode.equals(Status.STATUS_OK)) {
 
-                if(statusCode.startsWith(AttributeIds.STATUS_PREFIX)) {
+                if (statusCode.startsWith(AttributeIds.STATUS_PREFIX)) {
 
                     ResourceNotFoundException e = null;
                     try {
                         final Class clazz = Class.forName(statusCode.substring(AttributeIds.STATUS_PREFIX.length()));
-                        if(ResourceNotFoundException.class.isAssignableFrom(clazz)) {
+                        if (ResourceNotFoundException.class.isAssignableFrom(clazz)) {
 
                             final String statusMessage = status.getMessage();
-                            e = (ResourceNotFoundException) clazz.getConstructor(new Class[]{String.class})
-                                    .newInstance(statusMessage);
+                            e =
+                                (ResourceNotFoundException) clazz
+                                    .getConstructor(new Class[] { String.class }).newInstance(statusMessage);
                         }
-                    } catch(Exception e1) {
-                        if(LOGGER.isWarnEnabled()) {
-                            LOGGER.warn(StringUtility
-                                    .format("Error reported during policy evaluation ", result.getResource(),
-                                        encode(status)));
+                    }
+                    catch (Exception e1) {
+                        if (LOGGER.isWarnEnabled()) {
+                            LOGGER.warn(StringUtility.format("Error reported during policy evaluation ", result
+                                .getResource(), encode(status)));
                         }
-                        if(LOGGER.isDebugEnabled()) {
-                            LOGGER.debug(StringUtility
-                                .format("Error reported during policy evaluation ", result.getResource(),
-                                        encode(status)), e);
+                        if (LOGGER.isDebugEnabled()) {
+                            LOGGER.debug(StringUtility.format("Error reported during policy evaluation ", result
+                                .getResource(), encode(status)), e);
                         }
                         e = null;
                     }
-                    if(e != null) {
+                    if (e != null) {
                         throw e;
-                    } else {
-                        throw new WebserverSystemException(StringUtility
-                                .format("Error reported during policy evaluation ", result.getResource(),
-                                        encode(status)));
+                    }
+                    else {
+                        throw new WebserverSystemException(StringUtility.format(
+                            "Error reported during policy evaluation ", result.getResource(), encode(status)));
                     }
 
                 }
 
-                throw new WebserverSystemException(StringUtility
-                        .format("XACML error reported during policy evaluation ", result.getResource(),
-                                encode(status)));
+                throw new WebserverSystemException(StringUtility.format(
+                    "XACML error reported during policy evaluation ", result.getResource(), encode(status)));
             }
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug(StringUtility.format("Access not granted. Reason from XACML engine: ",
-                        Result.DECISIONS[result.getDecision()]));
+                    Result.DECISIONS[result.getDecision()]));
             }
             return false;
         }
@@ -501,7 +508,6 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
      *
      * @param status The XACML status to encode.
      * @return Returns the encoded status.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private static String encode(final Status status) throws WebserverSystemException {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -509,9 +515,11 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
         try {
             status.encode(out, new Indenter());
             ret = out.toString(XmlUtility.CHARACTER_ENCODING);
-        } catch(UnsupportedEncodingException e) {
+        }
+        catch (UnsupportedEncodingException e) {
             throw new WebserverSystemException("Error on encoding policy.", e);
-        } finally {
+        }
+        finally {
             IOUtils.closeStream(out);
         }
         return ret;
@@ -526,13 +534,13 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
      *                                  or the result has obligations.
      */
     private static Result extractSingleResultWithoutObligations(final ResponseCtx responseCtx)
-            throws WebserverSystemException {
+        throws WebserverSystemException {
 
-        if(responseCtx.getResults().size() != 1) {
+        if (responseCtx.getResults().size() != 1) {
             throw new WebserverSystemException(ERROR_MORE_THAN_ONE_RESULT);
         }
         final Result result = (Result) responseCtx.getResults().iterator().next();
-        if(! result.getObligations().isEmpty()) {
+        if (!result.getObligations().isEmpty()) {
             throw new WebserverSystemException(ERROR_OBLIGATIONS_ARE_NOT_SUPPORTED);
         }
         return result;
@@ -547,8 +555,8 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
      * @throws XmlSchemaValidationException Thrown in case of a schema validation error or a corrupted xml.
      * @throws SystemException              Thrown in case of an internal error.
      */
-    private List<ResponseCtx> doEvaluate(final CharSequence requestsXml)
-            throws XmlSchemaValidationException, SystemException {
+    private List<ResponseCtx> doEvaluate(final CharSequence requestsXml) throws XmlSchemaValidationException,
+        SystemException {
 
         // trim white spaces and newlines around < and >
         Matcher matcher = TRIM_PATTERN.matcher(requestsXml);
@@ -567,25 +575,28 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
         matcher = SPLIT_PATTERN.matcher(xml);
         int i = 0;
         final List<RequestCtx> requestCtxs = new ArrayList<RequestCtx>();
-        while(matcher.find(i)) {
+        while (matcher.find(i)) {
             try {
-                RequestCtx requestCtx = RequestCtx.getInstance(
-                        new ByteArrayInputStream(matcher.group(1).getBytes(XmlUtility.CHARACTER_ENCODING)));
+                RequestCtx requestCtx =
+                    RequestCtx.getInstance(new ByteArrayInputStream(matcher.group(1).getBytes(
+                        XmlUtility.CHARACTER_ENCODING)));
                 final Set<Attribute> resources = requestCtx.getResource();
                 final Set<Attribute> uris = new HashSet<Attribute>(resources.size());
-                for(final Attribute attribute : resources) {
+                for (final Attribute attribute : resources) {
                     uris.add(new Attribute(CheckProvidedAttributeFinderModule.getAttributeId(), null, null,
-                            new StringAttribute(attribute.getId().toString())));
+                        new StringAttribute(attribute.getId().toString())));
                 }
-                for(final Attribute attribute : (Set<Attribute>) requestCtx.getEnvironmentAttributes()) {
+                for (final Attribute attribute : (Set<Attribute>) requestCtx.getEnvironmentAttributes()) {
                     uris.add(attribute);
                 }
-                requestCtx = new RequestCtx(requestCtx.getSubjects(), requestCtx.getResource(), requestCtx.getAction(),
-                        uris);
+                requestCtx =
+                    new RequestCtx(requestCtx.getSubjects(), requestCtx.getResource(), requestCtx.getAction(), uris);
                 requestCtxs.add(requestCtx);
-            } catch(UnsupportedEncodingException e) {
+            }
+            catch (UnsupportedEncodingException e) {
                 throw new WebserverSystemException(e.getMessage(), e);
-            } catch(ParsingException e) {
+            }
+            catch (ParsingException e) {
                 throw new XmlSchemaValidationException(e.getMessage(), e);
             }
             i = matcher.end();
@@ -606,7 +617,7 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
 
         final Iterator<RequestCtx> iter = requestCtxs.iterator();
         final List<ResponseCtx> responsCtxs = new ArrayList<ResponseCtx>(requestCtxs.size());
-        while(iter.hasNext()) {
+        while (iter.hasNext()) {
             responsCtxs.add(doEvaluate(iter.next()));
         }
         return responsCtxs;
@@ -620,13 +631,14 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
     private ResponseCtx doEvaluate(final RequestCtx requestCtx) throws WebserverSystemException {
-        if(LOGGER.isDebugEnabled()) {
+        if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Request: ");
             final ByteArrayOutputStream writer = new ByteArrayOutputStream();
             try {
                 requestCtx.encode(writer, new Indenter());
                 LOGGER.debug(writer.toString());
-            } finally {
+            }
+            finally {
                 IOUtils.closeStream(writer);
             }
         }
@@ -638,21 +650,24 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
             // The evaluation has to be run as authorization user
             wasExternalBefore = UserContext.runAsInternalUser();
             response = customPdp.evaluate(requestCtx);
-        } catch(RuntimeException e) {
+        }
+        catch (RuntimeException e) {
             throw new WebserverSystemException(e.getMessage(), e);
-        } finally {
-            if(wasExternalBefore) {
+        }
+        finally {
+            if (wasExternalBefore) {
                 UserContext.runAsExternalUser();
             }
         }
 
-        if(LOGGER.isDebugEnabled()) {
+        if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Response: ");
             final ByteArrayOutputStream writer = new ByteArrayOutputStream();
             try {
                 response.encode(writer, new Indenter());
                 LOGGER.debug(writer.toString());
-            } finally {
+            }
+            finally {
                 IOUtils.closeStream(writer);
             }
         }
@@ -670,8 +685,7 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
         handlerClassNames.put("content-relation", ContentRelationHandlerInterface.class.getName());
         handlerClassNames.put("content-model", ContentModelHandlerInterface.class.getName());
         handlerClassNames.put("organizational-unit", OrganizationalUnitHandlerInterface.class.getName());
-        handlerClassNames
-                .put("user-account", UserAccountHandlerInterface.class.getName());
+        handlerClassNames.put("user-account", UserAccountHandlerInterface.class.getName());
         handlerClassNames.put("user-group", UserGroupHandlerInterface.class.getName());
         handlerClassNames.put("role", RoleHandlerInterface.class.getName());
 
@@ -744,7 +758,7 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
      *         The {@link TripleStoreAttributeFinderModule} to inject.
      */
     public void setTripleStoreAttributeFinderModule(
-            final TripleStoreAttributeFinderModule tripleStoreAttributeFinderModule) {
+        final TripleStoreAttributeFinderModule tripleStoreAttributeFinderModule) {
 
         this.tripleStoreAttributeFinderModule = tripleStoreAttributeFinderModule;
     }
@@ -778,6 +792,5 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
     public void touch() {
         // do nothing
     }
-
 
 }

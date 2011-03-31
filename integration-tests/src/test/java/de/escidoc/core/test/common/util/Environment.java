@@ -32,9 +32,8 @@ import org.joda.time.DateTime;
 
 /**
  * Test environment description.
- * 
+ *
  * @author Steffen Wagner
- * 
  */
 public class Environment {
 
@@ -72,8 +71,7 @@ public class Environment {
     private String description = null;
 
     /**
-     * @param date
-     *            the date to set
+     * @param date the date to set
      */
     public void setDate(final DateTime date) {
         this.date = date;
@@ -87,8 +85,7 @@ public class Environment {
     }
 
     /**
-     * @param hostname
-     *            the hostname to set
+     * @param hostname the hostname to set
      */
     public void setHostname(final String hostname) {
         this.hostname = hostname;
@@ -102,8 +99,7 @@ public class Environment {
     }
 
     /**
-     * @param fwSeries
-     *            the fwSeries to set
+     * @param fwSeries the fwSeries to set
      */
     public void setFwSeries(final String fwSeries) {
         this.fwSeries = fwSeries;
@@ -117,8 +113,7 @@ public class Environment {
     }
 
     /**
-     * @param fwBuild
-     *            the fwBuild to set
+     * @param fwBuild the fwBuild to set
      */
     public void setFwBuild(final String fwBuild) {
         this.fwBuild = fwBuild;
@@ -132,8 +127,7 @@ public class Environment {
     }
 
     /**
-     * @param noOfCpus
-     *            the noOfCpus to set
+     * @param noOfCpus the noOfCpus to set
      */
     public void setNoOfCpus(final int noOfCpus) {
         this.noOfCpus = noOfCpus;
@@ -147,8 +141,7 @@ public class Environment {
     }
 
     /**
-     * @param mhz
-     *            the mhz to set
+     * @param mhz the mhz to set
      */
     public void setMhz(final int mhz) {
         this.mhz = mhz;
@@ -162,8 +155,7 @@ public class Environment {
     }
 
     /**
-     * @param cpuType
-     *            the cpuType to set
+     * @param cpuType the cpuType to set
      */
     public void setCpuType(final String cpuType) {
         this.cpuType = cpuType;
@@ -177,8 +169,7 @@ public class Environment {
     }
 
     /**
-     * @param memory
-     *            the memory to set
+     * @param memory the memory to set
      */
     public void setMemory(final long memory) {
         this.memory = memory;
@@ -192,8 +183,7 @@ public class Environment {
     }
 
     /**
-     * @param javaVersion
-     *            the javaVersion to set
+     * @param javaVersion the javaVersion to set
      */
     public void setJavaVersion(final String javaVersion) {
         this.javaVersion = javaVersion;
@@ -207,8 +197,7 @@ public class Environment {
     }
 
     /**
-     * @param fedoraVersion
-     *            the fedoraVersion to set
+     * @param fedoraVersion the fedoraVersion to set
      */
     public void setFedoraVersion(final String fedoraVersion) {
         this.fedoraVersion = fedoraVersion;
@@ -222,8 +211,7 @@ public class Environment {
     }
 
     /**
-     * @param tripleStore
-     *            the tripleStore to set
+     * @param tripleStore the tripleStore to set
      */
     public void setTripleStore(final String tripleStore) {
         this.tripleStore = tripleStore;
@@ -237,8 +225,7 @@ public class Environment {
     }
 
     /**
-     * @param jbossVersion
-     *            the jbossVersion to set
+     * @param jbossVersion the jbossVersion to set
      */
     public void setJbossVersion(final String jbossVersion) {
         this.jbossVersion = jbossVersion;
@@ -252,8 +239,7 @@ public class Environment {
     }
 
     /**
-     * @param javaOpts
-     *            the javaOpts to set
+     * @param javaOpts the javaOpts to set
      */
     public void setJavaOpts(final String javaOpts) {
         this.javaOpts = javaOpts;
@@ -267,8 +253,7 @@ public class Environment {
     }
 
     /**
-     * @param methodParameter
-     *            the methodParameter to set
+     * @param methodParameter the methodParameter to set
      */
     public void setMethodParameter(final String methodParameter) {
         this.methodParameter = methodParameter;
@@ -282,8 +267,7 @@ public class Environment {
     }
 
     /**
-     * @param description
-     *            the description to set
+     * @param description the description to set
      */
     public void setDescription(final String description) {
         this.description = description;

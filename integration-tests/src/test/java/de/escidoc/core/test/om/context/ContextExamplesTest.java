@@ -40,36 +40,31 @@ import java.util.Map;
 
 /**
  * Test creating the example Context objects.
- * 
+ *
  * @author Steffen Wagner
- * 
  */
 @RunWith(value = Parameterized.class)
 public class ContextExamplesTest extends ContextTestBase {
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ContextExamplesTest(final int transport) {
         super(transport);
     }
 
     /**
-     * Delete all Contexts with same name before test runs to avoid unique name
-     * conflicts. Finding contexts with the same name based on filters. If
-     * filters fail, then could it be that a Context with same name still exist
-     * in repository.
-     * @throws Exception 
+     * Delete all Contexts with same name before test runs to avoid unique name conflicts. Finding contexts with the
+     * same name based on filters. If filters fail, then could it be that a Context with same name still exist in
+     * repository.
      */
     @Before
     public void preventUniqueNameConflict() throws Exception {
 
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_NAME + "\"=\"Context%20Example%2001%20(REST)\"" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_NAME
+            + "\"=\"Context%20Example%2001%20(REST)\"" });
 
         String result = retrieveContexts(filterParams);
 
@@ -80,21 +75,17 @@ public class ContextExamplesTest extends ContextTestBase {
     }
 
     /**
-     * Test if the example context for create is still compatible with
-     * framework.
-     * 
-     * @throws Exception
-     *             Thrown if creation of example Context failed.
+     * Test if the example context for create is still compatible with framework.
+     *
+     * @throws Exception Thrown if creation of example Context failed.
      */
     @Test
     public void creatingExample01() throws Exception {
 
-        String contextXml =
-            getExampleTemplate("context-minimal-for-create-01.xml");
+        String contextXml = getExampleTemplate("context-minimal-for-create-01.xml");
         String xml = create(contextXml);
         assertXmlValidContext(xml);
         delete(getObjidValue(xml));
     }
-    
-    
+
 }

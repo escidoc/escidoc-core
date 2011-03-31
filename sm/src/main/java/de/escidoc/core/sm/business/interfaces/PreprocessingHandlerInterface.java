@@ -33,39 +33,26 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 
 /**
  * Interface of an Preprocessing handler of the business layer.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 public interface PreprocessingHandlerInterface {
 
     /**
-     * Preprocess Statistic raw data.<br/>       
-     *
-     * <b>Tasks:</b><br/>
-     * <ul>
-     * <li>Extract Aggregation Definition IDs.</li>
-     * <li>If no Aggregation Definition IDs are provided, 
-     *      process all Aggregation Definitions.</li>
-     * <li>Extract startDate and endDate.</li>
-     * <li>Preprocess.</li>
+     * Preprocess Statistic raw data.<br/>
+     * <p/>
+     * <b>Tasks:</b><br/> <ul> <li>Extract Aggregation Definition IDs.</li> <li>If no Aggregation Definition IDs are
+     * provided, process all Aggregation Definitions.</li> <li>Extract startDate and endDate.</li> <li>Preprocess.</li>
      * </ul>
-     * 
-     * @param aggregationDefinitionId
-     *         the Aggregation Definition ID to preprocess.
-     * @param xmlData
-     *         The XML representation of the 
-     *         Preprocessing Information to be processed
-     *         corresponding to XML-schema "preprocessing-information.xsd".
-     * 
+     *
+     * @param aggregationDefinitionId the Aggregation Definition ID to preprocess.
+     * @param xmlData                 The XML representation of the Preprocessing Information to be processed
+     *                                corresponding to XML-schema "preprocessing-information.xsd".
      * @throws MissingMethodParameterException
-     *             ex
-     * @throws SystemException
-     *             ex
-     * 
+     *                         ex
+     * @throws SystemException ex
      */
-    void preprocess(String aggregationDefinitionId, 
-            String xmlData) throws MissingMethodParameterException,
+    void preprocess(String aggregationDefinitionId, String xmlData) throws MissingMethodParameterException,
         SystemException;
 
 }

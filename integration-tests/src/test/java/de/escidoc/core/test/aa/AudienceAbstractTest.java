@@ -36,12 +36,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
-
 /**
  * Test suite for the role Audience.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 public class AudienceAbstractTest extends GrantTestBase {
 
@@ -52,9 +50,9 @@ public class AudienceAbstractTest extends GrantTestBase {
     protected static final String PASSWORD = PWCallback.PASSWORD;
 
     protected static String grantCreationUserOrGroupId = null;
-    
+
     protected static int methodCounter = 0;
-    
+
     protected static String contextId = null;
 
     protected static String contextHref = null;
@@ -81,30 +79,22 @@ public class AudienceAbstractTest extends GrantTestBase {
 
     /**
      * The constructor.
-     * 
-     * @param transport
-     *            The transport identifier.
-     * @param handlerCode
-     *            handlerCode of either UserAccountHandler or UserGroupHandler.
-     * @param userOrGroupId
-     *            userOrGroupId for grantCreation.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param transport     The transport identifier.
+     * @param handlerCode   handlerCode of either UserAccountHandler or UserGroupHandler.
+     * @param userOrGroupId userOrGroupId for grantCreation.
+     * @throws Exception If anything fails.
      */
-    public AudienceAbstractTest(
-            final int transport, 
-            final int handlerCode,
-            final String userOrGroupId) throws Exception {
+    public AudienceAbstractTest(final int transport, final int handlerCode, final String userOrGroupId)
+        throws Exception {
         super(transport, handlerCode);
         grantCreationUserOrGroupId = userOrGroupId;
     }
 
     /**
      * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Before
     public void initialize() throws Exception {
@@ -116,9 +106,8 @@ public class AudienceAbstractTest extends GrantTestBase {
 
     /**
      * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @After
     public void deinitialize() throws Exception {
@@ -128,87 +117,45 @@ public class AudienceAbstractTest extends GrantTestBase {
 
     /**
      * insert data into system for the tests.
-     * 
-     * @test.name prepare
-     * @test.id PREPARE
-     * @test.input
-     * @test.inputDescription
-     * @test.expected
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     protected void prepare() throws Exception {
 
         //create container
-        String containerXml = 
-            prepareContainer(
-                PWCallback.DEFAULT_HANDLE, 
-                STATUS_RELEASED, null,
-                false, false);
-        Document containerDocument =
-            EscidocRestSoapTestBase.getDocument(containerXml);
+        String containerXml = prepareContainer(PWCallback.DEFAULT_HANDLE, STATUS_RELEASED, null, false, false);
+        Document containerDocument = EscidocRestSoapTestBase.getDocument(containerXml);
         containerId = getObjidValue(containerDocument);
         containerHref = Constants.CONTAINER_BASE_URI + "/" + containerId;
 
         //create item in status released
-        String itemXml = 
-            prepareItem(
-                PWCallback.DEFAULT_HANDLE, 
-                STATUS_RELEASED, 
-                null,
-                false, false);
-        Document document =
-            EscidocRestSoapTestBase.getDocument(itemXml);
-        
+        String itemXml = prepareItem(PWCallback.DEFAULT_HANDLE, STATUS_RELEASED, null, false, false);
+        Document document = EscidocRestSoapTestBase.getDocument(itemXml);
+
         //save ids
         contextId = extractContextId(document);
         contextHref = Constants.CONTEXT_BASE_URI + "/" + contextId;
         itemId = getObjidValue(document);
         itemHref = Constants.ITEM_BASE_URI + "/" + itemId;
         publicComponentId = extractComponentId(document, VISIBILITY_PUBLIC);
-        publicComponentHref = 
-                itemHref 
-                    + "/" + Constants.SUB_COMPONENT 
-                    + "/" + publicComponentId;
+        publicComponentHref = itemHref + "/" + Constants.SUB_COMPONENT + "/" + publicComponentId;
         privateComponentId = extractComponentId(document, VISIBILITY_PRIVATE);
-        privateComponentHref = 
-            itemHref 
-                + "/" + Constants.SUB_COMPONENT 
-                + "/" + privateComponentId;
+        privateComponentHref = itemHref + "/" + Constants.SUB_COMPONENT + "/" + privateComponentId;
         audienceComponentId = extractComponentId(document, VISIBILITY_AUDIENCE);
-        audienceComponentHref = 
-            itemHref 
-                + "/" + Constants.SUB_COMPONENT 
-                + "/" + audienceComponentId;
-        
+        audienceComponentHref = itemHref + "/" + Constants.SUB_COMPONENT + "/" + audienceComponentId;
+
         //add item to container
-        String lastModificationDate = 
-            getLastModificationDateValue(containerDocument);
-        String taskParam = 
-            "<param last-modification-date=\"" 
-            + lastModificationDate 
-            + "\"><id>" 
-            + itemId 
-            + "</id></param>";
+        String lastModificationDate = getLastModificationDateValue(containerDocument);
+        String taskParam =
+            "<param last-modification-date=\"" + lastModificationDate + "\"><id>" + itemId + "</id></param>";
         getContainerClient().addMembers(containerId, taskParam);
-        
-        
+
     }
-    
+
     /**
      * Test logging out a collaborator.
-     * 
-     * @test.name Collaborator - Logout
-     * @test.id AA-Collaborator-Logout
-     * @test.input Valid handle of the user.
-     * @test.expected Successful logout.
-     * @test.status Implemented
-     * @test.issue http://www.escidoc-project.de/issueManagement/show_bug.cgi?id=278
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testAaCollaboratorLogout() throws Exception {

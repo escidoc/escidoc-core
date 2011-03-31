@@ -23,49 +23,37 @@ package de.escidoc.core.common.business.fedora.resources.listener;
 import de.escidoc.core.common.exceptions.system.SystemException;
 
 /**
- * This interface allows you to get informed if a resource was created, modified
- * or deleted.
- * 
- * @author André Schenk
+ * This interface allows you to get informed if a resource was created, modified or deleted.
  *
+ * @author André Schenk
  */
 public interface ResourceListener {
+
     /**
      * A resource was created.
-     * 
-     * @param id resource id
+     *
+     * @param id      resource id
      * @param restXml complete resource as REST XML
      * @param soapXml complete resource as SOAP XML
-     * 
      * @throws SystemException The listener object threw an exception.
-     * 
-     *
      */
-    void resourceCreated(String id, String restXml, String soapXml)
-        throws SystemException;
+    void resourceCreated(String id, String restXml, String soapXml) throws SystemException;
 
     /**
      * A resource was deleted.
-     * 
-     * @param id resource id
-     * 
-     * @throws SystemException The listener object threw an exception.
-     * 
      *
+     * @param id resource id
+     * @throws SystemException The listener object threw an exception.
      */
     void resourceDeleted(String id) throws SystemException;
 
     /**
      * A resource was modified.
-     * 
-     * @param id resource id
+     *
+     * @param id      resource id
      * @param restXml complete resource as REST XML
      * @param soapXml complete resource as SOAP XML
-     * 
      * @throws SystemException The listener object threw an exception.
-     * 
-     *
      */
-    void resourceModified(String id, String restXml, String soapXml)
-        throws SystemException;
+    void resourceModified(String id, String restXml, String soapXml) throws SystemException;
 }

@@ -34,34 +34,29 @@ import org.junit.runners.Parameterized;
 
 /**
  * Test creating the example OrganizationalUnit objects.
- * 
+ *
  * @author Steffen Wagner
- * 
  */
 @RunWith(value = Parameterized.class)
 public class ExamplesTest extends OrganizationalUnitTestBase {
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ExamplesTest(final int transport) {
         super(transport);
     }
 
     /**
-     * Test if the example organizationalUnit for create is still compatible
-     * with framework.
-     * 
-     * @throws Exception
-     *             Thrown if creation of example OrganizationalUnit failed.
+     * Test if the example organizationalUnit for create is still compatible with framework.
+     *
+     * @throws Exception Thrown if creation of example OrganizationalUnit failed.
      */
     @Test
     public void testCreatingExample01() throws Exception {
 
         String templateName = "organizational-unit-minimal-for-create-01.xml";
-        String organizationalUnitXml =
-            getExampleTemplate(templateName);
+        String organizationalUnitXml = getExampleTemplate(templateName);
         String xml = create(organizationalUnitXml);
         assertXmlValidOrganizationalUnit(xml);
     }

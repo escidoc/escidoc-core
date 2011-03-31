@@ -25,11 +25,9 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.service.UserContext;
 
 /**
- * Version properties of versionable resource (Item/Container)(can represent
- * current and latest version).
- * 
+ * Version properties of versionable resource (Item/Container)(can represent current and latest version).
+ *
  * @author Steffen Wagner
- * 
  */
 public class VersionProperties {
 
@@ -53,9 +51,8 @@ public class VersionProperties {
 
     /**
      * Version properties of Item.
-     * 
-     * @throws WebserverSystemException
-     *             Thrown if obtaining user context failed.
+     *
+     * @throws WebserverSystemException Thrown if obtaining user context failed.
      */
     public VersionProperties() throws WebserverSystemException {
 
@@ -68,8 +65,7 @@ public class VersionProperties {
     }
 
     /**
-     * @param versionNo
-     *            the versionNumber to set
+     * @param versionNo the versionNumber to set
      */
     public void setNumber(final String versionNo) {
         this.versionNumber = versionNo;
@@ -84,9 +80,8 @@ public class VersionProperties {
 
     /**
      * Set Id of Creator.
-     * 
-     * @param createdById
-     *            the creator id
+     *
+     * @param createdById the creator id
      */
     public final void setCreatedById(final String createdById) {
         this.createdById = createdById;
@@ -94,7 +89,7 @@ public class VersionProperties {
 
     /**
      * Get Id of creator.
-     * 
+     *
      * @return the creator id
      */
     public String getCreatedById() {
@@ -103,9 +98,8 @@ public class VersionProperties {
 
     /**
      * Set id of modifier of this version.
-     * 
-     * @param modifiedById
-     *            the modifiedById to set
+     *
+     * @param modifiedById the modifiedById to set
      */
     public final void setModifiedById(final String modifiedById) {
         this.modifiedById = modifiedById;
@@ -113,7 +107,7 @@ public class VersionProperties {
 
     /**
      * Get id of modifier of this version.
-     * 
+     *
      * @return the modifiedById
      */
     public String getModifiedById() {
@@ -122,9 +116,8 @@ public class VersionProperties {
 
     /**
      * Get status of version.
-     * 
-     * @param status
-     *            the status to set
+     *
+     * @param status the status to set
      */
     public void setStatus(final StatusType status) {
         this.status = status;
@@ -138,8 +131,7 @@ public class VersionProperties {
     }
 
     /**
-     * @param comment
-     *            the statusComment to set
+     * @param comment the statusComment to set
      */
     public void setComment(final String comment) {
         this.comment = comment;
@@ -153,8 +145,7 @@ public class VersionProperties {
     }
 
     /**
-     * @param createdByName
-     *            the createdByName to set
+     * @param createdByName the createdByName to set
      */
     public final void setCreatedByName(final String createdByName) {
         this.createdByName = createdByName;
@@ -168,8 +159,7 @@ public class VersionProperties {
     }
 
     /**
-     * @param modifiedByName
-     *            the modifiedByName to set
+     * @param modifiedByName the modifiedByName to set
      */
     public final void setModifiedByName(final String modifiedByName) {
         this.modifiedByName = modifiedByName;
@@ -183,8 +173,7 @@ public class VersionProperties {
     }
 
     /**
-     * @param pid
-     *            the pid to set
+     * @param pid the pid to set
      */
     public void setPid(final String pid) {
         this.pid = pid;
@@ -198,8 +187,7 @@ public class VersionProperties {
     }
 
     /**
-     * @param date
-     *            the date to set
+     * @param date the date to set
      */
     public void setDate(final String date) {
         this.date = date;

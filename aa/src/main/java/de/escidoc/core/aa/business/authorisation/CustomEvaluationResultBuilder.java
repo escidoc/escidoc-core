@@ -40,51 +40,37 @@ import java.util.List;
 
 /**
  * Utility class to create XACML evaluation results.
- * 
+ *
  * @author Torsten Tetteroo
- * 
  */
 public final class CustomEvaluationResultBuilder {
-    
+
     /**
      * Private constructor to prevent instantiation.
-     * 
-     *
      */
     private CustomEvaluationResultBuilder() {
     }
 
     /**
-     * Creates an <code>EvaluationResult</code> object holding an error
-     * <code>Status</code>.<br>
-     * This can be used to tunnel an exception through the XACML engine.<br>
-     * If the provided exception is not an <code>EscidocException</code>, it
-     * is wrapped by a <code>WebserverSystemException .</code>
-     * 
-     * @param status
-     *            The status code, one of the codes defined in the class
-     *            <code>com.sun.xacml.ctx.Status</code>.
-     * @param e
-     *            The <code>Exception</code> that caused this error result.
-     * @return Returns the created <code>EvaluationResult</code> object.
+     * Creates an <code>EvaluationResult</code> object holding an error <code>Status</code>.<br> This can be used to
+     * tunnel an exception through the XACML engine.<br> If the provided exception is not an
+     * <code>EscidocException</code>, it is wrapped by a <code>WebserverSystemException .</code>
      *
+     * @param status The status code, one of the codes defined in the class <code>com.sun.xacml.ctx.Status</code>.
+     * @param e      The <code>Exception</code> that caused this error result.
+     * @return Returns the created <code>EvaluationResult</code> object.
      */
-    private static EvaluationResult createErrorResult(
-        final String status, final Exception e) {
+    private static EvaluationResult createErrorResult(final String status, final Exception e) {
 
-        return new EvaluationResult(CustomStatusBuilder.createErrorStatus(
-            status, e));
+        return new EvaluationResult(CustomStatusBuilder.createErrorStatus(status, e));
 
     }
 
     /**
-     * Creates an <code>EvaluationResult</code> object holding a
-     * <code>Status</code> indicating a syntax error.
-     * 
-     * @param e
-     *            The <code>Exception</code> that caused this error result.
-     * @return Returns the created <code>EvaluationResult</code> object.
+     * Creates an <code>EvaluationResult</code> object holding a <code>Status</code> indicating a syntax error.
      *
+     * @param e The <code>Exception</code> that caused this error result.
+     * @return Returns the created <code>EvaluationResult</code> object.
      */
     public static EvaluationResult createSyntaxErrorResult(final Exception e) {
 
@@ -92,11 +78,9 @@ public final class CustomEvaluationResultBuilder {
     }
 
     /**
-     * Creates an empty evaluation result for the attribute type
-     * http://www.w3.org/2001/XMLSchema#string.
-     * 
-     * @return Returns an empty evaluation result.
+     * Creates an empty evaluation result for the attribute type http://www.w3.org/2001/XMLSchema#string.
      *
+     * @return Returns an empty evaluation result.
      */
     public static EvaluationResult createEmptyEvaluationResult() {
 
@@ -105,41 +89,32 @@ public final class CustomEvaluationResultBuilder {
 
     /**
      * Creates an empty evaluation result for the provided attribute type.
-     * 
-     * @param attributeType
-     *            The URI specifying the attribute type.
-     * @return Returns an empty evaluation result.
      *
+     * @param attributeType The URI specifying the attribute type.
+     * @return Returns an empty evaluation result.
      */
-    public static EvaluationResult createEmptyEvaluationResult(
-        final URI attributeType) {
+    public static EvaluationResult createEmptyEvaluationResult(final URI attributeType) {
 
         return new EvaluationResult(BagAttribute.createEmptyBag(attributeType));
     }
 
     /**
-     * Creates an <code>EvaluationResult</code> object holding a
-     * <code>Status</code> indicating a missing attribute error.
-     * 
-     * @param e
-     *            The <code>Exception</code> that caused this error result.
-     * @return Returns the created <code>EvaluationResult</code> object.
+     * Creates an <code>EvaluationResult</code> object holding a <code>Status</code> indicating a missing attribute
+     * error.
      *
+     * @param e The <code>Exception</code> that caused this error result.
+     * @return Returns the created <code>EvaluationResult</code> object.
      */
-    public static EvaluationResult createMissingAttributeErrorResult(
-        final Exception e) {
+    public static EvaluationResult createMissingAttributeErrorResult(final Exception e) {
 
         return createErrorResult(Status.STATUS_MISSING_ATTRIBUTE, e);
     }
 
     /**
-     * Creates an <code>EvaluationResult</code> object holding a
-     * <code>Status</code> indicating a processing error.
-     * 
-     * @param e
-     *            The <code>Exception</code> that caused this error result.
-     * @return Returns the created <code>EvaluationResult</code> object.
+     * Creates an <code>EvaluationResult</code> object holding a <code>Status</code> indicating a processing error.
      *
+     * @param e The <code>Exception</code> that caused this error result.
+     * @return Returns the created <code>EvaluationResult</code> object.
      */
     public static EvaluationResult createProcessingErrorResult(final Exception e) {
 
@@ -148,34 +123,26 @@ public final class CustomEvaluationResultBuilder {
 
     /**
      * Creates a evaluation result holding a single value.
-     * 
-     * @param value
-     *            The single value of the evaluation result.
-     * @return Returns the created {@link EvaluationResult}
-     *         object.
+     *
+     * @param value The single value of the evaluation result.
+     * @return Returns the created {@link EvaluationResult} object.
      */
-    public static EvaluationResult createSingleStringValueResult(
-        final String value) {
+    public static EvaluationResult createSingleStringValueResult(final String value) {
 
-        final List<StringAttribute> stringAttributes =
-            new ArrayList<StringAttribute>();
+        final List<StringAttribute> stringAttributes = new ArrayList<StringAttribute>();
         stringAttributes.add(new StringAttribute(value));
-        return new EvaluationResult(new BagAttribute(
-            Constants.URI_XMLSCHEMA_STRING, stringAttributes));
+        return new EvaluationResult(new BagAttribute(Constants.URI_XMLSCHEMA_STRING, stringAttributes));
     }
 
     /**
      * Creates an error result for a <code>ResourceNotFoundException</code>.
-     * 
-     * @param e
-     *            The <code>ResourceNotFoundException</code>.
+     *
+     * @param e The <code>ResourceNotFoundException</code>.
      * @return Returns the created <code>EvaluationResult</code>.
      */
-    public static EvaluationResult createResourceNotFoundResult(
-        final ResourceNotFoundException e) {
+    public static EvaluationResult createResourceNotFoundResult(final ResourceNotFoundException e) {
 
-        return createErrorResult(CustomStatusBuilder
-            .getResourceNotFoundStatusCode(e), e);
+        return createErrorResult(CustomStatusBuilder.getResourceNotFoundStatusCode(e), e);
     }
 
 }

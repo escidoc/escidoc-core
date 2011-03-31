@@ -39,31 +39,26 @@ import org.z3950.zing.cql.CQLParser;
 import org.z3950.zing.cql.CQLTermNode;
 
 /**
- * This class parses a CQL filter to filter for report definitions and translates
- * it into a Hibernate query.
- * 
+ * This class parses a CQL filter to filter for report definitions and translates it into a Hibernate query.
+ *
  * @author André Schenk
  */
 public class ReportDefinitionFilter extends CqlFilter {
 
     /**
-     * Parse the given CQL query and create a corresponding Hibernate query to
-     * filter for eSciDoc report definitions from it.
+     * Parse the given CQL query and create a corresponding Hibernate query to filter for eSciDoc report definitions
+     * from it.
      *
      * @param query CQL query
-     * @throws InvalidSearchQueryException thrown if the given search query could
-     *                                     not be translated into a SQL query
+     * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
      */
-    public ReportDefinitionFilter(final String query)
-        throws InvalidSearchQueryException {
+    public ReportDefinitionFilter(final String query) throws InvalidSearchQueryException {
         //Adding or Removal of values has also to be done in Method evaluate
         //and in the Hibernate-Class-Method retrieveReportDefinitions
         // URI-style filters/////////////////////////////////////////////////////
         //Filter-Names
-        criteriaMap.put(Constants.DC_IDENTIFIER_URI,
-            new Object[] {COMPARE_EQ, "id"});
-        criteriaMap.put(TripleStoreUtility.PROP_NAME,
-            new Object[] {COMPARE_LIKE, "name"});
+        criteriaMap.put(Constants.DC_IDENTIFIER_URI, new Object[] { COMPARE_EQ, "id" });
+        criteriaMap.put(TripleStoreUtility.PROP_NAME, new Object[] { COMPARE_LIKE, "name" });
 
         //Sortby-Names
         propertyNamesMap.put(Constants.DC_IDENTIFIER_URI, "id");
@@ -72,10 +67,8 @@ public class ReportDefinitionFilter extends CqlFilter {
 
         // Path-style filters////////////////////////////////////////////////////
         //Filter-Names
-        criteriaMap.put(Constants.FILTER_PATH_ID,
-            new Object[] {COMPARE_EQ, "id"});
-        criteriaMap.put(Constants.FILTER_PATH_NAME,
-            new Object[] {COMPARE_LIKE, "name"});
+        criteriaMap.put(Constants.FILTER_PATH_ID, new Object[] { COMPARE_EQ, "id" });
+        criteriaMap.put(Constants.FILTER_PATH_NAME, new Object[] { COMPARE_LIKE, "name" });
 
         //Sortby-Names
         propertyNamesMap.put(Constants.FILTER_PATH_ID, "id");
@@ -86,8 +79,7 @@ public class ReportDefinitionFilter extends CqlFilter {
             try {
                 final CQLParser parser = new CQLParser();
 
-                this.detachedCriteria =
-                    DetachedCriteria.forClass(ReportDefinition.class, "r");
+                this.detachedCriteria = DetachedCriteria.forClass(ReportDefinition.class, "r");
 
                 final Criterion criterion = evaluate(parser.parse(query));
 
@@ -105,28 +97,23 @@ public class ReportDefinitionFilter extends CqlFilter {
      * Evaluate a CQL term node.
      *
      * @param node CQL node
-     *
      * @return Hibernate query reflecting the given CQL query
-     * @throws InvalidSearchQueryException thrown if the given search query could
-     *                                     not be translated into a SQL query
+     * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
      */
     @Override
-    protected Criterion evaluate(final CQLTermNode node)
-        throws InvalidSearchQueryException {
+    protected Criterion evaluate(final CQLTermNode node) throws InvalidSearchQueryException {
         Criterion result = null;
         final Object[] parts = criteriaMap.get(node.getIndex());
         final String value = node.getTerm();
 
         if (parts != null) {
-            result = evaluate(node.getRelation(), (String) parts[1], value,
-                (Integer) parts[0] == COMPARE_LIKE);
+            result = evaluate(node.getRelation(), (String) parts[1], value, (Integer) parts[0] == COMPARE_LIKE);
         }
         else {
             final String columnName = node.getIndex();
 
             if (columnName != null) {
-                throw new InvalidSearchQueryException(
-                    "unknown filter criteria: " + columnName);
+                throw new InvalidSearchQueryException("unknown filter criteria: " + columnName);
             }
         }
         return result;

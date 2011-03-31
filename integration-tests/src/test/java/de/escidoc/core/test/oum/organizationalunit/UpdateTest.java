@@ -46,37 +46,22 @@ import static org.junit.Assert.assertNull;
 
 /**
  * Test the mock implementation of the item resource.
- * 
+ *
  * @author Michael Schneider
- * 
- * Changes:
- * <ul>
- * <li>schema version 0.3:
- * <ul>
- * <li>removed testUpdateParentOusWithConfusingData as this is not possible,
- * anymore.</li>
- * <li>removed OUM_UOU-1-2 as now special soap test exists for checking with
- * setting all read-only values.</li>
- * <li>removed OUM_UOU-1-3 as now special rest test exists for checking with
- * setting all read-only values.</li>
- * <li>removed testUpdatePropertiesReadOnlyElement as this is now a positive
- * test with set read-only value</li>
- * <li>added OUM-UOU-2-1</li>
- * <li>renamed testUpdatePropertiesPid to OUM-UOU-2-2</li>
- * <li>renamed testUpdateWithNonExistingId to OUM-UOU-6-1</li>
- * <li>renamed testUpdateWithWrongLastModificationDate to OUM-UOU-7-1</li>
- * <li>added OUM-UOU-7-2</li>
- * <li>added OUM-UOU-6-2</li>
- * </ul>
- * </ul>
- * 
+ *         <p/>
+ *         Changes: <ul> <li>schema version 0.3: <ul> <li>removed testUpdateParentOusWithConfusingData as this is not
+ *         possible, anymore.</li> <li>removed OUM_UOU-1-2 as now special soap test exists for checking with setting all
+ *         read-only values.</li> <li>removed OUM_UOU-1-3 as now special rest test exists for checking with setting all
+ *         read-only values.</li> <li>removed testUpdatePropertiesReadOnlyElement as this is now a positive test with
+ *         set read-only value</li> <li>added OUM-UOU-2-1</li> <li>renamed testUpdatePropertiesPid to OUM-UOU-2-2</li>
+ *         <li>renamed testUpdateWithNonExistingId to OUM-UOU-6-1</li> <li>renamed testUpdateWithWrongLastModificationDate
+ *         to OUM-UOU-7-1</li> <li>added OUM-UOU-7-2</li> <li>added OUM-UOU-6-2</li> </ul> </ul>
  */
 @RunWith(value = Parameterized.class)
 public class UpdateTest extends OrganizationalUnitTestBase {
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public UpdateTest(final int transport) {
         super(transport);
@@ -84,40 +69,32 @@ public class UpdateTest extends OrganizationalUnitTestBase {
 
     /**
      * Test successfully deleting one of two md-records.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testDelOneOfTwoMdRecords() throws Exception {
 
-        final String createdXml =
-            createSuccessfully("escidoc_ou_create_2_md_records.xml");
+        final String createdXml = createSuccessfully("escidoc_ou_create_2_md_records.xml");
         final Document createdDocument = getDocument(createdXml);
         final String id = getObjidValue(createdDocument);
 
         Document forUpdate = getDocument(retrieve(id));
-        String xpathMdRecordToRemove =
-            XPATH_ORGANIZATIONAL_UNIT + XPATH_MD_RECORD + "[@name = 'abc']";
+        String xpathMdRecordToRemove = XPATH_ORGANIZATIONAL_UNIT + XPATH_MD_RECORD + "[@name = 'abc']";
         deleteElement(forUpdate, xpathMdRecordToRemove);
-        assertNull("Metadata record must be removed for this test.",
-            selectSingleNode(forUpdate, xpathMdRecordToRemove));
+        assertNull("Metadata record must be removed for this test.", selectSingleNode(forUpdate, xpathMdRecordToRemove));
 
         String beforeUpdateTimestamp = getNowAsTimestamp();
         String updatedXml = update(id, toString(forUpdate, false));
 
-        assertOrganizationalUnit(updatedXml, toString(forUpdate, false), startTimestamp,
-            beforeUpdateTimestamp);
+        assertOrganizationalUnit(updatedXml, toString(forUpdate, false), startTimestamp, beforeUpdateTimestamp);
     }
 
     /**
      * Test successfully update of an organizational unit created in the eSciDoc Infrastructure without changing the
      * representation. No change should occur.
-     * 
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumUpdateNoChanges1() throws Exception {
@@ -128,22 +105,17 @@ public class UpdateTest extends OrganizationalUnitTestBase {
         final String creationLmd = getLastModificationDateValue(createdDocument);
 
         final String updatedXml = update(id, createdXml);
-        final String lmdAfterUpdate =
-            getLastModificationDateValue(getDocument(updatedXml));
+        final String lmdAfterUpdate = getLastModificationDateValue(getDocument(updatedXml));
 
-        assertEquals(
-            "Update without modification should not change an Organizational Unit (from create).",
+        assertEquals("Update without modification should not change an Organizational Unit (from create).",
             creationLmd, lmdAfterUpdate);
     }
 
     /**
      * Test successfully update of an organizational unit retrieved from the eSciDoc Infrastructure without changing the
      * representation. No change should occur.
-     * 
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumUpdateNoChanges2() throws Exception {
@@ -157,27 +129,17 @@ public class UpdateTest extends OrganizationalUnitTestBase {
         final String retrievedLmd = getLastModificationDateValue(retrievedDocument);
 
         final String updatedXml = update(id, retrievedXml);
-        final String lmdAfterUpdate =
-            getLastModificationDateValue(getDocument(updatedXml));
+        final String lmdAfterUpdate = getLastModificationDateValue(getDocument(updatedXml));
 
-        assertEquals(
-            "Update without modification should not change an Organizational Unit (from retrieve).",
+        assertEquals("Update without modification should not change an Organizational Unit (from retrieve).",
             retrievedLmd, lmdAfterUpdate);
     }
 
     /**
-     * Test successfully update of an organizational unit. Element of the
-     * section "md-record" with name 'escidoc' will be updated.
-     * 
-     * @test.name Update Organizational Unit - md-record
-     * @test.id OUM_UOU-1-a
-     * @test.input Organizational Unit XML representation with updated md-record
-     *             section.
-     * @test.expected: Xml representation of updated organizational unit.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test successfully update of an organizational unit. Element of the section "md-record" with name 'escidoc' will
+     * be updated.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumUou1a() throws Exception {
@@ -187,31 +149,23 @@ public class UpdateTest extends OrganizationalUnitTestBase {
         final String id = getObjidValue(toBeUpdatedDocument);
 
         // dc:title
-        substitute(toBeUpdatedDocument, XPATH_ORGANIZATIONAL_UNIT_TITLE,
-            getUniqueName("New Title for update"));
+        substitute(toBeUpdatedDocument, XPATH_ORGANIZATIONAL_UNIT_TITLE, getUniqueName("New Title for update"));
         // dcterms:alternative
-        substitute(toBeUpdatedDocument, XPATH_ORGANIZATIONAL_UNIT_ALTERNATIVE,
-            "NTfU");
+        substitute(toBeUpdatedDocument, XPATH_ORGANIZATIONAL_UNIT_ALTERNATIVE, "NTfU");
         // dc:description
-        substitute(toBeUpdatedDocument, XPATH_ORGANIZATIONAL_UNIT_DESCRIPTION,
-            "NewDescription");
+        substitute(toBeUpdatedDocument, XPATH_ORGANIZATIONAL_UNIT_DESCRIPTION, "NewDescription");
         // dc:identifier
-        substitute(toBeUpdatedDocument, XPATH_ORGANIZATIONAL_UNIT_IDENTIFIER,
-            "NewIdentifier");
+        substitute(toBeUpdatedDocument, XPATH_ORGANIZATIONAL_UNIT_IDENTIFIER, "NewIdentifier");
         // type
-        substitute(toBeUpdatedDocument,
-            XPATH_ORGANIZATIONAL_UNIT_ORGANIZATION_TYPE, "NewType");
+        substitute(toBeUpdatedDocument, XPATH_ORGANIZATIONAL_UNIT_ORGANIZATION_TYPE, "NewType");
         // country
         substitute(toBeUpdatedDocument, XPATH_ORGANIZATIONAL_UNIT_COUNTRY, "NC");
         // city
-        substitute(toBeUpdatedDocument, XPATH_ORGANIZATIONAL_UNIT_CITY,
-            "New City");
+        substitute(toBeUpdatedDocument, XPATH_ORGANIZATIONAL_UNIT_CITY, "New City");
         // start-date
-        substitute(toBeUpdatedDocument, XPATH_ORGANIZATIONAL_UNIT_START_DATE,
-            startTimestamp);
+        substitute(toBeUpdatedDocument, XPATH_ORGANIZATIONAL_UNIT_START_DATE, startTimestamp);
         // end-date
-        substitute(toBeUpdatedDocument, XPATH_ORGANIZATIONAL_UNIT_END_DATE,
-            getNowAsTimestamp());
+        substitute(toBeUpdatedDocument, XPATH_ORGANIZATIONAL_UNIT_END_DATE, getNowAsTimestamp());
         final String toBeUpdatedXml = toString(toBeUpdatedDocument, false);
 
         String beforeUpdateTimestamp = getNowAsTimestamp();
@@ -222,31 +176,14 @@ public class UpdateTest extends OrganizationalUnitTestBase {
         catch (final Exception e) {
             failException("Updating OU failed with exception. ", e);
         }
-        assertOrganizationalUnit(updatedXml, toBeUpdatedXml, startTimestamp,
-            beforeUpdateTimestamp);
+        assertOrganizationalUnit(updatedXml, toBeUpdatedXml, startTimestamp, beforeUpdateTimestamp);
     }
 
     /**
-     * Test successfully update of an organizational unit. References to parents
-     * will be updated: exist references to parents will be deleted, a new
-     * reference to a parent in status created will be added.
-     * 
-     * @test.name Update Organizational Unit - Success
-     * @test.id OUM_UOU-1-b
-     * @test.input
-     *          <ul>
-     *          <li>Id of existing organizational unit</li>
-     *          <li>Valid Organizational Unit XML representation to update the
-     *          addressed organizational unit</li>
-     *          </ul>
-     * @test.expected: The expected result is the XML representation of the
-     *                 created OrganizationalUnit, corresponding to XML-schema
-     *                 "organizational-unit.xsd" including generated id, creator
-     *                 and creation date
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test successfully update of an organizational unit. References to parents will be updated: exist references to
+     * parents will be deleted, a new reference to a parent in status created will be added.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumUou1b() throws Exception {
@@ -254,8 +191,7 @@ public class UpdateTest extends OrganizationalUnitTestBase {
         createOuHierarchie();
 
         // create new parent for child 2
-        final String ouNewParentXml =
-            createSuccessfully("escidoc_ou_create.xml");
+        final String ouNewParentXml = createSuccessfully("escidoc_ou_create.xml");
         final Document ouNewParentDocument = getDocument(ouNewParentXml);
         final String ouNewParentId = getObjidValue(ouNewParentDocument);
         // final String ouNewParentTitle = getTitleValue(ouNewParentDocument);
@@ -266,14 +202,12 @@ public class UpdateTest extends OrganizationalUnitTestBase {
         // delete old parents and add new parent to child2
         // this is done by replacing the parent ous element
         deleteElement(toBeUpdatedDocument, XPATH_ORGANIZATIONAL_UNIT_PARENTS);
-        insertParentsElement(toBeUpdatedDocument,
-            XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS, new String[] { ouNewParentId,
-                null }, false);
+        insertParentsElement(toBeUpdatedDocument, XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS, new String[] { ouNewParentId,
+            null }, false);
 
         String beforeUpdateTimestamp = getNowAsTimestamp();
         String toBeUpdatedXml =
-            toString(toBeUpdatedDocument, false).replaceAll(
-                SREL_PREFIX_TEMPLATES, SREL_PREFIX_ESCIDOC);
+            toString(toBeUpdatedDocument, false).replaceAll(SREL_PREFIX_TEMPLATES, SREL_PREFIX_ESCIDOC);
 
         String updatedXml = null;
         try {
@@ -282,31 +216,14 @@ public class UpdateTest extends OrganizationalUnitTestBase {
         catch (final Exception e) {
             failException("Updating parent ous failed.", e);
         }
-        assertOrganizationalUnit(updatedXml, toBeUpdatedXml, startTimestamp,
-            beforeUpdateTimestamp);
+        assertOrganizationalUnit(updatedXml, toBeUpdatedXml, startTimestamp, beforeUpdateTimestamp);
     }
 
     /**
-     * Test successfully update of an organizational unit. References to parents
-     * will be updated: exist references to parents will be deleted, a new
-     * reference to a parent in status opened will be added.
-     * 
-     * @test.name Update Organizational Unit - Success
-     * @test.id OUM_UOU-1-c
-     * @test.input
-     *          <ul>
-     *          <li>Id of existing organizational unit</li>
-     *          <li>Valid Organizational Unit XML representation to update the
-     *          addressed organizational unit</li>
-     *          </ul>
-     * @test.expected: The expected result is the XML representation of the
-     *                 created OrganizationalUnit, corresponding to XML-schema
-     *                 "organizational-unit.xsd" including generated id, creator
-     *                 and creation date
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test successfully update of an organizational unit. References to parents will be updated: exist references to
+     * parents will be deleted, a new reference to a parent in status opened will be added.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumUou1c() throws Exception {
@@ -314,12 +231,11 @@ public class UpdateTest extends OrganizationalUnitTestBase {
         createOuHierarchie();
 
         // create new parent for child 2
-        final String ouNewParentXml =
-            createSuccessfully("escidoc_ou_create.xml");
+        final String ouNewParentXml = createSuccessfully("escidoc_ou_create.xml");
         final Document ouNewParentDocument = getDocument(ouNewParentXml);
         final String ouNewParentId = getObjidValue(ouNewParentDocument);
-        open(ouNewParentId, getTheLastModificationParam(true, ouNewParentId,
-            "Opened organizational unit '" + ouNewParentId + "'."));
+        open(ouNewParentId, getTheLastModificationParam(true, ouNewParentId, "Opened organizational unit '"
+            + ouNewParentId + "'."));
 
         String child2Xml = retrieve(ouChild2ParentsId);
         Document toBeUpdatedDocument = getDocument(child2Xml);
@@ -327,14 +243,12 @@ public class UpdateTest extends OrganizationalUnitTestBase {
         // delete old parents and add new parent to child2
         // this is done by replacing the parent ous element
         deleteElement(toBeUpdatedDocument, XPATH_ORGANIZATIONAL_UNIT_PARENTS);
-        insertParentsElement(toBeUpdatedDocument,
-            XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS, new String[] { ouNewParentId,
-                null }, false);
+        insertParentsElement(toBeUpdatedDocument, XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS, new String[] { ouNewParentId,
+            null }, false);
 
         String beforeUpdateTimestamp = getNowAsTimestamp();
         String toBeUpdatedXml =
-            toString(toBeUpdatedDocument, false).replaceAll(
-                SREL_PREFIX_TEMPLATES, SREL_PREFIX_ESCIDOC);
+            toString(toBeUpdatedDocument, false).replaceAll(SREL_PREFIX_TEMPLATES, SREL_PREFIX_ESCIDOC);
 
         String updatedXml = null;
         try {
@@ -343,31 +257,14 @@ public class UpdateTest extends OrganizationalUnitTestBase {
         catch (final Exception e) {
             failException("Updating parent ous failed.", e);
         }
-        assertOrganizationalUnit(updatedXml, toBeUpdatedXml, startTimestamp,
-            beforeUpdateTimestamp);
+        assertOrganizationalUnit(updatedXml, toBeUpdatedXml, startTimestamp, beforeUpdateTimestamp);
     }
 
     /**
-     * Test successfully update of an organizational unit. References to
-     * parent-ous will be updated twice with existing references to parent-ous.
-     * Issue 382
-     * 
-     * @test.name Update Organizational Unit - Success
-     * @test.id OUM_UOU-1-d
-     * @test.input
-     *          <ul>
-     *          <li>Id of existing organizational unit</li>
-     *          <li>Valid Organizational Unit XML representation to update the
-     *          addressed organizational unit</li>
-     *          </ul>
-     * @test.expected: The expected result is the XML representation of the
-     *                 created OrganizationalUnit, corresponding to XML-schema
-     *                 "organizational-unit.xsd" including generated id, creator
-     *                 and creation date
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test successfully update of an organizational unit. References to parent-ous will be updated twice with existing
+     * references to parent-ous. Issue 382
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumUou1d() throws Exception {
@@ -375,22 +272,19 @@ public class UpdateTest extends OrganizationalUnitTestBase {
         createOuHierarchie();
 
         // create new parent for child 2
-        final String ouNewParentXml =
-            createSuccessfully("escidoc_ou_create.xml");
+        final String ouNewParentXml = createSuccessfully("escidoc_ou_create.xml");
         final Document ouNewParentDocument = getDocument(ouNewParentXml);
         final String ouNewParentId = getObjidValue(ouNewParentDocument);
         String child2Xml = retrieve(ouChild2ParentsId);
         Document toBeUpdatedDocument = getDocument(child2Xml);
 
         deleteElement(toBeUpdatedDocument, XPATH_ORGANIZATIONAL_UNIT_PARENTS);
-        insertParentsElement(toBeUpdatedDocument,
-            XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS, new String[] { ouNewParentId,
-                ouTop2Id, null, null }, false);
+        insertParentsElement(toBeUpdatedDocument, XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS, new String[] { ouNewParentId,
+            ouTop2Id, null, null }, false);
 
         String beforeUpdateTimestamp = getNowAsTimestamp();
         String toBeUpdatedXml =
-            toString(toBeUpdatedDocument, false).replaceAll(
-                SREL_PREFIX_TEMPLATES, SREL_PREFIX_ESCIDOC);
+            toString(toBeUpdatedDocument, false).replaceAll(SREL_PREFIX_TEMPLATES, SREL_PREFIX_ESCIDOC);
         String updatedXml = null;
         try {
             updatedXml = update(ouChild2ParentsId, toBeUpdatedXml);
@@ -398,23 +292,18 @@ public class UpdateTest extends OrganizationalUnitTestBase {
         catch (final Exception e) {
             failException("Updating parent ous failed.", e);
         }
-        assertOrganizationalUnit(updatedXml, toBeUpdatedXml, startTimestamp,
-            beforeUpdateTimestamp);
+        assertOrganizationalUnit(updatedXml, toBeUpdatedXml, startTimestamp, beforeUpdateTimestamp);
 
         // 2nd update
-        final String ou3rdParentId =
-            getObjidValue(createSuccessfully("escidoc_ou_create.xml"));
+        final String ou3rdParentId = getObjidValue(createSuccessfully("escidoc_ou_create.xml"));
         toBeUpdatedDocument = getDocument(updatedXml);
 
         deleteElement(toBeUpdatedDocument, XPATH_ORGANIZATIONAL_UNIT_PARENTS);
-        insertParentsElement(toBeUpdatedDocument,
-            XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS, new String[] { ouNewParentId,
-                ouTop2Id, ou3rdParentId, null, null, null }, false);
+        insertParentsElement(toBeUpdatedDocument, XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS, new String[] { ouNewParentId,
+            ouTop2Id, ou3rdParentId, null, null, null }, false);
 
         beforeUpdateTimestamp = getNowAsTimestamp();
-        toBeUpdatedXml =
-            toString(toBeUpdatedDocument, false).replaceAll(
-                SREL_PREFIX_TEMPLATES, SREL_PREFIX_ESCIDOC);
+        toBeUpdatedXml = toString(toBeUpdatedDocument, false).replaceAll(SREL_PREFIX_TEMPLATES, SREL_PREFIX_ESCIDOC);
         updatedXml = null;
         try {
             updatedXml = update(ouChild2ParentsId, toBeUpdatedXml);
@@ -422,30 +311,13 @@ public class UpdateTest extends OrganizationalUnitTestBase {
         catch (final Exception e) {
             failException("Updating parent ous failed.", e);
         }
-        assertOrganizationalUnit(updatedXml, toBeUpdatedXml, startTimestamp,
-            beforeUpdateTimestamp);
+        assertOrganizationalUnit(updatedXml, toBeUpdatedXml, startTimestamp, beforeUpdateTimestamp);
     }
 
     /**
-     * Test successfully update of an organizational unit. The name of the
-     * organizational unit will be updated.
-     * 
-     * @test.name Update Organizational Unit - Success
-     * @test.id OUM_UOU-1-e
-     * @test.input
-     *          <ul>
-     *          <li>Id of existing organizational unit</li>
-     *          <li>Valid Organizational Unit XML representation to update the
-     *          addressed organizational unit</li>
-     *          </ul>
-     * @test.expected: The expected result is the XML representation of the
-     *                 created OrganizationalUnit, corresponding to XML-schema
-     *                 "organizational-unit.xsd" including generated id, creator
-     *                 and creation date
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test successfully update of an organizational unit. The name of the organizational unit will be updated.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumUou1e() throws Exception {
@@ -455,79 +327,54 @@ public class UpdateTest extends OrganizationalUnitTestBase {
         final Document toBeUpdatedDocument = getDocument(ouXml);
         final String ouId = getObjidValue(toBeUpdatedDocument);
         final String ouTitle =
-            selectSingleNodeAsserted(getDocument(ouXml),
-                XPATH_ORGANIZATIONAL_UNIT_TITLE).getTextContent();
+            selectSingleNodeAsserted(getDocument(ouXml), XPATH_ORGANIZATIONAL_UNIT_TITLE).getTextContent();
 
         final String ouTitleToUpdate = getUniqueName(ouTitle);
-        substitute(toBeUpdatedDocument, XPATH_ORGANIZATIONAL_UNIT_TITLE,
-            ouTitleToUpdate);
+        substitute(toBeUpdatedDocument, XPATH_ORGANIZATIONAL_UNIT_TITLE, ouTitleToUpdate);
 
         final String ouDescription =
-            selectSingleNodeAsserted(getDocument(ouXml),
-                XPATH_ORGANIZATIONAL_UNIT_DESCRIPTION).getTextContent();
+            selectSingleNodeAsserted(getDocument(ouXml), XPATH_ORGANIZATIONAL_UNIT_DESCRIPTION).getTextContent();
         final String ouDescriptionToUpdate = getUniqueName(ouDescription);
-        substitute(toBeUpdatedDocument, XPATH_ORGANIZATIONAL_UNIT_DESCRIPTION,
-            ouDescriptionToUpdate);
+        substitute(toBeUpdatedDocument, XPATH_ORGANIZATIONAL_UNIT_DESCRIPTION, ouDescriptionToUpdate);
 
         String ou = update(ouId, toString(toBeUpdatedDocument, false));
 
         // check if updated organizational-unit contains new title
         final String updatedTitle =
-            selectSingleNodeAsserted(getDocument(ou),
-                XPATH_ORGANIZATIONAL_UNIT_TITLE).getTextContent();
+            selectSingleNodeAsserted(getDocument(ou), XPATH_ORGANIZATIONAL_UNIT_TITLE).getTextContent();
         assertEquals(ouTitleToUpdate, updatedTitle);
         // check if updated organizational-unit contains new title
         final String updatedDescription =
-            selectSingleNodeAsserted(getDocument(ou),
-                XPATH_ORGANIZATIONAL_UNIT_DESCRIPTION).getTextContent();
+            selectSingleNodeAsserted(getDocument(ou), XPATH_ORGANIZATIONAL_UNIT_DESCRIPTION).getTextContent();
         assertEquals(ouDescriptionToUpdate, updatedDescription);
 
         // check if title was also changed in resource index
         TripleStoreTestBase tripleStore = new TripleStoreTestBase();
         String result =
-            tripleStore.requestMPT("<info:fedora/" + ouId + "> "
-                + "<http://purl.org/dc/elements/1.1/title>" + " *", "RDF/XML");
-        String riTitle =
-            selectSingleNodeAsserted(getDocument(result),
-                XPATH_TRIPLE_STORE_OU_TITLE).getTextContent();
+            tripleStore.requestMPT("<info:fedora/" + ouId + "> " + "<http://purl.org/dc/elements/1.1/title>" + " *",
+                "RDF/XML");
+        String riTitle = selectSingleNodeAsserted(getDocument(result), XPATH_TRIPLE_STORE_OU_TITLE).getTextContent();
         assertEquals(ouTitleToUpdate, riTitle);
 
         // check if description was also changed in resource index
         result =
-            tripleStore.requestMPT("<info:fedora/" + ouId + "> "
-                + "<http://purl.org/dc/elements/1.1/description>" + " *",
-                "RDF/XML");
+            tripleStore.requestMPT("<info:fedora/" + ouId + "> " + "<http://purl.org/dc/elements/1.1/description>"
+                + " *", "RDF/XML");
         String riDescription =
-            selectSingleNodeAsserted(getDocument(result),
-                XPATH_TRIPLE_STORE_OU_DESCRIPTION).getTextContent();
+            selectSingleNodeAsserted(getDocument(result), XPATH_TRIPLE_STORE_OU_DESCRIPTION).getTextContent();
         assertEquals(ouDescriptionToUpdate, riDescription);
     }
 
     /**
-     * Test declining update of an organizational unit with references to parent
-     * organizational units, which causes cycles in organizational units
-     * hierarchy.
-     * 
-     * @test.name Update Organizational Unit - Cycle In Hierarchy
-     * @test.id OUM_UOU-2-a
-     * @test.input
-     *          <ul>
-     *          <li>Id of existing organizational unit</li>
-     *          <li>Valid Organizational Unit XML representation to update the
-     *          addressed organizational unit, but updated parent-ous causes
-     *          cycle in organizational units hierarchy</li>
-     *          </ul>
-     * @test.expected: OrganizationalUnitHierarchyViolationException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test declining update of an organizational unit with references to parent organizational units, which causes
+     * cycles in organizational units hierarchy.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumUou2a() throws Exception {
 
-        Class<OrganizationalUnitHierarchyViolationException> ec =
-            OrganizationalUnitHierarchyViolationException.class;
+        Class<OrganizationalUnitHierarchyViolationException> ec = OrganizationalUnitHierarchyViolationException.class;
 
         // create parent
         final String parentXml = createSuccessfully("escidoc_ou_create.xml");
@@ -535,25 +382,18 @@ public class UpdateTest extends OrganizationalUnitTestBase {
         final String parentId = getObjidValue(parentDocument);
 
         // create child
-        final String childXml =
-            createSuccessfullyChild("escidoc_ou_create.xml",
-                new String[] { parentId });
+        final String childXml = createSuccessfullyChild("escidoc_ou_create.xml", new String[] { parentId });
         final String childId = getObjidValue(getDocument(childXml));
 
         // create cycle by updating the parent
-        insertParentsElement((Document) deleteElement(parentDocument,
-            XPATH_ORGANIZATIONAL_UNIT_PARENTS),
-            XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS,
-            new String[] { childId, null }, false);
+        insertParentsElement((Document) deleteElement(parentDocument, XPATH_ORGANIZATIONAL_UNIT_PARENTS),
+            XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS, new String[] { childId, null }, false);
 
-        String toBeUpdatedXml =
-            toString(parentDocument, false).replaceAll(SREL_PREFIX_TEMPLATES,
-                SREL_PREFIX_ESCIDOC);
+        String toBeUpdatedXml = toString(parentDocument, false).replaceAll(SREL_PREFIX_TEMPLATES, SREL_PREFIX_ESCIDOC);
         try {
             update(parentId, toBeUpdatedXml);
-            failMissingException(
-                "No exception occured on update with references to parents, which"
-                    + "causes cycles in organizational units hierarchy.", ec);
+            failMissingException("No exception occured on update with references to parents, which"
+                + "causes cycles in organizational units hierarchy.", ec);
         }
         catch (final Exception e) {
             assertExceptionType(ec.getName() + " expected.", ec, e);
@@ -562,18 +402,9 @@ public class UpdateTest extends OrganizationalUnitTestBase {
     }
 
     /**
-     * Test declining updating an organizational unit with providing a parent in
-     * state closed.
-     * 
-     * @test.name Update Organizational Unit - Parent in state closed
-     * @test.id OUM_UOU-2-b
-     * @test.inputOrganizational Unit XML representation with a parent in state
-     *                           closed.
-     * @test.expected: InvalidStatusException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test declining updating an organizational unit with providing a parent in state closed.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumUou2b() throws Exception {
@@ -581,14 +412,13 @@ public class UpdateTest extends OrganizationalUnitTestBase {
         createOuHierarchie();
 
         // create new parent for child 2
-        final String ouNewParentXml =
-            createSuccessfully("escidoc_ou_create.xml");
+        final String ouNewParentXml = createSuccessfully("escidoc_ou_create.xml");
         final Document ouNewParentDocument = getDocument(ouNewParentXml);
         final String ouNewParentId = getObjidValue(ouNewParentDocument);
-        open(ouNewParentId, getTheLastModificationParam(true, ouNewParentId,
-            "Opened organizational unit '" + ouNewParentId + "'."));
-        close(ouNewParentId, getTheLastModificationParam(true, ouNewParentId,
-            "Closed organizational unit '" + ouNewParentId + "'."));
+        open(ouNewParentId, getTheLastModificationParam(true, ouNewParentId, "Opened organizational unit '"
+            + ouNewParentId + "'."));
+        close(ouNewParentId, getTheLastModificationParam(true, ouNewParentId, "Closed organizational unit '"
+            + ouNewParentId + "'."));
 
         String child2Xml = retrieve(ouChild2ParentsId);
         Document toBeUpdatedDocument = getDocument(child2Xml);
@@ -596,13 +426,11 @@ public class UpdateTest extends OrganizationalUnitTestBase {
         // delete old parents and add new parent to child2
         // this is done by replacing the parent ous element
         deleteElement(toBeUpdatedDocument, XPATH_ORGANIZATIONAL_UNIT_PARENTS);
-        insertParentsElement(toBeUpdatedDocument,
-            XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS, new String[] { ouNewParentId,
-                null }, false);
+        insertParentsElement(toBeUpdatedDocument, XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS, new String[] { ouNewParentId,
+            null }, false);
 
         String toBeUpdatedXml =
-            toString(toBeUpdatedDocument, false).replaceAll(
-                SREL_PREFIX_TEMPLATES, SREL_PREFIX_ESCIDOC);
+            toString(toBeUpdatedDocument, false).replaceAll(SREL_PREFIX_TEMPLATES, SREL_PREFIX_ESCIDOC);
 
         final Class<InvalidStatusException> ec = InvalidStatusException.class;
         try {
@@ -614,21 +442,21 @@ public class UpdateTest extends OrganizationalUnitTestBase {
         }
     }
 
-//    /**
-//     * Test declining updating an organizational unit in state opened and
-//     * providing a parent in state created.
-//     * 
-//     * @test.name Update Organizational Unit - Parent in state closed
-//     * @test.id OUM_UOU-2-b
-//     * @test.inputOrganizational Unit XML representation with a parent in state
-//     *                           closed.
-//     * @test.expected: InvalidStatusException
-//     * @test.status Revoked - because it is impossible to create an ou in state
-//     *              opened with parents in status closed.
-//     * 
-//     * @throws Exception
-//     *             If anything fails.
-//     */
+    //    /**
+    //     * Test declining updating an organizational unit in state opened and
+    //     * providing a parent in state created.
+    //     *
+    //     * @test.name Update Organizational Unit - Parent in state closed
+    //     * @test.id OUM_UOU-2-b
+    //     * @test.inputOrganizational Unit XML representation with a parent in state
+    //     *                           closed.
+    //     * @test.expected: InvalidStatusException
+    //     * @test.status Revoked - because it is impossible to create an ou in state
+    //     *              opened with parents in status closed.
+    //     *
+    //     * @throws Exception
+    //     *             If anything fails.
+    //     */
     // public void testOumUou2c() throws Exception {
     //
     // createOuHierarchie();
@@ -665,21 +493,21 @@ public class UpdateTest extends OrganizationalUnitTestBase {
     // assertExceptionType(ec, e);
     // }
     // }
-//    /**
-//     * Test declining updating an organizational unit in state closed and
-//     * providing a parent in state created.
-//     * 
-//     * @test.name Update Organizational Unit - Parent in state closed
-//     * @test.id OUM_UOU-2-d
-//     * @test.inputOrganizational Unit XML representation with a parent in state
-//     *                           closed.
-//     * @test.expected: InvalidStatusException
-//     * @test.status Revoked - because it is impossible to create an ou in state
-//     *              closed with parents in status created.
-//     * 
-//     * @throws Exception
-//     *             If anything fails.
-//     */
+    //    /**
+    //     * Test declining updating an organizational unit in state closed and
+    //     * providing a parent in state created.
+    //     *
+    //     * @test.name Update Organizational Unit - Parent in state closed
+    //     * @test.id OUM_UOU-2-d
+    //     * @test.inputOrganizational Unit XML representation with a parent in state
+    //     *                           closed.
+    //     * @test.expected: InvalidStatusException
+    //     * @test.status Revoked - because it is impossible to create an ou in state
+    //     *              closed with parents in status created.
+    //     *
+    //     * @throws Exception
+    //     *             If anything fails.
+    //     */
     // public void testOumUou2d() throws Exception {
     //
     // createOuHierarchie();
@@ -723,33 +551,19 @@ public class UpdateTest extends OrganizationalUnitTestBase {
 
     /**
      * Test declining update of an organizational unit with non existing id.
-     * 
-     * @test.name Update Organizational Unit - Unknown id
-     * @test.id OUM-UOU-2-e
-     * @test.input
-     *          <ul>
-     *          <li>Non existing id</li>
-     *          <li> Organizational Unit XML representation</li>
-     *          </ul>
-     * @test.expected: OrganizationalUnitNotFoundException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumUou2e() throws Exception {
 
-        final Class<OrganizationalUnitNotFoundException> ec =
-            OrganizationalUnitNotFoundException.class;
+        final Class<OrganizationalUnitNotFoundException> ec = OrganizationalUnitNotFoundException.class;
 
-        final String toBeUpdatedXml =
-            createSuccessfully("escidoc_ou_create.xml");
+        final String toBeUpdatedXml = createSuccessfully("escidoc_ou_create.xml");
 
         try {
             update(UNKNOWN_ID, toBeUpdatedXml);
-            failMissingException(
-                "No exception occured on update with non existing id.", ec);
+            failMissingException("No exception occured on update with non existing id.", ec);
         }
         catch (final Exception e) {
             assertExceptionType(ec, e);
@@ -757,36 +571,20 @@ public class UpdateTest extends OrganizationalUnitTestBase {
     }
 
     /**
-     * Test declining update of an organizational unit with id of a resource of
-     * another type.
-     * 
-     * @test.name Update Organizational Unit - Id of another resource type
-     * @test.id OUM-UOU-2-f
-     * @test.input
-     *          <ul>
-     *          <li>Existing id of a resource of another resource type</li>
-     *          <li>Organizational Unit XML representation</li>
-     *          </ul>
-     * @test.expected: OrganizationalUnitNotFoundException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test declining update of an organizational unit with id of a resource of another type.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumUou2f() throws Exception {
 
-        final Class<OrganizationalUnitNotFoundException> ec =
-            OrganizationalUnitNotFoundException.class;
+        final Class<OrganizationalUnitNotFoundException> ec = OrganizationalUnitNotFoundException.class;
 
-        final String toBeUpdatedXml =
-            createSuccessfully("escidoc_ou_create.xml");
+        final String toBeUpdatedXml = createSuccessfully("escidoc_ou_create.xml");
 
         try {
             update(CONTEXT_ID, toBeUpdatedXml);
-            failMissingException(
-                "No exception occured on update with id of resoure of"
-                    + " another type.", ec);
+            failMissingException("No exception occured on update with id of resoure of" + " another type.", ec);
         }
         catch (final Exception e) {
             assertExceptionType(ec, e);
@@ -795,33 +593,19 @@ public class UpdateTest extends OrganizationalUnitTestBase {
 
     /**
      * Test declining update of an organizational unit with with missing id.
-     * 
-     * @test.name Update Organizational Unit - Missing id
-     * @test.id OUM-UOU-2-g
-     * @test.input
-     *          <ul>
-     *          <li>Empty id</li>
-     *          <li>Organizational Unit XML representation</li>
-     *          </ul>
-     * @test.expected: MissingMethodParameterException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumUou2g() throws Exception {
 
-        final Class<MissingMethodParameterException> ec =
-            MissingMethodParameterException.class;
+        final Class<MissingMethodParameterException> ec = MissingMethodParameterException.class;
 
-        final String toBeUpdatedXml =
-            createSuccessfully("escidoc_ou_create.xml");
+        final String toBeUpdatedXml = createSuccessfully("escidoc_ou_create.xml");
 
         try {
             update(null, toBeUpdatedXml);
-            failMissingException(
-                "No exception occured on update with missing id.", ec);
+            failMissingException("No exception occured on update with missing id.", ec);
         }
         catch (final Exception e) {
             assertExceptionType(ec, e);
@@ -829,36 +613,21 @@ public class UpdateTest extends OrganizationalUnitTestBase {
     }
 
     /**
-     * Test declining update of an organizational unit with with missing
-     * organizational unit xml.
-     * 
-     * @test.name Update Organizational Unit - Missing organizational unit xml
-     * @test.id OUM-UOU-2-h
-     * @test.input
-     *          <ul>
-     *          <li>Empty id</li>
-     *          <li>Organizational Unit XML representation</li>
-     *          </ul>
-     * @test.expected: MissingMethodParameterException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test declining update of an organizational unit with with missing organizational unit xml.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumUou2h() throws Exception {
 
-        final Class<MissingMethodParameterException> ec =
-            MissingMethodParameterException.class;
+        final Class<MissingMethodParameterException> ec = MissingMethodParameterException.class;
 
-        final String toBeUpdatedXml =
-            createSuccessfully("escidoc_ou_create.xml");
+        final String toBeUpdatedXml = createSuccessfully("escidoc_ou_create.xml");
         final String id = getObjidValue(toBeUpdatedXml);
 
         try {
             update(id, null);
-            failMissingException(
-                "No exception occured on update with missing ou xml.", ec);
+            failMissingException("No exception occured on update with missing ou xml.", ec);
         }
         catch (final Exception e) {
             assertExceptionType(ec, e);
@@ -866,42 +635,24 @@ public class UpdateTest extends OrganizationalUnitTestBase {
     }
 
     /**
-     * Test declining update of an organizational unit with wrong last
-     * modification date (too old).
-     * 
-     * @test.name Update Organizational Unit - Optimistic locking error - Too
-     *            Old
-     * @test.id OUM-UOU-7-a
-     * @test.input
-     *          <ul>
-     *          <li>Valid id of organizational unit</li>
-     *          <li>Organizational Unit XML representation with set last
-     *          modification date that is older than the last modification date
-     *          of the organizational unit</li>
-     *          </ul>
-     * @test.expected: OptimisticLockingException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test declining update of an organizational unit with wrong last modification date (too old).
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumUou7a() throws Exception {
 
         Class<OptimisticLockingException> ec = OptimisticLockingException.class;
 
-        final String toBeUpdatedXml =
-            createSuccessfully("escidoc_ou_create.xml");
+        final String toBeUpdatedXml = createSuccessfully("escidoc_ou_create.xml");
         final Document toBeUpdatedDocument =
-            (Document) substitute(getDocument(toBeUpdatedXml),
-                XPATH_ORGANIZATIONAL_UNIT_LAST_MODIFICATION_DATE,
+            (Document) substitute(getDocument(toBeUpdatedXml), XPATH_ORGANIZATIONAL_UNIT_LAST_MODIFICATION_DATE,
                 "2005-01-30T11:36:42.015Z");
         final String id = getObjidValue(toBeUpdatedDocument);
 
         try {
             update(id, toString(toBeUpdatedDocument, false));
-            failMissingException(
-                "No exception occured on update with wrong time stamp.", ec);
+            failMissingException("No exception occured on update with wrong time stamp.", ec);
         }
         catch (final Exception e) {
             assertExceptionType(ec, e);
@@ -909,42 +660,24 @@ public class UpdateTest extends OrganizationalUnitTestBase {
     }
 
     /**
-     * Test declining update of an organizational unit with wrong last
-     * modification date (more recent).
-     * 
-     * @test.name Update Organizational Unit - Optimistic locking error - More
-     *            recent
-     * @test.id OUM-UOU-7-b
-     * @test.input
-     *          <ul>
-     *          <li>Valid id of organizational unit</li>
-     *          <li>Organizational Unit XML representation with set last
-     *          modification date that is more recent than the last modification
-     *          date of the organizational unit</li>
-     *          </ul>
-     * @test.expected: OptimisticLockingException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test declining update of an organizational unit with wrong last modification date (more recent).
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumUou7b() throws Exception {
 
         Class<OptimisticLockingException> ec = OptimisticLockingException.class;
 
-        final String toBeUpdatedXml =
-            createSuccessfully("escidoc_ou_create.xml");
+        final String toBeUpdatedXml = createSuccessfully("escidoc_ou_create.xml");
         final Document toBeUpdatedDocument =
-            (Document) substitute(getDocument(toBeUpdatedXml),
-                XPATH_ORGANIZATIONAL_UNIT_LAST_MODIFICATION_DATE,
+            (Document) substitute(getDocument(toBeUpdatedXml), XPATH_ORGANIZATIONAL_UNIT_LAST_MODIFICATION_DATE,
                 getNowAsTimestamp());
         final String id = getObjidValue(toBeUpdatedDocument);
 
         try {
             update(id, toString(toBeUpdatedDocument, false));
-            failMissingException(
-                "No exception occured on update with wrong time stamp.", ec);
+            failMissingException("No exception occured on update with wrong time stamp.", ec);
         }
         catch (final Exception e) {
             assertExceptionType(ec, e);
@@ -953,15 +686,8 @@ public class UpdateTest extends OrganizationalUnitTestBase {
 
     /**
      * Test declining update of an organizational unit with corrupt xml.
-     * 
-     * @test.name Update Organizational Unit - Corrupt Xml
-     * @test.id OUM_UOU-8-a
-     * @test.input Corrupted Xml.
-     * @test.expected: XmlCorruptedException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumUou8a() throws Exception {
@@ -971,12 +697,10 @@ public class UpdateTest extends OrganizationalUnitTestBase {
         final String createdXml = createSuccessfully("escidoc_ou_create.xml");
         final Document toBeUpdatedDocument = getDocument(createdXml);
         final String id = getObjidValue(toBeUpdatedDocument);
-        deleteElement(toBeUpdatedDocument,
-            XPATH_ORGANIZATIONAL_UNIT_CREATION_DATE);
+        deleteElement(toBeUpdatedDocument, XPATH_ORGANIZATIONAL_UNIT_CREATION_DATE);
         try {
             update(id, "<org");
-            failMissingException(
-                "No exception occured on update with corrupted xml.", ec);
+            failMissingException("No exception occured on update with corrupted xml.", ec);
         }
         catch (final Exception e) {
             assertExceptionType(ec, e);
@@ -984,24 +708,14 @@ public class UpdateTest extends OrganizationalUnitTestBase {
     }
 
     /**
-     * Test declining updating a top level organizational unit with setting an
-     * empty name.
-     * 
-     * @test.name Update Organizational Unit - Empty Name
-     * @test.id OUM_UOU-5-b
-     * @test.input Organizational Unit XML representation of a top level
-     *             Organizational unit containing an empty name element.
-     * @test.expected: OrganizationalUnitNameNotUniqueException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test declining updating a top level organizational unit with setting an empty name.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumUou5b() throws Exception {
 
-        final Class<MissingElementValueException> ec =
-            MissingElementValueException.class;
+        final Class<MissingElementValueException> ec = MissingElementValueException.class;
 
         // create first top level ou
         final String ou1Xml = createSuccessfully("escidoc_ou_create.xml");
@@ -1021,24 +735,10 @@ public class UpdateTest extends OrganizationalUnitTestBase {
     }
 
     /**
-     * Test sucessfully updating an organizational unit with a name of an
-     * existing organizational unit in another scope of the parents.
-     * 
-     * @test.name Update Organizational Unit - Update Name with Duplicate Name
-     *            in different Scopes of Parents
-     * @test.id OUM_UOU-5-d
-     * @test.input Organizational Unit XML representation containing a name of
-     *             an organizational unit that just exists, but that is not in
-     *             the scope of the parents of the organizational unit to be
-     *             created.
-     * @test.expected: The expected result is the XML representation of the
-     *                 created OrganizationalUnit, corresponding to XML-schema
-     *                 "organizational-unit.xsd" including generated id, creator
-     *                 and creation date
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test sucessfully updating an organizational unit with a name of an existing organizational unit in another scope
+     * of the parents.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumUou5d() throws Exception {
@@ -1049,23 +749,17 @@ public class UpdateTest extends OrganizationalUnitTestBase {
         final String parent2Id = parentIds[1];
 
         // create child of first parent ou
-        final String child1Xml =
-            createSuccessfullyChild("escidoc_ou_create.xml",
-                new String[] { parent1Id });
+        final String child1Xml = createSuccessfullyChild("escidoc_ou_create.xml", new String[] { parent1Id });
         final String child1Name =
-            selectSingleNodeAsserted(getDocument(child1Xml),
-                XPATH_ORGANIZATIONAL_UNIT_TITLE).getTextContent();
+            selectSingleNodeAsserted(getDocument(child1Xml), XPATH_ORGANIZATIONAL_UNIT_TITLE).getTextContent();
 
         // create child of second parent ou
-        final String child2Xml =
-            createSuccessfullyChild("escidoc_ou_create.xml",
-                new String[] { parent2Id });
+        final String child2Xml = createSuccessfullyChild("escidoc_ou_create.xml", new String[] { parent2Id });
 
         // update name of second child ou to name of first child ou
         final Document toBeUpdatedDocument = getDocument(child2Xml);
         final String child2Id = getObjidValue(toBeUpdatedDocument);
-        substitute(toBeUpdatedDocument, XPATH_ORGANIZATIONAL_UNIT_TITLE,
-            child1Name);
+        substitute(toBeUpdatedDocument, XPATH_ORGANIZATIONAL_UNIT_TITLE, child1Name);
 
         final String toBeUpdatedXml = toString(toBeUpdatedDocument, false);
         final String beforeUpdateTimestamp = getNowAsTimestamp();
@@ -1074,63 +768,36 @@ public class UpdateTest extends OrganizationalUnitTestBase {
             updatedXml = update(child2Id, toBeUpdatedXml);
         }
         catch (final Exception e) {
-            failException(
-                "Updating OU with name of ou in another scope failed.", e);
+            failException("Updating OU with name of ou in another scope failed.", e);
         }
-        assertOrganizationalUnit(updatedXml, toBeUpdatedXml, startTimestamp,
-            beforeUpdateTimestamp);
+        assertOrganizationalUnit(updatedXml, toBeUpdatedXml, startTimestamp, beforeUpdateTimestamp);
     }
 
     /**
-     * Test sucessfully updating an organizational unit with moving to another
-     * scope (top-level) and setting the name of an existing organizational unit
-     * in the previous scope of the parents.
-     * 
-     * @test.name Update Organizational Unit - Update Name with Duplicate Name
-     *            in Previous Scopes of Parents
-     * @test.id OUM_UOU-5-f
-     * @test.input Valid XML representation of an organizational unit for
-     *             updating with:
-     *             <ul>
-     *             <li>removing parent ou</li>
-     *             <li>changing name to the name of an Organizational unit that
-     *             exists in the previous scope of parents.</li>
-     *             </ul>
-     * @test.expected: The expected result is the XML representation of the
-     *                 created OrganizationalUnit, corresponding to XML-schema
-     *                 "organizational-unit.xsd" including generated id, creator
-     *                 and creation date
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test sucessfully updating an organizational unit with moving to another scope (top-level) and setting the name of
+     * an existing organizational unit in the previous scope of the parents.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumUou5f() throws Exception {
 
         // create parent
-        final String topLevelId =
-            createSuccessfully("escidoc_ou_create.xml", 1)[0];
+        final String topLevelId = createSuccessfully("escidoc_ou_create.xml", 1)[0];
 
         // create first child
-        final String child1Xml =
-            createSuccessfullyChild("escidoc_ou_create.xml",
-                new String[] { topLevelId });
+        final String child1Xml = createSuccessfullyChild("escidoc_ou_create.xml", new String[] { topLevelId });
         final String child1Name =
-            selectSingleNodeAsserted(getDocument(child1Xml),
-                XPATH_ORGANIZATIONAL_UNIT_TITLE).getTextContent();
+            selectSingleNodeAsserted(getDocument(child1Xml), XPATH_ORGANIZATIONAL_UNIT_TITLE).getTextContent();
 
         // create second child
-        final String child2Xml =
-            createSuccessfullyChild("escidoc_ou_create.xml",
-                new String[] { topLevelId });
+        final String child2Xml = createSuccessfullyChild("escidoc_ou_create.xml", new String[] { topLevelId });
 
         // remove parent of second child (making it a top-level ou) and set the
         // name of the first child.
         final Document toBeUpdatedDocument = getDocument(child2Xml);
         final String child2Id = getObjidValue(toBeUpdatedDocument);
-        substitute(toBeUpdatedDocument, XPATH_ORGANIZATIONAL_UNIT_TITLE,
-            child1Name);
+        substitute(toBeUpdatedDocument, XPATH_ORGANIZATIONAL_UNIT_TITLE, child1Name);
         deleteNodes(toBeUpdatedDocument, XPATH_ORGANIZATIONAL_UNIT_PARENTS);
 
         final String toBeUpdatedXml = toString(toBeUpdatedDocument, false);
@@ -1140,12 +807,9 @@ public class UpdateTest extends OrganizationalUnitTestBase {
             updatedXml = update(child2Id, toBeUpdatedXml);
         }
         catch (final Exception e) {
-            failException(
-                "Updating OU with removed parents and set name of ou in"
-                    + " previous scope failed.", e);
+            failException("Updating OU with removed parents and set name of ou in" + " previous scope failed.", e);
         }
-        assertOrganizationalUnit(updatedXml, toBeUpdatedXml, startTimestamp,
-            beforeUpdateTimestamp);
+        assertOrganizationalUnit(updatedXml, toBeUpdatedXml, startTimestamp, beforeUpdateTimestamp);
     }
 
 }

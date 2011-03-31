@@ -22,9 +22,8 @@ package de.escidoc.core.common.business.fedora.resources.create;
 
 /**
  * Relation.
- * 
+ *
  * @author Steffen Wagner
- * 
  */
 public class RelationCreate {
 
@@ -43,16 +42,12 @@ public class RelationCreate {
 
     /**
      * RelationCreate.
-     * 
-     * @param predicateNamespace
-     *            Namespace of the relation.
-     * @param predicate
-     *            Predicate of Relation.
-     * @param target
-     *            Target (objid) for the relation.
+     *
+     * @param predicateNamespace Namespace of the relation.
+     * @param predicate          Predicate of Relation.
+     * @param target             Target (objid) for the relation.
      */
-    public RelationCreate(final String predicateNamespace,
-        final String predicate, final String target) {
+    public RelationCreate(final String predicateNamespace, final String predicate, final String target) {
 
         this.predicateNs = predicateNamespace;
         this.predicate = predicate;
@@ -60,8 +55,7 @@ public class RelationCreate {
     }
 
     /**
-     * @param predicateValue
-     *            the predicateValue to set
+     * @param predicateValue the predicateValue to set
      */
     public void setPredicate(final String predicateValue) {
         this.predicate = predicateValue;
@@ -75,8 +69,7 @@ public class RelationCreate {
     }
 
     /**
-     * @param target
-     *            the target to set
+     * @param target the target to set
      */
     public void setTarget(final String target) {
         this.target = target;
@@ -90,8 +83,7 @@ public class RelationCreate {
     }
 
     /**
-     * @param predicateNs
-     *            the predicateNs to set
+     * @param predicateNs the predicateNs to set
      */
     public void setPredicateNs(final String predicateNs) {
         this.predicateNs = predicateNs;

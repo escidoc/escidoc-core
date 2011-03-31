@@ -27,31 +27,25 @@ import java.util.Map;
 
 /**
  * Resource Interface.
- * 
+ *
  * @author Steffen Wagner
  */
 public interface Resource extends FedoraResource {
 
     /**
-     * Get a map of the Resource properties. The keys are defined in
-     * PropertyMapKeys.
-     * 
+     * Get a map of the Resource properties. The keys are defined in PropertyMapKeys.
+     *
      * @return properties map
-     * @throws TripleStoreSystemException
-     *             Thrown if requesting TripleStore failed.
-     * @throws WebserverSystemException
-     *             Thrown if requesting Fedora failed or in case of internal
-     *             (parser) error.
+     * @throws TripleStoreSystemException Thrown if requesting TripleStore failed.
+     * @throws WebserverSystemException   Thrown if requesting Fedora failed or in case of internal (parser) error.
      */
-    Map<String, String> getResourceProperties()
-        throws TripleStoreSystemException, WebserverSystemException;
+    Map<String, String> getResourceProperties() throws TripleStoreSystemException, WebserverSystemException;
 
     /**
-     * Indicate that the public-status of the resource has changed. E.g from
-     * pending to submitted or to released.
-     * 
-     * @return True if public-status has changed during the current update.
-     *         False if public-status is same as before update.
+     * Indicate that the public-status of the resource has changed. E.g from pending to submitted or to released.
+     *
+     * @return True if public-status has changed during the current update. False if public-status is same as before
+     *         update.
      */
     boolean hasPublicStatusChanged();
 
@@ -61,23 +55,16 @@ public interface Resource extends FedoraResource {
     void setPublicStatusChange();
 
     /**
-     * Set resource properties. Usually are all changes done class internal.
-     * This method provides the announcements of class external changes at the
-     * resource to the resource class. Resource changes outside of resource
-     * class is going to removed from the code, therefore is this method marked
-     * as deprecated.
-     * 
-     * @param key
-     *            The name of the properties key
-     * @param value
-     *            The value of the property
-     * @throws TripleStoreSystemException
-     *             Thrown if requesting TripleStore failed.
-     * @throws WebserverSystemException
-     *             Thrown if requesting Fedora failed or in case of internal
-     *             (parser) error.
+     * Set resource properties. Usually are all changes done class internal. This method provides the announcements of
+     * class external changes at the resource to the resource class. Resource changes outside of resource class is going
+     * to removed from the code, therefore is this method marked as deprecated.
+     *
+     * @param key   The name of the properties key
+     * @param value The value of the property
+     * @throws TripleStoreSystemException Thrown if requesting TripleStore failed.
+     * @throws WebserverSystemException   Thrown if requesting Fedora failed or in case of internal (parser) error.
      */
     @Deprecated
-    void setResourceProperties(final String key, final String value)
-        throws TripleStoreSystemException, WebserverSystemException;
+    void setResourceProperties(final String key, final String value) throws TripleStoreSystemException,
+        WebserverSystemException;
 }

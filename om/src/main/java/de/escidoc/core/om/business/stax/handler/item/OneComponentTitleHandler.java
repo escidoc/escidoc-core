@@ -44,24 +44,22 @@ public class OneComponentTitleHandler extends DefaultHandler {
     }
 
     @Override
-    public StartElement startElement(final StartElement element)
-        throws ReadonlyAttributeViolationException, InvalidContentException {
+    public StartElement startElement(final StartElement element) throws ReadonlyAttributeViolationException,
+        InvalidContentException {
 
         final String componentPath = "/component";
         final String theName = element.getLocalName();
         final String currenrPath = parser.getCurPath();
         if (componentPath.equals(currenrPath)) {
             final int indexOfobjId = element.indexOfAttribute(null, "objid");
-            if (indexOfobjId != -1
-                && element.getAttribute(indexOfobjId).getValue().length() > 0) {
+            if (indexOfobjId != -1 && element.getAttribute(indexOfobjId).getValue().length() > 0) {
                 throw new ReadonlyAttributeViolationException("Read only attribute \"objid\" of the " + "element "
-                        + theName + " may not exist while create");
+                    + theName + " may not exist while create");
             }
             final int indexOfhref = element.indexOfAttribute(Constants.XLINK_URI, "href");
-            if (indexOfhref != -1
-                && element.getAttribute(indexOfhref).getValue().length() > 0) {
+            if (indexOfhref != -1 && element.getAttribute(indexOfhref).getValue().length() > 0) {
                 throw new ReadonlyAttributeViolationException("Read only attribute \"href\" of the " + "element "
-                        + theName + " may not exist while create");
+                    + theName + " may not exist while create");
             }
         }
         return element;

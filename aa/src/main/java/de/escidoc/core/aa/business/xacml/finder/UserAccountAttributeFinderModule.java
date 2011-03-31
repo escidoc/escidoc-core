@@ -70,88 +70,61 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Implementation of an XACML attribute finder module that is responsible for
- * the attributes related to an user account.<br>
- * This finder module supports both XACML subject attributes and XACML resource
- * attributes.<br>
- * The attribute values are fetched from the xml representation of the user
- * account.
- * 
- * Supported Attributes:<br>
- * -info:escidoc/names:aa:1.0:resource:user-account:handle<br>
- * the handle of the user-account, single value attribute
- * -info:escidoc/names:aa:1.0:resource:user-account:login-name<br>
- * the login-name of the user-account, single value attribute
- * -info:escidoc/names:aa:1.0:resource:user-account:name<br>
- * the name of the user-account, single value attribute
- * -info:escidoc/names:aa:1.0:resource:user-account:created-by<br>
- * the user who created the user-account, single value attribute
- * -info:escidoc/names:aa:1.0:resource:user-account:modified-by<br>
- * the user who modified the user-account, single value attribute
- * -info:escidoc/names:aa:1.0:resource:user-account:organizational-unit<br>
- * the organizational-unit of the user-account, multi value attribute
- * -info:escidoc
- * /names:aa:1.0:resource:user-account:organizational-unit-with-children<br>
- * the organizational-unit tree of the user-account, multi value attribute
- * -info:escidoc/names:aa:1.0:resource:user-account:group-membership<br>
- * the ids of the groups the user is member(hierarchical), multi value attribute
- * -info:escidoc/names:aa:1.0:resource:user-account:id<br>
- * the id of the user-account, single value attribute
- * -info:escidoc/names:aa:1.0:subject:handle<br>
- * the handle of the current user, single value attribute
- * -info:escidoc/names:aa:1.0:subject:login-name<br>
- * the login-name of the current user, single value attribute
- * -info:escidoc/names:aa:1.0:subject:name<br>
- * the name of the current user, single value attribute
- * -info:escidoc/names:aa:1.0:subject:created-by<br>
- * the user who created the current user, single value attribute
- * -info:escidoc/names:aa:1.0:subject:modified-by<br>
- * the user who modified the current user, single value attribute
- * -info:escidoc/names:aa:1.0:subject:organizational-unit<br>
- * the organizational-unit of the current user, multi value attribute
- * -info:escidoc/names:aa:1.0:subject:organizational-unit-with-children<br>
- * the organizational-unit tree of the current user, multi value attribute
- * -info:escidoc/names:aa:1.0:subject:group-membership<br>
- * the ids of the groups the current user is member(hierarchical), multi value
- * attribute
- * -info:escidoc/names:aa:1.0:subject:role-grant:&lt;role-id&gt;:assigned-on<br>
- * the id of the object the grant is assigned on (scope of the grant), multi
- * value attribute
- * 
+ * Implementation of an XACML attribute finder module that is responsible for the attributes related to an user
+ * account.<br> This finder module supports both XACML subject attributes and XACML resource attributes.<br> The
+ * attribute values are fetched from the xml representation of the user account.
+ * <p/>
+ * Supported Attributes:<br> -info:escidoc/names:aa:1.0:resource:user-account:handle<br> the handle of the user-account,
+ * single value attribute -info:escidoc/names:aa:1.0:resource:user-account:login-name<br> the login-name of the
+ * user-account, single value attribute -info:escidoc/names:aa:1.0:resource:user-account:name<br> the name of the
+ * user-account, single value attribute -info:escidoc/names:aa:1.0:resource:user-account:created-by<br> the user who
+ * created the user-account, single value attribute -info:escidoc/names:aa:1.0:resource:user-account:modified-by<br> the
+ * user who modified the user-account, single value attribute -info:escidoc/names:aa:1.0:resource:user-account:organizational-unit<br>
+ * the organizational-unit of the user-account, multi value attribute -info:escidoc
+ * /names:aa:1.0:resource:user-account:organizational-unit-with-children<br> the organizational-unit tree of the
+ * user-account, multi value attribute -info:escidoc/names:aa:1.0:resource:user-account:group-membership<br> the ids of
+ * the groups the user is member(hierarchical), multi value attribute -info:escidoc/names:aa:1.0:resource:user-account:id<br>
+ * the id of the user-account, single value attribute -info:escidoc/names:aa:1.0:subject:handle<br> the handle of the
+ * current user, single value attribute -info:escidoc/names:aa:1.0:subject:login-name<br> the login-name of the current
+ * user, single value attribute -info:escidoc/names:aa:1.0:subject:name<br> the name of the current user, single value
+ * attribute -info:escidoc/names:aa:1.0:subject:created-by<br> the user who created the current user, single value
+ * attribute -info:escidoc/names:aa:1.0:subject:modified-by<br> the user who modified the current user, single value
+ * attribute -info:escidoc/names:aa:1.0:subject:organizational-unit<br> the organizational-unit of the current user,
+ * multi value attribute -info:escidoc/names:aa:1.0:subject:organizational-unit-with-children<br> the
+ * organizational-unit tree of the current user, multi value attribute -info:escidoc/names:aa:1.0:subject:group-membership<br>
+ * the ids of the groups the current user is member(hierarchical), multi value attribute
+ * -info:escidoc/names:aa:1.0:subject:role-grant:&lt;role-id&gt;:assigned-on<br> the id of the object the grant is
+ * assigned on (scope of the grant), multi value attribute
+ *
  * @author Torsten Tetteroo
  */
-public class UserAccountAttributeFinderModule
-    extends AbstractAttributeFinderModule {
+public class UserAccountAttributeFinderModule extends AbstractAttributeFinderModule {
 
     /**
-     * Pattern used to parse the attribute id and fetch the resolvable part, the
-     * last part of the resolvable part and the tail.
+     * Pattern used to parse the attribute id and fetch the resolvable part, the last part of the resolvable part and
+     * the tail.
      */
-    private static final String USER_ACCOUNT_ATTRS = "(handle|login-name|name|"
-        + "created-by|modified-by|"
-        + "organizational-unit|organizational-unit-with-children|"
-        + "group-membership|role-grant)";
+    private static final String USER_ACCOUNT_ATTRS =
+        "(handle|login-name|name|" + "created-by|modified-by|"
+            + "organizational-unit|organizational-unit-with-children|" + "group-membership|role-grant)";
 
     private static final String ROLE_GRANT_ATTRS = "(assigned-on)";
 
-    private static final Pattern PATTERN_PARSE_ROLE_GRANT_ROLE = Pattern
-        .compile("((" + AttributeIds.SUBJECT_ATTR_PREFIX + '|'
-            + AttributeIds.USER_ACCOUNT_ATTR_PREFIX + ')' + USER_ACCOUNT_ATTRS
-            + "):(.*?):" + ROLE_GRANT_ATTRS);
+    private static final Pattern PATTERN_PARSE_ROLE_GRANT_ROLE =
+        Pattern.compile("((" + AttributeIds.SUBJECT_ATTR_PREFIX + '|' + AttributeIds.USER_ACCOUNT_ATTR_PREFIX + ')'
+            + USER_ACCOUNT_ATTRS + "):(.*?):" + ROLE_GRANT_ATTRS);
 
     private static final Pattern PATTERN_PARSE_USER_ACCOUNT_ATTRIBUTE_ID =
-        Pattern.compile("((" + AttributeIds.SUBJECT_ATTR_PREFIX + '|'
-            + AttributeIds.USER_ACCOUNT_ATTR_PREFIX + ')' + USER_ACCOUNT_ATTRS
-            + ")(:.*){0,1}");
+        Pattern.compile("((" + AttributeIds.SUBJECT_ATTR_PREFIX + '|' + AttributeIds.USER_ACCOUNT_ATTR_PREFIX + ')'
+            + USER_ACCOUNT_ATTRS + ")(:.*){0,1}");
 
-    private static final Pattern PATTERN_SUBJECT_ATTRIBUTE_PREFIX = Pattern
-        .compile(AttributeIds.SUBJECT_ATTR_PREFIX);
+    private static final Pattern PATTERN_SUBJECT_ATTRIBUTE_PREFIX = Pattern.compile(AttributeIds.SUBJECT_ATTR_PREFIX);
 
     private static final Pattern PATTERN_USER_ACCOUNT_ATTRIBUTE_PREFIX =
         Pattern.compile(AttributeIds.USER_ACCOUNT_ATTR_PREFIX);
 
-    private static final Pattern PATTERN_IS_SUBJECT_ATTRIBUTE_ID = Pattern
-        .compile(AttributeIds.SUBJECT_ATTR_PREFIX + ".*");
+    private static final Pattern PATTERN_IS_SUBJECT_ATTRIBUTE_ID =
+        Pattern.compile(AttributeIds.SUBJECT_ATTR_PREFIX + ".*");
 
     /**
      * Attributes can have USER_ACCOUNT_ATTR_PREFIX
@@ -160,103 +133,65 @@ public class UserAccountAttributeFinderModule
      * USER_ACCOUNT_ATTR_PREFIX is used, userId is resolved from
      * resourceId-Attribute. if SUBJECT_ATTR_PREFIX is used, userId is resolved
      * from xacml-subject-attribute
-     * 
+     *
      * Internally this class only uses USER_ACCOUNT_ATTR_PREFIX -->
      * SUBJECT_ATTR_PREFIX is changed to USER_ACCOUNT_ATTR_PREFIX before
      * resolving.
      */
 
     /**
-     * This attribute matches the current eSciDoc user handles of the user
-     * (identified by the resource-id).
-     * 
-     *
+     * This attribute matches the current eSciDoc user handles of the user (identified by the resource-id).
      */
-    public static final String ATTR_USER_HANDLE =
-        AttributeIds.USER_ACCOUNT_ATTR_PREFIX + "handle";
+    public static final String ATTR_USER_HANDLE = AttributeIds.USER_ACCOUNT_ATTR_PREFIX + "handle";
 
     /**
-     * This attribute matches the internal id of the user (identified by the
-     * resource-id).
-     * 
-     *
+     * This attribute matches the internal id of the user (identified by the resource-id).
      */
-    public static final String ATTR_USER_ID =
-        AttributeIds.USER_ACCOUNT_ATTR_PREFIX + "id";
+    public static final String ATTR_USER_ID = AttributeIds.USER_ACCOUNT_ATTR_PREFIX + "id";
 
     /**
-     * This attribute matches the login name of the user (identified by the
-     * resource-id).
-     * 
-     *
+     * This attribute matches the login name of the user (identified by the resource-id).
      */
-    public static final String ATTR_USER_LOGIN_NAME =
-        AttributeIds.USER_ACCOUNT_ATTR_PREFIX + "login-name";
+    public static final String ATTR_USER_LOGIN_NAME = AttributeIds.USER_ACCOUNT_ATTR_PREFIX + "login-name";
 
     /**
-     * This attribute matches the name of the user (identified by the
-     * resource-id).
-     * 
-     *
+     * This attribute matches the name of the user (identified by the resource-id).
      */
-    public static final String ATTR_USER_NAME =
-        AttributeIds.USER_ACCOUNT_ATTR_PREFIX + "name";
+    public static final String ATTR_USER_NAME = AttributeIds.USER_ACCOUNT_ATTR_PREFIX + "name";
 
     /**
-     * This attribute matches the creator of the user (identified by the
-     * resource-id).
-     * 
-     *
+     * This attribute matches the creator of the user (identified by the resource-id).
      */
-    public static final String ATTR_CREATED_BY =
-        AttributeIds.USER_ACCOUNT_ATTR_PREFIX + "created-by";
+    public static final String ATTR_CREATED_BY = AttributeIds.USER_ACCOUNT_ATTR_PREFIX + "created-by";
 
     /**
-     * This attribute matches the last modifier of the user (identified by the
-     * resource-id).
-     * 
-     *
+     * This attribute matches the last modifier of the user (identified by the resource-id).
      */
-    public static final String ATTR_MODIFIED_BY =
-        AttributeIds.USER_ACCOUNT_ATTR_PREFIX + "modified-by";
+    public static final String ATTR_MODIFIED_BY = AttributeIds.USER_ACCOUNT_ATTR_PREFIX + "modified-by";
 
     /**
-     * This attribute matches the group-membership of the user (identified by
-     * the resource-id).
-     * 
-     *
+     * This attribute matches the group-membership of the user (identified by the resource-id).
      */
-    public static final String ATTR_USER_GROUP_MEMBERSHIP =
-        AttributeIds.USER_ACCOUNT_ATTR_PREFIX + "group-membership";
+    public static final String ATTR_USER_GROUP_MEMBERSHIP = AttributeIds.USER_ACCOUNT_ATTR_PREFIX + "group-membership";
 
     /**
-     * This attribute matches the organizational unit of the user (identified by
-     * the resource-id).
-     * 
-     *
+     * This attribute matches the organizational unit of the user (identified by the resource-id).
      */
     public static final String ATTR_USER_ORGANIZATIONAL_UNIT =
-        AttributeIds.USER_ACCOUNT_ATTR_PREFIX
-            + XmlUtility.NAME_ORGANIZATIONAL_UNIT;
+        AttributeIds.USER_ACCOUNT_ATTR_PREFIX + XmlUtility.NAME_ORGANIZATIONAL_UNIT;
 
     /**
-     * This attribute matches the organizational unit of the user (identified by
-     * the resource-id) (also children are resolved).
-     * 
-     *
+     * This attribute matches the organizational unit of the user (identified by the resource-id) (also children are
+     * resolved).
      */
     public static final String ATTR_USER_ORGANIZATIONAL_UNIT_WITH_CHILDREN =
-        AttributeIds.USER_ACCOUNT_ATTR_PREFIX
-            + XmlUtility.NAME_ORGANIZATIONAL_UNIT + "-with-children";
+        AttributeIds.USER_ACCOUNT_ATTR_PREFIX + XmlUtility.NAME_ORGANIZATIONAL_UNIT + "-with-children";
 
     /**
      * This attribute matches the scope of a role of the user.
-     * 
-     *
      */
-    public static final Pattern ATTR_USER_ROLE_SCOPE = Pattern
-        .compile(AttributeIds.USER_ACCOUNT_ATTR_PREFIX
-            + "role-grant:(.*?):assigned-on");
+    public static final Pattern ATTR_USER_ROLE_SCOPE =
+        Pattern.compile(AttributeIds.USER_ACCOUNT_ATTR_PREFIX + "role-grant:(.*?):assigned-on");
 
     private PoliciesCacheProxy policiesCacheProxy;
 
@@ -265,14 +200,11 @@ public class UserAccountAttributeFinderModule
     private TripleStoreUtility tripleStoreUtility;
 
     /**
-     * Since this class will retrieve subject attributes and resource
-     * attributes, it will return a set only containing two values, indicating
-     * that it supports Designators of type SUBJECT_TARGET and RESOURCE_TARGET.
-     * 
-     * @return Set only containing the value SUBJECT_TARGET and RESOURCE_TARGET.
-     * @see AttributeFinderModule
-     *      #getSupportedDesignatorTypes()
+     * Since this class will retrieve subject attributes and resource attributes, it will return a set only containing
+     * two values, indicating that it supports Designators of type SUBJECT_TARGET and RESOURCE_TARGET.
      *
+     * @return Set only containing the value SUBJECT_TARGET and RESOURCE_TARGET.
+     * @see AttributeFinderModule #getSupportedDesignatorTypes()
      */
     @Override
     public Set getSupportedDesignatorTypes() {
@@ -282,27 +214,13 @@ public class UserAccountAttributeFinderModule
         return set;
     }
 
-
-
     /**
      * See Interface for functional description.
-     * 
-     * @param attributeIdValue
-     * @param ctx
-     * @param resourceId
-     * @param resourceObjid
-     * @param resourceVersionNumber
-     * @param designatorType
-     * @return
-     * @throws EscidocException
-     *
      */
     @Override
     protected boolean assertAttribute(
-        final String attributeIdValue, final EvaluationCtx ctx,
-        final String resourceId, final String resourceObjid,
-        final String resourceVersionNumber, final int designatorType)
-        throws EscidocException {
+        final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
+        final String resourceVersionNumber, final int designatorType) throws EscidocException {
 
         // the super class method only supports RESOURCE attributes. We have to
         // override it, to support SUBJECT Attributes, too.
@@ -316,27 +234,16 @@ public class UserAccountAttributeFinderModule
 
         // make sure attribute is in escidoc-internal format for
         // subject attribute or resource user-account attributes
-        return PATTERN_PARSE_USER_ACCOUNT_ATTRIBUTE_ID
-                .matcher(attributeIdValue).find();
+        return PATTERN_PARSE_USER_ACCOUNT_ATTRIBUTE_ID.matcher(attributeIdValue).find();
 
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param attributeIdValue
-     * @param ctx
-     * @param resourceId
-     * @param resourceObjid
-     * @param resourceVersionNumber
-     * @return
-     * @throws EscidocException
-     *
      */
     @Override
     protected Object[] resolveLocalPart(
-        final String attributeIdValue, final EvaluationCtx ctx,
-        final String resourceId, final String resourceObjid,
+        final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
         final String resourceVersionNumber) throws EscidocException {
 
         // determine the id of the user account and to simplify the further
@@ -348,22 +255,16 @@ public class UserAccountAttributeFinderModule
         boolean isSubjectAttribute = false;
         if (PATTERN_IS_SUBJECT_ATTRIBUTE_ID.matcher(attributeIdValue).find()) {
             isSubjectAttribute = true;
-            userAccountId =
-                FinderModuleHelper.retrieveSingleSubjectAttribute(ctx,
-                    Constants.URI_SUBJECT_ID, true);
+            userAccountId = FinderModuleHelper.retrieveSingleSubjectAttribute(ctx, Constants.URI_SUBJECT_ID, true);
             if (userAccountId == null) {
-                final StringBuilder errorMsg =
-                        new StringBuilder(
-                                "The subject (user) of the request cannot be ");
+                final StringBuilder errorMsg = new StringBuilder("The subject (user) of the request cannot be ");
                 errorMsg.append("identified, the ");
                 errorMsg.append(Constants.URI_SUBJECT_ID);
                 errorMsg.append(" may not have been set.");
                 throw new WebserverSystemException(errorMsg.toString());
             }
-            final Matcher matcher =
-                PATTERN_SUBJECT_ATTRIBUTE_PREFIX.matcher(attributeIdValue);
-            internalAttributeIdValue =
-                matcher.replaceFirst(AttributeIds.USER_ACCOUNT_ATTR_PREFIX);
+            final Matcher matcher = PATTERN_SUBJECT_ATTRIBUTE_PREFIX.matcher(attributeIdValue);
+            internalAttributeIdValue = matcher.replaceFirst(AttributeIds.USER_ACCOUNT_ATTR_PREFIX);
         }
         else {
             userAccountId = FinderModuleHelper.getResourceId(ctx);
@@ -373,8 +274,8 @@ public class UserAccountAttributeFinderModule
             internalAttributeIdValue = attributeIdValue;
         }
         // ask cache for previously cached results
-        EvaluationResult result = getFromCache(resourceId, resourceObjid, resourceVersionNumber,
-                internalAttributeIdValue, ctx);
+        EvaluationResult result =
+            getFromCache(resourceId, resourceObjid, resourceVersionNumber, internalAttributeIdValue, ctx);
 
         String resolvedAttributeIdValue = null;
         if (result == null) {
@@ -382,30 +283,22 @@ public class UserAccountAttributeFinderModule
             if (UserContext.isIdOfAnonymousUser(userAccountId)) {
                 // The anonymous user does not have an account, for each
                 // attribute the value of the anonymous identifier is returned.
-                result =
-                    CustomEvaluationResultBuilder
-                        .createSingleStringValueResult(UserContext.ANONYMOUS_IDENTIFIER);
+                result = CustomEvaluationResultBuilder.createSingleStringValueResult(UserContext.ANONYMOUS_IDENTIFIER);
                 // the resolved id is set to the complete id, as no further
                 // resolving is possible.
                 resolvedAttributeIdValue = internalAttributeIdValue;
             }
             else {
                 if (ATTR_USER_HANDLE.equals(internalAttributeIdValue)) {
-                    final Set userHandles = retrieveUserHandle(ctx, userAccountId,
-                            internalAttributeIdValue);
-                    result =
-                        new EvaluationResult(new BagAttribute(
-                            Constants.URI_XMLSCHEMA_STRING, userHandles));
+                    final Set userHandles = retrieveUserHandle(ctx, userAccountId, internalAttributeIdValue);
+                    result = new EvaluationResult(new BagAttribute(Constants.URI_XMLSCHEMA_STRING, userHandles));
                     resolvedAttributeIdValue = ATTR_USER_HANDLE;
                 }
-                else if (ATTR_USER_ROLE_SCOPE
-                    .matcher(internalAttributeIdValue).matches()) {
-                    result =
-                        fetchRoleScopes(userAccountId, internalAttributeIdValue);
+                else if (ATTR_USER_ROLE_SCOPE.matcher(internalAttributeIdValue).matches()) {
+                    result = fetchRoleScopes(userAccountId, internalAttributeIdValue);
                     resolvedAttributeIdValue = internalAttributeIdValue;
                 }
-                else if (ATTR_USER_GROUP_MEMBERSHIP
-                    .equals(internalAttributeIdValue)) {
+                else if (ATTR_USER_GROUP_MEMBERSHIP.equals(internalAttributeIdValue)) {
                     result = fetchUserGroups(userAccountId);
                     resolvedAttributeIdValue = internalAttributeIdValue;
                 }
@@ -417,10 +310,8 @@ public class UserAccountAttributeFinderModule
                     }
                     catch (final UserAccountNotFoundException e) {
                         if (isSubjectAttribute) {
-                            throw new UserAccountNotFoundException(
-                                StringUtility.format(
-                                    "Account of subject not found.",
-                                    userAccountId, e.getMessage()), e);
+                            throw new UserAccountNotFoundException(StringUtility.format(
+                                "Account of subject not found.", userAccountId, e.getMessage()), e);
                         }
                         else {
                             throw e;
@@ -433,47 +324,31 @@ public class UserAccountAttributeFinderModule
                         if (userAccount != null) {
                             if (ATTR_USER_ID.equals(resolvedAttributeIdValue)) {
                                 final String nextResourceId = userAccount.getId();
-                                result =
-                                    CustomEvaluationResultBuilder
-                                        .createSingleStringValueResult(nextResourceId);
+                                result = CustomEvaluationResultBuilder.createSingleStringValueResult(nextResourceId);
                             }
-                            else if (ATTR_USER_LOGIN_NAME
-                                .equals(resolvedAttributeIdValue)) {
+                            else if (ATTR_USER_LOGIN_NAME.equals(resolvedAttributeIdValue)) {
                                 result =
-                                    CustomEvaluationResultBuilder
-                                        .createSingleStringValueResult(userAccount
-                                            .getLoginname());
+                                    CustomEvaluationResultBuilder.createSingleStringValueResult(userAccount
+                                        .getLoginname());
                             }
-                            else if (ATTR_USER_NAME
-                                .equals(resolvedAttributeIdValue)) {
+                            else if (ATTR_USER_NAME.equals(resolvedAttributeIdValue)) {
                                 result =
-                                    CustomEvaluationResultBuilder
-                                        .createSingleStringValueResult(userAccount
-                                            .getName());
+                                    CustomEvaluationResultBuilder.createSingleStringValueResult(userAccount.getName());
                             }
-                            else if (ATTR_CREATED_BY
-                                .equals(resolvedAttributeIdValue)) {
+                            else if (ATTR_CREATED_BY.equals(resolvedAttributeIdValue)) {
                                 result =
-                                    CustomEvaluationResultBuilder
-                                        .createSingleStringValueResult(userAccount
-                                            .getUserAccountByCreatorId()
-                                            .getId());
+                                    CustomEvaluationResultBuilder.createSingleStringValueResult(userAccount
+                                        .getUserAccountByCreatorId().getId());
                             }
-                            else if (ATTR_MODIFIED_BY
-                                .equals(resolvedAttributeIdValue)) {
+                            else if (ATTR_MODIFIED_BY.equals(resolvedAttributeIdValue)) {
                                 result =
-                                    CustomEvaluationResultBuilder
-                                        .createSingleStringValueResult(userAccount
-                                            .getUserAccountByModifiedById()
-                                            .getId());
+                                    CustomEvaluationResultBuilder.createSingleStringValueResult(userAccount
+                                        .getUserAccountByModifiedById().getId());
                             }
-                            else if (ATTR_USER_ORGANIZATIONAL_UNIT
-                                .equals(resolvedAttributeIdValue)) {
-                                result =
-                                    fetchUserAccountOus(userAccount, false);
+                            else if (ATTR_USER_ORGANIZATIONAL_UNIT.equals(resolvedAttributeIdValue)) {
+                                result = fetchUserAccountOus(userAccount, false);
                             }
-                            else if (ATTR_USER_ORGANIZATIONAL_UNIT_WITH_CHILDREN
-                                .equals(resolvedAttributeIdValue)) {
+                            else if (ATTR_USER_ORGANIZATIONAL_UNIT_WITH_CHILDREN.equals(resolvedAttributeIdValue)) {
                                 result = fetchUserAccountOus(userAccount, true);
                             }
                         }
@@ -486,40 +361,28 @@ public class UserAccountAttributeFinderModule
         }
         if (isSubjectAttribute) {
             // revert previously Subject -> Resource change
-            final Matcher matcher =
-                PATTERN_USER_ACCOUNT_ATTRIBUTE_PREFIX
-                    .matcher(resolvedAttributeIdValue);
-            resolvedAttributeIdValue =
-                matcher.replaceFirst(AttributeIds.SUBJECT_ATTR_PREFIX);
+            final Matcher matcher = PATTERN_USER_ACCOUNT_ATTRIBUTE_PREFIX.matcher(resolvedAttributeIdValue);
+            resolvedAttributeIdValue = matcher.replaceFirst(AttributeIds.SUBJECT_ATTR_PREFIX);
         }
-        putInCache(resourceId, resourceObjid, resourceVersionNumber,
-            attributeIdValue, ctx, result);
+        putInCache(resourceId, resourceObjid, resourceVersionNumber, attributeIdValue, ctx, result);
         return new Object[] { result, resolvedAttributeIdValue };
     }
 
-
-
     /**
-     * Fetches the value of the attribute <code>ATTR_USER_OU</code> for the
-     * provided user account.
-     * 
-     * @param userAccount
-     *            The user account to fetch the value from.
-     * @param getChildren
-     *            if also children of userAccountous are to be fetched.
+     * Fetches the value of the attribute <code>ATTR_USER_OU</code> for the provided user account.
+     *
+     * @param userAccount The user account to fetch the value from.
+     * @param getChildren if also children of userAccountous are to be fetched.
      * @return Returns the attribute value in an <code>EvaluationResult</code>.
-     * @throws EscidocException
-     *             e
+     * @throws EscidocException e
      */
-    private EvaluationResult fetchUserAccountOus(
-        final UserAccount userAccount, final boolean getChildren)
+    private EvaluationResult fetchUserAccountOus(final UserAccount userAccount, final boolean getChildren)
         throws EscidocException {
 
         final String ouAttributeName;
         try {
             ouAttributeName =
-                EscidocConfiguration.getInstance().get(
-                    EscidocConfiguration.ESCIDOC_CORE_AA_OU_ATTRIBUTE_NAME);
+                EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_AA_OU_ATTRIBUTE_NAME);
         }
         catch (final IOException e) {
             throw new SystemException(e);
@@ -527,16 +390,13 @@ public class UserAccountAttributeFinderModule
         if (ouAttributeName == null || ouAttributeName.length() == 0) {
             return CustomEvaluationResultBuilder.createEmptyEvaluationResult();
         }
-        final List<UserAttribute> attributes =
-            userAccountDao.retrieveAttributes(userAccount, ouAttributeName);
+        final List<UserAttribute> attributes = userAccountDao.retrieveAttributes(userAccount, ouAttributeName);
         final EvaluationResult result;
         if (attributes == null || attributes.isEmpty()) {
-            result =
-                CustomEvaluationResultBuilder.createEmptyEvaluationResult();
+            result = CustomEvaluationResultBuilder.createEmptyEvaluationResult();
         }
         else {
-            final List<StringAttribute> results =
-                new ArrayList<StringAttribute>(attributes.size());
+            final List<StringAttribute> results = new ArrayList<StringAttribute>(attributes.size());
             final Collection<String> ouIds = new ArrayList<String>();
             for (final UserAttribute attribute : attributes) {
                 results.add(new StringAttribute(attribute.getValue()));
@@ -545,9 +405,7 @@ public class UserAccountAttributeFinderModule
                 }
             }
             if (getChildren) {
-                final List<String> childOus =
-                    tripleStoreUtility.getChildrenPath(ouIds,
-                        new ArrayList<String>());
+                final List<String> childOus = tripleStoreUtility.getChildrenPath(ouIds, new ArrayList<String>());
                 if (childOus != null) {
                     for (final String childOu : childOus) {
                         results.add(new StringAttribute(childOu));
@@ -555,67 +413,51 @@ public class UserAccountAttributeFinderModule
                 }
             }
 
-            result =
-                new EvaluationResult(new BagAttribute(
-                    Constants.URI_XMLSCHEMA_STRING, results));
+            result = new EvaluationResult(new BagAttribute(Constants.URI_XMLSCHEMA_STRING, results));
         }
         return result;
     }
 
     /**
      * Fetches the groupIds where user is member for the provided user account.
-     * 
-     * @param userAccountId
-     *            The id of the user account to fetch the value from.
-     * @throws EscidocException
-     *             e
+     *
+     * @param userAccountId The id of the user account to fetch the value from.
      * @return Returns the attribute value in an <code>EvaluationResult</code>.
+     * @throws EscidocException e
      */
-    private EvaluationResult fetchUserGroups(final String userAccountId)
-        throws EscidocException {
+    private EvaluationResult fetchUserGroups(final String userAccountId) throws EscidocException {
 
         final EvaluationResult result;
 
-        final Set<String> userGroups =
-            policiesCacheProxy.getUserGroups(userAccountId);
+        final Set<String> userGroups = policiesCacheProxy.getUserGroups(userAccountId);
 
         if (userGroups == null || userGroups.isEmpty()) {
-            result =
-                CustomEvaluationResultBuilder.createEmptyEvaluationResult();
+            result = CustomEvaluationResultBuilder.createEmptyEvaluationResult();
         }
         else {
             final Iterator<String> groupIdsIter = userGroups.iterator();
-            final List<StringAttribute> results =
-                new ArrayList<StringAttribute>(userGroups.size());
+            final List<StringAttribute> results = new ArrayList<StringAttribute>(userGroups.size());
             while (groupIdsIter.hasNext()) {
                 results.add(new StringAttribute(groupIdsIter.next()));
             }
-            result =
-                new EvaluationResult(new BagAttribute(
-                    Constants.URI_XMLSCHEMA_STRING, results));
+            result = new EvaluationResult(new BagAttribute(Constants.URI_XMLSCHEMA_STRING, results));
         }
         return result;
     }
 
     /**
-     * Fetches the scopes of the role identified in the attribute for the
-     * provided user account.
-     * 
-     * @param userAccountId
-     *            The id of the user account to fetch the value from.
-     * @param attributeId
-     *            The name of the attribute.
-     * @throws EscidocException
-     *             e
+     * Fetches the scopes of the role identified in the attribute for the provided user account.
+     *
+     * @param userAccountId The id of the user account to fetch the value from.
+     * @param attributeId   The name of the attribute.
      * @return Returns the attribute value in an <code>EvaluationResult</code>.
+     * @throws EscidocException e
      */
-    private EvaluationResult fetchRoleScopes(
-        final String userAccountId, final CharSequence attributeId)
+    private EvaluationResult fetchRoleScopes(final String userAccountId, final CharSequence attributeId)
         throws EscidocException {
 
         // get role to fetch
-        final Matcher roleMatcher =
-            PATTERN_PARSE_ROLE_GRANT_ROLE.matcher(attributeId);
+        final Matcher roleMatcher = PATTERN_PARSE_ROLE_GRANT_ROLE.matcher(attributeId);
         String roleName = null;
         if (roleMatcher.find()) {
             roleName = roleMatcher.group(4);
@@ -624,28 +466,18 @@ public class UserAccountAttributeFinderModule
             return CustomEvaluationResultBuilder.createEmptyEvaluationResult();
         }
 
-        final Set<String> userGroups =
-            policiesCacheProxy.getUserGroups(userAccountId);
-        final Map<String, HashSet<String>> criterias =
-            new HashMap<String, HashSet<String>>();
+        final Set<String> userGroups = policiesCacheProxy.getUserGroups(userAccountId);
+        final Map<String, HashSet<String>> criterias = new HashMap<String, HashSet<String>>();
         final HashSet<String> roles = new HashSet<String>();
         roles.add(roleName);
         final HashSet<String> users = new HashSet<String>();
         users.add(userAccountId);
-        criterias.put(
-            de.escidoc.core.common.business.Constants.FILTER_PATH_USER_ID,
-            users);
-        criterias.put(
-            de.escidoc.core.common.business.Constants.FILTER_PATH_ROLE_ID,
-            roles);
+        criterias.put(de.escidoc.core.common.business.Constants.FILTER_PATH_USER_ID, users);
+        criterias.put(de.escidoc.core.common.business.Constants.FILTER_PATH_ROLE_ID, roles);
         if (userGroups != null && !userGroups.isEmpty()) {
-            criterias.put(
-                de.escidoc.core.common.business.Constants.FILTER_PATH_GROUP_ID,
-                (HashSet<String>) userGroups);
+            criterias.put(de.escidoc.core.common.business.Constants.FILTER_PATH_GROUP_ID, (HashSet<String>) userGroups);
         }
-        final List<RoleGrant> roleGrants =
-            userAccountDao.retrieveGrants(criterias, null,
-                ListSorting.ASCENDING);
+        final List<RoleGrant> roleGrants = userAccountDao.retrieveGrants(criterias, null, ListSorting.ASCENDING);
         final EvaluationResult result;
         if (roleGrants != null) {
             final List<StringAttribute> results = new ArrayList<StringAttribute>();
@@ -654,54 +486,35 @@ public class UserAccountAttributeFinderModule
                     results.add(new StringAttribute(roleGrant.getObjectId()));
                 }
             }
-            result =
-                new EvaluationResult(new BagAttribute(
-                    Constants.URI_XMLSCHEMA_STRING, results));
+            result = new EvaluationResult(new BagAttribute(Constants.URI_XMLSCHEMA_STRING, results));
         }
         else {
-            result =
-                CustomEvaluationResultBuilder.createEmptyEvaluationResult();
+            result = CustomEvaluationResultBuilder.createEmptyEvaluationResult();
         }
         return result;
     }
 
     /**
      * Retrieves the handles of the user.
-     * 
-     * @param ctx
-     *            The evaluation context, which will be used as key for the
-     *            cache.
-     * @param userAccountId
-     *            The id of the user account to get the handles for.
-     * @param attributeIdValue
-     *            The value of the attribute id that is currently resolved.
-     * @return Returns the eSciDoc user handle of the subject (current user).
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
-     * @throws UserAccountNotFoundException
-     *             Thrown if no user account with provided id is found.
      *
+     * @param ctx              The evaluation context, which will be used as key for the cache.
+     * @param userAccountId    The id of the user account to get the handles for.
+     * @param attributeIdValue The value of the attribute id that is currently resolved.
+     * @return Returns the eSciDoc user handle of the subject (current user).
+     * @throws WebserverSystemException     Thrown in case of an internal error.
+     * @throws UserAccountNotFoundException Thrown if no user account with provided id is found.
      */
-    private Set retrieveUserHandle(
-        final EvaluationCtx ctx, final String userAccountId,
-        final String attributeIdValue) throws WebserverSystemException,
-        UserAccountNotFoundException {
+    private Set retrieveUserHandle(final EvaluationCtx ctx, final String userAccountId, final String attributeIdValue)
+        throws WebserverSystemException, UserAccountNotFoundException {
 
-        final StringBuffer key =
-            StringUtility.concatenateWithColon(XmlUtility.NAME_HANDLE,
-                    userAccountId);
-        Set<AttributeValue> result =
-            (Set<AttributeValue>) RequestAttributesCache.get(ctx,
-                key.toString());
+        final StringBuffer key = StringUtility.concatenateWithColon(XmlUtility.NAME_HANDLE, userAccountId);
+        Set<AttributeValue> result = (Set<AttributeValue>) RequestAttributesCache.get(ctx, key.toString());
         if (result == null) {
             final List userHandles;
             try {
-                userHandles =
-                    getUserAccountDao().retrieveUserLoginDataByUserId(
-                        userAccountId);
+                userHandles = getUserAccountDao().retrieveUserLoginDataByUserId(userAccountId);
                 if (userHandles == null || userHandles.isEmpty()) {
-                    assertUserAccount(userAccountId, getUserAccountDao()
-                        .retrieveUserAccountById(userAccountId));
+                    assertUserAccount(userAccountId, getUserAccountDao().retrieveUserAccountById(userAccountId));
                 }
             }
             catch (final UserAccountNotFoundException e) {
@@ -711,9 +524,7 @@ public class UserAccountAttributeFinderModule
                 throw e;
             }
             catch (final Exception e) {
-                final String errorMsg =
-                    StringUtility.format(
-                            "Retrieving of attribute failed", attributeIdValue);
+                final String errorMsg = StringUtility.format("Retrieving of attribute failed", attributeIdValue);
                 throw new WebserverSystemException(errorMsg, e);
             }
             result = new HashSet<AttributeValue>();
@@ -730,39 +541,25 @@ public class UserAccountAttributeFinderModule
 
     /**
      * Retrieve User Account from the system.
-     * 
-     * @param ctx
-     *            The evaluation context, which will be used as key for the
-     *            cache.
-     * @param userAccountId
-     *            The user account id.
-     * @return Returns the <code>UserAccount</code> identified by the provided
-     *         id.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
-     * @throws UserAccountNotFoundException
-     *             Thrown if no user account with provided id exists.
      *
+     * @param ctx           The evaluation context, which will be used as key for the cache.
+     * @param userAccountId The user account id.
+     * @return Returns the <code>UserAccount</code> identified by the provided id.
+     * @throws WebserverSystemException     Thrown in case of an internal error.
+     * @throws UserAccountNotFoundException Thrown if no user account with provided id exists.
      */
-    private UserAccount retrieveUserAccount(
-        final EvaluationCtx ctx, final String userAccountId)
+    private UserAccount retrieveUserAccount(final EvaluationCtx ctx, final String userAccountId)
         throws WebserverSystemException, UserAccountNotFoundException {
 
-        final StringBuffer key =
-            StringUtility.concatenateWithColon(XmlUtility.NAME_ID,
-                    userAccountId);
-        UserAccount userAccount =
-            (UserAccount) RequestAttributesCache.get(ctx, key.toString());
+        final StringBuffer key = StringUtility.concatenateWithColon(XmlUtility.NAME_ID, userAccountId);
+        UserAccount userAccount = (UserAccount) RequestAttributesCache.get(ctx, key.toString());
         if (userAccount == null) {
             try {
-                userAccount =
-                    getUserAccountDao().retrieveUserAccount(userAccountId);
+                userAccount = getUserAccountDao().retrieveUserAccount(userAccountId);
             }
             catch (final Exception e) {
-                throw new WebserverSystemException(
-                    StringUtility.format(
-                        "Exception during retrieval of the user account",
-                        e.getMessage()), e);
+                throw new WebserverSystemException(StringUtility.format(
+                    "Exception during retrieval of the user account", e.getMessage()), e);
             }
         }
 
@@ -773,69 +570,53 @@ public class UserAccountAttributeFinderModule
     }
 
     /**
-     * Asserts that the user account is provided, i.e. it is not
-     * <code>null</code>.
-     * 
-     * @param userId
-     *            The user id for which the account should be provided (should
-     *            exist).
-     * @param userAccount
-     *            The user account to assert.
-     * @throws UserAccountNotFoundException
-     *             Thrown if assertion fails.
+     * Asserts that the user account is provided, i.e. it is not <code>null</code>.
      *
+     * @param userId      The user id for which the account should be provided (should exist).
+     * @param userAccount The user account to assert.
+     * @throws UserAccountNotFoundException Thrown if assertion fails.
      */
     private static void assertUserAccount(final String userId, final UserAccount userAccount)
         throws UserAccountNotFoundException {
 
         if (userAccount == null) {
-            throw new UserAccountNotFoundException(StringUtility
-                    .format(
-                            "User with provided id does not exist", userId));
+            throw new UserAccountNotFoundException(StringUtility.format("User with provided id does not exist", userId));
         }
     }
 
     /**
      * Gets the user account dao.
-     * 
+     *
      * @return Returns the user account dao bean.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal system error during bean
-     *             initialization.
+     * @throws WebserverSystemException Thrown in case of an internal system error during bean initialization.
      */
-    private UserAccountDaoInterface getUserAccountDao()
-        throws WebserverSystemException {
+    private UserAccountDaoInterface getUserAccountDao() throws WebserverSystemException {
 
         return this.userAccountDao;
     }
 
     /**
      * Injects the policies cache proxy.
-     * 
-     * @param policiesCacheProxy
-     *            the {@link PoliciesCacheProxy} to inject.
+     *
+     * @param policiesCacheProxy the {@link PoliciesCacheProxy} to inject.
      */
-    public void setPoliciesCacheProxy(
-        final PoliciesCacheProxy policiesCacheProxy) {
+    public void setPoliciesCacheProxy(final PoliciesCacheProxy policiesCacheProxy) {
         this.policiesCacheProxy = policiesCacheProxy;
     }
 
     /**
      * Injects the TripleStore utility.
      *
-     * @param tripleStoreUtility
-     *            TripleStoreUtility from Spring
+     * @param tripleStoreUtility TripleStoreUtility from Spring
      */
-    public void setTripleStoreUtility(
-        final TripleStoreUtility tripleStoreUtility) {
+    public void setTripleStoreUtility(final TripleStoreUtility tripleStoreUtility) {
         this.tripleStoreUtility = tripleStoreUtility;
     }
 
     /**
      * Injects the user account data access object if "called" via Spring.
-     * 
-     * @param userAccountDao
-     *            The user account dao.
+     *
+     * @param userAccountDao The user account dao.
      */
     public void setUserAccountDao(final UserAccountDaoInterface userAccountDao) {
         this.userAccountDao = userAccountDao;

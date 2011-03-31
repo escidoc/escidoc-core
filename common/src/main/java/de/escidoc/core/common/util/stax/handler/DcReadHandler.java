@@ -19,7 +19,7 @@
  */
 
 /**
- * 
+ *
  */
 package de.escidoc.core.common.util.stax.handler;
 
@@ -35,7 +35,6 @@ import java.util.Map;
 
 /**
  * @author Frank Schwichtenberg
- * 
  */
 public class DcReadHandler extends DefaultHandler {
 
@@ -43,11 +42,10 @@ public class DcReadHandler extends DefaultHandler {
 
     private static final String DC_PATH = "/dc";
 
-    private final Map<String, String> properties =
-        new HashMap<String, String>();
+    private final Map<String, String> properties = new HashMap<String, String>();
 
     /**
-     * 
+     *
      * @param parser
      */
     public DcReadHandler(final StaxParser parser) {
@@ -55,8 +53,7 @@ public class DcReadHandler extends DefaultHandler {
     }
 
     @Override
-    public String characters(final String data, final StartElement element)
-        throws IntegritySystemException {
+    public String characters(final String data, final StartElement element) throws IntegritySystemException {
         final String curPath = parser.getCurPath();
         final String theName = element.getLocalName();
 
@@ -72,7 +69,6 @@ public class DcReadHandler extends DefaultHandler {
                 properties.put(TripleStoreUtility.PROP_DC_TITLE, data);
             }
         }
-
         else if (theName.equals(Elements.ELEMENT_DESCRIPTION)) {
 
             if (data.length() == 0) {
@@ -92,7 +88,7 @@ public class DcReadHandler extends DefaultHandler {
 
     /**
      * Return property elements as HashMap.
-     * 
+     *
      * @return map of properties without organizational units.
      */
     public Map<String, String> getPropertiesMap() {

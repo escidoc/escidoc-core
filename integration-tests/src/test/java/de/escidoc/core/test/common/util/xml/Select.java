@@ -11,55 +11,43 @@ import java.util.regex.Pattern;
 
 /**
  * Collection of methods to select values from eSciDoc XML resources.
- * 
- * FIXME methods are duplicated from Escidoc[.*]TestBase. If great refactoring
- * of test environment starts than remove this methods from the
- * Escidoc[.*]TestBase classes to shrink them.
- * 
+ * <p/>
+ * FIXME methods are duplicated from Escidoc[.*]TestBase. If great refactoring of test environment starts than remove
+ * this methods from the Escidoc[.*]TestBase classes to shrink them.
+ *
  * @author Steffen Wagner
- * 
  */
 public class Select {
 
     /**
      * Gets the objid attribute of the root element from the document.
-     * 
-     * @param document
-     *            The document to retrieve the value from.
-     * @param transport
-     *            Set transport protocol (depending on transport is the objid
-     *            obtained from different attributes).
+     *
+     * @param document  The document to retrieve the value from.
+     * @param transport Set transport protocol (depending on transport is the objid obtained from different
+     *                  attributes).
      * @return Returns the objid of the document.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    public static String getObjidValue(
-        final Document document, final int transport) throws Exception {
+    public static String getObjidValue(final Document document, final int transport) throws Exception {
 
         if (transport == Constants.TRANSPORT_REST) {
             return getObjidFromHref(getRootElementAttributeValueNS(document,
-                de.escidoc.core.test.Constants.ATTRIBUTE_NAME_HREF,
-                de.escidoc.core.test.Constants.XLINK_NS_URI));
+                de.escidoc.core.test.Constants.ATTRIBUTE_NAME_HREF, de.escidoc.core.test.Constants.XLINK_NS_URI));
         }
 
-        return getRootElementAttributeValue(document,
-            de.escidoc.core.test.Constants.ATTRIBUTE_NAME_OBJID);
+        return getRootElementAttributeValue(document, de.escidoc.core.test.Constants.ATTRIBUTE_NAME_OBJID);
     }
 
     /**
      * Remove version informaion from given objid.
-     * 
-     * @param document
-     *            The document to retrieve the value from.
-     * @param transport
-     *            Set transport protocol (depending on transport is the objid
-     *            obtained from different attributes).
+     *
+     * @param document  The document to retrieve the value from.
+     * @param transport Set transport protocol (depending on transport is the objid obtained from different
+     *                  attributes).
      * @return Returns the objid of the document without version suffix.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    public static String getObjidValueWithoutVersion(
-        final Document document, final int transport) throws Exception {
+    public static String getObjidValueWithoutVersion(final Document document, final int transport) throws Exception {
 
         String result = getObjidValue(document, transport);
         return getObjidValueWithoutVersion(result);
@@ -67,18 +55,14 @@ public class Select {
 
     /**
      * Get objid wihtout version suffix.
-     * 
-     * @param objid
-     *            Objid (with or without version suffix)
+     *
+     * @param objid Objid (with or without version suffix)
      * @return objid without version suffix
-     * @throws Exception
-     *             Thrown if pattern matching failed.
+     * @throws Exception Thrown if pattern matching failed.
      */
-    public static String getObjidValueWithoutVersion(final String objid)
-        throws Exception {
+    public static String getObjidValueWithoutVersion(final String objid) throws Exception {
 
-        final Pattern patternIdWithoutVersion =
-            Pattern.compile("([a-zA-Z]+:[0-9]+):[0-9]+");
+        final Pattern patternIdWithoutVersion = Pattern.compile("([a-zA-Z]+:[0-9]+):[0-9]+");
 
         String result = objid;
 
@@ -91,9 +75,8 @@ public class Select {
 
     /**
      * Gets the id from the provided uri (href).
-     * 
-     * @param href
-     *            The uri to extract the id from.
+     *
+     * @param href The uri to extract the id from.
      * @return Returns the extracted id.
      */
     public static String getObjidFromHref(final String href) {
@@ -102,19 +85,15 @@ public class Select {
     }
 
     /**
-     * Gets the value of the specified attribute of the root element from the
-     * document.
-     * 
-     * @param document
-     *            The document to retrieve the value from.
-     * @param attributeName
-     *            The name of the attribute whose value shall be retrieved.
+     * Gets the value of the specified attribute of the root element from the document.
+     *
+     * @param document      The document to retrieve the value from.
+     * @param attributeName The name of the attribute whose value shall be retrieved.
      * @return Returns the attribute value.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    public static String getRootElementAttributeValue(
-        final Document document, final String attributeName) throws Exception {
+    public static String getRootElementAttributeValue(final Document document, final String attributeName)
+        throws Exception {
 
         Node root = getRootElement(document);
 
@@ -133,12 +112,10 @@ public class Select {
 
     /**
      * Gets the root element of the provided document.
-     * 
-     * @param doc
-     *            The document to get the root element from.
+     *
+     * @param doc The document to get the root element from.
      * @return Returns the first child of the document that is an element node.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     public static Element getRootElement(final Document doc) throws Exception {
 
@@ -153,30 +130,21 @@ public class Select {
     }
 
     /**
-     * Gets the value of the specified attribute of the root element from the
-     * document.
-     * 
-     * @param document
-     *            The document to retrieve the value from.
-     * @param attributeName
-     *            The name of the attribute whose value shall be retrieved.
-     * @param namespaceURI
-     *            The namespace URI of the attribute.
+     * Gets the value of the specified attribute of the root element from the document.
+     *
+     * @param document      The document to retrieve the value from.
+     * @param attributeName The name of the attribute whose value shall be retrieved.
+     * @param namespaceURI  The namespace URI of the attribute.
      * @return Returns the attribute value.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     public static String getRootElementAttributeValueNS(
-        final Document document, final String attributeName,
-        final String namespaceURI) throws Exception {
+        final Document document, final String attributeName, final String namespaceURI) throws Exception {
 
         Node root = getRootElement(document);
         if (root.getNamespaceURI() != null) {
             // has been parsed namespace aware
-            Node attr =
-                root
-                    .getAttributes()
-                    .getNamedItemNS(namespaceURI, attributeName);
+            Node attr = root.getAttributes().getNamedItemNS(namespaceURI, attributeName);
             return attr.getTextContent();
         }
         else {

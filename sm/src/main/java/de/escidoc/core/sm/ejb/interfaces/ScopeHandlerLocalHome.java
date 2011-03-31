@@ -9,6 +9,7 @@ import javax.ejb.EJBLocalHome;
 public interface ScopeHandlerLocalHome extends EJBLocalHome {
 
     String COMP_NAME = "java:comp/env/ejb/ScopeHandlerLocal";
+
     String JNDI_NAME = "ejb/ScopeHandlerLocal";
 
     ScopeHandlerLocal create() throws CreateException;

@@ -52,10 +52,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 
- * 
  * @author Rozita Friedman
- * 
  */
 public class ContentRelationsCreateHandler extends DefaultHandler {
 
@@ -77,37 +74,30 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
 
     private List<Map<String, String>> relationsData;
 
-    private static final Logger LOGGER =
-        LoggerFactory.getLogger(ContentRelationsCreateHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ContentRelationsCreateHandler.class);
 
     /**
      * Instantiate a ContentRelationsCreateHandler.
-     * 
-     * @param id
-     *            The id of the parsed object.
-     * @param parser
-     *            The parser.
+     *
+     * @param id     The id of the parsed object.
+     * @param parser The parser.
      */
-    public ContentRelationsCreateHandler(final String id,
-        final StaxParser parser) {
+    public ContentRelationsCreateHandler(final String id, final StaxParser parser) {
         this.id = id;
         this.parser = parser;
     }
 
     /**
      * Handle the start of an element.
-     * 
-     * @param element
-     *            The element.
+     *
+     * @param element The element.
      * @return The element.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     * @throws SystemException Thrown in case of an internal error.
      */
     @Override
-    public StartElement startElement(final StartElement element)
-        throws ReadonlyAttributeViolationException, InvalidContentException,
-        ReferencedResourceNotFoundException,
-        RelationPredicateNotFoundException, SystemException {
+    public StartElement startElement(final StartElement element) throws ReadonlyAttributeViolationException,
+        InvalidContentException, ReferencedResourceNotFoundException, RelationPredicateNotFoundException,
+        SystemException {
 
         final String currentPath = parser.getCurPath();
         String contentRelationsPath = "/item/relations";
@@ -117,7 +107,7 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
             contentRelationsPath = "/container/relations";
             contentRelationPath = "/container/relations/relation";
         }
-        
+
         final String theName = element.getLocalName();
 
         if (contentRelationPath.equals(currentPath)) {
@@ -125,8 +115,7 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
             final int indexOfObjId = element.indexOfAttribute(null, "objid");
             if (indexOfObjId != -1) {
                 throw new ReadonlyAttributeViolationException("Read only attribute \"objid\" of the " + "element "
-                        + element.getLocalName()
-                        + " may not exist while create");
+                    + element.getLocalName() + " may not exist while create");
             }
 
         }
@@ -136,67 +125,58 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
             }
             else if ("predicate".equals(theName)) {
                 try {
-                    final String xlinkHref =
-                        element
-                            .getAttribute(Constants.XLINK_URI, "href")
-                            .getValue();
+                    final String xlinkHref = element.getAttribute(Constants.XLINK_URI, "href").getValue();
                     if (OntologyUtility.checkPredicate(xlinkHref)) {
                         this.predicate = xlinkHref;
-                    } else {
+                    }
+                    else {
                         throw new RelationPredicateNotFoundException("Predicate " + xlinkHref + " is wrong. ");
                     }
 
                 }
                 catch (final NoSuchAttributeException e) {
-                    throw new InvalidContentException("Attribute 'href' of the element '" + theName
-                            + "' is missing.", e);
+                    throw new InvalidContentException("Attribute 'href' of the element '" + theName + "' is missing.",
+                        e);
                 }
-                final int indexOfType =
-                    element.indexOfAttribute(Constants.XLINK_URI, "type");
+                final int indexOfType = element.indexOfAttribute(Constants.XLINK_URI, "type");
 
                 final Attribute type = element.getAttribute(indexOfType);
                 final String typeValue = type.getValue();
                 if (!typeValue.equals(Constants.XLINK_TYPE_SIMPLE)) {
                     throw new InvalidContentException("Attribute " + Constants.XLINK_URI + ':'
-                            + "type must be set to 'simple'");
+                        + "type must be set to 'simple'");
                 }
 
             }
         }
         else if (contentRelationsPath.equals(currentPath)) {
             this.relationsData = new ArrayList<Map<String, String>>();
-            final int indexOfTitle =
-                element.indexOfAttribute(Constants.XLINK_URI, "title");
+            final int indexOfTitle = element.indexOfAttribute(Constants.XLINK_URI, "title");
 
             if (indexOfTitle != -1) {
                 throw new ReadonlyAttributeViolationException("Read only attribute \"title\" of the " + "element "
-                        + element.getLocalName()
-                        + " may not exist while create");
+                    + element.getLocalName() + " may not exist while create");
             }
-            final int indexOfHref =
-                element.indexOfAttribute(Constants.XLINK_URI, "href");
+            final int indexOfHref = element.indexOfAttribute(Constants.XLINK_URI, "href");
             if (indexOfHref != -1) {
                 throw new ReadonlyAttributeViolationException("Read only attribute \"href\" of the " + "element "
-                        + element.getLocalName()
-                        + " may not exist while create");
+                    + element.getLocalName() + " may not exist while create");
             }
             try {
-                final Attribute type =
-                    element.getAttribute(Constants.XLINK_URI, "type");
+                final Attribute type = element.getAttribute(Constants.XLINK_URI, "type");
                 if (!"simple".equals(type.getValue())) {
                     throw new InvalidContentException("Attribute " + Constants.XLINK_URI + ':'
-                            + "type must be set to 'simple'");
+                        + "type must be set to 'simple'");
                 }
             }
             catch (final NoSuchAttributeException e) {
-                if(LOGGER.isWarnEnabled()) {
+                if (LOGGER.isWarnEnabled()) {
                     LOGGER.warn("Error on getting attribute.");
                 }
-                if(LOGGER.isDebugEnabled()) {
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Error on getting attribute.", e);
                 }
-                element.addAttribute(new Attribute("type", Constants.XLINK_URI,
-                    Constants.XLINK_PREFIX, "simple"));
+                element.addAttribute(new Attribute("type", Constants.XLINK_URI, Constants.XLINK_PREFIX, "simple"));
             }
 
         }
@@ -206,9 +186,8 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
 
     /**
      * Handle the end of an element.
-     * 
-     * @param element
-     *            The element.
+     *
+     * @param element The element.
      * @return The element.
      */
     @Override
@@ -236,67 +215,59 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
     }
 
     /**
-     * 
+     *
      * @param element
      * @throws InvalidContentException
      * @throws ReadonlyAttributeViolationException
      * @throws ReferencedResourceNotFoundException
      * @throws SystemException
      */
-    private void checkRefElement(final StartElement element)
-        throws InvalidContentException, ReadonlyAttributeViolationException,
-        ReferencedResourceNotFoundException, SystemException {
+    private void checkRefElement(final StartElement element) throws InvalidContentException,
+        ReadonlyAttributeViolationException, ReferencedResourceNotFoundException, SystemException {
         try {
             final String objectId = element.getAttribute(null, "objid").getValue();
-            final String xlinkHref =
-                element.getAttribute(Constants.XLINK_URI, "href").getValue();
+            final String xlinkHref = element.getAttribute(Constants.XLINK_URI, "href").getValue();
             this.targetId = XmlUtility.getIdFromURI(xlinkHref);
             if (!objectId.equals(this.targetId)) {
-                throw new InvalidContentException("Value of the attribute 'href' is wrong. It must contain "
-                        + objectId + " instead of " + this.targetId);
+                throw new InvalidContentException("Value of the attribute 'href' is wrong. It must contain " + objectId
+                    + " instead of " + this.targetId);
             }
-            this.targetIdWithoutVersion =
-                XmlUtility.getObjidWithoutVersion(this.targetId);
+            this.targetIdWithoutVersion = XmlUtility.getObjidWithoutVersion(this.targetId);
             this.targetVersion = targetId.replaceFirst(this.targetIdWithoutVersion, "");
             this.targetVersion = targetVersion.length() > 0 ? targetVersion.substring(1) : null;
 
-            final String targetObjectType =
-                TripleStoreUtility.getInstance().getObjectType(this.targetIdWithoutVersion);
+            final String targetObjectType = TripleStoreUtility.getInstance().getObjectType(this.targetIdWithoutVersion);
             targetExist(targetObjectType);
             if (!xlinkHref.equals("/ir/" + targetObjectType + '/' + this.targetId)) {
-                throw new InvalidContentException("Value of the attribute 'href' is wrong. It must be"
-                        + "/ir/" + targetObjectType + '/' + this.targetId);
+                throw new InvalidContentException("Value of the attribute 'href' is wrong. It must be" + "/ir/"
+                    + targetObjectType + '/' + this.targetId);
             }
 
-            final int indexOfTitle =
-                element.indexOfAttribute(Constants.XLINK_URI, "title");
+            final int indexOfTitle = element.indexOfAttribute(Constants.XLINK_URI, "title");
             if (indexOfTitle != -1) {
                 throw new ReadonlyAttributeViolationException("Read only attribute \"title\" of the " + "element "
-                        + element.getLocalName()
-                        + " may not exist while create");
+                    + element.getLocalName() + " may not exist while create");
             }
             // targetId = "<info:fedora/" + targetId + ">";
 
         }
         catch (final NoSuchAttributeException e) {
-            throw new InvalidContentException("Expected attribute in object reference " + "in 'relation' of "
-                    + this.id + " is not set. (create item)", e);
+            throw new InvalidContentException("Expected attribute in object reference " + "in 'relation' of " + this.id
+                + " is not set. (create item)", e);
 
         }
     }
 
     /**
-     * 
+     *
      * @param targetObjectType
      * @throws ReferencedResourceNotFoundException
      * @throws SystemException
      */
-    private void targetExist(final String targetObjectType)
-        throws ReferencedResourceNotFoundException, SystemException {
+    private void targetExist(final String targetObjectType) throws ReferencedResourceNotFoundException, SystemException {
         if (!TripleStoreUtility.getInstance().exists(this.targetIdWithoutVersion)) {
-            throw new ReferencedResourceNotFoundException("Referenced target resource with id " +
-                    this.targetIdWithoutVersion
-                    + " does not exist.");
+            throw new ReferencedResourceNotFoundException("Referenced target resource with id "
+                + this.targetIdWithoutVersion + " does not exist.");
 
         }
         if (this.targetVersion != null) {
@@ -306,11 +277,10 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
                     TripleStoreUtility.getInstance().getPropertiesElements(this.targetIdWithoutVersion,
                         TripleStoreUtility.PROP_LATEST_VERSION_NUMBER);
             }
-            if (targetLatestVersion == null || Integer.parseInt(this.targetVersion) > Integer
-                .parseInt(targetLatestVersion)) {
+            if (targetLatestVersion == null
+                || Integer.parseInt(this.targetVersion) > Integer.parseInt(targetLatestVersion)) {
                 throw new ReferencedResourceNotFoundException("Referenced target resource with id "
-                        + this.targetIdWithoutVersion + ':' + this.targetVersion
-                        + " does not exist.");
+                    + this.targetIdWithoutVersion + ':' + this.targetVersion + " does not exist.");
             }
         }
     }

@@ -35,21 +35,16 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 /**
- * Interceptor to validate incoming XML documents. The validation takes only
- * place if the called method is annotated accordingly.
- * 
+ * Interceptor to validate incoming XML documents. The validation takes only place if the called method is annotated
+ * accordingly.
+ *
  * @author Michael Schneider
  */
 @Aspect
 public class XmlValidationInterceptor implements Ordered {
 
-
-
     /**
      * See Interface for functional description.
-     * 
-     * @return
-     *
      */
     @Override
     public int getOrder() {
@@ -57,76 +52,54 @@ public class XmlValidationInterceptor implements Ordered {
         return AopUtil.PRECEDENCE_XML_VALIDATION_INTERCEPTOR;
     }
 
-
-
     /**
-     * Before advice to perform the schema validation of xml data of the current
-     * request.
-     * 
-     * @param joinPoint
-     *            The current {@link JoinPoint}.
-     * @throws Throwable
-     *             Thrown in case of an error.
+     * Before advice to perform the schema validation of xml data of the current request.
      *
+     * @param joinPoint The current {@link JoinPoint}.
+     * @throws Throwable Thrown in case of an error.
      */
-//    @Before("call(public !static * de.escidoc.core.*.service.interfaces.*.*(..))"
-//        + " && within(de.escidoc.core.*.ejb.*Bean)")
+    //    @Before("call(public !static * de.escidoc.core.*.service.interfaces.*.*(..))"
+    //        + " && within(de.escidoc.core.*.ejb.*Bean)")
     @Before("call(public !static * de.escidoc.core.*.service.interfaces.*.*(..))")
     public void validate(final JoinPoint joinPoint) throws Throwable {
 
-        final Method calledMethod =
-            ((MethodSignature) joinPoint.getSignature()).getMethod();
+        final Method calledMethod = ((MethodSignature) joinPoint.getSignature()).getMethod();
         final Annotation annotation = calledMethod.getAnnotation(Validate.class);
         if (annotation != null) {
             final Object[] arguments = joinPoint.getArgs();
-            validate((String) arguments[((Validate) annotation).param()],
-                ((Validate) annotation).resolver(), ((Validate) annotation)
-                    .root());
+            validate((String) arguments[((Validate) annotation).param()], ((Validate) annotation).resolver(),
+                ((Validate) annotation).root());
         }
     }
 
     /**
      * Validates the provided xml data using the specified schema.
-     * 
-     * @param xml
-     *            The xml data to validate.
-     * @param resolvingMethod
-     *            The name of the resolving method used to identify the schema
-     *            location.
-     * @param root
-     * @throws InvalidXmlException
-     *             Thrown in case of failed xml schema validation.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
-     * @throws XmlParserSystemException
      *
+     * @param xml             The xml data to validate.
+     * @param resolvingMethod The name of the resolving method used to identify the schema location.
+     * @throws InvalidXmlException      Thrown in case of failed xml schema validation.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private void validate(
-        final String xml, final String resolvingMethod, final String root)
-        throws InvalidXmlException, WebserverSystemException,
-        XmlParserSystemException {
+    private void validate(final String xml, final String resolvingMethod, final String root)
+        throws InvalidXmlException, WebserverSystemException, XmlParserSystemException {
 
         XmlUtility.validate(xml, getSchemaLocation(resolvingMethod), root);
     }
 
     /**
      * Gets the location of the schema using the provided resolvingMethod value.
-     * 
-     * @param resolvingMethod
-     *            The name of the resolving method used to identify the schema
-     *            location.
-     * @return Returns the schema location.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
      *
+     * @param resolvingMethod The name of the resolving method used to identify the schema location.
+     * @return Returns the schema location.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private static String getSchemaLocation(final String resolvingMethod)
-        throws WebserverSystemException {
+    private static String getSchemaLocation(final String resolvingMethod) throws WebserverSystemException {
         final Class[] paramTypes = {};
         try {
             final Method getSchemaLocationM = XmlUtility.class.getMethod(resolvingMethod, paramTypes);
             return (String) getSchemaLocationM.invoke(null);
-        } catch (final Exception e) {
+        }
+        catch (final Exception e) {
             throw new WebserverSystemException("Could not find schema location for schema " + resolvingMethod + '!', e);
         }
     }

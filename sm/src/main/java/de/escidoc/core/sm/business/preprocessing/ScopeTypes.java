@@ -29,14 +29,13 @@
 package de.escidoc.core.sm.business.preprocessing;
 
 /**
- * <p>
+ * <p/>
  * Java class for scope-types.
- * 
- * <p>
- * The following schema fragment specifies the expected content contained within
- * this class.
- * <p>
- * 
+ * <p/>
+ * <p/>
+ * The following schema fragment specifies the expected content contained within this class.
+ * <p/>
+ * <p/>
  * <pre>
  * &lt;simpleType name="scope-types">
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}token">
@@ -45,7 +44,6 @@ package de.escidoc.core.sm.business.preprocessing;
  *   &lt;/restriction>
  * &lt;/simpleType>
  * </pre>
- * 
  */
 public enum ScopeTypes {
 

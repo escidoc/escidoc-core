@@ -30,7 +30,7 @@ package de.escidoc.sb.gsearch;
 
 /**
  * Constants.
- * 
+ *
  * @author Michael Hoppe
  */
 public final class Constants {
@@ -39,7 +39,6 @@ public final class Constants {
      * Spring Object-Names.
      */
     public static final String SB_SPRING_CONTEXT_NAME = "Sb.spring.ejb.context";
-
 
     /**
      * Private constructor to avoid instantiation.

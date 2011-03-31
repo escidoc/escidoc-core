@@ -33,13 +33,12 @@ import de.escidoc.core.sm.business.Constants;
 import de.escidoc.core.sm.business.vo.database.DatabaseConventionChecker;
 
 /**
- * Value Object that holds Information about one database-field when creating a
- * database-table.
- * 
- * @author Michael Hoppe
+ * Value Object that holds Information about one database-field when creating a database-table.
  *
+ * @author Michael Hoppe
  */
 public class DatabaseTableFieldVo {
+
     private String fieldName;
 
     // type can be date, numeric or text
@@ -53,19 +52,17 @@ public class DatabaseTableFieldVo {
     }
 
     /**
-     * @param fieldName
-     *            the fieldName to set
+     * @param fieldName the fieldName to set
      * @throws SqlDatabaseSystemException databaseException
      */
-    public void setFieldName(final String fieldName) 
-                        throws SqlDatabaseSystemException {
+    public void setFieldName(final String fieldName) throws SqlDatabaseSystemException {
         DatabaseConventionChecker.checkName(fieldName);
         this.fieldName = fieldName;
     }
 
     /**
      * can be text, numeric or date.
-     * 
+     *
      * @return the fieldType
      */
     public CharSequence getFieldType() {
@@ -74,16 +71,12 @@ public class DatabaseTableFieldVo {
 
     /**
      * can be text, numeric or date.
-     * 
-     * @param fieldType
-     *            the fieldType to set
-     * @throws SqlDatabaseSystemException
-     *             e
+     *
+     * @param fieldType the fieldType to set
+     * @throws SqlDatabaseSystemException e
      */
-    public void setFieldType(final String fieldType)
-        throws SqlDatabaseSystemException {
-        if (fieldType == null 
-        		|| !fieldType.equals(Constants.DATABASE_FIELD_TYPE_TEXT)
+    public void setFieldType(final String fieldType) throws SqlDatabaseSystemException {
+        if (fieldType == null || !fieldType.equals(Constants.DATABASE_FIELD_TYPE_TEXT)
             && !fieldType.equals(Constants.DATABASE_FIELD_TYPE_NUMERIC)
             && !fieldType.equals(Constants.DATABASE_FIELD_TYPE_DATE)) {
             throw new SqlDatabaseSystemException("wrong fieldType given");

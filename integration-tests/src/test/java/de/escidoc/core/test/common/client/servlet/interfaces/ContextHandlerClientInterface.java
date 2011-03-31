@@ -30,19 +30,15 @@ package de.escidoc.core.test.common.client.servlet.interfaces;
 
 /**
  * @author Steffen Wagner
- * 
  */
-public interface ContextHandlerClientInterface
-    extends ResourceHandlerClientInterface {
+public interface ContextHandlerClientInterface extends ResourceHandlerClientInterface {
+
     /**
      * Retrieve the xml representation of the properties of a resource.
-     * 
-     * @param id
-     *            The resource id.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param id The resource id.
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     Object retrieveProperties(final String id) throws Exception;
 }

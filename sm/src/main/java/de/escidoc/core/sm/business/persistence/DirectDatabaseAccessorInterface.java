@@ -37,132 +37,92 @@ import java.util.List;
 
 /**
  * Interface for direct JDBC Database access.
- * 
+ *
  * @author Michael Hoppe
  */
 public interface DirectDatabaseAccessorInterface {
 
     /**
      * Create a new Table according to the Informations in the databaseTableVo.
-     * 
-     * @param databaseTableVo
-     *            databaseTableVo with information about tablename, fieldnames
-     *            and indexnames.
-     * 
-     * @throws SqlDatabaseSystemException
-     *             If an error occurs accessing the database.
-     * 
+     *
+     * @param databaseTableVo databaseTableVo with information about tablename, fieldnames and indexnames.
+     * @throws SqlDatabaseSystemException If an error occurs accessing the database.
      */
-    void createTable(final DatabaseTableVo databaseTableVo)
-        throws SqlDatabaseSystemException;
+    void createTable(final DatabaseTableVo databaseTableVo) throws SqlDatabaseSystemException;
 
     /**
      * Drop a table according to the Informations in the databaseTableVo..
-     * 
-     * @param databaseTableVo
-     *            databaseTableVo with information about tablename.
-     * @throws SqlDatabaseSystemException
-     *             If an error occurs accessing the database.
-     * 
+     *
+     * @param databaseTableVo databaseTableVo with information about tablename.
+     * @throws SqlDatabaseSystemException If an error occurs accessing the database.
      */
-    void dropTable(final DatabaseTableVo databaseTableVo)
-        throws SqlDatabaseSystemException;
+    void dropTable(final DatabaseTableVo databaseTableVo) throws SqlDatabaseSystemException;
 
     /**
      * Insert new Record into Table.
-     * 
-     * @param databaseRecordVo
-     *            DatabaseRecordVo with information about tablename, fieldnames
-     *            and indexnames.
-     * @throws SqlDatabaseSystemException
-     *             If an error occurs accessing the database.
-     * 
+     *
+     * @param databaseRecordVo DatabaseRecordVo with information about tablename, fieldnames and indexnames.
+     * @throws SqlDatabaseSystemException If an error occurs accessing the database.
      */
-    void createRecord(final DatabaseRecordVo databaseRecordVo)
-        throws SqlDatabaseSystemException;
+    void createRecord(final DatabaseRecordVo databaseRecordVo) throws SqlDatabaseSystemException;
 
     /**
      * Delete Record.
-     * 
-     * @param databaseSelectVo
-     *            databaseSelectVo with information about record.
-     * @throws SqlDatabaseSystemException
-     *             If an error occurs accessing the database.
-     * 
+     *
+     * @param databaseSelectVo databaseSelectVo with information about record.
+     * @throws SqlDatabaseSystemException If an error occurs accessing the database.
      */
-    void deleteRecord(final DatabaseSelectVo databaseSelectVo)
-        throws SqlDatabaseSystemException;
+    void deleteRecord(final DatabaseSelectVo databaseSelectVo) throws SqlDatabaseSystemException;
 
     /**
      * Update Record.
-     * 
-     * @param databaseSelectVo
-     *            databaseSelectVo with information about record.
-     * @throws SqlDatabaseSystemException
-     *             If an error occurs accessing the database.
-     * 
+     *
+     * @param databaseSelectVo databaseSelectVo with information about record.
+     * @throws SqlDatabaseSystemException If an error occurs accessing the database.
      */
-    void updateRecord(final DatabaseSelectVo databaseSelectVo)
-        throws SqlDatabaseSystemException;
+    void updateRecord(final DatabaseSelectVo databaseSelectVo) throws SqlDatabaseSystemException;
 
     /**
      * Execute SQL.
-     * 
-     * @param databaseSelectVo
-     *            databaseSelectVo with information about sql.
+     *
+     * @param databaseSelectVo databaseSelectVo with information about sql.
      * @return List of Maps with data (one Map per db-record)
-     * @throws SqlDatabaseSystemException
-     *             If an error occurs accessing the database.
-     * 
+     * @throws SqlDatabaseSystemException If an error occurs accessing the database.
      */
-    List executeSql(final DatabaseSelectVo databaseSelectVo)
-        throws SqlDatabaseSystemException;
+    List executeSql(final DatabaseSelectVo databaseSelectVo) throws SqlDatabaseSystemException;
 
     /**
      * Execute SQL.
-     * 
-     * @param sql
-     *            sql-String
+     *
+     * @param sql sql-String
      * @return List of Maps with data (one Map per db-record)
-     * @throws SqlDatabaseSystemException
-     *             If an error occurs accessing the database.
-     * 
+     * @throws SqlDatabaseSystemException If an error occurs accessing the database.
      */
     List executeReadOnlySql(final String sql) throws SqlDatabaseSystemException;
 
     /**
      * Get database-dependant sql-query-part for an xpath-boolean request.
-     * 
-     * @param xpath
-     *            xpath-expression.
-     * @param field
-     *            db-field expression shall run on.
+     *
+     * @param xpath xpath-expression.
+     * @param field db-field expression shall run on.
      * @return String database-dependant query for an xpath-boolean request.
-     * 
      */
     String getXpathBoolean(final String xpath, final String field);
 
     /**
      * Get database-dependant sql-query-part for an xpath-string request.
-     * 
-     * @param xpath
-     *            xpath-expression.
-     * @param field
-     *            db-field expression shall run on.
+     *
+     * @param xpath xpath-expression.
+     * @param field db-field expression shall run on.
      * @return String database-dependant query for an xpath-string request.
-     * 
      */
     String getXpathString(final String xpath, final String field);
 
     /**
      * checks if given fieldname is a reserved expression in the database.
-     * 
-     * @param fieldname
-     *            name of field
-     * @throws SqlDatabaseSystemException
-     *             e
-     * 
+     *
+     * @param fieldname name of field
+     * @throws SqlDatabaseSystemException e
      */
-    void checkReservedExpressions(final String fieldname)
-        throws SqlDatabaseSystemException;
+    void checkReservedExpressions(final String fieldname) throws SqlDatabaseSystemException;
 }

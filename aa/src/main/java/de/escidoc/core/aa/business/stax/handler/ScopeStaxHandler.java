@@ -45,29 +45,24 @@ import java.util.List;
 
 /**
  * Stax handler that manages the scope definition of a role.
- * 
- * @author Torsten Tetteroo
  *
+ * @author Torsten Tetteroo
  */
 public class ScopeStaxHandler extends DefaultHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ScopeStaxHandler.class);
 
-    private static final String ROLE_SCOPE_DEF_RESOURCE_TYPE_NAME =
-        "resource-type";
+    private static final String ROLE_SCOPE_DEF_RESOURCE_TYPE_NAME = "resource-type";
 
-    private static final String ROLE_SCOPE_DEF_RELATION_ATTRIBUTE_ID_NAME =
-        "relation-attribute-id";
+    private static final String ROLE_SCOPE_DEF_RELATION_ATTRIBUTE_ID_NAME = "relation-attribute-id";
 
-    private static final String ROLE_SCOPE_DEF_RELATION_ATTRIBUTE_OBJECT_TYPE_NAME =
-        "relation-attribute-object-type";
+    private static final String ROLE_SCOPE_DEF_RELATION_ATTRIBUTE_OBJECT_TYPE_NAME = "relation-attribute-object-type";
 
     private static final String ROLE_SCOPE_DEF_NAME = "scope-def";
 
     private static final String BASE_PATH = "/role/scope";
 
-    private static final String ROLE_SCOPE_DEF_PATH =
-        BASE_PATH + '/' + ROLE_SCOPE_DEF_NAME;
+    private static final String ROLE_SCOPE_DEF_PATH = BASE_PATH + '/' + ROLE_SCOPE_DEF_NAME;
 
     private boolean unlimited = true;
 
@@ -81,68 +76,53 @@ public class ScopeStaxHandler extends DefaultHandler {
 
     /**
      * The constructor.
-     * 
-     * @param role
-     *            The role to handle.
      *
+     * @param role The role to handle.
      */
     public ScopeStaxHandler(final EscidocRole role) {
         this.role = role;
     }
 
-
-
     /**
      * See Interface for functional description.
-     * 
-     * @param element
-     * @return
-     * @throws SystemException
-     *             Thrown in case of an internal system error.
-     * @see DefaultHandler
-     *      #startElement
-     *      (de.escidoc.core.common.util.xml.stax.events.StartElement)
      *
+     * @throws SystemException Thrown in case of an internal system error.
+     * @see DefaultHandler #startElement (de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
-    public StartElement startElement(final StartElement element)
-        throws SystemException {
+    public StartElement startElement(final StartElement element) throws SystemException {
 
         if (isNotReady()) {
             final String currentPath = element.getPath();
             if (ROLE_SCOPE_DEF_PATH.equals(currentPath)) {
                 try {
-                    scopeDefResourceTypes.add(element.getAttributeValue(null,
-                        ROLE_SCOPE_DEF_RESOURCE_TYPE_NAME));
+                    scopeDefResourceTypes.add(element.getAttributeValue(null, ROLE_SCOPE_DEF_RESOURCE_TYPE_NAME));
                 }
                 catch (final NoSuchAttributeException e) {
-                    throw createMandatoryAttributeNotFoundException(element,
-                        null, ROLE_SCOPE_DEF_RESOURCE_TYPE_NAME, e);
+                    throw createMandatoryAttributeNotFoundException(element, null, ROLE_SCOPE_DEF_RESOURCE_TYPE_NAME, e);
                 }
                 String scopeDefAttributeId = null;
                 try {
-                    scopeDefAttributeId = element.getAttributeValue(null,
-                            ROLE_SCOPE_DEF_RELATION_ATTRIBUTE_ID_NAME);
+                    scopeDefAttributeId = element.getAttributeValue(null, ROLE_SCOPE_DEF_RELATION_ATTRIBUTE_ID_NAME);
                     scopeDefAttributeIds.add(scopeDefAttributeId);
-                } catch (final NoSuchAttributeException e) {
-                    if(LOGGER.isWarnEnabled()) {
+                }
+                catch (final NoSuchAttributeException e) {
+                    if (LOGGER.isWarnEnabled()) {
                         LOGGER.warn("Error on getting attribute.");
                     }
-                    if(LOGGER.isDebugEnabled()) {
+                    if (LOGGER.isDebugEnabled()) {
                         LOGGER.debug("Error on getting attribute.", e);
                     }
                     scopeDefAttributeIds.add(null);
                 }
                 try {
-                    scopeDefAttributeObjectTypes.add(
-                            element.getAttributeValue(null,
-                            ROLE_SCOPE_DEF_RELATION_ATTRIBUTE_OBJECT_TYPE_NAME));
+                    scopeDefAttributeObjectTypes.add(element.getAttributeValue(null,
+                        ROLE_SCOPE_DEF_RELATION_ATTRIBUTE_OBJECT_TYPE_NAME));
                 }
                 catch (final NoSuchAttributeException e) {
                     if (scopeDefAttributeId != null) {
-                        throw createMandatoryAttributeNotFoundException(element,
-                                null, 
-                                ROLE_SCOPE_DEF_RELATION_ATTRIBUTE_OBJECT_TYPE_NAME, e);
+                        throw createMandatoryAttributeNotFoundException(element, null,
+                            ROLE_SCOPE_DEF_RELATION_ATTRIBUTE_OBJECT_TYPE_NAME, e);
                     }
                     scopeDefAttributeObjectTypes.add(null);
                 }
@@ -155,13 +135,8 @@ public class ScopeStaxHandler extends DefaultHandler {
 
     /**
      * See Interface for functional description.
-     * 
-     * @param element
-     * @return
-     * @throws Exception
-     * @see DefaultHandler
-     *      #endElement(de.escidoc.core.common.util.xml.stax.events.EndElement)
      *
+     * @see DefaultHandler #endElement(de.escidoc.core.common.util.xml.stax.events.EndElement)
      */
     @Override
     public EndElement endElement(final EndElement element) throws Exception {
@@ -176,20 +151,14 @@ public class ScopeStaxHandler extends DefaultHandler {
                 scopeDefs.clear();
 
                 // add new scope defs
-                final Iterator<String> resourceTypesIterator =
-                    scopeDefResourceTypes.iterator();
-                final Iterator<String> attributeIdsIterator =
-                    scopeDefAttributeIds.iterator();
-                final Iterator<String> attributeObjectTypesIterator =
-                    scopeDefAttributeObjectTypes.iterator();
+                final Iterator<String> resourceTypesIterator = scopeDefResourceTypes.iterator();
+                final Iterator<String> attributeIdsIterator = scopeDefAttributeIds.iterator();
+                final Iterator<String> attributeObjectTypesIterator = scopeDefAttributeObjectTypes.iterator();
                 while (resourceTypesIterator.hasNext()) {
                     final String resourceType = resourceTypesIterator.next();
                     final String attributeId = attributeIdsIterator.next();
-                    final String attributeObjectType =
-                        attributeObjectTypesIterator.next();
-                    final ScopeDef scopeDef =
-                        new ScopeDef(
-                            resourceType, attributeId, attributeObjectType, this.role);
+                    final String attributeObjectType = attributeObjectTypesIterator.next();
+                    final ScopeDef scopeDef = new ScopeDef(resourceType, attributeId, attributeObjectType, this.role);
                     scopeDefs.add(scopeDef);
                 }
 
@@ -199,14 +168,10 @@ public class ScopeStaxHandler extends DefaultHandler {
         return element;
     }
 
-
-
     /**
      * Gets the unlimited flag.
-     * 
-     * @return Returns <code>true</code>, if a unlimited role has been
-     *         parsed, <code>false</code> else.
      *
+     * @return Returns <code>true</code>, if a unlimited role has been parsed, <code>false</code> else.
      */
     public boolean isUnlimited() {
 
@@ -215,11 +180,9 @@ public class ScopeStaxHandler extends DefaultHandler {
 
     /**
      * Gets the attribute id definitions of the scope defs.
-     * 
-     * @return Returns the attribute id definitions of the scope defs. If no
-     *         scope definitions have been found, an empty <code>List</code>
-     *         is returned.
      *
+     * @return Returns the attribute id definitions of the scope defs. If no scope definitions have been found, an empty
+     *         <code>List</code> is returned.
      */
     public List<String> getScopeDefAttributeIds() {
         return this.scopeDefAttributeIds;
@@ -227,11 +190,9 @@ public class ScopeStaxHandler extends DefaultHandler {
 
     /**
      * Gets the resource type definitions of the scope defs.
-     * 
-     * @return Returns the resource type definitions of the scope defs. If no
-     *         scope definitions have been found, an empty <code>List</code>
-     *         is returned.
      *
+     * @return Returns the resource type definitions of the scope defs. If no scope definitions have been found, an
+     *         empty <code>List</code> is returned.
      */
     public List<String> getScopeDefResourceTypes() {
         return this.scopeDefResourceTypes;

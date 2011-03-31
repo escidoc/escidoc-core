@@ -24,12 +24,12 @@ import java.util.Arrays;
 import java.util.TreeSet;
 
 /**
- * This class represents a database table containing a list of all its column
- * names and indexes.
- * 
+ * This class represents a database table containing a list of all its column names and indexes.
+ *
  * @author André Schenk
  */
 public class Table implements Comparable<Object> {
+
     private String name;
 
     private TreeSet<String> columns;
@@ -48,20 +48,14 @@ public class Table implements Comparable<Object> {
 
     /**
      * Create a new Table object.
-     * 
-     * @param name
-     *            table name
-     * @param columns
-     *            list of table columns
-     * @param indexes
-     *            list of table indexes
-     * @param primaryKeys
-     *            primary keys defined for the table
-     * @param foreignKeys
-     *            foreign keys defined for the table
+     *
+     * @param name        table name
+     * @param columns     list of table columns
+     * @param indexes     list of table indexes
+     * @param primaryKeys primary keys defined for the table
+     * @param foreignKeys foreign keys defined for the table
      */
-    public Table(final String name, final String[] columns,
-        final String[] indexes, final String[] primaryKeys,
+    public Table(final String name, final String[] columns, final String[] indexes, final String[] primaryKeys,
         final String[] foreignKeys) {
         setName(name);
         setColumns(columns);
@@ -71,15 +65,12 @@ public class Table implements Comparable<Object> {
     }
 
     /**
-     * Compares this object with the specified object for order. Returns a
-     * negative integer, zero, or a positive integer as this object is less
-     * than, equal to, or greater than the specified object.
-     * 
-     * @param o
-     *            the Object to be compared.
-     * 
-     * @return a negative integer, zero, or a positive integer as this object is
-     *         less than, equal to, or greater than the specified object.
+     * Compares this object with the specified object for order. Returns a negative integer, zero, or a positive integer
+     * as this object is less than, equal to, or greater than the specified object.
+     *
+     * @param o the Object to be compared.
+     * @return a negative integer, zero, or a positive integer as this object is less than, equal to, or greater than
+     *         the specified object.
      */
     @Override
     public int compareTo(final Object o) {
@@ -88,12 +79,9 @@ public class Table implements Comparable<Object> {
 
     /**
      * Indicates whether some other object is "equal to" this one.
-     * 
-     * @param obj
-     *            the reference object with which to compare.
-     * 
-     * @return true if this object is the same as the obj argument; false
-     *         otherwise.
+     *
+     * @param obj the reference object with which to compare.
+     * @return true if this object is the same as the obj argument; false otherwise.
      */
     public boolean equals(final Object obj) {
         return (obj != null) && name.equals(((Table) obj).getName());
@@ -101,7 +89,7 @@ public class Table implements Comparable<Object> {
 
     /**
      * Get the list of column names.
-     * 
+     *
      * @return column names
      */
     public TreeSet<String> getColumns() {
@@ -110,7 +98,7 @@ public class Table implements Comparable<Object> {
 
     /**
      * Get the list of foreign keys.
-     * 
+     *
      * @return foreign keys
      */
     public TreeSet<String> getForeignKeys() {
@@ -119,7 +107,7 @@ public class Table implements Comparable<Object> {
 
     /**
      * Get the list of table indexes.
-     * 
+     *
      * @return table indexes
      */
     public TreeSet<String> getIndexes() {
@@ -128,7 +116,7 @@ public class Table implements Comparable<Object> {
 
     /**
      * Get the table name.
-     * 
+     *
      * @return table name
      */
     public String getName() {
@@ -137,7 +125,7 @@ public class Table implements Comparable<Object> {
 
     /**
      * Get the list of primary keys.
-     * 
+     *
      * @return primary keys
      */
     public TreeSet<String> getPrimaryKeys() {
@@ -145,9 +133,9 @@ public class Table implements Comparable<Object> {
     }
 
     /**
-     * Returns a hash code value for the object. This method is supported for
-     * the benefit of hashtables such as those provided by java.util.Hashtable.
-     * 
+     * Returns a hash code value for the object. This method is supported for the benefit of hashtables such as those
+     * provided by java.util.Hashtable.
+     *
      * @return a hash code value for this object.
      */
     public int hashCode() {
@@ -156,25 +144,22 @@ public class Table implements Comparable<Object> {
 
     /**
      * Set the list of column names.
-     * 
-     * @param columns
-     *            column names
+     *
+     * @param columns column names
      */
     public void setColumns(final String[] columns) {
         if (columns != null) {
             this.columns = new TreeSet<String>();
             final String[] internalArray = new String[columns.length];
-            System
-                .arraycopy(columns, 0, internalArray, 0, internalArray.length);
+            System.arraycopy(columns, 0, internalArray, 0, internalArray.length);
             this.columns.addAll(Arrays.asList(internalArray));
         }
     }
 
     /**
      * Set the list of column names.
-     * 
-     * @param columns
-     *            column names
+     *
+     * @param columns column names
      */
     public void setColumns(final TreeSet<String> columns) {
         this.columns = columns;
@@ -182,25 +167,22 @@ public class Table implements Comparable<Object> {
 
     /**
      * Set the list of foreign keys.
-     * 
-     * @param foreignKeys
-     *            foreign keys
+     *
+     * @param foreignKeys foreign keys
      */
     public void setForeignKeys(final String[] foreignKeys) {
         if (foreignKeys != null) {
             this.foreignKeys = new TreeSet<String>();
             final String[] internalArray = new String[foreignKeys.length];
-            System.arraycopy(foreignKeys, 0, internalArray, 0,
-                internalArray.length);
+            System.arraycopy(foreignKeys, 0, internalArray, 0, internalArray.length);
             this.foreignKeys.addAll(Arrays.asList(internalArray));
         }
     }
 
     /**
      * Set the list of foreign keys.
-     * 
-     * @param foreignKeys
-     *            foreign keys
+     *
+     * @param foreignKeys foreign keys
      */
     public void setForeignKeys(final TreeSet<String> foreignKeys) {
         this.foreignKeys = foreignKeys;
@@ -208,9 +190,8 @@ public class Table implements Comparable<Object> {
 
     /**
      * Set the list of table indexes.
-     * 
-     * @param indexes
-     *            table indexes
+     *
+     * @param indexes table indexes
      */
     public void setIndexes(final String[] indexes) {
         // FIXME: reactivate after 1.3 release
@@ -224,9 +205,8 @@ public class Table implements Comparable<Object> {
 
     /**
      * Set the list of table indexes.
-     * 
-     * @param indexes
-     *            table indexes
+     *
+     * @param indexes table indexes
      */
     public void setIndexes(final TreeSet<String> indexes) {
         // FIXME: reactivate after 1.3 release
@@ -235,9 +215,8 @@ public class Table implements Comparable<Object> {
 
     /**
      * Set the table name.
-     * 
-     * @param name
-     *            table name
+     *
+     * @param name table name
      */
     public void setName(final String name) {
         this.name = name;
@@ -245,25 +224,22 @@ public class Table implements Comparable<Object> {
 
     /**
      * Set the list of primary keys.
-     * 
-     * @param primaryKeys
-     *            primary keys
+     *
+     * @param primaryKeys primary keys
      */
     public void setPrimaryKeys(final String[] primaryKeys) {
         if (primaryKeys != null) {
             this.primaryKeys = new TreeSet<String>();
             final String[] internalArray = new String[primaryKeys.length];
-            System.arraycopy(primaryKeys, 0, internalArray, 0,
-                internalArray.length);
+            System.arraycopy(primaryKeys, 0, internalArray, 0, internalArray.length);
             this.primaryKeys.addAll(Arrays.asList(internalArray));
         }
     }
 
     /**
      * Set the list of primary keys.
-     * 
-     * @param primaryKeys
-     *            primary keys
+     *
+     * @param primaryKeys primary keys
      */
     public void setPrimaryKeys(final TreeSet<String> primaryKeys) {
         this.primaryKeys = primaryKeys;

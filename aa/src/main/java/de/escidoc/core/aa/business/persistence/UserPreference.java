@@ -25,15 +25,13 @@
  * fuer wissenschaftlich-technische Information mbH and Max-Planck-
  * Gesellschaft zur Foerderung der Wissenschaft e.V.
  * All rights reserved.  Use is subject to license terms.
- */ 
+ */
 package de.escidoc.core.aa.business.persistence;
 
 /**
  * A user property.
- * 
+ *
  * @author Frank Schwichtenberg
- *
- *
  */
 public class UserPreference extends UserPreferenceBase {
 
@@ -44,8 +42,6 @@ public class UserPreference extends UserPreferenceBase {
 
     /**
      * The default constructor.
-     * 
-     *
      */
     public UserPreference() {
     }

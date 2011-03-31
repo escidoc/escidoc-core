@@ -23,12 +23,12 @@ package de.escidoc.core.common.business.filter;
 import java.util.Map;
 
 /**
- * This class is a value object for all parameters used in an SRU request with
- * Lucene as back end.
- * 
+ * This class is a value object for all parameters used in an SRU request with Lucene as back end.
+ *
  * @author André Schenk
  */
 public class LuceneRequestParameters extends SRURequestParameters {
+
     // Do not set a default value for maximum records on client side.
     public static final int DEFAULT_MAXIMUM_RECORDS = -1;
 
@@ -37,9 +37,8 @@ public class LuceneRequestParameters extends SRURequestParameters {
 
     /**
      * Create a new parameters object from the given map.
-     * 
-     * @param parameters
-     *            map map containing the CQL request parameters
+     *
+     * @param parameters map map containing the CQL request parameters
      */
     public LuceneRequestParameters(final Map<String, String[]> parameters) {
         super(parameters);
@@ -47,7 +46,7 @@ public class LuceneRequestParameters extends SRURequestParameters {
 
     /**
      * Get the default maximum records value for search.
-     * 
+     *
      * @return default maximum value for search
      */
     @Override
@@ -57,7 +56,7 @@ public class LuceneRequestParameters extends SRURequestParameters {
 
     /**
      * Get the default start record for search.
-     * 
+     *
      * @return default start record for search
      */
     @Override

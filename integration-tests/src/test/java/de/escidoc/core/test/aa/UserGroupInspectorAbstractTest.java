@@ -41,9 +41,8 @@ import java.util.ArrayList;
 
 /**
  * Test suite for the role user-group-inspector.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 public class UserGroupInspectorAbstractTest extends GrantTestBase {
 
@@ -54,32 +53,25 @@ public class UserGroupInspectorAbstractTest extends GrantTestBase {
     protected static final String PASSWORD = PWCallback.PASSWORD;
 
     protected static String grantCreationUserOrGroupId = null;
-    
+
     private static UserGroupTestBase userGroupTestBase = null;
-    
+
     private static int methodCounter = 0;
-    
+
     private static String groupId = null;
-    
+
     private static String groupId1 = null;
-    
+
     /**
      * The constructor.
-     * 
-     * @param transport
-     *            The transport identifier.
-     * @param handlerCode
-     *            handlerCode of either UserAccountHandler or UserGroupHandler.
-     * @param userOrGroupId
-     *            userOrGroupId for grantCreation.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param transport     The transport identifier.
+     * @param handlerCode   handlerCode of either UserAccountHandler or UserGroupHandler.
+     * @param userOrGroupId userOrGroupId for grantCreation.
+     * @throws Exception If anything fails.
      */
-    public UserGroupInspectorAbstractTest(
-            final int transport, 
-            final int handlerCode,
-            final String userOrGroupId) throws Exception {
+    public UserGroupInspectorAbstractTest(final int transport, final int handlerCode, final String userOrGroupId)
+        throws Exception {
         super(transport, handlerCode);
         grantCreationUserOrGroupId = userOrGroupId;
         userGroupTestBase = new UserGroupTestBase(transport);
@@ -87,9 +79,8 @@ public class UserGroupInspectorAbstractTest extends GrantTestBase {
 
     /**
      * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Before
     public void initialize() throws Exception {
@@ -102,9 +93,8 @@ public class UserGroupInspectorAbstractTest extends GrantTestBase {
 
     /**
      * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @After
     public void deinitialize() throws Exception {
@@ -117,159 +107,141 @@ public class UserGroupInspectorAbstractTest extends GrantTestBase {
 
     /**
      * prepare tests (create group).
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     public void prepare() throws Exception {
         String groupXml = prepareUserGroup(PWCallback.DEFAULT_HANDLE);
-        Document groupDocument =
-            EscidocRestSoapTestBase.getDocument(groupXml);
+        Document groupDocument = EscidocRestSoapTestBase.getDocument(groupXml);
         groupId = getObjidValue(groupDocument);
-        String lastModificationDate = 
-            getLastModificationDateValue(groupDocument);
+        String lastModificationDate = getLastModificationDateValue(groupDocument);
 
         groupXml = prepareUserGroup(PWCallback.DEFAULT_HANDLE);
-        groupDocument =
-            EscidocRestSoapTestBase.getDocument(groupXml);
+        groupDocument = EscidocRestSoapTestBase.getDocument(groupXml);
         groupId1 = getObjidValue(groupDocument);
 
         //add group1 to group
-        ArrayList<String []> selectors = new ArrayList<String[]>();
-        String [] selector = new String [3];
+        ArrayList<String[]> selectors = new ArrayList<String[]>();
+        String[] selector = new String[3];
         selector[0] = "user-group";
         selector[1] = "internal";
         selector[2] = groupId1;
 
         selectors.add(selector);
-        String taskParam = 
-            userGroupTestBase
-                .getAddSelectorsTaskParam(
-                        selectors, lastModificationDate);
-        userGroupTestBase.doTestAddSelectors(
-                    null, groupId, taskParam, null);
+        String taskParam = userGroupTestBase.getAddSelectorsTaskParam(selectors, lastModificationDate);
+        userGroupTestBase.doTestAddSelectors(null, groupId, taskParam, null);
 
     }
 
     /**
      * Tests successfully retrieving a user-group.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveGroup() throws Exception {
         try {
             //grant role user-group-inspector to user with scope on group
-            doTestCreateGrant(null, grantCreationUserOrGroupId, 
-                Constants.USER_GROUP_BASE_URI + "/" 
-                    + groupId, ROLE_HREF_USER_GROUP_INSPECTOR, null);
+            doTestCreateGrant(null, grantCreationUserOrGroupId, Constants.USER_GROUP_BASE_URI + "/" + groupId,
+                ROLE_HREF_USER_GROUP_INSPECTOR, null);
 
             userGroupTestBase.doTestRetrieve(HANDLE, groupId, null);
-        } finally {
+        }
+        finally {
             revokeAllGrants(grantCreationUserOrGroupId);
         }
     }
 
     /**
      * Tests declining retrieving a user-group.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveGroupHierarchicalDecline() throws Exception {
         try {
             //grant role user-group-inspector to user with scope on group
-            doTestCreateGrant(null, grantCreationUserOrGroupId, 
-                Constants.USER_GROUP_BASE_URI + "/" 
-                    + groupId, ROLE_HREF_USER_GROUP_INSPECTOR, null);
+            doTestCreateGrant(null, grantCreationUserOrGroupId, Constants.USER_GROUP_BASE_URI + "/" + groupId,
+                ROLE_HREF_USER_GROUP_INSPECTOR, null);
 
-            userGroupTestBase.doTestRetrieve(
-                HANDLE, groupId1, AuthorizationException.class);
-        } finally {
+            userGroupTestBase.doTestRetrieve(HANDLE, groupId1, AuthorizationException.class);
+        }
+        finally {
             revokeAllGrants(grantCreationUserOrGroupId);
         }
     }
 
     /**
      * Tests successfully retrieving a user-group.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveGroup1() throws Exception {
         try {
             //grant role user-group-inspector to user with scope on group
-            doTestCreateGrant(null, grantCreationUserOrGroupId, 
-                Constants.USER_GROUP_BASE_URI + "/" 
-                    + groupId1, ROLE_HREF_USER_GROUP_INSPECTOR, null);
+            doTestCreateGrant(null, grantCreationUserOrGroupId, Constants.USER_GROUP_BASE_URI + "/" + groupId1,
+                ROLE_HREF_USER_GROUP_INSPECTOR, null);
 
             userGroupTestBase.doTestRetrieve(HANDLE, groupId1, null);
-        } finally {
+        }
+        finally {
             revokeAllGrants(grantCreationUserOrGroupId);
         }
     }
 
     /**
      * Tests declining retrieving a user-group.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveGroupHierarchicalDecline1() throws Exception {
         try {
             //grant role user-group-inspector to user with scope on group
-            doTestCreateGrant(null, grantCreationUserOrGroupId, 
-                Constants.USER_GROUP_BASE_URI + "/" 
-                    + groupId1, ROLE_HREF_USER_GROUP_INSPECTOR, null);
+            doTestCreateGrant(null, grantCreationUserOrGroupId, Constants.USER_GROUP_BASE_URI + "/" + groupId1,
+                ROLE_HREF_USER_GROUP_INSPECTOR, null);
 
-            userGroupTestBase.doTestRetrieve(
-                HANDLE, groupId, AuthorizationException.class);
-        } finally {
+            userGroupTestBase.doTestRetrieve(HANDLE, groupId, AuthorizationException.class);
+        }
+        finally {
             revokeAllGrants(grantCreationUserOrGroupId);
         }
     }
 
     /**
      * Tests declining retrieving a user-group.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveGroupDecline() throws Exception {
         try {
             //grant role user-group-inspector to user with scope on group
-            doTestCreateGrant(null, grantCreationUserOrGroupId, 
-                Constants.USER_GROUP_BASE_URI + "/" 
-                    + groupId, ROLE_HREF_USER_GROUP_INSPECTOR, null);
+            doTestCreateGrant(null, grantCreationUserOrGroupId, Constants.USER_GROUP_BASE_URI + "/" + groupId,
+                ROLE_HREF_USER_GROUP_INSPECTOR, null);
 
-            userGroupTestBase.doTestRetrieve(
-                HANDLE, groupId1, AuthorizationException.class);
-        } finally {
+            userGroupTestBase.doTestRetrieve(HANDLE, groupId1, AuthorizationException.class);
+        }
+        finally {
             revokeAllGrants(grantCreationUserOrGroupId);
         }
     }
 
     /**
      * Tests declining retrieving a user-group.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveGroupDecline1() throws Exception {
         try {
             //grant role user-group-inspector to user with scope on group
-            doTestCreateGrant(null, grantCreationUserOrGroupId, 
-                null, ROLE_HREF_USER_GROUP_INSPECTOR, null);
+            doTestCreateGrant(null, grantCreationUserOrGroupId, null, ROLE_HREF_USER_GROUP_INSPECTOR, null);
 
-            userGroupTestBase.doTestRetrieve(
-                HANDLE, groupId1, AuthorizationException.class);
-        } finally {
+            userGroupTestBase.doTestRetrieve(HANDLE, groupId1, AuthorizationException.class);
+        }
+        finally {
             revokeAllGrants(grantCreationUserOrGroupId);
         }
     }

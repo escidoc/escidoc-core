@@ -52,7 +52,7 @@ import java.util.Map;
 
 /**
  * An statistic Scope resource handler.
- * 
+ *
  * @author Michael Hoppe
  */
 public class ScopeHandler implements ScopeHandlerInterface {
@@ -65,23 +65,16 @@ public class ScopeHandler implements ScopeHandlerInterface {
 
     /**
      * See Interface for functional description.
-     * 
-     * @see de.escidoc.core.sm.business.interfaces .ScopeHandlerInterface
-     *      #create(java.lang.String)
-     * 
-     * @param xmlData
-     *            Scope as xml in Scope schema.
+     *
+     * @param xmlData Scope as xml in Scope schema.
      * @return Returns the XML representation of the resource.
-     * 
      * @throws MissingMethodParameterException
-     *             ex
-     * @throws SystemException
-     *             ex
-     * 
+     *                         ex
+     * @throws SystemException ex
+     * @see de.escidoc.core.sm.business.interfaces .ScopeHandlerInterface #create(java.lang.String)
      */
     @Override
-    public String create(final String xmlData)
-        throws MissingMethodParameterException, SystemException {
+    public String create(final String xmlData) throws MissingMethodParameterException, SystemException {
         if (xmlData == null || xmlData.length() == 0) {
             throw new MissingMethodParameterException("xml may not be null");
         }
@@ -91,7 +84,8 @@ public class ScopeHandler implements ScopeHandlerInterface {
         sp.addHandler(handler);
         try {
             sp.parse(xmlData);
-        } catch (final Exception e) {
+        }
+        catch (final Exception e) {
             throw new SystemException(e);
         }
 
@@ -99,8 +93,7 @@ public class ScopeHandler implements ScopeHandlerInterface {
         final Utility utility = new Utility();
         scope.setCreatorId(utility.getCurrentUserId());
         scope.setModifiedById(scope.getCreatorId());
-        scope
-            .setLastModificationDate(new Timestamp(System.currentTimeMillis()));
+        scope.setLastModificationDate(new Timestamp(System.currentTimeMillis()));
         scope.setCreationDate(scope.getLastModificationDate());
 
         dao.save(scope);
@@ -110,24 +103,16 @@ public class ScopeHandler implements ScopeHandlerInterface {
 
     /**
      * See Interface for functional description.
-     * 
-     * @see de.escidoc.core.sm.business.interfaces .ScopeHandlerInterface
-     *      #delete(java.lang.String)
-     * 
-     * @param id
-     *            resource id.
-     * 
-     * @throws ScopeNotFoundException
-     *             e.
+     *
+     * @param id resource id.
+     * @throws ScopeNotFoundException e.
      * @throws MissingMethodParameterException
-     *             e.
-     * @throws SystemException
-     *             e.
-     * 
+     *                                e.
+     * @throws SystemException        e.
+     * @see de.escidoc.core.sm.business.interfaces .ScopeHandlerInterface #delete(java.lang.String)
      */
     @Override
-    public void delete(final String id) throws ScopeNotFoundException,
-        MissingMethodParameterException, SystemException {
+    public void delete(final String id) throws ScopeNotFoundException, MissingMethodParameterException, SystemException {
         if (id == null) {
             throw new MissingMethodParameterException("id may not be null");
         }
@@ -137,25 +122,18 @@ public class ScopeHandler implements ScopeHandlerInterface {
 
     /**
      * See Interface for functional description.
-     * 
-     * @see de.escidoc.core.sm.business.interfaces .ScopeHandlerInterface
-     *      #retrieve(java.lang.String)
-     * 
-     * @param id
-     *            resource id.
+     *
+     * @param id resource id.
      * @return Returns the XML representation of the resource.
-     * 
-     * @throws ScopeNotFoundException
-     *             e.
+     * @throws ScopeNotFoundException e.
      * @throws MissingMethodParameterException
-     *             e.
-     * @throws SystemException
-     *             e.
-     * 
+     *                                e.
+     * @throws SystemException        e.
+     * @see de.escidoc.core.sm.business.interfaces .ScopeHandlerInterface #retrieve(java.lang.String)
      */
     @Override
-    public String retrieve(final String id) throws ScopeNotFoundException,
-        MissingMethodParameterException, SystemException {
+    public String retrieve(final String id) throws ScopeNotFoundException, MissingMethodParameterException,
+        SystemException {
         if (id == null) {
             throw new MissingMethodParameterException("id may not be null");
         }
@@ -164,25 +142,18 @@ public class ScopeHandler implements ScopeHandlerInterface {
 
     /**
      * See Interface for functional description.
-     * 
-     * @see de.escidoc.core.sm.business.interfaces
-     *      .ScopeHandlerInterface#retrieveScopes(java.util.Map)
-     * 
-     * @param parameters
-     *            filter as CQL query
+     *
+     * @param parameters filter as CQL query
      * @return Returns the XML representation of the resource-list.
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a SQL query
-     * @throws SystemException
-     *             e.
+     * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
+     * @throws SystemException             e.
+     * @see de.escidoc.core.sm.business.interfaces .ScopeHandlerInterface#retrieveScopes(java.util.Map)
      */
     @Override
-    public String retrieveScopes(final Map<String, String[]> parameters)
-        throws InvalidSearchQueryException, SystemException {
+    public String retrieveScopes(final Map<String, String[]> parameters) throws InvalidSearchQueryException,
+        SystemException {
         final String result;
-        final SRURequestParameters params =
-            new DbRequestParameters(parameters);
+        final SRURequestParameters params = new DbRequestParameters(parameters);
         final String query = params.getQuery();
         final int limit = params.getMaximumRecords();
         final int offset = params.getStartRecord();
@@ -190,15 +161,11 @@ public class ScopeHandler implements ScopeHandlerInterface {
         if (params.isExplain()) {
             final Map<String, Object> values = new HashMap<String, Object>();
 
-            values.put("PROPERTY_NAMES",
-                new ScopeFilter(null).getPropertyNames());
-            result =
-                ExplainXmlProvider.getInstance().getExplainScopeXml(values);
+            values.put("PROPERTY_NAMES", new ScopeFilter(null).getPropertyNames());
+            result = ExplainXmlProvider.getInstance().getExplainScopeXml(values);
         }
         else if (limit == 0) {
-            result =
-                renderer.renderScopes(new ArrayList<Scope>(0),
-                    params.getRecordPacking());
+            result = renderer.renderScopes(new ArrayList<Scope>(0), params.getRecordPacking());
         }
         else {
             // get all scope-ids from database
@@ -209,14 +176,11 @@ public class ScopeHandler implements ScopeHandlerInterface {
 
             if (scopeIds != null && !scopeIds.isEmpty()) {
                 // get scope-ids filtered by user-privileges
-                filteredScopeIds =
-                    filterUtility.filterRetrievePrivilege(
-                        Constants.SCOPE_OBJECT_TYPE, scopeIds);
+                filteredScopeIds = filterUtility.filterRetrievePrivilege(Constants.SCOPE_OBJECT_TYPE, scopeIds);
             }
             if (filteredScopeIds != null && !filteredScopeIds.isEmpty()) {
                 // get scopes as XML
-                scopes =
-                    dao.retrieveScopes(filteredScopeIds, query, offset, limit);
+                scopes = dao.retrieveScopes(filteredScopeIds, query, offset, limit);
             }
 
             result = renderer.renderScopes(scopes, params.getRecordPacking());
@@ -226,28 +190,19 @@ public class ScopeHandler implements ScopeHandlerInterface {
 
     /**
      * See Interface for functional description.
-     * 
-     * @see de.escidoc.core.sm.business.interfaces .ScopeHandlerInterface
-     *      #update(java.lang.String,java.lang.String)
-     * 
-     * @param xmlData
-     *            Scope data as xml in Scope schema.
-     * @param id
-     *            resource id.
+     *
+     * @param xmlData Scope data as xml in Scope schema.
+     * @param id      resource id.
      * @return Returns the XML representation of the resource.
-     * 
-     * @throws ScopeNotFoundException
-     *             e.
+     * @throws ScopeNotFoundException e.
      * @throws MissingMethodParameterException
-     *             e.
-     * @throws SystemException
-     *             e.
-     * 
+     *                                e.
+     * @throws SystemException        e.
+     * @see de.escidoc.core.sm.business.interfaces .ScopeHandlerInterface #update(java.lang.String,java.lang.String)
      */
     @Override
-    public String update(final String id, final String xmlData)
-        throws ScopeNotFoundException, MissingMethodParameterException,
-        SystemException {
+    public String update(final String id, final String xmlData) throws ScopeNotFoundException,
+        MissingMethodParameterException, SystemException {
         if (id == null) {
             throw new MissingMethodParameterException("id may not be null");
         }
@@ -270,8 +225,7 @@ public class ScopeHandler implements ScopeHandlerInterface {
         final Scope scope = handler.getScope();
         final Utility utility = new Utility();
         scope.setModifiedById(utility.getCurrentUserId());
-        scope
-            .setLastModificationDate(new Timestamp(System.currentTimeMillis()));
+        scope.setLastModificationDate(new Timestamp(System.currentTimeMillis()));
 
         dao.update(scope);
 
@@ -280,10 +234,8 @@ public class ScopeHandler implements ScopeHandlerInterface {
 
     /**
      * Setter for the dao.
-     * 
-     * @param dao
-     *            The data access object.
-     * 
+     *
+     * @param dao The data access object.
      */
     public void setDao(final SmScopesDaoInterface dao) {
         this.dao = dao;
@@ -291,9 +243,8 @@ public class ScopeHandler implements ScopeHandlerInterface {
 
     /**
      * Setting the filterUtility.
-     * 
-     * @param filterUtility
-     *            The filterUtility to set.
+     *
+     * @param filterUtility The filterUtility to set.
      */
     public final void setFilterUtility(final SmFilterUtility filterUtility) {
         this.filterUtility = filterUtility;
@@ -301,9 +252,8 @@ public class ScopeHandler implements ScopeHandlerInterface {
 
     /**
      * Injects the renderer.
-     * 
-     * @param renderer
-     *            The renderer to inject.
+     *
+     * @param renderer The renderer to inject.
      */
     public void setRenderer(final ScopeRendererInterface renderer) {
         this.renderer = renderer;

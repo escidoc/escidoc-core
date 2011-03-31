@@ -37,119 +37,77 @@ import java.util.Map;
 
 /**
  * Interface of an data access object to access set definition data.
- * 
+ *
  * @author André Schenk
  */
 public interface SetDefinitionDaoInterface {
 
     /**
      * Delete the set definition.
-     * 
-     * @param setDefinition
-     *            set definition object to delete
-     * 
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database access error.
+     *
+     * @param setDefinition set definition object to delete
+     * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
-    void delete(final SetDefinition setDefinition)
-        throws SqlDatabaseSystemException;
+    void delete(final SetDefinition setDefinition) throws SqlDatabaseSystemException;
 
     /**
      * Retrieves a set definition.
-     * 
-     * @param id
-     *            The id of the set definition that shall be retrieved.
-     * 
-     * @return Returns the found <code>SetDefinition</code> object or
-     *         <code>null</code>.
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database access error.
+     *
+     * @param id The id of the set definition that shall be retrieved.
+     * @return Returns the found <code>SetDefinition</code> object or <code>null</code>.
+     * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
-    SetDefinition retrieveSetDefinition(final String id)
-        throws SqlDatabaseSystemException;
+    SetDefinition retrieveSetDefinition(final String id) throws SqlDatabaseSystemException;
 
     /**
-     * Retrieves {@link SetDefinition}
-     * objects using the provided values for filtering.
-     * 
-     * @param criteria
-     *            The {@link Map} containing the filter criteria. This object is
-     *            kept as provided by this method.
-     * @param offset
-     *            The index of the first result to be returned.
-     * @param maxResults
-     *            The maximal number of results to be returned.
-     * @param orderBy
-     *            The predicate that shall be used for ordering.
-     * @param sorting
-     *            The kind of ordering, i.e. ascending or descending.
-     * 
-     * @return Returns <code>List</code> of
-     *         {@link SetDefinition}
-     *         objects selected by the provided parameters. If no parameter is
-     *         provided, all user account objects are returned.
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database access error.
+     * Retrieves {@link SetDefinition} objects using the provided values for filtering.
+     *
+     * @param criteria   The {@link Map} containing the filter criteria. This object is kept as provided by this
+     *                   method.
+     * @param offset     The index of the first result to be returned.
+     * @param maxResults The maximal number of results to be returned.
+     * @param orderBy    The predicate that shall be used for ordering.
+     * @param sorting    The kind of ordering, i.e. ascending or descending.
+     * @return Returns <code>List</code> of {@link SetDefinition} objects selected by the provided parameters. If no
+     *         parameter is provided, all user account objects are returned.
+     * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
     List<SetDefinition> retrieveSetDefinitions(
-        final Map<String, Object> criteria, final int offset,
-        final int maxResults, final String orderBy, final ListSorting sorting)
-        throws SqlDatabaseSystemException;
+        final Map<String, Object> criteria, final int offset, final int maxResults, final String orderBy,
+        final ListSorting sorting) throws SqlDatabaseSystemException;
 
     /**
-     * Retrieves {@link SetDefinition}
-     * objects using the provided values for filtering.
-     * 
-     * @param criteria
-     *            The {@link String} containing the filter criteria as CQL
-     *            query.
-     * @param offset
-     *            The index of the first result to be returned.
-     * @param maxResults
-     *            The maximal number of results to be returned.
-     * 
-     * @return Returns <code>List</code> of
-     *         {@link SetDefinition}
-     *         objects selected by the provided parameters. If no parameter is
-     *         provided, all user account objects are returned.
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a SQL query
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database error.
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database access error.
+     * Retrieves {@link SetDefinition} objects using the provided values for filtering.
+     *
+     * @param criteria   The {@link String} containing the filter criteria as CQL query.
+     * @param offset     The index of the first result to be returned.
+     * @param maxResults The maximal number of results to be returned.
+     * @return Returns <code>List</code> of {@link SetDefinition} objects selected by the provided parameters. If no
+     *         parameter is provided, all user account objects are returned.
+     * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
+     * @throws SqlDatabaseSystemException  Thrown in case of an internal database error.
+     * @throws SqlDatabaseSystemException  Thrown in case of an internal database access error.
      */
-    List<SetDefinition> retrieveSetDefinitions(
-        final String criteria, final int offset, final int maxResults)
+    List<SetDefinition> retrieveSetDefinitions(final String criteria, final int offset, final int maxResults)
         throws InvalidSearchQueryException, SqlDatabaseSystemException;
 
     /**
      * Save the provided set definition data.
-     * 
-     * @param setDefinition
-     *            set definition data object to save
-     * 
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database access error.
+     *
+     * @param setDefinition set definition data object to save
+     * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
-    void save(final SetDefinition setDefinition)
-        throws SqlDatabaseSystemException;
+    void save(final SetDefinition setDefinition) throws SqlDatabaseSystemException;
 
     /**
      * Update the provided set definition data.
-     * 
-     * @param setDefinition
-     *            set definition data object to save
-     * 
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database access error.
+     *
+     * @param setDefinition set definition data object to save
+     * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
-    void update(final SetDefinition setDefinition)
-        throws SqlDatabaseSystemException;
+    void update(final SetDefinition setDefinition) throws SqlDatabaseSystemException;
 
-    SetDefinition findSetDefinitionBySpecification(final String specification)
-        throws SqlDatabaseSystemException;
+    SetDefinition findSetDefinitionBySpecification(final String specification) throws SqlDatabaseSystemException;
 
     // /**
     // * Checks if a set definition with the provided id exists.<br>

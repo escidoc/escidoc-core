@@ -21,15 +21,14 @@
 package de.escidoc.core.common.exceptions.application.notfound;
 
 /**
- * The UserGroupNotFoundException is used to indicate that the user group
- * requested in the context of the service-call is null or does not exist in the
- * system. Returned HTTP status code is 404. Status code (404) indicating that the
+ * The UserGroupNotFoundException is used to indicate that the user group requested in the context of the service-call
+ * is null or does not exist in the system. Returned HTTP status code is 404. Status code (404) indicating that the
  * requested resource is not available.
- * 
- * @author André Schenk
  *
+ * @author André Schenk
  */
 public class UserGroupNotFoundException extends ResourceNotFoundException {
+
     /**
      * The serial version uid.
      */
@@ -41,8 +40,6 @@ public class UserGroupNotFoundException extends ResourceNotFoundException {
 
     /**
      * Default constructor.
-     * 
-     *
      */
     public UserGroupNotFoundException() {
         super(HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -50,9 +47,8 @@ public class UserGroupNotFoundException extends ResourceNotFoundException {
 
     /**
      * Constructor used to map an initial exception.
-     * 
-     * @param error
-     *            Throwable
+     *
+     * @param error Throwable
      */
     public UserGroupNotFoundException(final Throwable error) {
         super(error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -60,27 +56,21 @@ public class UserGroupNotFoundException extends ResourceNotFoundException {
 
     /**
      * Constructs a new exception with the specified detail message.
-     * 
-     * @param message -
-     *            the detail message.
      *
+     * @param message - the detail message.
      */
     public UserGroupNotFoundException(final String message) {
         super(message, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 
     /**
-     * Constructor used to create a new Exception with the specified detail
-     * message and a mapping to an initial exception.
-     * 
-     * @param message -
-     *            the detail message.
-     * @param error
-     *            Throwable
+     * Constructor used to create a new Exception with the specified detail message and a mapping to an initial
+     * exception.
      *
+     * @param message - the detail message.
+     * @param error   Throwable
      */
-    public UserGroupNotFoundException(final String message,
-        final Throwable error) {
+    public UserGroupNotFoundException(final String message, final Throwable error) {
         super(message, error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 }

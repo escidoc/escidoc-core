@@ -36,9 +36,8 @@ import org.w3c.dom.Document;
 
 /**
  * Test the mock implementation of the item resource.
- * 
+ *
  * @author Michael Schneider
- * 
  */
 @RunWith(value = Parameterized.class)
 public class MimeTypeTest extends ItemTestBase {
@@ -46,54 +45,41 @@ public class MimeTypeTest extends ItemTestBase {
     private String theItemId = null;
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public MimeTypeTest(final int transport) {
         super(transport);
     }
 
     /**
-     * Successfully create components with MS Windows video and audio
-     * mime-types. Issue 622.
-     * 
-     * @throws Exception
+     * Successfully create components with MS Windows video and audio mime-types. Issue 622.
      */
     @Test
     public void testWithMSWinMimeTypes() throws Exception {
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
-                + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                "escidoc_item_198_for_create.xml");
         xmlItem =
-            (Document) substitute(xmlItem,
-                "/item/components/component[1]/properties/mime-type",
-                "video/x-ms-wmv");
+            (Document) substitute(xmlItem, "/item/components/component[1]/properties/mime-type", "video/x-ms-wmv");
         xmlItem =
-            (Document) substitute(xmlItem,
-                "/item/components/component[2]/properties/mime-type",
-                "audio/x-ms-wma");
+            (Document) substitute(xmlItem, "/item/components/component[2]/properties/mime-type", "audio/x-ms-wma");
         String item = toString(xmlItem, true);
 
         item = create(item);
         assertXmlValidItem(item);
         xmlItem = getDocument(item);
-        selectSingleNodeAsserted(xmlItem,
-            "/item/components/component/properties[mime-type = 'video/x-ms-wmv']");
-        selectSingleNodeAsserted(xmlItem,
-            "/item/components/component/properties[mime-type = 'audio/x-ms-wma']");
+        selectSingleNodeAsserted(xmlItem, "/item/components/component/properties[mime-type = 'video/x-ms-wmv']");
+        selectSingleNodeAsserted(xmlItem, "/item/components/component/properties[mime-type = 'audio/x-ms-wma']");
     }
 
     /**
-     * Create a component with content of mime-type text/plain. Related to issue
-     * 603.
-     * 
-     * @throws Exception
+     * Create a component with content of mime-type text/plain. Related to issue 603.
      */
     @Test
     public void testPlainTextComponent() throws Exception {
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
-                + "/" + getTransport(false), "item-plain-text.xml");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                "item-plain-text.xml");
         String item = toString(xmlItem, true);
 
         item = create(item);
@@ -106,41 +92,37 @@ public class MimeTypeTest extends ItemTestBase {
     }
 
     /**
-     * 
-     * 
+     *
+     *
      * @throws Exception
      */
     @Test
     public void testDeclineUnknownMimeTypeCreate() throws Exception {
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
-                + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
-        xmlItem =
-            (Document) substitute(xmlItem,
-                "/item/components/component[1]/properties/mime-type",
-                "unkn/own");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                "escidoc_item_198_for_create.xml");
+        xmlItem = (Document) substitute(xmlItem, "/item/components/component[1]/properties/mime-type", "unkn/own");
         String item = toString(xmlItem, true);
 
         item = create(item);
     }
 
     /**
-     * 
-     * 
+     *
+     *
      * @throws Exception
      */
     @Test
     public void testDeclineUnknownMimeTypeUpdate() throws Exception {
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
-                + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                "escidoc_item_198_for_create.xml");
         String item = toString(xmlItem, true);
 
         item = create(item);
 
         item =
-            toString((Document) substitute(getDocument(item),
-                "/item/components/component[1]/properties/mime-type",
+            toString((Document) substitute(getDocument(item), "/item/components/component[1]/properties/mime-type",
                 "unkn/own"), true);
         String id = getObjidValue(item);
 
@@ -148,27 +130,21 @@ public class MimeTypeTest extends ItemTestBase {
     }
 
     /**
-     * Test NOT declining update of an item with a component where property
-     * mime-type is set to a value not from the infrastructures list of allowed
-     * mime-types. List of allowed mime-types does not longer exist.
-     * 
-     * @throws Exception
+     * Test NOT declining update of an item with a component where property mime-type is set to a value not from the
+     * infrastructures list of allowed mime-types. List of allowed mime-types does not longer exist.
      */
     @Test
     public void testUpdateComponentPropertyMimeType() throws Exception {
         String xmlData =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
-                + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                "escidoc_item_198_for_create.xml");
         String theItemXml = create(xmlData);
-        theItemId =
-            getObjidValue(EscidocRestSoapTestBase.getDocument(theItemXml));
+        theItemId = getObjidValue(EscidocRestSoapTestBase.getDocument(theItemXml));
         Document newItem = EscidocRestSoapTestBase.getDocument(theItemXml);
 
         String testStringValue = "testing";
         String basePath = "/item/components/component/properties/";
-        newItem =
-            (Document) substitute(newItem, basePath + "mime-type",
-                testStringValue);
+        newItem = (Document) substitute(newItem, basePath + "mime-type", testStringValue);
 
         String newItemXml = toString(newItem, true);
 

@@ -10,9 +10,9 @@ import java.rmi.RemoteException;
 public interface PolicyDecisionPointRemoteHome extends EJBHome {
 
     String COMP_NAME = "java:comp/env/ejb/PolicyDecisionPoint";
+
     String JNDI_NAME = "ejb/PolicyDecisionPoint";
 
-    PolicyDecisionPointRemote create()
-            throws CreateException, RemoteException;
+    PolicyDecisionPointRemote create() throws CreateException, RemoteException;
 
 }

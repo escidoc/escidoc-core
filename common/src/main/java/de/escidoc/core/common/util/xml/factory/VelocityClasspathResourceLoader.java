@@ -29,12 +29,10 @@ import org.apache.velocity.runtime.resource.loader.ResourceLoader;
 import java.io.InputStream;
 
 /**
- * ResourceLoader implementation that wraps a
- * <code>ClasspathResourceLoader</code> and changes the resource string by
+ * ResourceLoader implementation that wraps a <code>ClasspathResourceLoader</code> and changes the resource string by
  * adding <code>TEMPLATES_BASE</code> as prefix.
- * 
- * @author Torsten Tetteroo
  *
+ * @author Torsten Tetteroo
  */
 public class VelocityClasspathResourceLoader extends ResourceLoader {
 
@@ -44,23 +42,15 @@ public class VelocityClasspathResourceLoader extends ResourceLoader {
 
     /**
      * The constructor.
-     * 
-     *
      */
     public VelocityClasspathResourceLoader() {
         this.loader = new ClasspathResourceLoader();
     }
 
-
-
     /**
      * See Interface for functional description.
-     * 
-     * @param resource
-     * @return
-     * @see ResourceLoader
-     *      #getLastModified(org.apache.velocity.runtime.resource.Resource)
      *
+     * @see ResourceLoader #getLastModified(org.apache.velocity.runtime.resource.Resource)
      */
     @Override
     public long getLastModified(final Resource resource) {
@@ -71,14 +61,9 @@ public class VelocityClasspathResourceLoader extends ResourceLoader {
 
     /**
      * See Interface for functional description.
-     * 
-     * @param s
-     * @return
-     *
      */
     @Override
-    public InputStream getResourceStream(final String s)
-        throws ResourceNotFoundException {
+    public InputStream getResourceStream(final String s) throws ResourceNotFoundException {
 
         final String source = TEMPLATES_BASE + s;
         return loader.getResourceStream(source);
@@ -86,11 +71,8 @@ public class VelocityClasspathResourceLoader extends ResourceLoader {
 
     /**
      * See Interface for functional description.
-     * 
-     * @param extendedproperties
-     * @see ResourceLoader
-     *      #init(org.apache.commons.collections.ExtendedProperties)
      *
+     * @see ResourceLoader #init(org.apache.commons.collections.ExtendedProperties)
      */
     @Override
     public void init(final ExtendedProperties extendedproperties) {
@@ -100,12 +82,8 @@ public class VelocityClasspathResourceLoader extends ResourceLoader {
 
     /**
      * See Interface for functional description.
-     * 
-     * @param resource
-     * @return
-     * @see ResourceLoader
-     *      #isSourceModified(org.apache.velocity.runtime.resource.Resource)
      *
+     * @see ResourceLoader #isSourceModified(org.apache.velocity.runtime.resource.Resource)
      */
     @Override
     public boolean isSourceModified(final Resource resource) {
@@ -113,7 +91,5 @@ public class VelocityClasspathResourceLoader extends ResourceLoader {
         resource.setName(TEMPLATES_BASE + resource.getName());
         return loader.isSourceModified(resource);
     }
-
-
 
 }

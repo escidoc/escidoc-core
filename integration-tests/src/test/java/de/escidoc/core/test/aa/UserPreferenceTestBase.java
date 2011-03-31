@@ -35,21 +35,17 @@ import org.apache.http.util.EntityUtils;
 
 /**
  * Base Class for GrantTests (userGrants and groupGrants).
- * 
+ *
  * @author Torsten Tetteroo
- * 
  */
 public class UserPreferenceTestBase extends UserAccountTestBase {
 
     private UserAccountClient client = null;
 
     /**
-     * @param transport
-     *            The transport identifier.
-     * @param handlerCode
-     *            handlerCode.
-     * @throws Exception
-     *             e
+     * @param transport   The transport identifier.
+     * @param handlerCode handlerCode.
+     * @throws Exception e
      */
     public UserPreferenceTestBase(final int transport) throws Exception {
         super(transport);
@@ -58,24 +54,20 @@ public class UserPreferenceTestBase extends UserAccountTestBase {
 
     /**
      * Test creating a user preference.
-     * 
-     * @param id
-     *            The id of the UserAccount.
-     * @param grantXml
-     *            The xml representation of the preference.
+     *
+     * @param id       The id of the UserAccount.
+     * @param grantXml The xml representation of the preference.
      * @return The xml representation of the created preference.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    protected String createPreference(final String id, final String xml)
-        throws Exception {
+    protected String createPreference(final String id, final String xml) throws Exception {
         Object result = client.createPreference(id, xml);
         String xmlResult = null;
         if (result instanceof HttpResponse) {
             HttpResponse method = (HttpResponse) result;
             xmlResult = EntityUtils.toString(method.getEntity(), HTTP.UTF_8);
             assertHttpStatusOfMethod("", method);
-         
+
         }
         else if (result instanceof String) {
             xmlResult = (String) result;
@@ -85,17 +77,13 @@ public class UserPreferenceTestBase extends UserAccountTestBase {
 
     /**
      * Test deleting a user preference.
-     * 
-     * @param id
-     *            The id of the UserAccount.
-     * @param name
-     *            The name of the preference.
+     *
+     * @param id   The id of the UserAccount.
+     * @param name The name of the preference.
      * @return The xml representation of the created preference.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    protected void deletePreference(final String id, final String name)
-        throws Exception {
+    protected void deletePreference(final String id, final String name) throws Exception {
         Object result = client.deletePreference(id, name);
         if (result instanceof HttpResponse) {
             HttpResponse method = (HttpResponse) result;
@@ -105,23 +93,19 @@ public class UserPreferenceTestBase extends UserAccountTestBase {
 
     /**
      * Test updating user preferences.
-     * 
-     * @param id
-     *            The id of the UserAccount.
-     * @param grantXml
-     *            The xml representation of the preferences.
+     *
+     * @param id       The id of the UserAccount.
+     * @param grantXml The xml representation of the preferences.
      * @return The xml representation of the updated preferences.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    protected String updatePreferences(final String id, final String xml)
-        throws Exception {
+    protected String updatePreferences(final String id, final String xml) throws Exception {
         Object result = client.updatePreferences(id, xml);
         String xmlResult = null;
         if (result instanceof HttpResponse) {
             HttpResponse method = (HttpResponse) result;
             xmlResult = EntityUtils.toString(method.getEntity(), HTTP.UTF_8);
-            assertHttpStatusOfMethod("", method);    
+            assertHttpStatusOfMethod("", method);
         }
         else if (result instanceof String) {
             xmlResult = (String) result;
@@ -131,23 +115,19 @@ public class UserPreferenceTestBase extends UserAccountTestBase {
 
     /**
      * Test updating single user preference.
-     * 
-     * @param id
-     *            The id of the UserAccount.
-     * @param grantXml
-     *            The xml representation of the preference.
+     *
+     * @param id       The id of the UserAccount.
+     * @param grantXml The xml representation of the preference.
      * @return The xml representation of the updated preference.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    protected String updatePreference(
-        final String id, final String name, final String xml) throws Exception {
+    protected String updatePreference(final String id, final String name, final String xml) throws Exception {
         Object result = client.updatePreference(id, name, xml);
         String xmlResult = null;
         if (result instanceof HttpResponse) {
             HttpResponse method = (HttpResponse) result;
             xmlResult = EntityUtils.toString(method.getEntity(), HTTP.UTF_8);
-            assertHttpStatusOfMethod("", method);        
+            assertHttpStatusOfMethod("", method);
         }
         else if (result instanceof String) {
             xmlResult = (String) result;
@@ -163,15 +143,14 @@ public class UserPreferenceTestBase extends UserAccountTestBase {
             HttpResponse method = (HttpResponse) result;
             xmlResult = EntityUtils.toString(method.getEntity(), HTTP.UTF_8);
             assertHttpStatusOfMethod("", method);
-         }
+        }
         else if (result instanceof String) {
             xmlResult = (String) result;
         }
         return xmlResult;
     }
 
-    protected String retrievePreference(final String id, final String name)
-        throws Exception {
+    protected String retrievePreference(final String id, final String name) throws Exception {
 
         Object result = client.retrievePreference(id, name);
         String xmlResult = null;
@@ -179,7 +158,7 @@ public class UserPreferenceTestBase extends UserAccountTestBase {
             HttpResponse method = (HttpResponse) result;
             xmlResult = EntityUtils.toString(method.getEntity(), HTTP.UTF_8);
             assertHttpStatusOfMethod("", method);
-           
+
         }
         else if (result instanceof String) {
             xmlResult = (String) result;

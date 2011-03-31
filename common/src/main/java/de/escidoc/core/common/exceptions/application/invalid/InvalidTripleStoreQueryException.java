@@ -21,13 +21,11 @@
 package de.escidoc.core.common.exceptions.application.invalid;
 
 /**
- * The InvalidTripleStoreQueryException is used to indicate that the given
- * triple store query is invalid. returned httpStatusCode is 412. Status code
- * (412) indicating that the precondition given in one or more of the
- * request-header fields evaluated to false when it was tested on the server.
- * 
- * @author Michael Hoppe (FIZ Karlsruhe)
+ * The InvalidTripleStoreQueryException is used to indicate that the given triple store query is invalid. returned
+ * httpStatusCode is 412. Status code (412) indicating that the precondition given in one or more of the request-header
+ * fields evaluated to false when it was tested on the server.
  *
+ * @author Michael Hoppe (FIZ Karlsruhe)
  */
 public class InvalidTripleStoreQueryException extends ValidationException {
 
@@ -38,13 +36,10 @@ public class InvalidTripleStoreQueryException extends ValidationException {
 
     public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_INVALID;
 
-    public static final String HTTP_STATUS_MESSAGE =
-        "Invalid triple store query.";
+    public static final String HTTP_STATUS_MESSAGE = "Invalid triple store query.";
 
     /**
      * Default constructor.
-     * 
-     *
      */
     public InvalidTripleStoreQueryException() {
         super(HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -52,9 +47,8 @@ public class InvalidTripleStoreQueryException extends ValidationException {
 
     /**
      * Constructor used to map an initial exception.
-     * 
-     * @param error
-     *            Throwable
+     *
+     * @param error Throwable
      */
     public InvalidTripleStoreQueryException(final Throwable error) {
         super(error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -62,27 +56,21 @@ public class InvalidTripleStoreQueryException extends ValidationException {
 
     /**
      * Constructs a new exception with the specified detail message.
-     * 
-     * @param message -
-     *            the detail message.
      *
+     * @param message - the detail message.
      */
     public InvalidTripleStoreQueryException(final String message) {
         super(message, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 
     /**
-     * Constructor used to create a new Exception with the specified detail
-     * message and a mapping to an initial exception.
-     * 
-     * @param message -
-     *            the detail message.
-     * @param error
-     *            Throwable
+     * Constructor used to create a new Exception with the specified detail message and a mapping to an initial
+     * exception.
      *
+     * @param message - the detail message.
+     * @param error   Throwable
      */
-    public InvalidTripleStoreQueryException(final String message,
-        final Throwable error) {
+    public InvalidTripleStoreQueryException(final String message, final Throwable error) {
         super(message, error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 }

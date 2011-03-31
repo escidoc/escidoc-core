@@ -55,59 +55,42 @@ public class StatisticDataHandler implements StatisticDataHandlerInterface {
 
     /**
      * See Interface for functional description.
-     * 
-     * @see de.escidoc.core.sm.business.interfaces .StatisticDataHandlerInterface
-     *      #create(java.lang.String)
-     * 
-     * @param xmlData
-     *            statistic data as xml in statistic-data schema.
-     * 
-     * @throws MissingMethodParameterException
-     *             ex
-     * @throws SystemException
-     *             ex
-     * 
      *
+     * @param xmlData statistic data as xml in statistic-data schema.
+     * @throws MissingMethodParameterException
+     *                         ex
+     * @throws SystemException ex
+     * @see de.escidoc.core.sm.business.interfaces .StatisticDataHandlerInterface #create(java.lang.String)
      */
     @Override
-    public void create(final String xmlData)
-        throws MissingMethodParameterException, SystemException {
+    public void create(final String xmlData) throws MissingMethodParameterException, SystemException {
         if (xmlData == null || xmlData.length() == 0) {
             throw new MissingMethodParameterException("xml may not be null");
         }
         final ProducerTemplate producerTemplate = this.camelContext.createProducerTemplate();
-        producerTemplate.asyncSendBody("jms:queue:de.escidoc.core.statistic.StatisticService.input?disableReplyTo=true", xmlData);
+        producerTemplate.asyncSendBody(
+            "jms:queue:de.escidoc.core.statistic.StatisticService.input?disableReplyTo=true", xmlData);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @see de.escidoc.core.sm.business.interfaces .StatisticDataHandlerInterface
-     *      #insertStatisticData(java.lang.String)
-     * 
-     * @param xmlData
-     *            xmlData
-     * 
-     * @throws ScopeNotFoundException
-     *             ex
+     *
+     * @param xmlData xmlData
+     * @throws ScopeNotFoundException       ex
      * @throws MissingMethodParameterException
-     *             ex
-     * @throws XmlSchemaValidationException
-     *             ex
-     * @throws XmlCorruptedException
-     *             ex
-     * @throws SystemException
-     *             e
+     *                                      ex
+     * @throws XmlSchemaValidationException ex
+     * @throws XmlCorruptedException        ex
+     * @throws SystemException              e
+     * @see de.escidoc.core.sm.business.interfaces .StatisticDataHandlerInterface #insertStatisticData(java.lang.String)
      */
     @Override
-    public void insertStatisticData(final String xmlData)
-        throws ScopeNotFoundException, MissingMethodParameterException,
-        XmlSchemaValidationException, XmlCorruptedException, SystemException {
+    public void insertStatisticData(final String xmlData) throws ScopeNotFoundException,
+        MissingMethodParameterException, XmlSchemaValidationException, XmlCorruptedException, SystemException {
         if (xmlData == null || xmlData.length() == 0) {
             throw new MissingMethodParameterException("xml may not be null");
         }
-        XmlUtility.validate(xmlData, XmlUtility
-            .getStatisticDataSchemaLocation());
+        XmlUtility.validate(xmlData, XmlUtility.getStatisticDataSchemaLocation());
 
         final String scopeId = xmlUtility.getScopeId(xmlData);
 
@@ -118,11 +101,9 @@ public class StatisticDataHandler implements StatisticDataHandlerInterface {
             dao.saveStatisticData(xmlData, scopeId);
         }
         catch (final SqlDatabaseSystemException e) {
-            if (e.getCause() != null
-                && e.getCause().getClass() != null
+            if (e.getCause() != null && e.getCause().getClass() != null
                 && "ConstraintViolationException".equals(e.getCause().getClass().getSimpleName())) {
-                throw new ScopeNotFoundException("scope with id " + scopeId
-                    + " not found in database");
+                throw new ScopeNotFoundException("scope with id " + scopeId + " not found in database");
             }
             else {
                 throw e;
@@ -130,12 +111,10 @@ public class StatisticDataHandler implements StatisticDataHandlerInterface {
         }
     }
 
-
     /**
      * Setter for the dao.
-     * 
-     * @param dao
-     *            The data access object.
+     *
+     * @param dao The data access object.
      */
     public void setDao(final SmStatisticDataDaoInterface dao) {
         this.dao = dao;
@@ -143,9 +122,8 @@ public class StatisticDataHandler implements StatisticDataHandlerInterface {
 
     /**
      * Setting the xmlUtility.
-     * 
-     * @param xmlUtility
-     *            The xmlUtility to set.
+     *
+     * @param xmlUtility The xmlUtility to set.
      */
     public final void setXmlUtility(final SmXmlUtility xmlUtility) {
         this.xmlUtility = xmlUtility;

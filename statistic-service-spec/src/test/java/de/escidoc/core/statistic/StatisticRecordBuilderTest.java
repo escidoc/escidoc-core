@@ -19,23 +19,23 @@ public class StatisticRecordBuilderTest {
     @Test
     public void testStatisticRecord() {
         final DateTime now = new DateTime();
-        final StatisticRecord statisticRecord = StatisticRecordBuilder.createStatisticRecord()
-                .withParameter("string", "stringvalue") // NON-NLS
-                .withParameter("date", now) // NON-NLS
+        final StatisticRecord statisticRecord =
+            StatisticRecordBuilder.createStatisticRecord().withParameter("string", "stringvalue") // NON-NLS
+            .withParameter("date", now) // NON-NLS
                 .withParameter("decimal", BigDecimal.valueOf(TEST_DECIMAL_VALUE)) // NON-NLS
                 .withParameter("booleanTrue", true) // NON-NLS
                 .withParameter("booleanFalse", false) // NON-NLS
                 .build();
         assertEquals("wrong number of parameters", 5, statisticRecord.getParameter().size()); // NON-NLS
         final Map<String, Parameter> parametersMap = new HashMap<String, Parameter>(5);
-        for(final Parameter parameter : statisticRecord.getParameter()) {
+        for (final Parameter parameter : statisticRecord.getParameter()) {
             parametersMap.put(parameter.getName(), parameter);
         }
         assertEquals("wrong string value", "stringvalue", parametersMap.get("string").getStringValue()); // NON-NLS
-        assertEquals("wrong date value", now.getMillis(),
-                parametersMap.get("date").getDateValue().toGregorianCalendar().getTimeInMillis()); // NON-NLS
-        assertEquals("wrong decimal value", BigDecimal.valueOf(TEST_DECIMAL_VALUE),
-                parametersMap.get("decimal").getDecimalValue());  // NON-NLS
+        assertEquals("wrong date value", now.getMillis(), parametersMap
+            .get("date").getDateValue().toGregorianCalendar().getTimeInMillis()); // NON-NLS
+        assertEquals("wrong decimal value", BigDecimal.valueOf(TEST_DECIMAL_VALUE), parametersMap
+            .get("decimal").getDecimalValue()); // NON-NLS
         assertEquals("wrong boolean value", "1", parametersMap.get("booleanTrue").getStringValue()); // NON-NLS
         assertEquals("wrong boolean value", "0", parametersMap.get("booleanFalse").getStringValue()); // NON-NLS
     }

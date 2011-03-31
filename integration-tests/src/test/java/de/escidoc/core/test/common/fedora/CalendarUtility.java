@@ -41,8 +41,7 @@ public final class CalendarUtility {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CalendarUtility.class);
 
-    public static Calendar TransformStringToCalendar(
-        final String date, final SimpleDateFormat sdfInput) {
+    public static Calendar TransformStringToCalendar(final String date, final SimpleDateFormat sdfInput) {
         Date transformedDate = null;
 
         try {

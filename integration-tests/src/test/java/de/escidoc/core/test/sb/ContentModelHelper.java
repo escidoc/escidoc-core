@@ -32,47 +32,39 @@ import de.escidoc.core.test.cmm.contentmodel.ContentModelTestBase;
 
 /**
  * Call the Content-Model-Service.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 public class ContentModelHelper extends ContentModelTestBase {
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ContentModelHelper(final int transport) {
         super(transport);
     }
 
     /**
-     * @param xml
-     *            The item as xml.
+     * @param xml The item as xml.
      * @return String item-xml
-     * @exception Exception
-     *                e
+     * @throws Exception e
      */
     public String create(final String xml) throws Exception {
         return super.create(xml);
     }
 
     /**
-     * @param id
-     *            The item-id.
+     * @param id The item-id.
      * @return String item-xml
-     * @exception Exception
-     *                e
+     * @throws Exception e
      */
     public String retrieve(final String id) throws Exception {
         return super.retrieve(id);
     }
 
     /**
-     * @param id
-     *            The item-id.
-     * @exception Exception
-     *                e
+     * @param id The item-id.
+     * @throws Exception e
      */
     public void delete(final String id) throws Exception {
         super.delete(id);

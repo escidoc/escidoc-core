@@ -38,9 +38,8 @@ import java.util.Iterator;
 
 /**
  * An default handler for the Axis framework.
- * 
+ *
  * @author Bernhard Kraus (Accenture)
- * 
  */
 public class AuthHandler extends BasicHandler {
 
@@ -53,11 +52,9 @@ public class AuthHandler extends BasicHandler {
 
     /**
      * The invoke method of the handler.
-     * 
-     * @param ctx
-     *            The context of the message
-     * @throws AxisFault
-     *             the exception
+     *
+     * @param ctx The context of the message
+     * @throws AxisFault the exception
      */
     public void invoke(final MessageContext ctx) throws AxisFault {
         if (LOGGER.isDebugEnabled()) {

@@ -46,16 +46,14 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * Test the task oriented method retrieveContexts.
- * 
+ *
  * @author Michael Schneider
- * 
  */
 @RunWith(value = Parameterized.class)
 public class RetrieveContextsTest extends ContextTestBase {
 
     public static final String XPATH_SRW_CONTEXT_LIST_CONTEXT =
-        XPATH_SRW_RESPONSE_RECORD + "/recordData/search-result-record/"
-            + NAME_CONTEXT;
+        XPATH_SRW_RESPONSE_RECORD + "/recordData/search-result-record/" + NAME_CONTEXT;
 
     private String path = TEMPLATE_CONTEXT_PATH;
 
@@ -72,8 +70,7 @@ public class RetrieveContextsTest extends ContextTestBase {
     private static int methodCounter = 0;
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public RetrieveContextsTest(final int transport) {
         super(transport);
@@ -81,47 +78,34 @@ public class RetrieveContextsTest extends ContextTestBase {
 
     /**
      * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Before
     public void setUp() throws Exception {
         this.path += "/" + getTransport(false);
 
         if (noOfContexts == -1) {
-            String contexts =
-                retrieveContexts(getFilterRetrieveContexts(null, null, null));
+            String contexts = retrieveContexts(getFilterRetrieveContexts(null, null, null));
             assertXmlValidSrwResponse(contexts);
             noOfContexts =
-                getNoOfSelections(
-                    EscidocRestSoapTestBase.getDocument(contexts),
-                    XPATH_SRW_CONTEXT_LIST_CONTEXT);
+                getNoOfSelections(EscidocRestSoapTestBase.getDocument(contexts), XPATH_SRW_CONTEXT_LIST_CONTEXT);
             noOfPubManContexts =
-                getNoOfSelections(
-                    EscidocRestSoapTestBase.getDocument(contexts),
-                    XPATH_SRW_CONTEXT_LIST_CONTEXT + "/properties[type=\""
-                        + CONTEXT_TYPE_PUB_MAN + "\"]");
+                getNoOfSelections(EscidocRestSoapTestBase.getDocument(contexts), XPATH_SRW_CONTEXT_LIST_CONTEXT
+                    + "/properties[type=\"" + CONTEXT_TYPE_PUB_MAN + "\"]");
             noOfSwbContexts =
-                getNoOfSelections(
-                    EscidocRestSoapTestBase.getDocument(contexts),
-                    XPATH_SRW_CONTEXT_LIST_CONTEXT + "/properties[type=\""
-                        + CONTEXT_TYPE_SWB + "\"]");
+                getNoOfSelections(EscidocRestSoapTestBase.getDocument(contexts), XPATH_SRW_CONTEXT_LIST_CONTEXT
+                    + "/properties[type=\"" + CONTEXT_TYPE_SWB + "\"]");
 
-            Document context =
-                EscidocRestSoapTestBase.getTemplateAsDocument(this.path,
-                    "context_create.xml");
-            substitute(context, "/context/properties/name",
-                getUniqueName("PubMan Context "));
-            substitute(context, "/context/properties/type",
-                CONTEXT_TYPE_PUB_MAN);
+            Document context = EscidocRestSoapTestBase.getTemplateAsDocument(this.path, "context_create.xml");
+            substitute(context, "/context/properties/name", getUniqueName("PubMan Context "));
+            substitute(context, "/context/properties/type", CONTEXT_TYPE_PUB_MAN);
             create(toString(context, false));
             noOfContexts = noOfContexts + 1;
             noOfPubManContexts = noOfPubManContexts + 1;
 
             substitute(context, "/context/properties/type", CONTEXT_TYPE_SWB);
-            substitute(context, "/context/properties/name",
-                getUniqueName("Swb Context "));
+            substitute(context, "/context/properties/name", getUniqueName("Swb Context "));
             create(toString(context, false));
             noOfContexts = noOfContexts + 1;
             noOfSwbContexts = noOfSwbContexts + 1;
@@ -129,33 +113,26 @@ public class RetrieveContextsTest extends ContextTestBase {
             // get the number of PubMan contexts which are visible for depositor
             // user/role
             PWCallback.setHandle(PWCallback.DEPOSITOR_HANDLE);
-            contexts =
-                retrieveContexts(getFilterRetrieveContexts(null, null, null));
+            contexts = retrieveContexts(getFilterRetrieveContexts(null, null, null));
             assertXmlValidSrwResponse(contexts);
             noOfPubManContextsForDepositorUser =
-                getNoOfSelections(
-                    EscidocRestSoapTestBase.getDocument(contexts),
-                    XPATH_SRW_CONTEXT_LIST_CONTEXT + "/properties[type=\""
-                        + CONTEXT_TYPE_PUB_MAN + "\"]");
+                getNoOfSelections(EscidocRestSoapTestBase.getDocument(contexts), XPATH_SRW_CONTEXT_LIST_CONTEXT
+                    + "/properties[type=\"" + CONTEXT_TYPE_PUB_MAN + "\"]");
             contexts =
-                retrieveContexts(getFilterRetrieveContexts(PWCallback.ID_PREFIX
-                    + PWCallback.DEPOSITOR_HANDLE, "escidoc:role-depositor",
-                    null));
+                retrieveContexts(getFilterRetrieveContexts(PWCallback.ID_PREFIX + PWCallback.DEPOSITOR_HANDLE,
+                    "escidoc:role-depositor", null));
             assertXmlValidSrwResponse(contexts);
             noOfPubManContextsForDepositorUserAndRole =
-                getNoOfSelections(
-                    EscidocRestSoapTestBase.getDocument(contexts),
-                    XPATH_SRW_CONTEXT_LIST_CONTEXT + "/properties[type=\""
-                        + CONTEXT_TYPE_PUB_MAN + "\"]");
+                getNoOfSelections(EscidocRestSoapTestBase.getDocument(contexts), XPATH_SRW_CONTEXT_LIST_CONTEXT
+                    + "/properties[type=\"" + CONTEXT_TYPE_PUB_MAN + "\"]");
             PWCallback.resetHandle();
         }
     }
 
     /**
      * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Override
     @After
@@ -174,9 +151,8 @@ public class RetrieveContextsTest extends ContextTestBase {
 
     /**
      * Test retrieve all Contexts.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveAllContexts() throws Exception {
@@ -185,9 +161,8 @@ public class RetrieveContextsTest extends ContextTestBase {
 
     /**
      * Test retrieving PubMan Contexts.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrievePubManContexts() throws Exception {
@@ -195,102 +170,41 @@ public class RetrieveContextsTest extends ContextTestBase {
     }
 
     /**
-     * Tests successfully retrieving of contexts of PubMan contexts for a
-     * Depositor.
-     * 
-     * @test.name Decline missing parameter in retrieveContexts.
-     * @test.id testRetrievePubManContextsWithDepositor
-     * @test.inputDescription: Valid XML representation of filter parameter
-     *                         containing these filter criteria:
-     *                         <ul>
-     *                         <li>User id of existing user with the specified
-     *                         role (Depositor).</li>
-     *                         <li>Role id (Depositor)</li>
-     *                         <li>Context type (PubMan)</li>
-     *                         </ul>
-     * @test.expected: MissingMethodParameterException
-     * @test.status Implemented
-     * @test.issue 203
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests successfully retrieving of contexts of PubMan contexts for a Depositor.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrievePubManContextsWithDepositor() throws Exception {
-        retrieveContexts(PWCallback.ID_PREFIX + PWCallback.DEPOSITOR_HANDLE,
-            "escidoc:role-depositor", CONTEXT_TYPE_PUB_MAN,
-            noOfPubManContextsForDepositorUserAndRole);
+        retrieveContexts(PWCallback.ID_PREFIX + PWCallback.DEPOSITOR_HANDLE, "escidoc:role-depositor",
+            CONTEXT_TYPE_PUB_MAN, noOfPubManContextsForDepositorUserAndRole);
     }
 
     /**
-     * Tests successfully retrieving of contexts of PubMan contexts for all
-     * Roles.
-     * 
-     * @test.name Retrieve Contexts - All Roles
-     * @test.id testRetrievePubManContextsWithAllRoles
-     * @test.inputDescription: Valid XML representation of filter parameter
-     *                         containing these filter criteria:
-     *                         <ul>
-     *                         <li>User id of existing user with the specified
-     *                         role (Depositor).</li>
-     *                         <li>No role name</li>
-     *                         <li>Context type (PubMan)</li>
-     *                         </ul>
-     * @test.expected: MissingMethodParameterException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests successfully retrieving of contexts of PubMan contexts for all Roles.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrievePubManContextsWithAllRoles() throws Exception {
-        retrieveContexts(PWCallback.ID_PREFIX + PWCallback.DEPOSITOR_HANDLE,
-            null, CONTEXT_TYPE_PUB_MAN, noOfPubManContextsForDepositorUser);
+        retrieveContexts(PWCallback.ID_PREFIX + PWCallback.DEPOSITOR_HANDLE, null, CONTEXT_TYPE_PUB_MAN,
+            noOfPubManContextsForDepositorUser);
     }
 
     /**
-     * Tests successfully retrieving empty list of PubMan contexts for a unknown
-     * role.
-     * 
-     * @test.name Retrieve Contexts - Unknown Role.
-     * @test.id testRetrievePubManContextsWithUnknownRole
-     * @test.inputDescription: Valid XML representation of filter parameter
-     *                         containing these filter criteria:
-     *                         <ul>
-     *                         <li>User id of existing user.</li>
-     *                         <li>Unknown Role name</li>
-     *                         <li>Context type (PubMan)</li>
-     *                         </ul>
-     * @test.expected: MissingMethodParameterException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests successfully retrieving empty list of PubMan contexts for a unknown role.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrievePubManContextsWithUnknownRole() throws Exception {
-        retrieveContexts(PWCallback.ID_PREFIX + PWCallback.DEPOSITOR_HANDLE,
-            UNKNOWN_ID, CONTEXT_TYPE_PUB_MAN, 0);
+        retrieveContexts(PWCallback.ID_PREFIX + PWCallback.DEPOSITOR_HANDLE, UNKNOWN_ID, CONTEXT_TYPE_PUB_MAN, 0);
     }
 
     /**
-     * Tests successfully retrieving empty list of PubMan contexts for a unknown
-     * user.
-     * 
-     * @test.name Retrieve Contexts - Unknown User.
-     * @test.id testRetrievePubManContextsWithUnknownUser
-     * @test.inputDescription: Valid XML representation of filter parameter
-     *                         containing these filter criteria:
-     *                         <ul>
-     *                         <li>Unknown user id.</li>
-     *                         <li>Role name (Depositor)</li>
-     *                         <li>Context type (PubMan)</li>
-     *                         </ul>
-     * @test.expected: MissingMethodParameterException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests successfully retrieving empty list of PubMan contexts for a unknown user.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrievePubManContextsWithUnknownUser() throws Exception {
@@ -298,9 +212,7 @@ public class RetrieveContextsTest extends ContextTestBase {
     }
 
     /**
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveSWBContexts() throws Exception {
@@ -308,9 +220,7 @@ public class RetrieveContextsTest extends ContextTestBase {
     }
 
     /**
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveUnknownTypeContexts() throws Exception {
@@ -319,83 +229,62 @@ public class RetrieveContextsTest extends ContextTestBase {
 
     /**
      * Test successful retrieving of all admin-descriptors of a Context.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveAdminDescriptors() throws Exception {
 
-        Document context =
-            EscidocRestSoapTestBase.getTemplateAsDocument(this.path,
-                "context_create.xml");
-        substitute(context, "/context/properties/name",
-            getUniqueName("PubMan Context "));
+        Document context = EscidocRestSoapTestBase.getTemplateAsDocument(this.path, "context_create.xml");
+        substitute(context, "/context/properties/name", getUniqueName("PubMan Context "));
 
         String template = toString(context, false);
         Document newContext = getDocument(create(template));
 
         String id = getObjidValue(newContext);
 
-        NodeList admDescs =
-            selectNodeList(context,
-                "/context/admin-descriptors/admin-descriptor");
+        NodeList admDescs = selectNodeList(context, "/context/admin-descriptors/admin-descriptor");
 
         String temp = retrieveAdminDescriptors(id);
         Document docAdmDesc = getDocument(temp);
 
-        NodeList admDescsNLst =
-            selectNodeList(docAdmDesc, "/admin-descriptors/admin-descriptor");
+        NodeList admDescsNLst = selectNodeList(docAdmDesc, "/admin-descriptors/admin-descriptor");
 
         assertEquals(admDescs.getLength(), admDescsNLst.getLength());
 
         for (int i = 0; i < admDescs.getLength(); i++) {
             admDescs.item(i);
             String admDescName =
-                selectSingleNode(
-                    context,
-                    "context/admin-descriptors/admin-descriptor[position()="
-                        + (i + 1) + "]/@name").getTextContent();
+                selectSingleNode(context,
+                    "context/admin-descriptors/admin-descriptor[position()=" + (i + 1) + "]/@name").getTextContent();
 
             Node contextAdmDesc =
-                selectSingleNode(context,
-                    "context/admin-descriptors/admin-descriptor[@name='"
-                        + admDescName + "']");
+                selectSingleNode(context, "context/admin-descriptors/admin-descriptor[@name='" + admDescName + "']");
 
             Node newContextAdmDesc =
-                selectSingleNode(newContext,
-                    "context/admin-descriptors/admin-descriptor[@name='"
-                        + admDescName + "']");
+                selectSingleNode(newContext, "context/admin-descriptors/admin-descriptor[@name='" + admDescName + "']");
 
             Node admDesc =
-                selectSingleNode(docAdmDesc,
-                    "admin-descriptors/admin-descriptor[@name='" + admDescName
-                        + "']");
+                selectSingleNode(docAdmDesc, "admin-descriptors/admin-descriptor[@name='" + admDescName + "']");
 
-            assertXmlEquals("Admin Descriptors not equal. ", contextAdmDesc,
-                newContextAdmDesc);
+            assertXmlEquals("Admin Descriptors not equal. ", contextAdmDesc, newContextAdmDesc);
 
-            assertXmlEquals("Admin Descriptors not equal. ", contextAdmDesc,
-                admDesc);
+            assertXmlEquals("Admin Descriptors not equal. ", contextAdmDesc, admDesc);
         }
     }
 
     /**
-     * Test successful retrieving of an empty admin-descriptors element. An
-     * empty admin-descriptors section has to be in the XML of the Context
-     * (consitent behavior like filters).
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test successful retrieving of an empty admin-descriptors element. An empty admin-descriptors section has to be in
+     * the XML of the Context (consitent behavior like filters).
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveEmptyAdminDescriptors() throws Exception {
 
         Document context =
-            EscidocRestSoapTestBase.getTemplateAsDocument(this.path,
-                "context_create_without_admindescriptor.xml");
-        substitute(context, "/context/properties/name",
-            getUniqueName("PubMan Context "));
+            EscidocRestSoapTestBase.getTemplateAsDocument(this.path, "context_create_without_admindescriptor.xml");
+        substitute(context, "/context/properties/name", getUniqueName("PubMan Context "));
 
         // create Context
         String template = toString(context, false);
@@ -404,15 +293,12 @@ public class RetrieveContextsTest extends ContextTestBase {
 
         String id = getObjidValue(newContext);
 
-        NodeList admDescs =
-            selectNodeList(context,
-                "/context/admin-descriptors/admin-descriptor");
+        NodeList admDescs = selectNodeList(context, "/context/admin-descriptors/admin-descriptor");
 
         String temp = retrieveAdminDescriptors(id);
         Document docAdmDesc = getDocument(temp);
 
-        NodeList admDescsNLst =
-            selectNodeList(docAdmDesc, "/admin-descriptors/admin-descriptor");
+        NodeList admDescsNLst = selectNodeList(docAdmDesc, "/admin-descriptors/admin-descriptor");
 
         assertEquals(admDescs.getLength(), admDescsNLst.getLength());
         assertEquals(0, admDescs.getLength());
@@ -420,55 +306,37 @@ public class RetrieveContextsTest extends ContextTestBase {
 
     /**
      * Test retrieve Context.
-     * 
-     * @param user
-     *            The user id (e.g. PWCallback.ID_PREFIX +
-     *            PWCallback.DEPOSITOR_HANDLE) or null.
-     * @param role
-     *            Role (e.g. "Depositor")
-     * @param contextType
-     *            Type of Context (e.g. "PubMan")
-     * @param expectedNoOfContexts
-     *            Expected number of Contexts (or -1).
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param user                 The user id (e.g. PWCallback.ID_PREFIX + PWCallback.DEPOSITOR_HANDLE) or null.
+     * @param role                 Role (e.g. "Depositor")
+     * @param contextType          Type of Context (e.g. "PubMan")
+     * @param expectedNoOfContexts Expected number of Contexts (or -1).
+     * @throws Exception If anything fails.
      */
     private void retrieveContexts(
-        final String user, final String role, final String contextType,
-        final int expectedNoOfContexts) throws Exception {
-        String contexts =
-            retrieveContexts(getFilterRetrieveContexts(user, role, contextType));
+        final String user, final String role, final String contextType, final int expectedNoOfContexts)
+        throws Exception {
+        String contexts = retrieveContexts(getFilterRetrieveContexts(user, role, contextType));
 
         assertXmlValidSrwResponse(contexts);
 
-        int no =
-            getNoOfSelections(EscidocRestSoapTestBase.getDocument(contexts),
-                XPATH_SRW_CONTEXT_LIST_CONTEXT);
+        int no = getNoOfSelections(EscidocRestSoapTestBase.getDocument(contexts), XPATH_SRW_CONTEXT_LIST_CONTEXT);
         String label = contextType;
 
         if (contextType == null) {
             label = "";
         }
-        assertEquals("Wrong no of " + label + " Contexts found!",
-            expectedNoOfContexts, no);
+        assertEquals("Wrong no of " + label + " Contexts found!", expectedNoOfContexts, no);
     }
 
     /**
      * Test successfully retrieving an explain response.
-     * 
-     * @test.name testExplainRetrieveContexts
-     * @test.id testExplainRetrieveContexts
-     * @test.input
-     * @test.expected: valid explain response.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testExplainRetrieveContexts() throws Exception {
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_EXPLAIN, new String[] { "" });
 

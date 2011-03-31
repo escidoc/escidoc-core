@@ -43,62 +43,42 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Attribute finder module implementation that resolves partly resolveable
- * attributes of new or updated resources.<br>
- * This finder module handles all attributes that contain the substring "-new"
- * but does not end with this substring. This substring identifies attributes
- * whose values are changed during a create or an update operation. The
- * attribute id consists of two parts: The first part of until the "-new"
- * substring, and the part behind "-new" which must not be empty. The first part
- * cannot be automatically resolved and must be provided within the request,
- * i.e. it must be part of the context. The value for this part is retrieved
- * from the context. If this fails, an error is "thrown". Otherwise, the
- * retrieved value is used as the starting point to resolve the second part of
- * the attribute id by recursively calling <code>getResourceAttribute</code>.<br>
- * This finder module should be the one of the first eSciDoc specific finder
- * module in the chain, but must be placed after the 'standard' finder modules.
- * 
+ * Attribute finder module implementation that resolves partly resolveable attributes of new or updated resources.<br>
+ * This finder module handles all attributes that contain the substring "-new" but does not end with this substring.
+ * This substring identifies attributes whose values are changed during a create or an update operation. The attribute
+ * id consists of two parts: The first part of until the "-new" substring, and the part behind "-new" which must not be
+ * empty. The first part cannot be automatically resolved and must be provided within the request, i.e. it must be part
+ * of the context. The value for this part is retrieved from the context. If this fails, an error is "thrown".
+ * Otherwise, the retrieved value is used as the starting point to resolve the second part of the attribute id by
+ * recursively calling <code>getResourceAttribute</code>.<br> This finder module should be the one of the first eSciDoc
+ * specific finder module in the chain, but must be placed after the 'standard' finder modules.
+ *
  * @author Torsten Tetteroo
  */
-public class PartlyResolveableAttributeFinderModule
-    extends AbstractAttributeFinderModule {
+public class PartlyResolveableAttributeFinderModule extends AbstractAttributeFinderModule {
 
     /**
-     * Pattern to check if an attribute id is a partly resolveable attribute id,
-     * i.e. it contains the substring MARKER but does not end with it, and it
-     * contains the MARKER one time, only.
+     * Pattern to check if an attribute id is a partly resolveable attribute id, i.e. it contains the substring MARKER
+     * but does not end with it, and it contains the MARKER one time, only.
      */
     private static final Pattern PATTERN_PARSE_PARTLY_RESOLVEABLE_ATTRIBUTE_ID =
-        Pattern.compile("(^.*?" + AttributeIds.MARKER + ")+:(.*?"
-            + AttributeIds.MARKER + ")*.*?");
+        Pattern.compile("(^.*?" + AttributeIds.MARKER + ")+:(.*?" + AttributeIds.MARKER + ")*.*?");
 
-    /** The length of the marker. */
+    /**
+     * The length of the marker.
+     */
     public static final int MARKER_LENGTH = AttributeIds.MARKER.length();
-
-
 
     /**
      * See Interface for functional description.
-     * 
-     * @param attributeIdValue
-     * @param ctx
-     * @param resourceId
-     * @param resourceObjid
-     * @param resourceVersionNumber
-     * @param designatorType
-     * @return
-     * @throws EscidocException
-     *
      */
     @Override
     protected boolean assertAttribute(
-        final String attributeIdValue, final EvaluationCtx ctx,
-        final String resourceId, final String resourceObjid,
-        final String resourceVersionNumber, final int designatorType)
-        throws EscidocException {
+        final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
+        final String resourceVersionNumber, final int designatorType) throws EscidocException {
 
-        if (!super.assertAttribute(attributeIdValue, ctx, resourceId,
-            resourceObjid, resourceVersionNumber, designatorType)) {
+        if (!super.assertAttribute(attributeIdValue, ctx, resourceId, resourceObjid, resourceVersionNumber,
+            designatorType)) {
 
             return false;
         }
@@ -106,29 +86,17 @@ public class PartlyResolveableAttributeFinderModule
         // make sure it is a partly resolveable attribute id, i.e. it contains
         // the substring MARKER but does not end with it, and it contains the
         // MARKER one time, only.
-        final Matcher matcher =
-            PATTERN_PARSE_PARTLY_RESOLVEABLE_ATTRIBUTE_ID
-                .matcher(attributeIdValue);
+        final Matcher matcher = PATTERN_PARSE_PARTLY_RESOLVEABLE_ATTRIBUTE_ID.matcher(attributeIdValue);
         return !(!matcher.find() || matcher.group(2) != null);
 
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param attributeIdValue
-     * @param ctx
-     * @param resourceId
-     * @param resourceObjid
-     * @param resourceVersionNumber
-     * @return
-     * @throws EscidocException
-     *
      */
     @Override
     protected Object[] resolveLocalPart(
-        final String attributeIdValue, final EvaluationCtx ctx,
-        final String resourceId, final String resourceObjid,
+        final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
         final String resourceVersionNumber) throws EscidocException {
 
         // First, the part until the MARKER has to be resolved. This is an
@@ -137,33 +105,24 @@ public class PartlyResolveableAttributeFinderModule
         // ctx.getResourceAttribute() is called to get this new value.
         // This fetched value is returned to enable recursively resolving the
         // complete attribute id, see AbstractAttributeFinderModule.
-        final Matcher matcher =
-            PATTERN_PARSE_PARTLY_RESOLVEABLE_ATTRIBUTE_ID
-                .matcher(attributeIdValue);
+        final Matcher matcher = PATTERN_PARSE_PARTLY_RESOLVEABLE_ATTRIBUTE_ID.matcher(attributeIdValue);
         matcher.find();
         final String firstPartAttributeId = matcher.group(1);
 
         EvaluationResult result;
         try {
-            result =
-                ctx.getResourceAttribute(Constants.URI_XMLSCHEMA_STRING,
-                    new URI(firstPartAttributeId), null);
+            result = ctx.getResourceAttribute(Constants.URI_XMLSCHEMA_STRING, new URI(firstPartAttributeId), null);
         }
         catch (final URISyntaxException e) {
             result = CustomEvaluationResultBuilder.createSyntaxErrorResult(e);
         }
         if (isEmptyResult(result)) {
             result =
-                CustomEvaluationResultBuilder
-                    .createMissingAttributeErrorResult(new MissingParameterException(
-                        StringUtility.format(
-                            "Needed attribute value not provided",
-                            firstPartAttributeId)));
+                CustomEvaluationResultBuilder.createMissingAttributeErrorResult(new MissingParameterException(
+                    StringUtility.format("Needed attribute value not provided", firstPartAttributeId)));
         }
 
         return new Object[] { result, firstPartAttributeId };
     }
-
-
 
 }

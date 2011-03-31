@@ -59,9 +59,8 @@ import java.io.ByteArrayInputStream;
 
 /**
  * Persistent Identifier relevant methods for Container.
- * 
+ *
  * @author Steffen Wagner
- * 
  */
 public class ContainerHandlerPid extends ContainerHandlerCreate {
 
@@ -75,20 +74,17 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
      * @see de.escidoc.core.om.business.interfaces.ContainerHandlerInterface
      * #assignObjectPid(java.lang.String, java.lang.String)
      */
-    public String assignObjectPid(final String id, final String taskParam)
-        throws InvalidStatusException, ContainerNotFoundException,
-        LockingException, MissingMethodParameterException,
-        OptimisticLockingException, SystemException, XmlCorruptedException {
+    public String assignObjectPid(final String id, final String taskParam) throws InvalidStatusException,
+        ContainerNotFoundException, LockingException, MissingMethodParameterException, OptimisticLockingException,
+        SystemException, XmlCorruptedException {
 
         setContainer(id);
-        final TaskParamHandler taskParameter =
-            XmlUtility.parseTaskParam(taskParam);
+        final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(taskParam);
         checkLocked();
         checkStatusNot(Constants.STATUS_WITHDRAWN);
         checkNoObjectPidAssigned();
 
-        getUtility().checkOptimisticLockingCriteria(
-            getContainer().getLastModificationDate(),
+        getUtility().checkOptimisticLockingCriteria(getContainer().getLastModificationDate(),
             taskParameter.getLastModificationDate(), "Container " + id);
 
         String pid = taskParameter.getPid();
@@ -111,44 +107,29 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
 
     /**
      * Assign a persistent identifier to a version of container.
-     * 
-     * @param id
-     *            Object identifier of container
-     * @param taskParam
-     *            XML snippet with PID parameter.
+     *
+     * @param id        Object identifier of container
+     * @param taskParam XML snippet with PID parameter.
      * @return The assigned PID within XML structure.
-     * @throws ContainerNotFoundException
-     *             Thrown if the Container with the id could not be found.
-     * @throws LockingException
-     *             Thrown if the Container is locked.
+     * @throws ContainerNotFoundException Thrown if the Container with the id could not be found.
+     * @throws LockingException           Thrown if the Container is locked.
      * @throws MissingMethodParameterException
-     *             Thrown if taskParam is invalid.
-     * @throws InvalidStatusException
-     *             Thrown if Container version status is invalied.
-     * @throws OptimisticLockingException
-     *             Thrown if Container was altered through third instance mean
-     *             while.
-     * @throws XmlCorruptedException
-     *             Thrown if taskParam is invalid.
-     * @throws ReadonlyVersionException
-     *             Thrown if a provided container version id is not a latest
-     *             version.
-     * @throws SystemException
-     *             Thrown if internal error occures.
-     * 
+     *                                    Thrown if taskParam is invalid.
+     * @throws InvalidStatusException     Thrown if Container version status is invalied.
+     * @throws OptimisticLockingException Thrown if Container was altered through third instance mean while.
+     * @throws XmlCorruptedException      Thrown if taskParam is invalid.
+     * @throws ReadonlyVersionException   Thrown if a provided container version id is not a latest version.
+     * @throws SystemException            Thrown if internal error occures.
      */
-    public String assignVersionPid(final String id, final String taskParam)
-        throws ContainerNotFoundException, LockingException,
-        MissingMethodParameterException, SystemException,
-        OptimisticLockingException, InvalidStatusException,
-        XmlCorruptedException, ReadonlyVersionException {
+    public String assignVersionPid(final String id, final String taskParam) throws ContainerNotFoundException,
+        LockingException, MissingMethodParameterException, SystemException, OptimisticLockingException,
+        InvalidStatusException, XmlCorruptedException, ReadonlyVersionException {
 
         setContainer(id);
         if (!getContainer().isLatestVersion()) {
             throw new ReadonlyVersionException("The version " + getContainer().getVersionNumber()
-                    + " is not a latest version of the container. "
-                    + " Assignment of version PID is restricted to "
-                    + "the latest version.");
+                + " is not a latest version of the container. " + " Assignment of version PID is restricted to "
+                + "the latest version.");
         }
         // check Container status/values
         checkLocked();
@@ -158,12 +139,9 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
         checkVersionStatusNot(Constants.STATUS_RELEASED);
         checkVersionPidAssignable(id);
 
-        final TaskParamHandler taskParameter =
-            XmlUtility.parseTaskParam(taskParam);
-        getUtility().checkOptimisticLockingCriteria(
-            getContainer().getLastModificationDate(),
-            taskParameter.getLastModificationDate(),
-            "Container " + getContainer().getId());
+        final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(taskParam);
+        getUtility().checkOptimisticLockingCriteria(getContainer().getLastModificationDate(),
+            taskParameter.getLastModificationDate(), "Container " + getContainer().getId());
 
         String pid = taskParameter.getPid();
         if (pid == null) {
@@ -184,24 +162,17 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
 
     /**
      * Get Persistent Identifier from configured PID (Manager) service.
-     * 
-     * @param id
-     *            Container ID
-     * @param param
-     *            XML snippet with PID Manager parameter.
+     *
+     * @param id    Container ID
+     * @param param XML snippet with PID Manager parameter.
      * @return Persistent Identifier
-     * @throws PidSystemException
-     *             Thrown if the communication with PID (Management) System
-     *             fails.
+     * @throws PidSystemException       Thrown if the communication with PID (Management) System fails.
      * @throws MissingMethodParameterException
-     *             Thrown if necessary parameter not part of the param XML
-     *             structure.
-     * @throws WebserverSystemException
-     *             Thrown by assignPid().
+     *                                  Thrown if necessary parameter not part of the param XML structure.
+     * @throws WebserverSystemException Thrown by assignPid().
      */
-    public String getPid(final String id, final String param)
-        throws PidSystemException, MissingMethodParameterException,
-        WebserverSystemException {
+    public String getPid(final String id, final String param) throws PidSystemException,
+        MissingMethodParameterException, WebserverSystemException {
 
         if (this.pidGenFactory == null) {
             this.pidGenFactory = PIDSystemFactory.getInstance();
@@ -214,45 +185,32 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
     }
 
     /**
-     * Check the status of persistent identifier in relation to the configured
-     * behavior. This behavior is to configure by the escidoc-core.properties
-     * until an existing implementation of the content model.
-     * 
-     * @throws InvalidStatusException
-     *             Thrown if the Item has invalid status to release a Item.
-     * @throws TripleStoreSystemException
-     *             Thrown if TripleStore request fails.
-     * @throws WebserverSystemException
-     *             TODO
+     * Check the status of persistent identifier in relation to the configured behavior. This behavior is to configure
+     * by the escidoc-core.properties until an existing implementation of the content model.
+     *
+     * @throws InvalidStatusException     Thrown if the Item has invalid status to release a Item.
+     * @throws TripleStoreSystemException Thrown if TripleStore request fails.
+     * @throws WebserverSystemException   TODO
      */
-    protected void checkPid() throws InvalidStatusException,
-        TripleStoreSystemException, WebserverSystemException {
+    protected void checkPid() throws InvalidStatusException, TripleStoreSystemException, WebserverSystemException {
         // this is part of a content model (which is currently missing)
 
         if (!releasableObjectPid()) {
-            throw new InvalidStatusException("ObjectPid is missing! "
-                + "A released Container must have an objectPid.");
+            throw new InvalidStatusException("ObjectPid is missing! " + "A released Container must have an objectPid.");
         }
 
         if (!releasableVersionPid()) {
-            throw new InvalidStatusException("VersionPid is missing! "
-                + "A released Container must have a versionPid.");
+            throw new InvalidStatusException("VersionPid is missing! " + "A released Container must have a versionPid.");
         }
     }
 
     /**
-     * Check if container fulfills all requirements for PID assignment. - status
-     * released - not already assigned pid
-     * 
-     * @param versionId
-     *            The version ID of the container.
-     * 
-     * @throws InvalidStatusException
-     *             If item status is not released
-     * @throws TripleStoreSystemException
+     * Check if container fulfills all requirements for PID assignment. - status released - not already assigned pid
+     *
+     * @param versionId The version ID of the container.
+     * @throws InvalidStatusException If item status is not released
      */
-    protected void checkVersionPidAssignable(final String versionId)
-        throws InvalidStatusException {
+    protected void checkVersionPidAssignable(final String versionId) throws InvalidStatusException {
 
         // String status = null;
         final String pid;
@@ -260,12 +218,10 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
         final XPath xpath = XPathFactory.newInstance().newXPath();
         try {
             final DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-            final Document xmlDom = db.parse(new ByteArrayInputStream(getContainer()
-                    .getWov().getStream()));
+            final Document xmlDom = db.parse(new ByteArrayInputStream(getContainer().getWov().getStream()));
 
             // get status from version-history/version[@objid='id']/pid
-            final String xpathPid =
-                "/version-history/version[@objid='" + versionId + "']/pid";
+            final String xpathPid = "/version-history/version[@objid='" + versionId + "']/pid";
             pid = xpath.evaluate(xpathPid, xmlDom);
         }
         catch (final Exception e) {
@@ -283,40 +239,32 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
         // FIXME pid structure check ?
         if (pid.length() > 0) {
             throw new InvalidStatusException("This object version is already assigned with PID '" + pid
-                    + "' and can not be reassigned.");
+                + "' and can not be reassigned.");
         }
     }
 
     /**
-     * Check if the Container has fulfilled all pre-conditions in relation to
-     * PID for the release process.
-     * 
+     * Check if the Container has fulfilled all pre-conditions in relation to PID for the release process.
+     *
      * @return true if all pre-conditions are fulfilled otherwise false.
-     * @throws TripleStoreSystemException
-     *             Thrown if TripleStore request fails.
-     * @throws WebserverSystemException
-     *             Thrown if check of existing versionPID throws Exception.
+     * @throws TripleStoreSystemException Thrown if TripleStore request fails.
+     * @throws WebserverSystemException   Thrown if check of existing versionPID throws Exception.
      */
-    protected boolean releasableObjectPid() throws TripleStoreSystemException,
-        WebserverSystemException {
-        if (Boolean.valueOf(System
-                .getProperty("cmm.Container.objectPid.releaseWithoutPid"))) {
+    protected boolean releasableObjectPid() throws TripleStoreSystemException, WebserverSystemException {
+        if (Boolean.valueOf(System.getProperty("cmm.Container.objectPid.releaseWithoutPid"))) {
             return true;
         } // objectPid is needed
         return getContainer().hasObjectPid();
     }
 
     /**
-     * Check if the Container has fulfilled all pre-conditions in relation to
-     * PID for the release process.
-     * 
+     * Check if the Container has fulfilled all pre-conditions in relation to PID for the release process.
+     *
      * @return true if all pre-conditions are fulfilled otherwise false.
-     * @throws WebserverSystemException
-     *             Thrown if check of existing versionPID throws Exception.
+     * @throws WebserverSystemException Thrown if check of existing versionPID throws Exception.
      */
     protected boolean releasableVersionPid() throws WebserverSystemException {
-        if (Boolean.valueOf(System
-            .getProperty("cmm.Container.versionPid.releaseWithoutPid"))) {
+        if (Boolean.valueOf(System.getProperty("cmm.Container.versionPid.releaseWithoutPid"))) {
             return true;
         }
 
@@ -326,45 +274,34 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
 
     /**
      * Check pre-conditions to assign an ObjectPID.
-     * 
-     * @param versionId
-     *            ID of container object
-     * @throws InvalidStatusException
-     *             thrown if assignment is forbidden
-     * @throws SystemException
-     *             thrown in case of error
+     *
+     * @param versionId ID of container object
+     * @throws InvalidStatusException thrown if assignment is forbidden
+     * @throws SystemException        thrown in case of error
      */
-    protected void checkObjectPidAssignable(final String versionId)
-        throws InvalidStatusException, SystemException {
+    protected void checkObjectPidAssignable(final String versionId) throws InvalidStatusException, SystemException {
 
         final String pid =
-            getTripleStoreUtility().getPropertiesElements(
-                getContainer().getId(),
+            getTripleStoreUtility().getPropertiesElements(getContainer().getId(),
                 TripleStoreUtility.PROP_LATEST_RELEASE_PID);
 
         if (pid != null && pid.length() > 0) {
             throw new InvalidStatusException("The object is already assigned with PID '" + pid
-                    + "' and can not be reassigned.");
+                + "' and can not be reassigned.");
         }
     }
 
     /**
      * Prepare the assignment response message.
-     * 
+     * <p/>
      * Preconditions: The TripleStore must be in sync with the repository.
-     * 
-     * @param pid
-     *            The new assigned PID.
+     *
+     * @param pid The new assigned PID.
      * @return response message
-     * 
-     * @throws WebserverSystemException
-     *             Thrown in case of internal error.
-     * @throws TripleStoreSystemException
-     *             Thrown in case of TripleStore error.
-     * 
+     * @throws WebserverSystemException   Thrown in case of internal error.
+     * @throws TripleStoreSystemException Thrown in case of TripleStore error.
      */
-    private String prepareResponse(final String pid)
-        throws TripleStoreSystemException, WebserverSystemException {
+    private String prepareResponse(final String pid) throws TripleStoreSystemException, WebserverSystemException {
 
         final String lmd;
         try {

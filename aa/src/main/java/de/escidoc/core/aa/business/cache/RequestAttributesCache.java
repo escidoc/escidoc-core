@@ -39,13 +39,10 @@ import java.util.Collections;
 import java.util.Map;
 
 /**
- * Class to cache objects retrieved from the system for the XACML engine.<br>
- * The objects are store in a {@link Map} that is synchronized by
- * {@link Collections}.synchronizedMap({@link Map}).
- * 
- * @author Roland Werner (Accenture)
+ * Class to cache objects retrieved from the system for the XACML engine.<br> The objects are store in a {@link Map}
+ * that is synchronized by {@link Collections}.synchronizedMap({@link Map}).
  *
- * 
+ * @author Roland Werner (Accenture)
  */
 public final class RequestAttributesCache {
 
@@ -55,40 +52,30 @@ public final class RequestAttributesCache {
     private static final Logger LOGGER = LoggerFactory.getLogger(RequestAttributesCache.class);
 
     /**
-     * Fall back value if reading property
-     * {@link <code>EscidocConfiguration.AA_CACHE_USERS_SIZE</code>} fails.
-     * 
-     *
+     * Fall back value if reading property {@link <code>EscidocConfiguration.AA_CACHE_USERS_SIZE</code>} fails.
      */
     private static final int USERS_CACHE_SIZE_FALL_BACK = 50;
 
     /**
-     * Fall back value if reading property
-     * {@link <code>EscidocConfiguration.AA_CACHE_ATTRIBUTES_SIZE</code>} fails.
-     * 
-     *
+     * Fall back value if reading property {@link <code>EscidocConfiguration.AA_CACHE_ATTRIBUTES_SIZE</code>} fails.
      */
     private static final int INTERNAL_CACHE_SIZE_FALL_BACK = 50;
 
     /**
-     * The cache is implemented as a synchronized LRUMap (least-recently-used
-     * map), so it can only grow to a certain size.
-     * 
-     *
+     * The cache is implemented as a synchronized LRUMap (least-recently-used map), so it can only grow to a certain
+     * size.
      */
     private static Map<EvaluationCtx, Map<Object, Object>> attributesCache;
 
     /**
-     * This cache size should be set to the number of expected concurrent users.
-     * It is fetched from the properties. If this fails, a fall back value is
-     * used.
+     * This cache size should be set to the number of expected concurrent users. It is fetched from the properties. If
+     * this fails, a fall back value is used.
      */
     private static int usersCacheSize = USERS_CACHE_SIZE_FALL_BACK;
 
     /**
-     * This cache size should be set to the number of system objects that should
-     * be cached for a request at one point of time. It is fetched from the
-     * properties. If this fails, a fall back value is used.
+     * This cache size should be set to the number of system objects that should be cached for a request at one point of
+     * time. It is fetched from the properties. If this fails, a fall back value is used.
      */
     private static int internalCacheSize;
 
@@ -98,16 +85,13 @@ public final class RequestAttributesCache {
 
     /**
      * Private constructor to prevent class from being instantiated.
-     * 
-     *
      */
     private RequestAttributesCache() {
     }
 
     /**
-     * Initializes the caches.<br/>The cache sizes are fetched from the eSciDoc
-     * Configuration. If this fails, the default values are used as fallback an
-     * an error is logged.
+     * Initializes the caches.<br/>The cache sizes are fetched from the eSciDoc Configuration. If this fails, the
+     * default values are used as fallback an an error is logged.
      */
     private static void initCaches() {
 
@@ -115,28 +99,26 @@ public final class RequestAttributesCache {
             usersCacheSize =
                 Integer.parseInt(EscidocConfiguration.getInstance().get(
                     EscidocConfiguration.ESCIDOC_CORE_AA_CACHE_USERS_SIZE));
-        } catch (final Exception e) {
-            if(LOGGER.isWarnEnabled()) {
-                    LOGGER.warn("Error on parsing user cache size.");
-                }
-            if(LOGGER.isDebugEnabled()) {
+        }
+        catch (final Exception e) {
+            if (LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Error on parsing user cache size.");
+            }
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on parsing user cache size.", e);
             }
             usersCacheSize = USERS_CACHE_SIZE_FALL_BACK;
         }
         try {
             internalCacheSize =
-                Integer
-                    .parseInt(EscidocConfiguration
-                        .getInstance()
-                        .get(
-                            EscidocConfiguration.ESCIDOC_CORE_AA_CACHE_ATTRIBUTES_SIZE));
+                Integer.parseInt(EscidocConfiguration.getInstance().get(
+                    EscidocConfiguration.ESCIDOC_CORE_AA_CACHE_ATTRIBUTES_SIZE));
         }
         catch (final Exception e) {
-            if(LOGGER.isWarnEnabled()) {
-                    LOGGER.warn("Error on parsing internal cache size.");
-                }
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Error on parsing internal cache size.");
+            }
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on parsing internal cache size.", e);
             }
             internalCacheSize = INTERNAL_CACHE_SIZE_FALL_BACK;
@@ -146,26 +128,22 @@ public final class RequestAttributesCache {
     }
 
     /**
-     * Creates the attribute cache.<br/>The cache is implemented as a
-     * synchronized LRUMap (least-recently-used map), so it can only grow to a
-     * certain size. The size is taken from the static field
-     * <code>usersCacheSize</code> that has to be initialized before calling
-     * this method (this is not checked).
+     * Creates the attribute cache.<br/>The cache is implemented as a synchronized LRUMap (least-recently-used map), so
+     * it can only grow to a certain size. The size is taken from the static field <code>usersCacheSize</code> that has
+     * to be initialized before calling this method (this is not checked).
      */
     @SuppressWarnings("unchecked")
     private static void createAttributeCache() {
 
-        attributesCache =
-            Collections.synchronizedMap(new LRUMap(usersCacheSize));
+        attributesCache = Collections.synchronizedMap(new LRUMap(usersCacheSize));
     }
 
     /**
-     * Creates the internal map holding the system objects (attributes) that
-     * shall be cached for a request.<br/>
-     * 
-     * @return Returns a synchronized LRU map. The map size is taken from the
-     *         static field <code>internalCacheSize</code> that has to be
-     *         initialized before calling this method (this is not checked).
+     * Creates the internal map holding the system objects (attributes) that shall be cached for a request.<br/>
+     *
+     * @return Returns a synchronized LRU map. The map size is taken from the static field
+     *         <code>internalCacheSize</code> that has to be initialized before calling this method (this is not
+     *         checked).
      */
     @SuppressWarnings("unchecked")
     private static Map<Object, Object> createInternalMap() {
@@ -174,23 +152,16 @@ public final class RequestAttributesCache {
     }
 
     /**
-     * Stores the provided object using the provided key in the internal cache
-     * for this EvaluationCtx.
-     * 
-     * Realised as a outer LRUMap that uses context as key and which has an
-     * inner LRUMap as value. The inner LRUMap has key as key and object as
-     * value. Both LRUMaps are synchronized.
-     * 
-     * @param context
-     *            The context to use as key for the outer HashMap.
-     * @param key
-     *            The key to use as key for the inner HashMap.
-     * @param object
-     *            The value for the inner HashMap.
+     * Stores the provided object using the provided key in the internal cache for this EvaluationCtx.
+     * <p/>
+     * Realised as a outer LRUMap that uses context as key and which has an inner LRUMap as value. The inner LRUMap has
+     * key as key and object as value. Both LRUMaps are synchronized.
      *
+     * @param context The context to use as key for the outer HashMap.
+     * @param key     The key to use as key for the inner HashMap.
+     * @param object  The value for the inner HashMap.
      */
-    public static void put(
-        final EvaluationCtx context, final Object key, final Object object) {
+    public static void put(final EvaluationCtx context, final Object key, final Object object) {
 
         try {
             if (key == null || context == null) {
@@ -204,24 +175,19 @@ public final class RequestAttributesCache {
             internalMap.put(key, object);
         }
         catch (final RuntimeException e) {
-            LOGGER.error(StringUtility.format(
-                "Runtime exception during put.", context, key, object), e);
+            LOGGER.error(StringUtility.format("Runtime exception during put.", context, key, object), e);
             createAttributeCache();
         }
     }
 
     /**
-     * Gets the object for the provided key, given that we are still in the same
-     * EvaluationCtx.
-     * 
+     * Gets the object for the provided key, given that we are still in the same EvaluationCtx.
+     * <p/>
      * Realisation see method put.
-     * 
-     * @param context
-     *            The context to use as key for the outer HashMap.
-     * @param key
-     *            The key to use as key for the inner HashMap.
-     * @return The value of the inner HashMap.
      *
+     * @param context The context to use as key for the outer HashMap.
+     * @param key     The key to use as key for the inner HashMap.
+     * @return The value of the inner HashMap.
      */
     public static Object get(final EvaluationCtx context, final Object key) {
 
@@ -236,8 +202,7 @@ public final class RequestAttributesCache {
             return internalMap.get(key);
         }
         catch (final RuntimeException e) {
-            LOGGER.error(StringUtility.format(
-                "Runtime exception during get.", context, key), e);
+            LOGGER.error(StringUtility.format("Runtime exception during get.", context, key), e);
             createAttributeCache();
             return null;
         }

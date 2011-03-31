@@ -31,22 +31,18 @@ package de.escidoc.core.test.aa.soap;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-
-
 /**
  * Testsuite for the UserGroup's Grants with SOAP transport.
- * 
+ *
  * @author Torsten Tetteroo
- * 
  */
 @RunWith(JUnit4.class)
 public class UserGroupGrantSoapTest extends GrantSoapAbstractTest {
 
     /**
      * Constructor.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     public UserGroupGrantSoapTest() throws Exception {
         super(USER_GROUP_HANDLER_CODE);

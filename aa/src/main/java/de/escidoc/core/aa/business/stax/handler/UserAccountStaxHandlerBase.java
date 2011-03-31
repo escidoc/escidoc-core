@@ -34,39 +34,35 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 /**
  * Base class of stax handlers that work with user accounts or grants.
- * 
- * @author Torsten Tetteroo
  *
+ * @author Torsten Tetteroo
  */
 public abstract class UserAccountStaxHandlerBase extends DefaultHandler {
 
-    /** The user account to handle. */
+    /**
+     * The user account to handle.
+     */
     private UserAccount userAccount;
 
-    /** The grant to handle. */
+    /**
+     * The grant to handle.
+     */
     private RoleGrant grant;
 
     /**
-     * Flag indicating if new user data may be created (<code>true</code>)
-     * or data from database shall be updated (<code>false</code>).
-     * 
-     *
+     * Flag indicating if new user data may be created (<code>true</code>) or data from database shall be updated
+     * (<code>false</code>).
      */
     private final boolean create;
 
     /**
      * The constructor.
-     * 
-     * @param userAccount
-     *            The user account to handle.
-     * @param create
-     *            The flag indicating if new object shall be created (
-     *            <code>true</code> ), or a object shall be updated.
-     * 
      *
+     * @param userAccount The user account to handle.
+     * @param create      The flag indicating if new object shall be created ( <code>true</code> ), or a object shall be
+     *                    updated.
      */
-    protected UserAccountStaxHandlerBase(final UserAccount userAccount,
-        final boolean create) {
+    protected UserAccountStaxHandlerBase(final UserAccount userAccount, final boolean create) {
 
         this.userAccount = userAccount;
         this.create = create;
@@ -74,17 +70,12 @@ public abstract class UserAccountStaxHandlerBase extends DefaultHandler {
 
     /**
      * The constructor.
-     * 
-     * @param grant
-     *            The grant to handle.
-     * @param create
-     *            The flag indicating if new object shall be created (
-     *            <code>true</code> ), or a object shall be updated.
-     * 
      *
+     * @param grant  The grant to handle.
+     * @param create The flag indicating if new object shall be created ( <code>true</code> ), or a object shall be
+     *               updated.
      */
-    protected UserAccountStaxHandlerBase(final RoleGrant grant,
-        final boolean create) {
+    protected UserAccountStaxHandlerBase(final RoleGrant grant, final boolean create) {
 
         this.grant = grant;
         this.create = create;
@@ -92,7 +83,6 @@ public abstract class UserAccountStaxHandlerBase extends DefaultHandler {
 
     /**
      * @return Returns the create.
-     *
      */
     protected boolean isCreate() {
         return this.create;
@@ -100,9 +90,8 @@ public abstract class UserAccountStaxHandlerBase extends DefaultHandler {
 
     /**
      * Gets the user data from the data provider.
-     * 
-     * @return Returns the stored <code>UserAccount</code> object or
-     *         <code>null</code>.
+     *
+     * @return Returns the stored <code>UserAccount</code> object or <code>null</code>.
      */
     protected UserAccount getUserAccount() {
 
@@ -111,9 +100,8 @@ public abstract class UserAccountStaxHandlerBase extends DefaultHandler {
 
     /**
      * Gets the user data from the data provider.
-     * 
-     * @return Returns the stored <code>UserAccount</code> object or
-     *         <code>null</code>.
+     *
+     * @return Returns the stored <code>UserAccount</code> object or <code>null</code>.
      */
     protected RoleGrant getGrant() {
 

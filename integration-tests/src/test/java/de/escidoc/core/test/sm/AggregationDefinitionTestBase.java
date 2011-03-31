@@ -37,15 +37,13 @@ import java.util.Map;
 
 /**
  * Base class for aggregationDefinition tests.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 public class AggregationDefinitionTestBase extends SmTestBase {
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public AggregationDefinitionTestBase(final int transport) {
         super(transport);
@@ -53,12 +51,10 @@ public class AggregationDefinitionTestBase extends SmTestBase {
 
     /**
      * Test creating aggregationDefinition.
-     * 
-     * @param dataXml
-     *            The xml representation of the aggregationDefinition.
+     *
+     * @param dataXml The xml representation of the aggregationDefinition.
      * @return The created aggregationDefinition.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     @Override
     public String create(final String dataXml) throws Exception {
@@ -78,11 +74,9 @@ public class AggregationDefinitionTestBase extends SmTestBase {
 
     /**
      * Test deleting an aggregationDefinition from the mock framework.
-     * 
-     * @param id
-     *            The id of the aggregationDefinition.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param id The id of the aggregationDefinition.
+     * @throws Exception If anything fails.
      */
     @Override
     public void delete(final String id) throws Exception {
@@ -96,12 +90,10 @@ public class AggregationDefinitionTestBase extends SmTestBase {
 
     /**
      * Test retrieving an aggregationDefinition from the mock framework.
-     * 
-     * @param id
-     *            The id of the aggregationDefinition.
+     *
+     * @param id The id of the aggregationDefinition.
      * @return The retrieved aggregationDefinition.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     @Override
     public String retrieve(final String id) throws Exception {
@@ -120,18 +112,15 @@ public class AggregationDefinitionTestBase extends SmTestBase {
     }
 
     /**
-     * Test retrieving the list of all aggregationDefinitions from the mock
-     * framework.
-     * 
+     * Test retrieving the list of all aggregationDefinitions from the mock framework.
+     *
      * @return The retrieved aggregationDefinitions as xml.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     public String retrieveAggregationDefinitions() throws Exception {
 
         Object result =
-            getAggregationDefinitionClient().retrieveAggregationDefinitions(
-                new HashMap<String, String[]>());
+            getAggregationDefinitionClient().retrieveAggregationDefinitions(new HashMap<String, String[]>());
         String xmlResult = null;
         if (result instanceof HttpResponse) {
             HttpResponse httpRes = (HttpResponse) result;
@@ -145,21 +134,15 @@ public class AggregationDefinitionTestBase extends SmTestBase {
     }
 
     /**
-     * Test retrieving the list of aggregationDefinitions from the mock
-     * framework.
+     * Test retrieving the list of aggregationDefinitions from the mock framework.
      *
      * @param filter CQL filter
-     *
      * @return The retrieved aggregationDefinitions as xml.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    public String retrieveAggregationDefinitions(
-        final Map<String, String[]> filter) throws Exception {
+    public String retrieveAggregationDefinitions(final Map<String, String[]> filter) throws Exception {
 
-        Object result =
-            getAggregationDefinitionClient().retrieveAggregationDefinitions(
-                filter);
+        Object result = getAggregationDefinitionClient().retrieveAggregationDefinitions(filter);
         String xmlResult = null;
         if (result instanceof HttpResponse) {
             HttpResponse httpRes = (HttpResponse) result;

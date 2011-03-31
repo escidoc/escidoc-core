@@ -76,22 +76,25 @@ import java.util.Map;
 /**
  * @author Frank Schwichtenberg
  */
-public class FedoraContextHandler extends ContextHandlerUpdate
-    implements ContextHandlerInterface {
+public class FedoraContextHandler extends ContextHandlerUpdate implements ContextHandlerInterface {
 
     private final Collection<ResourceListener> contextListeners = new ArrayList<ResourceListener>();
 
     private FedoraContentRelationHandler contentRelationHandler;
 
-    /** The policy decision point used to check access privileges. */
+    /**
+     * The policy decision point used to check access privileges.
+     */
     private PolicyDecisionPointInterface pdp;
 
-    /** SRU request. */
+    /**
+     * SRU request.
+     */
     private SRURequest sruRequest;
 
     /**
      * Gets the {@link PolicyDecisionPointInterface} implementation.
-     * 
+     *
      * @return PolicyDecisionPointInterface
      */
     protected PolicyDecisionPointInterface getPdp() {
@@ -101,9 +104,8 @@ public class FedoraContextHandler extends ContextHandlerUpdate
 
     /**
      * Injects the {@link PolicyDecisionPointInterface} implementation.
-     * 
-     * @param pdp
-     *            the {@link PolicyDecisionPointInterface} to be injected.
+     *
+     * @param pdp the {@link PolicyDecisionPointInterface} to be injected.
      */
     public void setPdp(final PolicyDecisionPointInterface pdp) {
 
@@ -111,43 +113,31 @@ public class FedoraContextHandler extends ContextHandlerUpdate
     }
 
     /**
-     * This is a wrapper class for the create method. It takes a xml string and
-     * returns either the representation of the resource or its id.
-     * 
-     * @param xmlData
-     *            the string that contains the resource
-     * @param isCreate
-     *            set true if Context is created via create method, set to false
-     *            if Context is created via ingest method
+     * This is a wrapper class for the create method. It takes a xml string and returns either the representation of the
+     * resource or its id.
+     *
+     * @param xmlData  the string that contains the resource
+     * @param isCreate set true if Context is created via create method, set to false if Context is created via ingest
+     *                 method
      * @return id the string that contains the id of the created resource
-     * 
-     * @throws ContextNameNotUniqueException
-     *             e
-     * @throws SystemException
-     *             e
-     * @throws ContentModelNotFoundException
-     *             e
+     * @throws ContextNameNotUniqueException  e
+     * @throws SystemException                e
+     * @throws ContentModelNotFoundException  e
      * @throws ReadonlyElementViolationException
-     *             e
-     * @throws MissingAttributeValueException
-     *             e
-     * @throws MissingElementValueException
-     *             e
+     *                                        e
+     * @throws MissingAttributeValueException e
+     * @throws MissingElementValueException   e
      * @throws ReadonlyAttributeViolationException
-     *             e
-     * @throws InvalidContentException
-     *             e
+     *                                        e
+     * @throws InvalidContentException        e
      * @throws OrganizationalUnitNotFoundException
-     *             e
-     * @throws InvalidStatusException
-     *             e
+     *                                        e
+     * @throws InvalidStatusException         e
      */
-    private String doCreate(final String xmlData, final boolean isCreate)
-        throws ContextNameNotUniqueException, SystemException,
-        ContentModelNotFoundException, ReadonlyElementViolationException,
-        MissingAttributeValueException, MissingElementValueException,
-        ReadonlyAttributeViolationException, InvalidContentException,
-        OrganizationalUnitNotFoundException, InvalidStatusException {
+    private String doCreate(final String xmlData, final boolean isCreate) throws ContextNameNotUniqueException,
+        SystemException, ContentModelNotFoundException, ReadonlyElementViolationException,
+        MissingAttributeValueException, MissingElementValueException, ReadonlyAttributeViolationException,
+        InvalidContentException, OrganizationalUnitNotFoundException, InvalidStatusException {
 
         final String id = createContext(xmlData);
         try {
@@ -169,11 +159,9 @@ public class FedoraContextHandler extends ContextHandlerUpdate
      * (java.lang.String)
      */
     @Override
-    public String create(final String xmlData)
-        throws ContextNameNotUniqueException, SystemException,
-        ContentModelNotFoundException, ReadonlyElementViolationException,
-        MissingAttributeValueException, MissingElementValueException,
-        ReadonlyAttributeViolationException, InvalidContentException,
+    public String create(final String xmlData) throws ContextNameNotUniqueException, SystemException,
+        ContentModelNotFoundException, ReadonlyElementViolationException, MissingAttributeValueException,
+        MissingElementValueException, ReadonlyAttributeViolationException, InvalidContentException,
         OrganizationalUnitNotFoundException, InvalidStatusException {
         return doCreate(xmlData, true);
     }
@@ -182,11 +170,9 @@ public class FedoraContextHandler extends ContextHandlerUpdate
      * @see IngestableResource#ingest(String)
      */
     @Override
-    public String ingest(final String xmlData)
-        throws ContextNameNotUniqueException, SystemException,
-        ContentModelNotFoundException, ReadonlyElementViolationException,
-        MissingAttributeValueException, MissingElementValueException,
-        ReadonlyAttributeViolationException, InvalidContentException,
+    public String ingest(final String xmlData) throws ContextNameNotUniqueException, SystemException,
+        ContentModelNotFoundException, ReadonlyElementViolationException, MissingAttributeValueException,
+        MissingElementValueException, ReadonlyAttributeViolationException, InvalidContentException,
         OrganizationalUnitNotFoundException, InvalidStatusException {
         return doCreate(xmlData, false);
 
@@ -200,8 +186,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
      * (java.lang.String)
      */
     @Override
-    public String retrieve(final String id) throws ContextNotFoundException,
-        SystemException {
+    public String retrieve(final String id) throws ContextNotFoundException, SystemException {
         setContext(id);
         return getContextXml(this);
     }
@@ -214,19 +199,17 @@ public class FedoraContextHandler extends ContextHandlerUpdate
      */
     @Override
     public EscidocBinaryContent retrieveResource(
-        final String id, final String resourceName,
-        final Map<String, String[]> parameters)
-        throws OperationNotFoundException, ContextNotFoundException,
-        SystemException {
+        final String id, final String resourceName, final Map<String, String[]> parameters)
+        throws OperationNotFoundException, ContextNotFoundException, SystemException {
 
         final EscidocBinaryContent content = new EscidocBinaryContent();
         content.setMimeType("text/xml");
 
         if ("members".equals(resourceName)) {
             try {
-                content.setContent(new ByteArrayInputStream(retrieveMembers(id,
-                    new LuceneRequestParameters(parameters)).getBytes(
-                    XmlUtility.CHARACTER_ENCODING)));
+                content.setContent(new ByteArrayInputStream(
+                    retrieveMembers(id, new LuceneRequestParameters(parameters))
+                        .getBytes(XmlUtility.CHARACTER_ENCODING)));
                 return content;
             }
             catch (final UnsupportedEncodingException e) {
@@ -235,9 +218,8 @@ public class FedoraContextHandler extends ContextHandlerUpdate
         }
         else if ("relations".equals(resourceName)) {
             try {
-                content.setContent(new ByteArrayInputStream(
-                    retrieveContentRelations(id).getBytes(
-                        XmlUtility.CHARACTER_ENCODING)));
+                content.setContent(new ByteArrayInputStream(retrieveContentRelations(id).getBytes(
+                    XmlUtility.CHARACTER_ENCODING)));
                 return content;
             }
             catch (final UnsupportedEncodingException e) {
@@ -245,8 +227,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
             }
         }
         else {
-            throw new OperationNotFoundException(
-                "no virtual resource with that name defined");
+            throw new OperationNotFoundException("no virtual resource with that name defined");
         }
     }
 
@@ -256,8 +237,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
      * @see ContextHandlerInterface#retrieveResources(java.lang.String)
      */
     @Override
-    public String retrieveResources(final String id)
-        throws ContextNotFoundException, SystemException {
+    public String retrieveResources(final String id) throws ContextNotFoundException, SystemException {
 
         setContext(id);
         return getResourcesXml(this);
@@ -269,8 +249,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
      * @see ContextHandlerInterface#retrieveProperties(java.lang.String)
      */
     @Override
-    public String retrieveProperties(final String id)
-        throws ContextNotFoundException, SystemException {
+    public String retrieveProperties(final String id) throws ContextNotFoundException, SystemException {
 
         setContext(id);
         return getPropertiesXml(this);
@@ -280,16 +259,14 @@ public class FedoraContextHandler extends ContextHandlerUpdate
      * (non-Javadoc).
      */
     @Override
-    public String retrieveContexts(final SRURequestParameters parameters)
-        throws SystemException {
+    public String retrieveContexts(final SRURequestParameters parameters) throws SystemException {
         final StringWriter result = new StringWriter();
 
         if (parameters.isExplain()) {
             sruRequest.explain(result, ResourceType.CONTEXT);
         }
         else {
-            sruRequest.searchRetrieve(result,
-                new ResourceType[] { ResourceType.CONTEXT }, parameters);
+            sruRequest.searchRetrieve(result, new ResourceType[] { ResourceType.CONTEXT }, parameters);
         }
         return result.toString();
     }
@@ -298,8 +275,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
      * (non-Javadoc).
      */
     @Override
-    public String retrieveMembers(
-        final String id, final SRURequestParameters parameters)
+    public String retrieveMembers(final String id, final SRURequestParameters parameters)
         throws ContextNotFoundException, SystemException {
         final StringWriter result = new StringWriter();
 
@@ -314,11 +290,9 @@ public class FedoraContextHandler extends ContextHandlerUpdate
             if (parameters.getQuery() != null) {
                 query += " AND " + parameters.getQuery();
             }
-            sruRequest.searchRetrieve(result, new ResourceType[] {
-                ResourceType.CONTAINER, ResourceType.ITEM }, query,
-                parameters.getMaximumRecords(), parameters.getStartRecord(),
-                parameters.getExtraData(),
-                parameters.getRecordPacking());
+            sruRequest.searchRetrieve(result, new ResourceType[] { ResourceType.CONTAINER, ResourceType.ITEM }, query,
+                parameters.getMaximumRecords(), parameters.getStartRecord(), parameters.getExtraData(), parameters
+                    .getRecordPacking());
         }
         return result.toString();
     }
@@ -330,13 +304,11 @@ public class FedoraContextHandler extends ContextHandlerUpdate
      * retrieveAdminDescriptor(java.lang.String, java.lang.String)
      */
     @Override
-    public String retrieveAdminDescriptor(final String id, final String name)
-        throws ContextNotFoundException, SystemException,
-        AdminDescriptorNotFoundException {
+    public String retrieveAdminDescriptor(final String id, final String name) throws ContextNotFoundException,
+        SystemException, AdminDescriptorNotFoundException {
 
         setContext(id);
-        return getRenderer().renderAdminDescriptor(this, name,
-            getContext().getAdminDescriptor(name), true);
+        return getRenderer().renderAdminDescriptor(this, name, getContext().getAdminDescriptor(name), true);
     }
 
     /*
@@ -346,8 +318,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
      * retrieveAdminDescriptors(java.lang.String)
      */
     @Override
-    public String retrieveAdminDescriptors(final String id)
-        throws ContextNotFoundException, SystemException {
+    public String retrieveAdminDescriptors(final String id) throws ContextNotFoundException, SystemException {
 
         setContext(id);
         return getAdminDescriptorsXml(this);
@@ -361,12 +332,10 @@ public class FedoraContextHandler extends ContextHandlerUpdate
      * (java.lang.String, java.lang.String)
      */
     @Override
-    public String update(final String id, final String xmlData)
-        throws ContextNotFoundException, InvalidStatusException,
-        OptimisticLockingException, ReadonlyAttributeViolationException,
-        ReadonlyElementViolationException, SystemException,
-        ContextNameNotUniqueException, MissingElementValueException,
-        InvalidContentException {
+    public String update(final String id, final String xmlData) throws ContextNotFoundException,
+        InvalidStatusException, OptimisticLockingException, ReadonlyAttributeViolationException,
+        ReadonlyElementViolationException, SystemException, ContextNameNotUniqueException,
+        MissingElementValueException, InvalidContentException {
 
         setContext(id);
         final String context;
@@ -391,17 +360,15 @@ public class FedoraContextHandler extends ContextHandlerUpdate
      * .lang.String, java.lang.String)
      */
     @Override
-    public String open(final String id, final String taskParam)
-        throws ContextNotFoundException, InvalidStatusException,
-        InvalidXmlException, OptimisticLockingException, SystemException,
-        LockingException, StreamNotFoundException {
+    public String open(final String id, final String taskParam) throws ContextNotFoundException,
+        InvalidStatusException, InvalidXmlException, OptimisticLockingException, SystemException, LockingException,
+        StreamNotFoundException {
 
         setContext(id);
         open(this, taskParam);
         fireContextModified(id, retrieve(getContext().getId()));
 
-        return getUtility().prepareReturnXmlFromLastModificationDate(
-            getContext().getLastModificationDate());
+        return getUtility().prepareReturnXmlFromLastModificationDate(getContext().getLastModificationDate());
     }
 
     /*
@@ -412,17 +379,15 @@ public class FedoraContextHandler extends ContextHandlerUpdate
      * java.lang.String, java.lang.String)
      */
     @Override
-    public String close(final String id, final String taskParam)
-        throws ContextNotFoundException, OptimisticLockingException,
-        InvalidXmlException, InvalidStatusException, SystemException,
-        LockingException, StreamNotFoundException {
+    public String close(final String id, final String taskParam) throws ContextNotFoundException,
+        OptimisticLockingException, InvalidXmlException, InvalidStatusException, SystemException, LockingException,
+        StreamNotFoundException {
 
         setContext(id);
         close(this, taskParam);
         fireContextModified(id, retrieve(getContext().getId()));
 
-        return getUtility().prepareReturnXmlFromLastModificationDate(
-            getContext().getLastModificationDate());
+        return getUtility().prepareReturnXmlFromLastModificationDate(getContext().getLastModificationDate());
     }
 
     /*
@@ -433,8 +398,8 @@ public class FedoraContextHandler extends ContextHandlerUpdate
      * (java.lang.String)
      */
     @Override
-    public void delete(final String id) throws ContextNotEmptyException,
-        ContextNotFoundException, InvalidStatusException, SystemException {
+    public void delete(final String id) throws ContextNotEmptyException, ContextNotFoundException,
+        InvalidStatusException, SystemException {
 
         setContext(id);
         remove(this);
@@ -449,29 +414,22 @@ public class FedoraContextHandler extends ContextHandlerUpdate
      * updateAdminDescriptor(java.lang.String, java.lang.String)
      */
     @Override
-    public String updateAdminDescriptor(final String id, final String xmlData)
-        throws ContextNotFoundException, OptimisticLockingException,
-        AdminDescriptorNotFoundException {
+    public String updateAdminDescriptor(final String id, final String xmlData) throws ContextNotFoundException,
+        OptimisticLockingException, AdminDescriptorNotFoundException {
 
         // check status(closed)
         // FIXME implement updateAdminDescriptor
-        throw new UnsupportedOperationException(
-            "FedoraContextHandler.updateAdminDescriptor not implemented yet");
+        throw new UnsupportedOperationException("FedoraContextHandler.updateAdminDescriptor not implemented yet");
     }
 
     /**
      * Notify the listeners that a context was modified.
-     * 
-     * @param id
-     *            context id
-     * @param xmlData
-     *            complete context XML
-     * 
-     * @throws SystemException
-     *             One of the listeners threw an exception.
+     *
+     * @param id      context id
+     * @param xmlData complete context XML
+     * @throws SystemException One of the listeners threw an exception.
      */
-    private void fireContextModified(final String id, final String xmlData)
-        throws SystemException {
+    private void fireContextModified(final String id, final String xmlData) throws SystemException {
         final String restXml;
         final String soapXml;
 
@@ -490,17 +448,12 @@ public class FedoraContextHandler extends ContextHandlerUpdate
 
     /**
      * Notify the listeners that an context was created.
-     * 
-     * @param id
-     *            context id
-     * @param xmlData
-     *            complete context XML
-     * 
-     * @throws SystemException
-     *             One of the listeners threw an exception.
+     *
+     * @param id      context id
+     * @param xmlData complete context XML
+     * @throws SystemException One of the listeners threw an exception.
      */
-    private void fireContextCreated(final String id, final String xmlData)
-        throws SystemException {
+    private void fireContextCreated(final String id, final String xmlData) throws SystemException {
         final String restXml;
         final String soapXml;
 
@@ -519,12 +472,9 @@ public class FedoraContextHandler extends ContextHandlerUpdate
 
     /**
      * Notify the listeners that an context was deleted.
-     * 
-     * @param id
-     *            context id
-     * 
-     * @throws SystemException
-     *             One of the listeners threw an exception.
+     *
+     * @param id context id
+     * @throws SystemException One of the listeners threw an exception.
      */
     private void fireContextDeleted(final String id) throws SystemException {
         for (final ResourceListener contextListener : this.contextListeners) {
@@ -533,16 +483,12 @@ public class FedoraContextHandler extends ContextHandlerUpdate
     }
 
     /**
-     * Get the alternate form of a context representation. If the current
-     * request came in via REST, then the SOAP form will be returned here and
-     * vice versa.
-     * 
-     * @param id
-     *            context id
-     * 
+     * Get the alternate form of a context representation. If the current request came in via REST, then the SOAP form
+     * will be returned here and vice versa.
+     *
+     * @param id context id
      * @return alternate form of the context
-     * @throws SystemException
-     *             An internal error occurred.
+     * @throws SystemException An internal error occurred.
      */
     private String getAlternateForm(final String id) throws SystemException {
         String result = null;
@@ -572,53 +518,41 @@ public class FedoraContextHandler extends ContextHandlerUpdate
     }
 
     /**
-     * Retrieve all content relation in which the current resource is subject or
-     * object.
-     * 
-     * @param id
-     *            context id
-     * 
+     * Retrieve all content relation in which the current resource is subject or object.
+     *
+     * @param id context id
      * @return list of content relations
-     * @throws ContextNotFoundException
-     *             Thrown if an item with the specified id could not be found.
-     * @throws SystemException
-     *             If an error occurs.
+     * @throws ContextNotFoundException Thrown if an item with the specified id could not be found.
+     * @throws SystemException          If an error occurs.
      */
-    private String retrieveContentRelations(final String id)
-        throws ContextNotFoundException, SystemException {
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+    private String retrieveContentRelations(final String id) throws ContextNotFoundException, SystemException {
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
         setContext(id);
-        filterParams.put("query", new String[] { "\"/subject/id\"="
-            + getContext().getId() + " or " +
-            // "\"/subject/id\"=" + getContext().getFullId() + " or " +
+        filterParams.put("query", new String[] { "\"/subject/id\"=" + getContext().getId() + " or " +
+        // "\"/subject/id\"=" + getContext().getFullId() + " or " +
             // "\"/object/id\"=" + getContext().getFullId() + " or " +
             "\"/object/id\"=" + getContext().getId() });
 
-        final String searchResponse = contentRelationHandler.retrieveContentRelations(
-                new LuceneRequestParameters(filterParams));
+        final String searchResponse =
+            contentRelationHandler.retrieveContentRelations(new LuceneRequestParameters(filterParams));
         return transformSearchResponse2relations(searchResponse);
 
     }
 
     /**
      * Injects the content relation handler.
-     * 
-     * @param contentRelationHandler
-     *            The {@link FedoraContentRelationHandler}.
-     * 
+     *
+     * @param contentRelationHandler The {@link FedoraContentRelationHandler}.
      */
-    public void setContentRelationHandler(
-        final FedoraContentRelationHandler contentRelationHandler) {
+    public void setContentRelationHandler(final FedoraContentRelationHandler contentRelationHandler) {
         this.contentRelationHandler = contentRelationHandler;
     }
 
     /**
      * Set the SRURequest object.
-     * 
-     * @param sruRequest
-     *            SRURequest
+     *
+     * @param sruRequest SRURequest
      */
     public void setSruRequest(final SRURequest sruRequest) {
         this.sruRequest = sruRequest;
@@ -626,10 +560,8 @@ public class FedoraContextHandler extends ContextHandlerUpdate
 
     /**
      * Injects the triple store utility bean.
-     * 
-     * @param tsu
-     *            The {@link TripleStoreUtility}.
-     * 
+     *
+     * @param tsu The {@link TripleStoreUtility}.
      */
     @Override
     public void setTripleStoreUtility(final TripleStoreUtility tsu) {
@@ -638,11 +570,9 @@ public class FedoraContextHandler extends ContextHandlerUpdate
 
     /**
      * See Interface for functional description.
-     * 
-     * @param fedoraUtility
-     *            Fedora utility
-     * @see HandlerBase
-     *      #setFedoraUtility(de.escidoc.core.common.business.fedora.FedoraUtility)
+     *
+     * @param fedoraUtility Fedora utility
+     * @see HandlerBase #setFedoraUtility(de.escidoc.core.common.business.fedora.FedoraUtility)
      */
     @Override
     public void setFedoraUtility(final FedoraUtility fedoraUtility) {
@@ -652,11 +582,9 @@ public class FedoraContextHandler extends ContextHandlerUpdate
 
     /**
      * See Interface for functional description.
-     * 
-     * @param idProvider
-     *            id provider
-     * @see HandlerBase
-     *      #setIdProvider(de.escidoc.core.common.persistence.EscidocIdProvider)
+     *
+     * @param idProvider id provider
+     * @see HandlerBase #setIdProvider(de.escidoc.core.common.persistence.EscidocIdProvider)
      */
     @Override
     public void setIdProvider(final EscidocIdProvider idProvider) {
@@ -667,8 +595,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
     /**
      * Injects the indexing handler.
      *
-     * @param indexingHandler
-     *            The indexing handler.
+     * @param indexingHandler The indexing handler.
      */
     public void setIndexingHandler(final ResourceListener indexingHandler) {
         addContextListener(indexingHandler);
@@ -676,9 +603,8 @@ public class FedoraContextHandler extends ContextHandlerUpdate
 
     /**
      * Register an context listener.
-     * 
-     * @param listener
-     *            listener which will be added to the list
+     *
+     * @param listener listener which will be added to the list
      */
     public void addContextListener(final ResourceListener listener) {
         contextListeners.add(listener);

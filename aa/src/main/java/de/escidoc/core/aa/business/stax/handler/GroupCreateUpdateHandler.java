@@ -57,12 +57,11 @@ public class GroupCreateUpdateHandler extends DefaultHandler {
 
         final String currenrPath = parser.getCurPath();
 
-        
         if (PROPERTIES_PATH.equals(currenrPath)) {
             this.inProperties = true;
 
         }
-        
+
         return element;
     }
 
@@ -75,13 +74,12 @@ public class GroupCreateUpdateHandler extends DefaultHandler {
             this.inProperties = false;
 
         }
-        
+
         return element;
     }
 
     @Override
-    public String characters(final String s, final StartElement element)
-        throws XmlCorruptedException {
+    public String characters(final String s, final StartElement element) throws XmlCorruptedException {
 
         final String theName = element.getLocalName();
         if (this.inProperties) {
@@ -90,8 +88,7 @@ public class GroupCreateUpdateHandler extends DefaultHandler {
                     groupProperties.put(Elements.ELEMENT_NAME, s);
                 }
                 else {
-                    throw new XmlCorruptedException(
-                        "the value of element " + theName + " is missing");
+                    throw new XmlCorruptedException("the value of element " + theName + " is missing");
                 }
             }
             else if (theName.equals(Elements.ELEMENT_DESCRIPTION)) {
@@ -110,23 +107,20 @@ public class GroupCreateUpdateHandler extends DefaultHandler {
                     groupProperties.put("label", s);
                 }
                 else {
-                    throw new XmlCorruptedException(
-                        "the value of element " + theName + " is missing");
+                    throw new XmlCorruptedException("the value of element " + theName + " is missing");
                 }
-                
+
             }
-            else if ("email".equals(theName)
-                && s != null) {
+            else if ("email".equals(theName) && s != null) {
                 groupProperties.put("email", s);
             }
         }
-        
+
         return s;
     }
-    
+
     public Map<String, String> getGroupProperties() {
         return this.groupProperties;
     }
-    
-    
+
 }

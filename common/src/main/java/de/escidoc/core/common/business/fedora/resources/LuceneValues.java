@@ -25,10 +25,11 @@ import java.util.regex.Pattern;
 
 /**
  * Encapsulate the sub queries for Lucene filtering.
- * 
+ *
  * @author Andr&eacute; Schenk
  */
 public final class LuceneValues extends Values {
+
     // The following place holders may be used:
     // {0} : userId
     // {1} : roleId
@@ -40,11 +41,9 @@ public final class LuceneValues extends Values {
     private static final String ID_SQL = "permissions-filter.PID:({4})";
 
     // some constants for escaping
-    private static final String LUCENE_ESCAPE_CHARS =
-        "[\\\\+\\-\\!\\(\\)\\:\\^\\]\\{\\}\\~\\*\\?]";
+    private static final String LUCENE_ESCAPE_CHARS = "[\\\\+\\-\\!\\(\\)\\:\\^\\]\\{\\}\\~\\*\\?]";
 
-    private static final Pattern LUCENE_PATTERN = Pattern
-        .compile(LUCENE_ESCAPE_CHARS);
+    private static final Pattern LUCENE_PATTERN = Pattern.compile(LUCENE_ESCAPE_CHARS);
 
     private static final String REPLACEMENT_STRING = "\\\\$0";
 
@@ -59,86 +58,64 @@ public final class LuceneValues extends Values {
         OPERAND_MAP.put("content-model", "/properties/content-model/id");
         OPERAND_MAP.put("context", "permissions-filter.context-id");
         OPERAND_MAP.put("created-by", "permissions-filter.created-by");
-        OPERAND_MAP.put("latest-release-number",
-            "/properties/latest-release/number");
-        OPERAND_MAP.put("latest-version-modified-by",
-            "/properties/version/modified-by/id");
+        OPERAND_MAP.put("latest-release-number", "/properties/latest-release/number");
+        OPERAND_MAP.put("latest-version-modified-by", "/properties/version/modified-by/id");
         OPERAND_MAP.put("latest-version-number", "/properties/version/number");
         OPERAND_MAP.put("latest-version-status", "/properties/version/status");
         OPERAND_MAP.put("lock-date", "/properties/lock-date");
         OPERAND_MAP.put("lock-owner", "/properties/lock-owner");
         OPERAND_MAP.put("lock-status", "/properties/lock-status");
-        OPERAND_MAP.put("organizational-unit",
-            "/properties/organizational-units/organizational-unit/id");
+        OPERAND_MAP.put("organizational-unit", "/properties/organizational-units/organizational-unit/id");
         OPERAND_MAP.put("public-status", "permissions-filter.public-status");
         OPERAND_MAP.put("subject-id", USER_ID);
-        OPERAND_MAP.put("version-modified-by",
-            "/properties/version/modified-by/id");
+        OPERAND_MAP.put("version-modified-by", "/properties/version/modified-by/id");
         OPERAND_MAP.put("version-status", "permissions-filter.version.status");
 
         // resource container
         SCOPE_MAP.put("info:escidoc/names:aa:1.0:resource:container:context",
-            "permissions-filter.objecttype:container "
-                + "AND permissions-filter.context-id:({4})");
+            "permissions-filter.objecttype:container " + "AND permissions-filter.context-id:({4})");
 
         SCOPE_MAP.put("info:escidoc/names:aa:1.0:resource:container:container",
-            "permissions-filter.objecttype:container "
-                + "AND permissions-filter.parent:({4})");
+            "permissions-filter.objecttype:container " + "AND permissions-filter.parent:({4})");
 
-        SCOPE_MAP
-            .put(
-                "info:escidoc/names:aa:1.0:resource:container:hierarchical-containers",
-                "permissions-filter.objecttype:container "
-                    + "AND permissions-filter.PID:({5})");
+        SCOPE_MAP.put("info:escidoc/names:aa:1.0:resource:container:hierarchical-containers",
+            "permissions-filter.objecttype:container " + "AND permissions-filter.PID:({5})");
 
-        SCOPE_MAP
-            .put("info:escidoc/names:aa:1.0:resource:container-id", ID_SQL);
+        SCOPE_MAP.put("info:escidoc/names:aa:1.0:resource:container-id", ID_SQL);
 
         // resource content relation
-        SCOPE_MAP.put("info:escidoc/names:aa:1.0:resource:content-relation-id",
-            ID_SQL);
+        SCOPE_MAP.put("info:escidoc/names:aa:1.0:resource:content-relation-id", ID_SQL);
 
         // resource context
         SCOPE_MAP.put("info:escidoc/names:aa:1.0:resource:context-id", ID_SQL);
 
         // resource item
-        SCOPE_MAP.put("info:escidoc/names:aa:1.0:resource:item:component",
-            "permissions-filter.objecttype:item "
-                + "AND permissions-filter.component-id:({4})");
+        SCOPE_MAP.put("info:escidoc/names:aa:1.0:resource:item:component", "permissions-filter.objecttype:item "
+            + "AND permissions-filter.component-id:({4})");
 
-        SCOPE_MAP.put("info:escidoc/names:aa:1.0:resource:item:container",
-            "permissions-filter.objecttype:item "
-                + "AND permissions-filter.parent:({4})");
+        SCOPE_MAP.put("info:escidoc/names:aa:1.0:resource:item:container", "permissions-filter.objecttype:item "
+            + "AND permissions-filter.parent:({4})");
 
-        SCOPE_MAP.put(
-            "info:escidoc/names:aa:1.0:resource:item:container.collection",
+        SCOPE_MAP.put("info:escidoc/names:aa:1.0:resource:item:container.collection",
             "<info:escidoc/names:aa:1.0:resource:item:container.collection>");
 
-        SCOPE_MAP.put("info:escidoc/names:aa:1.0:resource:item:context",
-            "permissions-filter.objecttype:item "
-                + "AND permissions-filter.context-id:({4})");
+        SCOPE_MAP.put("info:escidoc/names:aa:1.0:resource:item:context", "permissions-filter.objecttype:item "
+            + "AND permissions-filter.context-id:({4})");
 
-        SCOPE_MAP.put(
-            "info:escidoc/names:aa:1.0:resource:item:hierarchical-containers",
-            "permissions-filter.objecttype:item "
-                + "AND permissions-filter.parent:({5})");
+        SCOPE_MAP.put("info:escidoc/names:aa:1.0:resource:item:hierarchical-containers",
+            "permissions-filter.objecttype:item " + "AND permissions-filter.parent:({5})");
 
         SCOPE_MAP.put("info:escidoc/names:aa:1.0:resource:item-id", ID_SQL);
 
         // resource organizational unit
-        SCOPE_MAP
-            .put(
-                "info:escidoc/names:aa:1.0:resource:organizational-unit:hierarchical-parents",
-                "permissions-filter.objecttype:organizational-unit "
-                    + "AND permissions-filter.PID:({6})");
+        SCOPE_MAP.put("info:escidoc/names:aa:1.0:resource:organizational-unit:hierarchical-parents",
+            "permissions-filter.objecttype:organizational-unit " + "AND permissions-filter.PID:({6})");
     }
 
     /**
      * Escape a string.
-     * 
-     * @param s
-     *            string
-     * 
+     *
+     * @param s string
      * @return the escaped string
      */
     @Override
@@ -148,12 +125,9 @@ public final class LuceneValues extends Values {
 
     /**
      * Combine the given operands with AND.
-     * 
-     * @param operand1
-     *            first operand
-     * @param operand2
-     *            second operand
-     * 
+     *
+     * @param operand1 first operand
+     * @param operand2 second operand
      * @return AND conjunction of the given operands
      */
     @Override
@@ -163,10 +137,8 @@ public final class LuceneValues extends Values {
 
     /**
      * Get a CONTAINS statement with the given operand.
-     * 
-     * @param operand
-     *            operand
-     * 
+     *
+     * @param operand operand
      * @return CONTAINS statement with the given operand
      */
     @Override
@@ -176,12 +148,9 @@ public final class LuceneValues extends Values {
 
     /**
      * Combine the given operands with =.
-     * 
-     * @param operand1
-     *            first operand
-     * @param operand2
-     *            second operand
-     * 
+     *
+     * @param operand1 first operand
+     * @param operand2 second operand
      * @return EQUALS conjunction of the given operands
      */
     @Override
@@ -191,27 +160,20 @@ public final class LuceneValues extends Values {
 
     /**
      * Get a condition of the form key=operand1 and value=operand2.
-     * 
-     * @param operand1
-     *            first operand
-     * @param operand2
-     *            second operand
-     * 
+     *
+     * @param operand1 first operand
+     * @param operand2 second operand
      * @return key/value statement of the given operands
      */
     @Override
-    public String getKeyValueCondition(
-        final String operand1, final String operand2) {
+    public String getKeyValueCondition(final String operand1, final String operand2) {
         return getEqualCondition(operand1, operand2);
     }
 
     /**
-     * Get a statement which does not affect another statement when combining it
-     * with AND (evaluates to TRUE).
-     * 
-     * @param resourceType
-     *            resource type
-     * 
+     * Get a statement which does not affect another statement when combining it with AND (evaluates to TRUE).
+     *
+     * @param resourceType resource type
      * @return neutral element for AND
      */
     @Override
@@ -220,12 +182,9 @@ public final class LuceneValues extends Values {
     }
 
     /**
-     * Get a statement which does not affect another statement when combining it
-     * with OR (evaluates to FALSE).
-     * 
-     * @param resourceType
-     *            resource type
-     * 
+     * Get a statement which does not affect another statement when combining it with OR (evaluates to FALSE).
+     *
+     * @param resourceType resource type
      * @return neutral element for OR
      */
     @Override
@@ -235,12 +194,9 @@ public final class LuceneValues extends Values {
 
     /**
      * Combine the given operands with OR.
-     * 
-     * @param operand1
-     *            first operand
-     * @param operand2
-     *            second operand
-     * 
+     *
+     * @param operand1 first operand
+     * @param operand2 second operand
      * @return OR conjunction of the given operands
      */
     @Override

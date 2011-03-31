@@ -23,14 +23,11 @@ package de.escidoc.core.common.exceptions.system;
 import de.escidoc.core.common.exceptions.EscidocException;
 
 /**
- * Main-Class for Exceptions that are caused by an system-error SystemExeption
- * contains a HttpStatusCode and a HttpStatusMessage which should be used in the
- * REST interface. returned httpStatusCode is 500. Status code (500) indicating
- * an error inside the HTTP server which prevented it from fulfilling the
- * request.
- * 
+ * Main-Class for Exceptions that are caused by an system-error SystemExeption contains a HttpStatusCode and a
+ * HttpStatusMessage which should be used in the REST interface. returned httpStatusCode is 500. Status code (500)
+ * indicating an error inside the HTTP server which prevented it from fulfilling the request.
+ *
  * @author Michael Hoppe (FIZ Karlsruhe)
- * 
  */
 public class SystemException extends EscidocException {
 
@@ -39,30 +36,23 @@ public class SystemException extends EscidocException {
      */
     private static final long serialVersionUID = 1L;
 
-    public static final int HTTP_STATUS_CODE = 
-        ESCIDOC_HTTP_SC_INTERNAL_SERVER_ERROR;
+    public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_INTERNAL_SERVER_ERROR;
 
-    public static final String HTTP_STATUS_MESSAGE = 
-        "Internal eSciDoc System Error";
+    public static final String HTTP_STATUS_MESSAGE = "Internal eSciDoc System Error";
 
     /**
      * Default constructor.
-     * 
-     *
      */
     public SystemException() {
         super(HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 
     /**
-     * Constructor used to create a new Exception with the specified detail
-     * message and a mapping to an initial exception.
-     * 
-     * @param message -
-     *            the detail message.
-     * @param cause
-     *            Throwable
+     * Constructor used to create a new Exception with the specified detail message and a mapping to an initial
+     * exception.
      *
+     * @param message - the detail message.
+     * @param cause   Throwable
      */
     public SystemException(final String message, final Throwable cause) {
         super(message, cause, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -70,10 +60,8 @@ public class SystemException extends EscidocException {
 
     /**
      * Constructs a new exception with the specified detail message.
-     * 
-     * @param message -
-     *            the detail message.
      *
+     * @param message - the detail message.
      */
     public SystemException(final String message) {
         super(message, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -81,10 +69,8 @@ public class SystemException extends EscidocException {
 
     /**
      * Constructor used to map an initial exception.
-     * 
-     * @param cause
-     *            Throwable
      *
+     * @param cause Throwable
      */
     public SystemException(final Throwable cause) {
         super(cause, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -92,66 +78,47 @@ public class SystemException extends EscidocException {
 
     /**
      * Default constructor.
-     * 
-     * @param httpStatusCode
-     *            the http status code
-     * @param httpStatusMsg
-     *            the http status message
      *
+     * @param httpStatusCode the http status code
+     * @param httpStatusMsg  the http status message
      */
-    public SystemException(final int httpStatusCode,
-                           final String httpStatusMsg) {
+    public SystemException(final int httpStatusCode, final String httpStatusMsg) {
         super(httpStatusCode, httpStatusMsg);
     }
 
     /**
-     * Constructor used to create a new Exception with the specified detail
-     * message and a mapping to an initial exception.
-     * 
-     * @param message
-     *            the detail message.
-     * @param cause
-     *            Throwable
-     * @param httpStatusCode
-     *            the http status code
-     * @param httpStatusMsg
-     *            the http status message
+     * Constructor used to create a new Exception with the specified detail message and a mapping to an initial
+     * exception.
      *
+     * @param message        the detail message.
+     * @param cause          Throwable
+     * @param httpStatusCode the http status code
+     * @param httpStatusMsg  the http status message
      */
-    public SystemException(final String message, final Throwable cause,
-        final int httpStatusCode, final String httpStatusMsg) {
+    public SystemException(final String message, final Throwable cause, final int httpStatusCode,
+        final String httpStatusMsg) {
         super(message, cause, httpStatusCode, httpStatusMsg);
     }
 
     /**
      * Constructs a new exception with the specified detail message.
-     * 
-     * @param message
-     *            the detail message.
-     * @param httpStatusCode
-     *            the http status code
-     * @param httpStatusMsg
-     *            the http status message
      *
+     * @param message        the detail message.
+     * @param httpStatusCode the http status code
+     * @param httpStatusMsg  the http status message
      */
-    public SystemException(final String message, final int httpStatusCode,
-        final String httpStatusMsg) {
+    public SystemException(final String message, final int httpStatusCode, final String httpStatusMsg) {
         super(message, httpStatusCode, httpStatusMsg);
     }
 
     /**
      * Constructor used to map an initial exception.
-     * 
-     * @param cause
-     *            Throwable
-     * @param httpStatusCode
-     *            the http status code
-     * @param httpStatusMsg
-     *            the http status message
      *
+     * @param cause          Throwable
+     * @param httpStatusCode the http status code
+     * @param httpStatusMsg  the http status message
      */
-    public SystemException(final Throwable cause, final int httpStatusCode,
-        final String httpStatusMsg) {
+    public SystemException(final Throwable cause, final int httpStatusCode, final String httpStatusMsg) {
         super(cause, httpStatusCode, httpStatusMsg);
     }
 

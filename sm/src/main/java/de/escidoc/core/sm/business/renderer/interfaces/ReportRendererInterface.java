@@ -35,26 +35,19 @@ import java.util.List;
 
 /**
  * Interface of an report renderer.
- * 
- * @author Michael Hoppe
  *
+ * @author Michael Hoppe
  */
 public interface ReportRendererInterface {
 
     /**
      * Gets the representation of an Report.
-     * 
-     * @param dbResult
-     *            result from dbCall.
-     * @param reportDefinition
-     *            the reportDefinition Hibernate Object.
-     * @return Returns the XML representation of the Report.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
      *
+     * @param dbResult         result from dbCall.
+     * @param reportDefinition the reportDefinition Hibernate Object.
+     * @return Returns the XML representation of the Report.
+     * @throws SystemException Thrown in case of an internal error.
      */
-    String render(
-            final List dbResult, 
-            final ReportDefinition reportDefinition) throws SystemException;
+    String render(final List dbResult, final ReportDefinition reportDefinition) throws SystemException;
 
 }

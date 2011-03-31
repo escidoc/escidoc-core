@@ -19,7 +19,7 @@
  */
 
 /**
- * 
+ *
  */
 package de.escidoc.core.common.business.fedora.resources;
 
@@ -71,14 +71,11 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 /**
- * Implementation of a Fedora Item Object which consist of datastreams managed
- * in Fedora Digital Repository System.
- * 
+ * Implementation of a Fedora Item Object which consist of datastreams managed in Fedora Digital Repository System.
+ *
  * @author Frank Schwichtenberg
- * 
  */
-public class Item extends GenericVersionableResourcePid
-    implements ItemInterface {
+public class Item extends GenericVersionableResourcePid implements ItemInterface {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Item.class);
 
@@ -90,8 +87,7 @@ public class Item extends GenericVersionableResourcePid
 
     private Map<String, Component> components;
 
-    private Map<String, Component> componentsByLocalName =
-        new HashMap<String, Component>();
+    private Map<String, Component> componentsByLocalName = new HashMap<String, Component>();
 
     private Collection<String> alteredComponent = new ArrayList<String>();
 
@@ -99,26 +95,15 @@ public class Item extends GenericVersionableResourcePid
     private boolean resourceInit;
 
     /**
-     * Constructs the Item with the specified id. The datastreams are
-     * instantiated and retrieved if the related getter is called.
-     * 
-     * @param id
-     *            The id of an item managed in Fedora.
-     * @throws StreamNotFoundException
-     *             Thrown if data streams of Item object was not found.
-     * @throws WebserverSystemException
-     * @throws TripleStoreSystemException
-     * @throws XmlParserSystemException
-     * @throws IntegritySystemException
-     *             Thrown if there is an integrity error with the addressed
-     *             object.
-     * @throws ResourceNotFoundException
-     * @throws FedoraSystemException
+     * Constructs the Item with the specified id. The datastreams are instantiated and retrieved if the related getter
+     * is called.
+     *
+     * @param id The id of an item managed in Fedora.
+     * @throws StreamNotFoundException  Thrown if data streams of Item object was not found.
+     * @throws IntegritySystemException Thrown if there is an integrity error with the addressed object.
      */
-    public Item(final String id) throws StreamNotFoundException,
-        TripleStoreSystemException, WebserverSystemException,
-        XmlParserSystemException, IntegritySystemException,
-        ResourceNotFoundException, FedoraSystemException {
+    public Item(final String id) throws StreamNotFoundException, TripleStoreSystemException, WebserverSystemException,
+        XmlParserSystemException, IntegritySystemException, ResourceNotFoundException, FedoraSystemException {
 
         super(id);
         setPropertiesNames(expandPropertiesNames(getPropertiesNames()),
@@ -132,8 +117,7 @@ public class Item extends GenericVersionableResourcePid
         initDatastreams(getDatastreamInfos());
 
         if (!checkResourceType(ResourceType.ITEM)) {
-            throw new ItemNotFoundException("Item with the provided objid '"
-                + id + "' does not exit.");
+            throw new ItemNotFoundException("Item with the provided objid '" + id + "' does not exit.");
         }
 
         setTitle(getProperty("title"));
@@ -148,18 +132,11 @@ public class Item extends GenericVersionableResourcePid
 
     /**
      * Add a Component to the Item.
-     * 
-     * @param c
-     *            The new Component. (The Component has not to be (but could)
-     *            persist, this is done with with the Item.)
-     * @throws FedoraSystemException
-     * @throws WebserverSystemException
-     * @throws IntegritySystemException
-     * @throws EncodingSystemException
+     *
+     * @param c The new Component. (The Component has not to be (but could) persist, this is done with with the Item.)
      */
-    public void addComponent(final Component c) throws FedoraSystemException,
-        WebserverSystemException, IntegritySystemException,
-        EncodingSystemException {
+    public void addComponent(final Component c) throws FedoraSystemException, WebserverSystemException,
+        IntegritySystemException, EncodingSystemException {
 
         addComponentToRelsExt(c.getId());
         this.components.put(c.getId(), c);
@@ -168,17 +145,11 @@ public class Item extends GenericVersionableResourcePid
 
     /**
      * Add a Component by id to the Item.
-     * 
-     * @param componentId
-     *            This has to be a persistent Component. This Component has
-     *            already to exists within the repository!
-     * @throws FedoraSystemException
-     * @throws WebserverSystemException
-     * @throws IntegritySystemException
-     * @throws EncodingSystemException
+     *
+     * @param componentId This has to be a persistent Component. This Component has already to exists within the
+     *                    repository!
      */
-    public void addComponent(final String componentId)
-        throws FedoraSystemException, WebserverSystemException,
+    public void addComponent(final String componentId) throws FedoraSystemException, WebserverSystemException,
         IntegritySystemException, EncodingSystemException {
 
         addComponentToRelsExt(componentId);
@@ -187,16 +158,10 @@ public class Item extends GenericVersionableResourcePid
 
     /**
      * Delete a Component from the Item.
-     * 
-     * @param componentId
-     *            The id of the Component which is to delete from the Item.
-     * @throws LockingException
-     * @throws ComponentNotFoundException
-     * @throws InvalidStatusException
-     * @throws SystemException
+     *
+     * @param componentId The id of the Component which is to delete from the Item.
      */
-    public void deleteComponent(final String componentId)
-        throws LockingException, ComponentNotFoundException,
+    public void deleteComponent(final String componentId) throws LockingException, ComponentNotFoundException,
         InvalidStatusException, SystemException {
 
         deleteComponent(getComponent(componentId));
@@ -204,24 +169,12 @@ public class Item extends GenericVersionableResourcePid
 
     /**
      * Delete a Component from the Item.
-     * 
-     * @param c
-     *            The Component which is to delete from the Item.
-     * @throws LockingException
-     * @throws ComponentNotFoundException
-     * @throws InvalidStatusException
-     * @throws WebserverSystemException
-     * @throws TripleStoreSystemException
-     * @throws FedoraSystemException
-     * @throws XmlParserSystemException
-     * @throws IntegritySystemException
-     * @throws EncodingSystemException
+     *
+     * @param c The Component which is to delete from the Item.
      */
-    public void deleteComponent(final FedoraResource c) throws LockingException,
-        ComponentNotFoundException, InvalidStatusException,
-        WebserverSystemException, TripleStoreSystemException,
-        FedoraSystemException, XmlParserSystemException,
-        IntegritySystemException, EncodingSystemException {
+    public void deleteComponent(final FedoraResource c) throws LockingException, ComponentNotFoundException,
+        InvalidStatusException, WebserverSystemException, TripleStoreSystemException, FedoraSystemException,
+        XmlParserSystemException, IntegritySystemException, EncodingSystemException {
 
         final String componentId = c.getId();
         removeComponent(componentId);
@@ -231,25 +184,17 @@ public class Item extends GenericVersionableResourcePid
 
     /**
      * Get a Component.
-     * 
-     * @param componentId
-     *            The id of the component.
+     *
+     * @param componentId The id of the component.
      * @return Component.
-     * 
-     * @throws ComponentNotFoundException
-     * @throws WebserverSystemException
-     * @throws FedoraSystemException
-     * @throws SystemException
      */
-    public Component getComponent(final String componentId)
-        throws ComponentNotFoundException, WebserverSystemException,
-        FedoraSystemException, SystemException {
+    public Component getComponent(final String componentId) throws ComponentNotFoundException,
+        WebserverSystemException, FedoraSystemException, SystemException {
 
         // check if the Component is part of this Item.
         if (!this.components.containsKey(componentId)) {
-            throw new ComponentNotFoundException("Component with objid='"
-                + componentId + "' is not part of Item with objid='" + getId()
-                + '\'');
+            throw new ComponentNotFoundException("Component with objid='" + componentId
+                + "' is not part of Item with objid='" + getId() + '\'');
         }
 
         Component c = this.components.get(componentId);
@@ -269,17 +214,11 @@ public class Item extends GenericVersionableResourcePid
     }
 
     /**
-     * @return A map which contains unique 'content-category' entries associated
-     *         with a component object. May be used for other identifications
-     *         which are possibly unique in item scope.
-     * @throws SystemException
-     * @throws FedoraSystemException
-     * @throws WebserverSystemException
-     * @throws ComponentNotFoundException
+     * @return A map which contains unique 'content-category' entries associated with a component object. May be used
+     *         for other identifications which are possibly unique in item scope.
      */
-    public Map<String, Component> getComponentsByLocalName()
-        throws ComponentNotFoundException, WebserverSystemException,
-        FedoraSystemException, SystemException {
+    public Map<String, Component> getComponentsByLocalName() throws ComponentNotFoundException,
+        WebserverSystemException, FedoraSystemException, SystemException {
 
         initComponents();
         return this.componentsByLocalName;
@@ -287,25 +226,17 @@ public class Item extends GenericVersionableResourcePid
 
     /**
      * Get a Component by name.
-     * 
-     * @param componentName
-     *            The name of the Component.
+     *
+     * @param componentName The name of the Component.
      * @return Component
-     * 
-     * @throws ComponentNotFoundException
-     * @throws WebserverSystemException
-     * @throws FedoraSystemException
-     * @throws SystemException
      */
-    public Component getComponentByLocalName(final String componentName)
-        throws ComponentNotFoundException, WebserverSystemException,
-        FedoraSystemException, SystemException {
+    public Component getComponentByLocalName(final String componentName) throws ComponentNotFoundException,
+        WebserverSystemException, FedoraSystemException, SystemException {
 
         initComponents();
         final Component c = this.componentsByLocalName.get(componentName);
         if (c == null) {
-            throw new ComponentNotFoundException("Component with name '"
-                + componentName + "' could not be found.");
+            throw new ComponentNotFoundException("Component with name '" + componentName + "' could not be found.");
         }
         return c;
     }
@@ -328,41 +259,31 @@ public class Item extends GenericVersionableResourcePid
 
     /**
      * Get the IDs of Components.
-     * 
+     *
      * @return Component IDs
-     * @throws XmlParserSystemException
-     * @throws TripleStoreSystemException
-     * @throws WebserverSystemException
      */
-    public Collection<String> getComponentIds()
-        throws XmlParserSystemException, TripleStoreSystemException,
+    public Collection<String> getComponentIds() throws XmlParserSystemException, TripleStoreSystemException,
         WebserverSystemException {
 
         final Collection<String> componentIds;
 
         if (this.components == null) {
             if (isLatestVersion()) {
-                componentIds =
-                    TripleStoreUtility.getInstance().getComponents(getId());
+                componentIds = TripleStoreUtility.getInstance().getComponents(getId());
             }
             else {
                 final List<String> predicates = new ArrayList<String>();
-                predicates.add(Constants.STRUCTURAL_RELATIONS_NS_URI
-                    + "component");
+                predicates.add(Constants.STRUCTURAL_RELATIONS_NS_URI + "component");
                 final StaxParser sp = new StaxParser();
-                final RelsExtRefListExtractor rerle =
-                    new RelsExtRefListExtractor(predicates, sp);
+                final RelsExtRefListExtractor rerle = new RelsExtRefListExtractor(predicates, sp);
                 sp.addHandler(rerle);
                 try {
                     sp.parse(getRelsExt().getStream());
                 }
                 catch (final Exception e) {
-                    throw new XmlParserSystemException("Unexpected exception.",
-                        e);
+                    throw new XmlParserSystemException("Unexpected exception.", e);
                 }
-                componentIds =
-                    rerle.getEntries().get(
-                        Constants.STRUCTURAL_RELATIONS_NS_URI + "component");
+                componentIds = rerle.getEntries().get(Constants.STRUCTURAL_RELATIONS_NS_URI + "component");
             }
         }
         else {
@@ -374,14 +295,11 @@ public class Item extends GenericVersionableResourcePid
 
     /**
      * Initialize the Components.
-     * 
-     * @throws ComponentNotFoundException
-     *             Thrown if Component of Item could no t be found.
-     * @throws SystemException
-     *             Thrown in case of internal failure.
+     *
+     * @throws ComponentNotFoundException Thrown if Component of Item could no t be found.
+     * @throws SystemException            Thrown in case of internal failure.
      */
-    private void initComponents() throws ComponentNotFoundException,
-        SystemException {
+    private void initComponents() throws ComponentNotFoundException, SystemException {
 
         if (this.components == null) {
             final Iterator<String> idsIter = getComponentIds().iterator();
@@ -391,8 +309,7 @@ public class Item extends GenericVersionableResourcePid
             while (idsIter.hasNext()) {
                 final String id = idsIter.next();
                 this.components.put(id, null);
-                final String type =
-                    this.getProperty(TripleStoreUtility.PROP_CONTENT_CATEGORY);
+                final String type = this.getProperty(TripleStoreUtility.PROP_CONTENT_CATEGORY);
 
                 if (type != null) {
                     this.componentsByLocalName.put(type, null);
@@ -401,8 +318,7 @@ public class Item extends GenericVersionableResourcePid
         }
     }
 
-    private Map<String, String> getDublinCorePropertiesMap()
-        throws XmlParserSystemException {
+    private Map<String, String> getDublinCorePropertiesMap() throws XmlParserSystemException {
 
         // parse version-history
         final StaxParser sp = new StaxParser();
@@ -424,8 +340,7 @@ public class Item extends GenericVersionableResourcePid
      * de.escidoc.core.om.business.fedora.resources.interfaces.FedoraResource
      * #getRelsExt()
      */
-    public Datastream getDc() throws FedoraSystemException,
-        WebserverSystemException {
+    public Datastream getDc() throws FedoraSystemException, WebserverSystemException {
 
         if (this.dc == null) {
             final Datastream ds;
@@ -452,8 +367,7 @@ public class Item extends GenericVersionableResourcePid
      * de.escidoc.core.om.business.fedora.resources.interfaces.FedoraResource
      * #setRelsExt(de.escidoc.core.common.business.fedora.datastream.Datastream)
      */
-    public void setDc(final Datastream ds) throws FedoraSystemException,
-        WebserverSystemException {
+    public void setDc(final Datastream ds) throws FedoraSystemException, WebserverSystemException {
         // TODO should lock only be checked in handler?
         // if (this.isLocked) {
         // throw new LockingException("Item " + getId() + " is locked.");
@@ -480,8 +394,7 @@ public class Item extends GenericVersionableResourcePid
         return this.cts;
     }
 
-    public void setCts(final Datastream ds) throws FedoraSystemException,
-        WebserverSystemException {
+    public void setCts(final Datastream ds) throws FedoraSystemException, WebserverSystemException {
         // TODO should lock only be checked in handler?
         // if (this.isLocked) {
         // throw new LockingException("Item " + getId() + " is locked.");
@@ -496,10 +409,10 @@ public class Item extends GenericVersionableResourcePid
                 this.cts = ds;
             }
             catch (final FedoraSystemException e) {
-                if(LOGGER.isWarnEnabled()) {
+                if (LOGGER.isWarnEnabled()) {
                     LOGGER.warn("Error on merging datastream.");
                 }
-                if(LOGGER.isDebugEnabled()) {
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Error on merging datastream.", e);
                 }
                 // this is not an update; its a create
@@ -511,10 +424,6 @@ public class Item extends GenericVersionableResourcePid
 
     /**
      * See Interface for functional description.
-     * 
-     * @return
-     * @throws IntegritySystemException
-     * @throws FedoraSystemException
      */
     @Override
     public Map<String, Datastream> getMdRecords() {
@@ -530,10 +439,8 @@ public class Item extends GenericVersionableResourcePid
      * #setMdRecords(java.util.HashMap)
      */
     @Override
-    public void setMdRecords(final Map<String, Datastream> mdRecords)
-        throws WebserverSystemException, EncodingSystemException,
-        IntegritySystemException, FedoraSystemException,
-        TripleStoreSystemException {
+    public void setMdRecords(final Map<String, Datastream> mdRecords) throws WebserverSystemException,
+        EncodingSystemException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException {
         // check if mdRecords is set, contains all metadata
         // datastreams, is equal to given mdRecords and save every
         // changed datastream to fedora
@@ -546,19 +453,19 @@ public class Item extends GenericVersionableResourcePid
                 final Datastream fedoraDs;
                 try {
                     fedoraDs = getMdRecord(nameInFedora);
-                } catch (final MdRecordNotFoundException e) {
-                    throw new IntegritySystemException(
-                            "Can not find md-record previously found in item "
-                                    + getId() + '.', e);
+                }
+                catch (final MdRecordNotFoundException e) {
+                    throw new IntegritySystemException("Can not find md-record previously found in item " + getId()
+                        + '.', e);
                 }
                 fedoraDs.delete();
                 // TODO ? remove it from this.mdrecords?
                 // TODO create remove method?
             }
         }
-        Set<Entry<String,Datastream>> mdRecordsEntrySet = mdRecords.entrySet();
+        Set<Entry<String, Datastream>> mdRecordsEntrySet = mdRecords.entrySet();
         // create/activate data streams which are in mdRecords but not in fedora
-        for(final Entry<String, Datastream> entry : mdRecordsEntrySet) {
+        for (final Entry<String, Datastream> entry : mdRecordsEntrySet) {
             final String name = entry.getKey();
             if (!namesInFedora.contains(name)) {
                 final Datastream currentMdRecord = entry.getValue();
@@ -566,7 +473,7 @@ public class Item extends GenericVersionableResourcePid
             }
         }
         mdRecordsEntrySet = mdRecords.entrySet();
-        for(final Entry<String, Datastream> entry : mdRecordsEntrySet) {
+        for (final Entry<String, Datastream> entry : mdRecordsEntrySet) {
             setMdRecord(entry.getKey(), entry.getValue());
         }
 
@@ -584,11 +491,10 @@ public class Item extends GenericVersionableResourcePid
      * #getMdRecord(java.lang.String)
      */
     @Override
-    public Datastream getMdRecord(final String name)
-        throws MdRecordNotFoundException {
+    public Datastream getMdRecord(final String name) throws MdRecordNotFoundException {
         if (!this.mdRecords.containsKey(name)) {
-            throw new MdRecordNotFoundException("Metadata record with name " + name + " not found in item "
-                    + getId() + '.');
+            throw new MdRecordNotFoundException("Metadata record with name " + name + " not found in item " + getId()
+                + '.');
         }
         return this.mdRecords.get(name);
     }
@@ -603,10 +509,8 @@ public class Item extends GenericVersionableResourcePid
      */
 
     @Override
-    public void setMdRecord(final String name, final Datastream ds)
-        throws WebserverSystemException, EncodingSystemException,
-        IntegritySystemException, FedoraSystemException,
-        TripleStoreSystemException {
+    public void setMdRecord(final String name, final Datastream ds) throws WebserverSystemException,
+        EncodingSystemException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException {
         // check if the metadata datastream is set, is equal to ds and save to
         // fedora
 
@@ -621,11 +525,12 @@ public class Item extends GenericVersionableResourcePid
             Datastream curDs = null;
             try {
                 curDs = getMdRecord(name);
-            } catch (final MdRecordNotFoundException e1) {
-                if(LOGGER.isWarnEnabled()) {
+            }
+            catch (final MdRecordNotFoundException e1) {
+                if (LOGGER.isWarnEnabled()) {
                     LOGGER.warn("Error on getting MD-records.");
                 }
-                if(LOGGER.isDebugEnabled()) {
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Error on getting MD-records.", e1);
                 }
                 isNew = true; // curDs is null
@@ -642,8 +547,7 @@ public class Item extends GenericVersionableResourcePid
                         curSchema = altIds.get(2);
                     }
                 }
-                if (!ds.equals(curDs) || !type.equals(curType)
-                    || !schema.equals(curSchema)
+                if (!ds.equals(curDs) || !type.equals(curType) || !schema.equals(curSchema)
                     || !mimeType.equals(curMimeType)) {
                     contentChanged = true;
                 }
@@ -652,30 +556,20 @@ public class Item extends GenericVersionableResourcePid
             if (contentChanged || isNew) {
                 if (contentChanged && "escidoc".equals(name)) {
 
-                    final Map<String, String> mdProperties =
-                        ds.getProperties();
+                    final Map<String, String> mdProperties = ds.getProperties();
                     if (mdProperties != null) {
                         if (mdProperties.containsKey("nsUri")) {
                             final String nsUri = mdProperties.get("nsUri");
                             final String dcNewContent =
-                                XmlUtility
-                                    .createDC(
-                                        nsUri,
-                                        ds.toStringUTF8(),
-                                        getId(),
-                                        getResourcePropertiesValue(PropertyMapKeys.CURRENT_VERSION_CONTENT_MODEL_ID));
+                                XmlUtility.createDC(nsUri, ds.toStringUTF8(), getId(),
+                                    getResourcePropertiesValue(PropertyMapKeys.CURRENT_VERSION_CONTENT_MODEL_ID));
 
-                            if (dcNewContent != null
-                                && dcNewContent.trim().length() > 0) {
+                            if (dcNewContent != null && dcNewContent.trim().length() > 0) {
                                 final Datastream dcNew;
                                 try {
                                     dcNew =
-                                        new Datastream(
-                                            "DC",
-                                            getId(),
-                                            dcNewContent
-                                                .getBytes(XmlUtility.CHARACTER_ENCODING),
-                                            "text/xml");
+                                        new Datastream("DC", getId(), dcNewContent
+                                            .getBytes(XmlUtility.CHARACTER_ENCODING), "text/xml");
                                 }
                                 catch (final UnsupportedEncodingException e) {
                                     throw new EncodingSystemException(e);
@@ -685,12 +579,12 @@ public class Item extends GenericVersionableResourcePid
                         }
                         else {
                             throw new IntegritySystemException("namespace uri of 'escidoc' metadata"
-                                    + " is not set in datastream.");
+                                + " is not set in datastream.");
                         }
                     }
                     else {
                         throw new IntegritySystemException("Properties of 'md-record' datastream"
-                                + " with the name 'escidoc' does not exist");
+                            + " with the name 'escidoc' does not exist");
                     }
                 }
 
@@ -700,11 +594,12 @@ public class Item extends GenericVersionableResourcePid
                 ds.merge();
 
             }
-        } catch (final FedoraSystemException e) {
-            if(LOGGER.isWarnEnabled()) {
+        }
+        catch (final FedoraSystemException e) {
+            if (LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on getting MD-records.");
             }
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on getting MD-records.", e);
             }
             // this is not an update; its a create
@@ -723,8 +618,8 @@ public class Item extends GenericVersionableResourcePid
         return this.contentStreams.get(name);
     }
 
-    public void setContentStream(final String name, final Datastream ds)
-        throws FedoraSystemException, WebserverSystemException {
+    public void setContentStream(final String name, final Datastream ds) throws FedoraSystemException,
+        WebserverSystemException {
         // don't trust the handler
         final List<String> alternateIDs = new ArrayList<String>();
         alternateIDs.add("content-stream");
@@ -742,9 +637,11 @@ public class Item extends GenericVersionableResourcePid
             else {
                 // FIXME change storage and mime-type ? (FRS)
                 // TODO ds.getLocation() may be null -> inline content
-                if (ds.getLocation() != null
-                        && !ds.getLocation().equals(curDs.getLocation())
-                        && !ds.getLocation().startsWith("/ir/item/" + getId()) || !curDs.getControlGroup().equals(ds.getControlGroup()) || !curDs.getMimeType().equals(ds.getMimeType()) || !curDs.getLabel().equals(ds.getLabel()) || !ds.equals(curDs)) {
+                if (ds.getLocation() != null && !ds.getLocation().equals(curDs.getLocation())
+                    && !ds.getLocation().startsWith("/ir/item/" + getId())
+                    || !curDs.getControlGroup().equals(ds.getControlGroup())
+                    || !curDs.getMimeType().equals(ds.getMimeType()) || !curDs.getLabel().equals(ds.getLabel())
+                    || !ds.equals(curDs)) {
                     contentChanged = true;
                 }
             }
@@ -755,11 +652,12 @@ public class Item extends GenericVersionableResourcePid
                 this.contentStreams.put(name, ds);
                 ds.merge();
             }
-        } catch (final FedoraSystemException e) {
-            if(LOGGER.isWarnEnabled()) {
+        }
+        catch (final FedoraSystemException e) {
+            if (LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on setting content stream.");
             }
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on setting content stream.", e);
             }
             // this is not an update; its a create
@@ -768,15 +666,13 @@ public class Item extends GenericVersionableResourcePid
         }
     }
 
-    public void setContentStreams(
-        final Map<String, Datastream> contentStreamDatastreams)
-        throws FedoraSystemException, WebserverSystemException,
-        IntegritySystemException {
+    public void setContentStreams(final Map<String, Datastream> contentStreamDatastreams) throws FedoraSystemException,
+        WebserverSystemException, IntegritySystemException {
 
         final Set<String> namesInFedora = getContentStreams().keySet();
 
-        Set<Entry<String,Datastream>> contentStreamDatastreamsEntrySet = contentStreamDatastreams.entrySet();
-        for(final Entry<String, Datastream> entry : contentStreamDatastreamsEntrySet) {
+        Set<Entry<String, Datastream>> contentStreamDatastreamsEntrySet = contentStreamDatastreams.entrySet();
+        for (final Entry<String, Datastream> entry : contentStreamDatastreamsEntrySet) {
             final String name = entry.getKey();
             if (!namesInFedora.contains(name)) {
                 setContentStream(name, entry.getValue());
@@ -784,7 +680,7 @@ public class Item extends GenericVersionableResourcePid
         }
         // update DSs which still remain in given list
         contentStreamDatastreamsEntrySet = contentStreamDatastreams.entrySet();
-        for(final Entry<String, Datastream> entry : contentStreamDatastreamsEntrySet) {
+        for (final Entry<String, Datastream> entry : contentStreamDatastreamsEntrySet) {
             setContentStream(entry.getKey(), entry.getValue());
         }
 
@@ -799,13 +695,11 @@ public class Item extends GenericVersionableResourcePid
     }
 
     /**
-     * Expand a list with names of properties values with the propertiesNames
-     * for a versionated resource. These list could be used to request the
-     * TripleStore.
-     * 
-     * @param propertiesNames
-     *            Collection of propertiesNames. The collection contains only
-     *            the version resource specific propertiesNames.
+     * Expand a list with names of properties values with the propertiesNames for a versionated resource. These list
+     * could be used to request the TripleStore.
+     *
+     * @param propertiesNames Collection of propertiesNames. The collection contains only the version resource specific
+     *                        propertiesNames.
      * @return Parameter name collection
      */
     private static Collection<String> expandPropertiesNames(final Collection<String> propertiesNames) {
@@ -821,13 +715,11 @@ public class Item extends GenericVersionableResourcePid
 
     /**
      * Expanding the properties naming map.
-     * 
-     * @param propertiesMapping
-     *            The properties name mapping from external as key and the
-     *            internal name as value. E.g. with the key "version-status" and
-     *            "LATEST_VERSION_STATUS" as value is the value of
-     *            "versin-status" after the mapping accessible with the internal
-     *            key "LATEST_VERSION_STATUS".
+     *
+     * @param propertiesMapping The properties name mapping from external as key and the internal name as value. E.g.
+     *                          with the key "version-status" and "LATEST_VERSION_STATUS" as value is the value of
+     *                          "versin-status" after the mapping accessible with the internal key
+     *                          "LATEST_VERSION_STATUS".
      * @return The key mapping.
      */
     private static Map<String, String> expandPropertiesNamesMapping(final Map<String, String> propertiesMapping) {
@@ -835,32 +727,26 @@ public class Item extends GenericVersionableResourcePid
         final Map<String, String> newPropertiesNames;
         newPropertiesNames = propertiesMapping != null ? propertiesMapping : new HashMap<String, String>();
 
-        newPropertiesNames.put(TripleStoreUtility.PROP_LATEST_VERSION_PID,
-            PropertyMapKeys.LATEST_VERSION_PID);
+        newPropertiesNames.put(TripleStoreUtility.PROP_LATEST_VERSION_PID, PropertyMapKeys.LATEST_VERSION_PID);
         newPropertiesNames.put(TripleStoreUtility.PROP_CONTENT_CATEGORY,
             PropertyMapKeys.LATEST_VERSION_CONTENT_CATEGORY);
         // FIXME release is a methd of Item/Container so this is to move higher
         // within the hirarchie
-        newPropertiesNames.put(TripleStoreUtility.PROP_LATEST_RELEASE_PID,
-            PropertyMapKeys.LATEST_RELEASE_PID);
+        newPropertiesNames.put(TripleStoreUtility.PROP_LATEST_RELEASE_PID, PropertyMapKeys.LATEST_RELEASE_PID);
 
         return newPropertiesNames;
     }
 
     /**
      * See Interface for functional description.
-     * 
+     *
      * @return resource properties.
-     * 
-     * @throws TripleStoreSystemException
-     *             Thrown if TripleStore request failed.
-     * @throws WebserverSystemException
-     *             Thrown in case of internal failure.
+     * @throws TripleStoreSystemException Thrown if TripleStore request failed.
+     * @throws WebserverSystemException   Thrown in case of internal failure.
      * @see GenericResource#getResourceProperties()
      */
     @Override
-    public Map<String, String> getResourceProperties()
-        throws TripleStoreSystemException, WebserverSystemException {
+    public Map<String, String> getResourceProperties() throws TripleStoreSystemException, WebserverSystemException {
 
         if (!this.resourceInit) {
             super.getResourceProperties();
@@ -880,17 +766,12 @@ public class Item extends GenericVersionableResourcePid
 
     /**
      * Persist all Component of this Item.
-     * 
-     * @return true if a Component was updated (and with this persisted), false
-     *         otherwise.
-     * @throws ComponentNotFoundException
-     *             Thrown if Component was not found.
-     * @throws SystemException
-     *             Thrown if connection or writing to Fedora failed or internal
-     *             errors.
+     *
+     * @return true if a Component was updated (and with this persisted), false otherwise.
+     * @throws ComponentNotFoundException Thrown if Component was not found.
+     * @throws SystemException            Thrown if connection or writing to Fedora failed or internal errors.
      */
-    public boolean persistComponents() throws ComponentNotFoundException,
-        SystemException {
+    public boolean persistComponents() throws ComponentNotFoundException, SystemException {
 
         boolean resourceUpdated = false;
 
@@ -920,17 +801,13 @@ public class Item extends GenericVersionableResourcePid
 
     /**
      * Persist Item (with all Components).
-     * 
+     *
      * @return last modification date of Item. Null if Item was not written.
-     * 
-     * @throws FedoraSystemException
-     *             Thrown if request of Fedora failed.
-     * @throws WebserverSystemException
-     *             Thrown in case of internal failure.
+     * @throws FedoraSystemException    Thrown if request of Fedora failed.
+     * @throws WebserverSystemException Thrown in case of internal failure.
      */
     @Override
-    public String persist() throws FedoraSystemException,
-        WebserverSystemException {
+    public String persist() throws FedoraSystemException, WebserverSystemException {
 
         try {
             if (persistComponents()) {
@@ -951,18 +828,14 @@ public class Item extends GenericVersionableResourcePid
     }
 
     /**
-     * Init all item datastreams. Some are initilized by super classes. (This is
-     * faster than init of each single data stream).
-     * 
-     * @param datastreamInfos
-     *            The Fedora datastream information.
-     * @throws WebserverSystemException
+     * Init all item datastreams. Some are initilized by super classes. (This is faster than init of each single data
+     * stream).
+     *
+     * @param datastreamInfos The Fedora datastream information.
      */
     @Override
-    protected final void initDatastreams(
-            final org.fcrepo.server.types.gen.Datastream[] datastreamInfos)
-        throws WebserverSystemException, FedoraSystemException,
-        TripleStoreSystemException, IntegritySystemException,
+    protected final void initDatastreams(final org.fcrepo.server.types.gen.Datastream[] datastreamInfos)
+        throws WebserverSystemException, FedoraSystemException, TripleStoreSystemException, IntegritySystemException,
         StreamNotFoundException {
 
         super.initDatastreams(datastreamInfos);
@@ -971,8 +844,7 @@ public class Item extends GenericVersionableResourcePid
             final List<String> altIDs = Arrays.asList(datastreamInfo.getAltIDs());
             final String name = datastreamInfo.getID();
             final String label = datastreamInfo.getLabel();
-            final DatastreamControlGroup controlGroup =
-                    datastreamInfo.getControlGroup();
+            final DatastreamControlGroup controlGroup = datastreamInfo.getControlGroup();
             final String controlGroupValue = controlGroup.getValue();
             final String mimeType = datastreamInfo.getMIMEType();
             final String location = datastreamInfo.getLocation();
@@ -980,31 +852,27 @@ public class Item extends GenericVersionableResourcePid
             final Datastream ds;
             if (altIDs.contains(Datastream.METADATA_ALTERNATE_ID)) {
                 // found md-record
-                ds =
-                        new Datastream(name, getId(), getVersionDate(), mimeType,
-                                location, controlGroupValue);
+                ds = new Datastream(name, getId(), getVersionDate(), mimeType, location, controlGroupValue);
                 ds.setAlternateIDs(new ArrayList<String>(altIDs));
                 ds.setLabel(label);
                 this.mdRecords.put(name, ds);
-            } else if (altIDs.contains("content-stream")) {
+            }
+            else if (altIDs.contains("content-stream")) {
                 // found content-stream
-                ds =
-                        new Datastream(name, getId(), getVersionDate(), mimeType,
-                                location, controlGroupValue);
+                ds = new Datastream(name, getId(), getVersionDate(), mimeType, location, controlGroupValue);
                 ds.setAlternateIDs(new ArrayList<String>(altIDs));
                 ds.setLabel(label);
                 this.contentStreams.put(name, ds);
             }
             // content-model-specific
             else if ("content-model-specific".equals(name)) {
-                ds =
-                        new Datastream(name, getId(), getVersionDate(), mimeType,
-                                location, controlGroupValue);
+                ds = new Datastream(name, getId(), getVersionDate(), mimeType, location, controlGroupValue);
                 ds.setAlternateIDs(new ArrayList<String>(altIDs));
                 ds.setLabel(label);
                 this.cts = ds;
-            } else {
-                if(LOGGER.isDebugEnabled()) {
+            }
+            else {
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Datastream " + getId() + '/' + name + " not instanziated in Item.<init>.");
                 }
             }
@@ -1013,36 +881,21 @@ public class Item extends GenericVersionableResourcePid
 
     /**
      * Removes a component from an item.
-     * 
-     * @param componentId
-     *            The component ID.
-     * 
-     * @throws ComponentNotFoundException
-     *             Thrown if the Component with the id was not found.
-     * @throws WebserverSystemException
-     *             In case of an internal error.
-     * @throws LockingException
-     *             If the iem is locked and the current user is not the one who
-     *             locked it.
-     * @throws TripleStoreSystemException
-     *             If triple store reports an error.
-     * @throws InvalidStatusException
-     *             If component is in invalid status for removing.
-     * @throws FedoraSystemException
-     *             If Fedora reports an error.
-     * @throws XmlParserSystemException
-     *             If parsing of xml data fails.
-     * @throws IntegritySystemException
-     *             If the integrity of the repository is violated.
-     * @throws EncodingSystemException
-     *             If encoding fails.
+     *
+     * @param componentId The component ID.
+     * @throws ComponentNotFoundException Thrown if the Component with the id was not found.
+     * @throws WebserverSystemException   In case of an internal error.
+     * @throws LockingException           If the iem is locked and the current user is not the one who locked it.
+     * @throws TripleStoreSystemException If triple store reports an error.
+     * @throws InvalidStatusException     If component is in invalid status for removing.
+     * @throws FedoraSystemException      If Fedora reports an error.
+     * @throws XmlParserSystemException   If parsing of xml data fails.
+     * @throws IntegritySystemException   If the integrity of the repository is violated.
+     * @throws EncodingSystemException    If encoding fails.
      */
-    private void removeComponent(final String componentId)
-        throws LockingException, ComponentNotFoundException,
-        WebserverSystemException, InvalidStatusException,
-        TripleStoreSystemException, FedoraSystemException,
-        XmlParserSystemException, IntegritySystemException,
-        EncodingSystemException {
+    private void removeComponent(final String componentId) throws LockingException, ComponentNotFoundException,
+        WebserverSystemException, InvalidStatusException, TripleStoreSystemException, FedoraSystemException,
+        XmlParserSystemException, IntegritySystemException, EncodingSystemException {
 
         // TODO move precondition checks to service method (?FRS)
         // checkLocked();
@@ -1083,19 +936,16 @@ public class Item extends GenericVersionableResourcePid
         }
 
         if (rh.getNoOfRemovedObjects() != 1) {
-            throw new ComponentNotFoundException("Component with the id '"
-                + componentId + "' not found.");
+            throw new ComponentNotFoundException("Component with the id '" + componentId + "' not found.");
         }
     }
 
-    private void addComponentToRelsExt(final String componentId)
-        throws FedoraSystemException, WebserverSystemException,
-        IntegritySystemException, EncodingSystemException {
+    private void addComponentToRelsExt(final String componentId) throws FedoraSystemException,
+        WebserverSystemException, IntegritySystemException, EncodingSystemException {
 
         final StaxParser sp = new StaxParser();
 
-        final AddNewSubTreesToDatastream addNewEntriesHandler =
-            new AddNewSubTreesToDatastream("/RDF", sp);
+        final AddNewSubTreesToDatastream addNewEntriesHandler = new AddNewSubTreesToDatastream("/RDF", sp);
 
         final StartElement pointer = new StartElement();
         pointer.setLocalName("Description");
@@ -1103,21 +953,17 @@ public class Item extends GenericVersionableResourcePid
         pointer.setNamespace(Constants.RDF_NAMESPACE_URI);
 
         addNewEntriesHandler.setPointerElement(pointer);
-        final StartElementWithChildElements newComponentIdElement =
-            new StartElementWithChildElements();
+        final StartElementWithChildElements newComponentIdElement = new StartElementWithChildElements();
         newComponentIdElement.setLocalName("component");
-        newComponentIdElement
-            .setPrefix(Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
-        newComponentIdElement
-            .setNamespace(Constants.STRUCTURAL_RELATIONS_NS_URI);
+        newComponentIdElement.setPrefix(Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
+        newComponentIdElement.setNamespace(Constants.STRUCTURAL_RELATIONS_NS_URI);
         final Attribute resource =
-            new Attribute("resource", Constants.RDF_NAMESPACE_URI,
-                Constants.RDF_NAMESPACE_PREFIX, "info:fedora/" + componentId);
+            new Attribute("resource", Constants.RDF_NAMESPACE_URI, Constants.RDF_NAMESPACE_PREFIX, "info:fedora/"
+                + componentId);
         newComponentIdElement.addAttribute(resource);
         // newComponentIdElement.setElementText(componentId);
         newComponentIdElement.setChildrenElements(null);
-        final List<StartElementWithChildElements> elements =
-            new ArrayList<StartElementWithChildElements>();
+        final List<StartElementWithChildElements> elements = new ArrayList<StartElementWithChildElements>();
 
         elements.add(newComponentIdElement);
         addNewEntriesHandler.setSubtreeToInsert(elements);
@@ -1130,8 +976,7 @@ public class Item extends GenericVersionableResourcePid
             throw new WebserverSystemException(e);
         }
         sp.clearHandlerChain();
-        final ByteArrayOutputStream relsExtNew =
-            addNewEntriesHandler.getOutputStreams();
+        final ByteArrayOutputStream relsExtNew = addNewEntriesHandler.getOutputStreams();
 
         try {
             setRelsExt(relsExtNew);

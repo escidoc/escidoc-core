@@ -54,35 +54,27 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 /**
- * Handle Item XML to obtain all required values (Properties, Metadata,
- * Components, Content-Model-Specific, .. ).
- * 
+ * Handle Item XML to obtain all required values (Properties, Metadata, Components, Content-Model-Specific, .. ).
+ *
  * @author Steffen Wagner
- * 
  */
 public class ItemHandler extends DefaultHandler {
 
-    private static final Logger LOGGER =
-        LoggerFactory.getLogger(ItemHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ItemHandler.class);
 
     private boolean surrogate;
 
     private static final String XPATH_ITEM = "/item";
 
-    private static final String XPATH_ITEM_PROPERTIES =
-        XPATH_ITEM + "/properties";
+    private static final String XPATH_ITEM_PROPERTIES = XPATH_ITEM + "/properties";
 
-    private static final String XPATH_ITEM_METADATA =
-        XPATH_ITEM + "/md-records/md-record";
+    private static final String XPATH_ITEM_METADATA = XPATH_ITEM + "/md-records/md-record";
 
-    private static final String XPATH_ITEM_COMPONENTS =
-        XPATH_ITEM + "/components";
+    private static final String XPATH_ITEM_COMPONENTS = XPATH_ITEM + "/components";
 
-    private static final String XPATH_ITEM_CONTENT_STREAMS =
-        XPATH_ITEM + "/content-streams";
+    private static final String XPATH_ITEM_CONTENT_STREAMS = XPATH_ITEM + "/content-streams";
 
-    private static final String XPATH_ITEM_RELATION =
-        XPATH_ITEM + "/relations/relation";
+    private static final String XPATH_ITEM_RELATION = XPATH_ITEM + "/relations/relation";
 
     private final StaxParser parser;
 
@@ -110,11 +102,9 @@ public class ItemHandler extends DefaultHandler {
 
     /**
      * ItemHandler.
-     * 
-     * @param parser
-     *            StAX Parser.
-     * @throws WebserverSystemException
-     *             If internal error occurs.
+     *
+     * @param parser StAX Parser.
+     * @throws WebserverSystemException If internal error occurs.
      */
     public ItemHandler(final StaxParser parser) throws WebserverSystemException {
 
@@ -124,25 +114,15 @@ public class ItemHandler extends DefaultHandler {
 
     /**
      * Parser hits an XML start element.
-     * 
-     * @param element
-     *            StAX Parser StartElement
+     *
+     * @param element StAX Parser StartElement
      * @return StartElement The StartElement.
-     * @throws MissingAttributeValueException
-     * @throws XMLStreamException
-     * @throws WebserverSystemException
-     * @throws ContextNotFoundException
-     * @throws ContentModelNotFoundException
-     * @throws ReadonlyElementViolationException
-     * @throws ReadonlyAttributeViolationException
-     * @throws IOException
      */
     @Override
-    public StartElement startElement(final StartElement element)
-        throws InvalidContentException, MissingAttributeValueException,
-        XMLStreamException, ReadonlyAttributeViolationException,
-        ReadonlyElementViolationException, ContentModelNotFoundException,
-        ContextNotFoundException, WebserverSystemException, IOException {
+    public StartElement startElement(final StartElement element) throws InvalidContentException,
+        MissingAttributeValueException, XMLStreamException, ReadonlyAttributeViolationException,
+        ReadonlyElementViolationException, ContentModelNotFoundException, ContextNotFoundException,
+        WebserverSystemException, IOException {
 
         if (this.parsingProperties) {
             this.propertiesHandler.startElement(element);
@@ -163,7 +143,7 @@ public class ItemHandler extends DefaultHandler {
             final String currentPath = parser.getCurPath();
 
             if (XPATH_ITEM_PROPERTIES.equals(currentPath)) {
-                if(LOGGER.isDebugEnabled()) {
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Parser reached " + XPATH_ITEM_PROPERTIES);
                 }
                 this.parsingProperties = true;
@@ -172,24 +152,20 @@ public class ItemHandler extends DefaultHandler {
             }
             else if (XPATH_ITEM_METADATA.equals(currentPath)) {
                 this.parsingMetaData = true;
-                this.metadataHandler =
-                    new MetadataHandler2(this.parser, XPATH_ITEM_METADATA);
+                this.metadataHandler = new MetadataHandler2(this.parser, XPATH_ITEM_METADATA);
                 this.metadataHandler.startElement(element);
             }
-            else if (! this.surrogate && XPATH_ITEM_COMPONENTS.equals(currentPath)) {
+            else if (!this.surrogate && XPATH_ITEM_COMPONENTS.equals(currentPath)) {
                 this.parsingComponents = true;
-                this.componentsHandler =
-                    new ComponentsHandler(this.parser, this.getItem());
+                this.componentsHandler = new ComponentsHandler(this.parser, this.getItem());
                 this.componentsHandler.startElement(element);
             }
             else if (XPATH_ITEM_RELATION.equals(currentPath)) {
                 this.parsingRelations = true;
-                this.relationHandler =
-                    new RelationHandler2(this.parser, XPATH_ITEM_RELATION);
+                this.relationHandler = new RelationHandler2(this.parser, XPATH_ITEM_RELATION);
                 this.relationHandler.startElement(element);
             }
-            else if (! this.surrogate
-                && XPATH_ITEM_CONTENT_STREAMS.equals(currentPath)) {
+            else if (!this.surrogate && XPATH_ITEM_CONTENT_STREAMS.equals(currentPath)) {
                 this.parsingContentStreams = true;
                 this.contentStreamsHandler = new ContentStreamsHandler(this.parser);
                 this.contentStreamsHandler.startElement(element);
@@ -201,45 +177,32 @@ public class ItemHandler extends DefaultHandler {
 
     /**
      * Parser hits an XML end element.
-     * 
-     * @param element
-     *            StAX EndElement
+     *
+     * @param element StAX EndElement
      * @return StAX EndElement
-     * 
-     * @throws XMLStreamException
-     * @throws SystemException
-     * @throws ContentModelNotFoundException
-     * @throws ContextNotFoundException
-     * @throws MissingAttributeValueException
-     * @throws InvalidXmlException
-     * @throws UnsupportedEncodingException
-     * @throws SystemException
      */
     @Override
-    public EndElement endElement(final EndElement element)
-        throws MissingContentException, XMLStreamException,
-        InvalidXmlException, MissingAttributeValueException,
-        ContextNotFoundException, ContentModelNotFoundException,
+    public EndElement endElement(final EndElement element) throws MissingContentException, XMLStreamException,
+        InvalidXmlException, MissingAttributeValueException, ContextNotFoundException, ContentModelNotFoundException,
         UnsupportedEncodingException, SystemException, InvalidContentException {
 
         final String currentPath = parser.getCurPath();
 
         if (XPATH_ITEM_PROPERTIES.equals(currentPath)) {
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Parser reached end of " + XPATH_ITEM_PROPERTIES);
             }
             // parser leaves the XML component element
             this.parsingProperties = false;
             this.propertiesHandler.endElement(element);
             this.item.setProperties(this.propertiesHandler.getProperties());
-            if (this.propertiesHandler
-                .getProperties().getObjectProperties().getOrigin() != null) {
+            if (this.propertiesHandler.getProperties().getObjectProperties().getOrigin() != null) {
                 this.surrogate = true;
             }
             this.propertiesHandler = null;
         }
         else if (XPATH_ITEM_METADATA.equals(currentPath)) {
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Parser reached end of " + XPATH_ITEM_METADATA);
             }
             // parser leaves the XML md-records element
@@ -248,8 +211,8 @@ public class ItemHandler extends DefaultHandler {
             this.item.addMdRecord(this.metadataHandler.getMetadataRecord());
             this.metadataHandler = null;
         }
-        else if (! this.surrogate && XPATH_ITEM_COMPONENTS.equals(currentPath)) {
-            if(LOGGER.isDebugEnabled()) {
+        else if (!this.surrogate && XPATH_ITEM_COMPONENTS.equals(currentPath)) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Parser reached end of " + XPATH_ITEM_COMPONENTS);
             }
             this.parsingComponents = false;
@@ -258,7 +221,7 @@ public class ItemHandler extends DefaultHandler {
             this.componentsHandler = null;
         }
         else if (XPATH_ITEM_RELATION.equals(currentPath)) {
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Parser reached end of " + XPATH_ITEM_RELATION);
             }
             this.parsingRelations = false;
@@ -268,14 +231,13 @@ public class ItemHandler extends DefaultHandler {
             // }
             this.relationHandler = null;
         }
-        else if (! this.surrogate && XPATH_ITEM_CONTENT_STREAMS.equals(currentPath)) {
-            if(LOGGER.isDebugEnabled()) {
+        else if (!this.surrogate && XPATH_ITEM_CONTENT_STREAMS.equals(currentPath)) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Parser reached end of " + XPATH_ITEM_CONTENT_STREAMS);
             }
             this.parsingContentStreams = false;
             this.contentStreamsHandler.endElement(element);
-            this.item.setContentStreams(this.contentStreamsHandler
-                .getContentStreams());
+            this.item.setContentStreams(this.contentStreamsHandler.getContentStreams());
             this.contentStreamsHandler = null;
         }
         else {
@@ -301,23 +263,14 @@ public class ItemHandler extends DefaultHandler {
 
     /**
      * Parser hits an XML character element.
-     * 
-     * @param s
-     *            XML character element.
-     * @param element
-     *            StAX StartElement
+     *
+     * @param s       XML character element.
+     * @param element StAX StartElement
      * @return XML character element.
-     * 
-     * @throws WebserverSystemException
-     * @throws MissingElementValueException
-     * @throws XMLStreamException
-     * @throws InvalidStatusException
-     * 
      */
     @Override
-    public String characters(final String s, final StartElement element)
-        throws InvalidContentException, MissingElementValueException,
-        WebserverSystemException, XMLStreamException, InvalidStatusException {
+    public String characters(final String s, final StartElement element) throws InvalidContentException,
+        MissingElementValueException, WebserverSystemException, XMLStreamException, InvalidStatusException {
 
         if (this.parsingProperties) {
             this.propertiesHandler.characters(s, element);
@@ -337,10 +290,9 @@ public class ItemHandler extends DefaultHandler {
 
     /**
      * Get the Item.
-     * 
-     * Attention! ItemCreate is only a transition object. Later implementation
-     * has to return the Item class.
-     * 
+     * <p/>
+     * Attention! ItemCreate is only a transition object. Later implementation has to return the Item class.
+     *
      * @return ItemCreate
      */
     public ItemCreate getItem() {

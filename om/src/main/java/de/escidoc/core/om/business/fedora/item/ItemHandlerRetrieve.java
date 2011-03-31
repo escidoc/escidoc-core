@@ -75,15 +75,12 @@ import java.util.Set;
 
 /**
  * This is a class, indeed.
- * 
+ *
  * @author Michael Schneider
- * 
  */
-public class ItemHandlerRetrieve extends ItemHandlerBase
-    implements ItemRendererInterface {
+public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRendererInterface {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(
-        ItemHandlerRetrieve.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ItemHandlerRetrieve.class);
 
     /*
      * (non-Javadoc)
@@ -93,20 +90,16 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
      * #render()
      */
     @Override
-    public String render() throws SystemException, ComponentNotFoundException,
-        ItemNotFoundException {
+    public String render() throws SystemException, ComponentNotFoundException, ItemNotFoundException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
 
         final Map<String, String> commonValues = getCommonValues(getItem());
 
         values.putAll(getPropertiesValues(getItem()));
-        values.put(XmlTemplateProvider.VAR_MD_RECORDS_CONTENT,
-            renderMdRecords(commonValues, false));
-        values.put(XmlTemplateProvider.CONTENT_STREAMS,
-            renderContentStreams(commonValues, false));
-        values.put(XmlTemplateProvider.VAR_COMPONENTS_CONTENT,
-            renderComponents(commonValues, false));
+        values.put(XmlTemplateProvider.VAR_MD_RECORDS_CONTENT, renderMdRecords(commonValues, false));
+        values.put(XmlTemplateProvider.CONTENT_STREAMS, renderContentStreams(commonValues, false));
+        values.put(XmlTemplateProvider.VAR_COMPONENTS_CONTENT, renderComponents(commonValues, false));
         values.putAll(getRelationValues(getItem()));
         values.putAll(getResourcesValues(getItem()));
         values.putAll(commonValues);
@@ -116,19 +109,14 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
 
     /**
      * Get XML representation of Components.
-     * 
-     * @param isRoot
-     *            Set true if Components is XML root element, false if it is XML
-     *            sub-element.
+     *
+     * @param isRoot Set true if Components is XML root element, false if it is XML sub-element.
      * @return XML representation of Components
-     * @throws ComponentNotFoundException
-     *             Thrown if Component was not found
-     * @throws SystemException
-     *             Thrown if an unexpected error occurs
+     * @throws ComponentNotFoundException Thrown if Component was not found
+     * @throws SystemException            Thrown if an unexpected error occurs
      */
     @Override
-    public String renderComponents(final boolean isRoot)
-        throws ComponentNotFoundException, SystemException {
+    public String renderComponents(final boolean isRoot) throws ComponentNotFoundException, SystemException {
 
         return renderComponents(getCommonValues(getItem()), isRoot);
     }
@@ -140,36 +128,30 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
      * de.escidoc.core.om.business.renderer.interfaces.ItemRendererInterface
      * #renderComponents(boolean)
      */
-    public String renderComponents(
-        final Map<String, String> commonValues, final boolean isRoot)
+    public String renderComponents(final Map<String, String> commonValues, final boolean isRoot)
         throws ComponentNotFoundException, SystemException {
 
         final Map<String, String> values = new HashMap<String, String>();
 
         if (isRoot) {
-            values.put(XmlTemplateProvider.IS_ROOT_SUB_RESOURCE,
-                XmlTemplateProvider.TRUE);
+            values.put(XmlTemplateProvider.IS_ROOT_SUB_RESOURCE, XmlTemplateProvider.TRUE);
         }
 
         final Collection<String> componentIds;
-        final String originObjectId =
-            getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN);
+        final String originObjectId = getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN);
         if (originObjectId != null) {
             values.put(XmlTemplateProvider.ORIGIN, XmlTemplateProvider.TRUE);
             values.putAll(getCommonValues(getOriginItem()));
-            values
-                .put("componentsTitle", "Components of Item " + getOriginId());
-            values.put("componentsHref",
-                de.escidoc.core.common.business.Constants.ITEM_URL_BASE
-                    + getOriginId() + "/components");
+            values.put("componentsTitle", "Components of Item " + getOriginId());
+            values.put("componentsHref", de.escidoc.core.common.business.Constants.ITEM_URL_BASE + getOriginId()
+                + "/components");
 
             componentIds = getOriginItem().getComponentIds();
         }
         else {
 
             values.putAll(commonValues);
-            values.put("componentsTitle", "Components of Item "
-                + getItem().getId());
+            values.put("componentsTitle", "Components of Item " + getItem().getId());
             values.put("componentsHref", getItem().getHref() + "/components");
 
             componentIds = getItem().getComponentIds();
@@ -178,8 +160,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
             final StringBuilder renderedComponents = new StringBuilder();
             for (final String componentId : componentIds) {
                 try {
-                    renderedComponents.append(renderComponent(componentId,
-                        commonValues, false));
+                    renderedComponents.append(renderComponent(componentId, commonValues, false));
                 }
                 catch (final ComponentNotFoundException e) {
                     throw new IntegritySystemException(e);
@@ -192,21 +173,16 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
 
     /**
      * Get XML representation of Component.
-     * 
-     * @param id
-     *            objid of Component
-     * @param isRoot
-     *            Set true if Component is XML root element, false if it is XML
-     *            sub-element.
+     *
+     * @param id     objid of Component
+     * @param isRoot Set true if Component is XML root element, false if it is XML sub-element.
      * @return XML representation of Component with provided id
-     * @throws ComponentNotFoundException
-     *             Thrown if Component was not found
-     * @throws SystemException
-     *             Thrown if an unexpected error occurs
+     * @throws ComponentNotFoundException Thrown if Component was not found
+     * @throws SystemException            Thrown if an unexpected error occurs
      */
     @Override
-    public String renderComponent(final String id, final boolean isRoot)
-        throws ComponentNotFoundException, SystemException {
+    public String renderComponent(final String id, final boolean isRoot) throws ComponentNotFoundException,
+        SystemException {
 
         return renderComponent(id, getCommonValues(getItem()), isRoot);
     }
@@ -218,10 +194,8 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
      * de.escidoc.core.om.business.renderer.interfaces.ItemRendererInterface
      * #renderComponent(java.lang.String, boolean)
      */
-    public String renderComponent(
-        final String id, final Map<String, String> commonValues,
-        final boolean isRoot) throws ComponentNotFoundException,
-        SystemException {
+    public String renderComponent(final String id, final Map<String, String> commonValues, final boolean isRoot)
+        throws ComponentNotFoundException, SystemException {
 
         Component component = getComponent(id);
 
@@ -229,33 +203,25 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         if (isRoot) {
             values.put(XmlTemplateProvider.IS_ROOT, XmlTemplateProvider.TRUE);
         }
-        final String originObjectId =
-            getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN);
+        final String originObjectId = getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN);
         if (originObjectId != null) {
             component = getComponent(id);
             values.put(XmlTemplateProvider.ORIGIN, XmlTemplateProvider.TRUE);
-            values.put("componentHref",
-                de.escidoc.core.common.business.Constants.ITEM_URL_BASE
-                    + getOriginId() + component.getHrefPart());
+            values.put("componentHref", de.escidoc.core.common.business.Constants.ITEM_URL_BASE + getOriginId()
+                + component.getHrefPart());
             values.putAll(getCommonValues(getOriginItem()));
         }
         else {
             component = getComponent(id);
-            values.put("componentHref",
-                getItem().getHref() + component.getHrefPart());
+            values.put("componentHref", getItem().getHref() + component.getHrefPart());
             values.putAll(getCommonValues(getItem()));
         }
-        values
-            .put(
-                XmlTemplateProvider.MD_RECRORDS_NAMESPACE_PREFIX,
-                de.escidoc.core.common.business.Constants.METADATARECORDS_NAMESPACE_PREFIX);
-        values
-            .put(
-                XmlTemplateProvider.MD_RECORDS_NAMESPACE,
-                de.escidoc.core.common.business.Constants.METADATARECORDS_NAMESPACE_URI);
+        values.put(XmlTemplateProvider.MD_RECRORDS_NAMESPACE_PREFIX,
+            de.escidoc.core.common.business.Constants.METADATARECORDS_NAMESPACE_PREFIX);
+        values.put(XmlTemplateProvider.MD_RECORDS_NAMESPACE,
+            de.escidoc.core.common.business.Constants.METADATARECORDS_NAMESPACE_URI);
         values.put("componentTitle", component.getTitle());
-        values.put("componentHref",
-            getItem().getHref() + component.getHrefPart());
+        values.put("componentHref", getItem().getHref() + component.getHrefPart());
         values.put("componentId", component.getId());
         values.putAll(commonValues);
         values.putAll(getComponentPropertiesValues(component));
@@ -266,25 +232,21 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         if (storage.equals(FoXmlProvider.CONTROL_GROUP_M)) {
             values.put("storage", Constants.STORAGE_INTERNAL_MANAGED);
             if (getOriginItem() != null) {
-                values.put("componentContentHref",
-                    de.escidoc.core.common.business.Constants.ITEM_URL_BASE
-                        + getOriginId() + component.getHrefPart() + "/content");
+                values.put("componentContentHref", de.escidoc.core.common.business.Constants.ITEM_URL_BASE
+                    + getOriginId() + component.getHrefPart() + "/content");
             }
             else {
-                values.put("componentContentHref", getItem().getHref()
-                    + component.getHrefPart() + "/content");
+                values.put("componentContentHref", getItem().getHref() + component.getHrefPart() + "/content");
             }
         }
         else if (storage.equals(FoXmlProvider.CONTROL_GROUP_E)) {
             values.put("storage", Constants.STORAGE_EXTERNAL_MANAGED);
             if (getOriginItem() != null) {
-                values.put("componentContentHref",
-                    de.escidoc.core.common.business.Constants.ITEM_URL_BASE
-                        + getOriginId() + component.getHrefPart() + "/content");
+                values.put("componentContentHref", de.escidoc.core.common.business.Constants.ITEM_URL_BASE
+                    + getOriginId() + component.getHrefPart() + "/content");
             }
             else {
-                values.put("componentContentHref", getItem().getHref()
-                    + component.getHrefPart() + "/content");
+                values.put("componentContentHref", getItem().getHref() + component.getHrefPart() + "/content");
             }
         }
         else if (storage.equals(FoXmlProvider.CONTROL_GROUP_R)) {
@@ -292,16 +254,14 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
             values.put("componentContentHref", content.getLocation());
         }
 
-        final String mdRecordsContent =
-            renderComponentMdRecords(component.getId(), commonValues, false);
+        final String mdRecordsContent = renderComponentMdRecords(component.getId(), commonValues, false);
         if (mdRecordsContent.length() > 0) {
             values.put("componentMdRecordsContent", mdRecordsContent);
         }
         return ItemXmlProvider.getInstance().getComponentXml(values);
     }
 
-    public String renderComponentProperties(final String id)
-        throws ComponentNotFoundException, FedoraSystemException,
+    public String renderComponentProperties(final String id) throws ComponentNotFoundException, FedoraSystemException,
         SystemException {
 
         final Component component;
@@ -310,9 +270,8 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         if (getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN) != null) {
             component = getComponent(id);
             values.put(XmlTemplateProvider.ORIGIN, XmlTemplateProvider.TRUE);
-            values.put("componentHref",
-                de.escidoc.core.common.business.Constants.ITEM_URL_BASE
-                    + getOriginId() + component.getHrefPart());
+            values.put("componentHref", de.escidoc.core.common.business.Constants.ITEM_URL_BASE + getOriginId()
+                + component.getHrefPart());
             values.putAll(getCommonValues(getOriginItem()));
         }
         else {
@@ -321,27 +280,21 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
             values.putAll(getCommonValues(getItem()));
         }
 
-        values.put(XmlTemplateProvider.IS_ROOT_PROPERTIES,
-            XmlTemplateProvider.TRUE);
-        values.put("componentHref",
-            getItem().getHref() + component.getHrefPart());
+        values.put(XmlTemplateProvider.IS_ROOT_PROPERTIES, XmlTemplateProvider.TRUE);
+        values.put("componentHref", getItem().getHref() + component.getHrefPart());
         values.put("componentId", component.getId());
         values.putAll(getComponentPropertiesValues(component));
         return ItemXmlProvider.getInstance().getComponentPropertiesXml(values);
     }
 
     @Override
-    public String renderMdRecords(final boolean isRoot)
-        throws WebserverSystemException, EncodingSystemException,
-        FedoraSystemException, IntegritySystemException,
-        TripleStoreSystemException {
+    public String renderMdRecords(final boolean isRoot) throws WebserverSystemException, EncodingSystemException,
+        FedoraSystemException, IntegritySystemException, TripleStoreSystemException {
         return renderMdRecords(getCommonValues(getItem()), isRoot);
     }
 
-    public String renderMdRecords(
-        final Map<String, String> commonValues, final boolean isRoot)
-        throws WebserverSystemException, EncodingSystemException,
-        FedoraSystemException, IntegritySystemException,
+    public String renderMdRecords(final Map<String, String> commonValues, final boolean isRoot)
+        throws WebserverSystemException, EncodingSystemException, FedoraSystemException, IntegritySystemException,
         TripleStoreSystemException {
 
         final Map<String, Datastream> mdRecords = getItem().getMdRecords();
@@ -353,8 +306,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         while (namesIter.hasNext()) {
             final String mdRecordName = namesIter.next();
             try {
-                final String mdRecordContent =
-                    renderMdRecord(mdRecordName, commonValues, false, false);
+                final String mdRecordContent = renderMdRecord(mdRecordName, commonValues, false, false);
                 if (mdRecordContent.length() == 0) {
                     namesIter.remove();
                 }
@@ -363,8 +315,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
                 }
             }
             catch (final MdRecordNotFoundException e) {
-                throw new WebserverSystemException(
-                    "Metadata record previously found in list not found.", e);
+                throw new WebserverSystemException("Metadata record previously found in list not found.", e);
             }
         }
 
@@ -374,13 +325,10 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
             for (final String mdRecordName : originMdRecords.keySet()) {
                 if (!mdRecords.keySet().contains(mdRecordName)) {
                     try {
-                        content.append(renderMdRecord(mdRecordName,
-                            commonValues, true, false));
+                        content.append(renderMdRecord(mdRecordName, commonValues, true, false));
                     }
                     catch (final MdRecordNotFoundException e) {
-                        throw new WebserverSystemException(
-                            "Metadata record previously found in list not found.",
-                            e);
+                        throw new WebserverSystemException("Metadata record previously found in list not found.", e);
                     }
                 }
             }
@@ -390,44 +338,29 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         }
 
         if (isRoot) {
-            values.put(XmlTemplateProvider.IS_ROOT_SUB_RESOURCE,
-                XmlTemplateProvider.TRUE);
+            values.put(XmlTemplateProvider.IS_ROOT_SUB_RESOURCE, XmlTemplateProvider.TRUE);
         }
         values.putAll(commonValues);
         values.put(XmlTemplateProvider.VAR_MD_RECORDS_HREF, getItem().getHref()
             + de.escidoc.core.common.business.Constants.MD_RECORDS_URL_PART);
-        values.put(XmlTemplateProvider.VAR_MD_RECORDS_TITLE,
-            "Metadata Records of Item " + getItem().getId());
-        values.put(XmlTemplateProvider.VAR_MD_RECORDS_CONTENT,
-            content.toString());
+        values.put(XmlTemplateProvider.VAR_MD_RECORDS_TITLE, "Metadata Records of Item " + getItem().getId());
+        values.put(XmlTemplateProvider.VAR_MD_RECORDS_CONTENT, content.toString());
 
         return ItemXmlProvider.getInstance().getMdRecordsXml(values);
     }
 
     /**
      * Render MD Record whereas the common values are not to recompile.
-     * 
-     * @param name
-     *            Name of md-record.
-     * @param commonValues
-     *            Common render values.
-     * @param isOrigin
-     *            set true if Item is origin Item, false otherwise
-     * @param isRoot
-     *            Set true is md-record is to render with XML root element
+     *
+     * @param name         Name of md-record.
+     * @param commonValues Common render values.
+     * @param isOrigin     set true if Item is origin Item, false otherwise
+     * @param isRoot       Set true is md-record is to render with XML root element
      * @return XMl representation of md-record.
-     * 
-     * @throws WebserverSystemException
-     * @throws IntegritySystemException
-     * @throws EncodingSystemException
-     * @throws MdRecordNotFoundException
-     * @throws TripleStoreSystemException
      */
     public String renderMdRecord(
-        final String name, final Map<String, String> commonValues,
-        final boolean isOrigin, final boolean isRoot)
-        throws WebserverSystemException, IntegritySystemException,
-        EncodingSystemException, MdRecordNotFoundException,
+        final String name, final Map<String, String> commonValues, final boolean isOrigin, final boolean isRoot)
+        throws WebserverSystemException, IntegritySystemException, EncodingSystemException, MdRecordNotFoundException,
         TripleStoreSystemException {
 
         final Map<String, String> values = new HashMap<String, String>();
@@ -435,25 +368,16 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         if (isOrigin) {
             ds = getOriginItem().getMdRecord(name);
             values.put(XmlTemplateProvider.ORIGIN, XmlTemplateProvider.TRUE);
-            values
-                .put(
-                    XmlTemplateProvider.VAR_MD_RECORD_HREF,
-                    de.escidoc.core.common.business.Constants.ITEM_URL_BASE
-                        + getOriginId()
-                        + de.escidoc.core.common.business.Constants.MD_RECORD_URL_PART
-                        + '/' + name);
-            if (name
-                .equals(XmlTemplateProvider.DEFAULT_METADATA_FOR_DC_MAPPING)) {
-                commonValues.put(XmlTemplateProvider.TITLE, getOriginItem()
-                    .getTitle());
+            values.put(XmlTemplateProvider.VAR_MD_RECORD_HREF, de.escidoc.core.common.business.Constants.ITEM_URL_BASE
+                + getOriginId() + de.escidoc.core.common.business.Constants.MD_RECORD_URL_PART + '/' + name);
+            if (name.equals(XmlTemplateProvider.DEFAULT_METADATA_FOR_DC_MAPPING)) {
+                commonValues.put(XmlTemplateProvider.TITLE, getOriginItem().getTitle());
             }
         }
         else {
             ds = getItem().getMdRecord(name);
-            values.put(XmlTemplateProvider.VAR_MD_RECORD_HREF, getItem()
-                .getHref()
-                + de.escidoc.core.common.business.Constants.MD_RECORD_URL_PART
-                + '/' + name);
+            values.put(XmlTemplateProvider.VAR_MD_RECORD_HREF, getItem().getHref()
+                + de.escidoc.core.common.business.Constants.MD_RECORD_URL_PART + '/' + name);
         }
 
         if (ds.isDeleted()) {
@@ -468,106 +392,81 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
             values.put(XmlTemplateProvider.MD_RECORD_SCHEMA, altIds.get(2));
         }
         try {
-            values.put(XmlTemplateProvider.MD_RECORD_CONTENT,
-                ds.toString(XmlUtility.CHARACTER_ENCODING));
+            values.put(XmlTemplateProvider.MD_RECORD_CONTENT, ds.toString(XmlUtility.CHARACTER_ENCODING));
         }
         catch (final EncodingSystemException e) {
             throw new EncodingSystemException(e.getMessage(), e);
         }
 
         if (isRoot) {
-            values.put(XmlTemplateProvider.IS_ROOT_MD_RECORD,
-                XmlTemplateProvider.TRUE);
+            values.put(XmlTemplateProvider.IS_ROOT_MD_RECORD, XmlTemplateProvider.TRUE);
         }
         values.putAll(commonValues);
         values.put(XmlTemplateProvider.MD_RECORD_NAME, name);
         values.put(XmlTemplateProvider.VAR_MD_RECORD_TITLE, name);
         values.put(XmlTemplateProvider.VAR_MD_RECORD_HREF, getItem().getHref()
-            + de.escidoc.core.common.business.Constants.MD_RECORD_URL_PART
-            + '/' + name);
+            + de.escidoc.core.common.business.Constants.MD_RECORD_URL_PART + '/' + name);
 
         return ItemXmlProvider.getInstance().getMdRecordXml(values);
     }
 
     /**
      * Render MD Record whereas the common values are not to recompile.
-     * 
-     * @param name
-     *            Name of md-record.
-     * @param isOrigin
-     *            set true if Item is origin Item, false otherwise
-     * @param isRoot
-     *            Set true is md-record is to render with XML root element
+     *
+     * @param name     Name of md-record.
+     * @param isOrigin set true if Item is origin Item, false otherwise
+     * @param isRoot   Set true is md-record is to render with XML root element
      * @return XMl representation of md-record.
-     * 
-     * @throws WebserverSystemException
-     * @throws IntegritySystemException
-     * @throws EncodingSystemException
-     * @throws MdRecordNotFoundException
-     * @throws TripleStoreSystemException
      */
     @Override
-    public String renderMdRecord(
-        final String name, final boolean isOrigin, final boolean isRoot)
-        throws WebserverSystemException, IntegritySystemException,
-        EncodingSystemException, MdRecordNotFoundException,
+    public String renderMdRecord(final String name, final boolean isOrigin, final boolean isRoot)
+        throws WebserverSystemException, IntegritySystemException, EncodingSystemException, MdRecordNotFoundException,
         TripleStoreSystemException {
 
-        return renderMdRecord(name, getCommonValues(getItem()), isOrigin,
-            isRoot);
+        return renderMdRecord(name, getCommonValues(getItem()), isOrigin, isRoot);
     }
 
     @Deprecated
-    public String retrieveMdRecord(final String name, final boolean isOrigin)
-        throws MdRecordNotFoundException {
+    public String retrieveMdRecord(final String name, final boolean isOrigin) throws MdRecordNotFoundException {
         final Datastream mdRecord;
         mdRecord = isOrigin ? getOriginItem().getMdRecord(name) : getItem().getMdRecord(name);
         if (mdRecord.isDeleted()) {
             throw new MdRecordNotFoundException("Metadata record with name " + name + " not found in item "
-                    + getItem().getId() + '.');
+                + getItem().getId() + '.');
         }
 
         return mdRecord.toString();
     }
 
-    public String renderContentStreams(final boolean isRoot)
-        throws WebserverSystemException, EncodingSystemException,
-        FedoraSystemException, IntegritySystemException,
-        TripleStoreSystemException {
+    public String renderContentStreams(final boolean isRoot) throws WebserverSystemException, EncodingSystemException,
+        FedoraSystemException, IntegritySystemException, TripleStoreSystemException {
 
         return renderContentStreams(getCommonValues(getItem()), isRoot);
     }
 
-    public String renderContentStreams(
-        final Map<String, String> commonValues, final boolean isRoot)
-        throws WebserverSystemException, EncodingSystemException,
-        FedoraSystemException, IntegritySystemException,
+    public String renderContentStreams(final Map<String, String> commonValues, final boolean isRoot)
+        throws WebserverSystemException, EncodingSystemException, FedoraSystemException, IntegritySystemException,
         TripleStoreSystemException {
 
         final Map<String, String> values = new HashMap<String, String>();
         final StringBuilder content = new StringBuilder();
         if (getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN) != null) {
             values.put(XmlTemplateProvider.ORIGIN, XmlTemplateProvider.TRUE);
-            for (final String contentStreamName : getOriginItem()
-                .getContentStreams().keySet()) {
+            for (final String contentStreamName : getOriginItem().getContentStreams().keySet()) {
                 content.append(renderContentStream(contentStreamName, false));
             }
             values.put(XmlTemplateProvider.VAR_CONTENT_STREAMS_HREF,
-                de.escidoc.core.common.business.Constants.ITEM_URL_BASE
-                    + getOriginId() + Constants.CONTENT_STREAMS_URL_PART);
-            values.put(XmlTemplateProvider.VAR_CONTENT_STREAMS_TITLE,
-                "Content streams of Item " + getOriginId());
+                de.escidoc.core.common.business.Constants.ITEM_URL_BASE + getOriginId()
+                    + Constants.CONTENT_STREAMS_URL_PART);
+            values.put(XmlTemplateProvider.VAR_CONTENT_STREAMS_TITLE, "Content streams of Item " + getOriginId());
         }
         else {
-            for (final String contentStreamName : getItem()
-                .getContentStreams().keySet()) {
-                content.append(renderContentStream(contentStreamName,
-                    commonValues, false));
+            for (final String contentStreamName : getItem().getContentStreams().keySet()) {
+                content.append(renderContentStream(contentStreamName, commonValues, false));
             }
-            values.put(XmlTemplateProvider.VAR_CONTENT_STREAMS_HREF, getItem()
-                .getHref() + Constants.CONTENT_STREAMS_URL_PART);
-            values.put(XmlTemplateProvider.VAR_CONTENT_STREAMS_TITLE,
-                "Content streams of Item " + getItem().getId());
+            values.put(XmlTemplateProvider.VAR_CONTENT_STREAMS_HREF, getItem().getHref()
+                + Constants.CONTENT_STREAMS_URL_PART);
+            values.put(XmlTemplateProvider.VAR_CONTENT_STREAMS_TITLE, "Content streams of Item " + getItem().getId());
 
         }
         if (content.length() == 0) {
@@ -575,33 +474,27 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         }
 
         if (isRoot) {
-            values.put(XmlTemplateProvider.IS_ROOT_SUB_RESOURCE,
-                XmlTemplateProvider.TRUE);
+            values.put(XmlTemplateProvider.IS_ROOT_SUB_RESOURCE, XmlTemplateProvider.TRUE);
         }
         values.putAll(commonValues);
-        values.put(XmlTemplateProvider.VAR_CONTENT_STREAMS_CONTENT,
-            content.toString());
+        values.put(XmlTemplateProvider.VAR_CONTENT_STREAMS_CONTENT, content.toString());
         return ItemXmlProvider.getInstance().getContentStreamsXml(values);
     }
 
-    public String renderContentStream(final String name, final boolean isRoot)
-        throws WebserverSystemException, IntegritySystemException,
-        TripleStoreSystemException {
+    public String renderContentStream(final String name, final boolean isRoot) throws WebserverSystemException,
+        IntegritySystemException, TripleStoreSystemException {
 
         return renderContentStream(name, getCommonValues(getItem()), isRoot);
     }
 
-    public String renderContentStream(
-        final String name, final Map<String, String> commonValues,
-        final boolean isRoot) throws WebserverSystemException,
-        IntegritySystemException, TripleStoreSystemException {
+    public String renderContentStream(final String name, final Map<String, String> commonValues, final boolean isRoot)
+        throws WebserverSystemException, IntegritySystemException, TripleStoreSystemException {
         final Map<String, String> values = new HashMap<String, String>();
 
         if (isRoot) {
             values.put("isRootContentStream", XmlTemplateProvider.TRUE);
         }
-        final String originObjectId =
-            getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN);
+        final String originObjectId = getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN);
         final Datastream ds;
         if (originObjectId != null) {
             ds = getOriginItem().getContentStream(name);
@@ -614,18 +507,14 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_NAME, ds.getName());
         values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_TITLE, ds.getLabel());
         String location = ds.getLocation();
-        if ("M".equals(ds.getControlGroup())
-            || "X".equals(ds.getControlGroup())) {
-            values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_STORAGE,
-                Constants.STORAGE_INTERNAL_MANAGED);
+        if ("M".equals(ds.getControlGroup()) || "X".equals(ds.getControlGroup())) {
+            values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_STORAGE, Constants.STORAGE_INTERNAL_MANAGED);
             location =
-                getItem().getHref() + Constants.CONTENT_STREAM_URL_PART + '/'
-                    + ds.getName()
+                getItem().getHref() + Constants.CONTENT_STREAM_URL_PART + '/' + ds.getName()
                     + Constants.CONTENT_STREAM_CONTENT_URL_EXTENSION;
             if ("X".equals(ds.getControlGroup())) {
                 try {
-                    values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_CONTENT,
-                        ds.toStringUTF8());
+                    values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_CONTENT, ds.toStringUTF8());
                 }
                 catch (final EncodingSystemException e) {
                     throw new WebserverSystemException(e);
@@ -633,70 +522,53 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
             }
         }
         else if ("E".equals(ds.getControlGroup())) {
-            values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_STORAGE,
-                Constants.STORAGE_EXTERNAL_MANAGED);
+            values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_STORAGE, Constants.STORAGE_EXTERNAL_MANAGED);
             location =
-                getItem().getHref() + Constants.CONTENT_STREAM_URL_PART + '/'
-                    + ds.getName()
+                getItem().getHref() + Constants.CONTENT_STREAM_URL_PART + '/' + ds.getName()
                     + Constants.CONTENT_STREAM_CONTENT_URL_EXTENSION;
 
         }
         else if ("R".equals(ds.getControlGroup())) {
-            values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_STORAGE,
-                Constants.STORAGE_EXTERNAL_URL);
+            values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_STORAGE, Constants.STORAGE_EXTERNAL_URL);
         }
-        values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_MIME_TYPE,
-            ds.getMimeType());
+        values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_MIME_TYPE, ds.getMimeType());
         values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_HREF, location);
 
         return ItemXmlProvider.getInstance().getContentStreamXml(values);
     }
 
-    public String renderComponentMdRecords(
-        final String componentId, final boolean isRoot)
+    public String renderComponentMdRecords(final String componentId, final boolean isRoot)
         throws ComponentNotFoundException, SystemException {
 
-        return renderComponentMdRecords(componentId,
-            getCommonValues(getItem()), isRoot);
+        return renderComponentMdRecords(componentId, getCommonValues(getItem()), isRoot);
     }
 
     public String renderComponentMdRecords(
-        final String componentId, final Map<String, String> commonValues,
-        final boolean isRoot) throws ComponentNotFoundException,
-        SystemException {
+        final String componentId, final Map<String, String> commonValues, final boolean isRoot)
+        throws ComponentNotFoundException, SystemException {
 
         final Component component;
         final Map<String, String> values = new HashMap<String, String>();
-        final String originObjectId =
-            getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN);
+        final String originObjectId = getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN);
         if (originObjectId != null) {
             component = getComponent(componentId);
             values.put(XmlTemplateProvider.ORIGIN, XmlTemplateProvider.TRUE);
-            values
-                .put(
-                    XmlTemplateProvider.VAR_MD_RECORDS_HREF,
-                    de.escidoc.core.common.business.Constants.ITEM_URL_BASE
-                        + getOriginId()
-                        + component.getHrefPart()
-                        + de.escidoc.core.common.business.Constants.MD_RECORDS_URL_PART);
+            values.put(XmlTemplateProvider.VAR_MD_RECORDS_HREF, de.escidoc.core.common.business.Constants.ITEM_URL_BASE
+                + getOriginId() + component.getHrefPart()
+                + de.escidoc.core.common.business.Constants.MD_RECORDS_URL_PART);
             values.putAll(getCommonValues(getOriginItem()));
         }
         else {
             component = getComponent(componentId);
-            values
-                .put(
-                    XmlTemplateProvider.VAR_MD_RECORD_HREF,
-                    getItem().getHref()
-                        + component.getHrefPart()
-                        + de.escidoc.core.common.business.Constants.MD_RECORDS_URL_PART);
+            values.put(XmlTemplateProvider.VAR_MD_RECORD_HREF, getItem().getHref() + component.getHrefPart()
+                + de.escidoc.core.common.business.Constants.MD_RECORDS_URL_PART);
             values.putAll(getCommonValues(getItem()));
         }
         final Map<String, Datastream> mdRecords = component.getMdRecords();
         final StringBuilder content = new StringBuilder();
         for (final String mdRecordName : mdRecords.keySet()) {
             try {
-                content.append(renderComponentMdRecord(componentId,
-                    mdRecordName, commonValues, false));
+                content.append(renderComponentMdRecord(componentId, mdRecordName, commonValues, false));
             }
             catch (final MdRecordNotFoundException e) {
                 throw new IntegritySystemException(e.getMessage(), e);
@@ -707,59 +579,41 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         }
 
         if (isRoot) {
-            values.put(XmlTemplateProvider.IS_ROOT_SUB_RESOURCE,
-                XmlTemplateProvider.TRUE);
+            values.put(XmlTemplateProvider.IS_ROOT_SUB_RESOURCE, XmlTemplateProvider.TRUE);
         }
         values.putAll(commonValues);
-        values
-            .put("mdRecordsHref", getItem().getHref() + component.getHrefPart()
-                + de.escidoc.core.common.business.Constants.MD_RECORDS_URL_PART);
-        values.put("mdRecordsTitle", "Metadata Records of Component "
-            + component.getId());
-        values.put(XmlTemplateProvider.VAR_MD_RECORDS_CONTENT,
-            content.toString());
+        values.put("mdRecordsHref", getItem().getHref() + component.getHrefPart()
+            + de.escidoc.core.common.business.Constants.MD_RECORDS_URL_PART);
+        values.put("mdRecordsTitle", "Metadata Records of Component " + component.getId());
+        values.put(XmlTemplateProvider.VAR_MD_RECORDS_CONTENT, content.toString());
         return ItemXmlProvider.getInstance().getMdRecordsXml(values);
     }
 
-    public String renderComponentMdRecord(
-        final String componentId, final String name, final boolean isRoot)
-        throws MdRecordNotFoundException, ComponentNotFoundException,
-        FedoraSystemException, SystemException {
+    public String renderComponentMdRecord(final String componentId, final String name, final boolean isRoot)
+        throws MdRecordNotFoundException, ComponentNotFoundException, FedoraSystemException, SystemException {
 
-        return renderComponentMdRecord(componentId, name,
-            getCommonValues(getItem()), isRoot);
+        return renderComponentMdRecord(componentId, name, getCommonValues(getItem()), isRoot);
     }
 
     public String renderComponentMdRecord(
-        final String componentId, final String name,
-        final Map<String, String> commonValues, final boolean isRoot)
-        throws MdRecordNotFoundException, ComponentNotFoundException,
-        FedoraSystemException, SystemException {
+        final String componentId, final String name, final Map<String, String> commonValues, final boolean isRoot)
+        throws MdRecordNotFoundException, ComponentNotFoundException, FedoraSystemException, SystemException {
 
         final Component component;
         final Map<String, String> values = new HashMap<String, String>();
-        final String originObjectId =
-            getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN);
+        final String originObjectId = getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN);
         if (originObjectId != null) {
             component = getComponent(componentId);
             values.put(XmlTemplateProvider.ORIGIN, XmlTemplateProvider.TRUE);
-            values
-                .put(
-                    XmlTemplateProvider.VAR_MD_RECORD_HREF,
-                    de.escidoc.core.common.business.Constants.ITEM_URL_BASE
-                        + getOriginId()
-                        + component.getHrefPart()
-                        + de.escidoc.core.common.business.Constants.MD_RECORD_URL_PART
-                        + '/' + name);
+            values.put(XmlTemplateProvider.VAR_MD_RECORD_HREF, de.escidoc.core.common.business.Constants.ITEM_URL_BASE
+                + getOriginId() + component.getHrefPart()
+                + de.escidoc.core.common.business.Constants.MD_RECORD_URL_PART + '/' + name);
             values.putAll(getCommonValues(getOriginItem()));
         }
         else {
             component = getComponent(componentId);
-            values.put(XmlTemplateProvider.VAR_MD_RECORD_HREF, getItem()
-                .getHref()
-                + component.getHrefPart()
-                + de.escidoc.core.common.business.Constants.MD_RECORD_URL_PART
-                + '/' + name);
+            values.put(XmlTemplateProvider.VAR_MD_RECORD_HREF, getItem().getHref() + component.getHrefPart()
+                + de.escidoc.core.common.business.Constants.MD_RECORD_URL_PART + '/' + name);
             values.putAll(commonValues);
         }
 
@@ -775,23 +629,19 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
             values.put(XmlTemplateProvider.MD_RECORD_SCHEMA, altIds.get(2));
         }
         try {
-            values.put(XmlTemplateProvider.MD_RECORD_CONTENT,
-                ds.toString(XmlUtility.CHARACTER_ENCODING));
+            values.put(XmlTemplateProvider.MD_RECORD_CONTENT, ds.toString(XmlUtility.CHARACTER_ENCODING));
         }
         catch (final EncodingSystemException e) {
             throw new EncodingSystemException(e.getMessage(), e);
         }
 
         if (isRoot) {
-            values.put(XmlTemplateProvider.IS_ROOT_MD_RECORD,
-                XmlTemplateProvider.TRUE);
+            values.put(XmlTemplateProvider.IS_ROOT_MD_RECORD, XmlTemplateProvider.TRUE);
         }
         values.put(XmlTemplateProvider.MD_RECORD_NAME, name);
         values.put(XmlTemplateProvider.VAR_MD_RECORD_TITLE, name);
-        values.put(XmlTemplateProvider.VAR_MD_RECORD_HREF, getItem().getHref()
-            + component.getHrefPart()
-            + de.escidoc.core.common.business.Constants.MD_RECORD_URL_PART
-            + '/' + name);
+        values.put(XmlTemplateProvider.VAR_MD_RECORD_HREF, getItem().getHref() + component.getHrefPart()
+            + de.escidoc.core.common.business.Constants.MD_RECORD_URL_PART + '/' + name);
         return ItemXmlProvider.getInstance().getMdRecordXml(values);
     }
 
@@ -803,14 +653,12 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
      * #renderProperties(de.escidoc.core.common.business.fedora.resources.Item)
      */
     @Override
-    public String renderProperties() throws WebserverSystemException,
-        TripleStoreSystemException, IntegritySystemException,
-        XmlParserSystemException, EncodingSystemException,
-        FedoraSystemException, ItemNotFoundException {
+    public String renderProperties() throws WebserverSystemException, TripleStoreSystemException,
+        IntegritySystemException, XmlParserSystemException, EncodingSystemException, FedoraSystemException,
+        ItemNotFoundException {
 
         final Map<String, String> values = new HashMap<String, String>();
-        values.put(XmlTemplateProvider.IS_ROOT_PROPERTIES,
-            XmlTemplateProvider.TRUE);
+        values.put(XmlTemplateProvider.IS_ROOT_PROPERTIES, XmlTemplateProvider.TRUE);
         if (getOriginItem() != null) {
             values.put(XmlTemplateProvider.ORIGIN, XmlTemplateProvider.TRUE);
         }
@@ -827,8 +675,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
      * #renderRelations(de.escidoc.core.common.business.fedora.resources.Item)
      */
     @Override
-    public String renderRelations() throws WebserverSystemException,
-        FedoraSystemException, IntegritySystemException,
+    public String renderRelations() throws WebserverSystemException, FedoraSystemException, IntegritySystemException,
         XmlParserSystemException, TripleStoreSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
@@ -849,8 +696,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
     public String renderResources() throws WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
-        values.put(XmlTemplateProvider.IS_ROOT_PROPERTIES,
-            XmlTemplateProvider.TRUE);
+        values.put(XmlTemplateProvider.IS_ROOT_PROPERTIES, XmlTemplateProvider.TRUE);
         values.putAll(getCommonValues(getItem()));
         values.putAll(getResourcesValues(getItem()));
 
@@ -862,14 +708,10 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
     }
 
     /**
-     * Gets the representation of the virtual resource <code>parents</code> of
-     * an item/container.
-     * 
-     * @param itemId
-     * @return Returns the XML representation of the virtual resource
-     *         <code>parents</code> of an container.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     * Gets the representation of the virtual resource <code>parents</code> of an item/container.
+     *
+     * @return Returns the XML representation of the virtual resource <code>parents</code> of an container.
+     * @throws SystemException Thrown in case of an internal error.
      */
     public String renderParents(final String itemId) throws SystemException {
 
@@ -877,11 +719,8 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         addXlinkValues(values);
         addStructuralRelationsValues(values);
         values.put("isRootParents", XmlTemplateProvider.TRUE);
-        values.put(
-            XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE,
-            ISODateTimeFormat
-                .dateTime().withZone(DateTimeZone.UTC)
-                .print(System.currentTimeMillis()));
+        values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, ISODateTimeFormat.dateTime().withZone(
+            DateTimeZone.UTC).print(System.currentTimeMillis()));
         addParentsValues(values, itemId);
         addParentsNamespaceValues(values);
         return ItemXmlProvider.getInstance().getParentsXml(values);
@@ -889,44 +728,36 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
 
     /**
      * Adds the parents values to the provided map.
-     * 
-     * @param values
-     *            The map to add values to.
-     * @param itemId
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     *
+     * @param values The map to add values to.
+     * @throws SystemException Thrown in case of an internal error.
      */
-    private void addParentsValues(
-        final Map<String, Object> values, final String itemId)
-        throws SystemException {
-        values.put("parentsHref",
-            XmlUtility.getItemParentsHref(XmlUtility.getItemHref(itemId)));
+    private void addParentsValues(final Map<String, Object> values, final String itemId) throws SystemException {
+        values.put("parentsHref", XmlUtility.getItemParentsHref(XmlUtility.getItemHref(itemId)));
         values.put("parentsTitle", "parents of item " + itemId);
 
         final StringBuffer query =
-            getTripleStoreUtility().getRetrieveSelectClause(true,
-                TripleStoreUtility.PROP_MEMBER);
+            getTripleStoreUtility().getRetrieveSelectClause(true, TripleStoreUtility.PROP_MEMBER);
 
         if (query.length() > 0) {
-            query.append(getTripleStoreUtility().getRetrieveWhereClause(true,
-                TripleStoreUtility.PROP_MEMBER, itemId, null, null, null));
+            query.append(getTripleStoreUtility().getRetrieveWhereClause(true, TripleStoreUtility.PROP_MEMBER, itemId,
+                null, null, null));
             List<String> ids = new ArrayList<String>();
             try {
                 ids = getTripleStoreUtility().retrieve(query.toString());
-            } catch (final TripleStoreSystemException e) {
-                if(LOGGER.isWarnEnabled()) {
+            }
+            catch (final TripleStoreSystemException e) {
+                if (LOGGER.isWarnEnabled()) {
                     LOGGER.warn("Error on retrieving data from triple store.");
                 }
-                if(LOGGER.isDebugEnabled()) {
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Error on retrieving data from triple store.", e);
                 }
             }
             final Iterator<String> idIter = ids.iterator();
-            final Collection<Map<String, String>> entries =
-                new ArrayList<Map<String, String>>(ids.size());
+            final Collection<Map<String, String>> entries = new ArrayList<Map<String, String>>(ids.size());
             while (idIter.hasNext()) {
-                final Map<String, String> entry =
-                    new HashMap<String, String>(3);
+                final Map<String, String> entry = new HashMap<String, String>(3);
                 final String id = idIter.next();
                 entry.put("id", id);
                 entry.put("href", XmlUtility.getContainerHref(id));
@@ -959,9 +790,8 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
                 renderedEntries.add(render());
             }
             catch (final ResourceNotFoundException e) {
-                throw new WebserverSystemException("FedoraItemHandler.retrieveItems: can not retrieve object "
-                        + itemId + ". ResourceNotFoundException: "
-                        + e.getCause() + '.', e);
+                throw new WebserverSystemException("FedoraItemHandler.retrieveItems: can not retrieve object " + itemId
+                    + ". ResourceNotFoundException: " + e.getCause() + '.', e);
             }
         }
         values.put(XmlTemplateProvider.VAR_ITEM_LIST_MEMBERS, renderedEntries);
@@ -969,35 +799,22 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         values.put(XmlTemplateProvider.VAR_ITEM_LIST_TITLE, "list of items");
         values.put(XmlTemplateProvider.VAR_ITEM_LIST_NAMESPACE,
             de.escidoc.core.common.business.Constants.ITEM_LIST_NAMESPACE_URI);
-        values
-            .put(
-                XmlTemplateProvider.VAR_ITEM_LIST_NAMESPACE_PREFIX,
-                de.escidoc.core.common.business.Constants.ITEM_LIST_NAMESPACE_PREFIX);
-        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL,
-            XmlUtility.getEscidocBaseUrl());
+        values.put(XmlTemplateProvider.VAR_ITEM_LIST_NAMESPACE_PREFIX,
+            de.escidoc.core.common.business.Constants.ITEM_LIST_NAMESPACE_PREFIX);
+        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, XmlUtility.getEscidocBaseUrl());
 
         return getItemXmlProvider().getItemListXml(values);
     }
 
     /**
      * Prepare properties values from item resource as velocity values.
-     * 
-     * @param item
-     *            The Item.
+     *
+     * @param item The Item.
      * @return Map with properties values (for velocity template)
-     * 
-     * @throws TripleStoreSystemException
-     * @throws WebserverSystemException
-     * @throws IntegritySystemException
-     * @throws XmlParserSystemException
-     * @throws EncodingSystemException
-     * @throws FedoraSystemException
-     * @throws ItemNotFoundException
      */
-    public Map<String, String> getPropertiesValues(final Item item)
-        throws TripleStoreSystemException, WebserverSystemException,
-        IntegritySystemException, XmlParserSystemException,
-        EncodingSystemException, FedoraSystemException, ItemNotFoundException {
+    public Map<String, String> getPropertiesValues(final Item item) throws TripleStoreSystemException,
+        WebserverSystemException, IntegritySystemException, XmlParserSystemException, EncodingSystemException,
+        FedoraSystemException, ItemNotFoundException {
 
         // retrieve properties from resource (the resource decided where are the
         // data to load, TripleStore or Wov)
@@ -1007,84 +824,68 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         final Map<String, String> values = new HashMap<String, String>();
 
         values.put(XmlTemplateProvider.VAR_PROPERTIES_TITLE, "Properties");
-        values.put(XmlTemplateProvider.VAR_PROPERTIES_HREF, item.getHref()
-            + Constants.PROPERTIES_URL_PART);
+        values.put(XmlTemplateProvider.VAR_PROPERTIES_HREF, item.getHref() + Constants.PROPERTIES_URL_PART);
 
         // surrogate item
         String origin = properties.get(PropertyMapKeys.ORIGIN);
         if (origin != null) {
             values.put(XmlTemplateProvider.ORIGIN, XmlTemplateProvider.TRUE);
-            final String originVersion =
-                properties.get(PropertyMapKeys.ORIGIN_VERSION);
+            final String originVersion = properties.get(PropertyMapKeys.ORIGIN_VERSION);
             if (originVersion != null) {
                 origin = origin + ':' + originVersion;
             }
             values.put(XmlTemplateProvider.VAR_ORIGIN_ID, origin);
             values.put(XmlTemplateProvider.VAR_ITEM_ORIGIN_HREF,
-                de.escidoc.core.common.business.Constants.ITEM_URL_BASE
-                    + getOriginId());
-            values.put(XmlTemplateProvider.VAR_ITEM_ORIGIN_TITLE,
-                getOriginItem().getTitle());
+                de.escidoc.core.common.business.Constants.ITEM_URL_BASE + getOriginId());
+            values.put(XmlTemplateProvider.VAR_ITEM_ORIGIN_TITLE, getOriginItem().getTitle());
         }
 
         try {
             final String creationDate = item.getCreationDate();
-            values
-                .put(XmlTemplateProvider.VAR_ITEM_CREATION_DATE, creationDate);
+            values.put(XmlTemplateProvider.VAR_ITEM_CREATION_DATE, creationDate);
         }
         catch (final TripleStoreSystemException e) {
             throw new ItemNotFoundException(e);
         }
 
-        values.put(XmlTemplateProvider.VAR_ITEM_CREATED_BY_TITLE,
-            properties.get(PropertyMapKeys.CREATED_BY_TITLE));
+        values.put(XmlTemplateProvider.VAR_ITEM_CREATED_BY_TITLE, properties.get(PropertyMapKeys.CREATED_BY_TITLE));
         values.put(XmlTemplateProvider.VAR_ITEM_CREATED_BY_HREF,
             de.escidoc.core.common.business.Constants.USER_ACCOUNT_URL_BASE
                 + properties.get(PropertyMapKeys.CREATED_BY_ID));
-        values.put(XmlTemplateProvider.VAR_ITEM_CREATED_BY_ID,
-            properties.get(PropertyMapKeys.CREATED_BY_ID));
+        values.put(XmlTemplateProvider.VAR_ITEM_CREATED_BY_ID, properties.get(PropertyMapKeys.CREATED_BY_ID));
 
-        values.put(XmlTemplateProvider.VAR_ITEM_CONTEXT_TITLE,
-            properties.get(PropertyMapKeys.CURRENT_VERSION_CONTEXT_TITLE));
+        values.put(XmlTemplateProvider.VAR_ITEM_CONTEXT_TITLE, properties
+            .get(PropertyMapKeys.CURRENT_VERSION_CONTEXT_TITLE));
         values.put(XmlTemplateProvider.VAR_ITEM_CONTEXT_HREF,
             de.escidoc.core.common.business.Constants.CONTEXT_URL_BASE
                 + properties.get(PropertyMapKeys.CURRENT_VERSION_CONTEXT_ID));
-        values.put(XmlTemplateProvider.VAR_ITEM_CONTEXT_ID,
-            properties.get(PropertyMapKeys.CURRENT_VERSION_CONTEXT_ID));
+        values.put(XmlTemplateProvider.VAR_ITEM_CONTEXT_ID, properties.get(PropertyMapKeys.CURRENT_VERSION_CONTEXT_ID));
 
-        values
-            .put(XmlTemplateProvider.VAR_ITEM_CONTENT_MODEL_TITLE, properties
-                .get(PropertyMapKeys.CURRENT_VERSION_CONTENT_MODEL_TITLE));
-        values.put(
-            XmlTemplateProvider.VAR_ITEM_CONTENT_MODEL_HREF,
+        values.put(XmlTemplateProvider.VAR_ITEM_CONTENT_MODEL_TITLE, properties
+            .get(PropertyMapKeys.CURRENT_VERSION_CONTENT_MODEL_TITLE));
+        values.put(XmlTemplateProvider.VAR_ITEM_CONTENT_MODEL_HREF,
             de.escidoc.core.common.business.Constants.CONTENT_MODEL_URL_BASE
-                + properties
-                    .get(PropertyMapKeys.CURRENT_VERSION_CONTENT_MODEL_ID));
-        values.put(XmlTemplateProvider.VAR_ITEM_CONTENT_MODEL_ID,
-            properties.get(PropertyMapKeys.CURRENT_VERSION_CONTENT_MODEL_ID));
+                + properties.get(PropertyMapKeys.CURRENT_VERSION_CONTENT_MODEL_ID));
+        values.put(XmlTemplateProvider.VAR_ITEM_CONTENT_MODEL_ID, properties
+            .get(PropertyMapKeys.CURRENT_VERSION_CONTENT_MODEL_ID));
 
         values.put(XmlTemplateProvider.VAR_ITEM_STATUS, item.getStatus());
-        values.put(XmlTemplateProvider.VAR_ITEM_STATUS_COMMENT, XmlUtility
-            .escapeForbiddenXmlCharacters(properties
-                .get(PropertyMapKeys.PUBLIC_STATUS_COMMENT)));
+        values.put(XmlTemplateProvider.VAR_ITEM_STATUS_COMMENT, XmlUtility.escapeForbiddenXmlCharacters(properties
+            .get(PropertyMapKeys.PUBLIC_STATUS_COMMENT)));
 
         if (item.hasObjectPid()) {
-            values.put(XmlTemplateProvider.VAR_ITEM_OBJECT_PID,
-                item.getObjectPid());
+            values.put(XmlTemplateProvider.VAR_ITEM_OBJECT_PID, item.getObjectPid());
         }
 
         if (item.isLocked()) {
             values.put(XmlTemplateProvider.VAR_ITEM_LOCK_STATUS,
                 de.escidoc.core.common.business.Constants.STATUS_LOCKED);
-            values.put(XmlTemplateProvider.VAR_ITEM_LOCK_DATE,
-                item.getLockDate());
+            values.put(XmlTemplateProvider.VAR_ITEM_LOCK_DATE, item.getLockDate());
             final String lockOwnerId = item.getLockOwner();
             values.put(XmlTemplateProvider.VAR_ITEM_LOCK_OWNER_ID, lockOwnerId);
             values.put(XmlTemplateProvider.VAR_ITEM_LOCK_OWNER_HREF,
-                de.escidoc.core.common.business.Constants.USER_ACCOUNT_URL_BASE
-                    + lockOwnerId);
-            values.put(XmlTemplateProvider.VAR_ITEM_LOCK_OWNER_TITLE,
-                item.getLockOwnerTitle());
+                de.escidoc.core.common.business.Constants.USER_ACCOUNT_URL_BASE + lockOwnerId);
+            values.put(XmlTemplateProvider.VAR_ITEM_LOCK_OWNER_TITLE, item.getLockOwnerTitle());
             // TODO lock-date
         }
         else {
@@ -1093,127 +894,95 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         }
 
         // version
-        final StringBuilder versionIdBase =
-            new StringBuilder(item.getId()).append(':');
+        final StringBuilder versionIdBase = new StringBuilder(item.getId()).append(':');
 
-        values.put(XmlTemplateProvider.VAR_ITEM_CURRENT_VERSION_HREF,
-            item.getVersionHref());
+        values.put(XmlTemplateProvider.VAR_ITEM_CURRENT_VERSION_HREF, item.getVersionHref());
         // de.escidoc.core.common.business.Constants.ITEM_URL_BASE
         // + currentVersionId);
-        values.put(XmlTemplateProvider.VAR_ITEM_CURRENT_VERSION_ID,
-            item.getFullId());
-        values.put(XmlTemplateProvider.VAR_ITEM_CURRENT_VERSION_TITLE,
-            "This Version");
-        values.put(XmlTemplateProvider.VAR_ITEM_CURRENT_VERSION_NUMBER,
-            item.getVersionId());
+        values.put(XmlTemplateProvider.VAR_ITEM_CURRENT_VERSION_ID, item.getFullId());
+        values.put(XmlTemplateProvider.VAR_ITEM_CURRENT_VERSION_TITLE, "This Version");
+        values.put(XmlTemplateProvider.VAR_ITEM_CURRENT_VERSION_NUMBER, item.getVersionId());
         // properties.get(TripleStoreUtility.PROP_CURRENT_VERSION_NUMBER));
-        values.put(XmlTemplateProvider.VAR_ITEM_CURRENT_VERSION_DATE,
-            item.getVersionDate());
+        values.put(XmlTemplateProvider.VAR_ITEM_CURRENT_VERSION_DATE, item.getVersionDate());
         // properties.get(TripleStoreUtility.PROP_VERSION_DATE));
-        values.put(XmlTemplateProvider.VAR_ITEM_CURRENT_VERSION_STATUS,
-            item.getVersionStatus());
+        values.put(XmlTemplateProvider.VAR_ITEM_CURRENT_VERSION_STATUS, item.getVersionStatus());
         // properties.get(TripleStoreUtility.PROP_CURRENT_VERSION_STATUS));
-        values.put(XmlTemplateProvider.VAR_ITEM_CURRENT_VERSION_VALID_STATUS,
-            properties.get(PropertyMapKeys.CURRENT_VERSION_VALID_STATUS));
-        values.put(XmlTemplateProvider.VAR_ITEM_CURRENT_VERSION_COMMENT,
-            XmlUtility.escapeForbiddenXmlCharacters(properties
-                .get(PropertyMapKeys.CURRENT_VERSION_VERSION_COMMENT)));
+        values.put(XmlTemplateProvider.VAR_ITEM_CURRENT_VERSION_VALID_STATUS, properties
+            .get(PropertyMapKeys.CURRENT_VERSION_VALID_STATUS));
+        values.put(XmlTemplateProvider.VAR_ITEM_CURRENT_VERSION_COMMENT, XmlUtility
+            .escapeForbiddenXmlCharacters(properties.get(PropertyMapKeys.CURRENT_VERSION_VERSION_COMMENT)));
 
-        values.put(XmlTemplateProvider.VAR_ITEM_CURRENT_VERSION_MODIFIED_BY_ID,
-            properties.get(PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_ID));
-        values.put(
-            XmlTemplateProvider.VAR_ITEM_CURRENT_VERSION_MODIFIED_BY_TITLE,
-            properties.get(PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_TITLE));
+        values.put(XmlTemplateProvider.VAR_ITEM_CURRENT_VERSION_MODIFIED_BY_ID, properties
+            .get(PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_ID));
+        values.put(XmlTemplateProvider.VAR_ITEM_CURRENT_VERSION_MODIFIED_BY_TITLE, properties
+            .get(PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_TITLE));
 
         // href is rest only value
-        values.put(
-            XmlTemplateProvider.VAR_ITEM_CURRENT_VERSION_MODIFIED_BY_HREF,
+        values.put(XmlTemplateProvider.VAR_ITEM_CURRENT_VERSION_MODIFIED_BY_HREF,
             de.escidoc.core.common.business.Constants.USER_ACCOUNT_URL_BASE
-                + properties
-                    .get(PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_ID));
+                + properties.get(PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_ID));
 
         // PID ---------------------------------------------------
         if (item.hasVersionPid()) {
-            values.put(XmlTemplateProvider.VAR_ITEM_VERSION_PID,
-                item.getVersionPid());
+            values.put(XmlTemplateProvider.VAR_ITEM_VERSION_PID, item.getVersionPid());
         }
 
         final String latestVersionId = item.getLatestVersionId();
         values.put(XmlTemplateProvider.VAR_ITEM_LATEST_VERSION_HREF,
-            de.escidoc.core.common.business.Constants.ITEM_URL_BASE
-                + latestVersionId);
-        values.put(XmlTemplateProvider.VAR_ITEM_LATEST_VERSION_TITLE,
-            "Latest Version");
-        values.put(XmlTemplateProvider.VAR_ITEM_LATEST_VERSION_ID,
-            latestVersionId);
-        values.put(XmlTemplateProvider.VAR_ITEM_LATEST_VERSION_NUMBER,
-            properties.get(PropertyMapKeys.LATEST_VERSION_NUMBER));
-        values.put(XmlTemplateProvider.VAR_ITEM_LATEST_VERSION_DATE,
-            properties.get(PropertyMapKeys.LATEST_VERSION_DATE));
+            de.escidoc.core.common.business.Constants.ITEM_URL_BASE + latestVersionId);
+        values.put(XmlTemplateProvider.VAR_ITEM_LATEST_VERSION_TITLE, "Latest Version");
+        values.put(XmlTemplateProvider.VAR_ITEM_LATEST_VERSION_ID, latestVersionId);
+        values.put(XmlTemplateProvider.VAR_ITEM_LATEST_VERSION_NUMBER, properties
+            .get(PropertyMapKeys.LATEST_VERSION_NUMBER));
+        values.put(XmlTemplateProvider.VAR_ITEM_LATEST_VERSION_DATE, properties
+            .get(PropertyMapKeys.LATEST_VERSION_DATE));
 
         // if item is released -------------------------------------------------
         if (properties.get(PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER) != null) {
 
-            values.put(XmlTemplateProvider.VAR_ITEM_LATEST_RELEASE_NUMBER,
-                properties.get(PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER));
+            values.put(XmlTemplateProvider.VAR_ITEM_LATEST_RELEASE_NUMBER, properties
+                .get(PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER));
 
             // ! changes versionIdBase
             final String latestRevisonId =
-                versionIdBase
-                    .append(
-                        properties
-                            .get(PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER))
-                    .toString();
+                versionIdBase.append(properties.get(PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER)).toString();
             values.put(XmlTemplateProvider.VAR_ITEM_LATEST_RELEASE_HREF,
-                de.escidoc.core.common.business.Constants.ITEM_URL_BASE
-                    + latestRevisonId);
-            values.put(XmlTemplateProvider.VAR_ITEM_LATEST_RELEASE_TITLE,
-                "Latest public version");
-            values.put(XmlTemplateProvider.VAR_ITEM_LATEST_RELEASE_ID,
-                latestRevisonId);
-            values.put(XmlTemplateProvider.VAR_ITEM_LATEST_RELEASE_DATE,
-                properties.get(PropertyMapKeys.LATEST_RELEASE_VERSION_DATE));
+                de.escidoc.core.common.business.Constants.ITEM_URL_BASE + latestRevisonId);
+            values.put(XmlTemplateProvider.VAR_ITEM_LATEST_RELEASE_TITLE, "Latest public version");
+            values.put(XmlTemplateProvider.VAR_ITEM_LATEST_RELEASE_ID, latestRevisonId);
+            values.put(XmlTemplateProvider.VAR_ITEM_LATEST_RELEASE_DATE, properties
+                .get(PropertyMapKeys.LATEST_RELEASE_VERSION_DATE));
 
             final String latestReleasePid = item.getLatestReleasePid();
             if (latestReleasePid != null) {
-                values.put(XmlTemplateProvider.VAR_ITEM_LATEST_RELEASE_PID,
-                    latestReleasePid);
+                values.put(XmlTemplateProvider.VAR_ITEM_LATEST_RELEASE_PID, latestReleasePid);
             }
         }
 
         final Datastream contentModelSpecific = item.getCts();
         if (contentModelSpecific != null) {
-            values.put(XmlTemplateProvider.VAR_ITEM_CONTENT_MODEL_SPECIFIC,
-                contentModelSpecific.toStringUTF8());
+            values.put(XmlTemplateProvider.VAR_ITEM_CONTENT_MODEL_SPECIFIC, contentModelSpecific.toStringUTF8());
         }
-        values
-            .put(
-                XmlTemplateProvider.VAR_NAMESPACE_PREFIX,
-                de.escidoc.core.common.business.Constants.ITEM_PROPERTIES_NAMESPACE_PREFIX);
-        values
-            .put(
-                XmlTemplateProvider.VAR_NAMESPACE,
-                de.escidoc.core.common.business.Constants.ITEM_PROPERTIES_NAMESPACE_URI);
+        values.put(XmlTemplateProvider.VAR_NAMESPACE_PREFIX,
+            de.escidoc.core.common.business.Constants.ITEM_PROPERTIES_NAMESPACE_PREFIX);
+        values.put(XmlTemplateProvider.VAR_NAMESPACE,
+            de.escidoc.core.common.business.Constants.ITEM_PROPERTIES_NAMESPACE_URI);
 
         return values;
     }
 
     /**
      * Get the content type specific properties.
-     * 
+     *
      * @return The content type specific properties.
-     * @throws EncodingSystemException
-     * @throws WebserverSystemException
      */
-    protected String getContentTypeSpecificPropertiesXml()
-        throws EncodingSystemException, WebserverSystemException {
+    protected String getContentTypeSpecificPropertiesXml() throws EncodingSystemException, WebserverSystemException {
 
         return getItem().getCts().toStringUTF8();
     }
 
-    public Set checkRelations(final String versionDate, final Map relations)
-        throws TripleStoreSystemException, WebserverSystemException,
-        FedoraSystemException, IntegritySystemException {
+    public Set checkRelations(final String versionDate, final Map relations) throws TripleStoreSystemException,
+        WebserverSystemException, FedoraSystemException, IntegritySystemException {
         final Set relationsData = relations.entrySet();
         final Iterator it = relationsData.iterator();
         while (it.hasNext()) {
@@ -1256,16 +1025,12 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
 
     /**
      * Get Common values from Item.
-     * 
-     * @param item
-     *            The item.
+     *
+     * @param item The item.
      * @return Map with common Item values.
-     * 
-     * @throws WebserverSystemException
-     *             Thrown if values extracting failed.
+     * @throws WebserverSystemException Thrown if values extracting failed.
      */
-    private Map<String, String> getCommonValues(final Item item)
-        throws WebserverSystemException {
+    private Map<String, String> getCommonValues(final Item item) throws WebserverSystemException {
 
         final Map<String, String> values = new HashMap<String, String>();
 
@@ -1279,16 +1044,13 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         values.put(XmlTemplateProvider.HREF, getItem().getHref());
 
         try {
-            values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE,
-                Iso8601Util.getIso8601(Iso8601Util.parseIso8601(item
-                    .getLastModificationDate())));
+            values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, Iso8601Util.getIso8601(Iso8601Util
+                .parseIso8601(item.getLastModificationDate())));
         }
         catch (final ParseException e) {
             try {
-                throw new WebserverSystemException(
-                    "Unable to parse last-modification-date '"
-                        + item.getLastModificationDate() + "' of item '"
-                        + item.getId() + "'!", e);
+                throw new WebserverSystemException("Unable to parse last-modification-date '"
+                    + item.getLastModificationDate() + "' of item '" + item.getId() + "'!", e);
             }
             catch (final FedoraSystemException e1) {
                 throw new WebserverSystemException(e1);
@@ -1298,122 +1060,77 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
             throw new WebserverSystemException(e);
         }
 
-        values.put("itemNamespacePrefix",
-            de.escidoc.core.common.business.Constants.ITEM_NAMESPACE_PREFIX);
-        values.put("itemNamespace",
-            de.escidoc.core.common.business.Constants.ITEM_NAMESPACE_URI);
-        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL,
-            XmlUtility.getEscidocBaseUrl());
+        values.put("itemNamespacePrefix", de.escidoc.core.common.business.Constants.ITEM_NAMESPACE_PREFIX);
+        values.put("itemNamespace", de.escidoc.core.common.business.Constants.ITEM_NAMESPACE_URI);
+        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, XmlUtility.getEscidocBaseUrl());
         values.put(XmlTemplateProvider.VAR_XLINK_NAMESPACE_PREFIX,
             de.escidoc.core.common.business.Constants.XLINK_NS_PREFIX);
-        values.put(XmlTemplateProvider.VAR_XLINK_NAMESPACE,
-            de.escidoc.core.common.business.Constants.XLINK_NS_URI);
+        values.put(XmlTemplateProvider.VAR_XLINK_NAMESPACE, de.escidoc.core.common.business.Constants.XLINK_NS_URI);
 
         values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX,
             de.escidoc.core.common.business.Constants.PROPERTIES_NS_PREFIX);
         values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS,
             de.escidoc.core.common.business.Constants.PROPERTIES_NS_URI);
-        values
-            .put(
-                XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX,
-                de.escidoc.core.common.business.Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
-        values
-            .put(
-                XmlTemplateProvider.ESCIDOC_SREL_NS,
-                de.escidoc.core.common.business.Constants.STRUCTURAL_RELATIONS_NS_URI);
-        values.put("versionNamespacePrefix",
-            de.escidoc.core.common.business.Constants.VERSION_NS_PREFIX);
-        values.put("versionNamespace",
-            de.escidoc.core.common.business.Constants.VERSION_NS_URI);
-        values.put("releaseNamespacePrefix",
-            de.escidoc.core.common.business.Constants.RELEASE_NS_PREFIX);
-        values.put("releaseNamespace",
-            de.escidoc.core.common.business.Constants.RELEASE_NS_URI);
-        values
-            .put(
-                "componentsNamespacePrefix",
-                de.escidoc.core.common.business.Constants.COMPONENTS_NAMESPACE_PREFIX);
-        values.put("componentsNamespace",
-            de.escidoc.core.common.business.Constants.COMPONENTS_NAMESPACE_URI);
+        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX,
+            de.escidoc.core.common.business.Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
+        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS,
+            de.escidoc.core.common.business.Constants.STRUCTURAL_RELATIONS_NS_URI);
+        values.put("versionNamespacePrefix", de.escidoc.core.common.business.Constants.VERSION_NS_PREFIX);
+        values.put("versionNamespace", de.escidoc.core.common.business.Constants.VERSION_NS_URI);
+        values.put("releaseNamespacePrefix", de.escidoc.core.common.business.Constants.RELEASE_NS_PREFIX);
+        values.put("releaseNamespace", de.escidoc.core.common.business.Constants.RELEASE_NS_URI);
+        values.put("componentsNamespacePrefix", de.escidoc.core.common.business.Constants.COMPONENTS_NAMESPACE_PREFIX);
+        values.put("componentsNamespace", de.escidoc.core.common.business.Constants.COMPONENTS_NAMESPACE_URI);
 
-        values
-            .put(
-                XmlTemplateProvider.MD_RECRORDS_NAMESPACE_PREFIX,
-                de.escidoc.core.common.business.Constants.METADATARECORDS_NAMESPACE_PREFIX);
-        values
-            .put(
-                XmlTemplateProvider.MD_RECORDS_NAMESPACE,
-                de.escidoc.core.common.business.Constants.METADATARECORDS_NAMESPACE_URI);
+        values.put(XmlTemplateProvider.MD_RECRORDS_NAMESPACE_PREFIX,
+            de.escidoc.core.common.business.Constants.METADATARECORDS_NAMESPACE_PREFIX);
+        values.put(XmlTemplateProvider.MD_RECORDS_NAMESPACE,
+            de.escidoc.core.common.business.Constants.METADATARECORDS_NAMESPACE_URI);
 
-        values
-            .put(
-                "contentStreamsNamespacePrefix",
-                de.escidoc.core.common.business.Constants.CONTENT_STREAMS_NAMESPACE_PREFIX);
-        values
-            .put(
-                "contentStreamsNamespace",
-                de.escidoc.core.common.business.Constants.CONTENT_STREAMS_NAMESPACE_URI);
+        values.put("contentStreamsNamespacePrefix",
+            de.escidoc.core.common.business.Constants.CONTENT_STREAMS_NAMESPACE_PREFIX);
+        values.put("contentStreamsNamespace", de.escidoc.core.common.business.Constants.CONTENT_STREAMS_NAMESPACE_URI);
 
         return values;
     }
 
-    private static Map<String, Object> getRelationValues(final Item item)
-        throws FedoraSystemException, IntegritySystemException,
-        XmlParserSystemException, WebserverSystemException,
-        TripleStoreSystemException {
+    private static Map<String, Object> getRelationValues(final Item item) throws FedoraSystemException,
+        IntegritySystemException, XmlParserSystemException, WebserverSystemException, TripleStoreSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
-        values
-            .put(
-                "contentRelationsNamespacePrefix",
-                de.escidoc.core.common.business.Constants.CONTENT_RELATIONS_NAMESPACE_PREFIX);
-        values
-            .put(
-                "contentRelationsNamespace",
-                de.escidoc.core.common.business.Constants.CONTENT_RELATIONS_NAMESPACE_URI);
-        final VelocityXmlCommonRenderer renderer =
-            new VelocityXmlCommonRenderer();
-        renderer
-            .addRelationsValues(item.getRelations(), item.getHref(), values);
+        values.put("contentRelationsNamespacePrefix",
+            de.escidoc.core.common.business.Constants.CONTENT_RELATIONS_NAMESPACE_PREFIX);
+        values.put("contentRelationsNamespace",
+            de.escidoc.core.common.business.Constants.CONTENT_RELATIONS_NAMESPACE_URI);
+        final VelocityXmlCommonRenderer renderer = new VelocityXmlCommonRenderer();
+        renderer.addRelationsValues(item.getRelations(), item.getHref(), values);
         values.put("contentRelationsTitle", "Relations of Item");
 
         return values;
     }
 
-    protected void addParentsNamespaceValues(final Map values)
-        throws WebserverSystemException {
-        values.put("parentsNamespacePrefix",
-            de.escidoc.core.common.business.Constants.PARENTS_NAMESPACE_PREFIX);
-        values.put("parentsNamespace",
-            de.escidoc.core.common.business.Constants.PARENTS_NAMESPACE_URI);
+    protected void addParentsNamespaceValues(final Map values) throws WebserverSystemException {
+        values.put("parentsNamespacePrefix", de.escidoc.core.common.business.Constants.PARENTS_NAMESPACE_PREFIX);
+        values.put("parentsNamespace", de.escidoc.core.common.business.Constants.PARENTS_NAMESPACE_URI);
 
     }
 
-    protected void addXlinkValues(final Map values)
-        throws WebserverSystemException {
+    protected void addXlinkValues(final Map values) throws WebserverSystemException {
 
-        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL,
-            XmlUtility.getEscidocBaseUrl());
+        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, XmlUtility.getEscidocBaseUrl());
         values.put(XmlTemplateProvider.VAR_XLINK_NAMESPACE_PREFIX,
             de.escidoc.core.common.business.Constants.XLINK_NS_PREFIX);
-        values.put(XmlTemplateProvider.VAR_XLINK_NAMESPACE,
-            de.escidoc.core.common.business.Constants.XLINK_NS_URI);
+        values.put(XmlTemplateProvider.VAR_XLINK_NAMESPACE, de.escidoc.core.common.business.Constants.XLINK_NS_URI);
     }
 
-    protected void addStructuralRelationsValues(final Map values)
-        throws WebserverSystemException {
-        values
-            .put(
-                XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX,
-                de.escidoc.core.common.business.Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
-        values
-            .put(
-                XmlTemplateProvider.ESCIDOC_SREL_NS,
-                de.escidoc.core.common.business.Constants.STRUCTURAL_RELATIONS_NS_URI);
+    protected void addStructuralRelationsValues(final Map values) throws WebserverSystemException {
+        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX,
+            de.escidoc.core.common.business.Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
+        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS,
+            de.escidoc.core.common.business.Constants.STRUCTURAL_RELATIONS_NS_URI);
     }
 
-    private Map<String, Object> getResourcesValues(final FedoraResource item)
-        throws WebserverSystemException {
+    private Map<String, Object> getResourcesValues(final FedoraResource item) throws WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         values.put(XmlTemplateProvider.RESOURCES_TITLE, "Resources");
@@ -1422,8 +1139,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         // add operations from Fedora service definitions
         // FIXME use item properties instead of triplestore util
         try {
-            values.put("resourceOperationNames", getTripleStoreUtility()
-                .getMethodNames(item.getId()));
+            values.put("resourceOperationNames", getTripleStoreUtility().getMethodNames(item.getId()));
         }
         catch (final TripleStoreSystemException e) {
             throw new WebserverSystemException(e);
@@ -1434,88 +1150,64 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
 
     /**
      * Get properties values of the Component.
-     * 
-     * @param component
-     *            The Component.
+     *
+     * @param component The Component.
      * @return Map with component properties values.
-     * 
-     * @throws TripleStoreSystemException
-     *             Thrown if TripleStore request failed.
-     * @throws WebserverSystemException
-     *             Thrown in case of internal failure.
+     * @throws TripleStoreSystemException Thrown if TripleStore request failed.
+     * @throws WebserverSystemException   Thrown in case of internal failure.
      */
-    private Map<String, String> getComponentPropertiesValues(
-        final Component component) throws TripleStoreSystemException,
-        WebserverSystemException {
+    private Map<String, String> getComponentPropertiesValues(final Component component)
+        throws TripleStoreSystemException, WebserverSystemException {
 
-        final Map<String, String> properties =
-            component.getResourceProperties();
+        final Map<String, String> properties = component.getResourceProperties();
         final String baseHRef = getItem().getHref() + component.getHrefPart();
         // TODO version
         final Map<String, String> values = new HashMap<String, String>();
-        values.put(XmlTemplateProvider.VAR_COMPONENT_PROPERTIES_TITLE,
-            "Properties");
-        values.put(XmlTemplateProvider.VAR_COMPONENT_PROPERTIES_HREF, baseHRef
-            + Constants.PROPERTIES_URL_PART);
+        values.put(XmlTemplateProvider.VAR_COMPONENT_PROPERTIES_TITLE, "Properties");
+        values.put(XmlTemplateProvider.VAR_COMPONENT_PROPERTIES_HREF, baseHRef + Constants.PROPERTIES_URL_PART);
 
-        if (properties.get(de.escidoc.core.common.business.Constants.DC_NS_URI
-            + Elements.ELEMENT_DESCRIPTION) != null && component
-            .getMdRecords().containsKey(
-                XmlTemplateProvider.DEFAULT_METADATA_FOR_DC_MAPPING) && !component
-                    .getMdRecord(
-                        XmlTemplateProvider.DEFAULT_METADATA_FOR_DC_MAPPING)
-                    .isDeleted()) {
-            values.put(XmlTemplateProvider.VAR_COMPONENT_DESCRIPTION,
-                properties
-                    .get(de.escidoc.core.common.business.Constants.DC_NS_URI
-                        + Elements.ELEMENT_DESCRIPTION));
+        if (properties.get(de.escidoc.core.common.business.Constants.DC_NS_URI + Elements.ELEMENT_DESCRIPTION) != null
+            && component.getMdRecords().containsKey(XmlTemplateProvider.DEFAULT_METADATA_FOR_DC_MAPPING)
+            && !component.getMdRecord(XmlTemplateProvider.DEFAULT_METADATA_FOR_DC_MAPPING).isDeleted()) {
+            values.put(XmlTemplateProvider.VAR_COMPONENT_DESCRIPTION, properties
+                .get(de.escidoc.core.common.business.Constants.DC_NS_URI + Elements.ELEMENT_DESCRIPTION));
         }
-        values.put(XmlTemplateProvider.VAR_COMPONENT_CREATION_DATE,
-            component.getCreationDate());
-        values.put(XmlTemplateProvider.VAR_COMPONENT_CREATED_BY_TITLE,
-            properties.get(TripleStoreUtility.PROP_CREATED_BY_TITLE));
+        values.put(XmlTemplateProvider.VAR_COMPONENT_CREATION_DATE, component.getCreationDate());
+        values.put(XmlTemplateProvider.VAR_COMPONENT_CREATED_BY_TITLE, properties
+            .get(TripleStoreUtility.PROP_CREATED_BY_TITLE));
         values.put(XmlTemplateProvider.VAR_COMPONENT_CREATED_BY_HREF,
             de.escidoc.core.common.business.Constants.USER_ACCOUNT_URL_BASE
                 + properties.get(TripleStoreUtility.PROP_CREATED_BY_ID));
-        values.put(XmlTemplateProvider.VAR_COMPONENT_CREATED_BY_ID,
-            properties.get(TripleStoreUtility.PROP_CREATED_BY_ID));
+        values.put(XmlTemplateProvider.VAR_COMPONENT_CREATED_BY_ID, properties
+            .get(TripleStoreUtility.PROP_CREATED_BY_ID));
 
         if (properties.get(TripleStoreUtility.PROP_VALID_STATUS) != null) {
-            values.put(XmlTemplateProvider.VAR_COMPONENT_VALID_STATUS,
-                properties.get(TripleStoreUtility.PROP_VALID_STATUS));
+            values.put(XmlTemplateProvider.VAR_COMPONENT_VALID_STATUS, properties
+                .get(TripleStoreUtility.PROP_VALID_STATUS));
         }
 
-        values.put(XmlTemplateProvider.VAR_COMPONENT_VISIBILITY,
-            properties.get(TripleStoreUtility.PROP_VISIBILITY));
+        values.put(XmlTemplateProvider.VAR_COMPONENT_VISIBILITY, properties.get(TripleStoreUtility.PROP_VISIBILITY));
 
-        values.put(XmlTemplateProvider.VAR_COMPONENT_CONTENT_CATEGORY,
-            properties.get(TripleStoreUtility.PROP_CONTENT_CATEGORY));
+        values.put(XmlTemplateProvider.VAR_COMPONENT_CONTENT_CATEGORY, properties
+            .get(TripleStoreUtility.PROP_CONTENT_CATEGORY));
 
         if (properties.get(TripleStoreUtility.PROP_MIME_TYPE) != null) {
-            values.put(XmlTemplateProvider.VAR_COMPONENT_MIME_TYPE,
-                properties.get(TripleStoreUtility.PROP_MIME_TYPE));
+            values.put(XmlTemplateProvider.VAR_COMPONENT_MIME_TYPE, properties.get(TripleStoreUtility.PROP_MIME_TYPE));
         }
 
-        if (properties.get(de.escidoc.core.common.business.Constants.DC_NS_URI
-            + Elements.ELEMENT_DC_TITLE) != null && component
-            .getMdRecords().containsKey(
-                XmlTemplateProvider.DEFAULT_METADATA_FOR_DC_MAPPING) && !component
-                    .getMdRecord(
-                        XmlTemplateProvider.DEFAULT_METADATA_FOR_DC_MAPPING)
-                    .isDeleted()) {
+        if (properties.get(de.escidoc.core.common.business.Constants.DC_NS_URI + Elements.ELEMENT_DC_TITLE) != null
+            && component.getMdRecords().containsKey(XmlTemplateProvider.DEFAULT_METADATA_FOR_DC_MAPPING)
+            && !component.getMdRecord(XmlTemplateProvider.DEFAULT_METADATA_FOR_DC_MAPPING).isDeleted()) {
             values.put(XmlTemplateProvider.VAR_COMPONENT_FILE_NAME, properties
-                .get(de.escidoc.core.common.business.Constants.DC_NS_URI
-                    + Elements.ELEMENT_DC_TITLE));
+                .get(de.escidoc.core.common.business.Constants.DC_NS_URI + Elements.ELEMENT_DC_TITLE));
         }
         if (properties.get(TripleStoreUtility.PROP_COMPONENT_PID) != null) {
-            values.put(XmlTemplateProvider.VAR_COMPONENT_PID,
-                properties.get(TripleStoreUtility.PROP_COMPONENT_PID));
+            values.put(XmlTemplateProvider.VAR_COMPONENT_PID, properties.get(TripleStoreUtility.PROP_COMPONENT_PID));
         }
 
         values.put(XmlTemplateProvider.CONTENT_CHECKSUM_ALGORITHM, properties
             .get(Elements.ELEMENT_COMPONENT_CONTENT_CHECKSUM_ALGORITHM));
-        values.put(XmlTemplateProvider.CONTENT_CHECKSUM,
-            properties.get(Elements.ELEMENT_COMPONENT_CONTENT_CHECKSUM));
+        values.put(XmlTemplateProvider.CONTENT_CHECKSUM, properties.get(Elements.ELEMENT_COMPONENT_CONTENT_CHECKSUM));
 
         return values;
     }

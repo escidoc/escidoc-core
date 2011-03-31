@@ -57,9 +57,8 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * A simple ConfigurationProvider that uses the Admin class to read + write XML
- * files.
- * 
+ * A simple ConfigurationProvider that uses the Admin class to read + write XML files.
+ *
  * @author Michael Hoppe
  */
 public class FileProvider implements WSDDEngineConfiguration {
@@ -81,25 +80,20 @@ public class FileProvider implements WSDDEngineConfiguration {
     private static String defaultJNDIUrl;
 
     /**
-     * Constructor which accesses a file in the current directory of the engine
-     * or at an absolute path.
-     * 
-     * @param filename
-     *            name of the config-file
+     * Constructor which accesses a file in the current directory of the engine or at an absolute path.
+     *
+     * @param filename name of the config-file
      */
     public FileProvider(final String filename) {
         this.configFile = new File(filename);
         if (defaultJNDIUrl == null) {
             try {
                 defaultJNDIUrl =
-                    EscidocConfiguration.getInstance().get(
-                        EscidocConfiguration.ESCIDOC_CORE_DEFAULT_JNDI_URL);
+                    EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_DEFAULT_JNDI_URL);
             }
             catch (final IOException e) {
-                throw new RuntimeException(
-                    "Default jndi url not found in properties! No value for key '"
-                        + EscidocConfiguration.ESCIDOC_CORE_DEFAULT_JNDI_URL
-                        + "'.", e);
+                throw new RuntimeException("Default jndi url not found in properties! No value for key '"
+                    + EscidocConfiguration.ESCIDOC_CORE_DEFAULT_JNDI_URL + "'.", e);
             }
         }
         check();
@@ -107,16 +101,12 @@ public class FileProvider implements WSDDEngineConfiguration {
 
     /**
      * Constructor which accesses a file relative to a specific base path.
-     * 
-     * @param basepath
-     *            base-path of the file
-     * @param filename
-     *            name of the config-file
-     * @throws ConfigurationException
-     *             e
+     *
+     * @param basepath base-path of the file
+     * @param filename name of the config-file
+     * @throws ConfigurationException e
      */
-    public FileProvider(final String basepath, final String filename)
-        throws ConfigurationException {
+    public FileProvider(final String basepath, final String filename) throws ConfigurationException {
 
         final File dir = new File(basepath);
 
@@ -125,8 +115,7 @@ public class FileProvider implements WSDDEngineConfiguration {
          * exception to make it easier to debug setup problems.
          */
         if (!dir.exists() || !dir.isDirectory() || !dir.canRead()) {
-            throw new ConfigurationException(Messages.getMessage(
-                "invalidConfigFilePath", basepath));
+            throw new ConfigurationException(Messages.getMessage("invalidConfigFilePath", basepath));
         }
 
         this.configFile = new File(basepath, filename);
@@ -134,18 +123,17 @@ public class FileProvider implements WSDDEngineConfiguration {
     }
 
     /**
-     * Check the configuration file attributes and remember whether or not the
-     * file is read-only.
+     * Check the configuration file attributes and remember whether or not the file is read-only.
      */
     private void check() {
         try {
             this.readOnly = !configFile.canWrite();
         }
         catch (final SecurityException se) {
-            if(LOGGER.isWarnEnabled()) {
+            if (LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on checking the configuration file.");
             }
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on checking the configuration file.", se);
             }
             this.readOnly = true;
@@ -161,11 +149,9 @@ public class FileProvider implements WSDDEngineConfiguration {
     }
 
     /**
-     * Constructor which takes an input stream directly. Note: The configuration
-     * will be read-only in this case!
-     * 
-     * @param is
-     *            the input stream
+     * Constructor which takes an input stream directly. Note: The configuration will be read-only in this case!
+     *
+     * @param is the input stream
      */
     public FileProvider(final InputStream is) {
         setInputStream(is);
@@ -173,9 +159,8 @@ public class FileProvider implements WSDDEngineConfiguration {
 
     /**
      * sets the InputStream.
-     * 
-     * @param is
-     *            the input stream
+     *
+     * @param is the input stream
      */
     public final void setInputStream(final InputStream is) {
 
@@ -187,7 +172,7 @@ public class FileProvider implements WSDDEngineConfiguration {
 
     /**
      * returns the InputStream.
-     * 
+     *
      * @return InputStream input stream
      */
     private InputStream getInputStream() {
@@ -196,7 +181,7 @@ public class FileProvider implements WSDDEngineConfiguration {
 
     /**
      * returns the deployment.
-     * 
+     *
      * @return WSDDDeployment the deployment
      */
     @Override
@@ -206,20 +191,18 @@ public class FileProvider implements WSDDEngineConfiguration {
 
     /**
      * sets the deployment.
-     * 
-     * @param deployment
-     *            the deployment
+     *
+     * @param deployment the deployment
      */
     public void setDeployment(final WSDDDeployment deployment) {
         this.deployment = deployment;
     }
 
     /**
-     * Determine whether or not we will look for a "*-config.wsdd" file on the
-     * classpath if we don't find it in the specified location.
-     * 
-     * @param searchClasspath
-     *            true if we should search the classpath
+     * Determine whether or not we will look for a "*-config.wsdd" file on the classpath if we don't find it in the
+     * specified location.
+     *
+     * @param searchClasspath true if we should search the classpath
      */
     public void setSearchClasspath(final boolean searchClasspath) {
         this.searchClasspath = searchClasspath;
@@ -227,9 +210,8 @@ public class FileProvider implements WSDDEngineConfiguration {
 
     /**
      * Replace parts matching ${...} with parameter from EscidocConfiguration.
-     * 
-     * @param in
-     *            InputStream
+     *
+     * @param in InputStream
      * @return InputStream replaced InputStream
      */
     private InputStream replaceVariables(final InputStream in) {
@@ -238,7 +220,8 @@ public class FileProvider implements WSDDEngineConfiguration {
             String xmlString = IOUtils.readStringFromStream(in);
             xmlString = insertSystemProperties(xmlString);
             returnValue = new ByteArrayInputStream(xmlString.getBytes(Charset.forName(XmlUtility.CHARACTER_ENCODING)));
-        } catch (final IOException e) {
+        }
+        catch (final IOException e) {
             LOGGER.error("Error on inserting system properties.", e);
         }
         finally {
@@ -249,9 +232,8 @@ public class FileProvider implements WSDDEngineConfiguration {
 
     /**
      * Replace parts matching ${...} with parameter from EscidocConfiguration.
-     * 
-     * @param propertyValue
-     *            propertyValue
+     *
+     * @param propertyValue propertyValue
      * @return String replaced String
      */
     private String insertSystemProperties(final String propertyValue) {
@@ -269,11 +251,9 @@ public class FileProvider implements WSDDEngineConfiguration {
     }
 
     /**
-     * Replace one part matching ${...} with parameter from
-     * EscidocConfiguration.
-     * 
-     * @param propertyValue
-     *            propertyValue
+     * Replace one part matching ${...} with parameter from EscidocConfiguration.
+     *
+     * @param propertyValue propertyValue
      * @return String replaced String
      */
     private static String insertSystemProperty(final String propertyValue) {
@@ -285,22 +265,20 @@ public class FileProvider implements WSDDEngineConfiguration {
                 final String confProperty = result.substring(i + 2, j);
                 String confPropertyValue = null;
                 try {
-                    confPropertyValue =
-                        EscidocConfiguration.getInstance().get(confProperty);
-                } catch (final IOException e) {
-                    if(LOGGER.isWarnEnabled()) {
+                    confPropertyValue = EscidocConfiguration.getInstance().get(confProperty);
+                }
+                catch (final IOException e) {
+                    if (LOGGER.isWarnEnabled()) {
                         LOGGER.warn("Error on getting configuration property.");
                     }
-                    if(LOGGER.isDebugEnabled()) {
+                    if (LOGGER.isDebugEnabled()) {
                         LOGGER.debug("Error on getting configuration property.", e);
                     }
                 }
                 if (confPropertyValue == null) {
                     confPropertyValue = defaultJNDIUrl;
                 }
-                result =
-                    result.substring(0, i) + confPropertyValue
-                        + result.substring(j + 1);
+                result = result.substring(0, i) + confPropertyValue + result.substring(j + 1);
             }
         }
         return result;
@@ -308,40 +286,35 @@ public class FileProvider implements WSDDEngineConfiguration {
 
     /**
      * Configures engine with values from configFile.
-     * 
-     * @param engine
-     *            axisEngine
-     * @throws ConfigurationException
-     *             e
+     *
+     * @param engine axisEngine
+     * @throws ConfigurationException e
      */
     @Override
-    public void configureEngine(final AxisEngine engine)
-        throws ConfigurationException {
+    public void configureEngine(final AxisEngine engine) throws ConfigurationException {
         try {
             if (getInputStream() == null) {
                 try {
                     setInputStream(new FileInputStream(this.configFile));
-                } catch (final Exception e) {
-                    if(LOGGER.isWarnEnabled()) {
+                }
+                catch (final Exception e) {
+                    if (LOGGER.isWarnEnabled()) {
                         LOGGER.warn("Error on creating input stream.");
                     }
-                    if(LOGGER.isDebugEnabled()) {
+                    if (LOGGER.isDebugEnabled()) {
                         LOGGER.debug("Error on creating input stream.", e);
                     }
                     if (this.searchClasspath) {
-                        setInputStream(ClassUtils.getResourceAsStream(engine
-                            .getClass(), configFile.getName(), true));
+                        setInputStream(ClassUtils.getResourceAsStream(engine.getClass(), configFile.getName(), true));
                     }
                 }
             }
 
             if (getInputStream() == null) {
-                throw new ConfigurationException(Messages
-                    .getMessage("noConfigFile"));
+                throw new ConfigurationException(Messages.getMessage("noConfigFile"));
             }
 
-            final WSDDDocument doc =
-                new WSDDDocument(XMLUtils.newDocument(getInputStream()));
+            final WSDDDocument doc = new WSDDDocument(XMLUtils.newDocument(getInputStream()));
             this.deployment = doc.getDeployment();
 
             deployment.configureEngine(engine);
@@ -355,30 +328,28 @@ public class FileProvider implements WSDDEngineConfiguration {
     }
 
     /**
-     * Save the engine configuration. In case there's a problem, we write it to
-     * a string before saving it out to the actual file so we don't screw up the
-     * file.
-     * 
-     * @param engine
-     *            axisEngine
-     * @throws ConfigurationException
-     *             e
+     * Save the engine configuration. In case there's a problem, we write it to a string before saving it out to the
+     * actual file so we don't screw up the file.
+     *
+     * @param engine axisEngine
+     * @throws ConfigurationException e
      */
     @Override
-    public void writeEngineConfig(final AxisEngine engine)
-        throws ConfigurationException {
-        if (! this.readOnly) {
+    public void writeEngineConfig(final AxisEngine engine) throws ConfigurationException {
+        if (!this.readOnly) {
             PrintWriter writer = null;
             try {
                 final Document doc = Admin.listConfig(engine);
-                final Writer osWriter = new OutputStreamWriter(
-                        new FileOutputStream(this.configFile), XMLUtils.getEncoding());
+                final Writer osWriter =
+                    new OutputStreamWriter(new FileOutputStream(this.configFile), XMLUtils.getEncoding());
                 writer = new PrintWriter(new BufferedWriter(osWriter));
                 XMLUtils.DocumentToWriter(doc, writer);
                 writer.println();
-            } catch (final Exception e) {
+            }
+            catch (final Exception e) {
                 throw new ConfigurationException(e);
-            } finally {
+            }
+            finally {
                 IOUtils.closeWriter(writer);
             }
         }
@@ -386,12 +357,10 @@ public class FileProvider implements WSDDEngineConfiguration {
 
     /**
      * retrieve an instance of the named handler.
-     * 
-     * @param qname
-     *            qname
+     *
+     * @param qname qname
      * @return Handler
-     * @throws ConfigurationException
-     *             e
+     * @throws ConfigurationException e
      */
     @Override
     public Handler getHandler(final QName qname) throws ConfigurationException {
@@ -400,73 +369,60 @@ public class FileProvider implements WSDDEngineConfiguration {
 
     /**
      * retrieve an instance of the named service.
-     * 
-     * @param qname
-     *            qname
+     *
+     * @param qname qname
      * @return SOAPService
-     * @throws ConfigurationException
-     *             e
+     * @throws ConfigurationException e
      */
     @Override
-    public SOAPService getService(final QName qname)
-        throws ConfigurationException {
+    public SOAPService getService(final QName qname) throws ConfigurationException {
         final SOAPService service = deployment.getService(qname);
         if (service == null) {
-            throw new ConfigurationException(Messages.getMessage("noService10",
-                qname.toString()));
+            throw new ConfigurationException(Messages.getMessage("noService10", qname.toString()));
         }
         return service;
     }
 
     /**
      * Get a service which has been mapped to a particular namespace.
-     * 
-     * @param namespace
-     *            a namespace URI
+     *
+     * @param namespace a namespace URI
      * @return an instance of the appropriate Service, or null
-     * @throws ConfigurationException
-     *             e
+     * @throws ConfigurationException e
      */
     @Override
-    public SOAPService getServiceByNamespaceURI(final String namespace)
-        throws ConfigurationException {
+    public SOAPService getServiceByNamespaceURI(final String namespace) throws ConfigurationException {
         return deployment.getServiceByNamespaceURI(namespace);
     }
 
     /**
      * retrieve an instance of the named transport.
-     * 
-     * @param qname
-     *            qname
+     *
+     * @param qname qname
      * @return Handler
-     * @throws ConfigurationException
-     *             e
+     * @throws ConfigurationException e
      */
     @Override
-    public Handler getTransport(final QName qname)
-        throws ConfigurationException {
+    public Handler getTransport(final QName qname) throws ConfigurationException {
         return deployment.getTransport(qname);
     }
 
     /**
      * Returns a TypeMappingRegistry.
-     * 
+     *
      * @return TypeMappingRegistry
-     * @throws ConfigurationException
-     *             e
+     * @throws ConfigurationException e
      */
     @Override
-    public TypeMappingRegistry getTypeMappingRegistry()
-        throws ConfigurationException {
+    public TypeMappingRegistry getTypeMappingRegistry() throws ConfigurationException {
         return deployment.getTypeMappingRegistry();
     }
 
     /**
      * Returns a global request handler.
-     * 
+     *
      * @return Handler
-     * @throws ConfigurationException
-     *             e
+     * @throws ConfigurationException e
      */
     @Override
     public Handler getGlobalRequest() throws ConfigurationException {
@@ -475,10 +431,9 @@ public class FileProvider implements WSDDEngineConfiguration {
 
     /**
      * Returns a global response handler.
-     * 
+     *
      * @return Handler
-     * @throws ConfigurationException
-     *             e
+     * @throws ConfigurationException e
      */
     @Override
     public Handler getGlobalResponse() throws ConfigurationException {
@@ -487,17 +442,15 @@ public class FileProvider implements WSDDEngineConfiguration {
 
     /**
      * Returns the global configuration options.
-     * 
+     *
      * @return Hashtable
-     * @throws ConfigurationException
-     *             e
+     * @throws ConfigurationException e
      */
     // Needs to be a HashTable
     // Interface org.apache.axis.EngineConfiguration
     @Override
     public Hashtable getGlobalOptions() throws ConfigurationException {
-        final WSDDGlobalConfiguration globalConfig =
-            deployment.getGlobalConfiguration();
+        final WSDDGlobalConfiguration globalConfig = deployment.getGlobalConfiguration();
 
         if (globalConfig != null) {
             return globalConfig.getParametersTable();
@@ -508,10 +461,9 @@ public class FileProvider implements WSDDEngineConfiguration {
 
     /**
      * Get an enumeration of the services deployed to this engine.
-     * 
+     *
      * @return Iterator
-     * @throws ConfigurationException
-     *             e
+     * @throws ConfigurationException e
      */
     @Override
     public Iterator getDeployedServices() throws ConfigurationException {
@@ -519,9 +471,9 @@ public class FileProvider implements WSDDEngineConfiguration {
     }
 
     /**
-     * Get a list of roles that this engine plays globally. Services within the
-     * engine configuration may also add additional roles.
-     * 
+     * Get a list of roles that this engine plays globally. Services within the engine configuration may also add
+     * additional roles.
+     *
      * @return a <code>List</code> of the roles for this engine
      */
     @Override

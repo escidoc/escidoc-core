@@ -42,22 +42,17 @@ public final class RoleXmlProvider extends InfrastructureXmlProvider {
 
     /**
      * Private constructor to prevent initialization.
-     * 
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
      *
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private RoleXmlProvider(){
+    private RoleXmlProvider() {
     }
 
     /**
      * Gets the role xml PROVIDER.
-     * 
-     * @return Returns the <code>RoleXmlProvider</code> object.
-     * @throws WebserverSystemException
-     *             Thrown if the instance cannot be created due to an internal
-     *             error.
      *
+     * @return Returns the <code>RoleXmlProvider</code> object.
+     * @throws WebserverSystemException Thrown if the instance cannot be created due to an internal error.
      */
     public static RoleXmlProvider getInstance() {
         return PROVIDER;
@@ -68,8 +63,7 @@ public final class RoleXmlProvider extends InfrastructureXmlProvider {
         return getXml(ROLE_RESOURCE_NAME, RESOURCES_PATH, values);
     }
 
-    public String getResourcesXml(final Map values)
-        throws WebserverSystemException {
+    public String getResourcesXml(final Map values) throws WebserverSystemException {
 
         return getXml(RESOURCES_RESOURCE_NAME, RESOURCES_PATH, values);
     }
@@ -79,8 +73,7 @@ public final class RoleXmlProvider extends InfrastructureXmlProvider {
         return getXml(ROLES_RESOURCE_NAME, RESOURCES_PATH, values);
     }
 
-    public String getRolesSrwXml(final Map values)
-        throws WebserverSystemException {
+    public String getRolesSrwXml(final Map values) throws WebserverSystemException {
 
         return getXml(ROLES_SRW_RESOURCE_NAME, RESOURCES_PATH, values);
     }

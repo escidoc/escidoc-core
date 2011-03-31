@@ -49,15 +49,13 @@ public class WovContentRelationsRetrieveHandler extends DefaultHandler {
     private String status = "inactive";
 
     public WovContentRelationsRetrieveHandler(final StaxParser parser, final String sourceVersionTimeStamp)
-            throws WebserverSystemException {
+        throws WebserverSystemException {
         this.parser = parser;
         try {
             this.sourceVersionTimeStamp =
-                DatatypeFactory.newInstance().newXMLGregorianCalendar(
-                    sourceVersionTimeStamp).toGregorianCalendar();
+                DatatypeFactory.newInstance().newXMLGregorianCalendar(sourceVersionTimeStamp).toGregorianCalendar();
             this.latestStatusTimestamp =
-                DatatypeFactory.newInstance().newXMLGregorianCalendar(
-                    "1970-01-01T00:00:00.000Z").toGregorianCalendar();
+                DatatypeFactory.newInstance().newXMLGregorianCalendar("1970-01-01T00:00:00.000Z").toGregorianCalendar();
         }
         catch (final DatatypeConfigurationException e) {
             throw new WebserverSystemException(e);
@@ -69,8 +67,7 @@ public class WovContentRelationsRetrieveHandler extends DefaultHandler {
     }
 
     @Override
-    public StartElement startElement(final StartElement element)
-        throws IntegritySystemException {
+    public StartElement startElement(final StartElement element) throws IntegritySystemException {
         final String elementPath = "/version-history/version";
         final String currentPath = parser.getCurPath();
 
@@ -96,17 +93,16 @@ public class WovContentRelationsRetrieveHandler extends DefaultHandler {
     }
 
     @Override
-    public String characters(final String s, final StartElement element)
-        throws IntegritySystemException, XmlParserSystemException {
+    public String characters(final String s, final StartElement element) throws IntegritySystemException,
+        XmlParserSystemException {
         if (this.inside) {
             final String theName = element.getLocalName();
             try {
                 if (theName.equals(Elements.ELEMENT_WOV_VERSION_STATUS)) {
-                    final String elementTimestampString =
-                        element.getAttribute(null, "timestamp").getValue();
+                    final String elementTimestampString = element.getAttribute(null, "timestamp").getValue();
                     final GregorianCalendar elementTimestamp =
-                        DatatypeFactory.newInstance().newXMLGregorianCalendar(
-                            elementTimestampString).toGregorianCalendar();
+                        DatatypeFactory
+                            .newInstance().newXMLGregorianCalendar(elementTimestampString).toGregorianCalendar();
                     if (sourceVersionTimeStamp.after(elementTimestamp)
                         && elementTimestamp.after(this.latestStatusTimestamp)) {
                         this.latestStatusTimestamp = elementTimestamp;

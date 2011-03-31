@@ -30,31 +30,24 @@
 package de.escidoc.core.test.sb;
 
 /**
- * Is called from sylesheet that transforms foxml to indexable document.
- * Performs different string-operations. to call this class from stylesheet:
- * declaration in sylesheet-element: xmlns:component-accessor=
- * "xalan://de.escidoc.sb.gsearch.xslt.ComponentAccessor"
- * xmlns:string-helper="xalan://de.escidoc.sb.gsearch.xslt.StringHelper"
- * extension-element-prefixes="component-accessor string-helper" use:
- * <xsl:value-of select="string-helper:getSubstringAfterLast($PID,'/')"/>
- * 
+ * Is called from sylesheet that transforms foxml to indexable document. Performs different string-operations. to call
+ * this class from stylesheet: declaration in sylesheet-element: xmlns:component-accessor=
+ * "xalan://de.escidoc.sb.gsearch.xslt.ComponentAccessor" xmlns:string-helper="xalan://de.escidoc.sb.gsearch.xslt.StringHelper"
+ * extension-element-prefixes="component-accessor string-helper" use: <xsl:value-of
+ * select="string-helper:getSubstringAfterLast($PID,'/')"/>
+ *
  * @author Michael Hoppe
- * @sb
  */
 public class StringHelper {
 
     /**
      * Returns the substring after the last occurence of character.
-     * 
-     * @param term
-     *            term
-     * @param character
-     *            character
+     *
+     * @param term      term
+     * @param character character
      * @return String substring of term after last occurence of character.
-     * @sb
      */
-    public String getSubstringAfterLast(
-        final String term, final String character) {
+    public String getSubstringAfterLast(final String term, final String character) {
         if (term == null || term.lastIndexOf(character) == -1) {
             return term;
         }
@@ -64,8 +57,7 @@ public class StringHelper {
     /**
      * @sb
      */
-    public String getSplitPart(
-        final String term, final String character, final int partNo) {
+    public String getSplitPart(final String term, final String character, final int partNo) {
         if (term == null || term.lastIndexOf(character) == -1) {
             return term;
         }

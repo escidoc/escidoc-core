@@ -36,132 +36,84 @@ import java.util.Date;
 
 /**
  * Database-Backend Interface for the PreprocessingLogs database-table.
- * 
+ *
  * @author Michael Hoppe
  */
 public interface SmPreprocessingLogsDaoInterface {
 
     /**
      * saves given PreprocessingLog-Data to the database.
-     * 
-     * @param preprocessingLog
-     *            preprocessingLog-Hibernate Object.
-     * @return Integer primary key of created Object
-     * 
      *
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database access error.
+     * @param preprocessingLog preprocessingLog-Hibernate Object.
+     * @return Integer primary key of created Object
+     * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
-    String savePreprocessingLog(
-            final PreprocessingLog preprocessingLog) 
-                        throws SqlDatabaseSystemException;
+    String savePreprocessingLog(final PreprocessingLog preprocessingLog) throws SqlDatabaseSystemException;
 
     /**
      * retrieves all PreprocessingLogs from the database with given aggregationDefinitionId.
-     * 
-     * @param aggregationDefinitionId
-     *            aggregationDefinitionId
-     * @return Collection of PreprocessingLogs as Hibernate-Objects
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database access error.
-     * 
      *
+     * @param aggregationDefinitionId aggregationDefinitionId
+     * @return Collection of PreprocessingLogs as Hibernate-Objects
+     * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
-    Collection<PreprocessingLog> 
-        retrievePreprocessingLogs(final String aggregationDefinitionId)
+    Collection<PreprocessingLog> retrievePreprocessingLogs(final String aggregationDefinitionId)
         throws SqlDatabaseSystemException;
 
     /**
      * retrieves all PreprocessingLogs from the database with given processingDate.
-     * 
-     * @param processingDate
-     *            processingDate
-     * @return Collection of PreprocessingLogs as Hibernate-Objects
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database access error.
-     * 
      *
+     * @param processingDate processingDate
+     * @return Collection of PreprocessingLogs as Hibernate-Objects
+     * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
+     */
+    Collection<PreprocessingLog> retrievePreprocessingLogs(final Date processingDate) throws SqlDatabaseSystemException;
+
+    /**
+     * retrieves all PreprocessingLogs from the database with given aggregationDefinitionId and processingDate.
+     *
+     * @param aggregationDefinitionId aggregationDefinitionId
+     * @param processingDate          processingDate
+     * @return Collection of PreprocessingLogs as Hibernate-Objects
+     * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
     Collection<PreprocessingLog> retrievePreprocessingLogs(
-                                    final Date processingDate)
+        final String aggregationDefinitionId, final Date processingDate) throws SqlDatabaseSystemException;
+
+    /**
+     * retrieves all PreprocessingLogs from the database with given aggregationDefinitionId and error or not.
+     *
+     * @param aggregationDefinitionId aggregationDefinitionId
+     * @param hasError                hasError
+     * @return Collection of PreprocessingLogs as Hibernate-Objects
+     * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
+     */
+    Collection<PreprocessingLog> retrievePreprocessingLogs(final String aggregationDefinitionId, final boolean hasError)
         throws SqlDatabaseSystemException;
 
     /**
-     * retrieves all PreprocessingLogs from the database 
-     * with given aggregationDefinitionId and processingDate.
-     * 
-     * @param aggregationDefinitionId
-     *            aggregationDefinitionId
-     * @param processingDate
-     *            processingDate
-     * @return Collection of PreprocessingLogs as Hibernate-Objects
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database access error.
-     * 
+     * retrieves all PreprocessingLogs from the database with given processingDate and error or not.
      *
+     * @param processingDate processingDate
+     * @param hasError       hasError
+     * @return Collection of PreprocessingLogs as Hibernate-Objects
+     * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
-    Collection<PreprocessingLog> 
-        retrievePreprocessingLogs(final String aggregationDefinitionId, 
-                final Date processingDate)
+    Collection<PreprocessingLog> retrievePreprocessingLogs(final Date processingDate, final boolean hasError)
         throws SqlDatabaseSystemException;
 
     /**
-     * retrieves all PreprocessingLogs from the database with given aggregationDefinitionId
-     * and error or not.
-     * 
-     * @param aggregationDefinitionId
-     *            aggregationDefinitionId
-     * @param hasError
-     *            hasError
-     * @return Collection of PreprocessingLogs as Hibernate-Objects
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database access error.
-     * 
+     * retrieves all PreprocessingLogs from the database with given processingDate and aggregationDefinitionId and error
+     * or not.
      *
-     */
-    Collection<PreprocessingLog> 
-        retrievePreprocessingLogs(final String aggregationDefinitionId, 
-                final boolean hasError)
-        throws SqlDatabaseSystemException;
-
-    /**
-     * retrieves all PreprocessingLogs from the database with given processingDate
-     * and error or not.
-     * 
-     * @param processingDate
-     *            processingDate
-     * @param hasError
-     *            hasError
+     * @param aggregationDefinitionId aggregationDefinitionId
+     * @param processingDate          processingDate
+     * @param hasError                hasError
      * @return Collection of PreprocessingLogs as Hibernate-Objects
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database access error.
-     * 
-     *
+     * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
-    Collection<PreprocessingLog> 
-        retrievePreprocessingLogs(
-                final Date processingDate, final boolean hasError)
-        throws SqlDatabaseSystemException;
-
-    /**
-     * retrieves all PreprocessingLogs from the database with given processingDate
-     * and aggregationDefinitionId and error or not.
-     * 
-     * @param aggregationDefinitionId
-     *            aggregationDefinitionId
-     * @param processingDate
-     *            processingDate
-     * @param hasError
-     *            hasError
-     * @return Collection of PreprocessingLogs as Hibernate-Objects
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database access error.
-     * 
-     *
-     */
-    Collection<PreprocessingLog> 
-        retrievePreprocessingLogs(final String aggregationDefinitionId,
-                final Date processingDate, final boolean hasError)
+    Collection<PreprocessingLog> retrievePreprocessingLogs(
+        final String aggregationDefinitionId, final Date processingDate, final boolean hasError)
         throws SqlDatabaseSystemException;
 
 }

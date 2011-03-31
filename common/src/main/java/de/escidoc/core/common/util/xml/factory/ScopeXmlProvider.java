@@ -26,104 +26,73 @@ import java.util.Map;
 
 /**
  * Scope renderer implementation using the velocity template engine.
- * 
- * @author Michael Hoppe
  *
+ * @author Michael Hoppe
  */
-public final class ScopeXmlProvider 
-                    extends InfrastructureXmlProvider {
+public final class ScopeXmlProvider extends InfrastructureXmlProvider {
 
-    private static final String SCOPE_RESOURCE_NAME = 
-        "scope";
+    private static final String SCOPE_RESOURCE_NAME = "scope";
 
-    private static final String SCOPES_RESOURCE_NAME =
-        "scope-list";
+    private static final String SCOPES_RESOURCE_NAME = "scope-list";
 
-    private static final String SCOPES_SRW_RESOURCE_NAME =
-        "scope-srw-list";
+    private static final String SCOPES_SRW_RESOURCE_NAME = "scope-srw-list";
 
-    private static final String SCOPE_PATH = 
-        "/scope";
+    private static final String SCOPE_PATH = "/scope";
 
     private static final ScopeXmlProvider PROVIDER = new ScopeXmlProvider();
 
     /**
      * Private constructor to prevent initialization.
-     * 
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
      *
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     private ScopeXmlProvider() {
     }
 
     /**
      * Gets the Scope xml PROVIDER.
-     * 
-     * @return Returns the <code>ScopeXmlProvider</code> object.
-     * @throws WebserverSystemException
-     *             Thrown if the instance cannot be created due to an internal
-     *             error.
      *
+     * @return Returns the <code>ScopeXmlProvider</code> object.
+     * @throws WebserverSystemException Thrown if the instance cannot be created due to an internal error.
      */
-    public static ScopeXmlProvider getInstance()
-        throws WebserverSystemException {
+    public static ScopeXmlProvider getInstance() throws WebserverSystemException {
         return PROVIDER;
     }
 
     /**
      * Gets the Scope xml.
-     * 
+     *
      * @param values rendering values
      * @return String rendered xml
-     * @throws WebserverSystemException
-     *             Thrown if the instance cannot be created due to an internal
-     *             error.
-     *
+     * @throws WebserverSystemException Thrown if the instance cannot be created due to an internal error.
      */
-    public String getScopeXml(
-            final Map values)
-        throws WebserverSystemException {
+    public String getScopeXml(final Map values) throws WebserverSystemException {
 
-        return getXml(
-                SCOPE_RESOURCE_NAME, 
-                SCOPE_PATH, values);
+        return getXml(SCOPE_RESOURCE_NAME, SCOPE_PATH, values);
     }
 
     /**
      * Gets the Scopes xml.
-     * 
+     *
      * @param values rendering values
      * @return String rendered xml
-     * @throws WebserverSystemException
-     *             Thrown if the instance cannot be created due to an internal
-     *             error.
-     *
+     * @throws WebserverSystemException Thrown if the instance cannot be created due to an internal error.
      */
-    public String getScopesXml(final Map values)
-        throws WebserverSystemException {
+    public String getScopesXml(final Map values) throws WebserverSystemException {
 
-        return getXml(
-                SCOPES_RESOURCE_NAME, 
-                SCOPE_PATH, values);
+        return getXml(SCOPES_RESOURCE_NAME, SCOPE_PATH, values);
     }
 
     /**
      * Gets the Scopes xml in srw-schema.
-     * 
+     *
      * @param values rendering values
      * @return String rendered xml
-     * @throws WebserverSystemException
-     *             Thrown if the instance cannot be created due to an internal
-     *             error.
-     *
+     * @throws WebserverSystemException Thrown if the instance cannot be created due to an internal error.
      */
-    public String getScopesSrwXml(final Map values)
-            throws WebserverSystemException {
+    public String getScopesSrwXml(final Map values) throws WebserverSystemException {
 
-        return getXml(
-                SCOPES_SRW_RESOURCE_NAME,
-                SCOPE_PATH, values);
+        return getXml(SCOPES_SRW_RESOURCE_NAME, SCOPE_PATH, values);
     }
-    
+
 }

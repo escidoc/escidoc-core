@@ -22,9 +22,8 @@ package de.escidoc.core.common.util.security.persistence;
 
 /**
  * Class holding information of a method mapping.
- * 
+ *
  * @author Torsten Tetteroo
- * 
  */
 public class MethodMapping extends MethodMappingBase {
 
@@ -34,12 +33,9 @@ public class MethodMapping extends MethodMappingBase {
      * @return a string representation of this object
      */
     public String toString() {
-        return
-            "[id=" + getId() + ',' + "class=" + getClassName() + ',' + "method="
-            + getMethodName() + ',' + "action=" + getActionName() + ','
-            + "isExecBefore=" + isExecBefore() + ',' + "isSingleResource="
-            + isSingleResource() + ',' + "resourceNotFoundException="
-            + getResourceNotFoundException() + ',' + "invocationMappings="
+        return "[id=" + getId() + ',' + "class=" + getClassName() + ',' + "method=" + getMethodName() + ',' + "action="
+            + getActionName() + ',' + "isExecBefore=" + isExecBefore() + ',' + "isSingleResource=" + isSingleResource()
+            + ',' + "resourceNotFoundException=" + getResourceNotFoundException() + ',' + "invocationMappings="
             + getInvocationMappings() + ']';
     }
 }

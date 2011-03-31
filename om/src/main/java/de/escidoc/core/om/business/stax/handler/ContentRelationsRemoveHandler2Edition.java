@@ -66,17 +66,17 @@ public class ContentRelationsRemoveHandler2Edition extends DefaultHandler {
 
     /**
      * Attention!
+     *
      * @param data is implemented with side affects!
      */
     @Override
-    public String characters(String data, final StartElement element)
-        throws MissingElementValueException {
+    public String characters(String data, final StartElement element) throws MissingElementValueException {
 
         if (this.inRelation) {
             if ("targetId".equals(element.getLocalName())) {
                 if (data == null || data.length() == 0) {
                     throw new MissingElementValueException("The value of the element " + element.getLocalName()
-                            + " is missing.");
+                        + " is missing.");
                 }
                 data = XmlUtility.getObjidWithoutVersion(data);
                 this.targetId = data;
@@ -84,7 +84,7 @@ public class ContentRelationsRemoveHandler2Edition extends DefaultHandler {
             else if ("predicate".equals(element.getLocalName())) {
                 if (data == null || data.length() == 0) {
                     throw new MissingElementValueException("The value of the element " + element.getLocalName()
-                            + " is missing.");
+                        + " is missing.");
                 }
                 this.predicate = data;
             }
@@ -105,11 +105,9 @@ public class ContentRelationsRemoveHandler2Edition extends DefaultHandler {
     }
 
     @Override
-    public EndElement endElement(final EndElement element)
-        throws ContentRelationNotFoundException, TripleStoreSystemException,
-        WebserverSystemException {
-        if (this.inRelation
-            && "relation".equals(element.getLocalName())) {
+    public EndElement endElement(final EndElement element) throws ContentRelationNotFoundException,
+        TripleStoreSystemException, WebserverSystemException {
+        if (this.inRelation && "relation".equals(element.getLocalName())) {
             final String[] splittedPredicate = splitPredicate(this.predicate);
             final String predicateNs = splittedPredicate[0];
             final String predicateValue = splittedPredicate[1];
@@ -118,13 +116,11 @@ public class ContentRelationsRemoveHandler2Edition extends DefaultHandler {
 
             if (existRelationTarget == null) {
                 throw new ContentRelationNotFoundException("A relation with predicate " + this.predicate
-                        + " between resources with ids " + this.sourceId
-                        + " and " + this.targetId + " does not exist.");
+                    + " between resources with ids " + this.sourceId + " and " + this.targetId + " does not exist.");
 
             }
 
-            final Map<String, String> relationData =
-                new HashMap<String, String>();
+            final Map<String, String> relationData = new HashMap<String, String>();
             relationsData.add(relationData);
             relationData.put("predicateNs", predicateNs);
             relationData.put("predicateValue", predicateValue);
@@ -138,7 +134,7 @@ public class ContentRelationsRemoveHandler2Edition extends DefaultHandler {
 
     /**
      * Returns a Vector with relations data.
-     * 
+     *
      * @return Relations Map
      */
     public List<Map<String, String>> getRelations() {

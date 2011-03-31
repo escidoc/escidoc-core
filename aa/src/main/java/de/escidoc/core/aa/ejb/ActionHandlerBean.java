@@ -28,15 +28,19 @@ import java.rmi.RemoteException;
 public class ActionHandlerBean implements SessionBean {
 
     ActionHandlerInterface service;
+
     SessionContext sessionCtx;
+
     private static final Logger LOGGER = LoggerFactory.getLogger(ActionHandlerBean.class);
 
     public void ejbCreate() throws CreateException {
         try {
             final BeanFactoryLocator beanFactoryLocator = SingletonBeanFactoryLocator.getInstance();
-            final BeanFactory factory = beanFactoryLocator.useBeanFactory("ActionHandler.spring.ejb.context").getFactory();
+            final BeanFactory factory =
+                beanFactoryLocator.useBeanFactory("ActionHandler.spring.ejb.context").getFactory();
             this.service = (ActionHandlerInterface) factory.getBean("service.ActionHandler");
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             LOGGER.error("ejbCreate(): Exception ActionHandlerComponent: " + e);
             throw new CreateException(e.getMessage());
         }
@@ -57,92 +61,74 @@ public class ActionHandlerBean implements SessionBean {
 
     }
 
-    public String createUnsecuredActions(final String contextId, final String actions,
-                                                   final SecurityContext securityContext)
-            throws ContextNotFoundException,
-            XmlCorruptedException,
-            XmlSchemaValidationException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException {
+    public String createUnsecuredActions(
+        final String contextId, final String actions, final SecurityContext securityContext)
+        throws ContextNotFoundException, XmlCorruptedException, XmlSchemaValidationException, AuthenticationException,
+        AuthorizationException, SystemException {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.createUnsecuredActions(contextId, actions);
     }
 
-    public String createUnsecuredActions(final String contextId, final String actions,
-                                                   final String authHandle, final Boolean restAccess)
-            throws ContextNotFoundException,
-            XmlCorruptedException,
-            XmlSchemaValidationException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException {
+    public String createUnsecuredActions(
+        final String contextId, final String actions, final String authHandle, final Boolean restAccess)
+        throws ContextNotFoundException, XmlCorruptedException, XmlSchemaValidationException, AuthenticationException,
+        AuthorizationException, SystemException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.createUnsecuredActions(contextId, actions);
     }
 
-    public void deleteUnsecuredActions(final String contextId,
-                                       final SecurityContext securityContext)
-            throws ContextNotFoundException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException {
+    public void deleteUnsecuredActions(final String contextId, final SecurityContext securityContext)
+        throws ContextNotFoundException, AuthenticationException, AuthorizationException, SystemException {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         service.deleteUnsecuredActions(contextId);
     }
 
-    public void deleteUnsecuredActions(final String contextId, final String authHandle,
-                                       final Boolean restAccess)
-            throws ContextNotFoundException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException {
+    public void deleteUnsecuredActions(final String contextId, final String authHandle, final Boolean restAccess)
+        throws ContextNotFoundException, AuthenticationException, AuthorizationException, SystemException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         service.deleteUnsecuredActions(contextId);
     }
 
-    public String retrieveUnsecuredActions(final String contextId,
-                                                     final SecurityContext securityContext)
-            throws ContextNotFoundException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException {
+    public String retrieveUnsecuredActions(final String contextId, final SecurityContext securityContext)
+        throws ContextNotFoundException, AuthenticationException, AuthorizationException, SystemException {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.retrieveUnsecuredActions(contextId);
     }
 
-    public String retrieveUnsecuredActions(final String contextId, final String authHandle,
-                                                     final Boolean restAccess)
-            throws ContextNotFoundException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException {
+    public String retrieveUnsecuredActions(final String contextId, final String authHandle, final Boolean restAccess)
+        throws ContextNotFoundException, AuthenticationException, AuthorizationException, SystemException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.retrieveUnsecuredActions(contextId);

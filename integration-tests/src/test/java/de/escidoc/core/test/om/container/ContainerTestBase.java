@@ -47,44 +47,35 @@ import static org.junit.Assert.fail;
 
 /**
  * Test the handler of the container resource.
- * 
+ *
  * @author Michael Schneider
- * 
  */
 //@RunWith(value = Parameterized.class)
 public class ContainerTestBase extends OmTestBase {
 
     protected static final String XPATH_CONTAINER = "/container";
 
-    protected static final String XPATH_CONTAINER_XLINK_HREF =
-        XPATH_CONTAINER + PART_XLINK_HREF;
+    protected static final String XPATH_CONTAINER_XLINK_HREF = XPATH_CONTAINER + PART_XLINK_HREF;
 
-    protected static final String XPATH_CONTAINER_XLINK_TYPE =
-        XPATH_CONTAINER + PART_XLINK_TYPE;
+    protected static final String XPATH_CONTAINER_XLINK_TYPE = XPATH_CONTAINER + PART_XLINK_TYPE;
 
-    protected static final String XPATH_CONTAINER_XLINK_TITLE =
-        XPATH_CONTAINER + PART_XLINK_TITLE;
+    protected static final String XPATH_CONTAINER_XLINK_TITLE = XPATH_CONTAINER + PART_XLINK_TITLE;
 
-    protected static final String XPATH_CONTAINER_XML_BASE =
-        XPATH_CONTAINER + "/@base";
+    protected static final String XPATH_CONTAINER_XML_BASE = XPATH_CONTAINER + "/@base";
 
-    protected static final String XPATH_CONTAINER_PROPERTIES =
-        XPATH_CONTAINER + "/properties";
+    protected static final String XPATH_CONTAINER_PROPERTIES = XPATH_CONTAINER + "/properties";
 
     public static final String XPATH_CONTAINER_PROPERTIES_CMS =
         XPATH_CONTAINER_PROPERTIES + "/" + "content-model-specific";
 
-    protected static final String XPATH_CONTAINER_PROPERTIES_XLINK_HREF =
-        XPATH_CONTAINER_PROPERTIES + PART_XLINK_HREF;
+    protected static final String XPATH_CONTAINER_PROPERTIES_XLINK_HREF = XPATH_CONTAINER_PROPERTIES + PART_XLINK_HREF;
 
-    protected static final String XPATH_CONTAINER_PROPERTIES_XLINK_TYPE =
-        XPATH_CONTAINER_PROPERTIES + PART_XLINK_TYPE;
+    protected static final String XPATH_CONTAINER_PROPERTIES_XLINK_TYPE = XPATH_CONTAINER_PROPERTIES + PART_XLINK_TYPE;
 
     protected static final String XPATH_CONTAINER_PROPERTIES_XLINK_TITLE =
         XPATH_CONTAINER_PROPERTIES + PART_XLINK_TITLE;
 
-    protected static final String XPATH_CONTAINER_CONTENT_TYPE =
-        XPATH_CONTAINER_PROPERTIES + "/content-model";
+    protected static final String XPATH_CONTAINER_CONTENT_TYPE = XPATH_CONTAINER_PROPERTIES + "/content-model";
 
     protected static final String XPATH_CONTAINER_CONTENT_TYPE_XLINK_HREF =
         XPATH_CONTAINER_CONTENT_TYPE + PART_XLINK_HREF;
@@ -95,32 +86,23 @@ public class ContainerTestBase extends OmTestBase {
     protected static final String XPATH_CONTAINER_CONTENT_TYPE_XLINK_TITLE =
         XPATH_CONTAINER_CONTENT_TYPE + PART_XLINK_TITLE;
 
-    protected static final String XPATH_CONTAINER_CONTEXT =
-        XPATH_CONTAINER_PROPERTIES + "/context";
+    protected static final String XPATH_CONTAINER_CONTEXT = XPATH_CONTAINER_PROPERTIES + "/context";
 
-    protected static final String XPATH_CONTAINER_CONTEXT_XLINK_HREF =
-        XPATH_CONTAINER_CONTEXT + PART_XLINK_HREF;
+    protected static final String XPATH_CONTAINER_CONTEXT_XLINK_HREF = XPATH_CONTAINER_CONTEXT + PART_XLINK_HREF;
 
-    protected static final String XPATH_CONTAINER_CONTEXT_XLINK_TYPE =
-        XPATH_CONTAINER_CONTEXT + PART_XLINK_TYPE;
+    protected static final String XPATH_CONTAINER_CONTEXT_XLINK_TYPE = XPATH_CONTAINER_CONTEXT + PART_XLINK_TYPE;
 
-    protected static final String XPATH_CONTAINER_CONTEXT_XLINK_TITLE =
-        XPATH_CONTAINER_CONTEXT + PART_XLINK_TITLE;
+    protected static final String XPATH_CONTAINER_CONTEXT_XLINK_TITLE = XPATH_CONTAINER_CONTEXT + PART_XLINK_TITLE;
 
-    protected static final String XPATH_CONTAINER_CREATOR =
-        XPATH_CONTAINER_PROPERTIES + "/creator";
+    protected static final String XPATH_CONTAINER_CREATOR = XPATH_CONTAINER_PROPERTIES + "/creator";
 
-    protected static final String XPATH_CONTAINER_CREATOR_XLINK_HREF =
-        XPATH_CONTAINER_CREATOR + PART_XLINK_HREF;
+    protected static final String XPATH_CONTAINER_CREATOR_XLINK_HREF = XPATH_CONTAINER_CREATOR + PART_XLINK_HREF;
 
-    protected static final String XPATH_CONTAINER_CREATOR_XLINK_TYPE =
-        XPATH_CONTAINER_CREATOR + PART_XLINK_TYPE;
+    protected static final String XPATH_CONTAINER_CREATOR_XLINK_TYPE = XPATH_CONTAINER_CREATOR + PART_XLINK_TYPE;
 
-    protected static final String XPATH_CONTAINER_CREATOR_XLINK_TITLE =
-        XPATH_CONTAINER_CREATOR + PART_XLINK_TITLE;
+    protected static final String XPATH_CONTAINER_CREATOR_XLINK_TITLE = XPATH_CONTAINER_CREATOR + PART_XLINK_TITLE;
 
-    protected static final String XPATH_CONTAINER_CURRENT_VERSION =
-        XPATH_CONTAINER_PROPERTIES + "/version";
+    protected static final String XPATH_CONTAINER_CURRENT_VERSION = XPATH_CONTAINER_PROPERTIES + "/version";
 
     public static final String XPATH_CONTAINER_CURRENT_VERSION_STATUS =
         XPATH_CONTAINER_CURRENT_VERSION + "/" + NAME_VERSION_STATUS;
@@ -134,8 +116,7 @@ public class ContainerTestBase extends OmTestBase {
     protected static final String XPATH_CONTAINER_CURRENT_VERSION_XLINK_TITLE =
         XPATH_CONTAINER_CURRENT_VERSION + PART_XLINK_TITLE;
 
-    protected static final String XPATH_CONTAINER_LATEST_RELEASE =
-        XPATH_CONTAINER_PROPERTIES + "/latest-release";
+    protected static final String XPATH_CONTAINER_LATEST_RELEASE = XPATH_CONTAINER_PROPERTIES + "/latest-release";
 
     protected static final String XPATH_CONTAINER_LATEST_RELEASE_XLINK_HREF =
         XPATH_CONTAINER_LATEST_RELEASE + PART_XLINK_HREF;
@@ -146,8 +127,7 @@ public class ContainerTestBase extends OmTestBase {
     protected static final String XPATH_CONTAINER_LATEST_RELEASE_XLINK_TITLE =
         XPATH_CONTAINER_LATEST_RELEASE + PART_XLINK_TITLE;
 
-    protected static final String XPATH_CONTAINER_LATEST_VERSION =
-        XPATH_CONTAINER_PROPERTIES + "/latest-version";
+    protected static final String XPATH_CONTAINER_LATEST_VERSION = XPATH_CONTAINER_PROPERTIES + "/latest-version";
 
     protected static final String XPATH_CONTAINER_LATEST_VERSION_XLINK_HREF =
         XPATH_CONTAINER_LATEST_VERSION + PART_XLINK_HREF;
@@ -158,42 +138,31 @@ public class ContainerTestBase extends OmTestBase {
     protected static final String XPATH_CONTAINER_LATEST_VERSION_XLINK_TITLE =
         XPATH_CONTAINER_LATEST_VERSION + PART_XLINK_TITLE;
 
-    public static final String XPATH_CONTAINER_STATUS =
-        XPATH_CONTAINER_PROPERTIES + "/" + NAME_PUBLIC_STATUS;
+    public static final String XPATH_CONTAINER_STATUS = XPATH_CONTAINER_PROPERTIES + "/" + NAME_PUBLIC_STATUS;
 
-    protected static final String XPATH_CONTAINER_MD_RECORDS =
-        XPATH_CONTAINER + "/md-records";
+    protected static final String XPATH_CONTAINER_MD_RECORDS = XPATH_CONTAINER + "/md-records";
 
-    protected static final String XPATH_CONTAINER_MD_RECORDS_XLINK_HREF =
-        XPATH_CONTAINER_MD_RECORDS + PART_XLINK_HREF;
+    protected static final String XPATH_CONTAINER_MD_RECORDS_XLINK_HREF = XPATH_CONTAINER_MD_RECORDS + PART_XLINK_HREF;
 
-    protected static final String XPATH_CONTAINER_MD_RECORDS_XLINK_TYPE =
-        XPATH_CONTAINER_MD_RECORDS + PART_XLINK_TYPE;
+    protected static final String XPATH_CONTAINER_MD_RECORDS_XLINK_TYPE = XPATH_CONTAINER_MD_RECORDS + PART_XLINK_TYPE;
 
     protected static final String XPATH_CONTAINER_MD_RECORDS_XLINK_TITLE =
         XPATH_CONTAINER_MD_RECORDS + PART_XLINK_TITLE;
 
-    protected static final String XPATH_CONTAINER_MD_RECORD =
-        XPATH_CONTAINER_MD_RECORDS + "/md-record";
+    protected static final String XPATH_CONTAINER_MD_RECORD = XPATH_CONTAINER_MD_RECORDS + "/md-record";
 
-    protected static final String XPATH_CONTAINER_MD_RECORD_SCHEMA =
-        XPATH_CONTAINER_MD_RECORD + "/@schema";
+    protected static final String XPATH_CONTAINER_MD_RECORD_SCHEMA = XPATH_CONTAINER_MD_RECORD + "/@schema";
 
-    protected static final String XPATH_CONTAINER_MD_RECORD_XLINK_HREF =
-        XPATH_CONTAINER_MD_RECORD + PART_XLINK_HREF;
+    protected static final String XPATH_CONTAINER_MD_RECORD_XLINK_HREF = XPATH_CONTAINER_MD_RECORD + PART_XLINK_HREF;
 
-    protected static final String XPATH_CONTAINER_MD_RECORD_XLINK_TYPE =
-        XPATH_CONTAINER_MD_RECORD + PART_XLINK_TYPE;
+    protected static final String XPATH_CONTAINER_MD_RECORD_XLINK_TYPE = XPATH_CONTAINER_MD_RECORD + PART_XLINK_TYPE;
 
-    protected static final String XPATH_CONTAINER_MD_RECORD_XLINK_TITLE =
-        XPATH_CONTAINER_MD_RECORD + PART_XLINK_TITLE;
+    protected static final String XPATH_CONTAINER_MD_RECORD_XLINK_TITLE = XPATH_CONTAINER_MD_RECORD + PART_XLINK_TITLE;
 
-    private static final String CONTAINER_URL =
-        "http://localhost:8080/ir/container/";
+    private static final String CONTAINER_URL = "http://localhost:8080/ir/container/";
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ContainerTestBase(final int transport) {
         super(transport);
@@ -210,12 +179,10 @@ public class ContainerTestBase extends OmTestBase {
 
     /**
      * Test retrieving the properties of an Container.
-     * 
-     * @param id
-     *            The id of the container.
+     *
+     * @param id The id of the container.
      * @return The retrieved properties.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     protected String retrieveProperties(final String id) throws Exception {
 
@@ -224,28 +191,22 @@ public class ContainerTestBase extends OmTestBase {
 
     /**
      * Test retrieving the list of containers.
-     * 
-     * @param filter
-     *            CQL filter
-     * 
+     *
+     * @param filter CQL filter
      * @return The retrieved components.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    protected String retrieveContainers(final Map<String, String[]> filter)
-        throws Exception {
+    protected String retrieveContainers(final Map<String, String[]> filter) throws Exception {
 
         return handleXmlResult(getContainerClient().retrieveContainers(filter));
     }
 
-    public String retrieveMembers(
-        final String id, final Map<String, String[]> filter) throws Exception {
+    public String retrieveMembers(final String id, final Map<String, String[]> filter) throws Exception {
 
         return handleXmlResult(getContainerClient().retrieveMembers(id, filter));
     }
 
-    public String retrieveTocs(
-        final String id, final Map<String, String[]> filter) throws Exception {
+    public String retrieveTocs(final String id, final Map<String, String[]> filter) throws Exception {
 
         return handleXmlResult(getContainerClient().retrieveTocs(id, filter));
     }
@@ -264,8 +225,7 @@ public class ContainerTestBase extends OmTestBase {
         }
     }
 
-    protected String updateToc(final String id, final String xml)
-        throws Exception {
+    protected String updateToc(final String id, final String xml) throws Exception {
 
         return handleXmlResult(getContainerClient().updateToc(id, xml));
     }
@@ -277,12 +237,10 @@ public class ContainerTestBase extends OmTestBase {
 
     /**
      * Test retrieving the metadata records of an Container.
-     * 
-     * @param id
-     *            The id of the container.
+     *
+     * @param id The id of the container.
      * @return The retrieved metadata records.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     protected String retrieveMetadataRecords(final String id) throws Exception {
 
@@ -291,51 +249,38 @@ public class ContainerTestBase extends OmTestBase {
 
     /**
      * Test retrieving the metadata records of an Container.
-     * 
-     * @param id
-     *            The id of the container.
-     * @param mdRecordname
-     *            The name of the md-record.
+     *
+     * @param id           The id of the container.
+     * @param mdRecordname The name of the md-record.
      * @return The retrieved metadata record.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    protected String retrieveMetadataRecord(
-        final String id, final String mdRecordname) throws Exception {
+    protected String retrieveMetadataRecord(final String id, final String mdRecordname) throws Exception {
 
-        return handleXmlResult(getContainerClient().retrieveMdRecord(id,
-            mdRecordname));
+        return handleXmlResult(getContainerClient().retrieveMdRecord(id, mdRecordname));
     }
 
     /**
      * Test updating a metadata record of an Container.
-     * 
-     * @param id
-     *            The id of the container.
-     * @param mdRecordName
-     *            The name of the metadata record.
-     * @param mdRecord
-     *            The updated metadata record.
+     *
+     * @param id           The id of the container.
+     * @param mdRecordName The name of the metadata record.
+     * @param mdRecord     The updated metadata record.
      * @return The created metadata record.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    protected String updateMetadataRecord(
-        final String id, final String mdRecordName, final String mdRecord)
+    protected String updateMetadataRecord(final String id, final String mdRecordName, final String mdRecord)
         throws Exception {
 
-        return handleXmlResult(getContainerClient().updateMetaDataRecord(id,
-            mdRecordName, mdRecord));
+        return handleXmlResult(getContainerClient().updateMetaDataRecord(id, mdRecordName, mdRecord));
     }
 
     /**
      * Test retrieving parents of an Container.
-     * 
-     * @param id
-     *            The id of the container.
+     *
+     * @param id The id of the container.
      * @return The retrieved parents.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     protected String retrieveParents(final String id) throws Exception {
 
@@ -344,12 +289,10 @@ public class ContainerTestBase extends OmTestBase {
 
     /**
      * Test retrieving the resources of an Container.
-     * 
-     * @param id
-     *            The id of the container.
+     *
+     * @param id The id of the container.
      * @return The retrieved resources.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     @Override
     public String retrieveResources(final String id) throws Exception {
@@ -359,12 +302,10 @@ public class ContainerTestBase extends OmTestBase {
 
     /**
      * Test retrieving the struct-map of a Container.
-     * 
-     * @param id
-     *            The id of the container.
+     *
+     * @param id The id of the container.
      * @return struct map XML
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     public String retrieveStructMap(final String id) throws Exception {
 
@@ -373,12 +314,10 @@ public class ContainerTestBase extends OmTestBase {
 
     /**
      * Test retrieving the version history of a container.
-     * 
-     * @param id
-     *            The id of the container.
+     *
+     * @param id The id of the container.
      * @return The retrieved version history.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     public String retrieveVersionHistory(final String id) throws Exception {
 
@@ -387,70 +326,53 @@ public class ContainerTestBase extends OmTestBase {
 
     /**
      * Test retrieving the relations of an Item.
-     * 
-     * @param id
-     *            The id of the container.
+     *
+     * @param id The id of the container.
      * @return The retrieved relations.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     public String retrieveRelations(final String id) throws Exception {
 
         return handleXmlResult(getContainerClient().retrieveRelations(id));
     }
 
-    public String addMembers(final String id, final String taskParam)
-        throws Exception {
+    public String addMembers(final String id, final String taskParam) throws Exception {
         return handleXmlResult(getContainerClient().addMembers(id, taskParam));
     }
 
-    public String addTocs(final String id, final String taskParam)
-        throws Exception {
+    public String addTocs(final String id, final String taskParam) throws Exception {
         return handleXmlResult(getContainerClient().addTocs(id, taskParam));
     }
 
-    protected String removeMembers(final String id, final String taskParam)
-        throws Exception {
+    protected String removeMembers(final String id, final String taskParam) throws Exception {
 
-        return handleXmlResult(getContainerClient()
-            .removeMembers(id, taskParam));
+        return handleXmlResult(getContainerClient().removeMembers(id, taskParam));
     }
 
-    protected String createItem(final String id, final String itemXml)
-        throws Exception {
+    protected String createItem(final String id, final String itemXml) throws Exception {
 
         return handleXmlResult(getContainerClient().createItem(id, itemXml));
     }
 
     /**
      * Create Container as method from Container.
-     * 
-     * @param id
-     *            The id of the Container.
-     * @param containerXml
-     *            The xml data of the new to create Container
-     * @param param
+     *
+     * @param id           The id of the Container.
+     * @param containerXml The xml data of the new to create Container
      * @return The XML representation of the new created Container.
-     * 
-     * @throws Exception
-     *             Thrown if creation failed.
+     * @throws Exception Thrown if creation failed.
      */
-    protected String createContainer(final String id, final String containerXml)
-        throws Exception {
+    protected String createContainer(final String id, final String containerXml) throws Exception {
 
-        return handleXmlResult(getContainerClient().createContainer(id,
-            containerXml));
+        return handleXmlResult(getContainerClient().createContainer(id, containerXml));
     }
 
     /**
      * Test releasing a Container.
-     * 
-     * @param id
-     *            The id of the container.
-     * @param param
-     *            The param indicating the last-modifiaction-date of the Item.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param id    The id of the container.
+     * @param param The param indicating the last-modifiaction-date of the Item.
+     * @throws Exception If anything fails.
      */
     public String release(final String id, final String param) throws Exception {
 
@@ -459,28 +381,22 @@ public class ContainerTestBase extends OmTestBase {
     }
 
     /**
-     * Test releasing a Container and assign (if necessary the version and/or
-     * object PIDs).
-     * 
-     * @param id
-     *            The id of the Container.
-     * @throws Exception
-     *             If anything fails.
+     * Test releasing a Container and assign (if necessary the version and/or object PIDs).
+     *
+     * @param id The id of the Container.
+     * @throws Exception If anything fails.
      */
     public String releaseWithPid(final String id) throws Exception {
 
         Document itemDoc = null;
 
-        if (!getContainerClient().getPidConfig(
-            "cmm.Container.objectPid.releaseWithoutPid", "false")
-            || !getContainerClient().getPidConfig(
-                "cmm.Container.versionPid.releaseWithoutPid", "false")) {
+        if (!getContainerClient().getPidConfig("cmm.Container.objectPid.releaseWithoutPid", "false")
+            || !getContainerClient().getPidConfig("cmm.Container.versionPid.releaseWithoutPid", "false")) {
             itemDoc = EscidocRestSoapTestBase.getDocument(retrieve(id));
         }
 
         // assign objectPid
-        if (!getContainerClient().getPidConfig(
-            "cmm.Container.objectPid.releaseWithoutPid", "false")) {
+        if (!getContainerClient().getPidConfig("cmm.Container.objectPid.releaseWithoutPid", "false")) {
             // prevent re-assigning
             Node pid = selectSingleNode(itemDoc, XPATH_CONTAINER_OBJECT_PID);
             if (pid == null) {
@@ -491,8 +407,7 @@ public class ContainerTestBase extends OmTestBase {
         }
 
         // assign versionPid
-        if (!getContainerClient().getPidConfig(
-            "cmm.Container.versionPid.releaseWithoutPid", "false")) {
+        if (!getContainerClient().getPidConfig("cmm.Container.versionPid.releaseWithoutPid", "false")) {
 
             // prevent re-assigning
             Node pid = selectSingleNode(itemDoc, XPATH_ITEM_VERSION_PID);
@@ -502,8 +417,7 @@ public class ContainerTestBase extends OmTestBase {
                 if (versionNumber == null) {
                     versionId = getLatestVersionObjidValue(itemDoc);
                 }
-                String pidParam =
-                    getPidParam(versionId, CONTAINER_URL + versionId);
+                String pidParam = getPidParam(versionId, CONTAINER_URL + versionId);
                 assignVersionPid(versionId, pidParam);
             }
         }
@@ -521,19 +435,15 @@ public class ContainerTestBase extends OmTestBase {
 
     /**
      * Test releasing an Container.
-     * 
-     * @param id
-     *            The id of the Container.
-     * @param param
-     *            The param indicating the last-modifiaction-date of the Item.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param id    The id of the Container.
+     * @param param The param indicating the last-modifiaction-date of the Item.
+     * @throws Exception If anything fails.
      */
-    public String releaseWithoutPid(final String id, final String param)
-        throws Exception {
+    public String releaseWithoutPid(final String id, final String param) throws Exception {
 
         Object result = getContainerClient().release(id, param);
-        
+
         if (result instanceof HttpResponse) {
             HttpResponse httpRes = (HttpResponse) result;
             assertHttpStatusOfMethod("", httpRes);
@@ -543,14 +453,10 @@ public class ContainerTestBase extends OmTestBase {
 
     /**
      * Test revising a container.
-     * 
-     * @param id
-     *            The id of the container.
-     * @param param
-     *            The param indicating the last-modification-date of the
-     *            Container.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param id    The id of the container.
+     * @param param The param indicating the last-modification-date of the Container.
+     * @throws Exception If anything fails.
      */
     public String revise(final String id, final String param) throws Exception {
 
@@ -564,13 +470,10 @@ public class ContainerTestBase extends OmTestBase {
 
     /**
      * Test submiting a container.
-     * 
-     * @param id
-     *            The id of the container.
-     * @param param
-     *            The param indicating the last-modifiaction-date of the Item.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param id    The id of the container.
+     * @param param The param indicating the last-modifiaction-date of the Item.
+     * @throws Exception If anything fails.
      */
     public String submit(final String id, final String param) throws Exception {
 
@@ -585,16 +488,12 @@ public class ContainerTestBase extends OmTestBase {
 
     /**
      * Test withdrawing a container.
-     * 
-     * @param id
-     *            The id of the container.
-     * @param param
-     *            The param indicating the last-modifiaction-date of the Item.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param id    The id of the container.
+     * @param param The param indicating the last-modifiaction-date of the Item.
+     * @throws Exception If anything fails.
      */
-    public String withdraw(final String id, final String param)
-        throws Exception {
+    public String withdraw(final String id, final String param) throws Exception {
 
         Object result = getContainerClient().withdraw(id, param);
         if (result instanceof HttpResponse) {
@@ -606,13 +505,10 @@ public class ContainerTestBase extends OmTestBase {
 
     /**
      * Test locking a container.
-     * 
-     * @param id
-     *            The id of the container.
-     * @param param
-     *            The param indicating the last-modifiaction-date of the Item.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param id    The id of the container.
+     * @param param The param indicating the last-modifiaction-date of the Item.
+     * @throws Exception If anything fails.
      */
     protected String lock(final String id, final String param) throws Exception {
 
@@ -626,16 +522,12 @@ public class ContainerTestBase extends OmTestBase {
 
     /**
      * Test unlocking a container.
-     * 
-     * @param id
-     *            The id of the container.
-     * @param param
-     *            The param indicating the last-modifiaction-date of the Item.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param id    The id of the container.
+     * @param param The param indicating the last-modifiaction-date of the Item.
+     * @throws Exception If anything fails.
      */
-    protected String unlock(final String id, final String param)
-        throws Exception {
+    protected String unlock(final String id, final String param) throws Exception {
 
         Object result = getContainerClient().unlock(id, param);
         if (result instanceof HttpResponse) {
@@ -646,13 +538,12 @@ public class ContainerTestBase extends OmTestBase {
     }
 
     /**
-     * 
+     *
      * @param id
      * @param taskParam
      * @return
      */
-    public String addContentRelations(final String id, final String taskParam)
-        throws Exception {
+    public String addContentRelations(final String id, final String taskParam) throws Exception {
         Object result = getContainerClient().addContentRelations(id, taskParam);
         if (result instanceof HttpResponse) {
             HttpResponse httpRes = (HttpResponse) result;
@@ -664,24 +555,21 @@ public class ContainerTestBase extends OmTestBase {
     protected String addCtsElement(final String xml) throws Exception {
         Document doc = EscidocRestSoapTestBase.getDocument(xml);
         doc =
-            (Document) addAfter(doc,
-                "/container/properties/content-model-specific/xxx",
-                createElementNode(doc, null, null, "nox", "modified"));
+            (Document) addAfter(doc, "/container/properties/content-model-specific/xxx", createElementNode(doc, null,
+                null, "nox", "modified"));
         String newXml = toString(doc, true);
         return newXml;
     }
 
     /**
-     * 
+     *
      * @param id
      * @param taskParam
      * @return
      */
-    public String removeContentRelations(final String id, final String taskParam)
-        throws Exception {
+    public String removeContentRelations(final String id, final String taskParam) throws Exception {
 
-        Object result =
-            getContainerClient().removeContentRelations(id, taskParam);
+        Object result = getContainerClient().removeContentRelations(id, taskParam);
         if (result instanceof HttpResponse) {
             HttpResponse httpRes = (HttpResponse) result;
             assertHttpStatusOfMethod("", httpRes);
@@ -690,113 +578,92 @@ public class ContainerTestBase extends OmTestBase {
     }
 
     /**
-     * 
-     * @param id
-     *            Container Version Identifier (escidoc:123:2)
-     * @param param
-     * @return
-     * @throws Exception
+     * @param id Container Version Identifier (escidoc:123:2)
      */
-    public String assignVersionPid(final String id, final String param)
-        throws Exception {
+    public String assignVersionPid(final String id, final String param) throws Exception {
 
         return handleXmlResult(getContainerClient().assignVersionPid(id, param));
     }
 
     /**
-     * 
+     *
      * @param id
      * @param param
      * @return
      * @throws Exception
      */
-    public String assignObjectPid(final String id, final String param)
-        throws Exception {
+    public String assignObjectPid(final String id, final String param) throws Exception {
 
         return handleXmlResult(getContainerClient().assignObjectPid(id, param));
     }
 
     /**
      * Create an Container from template.
-     * 
-     * @param templateName
-     *            The name of the Container template (file).
+     *
+     * @param templateName The name of the Container template (file).
      * @return objid of the Item.
-     * @throws Exception
-     *             Thrown if creation of Item or extraction of objid fails.
+     * @throws Exception Thrown if creation of Item or extraction of objid fails.
      */
-    public String createContainerFromTemplate(final String templateName)
-        throws Exception {
+    public String createContainerFromTemplate(final String templateName) throws Exception {
 
         // create an item and save the id
         String xmlData = getContainerTemplate(templateName);
 
-        String theContainerXml =
-            handleXmlResult(getContainerClient().create(xmlData));
+        String theContainerXml = handleXmlResult(getContainerClient().create(xmlData));
         return getObjidValue(theContainerXml);
     }
 
     /**
      * Create an Item from template.
-     * 
-     * @param templateName
-     *            The name of the Item template (file).
+     *
+     * @param templateName The name of the Item template (file).
      * @return objid of the Item.
-     * @throws Exception
-     *             Thrown if creation of Item or extraction of objid fails.
+     * @throws Exception Thrown if creation of Item or extraction of objid fails.
      */
-    public String createItemFromTemplate(final String templateName)
-        throws Exception {
+    public String createItemFromTemplate(final String templateName) throws Exception {
 
         // create an item and save the id
         String xmlData =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
-                + "/" + getTransport(false), templateName);
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false), templateName);
 
         String theItemXml = handleXmlResult(getItemClient().create(xmlData));
         return getObjidValue(theItemXml);
     }
 
     /**
-     * Get a Container template. The template is pulled automatically from the
-     * rest/soap directory of the container template basedir.
-     * 
-     * @param templateName
-     *            The name of the Container template (file).
+     * Get a Container template. The template is pulled automatically from the rest/soap directory of the container
+     * template basedir.
+     *
+     * @param templateName The name of the Container template (file).
      * @return The String representation of the template.
-     * @throws Exception
-     *             Thrown if anything fails.
+     * @throws Exception Thrown if anything fails.
      */
-    public String getContainerTemplate(final String templateName)
-        throws Exception {
+    public String getContainerTemplate(final String templateName) throws Exception {
 
-        return EscidocRestSoapTestBase.getTemplateAsString(
-            TEMPLATE_CONTAINER_PATH + "/" + getTransport(false), templateName);
+        return EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_CONTAINER_PATH + "/" + getTransport(false),
+            templateName);
 
     }
 
     /**
-     * Get a Item template. The template is pulled automatically from the
-     * rest/soap directory of the Item template basedir.
-     * 
-     * @param templateName
-     *            The name of the Item template (file).
+     * Get a Item template. The template is pulled automatically from the rest/soap directory of the Item template
+     * basedir.
+     *
+     * @param templateName The name of the Item template (file).
      * @return The String representation of the template.
-     * @throws Exception
-     *             Thrown if anything fails.
+     * @throws Exception Thrown if anything fails.
      */
     public String getItemTemplate(final String templateName) throws Exception {
 
-        return EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
-            + "/" + getTransport(false), templateName);
+        return EscidocRestSoapTestBase
+            .getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false), templateName);
 
     }
 
     /**
      * Convert a NodeList to a List.
-     * 
-     * @param nl
-     *            The NodeList.
+     *
+     * @param nl The NodeList.
      * @return List
      */
     public List<String> nodeList2List(final NodeList nl) {
@@ -810,12 +677,10 @@ public class ContainerTestBase extends OmTestBase {
 
     /**
      * Convert a NodeList to a List.
-     * 
-     * @param nl
-     *            The NodeList.
+     *
+     * @param nl The NodeList.
      * @return List with resource references
-     * @throws Exception
-     *             Thrown if extracting of values from XML failed.
+     * @throws Exception Thrown if extracting of values from XML failed.
      */
     public List<String> nodeListSOAP2List(final NodeList nl) throws Exception {
 
@@ -836,8 +701,7 @@ public class ContainerTestBase extends OmTestBase {
             else if (nodeName.contains(":container")) {
                 value = Constants.CONTAINER_BASE_URI + "/" + objid;
             }
-            else if (nodeName.contains(":modified-by")
-                || nodeName.contains(":created-by")) {
+            else if (nodeName.contains(":modified-by") || nodeName.contains(":created-by")) {
                 value = Constants.USER_ACCOUNT_BASE_URI + "/" + objid;
             }
             else if (nodeName.contains(":content-model")) {
@@ -847,11 +711,9 @@ public class ContainerTestBase extends OmTestBase {
                 value = Constants.CONTEXT_BASE_URI + "/" + objid;
             }
             else {
-                if (!nodeName.contains("latest-version")
-                    && !nodeName.contains("version")) {
-                    throw new Exception(
-                        "unknown resource type with node name '" + nodeName
-                            + "' and objid='" + objid + "'.");
+                if (!nodeName.contains("latest-version") && !nodeName.contains("version")) {
+                    throw new Exception("unknown resource type with node name '" + nodeName + "' and objid='" + objid
+                        + "'.");
                 }
             }
 
@@ -864,18 +726,14 @@ public class ContainerTestBase extends OmTestBase {
 
     /**
      * Compares if the content of two lists equals.
-     * 
+     * <p/>
      * WARNING: side effect, elements are removed from the second list
-     * 
-     * @param msg
-     *            Message for the exception.
-     * @param arg0
-     *            List one.
-     * @param arg1
-     *            List two.
+     *
+     * @param msg  Message for the exception.
+     * @param arg0 List one.
+     * @param arg1 List two.
      */
-    public void assertListContentEqual(
-        final String msg, final List<String> arg0, final List<String> arg1) {
+    public void assertListContentEqual(final String msg, final List<String> arg0, final List<String> arg1) {
 
         Iterator<String> it = arg0.iterator();
         while (it.hasNext()) {

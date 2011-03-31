@@ -40,28 +40,27 @@ import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
 import java.util.List;
 
 /**
- * Implementation of an XACML (target) function that checks if a provided value
- * can be found in a provided bag.<br>
- * The first parameter has to be a StringAttribute, the second one has to be a
- * bag containing StringAttributes.<br>
- * The function returns true if the value of the first parameter is found in the
- * value of the second parameter.
- * 
- * @author Torsten Tetteroo
+ * Implementation of an XACML (target) function that checks if a provided value can be found in a provided bag.<br> The
+ * first parameter has to be a StringAttribute, the second one has to be a bag containing StringAttributes.<br> The
+ * function returns true if the value of the first parameter is found in the value of the second parameter.
  *
- * 
+ * @author Torsten Tetteroo
  */
 public class XacmlFunctionIsIn extends FunctionBase {
 
-    /** The name of this function. */
-    public static final String NAME =
-        AttributeIds.FUNCTION_PREFIX + "string-is-in";
+    /**
+     * The name of this function.
+     */
+    public static final String NAME = AttributeIds.FUNCTION_PREFIX + "string-is-in";
 
-    /** The parameter types. */
-    private static final String[] PARAMS =
-        { StringAttribute.identifier, StringAttribute.identifier };
+    /**
+     * The parameter types.
+     */
+    private static final String[] PARAMS = { StringAttribute.identifier, StringAttribute.identifier };
 
-    /** The definitions of bag or non-bag parameters. */
+    /**
+     * The definitions of bag or non-bag parameters.
+     */
     private static final boolean[] BAG_PARAMS = { false, true };
 
     /**
@@ -72,20 +71,13 @@ public class XacmlFunctionIsIn extends FunctionBase {
         super(NAME, 0, PARAMS, BAG_PARAMS, BooleanAttribute.identifier, false);
     }
 
-
-
     /**
      * See Interface for functional description.
-     * 
-     * @param inputs
-     * @param context
-     * @return
-     * @see Function#evaluate(List,
-     *      EvaluationCtx)
+     *
+     * @see Function#evaluate(List, EvaluationCtx)
      */
     @Override
-    public EvaluationResult evaluate(
-        final List inputs, final EvaluationCtx context) {
+    public EvaluationResult evaluate(final List inputs, final EvaluationCtx context) {
 
         final AttributeValue[] argValues = new AttributeValue[inputs.size()];
         final EvaluationResult result = evalArgs(inputs, context, argValues);

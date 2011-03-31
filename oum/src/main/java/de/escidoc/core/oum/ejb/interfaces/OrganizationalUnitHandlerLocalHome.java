@@ -9,6 +9,7 @@ import javax.ejb.EJBLocalHome;
 public interface OrganizationalUnitHandlerLocalHome extends EJBLocalHome {
 
     String COMP_NAME = "java:comp/env/ejb/OrganizationalUnitHandlerLocal";
+
     String JNDI_NAME = "ejb/OrganizationalUnitHandlerLocal";
 
     OrganizationalUnitHandlerLocal create() throws CreateException;

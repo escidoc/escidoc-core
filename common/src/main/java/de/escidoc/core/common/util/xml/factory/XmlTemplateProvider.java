@@ -35,9 +35,8 @@ import java.util.regex.Pattern;
 
 /**
  * Handles XML Template mapping.
- * 
+ *
  * @author Steffen Wagner
- * 
  */
 public abstract class XmlTemplateProvider {
 
@@ -148,8 +147,7 @@ public abstract class XmlTemplateProvider {
 
     public static final String LATEST_VERSION_STATUS = "LATEST_VERSION_STATUS";
 
-    public static final String LATEST_VERSION_COMMENT =
-        "LATEST_VERSION_COMMENT";
+    public static final String LATEST_VERSION_COMMENT = "LATEST_VERSION_COMMENT";
 
     /*
      * Item/Container
@@ -162,20 +160,16 @@ public abstract class XmlTemplateProvider {
 
     public static final String CONTENT_MODEL_TITLE = "CONTENT_MODEL_TITLE";
 
-    public static final String CONTAINER_CONTENT_MODEL_SPECIFIC =
-        "containerCms";
+    public static final String CONTAINER_CONTENT_MODEL_SPECIFIC = "containerCms";
 
     /*
      * Behavior
      */
-    public static final String BEHAVIOR_CONTENT_MODEL_ID =
-        "behaviorContentModelId";
+    public static final String BEHAVIOR_CONTENT_MODEL_ID = "behaviorContentModelId";
 
-    public static final String BEHAVIOR_CONTENT_MODEL_ID_UNDERSCORE =
-        "behaviorContentModelIdUnderscore";
+    public static final String BEHAVIOR_CONTENT_MODEL_ID_UNDERSCORE = "behaviorContentModelIdUnderscore";
 
-    public static final String BEHAVIOR_OPERATION_NAME =
-        "behaviorOperationName";
+    public static final String BEHAVIOR_OPERATION_NAME = "behaviorOperationName";
 
     public static final String BEHAVIOR_TRANSFORM_MD = "behaviorTransformMd";
 
@@ -192,8 +186,7 @@ public abstract class XmlTemplateProvider {
 
     public static final String CONTENT_CATEGORY = "CONTENT_CATEGORY";
 
-    public static final String CONTENT_CHECKSUM_ALGORITHM =
-        "CHECKSUM_ALGORITHM";
+    public static final String CONTENT_CHECKSUM_ALGORITHM = "CHECKSUM_ALGORITHM";
 
     public static final String CONTENT_CHECKSUM = "CHECKSUM";
 
@@ -239,8 +232,7 @@ public abstract class XmlTemplateProvider {
 
     public static final String MD_RECORDS = "MD_RECORDS";
 
-    public static final String CONTENT_MODEL_SPECIFIC =
-        "CONTENT_MODEL_SPECIFIC";
+    public static final String CONTENT_MODEL_SPECIFIC = "CONTENT_MODEL_SPECIFIC";
 
     public static final String CONTENT_STREAMS = "CONTENT_STREAMS";
 
@@ -259,73 +251,53 @@ public abstract class XmlTemplateProvider {
 
     public static final String VAR_NAMESPACE = "NAMESPACE";
 
-    public static final String VAR_XLINK_NAMESPACE_PREFIX =
-        "XLINK_NAMESPACE_PREFIX";
+    public static final String VAR_XLINK_NAMESPACE_PREFIX = "XLINK_NAMESPACE_PREFIX";
 
     public static final String VAR_XLINK_NAMESPACE = "XLINK_NAMESPACE";
 
-    public static final String ESCIDOC_PROPERTIES_NS_PREFIX =
-        "escidocPropertiesNamespacePrefix";
+    public static final String ESCIDOC_PROPERTIES_NS_PREFIX = "escidocPropertiesNamespacePrefix";
 
-    public static final String ESCIDOC_PROPERTIES_NS =
-        "escidocPropertiesNamespace";
+    public static final String ESCIDOC_PROPERTIES_NS = "escidocPropertiesNamespace";
 
-    public static final String ESCIDOC_PROPERTIES_VERSION_NS_PREFIX =
-        "escidocPropertiesVersionNamespacePrefix";
+    public static final String ESCIDOC_PROPERTIES_VERSION_NS_PREFIX = "escidocPropertiesVersionNamespacePrefix";
 
-    public static final String ESCIDOC_PROPERTIES_VERSION_NS =
-        "escidocPropertiesVersionNamespace";
+    public static final String ESCIDOC_PROPERTIES_VERSION_NS = "escidocPropertiesVersionNamespace";
 
-    public static final String ESCIDOC_PROPERTIES_RELEASE_NS_PREFIX =
-        "escidocPropertiesReleaseNamespacePrefix";
+    public static final String ESCIDOC_PROPERTIES_RELEASE_NS_PREFIX = "escidocPropertiesReleaseNamespacePrefix";
 
-    public static final String ESCIDOC_PROPERTIES_RELEASE_NS =
-        "escidocPropertiesReleaseNamespace";
+    public static final String ESCIDOC_PROPERTIES_RELEASE_NS = "escidocPropertiesReleaseNamespace";
 
-    public static final String ESCIDOC_RESOURCE_NS =
-        "escidocResourcesNamespace";
+    public static final String ESCIDOC_RESOURCE_NS = "escidocResourcesNamespace";
 
-    public static final String ESCIDOC_RESOURCE_NS_PREFIX =
-        "escidocRelationsNamespacePrefix";
+    public static final String ESCIDOC_RESOURCE_NS_PREFIX = "escidocRelationsNamespacePrefix";
 
-    public static final String ESCIDOC_RELATION_NS =
-        "escidocRelationsNamespace";
+    public static final String ESCIDOC_RELATION_NS = "escidocRelationsNamespace";
 
-    public static final String ESCIDOC_RELATION_NS_PREFIX =
-        "contentRelationsNamespacePrefix";
+    public static final String ESCIDOC_RELATION_NS_PREFIX = "contentRelationsNamespacePrefix";
 
     public static final String ESCIDOC_ORIGIN_NS = "escidocOriginNamespace";
 
-    public static final String ESCIDOC_ORIGIN_NS_PREFIX =
-        "escidocOriginNamespacePrefix";
+    public static final String ESCIDOC_ORIGIN_NS_PREFIX = "escidocOriginNamespacePrefix";
 
-    public static final String ESCIDOC_RELEASE_NS_PREFIX =
-        "escidocPropertiesReleaseNamespacePrefix";
+    public static final String ESCIDOC_RELEASE_NS_PREFIX = "escidocPropertiesReleaseNamespacePrefix";
 
-    public static final String ESCIDOC_RELEASE_NS =
-        "escidocPropertiesReleaseNamespace";
+    public static final String ESCIDOC_RELEASE_NS = "escidocPropertiesReleaseNamespace";
 
-    public static final String ESCIDOC_SREL_NS_PREFIX =
-        "structuralRelationsNamespacePrefix";
+    public static final String ESCIDOC_SREL_NS_PREFIX = "structuralRelationsNamespacePrefix";
 
     public static final String ESCIDOC_SREL_NS = "structuralRelationsNamespace";
 
-    public static final String ESCIDOC_PARAMETER_NS_PREFIX =
-        "parameterNamespacePrefix";
+    public static final String ESCIDOC_PARAMETER_NS_PREFIX = "parameterNamespacePrefix";
 
     public static final String ESCIDOC_PARAMETER_NS = "parameterNamespace";
 
-    protected static final String BASE_TEMPLATE_PATH =
-        "/de/escidoc/core/common/util/xml/factory/templates";
+    protected static final String BASE_TEMPLATE_PATH = "/de/escidoc/core/common/util/xml/factory/templates";
 
-    public static final String CONTENT_RELATION_NAMESPACE_PREFIX =
-        "contentRelationNamespacePrefix";
+    public static final String CONTENT_RELATION_NAMESPACE_PREFIX = "contentRelationNamespacePrefix";
 
-    public static final String CONTENT_RELATION_NAMESPACE =
-        "contentRelationNamespace";
+    public static final String CONTENT_RELATION_NAMESPACE = "contentRelationNamespace";
 
-    public static final String MD_RECRORDS_NAMESPACE_PREFIX =
-        "mdRecordsNamespacePrefix";
+    public static final String MD_RECRORDS_NAMESPACE_PREFIX = "mdRecordsNamespacePrefix";
 
     public static final String MD_RECORDS_NAMESPACE = "mdRecordsNamespace";
 
@@ -334,8 +306,7 @@ public abstract class XmlTemplateProvider {
      */
     public static final String VAR_ESCIDOC_BASE_URL = "ESCIDOC_BASE_URL";
 
-    public static final String VAR_LAST_MODIFICATION_DATE =
-        "LAST_MODIFICATION_DATE";
+    public static final String VAR_LAST_MODIFICATION_DATE = "LAST_MODIFICATION_DATE";
 
     public static final String VAR_CREATION_DATE = "CREATION_DATE";
 
@@ -345,11 +316,9 @@ public abstract class XmlTemplateProvider {
 
     public static final String RESOURCES_TITLE = "resourcesTitle";
 
-    public static final String VAR_XACML_POLICY_NAMESPACE_PREFIX =
-        "XACML_POLICY_NAMESPACE_PREFIX";
+    public static final String VAR_XACML_POLICY_NAMESPACE_PREFIX = "XACML_POLICY_NAMESPACE_PREFIX";
 
-    public static final String VAR_XACML_POLICY_NAMESPACE =
-        "XACML_POLICY_NAMESPACE";
+    public static final String VAR_XACML_POLICY_NAMESPACE = "XACML_POLICY_NAMESPACE";
 
     public static final String VAR_AGENT_ID_VALUE = "AGENT_ID_VALUE";
 
@@ -412,11 +381,9 @@ public abstract class XmlTemplateProvider {
 
     public static final String VAR_MD_RECORD_HREF = "mdRecordHref";
 
-    public static final String VAR_CONTENT_STREAMS_CONTENT =
-        "contentStreamsContent";
+    public static final String VAR_CONTENT_STREAMS_CONTENT = "contentStreamsContent";
 
-    public static final String VAR_CONTENT_STREAMS_TITLE =
-        "contentStreamsTitle";
+    public static final String VAR_CONTENT_STREAMS_TITLE = "contentStreamsTitle";
 
     public static final String VAR_CONTENT_STREAMS_HREF = "contentStreamsHref";
 
@@ -426,14 +393,11 @@ public abstract class XmlTemplateProvider {
 
     public static final String VAR_CONTENT_STREAM_HREF = "contentStreamHref";
 
-    public static final String VAR_CONTENT_STREAM_CONTENT =
-        "contentStreamContent";
+    public static final String VAR_CONTENT_STREAM_CONTENT = "contentStreamContent";
 
-    public static final String VAR_CONTENT_STREAM_STORAGE =
-        "contentStreamStorage";
+    public static final String VAR_CONTENT_STREAM_STORAGE = "contentStreamStorage";
 
-    public static final String VAR_CONTENT_STREAM_MIME_TYPE =
-        "contentStreamMimeType";
+    public static final String VAR_CONTENT_STREAM_MIME_TYPE = "contentStreamMimeType";
 
     /*
      * FIXME it seems that is a copy and paste failure or a hot fix
@@ -452,8 +416,7 @@ public abstract class XmlTemplateProvider {
 
     public static final String VAR_ITEM_LIST_NAMESPACE = "itemListNamespace";
 
-    public static final String VAR_ITEM_LIST_NAMESPACE_PREFIX =
-        "itemListNamespacePrefix";
+    public static final String VAR_ITEM_LIST_NAMESPACE_PREFIX = "itemListNamespacePrefix";
 
     public static final String VAR_PROPERTIES_TITLE = "propertiesTitle";
 
@@ -465,8 +428,7 @@ public abstract class XmlTemplateProvider {
 
     public static final String VAR_ITEM_STATUS_COMMENT = "itemStatusComment";
 
-    public static final String VAR_CONTAINER_STATUS_COMMENT =
-        "containerStatusComment";
+    public static final String VAR_CONTAINER_STATUS_COMMENT = "containerStatusComment";
 
     public static final String VAR_ITEM_CREATED_BY_TITLE = "itemCreatedByTitle";
 
@@ -492,11 +454,9 @@ public abstract class XmlTemplateProvider {
 
     public static final String VAR_ITEM_CONTEXT_ID = "itemContextId";
 
-    public static final String VAR_ITEM_CONTENT_MODEL_TITLE =
-        "itemContentModelTitle";
+    public static final String VAR_ITEM_CONTENT_MODEL_TITLE = "itemContentModelTitle";
 
-    public static final String VAR_ITEM_CONTENT_MODEL_HREF =
-        "itemContentModelHref";
+    public static final String VAR_ITEM_CONTENT_MODEL_HREF = "itemContentModelHref";
 
     public static final String VAR_ITEM_CONTENT_MODEL_ID = "itemContentModelId";
 
@@ -512,108 +472,77 @@ public abstract class XmlTemplateProvider {
 
     public static final String VAR_ITEM_OBJECT_PID = "itemObjectPid";
 
-    public static final String VAR_ITEM_CURRENT_VERSION_HREF =
-        "itemVersionHref";
+    public static final String VAR_ITEM_CURRENT_VERSION_HREF = "itemVersionHref";
 
     public static final String VAR_ITEM_CURRENT_VERSION_ID = "itemVersionId";
 
-    public static final String VAR_ITEM_CURRENT_VERSION_TITLE =
-        "itemVersionTitle";
+    public static final String VAR_ITEM_CURRENT_VERSION_TITLE = "itemVersionTitle";
 
-    public static final String VAR_ITEM_CURRENT_VERSION_NUMBER =
-        "itemVersionNumber";
+    public static final String VAR_ITEM_CURRENT_VERSION_NUMBER = "itemVersionNumber";
 
-    public static final String VAR_ITEM_CURRENT_VERSION_DATE =
-        "itemVersionDate";
+    public static final String VAR_ITEM_CURRENT_VERSION_DATE = "itemVersionDate";
 
-    public static final String VAR_ITEM_CURRENT_VERSION_STATUS =
-        "itemVersionStatus";
+    public static final String VAR_ITEM_CURRENT_VERSION_STATUS = "itemVersionStatus";
 
-    public static final String VAR_ITEM_CURRENT_VERSION_VALID_STATUS =
-        "itemVersionValidStatus";
+    public static final String VAR_ITEM_CURRENT_VERSION_VALID_STATUS = "itemVersionValidStatus";
 
-    public static final String VAR_ITEM_CURRENT_VERSION_COMMENT =
-        "itemVersionComment";
+    public static final String VAR_ITEM_CURRENT_VERSION_COMMENT = "itemVersionComment";
 
-    public static final String VAR_ITEM_CURRENT_VERSION_MODIFIED_BY_ID =
-        "itemVersionModifiedById";
+    public static final String VAR_ITEM_CURRENT_VERSION_MODIFIED_BY_ID = "itemVersionModifiedById";
 
-    public static final String VAR_ITEM_CURRENT_VERSION_MODIFIED_BY_TITLE =
-        "itemVersionModifiedByTitle";
+    public static final String VAR_ITEM_CURRENT_VERSION_MODIFIED_BY_TITLE = "itemVersionModifiedByTitle";
 
-    public static final String VAR_ITEM_CURRENT_VERSION_MODIFIED_BY_HREF =
-        "itemVersionModifiedByHref";
+    public static final String VAR_ITEM_CURRENT_VERSION_MODIFIED_BY_HREF = "itemVersionModifiedByHref";
 
-    public static final String VAR_ITEM_LATEST_VERSION_ID =
-        "itemLatestVersionId";
+    public static final String VAR_ITEM_LATEST_VERSION_ID = "itemLatestVersionId";
 
-    public static final String VAR_ITEM_LATEST_VERSION_HREF =
-        "itemLatestVersionHref";
+    public static final String VAR_ITEM_LATEST_VERSION_HREF = "itemLatestVersionHref";
 
-    public static final String VAR_ITEM_LATEST_VERSION_TITLE =
-        "itemLatestVersionTitle";
+    public static final String VAR_ITEM_LATEST_VERSION_TITLE = "itemLatestVersionTitle";
 
-    public static final String VAR_ITEM_LATEST_VERSION_NUMBER =
-        "itemLatestVersionNumber";
+    public static final String VAR_ITEM_LATEST_VERSION_NUMBER = "itemLatestVersionNumber";
 
-    public static final String VAR_ITEM_LATEST_VERSION_DATE =
-        "itemLatestVersionDate";
+    public static final String VAR_ITEM_LATEST_VERSION_DATE = "itemLatestVersionDate";
 
-    public static final String VAR_ITEM_LATEST_RELEASE_NUMBER =
-        "itemLatestReleaseNumber";
+    public static final String VAR_ITEM_LATEST_RELEASE_NUMBER = "itemLatestReleaseNumber";
 
-    public static final String VAR_ITEM_LATEST_RELEASE_HREF =
-        "itemLatestReleaseHref";
+    public static final String VAR_ITEM_LATEST_RELEASE_HREF = "itemLatestReleaseHref";
 
-    public static final String VAR_ITEM_LATEST_RELEASE_TITLE =
-        "itemLatestReleaseTitle";
+    public static final String VAR_ITEM_LATEST_RELEASE_TITLE = "itemLatestReleaseTitle";
 
-    public static final String VAR_ITEM_LATEST_RELEASE_ID =
-        "itemLatestReleaseId";
+    public static final String VAR_ITEM_LATEST_RELEASE_ID = "itemLatestReleaseId";
 
-    public static final String VAR_ITEM_LATEST_RELEASE_DATE =
-        "itemLatestReleaseDate";
+    public static final String VAR_ITEM_LATEST_RELEASE_DATE = "itemLatestReleaseDate";
 
     public static final String LATEST_RELEASE_PID = "LATEST_RELEASE_PID";
 
-    public static final String VAR_ITEM_LATEST_RELEASE_PID =
-        "itemLatestReleasePid";
+    public static final String VAR_ITEM_LATEST_RELEASE_PID = "itemLatestReleasePid";
 
     public static final String VAR_ITEM_VERSION_PID = "itemVersionPid";
 
-    public static final String VAR_ITEM_CONTENT_MODEL_SPECIFIC =
-        "itemContentModelSpecific";
+    public static final String VAR_ITEM_CONTENT_MODEL_SPECIFIC = "itemContentModelSpecific";
 
-    public static final String VAR_COMPONENT_PROPERTIES_TITLE =
-        "componentPropertiesTitle";
+    public static final String VAR_COMPONENT_PROPERTIES_TITLE = "componentPropertiesTitle";
 
-    public static final String VAR_COMPONENT_PROPERTIES_HREF =
-        "componentPropertiesHref";
+    public static final String VAR_COMPONENT_PROPERTIES_HREF = "componentPropertiesHref";
 
-    public static final String VAR_COMPONENT_DESCRIPTION =
-        "componentDescription";
+    public static final String VAR_COMPONENT_DESCRIPTION = "componentDescription";
 
-    public static final String VAR_COMPONENT_CREATION_DATE =
-        "componentCreationDate";
+    public static final String VAR_COMPONENT_CREATION_DATE = "componentCreationDate";
 
-    public static final String VAR_COMPONENT_CREATED_BY_TITLE =
-        "componentCreatedByTitle";
+    public static final String VAR_COMPONENT_CREATED_BY_TITLE = "componentCreatedByTitle";
 
-    public static final String VAR_COMPONENT_CREATED_BY_HREF =
-        "componentCreatedByHref";
+    public static final String VAR_COMPONENT_CREATED_BY_HREF = "componentCreatedByHref";
 
-    public static final String VAR_COMPONENT_CREATED_BY_ID =
-        "componentCreatedById";
+    public static final String VAR_COMPONENT_CREATED_BY_ID = "componentCreatedById";
 
     public static final String VAR_COMPONENT_STATUS = "componentStatus";
 
-    public static final String VAR_COMPONENT_VALID_STATUS =
-        "componentValidStatus";
+    public static final String VAR_COMPONENT_VALID_STATUS = "componentValidStatus";
 
     public static final String VAR_COMPONENT_VISIBILITY = "componentVisibility";
 
-    public static final String VAR_COMPONENT_CONTENT_CATEGORY =
-        "componentContentCategory";
+    public static final String VAR_COMPONENT_CONTENT_CATEGORY = "componentContentCategory";
 
     public static final String VAR_COMPONENT_MIME_TYPE = "componentMimeType";
 
@@ -621,14 +550,11 @@ public abstract class XmlTemplateProvider {
 
     public static final String VAR_COMPONENT_FILE_NAME = "componentFileName";
 
-    public static final String VAR_COMPONENT_LOCATOR_URL =
-        "componentLocatorUrl";
+    public static final String VAR_COMPONENT_LOCATOR_URL = "componentLocatorUrl";
 
-    public static final String VAR_RESOURCES_ONTOLOGIES_NAMESPACE =
-        "resourcesOntologiesNamespace";
+    public static final String VAR_RESOURCES_ONTOLOGIES_NAMESPACE = "resourcesOntologiesNamespace";
 
-    public static final String VAR_STRUCT_RELATIONS_NAMESPACE =
-        "structRelationsNamespace";
+    public static final String VAR_STRUCT_RELATIONS_NAMESPACE = "structRelationsNamespace";
 
     public static final String VAR_PARENTS = "parents";
 
@@ -636,71 +562,51 @@ public abstract class XmlTemplateProvider {
 
     // public static final String VAR_MODIFIED_BY_TITLE = "modified-by-title";
 
-    public static final String VAR_CONTENT_MODEL_CREATION_DATE =
-        "resourceCreationDate";
+    public static final String VAR_CONTENT_MODEL_CREATION_DATE = "resourceCreationDate";
 
-    public static final String VAR_CONTENT_MODEL_CREATED_BY_TITLE =
-        "resourceCreatedByTitle";
+    public static final String VAR_CONTENT_MODEL_CREATED_BY_TITLE = "resourceCreatedByTitle";
 
-    public static final String VAR_CONTENT_MODEL_CREATED_BY_HREF =
-        "resourceCreatedByHref";
+    public static final String VAR_CONTENT_MODEL_CREATED_BY_HREF = "resourceCreatedByHref";
 
-    public static final String VAR_CONTENT_MODEL_CREATED_BY_ID =
-        "resourceCreatedById";
+    public static final String VAR_CONTENT_MODEL_CREATED_BY_ID = "resourceCreatedById";
 
-    public static final String VAR_CONTENT_MODEL_PUBLIC_STATUS =
-        "resourcePublicStatus";
+    public static final String VAR_CONTENT_MODEL_PUBLIC_STATUS = "resourcePublicStatus";
 
     public static final String VAR_CONTENT_MODEL_STATUS = VAR_CONTENT_MODEL_PUBLIC_STATUS;
 
-    public static final String VAR_CONTENT_MODEL_PUBLIC_STATUS_COMMENT =
-        "resourcePublicStatusComment";
+    public static final String VAR_CONTENT_MODEL_PUBLIC_STATUS_COMMENT = "resourcePublicStatusComment";
 
     public static final String VAR_CONTENT_MODEL_STATUS_COMMENT = VAR_CONTENT_MODEL_PUBLIC_STATUS_COMMENT;
 
-    public static final String VAR_CONTENT_MODEL_OBJECT_PID =
-        "resourceObjectPid";
+    public static final String VAR_CONTENT_MODEL_OBJECT_PID = "resourceObjectPid";
 
-    public static final String VAR_CONTENT_MODEL_LOCK_STATUS =
-        "resourceLockStatus";
+    public static final String VAR_CONTENT_MODEL_LOCK_STATUS = "resourceLockStatus";
 
     public static final String VAR_CONTENT_MODEL_LOCK_DATE = "resourceLockDate";
 
-    public static final String VAR_CONTENT_MODEL_LOCK_OWNER_ID =
-        "resourceLockOwnerId";
+    public static final String VAR_CONTENT_MODEL_LOCK_OWNER_ID = "resourceLockOwnerId";
 
-    public static final String VAR_CONTENT_MODEL_LOCK_OWNER_HREF =
-        "resourceLockOwnerHref";
+    public static final String VAR_CONTENT_MODEL_LOCK_OWNER_HREF = "resourceLockOwnerHref";
 
-    public static final String VAR_CONTENT_MODEL_LOCK_OWNER_TITLE =
-        "resourceLockOwnerTitle";
+    public static final String VAR_CONTENT_MODEL_LOCK_OWNER_TITLE = "resourceLockOwnerTitle";
 
-    public static final String VAR_CONTENT_MODEL_CURRENT_VERSION_HREF =
-        "resourceCurrentVersionHref";
+    public static final String VAR_CONTENT_MODEL_CURRENT_VERSION_HREF = "resourceCurrentVersionHref";
 
-    public static final String VAR_CONTENT_MODEL_CURRENT_VERSION_ID =
-        "resourceCurrentVersionId";
+    public static final String VAR_CONTENT_MODEL_CURRENT_VERSION_ID = "resourceCurrentVersionId";
 
-    public static final String VAR_CONTENT_MODEL_CURRENT_VERSION_TITLE =
-        "resourceCurrentVersionTitle";
+    public static final String VAR_CONTENT_MODEL_CURRENT_VERSION_TITLE = "resourceCurrentVersionTitle";
 
-    public static final String VAR_CONTENT_MODEL_CURRENT_VERSION_NUMBER =
-        "resourceCurrentVersionNumber";
+    public static final String VAR_CONTENT_MODEL_CURRENT_VERSION_NUMBER = "resourceCurrentVersionNumber";
 
-    public static final String VAR_CONTENT_MODEL_CURRENT_VERSION_DATE =
-        "resourceCurrentVersionDate";
+    public static final String VAR_CONTENT_MODEL_CURRENT_VERSION_DATE = "resourceCurrentVersionDate";
 
-    public static final String VAR_CONTENT_MODEL_CURRENT_VERSION_STATUS =
-        "resourceCurrentVersionStatus";
+    public static final String VAR_CONTENT_MODEL_CURRENT_VERSION_STATUS = "resourceCurrentVersionStatus";
 
-    public static final String VAR_CONTENT_MODEL_CURRENT_VERSION_VALID_STATUS =
-        "resourceCurrentVersionValidStatus";
+    public static final String VAR_CONTENT_MODEL_CURRENT_VERSION_VALID_STATUS = "resourceCurrentVersionValidStatus";
 
-    public static final String VAR_CONTENT_MODEL_CURRENT_VERSION_COMMENT =
-        "resourceCurrentVersionComment";
+    public static final String VAR_CONTENT_MODEL_CURRENT_VERSION_COMMENT = "resourceCurrentVersionComment";
 
-    public static final String VAR_CONTENT_MODEL_CURRENT_VERSION_MODIFIED_BY_ID =
-        "resourceCurrentVersionModifiedById";
+    public static final String VAR_CONTENT_MODEL_CURRENT_VERSION_MODIFIED_BY_ID = "resourceCurrentVersionModifiedById";
 
     public static final String VAR_CONTENT_MODEL_CURRENT_VERSION_MODIFIED_BY_TITLE =
         "resourceCurrentVersionModifiedByTitle";
@@ -708,123 +614,89 @@ public abstract class XmlTemplateProvider {
     public static final String VAR_CONTENT_MODEL_CURRENT_VERSION_MODIFIED_BY_HREF =
         "resourceCurrentVersionModifiedByHref";
 
-    public static final String VAR_CONTENT_MODEL_VERSION_PID =
-        "resourceVersionPid";
+    public static final String VAR_CONTENT_MODEL_VERSION_PID = "resourceVersionPid";
 
-    public static final String VAR_CONTENT_MODEL_LATEST_VERSION_HREF =
-        "resourceLatestVersionHref";
+    public static final String VAR_CONTENT_MODEL_LATEST_VERSION_HREF = "resourceLatestVersionHref";
 
-    public static final String VAR_CONTENT_MODEL_LATEST_VERSION_TITLE =
-        "resourceLatestVersionTitle";
+    public static final String VAR_CONTENT_MODEL_LATEST_VERSION_TITLE = "resourceLatestVersionTitle";
 
-    public static final String VAR_CONTENT_MODEL_LATEST_VERSION_ID =
-        "resourceLatestVersionId";
+    public static final String VAR_CONTENT_MODEL_LATEST_VERSION_ID = "resourceLatestVersionId";
 
-    public static final String VAR_CONTENT_MODEL_LATEST_VERSION_NUMBER =
-        "resourceLatestVersionNumber";
+    public static final String VAR_CONTENT_MODEL_LATEST_VERSION_NUMBER = "resourceLatestVersionNumber";
 
-    public static final String VAR_CONTENT_MODEL_LATEST_VERSION_DATE =
-        "resourceLatestVersionDate";
+    public static final String VAR_CONTENT_MODEL_LATEST_VERSION_DATE = "resourceLatestVersionDate";
 
-    public static final String VAR_CONTENT_MODEL_LATEST_RELEASE_NUMBER =
-        "resourceLatestReleaseNumber";
+    public static final String VAR_CONTENT_MODEL_LATEST_RELEASE_NUMBER = "resourceLatestReleaseNumber";
 
-    public static final String VAR_CONTENT_MODEL_LATEST_RELEASE_HREF =
-        "resourceLatestReleaseHref";
+    public static final String VAR_CONTENT_MODEL_LATEST_RELEASE_HREF = "resourceLatestReleaseHref";
 
-    public static final String VAR_CONTENT_MODEL_LATEST_RELEASE_TITLE =
-        "resourceLatestReleaseTitle";
+    public static final String VAR_CONTENT_MODEL_LATEST_RELEASE_TITLE = "resourceLatestReleaseTitle";
 
-    public static final String VAR_CONTENT_MODEL_LATEST_RELEASE_ID =
-        "resourceLatestReleaseId";
+    public static final String VAR_CONTENT_MODEL_LATEST_RELEASE_ID = "resourceLatestReleaseId";
 
-    public static final String VAR_CONTENT_MODEL_LATEST_RELEASE_DATE =
-        "resourceLatestReleaseDate";
+    public static final String VAR_CONTENT_MODEL_LATEST_RELEASE_DATE = "resourceLatestReleaseDate";
 
-    public static final String VAR_CONTENT_MODEL_LATEST_RELEASE_PID =
-        "resourceLatestReleasePid";
+    public static final String VAR_CONTENT_MODEL_LATEST_RELEASE_PID = "resourceLatestReleasePid";
 
-    public static final String VAR_CONTENT_MODEL_NAMESPACE_PREFIX =
-        "resourceNamespacePrefix";
+    public static final String VAR_CONTENT_MODEL_NAMESPACE_PREFIX = "resourceNamespacePrefix";
 
-    public static final String VAR_CONTENT_MODEL_NAMESPACE =
-        "resourceNamespace";
+    public static final String VAR_CONTENT_MODEL_NAMESPACE = "resourceNamespace";
 
-    public static final String VAR_CONTENT_MODEL_MDRECORD_DEFINITIONS =
-        "contentModelMdRecordDefinitions";
+    public static final String VAR_CONTENT_MODEL_MDRECORD_DEFINITIONS = "contentModelMdRecordDefinitions";
 
-    public static final String VAR_CONTENT_MODEL_RESOURCE_DEFINITIONS =
-        "contentModelResourceDefinitions";
+    public static final String VAR_CONTENT_MODEL_RESOURCE_DEFINITIONS = "contentModelResourceDefinitions";
 
-    public static final String VAR_CONTENT_STREAM_NS_PREFIX =
-        "contentStreamsNamespacePrefix";
+    public static final String VAR_CONTENT_STREAM_NS_PREFIX = "contentStreamsNamespacePrefix";
 
-    public static final String VAR_CONTENT_STREAM_NS =
-        "contentStreamsNamespace";
+    public static final String VAR_CONTENT_STREAM_NS = "contentStreamsNamespace";
 
     /*
      * Content Relation
      */
     public static final String CONTENT_RELATION_TYPE = "CONTENT_RELATION_TYPE";
 
-    public static final String CONTENT_RELATION_DESCRIPTION =
-        "CONTENT_RELATION_DESCRIPTION";
+    public static final String CONTENT_RELATION_DESCRIPTION = "CONTENT_RELATION_DESCRIPTION";
 
-    public static final String CONTENT_RELATION_SUBJECT_TITLE =
-        "contentRelationSubjectTitle";
+    public static final String CONTENT_RELATION_SUBJECT_TITLE = "contentRelationSubjectTitle";
 
-    public static final String CONTENT_RELATION_SUBJECT_HREF =
-        "contentRelationSubjectHref";
+    public static final String CONTENT_RELATION_SUBJECT_HREF = "contentRelationSubjectHref";
 
-    public static final String CONTENT_RELATION_SUBJECT_ID =
-        "contentRelationSubjectId";
+    public static final String CONTENT_RELATION_SUBJECT_ID = "contentRelationSubjectId";
 
-    public static final String CONTENT_RELATION_OBJECT_TITLE =
-        "contentRelationObjectTitle";
+    public static final String CONTENT_RELATION_OBJECT_TITLE = "contentRelationObjectTitle";
 
-    public static final String CONTENT_RELATION_OBJECT_HREF =
-        "contentRelationObjectHref";
+    public static final String CONTENT_RELATION_OBJECT_HREF = "contentRelationObjectHref";
 
-    public static final String CONTENT_RELATION_OBJECT_ID =
-        "contentRelationObjectId";
+    public static final String CONTENT_RELATION_OBJECT_ID = "contentRelationObjectId";
 
-    public static final String CONTENT_RELATION_SUBJECT_VERSION_NUMBER =
-        "contentRelationSubjectVersion";
+    public static final String CONTENT_RELATION_SUBJECT_VERSION_NUMBER = "contentRelationSubjectVersion";
 
-    public static final String CONTENT_RELATION_OBJECT_VERSION_NUMBER =
-        "contentRelationObjectVersion";
+    public static final String CONTENT_RELATION_OBJECT_VERSION_NUMBER = "contentRelationObjectVersion";
 
     /*
      * Map with templates (cache).
      */
-    private static final Map<String, String> TEMPLATES =
-        new HashMap<String, String>();
+    private static final Map<String, String> TEMPLATES = new HashMap<String, String>();
 
     private static final Map<String, Pattern> PATTERNS = new HashMap<String, Pattern>();
 
     private static final int BUFFER_SIZE = 0xFFFF;
 
     /**
-     * Get an XML fragment. First the template for the given resource and path
-     * are retrieved. Please refer to method 'public String getTemplate(final
-     * String resource, final String path)' to see how the template is found. In
-     * the second step all occurrences of the variables (the keys of the values
-     * map) are replaced by the stored value (the values of the values map).
-     * Every variable is extended to '"\\$\\{" + variable + "\\}"' before the
-     * replacement takes place.
-     * 
-     * @param resource
-     *            The name of the resource.
-     * @param path
-     *            The path to the parent of the resource.
-     * @param values
-     *            The (variable, value) pairs to replace in the template.
+     * Get an XML fragment. First the template for the given resource and path are retrieved. Please refer to method
+     * 'public String getTemplate(final String resource, final String path)' to see how the template is found. In the
+     * second step all occurrences of the variables (the keys of the values map) are replaced by the stored value (the
+     * values of the values map). Every variable is extended to '"\\$\\{" + variable + "\\}"' before the replacement
+     * takes place.
+     *
+     * @param resource The name of the resource.
+     * @param path     The path to the parent of the resource.
+     * @param values   The (variable, value) pairs to replace in the template.
      * @return The resulting XML fragment.
      * @throws WebserverSystemException .
      */
-    public String getXml(
-        final String resource, final String path,
-        final Map<String, String> values) throws WebserverSystemException {
+    public String getXml(final String resource, final String path, final Map<String, String> values)
+        throws WebserverSystemException {
 
         String result = getTemplate(resource, path);
         for (final Entry<String, String> e : values.entrySet()) {
@@ -835,26 +707,23 @@ public abstract class XmlTemplateProvider {
 
     /**
      * Replace all occurrences of variable in the source with replacement.
-     * 
-     * @param source
-     *            The source String.
-     * @param variable
-     *            The name of the variable to replace. It is extended to
-     *            '"\\$\\{" + variable + "\\}"' before the replacement takes
-     *            place.
-     * @param replacement
-     *            The String replacing the variable.
+     *
+     * @param source      The source String.
+     * @param variable    The name of the variable to replace. It is extended to '"\\$\\{" + variable + "\\}"' before
+     *                    the replacement takes place.
+     * @param replacement The String replacing the variable.
      * @return The resulting String.
      */
-    protected String replaceAll(
-        final String source, final String variable, final String replacement) {
+    protected String replaceAll(final String source, final String variable, final String replacement) {
 
         final Matcher matcher = getPattern(variable).matcher(source);
         String ret = source;
         // replaceAll does not like null if there is a match FRS 20070823
         if (matcher.find()) {
             // quoteReplacement does not like null
-            ret = replacement == null ? matcher.replaceAll("") : matcher.replaceAll(Matcher.quoteReplacement(replacement));
+            ret =
+                replacement == null ? matcher.replaceAll("") : matcher
+                    .replaceAll(Matcher.quoteReplacement(replacement));
         }
 
         return ret;
@@ -862,9 +731,8 @@ public abstract class XmlTemplateProvider {
 
     /**
      * Get the pattern for the variable for replacement.
-     * 
-     * @param variable
-     *            The variable.
+     *
+     * @param variable The variable.
      * @return The corresponding pattern.
      */
     protected Pattern getPattern(final String variable) {
@@ -878,25 +746,18 @@ public abstract class XmlTemplateProvider {
     }
 
     /**
-     * Get the template for the resource dependent on the parent. If the
-     * resource is a sub resource the path parameter gives the path to the sub
-     * resource in the surrounding object. This is necessary because there are
-     * sub resources with the same name but with different content. To clarify
-     * this here are some examples: If you want to get the template for an item,
-     * resource has to be set to 'item' and the path has to be '/', but if you
-     * want the template for a component resource has to be set to 'component'
-     * and path has to be set to 'item/components'.
-     * 
-     * @param resource
-     *            The name of the resource.
-     * @param path
-     *            The path to the parent of the resource.
+     * Get the template for the resource dependent on the parent. If the resource is a sub resource the path parameter
+     * gives the path to the sub resource in the surrounding object. This is necessary because there are sub resources
+     * with the same name but with different content. To clarify this here are some examples: If you want to get the
+     * template for an item, resource has to be set to 'item' and the path has to be '/', but if you want the template
+     * for a component resource has to be set to 'component' and path has to be set to 'item/components'.
+     *
+     * @param resource The name of the resource.
+     * @param path     The path to the parent of the resource.
      * @return The template.
-     * @throws WebserverSystemException
-     *             If the template was not found.
+     * @throws WebserverSystemException If the template was not found.
      */
-    private String getTemplate(final String resource, final String path)
-        throws WebserverSystemException {
+    private String getTemplate(final String resource, final String path) throws WebserverSystemException {
 
         String result = TEMPLATES.get(resource);
         if (result == null) {
@@ -906,8 +767,8 @@ public abstract class XmlTemplateProvider {
                 TEMPLATES.put(resource, result);
             }
             catch (final IOException e) {
-                throw new WebserverSystemException("Template for " + resource
-                    + " not available! File not found " + filename, e);
+                throw new WebserverSystemException("Template for " + resource + " not available! File not found "
+                    + filename, e);
             }
         }
         return result;
@@ -915,9 +776,8 @@ public abstract class XmlTemplateProvider {
 
     /**
      * Get the path where the resource is located.
-     * 
-     * @param path
-     *            The path to the parent of resource.
+     *
+     * @param path The path to the parent of resource.
      * @return The path to resource.
      */
     private static String getTemplatePath(final String path) {
@@ -926,12 +786,10 @@ public abstract class XmlTemplateProvider {
 
     /**
      * Get the contents of the file as String.
-     * 
-     * @param filename
-     *            The filename.
+     *
+     * @param filename The filename.
      * @return The contents of the file.
-     * @throws IOException
-     *             If the file was not found.
+     * @throws IOException If the file was not found.
      */
     private String getFileContents(final String filename) throws IOException {
         final ByteArrayOutputStream result = new ByteArrayOutputStream();
@@ -944,7 +802,8 @@ public abstract class XmlTemplateProvider {
                 result.write(buffer, 0, length);
                 length = inputStream.read(buffer);
             }
-        } finally {
+        }
+        finally {
             IOUtils.closeStream(inputStream);
         }
         return result.toString(XmlUtility.CHARACTER_ENCODING);

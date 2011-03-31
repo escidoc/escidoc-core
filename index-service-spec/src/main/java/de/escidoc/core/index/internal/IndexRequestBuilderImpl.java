@@ -3,7 +3,6 @@ package de.escidoc.core.index.internal;
 import de.escidoc.core.index.IndexRequest;
 import de.escidoc.core.index.IndexRequestBuilder;
 
-
 /**
  * Default implementation of {@link IndexRequestBuilder}.
  */
@@ -56,8 +55,6 @@ public class IndexRequestBuilderImpl extends IndexRequestBuilder {
 
     @Override
     public String toString() {
-        return "IndexRequestBuilderImpl{" +
-                "indexRequest=" + this.indexRequest +
-                '}';
+        return "IndexRequestBuilderImpl{" + "indexRequest=" + this.indexRequest + '}';
     }
 }

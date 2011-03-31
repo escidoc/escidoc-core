@@ -74,13 +74,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * An utility class for HTTP requests.<br />
- * This class uses pooled HTTP connections.
- * 
+ * An utility class for HTTP requests.<br /> This class uses pooled HTTP connections.
+ *
  * @author Steffen Wagner
- * 
- * @spring.bean id="escidoc.core.common.util.service.ConnectionUtility"
- *              scope="singleton"
  */
 public class ConnectionUtility {
 
@@ -101,42 +97,32 @@ public class ConnectionUtility {
     private boolean proxyConfigured;
 
     /**
-     * Get a response-string for the URL. If the URL contains an Authentication
-     * part then is this used and stored for this connection. Be aware to reset
-     * the authentication if the user name and password should not be reused for
+     * Get a response-string for the URL. If the URL contains an Authentication part then is this used and stored for
+     * this connection. Be aware to reset the authentication if the user name and password should not be reused for
      * later connection.
-     * 
-     * @param url
-     *            The resource URL.
+     *
+     * @param url The resource URL.
      * @return String response as String.
-     * @throws WebserverSystemException
-     *             Thrown if connection failed.
+     * @throws WebserverSystemException Thrown if connection failed.
      */
-    public String getRequestURLAsString(final URL url)
-        throws WebserverSystemException {
+    public String getRequestURLAsString(final URL url) throws WebserverSystemException {
 
         final HttpResponse httpResponse = getRequestURL(url);
         return readResponse(httpResponse);
     }
 
     /**
-     * Get a response-string for the URL. The username and password is stored
-     * for this connection. Later connection to same URL doesn't require to set
-     * the authentication again. Be aware that this could lead to an security
-     * issue! To avoid reuse reset the authentication for the URL.
-     * 
-     * @param url
-     *            The resource URL.
-     * @param username
-     *            User name for authentication.
-     * @param password
-     *            Password for authentication.
+     * Get a response-string for the URL. The username and password is stored for this connection. Later connection to
+     * same URL doesn't require to set the authentication again. Be aware that this could lead to an security issue! To
+     * avoid reuse reset the authentication for the URL.
+     *
+     * @param url      The resource URL.
+     * @param username User name for authentication.
+     * @param password Password for authentication.
      * @return String response as String.
-     * @throws WebserverSystemException
-     *             Thrown if connection failed.
+     * @throws WebserverSystemException Thrown if connection failed.
      */
-    public String getRequestURLAsString(
-        final URL url, final String username, final String password)
+    public String getRequestURLAsString(final URL url, final String username, final String password)
         throws WebserverSystemException {
 
         final HttpResponse httpResponse = getRequestURL(url, username, password);
@@ -144,40 +130,31 @@ public class ConnectionUtility {
     }
 
     /**
-     * Get a response-string for the URL. If the URL contains an Authentication
-     * part then is this used and stored for this connection. Be aware to reset
-     * the authentication if the user name and password should not be reused for
+     * Get a response-string for the URL. If the URL contains an Authentication part then is this used and stored for
+     * this connection. Be aware to reset the authentication if the user name and password should not be reused for
      * later connection. T
-     * 
-     * @param url
-     *            The resource URL.
-     * @param cookie
-     *            the Cookie.
+     *
+     * @param url    The resource URL.
+     * @param cookie the Cookie.
      * @return String response as String.
-     * @throws WebserverSystemException
-     *             Thrown if connection failed.
+     * @throws WebserverSystemException Thrown if connection failed.
      */
-    public String getRequestURLAsString(final URL url, final Cookie cookie)
-        throws WebserverSystemException {
+    public String getRequestURLAsString(final URL url, final Cookie cookie) throws WebserverSystemException {
 
         final HttpResponse httpResponse = getRequestURL(url, cookie);
         return readResponse(httpResponse);
     }
 
     /**
-     * Get a HttpGet for the URL. If the URL contains an Authentication part
-     * then is this used and stored for this connection. Be aware to reset the
-     * authentication if the user name and password should not be reused for
-     * later connection.
-     * 
-     * @param url
-     *            The resource URL.
+     * Get a HttpGet for the URL. If the URL contains an Authentication part then is this used and stored for this
+     * connection. Be aware to reset the authentication if the user name and password should not be reused for later
+     * connection.
+     *
+     * @param url The resource URL.
      * @return HttpGet.
-     * @throws WebserverSystemException
-     *             Thrown if connection failed.
+     * @throws WebserverSystemException Thrown if connection failed.
      */
-    public HttpResponse getRequestURL(final URL url)
-        throws WebserverSystemException {
+    public HttpResponse getRequestURL(final URL url) throws WebserverSystemException {
 
         final String username;
         final String password;
@@ -197,23 +174,17 @@ public class ConnectionUtility {
     }
 
     /**
-     * Get the HttpGet with authentication. The username and password is stored
-     * for this connection. Later connection to same URL doesn't require to set
-     * the authentication again. Be aware that this could lead to an security
-     * issue! To avoid reuse reset the authentication for the URL.
-     * 
-     * @param url
-     *            URL of resource.
-     * @param username
-     *            User name for authentication.
-     * @param password
-     *            Password for authentication.
+     * Get the HttpGet with authentication. The username and password is stored for this connection. Later connection to
+     * same URL doesn't require to set the authentication again. Be aware that this could lead to an security issue! To
+     * avoid reuse reset the authentication for the URL.
+     *
+     * @param url      URL of resource.
+     * @param username User name for authentication.
+     * @param password Password for authentication.
      * @return HttpGet
-     * @throws WebserverSystemException
-     *             Thrown if connection failed.
+     * @throws WebserverSystemException Thrown if connection failed.
      */
-    public HttpResponse getRequestURL(
-        final URL url, final String username, final String password)
+    public HttpResponse getRequestURL(final URL url, final String username, final String password)
         throws WebserverSystemException {
 
         setAuthentication(url, username, password);
@@ -222,65 +193,48 @@ public class ConnectionUtility {
 
     /**
      * Get the HttpGet with a cookie.
-     * 
-     * @param url
-     *            URL of resource.
-     * @param cookie
-     *            the Cookie.
+     *
+     * @param url    URL of resource.
+     * @param cookie the Cookie.
      * @return HttpGet
-     * @throws WebserverSystemException
-     *             Thrown if connection failed.
+     * @throws WebserverSystemException Thrown if connection failed.
      */
-    public HttpResponse getRequestURL(final URL url, final Cookie cookie)
-        throws WebserverSystemException {
+    public HttpResponse getRequestURL(final URL url, final Cookie cookie) throws WebserverSystemException {
 
         return get(url.toString(), cookie);
     }
 
     /**
-     * Get a response-string for the URL. The username and password is stored
-     * for this connection. Later connection to same URL doesn't require to set
-     * the authentication again. Be aware that this could lead to an security
-     * issue! To avoid reuse reset the authentication for the URL.
-     * 
-     * @param url
-     *            The resource URL.
-     * @param body
-     *            The body of HTTP request.
-     * @param username
-     *            User name for authentication.
-     * @param password
-     *            Password for authentication.
+     * Get a response-string for the URL. The username and password is stored for this connection. Later connection to
+     * same URL doesn't require to set the authentication again. Be aware that this could lead to an security issue! To
+     * avoid reuse reset the authentication for the URL.
+     *
+     * @param url      The resource URL.
+     * @param body     The body of HTTP request.
+     * @param username User name for authentication.
+     * @param password Password for authentication.
      * @return String response as String.
-     * @throws WebserverSystemException
-     *             Thrown if connection failed.
+     * @throws WebserverSystemException Thrown if connection failed.
      */
-    public String putRequestURLAsString(
-        final URL url, final String body, final String username,
-        final String password) throws WebserverSystemException {
+    public String putRequestURLAsString(final URL url, final String body, final String username, final String password)
+        throws WebserverSystemException {
 
         final HttpResponse method = putRequestURL(url, body, username, password);
         return readResponse(method);
     }
 
     /**
-     * Get a response-string for the URL. If the URL contains an Authentication
-     * part then is this used and stored for this connection. Be aware to reset
-     * the authentication if the user name and password should not be reused for
+     * Get a response-string for the URL. If the URL contains an Authentication part then is this used and stored for
+     * this connection. Be aware to reset the authentication if the user name and password should not be reused for
      * later connection.
-     * 
-     * @param url
-     *            The resource URL.
-     * @param body
-     *            The body of HTTP request.
-     * @param cookie
-     *            the Cookie.
+     *
+     * @param url    The resource URL.
+     * @param body   The body of HTTP request.
+     * @param cookie the Cookie.
      * @return String response as String.
-     * @throws WebserverSystemException
-     *             Thrown if connection failed.
+     * @throws WebserverSystemException Thrown if connection failed.
      */
-    public String putRequestURLAsString(
-        final URL url, final String body, final Cookie cookie)
+    public String putRequestURLAsString(final URL url, final String body, final Cookie cookie)
         throws WebserverSystemException {
 
         final HttpResponse method = putRequestURL(url, body, cookie);
@@ -288,26 +242,19 @@ public class ConnectionUtility {
     }
 
     /**
-     * Get the HttpPut with authentication. Username and password is stored for
-     * connection. Later connections to same URL doesn't require to set
-     * authentication again. Be aware that this could lead to an security issue!
-     * To avoid reuse reset the authentication for the URL.
-     * 
-     * @param url
-     *            URL of resource.
-     * @param body
-     *            The body of HTTP request.
-     * @param username
-     *            User name for authentication.
-     * @param password
-     *            Password for authentication.
+     * Get the HttpPut with authentication. Username and password is stored for connection. Later connections to same
+     * URL doesn't require to set authentication again. Be aware that this could lead to an security issue! To avoid
+     * reuse reset the authentication for the URL.
+     *
+     * @param url      URL of resource.
+     * @param body     The body of HTTP request.
+     * @param username User name for authentication.
+     * @param password Password for authentication.
      * @return HttpPut
-     * @throws WebserverSystemException
-     *             Thrown if connection failed.
+     * @throws WebserverSystemException Thrown if connection failed.
      */
-    public HttpResponse putRequestURL(
-        final URL url, final String body, final String username,
-        final String password) throws WebserverSystemException {
+    public HttpResponse putRequestURL(final URL url, final String body, final String username, final String password)
+        throws WebserverSystemException {
 
         setAuthentication(url, username, password);
         return put(url.toString(), body);
@@ -315,45 +262,33 @@ public class ConnectionUtility {
 
     /**
      * Get the HttpPut with a cookie.
-     * 
-     * @param url
-     *            URL of resource.
-     * @param body
-     *            The body of HTTP request.
-     * @param cookie
-     *            the Cookie.
+     *
+     * @param url    URL of resource.
+     * @param body   The body of HTTP request.
+     * @param cookie the Cookie.
      * @return HttpPut
-     * @throws WebserverSystemException
-     *             Thrown if connection failed.
+     * @throws WebserverSystemException Thrown if connection failed.
      */
-    public HttpResponse putRequestURL(
-        final URL url, final String body, final Cookie cookie)
+    public HttpResponse putRequestURL(final URL url, final String body, final Cookie cookie)
         throws WebserverSystemException {
 
         return put(url.toString(), body, cookie);
     }
 
     /**
-     * Get a response-string for the URL. The username and password is stored
-     * for this connection. Later connection to same URL doesn't require to set
-     * the authentication again. Be aware that this could lead to an security
-     * issue! To avoid reuse reset the authentication for the URL.
-     * 
-     * @param url
-     *            The resource URL.
-     * @param body
-     *            The body of HTTP request.
-     * @param username
-     *            User name for authentication.
-     * @param password
-     *            Password for authentication.
+     * Get a response-string for the URL. The username and password is stored for this connection. Later connection to
+     * same URL doesn't require to set the authentication again. Be aware that this could lead to an security issue! To
+     * avoid reuse reset the authentication for the URL.
+     *
+     * @param url      The resource URL.
+     * @param body     The body of HTTP request.
+     * @param username User name for authentication.
+     * @param password Password for authentication.
      * @return String response as String.
-     * @throws WebserverSystemException
-     *             Thrown if connection failed.
+     * @throws WebserverSystemException Thrown if connection failed.
      */
-    public String postRequestURLAsString(
-        final URL url, final String body, final String username,
-        final String password) throws WebserverSystemException {
+    public String postRequestURLAsString(final URL url, final String body, final String username, final String password)
+        throws WebserverSystemException {
 
         final HttpResponse method = postRequestURL(url, body, username, password);
         return readResponse(method);
@@ -361,19 +296,14 @@ public class ConnectionUtility {
 
     /**
      * Get a response-string for the URL. Cookie is set.
-     * 
-     * @param url
-     *            The resource URL.
-     * @param body
-     *            The body of HTTP request.
-     * @param cookie
-     *            the Cookie.
+     *
+     * @param url    The resource URL.
+     * @param body   The body of HTTP request.
+     * @param cookie the Cookie.
      * @return String response as String.
-     * @throws WebserverSystemException
-     *             Thrown if connection failed.
+     * @throws WebserverSystemException Thrown if connection failed.
      */
-    public String postRequestURLAsString(
-        final URL url, final String body, final Cookie cookie)
+    public String postRequestURLAsString(final URL url, final String body, final Cookie cookie)
         throws WebserverSystemException {
 
         final HttpResponse method = postRequestURL(url, body, cookie);
@@ -381,26 +311,19 @@ public class ConnectionUtility {
     }
 
     /**
-     * Get the HttpPost with authentication. Username and password is stored for
-     * connection. Later connections to same URL doesn't require to set
-     * authentication again. Be aware that this could lead to an security issue!
-     * To avoid reuse reset the authentication for the URL.
-     * 
-     * @param url
-     *            URL of resource.
-     * @param body
-     *            The post body of HTTP request.
-     * @param username
-     *            User name for authentication.
-     * @param password
-     *            Password for authentication.
+     * Get the HttpPost with authentication. Username and password is stored for connection. Later connections to same
+     * URL doesn't require to set authentication again. Be aware that this could lead to an security issue! To avoid
+     * reuse reset the authentication for the URL.
+     *
+     * @param url      URL of resource.
+     * @param body     The post body of HTTP request.
+     * @param username User name for authentication.
+     * @param password Password for authentication.
      * @return HttpPost
-     * @throws WebserverSystemException
-     *             Thrown if connection failed.
+     * @throws WebserverSystemException Thrown if connection failed.
      */
-    public HttpResponse postRequestURL(
-        final URL url, final String body, final String username,
-        final String password) throws WebserverSystemException {
+    public HttpResponse postRequestURL(final URL url, final String body, final String username, final String password)
+        throws WebserverSystemException {
 
         setAuthentication(url, username, password);
         return post(url.toString(), body);
@@ -408,42 +331,31 @@ public class ConnectionUtility {
 
     /**
      * Get the HttpPost with a Cookie.
-     * 
-     * @param url
-     *            URL of resource.
-     * @param body
-     *            The post body of HTTP request.
-     * @param cookie
-     *            The Cookie.
+     *
+     * @param url    URL of resource.
+     * @param body   The post body of HTTP request.
+     * @param cookie The Cookie.
      * @return HttpPost
-     * @throws WebserverSystemException
-     *             Thrown if connection failed.
+     * @throws WebserverSystemException Thrown if connection failed.
      */
-    public HttpResponse postRequestURL(
-        final URL url, final String body, final Cookie cookie)
+    public HttpResponse postRequestURL(final URL url, final String body, final Cookie cookie)
         throws WebserverSystemException {
 
         return post(url.toString(), body, cookie);
     }
 
     /**
-     * Get the HttpDelete with authentication. Username and password is stored
-     * for connection. Later connections to same URL doesn't require to set
-     * authentication again. Be aware that this could lead to an security issue!
-     * To avoid reuse reset the authentication for the URL.
-     * 
-     * @param url
-     *            URL of resource.
-     * @param username
-     *            User name for authentication.
-     * @param password
-     *            Password for authentication.
+     * Get the HttpDelete with authentication. Username and password is stored for connection. Later connections to same
+     * URL doesn't require to set authentication again. Be aware that this could lead to an security issue! To avoid
+     * reuse reset the authentication for the URL.
+     *
+     * @param url      URL of resource.
+     * @param username User name for authentication.
+     * @param password Password for authentication.
      * @return HttpDelete
-     * @throws WebserverSystemException
-     *             Thrown if connection failed.
+     * @throws WebserverSystemException Thrown if connection failed.
      */
-    public HttpDelete deleteRequestURL(
-        final URL url, final String username, final String password)
+    public HttpDelete deleteRequestURL(final URL url, final String username, final String password)
         throws WebserverSystemException {
 
         setAuthentication(url, username, password);
@@ -452,44 +364,32 @@ public class ConnectionUtility {
 
     /**
      * Get the HttpDelete with a Cookie.
-     * 
-     * @param url
-     *            URL of resource.
-     * @param cookie
-     *            The cookie.
+     *
+     * @param url    URL of resource.
+     * @param cookie The cookie.
      * @return HttpDelete
-     * @throws WebserverSystemException
-     *             Thrown if connection failed.
+     * @throws WebserverSystemException Thrown if connection failed.
      */
-    public HttpDelete deleteRequestURL(final URL url, final Cookie cookie)
-        throws WebserverSystemException {
+    public HttpDelete deleteRequestURL(final URL url, final Cookie cookie) throws WebserverSystemException {
 
         return delete(url.toString(), cookie);
     }
 
     /**
      * Set Authentication stuff.
-     * 
-     * @param url
-     *            URL of resource.
-     * @param username
-     *            User name for authentication
-     * @param password
-     *            Password for authentication.
-     * @throws WebserverSystemException
-     *             e
+     *
+     * @param url      URL of resource.
+     * @param username User name for authentication
+     * @param password Password for authentication.
+     * @throws WebserverSystemException e
      */
-    public void setAuthentication(
-        final URL url, final String username, final String password)
+    public void setAuthentication(final URL url, final String username, final String password)
         throws WebserverSystemException {
 
         final CredentialsProvider credsProvider = new BasicCredentialsProvider();
 
-        final AuthScope authScope =
-            new AuthScope(url.getHost(), AuthScope.ANY_PORT,
-                AuthScope.ANY_REALM);
-        final Credentials creds =
-            new UsernamePasswordCredentials(username, password);
+        final AuthScope authScope = new AuthScope(url.getHost(), AuthScope.ANY_PORT, AuthScope.ANY_REALM);
+        final Credentials creds = new UsernamePasswordCredentials(username, password);
         credsProvider.setCredentials(authScope, creds);
 
         this.getHttpClient(null).setCredentialsProvider(credsProvider);
@@ -498,25 +398,16 @@ public class ConnectionUtility {
         final HttpRequestInterceptor preemptiveAuth = new HttpRequestInterceptor() {
 
             @Override
-            public void process(
-                final HttpRequest request, final HttpContext context)
-                throws HttpException, IOException {
+            public void process(final HttpRequest request, final HttpContext context) throws HttpException, IOException {
 
-                final AuthState authState =
-                    (AuthState) context
-                        .getAttribute(ClientContext.TARGET_AUTH_STATE);
+                final AuthState authState = (AuthState) context.getAttribute(ClientContext.TARGET_AUTH_STATE);
                 final CredentialsProvider credsProvider =
-                    (CredentialsProvider) context
-                        .getAttribute(ClientContext.CREDS_PROVIDER);
-                final HttpHost targetHost =
-                    (HttpHost) context
-                        .getAttribute(ExecutionContext.HTTP_TARGET_HOST);
+                    (CredentialsProvider) context.getAttribute(ClientContext.CREDS_PROVIDER);
+                final HttpHost targetHost = (HttpHost) context.getAttribute(ExecutionContext.HTTP_TARGET_HOST);
 
                 // If not auth scheme has been initialized yet
                 if (authState.getAuthScheme() == null) {
-                    final AuthScope authScope =
-                        new AuthScope(targetHost.getHostName(),
-                            targetHost.getPort());
+                    final AuthScope authScope = new AuthScope(targetHost.getHostName(), targetHost.getPort());
                     // Obtain credentials matching the target host
                     final Credentials creds = credsProvider.getCredentials(authScope);
                     // If found, generate BasicScheme preemptively
@@ -535,42 +426,35 @@ public class ConnectionUtility {
 
     /**
      * Delete a specific authentication entry from HTTPClient.
-     * 
-     * @param url
-     *            The URL to the resource.
+     *
+     * @param url The URL to the resource.
      */
     public void resetAuthentication(final URL url) {
 
-        final AuthScope authScope =
-            new AuthScope(url.getHost(), AuthScope.ANY_PORT,
-                AuthScope.ANY_REALM);
+        final AuthScope authScope = new AuthScope(url.getHost(), AuthScope.ANY_PORT, AuthScope.ANY_REALM);
 
-        final Credentials creds =
-            new UsernamePasswordCredentials("", "");
+        final Credentials creds = new UsernamePasswordCredentials("", "");
 
         httpClient.getCredentialsProvider().setCredentials(authScope, creds);
     }
 
     /**
      * set ProxyHost according to escidoc-core.properties.
-     * 
+     *
      * @return HttpHost
-     * 
-     * @throws WebserverSystemException
-     *             e
+     * @throws WebserverSystemException e
      */
     private HttpHost getProxyHost() throws WebserverSystemException {
         try {
-            if (! this.proxyConfigured) {
+            if (!this.proxyConfigured) {
                 final String proxyHostName =
-                    EscidocConfiguration.getInstance().get(
-                        EscidocConfiguration.ESCIDOC_CORE_PROXY_HOST);
+                    EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_PROXY_HOST);
                 final String proxyPort =
-                    EscidocConfiguration.getInstance().get(
-                        EscidocConfiguration.ESCIDOC_CORE_PROXY_PORT);
+                    EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_PROXY_PORT);
                 if (proxyHostName != null && proxyHostName.trim().length() != 0) {
-                    this.proxyHost = proxyPort != null && proxyPort.trim().length() != 0 ? new HttpHost(proxyHostName,
-                            Integer.parseInt(proxyPort)) : new HttpHost(proxyHostName);
+                    this.proxyHost =
+                        proxyPort != null && proxyPort.trim().length() != 0 ? new HttpHost(proxyHostName, Integer
+                            .parseInt(proxyPort)) : new HttpHost(proxyHostName);
                 }
                 this.proxyConfigured = true;
             }
@@ -583,21 +467,16 @@ public class ConnectionUtility {
     }
 
     /**
-     * check if proxy has to get used for given url. If yes, set ProxyHost in
-     * httpClient
-     * 
-     * @param url
-     *            url
-     * 
-     * @throws WebserverSystemException
-     *             e
+     * check if proxy has to get used for given url. If yes, set ProxyHost in httpClient
+     *
+     * @param url url
+     * @throws WebserverSystemException e
      */
     private void setProxy(final CharSequence url) throws WebserverSystemException {
         try {
             if (this.proxyHost != null) {
                 String nonProxyHosts =
-                    EscidocConfiguration.getInstance().get(
-                        EscidocConfiguration.ESCIDOC_CORE_NON_PROXY_HOSTS);
+                    EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_NON_PROXY_HOSTS);
                 if (nonProxyHosts != null && nonProxyHosts.trim().length() != 0) {
                     nonProxyHosts = nonProxyHosts.replaceAll("\\.", "\\\\.");
                     nonProxyHosts = nonProxyHosts.replaceAll("\\*", "");
@@ -605,17 +484,14 @@ public class ConnectionUtility {
                     final Pattern nonProxyPattern = Pattern.compile(nonProxyHosts);
                     final Matcher nonProxyMatcher = nonProxyPattern.matcher(url);
                     if (nonProxyMatcher.find()) {
-                        this.httpClient.getParams().setParameter(
-                            ConnRoutePNames.DEFAULT_PROXY, null);
+                        this.httpClient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, null);
                     }
                     else {
-                        this.httpClient.getParams().setParameter(
-                            ConnRoutePNames.DEFAULT_PROXY, this.proxyHost);
+                        this.httpClient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, this.proxyHost);
                     }
                 }
                 else {
-                    this.httpClient.getParams().setParameter(
-                        ConnRoutePNames.DEFAULT_PROXY, this.proxyHost);
+                    this.httpClient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, this.proxyHost);
 
                 }
             }
@@ -627,28 +503,21 @@ public class ConnectionUtility {
 
     /**
      * Get the HTTP Client (multi threaded).
-     * 
-     * @param url
-     *            the url to call with the httpClient used to decide if proxy
-     *            has to get used.
+     *
+     * @param url the url to call with the httpClient used to decide if proxy has to get used.
      * @return HttpClient
-     * @throws WebserverSystemException
-     *             e
+     * @throws WebserverSystemException e
      */
-    public DefaultHttpClient getHttpClient(final String url)
-        throws WebserverSystemException {
+    public DefaultHttpClient getHttpClient(final String url) throws WebserverSystemException {
         if (this.httpClient == null) {
 
             final HttpParams params = new BasicHttpParams();
-            ConnManagerParams.setMaxTotalConnections(params,
-                HTTP_MAX_TOTAL_CONNECTIONS_FACTOR);
+            ConnManagerParams.setMaxTotalConnections(params, HTTP_MAX_TOTAL_CONNECTIONS_FACTOR);
 
-            final ConnPerRoute connPerRoute =
-                new ConnPerRouteBean(HTTP_MAX_CONNECTIONS_PER_HOST);
+            final ConnPerRoute connPerRoute = new ConnPerRouteBean(HTTP_MAX_CONNECTIONS_PER_HOST);
             ConnManagerParams.setMaxConnectionsPerRoute(params, connPerRoute);
 
-            final Scheme http =
-                new Scheme("http", PlainSocketFactory.getSocketFactory(), 80);
+            final Scheme http = new Scheme("http", PlainSocketFactory.getSocketFactory(), 80);
 
             // Schema für SSL Verbindungen
             // SSLSocketFactory sf = new
@@ -677,12 +546,10 @@ public class ConnectionUtility {
 
     /**
      * Call the HttpGet.
-     * 
-     * @param url
-     *            The URL for the HTTP GET method.
+     *
+     * @param url The URL for the HTTP GET method.
      * @return HttpGet
-     * @throws WebserverSystemException
-     *             If connection failed.
+     * @throws WebserverSystemException If connection failed.
      */
     private HttpResponse get(final String url) throws WebserverSystemException {
 
@@ -691,26 +558,20 @@ public class ConnectionUtility {
 
     /**
      * Call the HttpGet.
-     * 
-     * @param url
-     *            The URL for the HTTP GET method.
-     * @param cookie
-     *            The Cookie.
+     *
+     * @param url    The URL for the HTTP GET method.
+     * @param cookie The Cookie.
      * @return HttpGet
-     * @throws WebserverSystemException
-     *             If connection failed.
+     * @throws WebserverSystemException If connection failed.
      */
-    private HttpResponse get(final String url, final Cookie cookie)
-        throws WebserverSystemException {
+    private HttpResponse get(final String url, final Cookie cookie) throws WebserverSystemException {
 
         HttpResponse httpResponse = null;
         try {
             final HttpGet httpGet = new HttpGet(new URI(url));
             if (cookie != null) {
-                HttpClientParams.setCookiePolicy(httpGet.getParams(),
-                    CookiePolicy.BEST_MATCH);
-                httpGet.setHeader("Cookie",
-                    cookie.getName() + '=' + cookie.getValue());
+                HttpClientParams.setCookiePolicy(httpGet.getParams(), CookiePolicy.BEST_MATCH);
+                httpGet.setHeader("Cookie", cookie.getName() + '=' + cookie.getValue());
             }
             httpResponse = getHttpClient(url).execute(httpGet);
 
@@ -722,12 +583,13 @@ public class ConnectionUtility {
                 // TODO logging, Url abgelöst?
                 // URLEncodedUtils.LOGGER.debug("Connection to '" + url
                 // + "' failed with response code " + responseCode);
-                throw new WebserverSystemException("HTTP connection to \""
-                    + url + "\" failed: " + errorPage);
+                throw new WebserverSystemException("HTTP connection to \"" + url + "\" failed: " + errorPage);
             }
-        } catch (final IOException e) {
+        }
+        catch (final IOException e) {
             throw new WebserverSystemException(e);
-        } catch (final URISyntaxException e) {
+        }
+        catch (final URISyntaxException e) {
             throw new WebserverSystemException("Illegal URL '" + url + "'.", e);
         }
         return httpResponse;
@@ -735,12 +597,10 @@ public class ConnectionUtility {
 
     /**
      * Call the HttpDelete.
-     * 
-     * @param url
-     *            The URL for the HTTP DELETE method.
+     *
+     * @param url The URL for the HTTP DELETE method.
      * @return HttpDelete
-     * @throws WebserverSystemException
-     *             If connection failed.
+     * @throws WebserverSystemException If connection failed.
      */
     private HttpDelete delete(final String url) throws WebserverSystemException {
 
@@ -749,85 +609,73 @@ public class ConnectionUtility {
 
     /**
      * Call the HttpDelete.
-     * 
-     * @param url
-     *            The URL for the HTTP DELETE method.
-     * @param cookie
-     *            The Cookie.
+     *
+     * @param url    The URL for the HTTP DELETE method.
+     * @param cookie The Cookie.
      * @return HttpDelete
-     * @throws WebserverSystemException
-     *             If connection failed.
-     * @throws
+     * @throws WebserverSystemException If connection failed.
      */
-    private HttpDelete delete(final String url, final Cookie cookie)
-        throws WebserverSystemException {
+    private HttpDelete delete(final String url, final Cookie cookie) throws WebserverSystemException {
         try {
             final HttpDelete delete = new HttpDelete(new URI(url));
             final HttpResponse httpResponse = getHttpClient(url).execute(delete);
             if (httpResponse.getStatusLine().getStatusCode() != HttpServletResponse.SC_OK) {
                 final String errorPage = readResponse(httpResponse);
-                throw new WebserverSystemException("HTTP connection to \""
-                    + url + "\" failed: " + errorPage);
+                throw new WebserverSystemException("HTTP connection to \"" + url + "\" failed: " + errorPage);
             }
             return delete;
-        } catch (final IOException e) {
+        }
+        catch (final IOException e) {
             throw new WebserverSystemException(e);
-        } catch (final URISyntaxException e) {
+        }
+        catch (final URISyntaxException e) {
             throw new WebserverSystemException(e);
-        } catch (final IllegalArgumentException e) {
+        }
+        catch (final IllegalArgumentException e) {
             throw new WebserverSystemException(e);
         }
     }
 
     /**
      * Call the HttpPut.
-     * 
-     * @param url
-     *            The URL for the HTTP PUT request
-     * @param body
-     *            The body for the PUT request.
+     *
+     * @param url  The URL for the HTTP PUT request
+     * @param body The body for the PUT request.
      * @return HttpPut
-     * @throws WebserverSystemException
-     *             If connection failed.
+     * @throws WebserverSystemException If connection failed.
      */
-    private HttpResponse put(final String url, final String body)
-        throws WebserverSystemException {
+    private HttpResponse put(final String url, final String body) throws WebserverSystemException {
         return put(url, body, null);
     }
 
     /**
      * Call the HttpPut.
-     * 
-     * @param url
-     *            The URL for the HTTP PUT request
-     * @param body
-     *            The body for the PUT request.
-     * @param cookie
-     *            The Cookie.
+     *
+     * @param url    The URL for the HTTP PUT request
+     * @param body   The body for the PUT request.
+     * @param cookie The Cookie.
      * @return HttpPut
-     * @throws WebserverSystemException
-     *             If connection failed.
+     * @throws WebserverSystemException If connection failed.
      */
-    private HttpResponse put(
-        final String url, final String body, final Cookie cookie)
-        throws WebserverSystemException {
+    private HttpResponse put(final String url, final String body, final Cookie cookie) throws WebserverSystemException {
 
         final HttpResponse httpResponse;
         try {
-            final HttpEntity entity = new StringEntity(body, Constants.DEFAULT_MIME_TYPE,
-                    XmlUtility.CHARACTER_ENCODING);
+            final HttpEntity entity =
+                new StringEntity(body, Constants.DEFAULT_MIME_TYPE, XmlUtility.CHARACTER_ENCODING);
             final HttpPut httpPut = new HttpPut(url);
             httpPut.setEntity(entity);
             httpResponse = getHttpClient(url).execute(httpPut);
             final int responseCode = httpResponse.getStatusLine().getStatusCode();
             if (responseCode != HttpServletResponse.SC_OK) {
                 final String errorPage = readResponse(httpResponse);
-                throw new WebserverSystemException("HTTP connection to \""
-                    + url + "\" failed: " + errorPage);
+                throw new WebserverSystemException("HTTP connection to \"" + url + "\" failed: " + errorPage);
             }
-        } catch (final UnsupportedEncodingException e) {
+        }
+        catch (final UnsupportedEncodingException e) {
             throw new WebserverSystemException(e);
-        } catch (final IOException e) {
+        }
+        catch (final IOException e) {
             throw new WebserverSystemException(e);
         }
         return httpResponse;
@@ -835,37 +683,27 @@ public class ConnectionUtility {
 
     /**
      * Call the HttpPost.
-     * 
-     * @param url
-     *            The URL for the HTTP POST request
-     * @param body
-     *            The body for the POST request.
+     *
+     * @param url  The URL for the HTTP POST request
+     * @param body The body for the POST request.
      * @return HttpPost
-     * @throws WebserverSystemException
-     *             If connection failed.
+     * @throws WebserverSystemException If connection failed.
      */
-    private HttpResponse post(final String url, final String body)
-        throws WebserverSystemException {
+    private HttpResponse post(final String url, final String body) throws WebserverSystemException {
 
         return post(url, body, null);
     }
 
     /**
      * Call the HttpPost.
-     * 
-     * @param url
-     *            The URL for the HTTP POST request
-     * @param body
-     *            The body for the POST request.
-     * @param cookie
-     *            The Cookie.
+     *
+     * @param url    The URL for the HTTP POST request
+     * @param body   The body for the POST request.
+     * @param cookie The Cookie.
      * @return HttpResponse
-     * @throws WebserverSystemException
-     *             If connection failed.
+     * @throws WebserverSystemException If connection failed.
      */
-    private HttpResponse post(
-        final String url, final String body, final Cookie cookie)
-        throws WebserverSystemException {
+    private HttpResponse post(final String url, final String body, final Cookie cookie) throws WebserverSystemException {
 
         final HttpResponse httpResponse;
         try {
@@ -874,10 +712,8 @@ public class ConnectionUtility {
             final HttpPost httpPost = new HttpPost(url);
 
             if (cookie != null) {
-                HttpClientParams.setCookiePolicy(httpPost.getParams(),
-                    CookiePolicy.BEST_MATCH);
-                httpPost.setHeader("Cookie",
-                    cookie.getName() + '=' + cookie.getValue());
+                HttpClientParams.setCookiePolicy(httpPost.getParams(), CookiePolicy.BEST_MATCH);
+                httpPost.setHeader("Cookie", cookie.getName() + '=' + cookie.getValue());
             }
 
             httpResponse = getHttpClient(url).execute(httpPost);
@@ -891,15 +727,12 @@ public class ConnectionUtility {
 
     /**
      * Reads the response as String from the HttpResponse class.
-     * 
-     * @param httpResponse
-     *            The HttpResponse.
+     *
+     * @param httpResponse The HttpResponse.
      * @return String.
-     * @throws WebserverSystemException
-     *             Thrown if connection failed.
+     * @throws WebserverSystemException Thrown if connection failed.
      */
-    public String readResponse(final HttpResponse httpResponse)
-        throws WebserverSystemException {
+    public String readResponse(final HttpResponse httpResponse) throws WebserverSystemException {
         try {
             return EntityUtils.toString(httpResponse.getEntity(), HTTP.UTF_8);
         }
@@ -909,15 +742,13 @@ public class ConnectionUtility {
     }
 
     /**
-     * @param timeout
-     *            the timeout to set
+     * @param timeout the timeout to set
      */
     public void setTimeout(final int timeout) {
         this.timeout = timeout;
         if (this.httpClient != null) {
 
-            httpClient.getParams().setIntParameter(
-                CoreConnectionPNames.SO_TIMEOUT, timeout);
+            httpClient.getParams().setIntParameter(CoreConnectionPNames.SO_TIMEOUT, timeout);
             // TODO:
             // http.protocol.expect-continue': activates Expect: 100-Continue
             // handshake for the

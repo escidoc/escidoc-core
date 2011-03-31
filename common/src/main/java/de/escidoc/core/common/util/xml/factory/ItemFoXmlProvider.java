@@ -36,8 +36,7 @@ public final class ItemFoXmlProvider extends InfrastructureFoXmlProvider {
 
     private static final String CONTENT_RESOURCE_NAME = "content";
 
-    private static final String DEFAULT_DC_RESOURCE_NAME =
-        "component-dc-default";
+    private static final String DEFAULT_DC_RESOURCE_NAME = "component-dc-default";
 
     private static final String ITEM_RELS_EXT_PATH = ITEM_PATH;
 
@@ -51,110 +50,92 @@ public final class ItemFoXmlProvider extends InfrastructureFoXmlProvider {
 
     /**
      * Private constructor to prevent initialization.
-     * 
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
      *
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     private ItemFoXmlProvider() {
     }
 
     /**
      * Gets the Item FoXML PROVIDER.
-     * 
-     * @return Returns the <code>ItemFoXmlProvider</code> object.
-     * @throws WebserverSystemException
-     *             Thrown if the instance cannot be created due to an internal
-     *             error.
      *
+     * @return Returns the <code>ItemFoXmlProvider</code> object.
+     * @throws WebserverSystemException Thrown if the instance cannot be created due to an internal error.
      */
     public static ItemFoXmlProvider getInstance() {
         return PROVIDER;
     }
 
     /**
-     * 
+     *
      * @param values
      * @return
      * @throws WebserverSystemException
      */
-    public String getItemFoXml(final Map values)
-        throws WebserverSystemException {
+    public String getItemFoXml(final Map values) throws WebserverSystemException {
 
         return getXml(ITEM_RESOURCE_NAME, ITEM_PATH, values);
     }
 
     /**
-     * 
+     *
      * @param values
      * @return
      * @throws WebserverSystemException
      */
-    public String getComponentFoXml(final Map values)
-        throws WebserverSystemException {
+    public String getComponentFoXml(final Map values) throws WebserverSystemException {
 
         return getXml(COMPONENT_RESOURCE_NAME, COMPONENT_PATH, values);
     }
 
     /**
      * Get FOXML for Content.
-     * 
-     * @param values
-     *            Map with values for template.
+     *
+     * @param values Map with values for template.
      * @return FOXML part for Content.
-     * @throws WebserverSystemException
      */
-    public String getContentFoXml(final Map values)
-        throws WebserverSystemException {
+    public String getContentFoXml(final Map values) throws WebserverSystemException {
 
         return getXml(CONTENT_RESOURCE_NAME, COMPONENT_PATH, values);
     }
 
     /**
-     * 
+     *
      * @param values
      * @return
      * @throws WebserverSystemException
      */
-    public String getComponentDefaultDc(final Map values)
-        throws WebserverSystemException {
+    public String getComponentDefaultDc(final Map values) throws WebserverSystemException {
 
         return getXml(DEFAULT_DC_RESOURCE_NAME, COMPONENT_PATH, values);
     }
 
     /**
-     * 
+     *
      * @param values
      * @return
      * @throws WebserverSystemException
      */
-    public String getItemRelsExt(final Map values)
-        throws WebserverSystemException {
+    public String getItemRelsExt(final Map values) throws WebserverSystemException {
 
         return getXml(RELS_EXT_RESOURCE_NAME, ITEM_RELS_EXT_PATH, values);
     }
 
     /**
-     * 
+     *
      * @param values
      * @return
      * @throws WebserverSystemException
      */
-    public String getComponentRelsExt(final Map values)
-        throws WebserverSystemException {
+    public String getComponentRelsExt(final Map values) throws WebserverSystemException {
 
         return getXml(RELS_EXT_RESOURCE_NAME, COMPONENT_RELS_EXT_PATH, values);
     }
 
     /**
      * Render (an initial) WOV.
-     * 
-     * @param values
-     * @return
-     * @throws WebserverSystemException
      */
-    public String getWov(final Map<String, ?> values)
-        throws WebserverSystemException {
+    public String getWov(final Map<String, ?> values) throws WebserverSystemException {
 
         return getXml(WOV_RESOURCE_NAME, COMMON_TEMPLATE_PATH, values);
     }

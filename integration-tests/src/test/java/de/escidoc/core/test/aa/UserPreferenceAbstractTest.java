@@ -53,9 +53,8 @@ import static org.junit.Assert.fail;
 
 /**
  * Test suite for the Preferences of an UserAccount.
- * 
+ *
  * @author Frank Schwichtenberg
- * 
  */
 public abstract class UserPreferenceAbstractTest extends UserPreferenceTestBase {
 
@@ -63,14 +62,10 @@ public abstract class UserPreferenceAbstractTest extends UserPreferenceTestBase 
 
     /**
      * The constructor.
-     * 
-     * @param transport
-     *            The transport identifier.
-     * @param handlerCode
-     *            The handlerCode.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param transport   The transport identifier.
+     * @param handlerCode The handlerCode.
+     * @throws Exception If anything fails.
      */
     public UserPreferenceAbstractTest(final int transport) throws Exception {
         super(transport);
@@ -78,9 +73,8 @@ public abstract class UserPreferenceAbstractTest extends UserPreferenceTestBase 
 
     /**
      * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Before
     public void initialize() throws Exception {
@@ -88,9 +82,8 @@ public abstract class UserPreferenceAbstractTest extends UserPreferenceTestBase 
 
     /**
      * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @After
     public void deinitialize() throws Exception {
@@ -106,12 +99,10 @@ public abstract class UserPreferenceAbstractTest extends UserPreferenceTestBase 
         expectedPreferences.put(key, value);
 
         String createdXml =
-            createPreference(userId,
-                "<preference xmlns=\"http://www.escidoc.de/schemas/preferences/0.1\""
-                    + " name=\"" + key + "\">" + value + "</preference>");
+            createPreference(userId, "<preference xmlns=\"http://www.escidoc.de/schemas/preferences/0.1\"" + " name=\""
+                + key + "\">" + value + "</preference>");
         System.out.println("Created preference: " + createdXml);
-        assertValidUserPreferences(retrievePreferences(userId), userId,
-            expectedPreferences);
+        assertValidUserPreferences(retrievePreferences(userId), userId, expectedPreferences);
     }
 
     @Test
@@ -124,15 +115,13 @@ public abstract class UserPreferenceAbstractTest extends UserPreferenceTestBase 
         expectedPreferences.put(key, value);
 
         String createdXml =
-            createPreference(userId,
-                "<preference xmlns=\"http://www.escidoc.de/schemas/preferences/0.1\""
-                    + " name=\"" + key + "\">" + value + "</preference>");
+            createPreference(userId, "<preference xmlns=\"http://www.escidoc.de/schemas/preferences/0.1\"" + " name=\""
+                + key + "\">" + value + "</preference>");
 
         String retrievedXml = retrievePreference(userId, key);
         System.out.println("Retrieved preference: " + retrievedXml);
-        assertXmlEquals(
-            "Difference between the return value of create and a retrieve afterwards. ",
-            createdXml, retrievedXml);
+        assertXmlEquals("Difference between the return value of create and a retrieve afterwards. ", createdXml,
+            retrievedXml);
         assertValidUserPreferences(retrievedXml, null, null);
     }
 
@@ -146,22 +135,18 @@ public abstract class UserPreferenceAbstractTest extends UserPreferenceTestBase 
         expectedPreferences.put(key, value);
 
         String createdXml =
-            createPreference(userId,
-                "<preference xmlns=\"http://www.escidoc.de/schemas/preferences/0.1\""
-                    + " name=\"" + key + "\">" + value + "</preference>");
+            createPreference(userId, "<preference xmlns=\"http://www.escidoc.de/schemas/preferences/0.1\"" + " name=\""
+                + key + "\">" + value + "</preference>");
         System.out.println("Created preference: " + createdXml);
-        assertValidUserPreferences(retrievePreferences(userId), userId,
-            expectedPreferences);
+        assertValidUserPreferences(retrievePreferences(userId), userId, expectedPreferences);
 
         deletePreference(userId, key);
         expectedPreferences.remove(key);
-        assertValidUserPreferences(retrievePreferences(userId), userId,
-            expectedPreferences);
+        assertValidUserPreferences(retrievePreferences(userId), userId, expectedPreferences);
     }
 
     @Test
-    public void declineDeleteUserPreferenceNonexistingPreference()
-        throws Exception {
+    public void declineDeleteUserPreferenceNonexistingPreference() throws Exception {
         Class ec = PreferenceNotFoundException.class;
 
         String userId = PREEXISTING_USER;
@@ -172,12 +157,10 @@ public abstract class UserPreferenceAbstractTest extends UserPreferenceTestBase 
         expectedPreferences.put(key, value);
 
         String createdXml =
-            createPreference(userId,
-                "<preference xmlns=\"http://www.escidoc.de/schemas/preferences/0.1\""
-                    + " name=\"" + key + "\">" + value + "</preference>");
+            createPreference(userId, "<preference xmlns=\"http://www.escidoc.de/schemas/preferences/0.1\"" + " name=\""
+                + key + "\">" + value + "</preference>");
         System.out.println("Created preference: " + createdXml);
-        assertValidUserPreferences(retrievePreferences(userId), userId,
-            expectedPreferences);
+        assertValidUserPreferences(retrievePreferences(userId), userId, expectedPreferences);
 
         deletePreference(userId, key);
         try {
@@ -200,17 +183,15 @@ public abstract class UserPreferenceAbstractTest extends UserPreferenceTestBase 
 
         Class ec = XmlCorruptedException.class;
         try {
-            createPreference(userId,
-                "<preferenc xmlns=\"http://www.escidoc.de/schemas/preferences/0.1\""
-                    + " name=\"" + key + "\">" + value + "</preference>");
+            createPreference(userId, "<preferenc xmlns=\"http://www.escidoc.de/schemas/preferences/0.1\"" + " name=\""
+                + key + "\">" + value + "</preference>");
         }
         catch (final Exception e) {
             assertExceptionType(ec, e);
         }
         try {
-            createPreference(userId,
-                "<preferenc xmlns=\"http://www.escidoc.de/schemas/preferences/0.1\""
-                    + " name=\"" + key + "\">");
+            createPreference(userId, "<preferenc xmlns=\"http://www.escidoc.de/schemas/preferences/0.1\"" + " name=\""
+                + key + "\">");
         }
         catch (final Exception e) {
             assertExceptionType(ec, e);
@@ -218,17 +199,15 @@ public abstract class UserPreferenceAbstractTest extends UserPreferenceTestBase 
 
         ec = XmlSchemaValidationException.class;
         try {
-            createPreference(userId,
-                "<preference xmlns=\"http://www.escidoc.de/schemas/preferences/0.1\""
-                    + " >" + value + "</preference>");
+            createPreference(userId, "<preference xmlns=\"http://www.escidoc.de/schemas/preferences/0.1\"" + " >"
+                + value + "</preference>");
         }
         catch (final Exception e) {
             assertExceptionType(ec, e);
         }
         try {
-            createPreference(userId,
-                "<preference xmlns=\"http://www.escidoc.de\"" + " name=\""
-                    + key + "\">" + value + "</preference>");
+            createPreference(userId, "<preference xmlns=\"http://www.escidoc.de\"" + " name=\"" + key + "\">" + value
+                + "</preference>");
         }
         catch (final Exception e) {
             assertExceptionType(ec, e);
@@ -253,17 +232,14 @@ public abstract class UserPreferenceAbstractTest extends UserPreferenceTestBase 
         String value = "ValueForTestCreate";
 
         String createdXml =
-            createPreference(userId,
-                "<preference xmlns=\"http://www.escidoc.de/schemas/preferences/0.1\""
-                    + " name=\"" + key + "\">" + value + "</preference>");
+            createPreference(userId, "<preference xmlns=\"http://www.escidoc.de/schemas/preferences/0.1\"" + " name=\""
+                + key + "\">" + value + "</preference>");
         // System.out.println("Created preference: " + createdXml);
-        String timestamp =
-            getLastModificationDateValue(getDocument(createdXml));
+        String timestamp = getLastModificationDateValue(getDocument(createdXml));
 
-        updatePreferences(userId,
-            "<preferences xmlns=\"http://www.escidoc.de/schemas/preferences/0.1\" "
-                + "last-modification-date=\"" + timestamp + "\"><preference"
-                + " name=\"" + key + "\">updated</preference></preferences>");
+        updatePreferences(userId, "<preferences xmlns=\"http://www.escidoc.de/schemas/preferences/0.1\" "
+            + "last-modification-date=\"" + timestamp + "\"><preference" + " name=\"" + key
+            + "\">updated</preference></preferences>");
         Map<String, String> expectedPreferences = new HashMap<String, String>();
         expectedPreferences.put(key, "updated");
         String tmp = retrievePreferences(userId);
@@ -277,19 +253,15 @@ public abstract class UserPreferenceAbstractTest extends UserPreferenceTestBase 
         String value = "ValueForTestCreate";
 
         String createdXml =
-            createPreference(userId,
-                "<preference xmlns=\"http://www.escidoc.de/schemas/preferences/0.1\""
-                    + " name=\"" + key + "\">" + value + "</preference>");
+            createPreference(userId, "<preference xmlns=\"http://www.escidoc.de/schemas/preferences/0.1\"" + " name=\""
+                + key + "\">" + value + "</preference>");
         // System.out.println("Created preference: " + createdXml);
 
         Class ec = OptimisticLockingException.class;
         try {
-            updatePreferences(
-                userId,
-                "<preferences xmlns=\"http://www.escidoc.de/schemas/preferences/0.1\" "
-                    + "last-modification-date=\"1009-04-03T12:37:14.250Z\"><preference"
-                    + " name=\"" + key
-                    + "\">updated</preference></preferences>");
+            updatePreferences(userId, "<preferences xmlns=\"http://www.escidoc.de/schemas/preferences/0.1\" "
+                + "last-modification-date=\"1009-04-03T12:37:14.250Z\"><preference" + " name=\"" + key
+                + "\">updated</preference></preferences>");
             fail(ec.getName() + " expected");
         }
         catch (final Exception e) {
@@ -305,25 +277,20 @@ public abstract class UserPreferenceAbstractTest extends UserPreferenceTestBase 
         String value = "ValueForTestCreate";
 
         String createdXml =
-            createPreference(userId,
-                "<preference xmlns=\"http://www.escidoc.de/schemas/preferences/0.1\""
-                    + " name=\"" + key + "\">" + value + "</preference>");
+            createPreference(userId, "<preference xmlns=\"http://www.escidoc.de/schemas/preferences/0.1\"" + " name=\""
+                + key + "\">" + value + "</preference>");
         // System.out.println("Created preference: " + createdXml);
-        String timestamp =
-            getLastModificationDateValue(getDocument(createdXml));
+        String timestamp = getLastModificationDateValue(getDocument(createdXml));
 
-        updatePreferences(userId,
-            "<preferences xmlns=\"http://www.escidoc.de/schemas/preferences/0.1\" "
-                + "last-modification-date=\"" + timestamp + "\"><preference"
-                + " name=\"" + key + "\">updated1</preference></preferences>");
+        updatePreferences(userId, "<preferences xmlns=\"http://www.escidoc.de/schemas/preferences/0.1\" "
+            + "last-modification-date=\"" + timestamp + "\"><preference" + " name=\"" + key
+            + "\">updated1</preference></preferences>");
 
         Class ec = OptimisticLockingException.class;
         try {
-            updatePreferences(userId,
-                "<preferences xmlns=\"http://www.escidoc.de/schemas/preferences/0.1\" "
-                    + "last-modification-date=\"" + timestamp
-                    + "\"><preference" + " name=\"" + key
-                    + "\">updated2</preference></preferences>");
+            updatePreferences(userId, "<preferences xmlns=\"http://www.escidoc.de/schemas/preferences/0.1\" "
+                + "last-modification-date=\"" + timestamp + "\"><preference" + " name=\"" + key
+                + "\">updated2</preference></preferences>");
             fail(ec.getName() + " expected");
         }
         catch (final Exception e) {
@@ -339,17 +306,14 @@ public abstract class UserPreferenceAbstractTest extends UserPreferenceTestBase 
         String value = "ValueForTestCreate";
 
         String createdXml =
-            createPreference(userId, "<preference "
-                + "xmlns=\"http://www.escidoc.de/schemas/preferences/0.1\""
+            createPreference(userId, "<preference " + "xmlns=\"http://www.escidoc.de/schemas/preferences/0.1\""
                 + " name=\"" + key + "\">" + value + "</preference>");
         // System.out.println("Created preference: " + createdXml);
 
         Class ec = MissingAttributeValueException.class;
         try {
-            updatePreferences(userId, "<preferences "
-                + "xmlns=\"http://www.escidoc.de/schemas/preferences/0.1\">"
-                + "<preference name=\"" + key
-                + "\">updated</preference></preferences>");
+            updatePreferences(userId, "<preferences " + "xmlns=\"http://www.escidoc.de/schemas/preferences/0.1\">"
+                + "<preference name=\"" + key + "\">updated</preference></preferences>");
         }
         catch (final Exception e) {
             assertExceptionType(ec, e);
@@ -366,21 +330,16 @@ public abstract class UserPreferenceAbstractTest extends UserPreferenceTestBase 
         Map<String, String> expectedPreferences = getMapFromPreferences(userId);
 
         String createdXml =
-            createPreference(userId,
-                "<preference xmlns=\"http://www.escidoc.de/schemas/preferences/0.1\""
-                    + " name=\"" + key + "\">" + value + "</preference>");
+            createPreference(userId, "<preference xmlns=\"http://www.escidoc.de/schemas/preferences/0.1\"" + " name=\""
+                + key + "\">" + value + "</preference>");
         // System.out.println("Created preference: " + createdXml);
-        String timestamp =
-            getLastModificationDateValue(getDocument(createdXml));
+        String timestamp = getLastModificationDateValue(getDocument(createdXml));
 
-        updatePreference(userId, key,
-            "<preference xmlns=\"http://www.escidoc.de/schemas/preferences/0.1\""
-                + " last-modification-date=\"" + timestamp + "\"" + " name=\""
-                + key + "\">single updated</preference>");
+        updatePreference(userId, key, "<preference xmlns=\"http://www.escidoc.de/schemas/preferences/0.1\""
+            + " last-modification-date=\"" + timestamp + "\"" + " name=\"" + key + "\">single updated</preference>");
         expectedPreferences.put(key, "single updated");
         assertValidUserPreferences(retrievePreference(userId, key), null, null);
-        assertValidUserPreferences(retrievePreferences(userId), userId,
-            expectedPreferences);
+        assertValidUserPreferences(retrievePreferences(userId), userId, expectedPreferences);
     }
 
     @Test
@@ -392,17 +351,15 @@ public abstract class UserPreferenceAbstractTest extends UserPreferenceTestBase 
         Map<String, String> expectedPreferences = getMapFromPreferences(userId);
 
         String createdXml =
-            createPreference(userId,
-                "<preference xmlns=\"http://www.escidoc.de/schemas/preferences/0.1\""
-                    + " name=\"" + key + "\">" + value + "</preference>");
+            createPreference(userId, "<preference xmlns=\"http://www.escidoc.de/schemas/preferences/0.1\"" + " name=\""
+                + key + "\">" + value + "</preference>");
         System.out.println("Created preference: " + createdXml);
 
         Class ec = OptimisticLockingException.class;
         try {
-            updatePreference(userId, key,
-                "<preference xmlns=\"http://www.escidoc.de/schemas/preferences/0.1\""
-                    + " last-modification-date=\"1009-04-03T12:37:14.250Z\""
-                    + " name=\"" + key + "\">single updated</preference>");
+            updatePreference(userId, key, "<preference xmlns=\"http://www.escidoc.de/schemas/preferences/0.1\""
+                + " last-modification-date=\"1009-04-03T12:37:14.250Z\"" + " name=\"" + key
+                + "\">single updated</preference>");
             fail(ec.getName() + " expected");
         }
         catch (final Exception e) {
@@ -419,16 +376,14 @@ public abstract class UserPreferenceAbstractTest extends UserPreferenceTestBase 
         Map<String, String> expectedPreferences = getMapFromPreferences(userId);
 
         String createdXml =
-            createPreference(userId,
-                "<preference xmlns=\"http://www.escidoc.de/schemas/preferences/0.1\""
-                    + " name=\"" + key + "\">" + value + "</preference>");
+            createPreference(userId, "<preference xmlns=\"http://www.escidoc.de/schemas/preferences/0.1\"" + " name=\""
+                + key + "\">" + value + "</preference>");
         System.out.println("Created preference: " + createdXml);
 
         Class ec = MissingAttributeValueException.class;
         try {
-            updatePreference(userId, key,
-                "<preference xmlns=\"http://www.escidoc.de/schemas/preferences/0.1\""
-                    + " name=\"" + key + "\">single updated</preference>");
+            updatePreference(userId, key, "<preference xmlns=\"http://www.escidoc.de/schemas/preferences/0.1\""
+                + " name=\"" + key + "\">single updated</preference>");
             fail(ec.getName() + " expected");
         }
         catch (final Exception e) {
@@ -436,12 +391,11 @@ public abstract class UserPreferenceAbstractTest extends UserPreferenceTestBase 
         }
     }
 
-    public void assertValidUserPreferences(
-        String preferencesXml, String userId, Map<String, String> preferenceMap)
+    public void assertValidUserPreferences(String preferencesXml, String userId, Map<String, String> preferenceMap)
         throws Exception {
 
         assertXmlValidPreferences(preferencesXml);
-        if(userId == null){
+        if (userId == null) {
             return;
         }
 
@@ -450,56 +404,41 @@ public abstract class UserPreferenceAbstractTest extends UserPreferenceTestBase 
 
         try {
             if (getTransport() == Constants.TRANSPORT_REST) {
-                selectSingleNodeAsserted(preferencesXmlDocument,
-                    "/preferences/@base");
-                selectSingleNodeAsserted(preferencesXmlDocument,
-                    "/preferences[@href = '" + href + "']");
+                selectSingleNodeAsserted(preferencesXmlDocument, "/preferences/@base");
+                selectSingleNodeAsserted(preferencesXmlDocument, "/preferences[@href = '" + href + "']");
             }
             int count = preferenceMap.size();
             if (count > 0) {
-                selectSingleNodeAsserted(preferencesXmlDocument,
-                    "/preferences/preference[" + count + "]");
+                selectSingleNodeAsserted(preferencesXmlDocument, "/preferences/preference[" + count + "]");
             }
             else {
-                assertNull("Unexpected element /preferences/preference",
-                    selectSingleNode(preferencesXmlDocument,
-                        "/preferences/preference[1]"));
+                assertNull("Unexpected element /preferences/preference", selectSingleNode(preferencesXmlDocument,
+                    "/preferences/preference[1]"));
             }
 
             // check if every entry from given map is in the document
             HashSet<String> hashes = new HashSet<String>();
-            Iterator<Entry<String, String>> it =
-                preferenceMap.entrySet().iterator();
+            Iterator<Entry<String, String>> it = preferenceMap.entrySet().iterator();
             while (it.hasNext()) {
                 Entry<String, String> e = it.next();
                 hashes.add(e.getKey() + e.getValue());
             }
-            NodeList preferenceElements =
-                selectNodeList(preferencesXmlDocument,
-                    "/preferences/preference");
+            NodeList preferenceElements = selectNodeList(preferencesXmlDocument, "/preferences/preference");
             int elementCount = preferenceElements.getLength();
-            assertEquals(
-                "Cardinality of preference elements is not in sync with given map.",
-                count, elementCount);
+            assertEquals("Cardinality of preference elements is not in sync with given map.", count, elementCount);
             // iterate elements of the xml document
             for (int i = 0; i < elementCount; i++) {
                 // check if key value pair is in given map
-                String preferenceName =
-                    preferenceElements.item(i).getAttributes().getNamedItem(
-                        "name").getNodeValue();
-                String preferenceValue =
-                    preferenceElements.item(i).getTextContent();
-                boolean wasInHashesOutOfMap =
-                    hashes.remove(preferenceName + preferenceValue);
+                String preferenceName = preferenceElements.item(i).getAttributes().getNamedItem("name").getNodeValue();
+                String preferenceValue = preferenceElements.item(i).getTextContent();
+                boolean wasInHashesOutOfMap = hashes.remove(preferenceName + preferenceValue);
                 if (!wasInHashesOutOfMap) {
-                    fail("Found unexpected preference [" + preferenceName + "="
-                        + preferenceValue + "].");
+                    fail("Found unexpected preference [" + preferenceName + "=" + preferenceValue + "].");
                 }
             }
             // all entries should be removed from hashes(-out-of-map), now
             if (!hashes.isEmpty()) {
-                fail("Expected preferences not found. [" + hashes.toString()
-                    + "]");
+                fail("Expected preferences not found. [" + hashes.toString() + "]");
             }
         }
         catch (final AssertionError e) {
@@ -510,20 +449,14 @@ public abstract class UserPreferenceAbstractTest extends UserPreferenceTestBase 
         }
     }
 
-    private Map<String, String> getMapFromPreferences(String userId)
-        throws TransformerException, Exception {
-        NodeList list =
-            selectNodeList(getDocument(retrievePreferences(userId)),
-                "/preferences/preference");
+    private Map<String, String> getMapFromPreferences(String userId) throws TransformerException, Exception {
+        NodeList list = selectNodeList(getDocument(retrievePreferences(userId)), "/preferences/preference");
         Map<String, String> map = new HashMap<String, String>();
 
         int elementCount = list.getLength();
         // iterate elements of the xml document
         for (int i = 0; i < elementCount; i++) {
-            String preferenceName =
-                list
-                    .item(i).getAttributes().getNamedItem("name")
-                    .getNodeValue();
+            String preferenceName = list.item(i).getAttributes().getNamedItem("name").getNodeValue();
             String preferenceValue = list.item(i).getTextContent();
             map.put(preferenceName, preferenceValue);
         }

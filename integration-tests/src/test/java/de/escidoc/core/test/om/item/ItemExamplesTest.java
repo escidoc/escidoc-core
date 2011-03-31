@@ -28,7 +28,6 @@
  */
 package de.escidoc.core.test.om.item;
 
-
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.compare.TripleStoreValue;
@@ -45,16 +44,14 @@ import static org.junit.Assert.assertFalse;
 
 /**
  * Test creating the example Item objects.
- * 
+ *
  * @author Steffen Wagner
- * 
  */
 @RunWith(value = Parameterized.class)
 public class ItemExamplesTest extends ItemTestBase {
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ItemExamplesTest(final int transport) {
         super(transport);
@@ -62,9 +59,8 @@ public class ItemExamplesTest extends ItemTestBase {
 
     /**
      * Test if the example item for create is still compatible with framework.
-     * 
-     * @throws Exception
-     *             Thrown if creation of example Item failed.
+     *
+     * @throws Exception Thrown if creation of example Item failed.
      */
     @Test
     public void testCreatingExample01() throws Exception {
@@ -78,8 +74,7 @@ public class ItemExamplesTest extends ItemTestBase {
         // assert properties
         String xPath = null;
         if (getTransport() == Constants.TRANSPORT_REST) {
-            xPath =
-                "/item/properties/context[@href = '/ir/context/escidoc:ex1']";
+            xPath = "/item/properties/context[@href = '/ir/context/escidoc:ex1']";
         }
         else {
             xPath = "/item/properties/context[@objid = 'escidoc:ex1']";
@@ -87,8 +82,7 @@ public class ItemExamplesTest extends ItemTestBase {
         selectSingleNodeAsserted(xmlItem, xPath);
 
         // assert Components
-        assertXmlNotExists("Created Item should not have a Component", xmlItem,
-            "/item/components/component");
+        assertXmlNotExists("Created Item should not have a Component", xmlItem, "/item/components/component");
 
         TripleStoreValue tsv = new TripleStoreValue(getTransport());
         tsv.itemTripleStoreValues(xmlItem);
@@ -99,46 +93,33 @@ public class ItemExamplesTest extends ItemTestBase {
 
         String versionHistory = retrieveVersionHistory(itemId);
         Document wovDoc = EscidocRestSoapTestBase.getDocument(versionHistory);
-        Document itemDocV1 =
-            EscidocRestSoapTestBase.getDocument(retrieve(itemId + ":1"));
+        Document itemDocV1 = EscidocRestSoapTestBase.getDocument(retrieve(itemId + ":1"));
 
         // compare time stamps
-        assertXmlExists("Wrong timestamp in version-history root element",
-            versionHistory, "/version-history[@last-modification-date = '"
-                + lmd + "']");
+        assertXmlExists("Wrong timestamp in version-history root element", versionHistory,
+            "/version-history[@last-modification-date = '" + lmd + "']");
 
-        assertXmlExists(
-            "Wrong timestamp in version element of version-history",
-            versionHistory, "/version-history/version[@timestamp = '" + lmd
-                + "']");
+        assertXmlExists("Wrong timestamp in version element of version-history", versionHistory,
+            "/version-history/version[@timestamp = '" + lmd + "']");
 
         // compare creation date with version-history entry
-        assertEquals("creation date of Item [" + itemId
-            + "] differs from timestamp of first event of version 1 "
-            + "in version-history", XPathAPI.selectSingleNode(itemDocV1,
-            "/item/properties/creation-date").getTextContent(), XPathAPI
-            .selectSingleNode(
-                wovDoc,
-                "/version-history/version[version-number='1']"
-                    + "/events/event[1]/eventDateTime").getTextContent());
+        assertEquals("creation date of Item [" + itemId + "] differs from timestamp of first event of version 1 "
+            + "in version-history", XPathAPI
+            .selectSingleNode(itemDocV1, "/item/properties/creation-date").getTextContent(), XPathAPI.selectSingleNode(
+            wovDoc, "/version-history/version[version-number='1']" + "/events/event[1]/eventDateTime").getTextContent());
 
         // check timestamp of version 1
         assertEquals("last-modification-date root attribute of Item [" + itemId
-            + "] differs from timestamp of latest event of version 1 "
-            + "in version-history", XPathAPI.selectSingleNode(itemDocV1,
-            "/item/@last-modification-date").getTextContent(), XPathAPI
-            .selectSingleNode(
-                wovDoc,
-                "/version-history/version[version-number='1']"
-                    + "/events/event[1]/eventDateTime").getTextContent());
+            + "] differs from timestamp of latest event of version 1 " + "in version-history", XPathAPI
+            .selectSingleNode(itemDocV1, "/item/@last-modification-date").getTextContent(), XPathAPI.selectSingleNode(
+            wovDoc, "/version-history/version[version-number='1']" + "/events/event[1]/eventDateTime").getTextContent());
 
     }
 
     /**
      * Test if the example item for create is still compatible with framework.
-     * 
-     * @throws Exception
-     *             Thrown if creation of example Item failed.
+     *
+     * @throws Exception Thrown if creation of example Item failed.
      */
     @Test
     public void testCreatingExample02() throws Exception {
@@ -152,8 +133,7 @@ public class ItemExamplesTest extends ItemTestBase {
         // assert properties
         String xPath = null;
         if (getTransport() == Constants.TRANSPORT_REST) {
-            xPath =
-                "/item/properties/context[@href = '/ir/context/escidoc:ex1']";
+            xPath = "/item/properties/context[@href = '/ir/context/escidoc:ex1']";
         }
         else {
             xPath = "/item/properties/context[@objid = 'escidoc:ex1']";
@@ -161,35 +141,26 @@ public class ItemExamplesTest extends ItemTestBase {
         selectSingleNodeAsserted(xmlItem, xPath);
 
         if (getTransport() == Constants.TRANSPORT_REST) {
-            xPath =
-                "/item/properties/content-model[@href = "
-                    + "'/cmm/content-model/escidoc:ex4']";
+            xPath = "/item/properties/content-model[@href = " + "'/cmm/content-model/escidoc:ex4']";
         }
         else {
-            xPath =
-                "/item/properties/content-model[@objid = " + "'escidoc:ex4']";
+            xPath = "/item/properties/content-model[@objid = " + "'escidoc:ex4']";
         }
         selectSingleNodeAsserted(xmlItem, xPath);
-        selectSingleNodeAsserted(xmlItem,
-            "/item/properties/content-model-specific/cms-prop[@test = '1']");
+        selectSingleNodeAsserted(xmlItem, "/item/properties/content-model-specific/cms-prop[@test = '1']");
 
         // md-records
-        selectSingleNodeAsserted(xmlItem,
-            "/item/md-records/md-record[@name = 'escidoc']");
+        selectSingleNodeAsserted(xmlItem, "/item/md-records/md-record[@name = 'escidoc']");
         selectSingleNodeAsserted(xmlItem, "/item/md-records/md-record/metadata");
 
         // assert Components
         selectSingleNodeAsserted(xmlItem, "/item/components/component");
 
-        selectSingleNodeAsserted(xmlItem,
-            "/item/components/component/properties/valid-status");
-        selectSingleNodeAsserted(xmlItem,
-            "/item/components/component/properties/visibility");
-        selectSingleNodeAsserted(xmlItem,
-            "/item/components/component/properties/content-category");
+        selectSingleNodeAsserted(xmlItem, "/item/components/component/properties/valid-status");
+        selectSingleNodeAsserted(xmlItem, "/item/components/component/properties/visibility");
+        selectSingleNodeAsserted(xmlItem, "/item/components/component/properties/content-category");
 
-        selectSingleNodeAsserted(xmlItem,
-            "/item/components/component/content[@storage = 'internal-managed']");
+        selectSingleNodeAsserted(xmlItem, "/item/components/component/content[@storage = 'internal-managed']");
 
         TripleStoreValue tsv = new TripleStoreValue(getTransport());
         tsv.itemTripleStoreValues(xmlItem);
@@ -197,9 +168,8 @@ public class ItemExamplesTest extends ItemTestBase {
 
     /**
      * Test TripleStore values of created example 01 Item.
-     * 
-     * @throws Exception
-     *             Thrown if timestamp handling shows failure.
+     *
+     * @throws Exception Thrown if timestamp handling shows failure.
      */
     @Test
     public void testExample02TripleStoreValues() throws Exception {
@@ -212,29 +182,23 @@ public class ItemExamplesTest extends ItemTestBase {
         TripleStoreValue tsv = new TripleStoreValue(getTransport());
 
         // check last-modification-date
-        tsv.compareDocumentValueWithTripleStore(xmlItem,
-            "/item/@last-modification-date", "/RDF/Description/date",
+        tsv.compareDocumentValueWithTripleStore(xmlItem, "/item/@last-modification-date", "/RDF/Description/date",
             "<http://escidoc.de/core/01/properties/version/date>");
 
         // check public-status
-        tsv.compareDocumentValueWithTripleStore(xmlItem,
-            "/item/properties/public-status", "/RDF/Description/public-status",
-            "<http://escidoc.de/core/01/properties/public-status>");
+        tsv.compareDocumentValueWithTripleStore(xmlItem, "/item/properties/public-status",
+            "/RDF/Description/public-status", "<http://escidoc.de/core/01/properties/public-status>");
 
         // check version number
-        tsv.compareDocumentValueWithTripleStore(xmlItem,
-            "/item/properties/version/number", "/RDF/Description/number",
+        tsv.compareDocumentValueWithTripleStore(xmlItem, "/item/properties/version/number", "/RDF/Description/number",
             "<http://escidoc.de/core/01/properties/version/number>");
 
         // check resource type
-        tsv.compareValueWithTripleStore(getObjidValue(xmlItem),
-            "http://escidoc.de/core/01/resources/Item",
-            "/RDF/Description/type/@resource",
-            "<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>");
+        tsv.compareValueWithTripleStore(getObjidValue(xmlItem), "http://escidoc.de/core/01/resources/Item",
+            "/RDF/Description/type/@resource", "<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>");
 
         // check version status
-        tsv.compareDocumentValueWithTripleStore(xmlItem,
-            "/item/properties/version/status", "/RDF/Description/status",
+        tsv.compareDocumentValueWithTripleStore(xmlItem, "/item/properties/version/status", "/RDF/Description/status",
             "<http://escidoc.de/core/01/properties/version/status>");
 
         // // check component
@@ -246,9 +210,8 @@ public class ItemExamplesTest extends ItemTestBase {
 
     /**
      * Test if the example item for create is still compatible with framework.
-     * 
-     * @throws Exception
-     *             Thrown if creation of example Item failed.
+     *
+     * @throws Exception Thrown if creation of example Item failed.
      */
     @Test
     public void testCreatingExample03() throws Exception {
@@ -266,9 +229,8 @@ public class ItemExamplesTest extends ItemTestBase {
 
     /**
      * Test if the example item for create is still compatible with framework.
-     * 
-     * @throws Exception
-     *             Thrown if creation of example Item failed.
+     *
+     * @throws Exception Thrown if creation of example Item failed.
      */
     @Test
     public void testCreatingExample04() throws Exception {
@@ -286,9 +248,8 @@ public class ItemExamplesTest extends ItemTestBase {
 
     /**
      * Test if versionable for version-history datastream is set to false.
-     * 
-     * @throws Exception
-     *             Thrown if creation of example Item failed.
+     *
+     * @throws Exception Thrown if creation of example Item failed.
      */
     @Test
     public void testCreatingExample05() throws Exception {
@@ -300,8 +261,7 @@ public class ItemExamplesTest extends ItemTestBase {
         Client fc = new Client();
 
         Datastream ds = fc.getDatastreamInformation(objid, "version-history");
-        assertFalse("Version-History should not be versioned", ds
-            .isVersionable());
+        assertFalse("Version-History should not be versioned", ds.isVersionable());
     }
 
 }

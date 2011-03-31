@@ -10,9 +10,9 @@ import java.rmi.RemoteException;
 public interface ActionHandlerRemoteHome extends EJBHome {
 
     String COMP_NAME = "java:comp/env/ejb/ActionHandler";
+
     String JNDI_NAME = "ejb/ActionHandler";
 
-    ActionHandlerRemote create()
-            throws CreateException, RemoteException;
+    ActionHandlerRemote create() throws CreateException, RemoteException;
 
 }

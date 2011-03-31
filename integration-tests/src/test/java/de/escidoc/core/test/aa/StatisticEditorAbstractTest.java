@@ -40,9 +40,8 @@ import java.util.List;
 
 /**
  * Test suite for the role Statistics_editor.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 public class StatisticEditorAbstractTest extends GrantTestBase {
 
@@ -53,9 +52,9 @@ public class StatisticEditorAbstractTest extends GrantTestBase {
     private static final String PASSWORD = PWCallback.PASSWORD;
 
     protected static String grantCreationUserOrGroupId = null;
-    
+
     private static int methodCounter = 0;
-    
+
     private static final String ALLOWED_SCOPE = STATISTIC_SCOPE_ID;
 
     private static String disallowedScope = null;
@@ -65,52 +64,39 @@ public class StatisticEditorAbstractTest extends GrantTestBase {
     private static String allowedScopeReportDefinitionId = null;
 
     private static String disallowedScopeAggregationDefinitionId = null;
-    
+
     private static String disallowedScopeReportDefinitionId = null;
 
     private static final String SCOPE_TEMPLATE_NAME = "escidoc_scope3.xml";
-    
-    private static final String SCOPE_UPDATE_TEMPLATE_NAME = 
-                                            "escidoc_scope2.xml";
-    
-    private static final String AGGREGATION_DEFINITION_TEMPLATE_NAME = 
-                                    "escidoc_aggregation_definition1.xml";
 
-    private static final String REPORT_DEFINITION_TEMPLATE_NAME = 
-                                    "escidoc_report_definition1.xml";
-    
-    private static final String REPORT_DEFINITION_UPDATE_TEMPLATE_NAME = 
-                                    "escidoc_report_definition2.xml";
+    private static final String SCOPE_UPDATE_TEMPLATE_NAME = "escidoc_scope2.xml";
 
-    private static final String STATISTIC_DATA_TEMPLATE_NAME = 
-                                    "escidoc_statistic_data1.xml";
+    private static final String AGGREGATION_DEFINITION_TEMPLATE_NAME = "escidoc_aggregation_definition1.xml";
+
+    private static final String REPORT_DEFINITION_TEMPLATE_NAME = "escidoc_report_definition1.xml";
+
+    private static final String REPORT_DEFINITION_UPDATE_TEMPLATE_NAME = "escidoc_report_definition2.xml";
+
+    private static final String STATISTIC_DATA_TEMPLATE_NAME = "escidoc_statistic_data1.xml";
 
     /**
      * The constructor.
-     * 
-     * @param transport
-     *            The transport identifier.
-     * @param handlerCode
-     *            handlerCode of either UserAccountHandler or UserGroupHandler.
-     * @param userOrGroupId
-     *            userOrGroupId for grantCreation.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param transport     The transport identifier.
+     * @param handlerCode   handlerCode of either UserAccountHandler or UserGroupHandler.
+     * @param userOrGroupId userOrGroupId for grantCreation.
+     * @throws Exception If anything fails.
      */
-    public StatisticEditorAbstractTest(
-            final int transport, 
-            final int handlerCode,
-            final String userOrGroupId) throws Exception {
+    public StatisticEditorAbstractTest(final int transport, final int handlerCode, final String userOrGroupId)
+        throws Exception {
         super(transport, handlerCode);
         grantCreationUserOrGroupId = userOrGroupId;
     }
 
     /**
      * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Before
     public void initialize() throws Exception {
@@ -119,8 +105,7 @@ public class StatisticEditorAbstractTest extends GrantTestBase {
             revokeAllGrants(grantCreationUserOrGroupId);
             //create grant statistics editor for user grantCreationUserOrGroupId 
             //with scope on scope:3
-            doTestCreateGrant(null, grantCreationUserOrGroupId, 
-                Constants.STATISTIC_SCOPE_BASE_URI + "/" 
+            doTestCreateGrant(null, grantCreationUserOrGroupId, Constants.STATISTIC_SCOPE_BASE_URI + "/"
                 + ALLOWED_SCOPE, ROLE_HREF_STATISTICS_EDITOR, null);
             prepare();
         }
@@ -128,9 +113,8 @@ public class StatisticEditorAbstractTest extends GrantTestBase {
 
     /**
      * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @After
     public void deinitialize() throws Exception {
@@ -141,48 +125,31 @@ public class StatisticEditorAbstractTest extends GrantTestBase {
         }
     }
 
-
     /**
      * insert data into system for the tests.
-     * 
-     * @test.name prepare
-     * @test.id PREPARE
-     * @test.input
-     * @test.inputDescription
-     * @test.expected
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     private void prepare() throws Exception {
         //create scope where statistics_editor is not allowed to access.
-        disallowedScope = doTestCreateScope(
-                PWCallback.DEFAULT_HANDLE, SCOPE_TEMPLATE_NAME, null);
-        
+        disallowedScope = doTestCreateScope(PWCallback.DEFAULT_HANDLE, SCOPE_TEMPLATE_NAME, null);
+
         //create aggregationDefinition in disallowedScope as system-admin
-        disallowedScopeAggregationDefinitionId = 
-            doTestCreateAggregationDefinition(
-                PWCallback.DEFAULT_HANDLE, 
-                AGGREGATION_DEFINITION_TEMPLATE_NAME, 
+        disallowedScopeAggregationDefinitionId =
+            doTestCreateAggregationDefinition(PWCallback.DEFAULT_HANDLE, AGGREGATION_DEFINITION_TEMPLATE_NAME,
                 disallowedScope, null);
-        
+
         //create reportDefinition in disallowedScope as system-admin
-        disallowedScopeReportDefinitionId = 
-            doTestCreateReportDefinition(
-                PWCallback.DEFAULT_HANDLE,
-                REPORT_DEFINITION_TEMPLATE_NAME,
-                disallowedScope, 
-                disallowedScopeAggregationDefinitionId, 
-                null);
-        
+        disallowedScopeReportDefinitionId =
+            doTestCreateReportDefinition(PWCallback.DEFAULT_HANDLE, REPORT_DEFINITION_TEMPLATE_NAME, disallowedScope,
+                disallowedScopeAggregationDefinitionId, null);
+
     }
 
     /**
      * Tests successfully retrieving a scope by an statistics_editor.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveScope() throws Exception {
@@ -192,22 +159,19 @@ public class StatisticEditorAbstractTest extends GrantTestBase {
 
     /**
      * Tests successfully updating a scope by an statistics_editor.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testUpdateScope() throws Exception {
 
-        doTestUpdateScope(
-                HANDLE, SCOPE_UPDATE_TEMPLATE_NAME, ALLOWED_SCOPE, null);
+        doTestUpdateScope(HANDLE, SCOPE_UPDATE_TEMPLATE_NAME, ALLOWED_SCOPE, null);
     }
 
     /**
      * Tests successfully retrieving a scope-list by an statistics_editor.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveScopeList() throws Exception {
@@ -217,54 +181,42 @@ public class StatisticEditorAbstractTest extends GrantTestBase {
 
     /**
      * Tests successfully writing statistic-data by an statistics_editor.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testCreateStatisticData() throws Exception {
 
-        doTestCreateStatisticData(
-                HANDLE, STATISTIC_DATA_TEMPLATE_NAME, ALLOWED_SCOPE, null);
+        doTestCreateStatisticData(HANDLE, STATISTIC_DATA_TEMPLATE_NAME, ALLOWED_SCOPE, null);
     }
 
     /**
-     * Tests successfully creating a aggregation-definition 
-     * by an statistics_editor.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests successfully creating a aggregation-definition by an statistics_editor.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testCreateAggregationDefinition() throws Exception {
 
-        allowedScopeAggregationDefinitionId = 
-            doTestCreateAggregationDefinition(
-                    HANDLE, 
-                    AGGREGATION_DEFINITION_TEMPLATE_NAME, 
-                    ALLOWED_SCOPE, null);
+        allowedScopeAggregationDefinitionId =
+            doTestCreateAggregationDefinition(HANDLE, AGGREGATION_DEFINITION_TEMPLATE_NAME, ALLOWED_SCOPE, null);
     }
 
     /**
-     * Tests successfully retrieving a aggregation-definition 
-     * by an statistics_editor.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests successfully retrieving a aggregation-definition by an statistics_editor.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveAggregationDefinition() throws Exception {
 
-        doTestRetrieveAggregationDefinition(
-                HANDLE, allowedScopeAggregationDefinitionId, null);
+        doTestRetrieveAggregationDefinition(HANDLE, allowedScopeAggregationDefinitionId, null);
     }
 
     /**
-     * Tests successfully retrieving a list of aggregation-definitions 
-     * by an statistics_editor.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests successfully retrieving a list of aggregation-definitions by an statistics_editor.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveAggregationDefinitionList() throws Exception {
@@ -273,41 +225,33 @@ public class StatisticEditorAbstractTest extends GrantTestBase {
     }
 
     /**
-     * Tests successfully creating a report-definition 
-     * by an statistics_editor.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests successfully creating a report-definition by an statistics_editor.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testCreateReportDefinition() throws Exception {
 
-        allowedScopeReportDefinitionId = 
-            doTestCreateReportDefinition(HANDLE, 
-                    REPORT_DEFINITION_TEMPLATE_NAME, ALLOWED_SCOPE, 
-                    allowedScopeAggregationDefinitionId, null);
+        allowedScopeReportDefinitionId =
+            doTestCreateReportDefinition(HANDLE, REPORT_DEFINITION_TEMPLATE_NAME, ALLOWED_SCOPE,
+                allowedScopeAggregationDefinitionId, null);
     }
 
     /**
-     * Tests successfully retrieving a report-definition 
-     * by an statistics_editor.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests successfully retrieving a report-definition by an statistics_editor.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveReportDefinition() throws Exception {
 
-        doTestRetrieveReportDefinition(
-                HANDLE, allowedScopeReportDefinitionId, null);
+        doTestRetrieveReportDefinition(HANDLE, allowedScopeReportDefinitionId, null);
     }
 
     /**
-     * Tests successfully retrieving a list of report-definitions 
-     * by an statistics_editor.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests successfully retrieving a list of report-definitions by an statistics_editor.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveReportDefinitionList() throws Exception {
@@ -316,269 +260,191 @@ public class StatisticEditorAbstractTest extends GrantTestBase {
     }
 
     /**
-     * Tests successfully updating a report-definition 
-     * by an statistics_editor.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests successfully updating a report-definition by an statistics_editor.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testUpdateReportDefinition() throws Exception {
 
-        doTestUpdateReportDefinition(
-                HANDLE, 
-                REPORT_DEFINITION_UPDATE_TEMPLATE_NAME, 
-                allowedScopeReportDefinitionId, 
-                allowedScopeAggregationDefinitionId, 
-                ALLOWED_SCOPE, null);
+        doTestUpdateReportDefinition(HANDLE, REPORT_DEFINITION_UPDATE_TEMPLATE_NAME, allowedScopeReportDefinitionId,
+            allowedScopeAggregationDefinitionId, ALLOWED_SCOPE, null);
     }
 
     /**
-     * Tests successfully deleting a report-definition 
-     * by an statistics_editor.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests successfully deleting a report-definition by an statistics_editor.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testDeleteReportDefinition() throws Exception {
 
-        doTestDeleteReportDefinition(
-                HANDLE, allowedScopeReportDefinitionId, null);
+        doTestDeleteReportDefinition(HANDLE, allowedScopeReportDefinitionId, null);
     }
 
     /**
-     * Tests successfully deleting a aggregation-definition 
-     * by an statistics_editor.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests successfully deleting a aggregation-definition by an statistics_editor.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testDeleteAggregationDefinition() throws Exception {
 
-        doTestDeleteAggregationDefinition(
-                HANDLE, allowedScopeAggregationDefinitionId, null);
+        doTestDeleteAggregationDefinition(HANDLE, allowedScopeAggregationDefinitionId, null);
     }
 
     /**
      * Tests unsuccessfully retrieving a scope by an statistics_editor.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveDisallowedScope() throws Exception {
 
-        doTestRetrieveScope(
-                HANDLE, disallowedScope, AuthorizationException.class);
+        doTestRetrieveScope(HANDLE, disallowedScope, AuthorizationException.class);
     }
 
     /**
      * Tests unsuccessfully updating a scope by an statistics_editor.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testUpdateDisallowedScope() throws Exception {
 
-        doTestUpdateScope(
-                HANDLE, 
-                SCOPE_UPDATE_TEMPLATE_NAME, 
-                disallowedScope, AuthorizationException.class);
+        doTestUpdateScope(HANDLE, SCOPE_UPDATE_TEMPLATE_NAME, disallowedScope, AuthorizationException.class);
     }
 
     /**
      * Tests unsuccessfully writing statistic-data by an statistics_editor.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testCreateDisallowedStatisticData() throws Exception {
 
-        doTestCreateStatisticData(
-                HANDLE, 
-                STATISTIC_DATA_TEMPLATE_NAME, 
-                disallowedScope, AuthorizationException.class);
+        doTestCreateStatisticData(HANDLE, STATISTIC_DATA_TEMPLATE_NAME, disallowedScope, AuthorizationException.class);
     }
 
     /**
-     * Tests unsuccessfully creating a aggregation-definition 
-     * by an statistics_editor.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests unsuccessfully creating a aggregation-definition by an statistics_editor.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testCreateDisallowedAggregationDefinition() throws Exception {
 
-            doTestCreateAggregationDefinition(
-                    HANDLE, 
-                    AGGREGATION_DEFINITION_TEMPLATE_NAME, 
-                    disallowedScope, AuthorizationException.class);
+        doTestCreateAggregationDefinition(HANDLE, AGGREGATION_DEFINITION_TEMPLATE_NAME, disallowedScope,
+            AuthorizationException.class);
     }
 
     /**
-     * Tests unsuccessfully retrieving a aggregation-definition 
-     * by an statistics_editor.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests unsuccessfully retrieving a aggregation-definition by an statistics_editor.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveDisallowedAggregationDefinition() throws Exception {
 
-        doTestRetrieveAggregationDefinition(
-                HANDLE, 
-                disallowedScopeAggregationDefinitionId, 
-                AuthorizationException.class);
+        doTestRetrieveAggregationDefinition(HANDLE, disallowedScopeAggregationDefinitionId,
+            AuthorizationException.class);
     }
 
     /**
-     * Tests unsuccessfully creating a report-definition 
-     * by an statistics_editor.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests unsuccessfully creating a report-definition by an statistics_editor.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testCreateDisallowedReportDefinition() throws Exception {
 
-            doTestCreateReportDefinition(HANDLE, 
-                    REPORT_DEFINITION_TEMPLATE_NAME, disallowedScope, 
-                    disallowedScopeAggregationDefinitionId, 
-                    AuthorizationException.class);
+        doTestCreateReportDefinition(HANDLE, REPORT_DEFINITION_TEMPLATE_NAME, disallowedScope,
+            disallowedScopeAggregationDefinitionId, AuthorizationException.class);
     }
 
     /**
-     * Tests unsuccessfully retrieving a report-definition 
-     * by an statistics_editor.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests unsuccessfully retrieving a report-definition by an statistics_editor.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveDisallowedReportDefinition() throws Exception {
 
-        doTestRetrieveReportDefinition(
-                HANDLE, disallowedScopeReportDefinitionId, 
-                AuthorizationException.class);
+        doTestRetrieveReportDefinition(HANDLE, disallowedScopeReportDefinitionId, AuthorizationException.class);
     }
 
     /**
-     * Tests unsuccessfully updating a report-definition 
-     * by an statistics_editor.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests unsuccessfully updating a report-definition by an statistics_editor.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testUpdateDisallowedReportDefinition() throws Exception {
 
-        doTestUpdateReportDefinition(
-                HANDLE, 
-                REPORT_DEFINITION_UPDATE_TEMPLATE_NAME, 
-                disallowedScopeReportDefinitionId, 
-                disallowedScopeAggregationDefinitionId, 
-                disallowedScope, AuthorizationException.class);
+        doTestUpdateReportDefinition(HANDLE, REPORT_DEFINITION_UPDATE_TEMPLATE_NAME, disallowedScopeReportDefinitionId,
+            disallowedScopeAggregationDefinitionId, disallowedScope, AuthorizationException.class);
     }
 
     /**
-     * Tests unsuccessfully deleting a report-definition 
-     * by an statistics_editor.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests unsuccessfully deleting a report-definition by an statistics_editor.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testDeleteDisallowedReportDefinition() throws Exception {
 
-        doTestDeleteReportDefinition(
-                HANDLE, disallowedScopeReportDefinitionId, 
-                AuthorizationException.class);
+        doTestDeleteReportDefinition(HANDLE, disallowedScopeReportDefinitionId, AuthorizationException.class);
     }
 
     /**
-     * Tests unsuccessfully deleting a aggregation-definition 
-     * by an statistics_editor.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests unsuccessfully deleting a aggregation-definition by an statistics_editor.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testDeleteDisallowedAggregationDefinition() throws Exception {
 
-        doTestDeleteAggregationDefinition(
-                HANDLE, disallowedScopeAggregationDefinitionId, 
-                AuthorizationException.class);
+        doTestDeleteAggregationDefinition(HANDLE, disallowedScopeAggregationDefinitionId, AuthorizationException.class);
     }
 
     /**
-     * Tests successfully preprocessing an aggregation-definition 
-     * by an statistics_editor.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests successfully preprocessing an aggregation-definition by an statistics_editor.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testPreprocessAggregationDefinition() throws Exception {
-        String aggregationDefinitionId = 
-            doTestCreateAggregationDefinition(
-                PWCallback.DEFAULT_HANDLE, 
-                AGGREGATION_DEFINITION_TEMPLATE_NAME, 
+        String aggregationDefinitionId =
+            doTestCreateAggregationDefinition(PWCallback.DEFAULT_HANDLE, AGGREGATION_DEFINITION_TEMPLATE_NAME,
                 ALLOWED_SCOPE, null);
         List<String> aggregationDefinitionIds = new ArrayList<String>();
         aggregationDefinitionIds.add(aggregationDefinitionId);
 
-        doTestPreprocessStatisticData(
-                HANDLE, 
-                "escidoc_preprocessing_information1.xml",
-                aggregationDefinitionIds, 
-                "2000-01-01",
-                "2000-01-01",
-                null);
+        doTestPreprocessStatisticData(HANDLE, "escidoc_preprocessing_information1.xml", aggregationDefinitionIds,
+            "2000-01-01", "2000-01-01", null);
     }
 
     /**
-     * Tests unsuccessfully preprocessing an aggregation-definition 
-     * by an statistics_editor.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests unsuccessfully preprocessing an aggregation-definition by an statistics_editor.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testPreprocessDisallowedAggregationDefinition() throws Exception {
-        String aggregationDefinitionId = 
-            doTestCreateAggregationDefinition(
-                PWCallback.DEFAULT_HANDLE, 
-                AGGREGATION_DEFINITION_TEMPLATE_NAME, 
+        String aggregationDefinitionId =
+            doTestCreateAggregationDefinition(PWCallback.DEFAULT_HANDLE, AGGREGATION_DEFINITION_TEMPLATE_NAME,
                 disallowedScope, null);
 
         List<String> aggregationDefinitionIds = new ArrayList<String>();
         aggregationDefinitionIds.add(aggregationDefinitionId);
-        doTestPreprocessStatisticData(
-                HANDLE, 
-                "escidoc_preprocessing_information1.xml", 
-                aggregationDefinitionIds, 
-                "2000-01-01",
-                "2000-01-01",
-                AuthorizationException.class);
+        doTestPreprocessStatisticData(HANDLE, "escidoc_preprocessing_information1.xml", aggregationDefinitionIds,
+            "2000-01-01", "2000-01-01", AuthorizationException.class);
     }
 
     /**
      * Test logging out a statistics_editor.
-     * 
-     * @test.name Author - Logout
-     * @test.id AA-Author-Logout
-     * @test.input Valid handle of the user.
-     * @test.expected Successful logout.
-     * @test.status Implemented
-     * @test.issue http://www.escidoc-project.de/issueManagement/show_bug.cgi?id=278
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testAaStatisticsEditorLogout() throws Exception {

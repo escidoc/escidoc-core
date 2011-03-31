@@ -9,6 +9,7 @@ import javax.ejb.EJBLocalHome;
 public interface ItemHandlerLocalHome extends EJBLocalHome {
 
     String COMP_NAME = "java:comp/env/ejb/ItemHandlerLocal";
+
     String JNDI_NAME = "ejb/ItemHandlerLocal";
 
     ItemHandlerLocal create() throws CreateException;

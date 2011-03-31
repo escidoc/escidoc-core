@@ -62,22 +62,20 @@ public class GroupSelectorsAddHandler extends DefaultHandler {
             this.selector = new String[3];
             final int indexName = element.indexOfAttribute(null, "name");
             if (indexName >= 0) {
-                final String selectorName =
-                    element.getAttribute(indexName).getValue();
+                final String selectorName = element.getAttribute(indexName).getValue();
                 if (selectorName.length() == 0) {
                     throw new XmlCorruptedException("The value of the attribute 'selector/@name is missing.");
                 }
                 this.selector[0] = selectorName;
-            } 
+            }
             final int indexType = element.indexOfAttribute(null, "type");
             if (indexType >= 0) {
-                final String selectorType =
-                    element.getAttribute(indexType).getValue();
+                final String selectorType = element.getAttribute(indexType).getValue();
                 if (selectorType.length() == 0) {
                     throw new XmlCorruptedException("The value of the attribute 'selector/@type is missing.");
                 }
                 this.selector[1] = selectorType;
-            } 
+            }
         }
         return element;
     }
@@ -86,8 +84,8 @@ public class GroupSelectorsAddHandler extends DefaultHandler {
     public EndElement endElement(final EndElement element) {
         final String currenrPath = parser.getCurPath();
 
-       if (SELECTOR_PATH.equals(currenrPath)) {
-           this.inSelector = false;
+        if (SELECTOR_PATH.equals(currenrPath)) {
+            this.inSelector = false;
             groupSelectors.add(this.selector);
             this.selector = null;
         }
@@ -102,13 +100,11 @@ public class GroupSelectorsAddHandler extends DefaultHandler {
             if (s.length() == 0) {
                 throw new XmlCorruptedException("the value of element 'selector' is missing");
             }
-            this.selector[2] = s; 
+            this.selector[2] = s;
         }
         return s;
     }
-    
-    
-    
+
     public List<String[]> getGroupSelectors() {
         return this.groupSelectors;
     }

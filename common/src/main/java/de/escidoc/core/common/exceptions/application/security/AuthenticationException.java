@@ -23,13 +23,11 @@ package de.escidoc.core.common.exceptions.application.security;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 
 /**
- * The EscidocAuthenticationException is used to indicate that the action is not
- * allowed because the authentication fails, e.g. due to an expired
- * eSciDocUserHandle. Status code (302) indicating that a redirect to eSciDoc
- * login could be needed.
- * 
- * @author Torsten Tetteroo
+ * The EscidocAuthenticationException is used to indicate that the action is not allowed because the authentication
+ * fails, e.g. due to an expired eSciDocUserHandle. Status code (302) indicating that a redirect to eSciDoc login could
+ * be needed.
  *
+ * @author Torsten Tetteroo
  */
 public class AuthenticationException extends SecurityException {
 
@@ -40,15 +38,12 @@ public class AuthenticationException extends SecurityException {
 
     public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_SECURITY;
 
-    public static final String HTTP_STATUS_MESSAGE =
-        "Authentication failed. Redirect to login. ";
+    public static final String HTTP_STATUS_MESSAGE = "Authentication failed. Redirect to login. ";
 
     /**
      * Default constructor.
-     * 
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
      *
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     public AuthenticationException() throws WebserverSystemException {
         super(HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -56,45 +51,33 @@ public class AuthenticationException extends SecurityException {
 
     /**
      * Constructor used to map an initial exception.
-     * 
-     * @param error
-     *            Throwable
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
+     *
+     * @param error Throwable
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    public AuthenticationException(final Throwable error)
-        throws WebserverSystemException {
+    public AuthenticationException(final Throwable error) throws WebserverSystemException {
         super(error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 
     /**
      * Constructs a new exception with the specified detail message.
-     * 
-     * @param message -
-     *            the detail message.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
      *
+     * @param message - the detail message.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    public AuthenticationException(final String message)
-        throws WebserverSystemException {
+    public AuthenticationException(final String message) throws WebserverSystemException {
         super(message, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 
     /**
-     * Constructor used to create a new Exception with the specified detail
-     * message and a mapping to an initial exception.
-     * 
-     * @param message -
-     *            the detail message.
-     * @param error
-     *            Throwable
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
+     * Constructor used to create a new Exception with the specified detail message and a mapping to an initial
+     * exception.
      *
+     * @param message - the detail message.
+     * @param error   Throwable
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    public AuthenticationException(final String message, final Throwable error)
-        throws WebserverSystemException {
+    public AuthenticationException(final String message, final Throwable error) throws WebserverSystemException {
         super(message, error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 }

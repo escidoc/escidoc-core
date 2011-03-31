@@ -28,21 +28,17 @@
  */
 package de.escidoc.core.test.aa.rest;
 
-
-
 /**
  * Testsuite for the UserAccount's Grants with REST transport.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 public class UserAccountGrantRestTest extends GrantRestAbstractTest {
 
     /**
      * Constructor.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     public UserAccountGrantRestTest() throws Exception {
         super(USER_ACCOUNT_HANDLER_CODE);

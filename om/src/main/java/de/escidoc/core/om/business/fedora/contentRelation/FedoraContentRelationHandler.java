@@ -91,52 +91,43 @@ import java.util.List;
 
 /**
  * ContentRelation handler.
- * 
+ *
  * @author Steffen Wagner
  */
-public class FedoraContentRelationHandler extends HandlerBase
-    implements ContentRelationHandlerInterface {
+public class FedoraContentRelationHandler extends HandlerBase implements ContentRelationHandlerInterface {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(
-        FedoraContentRelationHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FedoraContentRelationHandler.class);
 
-    private final Collection<ResourceListener> contentRelationListeners =
-        new ArrayList<ResourceListener>();
+    private final Collection<ResourceListener> contentRelationListeners = new ArrayList<ResourceListener>();
 
     private PIDSystemFactory pidGenFactory;
 
     private PIDSystem pidGen;
 
-    /** SRU request. */
+    /**
+     * SRU request.
+     */
     private SRURequest sruRequest;
 
     /**
      * Create Content Relation.
-     * 
-     * @param xmlData
-     *            XML representation of Content Relation
+     *
+     * @param xmlData XML representation of Content Relation
      * @return XML representation of created Content Relation
-     * 
      * @throws MissingMethodParameterException
-     *             Thrown if method parameter is missing
+     *                                        Thrown if method parameter is missing
      * @throws ReferencedResourceNotFoundException
-     *             Thrown if referenced resource does not exist.
+     *                                        Thrown if referenced resource does not exist.
      * @throws RelationPredicateNotFoundException
-     *             Thrown if the predicate is not registered.
-     * @throws InvalidContentException
-     *             Thrown if content is invalid
-     * @throws InvalidXmlException
-     *             Thrown if XML is invalid
-     * @throws MissingAttributeValueException
-     *             Thrown if attribute value is missing
-     * @throws SystemException
-     *             Thrown if internal error occur
+     *                                        Thrown if the predicate is not registered.
+     * @throws InvalidContentException        Thrown if content is invalid
+     * @throws InvalidXmlException            Thrown if XML is invalid
+     * @throws MissingAttributeValueException Thrown if attribute value is missing
+     * @throws SystemException                Thrown if internal error occur
      */
     @Override
-    public String create(final String xmlData)
-        throws MissingAttributeValueException, MissingMethodParameterException,
-        InvalidXmlException, InvalidContentException,
-        ReferencedResourceNotFoundException,
+    public String create(final String xmlData) throws MissingAttributeValueException, MissingMethodParameterException,
+        InvalidXmlException, InvalidContentException, ReferencedResourceNotFoundException,
         RelationPredicateNotFoundException, SystemException {
 
         final ContentRelationCreate cr = parseContentRelation(xmlData);
@@ -151,8 +142,7 @@ public class FedoraContentRelationHandler extends HandlerBase
         cr.setIdProvider(getIdProvider());
         cr.persist(true);
 
-        final String resultCR =
-            ContentRelationXmlProvider.getInstance().getContentRelationXml(cr);
+        final String resultCR = ContentRelationXmlProvider.getInstance().getContentRelationXml(cr);
 
         fireContentRelationCreated(cr, resultCR);
         return resultCR;
@@ -160,112 +150,88 @@ public class FedoraContentRelationHandler extends HandlerBase
 
     /**
      * Get escidoc XML representation of ContentRelation.
-     * 
-     * @param id
-     *            objid of ContentRelation resource
+     *
+     * @param id objid of ContentRelation resource
      * @return escidoc XML representation of ContentRelation
      * @throws ContentRelationNotFoundException
-     *             Thrown if under provided id no ContentRelation could be found
-     * @throws SystemException
-     *             Thrown if internal error occurs.
+     *                         Thrown if under provided id no ContentRelation could be found
+     * @throws SystemException Thrown if internal error occurs.
      */
     @Override
-    public String retrieve(final String id)
-        throws ContentRelationNotFoundException, SystemException {
+    public String retrieve(final String id) throws ContentRelationNotFoundException, SystemException {
 
         final ContentRelationCreate cr = setContentRelation(id);
         enrichWithMetadataContent(cr);
-        return ContentRelationXmlProvider.getInstance().getContentRelationXml(
-            cr);
+        return ContentRelationXmlProvider.getInstance().getContentRelationXml(cr);
     }
 
     /**
      * Retrieves a filtered list of content relations.
-     * 
-     * @param parameters
-     *            parameters from the SRU request
-     * 
-     * @return Returns XML representation of the list of content relation
-     *         objects.
-     * @throws SystemException
-     *             If case of internal error.
+     *
+     * @param parameters parameters from the SRU request
+     * @return Returns XML representation of the list of content relation objects.
+     * @throws SystemException If case of internal error.
      */
     @Override
-    public String retrieveContentRelations(final SRURequestParameters parameters)
-        throws SystemException {
+    public String retrieveContentRelations(final SRURequestParameters parameters) throws SystemException {
         final StringWriter result = new StringWriter();
 
         if (parameters.isExplain()) {
             sruRequest.explain(result, ResourceType.CONTENT_RELATION);
         }
         else {
-            sruRequest.searchRetrieve(result,
-                new ResourceType[] { ResourceType.CONTENT_RELATION },
-                parameters);
+            sruRequest.searchRetrieve(result, new ResourceType[] { ResourceType.CONTENT_RELATION }, parameters);
         }
         return result.toString();
     }
 
     /**
      * Get escidoc XML representation of ContentRelations properties.
-     * 
-     * @param id
-     *            objid of ContentRelation resource
+     *
+     * @param id objid of ContentRelation resource
      * @return escidoc XML representation of ContentRelation
      * @throws ContentRelationNotFoundException
-     *             Thrown if under provided id no ContentRelation could be found
-     * @throws SystemException
-     *             Thrown if internal error occurs.
+     *                         Thrown if under provided id no ContentRelation could be found
+     * @throws SystemException Thrown if internal error occurs.
      */
     @Override
-    public String retrieveProperties(final String id)
-        throws ContentRelationNotFoundException, SystemException {
+    public String retrieveProperties(final String id) throws ContentRelationNotFoundException, SystemException {
 
         final ContentRelationCreate cr = setContentRelation(id);
-        return ContentRelationXmlProvider
-            .getInstance().getContentRelationPropertiesXml(cr);
+        return ContentRelationXmlProvider.getInstance().getContentRelationPropertiesXml(cr);
     }
 
     /**
      * Get escidoc XML representation of ContentRelations md-records.
-     * 
-     * @param id
-     *            objid of ContentRelation resource
+     *
+     * @param id objid of ContentRelation resource
      * @return escidoc XML representation of ContentRelation
      * @throws ContentRelationNotFoundException
-     *             Thrown if under provided id no ContentRelation could be found
-     * @throws SystemException
-     *             Thrown if internal error occurs.
+     *                         Thrown if under provided id no ContentRelation could be found
+     * @throws SystemException Thrown if internal error occurs.
      */
     @Override
-    public String retrieveMdRecords(final String id)
-        throws ContentRelationNotFoundException, SystemException {
+    public String retrieveMdRecords(final String id) throws ContentRelationNotFoundException, SystemException {
 
         final ContentRelationCreate cr = setContentRelation(id);
         enrichWithMetadataContent(cr);
-        return ContentRelationXmlProvider
-            .getInstance().getContentRelationMdRecords(cr);
+        return ContentRelationXmlProvider.getInstance().getContentRelationMdRecords(cr);
     }
 
     /**
      * Get escidoc XML representation of ContentRelations md-records.
-     * 
-     * @param id
-     *            objid of ContentRelation resource
-     * @param name
-     *            name of a md-record
+     *
+     * @param id   objid of ContentRelation resource
+     * @param name name of a md-record
      * @return escidoc XML representation of ContentRelation
      * @throws ContentRelationNotFoundException
-     *             Thrown if under provided id no ContentRelation could be found
-     * @throws MdRecordNotFoundException
-     *             e
-     * @throws SystemException
-     *             Thrown if internal error occurs.
+     *                                   Thrown if under provided id no ContentRelation could be found
+     * @throws MdRecordNotFoundException e
+     * @throws SystemException           Thrown if internal error occurs.
      */
     @Override
-    public String retrieveMdRecord(final String id, final String name)
-        throws ContentRelationNotFoundException, MdRecordNotFoundException,
-        SystemException {
+    public String retrieveMdRecord(final String id, final String name) throws ContentRelationNotFoundException,
+        MdRecordNotFoundException, SystemException {
 
         final ContentRelationCreate cr = setContentRelation(id);
         enrichWithMetadataContent(cr);
@@ -273,57 +239,41 @@ public class FedoraContentRelationHandler extends HandlerBase
         if (mdRecords != null) {
             for (final MdRecordCreate mr : mdRecords) {
                 if (mr.getName().equals(name)) {
-                    return ContentRelationXmlProvider
-                        .getInstance().getContentRelationMdRecord(cr, mr);
+                    return ContentRelationXmlProvider.getInstance().getContentRelationMdRecord(cr, mr);
                 }
             }
         }
-        throw new MdRecordNotFoundException("The md-record with name=" + name
-            + " does not exist.");
+        throw new MdRecordNotFoundException("The md-record with name=" + name + " does not exist.");
     }
 
     /**
      * Update Content Relation.
-     * 
-     * @param id
-     *            objid of Content Relation
-     * @param xmlData
-     *            XML representation of Content Relation
+     *
+     * @param id      objid of Content Relation
+     * @param xmlData XML representation of Content Relation
      * @return XML representation of updated Content Relation
-     * 
      * @throws ContentRelationNotFoundException
-     *             Thrown if no Content Relation could be found under provided
-     *             objid
-     * @throws OptimisticLockingException
-     *             Thrown if resource is updated in the meantime and last
-     *             modification date differs
-     * @throws InvalidStatusException
-     *             Thrown if resource has invalid status to update
-     * @throws MissingAttributeValueException
-     *             Thrown if attribute value is missing
-     * @throws LockingException
-     *             Thrown if resource is locked through other user
+     *                                        Thrown if no Content Relation could be found under provided objid
+     * @throws OptimisticLockingException     Thrown if resource is updated in the meantime and last modification date
+     *                                        differs
+     * @throws InvalidStatusException         Thrown if resource has invalid status to update
+     * @throws MissingAttributeValueException Thrown if attribute value is missing
+     * @throws LockingException               Thrown if resource is locked through other user
      * @throws MissingMethodParameterException
-     *             Thrown if method parameter is missing
+     *                                        Thrown if method parameter is missing
      * @throws ReferencedResourceNotFoundException
-     *             Thrown if referenced resource does not exist.
+     *                                        Thrown if referenced resource does not exist.
      * @throws RelationPredicateNotFoundException
-     *             Thrown if the predicate is not registered.
-     * @throws InvalidContentException
-     *             Thrown if content is invalid
-     * @throws InvalidXmlException
-     *             Thrown if XML is invalid
-     * @throws MissingAttributeValueException
-     *             Thrown if attribute value is missing
-     * @throws SystemException
-     *             Thrown if internal error occur
+     *                                        Thrown if the predicate is not registered.
+     * @throws InvalidContentException        Thrown if content is invalid
+     * @throws InvalidXmlException            Thrown if XML is invalid
+     * @throws MissingAttributeValueException Thrown if attribute value is missing
+     * @throws SystemException                Thrown if internal error occur
      */
     @Override
-    public String update(final String id, final String xmlData)
-        throws ContentRelationNotFoundException, OptimisticLockingException,
-        InvalidContentException, InvalidStatusException, LockingException,
-        MissingAttributeValueException, MissingMethodParameterException,
-        SystemException, InvalidXmlException,
+    public String update(final String id, final String xmlData) throws ContentRelationNotFoundException,
+        OptimisticLockingException, InvalidContentException, InvalidStatusException, LockingException,
+        MissingAttributeValueException, MissingMethodParameterException, SystemException, InvalidXmlException,
         ReferencedResourceNotFoundException, RelationPredicateNotFoundException {
 
         // instance of stored Content Relation
@@ -354,28 +304,20 @@ public class FedoraContentRelationHandler extends HandlerBase
 
     /**
      * Delete Content Relation.
-     * 
-     * Even if Content Relations have life cycle with release etc. it should be
-     * possible to remove. This rule is different to the release status of Item
-     * and Container where release means that the resource will be public
-     * available anytime and could only be withdrawn. It's assumed that the
-     * anytime feature isn't required for Content Relations because they not
-     * contain primary data.
-     * 
-     * @param id
-     *            The objid of the Content Relation
+     * <p/>
+     * Even if Content Relations have life cycle with release etc. it should be possible to remove. This rule is
+     * different to the release status of Item and Container where release means that the resource will be public
+     * available anytime and could only be withdrawn. It's assumed that the anytime feature isn't required for Content
+     * Relations because they not contain primary data.
+     *
+     * @param id The objid of the Content Relation
      * @throws ContentRelationNotFoundException
-     *             Thrown if a content relation with the provided id cannot be
-     *             found.
-     * @throws LockingException
-     *             Thrown if Content Relation is locked by other user
-     * @throws SystemException
-     *             Thrown if internal error occurs.
+     *                          Thrown if a content relation with the provided id cannot be found.
+     * @throws LockingException Thrown if Content Relation is locked by other user
+     * @throws SystemException  Thrown if internal error occurs.
      */
     @Override
-    public void delete(final String id)
-        throws ContentRelationNotFoundException, SystemException,
-        LockingException {
+    public void delete(final String id) throws ContentRelationNotFoundException, SystemException, LockingException {
 
         final ContentRelationCreate cr = setContentRelation(id);
         checkLocked(cr);
@@ -385,12 +327,9 @@ public class FedoraContentRelationHandler extends HandlerBase
     }
 
     /**
-     * @param xmlData
-     *            content relation as XML
-     * 
+     * @param xmlData content relation as XML
      * @return ingested content relation as XML
-     * @throws EscidocException
-     *             e
+     * @throws EscidocException e
      */
     @Override
     public String ingest(final String xmlData) throws EscidocException {
@@ -400,9 +339,8 @@ public class FedoraContentRelationHandler extends HandlerBase
 
     /**
      * Injects the indexing handler.
-     * 
-     * @param indexingHandler
-     *            The indexing handler.
+     *
+     * @param indexingHandler The indexing handler.
      */
     public void setIndexingHandler(final ResourceListener indexingHandler) {
         addContentRelationListener(indexingHandler);
@@ -410,9 +348,8 @@ public class FedoraContentRelationHandler extends HandlerBase
 
     /**
      * Set the SRURequest object.
-     * 
-     * @param sruRequest
-     *            SRURequest
+     *
+     * @param sruRequest SRURequest
      */
     public void setSruRequest(final SRURequest sruRequest) {
         this.sruRequest = sruRequest;
@@ -420,10 +357,8 @@ public class FedoraContentRelationHandler extends HandlerBase
 
     /**
      * Injects the triple store utility bean.
-     * 
-     * @param tsu
-     *            The {@link TripleStoreUtility}.
-     * 
+     *
+     * @param tsu The {@link TripleStoreUtility}.
      */
     @Override
     public void setTripleStoreUtility(final TripleStoreUtility tsu) {
@@ -432,11 +367,9 @@ public class FedoraContentRelationHandler extends HandlerBase
 
     /**
      * See Interface for functional description.
-     * 
-     * @param fedoraUtility
-     *            Fedora utility
-     * @see HandlerBase
-     *      #setFedoraUtility(de.escidoc.core.common.business.fedora.FedoraUtility)
+     *
+     * @param fedoraUtility Fedora utility
+     * @see HandlerBase #setFedoraUtility(de.escidoc.core.common.business.fedora.FedoraUtility)
      */
     @Override
     public void setFedoraUtility(final FedoraUtility fedoraUtility) {
@@ -446,11 +379,9 @@ public class FedoraContentRelationHandler extends HandlerBase
 
     /**
      * See Interface for functional description.
-     * 
-     * @param idProvider
-     *            id provider
-     * @see HandlerBase
-     *      #setIdProvider(de.escidoc.core.common.persistence.EscidocIdProvider)
+     *
+     * @param idProvider id provider
+     * @see HandlerBase #setIdProvider(de.escidoc.core.common.persistence.EscidocIdProvider)
      */
     @Override
     public void setIdProvider(final EscidocIdProvider idProvider) {
@@ -460,35 +391,25 @@ public class FedoraContentRelationHandler extends HandlerBase
 
     /**
      * Submit the Content Relation.
-     * 
-     * @param id
-     *            objid of ContentRelation
-     * @param param
-     *            Task parameter
+     *
+     * @param id    objid of ContentRelation
+     * @param param Task parameter
      * @return XML result
      * @throws ContentRelationNotFoundException
-     *             e
-     * @throws LockingException
-     *             e
-     * @throws InvalidStatusException
-     *             e
+     *                                    e
+     * @throws LockingException           e
+     * @throws InvalidStatusException     e
      * @throws MissingMethodParameterException
-     *             e
-     * @throws SystemException
-     *             e
-     * @throws OptimisticLockingException
-     *             e
-     * @throws InvalidXmlException
-     *             e
-     * @throws InvalidContentException
-     *             e
+     *                                    e
+     * @throws SystemException            e
+     * @throws OptimisticLockingException e
+     * @throws InvalidXmlException        e
+     * @throws InvalidContentException    e
      */
     @Override
-    public String submit(final String id, final String param)
-        throws ContentRelationNotFoundException, LockingException,
-        InvalidStatusException, MissingMethodParameterException,
-        SystemException, OptimisticLockingException, InvalidXmlException,
-        InvalidContentException {
+    public String submit(final String id, final String param) throws ContentRelationNotFoundException,
+        LockingException, InvalidStatusException, MissingMethodParameterException, SystemException,
+        OptimisticLockingException, InvalidXmlException, InvalidContentException {
 
         final ContentRelationCreate cr = setContentRelation(id);
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(param);
@@ -497,8 +418,8 @@ public class FedoraContentRelationHandler extends HandlerBase
         validateToSubmitStatus(cr);
 
         // check optimistic locking criteria
-        Utility.checkOptimisticLockingCriteria(cr.getProperties().getLastModificationDate(),
-                new DateTime(taskParameter.getLastModificationDate()), "Content relation " + id);
+        Utility.checkOptimisticLockingCriteria(cr.getProperties().getLastModificationDate(), new DateTime(taskParameter
+            .getLastModificationDate()), "Content relation " + id);
 
         cr.getProperties().setStatus(StatusType.SUBMITTED);
         // set status comment
@@ -506,60 +427,46 @@ public class FedoraContentRelationHandler extends HandlerBase
             cr.getProperties().setStatusComment(taskParameter.getComment());
         }
         else {
-            cr.getProperties()
-                .setStatusComment("Status changed to 'submitted'");
+            cr.getProperties().setStatusComment("Status changed to 'submitted'");
         }
 
         cr.persistProperties(true);
 
         // load metadata content to resource
         enrichWithMetadataContent(cr);
-        fireContentRelationModified(cr, ContentRelationXmlProvider
-            .getInstance().getContentRelationXml(cr));
+        fireContentRelationModified(cr, ContentRelationXmlProvider.getInstance().getContentRelationXml(cr));
 
         return Utility.prepareReturnXml(cr.getProperties().getLastModificationDate(), null);
     }
 
     /**
      * Register an content relation listener.
-     * 
-     * @param listener
-     *            listener which will be added to the list
+     *
+     * @param listener listener which will be added to the list
      */
     public void addContentRelationListener(final ResourceListener listener) {
         contentRelationListeners.add(listener);
     }
 
     /**
-     * 
-     * @param id
-     *            objid of ContentRelation
-     * @param param
-     *            Task parameter
+     * @param id    objid of ContentRelation
+     * @param param Task parameter
      * @return XML result
      * @throws ContentRelationNotFoundException
-     *             e
-     * @throws LockingException
-     *             e
-     * @throws InvalidStatusException
-     *             e
+     *                                    e
+     * @throws LockingException           e
+     * @throws InvalidStatusException     e
      * @throws MissingMethodParameterException
-     *             e
-     * @throws SystemException
-     *             e
-     * @throws OptimisticLockingException
-     *             e
-     * @throws InvalidXmlException
-     *             e
-     * @throws InvalidContentException
-     *             e
+     *                                    e
+     * @throws SystemException            e
+     * @throws OptimisticLockingException e
+     * @throws InvalidXmlException        e
+     * @throws InvalidContentException    e
      */
     @Override
-    public String release(final String id, final String param)
-        throws ContentRelationNotFoundException, LockingException,
-        InvalidStatusException, MissingMethodParameterException,
-        SystemException, OptimisticLockingException, InvalidXmlException,
-        InvalidContentException {
+    public String release(final String id, final String param) throws ContentRelationNotFoundException,
+        LockingException, InvalidStatusException, MissingMethodParameterException, SystemException,
+        OptimisticLockingException, InvalidXmlException, InvalidContentException {
 
         final ContentRelationCreate cr = setContentRelation(id);
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(param);
@@ -567,10 +474,10 @@ public class FedoraContentRelationHandler extends HandlerBase
         checkReleased(cr);
         if (cr.getProperties().getStatus() != StatusType.SUBMITTED) {
             throw new InvalidStatusException("The object is not in state '" + Constants.STATUS_SUBMITTED
-                    + "' and can not be " + Constants.STATUS_RELEASED + '.');
+                + "' and can not be " + Constants.STATUS_RELEASED + '.');
         }
-        Utility.checkOptimisticLockingCriteria(cr.getProperties().getLastModificationDate(),
-                new DateTime(taskParameter.getLastModificationDate()), "Content relation " + id);
+        Utility.checkOptimisticLockingCriteria(cr.getProperties().getLastModificationDate(), new DateTime(taskParameter
+            .getLastModificationDate()), "Content relation " + id);
 
         cr.getProperties().setStatus(StatusType.RELEASED);
 
@@ -586,53 +493,42 @@ public class FedoraContentRelationHandler extends HandlerBase
 
         // load metadata content to resource
         enrichWithMetadataContent(cr);
-        fireContentRelationModified(cr, ContentRelationXmlProvider
-            .getInstance().getContentRelationXml(cr));
+        fireContentRelationModified(cr, ContentRelationXmlProvider.getInstance().getContentRelationXml(cr));
 
         return Utility.prepareReturnXml(cr.getProperties().getLastModificationDate(), null);
     }
 
     /**
      * Revise the Content Relation.
-     * 
-     * @param id
-     *            Objid of Content Relation
-     * @param taskParam
-     *            TaskParameter
+     *
+     * @param id        Objid of Content Relation
+     * @param taskParam TaskParameter
      * @return XML result
      * @throws ContentRelationNotFoundException
-     *             e
-     * @throws LockingException
-     *             e
-     * @throws InvalidStatusException
-     *             e
+     *                                    e
+     * @throws LockingException           e
+     * @throws InvalidStatusException     e
      * @throws MissingMethodParameterException
-     *             e
-     * @throws SystemException
-     *             e
-     * @throws OptimisticLockingException
-     *             e
-     * @throws XmlCorruptedException
-     *             e
-     * @throws InvalidContentException
-     *             e
+     *                                    e
+     * @throws SystemException            e
+     * @throws OptimisticLockingException e
+     * @throws XmlCorruptedException      e
+     * @throws InvalidContentException    e
      */
     @Override
-    public String revise(final String id, final String taskParam)
-        throws ContentRelationNotFoundException, LockingException,
-        InvalidStatusException, MissingMethodParameterException,
-        SystemException, OptimisticLockingException, XmlCorruptedException,
-        InvalidContentException {
+    public String revise(final String id, final String taskParam) throws ContentRelationNotFoundException,
+        LockingException, InvalidStatusException, MissingMethodParameterException, SystemException,
+        OptimisticLockingException, XmlCorruptedException, InvalidContentException {
 
         final ContentRelationCreate cr = setContentRelation(id);
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(taskParam);
         checkLocked(cr);
         if (cr.getProperties().getStatus() != StatusType.SUBMITTED) {
             throw new InvalidStatusException("The object is not in state '" + Constants.STATUS_SUBMITTED
-                    + "' and can not be revised.");
+                + "' and can not be revised.");
         }
-        Utility.checkOptimisticLockingCriteria(cr.getProperties().getLastModificationDate(),
-                new DateTime(taskParameter.getLastModificationDate()), "Content relation " + id);
+        Utility.checkOptimisticLockingCriteria(cr.getProperties().getLastModificationDate(), new DateTime(taskParameter
+            .getLastModificationDate()), "Content relation " + id);
 
         cr.getProperties().setStatus(StatusType.INREVISION);
         // set status comment
@@ -640,59 +536,47 @@ public class FedoraContentRelationHandler extends HandlerBase
             cr.getProperties().setStatusComment(taskParameter.getComment());
         }
         else {
-            cr.getProperties().setStatusComment(
-                "Status changed to 'in-revision'");
+            cr.getProperties().setStatusComment("Status changed to 'in-revision'");
         }
 
         cr.persistProperties(true);
 
         // load metadata content to resource
         enrichWithMetadataContent(cr);
-        fireContentRelationModified(cr, ContentRelationXmlProvider
-            .getInstance().getContentRelationXml(cr));
+        fireContentRelationModified(cr, ContentRelationXmlProvider.getInstance().getContentRelationXml(cr));
 
         return Utility.prepareReturnXml(cr.getProperties().getLastModificationDate(), null);
     }
 
     /**
      * Lock a Content Relation for other user access.
-     * 
-     * @param id
-     *            Objid of Content Relation
-     * @param param
-     *            XML TaskParam
+     *
+     * @param id    Objid of Content Relation
+     * @param param XML TaskParam
      * @return Result XML data structure
      * @throws ContentRelationNotFoundException
-     *             e
-     * @throws LockingException
-     *             e
-     * @throws InvalidContentException
-     *             e
+     *                                    e
+     * @throws LockingException           e
+     * @throws InvalidContentException    e
      * @throws MissingMethodParameterException
-     *             e
-     * @throws SystemException
-     *             e
-     * @throws OptimisticLockingException
-     *             e
-     * @throws InvalidXmlException
-     *             e
-     * @throws InvalidStatusException
-     *             e
+     *                                    e
+     * @throws SystemException            e
+     * @throws OptimisticLockingException e
+     * @throws InvalidXmlException        e
+     * @throws InvalidStatusException     e
      */
     @Override
-    public String lock(final String id, final String param)
-        throws ContentRelationNotFoundException, LockingException,
-        InvalidContentException, MissingMethodParameterException,
-        SystemException, OptimisticLockingException, InvalidXmlException,
-        InvalidStatusException {
+    public String lock(final String id, final String param) throws ContentRelationNotFoundException, LockingException,
+        InvalidContentException, MissingMethodParameterException, SystemException, OptimisticLockingException,
+        InvalidXmlException, InvalidStatusException {
 
         final ContentRelationCreate cr = setContentRelation(id);
         checkReleased(cr);
         checkLocked(cr);
 
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(param);
-        Utility.checkOptimisticLockingCriteria(cr.getProperties().getLastModificationDate(),
-                new DateTime(taskParameter.getLastModificationDate()), "Content relation " + id);
+        Utility.checkOptimisticLockingCriteria(cr.getProperties().getLastModificationDate(), new DateTime(taskParameter
+            .getLastModificationDate()), "Content relation " + id);
 
         // lock resource
         final LockHandler lockHandler = LockHandler.getInstance();
@@ -701,14 +585,11 @@ public class FedoraContentRelationHandler extends HandlerBase
 
             cr.getProperties().setLockStatus(LockStatus.LOCKED);
             cr.getProperties().setLockOwnerId(getUtility().getCurrentUserId());
-            cr.getProperties().setLockOwnerName(
-                getUtility().getCurrentUserRealName());
-            cr.getProperties().setLockDate(
-                cr.getProperties().getLastModificationDate());
+            cr.getProperties().setLockOwnerName(getUtility().getCurrentUserRealName());
+            cr.getProperties().setLockDate(cr.getProperties().getLastModificationDate());
         }
 
-        fireContentRelationModified(cr, ContentRelationXmlProvider
-            .getInstance().getContentRelationXml(cr));
+        fireContentRelationModified(cr, ContentRelationXmlProvider.getInstance().getContentRelationXml(cr));
 
         // timestamp
         return Utility.prepareReturnXml(cr.getProperties().getLastModificationDate(), null);
@@ -716,41 +597,31 @@ public class FedoraContentRelationHandler extends HandlerBase
 
     /**
      * Unlock a Content Relation for other user access.
-     * 
-     * @param id
-     *            Objid of Content Relation
-     * @param param
-     *            XML TaskParam
+     *
+     * @param id    Objid of Content Relation
+     * @param param XML TaskParam
      * @return Result XML data structure
      * @throws ContentRelationNotFoundException
-     *             e
-     * @throws LockingException
-     *             e
-     * @throws InvalidContentException
-     *             e
+     *                                    e
+     * @throws LockingException           e
+     * @throws InvalidContentException    e
      * @throws MissingMethodParameterException
-     *             e
-     * @throws SystemException
-     *             e
-     * @throws OptimisticLockingException
-     *             e
-     * @throws InvalidXmlException
-     *             e
-     * @throws InvalidStatusException
-     *             Thrown if resource is not locked.
+     *                                    e
+     * @throws SystemException            e
+     * @throws OptimisticLockingException e
+     * @throws InvalidXmlException        e
+     * @throws InvalidStatusException     Thrown if resource is not locked.
      */
     @Override
-    public String unlock(final String id, final String param)
-        throws ContentRelationNotFoundException, LockingException,
-        MissingMethodParameterException, SystemException,
-        OptimisticLockingException, InvalidXmlException,
-        InvalidContentException, InvalidStatusException {
+    public String unlock(final String id, final String param) throws ContentRelationNotFoundException,
+        LockingException, MissingMethodParameterException, SystemException, OptimisticLockingException,
+        InvalidXmlException, InvalidContentException, InvalidStatusException {
 
         final ContentRelationCreate cr = setContentRelation(id);
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(param);
 
-        Utility.checkOptimisticLockingCriteria(cr.getProperties().getLastModificationDate(),
-                new DateTime(taskParameter.getLastModificationDate()), "Content relation " + id);
+        Utility.checkOptimisticLockingCriteria(cr.getProperties().getLastModificationDate(), new DateTime(taskParameter
+            .getLastModificationDate()), "Content relation " + id);
 
         // lock resource
         final LockHandler lockHandler = LockHandler.getInstance();
@@ -763,57 +634,41 @@ public class FedoraContentRelationHandler extends HandlerBase
             cr.getProperties().setLockDate((DateTime) null);
         }
 
-        fireContentRelationModified(cr, ContentRelationXmlProvider
-            .getInstance().getContentRelationXml(cr));
+        fireContentRelationModified(cr, ContentRelationXmlProvider.getInstance().getContentRelationXml(cr));
 
         return Utility.prepareReturnXml(cr.getProperties().getLastModificationDate(), null);
     }
 
     /**
      * Assign persistent identifier to a Content-relation object.
-     * 
-     * @param id
-     *            The Id of the Content-relation witch is to assign with an
-     *            ObjectPid.
-     * @param taskParam
-     *            XML snippet with parameter for the persistent identifier
-     *            system.
+     *
+     * @param id        The Id of the Content-relation witch is to assign with an ObjectPid.
+     * @param taskParam XML snippet with parameter for the persistent identifier system.
      * @return The assigned persistent identifier for the Content-relation.
-     * 
      * @throws ContentRelationNotFoundException
-     *             Thrown if the object with id is does not exist or is no Item.
-     * @throws LockingException
-     *             Thrown if the Item is locked
+     *                                     Thrown if the object with id is does not exist or is no Item.
+     * @throws LockingException            Thrown if the Item is locked
      * @throws MissingMethodParameterException
-     *             Thrown if a parameter is missing within
-     *             <code>taskParam</code>.
-     * @throws OptimisticLockingException
-     *             Thrown if Item was altered in the mean time.
-     * @throws PidAlreadyAssignedException
-     *             Thrown if a Content-relation is already assigned a PID.
-     * @throws InvalidXmlException
-     *             Thrown if taskParam has invalid XML.
-     * @throws SystemException
-     *             Thrown in case of internal error.
-     * @see de.escidoc.core.om.business.interfaces.ContentRelationsHandlerInterface
-     *      #assignObjectPid(java.lang.String,java.lang.String)
+     *                                     Thrown if a parameter is missing within <code>taskParam</code>.
+     * @throws OptimisticLockingException  Thrown if Item was altered in the mean time.
+     * @throws PidAlreadyAssignedException Thrown if a Content-relation is already assigned a PID.
+     * @throws InvalidXmlException         Thrown if taskParam has invalid XML.
+     * @throws SystemException             Thrown in case of internal error.
+     * @see de.escidoc.core.om.business.interfaces.ContentRelationsHandlerInterface #assignObjectPid(java.lang.String,java.lang.String)
      */
     @Override
-    public String assignObjectPid(final String id, final String taskParam)
-        throws ContentRelationNotFoundException, LockingException,
-        MissingMethodParameterException, OptimisticLockingException,
-        InvalidXmlException, SystemException, PidAlreadyAssignedException {
+    public String assignObjectPid(final String id, final String taskParam) throws ContentRelationNotFoundException,
+        LockingException, MissingMethodParameterException, OptimisticLockingException, InvalidXmlException,
+        SystemException, PidAlreadyAssignedException {
 
         final ContentRelationCreate cr = setContentRelation(id);
         if (cr.getProperties().getPid() != null) {
-            throw new PidAlreadyAssignedException("A content relation with id " + id
-                    + " is already assigned a PID");
+            throw new PidAlreadyAssignedException("A content relation with id " + id + " is already assigned a PID");
         }
-        final TaskParamHandler taskParameter =
-            XmlUtility.parseTaskParam(taskParam);
+        final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(taskParam);
         checkLocked(cr);
-        Utility.checkOptimisticLockingCriteria(cr.getProperties().getLastModificationDate(),
-                new DateTime(taskParameter.getLastModificationDate()), "Content-relation " + cr.getObjid());
+        Utility.checkOptimisticLockingCriteria(cr.getProperties().getLastModificationDate(), new DateTime(taskParameter
+            .getLastModificationDate()), "Content-relation " + cr.getObjid());
 
         String pid = taskParameter.getPid();
         if (pid == null) {
@@ -826,20 +681,15 @@ public class FedoraContentRelationHandler extends HandlerBase
     }
 
     /**
-     * Retrieves a list of registered predicates which can be used to create
-     * content relations.
-     * 
+     * Retrieves a list of registered predicates which can be used to create content relations.
+     *
      * @return String containing a list with registered predicates.
-     * @throws InvalidContentException
-     *             Thrown if a xml file with an ontology has invalid content
-     * @throws InvalidXmlException
-     *             Thrown if a xml file with an ontology is invalid rdf/xml
-     * @throws SystemException
-     *             e
+     * @throws InvalidContentException Thrown if a xml file with an ontology has invalid content
+     * @throws InvalidXmlException     Thrown if a xml file with an ontology is invalid rdf/xml
+     * @throws SystemException         e
      */
     @Override
-    public String retrieveRegisteredPredicates()
-        throws InvalidContentException, InvalidXmlException, SystemException {
+    public String retrieveRegisteredPredicates() throws InvalidContentException, InvalidXmlException, SystemException {
         final List<String> predicates = ContentRelationsUtility.getPredicates();
         final Iterator<String> it = predicates.iterator();
         final StringBuilder sb = new StringBuilder();
@@ -855,25 +705,17 @@ public class FedoraContentRelationHandler extends HandlerBase
 
     /**
      * Get Persistent Identifier from configured PID (Manager) service.
-     * 
-     * @param id
-     *            Item ID
-     * @param param
-     *            XML snippet with PID Manager parameter.
+     *
+     * @param id    Item ID
+     * @param param XML snippet with PID Manager parameter.
      * @return Persistent Identifier
-     * 
-     * @throws PidSystemException
-     *             Thrown if the communication with PID (Management) System
-     *             fails.
+     * @throws PidSystemException       Thrown if the communication with PID (Management) System fails.
      * @throws MissingMethodParameterException
-     *             Thrown if necessary parameters are not part of the param XML
-     *             structure.
-     * @throws WebserverSystemException
-     *             Thrown by assignPid().
+     *                                  Thrown if necessary parameters are not part of the param XML structure.
+     * @throws WebserverSystemException Thrown by assignPid().
      */
-    public String getPid(final String id, final String param)
-        throws PidSystemException, MissingMethodParameterException,
-        WebserverSystemException {
+    public String getPid(final String id, final String param) throws PidSystemException,
+        MissingMethodParameterException, WebserverSystemException {
 
         if (this.pidGenFactory == null) {
             this.pidGenFactory = PIDSystemFactory.getInstance();
@@ -887,36 +729,28 @@ public class FedoraContentRelationHandler extends HandlerBase
 
     /**
      * Retrieve virtual resources.
-     * 
-     * @param id
-     *            objid of Content Relation
+     *
+     * @param id objid of Content Relation
      * @return XML representation of resources
-     * @throws ContentRelationNotFoundException
-     * @throws SystemException
      */
     @Override
-    public String retrieveResources(final String id)
-        throws ContentRelationNotFoundException, SystemException {
+    public String retrieveResources(final String id) throws ContentRelationNotFoundException, SystemException {
 
         final ContentRelationCreate cr = setContentRelation(id);
-        return ContentRelationXmlProvider
-            .getInstance().getContentRelationResourcesXml(cr);
+        return ContentRelationXmlProvider.getInstance().getContentRelationResourcesXml(cr);
     }
 
     /**
      * Bounds a Content Relation object to this handler.
-     * 
-     * @param id
-     *            The ID of the Content Relation which should be bound to this
-     *            Handler.
+     *
+     * @param id The ID of the Content Relation which should be bound to this Handler.
      * @return value object of Content Relation with provided objid
      * @throws ContentRelationNotFoundException
-     *             If there is no item with <code>id</code> in the repository.
-     * @throws SystemException
-     *             Thrown in case of an internal system error.
+     *                         If there is no item with <code>id</code> in the repository.
+     * @throws SystemException Thrown in case of an internal system error.
      */
-    protected ContentRelationCreate setContentRelation(final String id)
-        throws ContentRelationNotFoundException, SystemException {
+    protected ContentRelationCreate setContentRelation(final String id) throws ContentRelationNotFoundException,
+        SystemException {
 
         final ContentRelationCreate cr = new ContentRelationCreate();
         cr.setObjid(id);
@@ -939,86 +773,66 @@ public class FedoraContentRelationHandler extends HandlerBase
             }
             cr.getProperties().setLockDate(lockHandler.getLockDate(id));
             cr.getProperties().setLockOwnerId(lockHandler.getLockOwner(id));
-            cr.getProperties().setLockOwnerName(
-                lockHandler.getLockOwnerTitle(id));
+            cr.getProperties().setLockOwnerName(lockHandler.getLockOwnerTitle(id));
         }
 
         // be aware some of them are triple store requests, which are expensive
-        cr.getProperties().setLastModificationDate(
-            getFedoraUtility().getLastModificationDate(id));
+        cr.getProperties().setLastModificationDate(getFedoraUtility().getLastModificationDate(id));
 
         return cr;
     }
 
     /**
      * Check if the Content Relation is locked.
-     * 
-     * @param cr
-     *            Content Relation
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
-     * @throws LockingException
-     *             If the Content is locked and the current user is not the one
-     *             who locked it.
+     *
+     * @param cr Content Relation
+     * @throws WebserverSystemException Thrown in case of an internal error.
+     * @throws LockingException         If the Content is locked and the current user is not the one who locked it.
      */
 
-    private void checkLocked(final ContentRelationCreate cr)
-        throws LockingException, WebserverSystemException {
+    private void checkLocked(final ContentRelationCreate cr) throws LockingException, WebserverSystemException {
 
         if (cr.getProperties().isLocked()
-            && !cr
-                .getProperties().getLockOwnerId()
-                .equals(getUtility().getCurrentUserId())) {
+            && !cr.getProperties().getLockOwnerId().equals(getUtility().getCurrentUserId())) {
             throw new LockingException("Content Relation + " + cr.getObjid() + " is locked by "
-                    + cr.getProperties().getLockOwnerId() + " ("
-                    + cr.getProperties().getLockOwnerName() + ") .");
+                + cr.getProperties().getLockOwnerId() + " (" + cr.getProperties().getLockOwnerName() + ") .");
         }
     }
 
     /**
      * Check release status of object.
-     * 
-     * @param cr
-     *            ContentRelation
-     * @throws InvalidStatusException
-     *             Thrown if object is not in status released.
+     *
+     * @param cr ContentRelation
+     * @throws InvalidStatusException Thrown if object is not in status released.
      */
-    private static void checkReleased(final ContentRelationCreate cr)
-        throws InvalidStatusException {
+    private static void checkReleased(final ContentRelationCreate cr) throws InvalidStatusException {
 
         final StatusType status = cr.getProperties().getStatus();
         if (status == StatusType.RELEASED) {
             throw new InvalidStatusException("The object is in state '" + Constants.STATUS_RELEASED
-                    + "' and can not be" + " changed.");
+                + "' and can not be" + " changed.");
         }
     }
 
     /**
-     * Retrieve the properties of the last version (RELS-EXT) and inject values
-     * into ContentRelationCreate object.
-     * 
-     * @param cr
-     *            ContentRelation object
-     * @throws SystemException
-     *             Thrown in case of internal failure.
+     * Retrieve the properties of the last version (RELS-EXT) and inject values into ContentRelationCreate object.
+     *
+     * @param cr ContentRelation object
+     * @throws SystemException Thrown in case of internal failure.
      * @throws ContentRelationNotFoundException
-     *             Thrown if resource with provided id could not be found in
-     *             Fedora repository.
+     *                         Thrown if resource with provided id could not be found in Fedora repository.
      */
-    private static void setRelsExtValues(final ContentRelationCreate cr)
-        throws SystemException, ContentRelationNotFoundException {
+    private static void setRelsExtValues(final ContentRelationCreate cr) throws SystemException,
+        ContentRelationNotFoundException {
 
         // retrieve resource with id from Fedora
         final Datastream relsExt;
         try {
-            relsExt =
-                new Datastream(Datastream.RELS_EXT_DATASTREAM, cr.getObjid(),
-                    null);
+            relsExt = new Datastream(Datastream.RELS_EXT_DATASTREAM, cr.getObjid(), null);
         }
         catch (final StreamNotFoundException e) {
-            throw new ContentRelationNotFoundException(
-                "Content Relation with id '" + cr.getObjid()
-                    + "' could not be found.", e);
+            throw new ContentRelationNotFoundException("Content Relation with id '" + cr.getObjid()
+                + "' could not be found.", e);
         }
 
         final StaxParser sp = new StaxParser();
@@ -1038,31 +852,25 @@ public class FedoraContentRelationHandler extends HandlerBase
         // write triple values into ContentRelation object
 
         for (final Triple triple : triples) {
-            if (triple
-                .getPredicate().equals(TripleStoreUtility.PROP_FRAMEWORK_BUILD)) {
+            if (triple.getPredicate().equals(TripleStoreUtility.PROP_FRAMEWORK_BUILD)) {
                 cr.setBuildNumber(triple.getObject());
             }
             // creator --------------
-            else if (triple.getPredicate().equals(
-                TripleStoreUtility.PROP_CREATED_BY_ID)) {
+            else if (triple.getPredicate().equals(TripleStoreUtility.PROP_CREATED_BY_ID)) {
                 cr.getProperties().setCreatedById(triple.getObject());
             }
-            else if (triple.getPredicate().equals(
-                TripleStoreUtility.PROP_CREATED_BY_TITLE)) {
+            else if (triple.getPredicate().equals(TripleStoreUtility.PROP_CREATED_BY_TITLE)) {
                 cr.getProperties().setCreatedByName(triple.getObject());
             }
             // modifier --------------
-            else if (triple.getPredicate().equals(
-                TripleStoreUtility.PROP_MODIFIED_BY_ID)) {
+            else if (triple.getPredicate().equals(TripleStoreUtility.PROP_MODIFIED_BY_ID)) {
                 cr.getProperties().setModifiedById(triple.getObject());
             }
-            else if (triple.getPredicate().equals(
-                TripleStoreUtility.PROP_MODIFIED_BY_TITLE)) {
+            else if (triple.getPredicate().equals(TripleStoreUtility.PROP_MODIFIED_BY_TITLE)) {
                 cr.getProperties().setModifiedByName(triple.getObject());
             }
             // public-status --------------
-            else if (triple.getPredicate().equals(
-                TripleStoreUtility.PROP_PUBLIC_STATUS)) {
+            else if (triple.getPredicate().equals(TripleStoreUtility.PROP_PUBLIC_STATUS)) {
 
                 final StatusType st;
                 try {
@@ -1074,34 +882,27 @@ public class FedoraContentRelationHandler extends HandlerBase
                 }
                 cr.getProperties().setStatus(st);
             }
-            else if (triple.getPredicate().equals(
-                TripleStoreUtility.PROP_PUBLIC_STATUS_COMMENT)) {
+            else if (triple.getPredicate().equals(TripleStoreUtility.PROP_PUBLIC_STATUS_COMMENT)) {
                 cr.getProperties().setStatusComment(triple.getObject());
             }
-            else if (triple.getPredicate().equals(
-                TripleStoreUtility.PROP_OBJECT_TYPE)) {
+            else if (triple.getPredicate().equals(TripleStoreUtility.PROP_OBJECT_TYPE)) {
                 // this is not the ContentRelation type, this is the type of
                 // resource
-                if (!(Constants.CONTENT_RELATION2_OBJECT_TYPE.equals(triple
-                    .getObject()) || (Constants.RDF_NAMESPACE_URI + "Statement")
+                if (!(Constants.CONTENT_RELATION2_OBJECT_TYPE.equals(triple.getObject()) || (Constants.RDF_NAMESPACE_URI + "Statement")
                     .equals(triple.getObject()))) {
                     throw new WebserverSystemException("Resource is not from type ContentRelation.");
                 }
             }
-            else if (triple.getPredicate().equals(
-                TripleStoreUtility.PROP_CONTENT_RELATION_SUBJECT)) {
+            else if (triple.getPredicate().equals(TripleStoreUtility.PROP_CONTENT_RELATION_SUBJECT)) {
                 cr.setSubject(triple.getObject());
             }
-            else if (triple.getPredicate().equals(
-                TripleStoreUtility.PROP_CONTENT_RELATION_OBJECT)) {
+            else if (triple.getPredicate().equals(TripleStoreUtility.PROP_CONTENT_RELATION_OBJECT)) {
                 cr.setObject(triple.getObject());
             }
-            else if (triple.getPredicate().equals(
-                TripleStoreUtility.PROP_CONTENT_RELATION_DESCRIPTION)) {
+            else if (triple.getPredicate().equals(TripleStoreUtility.PROP_CONTENT_RELATION_DESCRIPTION)) {
                 cr.getProperties().setDescription(triple.getObject());
             }
-            else if (triple.getPredicate().equals(
-                TripleStoreUtility.PROP_CONTENT_RELATION_TYPE)) {
+            else if (triple.getPredicate().equals(TripleStoreUtility.PROP_CONTENT_RELATION_TYPE)) {
                 try {
                     cr.setType(new URI(triple.getObject()));
                 }
@@ -1110,34 +911,29 @@ public class FedoraContentRelationHandler extends HandlerBase
                     throw new SystemException("Stored value for URI in invalid.", e);
                 }
             }
-            else if (triple.getPredicate().equals(
-                TripleStoreUtility.PROP_CONTENT_RELATION_OBJECT_VERSION)) {
+            else if (triple.getPredicate().equals(TripleStoreUtility.PROP_CONTENT_RELATION_OBJECT_VERSION)) {
                 cr.setObjectVersion(triple.getObject());
-            } else {
+            }
+            else {
                 // add values for mapping
-                LOGGER.warn("Predicate not mapped " + triple.getPredicate() + " = "
-                    + triple.getObject());
+                LOGGER.warn("Predicate not mapped " + triple.getPredicate() + " = " + triple.getObject());
             }
         }
     }
 
     /**
      * Get creation date of Content Relation.
-     * 
-     * @param objid
-     *            objid of Content Relation
+     *
+     * @param objid objid of Content Relation
      * @return creation date
      * @throws ContentRelationNotFoundException
-     *             Thrown if creation date could not be found (indicates, that
-     *             resource not exists)
-     * @throws WebserverSystemException
-     *             Thrown if internal failure occurs.
-     * @throws TripleStoreSystemException
-     *             Thrown if triple store request failed.
+     *                                    Thrown if creation date could not be found (indicates, that resource not
+     *                                    exists)
+     * @throws WebserverSystemException   Thrown if internal failure occurs.
+     * @throws TripleStoreSystemException Thrown if triple store request failed.
      */
-    private String getCreationDate(final String objid)
-        throws ContentRelationNotFoundException, WebserverSystemException,
-        TripleStoreSystemException {
+    private String getCreationDate(final String objid) throws ContentRelationNotFoundException,
+        WebserverSystemException, TripleStoreSystemException {
 
         final String date;
         try {
@@ -1146,9 +942,8 @@ public class FedoraContentRelationHandler extends HandlerBase
         catch (final TripleStoreSystemException e) {
 
             if (e.getMessage().contains("Creation date not found")) {
-                throw new ContentRelationNotFoundException(
-                    "Content Relation with objid '" + objid
-                        + "' does not exist.", e);
+                throw new ContentRelationNotFoundException("Content Relation with objid '" + objid
+                    + "' does not exist.", e);
             }
             else {
                 throw e;
@@ -1158,16 +953,11 @@ public class FedoraContentRelationHandler extends HandlerBase
     }
 
     /**
-     * 
-     * @param cr
-     *            ContentRelation
-     * @throws FedoraSystemException
-     *             Thrown if access to Fedora failed.
-     * @throws IntegritySystemException
-     *             Thrown if data integrity is violated.
+     * @param cr ContentRelation
+     * @throws FedoraSystemException    Thrown if access to Fedora failed.
+     * @throws IntegritySystemException Thrown if data integrity is violated.
      */
-    private void setMetadata(final ContentRelationCreate cr)
-        throws FedoraSystemException, IntegritySystemException {
+    private void setMetadata(final ContentRelationCreate cr) throws FedoraSystemException, IntegritySystemException {
 
         final org.fcrepo.server.types.gen.Datastream[] datastreamInfos =
             getFedoraUtility().getDatastreamsInformation(cr.getObjid(), null);
@@ -1175,10 +965,8 @@ public class FedoraContentRelationHandler extends HandlerBase
         for (final org.fcrepo.server.types.gen.Datastream datastreamInfo : datastreamInfos) {
 
             // add meta data
-            if (contains(datastreamInfo.getAltIDs(),
-                Datastream.METADATA_ALTERNATE_ID) > -1
-                && !datastreamInfo.getState().equals(
-                    FedoraUtility.DATASTREAM_STATUS_DELETED)) {
+            if (contains(datastreamInfo.getAltIDs(), Datastream.METADATA_ALTERNATE_ID) > -1
+                && !datastreamInfo.getState().equals(FedoraUtility.DATASTREAM_STATUS_DELETED)) {
                 // check if status of stream is not deleted
                 final MdRecordCreate mdRecord = new MdRecordCreate();
 
@@ -1194,8 +982,7 @@ public class FedoraContentRelationHandler extends HandlerBase
                 mdRecord.setChecksum(datastreamInfo.getChecksum());
                 // TODO checksum enabled missing
                 mdRecord.setMimeType(datastreamInfo.getMIMEType());
-                mdRecord.setControlGroup(datastreamInfo
-                    .getControlGroup().getValue());
+                mdRecord.setControlGroup(datastreamInfo.getControlGroup().getValue());
                 mdRecord.setDatastreamLocation(datastreamInfo.getLocation());
                 mdRecord.getRepositoryIndicator().setResourceIsNew(false);
 
@@ -1208,13 +995,10 @@ public class FedoraContentRelationHandler extends HandlerBase
 
     /**
      * Check if a value is in an array of Strings.
-     * 
-     * @param array
-     *            The array of Strings.
-     * @param value
-     *            The value which is to check.
-     * @return the int value of the position in the array and -1 if the values
-     *         is not in the array
+     *
+     * @param array The array of Strings.
+     * @param value The value which is to check.
+     * @return the int value of the position in the array and -1 if the values is not in the array
      */
     private static int contains(final String[] array, final String value) {
 
@@ -1228,50 +1012,38 @@ public class FedoraContentRelationHandler extends HandlerBase
 
     /**
      * Check if relation type is registered predicate.
-     * 
-     * @param predicate
-     *            the predicate as URI
-     * @throws InvalidContentException
-     *             Thrown if predicate is invalid
-     * @throws WebserverSystemException
-     *             Thrown if internal error occur
+     *
+     * @param predicate the predicate as URI
+     * @throws InvalidContentException  Thrown if predicate is invalid
+     * @throws WebserverSystemException Thrown if internal error occur
      * @throws RelationPredicateNotFoundException
-     *             Thrown if the predicate is not registered.
+     *                                  Thrown if the predicate is not registered.
      */
-    private static void checkRelationType(final URI predicate)
-        throws InvalidContentException, WebserverSystemException,
-        RelationPredicateNotFoundException {
+    private static void checkRelationType(final URI predicate) throws InvalidContentException,
+        WebserverSystemException, RelationPredicateNotFoundException {
         if (!ContentRelationsUtility.validPredicate(predicate)) {
             throw new RelationPredicateNotFoundException("Predicate " + predicate
-                    + " is not on the registered predicate list. ");
+                + " is not on the registered predicate list. ");
         }
 
     }
 
     /**
      * Obtain values from XML an create value object ContentRelation.
-     * 
-     * @param xml
-     *            The content relation XML (validated by schema).
+     *
+     * @param xml The content relation XML (validated by schema).
      * @return ContentRelation
-     * 
-     * @throws InvalidContentException
-     *             Thrown if content is invalid
-     * @throws InvalidXmlException
-     *             Thrown if XML is invalid
-     * @throws MissingAttributeValueException
-     *             Thrown if attribute value is missing
-     * @throws SystemException
-     *             Thrown if internal error occur
+     * @throws InvalidContentException        Thrown if content is invalid
+     * @throws InvalidXmlException            Thrown if XML is invalid
+     * @throws MissingAttributeValueException Thrown if attribute value is missing
+     * @throws SystemException                Thrown if internal error occur
      */
-    private static ContentRelationCreate parseContentRelation(final String xml)
-        throws MissingAttributeValueException, InvalidXmlException,
-        InvalidContentException, SystemException {
+    private static ContentRelationCreate parseContentRelation(final String xml) throws MissingAttributeValueException,
+        InvalidXmlException, InvalidContentException, SystemException {
 
         final StaxParser sp = new StaxParser();
 
-        final ContentRelationHandler contentRelationHandler =
-            new ContentRelationHandler(sp);
+        final ContentRelationHandler contentRelationHandler = new ContentRelationHandler(sp);
         sp.addHandler(contentRelationHandler);
 
         try {
@@ -1305,24 +1077,18 @@ public class FedoraContentRelationHandler extends HandlerBase
 
     /**
      * Enrich all meta data records with the (blob) content from repository.
-     * 
-     * @param cr
-     *            ContentRelation
-     * @throws WebserverSystemException
-     *             Thrown if access to repository (Feodra) failed.
+     *
+     * @param cr ContentRelation
+     * @throws WebserverSystemException Thrown if access to repository (Feodra) failed.
      */
-    private static void enrichWithMetadataContent(final ContentRelationCreate cr)
-        throws WebserverSystemException {
+    private static void enrichWithMetadataContent(final ContentRelationCreate cr) throws WebserverSystemException {
         final List<MdRecordCreate> mdRecords = cr.getMetadataRecords();
         if (mdRecords != null) {
             for (final MdRecordCreate mdRecord : mdRecords) {
                 if (mdRecord.getContent() == null) {
                     final Datastream ds =
-                        new Datastream(mdRecord.getName(), cr.getObjid(),
-                            mdRecord.getMimeType(),
-                            mdRecord.getDatastreamLocation(),
-                            mdRecord.getControlGroup(), cr
-                                .getProperties().getVersionDate());
+                        new Datastream(mdRecord.getName(), cr.getObjid(), mdRecord.getMimeType(), mdRecord
+                            .getDatastreamLocation(), mdRecord.getControlGroup(), cr.getProperties().getVersionDate());
                     mdRecord.setContent(new String(ds.getStream()));
                 }
             }
@@ -1331,26 +1097,20 @@ public class FedoraContentRelationHandler extends HandlerBase
 
     /**
      * Validate Content Relation.
-     * 
+     * <p/>
      * Checks if the required values are given and references valid.
-     * 
-     * @param cr
-     *            ContentRelation
-     * @throws TripleStoreSystemException
-     *             Thrown if TripleStore access failed.
-     * @throws WebserverSystemException
-     *             If internal error occur
+     *
+     * @param cr ContentRelation
+     * @throws TripleStoreSystemException Thrown if TripleStore access failed.
+     * @throws WebserverSystemException   If internal error occur
      * @throws ReferencedResourceNotFoundException
-     *             Thrown if referenced resource does not exist.
+     *                                    Thrown if referenced resource does not exist.
      * @throws RelationPredicateNotFoundException
-     *             Thrown if the predicate is not registered.
-     * @throws InvalidContentException
-     *             Thrown if predicate is invalid
+     *                                    Thrown if the predicate is not registered.
+     * @throws InvalidContentException    Thrown if predicate is invalid
      */
-    private void validate(final ContentRelationCreate cr)
-        throws TripleStoreSystemException, WebserverSystemException,
-        ReferencedResourceNotFoundException, InvalidContentException,
-        RelationPredicateNotFoundException {
+    private void validate(final ContentRelationCreate cr) throws TripleStoreSystemException, WebserverSystemException,
+        ReferencedResourceNotFoundException, InvalidContentException, RelationPredicateNotFoundException {
 
         validateReference(cr.getSubject());
         validateReference(cr.getObject());
@@ -1359,66 +1119,51 @@ public class FedoraContentRelationHandler extends HandlerBase
 
     /**
      * Check if referenced resources exists.
-     * 
-     * @param reference
-     *            reference to be checked
-     * @throws TripleStoreSystemException
-     *             Thrown if TripleStore access failed.
-     * @throws WebserverSystemException
-     *             If internal error occur
+     *
+     * @param reference reference to be checked
+     * @throws TripleStoreSystemException Thrown if TripleStore access failed.
+     * @throws WebserverSystemException   If internal error occur
      * @throws ReferencedResourceNotFoundException
-     *             Thrown if referenced resource does not exist.
+     *                                    Thrown if referenced resource does not exist.
      */
-    private void validateReference(final String reference)
-        throws TripleStoreSystemException, WebserverSystemException,
+    private void validateReference(final String reference) throws TripleStoreSystemException, WebserverSystemException,
         ReferencedResourceNotFoundException {
 
         if (!getTripleStoreUtility().exists(reference)) {
-            throw new ReferencedResourceNotFoundException(
-                "The referenced resource with objid=" + reference
-                    + " does not exist.");
+            throw new ReferencedResourceNotFoundException("The referenced resource with objid=" + reference
+                + " does not exist.");
         }
 
     }
 
     /**
-     * Checks if the ContentRelation has right status to change status to
-     * submitted.
-     * 
-     * @param cr
-     *            ContentRelation which is to check.
-     * @throws InvalidStatusException
-     *             Thrown if the current status of the ContentRelation is
-     *             invalid to change to submitted.
+     * Checks if the ContentRelation has right status to change status to submitted.
+     *
+     * @param cr ContentRelation which is to check.
+     * @throws InvalidStatusException Thrown if the current status of the ContentRelation is invalid to change to
+     *                                submitted.
      */
-    private static void validateToSubmitStatus(final ContentRelationCreate cr)
-        throws InvalidStatusException {
+    private static void validateToSubmitStatus(final ContentRelationCreate cr) throws InvalidStatusException {
 
         /*
          * Resource has to have status pending or in-revision when submit is
          * possible.
          */
         if (!(cr.getProperties().getStatus() == StatusType.PENDING || cr.getProperties().getStatus() == StatusType.INREVISION)) {
-            throw new InvalidStatusException("The object is not in state '" + Constants.STATUS_PENDING
-                    + "' or '" + Constants.STATUS_IN_REVISION
-                    + "' and can not be" + " submitted.");
+            throw new InvalidStatusException("The object is not in state '" + Constants.STATUS_PENDING + "' or '"
+                + Constants.STATUS_IN_REVISION + "' and can not be" + " submitted.");
         }
 
     }
 
     /**
      * Notify the listeners that a content relation was modified.
-     * 
-     * @param cr
-     *            Content Relation
-     * @param xmlData
-     *            complete content relation XML
-     * 
-     * @throws SystemException
-     *             One of the listeners threw an exception.
+     *
+     * @param cr      Content Relation
+     * @param xmlData complete content relation XML
+     * @throws SystemException One of the listeners threw an exception.
      */
-    private void fireContentRelationModified(
-        final ContentRelationCreate cr, final String xmlData)
+    private void fireContentRelationModified(final ContentRelationCreate cr, final String xmlData)
         throws SystemException {
         final String restXml;
         final String soapXml;
@@ -1432,24 +1177,18 @@ public class FedoraContentRelationHandler extends HandlerBase
             soapXml = xmlData;
         }
         for (final ResourceListener contentRelationListener : this.contentRelationListeners) {
-            contentRelationListener.resourceModified(cr.getObjid(), restXml,
-                soapXml);
+            contentRelationListener.resourceModified(cr.getObjid(), restXml, soapXml);
         }
     }
 
     /**
      * Notify the listeners that an content relation was created.
-     * 
-     * @param cr
-     *            content relation
-     * @param xmlData
-     *            complete content relation XML
-     * 
-     * @throws SystemException
-     *             One of the listeners threw an exception.
+     *
+     * @param cr      content relation
+     * @param xmlData complete content relation XML
+     * @throws SystemException One of the listeners threw an exception.
      */
-    private void fireContentRelationCreated(
-        final ContentRelationCreate cr, final String xmlData)
+    private void fireContentRelationCreated(final ContentRelationCreate cr, final String xmlData)
         throws SystemException {
         final String restXml;
         final String soapXml;
@@ -1463,21 +1202,17 @@ public class FedoraContentRelationHandler extends HandlerBase
             soapXml = xmlData;
         }
         for (final ResourceListener contentRelationListener : this.contentRelationListeners) {
-            contentRelationListener.resourceCreated(cr.getObjid(), restXml,
-                soapXml);
+            contentRelationListener.resourceCreated(cr.getObjid(), restXml, soapXml);
         }
     }
 
     /**
      * Notify the listeners that an content relation was deleted.
-     * 
-     * @param cr
-     *            content relation
-     * @throws SystemException
-     *             One of the listeners threw an exception.
+     *
+     * @param cr content relation
+     * @throws SystemException One of the listeners threw an exception.
      */
-    private void fireContentRelationDeleted(final ContentRelationCreate cr)
-        throws SystemException {
+    private void fireContentRelationDeleted(final ContentRelationCreate cr) throws SystemException {
         for (final ResourceListener contentRelationListener : this.contentRelationListeners) {
             contentRelationListener.resourceDeleted(cr.getObjid());
         }
@@ -1485,29 +1220,21 @@ public class FedoraContentRelationHandler extends HandlerBase
 
     /**
      * Prepare the assignment response message.
-     * 
+     * <p/>
      * Preconditions: The TripleStore must be in sync with the repository.
-     * 
-     * @param cr
-     *            content relation
-     * @param pid
-     *            The new assigned PID.
+     *
+     * @param cr  content relation
+     * @param pid The new assigned PID.
      * @return response message
-     * 
-     * @throws WebserverSystemException
-     *             Thrown in case of internal error.
-     * @throws TripleStoreSystemException
-     *             Thrown in case of TripleStore error.
-     * 
+     * @throws WebserverSystemException   Thrown in case of internal error.
+     * @throws TripleStoreSystemException Thrown in case of TripleStore error.
      */
-    private String prepareResponse(
-        final ContentRelationCreate cr, final String pid)
-        throws TripleStoreSystemException, WebserverSystemException {
+    private String prepareResponse(final ContentRelationCreate cr, final String pid) throws TripleStoreSystemException,
+        WebserverSystemException {
 
         final String result;
         try {
-            result =
-                Utility.prepareReturnXml(cr.getProperties().getLastModificationDate(), "<pid>" + pid + "</pid>\n");
+            result = Utility.prepareReturnXml(cr.getProperties().getLastModificationDate(), "<pid>" + pid + "</pid>\n");
         }
         catch (final SystemException e) {
             throw new WebserverSystemException(e);
@@ -1516,34 +1243,25 @@ public class FedoraContentRelationHandler extends HandlerBase
     }
 
     /**
-     * Get the alternate form of a content relation representation. If the
-     * current request came in via REST, then the SOAP form will be returned
-     * here and vice versa.
-     * 
-     * @param cr
-     *            content relation
+     * Get the alternate form of a content relation representation. If the current request came in via REST, then the
+     * SOAP form will be returned here and vice versa.
+     *
+     * @param cr content relation
      * @return alternate form of the content relation
-     * 
-     * @throws SystemException
-     *             An internal error occurred.
+     * @throws SystemException An internal error occurred.
      */
-    private static String getAlternateForm(final ContentRelationCreate cr)
-        throws SystemException {
+    private static String getAlternateForm(final ContentRelationCreate cr) throws SystemException {
         String result = null;
         final boolean isRestAccess = UserContext.isRestAccess();
 
         try {
             if (isRestAccess) {
                 UserContext.setRestAccess(false);
-                result =
-                    ContentRelationXmlProvider
-                        .getInstance().getContentRelationXml(cr);
+                result = ContentRelationXmlProvider.getInstance().getContentRelationXml(cr);
             }
             else {
                 UserContext.setRestAccess(true);
-                result =
-                    ContentRelationXmlProvider
-                        .getInstance().getContentRelationXml(cr);
+                result = ContentRelationXmlProvider.getInstance().getContentRelationXml(cr);
             }
         }
         catch (final WebserverSystemException e) {

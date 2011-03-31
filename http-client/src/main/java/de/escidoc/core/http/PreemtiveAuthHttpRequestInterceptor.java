@@ -36,10 +36,12 @@ import org.apache.http.protocol.HttpContext;
 import java.io.IOException;
 
 public class PreemtiveAuthHttpRequestInterceptor implements HttpRequestInterceptor {
+
     @Override
     public void process(final HttpRequest httpRequest, final HttpContext httpContext) throws HttpException, IOException {
         final AuthState authState = (AuthState) httpContext.getAttribute(ClientContext.TARGET_AUTH_STATE);
-        final CredentialsProvider credsProvider = (CredentialsProvider) httpContext.getAttribute(ClientContext.CREDS_PROVIDER);
+        final CredentialsProvider credsProvider =
+            (CredentialsProvider) httpContext.getAttribute(ClientContext.CREDS_PROVIDER);
         final HttpHost targetHost = (HttpHost) httpContext.getAttribute(ExecutionContext.HTTP_TARGET_HOST);
         // If not auth scheme has been initialized yet
         if (authState.getAuthScheme() == null) {

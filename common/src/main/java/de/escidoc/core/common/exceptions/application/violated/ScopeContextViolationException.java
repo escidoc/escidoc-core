@@ -21,14 +21,11 @@
 package de.escidoc.core.common.exceptions.application.violated;
 
 /**
- * The ScopeContextViolationException is used to indicate that the given
- * statistic data does not fit to the statistic-scope given with the data.
- * returned httpStatusCode is 409. Status code (409) indicating that the request
- * could not be completed due to a conflict with the current state of the
- * resource.
- * 
- * @author Michael Hoppe (FIZ Karlsruhe)
+ * The ScopeContextViolationException is used to indicate that the given statistic data does not fit to the
+ * statistic-scope given with the data. returned httpStatusCode is 409. Status code (409) indicating that the request
+ * could not be completed due to a conflict with the current state of the resource.
  *
+ * @author Michael Hoppe (FIZ Karlsruhe)
  */
 public class ScopeContextViolationException extends RuleViolationException {
 
@@ -43,8 +40,6 @@ public class ScopeContextViolationException extends RuleViolationException {
 
     /**
      * Default constructor.
-     * 
-     *
      */
     public ScopeContextViolationException() {
         super(HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -52,9 +47,8 @@ public class ScopeContextViolationException extends RuleViolationException {
 
     /**
      * Constructor used to map an initial exception.
-     * 
-     * @param error
-     *            Throwable
+     *
+     * @param error Throwable
      */
     public ScopeContextViolationException(final Throwable error) {
         super(error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -62,27 +56,21 @@ public class ScopeContextViolationException extends RuleViolationException {
 
     /**
      * Constructs a new exception with the specified detail message.
-     * 
-     * @param message -
-     *            the detail message.
      *
+     * @param message - the detail message.
      */
     public ScopeContextViolationException(final String message) {
         super(message, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 
     /**
-     * Constructor used to create a new Exception with the specified detail
-     * message and a mapping to an initial exception.
-     * 
-     * @param message -
-     *            the detail message.
-     * @param error
-     *            Throwable
+     * Constructor used to create a new Exception with the specified detail message and a mapping to an initial
+     * exception.
      *
+     * @param message - the detail message.
+     * @param error   Throwable
      */
-    public ScopeContextViolationException(final String message,
-        final Throwable error) {
+    public ScopeContextViolationException(final String message, final Throwable error) {
         super(message, error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 }

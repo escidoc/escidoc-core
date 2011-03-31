@@ -50,45 +50,36 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * This class implements the XACML Target used in the framework. <br>
- * In the escidoc framework, the action part of the target is a restricted:
- * <ul>
- * <li>the action match id equals to
- * urn:oasis:names:tc:xacml:1.0:function:string-is-in</li>
- * <li>the action DESIGNATOR type equals to
- * http://www.w3.org/2001/XMLSchema#string, and</li>
- * <li>the action DESIGNATOR id equals to
- * urn:oasis:names:tc:xacml:1.0:action:action-id</li>
- * </ul>
- * 
- * @author Torsten Tetteroo
- * 
+ * This class implements the XACML Target used in the framework. <br> In the escidoc framework, the action part of the
+ * target is a restricted: <ul> <li>the action match id equals to urn:oasis:names:tc:xacml:1.0:function:string-is-in</li>
+ * <li>the action DESIGNATOR type equals to http://www.w3.org/2001/XMLSchema#string, and</li> <li>the action DESIGNATOR
+ * id equals to urn:oasis:names:tc:xacml:1.0:action:action-id</li> </ul>
  *
+ * @author Torsten Tetteroo
  */
 public class XacmlTarget extends Target {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(XacmlTarget.class);
 
-    private static final String URN_ACTION_DESIGNATOR_ID =
-        "urn:oasis:names:tc:xacml:1.0:action:action-id";
+    private static final String URN_ACTION_DESIGNATOR_ID = "urn:oasis:names:tc:xacml:1.0:action:action-id";
 
-    private static final String URN_ACTION_DESIGNATOR_TYPE =
-        "http://www.w3.org/2001/XMLSchema#string";
+    private static final String URN_ACTION_DESIGNATOR_TYPE = "http://www.w3.org/2001/XMLSchema#string";
 
-    @SuppressWarnings({"CanBeFinal"})
+    @SuppressWarnings( { "CanBeFinal" })
     private static AttributeDesignator DESIGNATOR; // Ignore FindBugs
 
     static {
         try {
-            DESIGNATOR = new AttributeDesignator(AttributeDesignator.ACTION_TARGET,
-                    new URI(URN_ACTION_DESIGNATOR_TYPE), new URI(
-                                URN_ACTION_DESIGNATOR_ID), false);
-        } catch (final URISyntaxException e) {
+            DESIGNATOR =
+                new AttributeDesignator(AttributeDesignator.ACTION_TARGET, new URI(URN_ACTION_DESIGNATOR_TYPE),
+                    new URI(URN_ACTION_DESIGNATOR_ID), false);
+        }
+        catch (final URISyntaxException e) {
             // Dont do anything because null-query is given.
-            if(LOGGER.isWarnEnabled()) {
+            if (LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on initialising designator.");
             }
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on initialising designator.", e);
             }
         }
@@ -97,30 +88,21 @@ public class XacmlTarget extends Target {
     private static Function function;
 
     /**
-     * @param subjects
-     *            The subjects of the target.
-     * @param resources
-     *            The resources of the target.
-     * @param actions
-     *            The <code>Action</code>data objects of the actions of the
-     *            target.
-     *
+     * @param subjects  The subjects of the target.
+     * @param resources The resources of the target.
+     * @param actions   The <code>Action</code>data objects of the actions of the target.
      */
-    public XacmlTarget(final List subjects, final List resources,
-        final Collection<Action> actions) {
+    public XacmlTarget(final List subjects, final List resources, final Collection<Action> actions) {
 
         super(subjects, resources, buildActionMatches(actions));
     }
 
     /**
-     * Builds the list of action matches of this target using the provided Set
-     * of action data objects holding the action ids.
-     * 
-     * @param actions
-     *            The <code>Collection</code> of the data objects of the
-     *            actions defining this target.
-     * @return Returns the built <code>List</code> of action matches.
+     * Builds the list of action matches of this target using the provided Set of action data objects holding the action
+     * ids.
      *
+     * @param actions The <code>Collection</code> of the data objects of the actions defining this target.
+     * @return Returns the built <code>List</code> of action matches.
      */
     private static List<List<TargetMatch>> buildActionMatches(final Collection<Action> actions) {
 
@@ -135,8 +117,7 @@ public class XacmlTarget extends Target {
                 values.append(iter.next().getName());
                 values.append(' ');
             }
-            action.add(createTargetActionMatch(new StringAttribute(values
-                .toString().trim())));
+            action.add(createTargetActionMatch(new StringAttribute(values.toString().trim())));
             actionsList.add(action);
         }
         return actionsList;
@@ -144,15 +125,11 @@ public class XacmlTarget extends Target {
 
     /**
      * Simple helper routine that creates a TargetMatch instance.
-     * 
-     * @param value
-     *            the AttributeValue used in this match
-     * 
-     * @return the matching element
      *
+     * @param value the AttributeValue used in this match
+     * @return the matching element
      */
-    private static TargetMatch createTargetActionMatch(
-        final StringAttribute value) {
+    private static TargetMatch createTargetActionMatch(final StringAttribute value) {
 
         try {
             // get the factory that handles Target functions and get an
@@ -163,13 +140,13 @@ public class XacmlTarget extends Target {
             }
 
             // create the TargetMatch
-            return new TargetMatch(TargetMatch.ACTION, function, DESIGNATOR,
-                value);
-        } catch (final Exception e) {
-            if(LOGGER.isWarnEnabled()) {
+            return new TargetMatch(TargetMatch.ACTION, function, DESIGNATOR, value);
+        }
+        catch (final Exception e) {
+            if (LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on creating target action.");
             }
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on creating target action.", e);
             }
             return null;
@@ -177,12 +154,9 @@ public class XacmlTarget extends Target {
 
     }
 
-
-
     /**
      * See Interface for functional description.
-     * 
-     * @return
+     *
      * @see Object#toString()
      */
     public String toString() {
@@ -191,11 +165,11 @@ public class XacmlTarget extends Target {
         try {
             encode(writer, new Indenter());
             returnValue = writer.toString();
-        } finally {
+        }
+        finally {
             IOUtils.closeStream(writer);
         }
         return returnValue;
     }
-
 
 }

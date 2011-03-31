@@ -57,19 +57,18 @@ import static org.junit.Assert.fail;
 
 /**
  * Test the mock implementation of the item resource.
- * 
+ *
  * @author Michael Schneider
- * 
  */
 @RunWith(value = Parameterized.class)
 public class ItemContentRelationsTest extends ItemTestBase {
+
     private String itemId = null;
 
     private String itemXml = null;
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ItemContentRelationsTest(final int transport) {
         super(transport);
@@ -77,17 +76,15 @@ public class ItemContentRelationsTest extends ItemTestBase {
 
     /**
      * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Before
     public void setUp() throws Exception {
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
-                + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
-        Node xmlItemWithoutComponents =
-            deleteElement(xmlItem, "/item/components");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                "escidoc_item_198_for_create.xml");
+        Node xmlItemWithoutComponents = deleteElement(xmlItem, "/item/components");
         String itemWithoutComponents = toString(xmlItemWithoutComponents, true);
 
         itemXml = create(itemWithoutComponents);
@@ -102,18 +99,14 @@ public class ItemContentRelationsTest extends ItemTestBase {
     // FIXME reactivate after 1.3
     //@Test
     public void testIssueInfr1007() throws Exception {
-        addRelation(
-            itemId,
-            "http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#isRevisionOf");
+        addRelation(itemId, "http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#isRevisionOf");
         addRelation(itemId, "http://escidoc.org/examples/test1");
         addRelation(itemId, "http://escidoc.org/examples/#test2");
 
         String relationsElementXml = retrieveRelations(this.itemId);
-        Document relationsElementDocument =
-            EscidocRestSoapTestBase.getDocument(relationsElementXml);
+        Document relationsElementDocument = EscidocRestSoapTestBase.getDocument(relationsElementXml);
         selectSingleNodeAsserted(relationsElementDocument, "/relations");
-        selectSingleNodeAsserted(
-            relationsElementDocument,
+        selectSingleNodeAsserted(relationsElementDocument,
             "/relations/relation[@predicate = 'http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#isRevisionOf']");
         selectSingleNodeAsserted(relationsElementDocument,
             "/relations/relation[@predicate = 'http://escidoc.org/examples/test1']");
@@ -124,17 +117,15 @@ public class ItemContentRelationsTest extends ItemTestBase {
 
     /**
      * Tets successfully adding a new relation to the item.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testAddRelation() throws Exception {
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
-                + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
-        Node xmlItemWithoutComponents =
-            deleteElement(xmlItem, "/item/components");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                "escidoc_item_198_for_create.xml");
+        Node xmlItemWithoutComponents = deleteElement(xmlItem, "/item/components");
         String itemWithoutComponents = toString(xmlItemWithoutComponents, true);
 
         String xml1 = create(itemWithoutComponents);
@@ -152,19 +143,14 @@ public class ItemContentRelationsTest extends ItemTestBase {
         addContentRelations(this.itemId, taskParam);
         String itemWithRelations = retrieve(this.itemId);
         assertXmlValidItem(itemWithRelations);
-        Document itemWithRelationsDocument =
-            EscidocRestSoapTestBase.getDocument(itemWithRelations);
+        Document itemWithRelationsDocument = EscidocRestSoapTestBase.getDocument(itemWithRelations);
 
         NodeList relationTargets = null;
         if (Constants.TRANSPORT_REST == getTransport()) {
-            relationTargets =
-                selectNodeList(itemWithRelationsDocument,
-                    "/item/relations/relation/@href");
+            relationTargets = selectNodeList(itemWithRelationsDocument, "/item/relations/relation/@href");
         }
         else {
-            relationTargets =
-                selectNodeList(itemWithRelationsDocument,
-                    "/item/relations/relation/@objid");
+            relationTargets = selectNodeList(itemWithRelationsDocument, "/item/relations/relation/@objid");
 
         }
         boolean contains1 = false;
@@ -181,34 +167,28 @@ public class ItemContentRelationsTest extends ItemTestBase {
 
         }
 
-        assertTrue("added relation targetId1 is not container the "
-            + "+ relation list ", contains1);
-        assertTrue("added relation targetId2 is not container the "
-            + "+ relation list ", contains2);
+        assertTrue("added relation targetId1 is not container the " + "+ relation list ", contains1);
+        assertTrue("added relation targetId2 is not container the " + "+ relation list ", contains2);
 
         // and retrieve relations only and check
         String relationsElementXml = retrieveRelations(this.itemId);
-        selectSingleNodeAsserted(EscidocRestSoapTestBase
-            .getDocument(relationsElementXml), "/relations");
+        selectSingleNodeAsserted(EscidocRestSoapTestBase.getDocument(relationsElementXml), "/relations");
         assertXmlValidRelations(relationsElementXml);
 
         NodeList relations =
-            selectNodeList(EscidocRestSoapTestBase
-                .getDocument(itemWithRelations), "/item/relations/relation");
+            selectNodeList(EscidocRestSoapTestBase.getDocument(itemWithRelations), "/item/relations/relation");
         assertEquals("Number of relations is wrong ", relations.getLength(), 2);
     }
 
     /**
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     @Test
     public void testAddRelationWithoutId() throws Exception {
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
-                + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
-        Node xmlItemWithoutComponents =
-            deleteElement(xmlItem, "/item/components");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                "escidoc_item_198_for_create.xml");
+        Node xmlItemWithoutComponents = deleteElement(xmlItem, "/item/components");
         String itemWithoutComponents = toString(xmlItemWithoutComponents, true);
 
         String xml1 = create(itemWithoutComponents);
@@ -233,8 +213,7 @@ public class ItemContentRelationsTest extends ItemTestBase {
     }
 
     /**
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     @Test
     public void testAddRelationWithoutTaskParam() throws Exception {
@@ -249,11 +228,9 @@ public class ItemContentRelationsTest extends ItemTestBase {
     }
 
     /**
-     * Test declining adding of an relation with a non existing target to the
-     * item.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test declining adding of an relation with a non existing target to the item.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testAddRelationWithNonExistingTarget() throws Exception {
@@ -265,30 +242,25 @@ public class ItemContentRelationsTest extends ItemTestBase {
 
         try {
             addContentRelations(this.itemId, taskParam);
-            fail("No exception occurred on added an relation with non "
-                + "existing target to the item");
+            fail("No exception occurred on added an relation with non " + "existing target to the item");
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                "ReferencedResourceNotFoundException.",
+            EscidocRestSoapTestBase.assertExceptionType("ReferencedResourceNotFoundException.",
                 ReferencedResourceNotFoundException.class, e);
         }
     }
 
     /**
-     * Test declining adding of an relation with a non existing predicate to the
-     * item.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test declining adding of an relation with a non existing predicate to the item.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testAddRelationWithNonExistingPredicate() throws Exception {
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
-                + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
-        Node xmlItemWithoutComponents =
-            deleteElement(xmlItem, "/item/components");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                "escidoc_item_198_for_create.xml");
+        Node xmlItemWithoutComponents = deleteElement(xmlItem, "/item/components");
         String itemWithoutComponents = toString(xmlItemWithoutComponents, true);
 
         String xml1 = create(itemWithoutComponents);
@@ -305,27 +277,22 @@ public class ItemContentRelationsTest extends ItemTestBase {
 
         try {
             addContentRelations(this.itemId, taskParam);
-            fail("No exception occurred on added an relation with non "
-                + "existing predicate to the item");
+            fail("No exception occurred on added an relation with non " + "existing predicate to the item");
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                "RelationPredicateNotFoundException.",
+            EscidocRestSoapTestBase.assertExceptionType("RelationPredicateNotFoundException.",
                 RelationPredicateNotFoundException.class, e);
         }
 
     }
 
     /**
-     * Test declining adding of an relation with a target id containing a
-     * version number.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test declining adding of an relation with a target id containing a version number.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
-    public void testAddRelationWithTargetContainingVersionNumber()
-        throws Exception {
+    public void testAddRelationWithTargetContainingVersionNumber() throws Exception {
 
         Vector<String> targets = new Vector<String>();
         targets.add("escidoc:123:1");
@@ -335,12 +302,10 @@ public class ItemContentRelationsTest extends ItemTestBase {
 
         try {
             addContentRelations(this.itemId, taskParam);
-            fail("No exception occurred on added an relation with target"
-                + " containing version number to the item");
+            fail("No exception occurred on added an relation with target" + " containing version number to the item");
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                "InvalidContentException.", InvalidContentException.class, e);
+            EscidocRestSoapTestBase.assertExceptionType("InvalidContentException.", InvalidContentException.class, e);
         }
     }
 
@@ -385,19 +350,18 @@ public class ItemContentRelationsTest extends ItemTestBase {
     // assertEquals("relation ids are not equal", relationId,
     // retrivedRelationId);
     // }
+
     /**
      * Test declining adding of an existing relation to the item.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testAddExistingRelation() throws Exception {
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
-                + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
-        Node xmlItemWithoutComponents =
-            deleteElement(xmlItem, "/item/components");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                "escidoc_item_198_for_create.xml");
+        Node xmlItemWithoutComponents = deleteElement(xmlItem, "/item/components");
         String itemWithoutComponents = toString(xmlItemWithoutComponents, true);
 
         String xml = create(itemWithoutComponents);
@@ -415,8 +379,7 @@ public class ItemContentRelationsTest extends ItemTestBase {
             fail("No exception occurred on added an existing relation to the item");
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                "AlreadyExistException expected.",
+            EscidocRestSoapTestBase.assertExceptionType("AlreadyExistException expected.",
                 AlreadyExistsException.class, e);
         }
 
@@ -424,17 +387,15 @@ public class ItemContentRelationsTest extends ItemTestBase {
 
     /**
      * Test successfully removing an existing relation.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRemoveRelation() throws Exception {
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
-                + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
-        Node xmlItemWithoutComponents =
-            deleteElement(xmlItem, "/item/components");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                "escidoc_item_198_for_create.xml");
+        Node xmlItemWithoutComponents = deleteElement(xmlItem, "/item/components");
         String itemWithoutComponents = toString(xmlItemWithoutComponents, true);
 
         String xml = create(itemWithoutComponents);
@@ -451,27 +412,22 @@ public class ItemContentRelationsTest extends ItemTestBase {
         taskParam = getTaskParameter(lastModDate, targets);
         removeContentRelations(this.itemId, taskParam);
         String itemWithoutContentRelations = retrieve(this.itemId);
-        Document itemWithoutContentRelationsDoc =
-            EscidocRestSoapTestBase.getDocument(itemWithoutContentRelations);
-        Node relations =
-            selectSingleNode(itemWithoutContentRelationsDoc,
-                "/item/relations/relation");
+        Document itemWithoutContentRelationsDoc = EscidocRestSoapTestBase.getDocument(itemWithoutContentRelations);
+        Node relations = selectSingleNode(itemWithoutContentRelationsDoc, "/item/relations/relation");
         assertNull("relations may not exist", relations);
     }
 
     /**
      * Test declining removing of a already deleted relation.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRemoveDeletedRelation() throws Exception {
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
-                + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
-        Node xmlItemWithoutComponents =
-            deleteElement(xmlItem, "/item/components");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                "escidoc_item_198_for_create.xml");
+        Node xmlItemWithoutComponents = deleteElement(xmlItem, "/item/components");
         String itemWithoutComponents = toString(xmlItemWithoutComponents, true);
 
         String xml = create(itemWithoutComponents);
@@ -488,11 +444,8 @@ public class ItemContentRelationsTest extends ItemTestBase {
         taskParam = getTaskParameter(lastModDate, targets);
         removeContentRelations(this.itemId, taskParam);
         String itemWithoutContentRelations = retrieve(this.itemId);
-        Document itemWithoutContentRelationsDoc =
-            EscidocRestSoapTestBase.getDocument(itemWithoutContentRelations);
-        Node relations =
-            selectSingleNode(itemWithoutContentRelationsDoc,
-                "/item/relations/relation");
+        Document itemWithoutContentRelationsDoc = EscidocRestSoapTestBase.getDocument(itemWithoutContentRelations);
+        Node relations = selectSingleNode(itemWithoutContentRelationsDoc, "/item/relations/relation");
         assertNull("relations may not exist", relations);
         lastModDate = getTheLastModificationParam(this.itemId);
         taskParam = getTaskParameter(lastModDate, targets);
@@ -501,26 +454,22 @@ public class ItemContentRelationsTest extends ItemTestBase {
             fail("No exception occurred on remove a already deleted relation");
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                "ContentRelationNotFoundException expected.",
+            EscidocRestSoapTestBase.assertExceptionType("ContentRelationNotFoundException expected.",
                 ContentRelationNotFoundException.class, e);
         }
     }
 
     /**
-     * Test declining removing of an existing relation, which belongs to another
-     * source resource.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test declining removing of an existing relation, which belongs to another source resource.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRemoveRelationWithWrongSource() throws Exception {
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
-                + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
-        Node xmlItemWithoutComponents =
-            deleteElement(xmlItem, "/item/components");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                "escidoc_item_198_for_create.xml");
+        Node xmlItemWithoutComponents = deleteElement(xmlItem, "/item/components");
         String itemWithoutComponents = toString(xmlItemWithoutComponents, true);
 
         String xml1 = create(itemWithoutComponents);
@@ -541,37 +490,32 @@ public class ItemContentRelationsTest extends ItemTestBase {
             fail("No exception occurred on remove an relation with a wrong source");
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                "ContentRelationNotFoundException expected.",
+            EscidocRestSoapTestBase.assertExceptionType("ContentRelationNotFoundException expected.",
                 ContentRelationNotFoundException.class, e);
         }
 
     }
 
     /**
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveRelations() throws Exception {
         addRelation(itemId, null);
 
         String relationsElementXml = retrieveRelations(this.itemId);
-        selectSingleNodeAsserted(EscidocRestSoapTestBase
-            .getDocument(relationsElementXml), "/relations");
+        selectSingleNodeAsserted(EscidocRestSoapTestBase.getDocument(relationsElementXml), "/relations");
         assertXmlValidItem(relationsElementXml);
     }
 
     /**
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveNonexistingRelations() throws Exception {
         try {
             String relationsElementXml = retrieveRelations(this.itemId);
-            Node relationsElementDoc =
-                EscidocRestSoapTestBase.getDocument(relationsElementXml);
+            Node relationsElementDoc = EscidocRestSoapTestBase.getDocument(relationsElementXml);
             selectSingleNodeAsserted(relationsElementDoc, "/relations");
             assertNull(selectSingleNode(relationsElementDoc, "/relations/*"));
         }
@@ -582,8 +526,7 @@ public class ItemContentRelationsTest extends ItemTestBase {
     }
 
     /**
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveRelationsWithWrongId() throws Exception {
@@ -600,8 +543,7 @@ public class ItemContentRelationsTest extends ItemTestBase {
     }
 
     /**
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveRelationsWithoutId() throws Exception {
@@ -618,20 +560,17 @@ public class ItemContentRelationsTest extends ItemTestBase {
     }
 
     /**
-     * Test the last-modification-date in the return value of
-     * addContentRelations.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test the last-modification-date in the return value of addContentRelations.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRelationReturnValue01() throws Exception {
 
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
-                + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
-        Node xmlItemWithoutComponents =
-            deleteElement(xmlItem, "/item/components");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                "escidoc_item_198_for_create.xml");
+        Node xmlItemWithoutComponents = deleteElement(xmlItem, "/item/components");
         String itemWithoutComponents = toString(xmlItemWithoutComponents, true);
 
         String xml1 = create(itemWithoutComponents);
@@ -655,12 +594,10 @@ public class ItemContentRelationsTest extends ItemTestBase {
 
         String itemWithRelations = retrieve(this.itemId);
 
-        Document itemDoc =
-            EscidocRestSoapTestBase.getDocument(itemWithRelations);
+        Document itemDoc = EscidocRestSoapTestBase.getDocument(itemWithRelations);
         String lmdItem = getLastModificationDateValue(itemDoc);
 
-        assertEquals("Last modification date of result and item not equal",
-            lmdResult, lmdItem);
+        assertEquals("Last modification date of result and item not equal", lmdResult, lmdItem);
 
         // now test last-modification-date of removeContentRelations
 
@@ -679,26 +616,19 @@ public class ItemContentRelationsTest extends ItemTestBase {
         itemDoc = EscidocRestSoapTestBase.getDocument(itemWithOutRelations);
         lmdItem = getLastModificationDateValue(itemDoc);
 
-        assertEquals("Last modification date of result and item not equal",
-            lmdResultRemove, lmdItem);
+        assertEquals("Last modification date of result and item not equal", lmdResultRemove, lmdItem);
     }
 
     /**
-     * @param objectId
-     *            The id of the object to which the relation should be added.
-     *            The source id.
-     * @param predicate
-     *            The predicate of the relation.
-     * @throws Exception
-     *             If anything fails.
+     * @param objectId  The id of the object to which the relation should be added. The source id.
+     * @param predicate The predicate of the relation.
+     * @throws Exception If anything fails.
      */
-    private void addRelation(final String objectId, final String predicate)
-        throws Exception {
+    private void addRelation(final String objectId, final String predicate) throws Exception {
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
-                + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
-        Node xmlItemWithoutComponents =
-            deleteElement(xmlItem, "/item/components");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                "escidoc_item_198_for_create.xml");
+        Node xmlItemWithoutComponents = deleteElement(xmlItem, "/item/components");
         String itemWithoutComponents = toString(xmlItemWithoutComponents, true);
         String createdItem = create(itemWithoutComponents);
         String targetId = getObjidValue(createdItem);
@@ -713,72 +643,53 @@ public class ItemContentRelationsTest extends ItemTestBase {
     }
 
     /**
-     * @param id
-     *            The id of the resource.
+     * @param id The id of the resource.
      * @return The date of last modification of the resource as string.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    private String getTheLastModificationParam(final String id)
-        throws Exception {
+    private String getTheLastModificationParam(final String id) throws Exception {
         Document item = EscidocRestSoapTestBase.getDocument(retrieve(id));
 
         // get last-modification-date
         NamedNodeMap atts = item.getDocumentElement().getAttributes();
-        Node lastModificationDateNode =
-            atts.getNamedItem("last-modification-date");
+        Node lastModificationDateNode = atts.getNamedItem("last-modification-date");
         String lastModificationDate = lastModificationDateNode.getNodeValue();
 
         return lastModificationDate;
     }
 
     /**
-     * @param lastModDate
-     *            The last modification date of the source.
-     * @param targets
-     *            List of target ids. As much relations are added as there are
-     *            tagets.
+     * @param lastModDate The last modification date of the source.
+     * @param targets     List of target ids. As much relations are added as there are tagets.
      * @return The task parameter according to the given values.
      */
-    private String getTaskParameter(
-        final String lastModDate, final Vector<String> targets) {
+    private String getTaskParameter(final String lastModDate, final Vector<String> targets) {
         return getTaskParameter(lastModDate, targets, null);
     }
 
     /**
      * Get taskParameter with german Umlaut.
-     * 
-     * @param lastModDate
-     *            last-modification-date
-     * @param targets
-     *            vector with targets
+     *
+     * @param lastModDate last-modification-date
+     * @param targets     vector with targets
      * @return task-parameter (for task oriented methods)
      */
-    private String getTaskParameterWithUmlaut(
-        final String lastModDate, final Vector<String> targets) {
+    private String getTaskParameterWithUmlaut(final String lastModDate, final Vector<String> targets) {
 
-        return getTaskParameter(lastModDate, targets,
-            "http://www.escidoc.de/ontologies/mpdl-ontologies/"
-                + "content-relations#isTest\u00dc\u00c4\u00d6");
+        return getTaskParameter(lastModDate, targets, "http://www.escidoc.de/ontologies/mpdl-ontologies/"
+            + "content-relations#isTest\u00dc\u00c4\u00d6");
     }
 
     /**
-     * @param lastModDate
-     *            The last modification date of the source.
-     * @param targets
-     *            List of target ids. As much relations are added as there are
-     *            tagets.
-     * @param predicate
-     *            The predicate of the relation.
+     * @param lastModDate The last modification date of the source.
+     * @param targets     List of target ids. As much relations are added as there are tagets.
+     * @param predicate   The predicate of the relation.
      * @return The task parameter according to the given values.
      */
-    private String getTaskParameter(
-        final String lastModDate, final Vector<String> targets,
-        final String predicate) {
+    private String getTaskParameter(final String lastModDate, final Vector<String> targets, final String predicate) {
         String taskParam = null;
         if ((targets != null) && (targets.size() > 0)) {
-            taskParam =
-                "<param last-modification-date=\"" + lastModDate + "\">";
+            taskParam = "<param last-modification-date=\"" + lastModDate + "\">";
             Iterator<String> it = targets.iterator();
             while (it.hasNext()) {
                 String target = (String) it.next();
@@ -790,8 +701,7 @@ public class ItemContentRelationsTest extends ItemTestBase {
                 }
                 else {
                     taskParam =
-                        taskParam + "http://www.escidoc.de/ontologies/"
-                            + "mpdl-ontologies/content-relations#isPartOf";
+                        taskParam + "http://www.escidoc.de/ontologies/" + "mpdl-ontologies/content-relations#isPartOf";
 
                 }
                 taskParam = taskParam + "</predicate></relation>";

@@ -89,19 +89,15 @@ public class TripleStoreTestBase {
     protected DefaultHttpClient getHttpClient() throws Exception {
         DefaultHttpClient httpClient = new DefaultHttpClient();
         URL url = new URL(getFedoraUrl());
-        AuthScope m_authScope =
-                new AuthScope(url.getHost(), AuthScope.ANY_PORT,
-                        AuthScope.ANY_REALM);
-        UsernamePasswordCredentials m_creds =
-                new UsernamePasswordCredentials("fedoraAdmin", "fedoraAdmin");
-       httpClient.getCredentialsProvider().setCredentials(m_authScope, m_creds);
+        AuthScope m_authScope = new AuthScope(url.getHost(), AuthScope.ANY_PORT, AuthScope.ANY_REALM);
+        UsernamePasswordCredentials m_creds = new UsernamePasswordCredentials("fedoraAdmin", "fedoraAdmin");
+        httpClient.getCredentialsProvider().setCredentials(m_authScope, m_creds);
 
         return httpClient;
     }
 
     protected String getFedoraUrl() throws Exception {
-        return PropertiesProvider.getInstance().getProperty(
-            "fedora.url", "http://localhost:8082/fedora");
+        return PropertiesProvider.getInstance().getProperty("fedora.url", "http://localhost:8082/fedora");
     }
 
     /**
@@ -112,8 +108,7 @@ public class TripleStoreTestBase {
      * @return query result
      * @throws Exception If anything fails.
      */
-    public String requestMPT(final String spoQuery, final String outputFormat)
-            throws Exception {
+    public String requestMPT(final String spoQuery, final String outputFormat) throws Exception {
         HttpPost post = new HttpPost(getFedoraUrl() + "/risearch");
         List<NameValuePair> formparams = new ArrayList<NameValuePair>();
         formparams.add(new BasicNameValuePair("format", outputFormat));
@@ -123,7 +118,7 @@ public class TripleStoreTestBase {
         // The flush parameter tells the resource index to ensure
         // that any recently-added/modified/deleted triples are
         // flushed to the triplestore before executing the query.
-         formparams.add(new BasicNameValuePair("flush", FLUSH));
+        formparams.add(new BasicNameValuePair("flush", FLUSH));
         UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formparams, HTTP.UTF_8);
         post.setEntity(entity);
 
@@ -136,8 +131,7 @@ public class TripleStoreTestBase {
             httpClient.addRequestInterceptor(new PreemptiveAuthInterceptor(), 0);
             HttpResponse httpRes = httpClient.execute(post, localcontext);
             if (httpRes.getStatusLine().getStatusCode() != HttpServletResponse.SC_OK) {
-                throw new Exception("Bad request. Http response : "
-                        + resultCode);
+                throw new Exception("Bad request. Http response : " + resultCode);
             }
 
             String result = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
@@ -154,18 +148,16 @@ public class TripleStoreTestBase {
                 Pattern p2 = Pattern.compile(FORMAT_ERROR);
                 Matcher m2 = p2.matcher(result);
                 if (m.find()) {
-                    result =
-                            Constants.CDATA_START + result
-                                    + Constants.CDATA_END;
+                    result = Constants.CDATA_START + result + Constants.CDATA_END;
                     if (m1.find()) {
                         throw new Exception(result);
-                    } else if (m2.find()) {
+                    }
+                    else if (m2.find()) {
                         throw new Exception(result);
                     }
-                } else {
-                    result =
-                            Constants.CDATA_START + result
-                                    + Constants.CDATA_END;
+                }
+                else {
+                    result = Constants.CDATA_START + result + Constants.CDATA_END;
                     throw new Exception("Request to MPT failed." + result);
                 }
             }
@@ -176,6 +168,5 @@ public class TripleStoreTestBase {
             throw new Exception(e.toString(), e);
         }
     }
-
 
 }

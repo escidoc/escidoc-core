@@ -44,113 +44,88 @@ import java.util.Collection;
 
 /**
  * Test suite for the role Audience using the REST interface.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 @RunWith(Parameterized.class)
 public class AudienceRestTest extends AudienceAbstractTest {
 
     /**
      * Initializes test-class with data.
-     * 
+     *
      * @return Collection with data.
-     * 
      */
     @Parameters
     public static Collection<Object[]> data() {
-        return Arrays.asList(new Object[][]{
-                {USER_ACCOUNT_HANDLER_CODE, 
-                    PWCallback.ID_PREFIX + PWCallback.TEST_HANDLE},
-                {USER_GROUP_HANDLER_CODE, USER_GROUP_WITH_GROUP_LIST_ID},
-                {USER_GROUP_HANDLER_CODE, USER_GROUP_WITH_USER_LIST_ID},
-                {USER_GROUP_HANDLER_CODE, USER_GROUP_WITH_OU_LIST_ID},
-                {USER_GROUP_HANDLER_CODE, USER_GROUP_WITH_EXTERNAL_SELECTOR}
-        });
+        return Arrays.asList(new Object[][] {
+            { USER_ACCOUNT_HANDLER_CODE, PWCallback.ID_PREFIX + PWCallback.TEST_HANDLE },
+            { USER_GROUP_HANDLER_CODE, USER_GROUP_WITH_GROUP_LIST_ID },
+            { USER_GROUP_HANDLER_CODE, USER_GROUP_WITH_USER_LIST_ID },
+            { USER_GROUP_HANDLER_CODE, USER_GROUP_WITH_OU_LIST_ID },
+            { USER_GROUP_HANDLER_CODE, USER_GROUP_WITH_EXTERNAL_SELECTOR } });
     }
 
     /**
      * Constructor.
-     * 
-     * @param handlerCode handlerCode 
-     *      of UserAccountHandler or UserGroupHandler
-     * @param userOrGroupId
-     *            userOrGroupId for grantCreation.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param handlerCode   handlerCode of UserAccountHandler or UserGroupHandler
+     * @param userOrGroupId userOrGroupId for grantCreation.
+     * @throws Exception If anything fails.
      */
-    public AudienceRestTest(final int handlerCode,
-            final String userOrGroupId) throws Exception {
+    public AudienceRestTest(final int handlerCode, final String userOrGroupId) throws Exception {
 
         super(Constants.TRANSPORT_REST, handlerCode, userOrGroupId);
     }
 
     /**
-     * Test retrieving successfully a component 
-     * with visibility='audience' as audience-user.
-     * 
-     * @test.name Audience - Retrieve Audience Component
-     * @test.id AA-Audience-RetrieveAudienceComponent
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test retrieving successfully a component with visibility='audience' as audience-user.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveContentSuccessfull() throws Exception {
 
         //create grant audience for user USER_ID and scope of component
-        doTestCreateGrant(null, grantCreationUserOrGroupId, 
-            audienceComponentHref, ROLE_HREF_AUDIENCE, null);
-        
+        doTestCreateGrant(null, grantCreationUserOrGroupId, audienceComponentHref, ROLE_HREF_AUDIENCE, null);
+
         //test successfully retrieving content
         try {
             PWCallback.setHandle(HANDLE);
-            ((ItemClient) getClient(ITEM_HANDLER_CODE)).retrieveContent(
-                    itemId, audienceComponentId);
-        } 
+            ((ItemClient) getClient(ITEM_HANDLER_CODE)).retrieveContent(itemId, audienceComponentId);
+        }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                    "retrieving content failed. ", e);
+            EscidocRestSoapTestBase.failException("retrieving content failed. ", e);
         }
         finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
-        
+
     }
 
     /**
-     * Test retrieving declining a component 
-     * with visibility='private' as audience-user.
-     * 
-     * @test.name Audience - Retrieve Private Component
-     * @test.id AA-Audience-RetrievePrivateComponent
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test retrieving declining a component with visibility='private' as audience-user.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveContentDecline() throws Exception {
 
         //create grant audience for user USER_ID and scope of component
-        doTestCreateGrant(null, grantCreationUserOrGroupId, 
-            audienceComponentHref, ROLE_HREF_AUDIENCE, null);
-        
+        doTestCreateGrant(null, grantCreationUserOrGroupId, audienceComponentHref, ROLE_HREF_AUDIENCE, null);
+
         //test declining retrieving content
         try {
             PWCallback.setHandle(HANDLE);
-            ((ItemClient) getClient(ITEM_HANDLER_CODE)).retrieveContent(
-                    itemId, privateComponentId);
-            EscidocRestSoapTestBase
-                .failMissingException(AuthorizationException.class);
-        } catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                AuthorizationException.class, e);
-        } finally {
+            ((ItemClient) getClient(ITEM_HANDLER_CODE)).retrieveContent(itemId, privateComponentId);
+            EscidocRestSoapTestBase.failMissingException(AuthorizationException.class);
+        }
+        catch (final Exception e) {
+            EscidocRestSoapTestBase.assertExceptionType(AuthorizationException.class, e);
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
-        
+
     }
 
 }

@@ -63,5 +63,4 @@ public interface IndexRequest {
      */
     boolean getIsReindexerCaller();
 
-
 }

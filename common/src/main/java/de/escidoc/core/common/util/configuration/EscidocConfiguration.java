@@ -37,16 +37,14 @@ import java.util.regex.Pattern;
 
 /**
  * Handles properties.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 public final class EscidocConfiguration {
 
     private static final Pattern SPLIT_PATTERN = Pattern.compile("\\}.*?\\$\\{");
 
-    public static final String SEARCH_PROPERTIES_DIRECTORY =
-        "search.properties.directory";
+    public static final String SEARCH_PROPERTIES_DIRECTORY = "search.properties.directory";
 
     public static final String GSEARCH_URL = "gsearch.url";
 
@@ -60,26 +58,21 @@ public final class EscidocConfiguration {
 
     public static final String ADMIN_EMAIL = "escidoc-core.admin-email";
 
-    public static final String ESCIDOC_REPOSITORY_NAME =
-        "escidoc-core.repository-name";
+    public static final String ESCIDOC_REPOSITORY_NAME = "escidoc-core.repository-name";
 
     public static final String FEDORA_PASSWORD = "fedora.password";
 
-    public static final String ESCIDOC_CORE_NOTIFY_INDEXER_ENABLED =
-        "escidoc-core.notify.indexer.enabled";
+    public static final String ESCIDOC_CORE_NOTIFY_INDEXER_ENABLED = "escidoc-core.notify.indexer.enabled";
 
     public static final String ESCIDOC_CORE_BASEURL = "escidoc-core.baseurl";
 
     public static final String ESCIDOC_CORE_SELFURL = "escidoc-core.selfurl";
 
-    public static final String ESCIDOC_CORE_PROXY_HOST =
-        "escidoc-core.proxyHost";
+    public static final String ESCIDOC_CORE_PROXY_HOST = "escidoc-core.proxyHost";
 
-    public static final String ESCIDOC_CORE_PROXY_PORT =
-        "escidoc-core.proxyPort";
+    public static final String ESCIDOC_CORE_PROXY_PORT = "escidoc-core.proxyPort";
 
-    public static final String ESCIDOC_CORE_NON_PROXY_HOSTS =
-        "escidoc-core.nonProxyHosts";
+    public static final String ESCIDOC_CORE_NON_PROXY_HOSTS = "escidoc-core.nonProxyHosts";
 
     public static final String ESCIDOC_CORE_XSD_PATH = "escidoc-core.xsd-path";
 
@@ -88,76 +81,54 @@ public final class EscidocConfiguration {
 
     public static final String ESCIDOC_CORE_XSLT_STD = "escidoc-core.xslt.std";
 
-    public static final String ESCIDOC_CORE_IDENTIFIER_PREFIX =
-        "escidoc-core.identifier.prefix";
+    public static final String ESCIDOC_CORE_IDENTIFIER_PREFIX = "escidoc-core.identifier.prefix";
 
-    public static final String ESCIDOC_CORE_PID_SYSTEM_FACTORY =
-        "escidoc-core.PidSystemFactory";
+    public static final String ESCIDOC_CORE_PID_SYSTEM_FACTORY = "escidoc-core.PidSystemFactory";
 
-    public static final String ESCIDOC_CORE_DUMMYPID_GLOBALPREFIX =
-        "escidoc-core.dummyPid.globalPrefix";
+    public static final String ESCIDOC_CORE_DUMMYPID_GLOBALPREFIX = "escidoc-core.dummyPid.globalPrefix";
 
-    public static final String ESCIDOC_CORE_DUMMYPID_LOCALPREFIX =
-        "escidoc-core.dummyPid.localPrefix";
+    public static final String ESCIDOC_CORE_DUMMYPID_LOCALPREFIX = "escidoc-core.dummyPid.localPrefix";
 
-    public static final String ESCIDOC_CORE_DUMMYPID_NAMESPACE =
-        "escidoc-core.dummyPid.pidNamespace";
+    public static final String ESCIDOC_CORE_DUMMYPID_NAMESPACE = "escidoc-core.dummyPid.pidNamespace";
 
-    public static final String ESCIDOC_CORE_DUMMYPID_SEPARATOR =
-        "escidoc-core.dummyPid.separator";
+    public static final String ESCIDOC_CORE_DUMMYPID_SEPARATOR = "escidoc-core.dummyPid.separator";
 
-    public static final String ESCIDOC_CORE_USERHANDLE_LIFETIME =
-        "escidoc-core.userHandle.lifetime";
+    public static final String ESCIDOC_CORE_USERHANDLE_LIFETIME = "escidoc-core.userHandle.lifetime";
 
-    public static final String ESCIDOC_CORE_USERHANDLE_COOKIE_LIFETIME =
-        "escidoc-core.userHandle.cookie.lifetime";
+    public static final String ESCIDOC_CORE_USERHANDLE_COOKIE_LIFETIME = "escidoc-core.userHandle.cookie.lifetime";
 
-    public static final String ESCIDOC_CORE_USERHANDLE_COOKIE_VERSION =
-        "escidoc-core.userHandle.cookie.version";
+    public static final String ESCIDOC_CORE_USERHANDLE_COOKIE_VERSION = "escidoc-core.userHandle.cookie.version";
 
-    public static final String ESCIDOC_CORE_PID_SERVICE_HOST =
-        "escidoc-core.PidSystemRESTService.host";
+    public static final String ESCIDOC_CORE_PID_SERVICE_HOST = "escidoc-core.PidSystemRESTService.host";
 
-    public static final String ESCIDOC_CORE_PID_RESTSERVICE_USER =
-        "escidoc-core.PidSystemRESTService.user";
+    public static final String ESCIDOC_CORE_PID_RESTSERVICE_USER = "escidoc-core.PidSystemRESTService.user";
 
-    public static final String ESCIDOC_CORE_PID_RESTSERVICE_PASSWORD =
-        "escidoc-core.PidSystemRESTService.password";
+    public static final String ESCIDOC_CORE_PID_RESTSERVICE_PASSWORD = "escidoc-core.PidSystemRESTService.password";
 
-    public static final String ESCIDOC_CORE_PID_GLOBALPREFIX =
-        "escidoc-core.PidSystem.globalPrefix";
+    public static final String ESCIDOC_CORE_PID_GLOBALPREFIX = "escidoc-core.PidSystem.globalPrefix";
 
-    public static final String ESCIDOC_CORE_PID_LOCALPREFIX =
-        "escidoc-core.PidSystem.localPrefix";
+    public static final String ESCIDOC_CORE_PID_LOCALPREFIX = "escidoc-core.PidSystem.localPrefix";
 
-    public static final String ESCIDOC_CORE_PID_NAMESPACE =
-        "escidoc-core.PidSystem.namespace";
+    public static final String ESCIDOC_CORE_PID_NAMESPACE = "escidoc-core.PidSystem.namespace";
 
-    public static final String ESCIDOC_CORE_PID_SEPARATOR =
-        "escidoc-core.PidSystem.separator";
+    public static final String ESCIDOC_CORE_PID_SEPARATOR = "escidoc-core.PidSystem.separator";
 
-    public static final String DE_FIZ_ESCIDOC_OM_SERVICE_PROVIDER_URL =
-        "de.escidoc.core.om.service.provider.url";
+    public static final String DE_FIZ_ESCIDOC_OM_SERVICE_PROVIDER_URL = "de.escidoc.core.om.service.provider.url";
 
-    public static final String DE_FIZ_ESCIDOC_SM_SERVICE_PROVIDER_URL =
-        "de.escidoc.core.sm.service.provider.url";
+    public static final String DE_FIZ_ESCIDOC_SM_SERVICE_PROVIDER_URL = "de.escidoc.core.sm.service.provider.url";
 
-    public static final String ESCIDOC_CORE_DEFAULT_JNDI_URL =
-        "escidoc-core.default.jndi.url";
+    public static final String ESCIDOC_CORE_DEFAULT_JNDI_URL = "escidoc-core.default.jndi.url";
 
     public static final String SM_FRAMEWORK_SCOPE_ID = "sm.framework.scope.id";
 
-    public static final String ESCIDOC_CORE_QUEUE_USER =
-        "escidoc-core.queue.user";
+    public static final String ESCIDOC_CORE_QUEUE_USER = "escidoc-core.queue.user";
 
-    public static final String ESCIDOC_CORE_QUEUE_PASSWORD =
-        "escidoc-core.queue.password";
+    public static final String ESCIDOC_CORE_QUEUE_PASSWORD = "escidoc-core.queue.password";
 
     public static final String ESCIDOC_CORE_FILTER_DEFAULT_MAXIMUM_RECORDS =
         "escidoc-core.filter.default.maximumRecords";
 
-    public static final String CONTENT_RELATIONS_URL =
-        "escidoc-core.ontology.url";
+    public static final String CONTENT_RELATIONS_URL = "escidoc-core.ontology.url";
 
     public static final String SRW_URL = "srw.url";
 
@@ -168,66 +139,55 @@ public final class EscidocConfiguration {
     private static final String ONE = "1";
 
     /**
-     * This property should be set to the number of policy sets of roles that
-     * should be cached.
+     * This property should be set to the number of policy sets of roles that should be cached.
      */
-    public static final String ESCIDOC_CORE_AA_CACHE_ROLES_SIZE =
-        "escidoc-core.aa.cache.roles.size";
+    public static final String ESCIDOC_CORE_AA_CACHE_ROLES_SIZE = "escidoc-core.aa.cache.roles.size";
 
     /**
      * This property should be set to the number of expected concurrent users.
      */
-    public static final String ESCIDOC_CORE_AA_CACHE_USERS_SIZE =
-        "escidoc-core.aa.cache.users.size";
+    public static final String ESCIDOC_CORE_AA_CACHE_USERS_SIZE = "escidoc-core.aa.cache.users.size";
 
     /**
      * This property should be set to the number of expected concurrent users.
      */
-    public static final String ESCIDOC_CORE_AA_CACHE_GROUPS_SIZE =
-        "escidoc-core.aa.cache.groups.size";
+    public static final String ESCIDOC_CORE_AA_CACHE_GROUPS_SIZE = "escidoc-core.aa.cache.groups.size";
 
     /**
-     * This property should be set to the number of expected resources, for that
-     * the result of @ link XacmlFunctionRoleIsGranted} shall be cached (for
-     * each user and role).
+     * This property should be set to the number of expected resources, for that the result of @ link
+     * XacmlFunctionRoleIsGranted} shall be cached (for each user and role).
      */
     public static final String ESCIDOC_CORE_AA_CACHE_RESOURCES_IN_ROLE_IS_GRANTED_SIZE =
         "escidoc-core.aa.cache.resources-in-role-is-granted.size";
 
     /**
-     * This property should be set to the number of system objects that should
-     * be cached for a request at one point of time.
+     * This property should be set to the number of system objects that should be cached for a request at one point of
+     * time.
      */
-    public static final String ESCIDOC_CORE_AA_CACHE_ATTRIBUTES_SIZE =
-        "escidoc-core.aa.cache.attributes.size";
+    public static final String ESCIDOC_CORE_AA_CACHE_ATTRIBUTES_SIZE = "escidoc-core.aa.cache.attributes.size";
 
     /**
-     * This property should be set to the name of the user-attribute that
-     * defines the organizational unit the user belongs to .
+     * This property should be set to the name of the user-attribute that defines the organizational unit the user
+     * belongs to .
      */
-    public static final String ESCIDOC_CORE_AA_OU_ATTRIBUTE_NAME =
-        "escidoc-core.aa.attribute-name.ou";
+    public static final String ESCIDOC_CORE_AA_OU_ATTRIBUTE_NAME = "escidoc-core.aa.attribute-name.ou";
 
     /**
-     * This property should be set to the name of the user-attribute that
-     * defines the common name of the user.
+     * This property should be set to the name of the user-attribute that defines the common name of the user.
      */
     public static final String ESCIDOC_CORE_AA_COMMON_NAME_ATTRIBUTE_NAME =
         "escidoc-core.aa.attribute-name.common-name";
 
     /**
-     * This property should be set to the name of the user-attribute that
-     * defines the unique loginname of the user.
+     * This property should be set to the name of the user-attribute that defines the unique loginname of the user.
      */
     public static final String ESCIDOC_CORE_AA_PERSISTENT_ID_ATTRIBUTE_NAME =
         "escidoc-core.aa.attribute-name.persistent-id";
 
     /**
-     * This property should be set to the number of system objects that should
-     * be cached for the indexer.
+     * This property should be set to the number of system objects that should be cached for the indexer.
      */
-    public static final String ESCIDOC_CORE_INDEXER_CACHE_SIZE =
-        "escidoc-core.om.indexer.cache.size";
+    public static final String ESCIDOC_CORE_INDEXER_CACHE_SIZE = "escidoc-core.om.indexer.cache.size";
 
     /**
      * Digilib Server (URL).
@@ -246,11 +206,12 @@ public final class EscidocConfiguration {
     static {
         try {
             instance = new EscidocConfiguration();
-        } catch (final EscidocException e) {
-            if(LOGGER.isWarnEnabled()) {
+        }
+        catch (final EscidocException e) {
+            if (LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Problem while loading properties.");
             }
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Problem while loading properties.", e);
             }
         }
@@ -258,19 +219,15 @@ public final class EscidocConfiguration {
 
     private final Properties properties;
 
-    private static final String PROPERTIES_FILENAME =
-        "escidoc-core.custom.properties";
+    private static final String PROPERTIES_FILENAME = "escidoc-core.custom.properties";
 
-    private static final String PROPERTIES_DEFAULT_FILENAME =
-        "escidoc-core.properties";
+    private static final String PROPERTIES_DEFAULT_FILENAME = "escidoc-core.properties";
 
-    private static final String PROPERTIES_CONSTANT_FILENAME =
-        "escidoc-core.constant.properties";
+    private static final String PROPERTIES_CONSTANT_FILENAME = "escidoc-core.constant.properties";
 
     /**
-     * Private Constructor, in order to prevent instantiation of this utility
-     * class. read the Properties and fill it in properties attribute.
-     * @throws de.escidoc.core.common.exceptions.EscidocException
+     * Private Constructor, in order to prevent instantiation of this utility class. read the Properties and fill it in
+     * properties attribute.
      */
     private EscidocConfiguration() throws EscidocException {
         System.setProperty("java.awt.headless", "true");
@@ -279,21 +236,18 @@ public final class EscidocConfiguration {
 
     /**
      * Returns and perhaps initializes Object.
-     * 
+     *
      * @return EscidocConfiguration self
-     * @throws IOException
-     *             Thrown if properties loading fails.
+     * @throws IOException Thrown if properties loading fails.
      */
     public static EscidocConfiguration getInstance() throws IOException {
         return instance;
     }
 
     /**
-     * Returns the property with the given name or null if property was not
-     * found.
-     * 
-     * @param name
-     *            The name of the Property.
+     * Returns the property with the given name or null if property was not found.
+     *
+     * @param name The name of the Property.
      * @return Value of the given Property as String.
      */
     public String get(final String name) {
@@ -301,13 +255,10 @@ public final class EscidocConfiguration {
     }
 
     /**
-     * Returns the property with the given name or the second parameter as
-     * default value if property was not found.
-     * 
-     * @param name
-     *            The name of the Property.
-     * @param defaultValue
-     *            The default vaule if property isn't given.
+     * Returns the property with the given name or the second parameter as default value if property was not found.
+     *
+     * @param name         The name of the Property.
+     * @param defaultValue The default vaule if property isn't given.
      * @return Value of the given Property as String.
      */
     public String get(final String name, final String defaultValue) {
@@ -320,18 +271,16 @@ public final class EscidocConfiguration {
     }
 
     /**
-     * Returns the property with the given name as a boolean value. The result
-     * is set to true if the property value as String has the value "true" or
-     * "1".
-     * 
-     * @param name
-     *            The name of the Property.
+     * Returns the property with the given name as a boolean value. The result is set to true if the property value as
+     * String has the value "true" or "1".
+     *
+     * @param name The name of the Property.
      * @return Value of the given Property as boolean.
      */
     public boolean getAsBoolean(final String name) {
         Boolean result = false;
         String prop = ((String) this.properties.get(name));
-        if(prop != null) {
+        if (prop != null) {
             prop = prop.toLowerCase();
             if (prop != null && (TRUE.equals(prop) || ONE.equals(prop))) {
                 result = true;
@@ -342,18 +291,18 @@ public final class EscidocConfiguration {
 
     /**
      * Returns the property with the given name as a long value.
-     * 
-     * @param name
-     *            The name of the Property.
+     *
+     * @param name The name of the Property.
      * @return Value of the given Property as long value.
      */
     public Long getAsLong(final String name) {
         Long returnValue = null;
         try {
             returnValue = Long.parseLong(getProperty(name));
-        } catch(final NumberFormatException e) {
+        }
+        catch (final NumberFormatException e) {
             LOGGER.error("Error on parsing configuration property '" + name + "'. Property must be a long!.");
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on parsing configuration property '" + name + "'. Property must be a long!", e);
             }
         }
@@ -363,17 +312,17 @@ public final class EscidocConfiguration {
     /**
      * Returns the property with the given name as a long value.
      *
-     * @param name
-     *            The name of the Property.
+     * @param name The name of the Property.
      * @return Value of the given Property as long value.
      */
     public Integer getAsInt(final String name) {
         Integer returnValue = null;
         try {
             returnValue = Integer.parseInt(getProperty(name));
-        } catch(final NumberFormatException e) {
+        }
+        catch (final NumberFormatException e) {
             LOGGER.error("Error on parsing configuration property '" + name + "'. Property must be a integer!.");
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on parsing configuration property '" + name + "'. Property must be a integer!", e);
             }
         }
@@ -382,24 +331,20 @@ public final class EscidocConfiguration {
 
     private String getProperty(final String name) {
         final String property = properties.getProperty(name);
-        if(property == null) {
+        if (property == null) {
             LOGGER.error("Missing property '" + name + "'!");
         }
         throw new IllegalStateException("Missing property '" + name + "'!");
     }
 
     /**
-     * Loads the Properties from the possible files. First loads properties from
-     * the file escidoc-core.properties. Afterwards tries to load specific
-     * properties from the file escidoc-core.custom.properties and merges them
-     * with the default properties. If any key is included in default and
-     * specific properties, the value of the specific property will overwrite
-     * the default property.
-     * 
+     * Loads the Properties from the possible files. First loads properties from the file escidoc-core.properties.
+     * Afterwards tries to load specific properties from the file escidoc-core.custom.properties and merges them with
+     * the default properties. If any key is included in default and specific properties, the value of the specific
+     * property will overwrite the default property.
+     *
      * @return The properties
-     * @throws SystemException
-     *             If the loading of the default properties (file
-     *             escidoc-core.properties) fails.
+     * @throws SystemException If the loading of the default properties (file escidoc-core.properties) fails.
      */
     private static Properties loadProperties() throws SystemException {
         final Properties result;
@@ -431,11 +376,12 @@ public final class EscidocConfiguration {
         Properties constant = new Properties();
         try {
             constant = getProperties(PROPERTIES_CONSTANT_FILENAME);
-        } catch (final IOException e) {
-            if(LOGGER.isWarnEnabled()) {
+        }
+        catch (final IOException e) {
+            if (LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on loading contant properties.");
             }
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on loading contant properties.", e);
             }
         }
@@ -459,15 +405,12 @@ public final class EscidocConfiguration {
 
     /**
      * Get the properties from a file.
-     * 
-     * @param filename
-     *            The name of the properties file.
+     *
+     * @param filename The name of the properties file.
      * @return The properties.
-     * @throws IOException
-     *             If access to the specified file fails.
+     * @throws IOException If access to the specified file fails.
      */
-    private static Properties getProperties(final String filename)
-        throws IOException {
+    private static Properties getProperties(final String filename) throws IOException {
 
         final Properties result = new Properties();
         final InputStream propertiesStream = getInputStream(filename);
@@ -477,31 +420,24 @@ public final class EscidocConfiguration {
 
     /**
      * Get an InputStream for the given file.
-     * 
-     * @param filename
-     *            The name of the file.
+     *
+     * @param filename The name of the file.
      * @return The InputStream or null if the file could not be located.
-     * @throws FileNotFoundException
-     *             If access to the specified file fails.
+     * @throws FileNotFoundException If access to the specified file fails.
      */
-    private static InputStream getInputStream(final String filename)
-        throws IOException {
-        final ResourcePatternResolver applicationContext =
-            new ClassPathXmlApplicationContext(new String[] {});
-        final Resource[] resource =
-            applicationContext.getResources("classpath*:" + filename);
+    private static InputStream getInputStream(final String filename) throws IOException {
+        final ResourcePatternResolver applicationContext = new ClassPathXmlApplicationContext(new String[] {});
+        final Resource[] resource = applicationContext.getResources("classpath*:" + filename);
         if (resource.length == 0) {
-            throw new FileNotFoundException("Unable to find file '" + filename
-                + "' in classpath.");
+            throw new FileNotFoundException("Unable to find file '" + filename + "' in classpath.");
         }
         return resource[0].getInputStream();
     }
 
     /**
      * Retrieves the Properties from File.
-     * 
-     * @param property
-     *            value of property with env-variable-syntax (e.g. ${java.home})
+     *
+     * @param property value of property with env-variable-syntax (e.g. ${java.home})
      * @return String replaced env-variables
      */
     private static String replaceEnvVariables(final String property) {
@@ -510,17 +446,13 @@ public final class EscidocConfiguration {
             final String[] envVariables = SPLIT_PATTERN.split(property);
             if (envVariables != null) {
                 for (int i = 0; i < envVariables.length; i++) {
-                    envVariables[i] =
-                        envVariables[i].replaceFirst(".*?\\$\\{", "");
+                    envVariables[i] = envVariables[i].replaceFirst(".*?\\$\\{", "");
                     envVariables[i] = envVariables[i].replaceFirst("\\}.*", "");
                     if (System.getProperty(envVariables[i]) != null
                         && System.getProperty(envVariables[i]).length() != 0) {
-                        String envVariable =
-                            System.getProperty(envVariables[i]);
+                        String envVariable = System.getProperty(envVariables[i]);
                         envVariable = envVariable.replaceAll("\\\\", "/");
-                        replacedProperty =
-                            replacedProperty.replaceAll("\\$\\{"
-                                + envVariables[i] + '}', envVariable);
+                        replacedProperty = replacedProperty.replaceAll("\\$\\{" + envVariables[i] + '}', envVariable);
                     }
                 }
             }
@@ -529,12 +461,10 @@ public final class EscidocConfiguration {
     }
 
     /**
-     * Get the full URL to the eSciDoc Infrastructure itself extend with the
-     * provided path. E.g. path = "/xsd/schema1.xsd" leads to
-     * http://localhost:8080/xsd/schema1.xsd.
-     * 
-     * @param path
-     *            path which is to append on the eSciDoc selfUrl.
+     * Get the full URL to the eSciDoc Infrastructure itself extend with the provided path. E.g. path =
+     * "/xsd/schema1.xsd" leads to http://localhost:8080/xsd/schema1.xsd.
+     *
+     * @param path path which is to append on the eSciDoc selfUrl.
      * @return baseUrl with appended path
      */
     public String appendToSelfURL(final String path) {

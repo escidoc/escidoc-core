@@ -27,7 +27,6 @@ import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 
 /**
  * @author Frank Schwichtenberg
- * 
  */
 public class PIDManagerRESTServiceFactory extends PIDSystemFactory {
 
@@ -48,18 +47,13 @@ public class PIDManagerRESTServiceFactory extends PIDSystemFactory {
     }
 
     /**
-     * Create a new instance of PIDGeneratorRESTService and initialize it from
-     * escidoc-core.properties.
-     * <ul>
-     * <li>escidoc-core.PidGenerator.globalPrefix (required)</li>
-     * </ul>
-     * 
-     * @throws PidSystemException
-     *             If the PIDGenerator could not be initialized.
+     * Create a new instance of PIDGeneratorRESTService and initialize it from escidoc-core.properties. <ul>
+     * <li>escidoc-core.PidGenerator.globalPrefix (required)</li> </ul>
+     *
+     * @throws PidSystemException If the PIDGenerator could not be initialized.
      */
     private void getNewInstance() throws PidSystemException {
-        final PIDManagerRESTService pidRestGenerator =
-            new PIDManagerRESTService();
+        final PIDManagerRESTService pidRestGenerator = new PIDManagerRESTService();
         try {
             final EscidocConfiguration conf = EscidocConfiguration.getInstance();
             String param = conf.get(EscidocConfiguration.ESCIDOC_CORE_PID_SERVICE_HOST);
@@ -74,10 +68,10 @@ public class PIDManagerRESTServiceFactory extends PIDSystemFactory {
             if (param != null) {
                 pidRestGenerator.setGlobalPrefix(param);
             }
-            pidRestGenerator.setLocalPrefix(conf.get(EscidocConfiguration.ESCIDOC_CORE_PID_LOCALPREFIX,""));
-            pidRestGenerator.setSeparator(conf.get(
-                EscidocConfiguration.ESCIDOC_CORE_PID_SEPARATOR, "/"));
-        } catch (final Exception e) {
+            pidRestGenerator.setLocalPrefix(conf.get(EscidocConfiguration.ESCIDOC_CORE_PID_LOCALPREFIX, ""));
+            pidRestGenerator.setSeparator(conf.get(EscidocConfiguration.ESCIDOC_CORE_PID_SEPARATOR, "/"));
+        }
+        catch (final Exception e) {
             throw new PidSystemException("Can not initialise PID System.", e);
         }
         this.pidGenerator = pidRestGenerator;

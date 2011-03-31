@@ -48,11 +48,9 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
 /**
- * Test locking and unlocking an item resource.<br>
- * By default, the tests are executed using a depositor user.
- * 
+ * Test locking and unlocking an item resource.<br> By default, the tests are executed using a depositor user.
+ *
  * @author Michael Schneider
- * 
  */
 @RunWith(value = Parameterized.class)
 public class ItemLockTest extends ItemTestBase {
@@ -62,8 +60,7 @@ public class ItemLockTest extends ItemTestBase {
     private String theItemId;
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ItemLockTest(final int transport) {
         super(transport);
@@ -80,20 +77,16 @@ public class ItemLockTest extends ItemTestBase {
 
         String itemXml = retrieve(theItemId);
         Document itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
-        assertXmlEquals("Item lock status not as expected", itemDoc,
-            "/item/properties/lock-status", "locked");
+        assertXmlEquals("Item lock status not as expected", itemDoc, "/item/properties/lock-status", "locked");
         assertXmlNotNull("lock-date", itemDoc, "/item/properties/lock-date");
 
         String lockOwner = null;
         if (getTransport() == Constants.TRANSPORT_REST) {
             lockOwner =
-                getObjidFromHref(selectSingleNode(itemDoc,
-                    "/item/properties/lock-owner/@href").getTextContent());
+                getObjidFromHref(selectSingleNode(itemDoc, "/item/properties/lock-owner/@href").getTextContent());
         }
         else if (getTransport() == Constants.TRANSPORT_SOAP) {
-            lockOwner =
-                selectSingleNode(itemDoc, "/item/properties/lock-owner/@objid")
-                    .getTextContent();
+            lockOwner = selectSingleNode(itemDoc, "/item/properties/lock-owner/@objid").getTextContent();
         }
         assertNotNull(lockOwner);
         assertXmlValidItem(itemXml);
@@ -106,8 +99,7 @@ public class ItemLockTest extends ItemTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = LockingException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
         PWCallback.setHandle(PWCallback.DEPOSITOR_HANDLE);
         unlock(theItemId, param);
@@ -120,23 +112,17 @@ public class ItemLockTest extends ItemTestBase {
         lock(theItemId, param);
 
         String containerXml = retrieve(theItemId);
-        Document containerDoc =
-            EscidocRestSoapTestBase.getDocument(containerXml);
-        assertXmlEquals("Container lock status not as expected", containerDoc,
-            "/item/properties/lock-status", "locked");
-        assertXmlNotNull("lock-date", containerDoc,
-            "/item/properties/lock-date");
+        Document containerDoc = EscidocRestSoapTestBase.getDocument(containerXml);
+        assertXmlEquals("Container lock status not as expected", containerDoc, "/item/properties/lock-status", "locked");
+        assertXmlNotNull("lock-date", containerDoc, "/item/properties/lock-date");
 
         String lockOwner = null;
         if (getTransport() == Constants.TRANSPORT_REST) {
             lockOwner =
-                getObjidFromHref(selectSingleNode(containerDoc,
-                    "/item/properties/lock-owner/@href").getTextContent());
+                getObjidFromHref(selectSingleNode(containerDoc, "/item/properties/lock-owner/@href").getTextContent());
         }
         else if (getTransport() == Constants.TRANSPORT_SOAP) {
-            lockOwner =
-                selectSingleNode(containerDoc,
-                    "/item/properties/lock-owner/@objid").getTextContent();
+            lockOwner = selectSingleNode(containerDoc, "/item/properties/lock-owner/@objid").getTextContent();
         }
         assertNotNull(lockOwner);
 
@@ -151,23 +137,8 @@ public class ItemLockTest extends ItemTestBase {
 
     /**
      * Succesfully unlock item by the lock owner.
-     * 
-     * @test.name Unlock Item - Lock Owner
-     * @test.id OUM_ULI-1-1
-     * @test.input <ul>
-     *             <li>Valid item id of an item that is locked.</li>
-     *             <li>valid task param with last modification date of the item</li>
-     *             <li>Method called by the lock-owner</li>
-     *             </ul>
-     * @test.expected: <ul>
-     *                 <li>Unlock returns without exception</li>
-     *                 <li>retrieved unlocked item has unlocked status and does
-     *                 not contain lock information (lock-date, lock-owner)</li>
-     *                 </ul>
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOM_ULI_1_1() throws Exception {
@@ -177,30 +148,25 @@ public class ItemLockTest extends ItemTestBase {
             lock(theItemId, param);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Unlocking item can not be tested, locking failed"
-                    + " with exception.", e);
+            EscidocRestSoapTestBase.failException("Unlocking item can not be tested, locking failed"
+                + " with exception.", e);
         }
 
         try {
             unlock(theItemId, param);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Unlocking item failed with exception. ", e);
+            EscidocRestSoapTestBase.failException("Unlocking item failed with exception. ", e);
         }
 
         String containerXml = retrieve(theItemId);
 
-        Document containerDoc =
-            EscidocRestSoapTestBase.getDocument(containerXml);
-        assertXmlEquals("Item lock status not as expected", containerDoc,
-            "/item/properties/lock-status", "unlocked");
+        Document containerDoc = EscidocRestSoapTestBase.getDocument(containerXml);
+        assertXmlEquals("Item lock status not as expected", containerDoc, "/item/properties/lock-status", "unlocked");
 
-        assertXmlNotExists("Unexpected element lock-date in unlocked item.",
-            containerDoc, "/item/properties/lock-date");
-        assertXmlNotExists("Unexpected element lock-owner in unlocked item.",
-            containerDoc, "/item/properties/lock-owner");
+        assertXmlNotExists("Unexpected element lock-date in unlocked item.", containerDoc, "/item/properties/lock-date");
+        assertXmlNotExists("Unexpected element lock-owner in unlocked item.", containerDoc,
+            "/item/properties/lock-owner");
 
         // try to call update by System-Administrator
         PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
@@ -210,32 +176,15 @@ public class ItemLockTest extends ItemTestBase {
             update(theItemId, containerXml);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Updating unlocked item failed with exception. ", e);
+            EscidocRestSoapTestBase.failException("Updating unlocked item failed with exception. ", e);
         }
 
     }
 
     /**
      * Succesfully unlock item by a system administrator.
-     * 
-     * @test.name Unlock Item - System Administrator
-     * @test.id OUM_ULI-1-2
-     * @test.input <ul>
-     *             <li>Valid item id of an item that is locked.</li>
-     *             <li>valid task param with last modification date of the item</li>
-     *             <li>Method called by a system-administrator, not the
-     *             lock-owner</li>
-     *             </ul>
-     * @test.expected: <ul>
-     *                 <li>Unlock returns without exception</li>
-     *                 <li>retrieved unlocked item does not contain lock
-     *                 information (lock-date, lock-owner)</li>
-     *                 </ul>
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOM_ULI_1_2() throws Exception {
@@ -245,9 +194,8 @@ public class ItemLockTest extends ItemTestBase {
             lock(theItemId, param);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Unlocking item can not be tested, locking failed"
-                    + " with exception.", e);
+            EscidocRestSoapTestBase.failException("Unlocking item can not be tested, locking failed"
+                + " with exception.", e);
         }
 
         PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
@@ -256,21 +204,18 @@ public class ItemLockTest extends ItemTestBase {
             unlock(theItemId, param);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Unlocking item failed with exception. ", e);
+            EscidocRestSoapTestBase.failException("Unlocking item failed with exception. ", e);
         }
 
         String containerXml = retrieve(theItemId);
 
-        Document containerDoc =
-            EscidocRestSoapTestBase.getDocument(containerXml);
-        assertXmlEquals("Container lock status not as expected", containerDoc,
-            "/item/properties/lock-status", "unlocked");
+        Document containerDoc = EscidocRestSoapTestBase.getDocument(containerXml);
+        assertXmlEquals("Container lock status not as expected", containerDoc, "/item/properties/lock-status",
+            "unlocked");
 
-        assertXmlNotExists("Unexpected element lock-date in unlocked item.",
-            containerDoc, "/item/properties/lock-date");
-        assertXmlNotExists("Unexpected element lock-owner in unlocked item.",
-            containerDoc, "/item/properties/lock-owner");
+        assertXmlNotExists("Unexpected element lock-date in unlocked item.", containerDoc, "/item/properties/lock-date");
+        assertXmlNotExists("Unexpected element lock-owner in unlocked item.", containerDoc,
+            "/item/properties/lock-owner");
 
         // try to call update by System-Administrator
         param = getTheLastModificationParam(false, theItemId);
@@ -279,28 +224,15 @@ public class ItemLockTest extends ItemTestBase {
             update(theItemId, containerXml);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Updating unlocked item failed with exception. ", e);
+            EscidocRestSoapTestBase.failException("Updating unlocked item failed with exception. ", e);
         }
 
     }
 
     /**
      * Declining unlock item by a user that is not the lock owner.
-     * 
-     * @test.name Unlock Item - Not Lock Owner
-     * @test.id OUM_ULI-2
-     * @test.input <ul>
-     *             <li>Valid item id of an item that is locked.</li>
-     *             <li>valid task param with last modification date of the item</li>
-     *             <li>Method is neither called by the lock-owner nor a system
-     *             administrator</li>
-     *             </ul>
-     * @test.expected: AuthorizationException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOM_ULI_2() throws Exception {
@@ -312,29 +244,25 @@ public class ItemLockTest extends ItemTestBase {
             lock(theItemId, param);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Unlocking item can not be tested, locking failed"
-                    + " with exception.", e);
+            EscidocRestSoapTestBase.failException("Unlocking item can not be tested, locking failed"
+                + " with exception.", e);
         }
 
         PWCallback.setHandle(PWCallback.DEPOSITOR_HANDLE);
 
         try {
             unlock(theItemId, param);
-            EscidocRestSoapTestBase
-                .failMissingException(AuthorizationException.class);
+            EscidocRestSoapTestBase.failMissingException(AuthorizationException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                AuthorizationException.class, e);
+            EscidocRestSoapTestBase.assertExceptionType(AuthorizationException.class, e);
         }
     }
 
     /**
      * Unsuccessfully lock container with wrong container objid.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOM_C_lockWrongID() throws Exception {
@@ -345,8 +273,7 @@ public class ItemLockTest extends ItemTestBase {
 
         try {
             lock("escidoc:noExist", param);
-            EscidocRestSoapTestBase.failMissingException(
-                "No exception after lock with non existing id.", ec);
+            EscidocRestSoapTestBase.failMissingException("No exception after lock with non existing id.", ec);
         }
         catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
@@ -359,8 +286,7 @@ public class ItemLockTest extends ItemTestBase {
     @Test
     public void testOM_C_lockOptimisicLocking() throws Exception {
 
-        String param =
-            "<param last-modification-date=\"1970-01-01T00:00:00.000Z\" ></param>";
+        String param = "<param last-modification-date=\"1970-01-01T00:00:00.000Z\" ></param>";
 
         try {
             lock(theItemId, param);
@@ -368,8 +294,7 @@ public class ItemLockTest extends ItemTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = OptimisticLockingException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
     }
 
@@ -387,16 +312,14 @@ public class ItemLockTest extends ItemTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
     }
 
     /**
      * Test the last modification date timestamp of the lock/unlock method.
-     * 
-     * @throws Exception
-     *             Thrown if anything failed.
+     *
+     * @throws Exception Thrown if anything failed.
      */
     @Test
     public void testLockReturnValue01() throws Exception {
@@ -412,8 +335,7 @@ public class ItemLockTest extends ItemTestBase {
         Document itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
         String lmdRetrieve = getLastModificationDateValue(itemDoc);
 
-        assertEquals("Last modification date of result and item not equal",
-            lmdResultLock, lmdRetrieve);
+        assertEquals("Last modification date of result and item not equal", lmdResultLock, lmdRetrieve);
 
         // now check unlock
         resultXml = unlock(theItemId, param);
@@ -425,38 +347,33 @@ public class ItemLockTest extends ItemTestBase {
         itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
         lmdRetrieve = getLastModificationDateValue(itemDoc);
 
-        assertEquals("Last modification date of result and item not equal",
-            lmdResultUnlock, lmdRetrieve);
+        assertEquals("Last modification date of result and item not equal", lmdResultUnlock, lmdRetrieve);
 
         // assert that the last-modification-date of item hasn't changed
-        assertEquals("Last modification date of result and item not equal",
-            lmdResultUnlock, lmdResultLock);
+        assertEquals("Last modification date of result and item not equal", lmdResultUnlock, lmdResultLock);
     }
 
     /**
      * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Before
     public void setUp() throws Exception {
         // create an item and save the id
         PWCallback.setHandle(PWCallback.DEPOSITOR_HANDLE);
         String xmlData =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
-                + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                "escidoc_item_198_for_create.xml");
         theItemXml = create(xmlData);
-        theItemId =
-            getObjidValue(EscidocRestSoapTestBase.getDocument(theItemXml));
+        theItemId = getObjidValue(EscidocRestSoapTestBase.getDocument(theItemXml));
 
     }
 
     /**
      * Clean up after test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @After
     public void tearDown() throws Exception {

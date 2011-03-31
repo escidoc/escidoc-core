@@ -21,20 +21,15 @@ public class DbAccess {
 
     public static final String ESCIDOC_DATABASE_URL = "escidoc.database.url";
 
-    public static final String ESCIDOC_DATABASE_PASSWORD =
-        "escidoc.database.password";
+    public static final String ESCIDOC_DATABASE_PASSWORD = "escidoc.database.password";
 
-    public static final String ESCIDOC_DATABASE_USERNAME =
-        "escidoc.database.username";
+    public static final String ESCIDOC_DATABASE_USERNAME = "escidoc.database.username";
 
-    public static final String ESCIDOC_DATABASE_DRIVER_CLASS_NAME =
-        "escidoc.database.driverClassName";
+    public static final String ESCIDOC_DATABASE_DRIVER_CLASS_NAME = "escidoc.database.driverClassName";
 
-    private static final String USER_ACCOUNT_ID_QUERY =
-        "select id from aa.user_account";
+    private static final String USER_ACCOUNT_ID_QUERY = "select id from aa.user_account";
 
-    private static final String ROLE_ID_QUERY =
-        "select id from aa.escidoc_role";
+    private static final String ROLE_ID_QUERY = "select id from aa.escidoc_role";
 
     private static Properties PROPERTIES = null;
 
@@ -56,8 +51,7 @@ public class DbAccess {
         return executeQuery(ROLE_ID_QUERY);
     }
 
-    private Collection<String> executeQuery(final String query)
-        throws SQLException, ClassNotFoundException {
+    private Collection<String> executeQuery(final String query) throws SQLException, ClassNotFoundException {
         Collection<String> result = new Vector<String>();
         Connection con = getConnection();
         try {
@@ -79,11 +73,9 @@ public class DbAccess {
         return result;
     }
 
-    private Connection getConnection() throws SQLException,
-        ClassNotFoundException {
+    private Connection getConnection() throws SQLException, ClassNotFoundException {
         Class.forName(getDriverClassName());
-        return DriverManager.getConnection(getJdbcUrl(), getUsername(),
-            getPassword());
+        return DriverManager.getConnection(getJdbcUrl(), getUsername(), getPassword());
     }
 
     private String getJdbcUrl() {
@@ -97,8 +89,7 @@ public class DbAccess {
         if (PROPERTIES == null) {
             PROPERTIES = loadProperties();
         }
-        return PROPERTIES
-            .getProperty(DbAccess.ESCIDOC_DATABASE_DRIVER_CLASS_NAME);
+        return PROPERTIES.getProperty(DbAccess.ESCIDOC_DATABASE_DRIVER_CLASS_NAME);
     }
 
     private String getUsername() {
@@ -117,7 +108,7 @@ public class DbAccess {
 
     /**
      * Load properties file to influence test behavior.
-     * 
+     *
      * @return properties
      */
     private Properties loadProperties() {
@@ -127,16 +118,12 @@ public class DbAccess {
 
         try {
             try {
-                fis =
-                    ResourceProvider.getFileInputStreamFromFile("./etc",
-                        propertiesFile);
+                fis = ResourceProvider.getFileInputStreamFromFile("./etc", propertiesFile);
             }
             catch (final IOException e) {
                 e.printStackTrace();
                 if (fis == null) {
-                    fis =
-                        ResourceProvider.getFileInputStreamFromFile(
-                            "../../etc", propertiesFile);
+                    fis = ResourceProvider.getFileInputStreamFromFile("../../etc", propertiesFile);
                 }
             }
             if (fis != null) {

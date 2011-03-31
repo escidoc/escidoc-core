@@ -19,7 +19,7 @@
  */
 
 /**
- * 
+ *
  */
 package de.escidoc.core.common.business.fedora.resources.interfaces;
 
@@ -34,53 +34,33 @@ import java.util.Map;
 
 /**
  * @author Frank Schwichtenberg
- * 
  */
 public interface ComponentInterface extends FedoraResource {
 
     /**
-     * 
      * @return A Map containing the metadata datastreams of this resource.
-     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
-     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
-     Map <String, Datastream> getMdRecords() throws FedoraSystemException, IntegritySystemException;
+    Map<String, Datastream> getMdRecords() throws FedoraSystemException, IntegritySystemException;
 
     /**
-     * 
-     * @param ds
-     *            A Map containing the metadata datastreams of this resource.
-     * @throws LockingException
-     *             If item is locked.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     * @param ds A Map containing the metadata datastreams of this resource.
+     * @throws LockingException If item is locked.
+     * @throws SystemException  Thrown in case of an internal error.
      */
-    void setMdRecords(Map<String, Datastream> ds) throws LockingException,
-        SystemException;
+    void setMdRecords(Map<String, Datastream> ds) throws LockingException, SystemException;
 
     /**
-     * 
-     * @param name
-     *            The name of a matadata datastream.
+     * @param name The name of a matadata datastream.
      * @return A metadata datastreams of this resource.
-     * @throws de.escidoc.core.common.exceptions.application.notfound.StreamNotFoundException
-     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
      */
-    Datastream getMdRecord(String name) throws StreamNotFoundException,
-        FedoraSystemException;
+    Datastream getMdRecord(String name) throws StreamNotFoundException, FedoraSystemException;
 
     /**
-     * 
-     * @param name
-     *            The name of a matadata datastream.
-     * @param ds
-     *            A metadata datastreams of this resource.
-     * @throws LockingException
-     *             If item is locked.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     * @param name The name of a matadata datastream.
+     * @param ds   A metadata datastreams of this resource.
+     * @throws LockingException If item is locked.
+     * @throws SystemException  Thrown in case of an internal error.
      */
-    void setMdRecord(String name, Datastream ds) throws LockingException,
-        SystemException;
+    void setMdRecord(String name, Datastream ds) throws LockingException, SystemException;
 
 }

@@ -48,33 +48,30 @@ public class ComponentUpdateHandler extends DefaultHandler {
 
     private final String itemId;
 
-    public ComponentUpdateHandler(final String itemId, final String componentPath,
-        final StaxParser parser) {
+    public ComponentUpdateHandler(final String itemId, final String componentPath, final StaxParser parser) {
         this.itemId = itemId;
         this.parser = parser;
         this.componentPath = componentPath;
     }
 
     @Override
-    public StartElement startElement(final StartElement element)
-        throws TripleStoreSystemException, WebserverSystemException,
-        InvalidContentException {
+    public StartElement startElement(final StartElement element) throws TripleStoreSystemException,
+        WebserverSystemException, InvalidContentException {
         final String curPath = parser.getCurPath();
         if (curPath.startsWith(this.componentPath) && curPath.equals(this.componentPath)) {
             // do my job
             // save componentId
             final int indexObjid = element.indexOfAttribute(null, "objid");
-            final int indexHref =
-                element.indexOfAttribute(Constants.XLINK_NS_URI, "href");
+            final int indexHref = element.indexOfAttribute(Constants.XLINK_NS_URI, "href");
             if (indexObjid >= 0 || indexHref >= 0) {
-                final String componentId = indexObjid >= 0 ? element.getAttribute(indexObjid).getValue() :
-                        Utility.getId(element.getAttribute(indexHref).getValue());
+                final String componentId =
+                    indexObjid >= 0 ? element.getAttribute(indexObjid).getValue() : Utility.getId(element.getAttribute(
+                        indexHref).getValue());
 
                 if (componentId.length() > 0) {
                     // check if component exists
                     boolean componentExists = false;
-                    final List<String> existingComponents =
-                        TripleStoreUtility.getInstance().getComponents(this.itemId);
+                    final List<String> existingComponents = TripleStoreUtility.getInstance().getComponents(this.itemId);
                     for (final String existingComponent : existingComponents) {
                         if (existingComponent.equals(componentId)) {
                             componentExists = true;
@@ -82,9 +79,8 @@ public class ComponentUpdateHandler extends DefaultHandler {
                         }
                     }
                     if (!componentExists) {
-                        throw new InvalidContentException(
-                            "Component with id " + componentId
-                                + " does not exist in item " + this.itemId + '.');
+                        throw new InvalidContentException("Component with id " + componentId
+                            + " does not exist in item " + this.itemId + '.');
                     }
                 }
             }
@@ -100,17 +96,10 @@ public class ComponentUpdateHandler extends DefaultHandler {
         if (curPath.equals(this.componentPath + "/content")) {
 
             // check title
-            int index =
-                element.indexOfAttribute(
-                    Constants.XLINK_URI,
-                    "title");
+            int index = element.indexOfAttribute(Constants.XLINK_URI, "title");
 
             // check href
-            index =
-                element
-                    .indexOfAttribute(
-                        Constants.XLINK_URI,
-                        "href");
+            index = element.indexOfAttribute(Constants.XLINK_URI, "href");
         }
         return data;
     }

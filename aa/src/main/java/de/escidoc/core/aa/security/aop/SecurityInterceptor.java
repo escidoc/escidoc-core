@@ -66,21 +66,13 @@ import java.util.regex.Pattern;
 /**
  * Interceptor used for securing the escidoc framework.
  * <p/>
- * 
- * This Interceptor is invoked every time an EJB calls one of its service
- * classes, except
- * <ul>
- * <li>FedoraManagementDeviationaHandler (as this just delegates to other
- * resource handlers that are secured)</li>
- * <li>FedoraAccessDeviationaHandler (as this just delegates to the item handler
- * that is secured)</li>
- * <li>FedoraDescribeDeviationaHandler (as this handler does not provide any
- * information that has to be secured)</li>
- * </ul>
- * <br>
- * Together with the AA component, this class implements a Policy enforcement
- * point (PEP).
- * 
+ * <p/>
+ * This Interceptor is invoked every time an EJB calls one of its service classes, except <ul>
+ * <li>FedoraManagementDeviationaHandler (as this just delegates to other resource handlers that are secured)</li>
+ * <li>FedoraAccessDeviationaHandler (as this just delegates to the item handler that is secured)</li>
+ * <li>FedoraDescribeDeviationaHandler (as this handler does not provide any information that has to be secured)</li>
+ * </ul> <br> Together with the AA component, this class implements a Policy enforcement point (PEP).
+ *
  * @author Roland Werner (Accenture)
  */
 @Aspect
@@ -93,19 +85,13 @@ public class SecurityInterceptor implements Ordered {
     private static final Logger LOGGER = LoggerFactory.getLogger(SecurityInterceptor.class);
 
     /**
-     * Pattern used to check that a resource id does not contain the optional
-     * version number.
-     * 
-     *
+     * Pattern used to check that a resource id does not contain the optional version number.
      */
-    public static final Pattern PATTERN_CHECK_MISSING_VERSION_NUMBER =
-        Pattern.compile("^[^:]*:[^:]*$");
+    public static final Pattern PATTERN_CHECK_MISSING_VERSION_NUMBER = Pattern.compile("^[^:]*:[^:]*$");
 
-    private static final String ITEM_HANDLER_CLASS_NAME =
-        ItemHandlerInterface.class.getName();
+    private static final String ITEM_HANDLER_CLASS_NAME = ItemHandlerInterface.class.getName();
 
-    private static final String CONTAINER_HANDLER_CLASS_NAME =
-        ContainerHandlerInterface.class.getName();
+    private static final String CONTAINER_HANDLER_CLASS_NAME = ContainerHandlerInterface.class.getName();
 
     private static final String INTERNAL_UNEXPECTED_ERROR_DURING_AUTHORIZATION =
         "Internal unexpected error during authorization.";
@@ -120,66 +106,41 @@ public class SecurityInterceptor implements Ordered {
     private TripleStoreUtility tsu;
 
     /**
-     * The error message that is used in the {@link ResourceNotFoundException}
-     * to indicate a resource has not been released, yet.
+     * The error message that is used in the {@link ResourceNotFoundException} to indicate a resource has not been
+     * released, yet.
      */
-    public static final String ERR_MSG_LATEST_RELEASE_NOT_FOUND =
-        "Latest release not found.";
+    public static final String ERR_MSG_LATEST_RELEASE_NOT_FOUND = "Latest release not found.";
 
     /**
      * Around advice to perform the authorization of the current request.
-     * 
-     * This method is called every time the Interceptor is intercepting a method
-     * call.
-     * 
-     * It does the following steps:
-     * <ul>
-     * <li>Fetch the credentials (techUser, handle) of the current user from
-     * class <code>UserContext</code>.</li>
-     * <li>Checks the technical username. Has to be either
-     * <ul>
-     * <li><code>ShibbolethUser</code>, which means that the EJB has been
-     * invoked from the <code>EJBProvider</code> class of Axis via a webservice,
-     * </li>
-     * <li><code>internal</code>, which means that the EJB has been called
-     * internally from another component and <code>INTERNAL_INTERCEPTION</code>
-     * is turned off, or</li>
-     * <li><code>authorization</code>, which means that the EJB has been called
-     * internally from the authorization component.</li>
-     * </ul>
-     * <li>In case the technical username is <code>internal</code>, no further
-     * security checks are done, the intercepted method is invoked and its
-     * return value is returned to the originally invoking method.</li>
-     * <li>In case the technical username is <code>ShibbolethUser</code>, the
-     * following steps are executed.</li>
-     * <li>The private method <code>doAuthentication</code> is called, which
-     * returns the "real" username for the handle fetched from
-     * <code>UserContext</code>.</li>
-     * <li>The private method <code>doAuthorisation</code> is called, which
-     * calls the XACML engine with the current input parameters in order to
-     * decide whether invoking the intercepted method is permitted or denied. In
-     * case of denial, an exception is thrown.</li>
-     * <li>The intercepted method is invoked, returning some return values.</li>
-     * <li>If the return values are a list of objects, these have to filtered
-     * before returned to the invoking EJB. For this the private method
-     * <code>doFiltering</code> is called, which returns the (filtered) return
-     * value of the intercepted method.</li>
-     * <li>The (filtered) return value of the intercepted method is returned
-     * back to the invoking EJB.</li>
-     * </ul>
-     * 
-     * @param joinPoint
-     *            The current {@link JoinPoint}.
-     * @throws Throwable
-     *             Thrown in case of an error.
+     * <p/>
+     * This method is called every time the Interceptor is intercepting a method call.
+     * <p/>
+     * It does the following steps: <ul> <li>Fetch the credentials (techUser, handle) of the current user from class
+     * <code>UserContext</code>.</li> <li>Checks the technical username. Has to be either <ul>
+     * <li><code>ShibbolethUser</code>, which means that the EJB has been invoked from the <code>EJBProvider</code>
+     * class of Axis via a webservice, </li> <li><code>internal</code>, which means that the EJB has been called
+     * internally from another component and <code>INTERNAL_INTERCEPTION</code> is turned off, or</li>
+     * <li><code>authorization</code>, which means that the EJB has been called internally from the authorization
+     * component.</li> </ul> <li>In case the technical username is <code>internal</code>, no further security checks are
+     * done, the intercepted method is invoked and its return value is returned to the originally invoking method.</li>
+     * <li>In case the technical username is <code>ShibbolethUser</code>, the following steps are executed.</li> <li>The
+     * private method <code>doAuthentication</code> is called, which returns the "real" username for the handle fetched
+     * from <code>UserContext</code>.</li> <li>The private method <code>doAuthorisation</code> is called, which calls
+     * the XACML engine with the current input parameters in order to decide whether invoking the intercepted method is
+     * permitted or denied. In case of denial, an exception is thrown.</li> <li>The intercepted method is invoked,
+     * returning some return values.</li> <li>If the return values are a list of objects, these have to filtered before
+     * returned to the invoking EJB. For this the private method <code>doFiltering</code> is called, which returns the
+     * (filtered) return value of the intercepted method.</li> <li>The (filtered) return value of the intercepted method
+     * is returned back to the invoking EJB.</li> </ul>
      *
-     * @return
+     * @param joinPoint The current {@link JoinPoint}.
+     * @throws Throwable Thrown in case of an error.
      */
-//    @Around("call(public !static * de.escidoc.core.*.service.interfaces.*.*(..))"
-//        + " && within(de.escidoc.core.*.ejb.*Bean)")
+    //    @Around("call(public !static * de.escidoc.core.*.service.interfaces.*.*(..))"
+    //        + " && within(de.escidoc.core.*.ejb.*Bean)")
     @Around("call(public !static * de.escidoc.core.*.service.interfaces.*.*(..))")
-    public Object authorize(final ProceedingJoinPoint joinPoint)
-        throws Throwable {
+    public Object authorize(final ProceedingJoinPoint joinPoint) throws Throwable {
         final MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         final Method calledMethod = methodSignature.getMethod();
         final String target = methodSignature.getDeclaringTypeName();
@@ -191,19 +152,17 @@ public class SecurityInterceptor implements Ordered {
         // -------------------
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug(StringUtility.concatenateWithColonToString("The callee",
-                target));
-            LOGGER.debug(StringUtility.concatenateWithColonToString("Method name",
-                methodName));
-            LOGGER.debug(StringUtility.concatenateWithColonToString(
-                "The handle/password", handle));
+            LOGGER.debug(StringUtility.concatenateWithColonToString("The callee", target));
+            LOGGER.debug(StringUtility.concatenateWithColonToString("Method name", methodName));
+            LOGGER.debug(StringUtility.concatenateWithColonToString("The handle/password", handle));
         }
 
         final Object[] arguments = joinPoint.getArgs();
         if (LOGGER.isDebugEnabled()) {
             if (arguments.length > 0) {
                 LOGGER.debug(StringUtility.concatenateWithColon("First Argument", arguments[0]).toString());
-            } else {
+            }
+            else {
                 LOGGER.debug("Method called without arguments.");
             }
         }
@@ -247,8 +206,7 @@ public class SecurityInterceptor implements Ordered {
             // As this is an authorization failure, this kind of
             // ResourceNotFoundException must be caught and a
             // AuthorizationException has to be thrown, instead
-            if (UserContext.isRetrieveRestrictedToReleased()
-                && ERR_MSG_LATEST_RELEASE_NOT_FOUND.equals(e.getMessage())) {
+            if (UserContext.isRetrieveRestrictedToReleased() && ERR_MSG_LATEST_RELEASE_NOT_FOUND.equals(e.getMessage())) {
                 throw createAuthorizationException(target, methodName);
             }
             else {
@@ -259,26 +217,18 @@ public class SecurityInterceptor implements Ordered {
 
     /**
      * Continue the invocation.
-     * 
-     * @param joinPoint
-     *            The current {@link ProceedingJoinPoint}.
+     *
+     * @param joinPoint The current {@link ProceedingJoinPoint}.
      * @return Returns the result of the continued invocation.
-     * @throws Throwable
-     *             Thrown in case of an error during proceeding the method call.
+     * @throws Throwable Thrown in case of an error during proceeding the method call.
      */
-    private static Object proceed(final ProceedingJoinPoint joinPoint)
-        throws Throwable {
+    private static Object proceed(final ProceedingJoinPoint joinPoint) throws Throwable {
 
         return joinPoint.proceed();
     }
 
-
-
     /**
      * See Interface for functional description.
-     * 
-     * @return
-     *
      */
     @Override
     public int getOrder() {
@@ -286,69 +236,45 @@ public class SecurityInterceptor implements Ordered {
         return AopUtil.PRECEDENCE_SECURITY_INTERCEPTOR;
     }
 
-
-
     /**
      * Does the authorization part of the interception.
      * <p/>
-     * 
-     * In detail, the following steps are executed:
-     * <ul>
-     * <li>Calls <code>retrieveMethodMapping</code> of the
-     * PolicyDecisionPointBean, providing the name of the intercepted method.
-     * Receives one or two <code>MethodMapping</code> objects, of which the
-     * first is used for this method, the second is returned back to the
-     * <code>invoke</code> method. A <code>MethodMapping</code> contains the
-     * information, which input parameter of the intercepted method are relevant
-     * for the creation of the XACML request.</li>
-     * <li>The helper class <code>InvocationParser</code> is used to create a
-     * <code>RequestVo</code> object from the method input parameters, which
-     * contains the data needed to build an XACML request.</li>
-     * <li>Calls <code>checkUserPrivilege</code> of the PolicyDecisionPointBean,
-     * providing the <code>RequestVo</code> in order to decide on the
-     * authorization of the current method invocation.</li>
-     * <li>If the invocation of the intercepted method is not authorized, an
-     * exception is thrown.</li>
-     * </ul>
-     * 
-     * @param className
-     *            name of the called class.
-     * @param methodName
-     *            The called method name.
-     * @param arguments
-     *            The arguments of the current call.
-     * @return The MethodMapping object for after-call, in order to be reused
-     *         during filtering and don't have to be fetched twice from the
-     *         database. If filtering is not needed, <code>null</code> is
-     *         returned.
-     * @throws AuthorizationException
-     *             Thrown if authorization fails.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
-     * @throws ResourceNotFoundException
-     *             Thrown if a resource that shall be accessed cannot be found.
+     * <p/>
+     * In detail, the following steps are executed: <ul> <li>Calls <code>retrieveMethodMapping</code> of the
+     * PolicyDecisionPointBean, providing the name of the intercepted method. Receives one or two
+     * <code>MethodMapping</code> objects, of which the first is used for this method, the second is returned back to
+     * the <code>invoke</code> method. A <code>MethodMapping</code> contains the information, which input parameter of
+     * the intercepted method are relevant for the creation of the XACML request.</li> <li>The helper class
+     * <code>InvocationParser</code> is used to create a <code>RequestVo</code> object from the method input parameters,
+     * which contains the data needed to build an XACML request.</li> <li>Calls <code>checkUserPrivilege</code> of the
+     * PolicyDecisionPointBean, providing the <code>RequestVo</code> in order to decide on the authorization of the
+     * current method invocation.</li> <li>If the invocation of the intercepted method is not authorized, an exception
+     * is thrown.</li> </ul>
+     *
+     * @param className  name of the called class.
+     * @param methodName The called method name.
+     * @param arguments  The arguments of the current call.
+     * @return The MethodMapping object for after-call, in order to be reused during filtering and don't have to be
+     *         fetched twice from the database. If filtering is not needed, <code>null</code> is returned.
+     * @throws AuthorizationException         Thrown if authorization fails.
+     * @throws WebserverSystemException       Thrown in case of an internal error.
+     * @throws ResourceNotFoundException      Thrown if a resource that shall be accessed cannot be found.
      * @throws MissingMethodParameterException
-     *             Thrown if an argument has not been provided but is needed for
-     *             authorization.
-     * @throws MissingAttributeValueException
-     *             Thrown if an argument does not contain an attribute needed
-     *             for authorization.
-     * @throws MissingElementValueException
-     *             Thrown if an argument does not contain an element needed for
-     *             authorization.
-     * @throws InvalidXmlException
-     *             Thrown if an argument is expected to contain XML data but
-     *             cannot be parsed.
+     *                                        Thrown if an argument has not been provided but is needed for
+     *                                        authorization.
+     * @throws MissingAttributeValueException Thrown if an argument does not contain an attribute needed for
+     *                                        authorization.
+     * @throws MissingElementValueException   Thrown if an argument does not contain an element needed for
+     *                                        authorization.
+     * @throws InvalidXmlException            Thrown if an argument is expected to contain XML data but cannot be
+     *                                        parsed.
      * @see InvocationParser
      * @see MethodMapping
-     *
      */
-    private MethodMappingList doAuthorisation(
-        final String className, final String methodName,
-        final Object[] arguments) throws AuthorizationException,
-        WebserverSystemException, ResourceNotFoundException,
-        MissingMethodParameterException, MissingAttributeValueException,
-        MissingElementValueException, InvalidXmlException {
+    private MethodMappingList doAuthorisation(final String className, final String methodName, final Object[] arguments)
+        throws AuthorizationException, WebserverSystemException, ResourceNotFoundException,
+        MissingMethodParameterException, MissingAttributeValueException, MissingElementValueException,
+        InvalidXmlException {
 
         MethodMapping methodMapping = null;
         MethodMappingList methodMappings = null;
@@ -365,21 +291,17 @@ public class SecurityInterceptor implements Ordered {
                 methodMappingsExist = true;
                 methodMapping = methodMappings.getBefore(i);
                 final List<Map<String, String>> requests =
-                    getInvocationParser().buildRequestsList(arguments,
-                        methodMapping);
+                    getInvocationParser().buildRequestsList(arguments, methodMapping);
 
                 // try to authorize the user
                 // throws an AuthorizationException if not authorized
-                final boolean[] accessAllowedArray =
-                    getPdp().evaluateRequestList(requests);
+                final boolean[] accessAllowedArray = getPdp().evaluateRequestList(requests);
                 if (accessAllowedArray == null || accessAllowedArray.length == 0) {
-                    throw createAuthorizationException(className,
-                            methodName);
+                    throw createAuthorizationException(className, methodName);
                 }
                 for (final boolean anAccessAllowedArray : accessAllowedArray) {
                     if (!anAccessAllowedArray) {
-                        throw createAuthorizationException(className,
-                                methodName);
+                        throw createAuthorizationException(className, methodName);
                     }
                 }
             }
@@ -407,10 +329,8 @@ public class SecurityInterceptor implements Ordered {
             // is NOT true if the default-policies have to be changed!!!
 
             if (methodName.startsWith("retrieve")
-                && PATTERN_CHECK_MISSING_VERSION_NUMBER.matcher(
-                    (CharSequence) arguments[0]).find()
-                && (className.equals(CONTAINER_HANDLER_CLASS_NAME) || className
-                    .equals(ITEM_HANDLER_CLASS_NAME))) {
+                && PATTERN_CHECK_MISSING_VERSION_NUMBER.matcher((CharSequence) arguments[0]).find()
+                && (className.equals(CONTAINER_HANDLER_CLASS_NAME) || className.equals(ITEM_HANDLER_CLASS_NAME))) {
 
                 try {
                     final String latestReleaseVersionNumber =
@@ -419,23 +339,20 @@ public class SecurityInterceptor implements Ordered {
                     if (latestReleaseVersionNumber == null) {
                         throw e;
                     }
-                    arguments[0] =
-                        arguments[0] + ":"
-                            + latestReleaseVersionNumber;
+                    arguments[0] = arguments[0] + ":" + latestReleaseVersionNumber;
                     doAuthorisation(className, methodName, arguments);
                 }
                 catch (final TripleStoreSystemException ex) {
-                    if(LOGGER.isWarnEnabled()) {
+                    if (LOGGER.isWarnEnabled()) {
                         LOGGER.warn("Error on accesing triple store.");
                     }
-                    if(LOGGER.isDebugEnabled()) {
+                    if (LOGGER.isDebugEnabled()) {
                         LOGGER.debug("Error on accesing triple store.", e);
                     }
                     throw e;
                 }
 
-                UserContext
-                    .setRestrictedPermissions(UserContext.RESTRICTED_PERMISSION_RELEASES_ONLY);
+                UserContext.setRestrictedPermissions(UserContext.RESTRICTED_PERMISSION_RELEASES_ONLY);
                 return methodMappings;
             }
             else {
@@ -461,47 +378,36 @@ public class SecurityInterceptor implements Ordered {
             throw e;
         }
         catch (final Exception e) {
-            throw new WebserverSystemException(
-                INTERNAL_UNEXPECTED_ERROR_DURING_AUTHORIZATION, e);
+            throw new WebserverSystemException(INTERNAL_UNEXPECTED_ERROR_DURING_AUTHORIZATION, e);
         }
     }
 
     /**
      * Creates the {@link AuthorizationException} indicating a denied access.
-     * 
-     * @param className
-     *            The name of the class.
-     * @param methodName
-     *            The name of the method.
+     *
+     * @param className  The name of the class.
+     * @param methodName The name of the method.
      * @return Returns the {@link CreateDestMsg} {@link AuthorizationException}.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     private static AuthorizationException createAuthorizationException(final String className, final String methodName)
         throws WebserverSystemException {
 
-        return new AuthorizationException(StringUtility
-                .format("Access denied", className, methodName,
-                        UserContext.getHandle(), UserContext.getId()));
+        return new AuthorizationException(StringUtility.format("Access denied", className, methodName, UserContext
+            .getHandle(), UserContext.getId()));
     }
 
     /**
      * Determines the correct resource not found exception sub class.
-     * 
-     * @param methodMapping
-     *            The currently checked methodMapping that raised the
-     *            ResourceNotFoundException. This must not be <code>null</code>.
-     * @param e
-     *            The ResourceNotFoundException
-     * @return Returns the determined sub class instance or the original
-     *         exception if no sub class could be determined.
-     * @throws WebserverSystemException
-     *             Thrown in case of an identified error with a method mapping.
      *
+     * @param methodMapping The currently checked methodMapping that raised the ResourceNotFoundException. This must not
+     *                      be <code>null</code>.
+     * @param e             The ResourceNotFoundException
+     * @return Returns the determined sub class instance or the original exception if no sub class could be determined.
+     * @throws WebserverSystemException Thrown in case of an identified error with a method mapping.
      */
-    private static ResourceNotFoundException determineResourceNotFoundException(final MethodMapping methodMapping,
-                                                                                final ResourceNotFoundException e)
-        throws WebserverSystemException {
+    private static ResourceNotFoundException determineResourceNotFoundException(
+        final MethodMapping methodMapping, final ResourceNotFoundException e) throws WebserverSystemException {
 
         if (methodMapping == null) {
             throw new WebserverSystemException("No method mapping provided.");
@@ -514,20 +420,19 @@ public class SecurityInterceptor implements Ordered {
         final String exceptionName = methodMapping.getResourceNotFoundException();
         if (exceptionName == null) {
             final String errorMsg =
-                StringUtility.format(
-                    "Error in method mapping, missing specified"
-                        + " ResourceNotFoundException", methodMapping.getId());
+                StringUtility.format("Error in method mapping, missing specified" + " ResourceNotFoundException",
+                    methodMapping.getId());
             throw new WebserverSystemException(errorMsg);
         }
         try {
-            final Constructor<ResourceNotFoundException> constructor = (Constructor<ResourceNotFoundException>) Class.forName(
-                    exceptionName).getConstructor(new Class[]{String.class});
+            final Constructor<ResourceNotFoundException> constructor =
+                (Constructor<ResourceNotFoundException>) Class.forName(exceptionName).getConstructor(
+                    new Class[] { String.class });
             final String msg = e.getMessage();
             return constructor.newInstance(msg);
         }
         catch (final Exception e1) {
-            final StringBuilder errorMsg =
-                    new StringBuilder("Error in method mapping. Specified");
+            final StringBuilder errorMsg = new StringBuilder("Error in method mapping. Specified");
             errorMsg.append(" ResourceNotFoundException is unknown or cannot ");
             errorMsg.append(" be instantiated using the constructor ");
             errorMsg.append(exceptionName);
@@ -545,9 +450,8 @@ public class SecurityInterceptor implements Ordered {
 
     /**
      * Gets the invocation parser.
-     * 
-     * @return Returns the invocation parser.
      *
+     * @return Returns the invocation parser.
      */
     private InvocationParser getInvocationParser() {
 
@@ -556,9 +460,8 @@ public class SecurityInterceptor implements Ordered {
 
     /**
      * Injects the {@link InvocationParser}.
-     * 
-     * @param invocationParser
-     *            The {@link InvocationParser} to be injected.
+     *
+     * @param invocationParser The {@link InvocationParser} to be injected.
      */
     public void setInvocationParser(final InvocationParser invocationParser) {
         this.invocationParser = invocationParser;
@@ -566,7 +469,7 @@ public class SecurityInterceptor implements Ordered {
 
     /**
      * Gets the policy decision point (PDP).
-     * 
+     *
      * @return Returns the PDP.
      */
     private PolicyDecisionPointInterface getPdp() {
@@ -576,10 +479,8 @@ public class SecurityInterceptor implements Ordered {
 
     /**
      * Injects the policy decision point.
-     * 
-     * @param pdp
-     *            The {@link PolicyDecisionPointInterface} implementation to be
-     *            injected.
+     *
+     * @param pdp The {@link PolicyDecisionPointInterface} implementation to be injected.
      */
     public void setPdp(final PolicyDecisionPointInterface pdp) {
         this.pdp = pdp;
@@ -587,9 +488,8 @@ public class SecurityInterceptor implements Ordered {
 
     /**
      * Injects the {@link SecurityInterceptorCache}.
-     * 
-     * @param cache
-     *            The {@link SecurityInterceptorCache} to be injected.
+     *
+     * @param cache The {@link SecurityInterceptorCache} to be injected.
      */
     public void setCache(final SecurityInterceptorCache cache) {
         this.cache = cache;
@@ -597,9 +497,8 @@ public class SecurityInterceptor implements Ordered {
 
     /**
      * Gets the triple store utility bean.
-     * 
-     * @return Returns the tsu.
      *
+     * @return Returns the tsu.
      */
     private TripleStoreUtility getTsu() {
         return this.tsu;
@@ -607,9 +506,8 @@ public class SecurityInterceptor implements Ordered {
 
     /**
      * Injects the triple store utility bean.
-     * 
-     * @param tsu
-     *            The {@link TripleStoreUtility}.
+     *
+     * @param tsu The {@link TripleStoreUtility}.
      */
     public void setTsu(final TripleStoreUtility tsu) {
         this.tsu = tsu;

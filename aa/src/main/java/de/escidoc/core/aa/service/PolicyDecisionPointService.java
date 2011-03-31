@@ -17,29 +17,16 @@ import java.rmi.RemoteException;
  */
 public interface PolicyDecisionPointService extends Remote {
 
-    String evaluate(String requestsXml,
-                              SecurityContext securityContext)
-            throws ResourceNotFoundException,
-            XmlCorruptedException,
-            XmlSchemaValidationException,
-            MissingMethodParameterException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException, RemoteException;
+    String evaluate(String requestsXml, SecurityContext securityContext) throws ResourceNotFoundException,
+        XmlCorruptedException, XmlSchemaValidationException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException, RemoteException;
 
-    String evaluate(String requestsXml, String authHandle, Boolean restAccess)
-            throws ResourceNotFoundException,
-            XmlCorruptedException,
-            XmlSchemaValidationException,
-            MissingMethodParameterException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException, RemoteException;
+    String evaluate(String requestsXml, String authHandle, Boolean restAccess) throws ResourceNotFoundException,
+        XmlCorruptedException, XmlSchemaValidationException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException, RemoteException;
 
-    void touch(SecurityContext securityContext)
-            throws SystemException, RemoteException;
+    void touch(SecurityContext securityContext) throws SystemException, RemoteException;
 
-    void touch(String authHandle, Boolean restAccess)
-            throws SystemException, RemoteException;
+    void touch(String authHandle, Boolean restAccess) throws SystemException, RemoteException;
 
 }

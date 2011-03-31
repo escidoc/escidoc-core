@@ -54,11 +54,10 @@ import java.util.Set;
 
 /**
  * User account renderer implementation using the velocity template engine.
- * 
+ *
  * @author Torsten Tetteroo
  */
-public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
-    implements UserAccountRendererInterface {
+public final class VelocityXmlUserAccountRenderer extends AbstractRenderer implements UserAccountRendererInterface {
 
     /**
      * Private constructor to prevent initialization.
@@ -66,17 +65,10 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
     private VelocityXmlUserAccountRenderer() {
     }
 
-
-
     /**
      * See Interface for functional description.
-     * 
-     * @param userAccount
-     * @return
-     * @throws SystemException
-     * @see UserAccountRendererInterface#
-     *      render(Map)
      *
+     * @see UserAccountRendererInterface# render(Map)
      */
     @Override
     public String render(final UserAccount userAccount) throws SystemException {
@@ -92,26 +84,21 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
 
     /**
      * Adds the values of the {@link UserAccount} to the provided {@link Map}.
-     * 
-     * @param userAccount
-     *            The {@link UserAccount}.
-     * @param values
-     *            The {@link Map} to add the values to.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     *
+     * @param userAccount The {@link UserAccount}.
+     * @param values      The {@link Map} to add the values to.
+     * @throws SystemException Thrown in case of an internal error.
      */
     private static void addUserAccountValues(final UserAccount userAccount, final Map<String, Object> values)
         throws SystemException {
-        DateTime lmdDateTime =
-            new DateTime(userAccount.getLastModificationDate());
+        DateTime lmdDateTime = new DateTime(userAccount.getLastModificationDate());
         lmdDateTime = lmdDateTime.withZone(DateTimeZone.UTC);
         final String lmd = lmdDateTime.toString(Constants.TIMESTAMP_FORMAT);
         values.put("userAccountLastModificationDate", lmd);
         values.put("userAccountHref", userAccount.getHref());
         DateTime creationDateTime = new DateTime(userAccount.getCreationDate());
         creationDateTime = creationDateTime.withZone(DateTimeZone.UTC);
-        final String creationDate =
-            creationDateTime.toString(Constants.TIMESTAMP_FORMAT);
+        final String creationDate = creationDateTime.toString(Constants.TIMESTAMP_FORMAT);
         values.put("userAccountCreationDate", creationDate);
         values.put("userAccountName", userAccount.getName());
         values.put("userAccountLoginName", userAccount.getLoginname());
@@ -133,39 +120,25 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
 
     /**
      * See Interface for functional description.
-     * 
-     * @param userAccount
-     * @param currentGrants
-     * @return
-     * @throws WebserverSystemException
-     *
      */
     @Override
-    public String renderCurrentGrants(
-        final UserAccount userAccount, final List<RoleGrant> currentGrants)
+    public String renderCurrentGrants(final UserAccount userAccount, final List<RoleGrant> currentGrants)
         throws WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         values.put("isRootCurrentGrants", "true");
         values.put("grantNamespacePrefix", Constants.GRANTS_NS_PREFIX);
         values.put("grantNamespace", Constants.GRANTS_NS_URI);
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX,
-            Constants.PROPERTIES_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS,
-            Constants.PROPERTIES_NS_URI);
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX,
-            Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS,
-            Constants.STRUCTURAL_RELATIONS_NS_URI);
-        values.put("currentGrantsTitle",
-            "Grants of " + userAccount.getLoginname());
-        values.put("currentGrantsHref",
-            XmlUtility.getCurrentGrantsHref(userAccount.getId()));
+        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX, Constants.PROPERTIES_NS_PREFIX);
+        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS, Constants.PROPERTIES_NS_URI);
+        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
+        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
+        values.put("currentGrantsTitle", "Grants of " + userAccount.getLoginname());
+        values.put("currentGrantsHref", XmlUtility.getCurrentGrantsHref(userAccount.getId()));
         if (currentGrants != null && !currentGrants.isEmpty()) {
             values.put("currentGrants", currentGrants);
         }
-        DateTime lmdDateTime =
-            new DateTime(userAccount.getLastModificationDate());
+        DateTime lmdDateTime = new DateTime(userAccount.getLastModificationDate());
         lmdDateTime = lmdDateTime.withZone(DateTimeZone.UTC);
         final String lmd = lmdDateTime.toString(Constants.TIMESTAMP_FORMAT);
         values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, lmd);
@@ -175,39 +148,24 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
 
     /**
      * See Interface for functional description.
-     * 
-     * @param grants
-     * @param numberOfHits
-     * @param offset
-     * @param limit
-     * @param recordPacking
-     *            A string to determine how the record should be escaped in the
-     *            response. Defined values are 'string' and 'xml'. The default
-     *            is 'xml'.
-     * 
-     * @return
-     * @throws WebserverSystemException
-     * @see UserAccountRendererInterface#renderCurrentGrants
-     *      (de.escidoc.core.aa.business.UserAccount, java.util.List)
+     *
+     * @param recordPacking A string to determine how the record should be escaped in the response. Defined values are
+     *                      'string' and 'xml'. The default is 'xml'.
+     * @see UserAccountRendererInterface#renderCurrentGrants (de.escidoc.core.aa.business.UserAccount, java.util.List)
      */
     @Override
     public String renderGrants(
-        final List<RoleGrant> grants, final String numberOfHits,
-        final String offset, final String limit,
+        final List<RoleGrant> grants, final String numberOfHits, final String offset, final String limit,
         final RecordPacking recordPacking) throws WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         values.put("isRootGrants", "true");
         values.put("grantNamespacePrefix", Constants.GRANTS_NS_PREFIX);
         values.put("grantNamespace", Constants.GRANTS_NS_URI);
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX,
-            Constants.PROPERTIES_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS,
-            Constants.PROPERTIES_NS_URI);
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX,
-            Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS,
-            Constants.STRUCTURAL_RELATIONS_NS_URI);
+        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX, Constants.PROPERTIES_NS_PREFIX);
+        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS, Constants.PROPERTIES_NS_URI);
+        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
+        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
         values.put("searchResultNamespace", Constants.SEARCH_RESULT_NS_URI);
         values.put("recordPacking", recordPacking);
         values.put("numberOfHits", numberOfHits);
@@ -223,44 +181,30 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
 
     /**
      * See Interface for functional description.
-     * 
-     * @param grant
-     * @return
-     * @throws WebserverSystemException
-     *
      */
     @Override
-    public String renderGrant(final RoleGrant grant)
-        throws WebserverSystemException {
+    public String renderGrant(final RoleGrant grant) throws WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
 
         values.put("isRootGrant", "true");
         values.put("grantNamespacePrefix", Constants.GRANTS_NS_PREFIX);
         values.put("grantNamespace", Constants.GRANTS_NS_URI);
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX,
-            Constants.PROPERTIES_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS,
-            Constants.PROPERTIES_NS_URI);
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX,
-            Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS,
-            Constants.STRUCTURAL_RELATIONS_NS_URI);
+        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX, Constants.PROPERTIES_NS_PREFIX);
+        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS, Constants.PROPERTIES_NS_URI);
+        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
+        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
         values.put("grantTitle", grant.getTitle());
         values.put("grantHref", grant.getHref());
         values.put("grantId", grant.getId());
         if (grant.getUserAccountByUserId() != null) {
-            values.put("grantUserTitle", grant
-                .getUserAccountByUserId().getName());
-            values.put("grantUserHref", grant
-                .getUserAccountByUserId().getHref());
+            values.put("grantUserTitle", grant.getUserAccountByUserId().getName());
+            values.put("grantUserHref", grant.getUserAccountByUserId().getHref());
             values.put("grantUserId", grant.getUserAccountByUserId().getId());
         }
         if (grant.getUserGroupByGroupId() != null) {
-            values.put("grantGroupTitle", grant
-                .getUserGroupByGroupId().getName());
-            values.put("grantGroupHref", grant
-                .getUserGroupByGroupId().getHref());
+            values.put("grantGroupTitle", grant.getUserGroupByGroupId().getName());
+            values.put("grantGroupHref", grant.getUserGroupByGroupId().getHref());
             values.put("grantGroupId", grant.getUserGroupByGroupId().getId());
         }
         final EscidocRole escidocRole = grant.getEscidocRole();
@@ -273,23 +217,18 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
         values.put("grantObjectRefId", grant.getObjectId());
         DateTime creationDateTime = new DateTime(grant.getCreationDate());
         creationDateTime = creationDateTime.withZone(DateTimeZone.UTC);
-        final String creationDate =
-            creationDateTime.toString(Constants.TIMESTAMP_FORMAT);
+        final String creationDate = creationDateTime.toString(Constants.TIMESTAMP_FORMAT);
         values.put("grantCreationDate", creationDate);
-        values.put("grantCreatedByTitle", grant
-            .getUserAccountByCreatorId().getName());
-        values.put("grantCreatedByHref", grant
-            .getUserAccountByCreatorId().getHref());
-        values.put("grantCreatedById", grant
-            .getUserAccountByCreatorId().getId());
+        values.put("grantCreatedByTitle", grant.getUserAccountByCreatorId().getName());
+        values.put("grantCreatedByHref", grant.getUserAccountByCreatorId().getHref());
+        values.put("grantCreatedById", grant.getUserAccountByCreatorId().getId());
         values.put("grantRemark", grant.getGrantRemark());
 
         final Date revocationDate = grant.getRevocationDate();
         if (revocationDate != null) {
             DateTime revokationDateTime = new DateTime(revocationDate);
             revokationDateTime = revokationDateTime.withZone(DateTimeZone.UTC);
-            final String revokationDate =
-                revokationDateTime.toString(Constants.TIMESTAMP_FORMAT);
+            final String revokationDate = revokationDateTime.toString(Constants.TIMESTAMP_FORMAT);
             values.put("grantRevocationDate", revokationDate);
             final UserAccount revokedBy = grant.getUserAccountByRevokerId();
             values.put("grantRevokedByHref", revokedBy.getHref());
@@ -308,24 +247,17 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
 
     /**
      * See Interface for functional description.
-     * 
-     * @param userAccount
-     * @return
-     * @throws WebserverSystemException
-     * @see UserAccountRendererInterface
-     *      #renderResources(de.escidoc.core.aa.business.UserAccount)
      *
+     * @see UserAccountRendererInterface #renderResources(de.escidoc.core.aa.business.UserAccount)
      */
     @Override
-    public String renderResources(final UserAccount userAccount)
-        throws WebserverSystemException {
+    public String renderResources(final UserAccount userAccount) throws WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         values.put("isRootResources", "true");
         addResourcesValues(userAccount, values);
         addCommonValues(values);
-        DateTime lmdDateTime =
-            new DateTime(userAccount.getLastModificationDate());
+        DateTime lmdDateTime = new DateTime(userAccount.getLastModificationDate());
         lmdDateTime = lmdDateTime.withZone(DateTimeZone.UTC);
         final String lmd = lmdDateTime.toString(Constants.TIMESTAMP_FORMAT);
         values.put("userAccountLastModificationDate", lmd);
@@ -334,21 +266,13 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
 
     /**
      * See Interface for functional description.
-     * 
-     * @param userAccounts
-     * @param recordPacking
-     *            A string to determine how the record should be escaped in the
-     *            response. Defined values are 'string' and 'xml'. The default
-     *            is 'xml'.
-     * 
-     * @return
-     * @throws WebserverSystemException
-     * @see UserAccountRendererInterface
-     *      #renderUserAccounts(de.escidoc.core.aa.business.UserAccount)
+     *
+     * @param recordPacking A string to determine how the record should be escaped in the response. Defined values are
+     *                      'string' and 'xml'. The default is 'xml'.
+     * @see UserAccountRendererInterface #renderUserAccounts(de.escidoc.core.aa.business.UserAccount)
      */
     @Override
-    public String renderUserAccounts(
-        final List<UserAccount> userAccounts, final RecordPacking recordPacking)
+    public String renderUserAccounts(final List<UserAccount> userAccounts, final RecordPacking recordPacking)
         throws SystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
@@ -360,8 +284,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
         final Collection<Map<String, Object>> userAccountsValues =
             new ArrayList<Map<String, Object>>(userAccounts.size());
         for (final UserAccount userAccount : userAccounts) {
-            final Map<String, Object> userAccountValues =
-                new HashMap<String, Object>();
+            final Map<String, Object> userAccountValues = new HashMap<String, Object>();
             addUserAccountValues(userAccount, userAccountValues);
             userAccountsValues.add(userAccountValues);
         }
@@ -369,20 +292,13 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
         return getUserAccountXmlProvider().getUserAccountsXml(values);
     }
 
-
-
     /**
      * Adds the common values to the provided map.
-     * 
-     * @param values
-     *            The map to add values to.
-     * 
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
      *
+     * @param values The map to add values to.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private void addCommonValues(final Map<String, Object> values)
-        throws WebserverSystemException {
+    private void addCommonValues(final Map<String, Object> values) throws WebserverSystemException {
 
         addUserAccountNamespaceValues(values);
         addPropertiesNamespaceValues(values);
@@ -392,24 +308,18 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
 
     /**
      * Adds the user account name space values.
-     * 
-     * @param values
-     *            The {@link Map} to that the values shall be added.
      *
+     * @param values The {@link Map} to that the values shall be added.
      */
-    private static void addUserAccountNamespaceValues(
-        final Map<String, Object> values) {
-        values.put("userAccountNamespacePrefix",
-            Constants.USER_ACCOUNT_NS_PREFIX);
+    private static void addUserAccountNamespaceValues(final Map<String, Object> values) {
+        values.put("userAccountNamespacePrefix", Constants.USER_ACCOUNT_NS_PREFIX);
         values.put("userAccountNamespace", Constants.USER_ACCOUNT_NS_URI);
     }
 
     /**
      * Adds the user account list values to the provided map.
-     * 
-     * @param values
-     *            The map to add values to.
      *
+     * @param values The map to add values to.
      */
     private static void addUserAccountListValues(final Map<String, Object> values) {
 
@@ -418,92 +328,69 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
     }
 
     /**
-     * Adds the values related to the user accounts name space to the provided
-     * {@link Map}.
-     * 
-     * @param values
-     *            The MAP to add the values to.
+     * Adds the values related to the user accounts name space to the provided {@link Map}.
      *
+     * @param values The MAP to add the values to.
      */
-    private static void addUserAccountsNamespaceValues(
-        final Map<String, Object> values) {
+    private static void addUserAccountsNamespaceValues(final Map<String, Object> values) {
 
-        values.put("userAccountListNamespacePrefix",
-            Constants.USER_ACCOUNT_LIST_NS_PREFIX);
-        values.put("userAccountListNamespace",
-            Constants.USER_ACCOUNT_LIST_NS_URI);
+        values.put("userAccountListNamespacePrefix", Constants.USER_ACCOUNT_LIST_NS_PREFIX);
+        values.put("userAccountListNamespace", Constants.USER_ACCOUNT_LIST_NS_URI);
         values.put("searchResultNamespace", Constants.SEARCH_RESULT_NS_URI);
     }
 
     /**
      * Adds the escidoc base URL to the provided map.
-     * 
-     * @param values
-     *            The map to add values to.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
      *
+     * @param values The map to add values to.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private static void addEscidocBaseUrl(final Map<String, Object> values)
-        throws WebserverSystemException {
+    private static void addEscidocBaseUrl(final Map<String, Object> values) throws WebserverSystemException {
 
-        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL,
-            XmlUtility.getEscidocBaseUrl());
+        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, XmlUtility.getEscidocBaseUrl());
     }
 
     /**
      * Adds the resources specific values to the provided map.
-     * 
-     * @param userAccount
-     *            The user account for that data shall be created.
-     * @param values
-     *            The map to add values to.
      *
+     * @param userAccount The user account for that data shall be created.
+     * @param values      The map to add values to.
      */
-    private static void addResourcesValues(
-        final UserAccount userAccount, final Map<String, Object> values) {
+    private static void addResourcesValues(final UserAccount userAccount, final Map<String, Object> values) {
 
-        values.put("resourcesHref",
-            XmlUtility.getUserAccountResourcesHref(userAccount.getId()));
-        values.put("currentGrantsHref",
-            XmlUtility.getCurrentGrantsHref(userAccount.getId()));
-        values.put("preferencesHref",
-            XmlUtility.getPreferencesHref(userAccount.getId()));
-        values.put("attributesHref",
-            XmlUtility.getAttributesHref(userAccount.getId()));
+        values.put("resourcesHref", XmlUtility.getUserAccountResourcesHref(userAccount.getId()));
+        values.put("currentGrantsHref", XmlUtility.getCurrentGrantsHref(userAccount.getId()));
+        values.put("preferencesHref", XmlUtility.getPreferencesHref(userAccount.getId()));
+        values.put("attributesHref", XmlUtility.getAttributesHref(userAccount.getId()));
     }
 
     /**
      * Gets the <code>UserAccountXmlProvider</code> object.
-     * 
-     * @return Returns the <code>UserAccountXmlProvider</code> object.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
      *
+     * @return Returns the <code>UserAccountXmlProvider</code> object.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private static UserAccountXmlProvider getUserAccountXmlProvider()
-        throws WebserverSystemException {
+    private static UserAccountXmlProvider getUserAccountXmlProvider() throws WebserverSystemException {
 
         return UserAccountXmlProvider.getInstance();
     }
 
     @Override
-    public String renderPreference(
-        final UserAccount userAccount, final UserPreference preference)
+    public String renderPreference(final UserAccount userAccount, final UserPreference preference)
         throws SystemException {
         return renderPreference(userAccount, preference, true);
     }
 
-    private static String renderPreference(final UserAccount userAccount, final UserPreference preference,
-                                           final boolean isRootPreference) throws WebserverSystemException {
+    private static String renderPreference(
+        final UserAccount userAccount, final UserPreference preference, final boolean isRootPreference)
+        throws WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
 
         addPreferencesCommonValues(values);
         if (isRootPreference) {
             values.put("isRootPreference", XmlTemplateProvider.TRUE);
-            DateTime lmdDateTime =
-                new DateTime(userAccount.getLastModificationDate());
+            DateTime lmdDateTime = new DateTime(userAccount.getLastModificationDate());
             lmdDateTime = lmdDateTime.withZone(DateTimeZone.UTC);
             final String lmd = lmdDateTime.toString(Constants.TIMESTAMP_FORMAT);
             values.put("userAccountLastModificationDate", lmd);
@@ -517,24 +404,21 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
     }
 
     @Override
-    public String renderPreferences(
-        final UserAccount userAccount, final Set<UserPreference> preferences)
+    public String renderPreferences(final UserAccount userAccount, final Set<UserPreference> preferences)
         throws SystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
 
         values.put("isRootPreference", false);
         addPreferencesCommonValues(values);
-        DateTime lmdDateTime =
-            new DateTime(userAccount.getLastModificationDate());
+        DateTime lmdDateTime = new DateTime(userAccount.getLastModificationDate());
         lmdDateTime = lmdDateTime.withZone(DateTimeZone.UTC);
         final String lmd = lmdDateTime.toString(Constants.TIMESTAMP_FORMAT);
         values.put("userAccountLastModificationDate", lmd);
         values.put("userAccountId", userAccount.getId());
         addEscidocBaseUrl(values);
 
-        final Collection<Map<String, String>> userAccountPreferencesValues =
-            new ArrayList<Map<String, String>>();
+        final Collection<Map<String, String>> userAccountPreferencesValues = new ArrayList<Map<String, String>>();
         for (final UserPreference preference : preferences) {
             final Map<String, String> m = new HashMap<String, String>();
             m.put("userAccountPreferenceName", preference.getName());
@@ -545,43 +429,32 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
         return getUserAccountXmlProvider().getPreferencesXml(values);
     }
 
-    private static void addPreferencesCommonValues(
-        final Map<String, Object> values) {
-        values.put("preferencesNamespacePrefix",
-            Constants.USER_PREFERENCES_NS_PREFIX);
+    private static void addPreferencesCommonValues(final Map<String, Object> values) {
+        values.put("preferencesNamespacePrefix", Constants.USER_PREFERENCES_NS_PREFIX);
         values.put("preferencesNamespace", Constants.USER_PREFERENCES_NS_URI);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param attribute
-     *            attribute
-     * @return String rendered attribute
-     * @throws SystemException
-     *             e
      *
+     * @param attribute attribute
+     * @return String rendered attribute
+     * @throws SystemException e
      */
     @Override
-    public String renderAttribute(final UserAttribute attribute)
-        throws SystemException {
+    public String renderAttribute(final UserAttribute attribute) throws SystemException {
         return renderAttribute(attribute, XmlTemplateProvider.TRUE);
     }
 
     /**
      * renders one user-attribute.
-     * 
-     * @param attribute
-     *            attribute
-     * @param isRootAttribute
-     *            if root attribute
-     * @return String rendered attribute
-     * @throws WebserverSystemException
-     *             e
      *
+     * @param attribute       attribute
+     * @param isRootAttribute if root attribute
+     * @return String rendered attribute
+     * @throws WebserverSystemException e
      */
-    private String renderAttribute(
-        final UserAttribute attribute, final String isRootAttribute)
+    private String renderAttribute(final UserAttribute attribute, final String isRootAttribute)
         throws WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
@@ -589,14 +462,11 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
         values.put("isRootAttribute", isRootAttribute);
         addAttributesCommonValues(values);
         if (XmlTemplateProvider.TRUE.equals(isRootAttribute)) {
-            DateTime lmdDateTime =
-                new DateTime(attribute
-                    .getUserAccountByUserId().getLastModificationDate());
+            DateTime lmdDateTime = new DateTime(attribute.getUserAccountByUserId().getLastModificationDate());
             lmdDateTime = lmdDateTime.withZone(DateTimeZone.UTC);
             final String lmd = lmdDateTime.toString(Constants.TIMESTAMP_FORMAT);
             values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, lmd);
-            values.put("userAccountId", attribute
-                .getUserAccountByUserId().getId());
+            values.put("userAccountId", attribute.getUserAccountByUserId().getId());
         }
         values.put("userAccountAttributeId", attribute.getId());
         values.put("userAccountAttributeName", attribute.getName());
@@ -607,34 +477,27 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
 
     /**
      * See Interface for functional description.
-     * 
-     * @param userAccount
-     *            user-account-do
-     * @param attributes
-     *            set containing the attributes
-     * @return String rendered attributes
-     * @throws SystemException
-     *             e
      *
+     * @param userAccount user-account-do
+     * @param attributes  set containing the attributes
+     * @return String rendered attributes
+     * @throws SystemException e
      */
     @Override
-    public String renderAttributes(
-        final UserAccount userAccount, final Set<UserAttribute> attributes)
+    public String renderAttributes(final UserAccount userAccount, final Set<UserAttribute> attributes)
         throws SystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
 
         addAttributesCommonValues(values);
-        DateTime lmdDateTime =
-            new DateTime(userAccount.getLastModificationDate());
+        DateTime lmdDateTime = new DateTime(userAccount.getLastModificationDate());
         lmdDateTime = lmdDateTime.withZone(DateTimeZone.UTC);
         final String lmd = lmdDateTime.toString(Constants.TIMESTAMP_FORMAT);
         values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, lmd);
         values.put("userAccountId", userAccount.getId());
         addEscidocBaseUrl(values);
 
-        final Collection<Map<String, Object>> userAccountAttributesValues =
-            new ArrayList<Map<String, Object>>();
+        final Collection<Map<String, Object>> userAccountAttributesValues = new ArrayList<Map<String, Object>>();
         for (final UserAttribute attribute : attributes) {
             final Map<String, Object> m = new HashMap<String, Object>();
             m.put("userAccountId", userAccount.getId());
@@ -650,17 +513,12 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
 
     /**
      * adds common values to user-attribute.
-     * 
-     * @param values
-     *            map with values
-     * @throws WebserverSystemException
-     *             e
      *
+     * @param values map with values
+     * @throws WebserverSystemException e
      */
-    private static void addAttributesCommonValues(final Map<String, Object> values)
-        throws WebserverSystemException {
-        values.put("attributesNamespacePrefix",
-            Constants.USER_ATTRIBUTES_NS_PREFIX);
+    private static void addAttributesCommonValues(final Map<String, Object> values) throws WebserverSystemException {
+        values.put("attributesNamespacePrefix", Constants.USER_ATTRIBUTES_NS_PREFIX);
         values.put("attributesNamespace", Constants.USER_ATTRIBUTES_NS_URI);
         addEscidocBaseUrl(values);
     }

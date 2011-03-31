@@ -29,8 +29,7 @@ import javax.xml.stream.XMLStreamException;
 public class TestNextHandler extends DefaultHandler {
 
     @Override
-    public String characters(final String data, final StartElement element)
-        throws XMLStreamException {
+    public String characters(final String data, final StartElement element) throws XMLStreamException {
         return data;
     }
 
@@ -40,8 +39,7 @@ public class TestNextHandler extends DefaultHandler {
     }
 
     @Override
-    public StartElement startElement(final StartElement element)
-        throws XMLStreamException {
+    public StartElement startElement(final StartElement element) throws XMLStreamException {
         return element;
     }
 

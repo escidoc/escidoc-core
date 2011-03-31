@@ -45,36 +45,26 @@ import java.util.List;
 
 /**
  * Implementation of a staging file data access object (DAO).
- * 
+ *
  * @author Torsten Tetteroo
  */
-public class HibernateStagingFileDao extends HibernateDaoSupport
-    implements StagingFileDao {
+public class HibernateStagingFileDao extends HibernateDaoSupport implements StagingFileDao {
 
     /**
-     * Wrapper of setSessionFactory to enable bean stuff generation for this
-     * bean.
-     * 
-     * @param stagingSessionFactory
-     *            The sessionFactory to set.
+     * Wrapper of setSessionFactory to enable bean stuff generation for this bean.
+     *
+     * @param stagingSessionFactory The sessionFactory to set.
      */
-    public final void setStagingSessionFactory(
-        final SessionFactory stagingSessionFactory) {
+    public final void setStagingSessionFactory(final SessionFactory stagingSessionFactory) {
 
         setSessionFactory(stagingSessionFactory);
     }
 
-
-
     /**
      * See Interface for functional description.
-     * 
-     * @param token
-     * @return
      */
     @Override
-    public StagingFile findStagingFile(final String token)
-        throws SqlDatabaseSystemException {
+    public StagingFile findStagingFile(final String token) throws SqlDatabaseSystemException {
 
         try {
             final Session session = getSession(false);
@@ -87,8 +77,7 @@ public class HibernateStagingFileDao extends HibernateDaoSupport
         }
         catch (final HibernateException e) {
             //noinspection ThrowableResultOfMethodCallIgnored
-            throw new SqlDatabaseSystemException(
-                convertHibernateAccessException(e));
+            throw new SqlDatabaseSystemException(convertHibernateAccessException(e));
         }
         catch (final IllegalStateException e) {
             throw new SqlDatabaseSystemException(e);
@@ -98,18 +87,13 @@ public class HibernateStagingFileDao extends HibernateDaoSupport
 
     /**
      * See Interface for functional description.
-     * 
-     * @return
      */
     @Override
-    public List<StagingFile> findExpiredStagingFiles()
-        throws SqlDatabaseSystemException {
+    public List<StagingFile> findExpiredStagingFiles() throws SqlDatabaseSystemException {
 
         try {
-            final DetachedCriteria criteria =
-                DetachedCriteria.forClass(StagingFile.class);
-            criteria.add(Restrictions.lt("expiryTs", System
-                    .currentTimeMillis()));
+            final DetachedCriteria criteria = DetachedCriteria.forClass(StagingFile.class);
+            criteria.add(Restrictions.lt("expiryTs", System.currentTimeMillis()));
             return getHibernateTemplate().findByCriteria(criteria);
         }
         catch (final DataAccessException e) {
@@ -119,12 +103,9 @@ public class HibernateStagingFileDao extends HibernateDaoSupport
 
     /**
      * See Interface for functional description.
-     * 
-     * @param stagingFile
      */
     @Override
-    public void save(final StagingFile stagingFile)
-        throws SqlDatabaseSystemException {
+    public void save(final StagingFile stagingFile) throws SqlDatabaseSystemException {
 
         if (stagingFile != null) {
             try {
@@ -138,12 +119,9 @@ public class HibernateStagingFileDao extends HibernateDaoSupport
 
     /**
      * See Interface for functional description.
-     * 
-     * @param stagingFile
      */
     @Override
-    public void update(final StagingFile stagingFile)
-        throws SqlDatabaseSystemException {
+    public void update(final StagingFile stagingFile) throws SqlDatabaseSystemException {
 
         if (stagingFile != null) {
             try {
@@ -158,12 +136,9 @@ public class HibernateStagingFileDao extends HibernateDaoSupport
 
     /**
      * See Interface for functional description.
-     * 
-     * @param stagingFile
      */
     @Override
-    public void saveOrUpdate(final StagingFile stagingFile)
-        throws SqlDatabaseSystemException {
+    public void saveOrUpdate(final StagingFile stagingFile) throws SqlDatabaseSystemException {
 
         if (stagingFile != null) {
             try {
@@ -177,12 +152,9 @@ public class HibernateStagingFileDao extends HibernateDaoSupport
 
     /**
      * See Interface for functional description.
-     * 
-     * @param stagingFile
      */
     @Override
-    public void delete(final StagingFile stagingFile)
-        throws SqlDatabaseSystemException {
+    public void delete(final StagingFile stagingFile) throws SqlDatabaseSystemException {
 
         if (stagingFile != null) {
             try {
@@ -196,12 +168,9 @@ public class HibernateStagingFileDao extends HibernateDaoSupport
 
     /**
      * See Interface for functional description.
-     * 
-     * @param stagingFiles
      */
     @Override
-    public void delete(final StagingFile[] stagingFiles)
-        throws SqlDatabaseSystemException {
+    public void delete(final StagingFile[] stagingFiles) throws SqlDatabaseSystemException {
 
         if (stagingFiles != null) {
             try {

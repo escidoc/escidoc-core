@@ -38,120 +38,75 @@ import java.util.List;
 
 /**
  * Interface for the AaComponent to encapsulate the logic.
- * 
+ *
  * @author Rozita Friedman, Roland Werner
- * 
  */
 public interface PolicyDecisionPointInterface
     extends de.escidoc.core.aa.service.interfaces.PolicyDecisionPointInterface {
 
     /**
-     * The method evaluates the provided authorization requests. <br/>
-     * Information about user(s), action(s) and resource(s) are contained in the
-     * provided XML data string which represents the content of a
+     * The method evaluates the provided authorization requests. <br/> Information about user(s), action(s) and
+     * resource(s) are contained in the provided XML data string which represents the content of a
      * <code>com.sun.xacml.ctx.RequestCtx</code> objects.<p/>
-     * 
-     * For each authorization request, the following steps are executed:
-     * <ul>
-     * <li>An authorisation request object (a
-     * <code>com.sun.xacml.ctx.RequestCtx</code> object) is generated from the
-     * provided XML data and evaluated.</li>
-     * <li>Attributes (for subject or resource) needed to decide on a request
-     * are fetched either from the request or (if not contained in the request)
-     * directly from the system.</li>
-     * <li>The evaluation results in permission or denial in form of a boolean
-     * values.</li>
-     * </ul>
-     * 
-     * The list of boolean evaluation result values are returned with the same
-     * cardinality and in the same order as the input data.
-     * 
-     * @param requestsXml
-     *            The XML representation of the authorization requests
-     *            corresponding to "requests.xsd".
-     * @return Returns the XML representation of the evaluation results
-     *         corresponding to XML-schema "results.xsd".
+     * <p/>
+     * For each authorization request, the following steps are executed: <ul> <li>An authorisation request object (a
+     * <code>com.sun.xacml.ctx.RequestCtx</code> object) is generated from the provided XML data and evaluated.</li>
+     * <li>Attributes (for subject or resource) needed to decide on a request are fetched either from the request or (if
+     * not contained in the request) directly from the system.</li> <li>The evaluation results in permission or denial
+     * in form of a boolean values.</li> </ul>
+     * <p/>
+     * The list of boolean evaluation result values are returned with the same cardinality and in the same order as the
+     * input data.
+     *
+     * @param requestsXml The XML representation of the authorization requests corresponding to "requests.xsd".
+     * @return Returns the XML representation of the evaluation results corresponding to XML-schema "results.xsd".
      * @throws MissingMethodParameterException
-     *             Thrown if no role data has been provided.
-     * @throws ResourceNotFoundException
-     *             Thrown if a resource that needs to be handledd during
-     *             authorization can not be found.
-     * @throws XmlCorruptedException
-     *             Thrown if invalid XML is provided.
-     * @throws XmlSchemaValidationException
-     *             Thrown if non schema conform XML is provided.
-     * @throws SystemException
-     *             Thrown in case of an internal error
+     *                                      Thrown if no role data has been provided.
+     * @throws ResourceNotFoundException    Thrown if a resource that needs to be handledd during authorization can not
+     *                                      be found.
+     * @throws XmlCorruptedException        Thrown if invalid XML is provided.
+     * @throws XmlSchemaValidationException Thrown if non schema conform XML is provided.
+     * @throws SystemException              Thrown in case of an internal error
      */
     @Override
-    String evaluate(String requestsXml)
-        throws MissingMethodParameterException, ResourceNotFoundException,
+    String evaluate(String requestsXml) throws MissingMethodParameterException, ResourceNotFoundException,
         SystemException, XmlCorruptedException, XmlSchemaValidationException;
 
     /**
-     * Evaluates the current user's privileges for retrieving the specified
-     * objects of the specified resource type.<br>
+     * Evaluates the current user's privileges for retrieving the specified objects of the specified resource type.<br>
      * The current user is retrieved from the UserContext.
-     * 
-     * @param resourceName
-     *            The name identifying the resource. The name of the root
-     *            element of the resource's XML representation ist expected
-     *            here.<br>
-     *            This parameter is mandatory.
-     * @param ids
-     *            The ids of the objects that shall be checked for retrieving
-     *            them.<br>
-     *            This parameter is mandatory.
-     * @return Returns a <code>List</code> containing the ids of all objects
-     *         for that the retrieval is allowed.
+     *
+     * @param resourceName The name identifying the resource. The name of the root element of the resource's XML
+     *                     representation ist expected here.<br> This parameter is mandatory.
+     * @param ids          The ids of the objects that shall be checked for retrieving them.<br> This parameter is
+     *                     mandatory.
+     * @return Returns a <code>List</code> containing the ids of all objects for that the retrieval is allowed.
      * @throws MissingMethodParameterException
-     *             Thrown if the resource name or the ids are not provided.
-     * @throws ResourceNotFoundException
-     *             Thrown if a resource cannot be found during evaluating the
-     *             privileges.
-     * @throws SystemException
-     *             Thrown in case of an internal system error.
+     *                                   Thrown if the resource name or the ids are not provided.
+     * @throws ResourceNotFoundException Thrown if a resource cannot be found during evaluating the privileges.
+     * @throws SystemException           Thrown in case of an internal system error.
      */
     @Override
-    List<String> evaluateRetrieve(
-        String resourceName, List<String> ids)
-        throws MissingMethodParameterException, ResourceNotFoundException,
-        SystemException;
+    List<String> evaluateRetrieve(String resourceName, List<String> ids) throws MissingMethodParameterException,
+        ResourceNotFoundException, SystemException;
 
     /**
-     * Evaluates the current user's privileges for calling the specified method
-     * for the specified
-     * objects of the specified resource type.<br>
-     * The current user is retrieved from the UserContext.
-     * 
-     * @param resourceName
-     *            The name identifying the resource. The name of the root
-     *            element of the resource's XML representation ist expected
-     *            here.<br>
-     *            This parameter is mandatory.
-     * @param methodName
-     *            The name of the method.<br>
-     *            This parameter is mandatory.
-     * @param argumentList
-     *            List of Object[], each Object[] containing 
-     *            the arguments for one call to the method.<br>
-     *            This parameter is mandatory.
-     * @return Returns a <code>List</code> containing the arguments of all objects for
-     *         that the retrieval is allowed.
+     * Evaluates the current user's privileges for calling the specified method for the specified objects of the
+     * specified resource type.<br> The current user is retrieved from the UserContext.
+     *
+     * @param resourceName The name identifying the resource. The name of the root element of the resource's XML
+     *                     representation ist expected here.<br> This parameter is mandatory.
+     * @param methodName   The name of the method.<br> This parameter is mandatory.
+     * @param argumentList List of Object[], each Object[] containing the arguments for one call to the method.<br> This
+     *                     parameter is mandatory.
+     * @return Returns a <code>List</code> containing the arguments of all objects for that the retrieval is allowed.
      * @throws MissingMethodParameterException
-     *             Thrown if the resource name or the ids are not provided.
-     * @throws ResourceNotFoundException
-     *             Thrown if a resource cannot be found during evaluating the
-     *             privileges.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     *                                   Thrown if the resource name or the ids are not provided.
+     * @throws ResourceNotFoundException Thrown if a resource cannot be found during evaluating the privileges.
+     * @throws SystemException           Thrown in case of an internal error.
      */
     @Override
-    List<Object[]> evaluateMethodForList(
-            String resourceName, 
-            String methodName, 
-            List<Object[]> argumentList)
-        throws MissingMethodParameterException, ResourceNotFoundException,
-        SystemException;
+    List<Object[]> evaluateMethodForList(String resourceName, String methodName, List<Object[]> argumentList)
+        throws MissingMethodParameterException, ResourceNotFoundException, SystemException;
 
 }

@@ -29,15 +29,19 @@ import java.rmi.RemoteException;
 public class JhoveHandlerBean implements SessionBean {
 
     JhoveHandlerInterface service;
+
     SessionContext sessionCtx;
+
     private static final Logger LOGGER = LoggerFactory.getLogger(JhoveHandlerBean.class);
 
     public void ejbCreate() throws CreateException {
         try {
             final BeanFactoryLocator beanFactoryLocator = SingletonBeanFactoryLocator.getInstance();
-            final BeanFactory factory = beanFactoryLocator.useBeanFactory("JhoveHandler.spring.ejb.context").getFactory();
+            final BeanFactory factory =
+                beanFactoryLocator.useBeanFactory("JhoveHandler.spring.ejb.context").getFactory();
             this.service = (JhoveHandlerInterface) factory.getBean("service.JhoveHandler");
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             LOGGER.error("ejbCreate(): Exception JhoveHandlerComponent: " + e);
             throw new CreateException(e.getMessage());
         }
@@ -58,36 +62,26 @@ public class JhoveHandlerBean implements SessionBean {
 
     }
 
-    public String extract(final String requests,
-                                    final SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            XmlCorruptedException,
-            XmlSchemaValidationException,
-            MissingMethodParameterException,
-            SystemException,
-            TmeException {
+    public String extract(final String requests, final SecurityContext securityContext) throws AuthenticationException,
+        AuthorizationException, XmlCorruptedException, XmlSchemaValidationException, MissingMethodParameterException,
+        SystemException, TmeException {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.extract(requests);
     }
 
-    public String extract(final String requests, final String authHandle,
-                                    final Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            XmlCorruptedException,
-            XmlSchemaValidationException,
-            MissingMethodParameterException,
-            SystemException,
-            TmeException {
+    public String extract(final String requests, final String authHandle, final Boolean restAccess)
+        throws AuthenticationException, AuthorizationException, XmlCorruptedException, XmlSchemaValidationException,
+        MissingMethodParameterException, SystemException, TmeException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.extract(requests);

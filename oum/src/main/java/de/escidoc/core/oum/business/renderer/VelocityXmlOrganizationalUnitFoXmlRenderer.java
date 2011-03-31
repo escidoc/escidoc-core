@@ -38,64 +38,38 @@ import de.escidoc.core.oum.business.renderer.interfaces.OrganizationalUnitFoXmlR
 import java.util.Map;
 
 /**
- * Organizational unit foxml renderer implementation using the velocity template
- * engine.
- * 
+ * Organizational unit foxml renderer implementation using the velocity template engine.
+ *
  * @author Michael Schneider
- * 
  */
-public class VelocityXmlOrganizationalUnitFoXmlRenderer
-    implements OrganizationalUnitFoXmlRendererInterface {
-
+public class VelocityXmlOrganizationalUnitFoXmlRenderer implements OrganizationalUnitFoXmlRendererInterface {
 
     /**
      * See Interface for functional description.
-     * 
-     * @param datastreams
-     * @return
-     * @throws SystemException
      */
     @Override
-    public String render(final Map<String, Object> values)
-        throws SystemException {
+    public String render(final Map<String, Object> values) throws SystemException {
 
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX,
-            Constants.PROPERTIES_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS,
-            Constants.PROPERTIES_NS_URI);
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX,
-            Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
-        values.put(XmlTemplateProvider.VAR_STRUCT_RELATIONS_NAMESPACE,
-            Constants.STRUCTURAL_RELATIONS_NS_URI);
-        values.put(XmlTemplateProvider.VAR_RESOURCES_ONTOLOGIES_NAMESPACE,
-            Constants.RESOURCES_NS_URI);
-        return OrganizationalUnitFoXmlProvider
-                .getInstance().getOrganizationalUnitFoXml(values);
+        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX, Constants.PROPERTIES_NS_PREFIX);
+        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS, Constants.PROPERTIES_NS_URI);
+        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
+        values.put(XmlTemplateProvider.VAR_STRUCT_RELATIONS_NAMESPACE, Constants.STRUCTURAL_RELATIONS_NS_URI);
+        values.put(XmlTemplateProvider.VAR_RESOURCES_ONTOLOGIES_NAMESPACE, Constants.RESOURCES_NS_URI);
+        return OrganizationalUnitFoXmlProvider.getInstance().getOrganizationalUnitFoXml(values);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param values
-     * @return
-     * @throws WebserverSystemException
      */
     @Override
-    public String renderRelsExt(final Map<String, Object> values)
-        throws WebserverSystemException {
+    public String renderRelsExt(final Map<String, Object> values) throws WebserverSystemException {
 
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX,
-            Constants.PROPERTIES_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS,
-            Constants.PROPERTIES_NS_URI);
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX,
-            Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
-        values.put(XmlTemplateProvider.VAR_STRUCT_RELATIONS_NAMESPACE,
-            Constants.STRUCTURAL_RELATIONS_NS_URI);
-        values.put(XmlTemplateProvider.VAR_RESOURCES_ONTOLOGIES_NAMESPACE,
-            Constants.RESOURCES_NS_URI);
+        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX, Constants.PROPERTIES_NS_PREFIX);
+        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS, Constants.PROPERTIES_NS_URI);
+        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
+        values.put(XmlTemplateProvider.VAR_STRUCT_RELATIONS_NAMESPACE, Constants.STRUCTURAL_RELATIONS_NS_URI);
+        values.put(XmlTemplateProvider.VAR_RESOURCES_ONTOLOGIES_NAMESPACE, Constants.RESOURCES_NS_URI);
         return OrganizationalUnitFoXmlProvider.getInstance().getRelsExt(values);
     }
-
 
 }

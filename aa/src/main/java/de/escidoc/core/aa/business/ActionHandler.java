@@ -51,7 +51,6 @@ import java.io.ByteArrayInputStream;
  * Business layer implementation of a handler that manages eSciDoc actions.
  *
  * @author Torsten Tetteroo
- * 
  */
 public class ActionHandler implements ActionHandlerInterface {
 
@@ -67,35 +66,21 @@ public class ActionHandler implements ActionHandlerInterface {
 
     private Utility utility;
 
-
-
     /**
      * See Interface for functional description.
-     * 
-     * @param contextId
-     * @param actions
-     * @return
-     * @throws ContextNotFoundException
-     * @throws XmlCorruptedException
-     * @throws XmlSchemaValidationException
-     * @throws SystemException
-     * @see RoleHandlerInterface#createUnsecuredActions(String,
-     * String)
      *
+     * @see RoleHandlerInterface#createUnsecuredActions(String, String)
      */
     @Override
-    public String createUnsecuredActions(
-        final String contextId, final String actions)
-        throws ContextNotFoundException, XmlCorruptedException, 
-        XmlSchemaValidationException, SystemException {
+    public String createUnsecuredActions(final String contextId, final String actions) throws ContextNotFoundException,
+        XmlCorruptedException, XmlSchemaValidationException, SystemException {
 
         utility.checkIsContext(contextId);
 
         final ByteArrayInputStream in = validateUnsecuredActions(actions);
 
         final StaxParser sp = new StaxParser(XmlUtility.NAME_UNSECURED_ACTIONS);
-        final UnsecuredActionStaxHandler unsecuredActionStaxHandler =
-            new UnsecuredActionStaxHandler();
+        final UnsecuredActionStaxHandler unsecuredActionStaxHandler = new UnsecuredActionStaxHandler();
         sp.addHandler(unsecuredActionStaxHandler);
 
         try {
@@ -106,21 +91,17 @@ public class ActionHandler implements ActionHandlerInterface {
         }
         catch (final Exception e) {
             final String msg =
-                "Unexpected exception in " + getClass().getName()
-                    + ".createUnsecuredActions: " + e.getClass().getName();
+                "Unexpected exception in " + getClass().getName() + ".createUnsecuredActions: "
+                    + e.getClass().getName();
             throw new WebserverSystemException(msg, e);
         }
 
-        UnsecuredActionList unsecuredActionList =
-            actionDao.retrieveUnsecuredActionList(contextId);
+        UnsecuredActionList unsecuredActionList = actionDao.retrieveUnsecuredActionList(contextId);
         if (unsecuredActionList == null) {
-            unsecuredActionList =
-                new UnsecuredActionList(contextId, unsecuredActionStaxHandler
-                    .getUnsecuredActions());
+            unsecuredActionList = new UnsecuredActionList(contextId, unsecuredActionStaxHandler.getUnsecuredActions());
         }
         else {
-            unsecuredActionList.setActionIds(unsecuredActionStaxHandler
-                .getUnsecuredActions());
+            unsecuredActionList.setActionIds(unsecuredActionStaxHandler.getUnsecuredActions());
         }
         actionDao.saveOrUpdate(unsecuredActionList);
         return renderer.renderUnsecuredActionList(unsecuredActionList);
@@ -128,21 +109,14 @@ public class ActionHandler implements ActionHandlerInterface {
 
     /**
      * See Interface for functional description.
-     * 
-     * @param contextId
-     * @throws ContextNotFoundException
-     * @throws SystemException
-     * @see RoleHandlerInterface
-     *      #deleteUnsecuredActions(java.lang.String)
      *
+     * @see RoleHandlerInterface #deleteUnsecuredActions(java.lang.String)
      */
     @Override
-    public void deleteUnsecuredActions(final String contextId)
-        throws ContextNotFoundException, SystemException {
+    public void deleteUnsecuredActions(final String contextId) throws ContextNotFoundException, SystemException {
 
         Utility.getInstance().checkIsContext(contextId);
-        final UnsecuredActionList unsecuredActionList =
-            actionDao.retrieveUnsecuredActionList(contextId);
+        final UnsecuredActionList unsecuredActionList = actionDao.retrieveUnsecuredActionList(contextId);
 
         if (unsecuredActionList == null) {
             // FIXME: UnsecureActionsNotFoundException needed
@@ -153,22 +127,14 @@ public class ActionHandler implements ActionHandlerInterface {
 
     /**
      * See Interface for functional description.
-     * 
-     * @param contextId
-     * @return
-     * @throws ContextNotFoundException
-     * @throws SystemException
-     * @see RoleHandlerInterface
-     *      #retrieveUnsecuredActions(java.lang.String)
      *
+     * @see RoleHandlerInterface #retrieveUnsecuredActions(java.lang.String)
      */
     @Override
-    public String retrieveUnsecuredActions(final String contextId)
-        throws ContextNotFoundException, SystemException {
+    public String retrieveUnsecuredActions(final String contextId) throws ContextNotFoundException, SystemException {
 
         Utility.getInstance().checkIsContext(contextId);
-        UnsecuredActionList unsecuredActionList =
-            actionDao.retrieveUnsecuredActionList(contextId);
+        UnsecuredActionList unsecuredActionList = actionDao.retrieveUnsecuredActionList(contextId);
         if (unsecuredActionList == null) {
             unsecuredActionList = new UnsecuredActionList(contextId, null);
         }
@@ -176,37 +142,25 @@ public class ActionHandler implements ActionHandlerInterface {
 
     }
 
-
-
     /**
      * Validates data of a unsecured action list.
-     * 
-     * @param xmlData
-     *            The xml data.
-     * @return Returns the xml data in a <code>ByteArrayInputStream</code>.
-     * @throws XmlSchemaValidationException
-     *             Thrown if data in not valid.
-     * @throws XmlCorruptedException
-     *             Thrown if the XML data cannot be parsed.
-     * @throws WebserverSystemException
-     *             Thrown in case of any other failure.
      *
+     * @param xmlData The xml data.
+     * @return Returns the xml data in a <code>ByteArrayInputStream</code>.
+     * @throws XmlSchemaValidationException Thrown if data in not valid.
+     * @throws XmlCorruptedException        Thrown if the XML data cannot be parsed.
+     * @throws WebserverSystemException     Thrown in case of any other failure.
      */
-    private static ByteArrayInputStream validateUnsecuredActions(final String xmlData)
-        throws XmlCorruptedException, WebserverSystemException,
-        XmlSchemaValidationException {
+    private static ByteArrayInputStream validateUnsecuredActions(final String xmlData) throws XmlCorruptedException,
+        WebserverSystemException, XmlSchemaValidationException {
 
-        return XmlUtility.createValidatedByteArrayInputStream(xmlData,
-            XmlUtility.getUnsecuredActionsSchemaLocation());
+        return XmlUtility.createValidatedByteArrayInputStream(xmlData, XmlUtility.getUnsecuredActionsSchemaLocation());
     }
 
     /**
-     * Injects the data access object to access {@link Action} objects from the
-     * database.
-     * 
-     * @param actionDao
-     *            The dao to set.
+     * Injects the data access object to access {@link Action} objects from the database.
      *
+     * @param actionDao The dao to set.
      */
     public void setActionDao(final ActionDaoInterface actionDao) {
 
@@ -216,9 +170,7 @@ public class ActionHandler implements ActionHandlerInterface {
     /**
      * Injects the renderer.
      *
-     * @param renderer
-     *            The renderer to inject.
-     *
+     * @param renderer The renderer to inject.
      */
     public void setRenderer(final ActionRendererInterface renderer) {
 
@@ -227,10 +179,8 @@ public class ActionHandler implements ActionHandlerInterface {
 
     /**
      * Injects the utility.
-
-     * @param utility
-     *            the {@link Utility} to be injected.
      *
+     * @param utility the {@link Utility} to be injected.
      */
     public void setUtility(final Utility utility) {
 

@@ -35,9 +35,8 @@ import java.util.Set;
 
 /**
  * Abstract (base) class for data access objects using hibernate.
- * 
+ *
  * @author Torsten Tetteroo
- * 
  */
 public abstract class AbstractHibernateDao extends HibernateDaoSupport {
 
@@ -45,18 +44,15 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
 
     protected static final int COMPARE_EQ = 1;
 
-    private static final String FEDORA_EXCEPTION_MESSAGE = 
+    private static final String FEDORA_EXCEPTION_MESSAGE =
         new StringBuffer("Fedora might not be running:\n")
             .append("Problem retrieving Primary Key from Fedora:\n").toString();
 
     /**
      * Deletes the provided persistent object.
-     * 
-     * @param object
-     *            The object to delete.
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database access error.
      *
+     * @param object The object to delete.
+     * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
     public void delete(final Object object) throws SqlDatabaseSystemException {
 
@@ -73,11 +69,10 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
 
     /**
      * Flush all pending saves, updates and deletes to the database.
+     * <p/>
+     * Only invoke this for selective eager flushing, for example when JDBC code needs to see certain changes within the
+     * same transaction. Else, it's preferable to rely on auto-flushing at transaction completion.
      *
-     * Only invoke this for selective eager flushing, for example when JDBC code
-     * needs to see certain changes within the same transaction. Else, it's
-     * preferable to rely on auto-flushing at transaction completion.
-     * 
      * @throws SqlDatabaseSystemException Thrown in case of Hibernate errors
      */
     public void flush() throws SqlDatabaseSystemException {
@@ -86,16 +81,12 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
 
     /**
      * Saves the provided persistent object.
-     * 
-     * @param object
-     *            The object to save.
-     * @return The saved object.
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database access error.
      *
+     * @param object The object to save.
+     * @return The saved object.
+     * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
-    protected Object save(final Object object)
-        throws SqlDatabaseSystemException {
+    protected Object save(final Object object) throws SqlDatabaseSystemException {
 
         Object result = null;
         if (object != null) {
@@ -112,18 +103,12 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
     }
 
     /**
-     * Saves the provided object (if it has not been saved before) or updates
-     * the provided object.
-     * 
-     * @param object
-     *            The object to save or update.
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database access error.
+     * Saves the provided object (if it has not been saved before) or updates the provided object.
      *
-     * @return
+     * @param object The object to save or update.
+     * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
-    protected String saveOrUpdate(final Object object)
-        throws SqlDatabaseSystemException {
+    protected String saveOrUpdate(final Object object) throws SqlDatabaseSystemException {
 
         if (object != null) {
             try {
@@ -140,14 +125,11 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
 
     /**
      * Saves the provided persistent object.
-     * 
-     * @param object
-     *            The object to update.
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database access error.
+     *
+     * @param object The object to update.
+     * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
-    protected void update(final Object object)
-        throws SqlDatabaseSystemException {
+    protected void update(final Object object) throws SqlDatabaseSystemException {
 
         if (object != null) {
             try {
@@ -161,46 +143,32 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
     }
 
     /**
-     * Checks if the provided <code>HibernateException</code> contains a
-     * <code>BatchUpdateException</code> and throws an special
-     * <code>SqlDatabaseSystemException</code> in this case.
-     * 
-     * @param e
-     *            The exception to check.
-     * @throws SqlDatabaseSystemException
-     *             Thrown if the provided exception contains an
-     *             <code>BatchUpdateException</code>.
+     * Checks if the provided <code>HibernateException</code> contains a <code>BatchUpdateException</code> and throws an
+     * special <code>SqlDatabaseSystemException</code> in this case.
+     *
+     * @param e The exception to check.
+     * @throws SqlDatabaseSystemException Thrown if the provided exception contains an <code>BatchUpdateException</code>.
      */
-    private static void handleBatchUpdateException(final HibernateException e)
-        throws SqlDatabaseSystemException {
+    private static void handleBatchUpdateException(final HibernateException e) throws SqlDatabaseSystemException {
         if (e.getCause() instanceof BatchUpdateException) {
-            final Exception e1 =
-                ((SQLException) e.getCause()).getNextException();
-            throw new SqlDatabaseSystemException(StringUtility
-                .format(e.getMessage(), e
-                    .getCause().getMessage(), e1.getMessage()), e1);
+            final Exception e1 = ((SQLException) e.getCause()).getNextException();
+            throw new SqlDatabaseSystemException(StringUtility.format(e.getMessage(), e.getCause().getMessage(), e1
+                .getMessage()), e1);
         }
     }
 
     /**
-     * Checks if the provided <code>HibernateException</code> contains a
-     * <code>FedoraSystemException</code> and throws an special
-     * <code>SqlDatabaseSystemException</code> in this case.
-     * 
-     * @param e
-     *            The exception to check.
-     * @throws SqlDatabaseSystemException
-     *             Thrown if the provided exception contains an
-     *             <code>FedoraSystemException</code>.
+     * Checks if the provided <code>HibernateException</code> contains a <code>FedoraSystemException</code> and throws
+     * an special <code>SqlDatabaseSystemException</code> in this case.
+     *
+     * @param e The exception to check.
+     * @throws SqlDatabaseSystemException Thrown if the provided exception contains an <code>FedoraSystemException</code>.
      */
-    private static void handleFedoraSystemException(final Throwable e)
-        throws SqlDatabaseSystemException {
-        if (e.getCause() != null 
-                && e.getCause().getCause() != null) {
+    private static void handleFedoraSystemException(final Throwable e) throws SqlDatabaseSystemException {
+        if (e.getCause() != null && e.getCause().getCause() != null) {
             final Throwable e1 = e.getCause().getCause();
             if (e1 instanceof FedoraSystemException) {
-                final StringBuilder message =
-                        new StringBuilder(FEDORA_EXCEPTION_MESSAGE);
+                final StringBuilder message = new StringBuilder(FEDORA_EXCEPTION_MESSAGE);
                 final Throwable e2 = e1.getCause();
                 if (e2 != null) {
                     message.append(e2.getMessage());
@@ -211,15 +179,11 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
     }
 
     /**
-     * Asserts the provided {@link List} contains one Object and returns it. If
-     * the list is empty, <code>null</code> is returned. If the list contains
-     * more than one object, a {@link NonUniqueResultException} is thrown.
-     * 
-     * @param results
-     *            The {@link List} to be asserted.
-     * @return Returns the single Object contained in the list or
-     *         <code>null</code>.
+     * Asserts the provided {@link List} contains one Object and returns it. If the list is empty, <code>null</code> is
+     * returned. If the list contains more than one object, a {@link NonUniqueResultException} is thrown.
      *
+     * @param results The {@link List} to be asserted.
+     * @return Returns the single Object contained in the list or <code>null</code>.
      */
     protected Object getUniqueResult(final List<Object> results) {
 
@@ -237,13 +201,10 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
 
     /**
      * merges 2 sets into 1
-     *            
+     *
      * @return Set merged set
-     * @param s1
-     * @param s2
      */
-    protected Set<String> mergeSets(
-        final Set<String> s1, final Set<String> s2) {
+    protected Set<String> mergeSets(final Set<String> s1, final Set<String> s2) {
         if (s1 == null && s2 == null) {
             return null;
         }

@@ -38,20 +38,16 @@ import java.io.IOException;
 
 /**
  * PWCallback for the Client.<p/>
- * 
- * Sets the eSciDoc user handle as the password if the technical username
- * "eSciDocUser" is provided when calling the webservice.<br>
- * This password can be changed by using the <code>setHandle</code> and reset
- * by using the <code>resetHandle</code> methods
- * 
- *
+ * <p/>
+ * Sets the eSciDoc user handle as the password if the technical username "eSciDocUser" is provided when calling the
+ * webservice.<br> This password can be changed by using the <code>setHandle</code> and reset by using the
+ * <code>resetHandle</code> methods
  */
 public class PWCallback implements CallbackHandler {
 
     public static final String DEFAULT_HANDLE = "testsystemadministrator";
 
-    public static final String SYSTEMADMINISTRATOR_HANDLE = 
-        "testsystemadministrator1";
+    public static final String SYSTEMADMINISTRATOR_HANDLE = "testsystemadministrator1";
 
     public static final String DEPOSITOR_HANDLE = "testdepositor";
 
@@ -61,11 +57,9 @@ public class PWCallback implements CallbackHandler {
 
     public static final String ADMINISTRATOR_HANDLE = "testadministrator";
 
-    public static final String CONTEXT_ADMINISTRATOR_HANDLE = 
-                                        "testcontextadministrator";
+    public static final String CONTEXT_ADMINISTRATOR_HANDLE = "testcontextadministrator";
 
-    public static final String CONTENT_RELATION_MANAGER_HANDLE = 
-        "testcontentrelationmanager";
+    public static final String CONTENT_RELATION_MANAGER_HANDLE = "testcontentrelationmanager";
 
     public static final String MODERATOR_HANDLE = "testmoderator";
 
@@ -73,17 +67,13 @@ public class PWCallback implements CallbackHandler {
 
     public static final String AUTHOR_HANDLE = "testauthor";
 
-    public static final String STATISTIC_EDITOR_HANDLE = 
-                                    "teststatisticseditor";
+    public static final String STATISTIC_EDITOR_HANDLE = "teststatisticseditor";
 
-    public static final String STATISTIC_READER_HANDLE = 
-                                    "teststatisticsreader";
+    public static final String STATISTIC_READER_HANDLE = "teststatisticsreader";
 
-    public static final String AUDIENCE_HANDLE = 
-        "testaudience";
+    public static final String AUDIENCE_HANDLE = "testaudience";
 
-    public static final String COLLABORATOR_HANDLE = 
-        "testcollaborator";
+    public static final String COLLABORATOR_HANDLE = "testcollaborator";
 
     public static final String TEST_HANDLE = "test";
 
@@ -99,7 +89,7 @@ public class PWCallback implements CallbackHandler {
 
     /**
      * Gets the eSciDoc user handle.
-     * 
+     *
      * @return The user handle.
      */
     public static String getHandle() {
@@ -109,9 +99,8 @@ public class PWCallback implements CallbackHandler {
 
     /**
      * Sets the eSciDoc user handle to the provided value.
-     * 
-     * @param hd
-     *            The eSciDoc user handle to use.
+     *
+     * @param hd The eSciDoc user handle to use.
      */
     public static void setHandle(final String hd) {
 
@@ -119,8 +108,7 @@ public class PWCallback implements CallbackHandler {
     }
 
     /**
-     * Resets the eSciDoc user handle to the default value specified in
-     * <code>PWCallback.DEFAULT_HANDLE</code>.
+     * Resets the eSciDoc user handle to the default value specified in <code>PWCallback.DEFAULT_HANDLE</code>.
      */
     public static void resetHandle() {
 
@@ -129,7 +117,6 @@ public class PWCallback implements CallbackHandler {
 
     /**
      * Sets the eSciDoc user handle to anonymous role.
-     * 
      */
     public static void setAnonymousHandle() {
 
@@ -138,19 +125,13 @@ public class PWCallback implements CallbackHandler {
 
     /**
      * The handle method of the callback handler.
-     * 
-     * @param callbacks
-     *            the WSPasswordCallback implementation
-     * @throws IOException
-     *             Exception
-     * @throws UnsupportedCallbackException
-     *             Exception
-     * @see javax.security.auth.callback.CallbackHandler#handle
-     *      (javax.security.auth.callback.Callback[])
      *
+     * @param callbacks the WSPasswordCallback implementation
+     * @throws IOException                  Exception
+     * @throws UnsupportedCallbackException Exception
+     * @see javax.security.auth.callback.CallbackHandler#handle (javax.security.auth.callback.Callback[])
      */
-    public void handle(final Callback[] callbacks) throws IOException,
-        UnsupportedCallbackException {
+    public void handle(final Callback[] callbacks) throws IOException, UnsupportedCallbackException {
         for (int i = 0; i < callbacks.length; i++) {
             if (callbacks[i] instanceof WSPasswordCallback) {
                 WSPasswordCallback pc = (WSPasswordCallback) callbacks[i];
@@ -159,20 +140,17 @@ public class PWCallback implements CallbackHandler {
                 }
             }
             else {
-                throw new UnsupportedCallbackException(callbacks[i],
-                    "Unrecognized Callback");
+                throw new UnsupportedCallbackException(callbacks[i], "Unrecognized Callback");
             }
         }
     }
 
     /**
-     * Adds cookie escidocCookie storing the eSciDoc user handle as the content
-     * of the cookie escidocCookie to to the provided http method object.<br>
-     * The adding is skipped, if the current user handle is <code>null</code>
-     * or equals to an empty <code>String</code>.
-     * 
-     * @param method
-     *            The http method object to add the cookie to.
+     * Adds cookie escidocCookie storing the eSciDoc user handle as the content of the cookie escidocCookie to to the
+     * provided http method object.<br> The adding is skipped, if the current user handle is <code>null</code> or equals
+     * to an empty <code>String</code>.
+     *
+     * @param method The http method object to add the cookie to.
      */
     public static void addEscidocUserHandleCokie(final HttpMessage method) {
 
@@ -181,6 +159,6 @@ public class PWCallback implements CallbackHandler {
         }
         //Cookies werden im httpclient deaktiviert
         //method.getParams().setCookiePolicy(CookiePolicy.IGNORE_COOKIES);
-         method.setHeader("Cookie", "escidocCookie=" + handle);
+        method.setHeader("Cookie", "escidocCookie=" + handle);
     }
 }

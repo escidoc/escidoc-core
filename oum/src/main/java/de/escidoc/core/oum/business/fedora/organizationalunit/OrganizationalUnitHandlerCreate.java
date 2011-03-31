@@ -45,39 +45,29 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 /**
- * The methods of the class deals with datastreams for fedora objects, which
- * will represent the OrganizationalUnitCreator.
- * 
+ * The methods of the class deals with datastreams for fedora objects, which will represent the
+ * OrganizationalUnitCreator.
+ *
  * @author Michael Schneider
  */
-public class OrganizationalUnitHandlerCreate
-    extends OrganizationalUnitHandlerRetrieve {
+public class OrganizationalUnitHandlerCreate extends OrganizationalUnitHandlerRetrieve {
 
     /**
      * Build the foxml representation of an organizational unit.
-     * 
-     * @param id
-     *            The id of the organizational unit.
-     * @param relsExtValues
-     *            The rels-ext values.
-     * @param parents
-     *            The parent organizational units.
-     * @param metadataProperties
-     *            The metadata properties.
-     * @param metadataStreams
-     *            The metadata streams.
-     * @param dcStream
-     *            The dc stream.
+     *
+     * @param id                 The id of the organizational unit.
+     * @param relsExtValues      The rels-ext values.
+     * @param parents            The parent organizational units.
+     * @param metadataProperties The metadata properties.
+     * @param metadataStreams    The metadata streams.
+     * @param dcStream           The dc stream.
      * @return the foxml representation of the organizational unit.
-     * @throws SystemException
-     *             If anything fails.
+     * @throws SystemException If anything fails.
      */
     protected String getOrganizationalUnitFoxml(
-        final String id, final Map<String, Object> relsExtValues,
-        final List<String> parents,
+        final String id, final Map<String, Object> relsExtValues, final List<String> parents,
         final Map<String, Map<String, String>> metadataProperties,
-        final Map<String, ByteArrayOutputStream> metadataStreams,
-        final String dcStream) throws SystemException {
+        final Map<String, ByteArrayOutputStream> metadataStreams, final String dcStream) throws SystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         values.putAll(relsExtValues);
@@ -89,26 +79,25 @@ public class OrganizationalUnitHandlerCreate
         if (metadataStreams != null) {
             final Collection<Map<String, String>> mdRecords =
                 new ArrayList<Map<String, String>>(metadataStreams.size());
-            for (final Entry<String, ByteArrayOutputStream> stringByteArrayOutputStreamEntry : metadataStreams.entrySet()) {
+            for (final Entry<String, ByteArrayOutputStream> stringByteArrayOutputStreamEntry : metadataStreams
+                .entrySet()) {
                 final Map<String, String> mdRecord = new HashMap<String, String>();
                 if (metadataProperties != null) {
                     final Map<String, String> properties =
-                            metadataProperties.get(stringByteArrayOutputStreamEntry.getKey());
-                    mdRecord.put(XmlTemplateProvider.MD_RECORD_TYPE, properties
-                            .get(Elements.MD_RECORD_ATTRIBUTE_TYPE));
-                    mdRecord.put(XmlTemplateProvider.MD_RECORD_SCHEMA,
-                            properties.get(Elements.MD_RECORD_ATTRIBUTE_SCHEMA));
+                        metadataProperties.get(stringByteArrayOutputStreamEntry.getKey());
+                    mdRecord.put(XmlTemplateProvider.MD_RECORD_TYPE, properties.get(Elements.MD_RECORD_ATTRIBUTE_TYPE));
+                    mdRecord.put(XmlTemplateProvider.MD_RECORD_SCHEMA, properties
+                        .get(Elements.MD_RECORD_ATTRIBUTE_SCHEMA));
                 }
                 mdRecord.put(XmlTemplateProvider.MD_RECORD_NAME, stringByteArrayOutputStreamEntry.getKey());
                 try {
                     final String metadata =
-                            stringByteArrayOutputStreamEntry.getValue().toString(
-                                    XmlUtility.CHARACTER_ENCODING);
-                    mdRecord.put(XmlTemplateProvider.MD_RECORD_CONTENT,
-                            metadata);
-                } catch (final UnsupportedEncodingException e) {
-                    throw new EncodingSystemException("Metadata record '"
-                            + stringByteArrayOutputStreamEntry.getKey() + "' has wrong encoding!", e);
+                        stringByteArrayOutputStreamEntry.getValue().toString(XmlUtility.CHARACTER_ENCODING);
+                    mdRecord.put(XmlTemplateProvider.MD_RECORD_CONTENT, metadata);
+                }
+                catch (final UnsupportedEncodingException e) {
+                    throw new EncodingSystemException("Metadata record '" + stringByteArrayOutputStreamEntry.getKey()
+                        + "' has wrong encoding!", e);
                 }
                 mdRecords.add(mdRecord);
             }
@@ -121,23 +110,16 @@ public class OrganizationalUnitHandlerCreate
     }
 
     /**
-     * Build the foxml representation of the rels-ext datastream of an
-     * organizational unit.
-     * 
-     * @param id
-     *            The id of the organizational unit.
-     * @param relsExtValues
-     *            The rels-ext values.
-     * @param parents
-     *            The parent organizational units.
-     * @return The foxml representation of the rels-ext datastream of an
-     *         organizational unit.
-     * @throws SystemException
-     *             If anything fails.
+     * Build the foxml representation of the rels-ext datastream of an organizational unit.
+     *
+     * @param id            The id of the organizational unit.
+     * @param relsExtValues The rels-ext values.
+     * @param parents       The parent organizational units.
+     * @return The foxml representation of the rels-ext datastream of an organizational unit.
+     * @throws SystemException If anything fails.
      */
     protected String getOrganizationalUnitRelsExt(
-        final String id, final Map<String, Object> relsExtValues,
-        final List<String> parents) throws SystemException {
+        final String id, final Map<String, Object> relsExtValues, final List<String> parents) throws SystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         values.putAll(relsExtValues);

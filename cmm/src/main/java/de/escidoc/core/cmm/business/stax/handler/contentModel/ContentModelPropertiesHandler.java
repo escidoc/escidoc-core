@@ -43,9 +43,8 @@ import java.io.UnsupportedEncodingException;
 
 /**
  * Handler to extract property values from content model properties.
- * 
+ *
  * @author Frank Schwichtenberg
- * 
  */
 public class ContentModelPropertiesHandler extends DefaultHandler {
 
@@ -53,27 +52,22 @@ public class ContentModelPropertiesHandler extends DefaultHandler {
 
     private final ContentModelProperties properties;
 
-    private static final String XPATH_CONTENT_MODEL =
-            '/' + Elements.ELEMENT_CONTENT_MODEL;
+    private static final String XPATH_CONTENT_MODEL = '/' + Elements.ELEMENT_CONTENT_MODEL;
 
     private static final String XPATH_CONTENT_MODEL_PROPERTIES =
         XPATH_CONTENT_MODEL + '/' + Elements.ELEMENT_PROPERTIES;
 
     /**
-     * 
-     * @param parser
-     *            StAX Parser
-     * @throws WebserverSystemException
+     * @param parser StAX Parser
      */
-    public ContentModelPropertiesHandler(final StaxParser parser)
-        throws WebserverSystemException {
+    public ContentModelPropertiesHandler(final StaxParser parser) throws WebserverSystemException {
         this.parser = parser;
         this.properties = new ContentModelProperties();
     }
 
     /**
      * Get ContentModelProperties.
-     * 
+     *
      * @return ContentModelProperties.
      */
     public ContentModelProperties getProperties() {
@@ -82,9 +76,6 @@ public class ContentModelPropertiesHandler extends DefaultHandler {
 
     /**
      * @return StartElement
-     * @throws XMLStreamException
-     * @throws InvalidContentException
-     * 
      */
     @Override
     public StartElement startElement(final StartElement element) {
@@ -93,14 +84,9 @@ public class ContentModelPropertiesHandler extends DefaultHandler {
 
     /**
      * @return EndElement
-     * @throws InvalidXmlException
-     * @throws XMLStreamException
-     * @throws UnsupportedEncodingException
-     * 
      */
     @Override
-    public EndElement endElement(final EndElement element)
-        throws InvalidXmlException {
+    public EndElement endElement(final EndElement element) throws InvalidXmlException {
         return element;
     }
 
@@ -115,11 +101,10 @@ public class ContentModelPropertiesHandler extends DefaultHandler {
     @Override
     public String characters(final String data, final StartElement element) {
         final String curPath = parser.getCurPath();
-        if (curPath.equals(XPATH_CONTENT_MODEL_PROPERTIES + '/'
-            + Elements.ELEMENT_NAME)) {
+        if (curPath.equals(XPATH_CONTENT_MODEL_PROPERTIES + '/' + Elements.ELEMENT_NAME)) {
             this.properties.getObjectProperties().setTitle(data);
-        } else if (curPath.equals(XPATH_CONTENT_MODEL_PROPERTIES + '/'
-            + Elements.ELEMENT_DESCRIPTION)) {
+        }
+        else if (curPath.equals(XPATH_CONTENT_MODEL_PROPERTIES + '/' + Elements.ELEMENT_DESCRIPTION)) {
             this.properties.getObjectProperties().setDescription(data);
         }
         return data;

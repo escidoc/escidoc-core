@@ -39,17 +39,14 @@ import java.util.regex.Pattern;
 
 /**
  * Extracts filter-criteria out of filter-xml.
- * 
- * @author Michael Hoppe
  *
+ * @author Michael Hoppe
  */
 public class ExtendedFilterHandler extends DefaultHandler {
 
-    private static final String XPATH_ORDER_BY = '/' + XmlUtility.NAME_PARAM
-        + '/' + XmlUtility.NAME_ORDER_BY;
+    private static final String XPATH_ORDER_BY = '/' + XmlUtility.NAME_PARAM + '/' + XmlUtility.NAME_ORDER_BY;
 
-    private static final String XPATH_FILTER = '/' + XmlUtility.NAME_PARAM
-        + '/' + XmlUtility.NAME_FILTER;
+    private static final String XPATH_FILTER = '/' + XmlUtility.NAME_PARAM + '/' + XmlUtility.NAME_FILTER;
 
     /**
      * The default offset used if no offset is defined in parsed data.
@@ -57,8 +54,7 @@ public class ExtendedFilterHandler extends DefaultHandler {
     private static final int DEFAULT_OFFSET = 0;
 
     /**
-     * The default limitation of the max. number of results used if no
-     * limitation is defined in parsed data.
+     * The default limitation of the max. number of results used if no limitation is defined in parsed data.
      */
     private static final int DEFAULT_LIMIT = 1000;
 
@@ -72,17 +68,12 @@ public class ExtendedFilterHandler extends DefaultHandler {
      */
     private static final Pattern URI_PATTERN = Pattern.compile("[^/]+:.*/.*");
 
-    private static final Pattern NON_URI_PATTERN = Pattern
-        .compile("user|role|top-level-organizational-units"
-            + "|primary-affiliation|limited|granted|policyId|"
-            + XmlUtility.NAME_USER_ID + '|' + XmlUtility.NAME_GROUP_ID + '|'
-            + XmlUtility.NAME_ROLE_ID + '|' + XmlUtility.NAME_OBJECT_ID + '|'
-            + XmlUtility.NAME_STATUS + '|'
-            + XmlUtility.NAME_REVOCATION_DATE_FROM + '|'
-            + XmlUtility.NAME_REVOCATION_DATE_TO + '|'
-            + XmlUtility.NAME_GRANTED_DATE_FROM + '|'
-            + XmlUtility.NAME_GRANTED_DATE_TO + '|'
-            + XmlUtility.NAME_CREATOR_ID + '|' + XmlUtility.NAME_REVOKER_ID);
+    private static final Pattern NON_URI_PATTERN =
+        Pattern.compile("user|role|top-level-organizational-units" + "|primary-affiliation|limited|granted|policyId|"
+            + XmlUtility.NAME_USER_ID + '|' + XmlUtility.NAME_GROUP_ID + '|' + XmlUtility.NAME_ROLE_ID + '|'
+            + XmlUtility.NAME_OBJECT_ID + '|' + XmlUtility.NAME_STATUS + '|' + XmlUtility.NAME_REVOCATION_DATE_FROM
+            + '|' + XmlUtility.NAME_REVOCATION_DATE_TO + '|' + XmlUtility.NAME_GRANTED_DATE_FROM + '|'
+            + XmlUtility.NAME_GRANTED_DATE_TO + '|' + XmlUtility.NAME_CREATOR_ID + '|' + XmlUtility.NAME_REVOKER_ID);
 
     private final StaxParser parser;
 
@@ -103,18 +94,11 @@ public class ExtendedFilterHandler extends DefaultHandler {
     private String orderBy;
 
     /**
-     * Constructs a {@link FilterHandler} object. This constructor implicitly
-     * sets default values:
-     * <ul>
-     * <li>{@link DEFAULT_LIMIT} used if no limit is defined in parsed data</li>
-     * <li>{@link DEFAULT_OFFSET} used if no offset is defined in parsed data</li>
-     * <li>{@link DEFAULT_SORTING} used if no sorting is defined in parsed data</li>
-     * </ul>
-     * 
-     * @param parser
-     *            The {@link StaxParser} to use.
-     * 
+     * Constructs a {@link FilterHandler} object. This constructor implicitly sets default values: <ul> <li>{@link
+     * DEFAULT_LIMIT} used if no limit is defined in parsed data</li> <li>{@link DEFAULT_OFFSET} used if no offset is
+     * defined in parsed data</li> <li>{@link DEFAULT_SORTING} used if no sorting is defined in parsed data</li> </ul>
      *
+     * @param parser The {@link StaxParser} to use.
      */
     public ExtendedFilterHandler(final StaxParser parser) {
 
@@ -123,25 +107,17 @@ public class ExtendedFilterHandler extends DefaultHandler {
         this.objectsToFindIdList = new HashSet<String>();
     }
 
-
     /**
      * See Interface for functional description.
-     * 
-     * @param data
-     * @param element
-     * @return
-     * @throws InvalidContentException
      */
     @Override
-    public String characters(final String data, final StartElement element)
-        throws InvalidContentException {
+    public String characters(final String data, final StartElement element) throws InvalidContentException {
 
         final String localName = element.getLocalName();
         if (this.inFilter) {
             if ("id".equals(localName)) {
-                if (! this.inObjectList) {
-                    throw new InvalidContentException(
-                        "Invalid id element in filter rule.");
+                if (!this.inObjectList) {
+                    throw new InvalidContentException("Invalid id element in filter rule.");
                 }
                 objectsToFindIdList.add(data);
             }
@@ -149,16 +125,13 @@ public class ExtendedFilterHandler extends DefaultHandler {
                 // filtername=objectsToFind has no character data
                 final int indexOfName = element.indexOfAttribute(null, "name");
                 if (indexOfName >= 0) {
-                    String filterName =
-                        element.getAttribute(indexOfName).getValue();
+                    String filterName = element.getAttribute(indexOfName).getValue();
 
                     // filter name MUST be a URI or match the NON_URI_PATTERN
                     final Matcher uriMatcher = URI_PATTERN.matcher(filterName);
                     final Matcher nonUriMatcher = NON_URI_PATTERN.matcher(filterName);
                     if (!uriMatcher.matches() && !nonUriMatcher.matches()) {
-                        throw new InvalidContentException(
-                            StringUtility.format(
-                                "Filter is no URI.", filterName));
+                        throw new InvalidContentException(StringUtility.format("Filter is no URI.", filterName));
                     }
 
                     // temporary because filter-names for retreiveGrants
@@ -189,9 +162,6 @@ public class ExtendedFilterHandler extends DefaultHandler {
 
     /**
      * See Interface for functional description.
-     * 
-     * @param element
-     * @return
      */
     @Override
     public StartElement startElement(final StartElement element) {
@@ -201,20 +171,16 @@ public class ExtendedFilterHandler extends DefaultHandler {
             this.inFilter = true;
             final int indexOfName = element.indexOfAttribute(null, "name");
             if (indexOfName >= 0) {
-                final String filterName =
-                    element.getAttribute(indexOfName).getValue();
+                final String filterName = element.getAttribute(indexOfName).getValue();
                 if (filterName.equals(Constants.DC_IDENTIFIER_URI)) {
                     this.inObjectList = true;
                 }
             }
         }
         else if (curPath.equals(XPATH_ORDER_BY)) {
-            final int indexOfSorting =
-                element.indexOfAttribute(null, XmlUtility.NAME_SORTING);
+            final int indexOfSorting = element.indexOfAttribute(null, XmlUtility.NAME_SORTING);
             if (indexOfSorting >= 0) {
-                this.sorting =
-                    ListSorting.valueOf(element
-                        .getAttribute(indexOfSorting).getValue().toUpperCase());
+                this.sorting = ListSorting.valueOf(element.getAttribute(indexOfSorting).getValue().toUpperCase());
             }
         }
         return element;
@@ -222,9 +188,6 @@ public class ExtendedFilterHandler extends DefaultHandler {
 
     /**
      * See Interface for functional description.
-     * 
-     * @param element
-     * @return
      */
     @Override
     public EndElement endElement(final EndElement element) {
@@ -240,14 +203,10 @@ public class ExtendedFilterHandler extends DefaultHandler {
         return element;
     }
 
-
-
     /**
-     * Temporary Method to transform filter-names for method retreiveGrants into
-     * URIs.
-     * 
-     * @param filterName
-     *            original filterName
+     * Temporary Method to transform filter-names for method retreiveGrants into URIs.
+     *
+     * @param filterName original filterName
      * @return String transformed filterName
      */
     private static String transformFilterName(final String filterName) {
@@ -274,12 +233,10 @@ public class ExtendedFilterHandler extends DefaultHandler {
     }
 
     /**
-     * Returns a Map with the filter names as keys for the filter values. A
-     * special entry is the key <code>objectsToFind</code> for a Set of object
-     * IDs.
-     * 
-     * @return Filter Map
+     * Returns a Map with the filter names as keys for the filter values. A special entry is the key
+     * <code>objectsToFind</code> for a Set of object IDs.
      *
+     * @return Filter Map
      */
     public Map<String, Set<String>> getRules() {
 
@@ -288,10 +245,9 @@ public class ExtendedFilterHandler extends DefaultHandler {
 
     /**
      * Gets the parsed offset.
-     * 
-     * @return Returns the parsed offset. If none has been found, the default
-     *         value {@link FilterHandler.DEFAULT_OFFSET} is returned
      *
+     * @return Returns the parsed offset. If none has been found, the default value {@link FilterHandler.DEFAULT_OFFSET}
+     *         is returned
      */
     public int getOffset() {
 
@@ -300,10 +256,9 @@ public class ExtendedFilterHandler extends DefaultHandler {
 
     /**
      * Gets the parsed limit.
-     * 
-     * @return Returns the parsed limit. If none has been found, the default
-     *         value {@link FilterHandler.DEFAULT_LIMIT} is returned.
      *
+     * @return Returns the parsed limit. If none has been found, the default value {@link FilterHandler.DEFAULT_LIMIT}
+     *         is returned.
      */
     public int getLimit() {
 
@@ -312,10 +267,8 @@ public class ExtendedFilterHandler extends DefaultHandler {
 
     /**
      * Gets the parsed ordering information.
-     * 
-     * @return Returns the parsed ordering information. If none has been found,
-     *         <code>null</code> is returned.
      *
+     * @return Returns the parsed ordering information. If none has been found, <code>null</code> is returned.
      */
     public String getOrderBy() {
         return this.orderBy;
@@ -323,11 +276,9 @@ public class ExtendedFilterHandler extends DefaultHandler {
 
     /**
      * Gets the parsed sorting information.
-     * 
-     * @return Returns the parsed ordering information. If none has been found,
-     *         the default value {@link FilterHandler.DEFAULT_SORTING} is
-     *         returned.
      *
+     * @return Returns the parsed ordering information. If none has been found, the default value {@link
+     *         FilterHandler.DEFAULT_SORTING} is returned.
      */
     public ListSorting getSorting() {
         return this.sorting;

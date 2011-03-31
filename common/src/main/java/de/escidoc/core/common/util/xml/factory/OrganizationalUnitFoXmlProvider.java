@@ -24,14 +24,11 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 
 import java.util.Map;
 
-public final class OrganizationalUnitFoXmlProvider
-    extends InfrastructureFoXmlProvider {
+public final class OrganizationalUnitFoXmlProvider extends InfrastructureFoXmlProvider {
 
-    private static final String ORGANIZATIONAL_UNIT_PATH =
-        "/organizational-unit";
+    private static final String ORGANIZATIONAL_UNIT_PATH = "/organizational-unit";
 
-    private static final String ORGANIZATIONAL_UNIT_RESOURCE_NAME =
-        "organizational-unit";
+    private static final String ORGANIZATIONAL_UNIT_RESOURCE_NAME = "organizational-unit";
 
     private static final String RELS_EXT_RESOURCE_NAME = "rels-ext";
 
@@ -39,31 +36,25 @@ public final class OrganizationalUnitFoXmlProvider
 
     /**
      * Private constructor to prevent initialization.
-     * 
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
+     *
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     private OrganizationalUnitFoXmlProvider() {
     }
 
     /**
      * Gets the organizational unit foxml PROVIDER.
-     * 
-     * @return Returns the <code>OrganizationalUnitFoXmlProvider</code>
-     *         object.
-     * @throws WebserverSystemException
-     *             Thrown if the instance cannot be created due to an internal
-     *             error.
+     *
+     * @return Returns the <code>OrganizationalUnitFoXmlProvider</code> object.
+     * @throws WebserverSystemException Thrown if the instance cannot be created due to an internal error.
      */
     public static OrganizationalUnitFoXmlProvider getInstance() {
         return PROVIDER;
     }
 
-    public String getOrganizationalUnitFoXml(final Map values)
-        throws WebserverSystemException {
+    public String getOrganizationalUnitFoXml(final Map values) throws WebserverSystemException {
 
-        return getXml(ORGANIZATIONAL_UNIT_RESOURCE_NAME,
-            ORGANIZATIONAL_UNIT_PATH, values);
+        return getXml(ORGANIZATIONAL_UNIT_RESOURCE_NAME, ORGANIZATIONAL_UNIT_PATH, values);
     }
 
     public String getRelsExt(final Map values) throws WebserverSystemException {

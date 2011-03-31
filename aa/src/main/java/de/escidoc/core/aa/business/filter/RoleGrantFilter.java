@@ -46,9 +46,8 @@ import java.util.Set;
 import java.util.TreeSet;
 
 /**
- * This class parses a CQL filter to filter for eSciDoc role grants and
- * translates it into a Hibernate query.
- * 
+ * This class parses a CQL filter to filter for eSciDoc role grants and translates it into a Hibernate query.
+ *
  * @author André Schenk
  */
 public class RoleGrantFilter extends CqlFilter {
@@ -58,30 +57,21 @@ public class RoleGrantFilter extends CqlFilter {
     private Set<String> groupIds = new HashSet<String>();
 
     /**
-     * Parse the given CQL query and create a corresponding Hibernate query to
-     * filter for eSciDoc role grants from it.
-     * 
-     * @param query
-     *            CQL query
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a SQL query
+     * Parse the given CQL query and create a corresponding Hibernate query to filter for eSciDoc role grants from it.
+     *
+     * @param query CQL query
+     * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
      */
-    public RoleGrantFilter(final String query)
-        throws InvalidSearchQueryException {
+    public RoleGrantFilter(final String query) throws InvalidSearchQueryException {
         //Adding or Removal of values has also to be done in Method evaluate
         //and in the Hibernate-Class-Method retrieveGrants
         //And adapt method ExtendedFilterHandler.transformFilterName
         // URI-style/ filters////////////////////////////////////////////////////
         // Filter-Names
-        criteriaMap.put(Constants.FILTER_ROLE, new Object[] { COMPARE_EQ,
-            "roleId" });
-        criteriaMap.put(Constants.FILTER_ASSIGNED_ON, new Object[] {
-            COMPARE_EQ, "objectId" });
-        criteriaMap.put(Constants.FILTER_CREATED_BY, new Object[] { COMPARE_EQ,
-            "creatorId" });
-        criteriaMap.put(Constants.FILTER_REVOKED_BY, new Object[] { COMPARE_EQ,
-            "revokerId" });
+        criteriaMap.put(Constants.FILTER_ROLE, new Object[] { COMPARE_EQ, "roleId" });
+        criteriaMap.put(Constants.FILTER_ASSIGNED_ON, new Object[] { COMPARE_EQ, "objectId" });
+        criteriaMap.put(Constants.FILTER_CREATED_BY, new Object[] { COMPARE_EQ, "creatorId" });
+        criteriaMap.put(Constants.FILTER_REVOKED_BY, new Object[] { COMPARE_EQ, "revokerId" });
         criteriaMap.put(Constants.FILTER_USER, new Object[] {});
         criteriaMap.put(Constants.FILTER_GROUP, new Object[] {});
         criteriaMap.put(Constants.FILTER_REVOCATION_DATE, new Object[] {});
@@ -103,27 +93,20 @@ public class RoleGrantFilter extends CqlFilter {
         propertyNamesMap.put(Constants.FILTER_REVOKED_BY, "revokerId");
         propertyNamesMap.put(Constants.FILTER_USER, "userId");
         propertyNamesMap.put(Constants.FILTER_GROUP, "groupId");
-        propertyNamesMap
-            .put(Constants.FILTER_REVOCATION_DATE, "revocationDate");
+        propertyNamesMap.put(Constants.FILTER_REVOCATION_DATE, "revocationDate");
         propertyNamesMap.put(Constants.FILTER_CREATION_DATE, "creationDate");
-        propertyNamesMap.put(TripleStoreUtility.PROP_CREATED_BY_ID,
-            "userAccountByCreatorId.id");
-        propertyNamesMap.put(TripleStoreUtility.PROP_MODIFIED_BY_ID,
-            "userAccountByModifiedById.id");
+        propertyNamesMap.put(TripleStoreUtility.PROP_CREATED_BY_ID, "userAccountByCreatorId.id");
+        propertyNamesMap.put(TripleStoreUtility.PROP_MODIFIED_BY_ID, "userAccountByModifiedById.id");
         propertyNamesMap.put(Constants.FILTER_GRANTED_FROM, "grantedFrom");
         propertyNamesMap.put(Constants.FILTER_GRANTED_TO, "grantedTo");
         // //////////////////////////////////////////////////////////////////////
 
         // Path-style filters////////////////////////////////////////////////////
         // Filter-Names
-        criteriaMap.put(Constants.FILTER_PATH_ROLE_ID, new Object[] { COMPARE_EQ,
-            "roleId" });
-        criteriaMap.put(Constants.FILTER_PATH_ASSIGNED_ON_ID, new Object[] {
-            COMPARE_EQ, "objectId" });
-        criteriaMap.put(Constants.FILTER_PATH_CREATED_BY_ID, new Object[] { COMPARE_EQ,
-            "creatorId" });
-        criteriaMap.put(Constants.FILTER_PATH_REVOKED_BY_ID, new Object[] { COMPARE_EQ,
-            "revokerId" });
+        criteriaMap.put(Constants.FILTER_PATH_ROLE_ID, new Object[] { COMPARE_EQ, "roleId" });
+        criteriaMap.put(Constants.FILTER_PATH_ASSIGNED_ON_ID, new Object[] { COMPARE_EQ, "objectId" });
+        criteriaMap.put(Constants.FILTER_PATH_CREATED_BY_ID, new Object[] { COMPARE_EQ, "creatorId" });
+        criteriaMap.put(Constants.FILTER_PATH_REVOKED_BY_ID, new Object[] { COMPARE_EQ, "revokerId" });
         criteriaMap.put(Constants.FILTER_PATH_USER_ID, new Object[] {});
         criteriaMap.put(Constants.FILTER_PATH_GROUP_ID, new Object[] {});
         criteriaMap.put(Constants.FILTER_PATH_REVOCATION_DATE, new Object[] {});
@@ -145,8 +128,7 @@ public class RoleGrantFilter extends CqlFilter {
         propertyNamesMap.put(Constants.FILTER_PATH_REVOKED_BY_ID, "revokerId");
         propertyNamesMap.put(Constants.FILTER_PATH_USER_ID, "userId");
         propertyNamesMap.put(Constants.FILTER_PATH_GROUP_ID, "groupId");
-        propertyNamesMap
-            .put(Constants.FILTER_PATH_REVOCATION_DATE, "revocationDate");
+        propertyNamesMap.put(Constants.FILTER_PATH_REVOCATION_DATE, "revocationDate");
         propertyNamesMap.put(Constants.FILTER_PATH_CREATION_DATE, "creationDate");
         propertyNamesMap.put(Constants.FILTER_PATH_GRANTED_FROM, "grantedFrom");
         propertyNamesMap.put(Constants.FILTER_PATH_GRANTED_TO, "grantedTo");
@@ -156,8 +138,7 @@ public class RoleGrantFilter extends CqlFilter {
             try {
                 final CQLParser parser = new CQLParser();
 
-                this.detachedCriteria =
-                    DetachedCriteria.forClass(RoleGrant.class, "roleGrant");
+                this.detachedCriteria = DetachedCriteria.forClass(RoleGrant.class, "roleGrant");
 
                 final Criterion criterion = evaluate(parser.parse(query));
 
@@ -173,82 +154,56 @@ public class RoleGrantFilter extends CqlFilter {
 
     /**
      * Evaluate a CQL term node.
-     * 
-     * @param node
-     *            CQL node
-     * 
+     *
+     * @param node CQL node
      * @return Hibernate query reflecting the given CQL query
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a SQL query
+     * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
      */
     @Override
-    protected Criterion evaluate(final CQLTermNode node)
-        throws InvalidSearchQueryException {
+    protected Criterion evaluate(final CQLTermNode node) throws InvalidSearchQueryException {
         Criterion result = null;
         final Object[] parts = criteriaMap.get(node.getIndex());
         final String value = node.getTerm();
 
         if (parts != null && !specialCriteriaNames.contains(node.getIndex())) {
-            result =
-                evaluate(node.getRelation(), (String) parts[1], value,
-                    (Integer) parts[0] == COMPARE_LIKE);
+            result = evaluate(node.getRelation(), (String) parts[1], value, (Integer) parts[0] == COMPARE_LIKE);
         }
         else {
             final String columnName = node.getIndex();
 
             if (columnName != null) {
-                if (columnName.equals(Constants.FILTER_USER)
-                    || columnName.equals(Constants.FILTER_PATH_USER_ID)) {
+                if (columnName.equals(Constants.FILTER_USER) || columnName.equals(Constants.FILTER_PATH_USER_ID)) {
                     userIds.add(value);
                 }
-                else if (columnName.equals(Constants.FILTER_GROUP)
-                    || columnName.equals(Constants.FILTER_PATH_GROUP_ID)) {
+                else if (columnName.equals(Constants.FILTER_GROUP) || columnName.equals(Constants.FILTER_PATH_GROUP_ID)) {
                     groupIds.add(value);
                 }
                 else if (columnName.equals(Constants.FILTER_REVOCATION_DATE)
                     || columnName.equals(Constants.FILTER_PATH_REVOCATION_DATE)) {
                     result =
-                        evaluate(
-                            node.getRelation(),
-                            "revocationDate",
-                            value != null && value.length() > 0 ? new Date(
-                                new DateTime(value).getMillis())
-                                : null, false);
+                        evaluate(node.getRelation(), "revocationDate", value != null && value.length() > 0 ? new Date(
+                            new DateTime(value).getMillis()) : null, false);
                 }
                 else if (columnName.equals(Constants.FILTER_CREATION_DATE)
                     || columnName.equals(Constants.FILTER_PATH_CREATION_DATE)) {
                     result =
-                        evaluate(
-                            node.getRelation(),
-                            "creationDate",
-                            value != null && value.length() > 0 ? new Date(
-                                new DateTime(value).getMillis())
-                                : null, false);
+                        evaluate(node.getRelation(), "creationDate", value != null && value.length() > 0 ? new Date(
+                            new DateTime(value).getMillis()) : null, false);
                 }
                 else if (columnName.equals(Constants.FILTER_GRANTED_FROM)
                     || columnName.equals(Constants.FILTER_PATH_GRANTED_FROM)) {
                     result =
-                        evaluate(
-                            node.getRelation(),
-                            "grantedFrom",
-                            value != null && value.length() > 0 ? new Date(
-                                new DateTime(value).getMillis())
-                                : null, false);
+                        evaluate(node.getRelation(), "grantedFrom", value != null && value.length() > 0 ? new Date(
+                            new DateTime(value).getMillis()) : null, false);
                 }
                 else if (columnName.equals(Constants.FILTER_GRANTED_TO)
                     || columnName.equals(Constants.FILTER_PATH_GRANTED_TO)) {
                     result =
-                        evaluate(
-                            node.getRelation(),
-                            "grantedTo",
-                            value != null && value.length() > 0 ? new Date(
-                                new DateTime(value).getMillis())
-                                : null, false);
+                        evaluate(node.getRelation(), "grantedTo", value != null && value.length() > 0 ? new Date(
+                            new DateTime(value).getMillis()) : null, false);
                 }
                 else {
-                    throw new InvalidSearchQueryException(
-                        "unknown filter criteria: " + columnName);
+                    throw new InvalidSearchQueryException("unknown filter criteria: " + columnName);
                 }
             }
         }
@@ -257,7 +212,7 @@ public class RoleGrantFilter extends CqlFilter {
 
     /**
      * Get the list of the collected user group ids.
-     * 
+     *
      * @return list of the collected user group ids
      */
     public Set<String> getGroupIds() {
@@ -265,9 +220,8 @@ public class RoleGrantFilter extends CqlFilter {
     }
 
     /**
-     * Get all property names that are allowed as filter criteria for that
-     * filter.
-     * 
+     * Get all property names that are allowed as filter criteria for that filter.
+     *
      * @return all property names for that filter
      */
     @Override
@@ -279,7 +233,7 @@ public class RoleGrantFilter extends CqlFilter {
 
     /**
      * Get the list of the collected user account ids.
-     * 
+     *
      * @return list of the collected user account ids
      */
     public Set<String> getUserIds() {
@@ -288,9 +242,8 @@ public class RoleGrantFilter extends CqlFilter {
 
     /**
      * Set the list of user groups.
-     * 
-     * @param groupIds
-     *            list of user groups.
+     *
+     * @param groupIds list of user groups.
      */
     public void setGroupIds(final Set<String> groupIds) {
         this.groupIds = groupIds;
@@ -298,9 +251,8 @@ public class RoleGrantFilter extends CqlFilter {
 
     /**
      * Set the list of user accounts.
-     * 
-     * @param userIds
-     *            list of user accounts.
+     *
+     * @param userIds list of user accounts.
      */
     public void setUserIds(final Set<String> userIds) {
         this.userIds = userIds;
@@ -308,11 +260,9 @@ public class RoleGrantFilter extends CqlFilter {
 
     /**
      * Convert the CQL filter into a Hibernate query.
-     * 
+     *
      * @return Hibernate query representing this filter
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a SQL query
+     * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
      */
     @Override
     public DetachedCriteria toSql() throws InvalidSearchQueryException {

@@ -35,16 +35,12 @@ import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 /**
- * Stax handler implementation that handles the attributes that have to be
- * fetched from an component Xml representation or the component's properties
- * Xml representation.<br>
- * This handler extracts the attributes ...:item:component:valid-status,
- * ...:item:component:visibility, ...:item:component:content-category, and
- * ...:item:component:created-by. The attributes found are stored in the
- * <code>RequestAttributesCache</code>.
- * 
- * @author Torsten Tetteroo
+ * Stax handler implementation that handles the attributes that have to be fetched from an component Xml representation
+ * or the component's properties Xml representation.<br> This handler extracts the attributes
+ * ...:item:component:valid-status, ...:item:component:visibility, ...:item:component:content-category, and
+ * ...:item:component:created-by. The attributes found are stored in the <code>RequestAttributesCache</code>.
  *
+ * @author Torsten Tetteroo
  */
 public class ComponentStaxHandler extends DefaultHandler {
 
@@ -54,44 +50,30 @@ public class ComponentStaxHandler extends DefaultHandler {
 
     /**
      * The constructor.
-     * 
-     * @param ctx
-     *            The <code>EvaluationCtx</code> for that the item xml
-     *            representation shall be parsed. Found attributes are cached
-     *            using this context as part of the key.
-     * @param componentId
-     *            The id of the item's component. Used as part of the cache key.
+     *
+     * @param ctx         The <code>EvaluationCtx</code> for that the item xml representation shall be parsed. Found
+     *                    attributes are cached using this context as part of the key.
+     * @param componentId The id of the item's component. Used as part of the cache key.
      */
-    public ComponentStaxHandler(final EvaluationCtx ctx,
-        final String componentId) {
+    public ComponentStaxHandler(final EvaluationCtx ctx, final String componentId) {
 
         this.ctx = ctx;
         this.componentId = componentId;
     }
 
-
-
     /**
      * See Interface for functional description.
-     * 
-     * @param element
-     * @return
-     * @throws Exception
-     * @see DefaultHandler
-     *      #startElement
-     *      (de.escidoc.core.common.util.xml.stax.events.StartElement)
      *
+     * @see DefaultHandler #startElement (de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
-    public StartElement startElement(final StartElement element)
-        throws Exception {
+    public StartElement startElement(final StartElement element) throws Exception {
 
         if (isNotReady()) {
             final String localName = element.getLocalName();
             if (XmlUtility.NAME_CREATED_BY.equals(localName)) {
                 AbstractResourceAttributeStaxHandler.cacheAttribute(this.ctx, this.componentId,
-                    AttributeIds.URN_ITEM_COMPONENT_CREATED_BY_ATTR, XmlUtility
-                        .getIdFromStartElement(element));
+                    AttributeIds.URN_ITEM_COMPONENT_CREATED_BY_ATTR, XmlUtility.getIdFromStartElement(element));
             }
         }
 
@@ -100,19 +82,11 @@ public class ComponentStaxHandler extends DefaultHandler {
 
     /**
      * See Interface for functional description.
-     * 
-     * @param data
-     * @param element
-     * @return
-     * @throws Exception
-     * @see DefaultHandler
-     *      #characters(java.lang.String,
-     *      de.escidoc.core.common.util.xml.stax.events.StartElement)
      *
+     * @see DefaultHandler #characters(java.lang.String, de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
-    public String characters(final String data, final StartElement element)
-        throws Exception {
+    public String characters(final String data, final StartElement element) throws Exception {
 
         if (isNotReady()) {
             super.characters(data, element);
@@ -127,15 +101,12 @@ public class ComponentStaxHandler extends DefaultHandler {
                     AttributeIds.URN_ITEM_COMPONENT_VISIBILITY_ATTR, data);
             }
             else if (XmlUtility.NAME_CONTENT_CATEGORY.equals(localName)) {
-                AbstractResourceAttributeStaxHandler
-                    .cacheAttribute(this.ctx, this.componentId,
-                        AttributeIds.URN_ITEM_COMPONENT_CONTENT_CATEGORY_ATTR,
-                        data);
+                AbstractResourceAttributeStaxHandler.cacheAttribute(this.ctx, this.componentId,
+                    AttributeIds.URN_ITEM_COMPONENT_CONTENT_CATEGORY_ATTR, data);
             }
         }
 
         return data;
     }
-
 
 }

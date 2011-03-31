@@ -24,26 +24,25 @@ import de.escidoc.core.common.business.Constants;
 
 /**
  * Enumeration to describe all types of resources.
- * 
+ *
  * @author André Schenk
  */
 public enum ResourceType {
-    CONTAINER        ("container",           Constants.CONTAINER_OBJECT_TYPE),
-    CONTEXT          ("context",             Constants.CONTEXT_OBJECT_TYPE),
-    ITEM             ("item",                Constants.ITEM_OBJECT_TYPE),
-    OU               ("organizational-unit", Constants.ORGANIZATIONAL_UNIT_OBJECT_TYPE),
-    COMPONENT        ("component",           Constants.COMPONENT_OBJECT_TYPE),
-    CONTENT_MODEL    ("content-model",       Constants.CONTENT_MODEL_OBJECT_TYPE),
-    CONTENT_RELATION ("content-relation",    Constants.CONTENT_RELATION2_OBJECT_TYPE);
+    CONTAINER("container", Constants.CONTAINER_OBJECT_TYPE), CONTEXT("context", Constants.CONTEXT_OBJECT_TYPE), ITEM(
+        "item", Constants.ITEM_OBJECT_TYPE), OU("organizational-unit", Constants.ORGANIZATIONAL_UNIT_OBJECT_TYPE), COMPONENT(
+        "component", Constants.COMPONENT_OBJECT_TYPE), CONTENT_MODEL("content-model",
+        Constants.CONTENT_MODEL_OBJECT_TYPE), CONTENT_RELATION("content-relation",
+        Constants.CONTENT_RELATION2_OBJECT_TYPE);
 
     private final String label;
+
     private final String uri;
 
     /**
      * Create a new object.
      *
      * @param label object label
-     * @param uri object type URI
+     * @param uri   object type URI
      */
     ResourceType(final String label, final String uri) {
         this.label = label;
@@ -54,7 +53,6 @@ public enum ResourceType {
      * Get the corresponding ResourceType object from the given object type URI.
      *
      * @param uri object type URI
-     *
      * @return corresponding ResourceType object
      */
     public static ResourceType getResourceTypeFromUri(final String uri) {

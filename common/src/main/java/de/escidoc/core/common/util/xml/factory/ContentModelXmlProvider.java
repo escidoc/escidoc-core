@@ -25,14 +25,11 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import java.util.Map;
 
 /**
- * Content Model specific implementation of XmlTemplateProvider using the
- * velocity template engine.<br>
- * This implementation uses the velocity singleton pattern.
- * 
- * @see InfrastructureXmlProvider
- * 
- * @author Frank Schwichtenberg
+ * Content Model specific implementation of XmlTemplateProvider using the velocity template engine.<br> This
+ * implementation uses the velocity singleton pattern.
  *
+ * @author Frank Schwichtenberg
+ * @see InfrastructureXmlProvider
  */
 public final class ContentModelXmlProvider extends InfrastructureXmlProvider {
 
@@ -44,8 +41,7 @@ public final class ContentModelXmlProvider extends InfrastructureXmlProvider {
 
     public static final String RESOURCES_RESOURCE_NAME = "resources";
 
-    public static final String PROPERTIES_ROOT_ATTRIBUTES_RESOURCE_NAME =
-        "propertiesRootAttributes";
+    public static final String PROPERTIES_ROOT_ATTRIBUTES_RESOURCE_NAME = "propertiesRootAttributes";
 
     public static final String PROPERTIES_PATH = PATH;
 
@@ -57,13 +53,11 @@ public final class ContentModelXmlProvider extends InfrastructureXmlProvider {
 
     public static final String CURRENT_VERSION_RESOURCE_NAME = "currentVersion";
 
-    public static final String CURRENT_VERSION_RESOURCE_NAME_PID =
-        "currentVersionPid";
+    public static final String CURRENT_VERSION_RESOURCE_NAME_PID = "currentVersionPid";
 
     public static final String OBJECT_PID_RESOURCE_NAME = "objectPid";
 
-    public static final String CURRENT_VERSION_PROPERTIES_PATH =
-        PROPERTIES_PATH;
+    public static final String CURRENT_VERSION_PROPERTIES_PATH = PROPERTIES_PATH;
 
     public static final String LATEST_VERSION_RESOURCE_NAME = "latestVersion";
 
@@ -71,20 +65,17 @@ public final class ContentModelXmlProvider extends InfrastructureXmlProvider {
 
     public static final String LATEST_REVISION_RESOURCE_NAME = "latestRevision";
 
-    public static final String LATEST_REVISION_PROPERTIES_PATH =
-        PROPERTIES_PATH;
+    public static final String LATEST_REVISION_PROPERTIES_PATH = PROPERTIES_PATH;
 
     public static final String MD_RECORDS_RESOURCE_NAME = "md-records";
 
     public static final String MD_RECORD_RESOURCE_NAME = "md-record";
 
-    public static final String CONTENT_STREAMS_RESOURCE_NAME =
-        "content-streams";
+    public static final String CONTENT_STREAMS_RESOURCE_NAME = "content-streams";
 
     public static final String CONTENT_STREAM_RESOURCE_NAME = "content-stream";
 
-    public static final String MD_RECORDS_ROOT_ATTRIBUTES_RESOURCE_NAME =
-        "mdRecordsRootAttributes";
+    public static final String MD_RECORDS_ROOT_ATTRIBUTES_RESOURCE_NAME = "mdRecordsRootAttributes";
 
     public static final String COMMON_PATH = "/common";
 
@@ -104,8 +95,7 @@ public final class ContentModelXmlProvider extends InfrastructureXmlProvider {
 
     public static final String COMPONENTS_RESOURCE_NAME = "components";
 
-    public static final String COMPONENTS_ROOT_ATTRIBUTES_RESOURCE_NAME =
-        "componentsRootAttributes";
+    public static final String COMPONENTS_ROOT_ATTRIBUTES_RESOURCE_NAME = "componentsRootAttributes";
 
     private static final ContentModelXmlProvider PROVIDER = new ContentModelXmlProvider();
 
@@ -114,83 +104,67 @@ public final class ContentModelXmlProvider extends InfrastructureXmlProvider {
 
     /**
      * Get the eSciDoc XML document to deliver.
-     * 
-     * @param values
-     *            Map of values.
+     *
+     * @param values Map of values.
      * @return The eSciDoc Content Model document.
-     * @throws WebserverSystemException
-     *             If an error occurs.
+     * @throws WebserverSystemException If an error occurs.
      */
-    public String getContentModelXml(final Map<String, Object> values)
-        throws WebserverSystemException {
+    public String getContentModelXml(final Map<String, Object> values) throws WebserverSystemException {
 
         return getXml(RESOURCE_NAME, PATH, values);
     }
 
     /**
      * Get the eSciDoc XML document to deliver.
-     * 
-     * @param properties
-     *            Map of values.
+     *
+     * @param properties Map of values.
      * @return The eSciDoc Content Model Properties document.
-     * @throws WebserverSystemException
-     *             If an error occurs.
+     * @throws WebserverSystemException If an error occurs.
      */
-    public String getContentModelPropertiesXml(
-        final Map<String, String> properties) throws WebserverSystemException {
+    public String getContentModelPropertiesXml(final Map<String, String> properties) throws WebserverSystemException {
 
         return getXml(PROPERTIES_RESOURCE_NAME, PROPERTIES_PATH, properties);
     }
 
     /**
      * Get the eSciDoc XML document to deliver.
-     * 
-     * @param properties
-     *            Map of values.
+     *
+     * @param properties Map of values.
      * @return The eSciDoc Content Model Resources document.
-     * @throws WebserverSystemException
-     *             If an error occurs.
+     * @throws WebserverSystemException If an error occurs.
      */
-    public String getContentModelResourcesXml(
-        final Map<String, String> properties) throws WebserverSystemException {
+    public String getContentModelResourcesXml(final Map<String, String> properties) throws WebserverSystemException {
 
         return getXml(RESOURCES_RESOURCE_NAME, PATH, properties);
     }
 
     /**
      * Get the eSciDoc XML document to deliver.
-     * 
-     * @param values
-     *            Map of values.
+     *
+     * @param values Map of values.
      * @return The eSciDoc Content Model Content Streams document.
-     * @throws WebserverSystemException
-     *             If an error occurs.
+     * @throws WebserverSystemException If an error occurs.
      */
-    public String getContentStreamsXml(final Map<String, Object> values)
-        throws WebserverSystemException {
+    public String getContentStreamsXml(final Map<String, Object> values) throws WebserverSystemException {
 
-        return getXml(CONTENT_STREAMS_RESOURCE_NAME, CONTENT_STREAM_PATH,
-            values);
+        return getXml(CONTENT_STREAMS_RESOURCE_NAME, CONTENT_STREAM_PATH, values);
     }
 
     /**
      * Get the eSciDoc XML document to deliver.
-     * 
-     * @param values
-     *            Map of values.
+     *
+     * @param values Map of values.
      * @return The eSciDoc Content Model Content Stream document.
-     * @throws WebserverSystemException
-     *             If an error occurs.
+     * @throws WebserverSystemException If an error occurs.
      */
-    public String getContentStreamXml(final Map<String, Object> values)
-        throws WebserverSystemException {
+    public String getContentStreamXml(final Map<String, Object> values) throws WebserverSystemException {
 
         return getXml(CONTENT_STREAM_RESOURCE_NAME, CONTENT_STREAM_PATH, values);
     }
 
     /**
      * Returns an instance of this.
-     * 
+     *
      * @return The singleton.
      */
     public static ContentModelXmlProvider getInstance() {

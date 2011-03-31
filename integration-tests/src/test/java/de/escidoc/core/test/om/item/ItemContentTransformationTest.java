@@ -43,12 +43,11 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
 /**
- * 
  * @author Steffen Wagner
- * 
  */
 @RunWith(value = Parameterized.class)
-@Ignore // DigiLib Test sollen laut Matthias für das 1.3 Realease deaktiviert werden.
+@Ignore
+// DigiLib Test sollen laut Matthias für das 1.3 Realease deaktiviert werden.
 public class ItemContentTransformationTest extends ItemTestBase {
 
     private String itemId = null;
@@ -62,8 +61,7 @@ public class ItemContentTransformationTest extends ItemTestBase {
     private int componentNo = 2;
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ItemContentTransformationTest(final int transport) {
         super(transport);
@@ -71,16 +69,14 @@ public class ItemContentTransformationTest extends ItemTestBase {
 
     /**
      * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Before
     public void setUp() throws Exception {
         if (itemId == null) {
             itemXml =
-                EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
-                    + "/" + getTransport(false),
+                EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
                     "escidoc_item_for_image_transformation.xml");
 
             createdItem = EscidocRestSoapTestBase.getDocument(create(itemXml));
@@ -88,18 +84,13 @@ public class ItemContentTransformationTest extends ItemTestBase {
 
             submit(itemId, getTheLastModificationParam(false, itemId));
             String versionId = itemId + ":1";
-            assignVersionPid(versionId, getPidParam(versionId,
-                "http://localhost:8080/ir/item/" + versionId));
+            assignVersionPid(versionId, getPidParam(versionId, "http://localhost:8080/ir/item/" + versionId));
 
             release(itemId, getTheLastModificationParam(false, itemId));
 
             componentNo = 1;
-            componentId =
-                getObjidValue(getTransport(), createdItem,
-                    "/item/components/component[1]");
-            Node node =
-                selectSingleNode(createdItem,
-                    "/item/components/component[1]/properties/description");
+            componentId = getObjidValue(getTransport(), createdItem, "/item/components/component[1]");
+            Node node = selectSingleNode(createdItem, "/item/components/component[1]/properties/description");
             if (node == null) {
                 componentNo = 2;
             }
@@ -108,38 +99,29 @@ public class ItemContentTransformationTest extends ItemTestBase {
 
     /**
      * Test successfully retrieving the component of an item.
-     * 
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testItComRetr() throws Exception {
 
-        componentId =
-            getObjidValue(getTransport(), createdItem,
-                "/item/components/component[properties]");
+        componentId = getObjidValue(getTransport(), createdItem, "/item/components/component[properties]");
 
         retrieveComponentProperties(itemId, componentId);
         String templateProperties =
-            toString(
-                selectSingleNode(EscidocRestSoapTestBase.getDocument(itemXml),
-                    "/item/components/component[properties/description]/properties"),
-                true);
+            toString(selectSingleNode(EscidocRestSoapTestBase.getDocument(itemXml),
+                "/item/components/component[properties/description]/properties"), true);
 
         componentId =
-            getObjidValue(getTransport(), createdItem,
-                "/item/components/component[not(properties/description)]");
+            getObjidValue(getTransport(), createdItem, "/item/components/component[not(properties/description)]");
 
         retrieveComponentProperties(itemId, componentId);
     }
 
     /**
      * Test retrieving the content with transformation of an unknown item.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOMRCP2a() throws Exception {
@@ -150,38 +132,33 @@ public class ItemContentTransformationTest extends ItemTestBase {
             fail(ec + " expected but no error occurred!");
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
 
     }
 
     /**
      * Test retrieving the content of an item.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOMRCP2b() throws Exception {
         Class<?> ec = ComponentNotFoundException.class;
         try {
-            retrieveBinaryContent(itemId, "unknown", "digilib",
-                "?ws=1.0&wy=0.8&wh=1.8&ww=0.3&wx=0.1&dw=600&dh=300");
+            retrieveBinaryContent(itemId, "unknown", "digilib", "?ws=1.0&wy=0.8&wh=1.8&ww=0.3&wx=0.1&dw=600&dh=300");
             fail(ec + " expected but no error occurred!");
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
 
     }
 
     /**
      * Test retrieving the content of an item (multiple times).
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOMRCt1() throws Exception {
@@ -191,9 +168,7 @@ public class ItemContentTransformationTest extends ItemTestBase {
 
         if (getTransport() == Constants.TRANSPORT_REST) {
             xpath += "@href";
-            String debug =
-                toString(selectSingleNode(createdItem, "/item/components"),
-                    false);
+            String debug = toString(selectSingleNode(createdItem, "/item/components"), false);
             Node component = selectSingleNode(createdItem, xpath);
             assertNotNull("Missing Component in Item", component);
             String href = component.getNodeValue();
@@ -206,15 +181,13 @@ public class ItemContentTransformationTest extends ItemTestBase {
 
         // FIXME replace this with a method to retrieve binary content and
         // compare the delivered afterwards.
-        retrieveBinaryContent(itemId, compId, "digilib",
-            "?ws=1.0&wy=0.8&wh=1.8&ww=0.3&wx=0.1&dw=600&dh=300");
+        retrieveBinaryContent(itemId, compId, "digilib", "?ws=1.0&wy=0.8&wh=1.8&ww=0.3&wx=0.1&dw=600&dh=300");
     }
 
     /**
      * Test retrieving the content of an item with NON-ASCII parameter.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOMRCt2() throws Exception {
@@ -226,9 +199,8 @@ public class ItemContentTransformationTest extends ItemTestBase {
 
     /**
      * Test retrieving the content of item multiple times (stress)
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOMRCt3() throws Exception {

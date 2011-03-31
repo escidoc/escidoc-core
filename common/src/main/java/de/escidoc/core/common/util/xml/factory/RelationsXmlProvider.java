@@ -37,8 +37,7 @@ public final class RelationsXmlProvider extends InfrastructureXmlProvider {
 
     public static final String RELATION_PATH = "/common";
 
-    public static final String RELATIONS_ROOT_ATTRIBUTES_RESOURCE_NAME =
-        "relationsRootAttributes";
+    public static final String RELATIONS_ROOT_ATTRIBUTES_RESOURCE_NAME = "relationsRootAttributes";
 
     private static final RelationsXmlProvider PROVIDER = new RelationsXmlProvider();
 
@@ -47,9 +46,8 @@ public final class RelationsXmlProvider extends InfrastructureXmlProvider {
 
     /**
      * Get the Escidoc xml document to deliver.
-     * 
+     *
      * @return The Escidoc item document.
-     * @throws WebserverSystemException
      */
 
     public static RelationsXmlProvider getInstance() {
@@ -58,51 +56,40 @@ public final class RelationsXmlProvider extends InfrastructureXmlProvider {
 
     /**
      * Get XML representation of Relations.
-     * 
-     * @param values
-     *            value map
+     *
+     * @param values value map
      * @return XML representation of Relations
-     * @throws WebserverSystemException
-     *             Thrown if rending failed
+     * @throws WebserverSystemException Thrown if rending failed
      */
-    public String getRelationsXml(final Map values)
-        throws WebserverSystemException {
+    public String getRelationsXml(final Map values) throws WebserverSystemException {
 
         return getXml(RELATIONS_RESOURCE_NAME, RELATIONS_PATH, values);
     }
 
     /**
      * Get XML representation of Relation.
-     * 
-     * @param values
-     *            value map
+     *
+     * @param values value map
      * @return XML representation of Relations
-     * @throws WebserverSystemException
-     *             Thrown if rending failed
+     * @throws WebserverSystemException Thrown if rending failed
      */
-    public String getRelationXml(final Map values)
-        throws WebserverSystemException {
+    public String getRelationXml(final Map values) throws WebserverSystemException {
 
         return getXml(RELATION_RESOURCE_NAME, RELATION_PATH, values);
     }
 
     /**
      * Get attributes of root element of Relations.
-     * 
-     * @param values
-     *            value map
+     *
+     * @param values value map
      * @return XML representation of Relations
-     * @throws WebserverSystemException
-     *             Thrown if rending failed
+     * @throws WebserverSystemException Thrown if rending failed
      */
-    public String getRelationsRootAttributes(final Object values)
-        throws WebserverSystemException {
+    public String getRelationsRootAttributes(final Object values) throws WebserverSystemException {
 
         String result = "";
         if (values instanceof Map) {
-            result =
-                getXml(RELATIONS_ROOT_ATTRIBUTES_RESOURCE_NAME, RELATIONS_PATH,
-                    (Map) values);
+            result = getXml(RELATIONS_ROOT_ATTRIBUTES_RESOURCE_NAME, RELATIONS_PATH, (Map) values);
         }
         return result;
     }

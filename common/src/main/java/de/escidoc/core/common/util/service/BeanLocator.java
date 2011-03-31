@@ -42,9 +42,8 @@ import org.springframework.beans.factory.access.SingletonBeanFactoryLocator;
 
 /**
  * Class supporting locating of spring beans and the resource handler's EJBs.
- * 
+ *
  * @author Torsten Tetteroo
- * 
  */
 public final class BeanLocator {
 
@@ -73,37 +72,29 @@ public final class BeanLocator {
     }
 
     public static BeanFactory getBeanFactory(final String beanContextId) {
-        final BeanFactoryLocator beanFactoryLocator =
-            SingletonBeanFactoryLocator.getInstance();
+        final BeanFactoryLocator beanFactoryLocator = SingletonBeanFactoryLocator.getInstance();
         return beanFactoryLocator.useBeanFactory(beanContextId).getFactory();
     }
 
-    public static Object getBean(final String beanFactoryId, final String beanId)
-        throws WebserverSystemException {
+    public static Object getBean(final String beanFactoryId, final String beanId) throws WebserverSystemException {
 
         try {
             return getBeanFactory(beanFactoryId).getBean(beanId);
         }
         catch (final Exception e) {
-            throw new WebserverSystemException(e.getMessage()
-                + " for BeanFactory " + beanFactoryId, e);
+            throw new WebserverSystemException(e.getMessage() + " for BeanFactory " + beanFactoryId, e);
         }
     }
 
     /**
      * Gets the type of the specified bean from the specified bean factory.
-     * 
-     * @param beanFactoryId
-     *            The id of the factory bean.
-     * @param beanId
-     *            The id of the bean.
+     *
+     * @param beanFactoryId The id of the factory bean.
+     * @param beanId        The id of the bean.
      * @return Returns the bean.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error during bean creation.
+     * @throws WebserverSystemException Thrown in case of an internal error during bean creation.
      */
-    public static Class<?> getBeanType(
-        final String beanFactoryId, final String beanId)
-        throws WebserverSystemException {
+    public static Class<?> getBeanType(final String beanFactoryId, final String beanId) throws WebserverSystemException {
 
         try {
             return getBeanFactory(beanFactoryId).getType(beanId);
@@ -115,201 +106,167 @@ public final class BeanLocator {
 
     /**
      * Locates the admin handler EJB bean.
-     * 
+     *
      * @return Returns the located admin handler EJB bean.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error during bean creation.
+     * @throws WebserverSystemException Thrown in case of an internal error during bean creation.
      */
-    public static AdminHandlerInterface locateAdminHandler()
-        throws WebserverSystemException {
+    public static AdminHandlerInterface locateAdminHandler() throws WebserverSystemException {
 
-        return (AdminHandlerInterface) getBean(ADM_FACTORY_ID,
-            "service.AdminHandler");
+        return (AdminHandlerInterface) getBean(ADM_FACTORY_ID, "service.AdminHandler");
     }
 
     /**
      * Locates the policy decision point (PDP) EJB bean.
-     * 
+     *
      * @return Returns the located policy decision point EJB bean.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error during bean creation.
+     * @throws WebserverSystemException Thrown in case of an internal error during bean creation.
      */
-    public static PolicyDecisionPointInterface locatePolicyDecisionPoint()
-        throws WebserverSystemException {
+    public static PolicyDecisionPointInterface locatePolicyDecisionPoint() throws WebserverSystemException {
 
         return (PolicyDecisionPointInterface) getBean(AA_FACTORY_ID, "service.PolicyDecisionPoint");
     }
 
     /**
      * Locates the container handler EJB bean.
-     * 
+     *
      * @return Returns the located container handler EJB bean.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error during bean creation.
+     * @throws WebserverSystemException Thrown in case of an internal error during bean creation.
      */
-    public static ContainerHandlerInterface locateContainerHandler()
-        throws WebserverSystemException {
+    public static ContainerHandlerInterface locateContainerHandler() throws WebserverSystemException {
 
         return (ContainerHandlerInterface) getBean(OM_FACTORY_ID, "service.ContainerHandler");
     }
 
     /**
      * Locates the context handler EJB bean.
-     * 
+     *
      * @return Returns the located context handler EJB bean.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error during bean creation.
+     * @throws WebserverSystemException Thrown in case of an internal error during bean creation.
      */
-    public static ContextHandlerInterface locateContextHandler()
-        throws WebserverSystemException {
+    public static ContextHandlerInterface locateContextHandler() throws WebserverSystemException {
 
         return (ContextHandlerInterface) getBean(OM_FACTORY_ID, "service.ContextHandler");
     }
 
     /**
      * Locates the Content Model handler EJB bean.
-     * 
+     *
      * @return Returns the located Content Model handler EJB bean.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error during bean creation.
+     * @throws WebserverSystemException Thrown in case of an internal error during bean creation.
      */
-    public static ContentModelHandlerInterface locateContentModelHandler()
-        throws WebserverSystemException {
+    public static ContentModelHandlerInterface locateContentModelHandler() throws WebserverSystemException {
 
-        return (ContentModelHandlerInterface) getBean(
-            CMM_FACTORY_ID, "service.ContentModelHandler");
+        return (ContentModelHandlerInterface) getBean(CMM_FACTORY_ID, "service.ContentModelHandler");
     }
 
     /**
      * Locates the content relation handler EJB bean.
-     * 
+     *
      * @return Returns the located content relation handler EJB bean.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error during bean creation.
+     * @throws WebserverSystemException Thrown in case of an internal error during bean creation.
      */
-    public static ContentRelationHandlerInterface locateContentRelationHandler()
-        throws WebserverSystemException {
+    public static ContentRelationHandlerInterface locateContentRelationHandler() throws WebserverSystemException {
 
-        return (ContentRelationHandlerInterface) getBean(
-            OM_FACTORY_ID, "service.ContentRelationHandler");
+        return (ContentRelationHandlerInterface) getBean(OM_FACTORY_ID, "service.ContentRelationHandler");
     }
 
     /**
      * Locates the gsearch handler.
-     * 
+     *
      * @return Returns the located gsearch handler.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error during bean creation.
+     * @throws WebserverSystemException Thrown in case of an internal error during bean creation.
      */
-    public static GsearchHandler locateGsearchHandler()
-        throws WebserverSystemException {
+    public static GsearchHandler locateGsearchHandler() throws WebserverSystemException {
 
-        return (GsearchHandler) getBean(COMMON_FACTORY_ID,
-            "common.business.indexing.GsearchHandler");
+        return (GsearchHandler) getBean(COMMON_FACTORY_ID, "common.business.indexing.GsearchHandler");
     }
 
     /**
      * Locates the indexing handler.
-     * 
+     *
      * @return Returns the located indexing handler.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error during bean creation.
+     * @throws WebserverSystemException Thrown in case of an internal error during bean creation.
      */
-    public static IndexingHandler locateIndexingHandler()
-        throws WebserverSystemException {
+    public static IndexingHandler locateIndexingHandler() throws WebserverSystemException {
 
-        return (IndexingHandler) getBean(COMMON_FACTORY_ID,
-            "common.business.indexing.IndexingHandler");
+        return (IndexingHandler) getBean(COMMON_FACTORY_ID, "common.business.indexing.IndexingHandler");
     }
 
     /**
      * Locates the TripleStoreUtility.
-     * 
+     *
      * @return Returns the located TripleStoreUtility.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error during bean creation.
+     * @throws WebserverSystemException Thrown in case of an internal error during bean creation.
      */
-    public static TripleStoreUtility locateTripleStoreUtility()
-        throws WebserverSystemException {
+    public static TripleStoreUtility locateTripleStoreUtility() throws WebserverSystemException {
 
         return (TripleStoreUtility) getBean(COMMON_FACTORY_ID, "business.TripleStoreUtility");
     }
 
     /**
      * Locates the item handler EJB bean.
-     * 
+     *
      * @return Returns the located item handler EJB bean.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error during bean creation.
+     * @throws WebserverSystemException Thrown in case of an internal error during bean creation.
      */
-    public static ItemHandlerInterface locateItemHandler()
-        throws WebserverSystemException {
+    public static ItemHandlerInterface locateItemHandler() throws WebserverSystemException {
 
         return (ItemHandlerInterface) getBean(OM_FACTORY_ID, "service.ItemHandler");
     }
 
     /**
      * Locates the organizational unit handler EJB bean.
-     * 
+     *
      * @return Returns the located organizational unit handler wrapper EJB bean.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error during bean creation.
+     * @throws WebserverSystemException Thrown in case of an internal error during bean creation.
      */
-    public static OrganizationalUnitHandlerInterface locateOrganizationalUnitHandler()
-        throws WebserverSystemException {
+    public static OrganizationalUnitHandlerInterface locateOrganizationalUnitHandler() throws WebserverSystemException {
 
         return (OrganizationalUnitHandlerInterface) getBean(OUM_FACTORY_ID, "service.OrganizationalUnitHandler");
     }
 
     /**
      * Locates the user management wrapper EJB bean.
-     * 
+     *
      * @return Returns the located user management wrapper EJB bean.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error during bean creation.
+     * @throws WebserverSystemException Thrown in case of an internal error during bean creation.
      */
-    public static UserManagementWrapperInterface locateUserManagementWrapper()
-        throws WebserverSystemException {
+    public static UserManagementWrapperInterface locateUserManagementWrapper() throws WebserverSystemException {
 
         return (UserManagementWrapperInterface) getBean(AA_FACTORY_ID, "service.UserManagementWrapper");
     }
 
     /**
      * Locates the fedora describe deviation handler EJB bean.
-     * 
+     *
      * @return Returns the located fedora describe deviation handler EJB bean.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error during bean creation.
+     * @throws WebserverSystemException Thrown in case of an internal error during bean creation.
      */
     public static FedoraDescribeDeviationHandlerInterface locateFedoraDescribeDeviationHandler()
         throws WebserverSystemException {
 
         return (FedoraDescribeDeviationHandlerInterface) getBean(OM_FACTORY_ID,
-                "service.FedoraDescribeDeviationHandler");
+            "service.FedoraDescribeDeviationHandler");
     }
 
     /**
      * Locates the jhove handler EJB bean.
-     * 
+     *
      * @return Returns the located jhove handler EJB bean.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error during bean creation.
+     * @throws WebserverSystemException Thrown in case of an internal error during bean creation.
      */
-    public static JhoveHandlerInterface locateJhoveHandler()
-        throws WebserverSystemException {
+    public static JhoveHandlerInterface locateJhoveHandler() throws WebserverSystemException {
 
         return (JhoveHandlerInterface) getBean(TME_FACTORY_ID, "service.JhoveHandler");
     }
 
     /**
      * Locates the user group handler EJB bean.
-     * 
+     *
      * @return Returns the located user group handler EJB bean.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error during bean creation.
+     * @throws WebserverSystemException Thrown in case of an internal error during bean creation.
      */
-    public static UserGroupHandlerInterface locateUserGroupHandler()
-        throws WebserverSystemException {
+    public static UserGroupHandlerInterface locateUserGroupHandler() throws WebserverSystemException {
 
         return (UserGroupHandlerInterface) getBean(AA_FACTORY_ID, "service.UserGroupHandler");
     }

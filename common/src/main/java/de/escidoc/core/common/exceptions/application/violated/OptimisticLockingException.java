@@ -21,17 +21,12 @@
 package de.escidoc.core.common.exceptions.application.violated;
 
 /**
- * The OptimisticLockingException is used to indicate that the action cannot be
- * done on the object because the object has been changed and a new version
- * exists.<br>
- * This exception is thrown if the provided last-modification-date does not
- * match the timestamp of the current version.<br>
- * returned httpStatusCode is 409. Status code (409) indicating that the request
- * could not be completed due to a conflict with the current state of the
- * resource.
- * 
- * @author Torsten Tetteroo
+ * The OptimisticLockingException is used to indicate that the action cannot be done on the object because the object
+ * has been changed and a new version exists.<br> This exception is thrown if the provided last-modification-date does
+ * not match the timestamp of the current version.<br> returned httpStatusCode is 409. Status code (409) indicating that
+ * the request could not be completed due to a conflict with the current state of the resource.
  *
+ * @author Torsten Tetteroo
  */
 public class OptimisticLockingException extends RuleViolationException {
 
@@ -42,13 +37,10 @@ public class OptimisticLockingException extends RuleViolationException {
 
     public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_VIOLATED;
 
-    public static final String HTTP_STATUS_MESSAGE =
-        "Resource has been changed in the meantime.";
+    public static final String HTTP_STATUS_MESSAGE = "Resource has been changed in the meantime.";
 
     /**
      * Default constructor.
-     * 
-     *
      */
     public OptimisticLockingException() {
         super(HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -56,9 +48,8 @@ public class OptimisticLockingException extends RuleViolationException {
 
     /**
      * Constructor used to map an initial exception.
-     * 
-     * @param error
-     *            Throwable
+     *
+     * @param error Throwable
      */
     public OptimisticLockingException(final Throwable error) {
         super(error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -66,27 +57,21 @@ public class OptimisticLockingException extends RuleViolationException {
 
     /**
      * Constructs a new exception with the specified detail message.
-     * 
-     * @param message -
-     *            the detail message.
      *
+     * @param message - the detail message.
      */
     public OptimisticLockingException(final String message) {
         super(message, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 
     /**
-     * Constructor used to create a new Exception with the specified detail
-     * message and a mapping to an initial exception.
-     * 
-     * @param message -
-     *            the detail message.
-     * @param error
-     *            Throwable
+     * Constructor used to create a new Exception with the specified detail message and a mapping to an initial
+     * exception.
      *
+     * @param message - the detail message.
+     * @param error   Throwable
      */
-    public OptimisticLockingException(final String message,
-        final Throwable error) {
+    public OptimisticLockingException(final String message, final Throwable error) {
         super(message, error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 }

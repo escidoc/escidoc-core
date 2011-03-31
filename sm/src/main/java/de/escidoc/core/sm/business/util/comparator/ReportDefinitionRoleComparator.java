@@ -36,27 +36,20 @@ import java.util.Comparator;
 
 /**
  * Sorts ReportDefinitionRole-Objects according to their listIndex.
- * 
- * @author Michael Hoppe
  *
+ * @author Michael Hoppe
  */
-public class ReportDefinitionRoleComparator 
-        implements Comparator<ReportDefinitionRole>,Serializable {
+public class ReportDefinitionRoleComparator implements Comparator<ReportDefinitionRole>, Serializable {
 
     /**
      * compares listIndex.
-     * 
+     *
      * @param a1 ReportDefinitionRole1
      * @param a2 ReportDefinitionRole2
      * @return Returns compare result.
-     * 
-     *
      */
     @Override
-    public int compare(
-            final ReportDefinitionRole a1, 
-            final ReportDefinitionRole a2) {
-        return Integer.toString(a1.getListIndex())
-                .compareTo(Integer.toString(a2.getListIndex()));
+    public int compare(final ReportDefinitionRole a1, final ReportDefinitionRole a2) {
+        return Integer.toString(a1.getListIndex()).compareTo(Integer.toString(a2.getListIndex()));
     }
 }

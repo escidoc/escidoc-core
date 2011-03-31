@@ -10,8 +10,7 @@ import java.util.Map;
  */
 public interface FedoraDescribeDeviationHandlerLocal extends EJBLocalObject {
 
-    String getFedoraDescription(Map parameters, SecurityContext securityContext)
-            throws Exception;
+    String getFedoraDescription(Map parameters, SecurityContext securityContext) throws Exception;
 
     String getFedoraDescription(Map parameters, String authHandle, Boolean restAccess) throws Exception;
 

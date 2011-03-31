@@ -19,7 +19,7 @@
  */
 
 /**
- * 
+ *
  */
 package de.escidoc.core.common.exceptions.application.notfound;
 
@@ -27,7 +27,6 @@ import de.escidoc.core.common.exceptions.EscidocException;
 
 /**
  * @author Frank Schwichtenberg
- * 
  */
 public class StreamNotFoundException extends EscidocException {
 
@@ -37,15 +36,14 @@ public class StreamNotFoundException extends EscidocException {
     private static final long serialVersionUID = -99921296230375036L;
 
     /**
-     * 
+     *
      */
     public StreamNotFoundException() {
         // TODO Auto-generated constructor stub
     }
 
     /**
-     * @param message
-     *            message
+     * @param message message
      */
     public StreamNotFoundException(final String message) {
         super(message);
@@ -53,10 +51,8 @@ public class StreamNotFoundException extends EscidocException {
     }
 
     /**
-     * @param message
-     *            message
-     * @param cause
-     *            cause
+     * @param message message
+     * @param cause   cause
      */
     public StreamNotFoundException(final String message, final Throwable cause) {
         super(message, cause);
@@ -64,8 +60,7 @@ public class StreamNotFoundException extends EscidocException {
     }
 
     /**
-     * @param cause
-     *            cause
+     * @param cause cause
      */
     public StreamNotFoundException(final Throwable cause) {
         super(cause);

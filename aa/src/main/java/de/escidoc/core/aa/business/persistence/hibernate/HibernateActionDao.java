@@ -42,30 +42,20 @@ import java.util.List;
  * Escidoc action data access object using hibernate.
  *
  * @author Torsten Tetteroo
- * 
  */
-public class HibernateActionDao extends AbstractHibernateDao
-    implements ActionDaoInterface {
-
-
+public class HibernateActionDao extends AbstractHibernateDao implements ActionDaoInterface {
 
     /**
      * See Interface for functional description.
-     * 
-     * @param contextId
-     * @return
-     * @throws SqlDatabaseSystemException
      */
     @Override
-    public UnsecuredActionList retrieveUnsecuredActionList(
-        final String contextId) throws SqlDatabaseSystemException {
+    public UnsecuredActionList retrieveUnsecuredActionList(final String contextId) throws SqlDatabaseSystemException {
 
         UnsecuredActionList ret = null;
         if (contextId != null) {
             final List<UnsecuredActionList> list =
                 getHibernateTemplate().findByCriteria(
-                    DetachedCriteria.forClass(UnsecuredActionList.class).add(
-                        Restrictions.eq("contextId", contextId)));
+                    DetachedCriteria.forClass(UnsecuredActionList.class).add(Restrictions.eq("contextId", contextId)));
             if (list != null && !list.isEmpty()) {
                 ret = list.get(0);
             }
@@ -75,41 +65,28 @@ public class HibernateActionDao extends AbstractHibernateDao
 
     /**
      * See Interface for functional description.
-     * 
-     * @param unsecuredActionList
-     * @throws SqlDatabaseSystemException
      */
     @Override
-    public void saveOrUpdate(final UnsecuredActionList unsecuredActionList)
-        throws SqlDatabaseSystemException {
+    public void saveOrUpdate(final UnsecuredActionList unsecuredActionList) throws SqlDatabaseSystemException {
 
         super.saveOrUpdate(unsecuredActionList);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param unsecuredActionList
-     * @throws SqlDatabaseSystemException
-     * @see ActionDaoInterface
-     *      #delete(de.escidoc.core.aa.business.persistence.UnsecuredActionList)
      *
+     * @see ActionDaoInterface #delete(de.escidoc.core.aa.business.persistence.UnsecuredActionList)
      */
     @Override
-    public void delete(final UnsecuredActionList unsecuredActionList)
-        throws SqlDatabaseSystemException {
+    public void delete(final UnsecuredActionList unsecuredActionList) throws SqlDatabaseSystemException {
 
         super.delete(unsecuredActionList);
     }
 
-
-
     /**
-     * Wrapper of setSessionFactory to enable bean stuff generation for this
-     * bean.
-     * 
-     * @param mySessionFactory
-     *            The sessionFactory to set.
+     * Wrapper of setSessionFactory to enable bean stuff generation for this bean.
+     *
+     * @param mySessionFactory The sessionFactory to set.
      */
     public final void setMySessionFactory(final SessionFactory mySessionFactory) {
 

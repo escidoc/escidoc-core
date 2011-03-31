@@ -31,35 +31,28 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 
 /**
  * Service interface of an Technical metadata extraction handler.
- * 
+ *
  * @author Michael Schneider
  */
 public interface JhoveHandlerInterface {
+
     /**
-     * Identify the format of the given file and extract the metadata. Please
-     * refer to Chapter 1 for an example of the request parameter.
-     * 
-     * @param requests
-     *            The list of files to examine.
+     * Identify the format of the given file and extract the metadata. Please refer to Chapter 1 for an example of the
+     * request parameter.
+     *
+     * @param requests The list of files to examine.
      * @return A list with jhove results for the requested files.
-     * @throws AuthenticationException
-     *             If authentication fails.
-     * @throws AuthorizationException
-     *             If authorization fails.
-     * @throws XmlCorruptedException
-     *             Thrown if provided data is corrupted.
-     * @throws XmlSchemaValidationException
-     *             Thrown if the schema validation of the provided data fails.
+     * @throws AuthenticationException      If authentication fails.
+     * @throws AuthorizationException       If authorization fails.
+     * @throws XmlCorruptedException        Thrown if provided data is corrupted.
+     * @throws XmlSchemaValidationException Thrown if the schema validation of the provided data fails.
      * @throws MissingMethodParameterException
-     *             If the xml data is not provided.
-     * @throws SystemException
-     *             If an internal error occurred.
-     * @throws TmeException
-     *             If the invocation of jhove classes fails.
+     *                                      If the xml data is not provided.
+     * @throws SystemException              If an internal error occurred.
+     * @throws TmeException                 If the invocation of jhove classes fails.
      */
     @Validate(param = 0, resolver = "getTmeRequestsSchemaLocation", root = "request")
-    String extract(final String requests) throws AuthenticationException,
-        AuthorizationException, XmlCorruptedException,
-        XmlSchemaValidationException, MissingMethodParameterException,
-        SystemException, TmeException;
+    String extract(final String requests) throws AuthenticationException, AuthorizationException,
+        XmlCorruptedException, XmlSchemaValidationException, MissingMethodParameterException, SystemException,
+        TmeException;
 }

@@ -33,114 +33,88 @@ import de.escidoc.core.test.om.item.ItemTestBase;
 
 /**
  * Call the Item-Service.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 public class ItemHelper extends ItemTestBase {
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ItemHelper(final int transport) {
         super(transport);
     }
 
     /**
-     * @param xml
-     *            The item as xml.
+     * @param xml The item as xml.
      * @return String item-xml
-     * @exception Exception
-     *                e
+     * @throws Exception e
      */
     public String create(final String xml) throws Exception {
         return super.create(xml);
     }
 
     /**
-     * @param id
-     *            The item-id.
+     * @param id The item-id.
      * @return String item-xml
-     * @exception Exception
-     *                e
+     * @throws Exception e
      */
     public String retrieve(final String id) throws Exception {
         return super.retrieve(id);
     }
 
     /**
-     * @param id
-     *            The item-id.
-     * @exception Exception
-     *                e
+     * @param id The item-id.
+     * @throws Exception e
      */
     public void delete(final String id) throws Exception {
         super.delete(id);
     }
 
     /**
-     * @param id
-     *            The item-id.
-     * @param lastModDate
-     *            The last-modification-date.
+     * @param id          The item-id.
+     * @param lastModDate The last-modification-date.
      * @return XML result structure with at least last-modification-date
-     * @exception Exception
-     *                e
+     * @throws Exception e
      */
-    public String submit(final String id, final String lastModDate)
-        throws Exception {
+    public String submit(final String id, final String lastModDate) throws Exception {
         return super.submit(id, lastModDate);
     }
 
     /**
-     * @param id
-     *            The item-id.
-     * @param lastModDate
-     *            The last-modification-date.
+     * @param id          The item-id.
+     * @param lastModDate The last-modification-date.
      * @return XML result structure with at least last-modification-date
-     * @exception Exception
-     *                e
+     * @throws Exception e
      */
-    public String revise(final String id, final String lastModDate)
-        throws Exception {
+    public String revise(final String id, final String lastModDate) throws Exception {
         return super.revise(id, lastModDate);
     }
 
     /**
-     * @param id
-     *            The item-id.
-     * @param lastModDate
-     *            The last-modification-date.
+     * @param id          The item-id.
+     * @param lastModDate The last-modification-date.
      * @return XML result structure with at least last-modification-date
-     * @exception Exception
-     *                e
+     * @throws Exception e
      */
-    public String release(final String id, final String lastModDate)
-        throws Exception {
+    public String release(final String id, final String lastModDate) throws Exception {
         return super.release(id, lastModDate);
     }
 
     /**
-     * @param id
-     *            The item-id.
-     * @param lastModDate
-     *            The last-modification-date.
+     * @param id          The item-id.
+     * @param lastModDate The last-modification-date.
      * @return XML result structure with at least last-modification-date
-     * @exception Exception
-     *                e
+     * @throws Exception e
      */
-    public String withdraw(final String id, final String lastModDate)
-        throws Exception {
+    public String withdraw(final String id, final String lastModDate) throws Exception {
         return super.withdraw(id, lastModDate);
     }
 
     /**
-     * @param id
-     *            The item-id.
+     * @param id The item-id.
      * @return XML result structure with last-modification-date and pid
-     * @exception Exception
-     *                e
+     * @throws Exception e
      */
     public String assignVersionPid(final String id) throws Exception {
 
@@ -148,27 +122,22 @@ public class ItemHelper extends ItemTestBase {
         try {
             pidParam =
                 "<param last-modification-date=\""
-                    + getLastModificationDateValue(EscidocRestSoapTestBase
-                        .getDocument(retrieve(id))) + "\" >"
+                    + getLastModificationDateValue(EscidocRestSoapTestBase.getDocument(retrieve(id))) + "\" >"
                     + "<url>http://escidoc.de</url>" + "</param>";
         }
         catch (final RuntimeException e) {
-            EscidocRestSoapTestBase.failException(
-                "Failed to retrieve last modification date of item " + id, e);
+            EscidocRestSoapTestBase.failException("Failed to retrieve last modification date of item " + id, e);
         }
         return super.assignVersionPid(id, pidParam);
     }
 
     /**
-     * @param xmlName
-     *            String name of xml file
+     * @param xmlName String name of xml file
      * @return String path to item-xmls.
-     * @exception Exception
-     *                e
+     * @throws Exception e
      */
     public String getTemplateAsString(final String xmlName) throws Exception {
-        return EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH,
-            xmlName);
+        return EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH, xmlName);
     }
 
 }

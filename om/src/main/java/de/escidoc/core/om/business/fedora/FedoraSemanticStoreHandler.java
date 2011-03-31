@@ -55,46 +55,35 @@ import java.io.StringWriter;
  * @author Rozita Friedman
  */
 
-public class FedoraSemanticStoreHandler
-    implements SemanticStoreHandlerInterface {
+public class FedoraSemanticStoreHandler implements SemanticStoreHandlerInterface {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(
-        FedoraSemanticStoreHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FedoraSemanticStoreHandler.class);
 
     private TripleStoreConnector tripleStoreConnector;
 
     /**
-     * Retrieves a result of provided triple store query in a provided output
-     * format.
-     * 
-     * @param taskParam
-     *            SPO query parameter and return representation type.
-     * 
-     *            <pre>
-     *  &lt;param&gt;
-     *      &lt;query&gt;&lt;info:fedora/escidoc:111&gt;
-     *      &lt;http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#isRevisionOf&gt;
-     * /query&gt;
-     *      &lt;format&gt;N-Triples&lt;/format&gt;                                           
-     *      &lt;/param&gt;
-     * </pre>
-     * 
-     * @return Returns XML representation of the query result.
-     * @thows InvalidXmlException Thrown if the parameter content is invalid
-     *        XML.
-     * @throws InvalidTripleStoreQueryException
-     *             Thrown if triple store query is invalid.
-     * @throws SystemException
-     *             Thrown in case of internal failure.
-     * @throws InvalidTripleStoreOutputFormatException
-     *             Thrown if triple store output format is wrong defined.
+     * Retrieves a result of provided triple store query in a provided output format.
      *
+     * @param taskParam SPO query parameter and return representation type.
+     *                  <p/>
+     *                  <pre>
+     *                   &lt;param&gt;
+     *                       &lt;query&gt;&lt;info:fedora/escidoc:111&gt;
+     *                       &lt;http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#isRevisionOf&gt;
+     *                  /query&gt;
+     *                       &lt;format&gt;N-Triples&lt;/format&gt;
+     *                       &lt;/param&gt;
+     *                  </pre>
+     * @return Returns XML representation of the query result.
+     * @throws InvalidTripleStoreQueryException
+     *                         Thrown if triple store query is invalid.
+     * @throws SystemException Thrown in case of internal failure.
+     * @throws InvalidTripleStoreOutputFormatException
+     *                         Thrown if triple store output format is wrong defined.
      */
     @Override
-    public String spo(final String taskParam) throws SystemException,
-        InvalidTripleStoreQueryException,
-        InvalidTripleStoreOutputFormatException, InvalidXmlException,
-        MissingElementValueException {
+    public String spo(final String taskParam) throws SystemException, InvalidTripleStoreQueryException,
+        InvalidTripleStoreOutputFormatException, InvalidXmlException, MissingElementValueException {
 
         final StaxParser sp = new StaxParser();
         final SemanticQueryHandler qh = new SemanticQueryHandler();
@@ -113,11 +102,9 @@ public class FedoraSemanticStoreHandler
         final String query = qh.getQuery();
         // check predicate
         final String predicate = qh.getPredicate();
-        if (!"*".equals(predicate)
-            && !OntologyUtility.checkPredicate(predicate)) {
+        if (!"*".equals(predicate) && !OntologyUtility.checkPredicate(predicate)) {
             throw new InvalidTripleStoreQueryException("Predicate '"
-                + XmlUtility.escapeForbiddenXmlCharacters(predicate)
-                + "' not allowed.");
+                + XmlUtility.escapeForbiddenXmlCharacters(predicate) + "' not allowed.");
         }
         final String format = qh.getFormat();
         String result = tripleStoreConnector.requestMPT(query, format);
@@ -128,8 +115,7 @@ public class FedoraSemanticStoreHandler
                 final StringBuilder stringBuffer = new StringBuilder();
                 for (final String triple : triples) {
                     final String[] tripleParts = triple.trim().split("\\ +", 3);
-                    if (tripleParts.length >= 2
-                            && OntologyUtility.checkPredicate(tripleParts[1])) {
+                    if (tripleParts.length >= 2 && OntologyUtility.checkPredicate(tripleParts[1])) {
                         stringBuffer.append(triple);
                         stringBuffer.append(".\n");
                     }
@@ -141,8 +127,7 @@ public class FedoraSemanticStoreHandler
                 try {
                     final XMLInputFactory inf = XMLInputFactory.newInstance();
                     final XMLEventReader reader =
-                        inf.createFilteredReader(
-                            inf.createXMLEventReader(new StringReader(result)),
+                        inf.createFilteredReader(inf.createXMLEventReader(new StringReader(result)),
                             new RDFRegisteredOntologyFilter());
 
                     final StringWriter sw = new StringWriter();
@@ -155,13 +140,13 @@ public class FedoraSemanticStoreHandler
                     }
 
                     result = sw.toString();
-                } catch (final XMLStreamException e) {
+                }
+                catch (final XMLStreamException e) {
                     throw new WebserverSystemException(e);
                 }
             }
             else {
-                LOGGER.warn("No filter defined for result format '" + format
-                    + "'.");
+                LOGGER.warn("No filter defined for result format '" + format + "'.");
             }
         }
         return result;
@@ -169,13 +154,10 @@ public class FedoraSemanticStoreHandler
 
     /**
      * Injects the triple store connector bean.
-     * 
-     * @param tripleStoreConnector
-     *            The {@link TripleStoreConnector}.
-     * 
+     *
+     * @param tripleStoreConnector The {@link TripleStoreConnector}.
      */
-    public void setTripleStoreConnector(
-        final TripleStoreConnector tripleStoreConnector) {
+    public void setTripleStoreConnector(final TripleStoreConnector tripleStoreConnector) {
         this.tripleStoreConnector = tripleStoreConnector;
     }
 }

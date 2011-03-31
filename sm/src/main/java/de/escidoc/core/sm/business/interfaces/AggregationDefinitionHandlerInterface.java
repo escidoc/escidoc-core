@@ -37,80 +37,59 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import java.util.Map;
 
 /**
- * Interface of an Statistic Aggregation Definition Handler of the business
- * layer.
- * 
+ * Interface of an Statistic Aggregation Definition Handler of the business layer.
+ *
  * @author Michael Hoppe
- * 
  */
 public interface AggregationDefinitionHandlerInterface {
 
     /**
      * Creates new Aggregation Definition with given xmlData.
-     * 
-     * @param xmlData
-     *            Aggregation Definition as xml in Aggregation Definition schema.
+     *
+     * @param xmlData Aggregation Definition as xml in Aggregation Definition schema.
      * @return Returns the XML representation of the resource.
-     * 
      * @throws MissingMethodParameterException
-     *             ex
-     * @throws ScopeNotFoundException
-     *             ex
-     * @throws SystemException
-     *             ex
-     * 
+     *                                ex
+     * @throws ScopeNotFoundException ex
+     * @throws SystemException        ex
      */
-    String create(String xmlData) throws MissingMethodParameterException,
-        ScopeNotFoundException, SystemException;
+    String create(String xmlData) throws MissingMethodParameterException, ScopeNotFoundException, SystemException;
 
     /**
      * Deletes the specified resource.
-     * 
-     * @param aggregationDefinitionId
-     *            The Aggregation Definition ID of the resource.
+     *
+     * @param aggregationDefinitionId The Aggregation Definition ID of the resource.
      * @throws AggregationDefinitionNotFoundException
-     *             e.
+     *                         e.
      * @throws MissingMethodParameterException
-     *             e.
-     * @throws SystemException
-     *             e.
-     * 
+     *                         e.
+     * @throws SystemException e.
      */
-    void delete(String aggregationDefinitionId) 
-            throws AggregationDefinitionNotFoundException,
+    void delete(String aggregationDefinitionId) throws AggregationDefinitionNotFoundException,
         MissingMethodParameterException, SystemException;
 
     /**
      * Retrieves the specified resource.
-     * 
-     * @param aggregationDefinitionId
-     *            The Aggregation Definition ID of the resource.
+     *
+     * @param aggregationDefinitionId The Aggregation Definition ID of the resource.
      * @return Returns the XML representation of the Aggregation Definition.
      * @throws AggregationDefinitionNotFoundException
-     *             e.
+     *                         e.
      * @throws MissingMethodParameterException
-     *             e.
-     * @throws SystemException
-     *             e.
-     * 
+     *                         e.
+     * @throws SystemException e.
      */
-    String retrieve(String aggregationDefinitionId) 
-            throws AggregationDefinitionNotFoundException,
+    String retrieve(String aggregationDefinitionId) throws AggregationDefinitionNotFoundException,
         MissingMethodParameterException, SystemException;
 
     /**
      * Retrieves all Aggregation Definitions the user is allowed to see.
-     * 
-     * @param filter
-     *            filter as CQL query
-     * 
+     *
+     * @param filter filter as CQL query
      * @return Returns the XML representation of the Aggregation Definition-list.
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a SQL query
-     * @throws SystemException
-     *             e.
+     * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
+     * @throws SystemException             e.
      */
-    String retrieveAggregationDefinitions(Map<String, String[]> filter)
-        throws InvalidSearchQueryException, SystemException;
+    String retrieveAggregationDefinitions(Map<String, String[]> filter) throws InvalidSearchQueryException,
+        SystemException;
 }

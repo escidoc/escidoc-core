@@ -41,31 +41,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Helper class to filter elements out where the user permissions are
- * restricted.
- * 
+ * Helper class to filter elements out where the user permissions are restricted.
+ *
  * @author Steffen Wagner
- * 
  */
 public class UserFilter {
+
     /**
      * Get the list of the member (structural relation) of the Container.
-     * 
-     * @param container
-     * @return List of Container member (if <code>filter != null</code>
-     *         filtered)
-     * @throws SystemException
-     * @throws MissingMethodParameterException
+     *
+     * @return List of Container member (if <code>filter != null</code> filtered)
      */
-    public List<String> getMemberRefList(final Container container)
-        throws MissingMethodParameterException, SystemException {
+    public List<String> getMemberRefList(final Container container) throws MissingMethodParameterException,
+        SystemException {
 
         final List<String> memberRefs;
 
         if (container.getVersionNumber() == null) {
-            memberRefs =
-                TripleStoreUtility.getInstance().getContainerMemberList(
-                    container.getId(), null, null);
+            memberRefs = TripleStoreUtility.getInstance().getContainerMemberList(container.getId(), null, null);
         }
         else {
             // A work around until Fedora makes restrictions on the FOXML-size:
@@ -77,8 +70,7 @@ public class UserFilter {
             final List<String> predicates = new ArrayList<String>();
             predicates.add(Constants.STRUCTURAL_RELATIONS_NS_URI + "member");
             final StaxParser sp = new StaxParser();
-            final RelsExtRefListExtractor rerle =
-                new RelsExtRefListExtractor(predicates, sp);
+            final RelsExtRefListExtractor rerle = new RelsExtRefListExtractor(predicates, sp);
             sp.addHandler(rerle);
             try {
                 sp.parse(container.getEscidocRelsExt().getStream());
@@ -86,9 +78,7 @@ public class UserFilter {
             catch (final Exception e) {
                 throw new XmlParserSystemException("Unexpected exception.", e);
             }
-            memberRefs =
-                rerle.getEntries().get(
-                    Constants.STRUCTURAL_RELATIONS_NS_URI + "member");
+            memberRefs = rerle.getEntries().get(Constants.STRUCTURAL_RELATIONS_NS_URI + "member");
         }
         return memberRefs;
     }

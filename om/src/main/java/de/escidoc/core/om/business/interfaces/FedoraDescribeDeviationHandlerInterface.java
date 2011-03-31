@@ -32,25 +32,18 @@ import java.util.Map;
 
 /**
  * Interface of an FedoraDescribeDeviation handler of the business layer.
- * 
- * @author Michael Hoppe
- * 
  *
+ * @author Michael Hoppe
  */
 public interface FedoraDescribeDeviationHandlerInterface {
 
     /**
-     * Overwrites the Fedora http-Call /fedora/describe. Executes http-request
-     * to fedora/describe and returns input stream.
-     * 
-     * @param parameters
-     *            request parameters.
-     * 
-     * @return String response
-     * @throws Exception
-     *             ex
-     * 
+     * Overwrites the Fedora http-Call /fedora/describe. Executes http-request to fedora/describe and returns input
+     * stream.
      *
+     * @param parameters request parameters.
+     * @return String response
+     * @throws Exception ex
      */
     String getFedoraDescription(Map<String, String[]> parameters) throws Exception;
 

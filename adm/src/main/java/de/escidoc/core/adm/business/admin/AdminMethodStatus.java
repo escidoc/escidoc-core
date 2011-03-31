@@ -38,16 +38,18 @@ import java.util.Set;
 import java.util.concurrent.Semaphore;
 
 /**
- * Basic class for all singletons which contain all information about a running or
- * finished process.
+ * Basic class for all singletons which contain all information about a running or finished process.
  *
  * @author André Schenk
  */
 public abstract class AdminMethodStatus implements Map<ResourceType, Integer> {
 
     private Date completionDate = new Date();
+
     private boolean fillingComplete;
+
     private final Semaphore semaphore = new Semaphore(1);
+
     protected final Map<ResourceType, Integer> treeMap = new EnumMap<ResourceType, Integer>(ResourceType.class);
 
     protected boolean isFillingComplete() {
@@ -67,8 +69,7 @@ public abstract class AdminMethodStatus implements Map<ResourceType, Integer> {
     }
 
     /**
-     * Get the completion date of this process or null, if the process is still
-     * running.
+     * Get the completion date of this process or null, if the process is still running.
      *
      * @return completion date
      */
@@ -77,8 +78,8 @@ public abstract class AdminMethodStatus implements Map<ResourceType, Integer> {
     }
 
     /**
-     * Start a new admin method. The return value is true if the is no other
-     * process running the same method at the moment.
+     * Start a new admin method. The return value is true if the is no other process running the same method at the
+     * moment.
      *
      * @return true if the method is allowed to be started
      */

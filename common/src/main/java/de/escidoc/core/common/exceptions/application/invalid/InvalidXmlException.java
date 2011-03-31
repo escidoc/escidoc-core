@@ -21,15 +21,12 @@
 package de.escidoc.core.common.exceptions.application.invalid;
 
 /**
- * The InvalidXmlException is used to indicate that the XML is invalid but not
- * nessacary invalid to the external schema. E.g. a read-only element is given
- * in a create request or a read-only element is not given in an update request
- * (see Functional Specification). returned httpStatusCode is 412. Status code
- * (412) indicating that the precondition given in one or more of the
- * request-header fields evaluated to false when it was tested on the server.
- * 
- * @author Frank Schwichtenberg
+ * The InvalidXmlException is used to indicate that the XML is invalid but not nessacary invalid to the external schema.
+ * E.g. a read-only element is given in a create request or a read-only element is not given in an update request (see
+ * Functional Specification). returned httpStatusCode is 412. Status code (412) indicating that the precondition given
+ * in one or more of the request-header fields evaluated to false when it was tested on the server.
  *
+ * @author Frank Schwichtenberg
  */
 public class InvalidXmlException extends ValidationException {
 
@@ -44,8 +41,6 @@ public class InvalidXmlException extends ValidationException {
 
     /**
      * Default constructor.
-     * 
-     *
      */
     protected InvalidXmlException() {
         super(HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -53,10 +48,8 @@ public class InvalidXmlException extends ValidationException {
 
     /**
      * Constructs a new exception with the specified detail message.
-     * 
-     * @param message -
-     *            the detail message.
      *
+     * @param message - the detail message.
      */
     protected InvalidXmlException(final String message) {
         super(message, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -64,23 +57,19 @@ public class InvalidXmlException extends ValidationException {
 
     /**
      * Constructor used to map an initial exception.
-     * 
-     * @param error
-     *            Throwable
+     *
+     * @param error Throwable
      */
     protected InvalidXmlException(final Throwable error) {
         super(error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 
     /**
-     * Constructor used to create a new Exception with the specified detail
-     * message and a mapping to an initial exception.
-     * 
-     * @param message -
-     *            the detail message.
-     * @param error
-     *            Throwable
+     * Constructor used to create a new Exception with the specified detail message and a mapping to an initial
+     * exception.
      *
+     * @param message - the detail message.
+     * @param error   Throwable
      */
     protected InvalidXmlException(final String message, final Throwable error) {
         super(message, error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);

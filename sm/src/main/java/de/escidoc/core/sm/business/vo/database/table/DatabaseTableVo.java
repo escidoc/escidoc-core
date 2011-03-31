@@ -34,13 +34,12 @@ import de.escidoc.core.sm.business.vo.database.DatabaseConventionChecker;
 import java.util.Collection;
 
 /**
- * Value Object that holds Information about a database-table when creating a
- * database-table.
- * 
- * @author Michael Hoppe
+ * Value Object that holds Information about a database-table when creating a database-table.
  *
+ * @author Michael Hoppe
  */
 public class DatabaseTableVo {
+
     private String tableName;
 
     private Collection<DatabaseTableFieldVo> databaseFieldVos;
@@ -55,11 +54,9 @@ public class DatabaseTableVo {
     }
 
     /**
-     * @param databaseFieldVos
-     *            the databaseFieldVos to set
+     * @param databaseFieldVos the databaseFieldVos to set
      */
-    public void setDatabaseFieldVos(
-        final Collection<DatabaseTableFieldVo> databaseFieldVos) {
+    public void setDatabaseFieldVos(final Collection<DatabaseTableFieldVo> databaseFieldVos) {
         this.databaseFieldVos = databaseFieldVos;
     }
 
@@ -71,11 +68,9 @@ public class DatabaseTableVo {
     }
 
     /**
-     * @param databaseIndexVos
-     *            the databaseIndexVos to set
+     * @param databaseIndexVos the databaseIndexVos to set
      */
-    public void setDatabaseIndexVos(
-        final Collection<DatabaseIndexVo> databaseIndexVos) {
+    public void setDatabaseIndexVos(final Collection<DatabaseIndexVo> databaseIndexVos) {
         this.databaseIndexVos = databaseIndexVos;
     }
 
@@ -87,12 +82,10 @@ public class DatabaseTableVo {
     }
 
     /**
-     * @param tableName
-     *            the tableName to set
+     * @param tableName the tableName to set
      * @throws SqlDatabaseSystemException databaseException
      */
-    public void setTableName(final String tableName) 
-                        throws SqlDatabaseSystemException {
+    public void setTableName(final String tableName) throws SqlDatabaseSystemException {
         DatabaseConventionChecker.checkName(tableName);
         this.tableName = tableName;
     }

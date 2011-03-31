@@ -38,98 +38,59 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Finder module implementation that handles the resource identifier modules
- * like ...:resource:item-id (...:resource:item).<br>
- * This finder modules tries to resolve these attributes if they have not been
- * provided. The resource-id attribute is returned if the object-type related to
- * the resource-id equals the "object-type" in the attribute id.
- * 
- * Supported Attributes:<br>
- * -info:escidoc/names:aa:1.0:resource:component-id<br>
- *  the id of the component, single value attribute
- * -info:escidoc/names:aa:1.0:resource:container-id<br>
- *  the id of the container, single value attribute
- * -info:escidoc/names:aa:1.0:resource:content-type-id<br>
- *  the id of the content-type, single value attribute
- * -info:escidoc/names:aa:1.0:resource:context-id<br>
- *  the id of the context, single value attribute
- * -info:escidoc/names:aa:1.0:resource:grant-id<br>
- *  the id of the grant, single value attribute
- * -info:escidoc/names:aa:1.0:resource:item-id<br>
- *  the id of the item, single value attribute
- * -info:escidoc/names:aa:1.0:resource:organizational-unit-id<br>
- *  the id of the organizational-unit, single value attribute
- * -info:escidoc/names:aa:1.0:resource:role-id<br>
- *  the id of the role, single value attribute
- * -info:escidoc/names:aa:1.0:resource:user-account-id<br>
- *  the id of the user-account, single value attribute
- * -info:escidoc/names:aa:1.0:resource:user-group-id<br>
- *  the id of the user-group, single value attribute
- * 
+ * Finder module implementation that handles the resource identifier modules like ...:resource:item-id
+ * (...:resource:item).<br> This finder modules tries to resolve these attributes if they have not been provided. The
+ * resource-id attribute is returned if the object-type related to the resource-id equals the "object-type" in the
+ * attribute id.
+ * <p/>
+ * Supported Attributes:<br> -info:escidoc/names:aa:1.0:resource:component-id<br> the id of the component, single value
+ * attribute -info:escidoc/names:aa:1.0:resource:container-id<br> the id of the container, single value attribute
+ * -info:escidoc/names:aa:1.0:resource:content-type-id<br> the id of the content-type, single value attribute
+ * -info:escidoc/names:aa:1.0:resource:context-id<br> the id of the context, single value attribute
+ * -info:escidoc/names:aa:1.0:resource:grant-id<br> the id of the grant, single value attribute
+ * -info:escidoc/names:aa:1.0:resource:item-id<br> the id of the item, single value attribute
+ * -info:escidoc/names:aa:1.0:resource:organizational-unit-id<br> the id of the organizational-unit, single value
+ * attribute -info:escidoc/names:aa:1.0:resource:role-id<br> the id of the role, single value attribute
+ * -info:escidoc/names:aa:1.0:resource:user-account-id<br> the id of the user-account, single value attribute
+ * -info:escidoc/names:aa:1.0:resource:user-group-id<br> the id of the user-group, single value attribute
+ *
  * @author Torsten Tetteroo
  */
-public class ResourceIdentifierAttributeFinderModule
-    extends AbstractAttributeFinderModule {
+public class ResourceIdentifierAttributeFinderModule extends AbstractAttributeFinderModule {
 
     /**
-     * Pattern used to parse the attribute id and check if this module is
-     * responsible for it. This extracts the expected object-type, too.
+     * Pattern used to parse the attribute id and check if this module is responsible for it. This extracts the expected
+     * object-type, too.
      */
     private static final Pattern PATTERN_PARSE_RESOURCE_IDENTIFIED_ATTRIBUTE_ID =
-        Pattern.compile(AttributeIds.RESOURCE_ATTR_PREFIX 
-            + "(component|container|content-type|context|grant|item"
+        Pattern.compile(AttributeIds.RESOURCE_ATTR_PREFIX + "(component|container|content-type|context|grant|item"
             + "|organizational-unit|role|user-account|user-group)(-id){0,1}$");
-
-
 
     /**
      * See Interface for functional description.
-     * 
-     * @param attributeIdValue
-     * @param ctx
-     * @param resourceId
-     * @param resourceObjid
-     * @param resourceVersionNumber
-     * @param designatorType
-     * @return
-     * @throws EscidocException
-     *
      */
     @Override
     protected boolean assertAttribute(
-        final String attributeIdValue, final EvaluationCtx ctx,
-        final String resourceId, final String resourceObjid,
-        final String resourceVersionNumber, final int designatorType)
-        throws EscidocException {
+        final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
+        final String resourceVersionNumber, final int designatorType) throws EscidocException {
 
-        if (!super.assertAttribute(attributeIdValue, ctx, resourceId,
-            resourceObjid, resourceVersionNumber, designatorType)) {
+        if (!super.assertAttribute(attributeIdValue, ctx, resourceId, resourceObjid, resourceVersionNumber,
+            designatorType)) {
 
             return false;
         }
 
         // make sure they're asking for a resource identifier attribute
-        return PATTERN_PARSE_RESOURCE_IDENTIFIED_ATTRIBUTE_ID
-                .matcher(attributeIdValue).find();
+        return PATTERN_PARSE_RESOURCE_IDENTIFIED_ATTRIBUTE_ID.matcher(attributeIdValue).find();
 
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param attributeIdValue
-     * @param ctx
-     * @param resourceId
-     * @param resourceObjid
-     * @param resourceVersionNumber
-     * @return
-     * @throws EscidocException
-     *
      */
     @Override
     protected Object[] resolveLocalPart(
-        final String attributeIdValue, final EvaluationCtx ctx,
-        final String resourceId, final String resourceObjid,
+        final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
         final String resourceVersionNumber) throws EscidocException {
 
         // check if resource id is empty, i.e. new resource. In this case, an
@@ -144,20 +105,15 @@ public class ResourceIdentifierAttributeFinderModule
         // from the attribute id
         final String objectType = fetchObjectType(ctx);
 
-        final Matcher matcher =
-            PATTERN_PARSE_RESOURCE_IDENTIFIED_ATTRIBUTE_ID
-                .matcher(attributeIdValue);
+        final Matcher matcher = PATTERN_PARSE_RESOURCE_IDENTIFIED_ATTRIBUTE_ID.matcher(attributeIdValue);
         if (matcher.find()) {
             final String objectTypeFromAttributeId = matcher.group(1);
             if (objectType.equals(objectTypeFromAttributeId)) {
-                return new Object[] {
-                    CustomEvaluationResultBuilder
-                        .createSingleStringValueResult(resourceId),
+                return new Object[] { CustomEvaluationResultBuilder.createSingleStringValueResult(resourceId),
                     attributeIdValue };
             }
         }
         return null;
     }
-
 
 }

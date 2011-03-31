@@ -28,21 +28,17 @@
  */
 package de.escidoc.core.test.aa.soap;
 
-
-
 /**
  * Testsuite for the UserAccount's Grants with SOAP transport.
- * 
+ *
  * @author Torsten Tetteroo
- * 
  */
 public class UserAccountGrantSoapTest extends GrantSoapAbstractTest {
 
     /**
      * Constructor.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     public UserAccountGrantSoapTest() throws Exception {
         super(USER_ACCOUNT_HANDLER_CODE);

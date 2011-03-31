@@ -43,9 +43,8 @@ import java.util.regex.Pattern;
 
 /**
  * Base class for tests of the mock implementation of the SB resources.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 public class SmTestBase extends EscidocRestSoapTestBase {
 
@@ -58,24 +57,21 @@ public class SmTestBase extends EscidocRestSoapTestBase {
     private ReportClient reportClient = null;
 
     private ScopeClient scopeClient = null;
-    
+
     private PreprocessingClient preprocessingClient = null;
-    
-    private Pattern yearPattern = Pattern.compile(
-            "(?s)\\{yearReplacement\\}", 
-            Pattern.MULTILINE | Pattern.CASE_INSENSITIVE);
+
+    private Pattern yearPattern =
+        Pattern.compile("(?s)\\{yearReplacement\\}", Pattern.MULTILINE | Pattern.CASE_INSENSITIVE);
+
     private Matcher yearMatcher = yearPattern.matcher("");
 
-
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public SmTestBase(final int transport) {
         super(transport);
         this.statisticDataClient = new StatisticDataClient(transport);
-        this.aggregationDefinitionClient =
-            new AggregationDefinitionClient(transport);
+        this.aggregationDefinitionClient = new AggregationDefinitionClient(transport);
         this.reportDefinitionClient = new ReportDefinitionClient(transport);
         this.reportClient = new ReportClient(transport);
         this.scopeClient = new ScopeClient(transport);
@@ -126,9 +122,8 @@ public class SmTestBase extends EscidocRestSoapTestBase {
 
     /**
      * extracts the id of the root-element from given xml.
-     * 
-     * @param xml
-     *            String xml
+     *
+     * @param xml String xml
      * @return Returns the primaryKey.
      * @throws Exception e
      */
@@ -153,44 +148,33 @@ public class SmTestBase extends EscidocRestSoapTestBase {
     }
 
     /**
-     * replaces the objid of the element with given name 
-     * from given xml with given primKey.
-     * 
-     * @param xml
-     *            String xml
-     * @param elementName
-     *            String name of the element to replace objid
-     * @param objid
-     *            String objid
+     * replaces the objid of the element with given name from given xml with given primKey.
+     *
+     * @param xml         String xml
+     * @param elementName String name of the element to replace objid
+     * @param objid       String objid
      * @return Returns the replacedXml.
      */
-    public String replaceElementPrimKey(
-            final String xml, 
-            final String elementName, final String objid) {
+    public String replaceElementPrimKey(final String xml, final String elementName, final String objid) {
         String replacedXml = null;
         if (getTransport() == Constants.TRANSPORT_SOAP) {
             replacedXml =
-                xml.replaceFirst("(?s)(.*?<[^<]*?" 
-                    + elementName 
-                    + ".*?objid=\").*?(\".*?>)", "$1"
-                    + objid + "$2");
-        } else {
+                xml.replaceFirst("(?s)(.*?<[^<]*?" + elementName + ".*?objid=\").*?(\".*?>)", "$1" + objid + "$2");
+        }
+        else {
             replacedXml =
-                xml.replaceFirst("(?s)(.*?<[^<]*?" 
-                    + elementName 
-                    + ".*?href=\"[^\"]*/).*?(\".*?>)", "$1"
-                    + objid + "$2");
+                xml
+                    .replaceFirst("(?s)(.*?<[^<]*?" + elementName + ".*?href=\"[^\"]*/).*?(\".*?>)", "$1" + objid
+                        + "$2");
         }
         return replacedXml;
     }
 
     /**
      * replaces the id of the root-element from given xml with given primKey.
-     * 
-     * @param xml
-     *            String xml
-     * @param year
-     *            String replacement year
+     *
+     * @param xml  String xml
+     * @param year String replacement year
      * @return Returns the replacedXml.
      */
     public String replaceYear(final String xml, final String year) {
@@ -201,17 +185,13 @@ public class SmTestBase extends EscidocRestSoapTestBase {
 
     /**
      * replaces tablenames in reportdefinition.
-     * 
-     * @param xml
-     *            String xml
-     * @param aggregationDefinitionId
-     *            aggregationDefinitionId
+     *
+     * @param xml                     String xml
+     * @param aggregationDefinitionId aggregationDefinitionId
      * @return Returns the replacedXml.
      */
-    public String replaceTableNames(final String xml, 
-            final String aggregationDefinitionId) {
-        String idWithoutSpecialSigns = 
-            aggregationDefinitionId.replaceAll("\\:", "");
+    public String replaceTableNames(final String xml, final String aggregationDefinitionId) {
+        String idWithoutSpecialSigns = aggregationDefinitionId.replaceAll("\\:", "");
         boolean condition = false;
         String pre = xml.replaceFirst("(?s)(.*?<sql>).*", "$1");
         String post = xml.replaceFirst("(?s).*?(<\\/sql>.*)", "$1");
@@ -223,9 +203,7 @@ public class SmTestBase extends EscidocRestSoapTestBase {
         }
         String fromClause;
         if (condition) {
-            fromClause =
-                sql.replaceFirst(
-                    "(?i).*?from(.*?)(where|order by|group by).*", "$1");
+            fromClause = sql.replaceFirst("(?i).*?from(.*?)(where|order by|group by).*", "$1");
         }
         else {
             fromClause = sql.replaceFirst("(?i).*?from(.*)", "$1");
@@ -236,77 +214,58 @@ public class SmTestBase extends EscidocRestSoapTestBase {
             if (i > 0) {
                 replacedFromClause.append(",");
             }
-            replacedFromClause
-                .append(idWithoutSpecialSigns).append("_")
-                .append(tables[i].trim());
+            replacedFromClause.append(idWithoutSpecialSigns).append("_").append(tables[i].trim());
         }
         replacedFromClause.append(" ");
         if (condition) {
             sql =
-                sql.replaceFirst(
-                    "(?i)(.*?from).*?((where|order by|group by).*)",
-                    "$1" + replacedFromClause.toString() + "$2");
+                sql.replaceFirst("(?i)(.*?from).*?((where|order by|group by).*)", "$1" + replacedFromClause.toString()
+                    + "$2");
         }
         else {
-            sql =
-                sql.replaceFirst("(?i)(.*?from).*",
-                    "$1" + replacedFromClause.toString());
+            sql = sql.replaceFirst("(?i)(.*?from).*", "$1" + replacedFromClause.toString());
         }
 
         return pre + sql + post;
     }
 
     /**
-     * Retrieve a Template as a String and fixes the "link" attributes in case
-     * of SOAP.<br>
-     * The used parser is NOT namespace aware!
-     * 
-     * @param path
-     *            The Path of the Template.
-     * @param templateName
-     *            The name of the template.
+     * Retrieve a Template as a String and fixes the "link" attributes in case of SOAP.<br> The used parser is NOT
+     * namespace aware!
+     *
+     * @param path         The Path of the Template.
+     * @param templateName The name of the template.
      * @return The String representation of the Template.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    public String getTemplateAsFixedScopeString(
-        final String path, final String templateName) throws Exception {
+    public String getTemplateAsFixedScopeString(final String path, final String templateName) throws Exception {
 
-        final Document document =
-            getTemplateAsFixedScopeDocument(path, templateName);
+        final Document document = getTemplateAsFixedScopeDocument(path, templateName);
         return toString(document, false);
     }
 
     /**
-     * Retrieve a Template as a Document and fixes the "link" attributes in case
-     * of SOAP.<br>
-     * The used parser is NOT namespace aware!
-     * 
-     * @param path
-     *            The Path of the Template.
-     * @param templateName
-     *            The name of the template.
+     * Retrieve a Template as a Document and fixes the "link" attributes in case of SOAP.<br> The used parser is NOT
+     * namespace aware!
+     *
+     * @param path         The Path of the Template.
+     * @param templateName The name of the template.
      * @return The String representation of the Template.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    public Document getTemplateAsFixedScopeDocument(
-        final String path, final String templateName) throws Exception {
+    public Document getTemplateAsFixedScopeDocument(final String path, final String templateName) throws Exception {
 
-        final Document document =
-            EscidocRestSoapTestBase.getTemplateAsDocument(path, templateName);
+        final Document document = EscidocRestSoapTestBase.getTemplateAsDocument(path, templateName);
         fixScopeDocument(document);
         return document;
     }
 
     /**
      * Fixes the "link" attributes in case of SOAP.
-     * 
-     * @param document
-     *            The document to fix.
+     *
+     * @param document The document to fix.
      * @return Returns the provided (fixed) document.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     public Document fixScopeDocument(final Document document) throws Exception {
 
@@ -315,59 +274,46 @@ public class SmTestBase extends EscidocRestSoapTestBase {
     }
 
     /**
-     * Retrieve a Template as a String and fixes the "link" attributes in case
-     * of SOAP.<br>
-     * The used parser is NOT namespace aware!
-     * 
-     * @param path
-     *            The Path of the Template.
-     * @param templateName
-     *            The name of the template.
+     * Retrieve a Template as a String and fixes the "link" attributes in case of SOAP.<br> The used parser is NOT
+     * namespace aware!
+     *
+     * @param path         The Path of the Template.
+     * @param templateName The name of the template.
      * @return The String representation of the Template.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    public String getTemplateAsFixedAggregationDefinitionString(
-        final String path, final String templateName) throws Exception {
+    public String getTemplateAsFixedAggregationDefinitionString(final String path, final String templateName)
+        throws Exception {
 
-        final Document document =
-            getTemplateAsFixedAggregationDefinitionDocument(path, templateName);
+        final Document document = getTemplateAsFixedAggregationDefinitionDocument(path, templateName);
         return toString(document, false);
     }
 
     /**
-     * Retrieve a Template as a Document and fixes the "link" attributes in case
-     * of SOAP.<br>
-     * The used parser is NOT namespace aware!
-     * 
-     * @param path
-     *            The Path of the Template.
-     * @param templateName
-     *            The name of the template.
+     * Retrieve a Template as a Document and fixes the "link" attributes in case of SOAP.<br> The used parser is NOT
+     * namespace aware!
+     *
+     * @param path         The Path of the Template.
+     * @param templateName The name of the template.
      * @return The String representation of the Template.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    public Document getTemplateAsFixedAggregationDefinitionDocument(
-        final String path, final String templateName) throws Exception {
+    public Document getTemplateAsFixedAggregationDefinitionDocument(final String path, final String templateName)
+        throws Exception {
 
-        final Document document =
-            EscidocRestSoapTestBase.getTemplateAsDocument(path, templateName);
+        final Document document = EscidocRestSoapTestBase.getTemplateAsDocument(path, templateName);
         fixAggregationDefinitionDocument(document);
         return document;
     }
 
     /**
      * Fixes the "link" attributes in case of SOAP.
-     * 
-     * @param document
-     *            The document to fix.
+     *
+     * @param document The document to fix.
      * @return Returns the provided (fixed) document.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    public Document fixAggregationDefinitionDocument(
-            final Document document) throws Exception {
+    public Document fixAggregationDefinitionDocument(final Document document) throws Exception {
 
         fixLinkAttributes(document, XPATH_AGGREGATION_DEFINITION);
         fixLinkAttributes(document, XPATH_AGGREGATION_DEFINITION_SCOPE);
@@ -375,59 +321,46 @@ public class SmTestBase extends EscidocRestSoapTestBase {
     }
 
     /**
-     * Retrieve a Template as a String and fixes the "link" attributes in case
-     * of SOAP.<br>
-     * The used parser is NOT namespace aware!
-     * 
-     * @param path
-     *            The Path of the Template.
-     * @param templateName
-     *            The name of the template.
+     * Retrieve a Template as a String and fixes the "link" attributes in case of SOAP.<br> The used parser is NOT
+     * namespace aware!
+     *
+     * @param path         The Path of the Template.
+     * @param templateName The name of the template.
      * @return The String representation of the Template.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    public String getTemplateAsFixedReportDefinitionString(
-        final String path, final String templateName) throws Exception {
+    public String getTemplateAsFixedReportDefinitionString(final String path, final String templateName)
+        throws Exception {
 
-        final Document document =
-            getTemplateAsFixedReportDefinitionDocument(path, templateName);
+        final Document document = getTemplateAsFixedReportDefinitionDocument(path, templateName);
         return toString(document, false);
     }
 
     /**
-     * Retrieve a Template as a Document and fixes the "link" attributes in case
-     * of SOAP.<br>
-     * The used parser is NOT namespace aware!
-     * 
-     * @param path
-     *            The Path of the Template.
-     * @param templateName
-     *            The name of the template.
+     * Retrieve a Template as a Document and fixes the "link" attributes in case of SOAP.<br> The used parser is NOT
+     * namespace aware!
+     *
+     * @param path         The Path of the Template.
+     * @param templateName The name of the template.
      * @return The String representation of the Template.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    public Document getTemplateAsFixedReportDefinitionDocument(
-        final String path, final String templateName) throws Exception {
+    public Document getTemplateAsFixedReportDefinitionDocument(final String path, final String templateName)
+        throws Exception {
 
-        final Document document =
-            EscidocRestSoapTestBase.getTemplateAsDocument(path, templateName);
+        final Document document = EscidocRestSoapTestBase.getTemplateAsDocument(path, templateName);
         fixReportDefinitionDocument(document);
         return document;
     }
 
     /**
      * Fixes the "link" attributes in case of SOAP.
-     * 
-     * @param document
-     *            The document to fix.
+     *
+     * @param document The document to fix.
      * @return Returns the provided (fixed) document.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    public Document fixReportDefinitionDocument(
-            final Document document) throws Exception {
+    public Document fixReportDefinitionDocument(final Document document) throws Exception {
 
         fixLinkAttributes(document, XPATH_REPORT_DEFINITION);
         fixLinkAttributes(document, XPATH_REPORT_DEFINITION_SCOPE);
@@ -435,118 +368,90 @@ public class SmTestBase extends EscidocRestSoapTestBase {
     }
 
     /**
-     * Retrieve a Template as a String and fixes the "link" attributes in case
-     * of SOAP.<br>
-     * The used parser is NOT namespace aware!
-     * 
-     * @param path
-     *            The Path of the Template.
-     * @param templateName
-     *            The name of the template.
+     * Retrieve a Template as a String and fixes the "link" attributes in case of SOAP.<br> The used parser is NOT
+     * namespace aware!
+     *
+     * @param path         The Path of the Template.
+     * @param templateName The name of the template.
      * @return The String representation of the Template.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    public String getTemplateAsFixedReportParametersString(
-        final String path, final String templateName) throws Exception {
+    public String getTemplateAsFixedReportParametersString(final String path, final String templateName)
+        throws Exception {
 
-        final Document document =
-            getTemplateAsFixedReportParametersDocument(path, templateName);
+        final Document document = getTemplateAsFixedReportParametersDocument(path, templateName);
         return toString(document, false);
     }
 
     /**
-     * Retrieve a Template as a Document and fixes the "link" attributes in case
-     * of SOAP.<br>
-     * The used parser is NOT namespace aware!
-     * 
-     * @param path
-     *            The Path of the Template.
-     * @param templateName
-     *            The name of the template.
+     * Retrieve a Template as a Document and fixes the "link" attributes in case of SOAP.<br> The used parser is NOT
+     * namespace aware!
+     *
+     * @param path         The Path of the Template.
+     * @param templateName The name of the template.
      * @return The String representation of the Template.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    public Document getTemplateAsFixedReportParametersDocument(
-        final String path, final String templateName) throws Exception {
+    public Document getTemplateAsFixedReportParametersDocument(final String path, final String templateName)
+        throws Exception {
 
-        final Document document =
-            EscidocRestSoapTestBase.getTemplateAsDocument(path, templateName);
+        final Document document = EscidocRestSoapTestBase.getTemplateAsDocument(path, templateName);
         fixReportParametersDocument(document);
         return document;
     }
 
     /**
      * Fixes the "link" attributes in case of SOAP.
-     * 
-     * @param document
-     *            The document to fix.
+     *
+     * @param document The document to fix.
      * @return Returns the provided (fixed) document.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    public Document fixReportParametersDocument(
-            final Document document) throws Exception {
+    public Document fixReportParametersDocument(final Document document) throws Exception {
 
         fixLinkAttributes(document, XPATH_REPORT_PARAMETERS_REPORT_DEFINITION);
         return document;
     }
 
     /**
-     * Retrieve a Template as a String and fixes the "link" attributes in case
-     * of SOAP.<br>
-     * The used parser is NOT namespace aware!
-     * 
-     * @param path
-     *            The Path of the Template.
-     * @param templateName
-     *            The name of the template.
+     * Retrieve a Template as a String and fixes the "link" attributes in case of SOAP.<br> The used parser is NOT
+     * namespace aware!
+     *
+     * @param path         The Path of the Template.
+     * @param templateName The name of the template.
      * @return The String representation of the Template.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    public String getTemplateAsFixedReportString(
-        final String path, final String templateName) throws Exception {
+    public String getTemplateAsFixedReportString(final String path, final String templateName) throws Exception {
 
-        final Document document =
-            getTemplateAsFixedReportDocument(path, templateName);
+        final Document document = getTemplateAsFixedReportDocument(path, templateName);
         return toString(document, false);
     }
 
     /**
-     * Retrieve a Template as a Document and fixes the "link" attributes in case
-     * of SOAP.<br>
-     * The used parser is NOT namespace aware!
-     * 
-     * @param path
-     *            The Path of the Template.
-     * @param templateName
-     *            The name of the template.
+     * Retrieve a Template as a Document and fixes the "link" attributes in case of SOAP.<br> The used parser is NOT
+     * namespace aware!
+     *
+     * @param path         The Path of the Template.
+     * @param templateName The name of the template.
      * @return The String representation of the Template.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    public Document getTemplateAsFixedReportDocument(
-        final String path, final String templateName) throws Exception {
+    public Document getTemplateAsFixedReportDocument(final String path, final String templateName) throws Exception {
 
-        final Document document =
-            EscidocRestSoapTestBase.getTemplateAsDocument(path, templateName);
+        final Document document = EscidocRestSoapTestBase.getTemplateAsDocument(path, templateName);
         fixReportDocument(document);
         return document;
     }
 
     /**
      * Fixes the "link" attributes in case of SOAP.
-     * 
-     * @param document
-     *            The document to fix.
+     *
+     * @param document The document to fix.
      * @return Returns the provided (fixed) document.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    public Document fixReportDocument(
-            final Document document) throws Exception {
+    public Document fixReportDocument(final Document document) throws Exception {
 
         fixLinkAttributes(document, XPATH_REPORT_REPORT_DEFINITION);
         return document;

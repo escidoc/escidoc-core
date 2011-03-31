@@ -10,9 +10,7 @@ import org.w3c.dom.Document;
 import static org.junit.Assert.assertTrue;
 
 /**
- * 
  * @author Michael Hoppe
- * 
  */
 public class DeviationRestTest extends DeviationTestBase {
 
@@ -22,9 +20,8 @@ public class DeviationRestTest extends DeviationTestBase {
 
     /**
      * Test retrieving the fedora describe xml.
-     * 
-     * @throws Exception
-     *             e
+     *
+     * @throws Exception e
      */
     @Test
     public void testDescribe() throws Exception {
@@ -34,16 +31,15 @@ public class DeviationRestTest extends DeviationTestBase {
 
     /**
      * Test retrieving an item-xml.
-     * 
-     * @throws Exception
-     *             e
+     *
+     * @throws Exception e
      */
     @Test
     public void testExport() throws Exception {
 
         String toBeCreatedXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
-                + "/" + getTransport(false), "escidoc_test_item0.xml");
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                "escidoc_test_item0.xml");
 
         String createdXml = create(toBeCreatedXml);
         String id = getObjidValue(createdXml);
@@ -54,27 +50,23 @@ public class DeviationRestTest extends DeviationTestBase {
 
     /**
      * Test retrieving an content.
-     * 
-     * @throws Exception
-     *             e
+     *
+     * @throws Exception e
      */
     @Test
     public void testDatastreamDissimination() throws Exception {
 
         String toBeCreatedXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
-                + "/" + getTransport(false), "escidoc_test_item0.xml");
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                "escidoc_test_item0.xml");
 
         String createdXml = create(toBeCreatedXml);
         Document document = EscidocRestSoapTestBase.getDocument(createdXml);
         String id = getObjidValue(createdXml);
-        String componentId =
-            getObjidValue(document, OmTestBase.XPATH_ITEM_COMPONENTS + "/"
-                + NAME_COMPONENT);
+        String componentId = getObjidValue(document, OmTestBase.XPATH_ITEM_COMPONENTS + "/" + NAME_COMPONENT);
         String content =
-            (String) getDatastreamDissimination(id, Constants.ITEM_BASE_URI
-                + "/" + id + "/" + Constants.SUB_COMPONENT + "/" + componentId
-                + "/" + Constants.SUB_CONTENT);
+            (String) getDatastreamDissimination(id, Constants.ITEM_BASE_URI + "/" + id + "/" + Constants.SUB_COMPONENT
+                + "/" + componentId + "/" + Constants.SUB_CONTENT);
         assertTrue(content.contains("Antriebsvorrichtung"));
 
     }

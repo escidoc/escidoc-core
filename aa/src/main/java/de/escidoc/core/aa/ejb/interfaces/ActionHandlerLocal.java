@@ -16,43 +16,23 @@ import javax.ejb.EJBLocalObject;
 public interface ActionHandlerLocal extends EJBLocalObject {
 
     String createUnsecuredActions(String contextId, String actions, SecurityContext securityContext)
-            throws ContextNotFoundException,
-            XmlCorruptedException,
-            XmlSchemaValidationException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException;
+        throws ContextNotFoundException, XmlCorruptedException, XmlSchemaValidationException, AuthenticationException,
+        AuthorizationException, SystemException;
 
     String createUnsecuredActions(String contextId, String actions, String authHandle, Boolean restAccess)
-            throws ContextNotFoundException,
-            XmlCorruptedException,
-            XmlSchemaValidationException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException;
+        throws ContextNotFoundException, XmlCorruptedException, XmlSchemaValidationException, AuthenticationException,
+        AuthorizationException, SystemException;
 
-    void deleteUnsecuredActions(String contextId, SecurityContext securityContext)
-            throws ContextNotFoundException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException;
+    void deleteUnsecuredActions(String contextId, SecurityContext securityContext) throws ContextNotFoundException,
+        AuthenticationException, AuthorizationException, SystemException;
 
     void deleteUnsecuredActions(String contextId, String authHandle, Boolean restAccess)
-            throws ContextNotFoundException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException;
+        throws ContextNotFoundException, AuthenticationException, AuthorizationException, SystemException;
 
-    String retrieveUnsecuredActions(String contextId, SecurityContext securityContext)
-            throws ContextNotFoundException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException;
+    String retrieveUnsecuredActions(String contextId, SecurityContext securityContext) throws ContextNotFoundException,
+        AuthenticationException, AuthorizationException, SystemException;
 
     String retrieveUnsecuredActions(String contextId, String authHandle, Boolean restAccess)
-            throws ContextNotFoundException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException;
+        throws ContextNotFoundException, AuthenticationException, AuthorizationException, SystemException;
 
 }

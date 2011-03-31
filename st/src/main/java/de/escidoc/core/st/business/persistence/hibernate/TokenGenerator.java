@@ -35,34 +35,24 @@ import org.hibernate.id.IdentifierGenerator;
 
 import java.io.Serializable;
 
-
 /**
- * Generator for unique tokens.<br>
- * This is an implementation of a hibernate id generator.
- * 
- * @author Torsten Tetteroo
+ * Generator for unique tokens.<br> This is an implementation of a hibernate id generator.
  *
+ * @author Torsten Tetteroo
  */
 public class TokenGenerator implements IdentifierGenerator {
-    
+
     private static final String ID_PREFIX = "escidoctoken:";
 
     private final UUIDGen uuidGenerator = UUIDGenFactory.getUUIDGen();
-    
-
 
     /**
      * See Interface for functional description.
-     * 
-     * @param arg0
-     * @param arg1
-     * @return
      */
     @Override
-    public Serializable generate(final SessionImplementor sessionImplementor,
-                                 final Object arg1) {
+    public Serializable generate(final SessionImplementor sessionImplementor, final Object arg1) {
 
         return ID_PREFIX + uuidGenerator.nextUUID();
     }
-    
+
 }

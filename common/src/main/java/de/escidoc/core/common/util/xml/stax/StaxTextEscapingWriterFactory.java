@@ -27,52 +27,32 @@ import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 
 /**
- * <code>EscapingWriterFactory</code> implementation that returns escaping
- * writers used for escaping text content.
- * 
+ * <code>EscapingWriterFactory</code> implementation that returns escaping writers used for escaping text content.
+ *
  * @author Torsten Tetteroo
- * 
  */
 public class StaxTextEscapingWriterFactory implements EscapingWriterFactory {
 
-
-
     /**
      * See Interface for functional description.
-     * 
-     * @param writer
-     * @param enc
-     * @return
-     * @throws UnsupportedEncodingException
-     * @see EscapingWriterFactory
-     *      #createEscapingWriterFor(java.io.Writer, java.lang.String)
+     *
+     * @see EscapingWriterFactory #createEscapingWriterFor(java.io.Writer, java.lang.String)
      */
     @Override
-    public Writer createEscapingWriterFor(final Writer writer, final String enc)
-        throws UnsupportedEncodingException {
+    public Writer createEscapingWriterFor(final Writer writer, final String enc) throws UnsupportedEncodingException {
 
         return new StaxEscapingWriter(writer, false);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param out
-     * @param enc
-     * @return
-     * @throws UnsupportedEncodingException
-     * @see EscapingWriterFactory
-     *      #createEscapingWriterFor(java.io.OutputStream, java.lang.String)
+     *
+     * @see EscapingWriterFactory #createEscapingWriterFor(java.io.OutputStream, java.lang.String)
      */
     @Override
-    public Writer createEscapingWriterFor(
-        final OutputStream out, final String enc)
-        throws UnsupportedEncodingException {
+    public Writer createEscapingWriterFor(final OutputStream out, final String enc) throws UnsupportedEncodingException {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException(
-            "createEscapingWriterFor(OutputStream out, enc) not implemented");
+        throw new UnsupportedOperationException("createEscapingWriterFor(OutputStream out, enc) not implemented");
     }
-
-
 
 }

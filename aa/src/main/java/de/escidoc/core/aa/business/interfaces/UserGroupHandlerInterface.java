@@ -46,182 +46,126 @@ import java.util.Set;
 
 /**
  * The interface for access to a user group resource.
- * 
+ *
  * @author André Schenk
  */
 public interface UserGroupHandlerInterface extends PermissionHandlerInterface {
-    String MSG_GROUP_INVALID_SELECTOR_NAME =
-        "The given name is not allowed for internal selectors.";
+
+    String MSG_GROUP_INVALID_SELECTOR_NAME = "The given name is not allowed for internal selectors.";
 
     /**
      * Add one or more selectors to a User Group.<br/>
-     * 
-     * @param groupId
-     *            User Group ID
-     * @param taskParam
-     *            list of selectors to add to the User Group
-     * 
+     *
+     * @param groupId   User Group ID
+     * @param taskParam list of selectors to add to the User Group
      * @return last-modification-date within XML (result.xsd)
      * @throws OrganizationalUnitNotFoundException
-     *             Thrown if an Organizational Unit with the provided id does
-     *             not exist in the framework.
-     * @throws UserAccountNotFoundException
-     *             Thrown if a User Account with the provided id does not exist
-     *             in the framework.
-     * @throws UserGroupNotFoundException
-     *             Thrown if a User Group with the provided id does not exist in
-     *             the framework.
-     * @throws InvalidContentException
-     *             Thrown if for any ids there is no resource in the framework.
+     *                                      Thrown if an Organizational Unit with the provided id does not exist in the
+     *                                      framework.
+     * @throws UserAccountNotFoundException Thrown if a User Account with the provided id does not exist in the
+     *                                      framework.
+     * @throws UserGroupNotFoundException   Thrown if a User Group with the provided id does not exist in the
+     *                                      framework.
+     * @throws InvalidContentException      Thrown if for any ids there is no resource in the framework.
      * @throws MissingMethodParameterException
-     *             Thrown if one of expected input parameters is missing.
-     * @throws SystemException
-     *             Thrown if a framework internal error occurs.
-     * @throws AuthenticationException
-     *             Thrown if the authentication fails due to an invalid provided
-     *             eSciDoc user handle.
-     * @throws AuthorizationException
-     *             Thrown if authorization fails.
-     * @throws OptimisticLockingException
-     *             If the provided latest-modification-date does not match.
-     * @throws XmlCorruptedException
-     *             Thrown in case of provided invalid XML data (corrupted data,
-     *             schema validation failed, missing mandatory element or
-     *             attribute values).
+     *                                      Thrown if one of expected input parameters is missing.
+     * @throws SystemException              Thrown if a framework internal error occurs.
+     * @throws AuthenticationException      Thrown if the authentication fails due to an invalid provided eSciDoc user
+     *                                      handle.
+     * @throws AuthorizationException       Thrown if authorization fails.
+     * @throws OptimisticLockingException   If the provided latest-modification-date does not match.
+     * @throws XmlCorruptedException        Thrown in case of provided invalid XML data (corrupted data, schema
+     *                                      validation failed, missing mandatory element or attribute values).
      * @throws UserGroupHierarchyViolationException
-     *             Thrown if a selector's group id is already in the user group
-     *             tree of the given user group.
+     *                                      Thrown if a selector's group id is already in the user group tree of the
+     *                                      given user group.
      */
-    String addSelectors(String groupId, String taskParam)
-        throws OrganizationalUnitNotFoundException,
-        UserAccountNotFoundException, UserGroupNotFoundException,
-        InvalidContentException, MissingMethodParameterException,
-        SystemException, AuthenticationException, AuthorizationException,
-        OptimisticLockingException, XmlCorruptedException,
-        UserGroupHierarchyViolationException;
+    String addSelectors(String groupId, String taskParam) throws OrganizationalUnitNotFoundException,
+        UserAccountNotFoundException, UserGroupNotFoundException, InvalidContentException,
+        MissingMethodParameterException, SystemException, AuthenticationException, AuthorizationException,
+        OptimisticLockingException, XmlCorruptedException, UserGroupHierarchyViolationException;
 
     /**
      * Remove one or more selectors from a User Group.<br/>
-     * 
-     * @param groupId
-     *            User Group ID
-     * @param taskParam
-     *            list of selectors to remove from the User Group
-     * 
+     *
+     * @param groupId   User Group ID
+     * @param taskParam list of selectors to remove from the User Group
      * @return last-modification-date within XML (result.xsd)
      * @throws OrganizationalUnitNotFoundException
-     *             Thrown if an Organizational Unit with the provided id does not
-     *             exist in the framework.
-     * @throws UserAccountNotFoundException
-     *             Thrown if a User Account with the provided id does not exist in
-     *             the framework.
-     * @throws UserGroupNotFoundException
-     *             Thrown if a User Group with the provided id does not exist in
-     *             the framework.
+     *                                      Thrown if an Organizational Unit with the provided id does not exist in the
+     *                                      framework.
+     * @throws UserAccountNotFoundException Thrown if a User Account with the provided id does not exist in the
+     *                                      framework.
+     * @throws UserGroupNotFoundException   Thrown if a User Group with the provided id does not exist in the
+     *                                      framework.
      * @throws MissingMethodParameterException
-     *             Thrown if one of expected input parameters is missing.
-     * @throws SystemException
-     *             Thrown if a framework internal error occurs.
-     * @throws AuthenticationException
-     *             Thrown if the authentication fails due to an invalid provided
-     *             eSciDoc user handle.
-     * @throws AuthorizationException
-     *             Thrown if authorization fails.
-     * @throws OptimisticLockingException
-     *             If the provided latest-modification-date does not match.
-     * @throws XmlCorruptedException
-     *             Thrown in case of provided invalid XML data (corrupted data,
-     *             schema validation failed).
+     *                                      Thrown if one of expected input parameters is missing.
+     * @throws SystemException              Thrown if a framework internal error occurs.
+     * @throws AuthenticationException      Thrown if the authentication fails due to an invalid provided eSciDoc user
+     *                                      handle.
+     * @throws AuthorizationException       Thrown if authorization fails.
+     * @throws OptimisticLockingException   If the provided latest-modification-date does not match.
+     * @throws XmlCorruptedException        Thrown in case of provided invalid XML data (corrupted data, schema
+     *                                      validation failed).
      */
-    String removeSelectors(String groupId, String taskParam)
-        throws XmlCorruptedException, AuthenticationException,
-        AuthorizationException, SystemException, UserGroupNotFoundException,
-        OptimisticLockingException, MissingMethodParameterException,
-        OrganizationalUnitNotFoundException, UserAccountNotFoundException;
+    String removeSelectors(String groupId, String taskParam) throws XmlCorruptedException, AuthenticationException,
+        AuthorizationException, SystemException, UserGroupNotFoundException, OptimisticLockingException,
+        MissingMethodParameterException, OrganizationalUnitNotFoundException, UserAccountNotFoundException;
 
     /**
      * Retrieve the resources section of a User Group.
      *
      * @param groupId id of the user group
-     *
      * @return the resources of the user group as XML structure
-     * @throws SystemException Thrown in case of an internal error.
-     * @throws UserGroupNotFoundException
-     *             Thrown if a user group with the provided id does not exist in
-     *             the framework.
+     * @throws SystemException            Thrown in case of an internal error.
+     * @throws UserGroupNotFoundException Thrown if a user group with the provided id does not exist in the framework.
      */
-    String retrieveResources(final String groupId)
-        throws UserGroupNotFoundException, SystemException;
+    String retrieveResources(final String groupId) throws UserGroupNotFoundException, SystemException;
 
     /**
      * Retrieve a list of User Groups which match the given search criteria.
-     * 
+     *
      * @param filter The filter criteria as CQL query.
-     * 
-     * @return XML representation of all User Groups which match the given
-     *         search criteria
-     * @throws AuthenticationException
-     *             Thrown if the authentication fails due to an invalid provided
-     *             eSciDoc user handle.
-     * @throws AuthorizationException
-     *             Thrown if the authorization fails.
-     * @throws InvalidSearchQueryException thrown if the given search query could
-     *                                     not be translated into a SQL query
-     * @throws SystemException
-     *             Thrown in case of an internal system error.
+     * @return XML representation of all User Groups which match the given search criteria
+     * @throws AuthenticationException     Thrown if the authentication fails due to an invalid provided eSciDoc user
+     *                                     handle.
+     * @throws AuthorizationException      Thrown if the authorization fails.
+     * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
+     * @throws SystemException             Thrown in case of an internal system error.
      */
-    String retrieveUserGroups(Map<String, String[]> filter)
-        throws AuthenticationException, AuthorizationException,
+    String retrieveUserGroups(Map<String, String[]> filter) throws AuthenticationException, AuthorizationException,
         InvalidSearchQueryException, SystemException;
 
     /**
-     * Retrieve all groups hierarchically the 
-     * given user currently belongs to as Set of groupIds.
-     * 
-     * @param userId
-     *            the User Account ID
-     * 
+     * Retrieve all groups hierarchically the given user currently belongs to as Set of groupIds.
+     *
+     * @param userId the User Account ID
      * @return Set with groupIds
-     * @throws UserAccountNotFoundException
-     *             in case the User Account for the userId is not found
-     * @throws SystemException
-     *             Thrown in case of an internal system error.
+     * @throws UserAccountNotFoundException in case the User Account for the userId is not found
+     * @throws SystemException              Thrown in case of an internal system error.
      */
-    Set<String> retrieveGroupsForUser(String userId)
-        throws UserAccountNotFoundException, SystemException;
+    Set<String> retrieveGroupsForUser(String userId) throws UserAccountNotFoundException, SystemException;
 
     /**
-     * Retrieve all User Groups hierarchically the 
-     * given user currently belongs to as Set of groupIds.
-     * If activeOnly is set to true, just find active groups
-     * 
-     * @param userId
-     *            User Account ID
-     * @param activeOnly
-     *            true if only active User Groups should be found.
-     * 
+     * Retrieve all User Groups hierarchically the given user currently belongs to as Set of groupIds. If activeOnly is
+     * set to true, just find active groups
+     *
+     * @param userId     User Account ID
+     * @param activeOnly true if only active User Groups should be found.
      * @return Set with groupIds
-     * @throws UserAccountNotFoundException
-     *             in case the userAccount for the userId is not found
-     * @throws SystemException
-     *             Thrown in case of an internal system error.
+     * @throws UserAccountNotFoundException in case the userAccount for the userId is not found
+     * @throws SystemException              Thrown in case of an internal system error.
      */
-    Set<String> retrieveGroupsForUser(
-            String userId, boolean activeOnly)
-        throws UserAccountNotFoundException, SystemException;
+    Set<String> retrieveGroupsForUser(String userId, boolean activeOnly) throws UserAccountNotFoundException,
+        SystemException;
 
     /**
-     * Retrieve all User Groups hierarchically the 
-     * given User Group currently belongs to as Set of groupIds.
-     * 
-     * @param groupId
-     *            the User Group ID
-     * 
+     * Retrieve all User Groups hierarchically the given User Group currently belongs to as Set of groupIds.
+     *
+     * @param groupId the User Group ID
      * @return Set with groupIds
-     * @throws SystemException
-     *             Thrown in case of an internal system error.
+     * @throws SystemException Thrown in case of an internal system error.
      */
-    Set<String> retrieveGroupsForGroup(String groupId)
-        throws SystemException;
+    Set<String> retrieveGroupsForGroup(String groupId) throws SystemException;
 
 }

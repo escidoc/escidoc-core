@@ -55,9 +55,8 @@ import static org.junit.Assert.assertNotNull;
 
 /**
  * Test all references of a Container.
- * 
+ *
  * @author Steffen Wagner
- * 
  */
 @RunWith(value = Parameterized.class)
 public class ContainerReferenceTest extends ContainerTestBase {
@@ -69,8 +68,7 @@ public class ContainerReferenceTest extends ContainerTestBase {
     private String theItemId;
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ContainerReferenceTest(final int transport) {
         super(transport);
@@ -78,30 +76,24 @@ public class ContainerReferenceTest extends ContainerTestBase {
 
     /**
      * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     * 
+     *
+     * @throws Exception If anything fails.
      */
     @Before
     public void setUp() throws Exception {
 
         this.theItemId = createItem();
 
-        String xmlData =
-            getContainerTemplate("create_container_v1.1-forItem.xml");
+        String xmlData = getContainerTemplate("create_container_v1.1-forItem.xml");
 
-        theContainerXml =
-            create(xmlData.replaceAll("##ITEMID##", this.theItemId));
+        theContainerXml = create(xmlData.replaceAll("##ITEMID##", this.theItemId));
         this.theContainerId = getObjidValue(this.theContainerXml);
     }
 
     /**
-     * Check if all object references within the properties section are valid
-     * after createContainer.
-     * 
-     * @throws Exception
-     *             Thrown if an reference could not be solved.
+     * Check if all object references within the properties section are valid after createContainer.
+     *
+     * @throws Exception Thrown if an reference could not be solved.
      */
     @Test
     public void testReferenceProp1() throws Exception {
@@ -123,8 +115,7 @@ public class ContainerReferenceTest extends ContainerTestBase {
         // now check this for further versions
         int verNo = Integer.valueOf(versionNumber);
         if (Constants.TRANSPORT_REST == getTransport()) {
-            checkRestPropertiesReferences(theContainerXml, objId
-                + VERSION_SUFFIX_SEPARATOR + verNo);
+            checkRestPropertiesReferences(theContainerXml, objId + VERSION_SUFFIX_SEPARATOR + verNo);
         }
         else {
             checkSoapPropertiesReferences(theContainerXml, objid);
@@ -135,8 +126,7 @@ public class ContainerReferenceTest extends ContainerTestBase {
             theContainerXml = addCtsElement(theContainerXml);
             theContainerXml = update(theContainerId, theContainerXml);
             if (Constants.TRANSPORT_REST == getTransport()) {
-                checkRestPropertiesReferences(theContainerXml, objId
-                    + VERSION_SUFFIX_SEPARATOR + (i + 1));
+                checkRestPropertiesReferences(theContainerXml, objId + VERSION_SUFFIX_SEPARATOR + (i + 1));
             }
             else {
                 checkSoapPropertiesReferences(theContainerXml, objid);
@@ -146,11 +136,9 @@ public class ContainerReferenceTest extends ContainerTestBase {
     }
 
     /**
-     * Check if all object references are available and retrievable after
-     * createContainer.
-     * 
-     * @throws Exception
-     *             Thrown if an reference could not be solved.
+     * Check if all object references are available and retrievable after createContainer.
+     *
+     * @throws Exception Thrown if an reference could not be solved.
      */
     @Test
     public void testReferenceCr1() throws Exception {
@@ -165,11 +153,9 @@ public class ContainerReferenceTest extends ContainerTestBase {
     }
 
     /**
-     * Check if all object references are available and retrievable after a new
-     * Container cycle.
-     * 
-     * @throws Exception
-     *             Thrown if an reference could not be solved.
+     * Check if all object references are available and retrievable after a new Container cycle.
+     *
+     * @throws Exception Thrown if an reference could not be solved.
      */
     @Test
     public void testReferenceCr2() throws Exception {
@@ -186,18 +172,14 @@ public class ContainerReferenceTest extends ContainerTestBase {
             }
         }
 
-        String ltstVrsnId =
-            getLatestVersionId(EscidocRestSoapTestBase
-                .getDocument(theContainerXml));
+        String ltstVrsnId = getLatestVersionId(EscidocRestSoapTestBase.getDocument(theContainerXml));
         if (Constants.TRANSPORT_REST == getTransport()) {
             call("/ir/container/" + ltstVrsnId);
         }
         else {
             getContainerClient().retrieve(ltstVrsnId);
         }
-        int maxVersion =
-            Integer.valueOf(ltstVrsnId
-                .substring(ltstVrsnId.lastIndexOf(':') + 1));
+        int maxVersion = Integer.valueOf(ltstVrsnId.substring(ltstVrsnId.lastIndexOf(':') + 1));
 
         for (int i = 1; i <= maxVersion; i++) {
             String versionId = theContainerId + ":" + i;
@@ -213,17 +195,13 @@ public class ContainerReferenceTest extends ContainerTestBase {
 
     /**
      * Check the references of an Container for the REST representation.
-     * 
-     * @param containerXml
-     *            The XML of the Container.
-     * @throws Exception
-     *             Thrown if retrieve or ID extracting failed.
+     *
+     * @param containerXml The XML of the Container.
+     * @throws Exception Thrown if retrieve or ID extracting failed.
      */
-    private void checkRestReferences(final String containerXml)
-        throws Exception {
+    private void checkRestReferences(final String containerXml) throws Exception {
 
-        Document containerDoc =
-            EscidocRestSoapTestBase.getDocument(containerXml);
+        Document containerDoc = EscidocRestSoapTestBase.getDocument(containerXml);
 
         NodeList hrefs = selectNodeList(containerDoc, "//@href");
         List<String> refList = nodeList2List(hrefs);
@@ -246,9 +224,8 @@ public class ContainerReferenceTest extends ContainerTestBase {
 
     /**
      * References that are to skip (or non valid GET refs).
-     * 
-     * @param ref
-     *            The reference (path).
+     *
+     * @param ref The reference (path).
      * @return True if the reference is to skip, false otherwise.
      */
     private boolean skipRefCheck(final String ref) {
@@ -269,17 +246,13 @@ public class ContainerReferenceTest extends ContainerTestBase {
 
     /**
      * Check the references of an Container for the SOAP representation.
-     * 
-     * @param containerXml
-     *            The XML of the Container.
-     * @throws Exception
-     *             Thrown if retrieve or ID extracting failed.
+     *
+     * @param containerXml The XML of the Container.
+     * @throws Exception Thrown if retrieve or ID extracting failed.
      */
-    private void checkSoapReferences(final String containerXml)
-        throws Exception {
+    private void checkSoapReferences(final String containerXml) throws Exception {
 
-        Document containerDoc =
-            EscidocRestSoapTestBase.getDocument(containerXml);
+        Document containerDoc = EscidocRestSoapTestBase.getDocument(containerXml);
 
         NodeList objids = selectNodeList(containerDoc, "//*[@objid]");
         List<String> refList = nodeListSOAP2List(objids);
@@ -301,89 +274,63 @@ public class ContainerReferenceTest extends ContainerTestBase {
     }
 
     /**
-     * Check the References within the Properties section. It is not checked if
-     * the reference is retrievable. Here is the logic of the id checked.
-     * 
-     * @param containerXml
-     *            The XML of the Container.
-     * @param id
-     *            The id which was used for the retrieve.
-     * @throws Exception
-     *             Thrown if the ids within the properties section doesn't fit
-     *             to the retrieve Id.
+     * Check the References within the Properties section. It is not checked if the reference is retrievable. Here is
+     * the logic of the id checked.
+     *
+     * @param containerXml The XML of the Container.
+     * @param id           The id which was used for the retrieve.
+     * @throws Exception Thrown if the ids within the properties section doesn't fit to the retrieve Id.
      */
-    private void checkRestPropertiesReferences(
-        final String containerXml, final String id) throws Exception {
+    private void checkRestPropertiesReferences(final String containerXml, final String id) throws Exception {
 
-        Document containerDoc =
-            EscidocRestSoapTestBase.getDocument(containerXml);
+        Document containerDoc = EscidocRestSoapTestBase.getDocument(containerXml);
 
         String versionSuffix = getVersionNumber(id);
-        Node n =
-            selectSingleNode(containerDoc,
-                "/container/properties/version/@href");
+        Node n = selectSingleNode(containerDoc, "/container/properties/version/@href");
         String currentVersion = getObjidFromHref(n.getNodeValue());
 
-        n =
-            selectSingleNode(containerDoc,
-                "/container/properties/latest-version/@href");
+        n = selectSingleNode(containerDoc, "/container/properties/latest-version/@href");
         String latestVersion = getObjidFromHref(n.getNodeValue());
 
-        assertNotNull("VersionSuffix is missing on version link",
-            getVersionNumber(currentVersion));
-        assertNotNull("Latest-VersionSuffix is missing on version link",
-            getVersionNumber(latestVersion));
+        assertNotNull("VersionSuffix is missing on version link", getVersionNumber(currentVersion));
+        assertNotNull("Latest-VersionSuffix is missing on version link", getVersionNumber(latestVersion));
 
         if (versionSuffix != null) {
             assertEquals("This version link is wrong", id, currentVersion);
         }
         else {
-            assertEquals("This version/latest-version link is wrong",
-                latestVersion, currentVersion);
+            assertEquals("This version/latest-version link is wrong", latestVersion, currentVersion);
         }
     }
 
     /**
-     * Check the References within the Properties section. It is not checked if
-     * the reference is retrievable. Here is the logic of the id checked.
-     * 
-     * @param containerXml
-     *            The XML of the Container.
-     * @param id
-     *            The id which was used for the retrieve.
-     * @throws Exception
-     *             Thrown if the ids within the properties section doesn't fit
-     *             to the retrieve Id.
+     * Check the References within the Properties section. It is not checked if the reference is retrievable. Here is
+     * the logic of the id checked.
+     *
+     * @param containerXml The XML of the Container.
+     * @param id           The id which was used for the retrieve.
+     * @throws Exception Thrown if the ids within the properties section doesn't fit to the retrieve Id.
      */
-    private void checkSoapPropertiesReferences(
-        final String containerXml, final String id) throws Exception {
+    private void checkSoapPropertiesReferences(final String containerXml, final String id) throws Exception {
 
-        Document containerDoc =
-            EscidocRestSoapTestBase.getDocument(containerXml);
+        Document containerDoc = EscidocRestSoapTestBase.getDocument(containerXml);
 
-        Node n =
-            selectSingleNode(containerDoc,
-                "/container/properties/version/@objid");
+        Node n = selectSingleNode(containerDoc, "/container/properties/version/@objid");
         String currentVersion = n.getNodeValue();
 
-        Node n2 =
-            selectSingleNode(containerDoc,
-                "/container/properties/version/number");
+        Node n2 = selectSingleNode(containerDoc, "/container/properties/version/number");
         String versionNumber = n2.getTextContent();
 
-        assertEquals("This version id is wrong", id + ":" + versionNumber,
-            currentVersion);
+        assertEquals("This version id is wrong", id + ":" + versionNumber, currentVersion);
 
     }
 
     /**
      * Retrieve the resource from the Framework via REST GET request.
-     * 
-     * @param href
-     *            The resource href.
+     *
+     * @param href The resource href.
      * @return The response object.
-     * @throws Exception
-     *             Thrown if the HTTP response value is != HTTP_OK (200)
+     * @throws Exception Thrown if the HTTP response value is != HTTP_OK (200)
      */
     private HttpResponse call(final String href) throws Exception {
 
@@ -391,15 +338,13 @@ public class ContainerReferenceTest extends ContainerTestBase {
         httpClient.removeRequestInterceptorByClass(RequestAddCookies.class);
         httpClient.removeResponseInterceptorByClass(ResponseProcessCookies.class);
 
-        String httpUrl =
-            Constants.PROTOCOL + "://" + Constants.HOST_PORT + href;
+        String httpUrl = Constants.PROTOCOL + "://" + Constants.HOST_PORT + href;
 
         HttpResponse httpRes = HttpHelper.doGet(httpClient, httpUrl, null);
 
         if (httpRes.getStatusLine().getStatusCode() != HttpServletResponse.SC_OK) {
 
-            throw new Exception("Retrieve of " + href + " failed. "
-                + httpRes.getStatusLine().getReasonPhrase() + " - "
+            throw new Exception("Retrieve of " + href + " failed. " + httpRes.getStatusLine().getReasonPhrase() + " - "
                 + EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8));
         }
 
@@ -407,12 +352,11 @@ public class ContainerReferenceTest extends ContainerTestBase {
     }
 
     /**
-     * Create Item with the used interface method (REST/SOAP) for Container. The
-     * representation of an Item is different from the used ingest method.
-     * 
+     * Create Item with the used interface method (REST/SOAP) for Container. The representation of an Item is different
+     * from the used ingest method.
+     *
      * @return id of the created Item.
-     * @throws Exception
-     *             Thrown if ingest failed.
+     * @throws Exception Thrown if ingest failed.
      */
     private String createItem() throws Exception {
 

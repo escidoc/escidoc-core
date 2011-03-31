@@ -30,9 +30,8 @@ package de.escidoc.core.aa.business.persistence;
 
 /**
  * Class representing an escidoc action.
- * 
+ *
  * @author Torsten Tetteroo
- * 
  */
 public class Action extends ActionBase {
 

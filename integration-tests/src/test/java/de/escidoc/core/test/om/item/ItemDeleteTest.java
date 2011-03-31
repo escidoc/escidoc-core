@@ -49,17 +49,16 @@ import static org.junit.Assert.fail;
 
 /**
  * Test the mock implementation of the item resource.
- * 
+ *
  * @author Michael Schneider
- * 
  */
 @RunWith(value = Parameterized.class)
 public class ItemDeleteTest extends ItemTestBase {
+
     private String theItemId;
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ItemDeleteTest(final int transport) {
         super(transport);
@@ -67,26 +66,20 @@ public class ItemDeleteTest extends ItemTestBase {
 
     /**
      * Get the param with last-modification-date.
-     * 
-     * @param includeWithdrawComment
-     *            Set true if a withdraw comment is to include.
+     *
+     * @param includeWithdrawComment Set true if a withdraw comment is to include.
      * @return param with last-modification-date
-     * @throws Exception
-     *             Thrown if converting of XML to Document format fails.
+     * @throws Exception Thrown if converting of XML to Document format fails.
      */
-    private String getTheLastModificationParam(
-        final boolean includeWithdrawComment) throws Exception {
-        Document item =
-            EscidocRestSoapTestBase.getDocument(retrieve(theItemId));
+    private String getTheLastModificationParam(final boolean includeWithdrawComment) throws Exception {
+        Document item = EscidocRestSoapTestBase.getDocument(retrieve(theItemId));
 
         // get last-modification-date
         NamedNodeMap atts = item.getDocumentElement().getAttributes();
-        Node lastModificationDateNode =
-            atts.getNamedItem("last-modification-date");
+        Node lastModificationDateNode = atts.getNamedItem("last-modification-date");
         String lastModificationDate = lastModificationDateNode.getNodeValue();
 
-        String param =
-            "<param last-modification-date=\"" + lastModificationDate + "\" ";
+        String param = "<param last-modification-date=\"" + lastModificationDate + "\" ";
         if (includeWithdrawComment) {
             param += "withdraw-comment=\"this is a withdraw comment\"";
         }
@@ -97,18 +90,14 @@ public class ItemDeleteTest extends ItemTestBase {
 
     /**
      * Test successfully deleting item in status "pending".
-     * 
-     * 
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOMDi1a() throws Exception {
         String xml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
-                + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                "escidoc_item_198_for_create.xml");
         String itemXml = create(xml);
         this.theItemId = getObjidValue(itemXml);
 
@@ -131,29 +120,23 @@ public class ItemDeleteTest extends ItemTestBase {
     }
 
     /**
-     * Test successfully delete item with components, which are not all in the
-     * last item version.
-     * 
-     * @throws Exception
+     * Test successfully delete item with components, which are not all in the last item version.
      */
     @Test
-    public void testDeleteItemWithAllComponentsFromAllItemVersions()
-        throws Exception {
+    public void testDeleteItemWithAllComponentsFromAllItemVersions() throws Exception {
         String xml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
-                + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                "escidoc_item_198_for_create.xml");
         String itemXml = create(xml);
         this.theItemId = getObjidValue(itemXml);
         Document curItem = EscidocRestSoapTestBase.getDocument(itemXml);
         NodeList componentIdsAfterCreate = null;
         if (getTransport(true).equals("REST")) {
-            componentIdsAfterCreate =
-                selectNodeList(curItem, "/item/components/component/@href");
+            componentIdsAfterCreate = selectNodeList(curItem, "/item/components/component/@href");
         }
         else {
 
-            componentIdsAfterCreate =
-                selectNodeList(curItem, "/item/components/component/@objid");
+            componentIdsAfterCreate = selectNodeList(curItem, "/item/components/component/@objid");
         }
         Vector<String> componentIds = new Vector<String>();
         for (int i = 0; i < componentIdsAfterCreate.getLength(); i++) {
@@ -164,15 +147,12 @@ public class ItemDeleteTest extends ItemTestBase {
             componentIds.add(id);
         }
         final String itemUpdatedXml =
-            update(theItemId, toString(deleteElement(curItem,
-                "/item/components/component[1]"), false));
-        Document itemAfterUpdate =
-            EscidocRestSoapTestBase.getDocument(itemUpdatedXml);
+            update(theItemId, toString(deleteElement(curItem, "/item/components/component[1]"), false));
+        Document itemAfterUpdate = EscidocRestSoapTestBase.getDocument(itemUpdatedXml);
         // System.out.println("after update " + itemUpdatedXml);
-        NodeList componentIdsAfterUpdate =
-            selectNodeList(itemAfterUpdate, "/item/components/component");
-        assertEquals("number of components is wrong ", componentIdsAfterCreate
-            .getLength() - 1, componentIdsAfterUpdate.getLength());
+        NodeList componentIdsAfterUpdate = selectNodeList(itemAfterUpdate, "/item/components/component");
+        assertEquals("number of components is wrong ", componentIdsAfterCreate.getLength() - 1, componentIdsAfterUpdate
+            .getLength());
         assertNotNull(itemUpdatedXml);
         TripleStoreTestBase tripleStore = new TripleStoreTestBase();
 
@@ -190,12 +170,9 @@ public class ItemDeleteTest extends ItemTestBase {
         delete(theItemId);
         for (int i = 0; i < componentIds.size(); i++) {
             String result =
-                tripleStore.requestMPT("<info:fedora/" + componentIds.get(i)
-                    + "> " + "<http://purl.org/dc/elements/1.1/identifier>"
-                    + " *", "RDF/XML");
-            NodeList components =
-                selectNodeList(EscidocRestSoapTestBase.getDocument(result),
-                    "/RDF/Description/*");
+                tripleStore.requestMPT("<info:fedora/" + componentIds.get(i) + "> "
+                    + "<http://purl.org/dc/elements/1.1/identifier>" + " *", "RDF/XML");
+            NodeList components = selectNodeList(EscidocRestSoapTestBase.getDocument(result), "/RDF/Description/*");
             assertEquals("result is not empty ", 0, components.getLength());
 
         }
@@ -213,18 +190,14 @@ public class ItemDeleteTest extends ItemTestBase {
 
     /**
      * Test declining deleting item in status "released".
-     * 
-     * 
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOMDi2a() throws Exception {
         String xml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
-                + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                "escidoc_item_198_for_create.xml");
         String itemXml = create(xml);
         this.theItemId = getObjidValue(itemXml);
         String param = getTheLastModificationParam(false);
@@ -232,21 +205,15 @@ public class ItemDeleteTest extends ItemTestBase {
         submit(this.theItemId, param);
 
         String pidParam;
-        if (getItemClient().getPidConfig(
-            "cmm.Item.objectPid.setPidBeforeRelease", "true")
-            && !getItemClient().getPidConfig(
-                "cmm.Item.objectPid.releaseWithoutPid", "false")) {
-            pidParam =
-                getPidParam(this.theItemId, "http://somewhere" + this.theItemId);
+        if (getItemClient().getPidConfig("cmm.Item.objectPid.setPidBeforeRelease", "true")
+            && !getItemClient().getPidConfig("cmm.Item.objectPid.releaseWithoutPid", "false")) {
+            pidParam = getPidParam(this.theItemId, "http://somewhere" + this.theItemId);
             assignObjectPid(this.theItemId, pidParam);
         }
-        if (getItemClient().getPidConfig(
-            "cmm.Item.versionPid.setPidBeforeRelease", "true")
-            && !getItemClient().getPidConfig(
-                "cmm.Item.versionPid.releaseWithoutPid", "false")) {
+        if (getItemClient().getPidConfig("cmm.Item.versionPid.setPidBeforeRelease", "true")
+            && !getItemClient().getPidConfig("cmm.Item.versionPid.releaseWithoutPid", "false")) {
             String latestVersion = getLatestVersionObjidValue(itemXml);
-            pidParam =
-                getPidParam(latestVersion, "http://somewhere" + latestVersion);
+            pidParam = getPidParam(latestVersion, "http://somewhere" + latestVersion);
             assignVersionPid(latestVersion, pidParam);
         }
 
@@ -255,31 +222,26 @@ public class ItemDeleteTest extends ItemTestBase {
         Class<?> ec = InvalidStatusException.class;
         try {
             delete(this.theItemId);
-            EscidocRestSoapTestBase.failMissingException(
-                "Deleting an item in status 'released' was not declined. ", ec);
+            EscidocRestSoapTestBase
+                .failMissingException("Deleting an item in status 'released' was not declined. ", ec);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase
-                .assertExceptionType(
-                    "Deleting an item in status 'released' raised wrong exception. ",
-                    ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(
+                "Deleting an item in status 'released' raised wrong exception. ", ec, e);
         }
 
     }
 
     /**
      * Test declining deleting item in status "submitted".
-     * 
-     * 
-     * @test.status Implemented
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOMDi2b() throws Exception {
         String xml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
-                + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                "escidoc_item_198_for_create.xml");
         String itemXml = create(xml);
         this.theItemId = getObjidValue(itemXml);
 
@@ -293,23 +255,19 @@ public class ItemDeleteTest extends ItemTestBase {
         Class<?> ec = InvalidStatusException.class;
         try {
             delete(this.theItemId);
-            EscidocRestSoapTestBase.failMissingException(
-                "Deleting an item in status 'released' was not declined. ", ec);
+            EscidocRestSoapTestBase
+                .failMissingException("Deleting an item in status 'released' was not declined. ", ec);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                "Deleting an item in status 'released' raised "
-                    + "wrong exception. ", ec, e);
+            EscidocRestSoapTestBase.assertExceptionType("Deleting an item in status 'released' raised "
+                + "wrong exception. ", ec, e);
         }
     }
 
     /**
      * Test declining deleting item with not existing id.
-     * 
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOMDi3() throws Exception {
@@ -326,11 +284,8 @@ public class ItemDeleteTest extends ItemTestBase {
 
     /**
      * Test declining deleting item (input parameter item id is missing).
-     * 
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOMDi4() throws Exception {
@@ -345,18 +300,15 @@ public class ItemDeleteTest extends ItemTestBase {
     }
 
     /**
-     * Test declining deleting item with wrong id (id refers to another object
-     * type).
-     * 
-     * @test.status Implemented
-     * @throws Exception
-     *             If anything fails.
+     * Test declining deleting item with wrong id (id refers to another object type).
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOMDi5() throws Exception {
         String xml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
-                + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                "escidoc_item_198_for_create.xml");
 
         String itemXml = create(xml);
         this.theItemId = getObjidValue(itemXml);
@@ -369,9 +321,7 @@ public class ItemDeleteTest extends ItemTestBase {
         // "/item/components/component/@objid");
         // String componentId = componentObjiId.getTextContent();
 
-        Node component =
-            selectSingleNode(EscidocRestSoapTestBase.getDocument(itemXml),
-                "/item/components/component");
+        Node component = selectSingleNode(EscidocRestSoapTestBase.getDocument(itemXml), "/item/components/component");
         String componentId = getObjidValue(toString(component, true));
 
         try {

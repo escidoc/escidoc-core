@@ -32,66 +32,44 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 
 /**
  * Interface of an Statistic Report Handler.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 public interface ReportHandlerInterface {
 
     /**
-     * Retrieve a Statistic Report.<br/>    
-     * 
-     * Parameter for the Method is an xml corresponding 
-     * to XML-schema "report-parameters.xsd".<br/>
-     * 
+     * Retrieve a Statistic Report.<br/>
+     * <p/>
+     * Parameter for the Method is an xml corresponding to XML-schema "report-parameters.xsd".<br/>
+     * <p/>
      * In this xml you can define:<br/>
-     * 
-     * <ul>
-     * <li>The Report Definition the Statistic Report is based on</li>
-     * <li>Additional parameters that fill the placeholders 
-     *     in the sql-statement of the Report Definition.</li>
-     * </ul>
-     *
+     * <p/>
+     * <ul> <li>The Report Definition the Statistic Report is based on</li> <li>Additional parameters that fill the
+     * placeholders in the sql-statement of the Report Definition.</li> </ul>
+     * <p/>
      * <b>Prerequisites:</b><br/>
-     *
+     * <p/>
      * The Report Definition must exist<br/>
+     * <p/>
+     * <b>Tasks:</b><br/> <ul> <li>The Report Definition is accessed using the provided reference.</li> <li>The
+     * Statistic Report is created.</li> <li>The XML data is returned.</li> </ul>
      *
-     * <b>Tasks:</b><br/>
-     * <ul>
-     * <li>The Report Definition is accessed using the 
-           provided reference.</li>
-     * <li>The Statistic Report is created.</li>
-     * <li>The XML data is returned.</li>
-     * </ul>
-     * 
-     * @param xml
-     *            The xml with parameters corresponding 
-     *            to XML-schema "report-parameters.xsd".
-     * @return    The XML representation of the retrieved 
-     *            Statistic Report corresponding to XML-schema "report.xsd".
-     * @throws AuthenticationException
-     *             Thrown in case of failed authentication.
-     * @throws AuthorizationException
-     *             Thrown in case of failed authorization.
-     * @throws XmlCorruptedException
-     *             Thrown in case of provided invalid xml.
-     * @throws XmlSchemaValidationException
-     *             Thrown in case of provided xml not schema conform.
+     * @param xml The xml with parameters corresponding to XML-schema "report-parameters.xsd".
+     * @return The XML representation of the retrieved Statistic Report corresponding to XML-schema "report.xsd".
+     * @throws AuthenticationException      Thrown in case of failed authentication.
+     * @throws AuthorizationException       Thrown in case of failed authorization.
+     * @throws XmlCorruptedException        Thrown in case of provided invalid xml.
+     * @throws XmlSchemaValidationException Thrown in case of provided xml not schema conform.
      * @throws ReportDefinitionNotFoundException
-     *             e.
+     *                                      e.
      * @throws MissingMethodParameterException
-     *             e.
-     * @throws InvalidSqlException
-     *             e.
-     * @throws SystemException
-     *             e.
-     * 
+     *                                      e.
+     * @throws InvalidSqlException          e.
+     * @throws SystemException              e.
      */
     @Validate(param = 0, resolver = "getReportParametersSchemaLocation")
-    String retrieve(String xml) throws AuthenticationException,
-        AuthorizationException, XmlCorruptedException, 
-        XmlSchemaValidationException,
-        ReportDefinitionNotFoundException, MissingMethodParameterException,
+    String retrieve(String xml) throws AuthenticationException, AuthorizationException, XmlCorruptedException,
+        XmlSchemaValidationException, ReportDefinitionNotFoundException, MissingMethodParameterException,
         InvalidSqlException, SystemException;
 
 }

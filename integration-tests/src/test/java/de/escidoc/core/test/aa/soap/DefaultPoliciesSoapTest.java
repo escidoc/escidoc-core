@@ -35,18 +35,16 @@ import org.junit.runners.JUnit4;
 
 /**
  * Test suite for the Default Policies using the SOAP interface.
- * 
+ *
  * @author Torsten Tetteroo
- * 
  */
 @RunWith(JUnit4.class)
 public class DefaultPoliciesSoapTest extends DefaultPoliciesAbstractTest {
 
     /**
      * Constructor.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     public DefaultPoliciesSoapTest() throws Exception {
 

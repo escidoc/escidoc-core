@@ -37,41 +37,32 @@ import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClie
 import javax.xml.rpc.ServiceException;
 
 /**
- * Offers access methods to the escidoc REST and soap interface of the action
- * resource.
- * 
+ * Offers access methods to the escidoc REST and soap interface of the action resource.
+ *
  * @author Torsten Tetteroo
- * 
  */
-public class ActionClient extends ClientBase
-    implements ResourceHandlerClientInterface {
+public class ActionClient extends ClientBase implements ResourceHandlerClientInterface {
 
     private ActionHandler soapClient = null;
 
     /**
-     * 
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ActionClient(final int transport) {
         super(transport);
     }
 
     /**
-     * 
      * @return Returns the soapClient.
-     * @throws ServiceException
-     *             If the client creation fails.
+     * @throws ServiceException If the client creation fails.
      */
     @Override
     public ActionHandler getSoapClient() throws ServiceException {
 
         if (soapClient == null) {
-            ActionHandlerServiceLocator serviceLocator =
-                new ActionHandlerServiceLocator(getEngineConfig());
-            serviceLocator
-                .setActionHandlerServiceEndpointAddress(checkSoapAddress(serviceLocator
-                    .getActionHandlerServiceAddress()));
+            ActionHandlerServiceLocator serviceLocator = new ActionHandlerServiceLocator(getEngineConfig());
+            serviceLocator.setActionHandlerServiceEndpointAddress(checkSoapAddress(serviceLocator
+                .getActionHandlerServiceAddress()));
             soapClient = serviceLocator.getActionHandlerService();
         }
         return soapClient;
@@ -79,75 +70,53 @@ public class ActionClient extends ClientBase
 
     /**
      * Retrieve the xml representation of the resources of a action.
-     * 
-     * @param id
-     *            The action id.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param id The action id.
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     public Object retrieveResources(final String id) throws Exception {
-        return callEsciDoc("Action.retrieveResources",
-            METHOD_RETRIEVE_RESOURCES, Constants.HTTP_METHOD_GET,
-            Constants.UNSECURED_ACTIONS_BASE_URI, new String[] { id,
-                "resources" });
+        return callEsciDoc("Action.retrieveResources", METHOD_RETRIEVE_RESOURCES, Constants.HTTP_METHOD_GET,
+            Constants.UNSECURED_ACTIONS_BASE_URI, new String[] { id, "resources" });
     }
 
     /**
      * Creates/Updates the unsecured actions list related to a context.
-     * 
-     * @param contextId
-     *            The id of the context
-     * @param actions
-     *            The xml representation of the list of unsecured actions.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param contextId The id of the context
+     * @param actions   The xml representation of the list of unsecured actions.
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
-    public Object createUnsecuredActions(
-        final String contextId, final String actions) throws Exception {
+    public Object createUnsecuredActions(final String contextId, final String actions) throws Exception {
 
-        return callEsciDoc("Action.createUnsecuredActions",
-            METHOD_CREATE_UNSECURED_ACTIONS, Constants.HTTP_METHOD_PUT,
-            Constants.UNSECURED_ACTIONS_BASE_URI, new String[] { contextId },
-            changeToString(actions));
+        return callEsciDoc("Action.createUnsecuredActions", METHOD_CREATE_UNSECURED_ACTIONS, Constants.HTTP_METHOD_PUT,
+            Constants.UNSECURED_ACTIONS_BASE_URI, new String[] { contextId }, changeToString(actions));
     }
 
     /**
      * Deletes the unsecured actions list related to a context.
-     * 
-     * @param contextId
-     *            The id of the context
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param contextId The id of the context
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
-    public Object deleteUnsecuredActions(final String contextId)
-        throws Exception {
+    public Object deleteUnsecuredActions(final String contextId) throws Exception {
 
-        return callEsciDoc("Action.deleteUnsecuredActions",
-            METHOD_DELETE_UNSECURED_ACTIONS, Constants.HTTP_METHOD_DELETE,
-            Constants.UNSECURED_ACTIONS_BASE_URI, new String[] { contextId });
+        return callEsciDoc("Action.deleteUnsecuredActions", METHOD_DELETE_UNSECURED_ACTIONS,
+            Constants.HTTP_METHOD_DELETE, Constants.UNSECURED_ACTIONS_BASE_URI, new String[] { contextId });
     }
 
     /**
      * Retrieves the unsecured actions list related to a context.
-     * 
-     * @param contextId
-     *            The id of the context
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param contextId The id of the context
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
-    public Object retrieveUnsecuredActions(final String contextId)
-        throws Exception {
+    public Object retrieveUnsecuredActions(final String contextId) throws Exception {
 
-        return callEsciDoc("Action.retrieveUnsecuredActions",
-            METHOD_RETRIEVE_UNSECURED_ACTIONS, Constants.HTTP_METHOD_GET,
-            Constants.UNSECURED_ACTIONS_BASE_URI, new String[] { contextId });
+        return callEsciDoc("Action.retrieveUnsecuredActions", METHOD_RETRIEVE_UNSECURED_ACTIONS,
+            Constants.HTTP_METHOD_GET, Constants.UNSECURED_ACTIONS_BASE_URI, new String[] { contextId });
     }
 }

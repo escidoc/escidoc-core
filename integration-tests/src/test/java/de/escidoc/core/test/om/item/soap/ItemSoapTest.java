@@ -39,43 +39,28 @@ import java.util.regex.Pattern;
 
 /**
  * Item tests with SOAP transport.
- * 
+ *
  * @author Michael Schneider
- * 
  */
 public class ItemSoapTest extends ItemTestBase {
 
     /**
      * Constructor.
-     * 
      */
     public ItemSoapTest() {
         super(Constants.TRANSPORT_SOAP);
     }
 
     /**
-     * Test successfully creating item with special character (U201E), see issue
-     * 288.
-     * 
-     * @test.name Create Item - Success - Issue 288
-     * @test.id OUM_COU-issue-288
-     * @test.input Valid Organizational Unit XML representation.
-     * @test.expected: The expected result is the XML representation of the
-     *                 created OrganizationalUnit, corresponding to XML-schema
-     *                 "organizational-unit.xsd" including generated id, creator
-     *                 and creation date
-     * @test.status Implemented
-     * @test.issue http://www.escidoc-project.de/issueManagement/show_bug.cgi?id=288
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test successfully creating item with special character (U201E), see issue 288.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOMCi_issue_288() throws Exception {
 
         Document toBeCreatedDocument =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH,
-                "item_issue_288.xml");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH, "item_issue_288.xml");
         deleteElement(toBeCreatedDocument, "/item/components");
         String toBeCreatedXml = toString(toBeCreatedDocument, true);
 
@@ -84,35 +69,29 @@ public class ItemSoapTest extends ItemTestBase {
             createdXml = create(toBeCreatedXml);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase
-                .failException(
-                    "Creating item with unicode character U201e failed (see issue 288)",
-                    e);
+            EscidocRestSoapTestBase.failException("Creating item with unicode character U201e failed (see issue 288)",
+                e);
         }
 
         assertXmlValidItem(createdXml);
-        final Document createdDocument =
-            EscidocRestSoapTestBase.getDocument(createdXml);
-        assertXmlEquals("Node with special character is different",
-            toBeCreatedDocument, createdDocument, "//alternative-name[2]");
+        final Document createdDocument = EscidocRestSoapTestBase.getDocument(createdXml);
+        assertXmlEquals("Node with special character is different", toBeCreatedDocument, createdDocument,
+            "//alternative-name[2]");
 
         delete(getObjidValue(createdXml));
 
     }
-    
+
     @Test
     public void testCreateUpdateIssue423() throws Exception {
 
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH,
-                "item_fuer_umlaut_create_mpdl.xml");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH, "item_fuer_umlaut_create_mpdl.xml");
         String item = toString(xmlItem, true);
 
         item = create(item);
         assertXmlValidItem(item);
-        String lmd =
-            getLastModificationDateValue(EscidocRestSoapTestBase
-                .getDocument(item));
+        String lmd = getLastModificationDateValue(EscidocRestSoapTestBase.getDocument(item));
 
         Pattern PATTERN_OBJID_ATTRIBUTE = Pattern.compile("objid=\"([^\"]*)\"");
         Matcher m = PATTERN_OBJID_ATTRIBUTE.matcher(item);
@@ -121,11 +100,8 @@ public class ItemSoapTest extends ItemTestBase {
             itemId = m.group(1);
         }
 
-        xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH,
-                "item_fuer_umlaut_update_mpdl.xml");
-        xmlItem =
-            (Document) substitute(xmlItem, "/item/@last-modification-date", lmd);
+        xmlItem = EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH, "item_fuer_umlaut_update_mpdl.xml");
+        xmlItem = (Document) substitute(xmlItem, "/item/@last-modification-date", lmd);
         xmlItem = (Document) substitute(xmlItem, "/item/@objid", itemId);
         item = toString(xmlItem, true);
 

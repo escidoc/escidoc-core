@@ -24,7 +24,7 @@ import de.escidoc.core.common.business.fedora.Constants;
 
 /**
  * Enumeration to describe all types of storage.
- * 
+ *
  * @author Steffen Wagner
  */
 public enum StorageType {
@@ -37,9 +37,8 @@ public enum StorageType {
 
     /**
      * Storage Type (equals Fedora Control Group).
-     * 
-     * @param storageType
-     *            Storage Type
+     *
+     * @param storageType Storage Type
      */
     StorageType(final String storageType) {
 
@@ -48,7 +47,7 @@ public enum StorageType {
 
     /**
      * Get the abbreviation of storage type (equals to Fedora control group).
-     * 
+     *
      * @return Fedora Control Group type
      */
     public String getAbbreviation() {

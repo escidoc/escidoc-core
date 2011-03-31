@@ -21,11 +21,9 @@
 package de.escidoc.core.common.util.xml;
 
 /**
- * This class provides escaping of special XML characters in text content and
- * attributes.
- * 
+ * This class provides escaping of special XML characters in text content and attributes.
+ *
  * @author Torsten Tetteroo
- * 
  */
 public final class XmlEscaper {
 
@@ -35,9 +33,8 @@ public final class XmlEscaper {
 
     /**
      * Escapes the provided value for output in an attribute.
-     * 
-     * @param attributeValue
-     *            The value to escape.
+     *
+     * @param attributeValue The value to escape.
      * @return Returns the escpaed value.
      */
     public static String escapeAttribute(final String attributeValue) {
@@ -46,9 +43,8 @@ public final class XmlEscaper {
 
     /**
      * Escapes the provided value for output in text content.
-     * 
-     * @param textContent
-     *            The value to escape.
+     *
+     * @param textContent The value to escape.
      * @return Returns the escpaed value.
      */
     public static String escapeTextContent(final String textContent) {
@@ -57,9 +53,8 @@ public final class XmlEscaper {
 
     /**
      * Unescapes the provided value.
-     * 
-     * @param value
-     *            The value to unescape.
+     *
+     * @param value The value to unescape.
      * @return Returns the unescpaed value.
      */
     public static String unescape(final String value) {

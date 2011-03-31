@@ -44,99 +44,65 @@ import java.util.Collection;
 
 /**
  * Database-Backend for the Report-Definitions database-table.
- * 
+ *
  * @author Michael Hoppe
  */
-public class SmReportDefinitionsHibernateDao
-    extends AbstractHibernateDao
-    implements SmReportDefinitionsDaoInterface {
+public class SmReportDefinitionsHibernateDao extends AbstractHibernateDao implements SmReportDefinitionsDaoInterface {
 
     /**
      * See Interface for functional description.
-     * 
-     * @see de.escidoc.core.sm.business
-     *      .persistence.SmReportDefinitionsDaoInterface
-     *      #save(de.escidoc.core.sm.business.persistence.hibernate.ReportDefinition)
-     * 
-     * @param reportDefinition
-     *            The ReportDefinition Hibernate Object.
-     * @throws SqlDatabaseSystemException
-     *             e
-     * 
      *
+     * @param reportDefinition The ReportDefinition Hibernate Object.
+     * @throws SqlDatabaseSystemException e
+     * @see de.escidoc.core.sm.business .persistence.SmReportDefinitionsDaoInterface #save(de.escidoc.core.sm.business.persistence.hibernate.ReportDefinition)
      */
     @Override
-    public void save(final ReportDefinition reportDefinition)
-        throws SqlDatabaseSystemException {
+    public void save(final ReportDefinition reportDefinition) throws SqlDatabaseSystemException {
         super.save(reportDefinition);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @see de.escidoc.core.sm.business
-     *      .persistence.SmReportDefinitionsDaoInterface
-     *      #update( de.escidoc.core.sm.business.persistence.hibernate.ReportDefinition)
-     * 
-     * @param reportDefinition
-     *            The ReportDefinition Hibernate Object.
-     * @throws SqlDatabaseSystemException
-     *             e
-     * 
      *
+     * @param reportDefinition The ReportDefinition Hibernate Object.
+     * @throws SqlDatabaseSystemException e
+     * @see de.escidoc.core.sm.business .persistence.SmReportDefinitionsDaoInterface #update(
+     *      de.escidoc.core.sm.business.persistence.hibernate.ReportDefinition)
      */
     @Override
-    public void update(final ReportDefinition reportDefinition)
-        throws SqlDatabaseSystemException {
+    public void update(final ReportDefinition reportDefinition) throws SqlDatabaseSystemException {
         super.update(reportDefinition);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @see de.escidoc.core.sm.business
-     *      .persistence.SmReportDefinitionsDaoInterface
-     *      #delete( java.lang.Integer)
-     * 
-     * @param reportDefinition
-     *            The ReportDefinition Hibernate Object.
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database access error.
-     * 
      *
+     * @param reportDefinition The ReportDefinition Hibernate Object.
+     * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
+     * @see de.escidoc.core.sm.business .persistence.SmReportDefinitionsDaoInterface #delete( java.lang.Integer)
      */
     @Override
-    public void delete(final ReportDefinition reportDefinition)
-        throws SqlDatabaseSystemException {
+    public void delete(final ReportDefinition reportDefinition) throws SqlDatabaseSystemException {
         super.delete(reportDefinition);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @see de.escidoc.core.sm.business
-     *      .persistence.SmReportDefinitionsDaoInterface
-     *      #retrieve( java.lang.Integer)
-     * 
-     * @param id
-     *            The id of the ReportDefinition.
-     * @return ReportDefinition as Hibernate Object
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database access error.
-     * @throws ReportDefinitionNotFoundException
-     *             Thrown if report-definition with given id was not found.
-     * 
      *
+     * @param id The id of the ReportDefinition.
+     * @return ReportDefinition as Hibernate Object
+     * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
+     * @throws ReportDefinitionNotFoundException
+     *                                    Thrown if report-definition with given id was not found.
+     * @see de.escidoc.core.sm.business .persistence.SmReportDefinitionsDaoInterface #retrieve( java.lang.Integer)
      */
     @Override
-    public ReportDefinition retrieve(final String id)
-        throws SqlDatabaseSystemException, ReportDefinitionNotFoundException {
+    public ReportDefinition retrieve(final String id) throws SqlDatabaseSystemException,
+        ReportDefinitionNotFoundException {
         ReportDefinition result = null;
         if (id != null) {
             try {
-                result =
-                        getHibernateTemplate().get(ReportDefinition.class,
-                            id);
+                result = getHibernateTemplate().get(ReportDefinition.class, id);
             }
             catch (final DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);
@@ -146,70 +112,52 @@ public class SmReportDefinitionsHibernateDao
             }
             catch (final HibernateException e) {
                 //noinspection ThrowableResultOfMethodCallIgnored
-                throw new SqlDatabaseSystemException(
-                    convertHibernateAccessException(e));
+                throw new SqlDatabaseSystemException(convertHibernateAccessException(e));
             }
         }
         if (result == null) {
-            throw new ReportDefinitionNotFoundException(
-                    "ReportDefinition with id " + id + " was not found");
+            throw new ReportDefinitionNotFoundException("ReportDefinition with id " + id + " was not found");
         }
         return result;
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @see de.escidoc.core.sm.business
-     *      .persistence.SmReportDefinitionsDaoInterface
-     *      #retrieveReportDefinitions()
-     * 
-     * @return Collection of ReportDefinitions as Hibernate Objects
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database access error.
-     * 
      *
+     * @return Collection of ReportDefinitions as Hibernate Objects
+     * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
+     * @see de.escidoc.core.sm.business .persistence.SmReportDefinitionsDaoInterface #retrieveReportDefinitions()
      */
     @Override
-    public Collection<ReportDefinition> retrieveReportDefinitions()
-        throws SqlDatabaseSystemException {
-        final DetachedCriteria detachedCriteria =
-            DetachedCriteria.forClass(ReportDefinition.class, "r");
-            return getHibernateTemplate().findByCriteria(detachedCriteria);
+    public Collection<ReportDefinition> retrieveReportDefinitions() throws SqlDatabaseSystemException {
+        final DetachedCriteria detachedCriteria = DetachedCriteria.forClass(ReportDefinition.class, "r");
+        return getHibernateTemplate().findByCriteria(detachedCriteria);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @see de.escidoc.core.sm.business
-     *      .persistence.SmReportDefinitionsDaoInterface
-     *      #retrieveReportDefinitions( java.util.Collection)
-     * 
-     * @param scopeIds
-     *            Collection of scopeIds
-     * @param criteria
-     *            The {@link String} containing the filter criteria as CQL query.
-     * @param offset
-     *            The index of the first result to be returned.
-     * @param maxResults
-     *            The maximal number of results to be returned.
      *
+     * @param scopeIds   Collection of scopeIds
+     * @param criteria   The {@link String} containing the filter criteria as CQL query.
+     * @param offset     The index of the first result to be returned.
+     * @param maxResults The maximal number of results to be returned.
      * @return Collection of ReportDefinitions as Hibernate Objects
-     * @throws InvalidSearchQueryException thrown if the given search query could
-     *                                     not be translated into a SQL query
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database access error.
+     * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
+     * @throws SqlDatabaseSystemException  Thrown in case of an internal database access error.
+     * @see de.escidoc.core.sm.business .persistence.SmReportDefinitionsDaoInterface #retrieveReportDefinitions(
+     *      java.util.Collection)
      */
     @Override
     public Collection<ReportDefinition> retrieveReportDefinitions(
-        final Collection<String> scopeIds, final String criteria, final int offset,
-        final int maxResults)
+        final Collection<String> scopeIds, final String criteria, final int offset, final int maxResults)
         throws InvalidSearchQueryException, SqlDatabaseSystemException {
 
         if (scopeIds != null && !scopeIds.isEmpty()) {
             final DetachedCriteria detachedCriteria;
 
-            detachedCriteria = criteria != null && criteria.length() > 0 ? new ReportDefinitionFilter(criteria).toSql() : DetachedCriteria.forClass(ReportDefinition.class, "r");
+            detachedCriteria =
+                criteria != null && criteria.length() > 0 ? new ReportDefinitionFilter(criteria).toSql() : DetachedCriteria
+                    .forClass(ReportDefinition.class, "r");
             detachedCriteria.add(Restrictions.in("scope.id", scopeIds));
             return getHibernateTemplate().findByCriteria(detachedCriteria, offset, maxResults);
 
@@ -218,15 +166,13 @@ public class SmReportDefinitionsHibernateDao
     }
 
     /**
-     * Wrapper of setSessionFactory to enable bean stuff generation for this
-     * bean.
-     * 
-     * @param mySessionFactory
-     *            The sessionFactory to set.
+     * Wrapper of setSessionFactory to enable bean stuff generation for this bean.
+     *
+     * @param mySessionFactory The sessionFactory to set.
      */
     public final void setMySessionFactory(final SessionFactory mySessionFactory) {
 
         setSessionFactory(mySessionFactory);
     }
-    
+
 }

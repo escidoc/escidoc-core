@@ -31,22 +31,17 @@ import javax.servlet.http.HttpServlet;
 
 /**
  * @author Michael Hoppe
- * 
- * Overwrites default Axis Class because this class can extract placeholders out
- * of the server-config.wsdd and replace them with values specified in the
- * escidoc.properties. This is done because we have to specify the urls of the
- * jndi of the different eSciDoc-Components. These are specified in the
- * escidoc-core.properties because the server-config.wsdd 
- * is inside the .ear-file and cannot be easily changed.
+ *         <p/>
+ *         Overwrites default Axis Class because this class can extract placeholders out of the server-config.wsdd and
+ *         replace them with values specified in the escidoc.properties. This is done because we have to specify the
+ *         urls of the jndi of the different eSciDoc-Components. These are specified in the escidoc-core.properties
+ *         because the server-config.wsdd is inside the .ear-file and cannot be easily changed.
  */
-public class EscidocEngineConfigurationFactory
-    implements EngineConfigurationFactory {
+public class EscidocEngineConfigurationFactory implements EngineConfigurationFactory {
 
-    public static final String OPTION_CLIENT_CONFIG_FILE =
-        "axis.ClientConfigFile";
+    public static final String OPTION_CLIENT_CONFIG_FILE = "axis.ClientConfigFile";
 
-    public static final String OPTION_SERVER_CONFIG_FILE =
-        "axis.ServerConfigFile";
+    public static final String OPTION_SERVER_CONFIG_FILE = "axis.ServerConfigFile";
 
     protected static final String CLIENT_CONFIG_FILE = "client-config.wsdd";
 
@@ -60,19 +55,15 @@ public class EscidocEngineConfigurationFactory
 
     /**
      * Creates and returns a new EngineConfigurationFactory.
-     * 
-     * @param in
-     *            The parameter of the engine configuration factory. This
-     *            Factory needs an instance of {@link AdminServlet} or
-     *            {@link AxisServlet}.
-     * @return Returns the EscidocEngineConfigurationFactory or
-     *         <code>null</code> if the factory cannot be created.
+     *
+     * @param in The parameter of the engine configuration factory. This Factory needs an instance of {@link
+     *           AdminServlet} or {@link AxisServlet}.
+     * @return Returns the EscidocEngineConfigurationFactory or <code>null</code> if the factory cannot be created.
      * @see EngineConfigurationFactoryFinder
      */
     public static EngineConfigurationFactory newFactory(final Object in) {
 
-        if (in != null && !in.getClass().equals(AdminServlet.class)
-            && !in.getClass().equals(AxisServlet.class)) {
+        if (in != null && !in.getClass().equals(AdminServlet.class) && !in.getClass().equals(AxisServlet.class)) {
             return null; // not for us.
         }
 
@@ -83,8 +74,7 @@ public class EscidocEngineConfigurationFactory
     }
 
     /**
-     * Create the default engine configuration and detect whether the user has
-     * overridden this with their own.
+     * Create the default engine configuration and detect whether the user has overridden this with their own.
      */
     protected EscidocEngineConfigurationFactory() {
 
@@ -92,20 +82,14 @@ public class EscidocEngineConfigurationFactory
         if (param != null) {
             path = param.getServletContext().getRealPath("/WEB-INF") + '/';
         }
-        this.clientConfigFile =
-            path
-                + AxisProperties.getProperty(OPTION_CLIENT_CONFIG_FILE,
-                    CLIENT_CONFIG_FILE);
+        this.clientConfigFile = path + AxisProperties.getProperty(OPTION_CLIENT_CONFIG_FILE, CLIENT_CONFIG_FILE);
 
-        this.serverConfigFile =
-            path
-                + AxisProperties.getProperty(OPTION_SERVER_CONFIG_FILE,
-                    SERVER_CONFIG_FILE);
+        this.serverConfigFile = path + AxisProperties.getProperty(OPTION_SERVER_CONFIG_FILE, SERVER_CONFIG_FILE);
     }
 
     /**
      * Get a default client engine configuration.
-     * 
+     *
      * @return a client EngineConfiguration
      */
     @Override
@@ -116,7 +100,7 @@ public class EscidocEngineConfigurationFactory
 
     /**
      * Get a default server engine configuration.
-     * 
+     *
      * @return a server EngineConfiguration
      */
     @Override
@@ -134,8 +118,7 @@ public class EscidocEngineConfigurationFactory
     }
 
     /**
-     * @param param
-     *            the param to set
+     * @param param the param to set
      */
     public static void setParam(final HttpServlet param) {
 

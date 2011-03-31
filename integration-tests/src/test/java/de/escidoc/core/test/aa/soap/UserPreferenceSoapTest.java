@@ -35,19 +35,17 @@ import org.junit.runners.JUnit4;
 
 /**
  * Testsuite for the UserAccount's or UserGroups Grants with SOAP transport.
- * 
+ *
  * @author Torsten Tetteroo
- * 
  */
 @RunWith(JUnit4.class)
 public class UserPreferenceSoapTest extends UserPreferenceAbstractTest {
 
     /**
      * Constructor.
-     * 
+     *
      * @param handlerCode handlerCode.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     public UserPreferenceSoapTest() throws Exception {
         super(Constants.TRANSPORT_SOAP);

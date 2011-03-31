@@ -45,11 +45,11 @@ import java.io.StringWriter;
 
 /**
  * Base methods for XML handling.
- * 
- * @author Michael Schneider
  *
+ * @author Michael Schneider
  */
 public class XMLBase {
+
     public static final String ROOT_ELEMENT = "mapping";
 
     public static final String DOCUMENTATION_ELEMENT = "documentation";
@@ -120,40 +120,30 @@ public class XMLBase {
 
     public static final String VAR_BODY_METHOD = "BODY.METHOD";
 
-    public static final String VAR_BODY_LAST_MODIFICATION_DATE =
-        "BODY.LAST-MODIFICATION-DATE";
+    public static final String VAR_BODY_LAST_MODIFICATION_DATE = "BODY.LAST-MODIFICATION-DATE";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(XMLBase.class);
 
     private static final int BUFFER_SIZE = 0xFFFF;
 
     /**
-     * Apply the xPath to the given dom node and return the resulting list of
-     * nodes.
-     * 
-     * @param xPath
-     *            The xPath.
-     * @param node
-     *            The node.
-     * @return The resulting list of nodes.
-     * @throws TransformerException
-     *             If anything fails.
+     * Apply the xPath to the given dom node and return the resulting list of nodes.
      *
+     * @param xPath The xPath.
+     * @param node  The node.
+     * @return The resulting list of nodes.
+     * @throws TransformerException If anything fails.
      */
-    public NodeList parse(final String xPath, final Node node)
-        throws TransformerException {
+    public NodeList parse(final String xPath, final Node node) throws TransformerException {
         return XPathAPI.selectNodeList(node, xPath);
     }
 
     /**
      * Get the value of the attribute from the given node.
-     * 
-     * @param node
-     *            The node.
-     * @param attribute
-     *            The attribute name.
-     * @return The value of teh attribute.
      *
+     * @param node      The node.
+     * @param attribute The attribute name.
+     * @return The value of teh attribute.
      */
     public String getAttributeValue(final Node node, final String attribute) {
 
@@ -172,11 +162,9 @@ public class XMLBase {
 
     /**
      * Get a child node from the given node.
-     * 
-     * @param node
-     *            The node.
-     * @param childName
-     *            The name of the child node.
+     *
+     * @param node      The node.
+     * @param childName The name of the child node.
      * @return The child node.
      */
     public Node getChild(final Node node, final String childName) {
@@ -184,11 +172,12 @@ public class XMLBase {
         Node result = null;
         try {
             result = XPathAPI.selectSingleNode(node, childName);
-        } catch (final TransformerException e) {
-            if(LOGGER.isWarnEnabled()) {
+        }
+        catch (final TransformerException e) {
+            if (LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Child node not found.");
             }
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Child node not found.", e);
             }
         }
@@ -198,43 +187,35 @@ public class XMLBase {
 
     /**
      * Append the path to the given xPath.
-     * 
-     * @param xPath
-     *            The xPath.
-     * @param path
-     *            The path.
-     * @return The resulting xPath.
      *
+     * @param xPath The xPath.
+     * @param path  The path.
+     * @return The resulting xPath.
      */
     public String appendToXpath(final String xPath, final String path) {
 
         String result = xPath;
         if (xPath != null && path != null) {
-            result += ! xPath.endsWith(XPATH_DELIMITER) && ! path.startsWith(XPATH_DELIMITER) ? XPATH_DELIMITER + path :
-                    xPath.endsWith(XPATH_DELIMITER) && path.startsWith(XPATH_DELIMITER) ? path.substring(1) : path;
+            result +=
+                !xPath.endsWith(XPATH_DELIMITER) && !path.startsWith(XPATH_DELIMITER) ? XPATH_DELIMITER + path : xPath
+                    .endsWith(XPATH_DELIMITER)
+                    && path.startsWith(XPATH_DELIMITER) ? path.substring(1) : path;
         }
         return result;
     }
 
     /**
      * Get a dom document from the given file.
-     * 
-     * @param filename
-     *            The filename.
-     * @return The dom document.
-     * @throws ParserConfigurationException
-     *             If anything fails.
-     * @throws SAXException
-     *             If anything fails.
-     * @throws IOException
-     *             If anything fails.
      *
+     * @param filename The filename.
+     * @return The dom document.
+     * @throws ParserConfigurationException If anything fails.
+     * @throws SAXException                 If anything fails.
+     * @throws IOException                  If anything fails.
      */
-    public Document getDocument(final String filename)
-        throws ParserConfigurationException, SAXException, IOException {
+    public Document getDocument(final String filename) throws ParserConfigurationException, SAXException, IOException {
 
-        final DocumentBuilderFactory docBuilderFactory =
-            DocumentBuilderFactory.newInstance();
+        final DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
         final DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
         Document result = null;
         InputStream inputStream = null;
@@ -244,7 +225,8 @@ public class XMLBase {
                 throw new FileNotFoundException("XML file not found [" + filename + ']');
             }
             result = docBuilder.parse(inputStream);
-        } finally {
+        }
+        finally {
             IOUtils.closeStream(inputStream);
         }
         result.getDocumentElement().normalize();
@@ -252,17 +234,13 @@ public class XMLBase {
     }
 
     /**
-     * Serialize the given <code>org.w3c.Document</code> to a
-     * <code>String</code>.
-     * 
-     * @param document
-     *            The document.
+     * Serialize the given <code>org.w3c.Document</code> to a <code>String</code>.
+     *
+     * @param document The document.
      * @return The <code>String</code> representation of teh document.
-     * @throws IOException
-     *             If the serialization fails.
+     * @throws IOException If the serialization fails.
      */
-    public String getDocumentAsString(final Document document)
-        throws IOException {
+    public String getDocumentAsString(final Document document) throws IOException {
 
         final StringWriter stringOut = new StringWriter();
 
@@ -280,11 +258,9 @@ public class XMLBase {
 
     /**
      * Get a file input stream for the given filename.
-     * 
-     * @param filename
-     *            The file name.
-     * @return The file input stream.
      *
+     * @param filename The file name.
+     * @return The file input stream.
      */
     public InputStream getFileInputStream(final String filename) {
         return this.getClass().getResourceAsStream(filename);
@@ -292,13 +268,10 @@ public class XMLBase {
 
     /**
      * Get the contents of the file as String.
-     * 
-     * @param filename
-     *            The filename.
-     * @return The contents of the file.
-     * @throws IOException
-     *             If anything fails.
      *
+     * @param filename The filename.
+     * @return The contents of the file.
+     * @throws IOException If anything fails.
      */
     public String getFileContents(final String filename) throws IOException {
 
@@ -318,16 +291,12 @@ public class XMLBase {
 
     /**
      * Save the contents to a file.
-     * 
-     * @param filename
-     *            The name of the file.
-     * @param contents
-     *            The contents to save.
-     * @throws IOException
-     *             If the save operation fails.
+     *
+     * @param filename The name of the file.
+     * @param contents The contents to save.
+     * @throws IOException If the save operation fails.
      */
-    public void saveToFile(final String filename, final String contents)
-        throws IOException {
+    public void saveToFile(final String filename, final String contents) throws IOException {
 
         final File outFile = new File(filename);
         outFile.createNewFile();
@@ -336,7 +305,8 @@ public class XMLBase {
             fos = new FileOutputStream(outFile);
             fos.write(contents.getBytes());
             fos.flush();
-        } finally {
+        }
+        finally {
             IOUtils.closeStream(fos);
         }
     }

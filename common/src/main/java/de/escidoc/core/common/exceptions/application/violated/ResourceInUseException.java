@@ -23,11 +23,10 @@ package de.escidoc.core.common.exceptions.application.violated;
 import de.escidoc.core.common.exceptions.application.ApplicationException;
 
 /**
- * Exception to indicate that a resource some operation should be done on is
- * referenced by another resource and the operation is not allowed.
- * 
- * @author Frank Schwichtenberg
+ * Exception to indicate that a resource some operation should be done on is referenced by another resource and the
+ * operation is not allowed.
  *
+ * @author Frank Schwichtenberg
  */
 public class ResourceInUseException extends ApplicationException {
 
@@ -38,13 +37,10 @@ public class ResourceInUseException extends ApplicationException {
 
     public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_VIOLATED;
 
-    public static final String HTTP_STATUS_MESSAGE =
-        "Resource in use.";
+    public static final String HTTP_STATUS_MESSAGE = "Resource in use.";
 
     /**
      * Default constructor.
-     * 
-     *
      */
     public ResourceInUseException() {
         super(HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -52,9 +48,8 @@ public class ResourceInUseException extends ApplicationException {
 
     /**
      * Constructor used to map an initial exception.
-     * 
-     * @param error
-     *            Throwable
+     *
+     * @param error Throwable
      */
     public ResourceInUseException(final Throwable error) {
         super(error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -62,24 +57,19 @@ public class ResourceInUseException extends ApplicationException {
 
     /**
      * Constructs a new exception with the specified detail message.
-     * 
-     * @param message
-     *            - the detail message.
      *
+     * @param message - the detail message.
      */
     public ResourceInUseException(final String message) {
         super(message, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 
     /**
-     * Constructor used to create a new Exception with the specified detail
-     * message and a mapping to an initial exception.
-     * 
-     * @param message
-     *            - the detail message.
-     * @param error
-     *            Throwable
+     * Constructor used to create a new Exception with the specified detail message and a mapping to an initial
+     * exception.
      *
+     * @param message - the detail message.
+     * @param error   Throwable
      */
     public ResourceInUseException(final String message, final Throwable error) {
         super(message, error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);

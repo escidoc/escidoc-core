@@ -32,35 +32,28 @@ import java.util.Map.Entry;
 public class ErrorMessageHandler {
 
     private static final String DELIMITER =
-            "######################################################"
+        "######################################################"
             + "#################################################\n";
 
     /**
      * Writes error-message and timestamp into logfile.
-     * 
-     * @param parameters
-     *            Message message-object
-     * @param exception
-     *            exception to evaluate
-     * @param logfile
-     *            name of the logfile error-message has to get written to
      *
+     * @param parameters Message message-object
+     * @param exception  exception to evaluate
+     * @param logfile    name of the logfile error-message has to get written to
      */
-    public void putErrorMessage(final Map<String, String> parameters,
-            final Throwable exception, final String logfile) {
+    public void putErrorMessage(final Map<String, String> parameters, final Throwable exception, final String logfile) {
 
         final StringBuilder messageBuf = new StringBuilder(DELIMITER);
-        
+
         // put all given parameters into StringBuffer
         for (final Entry<String, String> e : parameters.entrySet()) {
-            messageBuf.append(e.getKey()).append(": ").append(e.getValue())
-                    .append('\n');
+            messageBuf.append(e.getKey()).append(": ").append(e.getValue()).append('\n');
         }
 
         //put error-message into StringBuffer
-        messageBuf.append("error: ").append(getStackTrace(exception)).append(
-                '\n');
-        
+        messageBuf.append("error: ").append(getStackTrace(exception)).append('\n');
+
         //write StringBuffer into logfile
         final Logger errorLogger = LoggerFactory.getLogger(logfile);
         errorLogger.error(messageBuf.toString());
@@ -70,19 +63,16 @@ public class ErrorMessageHandler {
 
     /**
      * Get Stack Trace of Exception.
-     * 
-     * @param e
-     *            Exception
-     * @return String Stack Trace
      *
+     * @param e Exception
+     * @return String Stack Trace
      */
     private static String getStackTrace(final Throwable e) {
         final StringBuilder stack = new StringBuilder("");
         if (e != null) {
             stack.append(e.getMessage()).append('\n');
             final StackTraceElement[] stackElements = e.getStackTrace();
-            if (stackElements != null && stackElements.length > 0
-                    && stackElements[0] != null) {
+            if (stackElements != null && stackElements.length > 0 && stackElements[0] != null) {
                 stack.append(stackElements[0].toString()).append('\n');
             }
             if (e.getCause() != null) {

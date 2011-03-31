@@ -32,7 +32,7 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 
 /**
  * Class holding the set definition data.
- * 
+ *
  * @author Rozita Friedman
  */
 public class SetDefinition extends SetDefinitionBase {

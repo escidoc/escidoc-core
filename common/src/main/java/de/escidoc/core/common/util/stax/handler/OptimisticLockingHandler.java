@@ -33,15 +33,12 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import javax.naming.directory.NoSuchAttributeException;
 
 /**
- * Verifies the attribute <code>last-modification-date</code> of a xml request.
- * The specified value have to be the <code>LastModificationDate</code> of the
- * handled Fedora Object. If a root-element is found the value of
- * <code>last-modification-date</code> is compared with the value provided
- * during creation of the handler. If the values are not equal a
- * <code>LockingException</code> is thrown.
- * 
+ * Verifies the attribute <code>last-modification-date</code> of a xml request. The specified value have to be the
+ * <code>LastModificationDate</code> of the handled Fedora Object. If a root-element is found the value of
+ * <code>last-modification-date</code> is compared with the value provided during creation of the handler. If the values
+ * are not equal a <code>LockingException</code> is thrown.
+ *
  * @author Frank Schwichtenberg
- * 
  */
 public class OptimisticLockingHandler extends DefaultHandler {
 
@@ -53,24 +50,17 @@ public class OptimisticLockingHandler extends DefaultHandler {
 
     private final String lastModifiedDate;
 
-    private static final String MODIFIED_DATE_ATT_NAME =
-        "last-modification-date";
+    private static final String MODIFIED_DATE_ATT_NAME = "last-modification-date";
 
     /**
      * Creates a instance of OptimisticLockingHandler.
-     * 
-     * @param objid
-     *            The unique identifier of the handled object.
-     * @param objectType
-     *            Type of Resource (required to set name of resource in case of
-     *            Exception).
-     * @param lastModificationDate
-     *            The last modification of the stores object.
-     * @param parser
-     *            The parser this handler is added.
+     *
+     * @param objid                The unique identifier of the handled object.
+     * @param objectType           Type of Resource (required to set name of resource in case of Exception).
+     * @param lastModificationDate The last modification of the stores object.
+     * @param parser               The parser this handler is added.
      */
-    public OptimisticLockingHandler(final String objid,
-        final String objectType, final String lastModificationDate,
+    public OptimisticLockingHandler(final String objid, final String objectType, final String lastModificationDate,
         final StaxParser parser) {
         this.objid = objid;
         this.objectType = objectType;
@@ -85,26 +75,23 @@ public class OptimisticLockingHandler extends DefaultHandler {
      * (de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
-    public StartElement startElement(final StartElement element)
-        throws OptimisticLockingException, MissingAttributeValueException,
-        WebserverSystemException, InvalidContentException {
-        if (! this.done) {
+    public StartElement startElement(final StartElement element) throws OptimisticLockingException,
+        MissingAttributeValueException, WebserverSystemException, InvalidContentException {
+        if (!this.done) {
             final Attribute requestedDate;
             try {
-                requestedDate =
-                    element.getAttribute(null, MODIFIED_DATE_ATT_NAME);
+                requestedDate = element.getAttribute(null, MODIFIED_DATE_ATT_NAME);
 
             }
             catch (final NoSuchAttributeException e) {
-                throw new MissingAttributeValueException(
-                    "Attribute \"last-modification-date\" of the element "
-                        + element.getLocalName() + " is missing.", e);
+                throw new MissingAttributeValueException("Attribute \"last-modification-date\" of the element "
+                    + element.getLocalName() + " is missing.", e);
             }
 
             final String requestedModificationDate = requestedDate.getValue();
             if (this.lastModifiedDate != null) {
                 Utility.getInstance().checkOptimisticLockingCriteria(this.lastModifiedDate, requestedModificationDate,
-                        this.objectType + " with id " + this.objid);
+                    this.objectType + " with id " + this.objid);
             }
             this.done = true;
 

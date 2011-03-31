@@ -29,9 +29,8 @@ import java.util.Properties;
 
 /**
  * Utility class to support ejb factory beans.
- * 
- * @author Torsten Tetteroo
  *
+ * @author Torsten Tetteroo
  */
 public final class EjbFactoryBeanHelper {
 
@@ -45,33 +44,26 @@ public final class EjbFactoryBeanHelper {
 
     /**
      * Gets the JNDI properties.
-     * 
-     * @param packageName
-     *            The package name.
+     *
+     * @param packageName The package name.
      * @return The JNDI properties.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    public static Properties getInitialContextJndiProperties(
-        final String packageName) throws WebserverSystemException {
+    public static Properties getInitialContextJndiProperties(final String packageName) throws WebserverSystemException {
 
         String providerUrl;
         try {
-            providerUrl =
-                EscidocConfiguration.getInstance().get(
-                    packageName + CONFIG_PROVIDER_URL_NAME);
+            providerUrl = EscidocConfiguration.getInstance().get(packageName + CONFIG_PROVIDER_URL_NAME);
             if (providerUrl == null) {
                 providerUrl =
-                    EscidocConfiguration.getInstance().get(
-                        EscidocConfiguration.ESCIDOC_CORE_DEFAULT_JNDI_URL);
+                    EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_DEFAULT_JNDI_URL);
             }
         }
         catch (final IOException e) {
             throw new WebserverSystemException(e);
         }
         final Properties properties = new Properties();
-        properties.setProperty(Context.URL_PKG_PREFIXES,
-            "org.jboss.naming:org.jnp.interfaces");
+        properties.setProperty(Context.URL_PKG_PREFIXES, "org.jboss.naming:org.jnp.interfaces");
         properties.setProperty(Context.PROVIDER_URL, providerUrl);
 
         return properties;

@@ -41,21 +41,17 @@ import java.util.Vector;
 
 /**
  * Tool to count resource in Fedora Repository.
- * 
+ *
  * @author Steffen Wagner
- * 
  */
 public class CountRepository {
 
-    private static final Logger LOGGER =
-        LoggerFactory.getLogger(CountRepository.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CountRepository.class);
 
-    private static final String RDF_TYPE =
-        "<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>";
+    private static final String RDF_TYPE = "<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>";
 
     /**
-     * @param args
-     *            Program arguments.
+     * @param args Program arguments.
      */
     public static void main(final String[] args) {
 
@@ -72,10 +68,9 @@ public class CountRepository {
 
     /**
      * Count all resources of the Fedora repository.
-     * 
+     *
      * @return Number of objects.
-     * @throws Exception
-     *             Throws Exception if TripleStore of Fedora request failed.
+     * @throws Exception Throws Exception if TripleStore of Fedora request failed.
      */
     public static int countResources() throws Exception {
 
@@ -86,10 +81,9 @@ public class CountRepository {
 
     /**
      * Count all resources from eSciDoc type Item of repository.
-     * 
+     *
      * @return Number of Items.
-     * @throws Exception
-     *             Throws Exception if TripleStore of Fedora request failed.
+     * @throws Exception Throws Exception if TripleStore of Fedora request failed.
      */
     public static int countItems() throws Exception {
 
@@ -99,30 +93,23 @@ public class CountRepository {
     }
 
     /**
-     * Obtains all objid which fit to the TripleStore predicate and cuts of the
-     * objid.
-     * 
-     * @param trsPredicate
-     *            TripleStore Predicate
+     * Obtains all objid which fit to the TripleStore predicate and cuts of the objid.
+     *
+     * @param trsPredicate TripleStore Predicate
      * @return Vector with all objids (Fedora PIDs) which fit to the Predicate.
-     * @throws Exception
-     *             Thrown if obtaining values from TripleStore and extracting
-     *             failed.
+     * @throws Exception Thrown if obtaining values from TripleStore and extracting failed.
      */
-    public static Vector<String> obtainObjidsFromTripleStore(
-        final String trsPredicate) throws Exception {
+    public static Vector<String> obtainObjidsFromTripleStore(final String trsPredicate) throws Exception {
 
         Vector<String> objids = new Vector<String>();
 
         // call value from TripleStore
         TripleStoreTestBase tripleStore = new TripleStoreTestBase();
-        String result =
-            tripleStore.requestMPT("* " + trsPredicate + " *", "RDF/XML");
+        String result = tripleStore.requestMPT("* " + trsPredicate + " *", "RDF/XML");
         Document resultDoc = EscidocRestSoapTestBase.getDocument(result);
 
         // obtain objids
-        NodeList nl =
-            XPathAPI.selectNodeList(resultDoc, "/RDF/Description/@about");
+        NodeList nl = XPathAPI.selectNodeList(resultDoc, "/RDF/Description/@about");
 
         int nlSize = nl.getLength();
         for (int i = 0; i < nlSize; i++) {
@@ -138,29 +125,23 @@ public class CountRepository {
     }
 
     /**
-     * Obtains all objid of Items which fit to the TripleStore predicate and
-     * cuts of the objid.
-     * 
+     * Obtains all objid of Items which fit to the TripleStore predicate and cuts of the objid.
+     *
      * @return Vector with all objids (Fedora PIDs) which fit to the Predicate.
-     * @throws Exception
-     *             Thrown if obtaining values from TripleStore and extracting
-     *             failed.
+     * @throws Exception Thrown if obtaining values from TripleStore and extracting failed.
      */
-    public static Vector<String> obtainObjidsOfItemsFromTripleStore()
-        throws Exception {
+    public static Vector<String> obtainObjidsOfItemsFromTripleStore() throws Exception {
 
         Vector<String> objids = new Vector<String>();
 
         // call value from TripleStore
         TripleStoreTestBase tripleStore = new TripleStoreTestBase();
         String result =
-            tripleStore.requestMPT("* " + RDF_TYPE
-                + " <http://escidoc.de/core/01/resources/Item>", "RDF/XML");
+            tripleStore.requestMPT("* " + RDF_TYPE + " <http://escidoc.de/core/01/resources/Item>", "RDF/XML");
         Document resultDoc = EscidocRestSoapTestBase.getDocument(result);
 
         // obtain objids
-        NodeList nl =
-            XPathAPI.selectNodeList(resultDoc, "/RDF/Description/@about");
+        NodeList nl = XPathAPI.selectNodeList(resultDoc, "/RDF/Description/@about");
 
         int nlSize = nl.getLength();
         for (int i = 0; i < nlSize; i++) {

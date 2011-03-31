@@ -36,158 +36,110 @@ import java.util.List;
 
 /**
  * Interface of an organizational unit renderer.
- * 
+ *
  * @author Michael Schneider
  */
 public interface OrganizationalUnitRendererInterface {
 
     /**
      * Gets the representation of an organizational unit.
-     * 
-     * @param organizationalUnit
-     *            The organizational unit to render.
+     *
+     * @param organizationalUnit The organizational unit to render.
      * @return Returns the XML representation of the organizational unit.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     * @throws SystemException Thrown in case of an internal error.
      */
-    String render(final OrganizationalUnit organizationalUnit)
-        throws SystemException;
+    String render(final OrganizationalUnit organizationalUnit) throws SystemException;
 
     /**
-     * Gets the representation of the sub resource <code>properties</code> of an
-     * organizational unit.
-     * 
-     * @param organizationalUnit
-     *            The organizational unit to render.
-     * @return Returns the XML representation of the sub resource
-     *         <code>properties</code> of an organizational unit.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
+     * Gets the representation of the sub resource <code>properties</code> of an organizational unit.
+     *
+     * @param organizationalUnit The organizational unit to render.
+     * @return Returns the XML representation of the sub resource <code>properties</code> of an organizational unit.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    String renderProperties(final OrganizationalUnit organizationalUnit)
+    String renderProperties(final OrganizationalUnit organizationalUnit) throws WebserverSystemException;
+
+    /**
+     * Gets the representation of the sub resource <code>resources</code> of an organizational unit.
+     *
+     * @param organizationalUnit The organizational unit to render.
+     * @return Returns the XML representation of the sub resource <code>resources</code> of an organizational unit.
+     * @throws WebserverSystemException Thrown in case of an internal error.
+     */
+    String renderResources(final OrganizationalUnit organizationalUnit) throws WebserverSystemException;
+
+    /**
+     * Gets the representation of the sub resource <code>md-records</code> of an organizational unit.
+     *
+     * @param organizationalUnit The organizational unit to render.
+     * @return Returns the XML representation of the sub resource <code>md-records</code> of an organizational unit.
+     * @throws WebserverSystemException Thrown in case of an internal error.
+     */
+    String renderMdRecords(final OrganizationalUnit organizationalUnit) throws WebserverSystemException;
+
+    /**
+     * Gets the representation of a single sub resource <code>md-record</code> of an organizational unit.
+     *
+     * @param organizationalUnit The organizational unit to render.
+     * @param name               The name of the md-record.
+     * @return Returns the XML representation of the sub resource <code>md-records</code> of an organizational unit.
+     * @throws WebserverSystemException Thrown in case of an internal error.
+     */
+    String renderMdRecord(final OrganizationalUnit organizationalUnit, final String name)
         throws WebserverSystemException;
 
     /**
-     * Gets the representation of the sub resource <code>resources</code> of an
-     * organizational unit.
-     * 
-     * @param organizationalUnit
-     *            The organizational unit to render.
-     * @return Returns the XML representation of the sub resource
-     *         <code>resources</code> of an organizational unit.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
+     * Gets the representation of the sub resource <code>parents</code> of an organizational unit.
+     *
+     * @param organizationalUnit The organizational unit to render.
+     * @return Returns the XML representation of the sub resource <code>parents</code> of an organizational unit.
+     * @throws SystemException Thrown in case of an internal error.
      */
-    String renderResources(final OrganizationalUnit organizationalUnit)
-        throws WebserverSystemException;
+    String renderParents(final OrganizationalUnit organizationalUnit) throws SystemException;
 
     /**
-     * Gets the representation of the sub resource <code>md-records</code> of an
-     * organizational unit.
-     * 
-     * @param organizationalUnit
-     *            The organizational unit to render.
-     * @return Returns the XML representation of the sub resource
-     *         <code>md-records</code> of an organizational unit.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
+     * Gets the representation of the virtual sub resource <code>children</code> of an organizational unit.
+     *
+     * @param organizationalUnit The organizational unit to render.
+     * @param children           The children of the organizational unit.
+     * @return Returns the XML representation of the virtual sub resource <code>children</code> of the organizational
+     *         unit.
+     * @throws SystemException Thrown in case of an internal error.
      */
-    String renderMdRecords(final OrganizationalUnit organizationalUnit)
-        throws WebserverSystemException;
-
-    /**
-     * Gets the representation of a single sub resource <code>md-record</code>
-     * of an organizational unit.
-     * 
-     * @param organizationalUnit
-     *            The organizational unit to render.
-     * @param name
-     *            The name of the md-record.
-     * @return Returns the XML representation of the sub resource
-     *         <code>md-records</code> of an organizational unit.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
-     */
-    String renderMdRecord(
-        final OrganizationalUnit organizationalUnit, final String name)
-        throws WebserverSystemException;
-
-    /**
-     * Gets the representation of the sub resource <code>parents</code> of an
-     * organizational unit.
-     * 
-     * @param organizationalUnit
-     *            The organizational unit to render.
-     * @return Returns the XML representation of the sub resource
-     *         <code>parents</code> of an organizational unit.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
-     */
-    String renderParents(final OrganizationalUnit organizationalUnit)
+    String renderChildObjects(final OrganizationalUnit organizationalUnit, final List<String> children)
         throws SystemException;
 
     /**
-     * Gets the representation of the virtual sub resource <code>children</code>
-     * of an organizational unit.
-     * 
-     * @param organizationalUnit
-     *            The organizational unit to render.
-     * @param children
-     *            The children of the organizational unit.
-     * @return Returns the XML representation of the virtual sub resource
-     *         <code>children</code> of the organizational unit.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     * Gets the representation of the virtual sub resource <code>parents</code> of an organizational unit.
+     *
+     * @param organizationalUnit The organizational unit to render.
+     * @param parents            The list of parent objects of the organizational unit.
+     * @return Returns the XML representation of the virtual sub resource <code>parents</code> of an organizational
+     *         unit.
+     * @throws SystemException Thrown in case of an internal error.
      */
-    String renderChildObjects(
-        final OrganizationalUnit organizationalUnit, final List<String> children)
+    String renderParentObjects(final OrganizationalUnit organizationalUnit, final List<String> parents)
         throws SystemException;
 
     /**
-     * Gets the representation of the virtual sub resource <code>parents</code>
-     * of an organizational unit.
-     * 
-     * @param organizationalUnit
-     *            The organizational unit to render.
-     * @param parents
-     *            The list of parent objects of the organizational unit.
-     * @return Returns the XML representation of the virtual sub resource
-     *         <code>parents</code> of an organizational unit.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     * Gets the representation of the virtual sub resource <code>path-list</code> of an organizational unit.
+     *
+     * @param organizationalUnit The organizational unit to render.
+     * @param pathes             The path-list of the organizational unit.
+     * @return Returns the XML representation of the virtual sub resource <code>path-list</code> of an organizational
+     *         unit.
+     * @throws SystemException Thrown in case of an internal error.
      */
-    String renderParentObjects(
-        final OrganizationalUnit organizationalUnit, final List<String> parents)
+    String renderPathList(final OrganizationalUnit organizationalUnit, final List<List<String>> pathes)
         throws SystemException;
 
     /**
-     * Gets the representation of the virtual sub resource
-     * <code>path-list</code> of an organizational unit.
-     * 
-     * @param organizationalUnit
-     *            The organizational unit to render.
-     * @param pathes
-     *            The path-list of the organizational unit.
-     * @return Returns the XML representation of the virtual sub resource
-     *         <code>path-list</code> of an organizational unit.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     * Gets the successor representation of the <code>organizational unit</code> .
+     *
+     * @param organizationalUnit The Organizational Unit.
+     * @return Returns the XML representation of the virtual sub resource <code>successors</code> of an organizational
+     *         unit.
+     * @throws SystemException Thrown in case of an internal error.
      */
-    String renderPathList(
-        final OrganizationalUnit organizationalUnit,
-        final List<List<String>> pathes) throws SystemException;
-
-    /**
-     * Gets the successor representation of the <code>organizational unit</code>
-     * .
-     * 
-     * @param organizationalUnit
-     *            The Organizational Unit.
-     * @return Returns the XML representation of the virtual sub resource
-     *         <code>successors</code> of an organizational unit.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
-     */
-    String renderSuccessors(final OrganizationalUnit organizationalUnit)
-        throws SystemException;
+    String renderSuccessors(final OrganizationalUnit organizationalUnit) throws SystemException;
 }

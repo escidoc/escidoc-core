@@ -41,59 +41,47 @@ import java.util.Collection;
 
 /**
  * Test suite for the role Depositor using the SOAP interface.
- * 
+ *
  * @author Torsten Tetteroo
- * 
  */
 @RunWith(Parameterized.class)
 public class DepositorSoapTest extends DepositorAbstractTest {
 
     /**
      * Initializes test-class with data.
-     * 
+     *
      * @return Collection with data.
-     * 
      */
     @Parameters
     public static Collection<Object[]> data() {
-        return Arrays.asList(new Object[][]{
-                {USER_ACCOUNT_HANDLER_CODE, 
-                    PWCallback.ID_PREFIX + PWCallback.TEST_HANDLE},
-                {USER_GROUP_HANDLER_CODE, USER_GROUP_WITH_GROUP_LIST_ID},
-                {USER_GROUP_HANDLER_CODE, USER_GROUP_WITH_USER_LIST_ID},
-                {USER_GROUP_HANDLER_CODE, USER_GROUP_WITH_OU_LIST_ID},
-                {USER_GROUP_HANDLER_CODE, USER_GROUP_WITH_EXTERNAL_SELECTOR}
-        });
+        return Arrays.asList(new Object[][] {
+            { USER_ACCOUNT_HANDLER_CODE, PWCallback.ID_PREFIX + PWCallback.TEST_HANDLE },
+            { USER_GROUP_HANDLER_CODE, USER_GROUP_WITH_GROUP_LIST_ID },
+            { USER_GROUP_HANDLER_CODE, USER_GROUP_WITH_USER_LIST_ID },
+            { USER_GROUP_HANDLER_CODE, USER_GROUP_WITH_OU_LIST_ID },
+            { USER_GROUP_HANDLER_CODE, USER_GROUP_WITH_EXTERNAL_SELECTOR } });
     }
 
     /**
      * Constructor.
-     * 
-     * @param handlerCode handlerCode 
-     *      of UserAccountHandler or UserGroupHandler
-     * @param userOrGroupId
-     *            userOrGroupId for grantCreation.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param handlerCode   handlerCode of UserAccountHandler or UserGroupHandler
+     * @param userOrGroupId userOrGroupId for grantCreation.
+     * @throws Exception If anything fails.
      */
-    public DepositorSoapTest(final int handlerCode,
-            final String userOrGroupId) throws Exception {
+    public DepositorSoapTest(final int handlerCode, final String userOrGroupId) throws Exception {
 
         super(Constants.TRANSPORT_SOAP, handlerCode, userOrGroupId);
     }
-    
+
     /**
      * Tests creating an item using the scenario for issue #326.
-     * 
-     * @test.issue http://www.escidoc-project.de/issueManagement/show_bug.cgi?id=326
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testCreateItemIssue326() throws Exception {
 
-        doTestCreateItem(
-                HANDLE, null, TEMPLATE_ITEM_PATH, "item_issue326-SOAP.xml");
+        doTestCreateItem(HANDLE, null, TEMPLATE_ITEM_PATH, "item_issue326-SOAP.xml");
     }
 }

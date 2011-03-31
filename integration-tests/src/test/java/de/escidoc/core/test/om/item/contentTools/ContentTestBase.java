@@ -39,8 +39,7 @@ public class ContentTestBase extends ItemTestBase {
     private static final String TEMP_REF_FILE_NAME = "testBinaryData-ref.img";
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ContentTestBase(final int transport) {
         super(transport);
@@ -48,16 +47,12 @@ public class ContentTestBase extends ItemTestBase {
 
     /**
      * Waits until every thread of the vector with threads is finished.
-     * 
-     * @param threads
-     *            Vector with threads
-     * @param sleep
-     *            milli secounds between thread alive checks.
-     * @throws InterruptedException
-     *             Thrown if a thread was interrupted.
+     *
+     * @param threads Vector with threads
+     * @param sleep   milli secounds between thread alive checks.
+     * @throws InterruptedException Thrown if a thread was interrupted.
      */
-    protected void waitForThreads(final Vector<Thread> threads, final int sleep)
-        throws InterruptedException {
+    protected void waitForThreads(final Vector<Thread> threads, final int sleep) throws InterruptedException {
         while (threadAlive(threads)) {
             Thread.sleep(sleep);
         }
@@ -65,11 +60,9 @@ public class ContentTestBase extends ItemTestBase {
     }
 
     /**
-     * Check if at least one thread is still running. (Is faster than
-     * getNoOfAliveThreads())
-     * 
-     * @param threads
-     *            Vector with threads.
+     * Check if at least one thread is still running. (Is faster than getNoOfAliveThreads())
+     *
+     * @param threads Vector with threads.
      * @return true if at least one thread is still running.
      */
     protected boolean threadAlive(final Vector<Thread> threads) {
@@ -86,9 +79,8 @@ public class ContentTestBase extends ItemTestBase {
 
     /**
      * Counts the number of running threads.
-     * 
-     * @param threads
-     *            Vector with threads.
+     *
+     * @param threads Vector with threads.
      * @return number of runnig threads.
      */
     protected int getNoOfAliveThreads(final Vector<Thread> threads) {
@@ -105,16 +97,12 @@ public class ContentTestBase extends ItemTestBase {
 
     /**
      * Counts the number of running threads.
-     * 
-     * @param threads
-     *            Vector with threads.
-     * @param noOfMaxRunningThreads
-     *            max number of simultanious threads
-     * @throws Exception
-     *             Thrown if set thread to sleep failed.
+     *
+     * @param threads               Vector with threads.
+     * @param noOfMaxRunningThreads max number of simultanious threads
+     * @throws Exception Thrown if set thread to sleep failed.
      */
-    protected void waitForRunningThreads(
-        final Vector<Thread> threads, final int noOfMaxRunningThreads)
+    protected void waitForRunningThreads(final Vector<Thread> threads, final int noOfMaxRunningThreads)
         throws Exception {
 
         while (getNoOfAliveThreads(threads) >= noOfMaxRunningThreads) {
@@ -124,16 +112,12 @@ public class ContentTestBase extends ItemTestBase {
 
     /**
      * Read the InputStream into an ByteArrayOutputStream.
-     * 
-     * @param inputStream
-     *            The InutStream.
+     *
+     * @param inputStream The InutStream.
      * @return The ByteArrayOutputStream of the InputStream.
-     * @throws IOException
-     *             Thrown if transfer of InputStream to ByteArrayOutputStream
-     *             failed.
+     * @throws IOException Thrown if transfer of InputStream to ByteArrayOutputStream failed.
      */
-    protected ByteArrayOutputStream readBinaryContent(
-        final InputStream inputStream) throws IOException {
+    protected ByteArrayOutputStream readBinaryContent(final InputStream inputStream) throws IOException {
 
         byte[] buffer = new byte[BUFFER_SIZE];
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -146,9 +130,8 @@ public class ContentTestBase extends ItemTestBase {
 
     /**
      * Get the minor type of ContentType.
-     * 
-     * @param contentType
-     *            The content type (image/jpeg)
+     *
+     * @param contentType The content type (image/jpeg)
      * @return minor content type (jpeg)
      */
     protected String getFileExtentionFromContentType(final String contentType) {
@@ -160,9 +143,8 @@ public class ContentTestBase extends ItemTestBase {
 
     /**
      * Get username and password Base64 encoded.
-     * 
-     * @param userInfo
-     *            username and password ('username:password')
+     *
+     * @param userInfo username and password ('username:password')
      * @return Base64 encoding of username and password.
      */
     protected static String userNamePasswordBase64(final String userInfo) {
@@ -173,37 +155,29 @@ public class ContentTestBase extends ItemTestBase {
 
     /**
      * Content URL to Fedora!
-     * 
-     * @param componentId
-     *            The Fedora objid.
-     * @param versionDate
-     *            Set to null to ignore it.
-     * @param transformer
-     *            The transformation service.
-     * @param param
-     *            The transformation parameter.
-     * @return The Url to the transformation service (digilib) including
-     *         resource parameter
-     * @throws Exception
-     *             If getting properties values failed.
+     *
+     * @param componentId The Fedora objid.
+     * @param versionDate Set to null to ignore it.
+     * @param transformer The transformation service.
+     * @param param       The transformation parameter.
+     * @return The Url to the transformation service (digilib) including resource parameter
+     * @throws Exception If getting properties values failed.
      */
     protected URL getDigilibUrl(
-        final String componentId, final String versionDate,
-        final String transformer, final String param) throws Exception {
+        final String componentId, final String versionDate, final String transformer, final String param)
+        throws Exception {
 
         String contentUrl = getFedoraUrl(componentId, versionDate);
 
-        String digilibServer =
-            PropertiesProvider.getInstance().getProperty(PropertiesProvider.DIGILIB_SCALER_URL);
+        String digilibServer = PropertiesProvider.getInstance().getProperty(PropertiesProvider.DIGILIB_SCALER_URL);
 
         URL url = null;
         if (transformer.equals(TRANSFORM_SERVICE_DIGILIB)) {
             url = new URL(digilibServer + "?fn=" + contentUrl + "&" + param);
         }
         else {
-            throw new InvalidParameterException(
-                "The content transformation service " + transformer
-                    + " is not supported.");
+            throw new InvalidParameterException("The content transformation service " + transformer
+                + " is not supported.");
         }
 
         return url;
@@ -211,30 +185,23 @@ public class ContentTestBase extends ItemTestBase {
 
     /**
      * Prepare the URL to the content of an Fedora object.
-     * 
-     * @param componentId
-     *            The Fedora objid.
-     * @param versionDate
-     *            The version date of the object
+     *
+     * @param componentId The Fedora objid.
+     * @param versionDate The version date of the object
      * @return The Fedora content Url for the object.
      */
-    protected String getFedoraUrl(
-        final String componentId, final String versionDate) {
+    protected String getFedoraUrl(final String componentId, final String versionDate) {
 
-        String fedoraUser =
-            PropertiesProvider.getInstance().getProperty(PropertiesProvider.FEDORA_USER);
-        String fedoraPw =
-            PropertiesProvider.getInstance().getProperty(PropertiesProvider.FEDORA_PASSWORD);
+        String fedoraUser = PropertiesProvider.getInstance().getProperty(PropertiesProvider.FEDORA_USER);
+        String fedoraPw = PropertiesProvider.getInstance().getProperty(PropertiesProvider.FEDORA_PASSWORD);
         String auth = fedoraUser + ":" + fedoraPw + "@";
 
-        String fedoraUrl =
-            PropertiesProvider.getInstance().getProperty(PropertiesProvider.FEDORA_URL);
+        String fedoraUrl = PropertiesProvider.getInstance().getProperty(PropertiesProvider.FEDORA_URL);
         int pos = fedoraUrl.indexOf("://");
         String protocol = fedoraUrl.substring(0, pos + 3);
         String hostPart = fedoraUrl.substring(pos + 3);
 
-        String contentUrl =
-            protocol + auth + hostPart + "/get/" + componentId + "/content";
+        String contentUrl = protocol + auth + hostPart + "/get/" + componentId + "/content";
 
         if (versionDate != null) {
             contentUrl += "/" + versionDate;
@@ -244,23 +211,15 @@ public class ContentTestBase extends ItemTestBase {
     }
 
     /**
-     * Retrieve content from the escidoc-core interface and store value in file.
-     * The expected content type is checked.
-     * 
-     * @param itemId
-     *            The id of the Item.
-     * @param componentId
-     *            The id of the Component.
-     * @param contentType
-     *            The expected contentType
+     * Retrieve content from the escidoc-core interface and store value in file. The expected content type is checked.
+     *
+     * @param itemId      The id of the Item.
+     * @param componentId The id of the Component.
+     * @param contentType The expected contentType
      * @return The file handler of the binary content.
-     * @throws Exception
-     *             Thrown if retrieveing failed or the delivered content type
-     *             compares not to the parameter.
-     * 
+     * @throws Exception Thrown if retrieveing failed or the delivered content type compares not to the parameter.
      */
-    protected File retrieveContentFromFramework(
-        final String itemId, final String componentId, final String contentType)
+    protected File retrieveContentFromFramework(final String itemId, final String componentId, final String contentType)
         throws Exception {
 
         BinaryContent ins = retrieveBinaryContent(itemId, componentId);
@@ -275,36 +234,27 @@ public class ContentTestBase extends ItemTestBase {
         fos.flush();
         fos.close();
         ins.getContent().close();
-      
+
         return temp;
     }
 
     /**
      * Retrieve content of object from repositoy and store it into tempory file.
-     * 
-     * @param objectId
-     *            The id of the Fedora object.
-     * @param contentType
-     *            The expected contentType
+     *
+     * @param objectId    The id of the Fedora object.
+     * @param contentType The expected contentType
      * @return The file handler of the binary content.
-     * @throws Exception
-     *             Thrown if retrieveing failed or the delivered content type
-     *             compares not to the parameter.
+     * @throws Exception Thrown if retrieveing failed or the delivered content type compares not to the parameter.
      */
-    protected File retrieveContentFromRepository(
-        final String objectId, final String contentType) throws Exception {
+    protected File retrieveContentFromRepository(final String objectId, final String contentType) throws Exception {
 
         String fedoraUrl =
-            PropertiesProvider.getInstance()
-                .getProperty(PropertiesProvider.FEDORA_URL)
-                + "/get/" + objectId + "/content";
+            PropertiesProvider.getInstance().getProperty(PropertiesProvider.FEDORA_URL) + "/get/" + objectId
+                + "/content";
 
         String auth =
-            PropertiesProvider.getInstance()
-                .getProperty(PropertiesProvider.FEDORA_USER)
-                + ":"
-                + PropertiesProvider.getInstance()
-                    .getProperty(PropertiesProvider.FEDORA_PASSWORD);
+            PropertiesProvider.getInstance().getProperty(PropertiesProvider.FEDORA_USER) + ":"
+                + PropertiesProvider.getInstance().getProperty(PropertiesProvider.FEDORA_PASSWORD);
 
         URL url = new URL(fedoraUrl);
 
@@ -330,9 +280,8 @@ public class ContentTestBase extends ItemTestBase {
 
     /**
      * Remove file and only log if it's not possible.
-     * 
-     * @param temp
-     *            The to remove file.
+     *
+     * @param temp The to remove file.
      */
     protected void removeSilent(final File temp) {
         if (temp.exists() && !temp.delete()) {
@@ -342,17 +291,13 @@ public class ContentTestBase extends ItemTestBase {
 
     /**
      * Upload all files of local directory to staging service.
-     * 
-     * @param path
-     *            The local path to the files.
-     * @param repetition
-     *            number of repetitions
+     *
+     * @param path       The local path to the files.
+     * @param repetition number of repetitions
      * @return The URLs of the content at the staging service.
-     * @throws Exception
-     *             If something failed.
+     * @throws Exception If something failed.
      */
-    protected HashMap<URL, File> uploadDirAsContent(
-        final String path, final int repetition) throws Exception {
+    protected HashMap<URL, File> uploadDirAsContent(final String path, final int repetition) throws Exception {
 
         HashMap<URL, File> urls = new HashMap<URL, File>();
         // path workaround (until relative path is fixed within the test
@@ -381,11 +326,9 @@ public class ContentTestBase extends ItemTestBase {
 
     /**
      * Get all files from the directory.
-     * 
-     * @param dir
-     *            The base directory.
-     * @return Vector with all files of the directory (including
-     *         sub-directories).
+     *
+     * @param dir The base directory.
+     * @return Vector with all files of the directory (including sub-directories).
      */
     public Vector<File> listDir(final File dir) {
 
@@ -406,31 +349,23 @@ public class ContentTestBase extends ItemTestBase {
 
     /**
      * Prepare a component for create.
-     * 
-     * @param file
-     *            The file which is already uploaded to staging service or
-     *            available via HTTP.
-     * @param url
-     *            The URL of the uploaded or HTTP accessible content.
+     *
+     * @param file The file which is already uploaded to staging service or available via HTTP.
+     * @param url  The URL of the uploaded or HTTP accessible content.
      * @return The String respresentation of the Component to create.
      */
     protected String prepareComponentAsItem(final File file, final URL url) {
 
         String mimeType = new MimetypesFileTypeMap().getContentType(file);
         String component =
-            "<escidocComponents:component>\n"
-                + "<escidocComponents:properties>\n"
-                + "<prop:description>FileSize=" + file.length()
-                + "byte(s)</prop:description>\n"
-                + "<prop:valid-status>valid</prop:valid-status>\n"
+            "<escidocComponents:component>\n" + "<escidocComponents:properties>\n" + "<prop:description>FileSize="
+                + file.length() + "byte(s)</prop:description>\n" + "<prop:valid-status>valid</prop:valid-status>\n"
                 + "<prop:visibility>public</prop:visibility>\n"
-                + "<prop:content-category>pre-print</prop:content-category>\n"
-                + "<prop:file-name>" + file.getName() + "</prop:file-name>\n"
-                + "<prop:mime-type>" + mimeType + "</prop:mime-type>\n"
+                + "<prop:content-category>pre-print</prop:content-category>\n" + "<prop:file-name>" + file.getName()
+                + "</prop:file-name>\n" + "<prop:mime-type>" + mimeType + "</prop:mime-type>\n"
                 + "</escidocComponents:properties>\n"
 
-                + "<escidocComponents:content\n" + "xlink:href=\"" + url
-                + "\"\n" + "storage=\"internal-managed\" />\n"
+                + "<escidocComponents:content\n" + "xlink:href=\"" + url + "\"\n" + "storage=\"internal-managed\" />\n"
 
                 + "</escidocComponents:component>";
 
@@ -439,15 +374,12 @@ public class ContentTestBase extends ItemTestBase {
 
     /**
      * Get all Components of an Item.
-     * 
-     * @param itemId
-     *            Objid of Item.
+     *
+     * @param itemId Objid of Item.
      * @return Vector with objids of Components.
-     * @throws Exception
-     *             Thrown if retrieve or extracting of objids failed.
+     * @throws Exception Thrown if retrieve or extracting of objids failed.
      */
-    protected Vector<String> getAllComponents(final String itemId)
-        throws Exception {
+    protected Vector<String> getAllComponents(final String itemId) throws Exception {
 
         Vector<String> components = new Vector<String>();
 
@@ -457,13 +389,11 @@ public class ContentTestBase extends ItemTestBase {
         NodeList componentsIdList = null;
 
         if (getTransport() == Constants.TRANSPORT_REST) {
-            componentsIdList =
-                selectNodeList(itemDoc, "/item/components/component/@href");
+            componentsIdList = selectNodeList(itemDoc, "/item/components/component/@href");
 
         }
         else {
-            componentsIdList =
-                selectNodeList(itemDoc, "/item/components/component/@objid");
+            componentsIdList = selectNodeList(itemDoc, "/item/components/component/@objid");
         }
 
         for (int i = componentsIdList.getLength() - 1; i >= 0; i--) {
@@ -478,8 +408,7 @@ public class ContentTestBase extends ItemTestBase {
         return components;
     }
 
-    protected HashMap<String, String> getAllComponents2(final String itemId)
-        throws Exception {
+    protected HashMap<String, String> getAllComponents2(final String itemId) throws Exception {
 
         HashMap<String, String> components = new HashMap<String, String>();
 
@@ -489,13 +418,11 @@ public class ContentTestBase extends ItemTestBase {
         NodeList componentsIdList = null;
 
         if (getTransport() == Constants.TRANSPORT_REST) {
-            componentsIdList =
-                selectNodeList(itemDoc, "/item/components/component/@href");
+            componentsIdList = selectNodeList(itemDoc, "/item/components/component/@href");
 
         }
         else {
-            componentsIdList =
-                selectNodeList(itemDoc, "/item/components/component/@objid");
+            componentsIdList = selectNodeList(itemDoc, "/item/components/component/@objid");
         }
 
         for (int i = componentsIdList.getLength() - 1; i >= 0; i--) {

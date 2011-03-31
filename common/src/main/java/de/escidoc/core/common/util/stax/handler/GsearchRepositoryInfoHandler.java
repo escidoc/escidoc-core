@@ -28,31 +28,23 @@ import java.util.Map;
 
 /**
  * Parses the GsearchRepositoryInfo-XML into a Hash-Structure.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 public class GsearchRepositoryInfoHandler extends DefaultHandler {
 
-    private final Map<String, String> gsearchRepositoryInfo =
-        new HashMap<String, String>();
-    
+    private final Map<String, String> gsearchRepositoryInfo = new HashMap<String, String>();
+
     /**
      * Handle the character section of an element.
-     * 
-     * @param s
-     *            The contents of the character section.
-     * @param element
-     *            The element.
+     *
+     * @param s       The contents of the character section.
+     * @param element The element.
      * @return The character section.
-     * @throws Exception
-     *             e
+     * @throws Exception e
      */
     @Override
-    public String characters(
-            final String s,
-            final StartElement element)
-            throws Exception {
+    public String characters(final String s, final StartElement element) throws Exception {
         gsearchRepositoryInfo.put(element.getLocalName(), s);
         return s;
     }
@@ -60,8 +52,7 @@ public class GsearchRepositoryInfoHandler extends DefaultHandler {
     /**
      * @return the gsearchRepositoryInfo
      */
-    public Map<String, String> 
-                        getGsearchRepositoryInfo() {
+    public Map<String, String> getGsearchRepositoryInfo() {
         return this.gsearchRepositoryInfo;
     }
 

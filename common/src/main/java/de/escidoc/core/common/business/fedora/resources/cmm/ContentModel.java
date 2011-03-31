@@ -59,17 +59,14 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 /**
- * Implementation of an eSciDoc Content Model Object which consist of
- * datastreams managed in Fedora Digital Repository System.
- * 
+ * Implementation of an eSciDoc Content Model Object which consist of datastreams managed in Fedora Digital Repository
+ * System.
+ *
  * @author Frank Schwichtenberg
- * 
  */
-public class ContentModel extends GenericVersionableResourcePid
-    implements VersionableResource {
+public class ContentModel extends GenericVersionableResourcePid implements VersionableResource {
 
-    public static final String DATASTREAM_DS_COMPOSITE_MODEL =
-        "DS-COMPOSITE-MODEL";
+    public static final String DATASTREAM_DS_COMPOSITE_MODEL = "DS-COMPOSITE-MODEL";
 
     private final Map<String, Datastream> contentStreams;
 
@@ -84,32 +81,21 @@ public class ContentModel extends GenericVersionableResourcePid
     private static final Logger LOGGER = LoggerFactory.getLogger(ContentModel.class);
 
     /**
-     * Constructs the Content Model with the specified id. The datastreams are
-     * instantiated and retrieved if the related getter is called.
-     * 
-     * @param id
-     *            The ID of the Content Model.
-     * 
-     * @throws WebserverSystemException
-     *             If an error occurs.
-     * @throws FedoraSystemException
-     *             If an error occurs accessing Fedora.
-     * @throws TripleStoreSystemException
-     *             If an error occurs accessing the triplestore.
-     * @throws IntegritySystemException
-     *             Thrown if there is an integrity error with the addressed
-     *             object.
-     * @throws StreamNotFoundException
-     *             If a specific datastream can not be found.
-     * @throws ResourceNotFoundException
-     *             If an object with the specified ID can not be found. If there
-     *             is such an object but this object is no Content Model a
-     *             ContentModelNotFoundException is thrown.
+     * Constructs the Content Model with the specified id. The datastreams are instantiated and retrieved if the related
+     * getter is called.
+     *
+     * @param id The ID of the Content Model.
+     * @throws WebserverSystemException   If an error occurs.
+     * @throws FedoraSystemException      If an error occurs accessing Fedora.
+     * @throws TripleStoreSystemException If an error occurs accessing the triplestore.
+     * @throws IntegritySystemException   Thrown if there is an integrity error with the addressed object.
+     * @throws StreamNotFoundException    If a specific datastream can not be found.
+     * @throws ResourceNotFoundException  If an object with the specified ID can not be found. If there is such an
+     *                                    object but this object is no Content Model a ContentModelNotFoundException is
+     *                                    thrown.
      */
-    public ContentModel(final String id) throws TripleStoreSystemException,
-        WebserverSystemException, IntegritySystemException,
-        FedoraSystemException, StreamNotFoundException,
-        ResourceNotFoundException {
+    public ContentModel(final String id) throws TripleStoreSystemException, WebserverSystemException,
+        IntegritySystemException, FedoraSystemException, StreamNotFoundException, ResourceNotFoundException {
         super(id);
         setPropertiesNames(expandPropertiesNames(getPropertiesNames()),
             expandPropertiesNamesMapping(getPropertiesNamesMapping()));
@@ -127,18 +113,14 @@ public class ContentModel extends GenericVersionableResourcePid
 
     /**
      * See Interface for functional description.
-     * 
+     *
      * @return resource properties.
-     * 
-     * @throws TripleStoreSystemException
-     *             Thrown if TripleStore request failed.
-     * @throws WebserverSystemException
-     *             Thrown in case of internal failure.
+     * @throws TripleStoreSystemException Thrown if TripleStore request failed.
+     * @throws WebserverSystemException   Thrown in case of internal failure.
      * @see GenericResource#getResourceProperties()
      */
     @Override
-    public Map<String, String> getResourceProperties()
-        throws TripleStoreSystemException, WebserverSystemException {
+    public Map<String, String> getResourceProperties() throws TripleStoreSystemException, WebserverSystemException {
 
         if (!this.resourceInit) {
             super.getResourceProperties();
@@ -156,8 +138,7 @@ public class ContentModel extends GenericVersionableResourcePid
         return super.getResourceProperties();
     }
 
-    private Map<String, String> getDublinCorePropertiesMap()
-        throws XmlParserSystemException {
+    private Map<String, String> getDublinCorePropertiesMap() throws XmlParserSystemException {
 
         // parse version-history
         final StaxParser sp = new StaxParser();
@@ -172,8 +153,7 @@ public class ContentModel extends GenericVersionableResourcePid
         return dch.getPropertiesMap();
     }
 
-    public Datastream getDc() throws FedoraSystemException,
-        WebserverSystemException {
+    public Datastream getDc() throws FedoraSystemException, WebserverSystemException {
 
         if (this.dc == null) {
             final Datastream ds;
@@ -190,8 +170,7 @@ public class ContentModel extends GenericVersionableResourcePid
         return this.dc;
     }
 
-    public void setDc(final Datastream ds) throws FedoraSystemException,
-        WebserverSystemException {
+    public void setDc(final Datastream ds) throws FedoraSystemException, WebserverSystemException {
         final Datastream curDs = getDc();
         if (!ds.equals(curDs)) {
             this.dc = ds;
@@ -200,10 +179,9 @@ public class ContentModel extends GenericVersionableResourcePid
     }
 
     /**
-     * Returns a Map containing all content streams of this content model. The
-     * names of the content streams are the keys in the map. The map is
-     * initialized creating this object.
-     * 
+     * Returns a Map containing all content streams of this content model. The names of the content streams are the keys
+     * in the map. The map is initialized creating this object.
+     *
      * @return The content streams of this content model.
      */
     public Map<String, Datastream> getContentStreams() {
@@ -212,10 +190,8 @@ public class ContentModel extends GenericVersionableResourcePid
 
     /**
      * Returns the specified content stream of this content model.
-     * 
-     * @param name
-     *            The name of the content stream.
-     * 
+     *
+     * @param name The name of the content stream.
      * @return The specified content stream of this content model.
      */
     public Datastream getContentStream(final String name) {
@@ -224,10 +200,8 @@ public class ContentModel extends GenericVersionableResourcePid
 
     /**
      * Returns the specified other stream of this content model.
-     * 
-     * @param name
-     *            The name of the content stream.
-     * 
+     *
+     * @param name The name of the content stream.
      * @return The specified content stream of this content model.
      */
     public Datastream getOtherStream(final String name) {
@@ -235,29 +209,19 @@ public class ContentModel extends GenericVersionableResourcePid
     }
 
     /**
-     * Init all content model datastreams. Some are initilized by super classes.
-     * (This is faster than init of each single data stream).
-     * 
-     * @param datastreamInfos
-     *            The Fedora datastream information.
-     * 
-     * @throws WebserverSystemException
-     *             If an error occurs.
-     * @throws FedoraSystemException
-     *             If an error occurs accessing Fedora.
-     * @throws TripleStoreSystemException
-     *             If an error occurs accessing the triplestore.
-     * @throws IntegritySystemException
-     *             Thrown if there is an integrity error with the addressed
-     *             object.
-     * @throws StreamNotFoundException
-     *             If a specific datastream can not be found.
+     * Init all content model datastreams. Some are initilized by super classes. (This is faster than init of each
+     * single data stream).
+     *
+     * @param datastreamInfos The Fedora datastream information.
+     * @throws WebserverSystemException   If an error occurs.
+     * @throws FedoraSystemException      If an error occurs accessing Fedora.
+     * @throws TripleStoreSystemException If an error occurs accessing the triplestore.
+     * @throws IntegritySystemException   Thrown if there is an integrity error with the addressed object.
+     * @throws StreamNotFoundException    If a specific datastream can not be found.
      */
     @Override
-    protected final void initDatastreams(
-            final org.fcrepo.server.types.gen.Datastream[] datastreamInfos)
-        throws WebserverSystemException, FedoraSystemException,
-        TripleStoreSystemException, IntegritySystemException,
+    protected final void initDatastreams(final org.fcrepo.server.types.gen.Datastream[] datastreamInfos)
+        throws WebserverSystemException, FedoraSystemException, TripleStoreSystemException, IntegritySystemException,
         StreamNotFoundException {
 
         super.initDatastreams(datastreamInfos);
@@ -266,8 +230,7 @@ public class ContentModel extends GenericVersionableResourcePid
             final List<String> altIDs = Arrays.asList(datastreamInfo.getAltIDs());
             final String name = datastreamInfo.getID();
             final String label = datastreamInfo.getLabel();
-            final DatastreamControlGroup controlGroup =
-                    datastreamInfo.getControlGroup();
+            final DatastreamControlGroup controlGroup = datastreamInfo.getControlGroup();
             final String controlGroupValue = controlGroup.getValue();
             final String mimeType = datastreamInfo.getMIMEType();
             final String location = datastreamInfo.getLocation();
@@ -275,29 +238,25 @@ public class ContentModel extends GenericVersionableResourcePid
             final Datastream ds;
             if (altIDs.contains("content-stream")) {
                 // found content-stream
-                ds =
-                        new Datastream(name, getId(), getVersionDate(), mimeType,
-                                location, controlGroupValue);
+                ds = new Datastream(name, getId(), getVersionDate(), mimeType, location, controlGroupValue);
                 ds.setAlternateIDs(new ArrayList<String>(altIDs));
                 ds.setLabel(label);
                 this.contentStreams.put(name, ds);
-            } else if (name.equals(DATASTREAM_DS_COMPOSITE_MODEL)) {
-                ds =
-                        new Datastream(name, getId(), getVersionDate(), mimeType,
-                                location, controlGroupValue);
+            }
+            else if (name.equals(DATASTREAM_DS_COMPOSITE_MODEL)) {
+                ds = new Datastream(name, getId(), getVersionDate(), mimeType, location, controlGroupValue);
                 ds.setAlternateIDs(new ArrayList<String>(altIDs));
                 ds.setLabel(label);
                 this.dsCompositeModel = ds;
-            } else if (!(name.equals(Datastream.RELS_EXT_DATASTREAM)
-                    || "DC".equals(name) || name.equals(DATASTREAM_WOV))) {
-                ds =
-                        new Datastream(name, getId(), getVersionDate(), mimeType,
-                                location, controlGroupValue);
+            }
+            else if (!(name.equals(Datastream.RELS_EXT_DATASTREAM) || "DC".equals(name) || name.equals(DATASTREAM_WOV))) {
+                ds = new Datastream(name, getId(), getVersionDate(), mimeType, location, controlGroupValue);
                 ds.setAlternateIDs(new ArrayList<String>(altIDs));
                 ds.setLabel(label);
                 this.otherStreams.put(name, ds);
-            } else {
-                if(LOGGER.isDebugEnabled()) {
+            }
+            else {
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Datastream " + getId() + '/' + name + " not instanziated in ContentModel.<init>.");
                 }
             }
@@ -305,19 +264,17 @@ public class ContentModel extends GenericVersionableResourcePid
     }
 
     /**
-     * Expand a list with names of properties values with the propertiesNames
-     * for a versionized resource. These list could be used to request the
-     * TripleStore.
-     * 
-     * @param propertiesNames
-     *            Collection of propertiesNames. The collection contains only
-     *            the version resource specific propertiesNames.
+     * Expand a list with names of properties values with the propertiesNames for a versionized resource. These list
+     * could be used to request the TripleStore.
+     *
+     * @param propertiesNames Collection of propertiesNames. The collection contains only the version resource specific
+     *                        propertiesNames.
      * @return Parameter name collection
      */
     private static Collection<String> expandPropertiesNames(final Collection<String> propertiesNames) {
 
         final Collection<String> newPropertiesNames =
-                propertiesNames != null ? propertiesNames : new ArrayList<String>();
+            propertiesNames != null ? propertiesNames : new ArrayList<String>();
 
         newPropertiesNames.add(TripleStoreUtility.PROP_CONTENT_CATEGORY);
         newPropertiesNames.add(TripleStoreUtility.PROP_DESCRIPTION);
@@ -327,13 +284,11 @@ public class ContentModel extends GenericVersionableResourcePid
 
     /**
      * Expanding the properties naming map.
-     * 
-     * @param propertiesMapping
-     *            The properties name mapping from external as key and the
-     *            internal name as value. E.g. with the key "version-status" and
-     *            "LATEST_VERSION_STATUS" as value is the value of
-     *            "versin-status" after the mapping accessible with the internal
-     *            key "LATEST_VERSION_STATUS".
+     *
+     * @param propertiesMapping The properties name mapping from external as key and the internal name as value. E.g.
+     *                          with the key "version-status" and "LATEST_VERSION_STATUS" as value is the value of
+     *                          "versin-status" after the mapping accessible with the internal key
+     *                          "LATEST_VERSION_STATUS".
      * @return The key mapping.
      */
     private static Map<String, String> expandPropertiesNamesMapping(final Map<String, String> propertiesMapping) {
@@ -342,42 +297,33 @@ public class ContentModel extends GenericVersionableResourcePid
         newPropertiesNames = propertiesMapping != null ? propertiesMapping : new HashMap<String, String>();
         newPropertiesNames.put(TripleStoreUtility.PROP_CONTENT_CATEGORY,
             PropertyMapKeys.LATEST_VERSION_CONTENT_CATEGORY);
-        newPropertiesNames.put(TripleStoreUtility.PROP_DESCRIPTION,
-            PropertyMapKeys.LATEST_VERSION_DESCRIPTION);
+        newPropertiesNames.put(TripleStoreUtility.PROP_DESCRIPTION, PropertyMapKeys.LATEST_VERSION_DESCRIPTION);
 
         return newPropertiesNames;
     }
 
     /**
      * Determines if the resource is in Public Status "withdrawn".
-     * 
+     *
      * @return True if the resource is in status withdrawn. False otherwise.
-     * 
-     * @throws TripleStoreSystemException
-     *             If an error occurs accessing the triplestore.
-     * @throws WebserverSystemException
-     *             If an error occurs.
+     * @throws TripleStoreSystemException If an error occurs accessing the triplestore.
+     * @throws WebserverSystemException   If an error occurs.
      */
-    public boolean isWithdrawn() throws TripleStoreSystemException,
-        WebserverSystemException {
+    public boolean isWithdrawn() throws TripleStoreSystemException, WebserverSystemException {
 
         final String status = this.getProperty(PropertyMapKeys.PUBLIC_STATUS);
         return status.equals(Constants.STATUS_WITHDRAWN);
     }
 
     /**
-     * Determines if the resource is in Public Status "released". That means it
-     * is once released but not necessarily the latest version is released.
-     * 
+     * Determines if the resource is in Public Status "released". That means it is once released but not necessarily the
+     * latest version is released.
+     *
      * @return True if the resource is in status released. False otherwise.
-     * 
-     * @throws TripleStoreSystemException
-     *             If an error occurs accessing the triplestore.
-     * @throws WebserverSystemException
-     *             If an error occurs.
+     * @throws TripleStoreSystemException If an error occurs accessing the triplestore.
+     * @throws WebserverSystemException   If an error occurs.
      */
-    public boolean isReleased() throws TripleStoreSystemException,
-        WebserverSystemException {
+    public boolean isReleased() throws TripleStoreSystemException, WebserverSystemException {
 
         final String status = this.getProperty(PropertyMapKeys.PUBLIC_STATUS);
         return status.equals(Constants.STATUS_RELEASED);
@@ -385,16 +331,12 @@ public class ContentModel extends GenericVersionableResourcePid
 
     /**
      * Determines if the resource is in Public Status "pending".
-     * 
+     *
      * @return True if the resource is in status pending. False otherwise.
-     * 
-     * @throws TripleStoreSystemException
-     *             If an error occurs accessing the triplestore.
-     * @throws WebserverSystemException
-     *             If an error occurs.
+     * @throws TripleStoreSystemException If an error occurs accessing the triplestore.
+     * @throws WebserverSystemException   If an error occurs.
      */
-    public boolean isPending() throws TripleStoreSystemException,
-        WebserverSystemException {
+    public boolean isPending() throws TripleStoreSystemException, WebserverSystemException {
 
         final String status = this.getProperty(PropertyMapKeys.PUBLIC_STATUS);
         return status.equals(Constants.STATUS_PENDING);
@@ -402,23 +344,18 @@ public class ContentModel extends GenericVersionableResourcePid
 
     /**
      * Determines if the resource is in Public Status "in-revision".
-     * 
+     *
      * @return True if the resource is in status in-revision. False otherwise.
-     * 
-     * @throws TripleStoreSystemException
-     *             If an error occurs accessing the triplestore.
-     * @throws WebserverSystemException
-     *             If an error occurs.
+     * @throws TripleStoreSystemException If an error occurs accessing the triplestore.
+     * @throws WebserverSystemException   If an error occurs.
      */
-    public boolean isInRevision() throws TripleStoreSystemException,
-        WebserverSystemException {
+    public boolean isInRevision() throws TripleStoreSystemException, WebserverSystemException {
 
         final String status = this.getProperty(PropertyMapKeys.PUBLIC_STATUS);
         return status.equals(Constants.STATUS_IN_REVISION);
     }
 
-    public List<DsTypeModel> getMdRecordDefinitionIDs()
-        throws IntegritySystemException, WebserverSystemException {
+    public List<DsTypeModel> getMdRecordDefinitionIDs() throws IntegritySystemException, WebserverSystemException {
 
         final StaxParser sp = new StaxParser();
         final DsCompositeModelHandler dcmh = new DsCompositeModelHandler(sp);
@@ -441,24 +378,20 @@ public class ContentModel extends GenericVersionableResourcePid
             throw e;
         }
         catch (final RuntimeException e) {
-            throw new WebserverSystemException(
-                "Unexpected exception parsing datastream DS-COMPOSITE-MODEL.",
-                e);
-        } catch (final Exception e) {
-            throw new WebserverSystemException(
-                "Unexpected exception parsing datastream DS-COMPOSITE-MODEL.",
-                e);
+            throw new WebserverSystemException("Unexpected exception parsing datastream DS-COMPOSITE-MODEL.", e);
+        }
+        catch (final Exception e) {
+            throw new WebserverSystemException("Unexpected exception parsing datastream DS-COMPOSITE-MODEL.", e);
         }
 
         return dcmh.getDsTypeModels();
     }
 
-    public Map<String, ResourceDefinitionCreate> getResourceDefinitions()
-        throws WebserverSystemException, IntegritySystemException {
+    public Map<String, ResourceDefinitionCreate> getResourceDefinitions() throws WebserverSystemException,
+        IntegritySystemException {
 
         if (this.resourceDefinitions == null) {
-            this.resourceDefinitions =
-                new HashMap<String, ResourceDefinitionCreate>();
+            this.resourceDefinitions = new HashMap<String, ResourceDefinitionCreate>();
 
             // get list of service references
             final Map<String, String> services;
@@ -468,25 +401,21 @@ public class ContentModel extends GenericVersionableResourcePid
                 services = this.getResourceProperties(pl);
             }
             catch (final TripleStoreSystemException e) {
-                throw new WebserverSystemException(
-                    "Can not access triplestore.", e);
+                throw new WebserverSystemException("Can not access triplestore.", e);
             }
 
             for (final Entry<String, String> entry : services.entrySet()) {
-                final String serviceName =
-                        entry.getValue().substring(
-                                entry.getValue().lastIndexOf('-') + 1);
-                final ResourceDefinitionCreate resourceDef =
-                        new ResourceDefinitionCreate();
+                final String serviceName = entry.getValue().substring(entry.getValue().lastIndexOf('-') + 1);
+                final ResourceDefinitionCreate resourceDef = new ResourceDefinitionCreate();
                 try {
                     resourceDef.setName(serviceName);
                     // FIXME retrieve md-record
                     resourceDef.setMdRecordName("escdioc");
                     // FIXME create correct href?
                     // resourceDef.setXsltHref("");
-                } catch (final MissingAttributeValueException e) {
-                    throw new IntegritySystemException(
-                            "Service ID but no name.", e);
+                }
+                catch (final MissingAttributeValueException e) {
+                    throw new IntegritySystemException("Service ID but no name.", e);
                 }
                 this.resourceDefinitions.put(serviceName, resourceDef);
             }
@@ -499,13 +428,11 @@ public class ContentModel extends GenericVersionableResourcePid
         return this.dsCompositeModel;
     }
 
-    public void setDsCompositeModel(final String xml)
-        throws WebserverSystemException {
+    public void setDsCompositeModel(final String xml) throws WebserverSystemException {
 
         try {
             final Datastream ds =
-                new Datastream("DS-COMPOSITE-MODEL", getId(),
-                    xml.getBytes(XmlUtility.CHARACTER_ENCODING), "text/xml");
+                new Datastream("DS-COMPOSITE-MODEL", getId(), xml.getBytes(XmlUtility.CHARACTER_ENCODING), "text/xml");
             setDsCompositeModel(ds);
         }
         catch (final UnsupportedEncodingException e) {
@@ -521,14 +448,12 @@ public class ContentModel extends GenericVersionableResourcePid
         }
     }
 
-    public void setContentStreams(
-        final Map<String, Datastream> contentStreamDatastreams)
-        throws FedoraSystemException, WebserverSystemException {
+    public void setContentStreams(final Map<String, Datastream> contentStreamDatastreams) throws FedoraSystemException,
+        WebserverSystemException {
 
         final Set<String> namesInFedora = getContentStreams().keySet();
 
-        final Iterator<Entry<String, Datastream>> nameIt =
-            contentStreamDatastreams.entrySet().iterator();
+        final Iterator<Entry<String, Datastream>> nameIt = contentStreamDatastreams.entrySet().iterator();
         // create/activate data streams which are in contentStreamDatastreams
         // but not in fedora
         // TODO: Check wether contentStreamDatastreams is used outside of this
@@ -556,8 +481,8 @@ public class ContentModel extends GenericVersionableResourcePid
         }
     }
 
-    public void setContentStream(final String name, final Datastream ds)
-        throws WebserverSystemException, FedoraSystemException {
+    public void setContentStream(final String name, final Datastream ds) throws WebserverSystemException,
+        FedoraSystemException {
         // don't trust the handler
         final List<String> alternateIDs = new ArrayList<String>();
         alternateIDs.add("content-stream");
@@ -569,15 +494,14 @@ public class ContentModel extends GenericVersionableResourcePid
         this.contentStreams.put(name, ds);
     }
 
-    public void setOtherStream(final String name, final Datastream ds)
-        throws WebserverSystemException, FedoraSystemException {
+    public void setOtherStream(final String name, final Datastream ds) throws WebserverSystemException,
+        FedoraSystemException {
         final Datastream curDs = getOtherStream(name);
         setStream(name, ds, curDs);
         this.otherStreams.put(name, ds);
     }
 
-    private void setStream(
-        final String name, final Datastream ds, final Datastream curDs)
+    private void setStream(final String name, final Datastream ds, final Datastream curDs)
         throws WebserverSystemException, FedoraSystemException {
         try {
 
@@ -592,19 +516,18 @@ public class ContentModel extends GenericVersionableResourcePid
                 try {
                     if (ds.getLocation() != null
                         && !ds.getLocation().equals(curDs.getLocation())
-                        && !(ds.getLocation().startsWith(
-                            "/cmm/content-model/" + getId()) || ds
+                        && !(ds.getLocation().startsWith("/cmm/content-model/" + getId()) || ds
                             .getLocation().startsWith(
-                                EscidocConfiguration.getInstance().get(
-                                    EscidocConfiguration.ESCIDOC_CORE_BASEURL)
+                                EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_BASEURL)
                                     + "/cmm/content-model/" + getId()))) {
                         contentChanged = true;
                     }
                     else {
                         ds.setContentUnchanged(true);
                     }
-                    if (!curDs.getControlGroup().equals(ds.getControlGroup()) || !curDs.getMimeType().equals(ds.getMimeType()) || ds.getLabel() != null && curDs.getLabel() != null
-                            && !curDs.getLabel().equals(ds.getLabel()) || !ds.equals(curDs)) {
+                    if (!curDs.getControlGroup().equals(ds.getControlGroup())
+                        || !curDs.getMimeType().equals(ds.getMimeType()) || ds.getLabel() != null
+                        && curDs.getLabel() != null && !curDs.getLabel().equals(ds.getLabel()) || !ds.equals(curDs)) {
                         contentChanged = true;
                     }
                 }
@@ -621,10 +544,10 @@ public class ContentModel extends GenericVersionableResourcePid
             }
         }
         catch (final FedoraSystemException e) {
-            if(LOGGER.isWarnEnabled()) {
+            if (LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on setting stream.");
             }
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on setting stream.", e);
             }
             // this is not an update; its a create
@@ -635,19 +558,14 @@ public class ContentModel extends GenericVersionableResourcePid
 
     /**
      * Persists the whole object to Fedora and force the TripleStore sync.
-     * 
-     * @return lastModificationDate of the resource (Attention this timestamp
-     *         differs from the last-modification timestamp of the repository.
-     *         See Versioning Concept.)
-     * 
-     * @throws FedoraSystemException
-     *             Thrown if connection to Fedora failed.
-     * @throws WebserverSystemException
-     *             Thrown in case of internal error.
+     *
+     * @return lastModificationDate of the resource (Attention this timestamp differs from the last-modification
+     *         timestamp of the repository. See Versioning Concept.)
+     * @throws FedoraSystemException    Thrown if connection to Fedora failed.
+     * @throws WebserverSystemException Thrown in case of internal error.
      */
     @Override
-    public String persist() throws FedoraSystemException,
-        WebserverSystemException {
+    public String persist() throws FedoraSystemException, WebserverSystemException {
 
         if (this.isNeedSync()) {
             persistDsCompositeModel();
@@ -656,8 +574,7 @@ public class ContentModel extends GenericVersionableResourcePid
         return persist(true);
     }
 
-    private String persistDsCompositeModel() throws FedoraSystemException,
-        WebserverSystemException {
+    private String persistDsCompositeModel() throws FedoraSystemException, WebserverSystemException {
 
         String timestamp = null;
         if (this.dsCompositeModel != null) {

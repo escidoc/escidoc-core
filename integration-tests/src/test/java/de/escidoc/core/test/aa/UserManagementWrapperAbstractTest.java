@@ -41,9 +41,8 @@ import static org.junit.Assert.assertNotNull;
 
 /**
  * Test suite for the user management wrapper.
- * 
+ *
  * @author Torsten Tetteroo
- * 
  */
 public class UserManagementWrapperAbstractTest extends UserManagementWrapperTestBase {
 
@@ -55,11 +54,9 @@ public class UserManagementWrapperAbstractTest extends UserManagementWrapperTest
 
     /**
      * The constructor.
-     * 
-     * @param transport
-     *            The transport identifier.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param transport The transport identifier.
+     * @throws Exception If anything fails.
      */
     public UserManagementWrapperAbstractTest(final int transport) throws Exception {
 
@@ -68,9 +65,8 @@ public class UserManagementWrapperAbstractTest extends UserManagementWrapperTest
 
     /**
      * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Before
     public void initialize() throws Exception {
@@ -78,9 +74,8 @@ public class UserManagementWrapperAbstractTest extends UserManagementWrapperTest
 
     /**
      * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @After
     public void deinitialize() throws Exception {
@@ -88,20 +83,8 @@ public class UserManagementWrapperAbstractTest extends UserManagementWrapperTest
 
     /**
      * Test login.
-     * 
-     * @test.name Login
-     * @test.id AA_Login
-     * @test.input
-     *          <ul>
-     *          <li>Valid name and password</li>
-     *          <li>Valid target URL</li>
-     *          </ul>
-     * @test.expected: Login successful, user account retrievable using the user
-     *                 handle.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testLogin() throws Exception {
@@ -125,20 +108,8 @@ public class UserManagementWrapperAbstractTest extends UserManagementWrapperTest
 
     /**
      * Test login with providing target URL parameter that contains slashes.
-     * 
-     * @test.name Login - Target Url Parameter With Slashes.
-     * @test.id AA_Login-2
-     * @test.input
-     *          <ul>
-     *          <li>Valid name and password</li>
-     *          <li>Valid target URL parameter that contains slashes</li>
-     *          </ul>
-     * @test.expected: Login successful, user account retrievable using the user
-     *                 handle.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testLogin2() throws Exception {
@@ -162,20 +133,8 @@ public class UserManagementWrapperAbstractTest extends UserManagementWrapperTest
 
     /**
      * Test multiple login.
-     * 
-     * @test.name Login - Multiple
-     * @test.id AA_MultipleLogin
-     * @test.input
-     *          <ul>
-     *          <li>Valid name and password</li>
-     *          </ul>
-     * @test.expected: Login successful, user account retrievable using the user
-     *                 handles, both handle returns the same user account xml
-     *                 representation.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testMultipleLogin() throws Exception {
@@ -197,8 +156,7 @@ public class UserManagementWrapperAbstractTest extends UserManagementWrapperTest
             EscidocRestSoapTestBase.failException(e);
         }
         assertNotNull(eSciDocUserHandle2);
-        assertNotEquals("Handles of different logins do not differ.",
-            eSciDocUserHandle1, eSciDocUserHandle2);
+        assertNotEquals("Handles of different logins do not differ.", eSciDocUserHandle1, eSciDocUserHandle2);
 
         String xml1 = null;
         try {
@@ -223,18 +181,8 @@ public class UserManagementWrapperAbstractTest extends UserManagementWrapperTest
 
     /**
      * Test logout.
-     * 
-     * @test.name Logout Authenticated User
-     * @test.id AA_Logout
-     * @test.input
-     *          <ul>
-     *          <li>Valid eSciDoc user handle</li>
-     *          </ul>
-     * @test.expected: Logout page is presented, no redirect occurs.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testLogout() throws Exception {
@@ -258,32 +206,17 @@ public class UserManagementWrapperAbstractTest extends UserManagementWrapperTest
         try {
             PWCallback.setHandle(eSciDocUserHandle);
             retrieve(eSciDocUserHandle);
-            EscidocRestSoapTestBase
-                .failMissingException(AuthenticationException.class);
+            EscidocRestSoapTestBase.failMissingException(AuthenticationException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                AuthenticationException.class, e);
+            EscidocRestSoapTestBase.assertExceptionType(AuthenticationException.class, e);
         }
     }
 
     /**
-     * Test logout with providing valid eSciDoc user handle and redirect target
-     * URL.
-     * 
-     * @test.name Logout Authenticated User - Target Url
-     * @test.id AA_Logout-2
-     * @test.input
-     *          <ul>
-     *          <li>Valid eSciDoc user handle</li>
-     *          <li>TargetUrl for redirect of the user after logout.</li>
-     *          </ul>
-     * @test.expected: Redirect to targetUrl occurs, logout page as message.
-     * @test.status Implemented
-     * @test.issue http://www.escidoc-project.de/issueManagement/show_bug.cgi?id=561
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test logout with providing valid eSciDoc user handle and redirect target URL.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testLogout2() throws Exception {
@@ -307,33 +240,17 @@ public class UserManagementWrapperAbstractTest extends UserManagementWrapperTest
         try {
             PWCallback.setHandle(eSciDocUserHandle);
             retrieve(eSciDocUserHandle);
-            EscidocRestSoapTestBase
-                .failMissingException(AuthenticationException.class);
+            EscidocRestSoapTestBase.failMissingException(AuthenticationException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                AuthenticationException.class, e);
+            EscidocRestSoapTestBase.assertExceptionType(AuthenticationException.class, e);
         }
     }
 
     /**
-     * Test logout with providing valid eSciDoc user handle and redirect target
-     * URL that contains slashes.
-     * 
-     * @test.name Logout Authenticated User - Target Url Parameter With Slashes
-     * @test.id AA_Logout-3
-     * @test.input
-     *          <ul>
-     *          <li>Valid eSciDoc user handle</li>
-     *          <li>TargetUrl for redirect of the user after logout. The
-     *          provided targetUrl parameter contains slashes.</li>
-     *          </ul>
-     * @test.expected: Redirect to targetUrl occurs, logout page as message.
-     * @test.status Implemented
-     * @test.issue http://www.escidoc-project.de/issueManagement/show_bug.cgi?id=561
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test logout with providing valid eSciDoc user handle and redirect target URL that contains slashes.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testLogout3() throws Exception {
@@ -357,31 +274,17 @@ public class UserManagementWrapperAbstractTest extends UserManagementWrapperTest
         try {
             PWCallback.setHandle(eSciDocUserHandle);
             retrieve(eSciDocUserHandle);
-            EscidocRestSoapTestBase
-                .failMissingException(AuthenticationException.class);
+            EscidocRestSoapTestBase.failMissingException(AuthenticationException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                AuthenticationException.class, e);
+            EscidocRestSoapTestBase.assertExceptionType(AuthenticationException.class, e);
         }
     }
 
     /**
      * Test logout a multiple logged in user.
-     * 
-     * @test.name Logout - Multiple Logged In User
-     * @test.id AA_LogoutMultipleLoggedInUser
-     * @test.input
-     *          <ul>
-     *          <li>Valid eScidoc user handle of user with more than one valid
-     *          handle.</li>
-     *          </ul>
-     * @test.expected: Logout successful, user account retrievable using the
-     *                 still valid user handle, not retrievable using the
-     *                 "logged-out" handle.
-     * @test.status Implemented
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testLogoutMultipleLoggedInUser() throws Exception {
@@ -403,8 +306,7 @@ public class UserManagementWrapperAbstractTest extends UserManagementWrapperTest
             EscidocRestSoapTestBase.failException(e);
         }
         assertNotNull(eSciDocUserHandle2);
-        assertNotEquals("Handles of different logins do not differ.",
-            eSciDocUserHandle1, eSciDocUserHandle2);
+        assertNotEquals("Handles of different logins do not differ.", eSciDocUserHandle1, eSciDocUserHandle2);
 
         try {
             logout(eSciDocUserHandle1);
@@ -425,30 +327,17 @@ public class UserManagementWrapperAbstractTest extends UserManagementWrapperTest
         try {
             PWCallback.setHandle(eSciDocUserHandle1);
             retrieve(eSciDocUserHandle1);
-            EscidocRestSoapTestBase
-                .failMissingException(AuthenticationException.class);
+            EscidocRestSoapTestBase.failMissingException(AuthenticationException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                AuthenticationException.class, e);
+            EscidocRestSoapTestBase.assertExceptionType(AuthenticationException.class, e);
         }
     }
 
     /**
      * Test logout with providing unknown eSciDoc user handle.
-     * 
-     * @test.name Logout Not Authenticated User
-     * @test.id AA_LogoutNotAuthenticatedUser
-     * @test.input
-     *          <ul>
-     *          <li>Unknown eSciDoc user handle</li>
-     *          </ul>
-     * @test.expected: Logout page is presented to the user, no redirect occurs.
-     * @test.status Implemented
-     * @test.issue http://www.escidoc-project.de/issueManagement/show_bug.cgi?id=561
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testLogoutNotAuthenticatedUser() throws Exception {
@@ -462,22 +351,9 @@ public class UserManagementWrapperAbstractTest extends UserManagementWrapperTest
     }
 
     /**
-     * Test logout with providing unknown eSciDoc user handle and redirect
-     * target URL.
-     * 
-     * @test.name Logout Not Authenticated User - Target Url
-     * @test.id AA_LogoutNotAuthenticatedUser-2
-     * @test.input
-     *          <ul>
-     *          <li>Unknown eSciDoc user handle</li>
-     *          <li>TargetUrl for redirect of the user after logout.</li>
-     *          </ul>
-     * @test.expected: Redirect to targetUrl occurs, logout page as message.
-     * @test.status Implemented
-     * @test.issue http://www.escidoc-project.de/issueManagement/show_bug.cgi?id=561
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test logout with providing unknown eSciDoc user handle and redirect target URL.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testLogoutNotAuthenticatedUser2() throws Exception {
@@ -493,19 +369,8 @@ public class UserManagementWrapperAbstractTest extends UserManagementWrapperTest
 
     /**
      * Test logout without providing an eSciDoc user handle.
-     * 
-     * @test.name Logout - No cookie
-     * @test.id AA_LogoutNoCookie
-     * @test.input
-     *          <ul>
-     *          <li>No eSciDoc user handle is provided in a cookie</li>
-     *          </ul>
-     * @test.expected: Logout page is presented to the user, no redirect occurs.
-     * @test.status Implemented
-     * @test.issue http://www.escidoc-project.de/issueManagement/show_bug.cgi?id=561
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testLogoutNoCookie() throws Exception {
@@ -519,22 +384,9 @@ public class UserManagementWrapperAbstractTest extends UserManagementWrapperTest
     }
 
     /**
-     * Test logout without providing an eSciDoc user handle but providing a
-     * redirect target URL.
-     * 
-     * @test.name Logout - Target Url, No Cookie
-     * @test.id AA_LogoutNoCookie-2
-     * @test.input
-     *          <ul>
-     *          <li>No eSciDoc user handle is provided in a cookie</li>
-     *          <li>TargetUrl for redirect of the user after logout.</li>
-     *          </ul>
-     * @test.expected: Redirect to targetUrl occurs, logout page as message.
-     * @test.status Implemented
-     * @test.issue http://www.escidoc-project.de/issueManagement/show_bug.cgi?id=561
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test logout without providing an eSciDoc user handle but providing a redirect target URL.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testLogoutNoCookie2() throws Exception {

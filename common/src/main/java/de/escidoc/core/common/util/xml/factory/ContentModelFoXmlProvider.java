@@ -32,97 +32,83 @@ public final class ContentModelFoXmlProvider extends InfrastructureFoXmlProvider
 
     private static final String DS_COMPOSITE_RESOURCE_NAME = "dsCompositeModel";
 
-    private static final String SERVICE_DEFINITION_RESOURCE_NAME =
-        "service-definition-xslt-md";
+    private static final String SERVICE_DEFINITION_RESOURCE_NAME = "service-definition-xslt-md";
 
-    private static final String SERVICE_DEPLOYMENT_RESOURCE_NAME =
-        "service-deployment-xslt-md";
+    private static final String SERVICE_DEPLOYMENT_RESOURCE_NAME = "service-deployment-xslt-md";
 
-    private static final String CONTENT_MODEL_RELS_EXT_PATH =
-        CONTENT_MODEL_PATH;
+    private static final String CONTENT_MODEL_RELS_EXT_PATH = CONTENT_MODEL_PATH;
 
     private static final String RELS_EXT_RESOURCE_NAME = "rels-ext";
-
 
     private static final ContentModelFoXmlProvider PROVIDER = new ContentModelFoXmlProvider();
 
     /**
      * Private constructor to prevent initialization.
-     *
      */
     private ContentModelFoXmlProvider() {
     }
 
     /**
      * Gets the role xml PROVIDER.
-     * 
-     * @return Returns the <code>UserAccountXmlProvider</code> object.
      *
+     * @return Returns the <code>UserAccountXmlProvider</code> object.
      */
     public static ContentModelFoXmlProvider getInstance() {
         return PROVIDER;
     }
 
     /**
-     * 
+     *
      * @param values
      * @return
      * @throws WebserverSystemException
      */
-    public String getContentModelFoXml(final Map values)
-        throws WebserverSystemException {
+    public String getContentModelFoXml(final Map values) throws WebserverSystemException {
 
         return getXml(CONTENT_MODEL_RESOURCE_NAME, CONTENT_MODEL_PATH, values);
     }
 
     /**
-     * 
+     *
      * @param values
      * @return
      * @throws WebserverSystemException
      */
-    public String getContentModelDsComposite(final Map values)
-        throws WebserverSystemException {
+    public String getContentModelDsComposite(final Map values) throws WebserverSystemException {
 
         return getXml(DS_COMPOSITE_RESOURCE_NAME, CONTENT_MODEL_PATH, values);
     }
 
     /**
-     * 
+     *
      * @param values
      * @return
      * @throws WebserverSystemException
      */
-    public String getServiceDefinitionFoXml(final Map values)
-        throws WebserverSystemException {
+    public String getServiceDefinitionFoXml(final Map values) throws WebserverSystemException {
 
-        return getXml(SERVICE_DEFINITION_RESOURCE_NAME, CONTENT_MODEL_PATH,
-            values);
+        return getXml(SERVICE_DEFINITION_RESOURCE_NAME, CONTENT_MODEL_PATH, values);
     }
 
     /**
-     * 
+     *
      * @param values
      * @return
      * @throws WebserverSystemException
      */
-    public String getServiceDeploymentFoXml(final Map values)
-        throws WebserverSystemException {
+    public String getServiceDeploymentFoXml(final Map values) throws WebserverSystemException {
 
-        return getXml(SERVICE_DEPLOYMENT_RESOURCE_NAME, CONTENT_MODEL_PATH,
-            values);
+        return getXml(SERVICE_DEPLOYMENT_RESOURCE_NAME, CONTENT_MODEL_PATH, values);
     }
 
     /**
-     * 
+     *
      * @param values
      * @return
      * @throws WebserverSystemException
      */
-    public String getContentModelRelsExt(final Map values)
-        throws WebserverSystemException {
+    public String getContentModelRelsExt(final Map values) throws WebserverSystemException {
 
-        return getXml(RELS_EXT_RESOURCE_NAME, CONTENT_MODEL_RELS_EXT_PATH,
-            values);
+        return getXml(RELS_EXT_RESOURCE_NAME, CONTENT_MODEL_RELS_EXT_PATH, values);
     }
 }

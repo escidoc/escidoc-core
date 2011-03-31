@@ -31,39 +31,25 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class VelocityXmlCommonFoXmlRenderer {
+
     /**
      * See Interface for functional description.
-     * 
-     * @param id
-     * @param title
-     * @param versionNo
-     * @param lastModificationDate
-     * @param versionStatus
-     * @param validStatus
-     * @param comment
-     * @param baseUrl
-     * @return
-     * @throws WebserverSystemException
-     *             cf. Interface
-     * @see de.escidoc.core.om.business.renderer.interfaces.ContainerFoXmlRendererInterface#renderWov(String,
-     *      String, String, String,
-     *      String, String, String)
+     *
+     * @throws WebserverSystemException cf. Interface
+     * @see de.escidoc.core.om.business.renderer.interfaces.ContainerFoXmlRendererInterface#renderWov(String, String,
+     *      String, String, String, String, String)
      */
     public String renderWov(
-        final String id, final String title, final String versionNo,
-        final String lastModificationDate, final String versionStatus,
-        final String comment, final String baseUrl)
-        throws WebserverSystemException {
+        final String id, final String title, final String versionNo, final String lastModificationDate,
+        final String versionStatus, final String comment, final String baseUrl) throws WebserverSystemException {
 
         final String currentUserId = Utility.getCurrentUser()[0];
         final String currentUserName = Utility.getCurrentUser()[1];
 
         final Map<String, String> values = new HashMap<String, String>();
 
-        values.put(XmlTemplateProvider.VAR_NAMESPACE_PREFIX,
-            Constants.WOV_NAMESPACE_PREFIX);
-        values.put(XmlTemplateProvider.VAR_NAMESPACE,
-            Constants.WOV_NAMESPACE_URI);
+        values.put(XmlTemplateProvider.VAR_NAMESPACE_PREFIX, Constants.WOV_NAMESPACE_PREFIX);
+        values.put(XmlTemplateProvider.VAR_NAMESPACE, Constants.WOV_NAMESPACE_URI);
         // expand the objid to escidoc:123:1 for version no 1
         if ("1".equals(versionNo)) {
             values.put(XmlTemplateProvider.OBJID, id + ":1");
@@ -81,23 +67,15 @@ public class VelocityXmlCommonFoXmlRenderer {
         // AGENT_TITLE AGENT_BASE_URI AGENT_ID_VALUE AGENT_ID_TYPE
         // AGENT_ID_VALUE
         values.put(XmlTemplateProvider.VAR_AGENT_ID_VALUE, currentUserId);
-        values.put(XmlTemplateProvider.VAR_AGENT_ID_TYPE,
-            Constants.PREMIS_ID_TYPE_ESCIDOC);
-        values.put(XmlTemplateProvider.VAR_AGENT_BASE_URI,
-            Constants.USER_ACCOUNT_URL_BASE);
+        values.put(XmlTemplateProvider.VAR_AGENT_ID_TYPE, Constants.PREMIS_ID_TYPE_ESCIDOC);
+        values.put(XmlTemplateProvider.VAR_AGENT_BASE_URI, Constants.USER_ACCOUNT_URL_BASE);
         values.put(XmlTemplateProvider.VAR_AGENT_TITLE, currentUserName);
         // EVENT_XMLID EVENT_ID_TYPE EVENT_ID_VALUE
-        values.put(XmlTemplateProvider.VAR_EVENT_XMLID,
-            "v1e" + System.currentTimeMillis());
-        values.put(
-            XmlTemplateProvider.VAR_EVENT_ID_VALUE,
-            Constants.CONTAINER_URL_BASE + id + "/resources/"
-                + Elements.ELEMENT_WOV_VERSION_HISTORY + '#'
-                + values.get(XmlTemplateProvider.VAR_EVENT_XMLID));
-        values.put(XmlTemplateProvider.VAR_EVENT_ID_TYPE,
-            Constants.PREMIS_ID_TYPE_URL_RELATIVE);
-        values.put(XmlTemplateProvider.VAR_OBJECT_ID_TYPE,
-            Constants.PREMIS_ID_TYPE_ESCIDOC);
+        values.put(XmlTemplateProvider.VAR_EVENT_XMLID, "v1e" + System.currentTimeMillis());
+        values.put(XmlTemplateProvider.VAR_EVENT_ID_VALUE, Constants.CONTAINER_URL_BASE + id + "/resources/"
+            + Elements.ELEMENT_WOV_VERSION_HISTORY + '#' + values.get(XmlTemplateProvider.VAR_EVENT_XMLID));
+        values.put(XmlTemplateProvider.VAR_EVENT_ID_TYPE, Constants.PREMIS_ID_TYPE_URL_RELATIVE);
+        values.put(XmlTemplateProvider.VAR_OBJECT_ID_TYPE, Constants.PREMIS_ID_TYPE_ESCIDOC);
         values.put(XmlTemplateProvider.VAR_OBJECT_ID_VALUE, id);
         return CommonFoXmlProvider.getInstance().getWov(values);
     }

@@ -37,15 +37,13 @@ import java.util.Map;
 
 /**
  * Base class for Scope tests.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 public class ScopeTestBase extends SmTestBase {
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ScopeTestBase(final int transport) {
         super(transport);
@@ -53,12 +51,10 @@ public class ScopeTestBase extends SmTestBase {
 
     /**
      * Test creating a Scope.
-     * 
-     * @param dataXml
-     *            The xml representation of the Scope.
+     *
+     * @param dataXml The xml representation of the Scope.
      * @return The created Scope.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     @Override
     public String create(final String dataXml) throws Exception {
@@ -68,7 +64,7 @@ public class ScopeTestBase extends SmTestBase {
         if (result instanceof HttpResponse) {
             HttpResponse httpRes = (HttpResponse) result;
             xmlResult = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
-            assertHttpStatusOfMethod("", httpRes);         
+            assertHttpStatusOfMethod("", httpRes);
         }
         else if (result instanceof String) {
             xmlResult = (String) result;
@@ -78,11 +74,9 @@ public class ScopeTestBase extends SmTestBase {
 
     /**
      * Test deleting an Scope from the mock framework.
-     * 
-     * @param id
-     *            The id of the Scope.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param id The id of the Scope.
+     * @throws Exception If anything fails.
      */
     @Override
     public void delete(final String id) throws Exception {
@@ -96,14 +90,11 @@ public class ScopeTestBase extends SmTestBase {
 
     /**
      * Test updating an Scope of the mock framework.
-     * 
-     * @param id
-     *            The id of the Scope.
-     * @param xml
-     *            The xml representation of the Scope.
+     *
+     * @param id  The id of the Scope.
+     * @param xml The xml representation of the Scope.
      * @return The updated Scope.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     @Override
     public String update(final String id, final String xml) throws Exception {
@@ -125,12 +116,10 @@ public class ScopeTestBase extends SmTestBase {
 
     /**
      * Test retrieving an Scope from the mock framework.
-     * 
-     * @param id
-     *            The id of the Scope.
+     *
+     * @param id The id of the Scope.
      * @return The retrieved Scope.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     @Override
     public String retrieve(final String id) throws Exception {
@@ -141,7 +130,8 @@ public class ScopeTestBase extends SmTestBase {
             HttpResponse httpRes = (HttpResponse) result;
             assertHttpStatusOfMethod("", httpRes);
             xmlResult = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
-        }        else if (result instanceof String) {
+        }
+        else if (result instanceof String) {
             xmlResult = (String) result;
         }
         return xmlResult;
@@ -149,15 +139,13 @@ public class ScopeTestBase extends SmTestBase {
 
     /**
      * Test retrieving the list of all scopes from the mock framework.
-     * 
+     *
      * @return The retrieved scopes as xml.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     public String retrieveScopes() throws Exception {
 
-        Object result =
-            getScopeClient().retrieveScopes(new HashMap<String, String[]>());
+        Object result = getScopeClient().retrieveScopes(new HashMap<String, String[]>());
         String xmlResult = null;
         if (result instanceof HttpResponse) {
             HttpResponse httpRes = (HttpResponse) result;
@@ -172,16 +160,12 @@ public class ScopeTestBase extends SmTestBase {
 
     /**
      * Test retrieving the list of scopes from the mock framework.
-     * 
-     * @param filter
-     *            filter as CQL query
-     * 
+     *
+     * @param filter filter as CQL query
      * @return The retrieved scopes as XML.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    public String retrieveScopes(final Map<String, String[]> filter)
-        throws Exception {
+    public String retrieveScopes(final Map<String, String[]> filter) throws Exception {
 
         Object result = getScopeClient().retrieveScopes(filter);
         String xmlResult = null;

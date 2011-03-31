@@ -23,12 +23,10 @@ package de.escidoc.core.common.exceptions.application.notfound;
 import de.escidoc.core.common.exceptions.application.ApplicationException;
 
 /**
- * Main-Class for Exceptions that are thrown because a resource with a given
- * parameter was not found in the system. returned httpStatusCode is 404. Status
- * code (404) indicating that the requested resource is not available.
- * 
+ * Main-Class for Exceptions that are thrown because a resource with a given parameter was not found in the system.
+ * returned httpStatusCode is 404. Status code (404) indicating that the requested resource is not available.
+ *
  * @author Michael Hoppe (FIZ Karlsruhe)
- * 
  */
 public class ResourceNotFoundException extends ApplicationException {
 
@@ -43,22 +41,17 @@ public class ResourceNotFoundException extends ApplicationException {
 
     /**
      * Default constructor.
-     * 
-     *
      */
     public ResourceNotFoundException() {
         super(HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 
     /**
-     * Constructor used to create a new Exception with the specified detail
-     * message and a mapping to an initial exception.
-     * 
-     * @param message -
-     *            the detail message.
-     * @param cause
-     *            Throwable
+     * Constructor used to create a new Exception with the specified detail message and a mapping to an initial
+     * exception.
      *
+     * @param message - the detail message.
+     * @param cause   Throwable
      */
     public ResourceNotFoundException(final String message, final Throwable cause) {
         super(message, cause, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -66,10 +59,8 @@ public class ResourceNotFoundException extends ApplicationException {
 
     /**
      * Constructs a new exception with the specified detail message.
-     * 
-     * @param message -
-     *            the detail message.
      *
+     * @param message - the detail message.
      */
     public ResourceNotFoundException(final String message) {
         super(message, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -77,10 +68,8 @@ public class ResourceNotFoundException extends ApplicationException {
 
     /**
      * Constructor used to map an initial exception.
-     * 
-     * @param cause
-     *            Throwable
      *
+     * @param cause Throwable
      */
     public ResourceNotFoundException(final Throwable cause) {
         super(cause, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -88,67 +77,47 @@ public class ResourceNotFoundException extends ApplicationException {
 
     /**
      * Default constructor.
-     * 
-     * @param httpStatusCode
-     *            the http status code
-     * @param httpStatusMsg
-     *            the http status message
      *
+     * @param httpStatusCode the http status code
+     * @param httpStatusMsg  the http status message
      */
-    public ResourceNotFoundException(final int httpStatusCode,
-        final String httpStatusMsg) {
+    public ResourceNotFoundException(final int httpStatusCode, final String httpStatusMsg) {
         super(httpStatusCode, httpStatusMsg);
     }
 
     /**
-     * Constructor used to create a new Exception with the specified detail
-     * message and a mapping to an initial exception.
-     * 
-     * @param message
-     *            the detail message.
-     * @param cause
-     *            Throwable
-     * @param httpStatusCode
-     *            the http status code
-     * @param httpStatusMsg
-     *            the http status message
+     * Constructor used to create a new Exception with the specified detail message and a mapping to an initial
+     * exception.
      *
+     * @param message        the detail message.
+     * @param cause          Throwable
+     * @param httpStatusCode the http status code
+     * @param httpStatusMsg  the http status message
      */
-    public ResourceNotFoundException(final String message,
-        final Throwable cause, final int httpStatusCode,
+    public ResourceNotFoundException(final String message, final Throwable cause, final int httpStatusCode,
         final String httpStatusMsg) {
         super(message, cause, httpStatusCode, httpStatusMsg);
     }
 
     /**
      * Constructs a new exception with the specified detail message.
-     * 
-     * @param message
-     *            the detail message.
-     * @param httpStatusCode
-     *            the http status code
-     * @param httpStatusMsg
-     *            the http status message
      *
+     * @param message        the detail message.
+     * @param httpStatusCode the http status code
+     * @param httpStatusMsg  the http status message
      */
-    public ResourceNotFoundException(final String message,
-        final int httpStatusCode, final String httpStatusMsg) {
+    public ResourceNotFoundException(final String message, final int httpStatusCode, final String httpStatusMsg) {
         super(message, httpStatusCode, httpStatusMsg);
     }
 
     /**
      * Constructor used to map an initial exception.
-     * 
-     * @param cause
-     *            Throwable
-     * @param httpStatusCode
-     *            the http status code
-     * @param httpStatusMsg
-     *            the http status message
      *
+     * @param cause          Throwable
+     * @param httpStatusCode the http status code
+     * @param httpStatusMsg  the http status message
      */
-    public ResourceNotFoundException(final Throwable cause,
-        final int httpStatusCode, final String httpStatusMsg) {
+    public ResourceNotFoundException(final Throwable cause, final int httpStatusCode, final String httpStatusMsg) {
         super(cause, httpStatusCode, httpStatusMsg);
     }
 

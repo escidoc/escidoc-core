@@ -35,18 +35,16 @@ import org.junit.runners.JUnit4;
 
 /**
  * Test suite for the policy decision point using the REST interface.
- * 
+ *
  * @author Torsten Tetteroo
- * 
  */
 @RunWith(JUnit4.class)
 public class PdpRestTest extends PdpAbstractTest {
 
     /**
      * Constructor.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     public PdpRestTest() throws Exception {
 

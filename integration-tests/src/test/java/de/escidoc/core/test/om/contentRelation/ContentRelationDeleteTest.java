@@ -38,16 +38,14 @@ import static org.junit.Assert.fail;
 
 /**
  * Test content relation delete implementation.
- * 
+ *
  * @author Steffen Wagner
- * 
  */
 @RunWith(value = Parameterized.class)
 public class ContentRelationDeleteTest extends ContentRelationTestBase {
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ContentRelationDeleteTest(final int transport) {
         super(transport);
@@ -55,15 +53,13 @@ public class ContentRelationDeleteTest extends ContentRelationTestBase {
 
     /**
      * Test deleting content relation.
-     * 
-     * @throws Exception
-     *             Thrown if deleting failed.
+     *
+     * @throws Exception Thrown if deleting failed.
      */
     @Test
     public void testDelete01() throws Exception {
 
-        String contentRelationXml =
-            getExampleTemplate("content-relation-01.xml");
+        String contentRelationXml = getExampleTemplate("content-relation-01.xml");
         String xml = create(contentRelationXml);
         String relationId = getObjidValue(xml);
 
@@ -75,8 +71,7 @@ public class ContentRelationDeleteTest extends ContentRelationTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = ContentRelationNotFoundException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
     }
 }

@@ -47,9 +47,8 @@ import static org.junit.Assert.fail;
 
 /**
  * Test the implementation of the ReportDefinition resource.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 @RunWith(value = Parameterized.class)
 public class ReportDefinitionTest extends ReportDefinitionTestBase {
@@ -69,12 +68,10 @@ public class ReportDefinitionTest extends ReportDefinitionTestBase {
 
     private static int methodCounter = 0;
 
-    public static final String XPATH_SRW_REP_DEF_LIST_REP_DEF =
-        XPATH_SRW_RESPONSE_OBJECT + NAME_REP_DEF;
-    
+    public static final String XPATH_SRW_REP_DEF_LIST_REP_DEF = XPATH_SRW_RESPONSE_OBJECT + NAME_REP_DEF;
+
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ReportDefinitionTest(final int transport) {
         super(transport);
@@ -82,9 +79,8 @@ public class ReportDefinitionTest extends ReportDefinitionTestBase {
 
     /**
      * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Before
     public void initialize() throws Exception {
@@ -98,9 +94,8 @@ public class ReportDefinitionTest extends ReportDefinitionTestBase {
 
     /**
      * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @After
     public void deinitialize() throws Exception {
@@ -110,32 +105,26 @@ public class ReportDefinitionTest extends ReportDefinitionTestBase {
             deleteReportDefinition();
             deleteScopes();
         }
-   }
+    }
 
     /**
      * Creates scope for tests.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     private void createScopes() throws Exception {
-        String xml =
-            getTemplateAsFixedScopeString(
-                    TEMPLATE_SCOPE_PATH, "escidoc_scope1.xml");
+        String xml = getTemplateAsFixedScopeString(TEMPLATE_SCOPE_PATH, "escidoc_scope1.xml");
         String result = scope.create(xml);
         scopeId = getPrimKey(result);
-        xml =
-            getTemplateAsFixedScopeString(
-                    TEMPLATE_SCOPE_PATH, "escidoc_scope_admin.xml");
+        xml = getTemplateAsFixedScopeString(TEMPLATE_SCOPE_PATH, "escidoc_scope_admin.xml");
         result = scope.create(xml);
         adminScopeId = getPrimKey(result);
     }
 
     /**
      * delete scope to clean database.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     public void deleteScopes() throws Exception {
         scope.delete(scopeId.toString());
@@ -144,15 +133,11 @@ public class ReportDefinitionTest extends ReportDefinitionTestBase {
 
     /**
      * create report-definition.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     public void createReportDefinition() throws Exception {
-        String xml =
-            getTemplateAsFixedReportDefinitionString(
-                    TEMPLATE_REP_DEF_PATH,
-                "escidoc_report_definition1.xml");
+        String xml = getTemplateAsFixedReportDefinitionString(TEMPLATE_REP_DEF_PATH, "escidoc_report_definition1.xml");
         try {
             String result = create(xml);
             assertXmlValidReportDefinition(result);
@@ -165,9 +150,8 @@ public class ReportDefinitionTest extends ReportDefinitionTestBase {
 
     /**
      * delete report-definition.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     public void deleteReportDefinition() throws Exception {
         for (String primKey : primKeys) {
@@ -177,22 +161,19 @@ public class ReportDefinitionTest extends ReportDefinitionTestBase {
 
     /**
      * retrieve report-definition.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSMRD1() throws Exception {
-        String result =
-            retrieve(primKeys.iterator().next());
+        String result = retrieve(primKeys.iterator().next());
         assertXmlValidReportDefinition(result);
     }
 
     /**
      * retrieve report-definition with invalid id.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSMRD2() throws Exception {
@@ -209,33 +190,26 @@ public class ReportDefinitionTest extends ReportDefinitionTestBase {
 
     /**
      * update report-definition.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSMRD3() throws Exception {
-        String xml =
-            getTemplateAsFixedReportDefinitionString(TEMPLATE_REP_DEF_PATH,
-                "escidoc_report_definition2.xml");
-        xml =
-            replacePrimKey(xml, primKeys.iterator().next());
-        String response =
-            update(primKeys.iterator().next(), xml);
+        String xml = getTemplateAsFixedReportDefinitionString(TEMPLATE_REP_DEF_PATH, "escidoc_report_definition2.xml");
+        xml = replacePrimKey(xml, primKeys.iterator().next());
+        String response = update(primKeys.iterator().next(), xml);
         assertXmlValidReportDefinition(response);
     }
 
     /**
      * create report-definition with invalid xml.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSMRD4() throws Exception {
         String xml =
-            getTemplateAsFixedReportDefinitionString(TEMPLATE_REP_DEF_PATH,
-                "escidoc_report_definition_invalid.xml");
+            getTemplateAsFixedReportDefinitionString(TEMPLATE_REP_DEF_PATH, "escidoc_report_definition_invalid.xml");
         try {
             create(xml);
             fail("No exception occured on create with invalid xml.");
@@ -249,15 +223,12 @@ public class ReportDefinitionTest extends ReportDefinitionTestBase {
 
     /**
      * create report-definition with sql that writes data.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSMRD4_1() throws Exception {
-        String xml =
-            getTemplateAsFixedReportDefinitionString(TEMPLATE_REP_DEF_PATH,
-                "escidoc_report_definition3.xml");
+        String xml = getTemplateAsFixedReportDefinitionString(TEMPLATE_REP_DEF_PATH, "escidoc_report_definition3.xml");
         try {
             create(xml);
             fail("No exception occured on create with invalid xml.");
@@ -271,15 +242,12 @@ public class ReportDefinitionTest extends ReportDefinitionTestBase {
 
     /**
      * update with wrong primkey.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSMRD5() throws Exception {
-        String xml =
-            getTemplateAsFixedReportDefinitionString(TEMPLATE_REP_DEF_PATH,
-                "escidoc_report_definition1.xml");
+        String xml = getTemplateAsFixedReportDefinitionString(TEMPLATE_REP_DEF_PATH, "escidoc_report_definition1.xml");
         try {
             update("99999", xml);
             fail("No exception occured on update with wrong primkey.");
@@ -293,15 +261,12 @@ public class ReportDefinitionTest extends ReportDefinitionTestBase {
 
     /**
      * create with wrong namespace-prefix.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSMRD6() throws Exception {
-        String xml =
-            getTemplateAsFixedReportDefinitionString(TEMPLATE_REP_DEF_PATH,
-                "escidoc_report_definition7.xml");
+        String xml = getTemplateAsFixedReportDefinitionString(TEMPLATE_REP_DEF_PATH, "escidoc_report_definition7.xml");
         try {
             create(xml);
             fail("No exception occured on create with wrong namespace-prefix.");
@@ -315,32 +280,25 @@ public class ReportDefinitionTest extends ReportDefinitionTestBase {
 
     /**
      * create correct namespace-prefix.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSMRD7() throws Exception {
-        String xml =
-            getTemplateAsFixedReportDefinitionString(TEMPLATE_REP_DEF_PATH,
-                "escidoc_report_definition8.xml");
+        String xml = getTemplateAsFixedReportDefinitionString(TEMPLATE_REP_DEF_PATH, "escidoc_report_definition8.xml");
         String result = create(xml);
         primKeys.add(getPrimKey(result));
         assertXmlValidReportDefinition(result);
     }
 
     /**
-     * create with admin-scope
-     * and aggregation-tables from different scopes.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * create with admin-scope and aggregation-tables from different scopes.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSMRD8() throws Exception {
-        String xml =
-            getTemplateAsFixedReportDefinitionString(TEMPLATE_REP_DEF_PATH,
-                "escidoc_report_definition10.xml");
+        String xml = getTemplateAsFixedReportDefinitionString(TEMPLATE_REP_DEF_PATH, "escidoc_report_definition10.xml");
         xml = replaceElementPrimKey(xml, "scope", adminScopeId.toString());
         String result = create(xml);
         primKeys.add(getPrimKey(result));
@@ -348,17 +306,13 @@ public class ReportDefinitionTest extends ReportDefinitionTestBase {
     }
 
     /**
-     * create with normal-scope
-     * and aggregation-tables from different scopes.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * create with normal-scope and aggregation-tables from different scopes.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSMRD9() throws Exception {
-        String xml =
-            getTemplateAsFixedReportDefinitionString(TEMPLATE_REP_DEF_PATH,
-                "escidoc_report_definition10.xml");
+        String xml = getTemplateAsFixedReportDefinitionString(TEMPLATE_REP_DEF_PATH, "escidoc_report_definition10.xml");
         xml = replaceElementPrimKey(xml, "scope", scopeId.toString());
         try {
             create(xml);
@@ -373,15 +327,12 @@ public class ReportDefinitionTest extends ReportDefinitionTestBase {
 
     /**
      * create with id-attribute.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSMRD10() throws Exception {
-        String xml =
-            getTemplateAsFixedReportDefinitionString(TEMPLATE_REP_DEF_PATH,
-                "escidoc_report_definition9.xml");
+        String xml = getTemplateAsFixedReportDefinitionString(TEMPLATE_REP_DEF_PATH, "escidoc_report_definition9.xml");
         String result = create(xml);
         String primKey = getPrimKey(result);
         primKeys.add(primKey);
@@ -391,15 +342,12 @@ public class ReportDefinitionTest extends ReportDefinitionTestBase {
 
     /**
      * create with wrong scope.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSMRD11() throws Exception {
-        String xml =
-            getTemplateAsFixedReportDefinitionString(TEMPLATE_REP_DEF_PATH,
-                "escidoc_report_definition11.xml");
+        String xml = getTemplateAsFixedReportDefinitionString(TEMPLATE_REP_DEF_PATH, "escidoc_report_definition11.xml");
         try {
             create(xml);
             fail("No exception occured on create with wrong scope.");
@@ -413,15 +361,12 @@ public class ReportDefinitionTest extends ReportDefinitionTestBase {
 
     /**
      * create with wrong sql.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSMRD12() throws Exception {
-        String xml =
-            getTemplateAsFixedReportDefinitionString(TEMPLATE_REP_DEF_PATH,
-                "escidoc_report_definition12.xml");
+        String xml = getTemplateAsFixedReportDefinitionString(TEMPLATE_REP_DEF_PATH, "escidoc_report_definition12.xml");
         try {
             create(xml);
             fail("No exception occured on create with wrong scope.");
@@ -435,15 +380,12 @@ public class ReportDefinitionTest extends ReportDefinitionTestBase {
 
     /**
      * create with correct sql with placeholders.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSMRD13() throws Exception {
-        String xml =
-            getTemplateAsFixedReportDefinitionString(TEMPLATE_REP_DEF_PATH,
-                "escidoc_report_definition13.xml");
+        String xml = getTemplateAsFixedReportDefinitionString(TEMPLATE_REP_DEF_PATH, "escidoc_report_definition13.xml");
         String result = create(xml);
         String primKey = getPrimKey(result);
         primKeys.add(primKey);
@@ -452,9 +394,8 @@ public class ReportDefinitionTest extends ReportDefinitionTestBase {
 
     /**
      * retrieve list of all report-definitions.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSMRD14() throws Exception {
@@ -464,91 +405,66 @@ public class ReportDefinitionTest extends ReportDefinitionTestBase {
 
     /**
      * retrieve a report definition identified by id.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSMRD15() throws Exception {
         final String ID = "escidoc:repdef1";
-        final Map <String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(EscidocRestSoapTestBase.FILTER_PARAMETER_QUERY,
-            new String[] {
-            "\"" + EscidocRestSoapTestBase.FILTER_IDENTIFIER + "\"=" + ID});
+        filterParams.put(EscidocRestSoapTestBase.FILTER_PARAMETER_QUERY, new String[] { "\""
+            + EscidocRestSoapTestBase.FILTER_IDENTIFIER + "\"=" + ID });
 
         String result = retrieveReportDefinitions(filterParams);
 
         assertXmlValidSrwResponse(result);
 
-        Document retrievedDocument =
-            EscidocRestSoapTestBase.getDocument(result);
+        Document retrievedDocument = EscidocRestSoapTestBase.getDocument(result);
         NodeList reportDefinitionNodes =
-            selectNodeList(retrievedDocument,
-                XPATH_SRW_REPOR_DEFINITION_LIST_REPOR_DEFINITION);
-        assertEquals("Unexpected number of report definitions.", 1,
-            reportDefinitionNodes.getLength());
-        assertXmlExists("Missing report definition with id " + ID,
-            retrievedDocument, XPATH_SRW_REPOR_DEFINITION_LIST_REPOR_DEFINITION
-                + "[@objid='" + ID 
-                + "' or @href='/statistic/report-definition/" 
-                + ID + "']");
+            selectNodeList(retrievedDocument, XPATH_SRW_REPOR_DEFINITION_LIST_REPOR_DEFINITION);
+        assertEquals("Unexpected number of report definitions.", 1, reportDefinitionNodes.getLength());
+        assertXmlExists("Missing report definition with id " + ID, retrievedDocument,
+            XPATH_SRW_REPOR_DEFINITION_LIST_REPOR_DEFINITION + "[@objid='" + ID
+                + "' or @href='/statistic/report-definition/" + ID + "']");
     }
 
     /**
      * retrieve a report definition identified by name.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSMRD16() throws Exception {
         final String NAME = "Item retrievals, all users";
-        final Map <String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(EscidocRestSoapTestBase.FILTER_PARAMETER_QUERY,
-            new String[] {
-            "\"" + EscidocRestSoapTestBase.FILTER_NAME + "\"=\"" + NAME + "\""});
+        filterParams.put(EscidocRestSoapTestBase.FILTER_PARAMETER_QUERY, new String[] { "\""
+            + EscidocRestSoapTestBase.FILTER_NAME + "\"=\"" + NAME + "\"" });
 
         String result = retrieveReportDefinitions(filterParams);
 
         assertXmlValidSrwResponse(result);
 
-        Document retrievedDocument =
-            EscidocRestSoapTestBase.getDocument(result);
+        Document retrievedDocument = EscidocRestSoapTestBase.getDocument(result);
         NodeList reportDefinitionNodes =
-            selectNodeList(retrievedDocument,
-                XPATH_SRW_REPOR_DEFINITION_LIST_REPOR_DEFINITION);
-        assertEquals("Unexpected number of report definitions.", 1,
-            reportDefinitionNodes.getLength());
-        assertXmlExists("Missing report definition with name " + NAME,
-            retrievedDocument, XPATH_SRW_REPOR_DEFINITION_LIST_REPOR_DEFINITION
-                + "[name='" + NAME + "']");
+            selectNodeList(retrievedDocument, XPATH_SRW_REPOR_DEFINITION_LIST_REPOR_DEFINITION);
+        assertEquals("Unexpected number of report definitions.", 1, reportDefinitionNodes.getLength());
+        assertXmlExists("Missing report definition with name " + NAME, retrievedDocument,
+            XPATH_SRW_REPOR_DEFINITION_LIST_REPOR_DEFINITION + "[name='" + NAME + "']");
     }
 
     /**
-     * Test successful retrieving a list of existing 
-     * ReportDefinitions resources.
-     * Test if maximumRecords=0 delivers 0 Roles
-     * 
-     * @test.name Retrieve ReportDefinitions - Success.
-     * @test.id emptyFilterZeroMaximumRecords
-     * @test.input Valid filter criteria.
-     * @test.expected: XML representation of the list of ReportDefinitions
-     *                 containing 0 ReportDefinitions.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test successful retrieving a list of existing ReportDefinitions resources. Test if maximumRecords=0 delivers 0
+     * Roles
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void emptyFilterZeroMaximumRecords() throws Exception {
 
-        final Map <String, String[]> filterParams =
-            new HashMap<String, String[]>();
-            filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] {"0"});
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "0" });
 
         String result = null;
 
@@ -556,41 +472,28 @@ public class ReportDefinitionTest extends ReportDefinitionTestBase {
             result = retrieveReportDefinitions(filterParams);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Retrieving of list of ReportDefinitions failed. ", e);
+            EscidocRestSoapTestBase.failException("Retrieving of list of ReportDefinitions failed. ", e);
         }
 
         assertXmlValidSrwResponse(result);
-        Document retrievedDocument =
-            EscidocRestSoapTestBase.getDocument(result);
-        NodeList resultNodes =
-            selectNodeList(retrievedDocument,
-                XPATH_SRW_REP_DEF_LIST_REP_DEF);
+        Document retrievedDocument = EscidocRestSoapTestBase.getDocument(result);
+        NodeList resultNodes = selectNodeList(retrievedDocument, XPATH_SRW_REP_DEF_LIST_REP_DEF);
         final int totalRecordsWithZeroMaximum = resultNodes.getLength();
-        
-        assertEquals("Unexpected number of records.", 
-            totalRecordsWithZeroMaximum, 0);
+
+        assertEquals("Unexpected number of records.", totalRecordsWithZeroMaximum, 0);
 
     }
 
     /**
      * Test successfully retrieving an explain response.
-     * 
-     * @test.name explainTest
-     * @test.id explainTest
-     * @test.input
-     * @test.expected: valid explain response.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void explainTest() throws Exception {
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(EscidocRestSoapTestBase.FILTER_PARAMETER_EXPLAIN,
-            new String[] {""});
+        filterParams.put(EscidocRestSoapTestBase.FILTER_PARAMETER_EXPLAIN, new String[] { "" });
 
         String result = null;
 
@@ -600,6 +503,6 @@ public class ReportDefinitionTest extends ReportDefinitionTestBase {
         catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
-        assertXmlValidSrwResponse(result);        
+        assertXmlValidSrwResponse(result);
     }
 }

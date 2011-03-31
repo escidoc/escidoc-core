@@ -11,17 +11,15 @@ import java.util.Iterator;
 
 /**
  * Cleans up the login data by removing expired eSciDoc user handles.
- * 
- * @author Torsten Tetteroo
  *
+ * @author Torsten Tetteroo
  */
 public class UserHandleCleaner {
-    private static final Logger LOGGER =
-        LoggerFactory.getLogger(UserHandleCleaner.class);
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserHandleCleaner.class);
 
     /**
-     * Offset added to user handle expire time stamp before removing them to
-     * avoid removing of currently used handles.
+     * Offset added to user handle expire time stamp before removing them to avoid removing of currently used handles.
      */
     private static final long EXPIRY_OFFSET = 500000L;
 
@@ -31,25 +29,22 @@ public class UserHandleCleaner {
     private UserAccountDaoInterface userAccountDao;
 
     /**
-     * Cleans up the login data, i.e. removes each eSciDoc user handle that has
-     * been expired a while ago.
-     * 
-     *
+     * Cleans up the login data, i.e. removes each eSciDoc user handle that has been expired a while ago.
      */
     public void cleanUp() {
-        if(LOGGER.isDebugEnabled()) {
+        if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Cleaning up the staging file area");
         }
         final Iterator<UserLoginData> expiredLoginDatas;
         try {
             expiredLoginDatas =
-                userAccountDao.retrieveExpiredUserLoginData(
-                    System.currentTimeMillis() - EXPIRY_OFFSET).iterator();
-        } catch (final SqlDatabaseSystemException e) {
-            if(LOGGER.isWarnEnabled()) {
+                userAccountDao.retrieveExpiredUserLoginData(System.currentTimeMillis() - EXPIRY_OFFSET).iterator();
+        }
+        catch (final SqlDatabaseSystemException e) {
+            if (LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on retriving expired user login data.");
             }
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on retriving expired user login data.", e);
             }
             return;
@@ -59,13 +54,14 @@ public class UserHandleCleaner {
             final UserLoginData loginData = expiredLoginDatas.next();
             try {
                 userAccountDao.delete(loginData);
-            } catch (final SqlDatabaseSystemException e) {
-                final String message = StringUtility.format("Removing login data failed", loginData.getHandle(),
-                        e.getClass().getName());
-                if(LOGGER.isWarnEnabled()) {
+            }
+            catch (final SqlDatabaseSystemException e) {
+                final String message =
+                    StringUtility.format("Removing login data failed", loginData.getHandle(), e.getClass().getName());
+                if (LOGGER.isWarnEnabled()) {
                     LOGGER.warn(message);
                 }
-                if(LOGGER.isDebugEnabled()) {
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug(message, e);
                 }
             }
@@ -74,13 +70,10 @@ public class UserHandleCleaner {
 
     /**
      * Setting the stagingFileDao.
-     * 
-     * @param userAccountDao
-     *            The {@link UserAccountDaoInterface} to set.
      *
+     * @param userAccountDao The {@link UserAccountDaoInterface} to set.
      */
-    public final void setUserAccountDao(
-        final UserAccountDaoInterface userAccountDao) {
+    public final void setUserAccountDao(final UserAccountDaoInterface userAccountDao) {
 
         this.userAccountDao = userAccountDao;
     }

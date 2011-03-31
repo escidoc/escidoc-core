@@ -38,7 +38,7 @@ import java.util.regex.Pattern;
 
 /**
  * This is a helper class to convert a XACML condition into an SQL fragment.
- * 
+ *
  * @author André Schenk
  */
 public class ConditionParser {
@@ -49,10 +49,8 @@ public class ConditionParser {
 
     /**
      * Extract the attribute name from a function URI.
-     * 
-     * @param function
-     *            function URI
-     * 
+     *
+     * @param function function URI
      * @return the last part of the URI path
      */
     private static String getAttribute(final String function) {
@@ -72,6 +70,7 @@ public class ConditionParser {
      * Inner class that stores a tuple of the form (function, operand1, operand2).
      */
     private static final class Function {
+
         private final String operation;
 
         private final String operand1;
@@ -82,11 +81,10 @@ public class ConditionParser {
          * Constructor.
          *
          * @param operation operation
-         * @param operand1 first operand
-         * @param operand2 second operand
+         * @param operand1  first operand
+         * @param operand2  second operand
          */
-        private Function(final String operation, final String operand1,
-                         final String operand2) {
+        private Function(final String operation, final String operand1, final String operand2) {
             this.operation = operation;
             this.operand1 = operand1;
             this.operand2 = operand2;
@@ -98,8 +96,7 @@ public class ConditionParser {
          * @return string representation of this object
          */
         public String toString() {
-            return "[operation=" + this.operation + ", operand1=" + this.operand1
-                + ",operand2=" + this.operand2 + ']';
+            return "[operation=" + this.operation + ", operand1=" + this.operand1 + ",operand2=" + this.operand2 + ']';
         }
     }
 
@@ -107,111 +104,86 @@ public class ConditionParser {
      * Parse an Apply object.
      *
      * @param condition apply object
-     *
      * @return tuple of the form (function, operand1, operand2)
      */
     private Function parseApply(final Apply condition) {
         Function result = null;
 
         if (condition != null) {
-            final String operation =
-                condition.getFunction().getIdentifier().toString();
+            final String operation = condition.getFunction().getIdentifier().toString();
 
-            final List< ? > children = condition.getChildren();
+            final List<?> children = condition.getChildren();
 
             if (children != null) {
                 if (children.size() == 1) {
                     if (operation.equals(Values.FUNCTION_STRING_ONE_AND_ONLY)) {
                         if (children.get(0) instanceof AttributeDesignator) {
                             result =
-                                new Function(operation,
-                                    ((AttributeDesignator) children.get(0))
-                                        .getId().toString(), null);
+                                new Function(operation, ((AttributeDesignator) children.get(0)).getId().toString(),
+                                    null);
                         }
                         else {
-                            throw new IllegalArgumentException(children
-                                .get(0).getClass().getName()
+                            throw new IllegalArgumentException(children.get(0).getClass().getName()
                                 + ": unexpected operand type");
                         }
                     }
                     else {
-                        throw new IllegalArgumentException(operation
-                            + ": unexpected function");
+                        throw new IllegalArgumentException(operation + ": unexpected function");
                     }
                 }
                 else if (children.size() == 2) {
                     if (operation.equals(Values.FUNCTION_STRING_CONTAINS)) {
-                        if (children.get(0) instanceof StringAttribute
-                            && children.get(1) instanceof Apply) {
-                            final Function nestedFunction =
-                                parseApply((Apply) children.get(1));
+                        if (children.get(0) instanceof StringAttribute && children.get(1) instanceof Apply) {
+                            final Function nestedFunction = parseApply((Apply) children.get(1));
 
-                            if (nestedFunction.operation
-                                .equals(Values.FUNCTION_STRING_ONE_AND_ONLY)) {
-                                final String operand1 = values.getOperand(getAttribute(
-                                    nestedFunction.operand1));
+                            if (nestedFunction.operation.equals(Values.FUNCTION_STRING_ONE_AND_ONLY)) {
+                                final String operand1 = values.getOperand(getAttribute(nestedFunction.operand1));
 
                                 if (operand1 == null) {
-                                    throw new IllegalArgumentException(
-                                        nestedFunction.operand1
-                                            + ": unknown operand");
+                                    throw new IllegalArgumentException(nestedFunction.operand1 + ": unknown operand");
                                 }
                                 result =
-                                    new Function(operation,
-                                        parseContains(
-                                            ((StringAttribute) children.get(0))
-                                                .getValue(), operand1), null);
+                                    new Function(operation, parseContains(((StringAttribute) children.get(0))
+                                        .getValue(), operand1), null);
                             }
                             else {
-                                throw new IllegalArgumentException(
-                                    nestedFunction.operation
-                                        + ": unexpected function");
+                                throw new IllegalArgumentException(nestedFunction.operation + ": unexpected function");
                             }
                         }
                         else {
-                            throw new IllegalArgumentException(children
-                                .get(0).getClass().getName()
-                                + " or "
-                                + children.get(1).getClass().getName()
-                                + ": unexpected operand type");
+                            throw new IllegalArgumentException(children.get(0).getClass().getName() + " or "
+                                + children.get(1).getClass().getName() + ": unexpected operand type");
                         }
                     }
                     else {
                         final String operand1;
 
                         if (children.get(0) instanceof Apply) {
-                            operand1 =
-                                parseApply((Apply) children.get(0)).operand1;
+                            operand1 = parseApply((Apply) children.get(0)).operand1;
                         }
                         else if (children.get(0) instanceof StringAttribute) {
-                            operand1 =
-                                ((StringAttribute) children.get(0)).getValue();
+                            operand1 = ((StringAttribute) children.get(0)).getValue();
                         }
                         else {
-                            throw new IllegalArgumentException(children
-                                .get(0).getClass().getName()
+                            throw new IllegalArgumentException(children.get(0).getClass().getName()
                                 + ": unexpected operand type");
                         }
                         final String operand2;
                         if (children.get(1) instanceof Apply) {
-                            operand2 =
-                                parseApply((Apply) children.get(1)).operand1;
+                            operand2 = parseApply((Apply) children.get(1)).operand1;
                         }
                         else if (children.get(1) instanceof StringAttribute) {
-                            operand2 =
-                                ((StringAttribute) children.get(1)).getValue();
+                            operand2 = ((StringAttribute) children.get(1)).getValue();
                         }
                         else {
-                            throw new IllegalArgumentException(children
-                                .get(1).getClass().getName()
+                            throw new IllegalArgumentException(children.get(1).getClass().getName()
                                 + ": unexpected operand type");
                         }
                         result = new Function(operation, operand1, operand2);
                     }
                 }
                 else {
-                    throw new IllegalArgumentException("operation with "
-                        + children.size() + " operands not allowed");
+                    throw new IllegalArgumentException("operation with " + children.size() + " operands not allowed");
                 }
             }
             else {
@@ -223,10 +195,8 @@ public class ConditionParser {
 
     /**
      * Parse the given condition and convert it into SQL / Lucene.
-     * 
-     * @param condition
-     *            XACML condition
-     * 
+     *
+     * @param condition XACML condition
      * @return SQL fragment representing the XACML condition
      */
     public String parse(final Apply condition) {
@@ -239,75 +209,55 @@ public class ConditionParser {
             if (sqlFunction != null) {
                 result.append('(');
                 if (function.operation.equals(Values.FUNCTION_AND)) {
-                    result
-                        .append(values.getContainsCondition(values
-                            .getAndCondition(function.operand1,
-                                function.operand2)));
+                    result.append(values.getContainsCondition(values.getAndCondition(function.operand1,
+                        function.operand2)));
                 }
-                else if (function.operation
-                    .equals(Values.FUNCTION_STRING_CONTAINS)) {
-                    result.append(values
-                        .getContainsCondition(function.operand1));
+                else if (function.operation.equals(Values.FUNCTION_STRING_CONTAINS)) {
+                    result.append(values.getContainsCondition(function.operand1));
                 }
-                else if (function.operation
-                    .equals(Values.FUNCTION_STRING_EQUAL)) {
-                    final String operand1 =
-                        values.getOperand(getAttribute(function.operand1));
+                else if (function.operation.equals(Values.FUNCTION_STRING_EQUAL)) {
+                    final String operand1 = values.getOperand(getAttribute(function.operand1));
 
                     if (operand1 == null) {
-                        throw new IllegalArgumentException(function.operand1
-                            + ": unknown operand");
+                        throw new IllegalArgumentException(function.operand1 + ": unknown operand");
                     }
 
-                    final String operand2 =
-                        values.getOperand(getAttribute(function.operand2));
+                    final String operand2 = values.getOperand(getAttribute(function.operand2));
 
                     if (operand2 == null) {
-                        throw new IllegalArgumentException(function.operand2
-                            + ": unknown operand");
+                        throw new IllegalArgumentException(function.operand2 + ": unknown operand");
                     }
 
                     if (operand1.equals(Values.USER_ID)) {
-                        result.append(values.getEqualCondition(operand2,
-                            operand1));
+                        result.append(values.getEqualCondition(operand2, operand1));
                     }
                     else if (operand2.equals(Values.USER_ID)) {
-                        result.append(values.getEqualCondition(operand1,
-                            operand2));
+                        result.append(values.getEqualCondition(operand1, operand2));
                     }
                     else {
-                        throw new IllegalArgumentException(function
-                            + ": unknown function");
+                        throw new IllegalArgumentException(function + ": unknown function");
                     }
                 }
-                else if (function.operation
-                    .equals(Values.FUNCTION_STRING_ONE_AND_ONLY)) {
+                else if (function.operation.equals(Values.FUNCTION_STRING_ONE_AND_ONLY)) {
                     result.append(function.operand1);
                 }
                 else {
-                    throw new IllegalArgumentException(function
-                        + ": unknown function");
+                    throw new IllegalArgumentException(function + ": unknown function");
                 }
                 result.append(')');
             }
             else {
-                throw new IllegalArgumentException(function
-                    + ": unknown function");
+                throw new IllegalArgumentException(function + ": unknown function");
             }
         }
         return result.toString();
     }
 
     /**
-     * Parse the self defined function "string-contains" and create an SQL
-     * snippet from it.
-     * 
-     * @param list
-     *            list of possible values
-     * @param value
-     *            value which must match one of the values given in the above
-     *            list
-     * 
+     * Parse the self defined function "string-contains" and create an SQL snippet from it.
+     *
+     * @param list  list of possible values
+     * @param value value which must match one of the values given in the above list
      * @return SQL equivalent for that function
      */
     private String parseContains(final String list, final String value) {
@@ -315,17 +265,17 @@ public class ConditionParser {
         final String[] listValues = SPLIT_PATTERN.split(list);
 
         for (final String listvalue : listValues) {
-            result = result.length() > 0 ? values.getOrCondition(result,
-                    values.getKeyValueCondition(value, listvalue)) : values.getKeyValueCondition(value, listvalue);
+            result =
+                result.length() > 0 ? values.getOrCondition(result, values.getKeyValueCondition(value, listvalue)) : values
+                    .getKeyValueCondition(value, listvalue);
         }
         return result;
     }
 
     /**
      * Injects the filter values object.
-     * 
-     * @param values
-     *            filter values object from Spring
+     *
+     * @param values filter values object from Spring
      */
     public void setValues(final Values values) {
         this.values = values;

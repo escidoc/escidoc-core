@@ -9,6 +9,7 @@ import javax.ejb.EJBLocalHome;
 public interface PolicyDecisionPointLocalHome extends EJBLocalHome {
 
     String COMP_NAME = "java:comp/env/ejb/PolicyDecisionPointLocal";
+
     String JNDI_NAME = "ejb/PolicyDecisionPointLocal";
 
     PolicyDecisionPointLocal create() throws CreateException;

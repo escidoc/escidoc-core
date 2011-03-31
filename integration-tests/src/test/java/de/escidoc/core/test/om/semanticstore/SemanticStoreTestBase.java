@@ -33,17 +33,15 @@ import de.escidoc.core.test.om.OmTestBase;
 
 /**
  * Base class for tests of the mock implementation of the OM resources.
- * 
+ *
  * @author Michael Schneider
- * 
  */
 public class SemanticStoreTestBase extends OmTestBase {
 
     private SemanticStoreClient semanticStoreClient = null;
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public SemanticStoreTestBase(final int transport) {
         super(transport);

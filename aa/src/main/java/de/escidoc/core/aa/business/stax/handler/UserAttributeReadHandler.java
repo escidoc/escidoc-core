@@ -41,8 +41,7 @@ public class UserAttributeReadHandler extends DefaultHandler {
     private final Map<String, String> attributes = new HashMap<String, String>();
 
     @Override
-    public String characters(final String data, final StartElement element)
-        throws Exception {
+    public String characters(final String data, final StartElement element) throws Exception {
         if (element.getLocalName().equals(Elements.ELEMENT_USER_ATTRIBUTE)) {
             final String name = element.getAttributeValue(null, "name");
             this.attributes.put(name, data);

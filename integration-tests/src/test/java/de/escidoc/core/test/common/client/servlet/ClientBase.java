@@ -97,19 +97,16 @@ import static junit.framework.Assert.assertTrue;
 
 /**
  * Base class for access to the escidoc REST interface.
- * 
+ *
  * @author Michael Schneider
- * 
  */
 public abstract class ClientBase {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientBase.class);
 
-    public static final String METHOD_ADD_CONTENT_RELATIONS =
-        "addContentRelations";
+    public static final String METHOD_ADD_CONTENT_RELATIONS = "addContentRelations";
 
-    public static final String METHOD_REMOVE_CONTENT_RELATIONS =
-        "removeContentRelations";
+    public static final String METHOD_REMOVE_CONTENT_RELATIONS = "removeContentRelations";
 
     public static final String METHOD_CREATE = "create";
 
@@ -117,8 +114,7 @@ public abstract class ClientBase {
 
     public static final String METHOD_RETRIEVE = "retrieve";
 
-    public static final String METHOD_RETRIEVE_CURRENT_USER =
-        "retrieveCurrentUser";
+    public static final String METHOD_RETRIEVE_CURRENT_USER = "retrieveCurrentUser";
 
     public static final String METHOD_UPDATE = "update";
 
@@ -132,19 +128,15 @@ public abstract class ClientBase {
 
     public static final String METHOD_UPDATE_COMPONENT = "updateComponent";
 
-    public static final String METHOD_RETRIEVE_COMPONENTS =
-        "retrieveComponents";
+    public static final String METHOD_RETRIEVE_COMPONENTS = "retrieveComponents";
 
-    public static final String METHOD_RETRIEVE_COMPONENT_PROPERTIES =
-        "retrieveComponentProperties";
+    public static final String METHOD_RETRIEVE_COMPONENT_PROPERTIES = "retrieveComponentProperties";
 
     public static final String METHOD_INSERT_CONTAINERS = "insertContainers";
 
-    public static final String METHOD_RETRIEVE_CONTAINERS =
-        "retrieveContainers";
+    public static final String METHOD_RETRIEVE_CONTAINERS = "retrieveContainers";
 
-    public static final String METHOD_RETRIEVE_CONTAINER_REFS =
-        "retrieveContainerRefs";
+    public static final String METHOD_RETRIEVE_CONTAINER_REFS = "retrieveContainerRefs";
 
     public static final String METHOD_UPDATE_CONTAINERS = "updateContainers";
 
@@ -184,65 +176,49 @@ public abstract class ClientBase {
 
     public static final String METHOD_UPDATE_ITEMS = "updateItems";
 
-    public static final String METHOD_RETRIEVE_LICENSE_TYPES =
-        "retrieveLicenseTypes";
+    public static final String METHOD_RETRIEVE_LICENSE_TYPES = "retrieveLicenseTypes";
 
-    public static final String METHOD_RETRIEVE_ADMIN_DESCRIPTORS =
-        "retrieveAdminDescriptors";
+    public static final String METHOD_RETRIEVE_ADMIN_DESCRIPTORS = "retrieveAdminDescriptors";
 
     public static final String METHOD_RETRIEVE_MEMBERS = "retrieveMembers";
 
-    public static final String METHOD_RETRIEVE_MEMBER_REFS =
-        "retrieveMemberRefs";
+    public static final String METHOD_RETRIEVE_MEMBER_REFS = "retrieveMemberRefs";
 
     public static final String METHOD_RETRIEVE_MD_RECORD = "retrieveMdRecord";
 
     public static final String METHOD_UPDATE_MD_RECORD = "updateMdRecord";
 
-    public static final String METHOD_RETRIEVE_SET_DEFINITIONS =
-        "retrieveSetDefinitions";
+    public static final String METHOD_RETRIEVE_SET_DEFINITIONS = "retrieveSetDefinitions";
 
-    public static final String METHOD_RETRIEVE_ORGANIZATIONAL_UNITS =
-        "retrieveOrganizationalUnits";
+    public static final String METHOD_RETRIEVE_ORGANIZATIONAL_UNITS = "retrieveOrganizationalUnits";
 
-    public static final String METHOD_RETRIEVE_ORGANIZATIONAL_UNIT_REFS =
-        "retrieveOrganizationalUnitRefs";
+    public static final String METHOD_RETRIEVE_ORGANIZATIONAL_UNIT_REFS = "retrieveOrganizationalUnitRefs";
 
-    public static final String METHOD_RETRIEVE_ORGANIZATIONAL_UNIT_PATH_LIST =
-        "retrievePathList";
+    public static final String METHOD_RETRIEVE_ORGANIZATIONAL_UNIT_PATH_LIST = "retrievePathList";
 
-    public static final String METHOD_RETRIEVE_ORGANIZATIONAL_UNIT_SUCCESSORS =
-        "retrieveSuccessors";
+    public static final String METHOD_RETRIEVE_ORGANIZATIONAL_UNIT_SUCCESSORS = "retrieveSuccessors";
 
-    public static final String METHOD_UPDATE_ORGANIZATIONAL_UNITS =
-        "updateOrganizationalUnits";
+    public static final String METHOD_UPDATE_ORGANIZATIONAL_UNITS = "updateOrganizationalUnits";
 
-    public static final String METHOD_RETRIEVE_ADMINDESCRIPTOR =
-        "retrieveAdminDescriptor";
+    public static final String METHOD_RETRIEVE_ADMINDESCRIPTOR = "retrieveAdminDescriptor";
 
-    public static final String METHOD_RETRIEVE_AGGREGATION_DEFINITIONS =
-        "retrieveAggregationDefinitions";
+    public static final String METHOD_RETRIEVE_AGGREGATION_DEFINITIONS = "retrieveAggregationDefinitions";
 
-    public static final String METHOD_RETRIEVE_REPORT_DEFINITIONS =
-        "retrieveReportDefinitions";
+    public static final String METHOD_RETRIEVE_REPORT_DEFINITIONS = "retrieveReportDefinitions";
 
     public static final String METHOD_RETRIEVE_SCOPES = "retrieveScopes";
 
     public static final String METHOD_PREPROCESS_STATISTICS = "preprocess";
 
-    public static final String METHOD_RETRIEVE_PROPERTIES =
-        "retrieveProperties";
+    public static final String METHOD_RETRIEVE_PROPERTIES = "retrieveProperties";
 
     public static final String METHOD_RETRIEVE_MD_RECORDS = "retrieveMdRecords";
 
-    public static final String METHOD_RETRIEVE_CONTENT_STREAMS =
-        "retrieveContentStreams";
+    public static final String METHOD_RETRIEVE_CONTENT_STREAMS = "retrieveContentStreams";
 
-    public static final String METHOD_RETRIEVE_CONTENT_STREAM_CONTENT =
-        "retrieveContentStreamContent";
+    public static final String METHOD_RETRIEVE_CONTENT_STREAM_CONTENT = "retrieveContentStreamContent";
 
-    public static final String METHOD_RETRIEVE_CONTENT_STREAM =
-        "retrieveContentStream";
+    public static final String METHOD_RETRIEVE_CONTENT_STREAM = "retrieveContentStream";
 
     public static final String METHOD_UPDATE_MD_RECORDS = "updateMdRecords";
 
@@ -264,15 +240,13 @@ public abstract class ClientBase {
      * Filter-method of ContentModelHandler for retrieving list of content
      * models.
      */
-    public static final String METHOD_RETRIEVE_CONTENT_MODELS =
-        "retrieveContentModels";
+    public static final String METHOD_RETRIEVE_CONTENT_MODELS = "retrieveContentModels";
 
     /*
      * Filter-method of ContentRelationHandler for retrieving list of content
      * relations.
      */
-    public static final String METHOD_RETRIEVE_CONTENT_RELATIONS =
-        "retrieveContentRelations";
+    public static final String METHOD_RETRIEVE_CONTENT_RELATIONS = "retrieveContentRelations";
 
     public static final String METHOD_RETRIEVE_STRUCT_MAP = "retrieveStructMap";
 
@@ -286,34 +260,25 @@ public abstract class ClientBase {
 
     public static final String METHOD_RETRIEVE_TOCS = "retrieveTocs";
 
-    public static final String METHOD_RETRIEVE_USER_ACCOUNTS =
-        "retrieveUserAccounts";
+    public static final String METHOD_RETRIEVE_USER_ACCOUNTS = "retrieveUserAccounts";
 
-    public static final String METHOD_RETRIEVE_USER_GROUPS =
-        "retrieveUserGroups";
+    public static final String METHOD_RETRIEVE_USER_GROUPS = "retrieveUserGroups";
 
-    public static final String METHOD_RETRIEVE_USER_GROUP_SELECTORS =
-        "addSelectors";
+    public static final String METHOD_RETRIEVE_USER_GROUP_SELECTORS = "addSelectors";
 
-    public static final String METHOD_ADD_USER_GROUP_SELECTORS =
-        "retrieveSelectors";
+    public static final String METHOD_ADD_USER_GROUP_SELECTORS = "retrieveSelectors";
 
-    public static final String METHOD_REMOVE_USER_GROUP_SELECTORS =
-        "removeSelectors";
+    public static final String METHOD_REMOVE_USER_GROUP_SELECTORS = "removeSelectors";
 
     public static final String METHOD_RETRIEVE_METS = "retrieveMetss";
 
-    public static final String METHOD_RETRIEVE_VERSION_HISTORY =
-        "retrieveVersionHistory";
+    public static final String METHOD_RETRIEVE_VERSION_HISTORY = "retrieveVersionHistory";
 
-    public static final String METHOD_CREATE_UNSECURED_ACTIONS =
-        "createUnsecuredActions";
+    public static final String METHOD_CREATE_UNSECURED_ACTIONS = "createUnsecuredActions";
 
-    public static final String METHOD_DELETE_UNSECURED_ACTIONS =
-        "deleteUnsecuredActions";
+    public static final String METHOD_DELETE_UNSECURED_ACTIONS = "deleteUnsecuredActions";
 
-    public static final String METHOD_RETRIEVE_UNSECURED_ACTIONS =
-        "retrieveUnsecuredActions";
+    public static final String METHOD_RETRIEVE_UNSECURED_ACTIONS = "retrieveUnsecuredActions";
 
     public static final String METHOD_UPDATE_TOC = "updateToc";
 
@@ -351,14 +316,11 @@ public abstract class ClientBase {
 
     public static final String METHOD_DEACTIVATE = "deactivate";
 
-    public static final String METHOD_RETRIEVE_CURRENT_GRANTS =
-        "retrieveCurrentGrants";
+    public static final String METHOD_RETRIEVE_CURRENT_GRANTS = "retrieveCurrentGrants";
 
-    public static final String METHOD_RETRIEVE_PREFERENCES =
-        "retrievePreferences";
+    public static final String METHOD_RETRIEVE_PREFERENCES = "retrievePreferences";
 
-    public static final String METHOD_RETRIEVE_PREFERENCE =
-        "retrievePreference";
+    public static final String METHOD_RETRIEVE_PREFERENCE = "retrievePreference";
 
     public static final String METHOD_CREATE_PREFERENCE = "createPreference";
 
@@ -368,11 +330,9 @@ public abstract class ClientBase {
 
     public static final String METHOD_UPDATE_PREFERENCE = "updatePreference";
 
-    public static final String METHOD_RETRIEVE_ATTRIBUTES =
-        "retrieveAttributes";
+    public static final String METHOD_RETRIEVE_ATTRIBUTES = "retrieveAttributes";
 
-    public static final String METHOD_RETRIEVE_NAMED_ATTRIBUTES =
-        "retrieveNamedAttributes";
+    public static final String METHOD_RETRIEVE_NAMED_ATTRIBUTES = "retrieveNamedAttributes";
 
     public static final String METHOD_RETRIEVE_ATTRIBUTE = "retrieveAttribute";
 
@@ -396,13 +356,11 @@ public abstract class ClientBase {
 
     public static final String METHOD_RETRIEVE_GRANTS = "retrieveGrants";
 
-    public static final String METHOD_RETRIEVE_PARENT_OBJECTS =
-        "retrieveParentObjects";
+    public static final String METHOD_RETRIEVE_PARENT_OBJECTS = "retrieveParentObjects";
 
     public static final String METHOD_RETRIEVE_PARENTS = "retrieveParents";
 
-    public static final String METHOD_RETRIEVE_CHILD_OBJECTS =
-        "retrieveChildObjects";
+    public static final String METHOD_RETRIEVE_CHILD_OBJECTS = "retrieveChildObjects";
 
     public static final String METHOD_LOGIN = "login";
 
@@ -413,11 +371,9 @@ public abstract class ClientBase {
     /**
      * Ingest methods.
      */
-    public static final String METHOD_INGEST_GET_CONFIGURATION =
-        "getConfiguration";
+    public static final String METHOD_INGEST_GET_CONFIGURATION = "getConfiguration";
 
-    public static final String METHOD_INGEST_SET_CONFIGURATION =
-        "setConfiguration";
+    public static final String METHOD_INGEST_SET_CONFIGURATION = "setConfiguration";
 
     public static final String METHOD_INGEST_ITEM = "ingestItem";
 
@@ -438,8 +394,7 @@ public abstract class ClientBase {
      */
     public static final String METHOD_GET_REPOSITORY_INFO = "getRepositoryInfo";
 
-    public static final String METHOD_GET_INDEX_CONFIGURATION =
-        "getIndexConfiguration";
+    public static final String METHOD_GET_INDEX_CONFIGURATION = "getIndexConfiguration";
 
     public static final String METHOD_DELETE_OBJECTS = "deleteObjects";
 
@@ -453,19 +408,24 @@ public abstract class ClientBase {
      * End admin tool methods.
      */
 
-    /** Index of resource id in params vector (SOAP). */
+    /**
+     * Index of resource id in params vector (SOAP).
+     */
     public static final int RESOURCE_ID_INDEX = 0;
 
-    /** Index of first subresource id in params vector (SOAP). */
+    /**
+     * Index of first subresource id in params vector (SOAP).
+     */
     public static final int SUB_RESOURCE_ID_INDEX = 1;
 
-    /** Indicating method needs no xml data. */
+    /**
+     * Indicating method needs no xml data.
+     */
     public static final String NOXML = "method without xml data parameter";
 
     public static final String DEFAULT_CHARSET = "UTF-8";
 
-    public static final String TEMPLATE_OM_COMMON_PATH = "/templates"
-        + "/om/template" + "/common";
+    public static final String TEMPLATE_OM_COMMON_PATH = "/templates" + "/om/template" + "/common";
 
     // /**
     // * Pattern matching the class name of the exception.
@@ -491,14 +451,11 @@ public abstract class ClientBase {
     // private static final Pattern PATTERN_EXCEPTION_TITLE =
     // Pattern.compile("<title><h1>(.*)</h1></title>");
 
-    private static final Pattern PATTERN_VERSION_NUMBER = Pattern
-        .compile("[a-zA-Z]+:[a-zA-Z0-9]+:([0-9]+)");
+    private static final Pattern PATTERN_VERSION_NUMBER = Pattern.compile("[a-zA-Z]+:[a-zA-Z0-9]+:([0-9]+)");
 
-    private static final Pattern PATTERN_ID_WITHOUT_VERSION = Pattern
-        .compile("([a-zA-Z]+:[0-9]+):[0-9]+");
+    private static final Pattern PATTERN_ID_WITHOUT_VERSION = Pattern.compile("([a-zA-Z]+:[0-9]+):[0-9]+");
 
-    private static final Pattern PATTERN_OBJID_ATTRIBUTE = Pattern
-        .compile(".*\\/([^\"\\/]*)");
+    private static final Pattern PATTERN_OBJID_ATTRIBUTE = Pattern.compile(".*\\/([^\"\\/]*)");
 
     private int transport;
 
@@ -506,10 +463,8 @@ public abstract class ClientBase {
 
     /**
      * Constructor for client base class.
-     * 
-     * @param transport
-     *            Decides if this client is a REST or SOAP client.
-     * @throws Exception
+     *
+     * @param transport Decides if this client is a REST or SOAP client.
      */
     public ClientBase(final int transport) {
         this.transport = transport;
@@ -521,14 +476,12 @@ public abstract class ClientBase {
         ConnManagerParams.setMaxTotalConnections(httpParams, 90);
         final ConnPerRouteBean connPerRoute = new ConnPerRouteBean(30);
         ConnManagerParams.setMaxConnectionsPerRoute(httpParams, connPerRoute);
-        final Scheme httpSchema =
-            new Scheme("http", PlainSocketFactory.getSocketFactory(), 80);
+        final Scheme httpSchema = new Scheme("http", PlainSocketFactory.getSocketFactory(), 80);
         final SchemeRegistry schemaRegistry = new SchemeRegistry();
         schemaRegistry.register(httpSchema);
         final ClientConnectionManager clientConnectionManager =
             new ThreadSafeClientConnManager(httpParams, schemaRegistry);
-        this.httpClient =
-            new DefaultHttpClient(clientConnectionManager, httpParams);
+        this.httpClient = new DefaultHttpClient(clientConnectionManager, httpParams);
         // disable cookies
         /*
          * this.httpClient.removeRequestInterceptorByClass(RequestAddCookies.class
@@ -537,12 +490,9 @@ public abstract class ClientBase {
          * .class);
          */
         // disable redirects
-        this.httpClient.getParams().setParameter(ClientPNames.COOKIE_POLICY,
-            CookiePolicy.BROWSER_COMPATIBILITY);
-        this.httpClient.getParams().setParameter(
-            "http.protocol.handle-redirects", Boolean.FALSE);
-        this.httpClient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY,
-            this.getHttpHost());
+        this.httpClient.getParams().setParameter(ClientPNames.COOKIE_POLICY, CookiePolicy.BROWSER_COMPATIBILITY);
+        this.httpClient.getParams().setParameter("http.protocol.handle-redirects", Boolean.FALSE);
+        this.httpClient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, this.getHttpHost());
     }
 
     private HttpHost getHttpHost() {
@@ -552,69 +502,51 @@ public abstract class ClientBase {
                 && PropertiesProvider.getInstance().getProperty("server.port") != null) {
                 Constants.HOST = PropertiesProvider.getInstance().getProperty("server.name");
                 Constants.HOST_PORT =
-                    Constants.HOST + ":"
-                        + PropertiesProvider.getInstance().getProperty("server.port");
+                    Constants.HOST + ":" + PropertiesProvider.getInstance().getProperty("server.port");
             }
             if (PropertiesProvider.getInstance().getProperty("http.proxyHost") != null
                 && PropertiesProvider.getInstance().getProperty("http.proxyPort") != null) {
                 httpHost =
-                    new HttpHost(PropertiesProvider.getInstance().getProperty("http.proxyHost"),
-                        Integer.parseInt(PropertiesProvider.getInstance()
-                            .getProperty("http.proxyPort")));
+                    new HttpHost(PropertiesProvider.getInstance().getProperty("http.proxyHost"), Integer
+                        .parseInt(PropertiesProvider.getInstance().getProperty("http.proxyPort")));
 
             }
         }
         catch (final Exception e) {
-            throw new RuntimeException(
-                "[ClientBase] Error occured loading properties! "
-                    + e.getMessage(), e);
+            throw new RuntimeException("[ClientBase] Error occured loading properties! " + e.getMessage(), e);
         }
         return httpHost;
     }
 
     /**
-     * Gets the soap client to use.<br>
-     * This method is called by the (default) implementation of the method
-     * callSoapMethod to determine the soap client to use.<br>
-     * This default implementation throws an exception indicating further
-     * implementation is needed in the concrete test class.
-     * 
+     * Gets the soap client to use.<br> This method is called by the (default) implementation of the method
+     * callSoapMethod to determine the soap client to use.<br> This default implementation throws an exception
+     * indicating further implementation is needed in the concrete test class.
+     *
      * @return Returns the soapClient.
-     * @throws ServiceException
-     *             If the client creation fails.
+     * @throws ServiceException If the client creation fails.
      */
     public Remote getSoapClient() throws ServiceException {
 
-        throw new UnsupportedOperationException(
-            "getSoapClient() not supported. In the concrete test class, either"
-                + " this method has to be implemented or the method"
-                + " callSoapMethod() has to be overridden.");
+        throw new UnsupportedOperationException("getSoapClient() not supported. In the concrete test class, either"
+            + " this method has to be implemented or the method" + " callSoapMethod() has to be overridden.");
     }
 
     /**
-     * Call the soap method on the appropriate soap client.<br>
-     * This default implementation calls getSoapClient() that has to be
-     * implemented by the concrete test class to determine the soap client to
-     * use. The soap client's method that has to be called is determined via
-     * reflection from the provided soapMethod parameter.<br>
-     * This may be overriden by the concrete test implementation.
-     * 
-     * @param label
-     *            A label for logging purposes.
-     * @param soapMethod
-     *            The soap method.
-     * @param params
-     *            The parameters used for the method call.<br>
-     *            In case of methods that expect xml data or another object, the
-     *            last entry in params contains the object or the xml
-     *            representation of an object to create or update. Could be the
-     *            resource itself or a sub resource.
+     * Call the soap method on the appropriate soap client.<br> This default implementation calls getSoapClient() that
+     * has to be implemented by the concrete test class to determine the soap client to use. The soap client's method
+     * that has to be called is determined via reflection from the provided soapMethod parameter.<br> This may be
+     * overriden by the concrete test implementation.
+     *
+     * @param label      A label for logging purposes.
+     * @param soapMethod The soap method.
+     * @param params     The parameters used for the method call.<br> In case of methods that expect xml data or another
+     *                   object, the last entry in params contains the object or the xml representation of an object to
+     *                   create or update. Could be the resource itself or a sub resource.
      * @return The result of the soap call.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    protected Object callSoapMethod(
-        final String label, final String soapMethod, final Object[] params)
+    protected Object callSoapMethod(final String label, final String soapMethod, final Object[] params)
         throws Exception {
 
         logSoapServiceCall(label, params);
@@ -628,8 +560,7 @@ public abstract class ClientBase {
                 parameterTypes[i] = String.class;
             }
         }
-        Method method =
-            soapClient.getClass().getMethod(soapMethod, parameterTypes);
+        Method method = soapClient.getClass().getMethod(soapMethod, parameterTypes);
         try {
             return method.invoke(soapClient, params);
         }
@@ -643,294 +574,180 @@ public abstract class ClientBase {
     }
 
     /**
-     * Make a service call to the escidoc framework for methods without sending
-     * an xml representation of a resource. Whether REST or SOAP is taken
-     * depends on the transport attribute.
-     * 
-     * @param label
-     *            A label for logging purposes.
-     * @param soapMethod
-     *            The soap method.
-     * @param HttpResponse
-     *            The http method.
-     * @param httpBaseUri
-     *            The base uri.
-     * @param pathElements
-     *            The <code>String[]</code> array containing the elements
-     *            describing the path of the addressed (sub) resource:
-     *            <ul>
-     *            <li>pathElements[0] = resourceId</li>
-     *            <li>pathElements[1] = subResourceName</li>
-     *            <li>pathElements[2] = subResourceId</li>
-     *            <li>pathElements[3] = subSubResourceName</li>
-     *            <li>pathElements[4] = subSubResourceId</li>
-     *            <li>...</li>
-     *            </ul>
-     * @param parameters
-     *            The parameters for an HTTP GET request.
-     * 
-     * @return The HttpResponse after the service call (REST) or the result
-     *         object (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     * Make a service call to the escidoc framework for methods without sending an xml representation of a resource.
+     * Whether REST or SOAP is taken depends on the transport attribute.
+     *
+     * @param label        A label for logging purposes.
+     * @param soapMethod   The soap method.
+     * @param HttpResponse The http method.
+     * @param httpBaseUri  The base uri.
+     * @param pathElements The <code>String[]</code> array containing the elements describing the path of the addressed
+     *                     (sub) resource: <ul> <li>pathElements[0] = resourceId</li> <li>pathElements[1] =
+     *                     subResourceName</li> <li>pathElements[2] = subResourceId</li> <li>pathElements[3] =
+     *                     subSubResourceName</li> <li>pathElements[4] = subSubResourceId</li> <li>...</li> </ul>
+     * @param parameters   The parameters for an HTTP GET request.
+     * @return The HttpResponse after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     protected Object callEsciDoc(
-        final String label, final String soapMethod, final String HttpResponse,
-        final String httpBaseUri, final String[] pathElements,
-        final Map<String, String[]> parameters) throws Exception {
+        final String label, final String soapMethod, final String HttpResponse, final String httpBaseUri,
+        final String[] pathElements, final Map<String, String[]> parameters) throws Exception {
 
-        return doCallEscidoc(label, soapMethod, HttpResponse, httpBaseUri,
-            pathElements, NOXML, null, null, parameters);
+        return doCallEscidoc(label, soapMethod, HttpResponse, httpBaseUri, pathElements, NOXML, null, null, parameters);
     }
 
     /**
-     * Make a service call to the escidoc framework for methods without sending
-     * an xml representation of a resource. Whether REST or SOAP is taken
-     * depends on the transport attribute.
-     * 
-     * @param label
-     *            A label for logging purposes.
-     * @param soapMethod
-     *            The soap method.
-     * @param HttpResponse
-     *            The http method.
-     * @param httpBaseUri
-     *            The base uri.
-     * @param pathElements
-     *            The <code>String[]</code> array containing the elements
-     *            describing the path of the addressed (sub) resource:
-     *            <ul>
-     *            <li>pathElements[0] = resourceId</li>
-     *            <li>pathElements[1] = subResourceName</li>
-     *            <li>pathElements[2] = subResourceId</li>
-     *            <li>pathElements[3] = subSubResourceName</li>
-     *            <li>pathElements[4] = subSubResourceId</li>
-     *            <li>...</li>
-     *            </ul>
-     * @return The HttpResponse after the service call (REST) or the result
-     *         object (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     * Make a service call to the escidoc framework for methods without sending an xml representation of a resource.
+     * Whether REST or SOAP is taken depends on the transport attribute.
+     *
+     * @param label        A label for logging purposes.
+     * @param soapMethod   The soap method.
+     * @param HttpResponse The http method.
+     * @param httpBaseUri  The base uri.
+     * @param pathElements The <code>String[]</code> array containing the elements describing the path of the addressed
+     *                     (sub) resource: <ul> <li>pathElements[0] = resourceId</li> <li>pathElements[1] =
+     *                     subResourceName</li> <li>pathElements[2] = subResourceId</li> <li>pathElements[3] =
+     *                     subSubResourceName</li> <li>pathElements[4] = subSubResourceId</li> <li>...</li> </ul>
+     * @return The HttpResponse after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     protected Object callEsciDoc(
-        final String label, final String soapMethod, final String HttpResponse,
-        final String httpBaseUri, final String[] pathElements) throws Exception {
+        final String label, final String soapMethod, final String HttpResponse, final String httpBaseUri,
+        final String[] pathElements) throws Exception {
 
-        return doCallEscidoc(label, soapMethod, HttpResponse, httpBaseUri,
-            pathElements, NOXML, null, null, null);
+        return doCallEscidoc(label, soapMethod, HttpResponse, httpBaseUri, pathElements, NOXML, null, null, null);
     }
 
     /**
-     * Make a service call to the escidoc framework. Whether REST or SOAP is
-     * taken depends on the transport attribute.
-     * 
-     * @param label
-     *            A label for logging purposes.
-     * @param soapMethod
-     *            The soap method. The http method.
-     * @param httpBaseUri
-     *            The base uri.
-     * @param pathElements
-     *            The <code>String[]</code> array containing the elements
-     *            describing the path of the addressed (sub) resource:
-     *            <ul>
-     *            <li>pathElements[0] = resourceId</li>
-     *            <li>pathElements[1] = subResourceName</li>
-     *            <li>pathElements[2] = subResourceId</li>
-     *            <li>pathElements[3] = subSubResourceName</li>
-     *            <li>pathElements[4] = subSubResourceId</li>
-     *            <li>...</li>
-     *            </ul>
-     * @param xml
-     *            The xml representaion of a new or updated framework object.
-     * @return The HttpResponse after the service call (REST) or the result
-     *         object (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     * Make a service call to the escidoc framework. Whether REST or SOAP is taken depends on the transport attribute.
+     *
+     * @param label        A label for logging purposes.
+     * @param soapMethod   The soap method. The http method.
+     * @param httpBaseUri  The base uri.
+     * @param pathElements The <code>String[]</code> array containing the elements describing the path of the addressed
+     *                     (sub) resource: <ul> <li>pathElements[0] = resourceId</li> <li>pathElements[1] =
+     *                     subResourceName</li> <li>pathElements[2] = subResourceId</li> <li>pathElements[3] =
+     *                     subSubResourceName</li> <li>pathElements[4] = subSubResourceId</li> <li>...</li> </ul>
+     * @param xml          The xml representaion of a new or updated framework object.
+     * @return The HttpResponse after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     protected Object callEsciDoc(
-        final String label, final String soapMethod, final String httpMethod,
-        final String httpBaseUri, final String[] pathElements, final Object xml)
-        throws Exception {
+        final String label, final String soapMethod, final String httpMethod, final String httpBaseUri,
+        final String[] pathElements, final Object xml) throws Exception {
 
-        return doCallEscidoc(label, soapMethod, httpMethod, httpBaseUri,
-            pathElements, xml, null, null, null);
+        return doCallEscidoc(label, soapMethod, httpMethod, httpBaseUri, pathElements, xml, null, null, null);
     }
 
     /**
      * Call eSciDoc with parameter string, without XML.
-     * 
-     * @param label
-     *            A label for logging purposes.
-     * @param soapMethod
-     *            The soap method.
-     * @param HttpResponse
-     *            The http method.
-     * @param httpBaseUri
-     *            The base uri.
-     * @param parameter
-     * @param pathElements
-     *            The <code>String[]</code> array containing the elements
-     *            describing the path of the addressed (sub) resource:
-     *            <ul>
-     *            <li>pathElements[0] = resourceId</li>
-     *            <li>pathElements[1] = subResourceName</li>
-     *            <li>pathElements[2] = subResourceId</li>
-     *            <li>pathElements[3] = subSubResourceName</li>
-     *            <li>pathElements[4] = subSubResourceId</li>
-     *            <li>...</li>
-     *            </ul>
-     * 
-     * @return The HttpResponse after the service call (REST) or the result
-     *         object (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param label        A label for logging purposes.
+     * @param soapMethod   The soap method.
+     * @param HttpResponse The http method.
+     * @param httpBaseUri  The base uri.
+     * @param pathElements The <code>String[]</code> array containing the elements describing the path of the addressed
+     *                     (sub) resource: <ul> <li>pathElements[0] = resourceId</li> <li>pathElements[1] =
+     *                     subResourceName</li> <li>pathElements[2] = subResourceId</li> <li>pathElements[3] =
+     *                     subSubResourceName</li> <li>pathElements[4] = subSubResourceId</li> <li>...</li> </ul>
+     * @return The HttpResponse after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     protected Object callEsciDoc(
-        final String label, final String soapMethod, final String HttpResponse,
-        final String httpBaseUri, final String parameter,
-        final String[] pathElements) throws Exception {
+        final String label, final String soapMethod, final String HttpResponse, final String httpBaseUri,
+        final String parameter, final String[] pathElements) throws Exception {
 
-        return doCallEscidoc(label, soapMethod, HttpResponse, httpBaseUri,
-            pathElements, parameter, NOXML, null, null, null);
+        return doCallEscidoc(label, soapMethod, HttpResponse, httpBaseUri, pathElements, parameter, NOXML, null, null,
+            null);
     }
 
     /**
-     * Make a service call to the escidoc framework. Whether REST or SOAP is
-     * taken depends on the transport attribute.
-     * 
-     * @param label
-     *            A label for logging purposes.
-     * @param soapMethod
-     *            The soap method.
-     * @param HttpResponse
-     *            The http method.
-     * @param httpBaseUri
-     *            The base uri.
-     * @param pathElements
-     *            TThe <code>String[]</code> array containing the elements
-     *            describing the path of the addressed (sub) resource:
-     *            <ul>
-     *            <li>pathElements[0] = resourceId</li>
-     *            <li>pathElements[1] = subResourceName</li>
-     *            <li>pathElements[2] = subResourceId</li>
-     *            <li>pathElements[3] = subSubResourceName</li>
-     *            <li>pathElements[4] = subSubResourceId</li>
-     *            <li>...</li>
-     *            </ul>
-     * @param binaryContent
-     *            The binary content of the body.
-     * @param mimeType
-     *            The mime type of the data.
-     * @param filename
-     *            The name of the file.
-     * @return The HttpResponse after the service call (REST) or the result
-     *         object (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     * Make a service call to the escidoc framework. Whether REST or SOAP is taken depends on the transport attribute.
+     *
+     * @param label         A label for logging purposes.
+     * @param soapMethod    The soap method.
+     * @param HttpResponse  The http method.
+     * @param httpBaseUri   The base uri.
+     * @param pathElements  TThe <code>String[]</code> array containing the elements describing the path of the
+     *                      addressed (sub) resource: <ul> <li>pathElements[0] = resourceId</li> <li>pathElements[1] =
+     *                      subResourceName</li> <li>pathElements[2] = subResourceId</li> <li>pathElements[3] =
+     *                      subSubResourceName</li> <li>pathElements[4] = subSubResourceId</li> <li>...</li> </ul>
+     * @param binaryContent The binary content of the body.
+     * @param mimeType      The mime type of the data.
+     * @param filename      The name of the file.
+     * @return The HttpResponse after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     protected Object callEsciDocWithBinaryContent(
-        final String label, final String soapMethod, final String HttpResponse,
-        final String httpBaseUri, final String[] pathElements,
-        final InputStream binaryContent, final String mimeType,
-        final String filename) throws Exception {
+        final String label, final String soapMethod, final String HttpResponse, final String httpBaseUri,
+        final String[] pathElements, final InputStream binaryContent, final String mimeType, final String filename)
+        throws Exception {
 
-        return doCallEscidoc(label, soapMethod, HttpResponse, httpBaseUri,
-            pathElements, binaryContent, mimeType, filename, null);
+        return doCallEscidoc(label, soapMethod, HttpResponse, httpBaseUri, pathElements, binaryContent, mimeType,
+            filename, null);
     }
 
     /**
-     * Worker method wrapper to call eSciDoc. This is called by one of the
-     * callEsciDoc methods.
-     * 
-     * @param label
-     *            A label for logging purposes.
-     * @param soapMethod
-     *            The soap method. The http method.
-     * @param httpBaseUri
-     *            The base URI (REST).
-     * @param pathElements
-     *            The elements describing the path to the (sub) resource: id,
-     *            subresourceName1, subresourceId2, ...
-     * @param body
-     *            An <code>Object</code> holding the content of the body.
-     *            Currently, String and InputStream are supported.
-     * @param mimeType
-     *            The mime type of the data, in case of binary content.
-     * @param filename
-     *            The name of the file, in case of binary content.
-     * @param parameters
-     *            The request parameters for HTTP GET.
-     * 
-     * @return The HttpResponse after the service call (REST) or the result
-     *         object (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     * Worker method wrapper to call eSciDoc. This is called by one of the callEsciDoc methods.
+     *
+     * @param label        A label for logging purposes.
+     * @param soapMethod   The soap method. The http method.
+     * @param httpBaseUri  The base URI (REST).
+     * @param pathElements The elements describing the path to the (sub) resource: id, subresourceName1, subresourceId2,
+     *                     ...
+     * @param body         An <code>Object</code> holding the content of the body. Currently, String and InputStream are
+     *                     supported.
+     * @param mimeType     The mime type of the data, in case of binary content.
+     * @param filename     The name of the file, in case of binary content.
+     * @param parameters   The request parameters for HTTP GET.
+     * @return The HttpResponse after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     private Object doCallEscidoc(
-        final String label, final String soapMethod, final String httpMethod,
-        final String httpBaseUri, final String[] pathElements,
-        final Object body, final String mimeType, final String filename,
+        final String label, final String soapMethod, final String httpMethod, final String httpBaseUri,
+        final String[] pathElements, final Object body, final String mimeType, final String filename,
         final Map<String, String[]> parameters) throws Exception {
 
-        return doCallEscidoc(label, soapMethod, httpMethod, httpBaseUri,
-            pathElements, null, body, mimeType, filename, parameters);
+        return doCallEscidoc(label, soapMethod, httpMethod, httpBaseUri, pathElements, null, body, mimeType, filename,
+            parameters);
     }
 
     /**
-     * Worker method to call eSciDoc. This is called by one of the callEsciDoc
-     * methods.
-     * 
-     * @param label
-     *            A label for logging purposes.
-     * @param soapMethod
-     *            The soap method. The http method.
-     * @param httpBaseUri
-     *            The base URI (REST).
-     * @param pathElements
-     *            The elements describing the path to the (sub) resource: id,
-     *            subresourceName1, subresourceId2, ...
-     * @param parameter
-     *            The HTTP parameter (GET)
-     * @param body
-     *            An <code>Object</code> holding the content of the body.
-     *            Currently, String and InputStream are supported.
-     * @param mimeType
-     *            The mime type of the data, in case of binary content.
-     * @param filename
-     *            The name of the file, in case of binary content.
-     * @param parameters
-     *            The request parameters for HTTP GET.
-     * 
-     * @return The HttpResponse after the service call (REST) or the result
-     *         object (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     * Worker method to call eSciDoc. This is called by one of the callEsciDoc methods.
+     *
+     * @param label        A label for logging purposes.
+     * @param soapMethod   The soap method. The http method.
+     * @param httpBaseUri  The base URI (REST).
+     * @param pathElements The elements describing the path to the (sub) resource: id, subresourceName1, subresourceId2,
+     *                     ...
+     * @param parameter    The HTTP parameter (GET)
+     * @param body         An <code>Object</code> holding the content of the body. Currently, String and InputStream are
+     *                     supported.
+     * @param mimeType     The mime type of the data, in case of binary content.
+     * @param filename     The name of the file, in case of binary content.
+     * @param parameters   The request parameters for HTTP GET.
+     * @return The HttpResponse after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     private Object doCallEscidoc(
-        final String label, final String soapMethod, final String httpMethod,
-        final String httpBaseUri, final String[] pathElements,
-        final String parameter, final Object body, final String mimeType,
-        final String filename, final Map<String, String[]> parameters)
-        throws Exception {
+        final String label, final String soapMethod, final String httpMethod, final String httpBaseUri,
+        final String[] pathElements, final String parameter, final Object body, final String mimeType,
+        final String filename, final Map<String, String[]> parameters) throws Exception {
 
         Object result = null;
         switch (getTransport()) {
             case Constants.TRANSPORT_REST:
                 String httpUrl =
-                    HttpHelper.createUrl(Constants.PROTOCOL,
-                        Constants.HOST_PORT, httpBaseUri, pathElements,
-                        parameter, false);
+                    HttpHelper.createUrl(Constants.PROTOCOL, Constants.HOST_PORT, httpBaseUri, pathElements, parameter,
+                        false);
                 logRestServiceCall(label, httpMethod, httpUrl, body);
                 if (NOXML.equals(body)) {
                     result =
-                        HttpHelper.executeHttpRequest(getHttpClient(),
-                            httpMethod, httpUrl, null, mimeType, parameters);
+                        HttpHelper.executeHttpRequest(getHttpClient(), httpMethod, httpUrl, null, mimeType, parameters);
                 }
                 else {
                     result =
-                        HttpHelper.executeHttpRequest(getHttpClient(),
-                            httpMethod, httpUrl, body, mimeType, parameters);
+                        HttpHelper.executeHttpRequest(getHttpClient(), httpMethod, httpUrl, body, mimeType, parameters);
                 }
                 if (((HttpResponse) result).getStatusLine().getStatusCode() >= HttpServletResponse.SC_MULTIPLE_CHOICES) {
                     throwCorrespondingException((HttpResponse) result);
@@ -972,122 +789,89 @@ public abstract class ClientBase {
     }
 
     /**
-     * This method handles a detected error contained in the provided result. <br>
-     * This method examines the error response of the body of the result and
-     * constructs the corresponding remote exception.
-     * 
-     * @param result
-     *            The http result object describing the error.
-     * 
-     * @throws Exception
-     *             In any case.
+     * This method handles a detected error contained in the provided result. <br> This method examines the error
+     * response of the body of the result and constructs the corresponding remote exception.
+     *
+     * @param result The http result object describing the error.
+     * @throws Exception In any case.
      */
-    private void throwCorrespondingException(final HttpResponse result)
-        throws Exception {
+    private void throwCorrespondingException(final HttpResponse result) throws Exception {
 
-        String exceptionXML =
-            ResourceProvider.getContentsFromInputStream(result
-                .getEntity().getContent());
+        String exceptionXML = ResourceProvider.getContentsFromInputStream(result.getEntity().getContent());
 
         // try to parse the body that may contain XML representation of an
         // eScidoc exception.
         Document exceptionDocument = null;
         try {
-            exceptionDocument =
-                EscidocRestSoapTestBase.getDocument(exceptionXML, false);
+            exceptionDocument = EscidocRestSoapTestBase.getDocument(exceptionXML, false);
         }
         catch (final Exception e) {
             // parsing failed, does not seem to be an eScidocException
             // body is wrapped into a generic Axis-Fault
-            throw new AxisFault("Unknown (unparseable) error response"
-                + "\nStatus code: " + result.getStatusLine().getStatusCode()
-                + "\nStatus text: " + result.getStatusLine().getReasonPhrase()
+            throw new AxisFault("Unknown (unparseable) error response" + "\nStatus code: "
+                + result.getStatusLine().getStatusCode() + "\nStatus text: " + result.getStatusLine().getReasonPhrase()
                 + "\nBody:\n" + exceptionXML);
         }
 
-        Node exceptionNameNode =
-            EscidocTestBase.selectSingleNode(exceptionDocument,
-                "/exception/class/p");
+        Node exceptionNameNode = EscidocTestBase.selectSingleNode(exceptionDocument, "/exception/class/p");
         if (exceptionNameNode == null) {
-            throw new Exception("Missing exception node in response body:\n"
-                + exceptionXML);
+            throw new Exception("Missing exception node in response body:\n" + exceptionXML);
         }
         String exceptionName = exceptionNameNode.getTextContent();
         if (exceptionName == null) {
-            throw new Exception(
-                "Exception could not be identified from response body:\n"
-                    + exceptionXML);
+            throw new Exception("Exception could not be identified from response body:\n" + exceptionXML);
         }
         Header exceptionHeader = result.getFirstHeader("eSciDocException");
         assertNotNull("Missing eSciDocException header. ", exceptionHeader);
-        assertEquals(
-            "Exception name mismatch in response header and response body.",
-            exceptionHeader.getValue(), exceptionName);
+        assertEquals("Exception name mismatch in response header and response body.", exceptionHeader.getValue(),
+            exceptionName);
 
         Object exceptionObject;
-        if (exceptionName.equals("de.escidoc.core.common.servlet.invocation"
-            + ".exceptions.MethodNotFoundException")) {
+        if (exceptionName.equals("de.escidoc.core.common.servlet.invocation" + ".exceptions.MethodNotFoundException")) {
             exceptionObject = new MethodNotFoundException();
         }
         else {
-            exceptionName =
-                exceptionName.replaceAll("application\\.",
-                    "remote.application.");
-            exceptionName =
-                exceptionName.replaceAll("system\\.", "remote.system.");
+            exceptionName = exceptionName.replaceAll("application\\.", "remote.application.");
+            exceptionName = exceptionName.replaceAll("system\\.", "remote.system.");
 
             Class<?> exceptionClass;
             try {
                 exceptionClass = Class.forName(exceptionName);
             }
             catch (final ClassNotFoundException e) {
-                throw new Exception("No class found for identified exception"
-                    + " received from eSciDoc [" + exceptionName + ", "
-                    + (result).getStatusLine().getReasonPhrase()
-                    + "]\n Body:\n" + exceptionXML, e);
+                throw new Exception("No class found for identified exception" + " received from eSciDoc ["
+                    + exceptionName + ", " + (result).getStatusLine().getReasonPhrase() + "]\n Body:\n" + exceptionXML,
+                    e);
             }
             exceptionObject = exceptionClass.newInstance();
-            if (exceptionObject == null
-                || !(exceptionObject instanceof Exception)) {
-                throw new Exception(
-                    "Exception class could not be instantiated ["
-                        + exceptionName + ", "
-                        + (result).getStatusLine().getReasonPhrase()
-                        + "], instantiated exception object is "
-                        + exceptionObject + "\n Body:\n" + exceptionXML);
+            if (exceptionObject == null || !(exceptionObject instanceof Exception)) {
+                throw new Exception("Exception class could not be instantiated [" + exceptionName + ", "
+                    + (result).getStatusLine().getReasonPhrase() + "], instantiated exception object is "
+                    + exceptionObject + "\n Body:\n" + exceptionXML);
             }
         }
 
         if (exceptionObject instanceof EscidocException) {
-            initializeEscidocException(result, exceptionXML,
-                (EscidocException) exceptionObject);
+            initializeEscidocException(result, exceptionXML, (EscidocException) exceptionObject);
         }
 
         throw (Exception) exceptionObject;
     }
 
     /**
-     * Initializes the value of an <code>EscidocException</code> from the
-     * provided data.
-     * 
+     * Initializes the value of an <code>EscidocException</code> from the provided data.
+     * <p/>
      * The http method object holding the data of the request and response.
-     * 
-     * @param exceptionXML
-     *            The XML representation of the exception.
-     * @param escidocException
-     *            The <code>EscidocException</code> object that shall be
-     *            initialized
+     *
+     * @param exceptionXML     The XML representation of the exception.
+     * @param escidocException The <code>EscidocException</code> object that shall be initialized
      */
     private void initializeEscidocException(
-        final HttpResponse httpRes, final String exceptionXML,
-        EscidocException escidocException) {
+        final HttpResponse httpRes, final String exceptionXML, EscidocException escidocException) {
 
-        escidocException.setHttpStatusCode(
-            httpRes.getStatusLine().getStatusCode());
-        escidocException.setHttpStatusMsg(
-            httpRes.getStatusLine().getReasonPhrase());
-        escidocException.setHttpStatusLine(
-            httpRes.getStatusLine().getReasonPhrase());
+        escidocException.setHttpStatusCode(httpRes.getStatusLine().getStatusCode());
+        escidocException.setHttpStatusMsg(httpRes.getStatusLine().getReasonPhrase());
+        escidocException.setHttpStatusLine(httpRes.getStatusLine().getReasonPhrase());
         escidocException.setFaultString(exceptionXML);
         // (exceptionXML,
         // httpRes.getStatusLine().getStatusCode(),
@@ -1126,22 +910,17 @@ public abstract class ClientBase {
 
     /**
      * Log the execution of an rest service call.
-     * 
-     * @param method
-     *            The executed resource method.
-     * @param HttpResponse
-     *            The executed http method.
-     * @param url
-     *            The url.
-     * @param body
-     *            The body (if the http method (POST or PUT) permits a body).
+     *
+     * @param method       The executed resource method.
+     * @param HttpResponse The executed http method.
+     * @param url          The url.
+     * @param body         The body (if the http method (POST or PUT) permits a body).
      */
     protected void logRestServiceCall(
-        final String method, final String HttpResponse, final String url,
-        final Object body) {
+        final String method, final String HttpResponse, final String url, final Object body) {
         String message =
-            "[REST] [" + method + "] Calling eSciDoc with URL='" + url
-                + "' and http method='" + HttpResponse.toUpperCase() + "'";
+            "[REST] [" + method + "] Calling eSciDoc with URL='" + url + "' and http method='"
+                + HttpResponse.toUpperCase() + "'";
         // if ((Constants.HTTP_METHOD_POST.equals(HttpResponse.toUpperCase()))
         // || (Constants.HTTP_METHOD_PUT.equals(HttpResponse.toUpperCase()))) {
         // message += " body='" + body + "'";
@@ -1151,36 +930,27 @@ public abstract class ClientBase {
 
     /**
      * Log the execution of an soap service call.
-     * 
-     * @param method
-     *            The executed resource method.
-     * @param params
-     *            The parameter values.
+     *
+     * @param method The executed resource method.
+     * @param params The parameter values.
      * @deprecated
      */
     @Deprecated
-    protected void logSoapServiceCall(
-        final String method, final Collection<Object> params) {
+    protected void logSoapServiceCall(final String method, final Collection<Object> params) {
 
-        String message =
-            "[SOAP] [" + method + " ( " + params
-                + " )] Calling eSciDoc service method.";
+        String message = "[SOAP] [" + method + " ( " + params + " )] Calling eSciDoc service method.";
         LOGGER.debug(message);
     }
 
     /**
      * Log the execution of an soap service call.
-     * 
-     * @param method
-     *            The executed resource method.
-     * @param params
-     *            The parameter values.
+     *
+     * @param method The executed resource method.
+     * @param params The parameter values.
      */
     protected void logSoapServiceCall(final String method, final Object[] params) {
 
-        String message =
-            "[SOAP] [" + method + " ( " + params
-                + " )] Calling eSciDoc service method.";
+        String message = "[SOAP] [" + method + " ( " + params + " )] Calling eSciDoc service method.";
         LOGGER.debug(message);
     }
 
@@ -1199,16 +969,12 @@ public abstract class ClientBase {
     }
 
     /**
-     * Creates and adds a new bean mapping for the provided class to the
-     * provided mapping vector.
-     * 
-     * @param clazz
-     *            The class for which the mapping shall be created.
-     * @param mappings
-     *            The mapping vector.
+     * Creates and adds a new bean mapping for the provided class to the provided mapping vector.
+     *
+     * @param clazz    The class for which the mapping shall be created.
+     * @param mappings The mapping vector.
      */
-    protected void addBeanMapping(
-        final Class<?> clazz, final Vector<Object> mappings) {
+    protected void addBeanMapping(final Class<?> clazz, final Vector<Object> mappings) {
 
         BeanMapping beanMapping = new BeanMapping();
         beanMapping.setBean(clazz);
@@ -1219,20 +985,16 @@ public abstract class ClientBase {
 
     /**
      * Make a String from the input.
-     * 
-     * @param input
-     *            The input (maybe an InputStream or a String)
+     *
+     * @param input The input (maybe an InputStream or a String)
      * @return The input as String.
-     * @throws IOException
-     *             If reading from InputStream fails.
+     * @throws IOException If reading from InputStream fails.
      */
     protected String changeToString(final Object input) throws IOException {
 
         String result = null;
         if (input instanceof InputStream) {
-            result =
-                ResourceProvider
-                    .getContentsFromInputStream((InputStream) input);
+            result = ResourceProvider.getContentsFromInputStream((InputStream) input);
         }
         else if (input instanceof String) {
             result = (String) input;
@@ -1241,26 +1003,21 @@ public abstract class ClientBase {
     }
 
     /**
-     * Gets the last-modification-date attribute of the root element from the
-     * document.
-     * 
-     * @param document
-     *            The document to retrieve the value from.
+     * Gets the last-modification-date attribute of the root element from the document.
+     *
+     * @param document The document to retrieve the value from.
      * @return Returns the attribute value.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    public static String getLastModificationDateValue(final Document document)
-        throws Exception {
+    public static String getLastModificationDateValue(final Document document) throws Exception {
 
         return getRootElementAttributeValue(document, "last-modification-date");
     }
 
     /**
      * Retrieves the namespace from the given class.
-     * 
-     * @param clazz
-     *            The class.
+     *
+     * @param clazz The class.
      * @return Returns the namespace
      */
     public static String getNamespace(final Class<?> clazz) {
@@ -1270,22 +1027,16 @@ public abstract class ClientBase {
     }
 
     /**
-     * Retrieves the namespace URI from the given class.<br>
-     * The URI is generated using the package name. If the class is a remote
-     * application exception, the "remote" part is removed from the package
-     * name.
-     * 
-     * @param clazz
-     *            The class.
-     * @return Returns the namespace uRI retrieved from the name of the package
-     *         of the class.
+     * Retrieves the namespace URI from the given class.<br> The URI is generated using the package name. If the class
+     * is a remote application exception, the "remote" part is removed from the package name.
+     *
+     * @param clazz The class.
+     * @return Returns the namespace uRI retrieved from the name of the package of the class.
      */
     public static String getNamespaceUri(final Class<?> clazz) {
 
         String packageName = clazz.getPackage().getName();
-        packageName =
-            packageName.replaceAll("exceptions\\.remote\\.application",
-                "exceptions.application");
+        packageName = packageName.replaceAll("exceptions\\.remote\\.application", "exceptions.application");
         packageName = packageName.replaceAll("\\.remote\\.", ".");
         StringBuffer ret = new StringBuffer("http://");
         String[] parts = packageName.split("\\.");
@@ -1299,13 +1050,11 @@ public abstract class ClientBase {
     }
 
     /**
-     * Check the given service address if it's base (server_host:port) is the
-     * same as the constant <code>Constants.HOST_PORT</code>. If not
-     * (server_host:port) is changed to the value configured in constant
+     * Check the given service address if it's base (server_host:port) is the same as the constant
+     * <code>Constants.HOST_PORT</code>. If not (server_host:port) is changed to the value configured in constant
      * <code>Constants.HOST_PORT</code>.
-     * 
-     * @param serviceAddress
-     *            The original address.
+     *
+     * @param serviceAddress The original address.
      * @return The resulting address.
      */
     protected String checkSoapAddress(final String serviceAddress) {
@@ -1326,18 +1075,17 @@ public abstract class ClientBase {
     public EngineConfiguration getEngineConfig() {
         FileProvider engineConfig = null;
         final String filename = "client.wsdd";
-        final PathMatchingResourcePatternResolver pathMatchingResourcePatternResolver
-            = new PathMatchingResourcePatternResolver();
+        final PathMatchingResourcePatternResolver pathMatchingResourcePatternResolver =
+            new PathMatchingResourcePatternResolver();
         try {
-            final Resource[] resource =
-                pathMatchingResourcePatternResolver.getResources("classpath*:**/" + filename);
+            final Resource[] resource = pathMatchingResourcePatternResolver.getResources("classpath*:**/" + filename);
             engineConfig = new FileProvider(resource[0].getInputStream());
         }
         catch (final IOException e) {
-            if(LOGGER.isWarnEnabled()) {
+            if (LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on loading configuration.");
             }
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on loading configuration.", e);
             }
         }
@@ -1366,65 +1114,50 @@ public abstract class ClientBase {
 
     /**
      * Deliver configured values for PID behavior.
-     * 
-     * @param var
-     *            name of properties parameter.
-     * @param defValue
-     *            Default value if the parameter is not set.
-     * @return The boolean expression if the property parameter is set to true
-     *         or the parameter is missing and the default values is set to
-     *         true. False otherwise.
+     *
+     * @param var      name of properties parameter.
+     * @param defValue Default value if the parameter is not set.
+     * @return The boolean expression if the property parameter is set to true or the parameter is missing and the
+     *         default values is set to true. False otherwise.
      */
     public final Boolean getPidConfig(final String var, final String defValue) {
         return (Boolean.valueOf(PropertiesProvider.getInstance().getProperty(var, defValue)));
     }
 
     /**
-     * Create a Param structure for PID assignments. The last-modification-date
-     * is retrieved from the by id selected object.
-     * 
-     * @param id
-     *            The object Id
-     * @param url
-     *            URL of the resource (not checked)
-     * @throws Exception
-     *             Thrown if getTheLastModificationDate() fails.
+     * Create a Param structure for PID assignments. The last-modification-date is retrieved from the by id selected
+     * object.
+     *
+     * @param id  The object Id
+     * @param url URL of the resource (not checked)
      * @return param XML snippet.
+     * @throws Exception Thrown if getTheLastModificationDate() fails.
      */
-    protected final String getPidParam(final String id, final String url)
-        throws Exception {
+    protected final String getPidParam(final String id, final String url) throws Exception {
 
         String param =
-            "<param last-modification-date=\"" + getTheLastModificationDate(id)
-                + "\"><url>" + url + "</url></param>";
+            "<param last-modification-date=\"" + getTheLastModificationDate(id) + "\"><url>" + url + "</url></param>";
         return (param);
     }
 
     /**
      * Create a Param structure for PID assignments.
-     * 
-     * @param lstModDate
-     *            The last-modification-date.
-     * @param url
-     *            URL of the resource (not checked)
+     *
+     * @param lstModDate The last-modification-date.
+     * @param url        URL of the resource (not checked)
      * @return param XML snippet.
      */
-    protected final String getPidParam2(
-        final String lstModDate, final String url) {
-        String param =
-            "<param last-modification-date=\"" + lstModDate + "\"><url>" + url
-                + "</url></param>";
+    protected final String getPidParam2(final String lstModDate, final String url) {
+        String param = "<param last-modification-date=\"" + lstModDate + "\"><url>" + url + "</url></param>";
         return (param);
     }
 
     /**
      * Returns the xml data of the provided result.
-     * 
-     * @param result
-     *            The object holding the result.
+     *
+     * @param result The object holding the result.
      * @return Returns the xml string.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     protected String handleXmlResult(final Object result) throws Exception {
 
@@ -1443,17 +1176,14 @@ public abstract class ClientBase {
 
     /**
      * Assert that the http request was successful.
-     * 
-     * @param message
-     *            The message printed if assertion fails.
+     *
+     * @param message The message printed if assertion fails.
      */
-    public static void assertHttpStatusOfMethod(
-        final String message, final HttpResponse httpRes) {
+    public static void assertHttpStatusOfMethod(final String message, final HttpResponse httpRes) {
 
         // httpDelete
         if (httpRes.getStatusLine().getStatusCode() == HttpServletResponse.SC_NO_CONTENT) {
-            assertHttpStatus(message, HttpServletResponse.SC_NO_CONTENT,
-                httpRes);
+            assertHttpStatus(message, HttpServletResponse.SC_NO_CONTENT, httpRes);
             // other httpMethods
         }
         else if (httpRes.getStatusLine().getStatusCode() == HttpServletResponse.SC_OK) {
@@ -1464,33 +1194,25 @@ public abstract class ClientBase {
 
     /**
      * Assert that the http response has the expected status.
-     * 
-     * @param message
-     *            The message printed if assertion fails.
-     * @param expectedStatus
-     *            The expected status.
+     *
+     * @param message        The message printed if assertion fails.
+     * @param expectedStatus The expected status.
      */
-    public static void assertHttpStatus(
-        final String message, final int expectedStatus,
-        final HttpResponse httpRes) {
-        assertEquals(message + " Wrong response status!", expectedStatus,
-            httpRes.getStatusLine().getStatusCode());
+    public static void assertHttpStatus(final String message, final int expectedStatus, final HttpResponse httpRes) {
+        assertEquals(message + " Wrong response status!", expectedStatus, httpRes.getStatusLine().getStatusCode());
     }
 
     /**
      * Assert that the http request was successful.
-     * 
-     * @param message
-     *            The message printed if assertion fails.
+     *
+     * @param message The message printed if assertion fails.
      */
-    public static void assertContentTypeTextXmlUTF8OfMethod(
-        final String message, final HttpResponse httpRes) {
+    public static void assertContentTypeTextXmlUTF8OfMethod(final String message, final HttpResponse httpRes) {
         assertContentType(message, "text/xml", "utf-8", httpRes);
     }
 
     public static void assertContentType(
-        final String message, final String expectedContentType,
-        final String expectedCharset, final HttpResponse httpRes) {
+        final String message, final String expectedContentType, final String expectedCharset, final HttpResponse httpRes) {
         Header[] headers = httpRes.getAllHeaders();
         String contentTypeHeaderValue = null;
         for (int i = 0; i < headers.length && contentTypeHeaderValue == null; ++i) {
@@ -1498,47 +1220,35 @@ public abstract class ClientBase {
                 contentTypeHeaderValue = headers[i].getValue();
             }
         }
-        assertNotNull(
-            "No content-type header found, but expected 'content-type="
-                + expectedContentType + ";" + expectedCharset + "'",
-            contentTypeHeaderValue);
-        assertTrue("Wrong content-type found, expected '" + expectedContentType
-            + "' but was '" + contentTypeHeaderValue + "'",
-            contentTypeHeaderValue.indexOf(expectedContentType) > -1);
-        assertTrue("Wrong charset found, expected '" + expectedCharset
-            + "' but was '" + contentTypeHeaderValue + "'",
+        assertNotNull("No content-type header found, but expected 'content-type=" + expectedContentType + ";"
+            + expectedCharset + "'", contentTypeHeaderValue);
+        assertTrue("Wrong content-type found, expected '" + expectedContentType + "' but was '"
+            + contentTypeHeaderValue + "'", contentTypeHeaderValue.indexOf(expectedContentType) > -1);
+        assertTrue("Wrong charset found, expected '" + expectedCharset + "' but was '" + contentTypeHeaderValue + "'",
             contentTypeHeaderValue.indexOf(expectedContentType) > -1);
     }
 
     /**
      * Get the response body as an String encoded with UTF-8.
-     * 
+     *
      * @return The response body.
-     * @throws UnsupportedEncodingException
-     *             If UTF-8 is not supported.
-     * @throws IOException
-     *             If the response body is not valid.
+     * @throws UnsupportedEncodingException If UTF-8 is not supported.
+     * @throws IOException                  If the response body is not valid.
      */
-    protected String getResponseBodyAsUTF8(final HttpResponse httpRes)
-        throws UnsupportedEncodingException, IOException {
+    protected String getResponseBodyAsUTF8(final HttpResponse httpRes) throws UnsupportedEncodingException, IOException {
 
         return EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
     }
 
     /**
      * Return the child of the node selected by the xPath.
-     * 
-     * @param node
-     *            The node.
-     * 
-     * @param xPath
-     *            The xPath.
+     *
+     * @param node  The node.
+     * @param xPath The xPath.
      * @return The child of the node selected by the xPath.
-     * @throws TransformerException
-     *             If anything fails.
+     * @throws TransformerException If anything fails.
      */
-    public static Node selectSingleNode(final Node node, final String xPath)
-        throws TransformerException {
+    public static Node selectSingleNode(final Node node, final String xPath) throws TransformerException {
 
         Node result = XPathAPI.selectSingleNode(node, xPath);
         return result;
@@ -1546,11 +1256,9 @@ public abstract class ClientBase {
 
     /**
      * Remove version informaion from given objid.
-     * 
-     * @param objid
-     *            The objid.
-     * @return The objid without version information.
      *
+     * @param objid The objid.
+     * @return The objid without version information.
      */
     public static String getObjidWithoutVersion(final String objid) {
 
@@ -1564,11 +1272,9 @@ public abstract class ClientBase {
 
     /**
      * Select the Version Number from the object Identifier.
-     * 
-     * @param objid
-     *            The object Id.
-     * @return The version number as String or null if no number could be
-     *         recognized.
+     *
+     * @param objid The object Id.
+     * @return The version number as String or null if no number could be recognized.
      */
     public String getVersionNumber(final String objid) {
         String version = null;
@@ -1581,9 +1287,8 @@ public abstract class ClientBase {
 
     /**
      * Extract ID from href.
-     * 
-     * @param val
-     *            href
+     *
+     * @param val href
      * @return id
      */
     public String getIdFromHrefValue(final String val) {
@@ -1598,46 +1303,35 @@ public abstract class ClientBase {
 
     /**
      * Gets the last modification date from the Resource.
-     * 
-     * @param id
-     *            The id of the Resource.
+     *
+     * @param id The id of the Resource.
      * @return last-modification-date
-     * @throws Exception
-     *             Thrown if anything fails.
+     * @throws Exception Thrown if anything fails.
      */
     public String getTheLastModificationDate(final String id) throws Exception {
-        Document resource =
-            EscidocRestSoapTestBase.getDocument(handleXmlResult(retrieve(id)));
+        Document resource = EscidocRestSoapTestBase.getDocument(handleXmlResult(retrieve(id)));
 
         // get last-modification-date
         NamedNodeMap atts = resource.getDocumentElement().getAttributes();
-        Node lastModificationDateNode =
-            atts.getNamedItem("last-modification-date");
+        Node lastModificationDateNode = atts.getNamedItem("last-modification-date");
         return (lastModificationDateNode.getNodeValue());
     }
 
     /**
      * Get id of latest version of object (item, container).
-     * 
-     * @param document
-     *            The item or container document.
+     *
+     * @param document The item or container document.
      * @return The latest version objid.
-     * @throws Exception
-     *             Thrown if parsing fails.
+     * @throws Exception Thrown if parsing fails.
      */
-    public String getLatestVersionObjidValue(final Document document)
-        throws Exception {
+    public String getLatestVersionObjidValue(final Document document) throws Exception {
         String id = null;
 
         if (getTransport() == Constants.TRANSPORT_REST) {
-            id =
-                getIdFromHrefValue(selectSingleNode(document,
-                    "//properties/version/@href").getTextContent());
+            id = getIdFromHrefValue(selectSingleNode(document, "//properties/version/@href").getTextContent());
         }
         else {
-            id =
-                selectSingleNode(document, "//properties/version/@objid")
-                    .getTextContent();
+            id = selectSingleNode(document, "//properties/version/@objid").getTextContent();
         }
 
         return (id);
@@ -1645,12 +1339,10 @@ public abstract class ClientBase {
 
     /**
      * Handles the result of a base service access.
-     * 
-     * @param result
-     *            The result to handle.
+     *
+     * @param result The result to handle.
      * @return Returns the xml response.
-     * @throws Exception
-     *             Thrown if anything fails.
+     * @throws Exception Thrown if anything fails.
      */
     public String handleResult(final Object result) throws Exception {
 
@@ -1668,12 +1360,10 @@ public abstract class ClientBase {
 
     /**
      * Handles the binary result of a base service access.
-     * 
-     * @param result
-     *            The result to handle.
+     *
+     * @param result The result to handle.
      * @return Returns response InputStream.
-     * @throws Exception
-     *             Thrown if anything fails.
+     * @throws Exception Thrown if anything fails.
      */
     public InputStream handleBinaryResult(final Object result) throws Exception {
 
@@ -1687,12 +1377,10 @@ public abstract class ClientBase {
 
     /**
      * Gets the root element of the provided document.
-     * 
-     * @param doc
-     *            The document to get the root element from.
+     *
+     * @param doc The document to get the root element from.
      * @return Returns the first child of the document htat is an element node.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     public static Element getRootElement(final Document doc) throws Exception {
 
@@ -1708,39 +1396,28 @@ public abstract class ClientBase {
 
     /**
      * Assert that the Element/Attribute selected by the xPath exists.
-     * 
-     * @param message
-     *            The message printed if assertion fails.
-     * @param node
-     *            The Node.
-     * @param xPath
-     *            The xPath.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param message The message printed if assertion fails.
+     * @param node    The Node.
+     * @param xPath   The xPath.
+     * @throws Exception If anything fails.
      */
-    public static void assertXmlExists(
-        final String message, final Node node, final String xPath)
-        throws Exception {
+    public static void assertXmlExists(final String message, final Node node, final String xPath) throws Exception {
 
         NodeList nodes = XPathAPI.selectNodeList(node, xPath);
         assertTrue(message, nodes.getLength() > 0);
     }
 
     /**
-     * Gets the value of the specified attribute of the root element from the
-     * document.
-     * 
-     * @param document
-     *            The document to retrieve the value from.
-     * @param attributeName
-     *            The name of the attribute whose value shall be retrieved.
+     * Gets the value of the specified attribute of the root element from the document.
+     *
+     * @param document      The document to retrieve the value from.
+     * @param attributeName The name of the attribute whose value shall be retrieved.
      * @return Returns the attribute value.
-     * @throws Exception
-     *             If anything fails.
-     * @throws TransformerException
+     * @throws Exception If anything fails.
      */
-    public static String getRootElementAttributeValue(
-        final Document document, final String attributeName) throws Exception {
+    public static String getRootElementAttributeValue(final Document document, final String attributeName)
+        throws Exception {
 
         Node root = getRootElement(document);
 
@@ -1752,8 +1429,7 @@ public abstract class ClientBase {
         else {
             xPath = "/*/@" + attributeName;
         }
-        assertXmlExists("Attribute not found [" + attributeName + "]. ",
-            document, xPath);
+        assertXmlExists("Attribute not found [" + attributeName + "]. ", document, xPath);
         final Node attr = selectSingleNode(root, xPath);
         assertNotNull("Attribute not found [" + attributeName + "]. ", attr);
         String value = attr.getTextContent();
@@ -1762,28 +1438,23 @@ public abstract class ClientBase {
 
     /**
      * Get the task param including the last-modification-date.
-     * 
-     * @param timestamp
-     *            If not null the last-modification-date is set to timestamp.
+     *
+     * @param timestamp If not null the last-modification-date is set to timestamp.
      * @return The task param.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     public static String getTaskParam(final String timestamp) throws Exception {
         String result = null;
 
         if (timestamp != null) {
             final Node document =
-                substitute(EscidocRestSoapTestBase.getTemplateAsDocument(
-                    TEMPLATE_OM_COMMON_PATH,
-                    "task_param_last_modification_date.xml"),
-                    "/param/@last-modification-date", timestamp);
+                substitute(EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_OM_COMMON_PATH,
+                    "task_param_last_modification_date.xml"), "/param/@last-modification-date", timestamp);
             result = toString(document, false);
         }
         else {
             result =
-                EscidocRestSoapTestBase.getTemplateAsString(
-                    TEMPLATE_OM_COMMON_PATH,
+                EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_OM_COMMON_PATH,
                     "task_param_last_modification_date.xml");
         }
         return result;
@@ -1791,17 +1462,13 @@ public abstract class ClientBase {
 
     /**
      * Serialize the given Dom Object to a String.
-     * 
-     * @param xml
-     *            The Xml Node to serialize.
-     * @param omitXMLDeclaration
-     *            Indicates if XML declaration will be omitted.
+     *
+     * @param xml                The Xml Node to serialize.
+     * @param omitXMLDeclaration Indicates if XML declaration will be omitted.
      * @return The String representation of the Xml Node.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    public static String toString(
-        final Node xml, final boolean omitXMLDeclaration) throws Exception {
+    public static String toString(final Node xml, final boolean omitXMLDeclaration) throws Exception {
 
         String result = new String();
         if (xml instanceof AttrImpl) {
@@ -1823,10 +1490,8 @@ public abstract class ClientBase {
             result = stringOut.toString();
         }
         else {
-            DOMImplementationRegistry registry =
-                DOMImplementationRegistry.newInstance();
-            DOMImplementationLS impl =
-                (DOMImplementationLS) registry.getDOMImplementation("LS");
+            DOMImplementationRegistry registry = DOMImplementationRegistry.newInstance();
+            DOMImplementationLS impl = (DOMImplementationLS) registry.getDOMImplementation("LS");
             LSOutput lsOutput = impl.createLSOutput();
             lsOutput.setEncoding(DEFAULT_CHARSET);
 
@@ -1835,9 +1500,7 @@ public abstract class ClientBase {
             LSSerializer writer = impl.createLSSerializer();
             // result = writer.writeToString(xml);
             writer.write(xml, lsOutput);
-            result =
-                ((ByteArrayOutputStream) lsOutput.getByteStream())
-                    .toString(DEFAULT_CHARSET);
+            result = ((ByteArrayOutputStream) lsOutput.getByteStream()).toString(DEFAULT_CHARSET);
             if ((omitXMLDeclaration) && (result.indexOf("?>") != -1)) {
                 result = result.substring(result.indexOf("?>") + 2);
             }
@@ -1849,14 +1512,12 @@ public abstract class ClientBase {
 
     /**
      * Serialize the given InputStream to a String.
-     * 
+     *
      * @param inputStream intutStream
      * @return The String representation of the InputStream.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    public static String toString(
-        final InputStream inputStream) throws Exception {
+    public static String toString(final InputStream inputStream) throws Exception {
 
         ByteArrayOutputStream out = null;
         String contentString = null;
@@ -1869,19 +1530,23 @@ public abstract class ClientBase {
                     out.write(bytes, 0, i);
                 }
                 out.flush();
-                contentString = new String(
-                    out.toByteArray(), HttpHelper.HTTP_DEFAULT_CHARSET);
+                contentString = new String(out.toByteArray(), HttpHelper.HTTP_DEFAULT_CHARSET);
             }
-        } finally {
+        }
+        finally {
             if (inputStream != null) {
                 try {
                     inputStream.close();
-                } catch (final IOException e) {}
+                }
+                catch (final IOException e) {
+                }
             }
             if (out != null) {
                 try {
                     out.close();
-                } catch (final IOException e) {}
+                }
+                catch (final IOException e) {
+                }
             }
         }
         return contentString;
@@ -1889,14 +1554,12 @@ public abstract class ClientBase {
 
     /**
      * Serialize the given InputStream to a byte[].
-     * 
+     *
      * @param inputStream inputStream
      * @return The byte[] representation of the InputStream.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    public static byte[] toByteArray(
-        final InputStream inputStream) throws Exception {
+    public static byte[] toByteArray(final InputStream inputStream) throws Exception {
 
         ByteArrayOutputStream out = null;
         byte[] returnBytes = null;
@@ -1911,42 +1574,39 @@ public abstract class ClientBase {
                 out.flush();
                 returnBytes = out.toByteArray();
             }
-        } finally {
+        }
+        finally {
             if (inputStream != null) {
                 try {
                     inputStream.close();
-                } catch (final IOException e) {}
+                }
+                catch (final IOException e) {
+                }
             }
             if (out != null) {
                 try {
                     out.close();
-                } catch (final IOException e) {}
+                }
+                catch (final IOException e) {
+                }
             }
         }
         return returnBytes;
     }
 
     /**
-     * Substitute the element selected by the xPath in the given node with the
-     * new value.
-     * 
-     * @param node
-     *            The node.
-     * @param xPath
-     *            The xPath.
-     * @param newValue
-     *            The newValue.
+     * Substitute the element selected by the xPath in the given node with the new value.
+     *
+     * @param node     The node.
+     * @param xPath    The xPath.
+     * @param newValue The newValue.
      * @return The resulting node after the substitution.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    public static Node substitute(
-        final Node node, final String xPath, final String newValue)
-        throws Exception {
+    public static Node substitute(final Node node, final String xPath, final String newValue) throws Exception {
         Node result = node;
         Node replace = selectSingleNode(result, xPath);
-        assertNotNull("No node found for specified xpath [" + xPath + "]",
-            replace);
+        assertNotNull("No node found for specified xpath [" + xPath + "]", replace);
         // if (replace.getNodeType() == Node.ELEMENT_NODE) {
         replace.setTextContent(newValue);
         // }

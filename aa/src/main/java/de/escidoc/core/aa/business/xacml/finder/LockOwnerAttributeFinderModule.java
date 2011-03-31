@@ -38,50 +38,32 @@ import de.escidoc.core.common.exceptions.EscidocException;
 import java.util.regex.Pattern;
 
 /**
- * Implementation of an XACML attribute finder module that is responsible for
- * the lock-owner attribute.<br>
- * 
- * Supported Attributes:<br>
- * -info:escidoc/names:aa:1.0:resource:container:lock-owner<br>
- * the id of the user who locked the container, single value attribute
- * -info:escidoc/names:aa:1.0:resource:item:lock-owner<br>
- * the id of the user who locked the item, single value attribute
+ * Implementation of an XACML attribute finder module that is responsible for the lock-owner attribute.<br>
+ * <p/>
+ * Supported Attributes:<br> -info:escidoc/names:aa:1.0:resource:container:lock-owner<br> the id of the user who locked
+ * the container, single value attribute -info:escidoc/names:aa:1.0:resource:item:lock-owner<br> the id of the user who
+ * locked the item, single value attribute
  *
  * @author Michael Hoppe
  */
-public class LockOwnerAttributeFinderModule
-    extends AbstractAttributeFinderModule {
+public class LockOwnerAttributeFinderModule extends AbstractAttributeFinderModule {
 
-    private static final Pattern PATTERN_VALID_ATTRIBUTE_ID = Pattern
-        .compile(AttributeIds.CONTAINER_ATTR_PREFIX + "lock-owner|"
-            + AttributeIds.ITEM_ATTR_PREFIX + "lock-owner");
+    private static final Pattern PATTERN_VALID_ATTRIBUTE_ID =
+        Pattern.compile(AttributeIds.CONTAINER_ATTR_PREFIX + "lock-owner|" + AttributeIds.ITEM_ATTR_PREFIX
+            + "lock-owner");
 
     private LockHandler lockHandler;
 
-
-
     /**
      * See Interface for functional description.
-     * 
-     * @param attributeIdValue
-     * @param ctx
-     * @param resourceId
-     * @param resourceObjid
-     * @param resourceVersionNumber
-     * @param designatorType
-     * @return
-     * @throws EscidocException
-     *
      */
     @Override
     protected boolean assertAttribute(
-        final String attributeIdValue, final EvaluationCtx ctx,
-        final String resourceId, final String resourceObjid,
-        final String resourceVersionNumber, final int designatorType)
-        throws EscidocException {
+        final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
+        final String resourceVersionNumber, final int designatorType) throws EscidocException {
 
-        if (!super.assertAttribute(attributeIdValue, ctx, resourceId,
-            resourceObjid, resourceVersionNumber, designatorType)) {
+        if (!super.assertAttribute(attributeIdValue, ctx, resourceId, resourceObjid, resourceVersionNumber,
+            designatorType)) {
 
             return false;
         }
@@ -93,34 +75,22 @@ public class LockOwnerAttributeFinderModule
 
     /**
      * See Interface for functional description.
-     * 
-     * @param attributeIdValue
-     * @param ctx
-     * @param resourceId
-     * @param resourceObjid
-     * @param resourceVersionNumber
-     * @return
-     * @throws EscidocException
-     *
      */
     @Override
     protected Object[] resolveLocalPart(
-        final String attributeIdValue, final EvaluationCtx ctx,
-        final String resourceId, final String resourceObjid,
+        final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
         final String resourceVersionNumber) throws EscidocException {
 
         final String lockOwner = lockHandler.getLockOwner(resourceId);
-        final EvaluationResult result = CustomEvaluationResultBuilder
-                .createSingleStringValueResult(lockOwner);
+        final EvaluationResult result = CustomEvaluationResultBuilder.createSingleStringValueResult(lockOwner);
         return new Object[] { result, attributeIdValue };
 
     }
 
     /**
      * Injects the lock handler if "called" via Spring.
-     * 
-     * @param lockHandler
-     *            The lock handler.
+     *
+     * @param lockHandler The lock handler.
      */
     public void setLockHandler(final LockHandler lockHandler) {
         this.lockHandler = lockHandler;

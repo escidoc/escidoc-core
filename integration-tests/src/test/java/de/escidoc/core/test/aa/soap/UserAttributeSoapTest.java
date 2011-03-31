@@ -35,18 +35,16 @@ import org.junit.runners.JUnit4;
 
 /**
  * Testsuite for the UserAccount's Attributes with SOAP transport.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 @RunWith(JUnit4.class)
 public class UserAttributeSoapTest extends UserAttributeAbstractTest {
 
     /**
      * Constructor.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     public UserAttributeSoapTest() throws Exception {
         super(Constants.TRANSPORT_SOAP);

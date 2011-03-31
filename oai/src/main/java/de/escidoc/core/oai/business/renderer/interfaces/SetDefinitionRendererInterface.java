@@ -36,42 +36,29 @@ import java.util.List;
 
 /**
  * Interface of an user group renderer.
- * 
- * @author Rozita Friedman
  *
+ * @author Rozita Friedman
  */
 public interface SetDefinitionRendererInterface {
 
     /**
      * Gets the representation of a set definition.
-     * 
-     * @param setDefinition
-     *            The set definition to render.
-     * 
-     * @return Returns the XML representation of the set definition.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
      *
+     * @param setDefinition The set definition to render.
+     * @return Returns the XML representation of the set definition.
+     * @throws SystemException Thrown in case of an internal error.
      */
     String render(final SetDefinition setDefinition) throws SystemException;
 
     /**
      * Gets the representation of a list of the provided set definitions.
-     * 
-     * @param setDefinitions
-     *            The <code>List</code> of
-     *            {@link SetDefinition}
-     *            objects to render.
-     * @param recordPacking
-     *            A string to determine how the record should be escaped in the
-     *            response. Defined values are 'string' and 'xml'. The default
-     *            is 'xml'.
-     * 
+     *
+     * @param setDefinitions The <code>List</code> of {@link SetDefinition} objects to render.
+     * @param recordPacking  A string to determine how the record should be escaped in the response. Defined values are
+     *                       'string' and 'xml'. The default is 'xml'.
      * @return Returns the XML representation of the list of set definitions.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     * @throws SystemException Thrown in case of an internal error.
      */
-    String renderSetDefinitions(
-        final List<SetDefinition> setDefinitions,
-        final RecordPacking recordPacking) throws SystemException;
+    String renderSetDefinitions(final List<SetDefinition> setDefinitions, final RecordPacking recordPacking)
+        throws SystemException;
 }

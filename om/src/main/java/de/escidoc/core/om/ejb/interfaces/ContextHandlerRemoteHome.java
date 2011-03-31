@@ -10,9 +10,9 @@ import java.rmi.RemoteException;
 public interface ContextHandlerRemoteHome extends EJBHome {
 
     String COMP_NAME = "java:comp/env/ejb/ContextHandler";
+
     String JNDI_NAME = "ejb/ContextHandler";
 
-    ContextHandlerRemote create()
-            throws CreateException, RemoteException;
+    ContextHandlerRemote create() throws CreateException, RemoteException;
 
 }

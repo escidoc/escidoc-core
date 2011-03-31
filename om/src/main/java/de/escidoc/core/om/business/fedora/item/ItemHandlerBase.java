@@ -67,25 +67,20 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Contains base functionality of FedoraItemHandler. Is extended at least by
- * FedoraItemHandler.
- * 
+ * Contains base functionality of FedoraItemHandler. Is extended at least by FedoraItemHandler.
+ *
  * @author Frank Schwichtenberg
- * 
  */
 public class ItemHandlerBase extends HandlerBase {
 
     private static final String ERROR_MSG_NO_HTTP_PROTOCOL =
-        "The url has a wrong protocol."
-            + " The protocol must be a http protocol.";
+        "The url has a wrong protocol." + " The protocol must be a http protocol.";
 
-    private static final Pattern PATTERN_ERROR_GETTING = Pattern.compile(
-        "fedora.server.errors.GeneralException: Error getting",
-        Pattern.CASE_INSENSITIVE);
+    private static final Pattern PATTERN_ERROR_GETTING =
+        Pattern.compile("fedora.server.errors.GeneralException: Error getting", Pattern.CASE_INSENSITIVE);
 
-    private static final Pattern PATTERN_MALFORMED_URL = Pattern
-        .compile("fedora.server.errors.ObjectIntegrityException: "
-            + "FOXML IO stream was bad : Malformed URL");
+    private static final Pattern PATTERN_MALFORMED_URL =
+        Pattern.compile("fedora.server.errors.ObjectIntegrityException: " + "FOXML IO stream was bad : Malformed URL");
 
     private Item item;
 
@@ -97,31 +92,22 @@ public class ItemHandlerBase extends HandlerBase {
 
     /**
      * Upload the content (a base64 encoded byte stream) to the staging area.
-     * 
-     * @param content
-     *            Base64 encoded byte stream.
-     * @param fileName
-     *            The file name.
-     * @param mimeType
-     *            The mime type of the content.
-     * @return The url to the staging area where the resulting file is
-     *         accessible.
-     * @throws WebserverSystemException
-     *             In case of an internal error during decoding or storing the
-     *             content.
+     *
+     * @param content  Base64 encoded byte stream.
+     * @param fileName The file name.
+     * @param mimeType The mime type of the content.
+     * @return The url to the staging area where the resulting file is accessible.
+     * @throws WebserverSystemException In case of an internal error during decoding or storing the content.
      */
-    final String uploadBase64EncodedContent(
-            final String content, final String fileName, final String mimeType)
+    final String uploadBase64EncodedContent(final String content, final String fileName, final String mimeType)
         throws WebserverSystemException {
         final String uploadUrl;
         try {
             final byte[] streamContent = Base64.decodeBase64(content.getBytes());
-            uploadUrl =
-                Utility.getInstance().upload(streamContent, fileName, mimeType);
+            uploadUrl = Utility.getInstance().upload(streamContent, fileName, mimeType);
         }
         catch (final FileSystemException e) {
-            throw new WebserverSystemException(
-                "Error while uploading of content to the staging area. ", e);
+            throw new WebserverSystemException("Error while uploading of content to the staging area. ", e);
         }
 
         return uploadUrl;
@@ -129,7 +115,7 @@ public class ItemHandlerBase extends HandlerBase {
 
     /**
      * Returns an instance of ItemXmlProvider.
-     * 
+     *
      * @return ItemXmlProvider.
      */
     final ItemXmlProvider getItemXmlProvider() {
@@ -138,7 +124,7 @@ public class ItemHandlerBase extends HandlerBase {
 
     /**
      * Returns an instance of RelationsXmlProvider.
-     * 
+     *
      * @return RelationsXmlProvider.
      */
     protected RelationsXmlProvider getRelationsXmlProvider() {
@@ -147,9 +133,8 @@ public class ItemHandlerBase extends HandlerBase {
     }
 
     /**
-     * Returns the item that is managed by this ItemHandler. Every service
-     * method has to call setItem().
-     * 
+     * Returns the item that is managed by this ItemHandler. Every service method has to call setItem().
+     *
      * @return the item
      */
     final Item getItem() {
@@ -157,9 +142,9 @@ public class ItemHandlerBase extends HandlerBase {
     }
 
     /**
-     * Returns the origin item of the surrogate item that is managed by this
-     * ItemHandler. Every service method has to call setOriginItem().
-     * 
+     * Returns the origin item of the surrogate item that is managed by this ItemHandler. Every service method has to
+     * call setOriginItem().
+     *
      * @return the item
      */
     final Item getOriginItem() {
@@ -167,18 +152,13 @@ public class ItemHandlerBase extends HandlerBase {
     }
 
     /**
-     * Bounds a Item object to this handler. Subsequent calls to this method
-     * have no effect.
-     * 
-     * @param id
-     *            The ID of the item which should be bound to this Handler.
-     * @throws ItemNotFoundException
-     *             If there is no item with <code>id</code> in the repository.
-     * @throws SystemException
-     *             Thrown in case of an internal system error.
+     * Bounds a Item object to this handler. Subsequent calls to this method have no effect.
+     *
+     * @param id The ID of the item which should be bound to this Handler.
+     * @throws ItemNotFoundException If there is no item with <code>id</code> in the repository.
+     * @throws SystemException       Thrown in case of an internal system error.
      */
-    final void setItem(final String id) throws ItemNotFoundException,
-        SystemException {
+    final void setItem(final String id) throws ItemNotFoundException, SystemException {
 
         try {
             this.item = new Item(id);
@@ -192,18 +172,13 @@ public class ItemHandlerBase extends HandlerBase {
     }
 
     /**
-     * Bounds an OriginItem of an SurrogateItem object to this handler.
-     * Subsequent calls to this method have no effect.
-     * 
-     * @param id
-     *            The ID of the item which should be bound to this Handler.
-     * @throws ItemNotFoundException
-     *             If there is no item with <code>id</code> in the repository.
-     * @throws SystemException
-     *             Thrown in case of an internal system error.
+     * Bounds an OriginItem of an SurrogateItem object to this handler. Subsequent calls to this method have no effect.
+     *
+     * @param id The ID of the item which should be bound to this Handler.
+     * @throws ItemNotFoundException If there is no item with <code>id</code> in the repository.
+     * @throws SystemException       Thrown in case of an internal system error.
      */
-    final void setOriginItem(final String id) throws ItemNotFoundException,
-        SystemException {
+    final void setOriginItem(final String id) throws ItemNotFoundException, SystemException {
         try {
             this.originItem = new Item(id);
         }
@@ -217,9 +192,8 @@ public class ItemHandlerBase extends HandlerBase {
     }
 
     /**
-     * Unbounds an OriginItem of an SurrogateItem object from this handler.
-     * Subsequent calls to this method have no effect.
-     * 
+     * Unbounds an OriginItem of an SurrogateItem object from this handler. Subsequent calls to this method have no
+     * effect.
      */
     final void resetOriginItem() {
         this.originItem = null;
@@ -227,11 +201,9 @@ public class ItemHandlerBase extends HandlerBase {
     }
 
     /**
-     * Bounds an OriginItem of an SurrogateItem object to this handler.
-     * Subsequent calls to this method have no effect.
-     * 
-     * @param originItem
-     *            The item which should be bound to this Handler.
+     * Bounds an OriginItem of an SurrogateItem object to this handler. Subsequent calls to this method have no effect.
+     *
+     * @param originItem The item which should be bound to this Handler.
      */
     final void setOriginItem(final Item originItem) {
         this.originItem = originItem;
@@ -239,45 +211,37 @@ public class ItemHandlerBase extends HandlerBase {
     }
 
     /**
-     * Returns the specified component if it belongs to this item. Every service
-     * method has to call setItem() first.
-     * 
-     * @param id
-     *            ID of the component.
+     * Returns the specified component if it belongs to this item. Every service method has to call setItem() first.
+     *
+     * @param id ID of the component.
      * @return The requested component object or null.
-     * @throws ComponentNotFoundException
-     *             Thrown if Component with provided objid could not be found.
-     * @throws SystemException
-     *             Thrown in case of internal error.
+     * @throws ComponentNotFoundException Thrown if Component with provided objid could not be found.
+     * @throws SystemException            Thrown in case of internal error.
      */
-    final Component getComponent(final String id)
-        throws ComponentNotFoundException, SystemException {
+    final Component getComponent(final String id) throws ComponentNotFoundException, SystemException {
 
         Component c;
         try {
             c = getOriginItem() != null ? getOriginItem().getComponent(id) : getItem().getComponent(id);
         }
         catch (final ComponentNotFoundException e) {
-            c = getOriginItem() != null ? getOriginItem().getComponentByLocalName(id) : getItem().getComponentByLocalName(id);
+            c =
+                getOriginItem() != null ? getOriginItem().getComponentByLocalName(id) : getItem()
+                    .getComponentByLocalName(id);
         }
         return c;
     }
 
     /**
      * Get versions datastream of the item.
-     * 
+     *
      * @return The versions datastream.
-     * @throws StreamNotFoundException
-     *             If a datastream can not be retrieved.
-     * @throws FedoraSystemException
-     *             If Fedora reports an error.
-     * @throws EncodingSystemException
-     *             In case of an encoding failure.
-     * @throws WebserverSystemException
-     *             Thrown in case of internal error.
+     * @throws StreamNotFoundException  If a datastream can not be retrieved.
+     * @throws FedoraSystemException    If Fedora reports an error.
+     * @throws EncodingSystemException  In case of an encoding failure.
+     * @throws WebserverSystemException Thrown in case of internal error.
      */
-    final String getVersions() throws StreamNotFoundException,
-        FedoraSystemException, EncodingSystemException,
+    final String getVersions() throws StreamNotFoundException, FedoraSystemException, EncodingSystemException,
         WebserverSystemException {
 
         return getItem().getWov().toStringUTF8();
@@ -285,54 +249,39 @@ public class ItemHandlerBase extends HandlerBase {
 
     /**
      * Check if the item is locked.
-     * 
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
-     * @throws LockingException
-     *             If the item is locked and the current user is not the one who
-     *             locked it.
+     *
+     * @throws WebserverSystemException Thrown in case of an internal error.
+     * @throws LockingException         If the item is locked and the current user is not the one who locked it.
      */
-    final void checkLocked() throws LockingException,
-        WebserverSystemException {
-        if (getItem().isLocked()
-            && !getItem().getLockOwner().equals(
-                Utility.getCurrentUser()[0])) {
-            throw new LockingException("Item + " + getItem().getId()
-                + " is locked by " + getItem().getLockOwner() + '.');
+    final void checkLocked() throws LockingException, WebserverSystemException {
+        if (getItem().isLocked() && !getItem().getLockOwner().equals(Utility.getCurrentUser()[0])) {
+            throw new LockingException("Item + " + getItem().getId() + " is locked by " + getItem().getLockOwner()
+                + '.');
         }
     }
 
     /**
      * Check if the requested item version is the latest version.
-     * 
-     * @throws ReadonlyVersionException
-     *             If the requested item version is not the latest one.
-     * 
+     *
+     * @throws ReadonlyVersionException If the requested item version is not the latest one.
      */
     final void checkLatestVersion() throws ReadonlyVersionException {
         final String thisVersion = getItem().getVersionNumber();
-        if (thisVersion != null
-            && !thisVersion.equals(getItem().getLatestVersionNumber())) {
-            throw new ReadonlyVersionException(
-                "Only latest version can be modified.");
+        if (thisVersion != null && !thisVersion.equals(getItem().getLatestVersionNumber())) {
+            throw new ReadonlyVersionException("Only latest version can be modified.");
         }
     }
 
     /**
      * Check release status of object.
-     * 
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
-     * @throws InvalidStatusException
-     *             Thrown if object is not in status released.
-     * @throws TripleStoreSystemException
-     *             If the triple store reports an error.
+     *
+     * @throws WebserverSystemException   Thrown in case of an internal error.
+     * @throws InvalidStatusException     Thrown if object is not in status released.
+     * @throws TripleStoreSystemException If the triple store reports an error.
      */
-    final void checkReleased() throws InvalidStatusException,
-        TripleStoreSystemException, WebserverSystemException {
+    final void checkReleased() throws InvalidStatusException, TripleStoreSystemException, WebserverSystemException {
 
-        final String status =
-            getItem().getProperty(PropertyMapKeys.PUBLIC_STATUS);
+        final String status = getItem().getProperty(PropertyMapKeys.PUBLIC_STATUS);
         // TripleStoreUtility.getInstance().getPropertiesElements(
         // getItem().getId(), TripleStoreUtility.PROP_PUBLIC_STATUS);
         // In first release, if object is once released no changes are allowed
@@ -346,98 +295,74 @@ public class ItemHandlerBase extends HandlerBase {
             // getItem().getId(),
             // TripleStoreUtility.PROP_LATEST_VERSION_STATUS).equals(
             // Constants.STATUS_RELEASED)) {
-            if (getItem().getProperty(
-                PropertyMapKeys.LATEST_VERSION_VERSION_STATUS).equals(
-                Constants.STATUS_RELEASED)) {
+            if (getItem().getProperty(PropertyMapKeys.LATEST_VERSION_VERSION_STATUS).equals(Constants.STATUS_RELEASED)) {
                 throw new InvalidStatusException("The object is in state '" + Constants.STATUS_RELEASED
-                        + "' and can not be" + " changed.");
+                    + "' and can not be" + " changed.");
             }
         }
     }
 
     /**
-     * Check status of a Context. An invalidStatusException is thrown if the
-     * Context has not the requested status.
-     * 
-     * @param contextId
-     *            The Id of the Context.
-     * @param status
-     *            The expected status of the Context.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
-     * @throws InvalidStatusException
-     *             Thrown if the Context is not in the requested status.
-     * @throws TripleStoreSystemException
-     *             If the triple store reports an error.
+     * Check status of a Context. An invalidStatusException is thrown if the Context has not the requested status.
+     *
+     * @param contextId The Id of the Context.
+     * @param status    The expected status of the Context.
+     * @throws WebserverSystemException   Thrown in case of an internal error.
+     * @throws InvalidStatusException     Thrown if the Context is not in the requested status.
+     * @throws TripleStoreSystemException If the triple store reports an error.
      */
-    final void checkContextStatus(
-            final String contextId, final String status)
-        throws InvalidStatusException, TripleStoreSystemException,
-        WebserverSystemException {
+    final void checkContextStatus(final String contextId, final String status) throws InvalidStatusException,
+        TripleStoreSystemException, WebserverSystemException {
 
         if (contextId == null || status == null) {
-            throw new WebserverSystemException(
-                "Context id and status must not be 'null' for check "
-                    + "context status.");
+            throw new WebserverSystemException("Context id and status must not be 'null' for check "
+                + "context status.");
         }
         final String curStatus =
-            getTripleStoreUtility().getPropertiesElements(contextId,
-                TripleStoreUtility.PROP_PUBLIC_STATUS);
+            getTripleStoreUtility().getPropertiesElements(contextId, TripleStoreUtility.PROP_PUBLIC_STATUS);
         if (curStatus == null || curStatus.length() == 0) {
             throw new WebserverSystemException("Can not get status of context " + contextId + '.');
         }
         // In first release, if object is once released no changes are allowed
         if (!curStatus.equals(status)) {
             throw new InvalidStatusException("The Context '" + contextId + "' is in state '" + curStatus
-                    + "' and not in status " + status + '.');
+                + "' and not in status " + status + '.');
         }
     }
 
     /**
      * Check if item is tagged with status released.
-     * 
-     * @throws InvalidStatusException
-     *             If item status is not released.
-     * @throws WebserverSystemException
-     *             In case of an internal error.
-     * @throws TripleStoreSystemException
-     *             If the triple store reports an error.
+     *
+     * @throws InvalidStatusException     If item status is not released.
+     * @throws WebserverSystemException   In case of an internal error.
+     * @throws TripleStoreSystemException If the triple store reports an error.
      */
-    protected void checkNotReleased() throws InvalidStatusException,
-        TripleStoreSystemException, WebserverSystemException {
+    protected void checkNotReleased() throws InvalidStatusException, TripleStoreSystemException,
+        WebserverSystemException {
         checkNotStatus(Constants.STATUS_RELEASED);
     }
 
     /**
      * Check if item is not submitted.
-     * 
-     * @throws InvalidStatusException
-     *             If item status is not released.
-     * @throws TripleStoreSystemException
-     *             If the triple store reports an error.
-     * @throws WebserverSystemException
-     *             In case of an internal error.
+     *
+     * @throws InvalidStatusException     If item status is not released.
+     * @throws TripleStoreSystemException If the triple store reports an error.
+     * @throws WebserverSystemException   In case of an internal error.
      */
-    protected void checkNotSubmitted() throws InvalidStatusException,
-        TripleStoreSystemException, WebserverSystemException {
+    protected void checkNotSubmitted() throws InvalidStatusException, TripleStoreSystemException,
+        WebserverSystemException {
         checkNotStatus(Constants.STATUS_SUBMITTED);
     }
 
     /**
      * Check if item is not in the specified status.
-     * 
-     * @param status
-     *            A status.
-     * 
-     * @throws InvalidStatusException
-     *             If item status is not in requested status.
-     * @throws TripleStoreSystemException
-     *             If the triple store reports an error.
-     * @throws WebserverSystemException
-     *             In case of an internal error.
+     *
+     * @param status A status.
+     * @throws InvalidStatusException     If item status is not in requested status.
+     * @throws TripleStoreSystemException If the triple store reports an error.
+     * @throws WebserverSystemException   In case of an internal error.
      */
-    final void checkNotStatus(final String status)
-        throws InvalidStatusException, TripleStoreSystemException,
+    final void checkNotStatus(final String status) throws InvalidStatusException, TripleStoreSystemException,
         WebserverSystemException {
 
         // In first release, if object is once released no changes are allowed
@@ -448,18 +373,13 @@ public class ItemHandlerBase extends HandlerBase {
 
     /**
      * Check if item is in the specified status.
-     * 
-     * @param status
-     *            A status.
-     * 
-     * @throws InvalidStatusException
-     *             If item status is in requested status.
-     * @throws WebserverSystemException
-     *             Thrown in case of internal error.
+     *
+     * @param status A status.
+     * @throws InvalidStatusException   If item status is in requested status.
+     * @throws WebserverSystemException Thrown in case of internal error.
      */
     // TODO make this consistent to Container (proposal: checkStatusNot())
-    final void checkStatus(final String status)
-        throws InvalidStatusException, WebserverSystemException {
+    final void checkStatus(final String status) throws InvalidStatusException, WebserverSystemException {
 
         // In first release, if object is once released no changes are allowed
         if (status.equals(getItem().getStatus())) {
@@ -469,97 +389,72 @@ public class ItemHandlerBase extends HandlerBase {
 
     /**
      * Check if item version is tagged with status released.
-     * 
-     * @param checkStatus
-     *            The status which is to validate.
-     * 
-     * @throws InvalidStatusException
-     *             If item version status is not equal to the requested
-     *             <code>checkStatus</code>.
-     * @throws IntegritySystemException
-     *             Thrown if version status could not be obtained.
+     *
+     * @param checkStatus The status which is to validate.
+     * @throws InvalidStatusException   If item version status is not equal to the requested <code>checkStatus</code>.
+     * @throws IntegritySystemException Thrown if version status could not be obtained.
      */
-    final void checkVersionStatus(final String checkStatus)
-        throws InvalidStatusException, IntegritySystemException {
+    final void checkVersionStatus(final String checkStatus) throws InvalidStatusException, IntegritySystemException {
 
         final String status = getItem().getVersionStatus();
 
         // In first release, if object is once released no changes are allowed
         if (!status.equals(checkStatus)) {
             throw new InvalidStatusException("The object is in state '" + checkStatus + "' and can not be"
-                    + " changed.");
+                + " changed.");
         }
     }
 
     /**
      * Check if item version is tagged with status released.
-     * 
-     * @param checkStatus
-     *            The status which is to validate.
-     * 
-     * @throws InvalidStatusException
-     *             If item status is equal to the requested.
-     * @throws IntegritySystemException
-     *             Thrown if version status could not be obtained.
+     *
+     * @param checkStatus The status which is to validate.
+     * @throws InvalidStatusException   If item status is equal to the requested.
+     * @throws IntegritySystemException Thrown if version status could not be obtained.
      */
-    final void checkVersionStatusNot(final String checkStatus)
-        throws InvalidStatusException, IntegritySystemException {
+    final void checkVersionStatusNot(final String checkStatus) throws InvalidStatusException, IntegritySystemException {
         final String status = getItem().getVersionStatus();
         if (status.equals(checkStatus)) {
             throw new InvalidStatusException("The object is in state '" + checkStatus + "' and can not be"
-                    + " changed.");
+                + " changed.");
         }
     }
 
     /**
      * Check if the item is in state withdrawn.
-     * 
-     * @param additionalMessage
-     *            An error message prefix.
-     * @throws InvalidStatusException
-     *             If the item is not in state withdrawn.
-     * @throws WebserverSystemException
-     *             In case of an internal error.
-     * @throws TripleStoreSystemException
-     *             If the triple store reports an error.
+     *
+     * @param additionalMessage An error message prefix.
+     * @throws InvalidStatusException     If the item is not in state withdrawn.
+     * @throws WebserverSystemException   In case of an internal error.
+     * @throws TripleStoreSystemException If the triple store reports an error.
      */
-    final void checkWithdrawn(final String additionalMessage)
-        throws InvalidStatusException, TripleStoreSystemException,
-        WebserverSystemException {
+    final void checkWithdrawn(final String additionalMessage) throws InvalidStatusException,
+        TripleStoreSystemException, WebserverSystemException {
 
-        final String status =
-            getItem().getProperty(PropertyMapKeys.PUBLIC_STATUS);
+        final String status = getItem().getProperty(PropertyMapKeys.PUBLIC_STATUS);
         if (status.equals(Constants.STATUS_WITHDRAWN)) {
             throw new InvalidStatusException("The object is in state '" + Constants.STATUS_WITHDRAWN + "'. "
-                    + additionalMessage);
+                + additionalMessage);
 
         }
     }
 
     /**
      * Handle a Fedora Exception thrown while uploading content.
-     * 
-     * @param url
-     *            The URL.
-     * @param e
-     *            The Fedora Exception.
-     * @throws FileNotFoundException
-     *             Thrown if access to remote resource failed.
-     * @throws FedoraSystemException
-     *             Thrown if Fedora reports an error.
+     *
+     * @param url The URL.
+     * @param e   The Fedora Exception.
+     * @throws FileNotFoundException Thrown if access to remote resource failed.
+     * @throws FedoraSystemException Thrown if Fedora reports an error.
      */
-    final void handleFedoraUploadError(
-            final String url, final FedoraSystemException e)
-        throws FileNotFoundException, FedoraSystemException {
+    final void handleFedoraUploadError(final String url, final FedoraSystemException e) throws FileNotFoundException,
+        FedoraSystemException {
 
-        final Matcher matcherErrorGetting =
-            PATTERN_ERROR_GETTING.matcher(e.getMessage());
-        final Matcher matcherMalformedUrl =
-            PATTERN_MALFORMED_URL.matcher(e.getMessage());
+        final Matcher matcherErrorGetting = PATTERN_ERROR_GETTING.matcher(e.getMessage());
+        final Matcher matcherMalformedUrl = PATTERN_MALFORMED_URL.matcher(e.getMessage());
 
         if (matcherErrorGetting.find() || matcherMalformedUrl.find()) {
-            throw new FileNotFoundException(
-                "Error getting content from " + url, e);
+            throw new FileNotFoundException("Error getting content from " + url, e);
         }
         if (!(url.startsWith("http://") || url.startsWith("https://"))) {
             throw new FileNotFoundException(ERROR_MSG_NO_HTTP_PROTOCOL);
@@ -571,14 +466,12 @@ public class ItemHandlerBase extends HandlerBase {
             final HttpResponse response = client.execute(method);
             final int resultCode = response.getStatusLine().getStatusCode();
             if (resultCode != HttpServletResponse.SC_OK) {
-                throw new FileNotFoundException(StringUtility.format(
-                            "Bad request. ", response.getStatusLine(), url));
+                throw new FileNotFoundException(StringUtility.format("Bad request. ", response.getStatusLine(), url));
             }
 
         }
         catch (final Exception e1) {
-            throw new FileNotFoundException(
-                "Error getting content from " + url, e1);
+            throw new FileNotFoundException("Error getting content from " + url, e1);
         }
         finally {
             client.getConnectionManager().shutdown();
@@ -588,7 +481,7 @@ public class ItemHandlerBase extends HandlerBase {
 
     /**
      * Get FoXML render.
-     * 
+     *
      * @return The foxml renderer.
      */
     final ItemFoXmlRendererInterface getFoxmlRenderer() {
@@ -601,7 +494,7 @@ public class ItemHandlerBase extends HandlerBase {
 
     /**
      * Get objid of origin (like user has set).
-     * 
+     *
      * @return objid of origin
      */
     final String getOriginId() {
@@ -610,9 +503,8 @@ public class ItemHandlerBase extends HandlerBase {
 
     /**
      * Set objid of origin (like user has set).
-     * 
-     * @param originId
-     *            objid of origin.
+     *
+     * @param originId objid of origin.
      */
     final void setOriginId(final String originId) {
         this.originId = originId;

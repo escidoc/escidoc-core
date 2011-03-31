@@ -26,9 +26,8 @@ import java.util.List;
 
 /**
  * Relations.
- * 
+ *
  * @author Steffen Wagner
- * 
  */
 public class RelationsCreate {
 
@@ -36,9 +35,8 @@ public class RelationsCreate {
 
     /**
      * Add Content Relation to Relations collection.
-     * 
-     * @param relation
-     *            A ContentRelation (between Item/Container).
+     *
+     * @param relation A ContentRelation (between Item/Container).
      */
     public void add(final RelationCreate relation) {
 
@@ -50,11 +48,8 @@ public class RelationsCreate {
 
     /**
      * Remove a relation from Relations.
-     * 
-     * 
-     * @param relation
-     *            The relation which is to remove. The values are compared by
-     *            each properties.
+     *
+     * @param relation The relation which is to remove. The values are compared by each properties.
      */
     public void remove(final RelationCreate relation) {
 
@@ -64,11 +59,9 @@ public class RelationsCreate {
             while (it.hasNext()) {
                 final RelationCreate rel = it.next();
 
-                if (rel.equals(relation)
-                    || rel.getPredicate().equals(relation.getPredicate())
-                        && rel.getPredicateNs()
-                            .equals(relation.getPredicate()) && rel
-                        .getTarget().equals(relation.getTarget())) {
+                if (rel.equals(relation) || rel.getPredicate().equals(relation.getPredicate())
+                    && rel.getPredicateNs().equals(relation.getPredicate())
+                    && rel.getTarget().equals(relation.getTarget())) {
 
                     it.remove();
                     break;
@@ -79,7 +72,7 @@ public class RelationsCreate {
 
     /**
      * Get a Iterator over Relations.
-     * 
+     *
      * @return Relations Iterator or null if no relation exist.
      */
     public Iterator<RelationCreate> iterator() {

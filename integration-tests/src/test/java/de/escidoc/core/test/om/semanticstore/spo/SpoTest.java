@@ -48,19 +48,17 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 /**
- * Tests the Semantic Store.<br>
- * The tests are executed by the depositor.
- * 
+ * Tests the Semantic Store.<br> The tests are executed by the depositor.
+ *
  * @author Michael Schneider
- * 
  */
 @RunWith(value = Parameterized.class)
 public class SpoTest extends SpoTestBase {
+
     private int transport;
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public SpoTest(final int transport) {
         super(transport);
@@ -69,9 +67,8 @@ public class SpoTest extends SpoTestBase {
 
     /**
      * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Before
     public void setUp() throws Exception {
@@ -80,9 +77,8 @@ public class SpoTest extends SpoTestBase {
 
     /**
      * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @After
     public void tearDown() throws Exception {
@@ -92,24 +88,18 @@ public class SpoTest extends SpoTestBase {
     }
 
     /**
-     * Tests successfully request of the triple store. Query for all entries of
-     * a subject. Result is filtered to relation entries only.
-     * 
-     * @throws Exception
+     * Tests successfully request of the triple store. Query for all entries of a subject. Result is filtered to
+     * relation entries only.
      */
     @Test
     public void testSpoRequestNTriples() throws Exception {
         String sourceId = createItemHelper();
         String targetId = createItemHelper();
-        String p =
-            "http://www.escidoc.de/ontologies/mpdl-ontologies/"
-                + "content-relations#isRevisionOf";
+        String p = "http://www.escidoc.de/ontologies/mpdl-ontologies/" + "content-relations#isRevisionOf";
         String format = "N-Triples";
         // String format = "RDF/XML";
         addRelation(sourceId, p, targetId);
-        String param =
-            getTaskParametrSpo("&lt;info:fedora/" + sourceId + "&gt;  * *",
-                format);
+        String param = getTaskParametrSpo("&lt;info:fedora/" + sourceId + "&gt;  * *", format);
         String result = spo(param);
 
         assertTrue(result.contains(sourceId));
@@ -122,28 +112,21 @@ public class SpoTest extends SpoTestBase {
     }
 
     /**
-     * Tests successfully request of the triple store. Query for all entrie of a
-     * subject. Result is filtered to relation entries only.
-     * 
-     * @throws Exception
+     * Tests successfully request of the triple store. Query for all entrie of a subject. Result is filtered to relation
+     * entries only.
      */
     @Test
     public void testSpoRequestRdfXml() throws Exception {
         String sourceId = createItemHelper();
         String targetId = createItemHelper();
-        String p =
-            "http://www.escidoc.de/ontologies/mpdl-ontologies/"
-                + "content-relations#isRevisionOf";
+        String p = "http://www.escidoc.de/ontologies/mpdl-ontologies/" + "content-relations#isRevisionOf";
         String format = "RDF/XML";
         addRelation(sourceId, p, targetId);
-        String param =
-            getTaskParametrSpo("&lt;info:fedora/" + sourceId + "&gt;  &lt;" + p
-                + "&gt; *", format);
+        String param = getTaskParametrSpo("&lt;info:fedora/" + sourceId + "&gt;  &lt;" + p + "&gt; *", format);
         String result = spo(param);
 
         Node resultDoc = EscidocRestSoapTestBase.getDocument(result);
-        selectSingleNodeAsserted(resultDoc,
-            "/RDF/Description[@about = 'info:fedora/" + sourceId + "']");
+        selectSingleNodeAsserted(resultDoc, "/RDF/Description[@about = 'info:fedora/" + sourceId + "']");
         selectSingleNodeAsserted(resultDoc, "/RDF/Description/isRevisionOf");
         NodeList nl = selectNodeList(resultDoc, "/RDF/Description/*");
         assertEquals("Number of triples", 1, nl.getLength());
@@ -151,25 +134,17 @@ public class SpoTest extends SpoTestBase {
 
     /**
      * Tests unsuccessfully request of the triple store with invalid predicate.
-     * 
-     * @throws Exception
      */
     @Test
     public void testSpoRequestForbiddenPredicate1() throws Exception {
         String sourceId = createItemHelper();
         String targetId = createItemHelper();
-        String p =
-            "http://www.escidoc.de/ontologies/mpdl-ontologies/"
-                + "content-relations#isRevisionOf";
+        String p = "http://www.escidoc.de/ontologies/mpdl-ontologies/" + "content-relations#isRevisionOf";
         addRelation(sourceId, p, targetId);
-        p =
-            "http://www.escidoc.de/ontologies/mpdl-ontologies/"
-                + "content-relations/isRevisionOf";
+        p = "http://www.escidoc.de/ontologies/mpdl-ontologies/" + "content-relations/isRevisionOf";
         String o = "*";
         String format = "N-Triples";
-        String param =
-            getTaskParametrSpo("&lt;info:fedora/" + sourceId + "&gt;  &lt;" + p
-                + "&gt;  " + o, format);
+        String param = getTaskParametrSpo("&lt;info:fedora/" + sourceId + "&gt;  &lt;" + p + "&gt;  " + o, format);
         try {
             String result = spo(param);
             fail("No exception on query with forbidden predicate.");
@@ -182,23 +157,17 @@ public class SpoTest extends SpoTestBase {
 
     /**
      * Tests unsuccessfully request of the triple store with invalid predicate.
-     * 
-     * @throws Exception
      */
     @Test
     public void testSpoRequestForbiddenPredicate2() throws Exception {
         String sourceId = createItemHelper();
         String targetId = createItemHelper();
-        String p =
-            "http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#isRevisionOf";
+        String p = "http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#isRevisionOf";
         addRelation(sourceId, p, targetId);
-        p =
-            "http://www.escidoc.de/ontologies/mpdl-ontologies/content-relation#isRevisionOf";
+        p = "http://www.escidoc.de/ontologies/mpdl-ontologies/content-relation#isRevisionOf";
         String o = "*";
         String format = "N-Triples";
-        String param =
-            getTaskParametrSpo("&lt;info:fedora/" + sourceId + "&gt;  &lt;" + p
-                + "&gt;  " + o, format);
+        String param = getTaskParametrSpo("&lt;info:fedora/" + sourceId + "&gt;  &lt;" + p + "&gt;  " + o, format);
         try {
             String result = spo(param);
             fail("No exception on query with forbidden predicate.");
@@ -210,10 +179,7 @@ public class SpoTest extends SpoTestBase {
     }
 
     /**
-     * Tests successfully request of the triple store. Query for a specific
-     * (single) relation entry.
-     * 
-     * @throws Exception
+     * Tests successfully request of the triple store. Query for a specific (single) relation entry.
      */
     @Test
     public void testSpoRequestAllowedPredicate() throws Exception {
@@ -221,14 +187,11 @@ public class SpoTest extends SpoTestBase {
         String targetId = createItemHelper();
         // String p =
         // "http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#isRevisionOf";
-        String p =
-            "http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#isTest\u00dc\u00c4\u00d6";
+        String p = "http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#isTest\u00dc\u00c4\u00d6";
         addRelation(sourceId, p, targetId);
         String o = "*";
         String format = "N-Triples";
-        String param =
-            getTaskParametrSpo("&lt;info:fedora/" + sourceId + "&gt; &lt;" + p
-                + "&gt; " + o, format);
+        String param = getTaskParametrSpo("&lt;info:fedora/" + sourceId + "&gt; &lt;" + p + "&gt; " + o, format);
         String result = spo(param);
         // System.out.println("result " + result);
         assertTrue(result.contains(sourceId));
@@ -238,47 +201,35 @@ public class SpoTest extends SpoTestBase {
     }
 
     /**
-     * Tests declining wrong request of the triple store containing a wrong
-     * query.
-     * 
-     * @throws Exception
+     * Tests declining wrong request of the triple store containing a wrong query.
      */
     @Test
     public void testSpoRequestWithWrongQuery() throws Exception {
         String id = createItemHelper();
-        String param =
-            getTaskParametrSpo("&lt;info:fedora/" + id + "&gt;  * * ooo",
-                "N-Triples");
+        String param = getTaskParametrSpo("&lt;info:fedora/" + id + "&gt;  * * ooo", "N-Triples");
         try {
             spo(param);
             fail("No exception occured on a triple store request with a wrong query");
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                "InvalidTripleStoreQueryException excpected.",
+            EscidocRestSoapTestBase.assertExceptionType("InvalidTripleStoreQueryException excpected.",
                 InvalidTripleStoreQueryException.class, e);
         }
     }
 
     /**
-     * Tests declining wrong request of the triple store containing a wrong
-     * output format.
-     * 
-     * @throws Exception
+     * Tests declining wrong request of the triple store containing a wrong output format.
      */
     @Test
     public void testSpoRequestWithWrongOutputFormat() throws Exception {
         String id = createItemHelper();
-        String param =
-            getTaskParametrSpo("&lt;info:fedora/" + id + "&gt;  * *", "bla");
+        String param = getTaskParametrSpo("&lt;info:fedora/" + id + "&gt;  * *", "bla");
         try {
             spo(param);
-            fail("No exception occured on a triple store "
-                + "request with a wrong output format");
+            fail("No exception occured on a triple store " + "request with a wrong output format");
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                "InvalidTripleStoreOutputFormatException excpected.",
+            EscidocRestSoapTestBase.assertExceptionType("InvalidTripleStoreOutputFormatException excpected.",
                 InvalidTripleStoreOutputFormatException.class, e);
         }
 
@@ -286,18 +237,8 @@ public class SpoTest extends SpoTestBase {
 
     /**
      * Tests issue 375.
-     * 
-     * @test.name Query Relation - Source Updated after Creation of Relation
-     * @test.id OM_SPO-1
-     * @test.input UserAccount XML representation
-     * @test.inputDescription: Valid XML representation of the UserAccount.
-     * @test.expected: XML representation of the created UserAccount
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     * 
-     * @throws Exception
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOM_Spo_1() throws Exception {
@@ -313,9 +254,7 @@ public class SpoTest extends SpoTestBase {
         releaseItemHelper(sourceId);
 
         // add relation
-        String p =
-            "http://www.escidoc.de/ontologies/mpdl-ontologies/"
-                + "content-relations#isRevisionOf";
+        String p = "http://www.escidoc.de/ontologies/mpdl-ontologies/" + "content-relations#isRevisionOf";
         addRelation(sourceId, p, targetId);
 
         // update source item
@@ -324,9 +263,7 @@ public class SpoTest extends SpoTestBase {
         // query relation
         String s = "*";
         String format = "RDF/XML";
-        String param =
-            getTaskParametrSpo(s + " &lt;" + p + "&gt; &lt;info:fedora/"
-                + targetId + "&gt;", format);
+        String param = getTaskParametrSpo(s + " &lt;" + p + "&gt; &lt;info:fedora/" + targetId + "&gt;", format);
         String result = null;
         try {
             result = spo(param);
@@ -345,20 +282,15 @@ public class SpoTest extends SpoTestBase {
         String theItemId = null;
         // create an item and save the id
         Document xmlData =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
-                + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
-        Node xmlItemWithoutComponents =
-            deleteElement(xmlData, "/item/components");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                "escidoc_item_198_for_create.xml");
+        Node xmlItemWithoutComponents = deleteElement(xmlData, "/item/components");
         String itemWithoutComponents = toString(xmlItemWithoutComponents, true);
         OmTestBase testBase = new OmTestBase(this.transport);
-        String theItemXml =
-            handleXmlResult(testBase.getItemClient().create(
-                itemWithoutComponents));
+        String theItemXml = handleXmlResult(testBase.getItemClient().create(itemWithoutComponents));
 
         if (getTransport() == Constants.TRANSPORT_REST) {
-            theItemId =
-                getIdFromRootElementHref(EscidocRestSoapTestBase
-                    .getDocument(theItemXml));
+            theItemId = getIdFromRootElementHref(EscidocRestSoapTestBase.getDocument(theItemXml));
         }
         else {
             theItemId = getIdFromRootElement(theItemXml);
@@ -370,22 +302,17 @@ public class SpoTest extends SpoTestBase {
     private void updateItemHelper(final String id) throws Exception {
 
         OmTestBase testBase = new OmTestBase(this.transport);
-        String toBeUpdatedXml =
-            handleXmlResult(testBase.getItemClient().retrieve(id));
-        toBeUpdatedXml =
-            toBeUpdatedXml.replaceFirst("Semiconductors",
-                "Semiconductors - Updated");
+        String toBeUpdatedXml = handleXmlResult(testBase.getItemClient().retrieve(id));
+        toBeUpdatedXml = toBeUpdatedXml.replaceFirst("Semiconductors", "Semiconductors - Updated");
         testBase.getItemClient().update(id, toBeUpdatedXml);
     }
 
     private void submitItemHelper(final String id) throws Exception {
 
         OmTestBase testBase = new OmTestBase(this.transport);
-        String toBeSubmittedXml =
-            handleXmlResult(testBase.getItemClient().retrieve(id));
+        String toBeSubmittedXml = handleXmlResult(testBase.getItemClient().retrieve(id));
         final String taskParam =
-            getTaskParam(getLastModificationDateValue(EscidocRestSoapTestBase
-                .getDocument(toBeSubmittedXml)));
+            getTaskParam(getLastModificationDateValue(EscidocRestSoapTestBase.getDocument(toBeSubmittedXml)));
         testBase.getItemClient().submit(id, taskParam);
     }
 
@@ -395,24 +322,19 @@ public class SpoTest extends SpoTestBase {
         testBase.getItemClient().releaseWithPid(id, null);
     }
 
-    private void addRelation(String sourceId, String predicate, String targetId)
-        throws Exception {
+    private void addRelation(String sourceId, String predicate, String targetId) throws Exception {
         OmTestBase testBase = new OmTestBase(this.transport);
         String taskParam =
             "<param last-modification-date=\""
-                + getLastModificationDateValue(EscidocRestSoapTestBase
-                    .getDocument(handleXmlResult(testBase
-                        .getItemClient().retrieve(sourceId)))) + "\">";
-        taskParam =
-            taskParam + "<relation><targetId>" + targetId + "</targetId>";
+                + getLastModificationDateValue(EscidocRestSoapTestBase.getDocument(handleXmlResult(testBase
+                    .getItemClient().retrieve(sourceId)))) + "\">";
+        taskParam = taskParam + "<relation><targetId>" + targetId + "</targetId>";
         taskParam = taskParam + "<predicate>";
         if (predicate != null) {
             taskParam = taskParam + predicate;
         }
         else {
-            taskParam =
-                taskParam + "http://www.escidoc.de/ontologies/mpdl-ontologies/"
-                    + "content-relations#isPartOf";
+            taskParam = taskParam + "http://www.escidoc.de/ontologies/mpdl-ontologies/" + "content-relations#isPartOf";
 
         }
         taskParam = taskParam + "</predicate></relation>";

@@ -37,90 +37,56 @@ import java.util.List;
 
 /**
  * Interface of an user group renderer.
- * 
- * @author André Schenk
  *
+ * @author André Schenk
  */
 public interface UserGroupRendererInterface {
 
     /**
      * Gets the representation of a user group.
-     * 
-     * @param userGroup
-     *            The user group to render.
-     * 
-     * @return Returns the XML representation of the user group.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
      *
+     * @param userGroup The user group to render.
+     * @return Returns the XML representation of the user group.
+     * @throws SystemException Thrown in case of an internal error.
      */
     String render(final UserGroup userGroup) throws SystemException;
 
     /**
-     * Gets the representation of the virtual sub resource "currentGrants" of a
-     * user group.
-     * 
-     * @param userGroup
-     *            The user group to render.
-     * @param currentGrants
-     *            The list of currently valid grants of the user group that
-     *            shall be rendered.
-     * 
-     * @return Returns the XML representation of the virtual sub resource
-     *         "currentGrants" of a user group.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     * Gets the representation of the virtual sub resource "currentGrants" of a user group.
      *
+     * @param userGroup     The user group to render.
+     * @param currentGrants The list of currently valid grants of the user group that shall be rendered.
+     * @return Returns the XML representation of the virtual sub resource "currentGrants" of a user group.
+     * @throws SystemException Thrown in case of an internal error.
      */
-    String renderCurrentGrants(
-        final UserGroup userGroup, final List<RoleGrant> currentGrants)
-        throws SystemException;
+    String renderCurrentGrants(final UserGroup userGroup, final List<RoleGrant> currentGrants) throws SystemException;
 
     /**
      * Gets the representation of the provided <code>RoleGrant</code> object.
-     * 
-     * @param grant
-     *            The {@link RoleGrant} to render.
-     * 
-     * @return Returns the XML representation of the provided
-     *         <code>RoleGrant</code> object.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
      *
+     * @param grant The {@link RoleGrant} to render.
+     * @return Returns the XML representation of the provided <code>RoleGrant</code> object.
+     * @throws SystemException Thrown in case of an internal error.
      */
     String renderGrant(final RoleGrant grant) throws SystemException;
 
     /**
      * Gets the representation of the "resources" sub resource of a user group.
-     * 
-     * @param userGroup
-     *            The user group to render.
-     * 
-     * @return Returns the XML representation of the "resources" sub resource of
-     *         the user group.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
      *
+     * @param userGroup The user group to render.
+     * @return Returns the XML representation of the "resources" sub resource of the user group.
+     * @throws SystemException Thrown in case of an internal error.
      */
     String renderResources(final UserGroup userGroup) throws SystemException;
 
     /**
      * Gets the representation of a list of the provided user groups.
-     * 
-     * @param userGroups
-     *            The <code>List</code> of
-     *            {@link UserGroup}
-     *            objects to render.
-     * @param recordPacking
-     *            A string to determine how the record should be escaped in the
-     *            response. Defined values are 'string' and 'xml'. The default
-     *            is 'xml'.
-     * 
+     *
+     * @param userGroups    The <code>List</code> of {@link UserGroup} objects to render.
+     * @param recordPacking A string to determine how the record should be escaped in the response. Defined values are
+     *                      'string' and 'xml'. The default is 'xml'.
      * @return Returns the XML representation of the list of user groups.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     * @throws SystemException Thrown in case of an internal error.
      */
-    String renderUserGroups(
-        final List<UserGroup> userGroups, final RecordPacking recordPacking)
-        throws SystemException;
+    String renderUserGroups(final List<UserGroup> userGroups, final RecordPacking recordPacking) throws SystemException;
 }

@@ -34,8 +34,6 @@ import java.io.InputStream;
 
 /**
  * Class encapsulating binary content.
- * 
- *
  */
 public class BinaryContent {
 
@@ -50,7 +48,7 @@ public class BinaryContent {
     private HttpMessage method = null;
 
     /**
-     * 
+     *
      */
     public BinaryContent() {
 
@@ -64,8 +62,7 @@ public class BinaryContent {
     }
 
     /**
-     * @param redirectUrl
-     *            the redirectUrl to set
+     * @param redirectUrl the redirectUrl to set
      */
     public void setRedirectUrl(final String redirectUrl) {
         this.redirectUrl = redirectUrl;
@@ -79,8 +76,7 @@ public class BinaryContent {
     }
 
     /**
-     * @param content
-     *            the content to set
+     * @param content the content to set
      */
     public void setContent(final InputStream content) {
         this.content = content;
@@ -94,8 +90,7 @@ public class BinaryContent {
     }
 
     /**
-     * @param fileName
-     *            the fileName to set
+     * @param fileName the fileName to set
      */
     public void setFileName(final String fileName) {
         this.fileName = fileName;
@@ -109,8 +104,7 @@ public class BinaryContent {
     }
 
     /**
-     * @param mimeType
-     *            the mimeType to set
+     * @param mimeType the mimeType to set
      */
     public void setMimeType(final String mimeType) {
         this.mimeType = mimeType;
@@ -118,13 +112,11 @@ public class BinaryContent {
 
     /**
      * Set the Connection.
-     * 
-     * @param method
-     *            The HttpConnection.
+     *
+     * @param method The HttpConnection.
      */
     public void setMethod(final HttpMessage method) {
         this.method = method;
     }
 
- 
 }

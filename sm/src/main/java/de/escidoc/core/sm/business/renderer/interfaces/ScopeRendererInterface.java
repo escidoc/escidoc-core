@@ -36,43 +36,30 @@ import java.util.Collection;
 
 /**
  * Interface of an scope renderer.
- * 
- * @author Michael Hoppe
  *
+ * @author Michael Hoppe
  */
 public interface ScopeRendererInterface {
 
     /**
      * Gets the representation of an Scope.
-     * 
-     * @param scope
-     *            The Scope to render.
-     * @return Returns the XML representation of the Scope.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
      *
+     * @param scope The Scope to render.
+     * @return Returns the XML representation of the Scope.
+     * @throws SystemException Thrown in case of an internal error.
      */
     String render(final Scope scope) throws SystemException;
 
     /**
      * Gets the representation of a list of the provided Scopes.
-     * 
-     * @param scopes
-     *            The <code>List</code> of
-     *            {@link de.escidoc.core.sm.business.persistence.Scope} objects
-     *            to render.
-     * @param recordPacking
-     *            A string to determine how the record should be escaped in the
-     *            response. Defined values are 'string' and 'xml'. The default
-     *            is 'xml'.
-     * 
-     * @return Returns the XML representation of the list of scopes.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
      *
+     * @param scopes        The <code>List</code> of {@link de.escidoc.core.sm.business.persistence.Scope} objects to
+     *                      render.
+     * @param recordPacking A string to determine how the record should be escaped in the response. Defined values are
+     *                      'string' and 'xml'. The default is 'xml'.
+     * @return Returns the XML representation of the list of scopes.
+     * @throws SystemException Thrown in case of an internal error.
      */
-    String renderScopes(
-        final Collection<Scope> scopes, final RecordPacking recordPacking)
-        throws SystemException;
+    String renderScopes(final Collection<Scope> scopes, final RecordPacking recordPacking) throws SystemException;
 
 }

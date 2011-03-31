@@ -37,21 +37,16 @@ import javax.xml.rpc.ServiceException;
 import java.util.Map;
 
 /**
- * Offers access methods to the escidoc REST and soap interface of the user group
- * resource.
- * 
+ * Offers access methods to the escidoc REST and soap interface of the user group resource.
+ *
  * @author Michael Hoppe
- * 
  */
-public class UserGroupClient extends GrantClient
-    implements ResourceHandlerClientInterface {
+public class UserGroupClient extends GrantClient implements ResourceHandlerClientInterface {
 
     private UserGroupHandler soapClient = null;
 
     /**
-     * 
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public UserGroupClient(final int transport) {
         super(transport);
@@ -59,327 +54,229 @@ public class UserGroupClient extends GrantClient
 
     /**
      * Create a user group.
-     * 
-     * @param userGroupXml
-     *            The xml representation of an userGroup
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param userGroupXml The xml representation of an userGroup
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     @Override
     public Object create(final Object userGroupXml) throws Exception {
 
-        return callEsciDoc("UserGroup.create", METHOD_CREATE,
-            Constants.HTTP_METHOD_PUT, Constants.USER_GROUP_BASE_URI,
+        return callEsciDoc("UserGroup.create", METHOD_CREATE, Constants.HTTP_METHOD_PUT, Constants.USER_GROUP_BASE_URI,
             new String[] {}, changeToString(userGroupXml));
     }
 
     /**
      * Delete a user group.
-     * 
-     * @param id
-     *            The userGroup id.
+     *
+     * @param id The userGroup id.
      * @return The HttpMethod after the service call (REST) or null (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     * @throws Exception If the service call fails.
      */
     @Override
     public Object delete(final String id) throws Exception {
-        return callEsciDoc("UserGroup.delete", METHOD_DELETE,
-            Constants.HTTP_METHOD_DELETE, Constants.USER_GROUP_BASE_URI,
-            new String[] { id });
+        return callEsciDoc("UserGroup.delete", METHOD_DELETE, Constants.HTTP_METHOD_DELETE,
+            Constants.USER_GROUP_BASE_URI, new String[] { id });
     }
 
     /**
      * Retrieve the xml representation of a userGroup.
-     * 
-     * @param id
-     *            The id.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param id The id.
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     @Override
     public Object retrieve(final String id) throws Exception {
-        return callEsciDoc("UserGroup.retrieve", METHOD_RETRIEVE,
-            Constants.HTTP_METHOD_GET, Constants.USER_GROUP_BASE_URI,
-            new String[] { id });
+        return callEsciDoc("UserGroup.retrieve", METHOD_RETRIEVE, Constants.HTTP_METHOD_GET,
+            Constants.USER_GROUP_BASE_URI, new String[] { id });
     }
 
     /**
      * Retrieve the xml representation of the resources of a user group.
-     * 
-     * @param id
-     *            The id.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param id The id.
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     public Object retrieveResources(final String id) throws Exception {
-        return callEsciDoc("UserGroup.retrieveResources",
-            METHOD_RETRIEVE_RESOURCES, Constants.HTTP_METHOD_GET,
-            Constants.USER_GROUP_BASE_URI, new String[] { id,
-                Constants.SUB_RESOURCES });
+        return callEsciDoc("UserGroup.retrieveResources", METHOD_RETRIEVE_RESOURCES, Constants.HTTP_METHOD_GET,
+            Constants.USER_GROUP_BASE_URI, new String[] { id, Constants.SUB_RESOURCES });
     }
 
     /**
      * Retrieve the xml representation of the list of user groups.
-     * 
-     * @param filter
-     *            The filter parameters.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param filter The filter parameters.
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
-    public Object retrieveUserGroups(final Map<String, String[]> filter)
-        throws Exception {
-        return callEsciDoc("UserGroup.retrieveUserGroups",
-            METHOD_RETRIEVE_USER_GROUPS, Constants.HTTP_METHOD_GET,
-            Constants.USER_GROUPS_BASE_URI, 
-            new String[] {}, filter);
+    public Object retrieveUserGroups(final Map<String, String[]> filter) throws Exception {
+        return callEsciDoc("UserGroup.retrieveUserGroups", METHOD_RETRIEVE_USER_GROUPS, Constants.HTTP_METHOD_GET,
+            Constants.USER_GROUPS_BASE_URI, new String[] {}, filter);
     }
 
     /**
      * Update a user group.
-     * 
-     * @param id
-     *            The userGroup id.
-     * @param userGroupXml
-     *            The xml representation of the user
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param id           The userGroup id.
+     * @param userGroupXml The xml representation of the user
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     @Override
-    public Object update(final String id, final Object userGroupXml)
-        throws Exception {
+    public Object update(final String id, final Object userGroupXml) throws Exception {
 
-        return callEsciDoc("UserGroup.update", METHOD_UPDATE,
-            Constants.HTTP_METHOD_PUT, Constants.USER_GROUP_BASE_URI,
+        return callEsciDoc("UserGroup.update", METHOD_UPDATE, Constants.HTTP_METHOD_PUT, Constants.USER_GROUP_BASE_URI,
             new String[] { id }, changeToString(userGroupXml));
     }
 
     /**
      * Activate a user group.
-     * 
-     * @param id
-     *            The user group id.
-     * @param taskParamXml
-     *            The task parameter in an XML structure.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param id           The user group id.
+     * @param taskParamXml The task parameter in an XML structure.
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
-    public Object activate(final String id, final String taskParamXml)
-        throws Exception {
+    public Object activate(final String id, final String taskParamXml) throws Exception {
 
-        return callEsciDoc("UserGroup.activate", METHOD_ACTIVATE,
-            Constants.HTTP_METHOD_POST, Constants.USER_GROUP_BASE_URI,
-            new String[] { id, "activate" }, changeToString(taskParamXml));
+        return callEsciDoc("UserGroup.activate", METHOD_ACTIVATE, Constants.HTTP_METHOD_POST,
+            Constants.USER_GROUP_BASE_URI, new String[] { id, "activate" }, changeToString(taskParamXml));
     }
 
     /**
      * Deactivate a user group.
-     * 
-     * @param id
-     *            The user group id.
-     * @param taskParamXml
-     *            The task parameter in an XML structure.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param id           The user group id.
+     * @param taskParamXml The task parameter in an XML structure.
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
-    public Object deactivate(final String id, final String taskParamXml)
-        throws Exception {
+    public Object deactivate(final String id, final String taskParamXml) throws Exception {
 
-        return callEsciDoc("UserGroup.deactivate", METHOD_DEACTIVATE,
-            Constants.HTTP_METHOD_POST, Constants.USER_GROUP_BASE_URI,
-            new String[] { id, "deactivate" }, changeToString(taskParamXml));
+        return callEsciDoc("UserGroup.deactivate", METHOD_DEACTIVATE, Constants.HTTP_METHOD_POST,
+            Constants.USER_GROUP_BASE_URI, new String[] { id, "deactivate" }, changeToString(taskParamXml));
     }
 
     /**
      * Retrieve the current grants of the specified user group.
-     * 
-     * @param id
-     *            The user group id.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param id The user group id.
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     @Override
     public Object retrieveCurrentGrants(final String id) throws Exception {
 
-        return callEsciDoc("UserGroup.retrieveCurrentGrants",
-            METHOD_RETRIEVE_CURRENT_GRANTS, Constants.HTTP_METHOD_GET,
-            Constants.USER_GROUP_BASE_URI, new String[] { id,
-                "resources/current-grants" });
+        return callEsciDoc("UserGroup.retrieveCurrentGrants", METHOD_RETRIEVE_CURRENT_GRANTS,
+            Constants.HTTP_METHOD_GET, Constants.USER_GROUP_BASE_URI, new String[] { id, "resources/current-grants" });
     }
 
     /**
      * Create a grant for the specified user group.
-     * 
-     * @param id
-     *            The user group id.
-     * @param grantXml
-     *            The XML representation of an grant.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param id       The user group id.
+     * @param grantXml The XML representation of an grant.
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     @Override
-    public Object createGrant(final String id, final String grantXml)
-        throws Exception {
+    public Object createGrant(final String id, final String grantXml) throws Exception {
 
-        return callEsciDoc("UserGroup.createGrant", METHOD_CREATE_GRANT,
-            Constants.HTTP_METHOD_PUT, Constants.USER_GROUP_BASE_URI,
-            new String[] { id, "/resources/grants/grant" },
-            changeToString(grantXml));
+        return callEsciDoc("UserGroup.createGrant", METHOD_CREATE_GRANT, Constants.HTTP_METHOD_PUT,
+            Constants.USER_GROUP_BASE_URI, new String[] { id, "/resources/grants/grant" }, changeToString(grantXml));
     }
 
     /**
      * Retrieve a grant from the specified user group.
-     * 
-     * @param id
-     *            The user group id.
-     * @param grantId
-     *            The id of the grant.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param id      The user group id.
+     * @param grantId The id of the grant.
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     @Override
-    public Object retrieveGrant(final String id, final String grantId)
-        throws Exception {
+    public Object retrieveGrant(final String id, final String grantId) throws Exception {
 
-        return callEsciDoc("UserGroup.retrieveGrant", METHOD_RETRIEVE_GRANT,
-            Constants.HTTP_METHOD_GET, Constants.USER_GROUP_BASE_URI,
-            new String[] { id, "resources/grants/grant", grantId });
-    }
-
-    
-   
-    /**
-     * Add selecors to the specified user group.
-     * 
-     * @param id
-     *            The user group id.
-     * @param taskParam
-     *            The task parameter in an XML structure.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
-     */
-   
-    public Object addSelectors(
-        final String id, final String taskParam)
-        throws Exception {
-        
-        return callEsciDoc("UserGroup.addSelectors", METHOD_ADD_SELECTORS,
-            Constants.HTTP_METHOD_POST, Constants.USER_GROUP_BASE_URI,
-            new String[] { id, Constants.SUB_ADD_SELECTORS }, taskParam);
+        return callEsciDoc("UserGroup.retrieveGrant", METHOD_RETRIEVE_GRANT, Constants.HTTP_METHOD_GET,
+            Constants.USER_GROUP_BASE_URI, new String[] { id, "resources/grants/grant", grantId });
     }
 
     /**
      * Add selecors to the specified user group.
-     * 
-     * @param id
-     *            The user group id.
-     * @param taskParam
-     *            The task parameter in an XML structure.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param id        The user group id.
+     * @param taskParam The task parameter in an XML structure.
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
-   
-    public Object removeSelectors(
-        final String id, final String taskParam)
-        throws Exception {
-        
-        return callEsciDoc("UserGroup.removeSelectors", METHOD_REMOVE_SELECTORS,
-            Constants.HTTP_METHOD_POST, Constants.USER_GROUP_BASE_URI,
-            new String[] { id, Constants.SUB_REMOVE_SELECTORS }, taskParam);
+
+    public Object addSelectors(final String id, final String taskParam) throws Exception {
+
+        return callEsciDoc("UserGroup.addSelectors", METHOD_ADD_SELECTORS, Constants.HTTP_METHOD_POST,
+            Constants.USER_GROUP_BASE_URI, new String[] { id, Constants.SUB_ADD_SELECTORS }, taskParam);
     }
-        
-        
+
+    /**
+     * Add selecors to the specified user group.
+     *
+     * @param id        The user group id.
+     * @param taskParam The task parameter in an XML structure.
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
+     */
+
+    public Object removeSelectors(final String id, final String taskParam) throws Exception {
+
+        return callEsciDoc("UserGroup.removeSelectors", METHOD_REMOVE_SELECTORS, Constants.HTTP_METHOD_POST,
+            Constants.USER_GROUP_BASE_URI, new String[] { id, Constants.SUB_REMOVE_SELECTORS }, taskParam);
+    }
+
     /**
      * Revoke a grant from the specified user group.
-     * 
-     * @param id
-     *            The user group id.
-     * @param filterXml
-     *            The filter-criteria in an XML structure.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param id        The user group id.
+     * @param filterXml The filter-criteria in an XML structure.
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     @Override
-    public Object revokeGrants(
-        final String id, final String filterXml)
-        throws Exception {
+    public Object revokeGrants(final String id, final String filterXml) throws Exception {
 
-        String[] pathElements =
-            new String[] { id, "resources/grants/revoke-grants" };
-        return callEsciDoc("UserGroup.revokeGrants", METHOD_REVOKE_GRANTS,
-            Constants.HTTP_METHOD_POST, Constants.USER_GROUP_BASE_URI,
-            pathElements, changeToString(filterXml));
+        String[] pathElements = new String[] { id, "resources/grants/revoke-grants" };
+        return callEsciDoc("UserGroup.revokeGrants", METHOD_REVOKE_GRANTS, Constants.HTTP_METHOD_POST,
+            Constants.USER_GROUP_BASE_URI, pathElements, changeToString(filterXml));
     }
 
     /**
      * Revoke a grant from the specified user account.
-     * 
-     * @param id
-     *            The user account id.
-     * @param grantId
-     *            The id of the grant.
-     * @param taskParamXml
-     *            The task parameter in an XML structure.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param id           The user account id.
+     * @param grantId      The id of the grant.
+     * @param taskParamXml The task parameter in an XML structure.
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     @Override
-    public Object revokeGrant(
-        final String id, final String grantId, final String taskParamXml)
-        throws Exception {
+    public Object revokeGrant(final String id, final String grantId, final String taskParamXml) throws Exception {
 
-        String[] pathElements =
-            new String[] { id, "resources/grants/grant", grantId,
-                "revoke-grant" };
-        return callEsciDoc("UserGroup.revokeGrant", METHOD_REVOKE_GRANT,
-            Constants.HTTP_METHOD_POST, Constants.USER_GROUP_BASE_URI,
-            pathElements, changeToString(taskParamXml));
+        String[] pathElements = new String[] { id, "resources/grants/grant", grantId, "revoke-grant" };
+        return callEsciDoc("UserGroup.revokeGrant", METHOD_REVOKE_GRANT, Constants.HTTP_METHOD_POST,
+            Constants.USER_GROUP_BASE_URI, pathElements, changeToString(taskParamXml));
     }
-    
+
     /**
-     * 
      * @return Returns the soapClient.
-     * @throws ServiceException
-     *             If the client creation fails.
+     * @throws ServiceException If the client creation fails.
      */
     @Override
     public UserGroupHandler getSoapClient() throws ServiceException {
 
         if (soapClient == null) {
-            UserGroupHandlerServiceLocator serviceLocator =
-                new UserGroupHandlerServiceLocator(getEngineConfig());
-            serviceLocator
-                .setUserGroupHandlerServiceEndpointAddress(
-                                checkSoapAddress(serviceLocator
-                    .getUserGroupHandlerServiceAddress()));
+            UserGroupHandlerServiceLocator serviceLocator = new UserGroupHandlerServiceLocator(getEngineConfig());
+            serviceLocator.setUserGroupHandlerServiceEndpointAddress(checkSoapAddress(serviceLocator
+                .getUserGroupHandlerServiceAddress()));
             soapClient = serviceLocator.getUserGroupHandlerService();
         }
         return soapClient;

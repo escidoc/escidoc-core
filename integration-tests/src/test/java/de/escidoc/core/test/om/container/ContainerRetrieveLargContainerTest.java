@@ -40,9 +40,8 @@ import org.w3c.dom.Node;
 
 /**
  * Test stability by increasing the number of versions of the Container resource.
- * 
+ *
  * @author Rozita Friedman
- * 
  */
 @RunWith(value = Parameterized.class)
 public class ContainerRetrieveLargContainerTest extends ContainerTestBase {
@@ -52,8 +51,7 @@ public class ContainerRetrieveLargContainerTest extends ContainerTestBase {
     private String theContainerId;
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ContainerRetrieveLargContainerTest(final int transport) {
         super(transport);
@@ -61,17 +59,14 @@ public class ContainerRetrieveLargContainerTest extends ContainerTestBase {
 
     /**
      * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Before
     public void setUp() throws Exception {
 
-        String theItemId =
-            createItemFromTemplate("escidoc_item_198_for_create.xml");
-        String xmlData =
-            getContainerTemplate("create_container_v1.1-forItem.xml");
+        String theItemId = createItemFromTemplate("escidoc_item_198_for_create.xml");
+        String xmlData = getContainerTemplate("create_container_v1.1-forItem.xml");
         String replaced = xmlData.replaceAll("##ITEMID##", theItemId);
 
         theContainerXml = create(replaced);
@@ -80,23 +75,17 @@ public class ContainerRetrieveLargContainerTest extends ContainerTestBase {
     }
 
     /**
-     * Tested successively adding 10000 members to a container and retrieve of
-     * this large container.
-     * 
-     * @throws Exception
+     * Tested successively adding 10000 members to a container and retrieve of this large container.
      */
     // ignore test now because it runs 6h 
     @Ignore("ignore test now because it runs 6h")
     @Test
     public void testAddAllMembers() throws Exception {
-       
-        for (int i = 0; i < 10000; i++) {
-            String itemToAddID =
-                createItemFromTemplate("escidoc_item_198_for_create.xml");
 
-            String taskParam =
-                "<param last-modification-date=\""
-                    + getTheLastModificationDate() + "\" ";
+        for (int i = 0; i < 10000; i++) {
+            String itemToAddID = createItemFromTemplate("escidoc_item_198_for_create.xml");
+
+            String taskParam = "<param last-modification-date=\"" + getTheLastModificationDate() + "\" ";
             taskParam += ">";
 
             taskParam += "<id>" + itemToAddID + "</id>";
@@ -112,19 +101,17 @@ public class ContainerRetrieveLargContainerTest extends ContainerTestBase {
             }
 
         }
-        
+
         String containerXml = retrieve(theContainerId);
         assertXmlValidContainer(containerXml);
     }
 
     private String getTheLastModificationDate() throws Exception {
-        Document item =
-            EscidocRestSoapTestBase.getDocument(retrieve(theContainerId));
+        Document item = EscidocRestSoapTestBase.getDocument(retrieve(theContainerId));
 
         // get last-modification-date
         NamedNodeMap atts = item.getDocumentElement().getAttributes();
-        Node lastModificationDateNode =
-            atts.getNamedItem("last-modification-date");
+        Node lastModificationDateNode = atts.getNamedItem("last-modification-date");
         String lastModificationDate = lastModificationDateNode.getNodeValue();
 
         return lastModificationDate;

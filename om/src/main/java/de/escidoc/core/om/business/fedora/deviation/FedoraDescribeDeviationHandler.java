@@ -41,34 +41,26 @@ import java.util.Map.Entry;
 /**
  * @author Michael Hoppe
  */
-public class FedoraDescribeDeviationHandler
-    implements FedoraDescribeDeviationHandlerInterface {
+public class FedoraDescribeDeviationHandler implements FedoraDescribeDeviationHandlerInterface {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(
-        FedoraDescribeDeviationHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FedoraDescribeDeviationHandler.class);
 
     private ConnectionUtility connectionUtility;
 
     /**
-     * @see de.escidoc.core.om.business.interfaces
-     *      .FedoraDescribeDeviationHandlerInterface#getDatastreamDissemination(Map)
-     * @param parameters
-     *            http request parameters.
-     * 
+     * @param parameters http request parameters.
      * @return String response
-     * @throws Exception
-     *             ex
-     * 
+     * @throws Exception ex
+     * @see de.escidoc.core.om.business.interfaces .FedoraDescribeDeviationHandlerInterface#getDatastreamDissemination(Map)
      */
     @Override
-    public String getFedoraDescription(
-        final Map<String, String[]> parameters) throws Exception {
+    public String getFedoraDescription(final Map<String, String[]> parameters) throws Exception {
 
         final String urlParams = buildUrlParameters(parameters);
         String baseURL = EscidocConfiguration.getInstance().get(EscidocConfiguration.FEDORA_URL);
         final String user = EscidocConfiguration.getInstance().get(EscidocConfiguration.FEDORA_USER);
         final String pass = EscidocConfiguration.getInstance().get(EscidocConfiguration.FEDORA_PASSWORD);
-        if (! baseURL.endsWith("/")) {
+        if (!baseURL.endsWith("/")) {
             baseURL += "/";
         }
 
@@ -81,11 +73,12 @@ public class FedoraDescribeDeviationHandler
             if (describeUrl != null) {
                 try {
                     connectionUtility.resetAuthentication(new URL(describeUrl));
-                } catch (final Exception e) {
-                    if(LOGGER.isWarnEnabled()) {
+                }
+                catch (final Exception e) {
+                    if (LOGGER.isWarnEnabled()) {
                         LOGGER.warn("Error on reseting authentication.");
                     }
-                    if(LOGGER.isDebugEnabled()) {
+                    if (LOGGER.isDebugEnabled()) {
                         LOGGER.debug("Error on reseting authentication.", e);
                     }
                 }
@@ -95,12 +88,9 @@ public class FedoraDescribeDeviationHandler
 
     /**
      * make http-requestparameter string out of given Map.
-     * 
-     * @param parameters
-     *            http request parameters.
-     * 
+     *
+     * @param parameters http request parameters.
      * @return String http requestparameters as String
-     * 
      */
     private static String buildUrlParameters(final Map<String, String[]> parameters) {
         final StringBuilder urlParams = new StringBuilder("");
@@ -122,9 +112,8 @@ public class FedoraDescribeDeviationHandler
 
     /**
      * See Interface for functional description.
-     * 
-     * @param connectionUtility
-     *            The HTTP connection utility.
+     *
+     * @param connectionUtility The HTTP connection utility.
      */
     public void setConnectionUtility(final ConnectionUtility connectionUtility) {
 

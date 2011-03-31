@@ -39,9 +39,8 @@ import static org.junit.Assert.fail;
 
 /**
  * Test the implementation of the statistic data resource.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 @RunWith(value = Parameterized.class)
 public class StatisticDataTest extends StatisticDataTestBase {
@@ -53,8 +52,7 @@ public class StatisticDataTest extends StatisticDataTestBase {
     private static int methodCounter = 0;
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public StatisticDataTest(final int transport) {
         super(transport);
@@ -62,9 +60,8 @@ public class StatisticDataTest extends StatisticDataTestBase {
 
     /**
      * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Before
     public void initialize() throws Exception {
@@ -76,9 +73,8 @@ public class StatisticDataTest extends StatisticDataTestBase {
 
     /**
      * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @After
     public void deinitialize() throws Exception {
@@ -90,13 +86,10 @@ public class StatisticDataTest extends StatisticDataTestBase {
 
     /**
      * Creates scope for tests.
-     * 
      */
     private void createScope() {
         try {
-            String xml =
-                getTemplateAsFixedScopeString(
-                        TEMPLATE_SCOPE_PATH, "escidoc_scope1.xml");
+            String xml = getTemplateAsFixedScopeString(TEMPLATE_SCOPE_PATH, "escidoc_scope1.xml");
             String result = scope.create(xml);
             scopeId = getPrimKey(result);
         }
@@ -107,30 +100,26 @@ public class StatisticDataTest extends StatisticDataTestBase {
 
     /**
      * create statistic data with invalid xml.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSMSD2() throws Exception {
         String xml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_STAT_DATA_PATH,
-                "escidoc_statistic_data_invalid.xml");
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_STAT_DATA_PATH, "escidoc_statistic_data_invalid.xml");
         xml = replaceElementPrimKey(xml, "scope", scopeId.toString());
         create(xml);
     }
 
     /**
      * create statistic data with correct xml.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSMSD3() throws Exception {
         String xml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_STAT_DATA_PATH,
-                "escidoc_statistic_data1.xml");
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_STAT_DATA_PATH, "escidoc_statistic_data1.xml");
         xml = replaceElementPrimKey(xml, "scope", scopeId.toString());
         try {
             create(xml);

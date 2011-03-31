@@ -30,50 +30,32 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 
 /**
  * Interface of an Preprocessing Handler.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 public interface PreprocessingHandlerInterface {
 
     /**
-     * Preprocess Statistic raw data.<br/>       
+     * Preprocess Statistic raw data.<br/>
+     * <p/>
+     * <b>Tasks:</b><br/> <ul> <li>Extract startDate and endDate.</li> <li>Get data from database-table containing the
+     * rae statistic-data (aa.statistic_data).</li> <li>Preprocess data according to aggregation-table desciption in
+     * aggregation-definition.</li> <li>Write data into aggregation-tables.</li> </ul>
      *
-     * <b>Tasks:</b><br/>
-     * <ul>
-     * <li>Extract startDate and endDate.</li>
-     * <li>Get data from database-table containing the rae statistic-data (aa.statistic_data).</li>
-     * <li>Preprocess data according to aggregation-table desciption in aggregation-definition.</li>
-     * <li>Write data into aggregation-tables.</li>
-     * </ul>
-     * 
-     * @param aggregationDefinitionId
-     *         Aggregation Definition ID to preprocess.
-     * 
-     * @param xmlData
-     *         The XML representation of the 
-     *         Preprocessing Information to be processed
-     *         corresponding to XML-schema "preprocessing-information.xsd".
-     * 
-     * @throws AuthenticationException
-     *             Thrown in case of failed authentication.
-     * @throws AuthorizationException
-     *             Thrown in case of failed authorization.
-     * @throws XmlSchemaValidationException
-     *             ex
-     * @throws XmlCorruptedException
-     *             ex
+     * @param aggregationDefinitionId Aggregation Definition ID to preprocess.
+     * @param xmlData                 The XML representation of the Preprocessing Information to be processed
+     *                                corresponding to XML-schema "preprocessing-information.xsd".
+     * @throws AuthenticationException      Thrown in case of failed authentication.
+     * @throws AuthorizationException       Thrown in case of failed authorization.
+     * @throws XmlSchemaValidationException ex
+     * @throws XmlCorruptedException        ex
      * @throws MissingMethodParameterException
-     *             ex
-     * @throws SystemException
-     *             ex
-     * 
+     *                                      ex
+     * @throws SystemException              ex
      */
     @Validate(param = 1, resolver = "getPreprocessingInformationSchemaLocation")
-    void preprocess(String aggregationDefinitionId, 
-            String xmlData) throws AuthenticationException,
-        AuthorizationException, XmlSchemaValidationException,
-        XmlCorruptedException, MissingMethodParameterException,
+    void preprocess(String aggregationDefinitionId, String xmlData) throws AuthenticationException,
+        AuthorizationException, XmlSchemaValidationException, XmlCorruptedException, MissingMethodParameterException,
         SystemException;
 
 }

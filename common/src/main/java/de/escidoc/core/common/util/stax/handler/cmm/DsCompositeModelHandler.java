@@ -35,13 +35,11 @@ public class DsCompositeModelHandler extends DefaultHandler {
 
     private static final String DS_COMPOSITE_MODEL_PATH = "/dsCompositeModel";
 
-    private static final String DS_TYPE_MODEL_PATH =
-        DS_COMPOSITE_MODEL_PATH + "/dsTypeModel";
+    private static final String DS_TYPE_MODEL_PATH = DS_COMPOSITE_MODEL_PATH + "/dsTypeModel";
 
     private static final String ATTRIBUTE_ID = "ID";
 
-    private static final String DS_TYPE_MODEL_EXTENSIONS_PATH =
-        DS_TYPE_MODEL_PATH + "/extensions";
+    private static final String DS_TYPE_MODEL_EXTENSIONS_PATH = DS_TYPE_MODEL_PATH + "/extensions";
 
     private static final String ATTRIBUTE_NAME = "name";
 
@@ -67,8 +65,7 @@ public class DsCompositeModelHandler extends DefaultHandler {
     }
 
     @Override
-    public StartElement startElement(final StartElement element)
-        throws IntegritySystemException {
+    public StartElement startElement(final StartElement element) throws IntegritySystemException {
 
         if (parser.getCurPath().equals(DS_TYPE_MODEL_PATH)) {
             this.dtm = new DsTypeModel();
@@ -77,15 +74,12 @@ public class DsCompositeModelHandler extends DefaultHandler {
             }
             catch (final NoSuchAttributeException e) {
                 throw new IntegritySystemException(
-                    "Datastream type model must have an attribute "
-                        + ATTRIBUTE_ID + '.', e);
+                    "Datastream type model must have an attribute " + ATTRIBUTE_ID + '.', e);
             }
         }
         else if (parser.getCurPath().equals(DS_TYPE_MODEL_EXTENSIONS_PATH)) {
             try {
-                if (element
-                    .getAttributeValue(null, ATTRIBUTE_NAME).equalsIgnoreCase(
-                        EXTENSION_NAME_SCHEMA)) {
+                if (element.getAttributeValue(null, ATTRIBUTE_NAME).equalsIgnoreCase(EXTENSION_NAME_SCHEMA)) {
                     this.dtm.setHasSchema(true);
                 }
             }

@@ -35,18 +35,16 @@ import org.junit.runners.JUnit4;
 
 /**
  * Testsuite for the UserAccount's or UserGroups Grants with SOAP transport.
- * 
+ *
  * @author Torsten Tetteroo
- * 
  */
 @RunWith(JUnit4.class)
 public class UserPreferenceRestTest extends UserPreferenceAbstractTest {
 
     /**
      * Constructor.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     public UserPreferenceRestTest() throws Exception {
         super(Constants.TRANSPORT_REST);

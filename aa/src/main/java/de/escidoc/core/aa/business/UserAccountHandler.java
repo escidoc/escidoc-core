@@ -127,53 +127,45 @@ import java.util.regex.Pattern;
  *
  * @author Michael Schneider
  */
-public class UserAccountHandler
-    implements UserAccountHandlerInterface {
+public class UserAccountHandler implements UserAccountHandlerInterface {
 
     /**
      * The logger.
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(UserAccountHandler.class);
 
-    private static final String XPATH_GRANT_ASSIGNED_ON = '/'
-        + XmlUtility.NAME_GRANT + '/' + XmlUtility.NAME_PROPERTIES + '/'
-        + XmlUtility.NAME_ASSIGNED_ON;
+    private static final String XPATH_GRANT_ASSIGNED_ON =
+        '/' + XmlUtility.NAME_GRANT + '/' + XmlUtility.NAME_PROPERTIES + '/' + XmlUtility.NAME_ASSIGNED_ON;
 
-    private static final String XPATH_GRANT_ROLE = '/' + XmlUtility.NAME_GRANT
-        + '/' + XmlUtility.NAME_PROPERTIES + '/' + XmlUtility.NAME_ROLE;
+    private static final String XPATH_GRANT_ROLE =
+        '/' + XmlUtility.NAME_GRANT + '/' + XmlUtility.NAME_PROPERTIES + '/' + XmlUtility.NAME_ROLE;
 
-    private static final Pattern GROUP_FILTER_PATTERN = Pattern
-        .compile("(?s)\"{0,1}(" + Constants.FILTER_GROUP + '|'
-            + Constants.FILTER_PATH_USER_ACCOUNT_GROUP_ID
-            + ")(\"*\\s*([=<>]+)\\s*\"*|\"*\\s*(any)\\s*\"*"
-            + "|\"*\\s*(cql.any)\\s*\"*)" + "([^\\s\"\\(\\)]*)\"{0,1}");
+    private static final Pattern GROUP_FILTER_PATTERN =
+        Pattern
+            .compile("(?s)\"{0,1}(" + Constants.FILTER_GROUP + '|' + Constants.FILTER_PATH_USER_ACCOUNT_GROUP_ID
+                + ")(\"*\\s*([=<>]+)\\s*\"*|\"*\\s*(any)\\s*\"*" + "|\"*\\s*(cql.any)\\s*\"*)"
+                + "([^\\s\"\\(\\)]*)\"{0,1}");
 
-    private static final String MSG_WRONG_HREF =
-        "Referenced object href is wrong, object has another type.";
+    private static final String MSG_WRONG_HREF = "Referenced object href is wrong, object has another type.";
 
     private static final String MSG_GRANT_RESTRICTION_VIOLATED =
         "Grants can be created on containers, content models, contexts"
             + ", items, components, organizational units, user-accounts, "
-            + "user-groups and scopes, only. No resource of one "
-            + "of these types with the provided id exists.";
+            + "user-groups and scopes, only. No resource of one " + "of these types with the provided id exists.";
 
-    private static final String MSG_USER_NOT_FOUND_BY_ID =
-        "User with provided id does not exist.";
+    private static final String MSG_USER_NOT_FOUND_BY_ID = "User with provided id does not exist.";
 
     private static final String MSG_USER_NOT_FOUND_BY_IDENTITY_INFO =
         "User with provided user identity does not exist.";
 
-    private static final String MSG_GROUP_NOT_FOUND_BY_ID =
-        "User-Group with provided id does not exist.";
+    private static final String MSG_GROUP_NOT_FOUND_BY_ID = "User-Group with provided id does not exist.";
 
-    private static final String MSG_UNEXPECTED_EXCEPTION =
-        "Unexpected exception in ";
+    private static final String MSG_UNEXPECTED_EXCEPTION = "Unexpected exception in ";
 
     private static final String MSG_UNEXPECTED_EXCEPTION_ACCESS_RIGHTS =
         "Unexpected exception during evaluating access rights.";
 
-    private static final String MSG_XML_SCHEMA_ENSURE =
-        "Should be ensured by XML Schema.";
+    private static final String MSG_XML_SCHEMA_ENSURE = "Should be ensured by XML Schema.";
 
     private static final int MAX_FIELD_LENGTH = 245;
 
@@ -197,20 +189,15 @@ public class UserAccountHandler
 
     /**
      * See Interface for functional description.
-     * 
-     * @param userId
-     *            userId
+     *
+     * @param userId userId
      * @return user-account data as xml
-     * @throws UserAccountNotFoundException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
-     *      #retrieve(java.lang.String)
+     * @throws UserAccountNotFoundException e
+     * @throws SystemException              e
+     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface #retrieve(java.lang.String)
      */
     @Override
-    public String retrieve(final String userId)
-        throws UserAccountNotFoundException, SystemException {
+    public String retrieve(final String userId) throws UserAccountNotFoundException, SystemException {
 
         final UserAccount userAccount = dao.retrieveUserAccount(userId);
         assertUserAccount(userId, userAccount);
@@ -220,23 +207,18 @@ public class UserAccountHandler
 
     /**
      * See Interface for functional description.
-     * 
+     *
      * @return user-account data as xml
-     * @throws UserAccountNotFoundException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
-     *      #retrieveCurrentUser(java.lang.String)
+     * @throws UserAccountNotFoundException e
+     * @throws SystemException              e
+     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface #retrieveCurrentUser(java.lang.String)
      */
     @Override
-    public String retrieveCurrentUser() throws UserAccountNotFoundException,
-        SystemException {
+    public String retrieveCurrentUser() throws UserAccountNotFoundException, SystemException {
         if (StringUtils.isEmpty(UserContext.getId())) {
             throw new UserAccountNotFoundException("No user logged in");
         }
-        final UserAccount userAccount =
-            dao.retrieveUserAccount(UserContext.getId());
+        final UserAccount userAccount = dao.retrieveUserAccount(UserContext.getId());
         assertUserAccount(UserContext.getId(), userAccount);
 
         return renderer.render(userAccount);
@@ -244,31 +226,23 @@ public class UserAccountHandler
 
     /**
      * See Interface for functional description.
-     * 
-     * @param xmlData
-     *            data for user-account
+     *
+     * @param xmlData data for user-account
      * @return user-data as xml
      * @throws UniqueConstraintViolationException
-     *             e
-     * @throws XmlCorruptedException
-     *             e
+     *                                e
+     * @throws XmlCorruptedException  e
      * @throws OrganizationalUnitNotFoundException
-     *             e
-     * @throws SystemException
-     *             e
-     * @throws InvalidStatusException
-     *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
-     *      #create(java.lang.String)
+     *                                e
+     * @throws SystemException        e
+     * @throws InvalidStatusException e
+     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface #create(java.lang.String)
      */
     @Override
-    public String create(final String xmlData)
-        throws UniqueConstraintViolationException, XmlCorruptedException,
-        OrganizationalUnitNotFoundException, SystemException,
-        InvalidStatusException {
+    public String create(final String xmlData) throws UniqueConstraintViolationException, XmlCorruptedException,
+        OrganizationalUnitNotFoundException, SystemException, InvalidStatusException {
 
-        final ByteArrayInputStream in =
-            XmlUtility.convertToByteArrayInputStream(xmlData);
+        final ByteArrayInputStream in = XmlUtility.convertToByteArrayInputStream(xmlData);
 
         final UserAccount userAccount = new UserAccount();
 
@@ -291,9 +265,7 @@ public class UserAccountHandler
             throw e;
         }
         catch (final Exception e) {
-            final String msg =
-                MSG_UNEXPECTED_EXCEPTION + getClass().getName() + ".create: "
-                    + e.getClass().getName();
+            final String msg = MSG_UNEXPECTED_EXCEPTION + getClass().getName() + ".create: " + e.getClass().getName();
             throw new SystemException(msg, e);
         }
 
@@ -317,19 +289,14 @@ public class UserAccountHandler
 
     /**
      * See Interface for functional description.
-     * 
-     * @param userId
-     *            userId
-     * @throws UserAccountNotFoundException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
-     *      #delete(java.lang.String)
+     *
+     * @param userId userId
+     * @throws UserAccountNotFoundException e
+     * @throws SystemException              e
+     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface #delete(java.lang.String)
      */
     @Override
-    public void delete(final String userId)
-        throws UserAccountNotFoundException, SystemException {
+    public void delete(final String userId) throws UserAccountNotFoundException, SystemException {
 
         dao.delete(retrieveUserAccountById(userId));
 
@@ -338,49 +305,36 @@ public class UserAccountHandler
 
     /**
      * See Interface for functional description.
-     * 
-     * @param userId
-     *            userId
-     * @param xmlData
-     *            xml with updated data
+     *
+     * @param userId  userId
+     * @param xmlData xml with updated data
      * @return updated user as xml
-     * @throws UserAccountNotFoundException
-     *             e
+     * @throws UserAccountNotFoundException   e
      * @throws UniqueConstraintViolationException
-     *             e
-     * @throws XmlCorruptedException
-     *             e
-     * @throws MissingAttributeValueException
-     *             e
-     * @throws OptimisticLockingException
-     *             e
+     *                                        e
+     * @throws XmlCorruptedException          e
+     * @throws MissingAttributeValueException e
+     * @throws OptimisticLockingException     e
      * @throws OrganizationalUnitNotFoundException
-     *             e
-     * @throws SystemException
-     *             e
-     * @throws InvalidStatusException
-     *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
-     *      #update(java.lang.String, java.lang.String)
+     *                                        e
+     * @throws SystemException                e
+     * @throws InvalidStatusException         e
+     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface #update(java.lang.String,
+     *      java.lang.String)
      */
     @Override
-    public String update(final String userId, final String xmlData)
-        throws UserAccountNotFoundException,
-        UniqueConstraintViolationException, XmlCorruptedException,
-        MissingAttributeValueException, OptimisticLockingException,
-        OrganizationalUnitNotFoundException, SystemException,
-        InvalidStatusException {
+    public String update(final String userId, final String xmlData) throws UserAccountNotFoundException,
+        UniqueConstraintViolationException, XmlCorruptedException, MissingAttributeValueException,
+        OptimisticLockingException, OrganizationalUnitNotFoundException, SystemException, InvalidStatusException {
 
         final UserAccount userAccount = retrieveUserAccountById(userId);
 
-        final ByteArrayInputStream in =
-            XmlUtility.convertToByteArrayInputStream(xmlData);
+        final ByteArrayInputStream in = XmlUtility.convertToByteArrayInputStream(xmlData);
 
         final StaxParser sp = new StaxParser(XmlUtility.NAME_USER_ACCOUNT);
 
         final OptimisticLockingStaxHandler optimisticLockingHandler =
-            new OptimisticLockingStaxHandler(
-                userAccount.getLastModificationDate());
+            new OptimisticLockingStaxHandler(userAccount.getLastModificationDate());
         sp.addHandler(optimisticLockingHandler);
 
         final UserAccountPropertiesStaxHandler propertiesHandler =
@@ -409,9 +363,7 @@ public class UserAccountHandler
             throw e;
         }
         catch (final Exception e) {
-            final String msg =
-                MSG_UNEXPECTED_EXCEPTION + getClass().getName() + ".parse: "
-                    + e.getClass().getName();
+            final String msg = MSG_UNEXPECTED_EXCEPTION + getClass().getName() + ".parse: " + e.getClass().getName();
             throw new SystemException(msg, e);
         }
 
@@ -424,58 +376,41 @@ public class UserAccountHandler
 
     /**
      * See Interface for functional description.
-     * 
-     * @param userId
-     *            userId
-     * @param taskParam
-     *            password
-     * @throws UserAccountNotFoundException
-     *             e
-     * @throws InvalidStatusException
-     *             e
-     * @throws XmlCorruptedException
-     *             e
+     *
+     * @param userId    userId
+     * @param taskParam password
+     * @throws UserAccountNotFoundException e
+     * @throws InvalidStatusException       e
+     * @throws XmlCorruptedException        e
      * @throws MissingMethodParameterException
-     *             e
-     * @throws OptimisticLockingException
-     *             e
-     * @throws AuthenticationException
-     *             e
-     * @throws AuthorizationException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface#updatePassword(String,
-     *      String)
+     *                                      e
+     * @throws OptimisticLockingException   e
+     * @throws AuthenticationException      e
+     * @throws AuthorizationException       e
+     * @throws SystemException              e
+     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface#updatePassword(String, String)
      */
     @Override
-    public void updatePassword(final String userId, final String taskParam)
-        throws UserAccountNotFoundException, InvalidStatusException,
-        XmlCorruptedException, MissingMethodParameterException,
-        OptimisticLockingException, AuthenticationException,
-        AuthorizationException, SystemException {
+    public void updatePassword(final String userId, final String taskParam) throws UserAccountNotFoundException,
+        InvalidStatusException, XmlCorruptedException, MissingMethodParameterException, OptimisticLockingException,
+        AuthenticationException, AuthorizationException, SystemException {
 
         final UserAccount userAccount = retrieveUserAccountById(userId);
         if (!userAccount.getActive()) {
-            throw new InvalidStatusException(
-                "Password must not be updated on inactive user-account!");
+            throw new InvalidStatusException("Password must not be updated on inactive user-account!");
         }
 
-        final TaskParamHandler handler =
-            XmlUtility.parseTaskParam(taskParam, true);
+        final TaskParamHandler handler = XmlUtility.parseTaskParam(taskParam, true);
 
         final String password = handler.getPassword();
         if (password == null || "".equals(password)) {
-            throw new MissingMethodParameterException(
-                "Password must not be null or empty!");
+            throw new MissingMethodParameterException("Password must not be null or empty!");
         }
         userAccount.setPassword(password);
-        final ByteArrayInputStream in =
-            XmlUtility.convertToByteArrayInputStream(taskParam);
+        final ByteArrayInputStream in = XmlUtility.convertToByteArrayInputStream(taskParam);
         final StaxParser sp = new StaxParser("param");
         final OptimisticLockingStaxHandler optimisticLockingHandler =
-            new OptimisticLockingStaxHandler(
-                userAccount.getLastModificationDate());
+            new OptimisticLockingStaxHandler(userAccount.getLastModificationDate());
         sp.addHandler(optimisticLockingHandler);
         try {
             sp.parse(in);
@@ -499,41 +434,31 @@ public class UserAccountHandler
 
     /**
      * See Interface for functional description.
-     * 
-     * @param userId
-     *            userId
+     *
+     * @param userId userId
      * @return resources as xml
-     * @throws UserAccountNotFoundException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
-     *      #retrieveResources(java.lang.String)
+     * @throws UserAccountNotFoundException e
+     * @throws SystemException              e
+     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface #retrieveResources(java.lang.String)
      */
     @Override
-    public String retrieveResources(final String userId)
-        throws UserAccountNotFoundException, SystemException {
+    public String retrieveResources(final String userId) throws UserAccountNotFoundException, SystemException {
 
         return renderer.renderResources(retrieveUserAccountById(userId));
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param userId
-     *            userId
+     *
+     * @param userId userId
      * @return grants as map
-     * @throws UserAccountNotFoundException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see UserAccountHandlerInterface
-     *      #retrieveCurrentGrantsAsMap(java.lang.String)
+     * @throws UserAccountNotFoundException e
+     * @throws SystemException              e
+     * @see UserAccountHandlerInterface #retrieveCurrentGrantsAsMap(java.lang.String)
      */
     @Override
-    public Map<String, Map<String, List<RoleGrant>>> retrieveCurrentGrantsAsMap(
-        final String userId) throws UserAccountNotFoundException,
-        SystemException {
+    public Map<String, Map<String, List<RoleGrant>>> retrieveCurrentGrantsAsMap(final String userId)
+        throws UserAccountNotFoundException, SystemException {
 
         retrieveUserAccountById(userId);
         final List<RoleGrant> currentGrants = fetchCurrentGrants(userId);
@@ -542,8 +467,7 @@ public class UserAccountHandler
         }
 
         final Iterator<RoleGrant> iter = currentGrants.iterator();
-        final Map<String, Map<String, List<RoleGrant>>> ret =
-            new HashMap<String, Map<String, List<RoleGrant>>>();
+        final Map<String, Map<String, List<RoleGrant>>> ret = new HashMap<String, Map<String, List<RoleGrant>>>();
         while (iter.hasNext()) {
             final RoleGrant grant = iter.next();
             final String roleId = grant.getEscidocRole().getId();
@@ -570,28 +494,21 @@ public class UserAccountHandler
 
     /**
      * See Interface for functional description.
-     * 
-     * @param userId
-     *            userId
+     *
+     * @param userId userId
      * @return grants as xml
-     * @throws UserAccountNotFoundException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
-     *      #retrieveCurrentGrants(java.lang.String)
+     * @throws UserAccountNotFoundException e
+     * @throws SystemException              e
+     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface #retrieveCurrentGrants(java.lang.String)
      */
     @Override
-    public String retrieveCurrentGrants(final String userId)
-        throws UserAccountNotFoundException, SystemException {
+    public String retrieveCurrentGrants(final String userId) throws UserAccountNotFoundException, SystemException {
 
         final UserAccount userAccount = retrieveUserAccountById(userId);
         final List<RoleGrant> currentGrants = fetchCurrentGrants(userId);
-        final HashMap<String, RoleGrant> grantsMap =
-            new HashMap<String, RoleGrant>();
+        final HashMap<String, RoleGrant> grantsMap = new HashMap<String, RoleGrant>();
         final List<Object[]> argumentList = new ArrayList<Object[]>();
-        final List<RoleGrant> filteredCurrentGrants =
-            new ArrayList<RoleGrant>();
+        final List<RoleGrant> filteredCurrentGrants = new ArrayList<RoleGrant>();
 
         // AA-filter
         for (final RoleGrant roleGrant : currentGrants) {
@@ -600,9 +517,7 @@ public class UserAccountHandler
             argumentList.add(args);
         }
         try {
-            final List<Object[]> returnList =
-                pdp.evaluateMethodForList("user-account", "retrieveGrant",
-                    argumentList);
+            final List<Object[]> returnList = pdp.evaluateMethodForList("user-account", "retrieveGrant", argumentList);
             for (final Object[] obj : returnList) {
                 filteredCurrentGrants.add(grantsMap.get(obj[1]));
             }
@@ -619,21 +534,16 @@ public class UserAccountHandler
 
     /**
      * See Interface for functional description.
-     * 
-     * @param filter
-     *            role grant filter
-     * 
+     *
+     * @param filter role grant filter
      * @return list of filtered role grants
-     * @throws InvalidSearchQueryException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
-     *      #retrieveGrants(java.util.Map)
+     * @throws InvalidSearchQueryException e
+     * @throws SystemException             e
+     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface #retrieveGrants(java.util.Map)
      */
     @Override
-    public String retrieveGrants(final Map<String, String[]> filter)
-        throws InvalidSearchQueryException, SystemException {
+    public String retrieveGrants(final Map<String, String[]> filter) throws InvalidSearchQueryException,
+        SystemException {
 
         final SRURequestParameters parameters = new DbRequestParameters(filter);
 
@@ -646,34 +556,27 @@ public class UserAccountHandler
         if (explain) {
             final Map<String, Object> values = new HashMap<String, Object>();
 
-            values.put("PROPERTY_NAMES",
-                new RoleGrantFilter(null).getPropertyNames());
-            result =
-                ExplainXmlProvider.getInstance().getExplainRoleGrantXml(values);
+            values.put("PROPERTY_NAMES", new RoleGrantFilter(null).getPropertyNames());
+            result = ExplainXmlProvider.getInstance().getExplainRoleGrantXml(values);
         }
         else if (limit == 0) {
             result =
-                renderer.renderGrants(new ArrayList<RoleGrant>(0),
-                    Integer.toString(0), Integer.toString(offset),
+                renderer.renderGrants(new ArrayList<RoleGrant>(0), Integer.toString(0), Integer.toString(offset),
                     Integer.toString(limit), parameters.getRecordPacking());
         }
         else {
             final int needed = offset + limit;
-            final List<RoleGrant> permittedRoleGrants =
-                new ArrayList<RoleGrant>();
+            final List<RoleGrant> permittedRoleGrants = new ArrayList<RoleGrant>();
 
-            final List<RoleGrant> tmpRoleGrants =
-                dao.retrieveGrants(query, 0, 0, this.userGroupHandler);
+            final List<RoleGrant> tmpRoleGrants = dao.retrieveGrants(query, 0, 0, this.userGroupHandler);
             if (tmpRoleGrants != null && !tmpRoleGrants.isEmpty()) {
                 final List<String> userIds = new ArrayList<String>();
                 final List<String> groupIds = new ArrayList<String>();
                 for (final RoleGrant roleGrant : tmpRoleGrants) {
-                    if (roleGrant.getUserId() != null
-                        && !userIds.contains(roleGrant.getUserId())) {
+                    if (roleGrant.getUserId() != null && !userIds.contains(roleGrant.getUserId())) {
                         userIds.add(roleGrant.getUserId());
                     }
-                    else if (roleGrant.getGroupId() != null
-                        && !groupIds.contains(roleGrant.getGroupId())) {
+                    else if (roleGrant.getGroupId() != null && !groupIds.contains(roleGrant.getGroupId())) {
                         groupIds.add(roleGrant.getGroupId());
                     }
                 }
@@ -682,37 +585,30 @@ public class UserAccountHandler
                     List<String> tmpUsersPermitted = new ArrayList<String>();
                     List<String> tmpGroupsPermitted = new ArrayList<String>();
                     if (!userIds.isEmpty()) {
-                        tmpUsersPermitted =
-                            pdp.evaluateRetrieve("user-account", userIds);
+                        tmpUsersPermitted = pdp.evaluateRetrieve("user-account", userIds);
                     }
                     if (!groupIds.isEmpty()) {
-                        tmpGroupsPermitted =
-                            pdp.evaluateRetrieve("user-group", groupIds);
+                        tmpGroupsPermitted = pdp.evaluateRetrieve("user-group", groupIds);
                     }
-                    if (!tmpUsersPermitted.isEmpty()
-                        || !tmpGroupsPermitted.isEmpty()) {
+                    if (!tmpUsersPermitted.isEmpty() || !tmpGroupsPermitted.isEmpty()) {
                         for (final RoleGrant roleGrant : tmpRoleGrants) {
                             if (roleGrant.getUserId() != null) {
-                                if (tmpUsersPermitted.contains(roleGrant
-                                    .getUserId())) {
+                                if (tmpUsersPermitted.contains(roleGrant.getUserId())) {
                                     permittedRoleGrants.add(roleGrant);
                                 }
                             }
                             else if (roleGrant.getGroupId() != null
-                                && tmpGroupsPermitted.contains(roleGrant
-                                    .getGroupId())) {
+                                && tmpGroupsPermitted.contains(roleGrant.getGroupId())) {
                                 permittedRoleGrants.add(roleGrant);
                             }
                         }
                     }
                 }
                 catch (final MissingMethodParameterException e) {
-                    throw new SystemException(
-                        MSG_UNEXPECTED_EXCEPTION_ACCESS_RIGHTS, e);
+                    throw new SystemException(MSG_UNEXPECTED_EXCEPTION_ACCESS_RIGHTS, e);
                 }
                 catch (final ResourceNotFoundException e) {
-                    throw new SystemException(
-                        MSG_UNEXPECTED_EXCEPTION_ACCESS_RIGHTS, e);
+                    throw new SystemException(MSG_UNEXPECTED_EXCEPTION_ACCESS_RIGHTS, e);
                 }
             }
 
@@ -728,65 +624,48 @@ public class UserAccountHandler
                 offsetRoleGrants = new ArrayList<RoleGrant>(0);
             }
             result =
-                renderer.renderGrants(offsetRoleGrants,
-                    Integer.toString(numberPermitted),
-                    Integer.toString(offset), Integer.toString(limit),
-                    parameters.getRecordPacking());
+                renderer.renderGrants(offsetRoleGrants, Integer.toString(numberPermitted), Integer.toString(offset),
+                    Integer.toString(limit), parameters.getRecordPacking());
         }
         return result;
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param userId
-     *            userId
-     * @param grantId
-     *            grantId
+     *
+     * @param userId  userId
+     * @param grantId grantId
      * @return grant as xml
-     * @throws GrantNotFoundException
-     *             e
-     * @throws UserAccountNotFoundException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
-     *      #retrieveGrant(java.lang.String, java.lang.String)
+     * @throws GrantNotFoundException       e
+     * @throws UserAccountNotFoundException e
+     * @throws SystemException              e
+     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface #retrieveGrant(java.lang.String,
+     *      java.lang.String)
      */
     @Override
-    public String retrieveGrant(final String userId, final String grantId)
-        throws GrantNotFoundException, UserAccountNotFoundException,
-        SystemException {
+    public String retrieveGrant(final String userId, final String grantId) throws GrantNotFoundException,
+        UserAccountNotFoundException, SystemException {
 
         return renderer.renderGrant(retrieveGrantByIds(userId, grantId));
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param userId
-     *            userId
-     * @param taskParam
-     *            taskParam
-     * @throws AlreadyActiveException
-     *             e
-     * @throws UserAccountNotFoundException
-     *             e
-     * @throws XmlCorruptedException
-     *             e
-     * @throws MissingAttributeValueException
-     *             e
-     * @throws OptimisticLockingException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
-     *      #activate(java.lang.String, java.lang.String)
+     *
+     * @param userId    userId
+     * @param taskParam taskParam
+     * @throws AlreadyActiveException         e
+     * @throws UserAccountNotFoundException   e
+     * @throws XmlCorruptedException          e
+     * @throws MissingAttributeValueException e
+     * @throws OptimisticLockingException     e
+     * @throws SystemException                e
+     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface #activate(java.lang.String,
+     *      java.lang.String)
      */
     @Override
-    public void activate(final String userId, final String taskParam)
-        throws AlreadyActiveException, UserAccountNotFoundException,
-        XmlCorruptedException, MissingAttributeValueException,
+    public void activate(final String userId, final String taskParam) throws AlreadyActiveException,
+        UserAccountNotFoundException, XmlCorruptedException, MissingAttributeValueException,
         OptimisticLockingException, SystemException {
 
         final UserAccount userAccount = retrieveUserAccountById(userId);
@@ -796,8 +675,7 @@ public class UserAccountHandler
         final StaxParser sp = new StaxParser(XmlUtility.NAME_PARAM);
 
         final OptimisticLockingStaxHandler optimisticLockingHandler =
-            new OptimisticLockingStaxHandler(
-                userAccount.getLastModificationDate());
+            new OptimisticLockingStaxHandler(userAccount.getLastModificationDate());
         sp.addHandler(optimisticLockingHandler);
 
         try {
@@ -816,9 +694,7 @@ public class UserAccountHandler
             throw e;
         }
         catch (final Exception e) {
-            final String msg =
-                MSG_UNEXPECTED_EXCEPTION + getClass().getName() + ".activate: "
-                    + e.getClass().getName();
+            final String msg = MSG_UNEXPECTED_EXCEPTION + getClass().getName() + ".activate: " + e.getClass().getName();
             throw new SystemException(msg, e);
         }
 
@@ -837,30 +713,21 @@ public class UserAccountHandler
 
     /**
      * See Interface for functional description.
-     * 
-     * @param userId
-     *            userId
-     * @param taskParam
-     *            taskParam
-     * @throws AlreadyDeactiveException
-     *             e
-     * @throws UserAccountNotFoundException
-     *             e
-     * @throws XmlCorruptedException
-     *             e
-     * @throws MissingAttributeValueException
-     *             e
-     * @throws OptimisticLockingException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
-     *      #deactivate(java.lang.String, java.lang.String)
+     *
+     * @param userId    userId
+     * @param taskParam taskParam
+     * @throws AlreadyDeactiveException       e
+     * @throws UserAccountNotFoundException   e
+     * @throws XmlCorruptedException          e
+     * @throws MissingAttributeValueException e
+     * @throws OptimisticLockingException     e
+     * @throws SystemException                e
+     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface #deactivate(java.lang.String,
+     *      java.lang.String)
      */
     @Override
-    public void deactivate(final String userId, final String taskParam)
-        throws AlreadyDeactiveException, UserAccountNotFoundException,
-        XmlCorruptedException, MissingAttributeValueException,
+    public void deactivate(final String userId, final String taskParam) throws AlreadyDeactiveException,
+        UserAccountNotFoundException, XmlCorruptedException, MissingAttributeValueException,
         OptimisticLockingException, SystemException {
 
         final UserAccount userAccount = retrieveUserAccountById(userId);
@@ -870,8 +737,7 @@ public class UserAccountHandler
         final StaxParser sp = new StaxParser(XmlUtility.NAME_PARAM);
 
         final OptimisticLockingStaxHandler optimisticLockingHandler =
-            new OptimisticLockingStaxHandler(
-                userAccount.getLastModificationDate());
+            new OptimisticLockingStaxHandler(userAccount.getLastModificationDate());
         sp.addHandler(optimisticLockingHandler);
 
         try {
@@ -891,8 +757,7 @@ public class UserAccountHandler
         }
         catch (final Exception e) {
             final String msg =
-                MSG_UNEXPECTED_EXCEPTION + getClass().getName()
-                    + ".deactivate: " + e.getClass().getName();
+                MSG_UNEXPECTED_EXCEPTION + getClass().getName() + ".deactivate: " + e.getClass().getName();
             throw new SystemException(msg, e);
         }
 
@@ -911,46 +776,34 @@ public class UserAccountHandler
 
     /**
      * See Interface for functional description.
-     * 
-     * @param userId
-     *            userId
-     * @param grantXML
-     *            grantXml
+     *
+     * @param userId   userId
+     * @param grantXML grantXml
      * @return created grant as xml
-     * @throws AlreadyExistsException
-     *             e
-     * @throws UserAccountNotFoundException
-     *             e
-     * @throws InvalidScopeException
-     *             e
-     * @throws RoleNotFoundException
-     *             e
-     * @throws XmlCorruptedException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
-     *      #createGrant(java.lang.String, java.lang.String)
+     * @throws AlreadyExistsException       e
+     * @throws UserAccountNotFoundException e
+     * @throws InvalidScopeException        e
+     * @throws RoleNotFoundException        e
+     * @throws XmlCorruptedException        e
+     * @throws SystemException              e
+     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface #createGrant(java.lang.String,
+     *      java.lang.String)
      */
     @Override
-    public String createGrant(final String userId, final String grantXML)
-        throws AlreadyExistsException, UserAccountNotFoundException,
-        InvalidScopeException, RoleNotFoundException, XmlCorruptedException,
+    public String createGrant(final String userId, final String grantXML) throws AlreadyExistsException,
+        UserAccountNotFoundException, InvalidScopeException, RoleNotFoundException, XmlCorruptedException,
         SystemException {
 
         final UserAccount userAccount = retrieveUserAccountById(userId);
         final RoleGrant grant = new RoleGrant();
-        final ByteArrayInputStream in =
-            XmlUtility.convertToByteArrayInputStream(grantXML);
+        final ByteArrayInputStream in = XmlUtility.convertToByteArrayInputStream(grantXML);
 
         final StaxParser sp = new StaxParser(XmlUtility.NAME_GRANT);
 
         final LinkStaxHandler roleLinkHandler =
-            new LinkStaxHandler(XPATH_GRANT_ROLE, XmlUtility.BASE_ROLE,
-                RoleNotFoundException.class);
+            new LinkStaxHandler(XPATH_GRANT_ROLE, XmlUtility.BASE_ROLE, RoleNotFoundException.class);
         sp.addHandler(roleLinkHandler);
-        final LinkStaxHandler objectLinkHandler =
-            new LinkStaxHandler(XPATH_GRANT_ASSIGNED_ON);
+        final LinkStaxHandler objectLinkHandler = new LinkStaxHandler(XPATH_GRANT_ASSIGNED_ON);
         sp.addHandler(objectLinkHandler);
 
         final GrantStaxHandler grantHandler = new GrantStaxHandler(grant);
@@ -970,8 +823,7 @@ public class UserAccountHandler
         }
         catch (final Exception e) {
             final String msg =
-                MSG_UNEXPECTED_EXCEPTION + getClass().getName()
-                    + ".createGrant: " + e.getClass().getName();
+                MSG_UNEXPECTED_EXCEPTION + getClass().getName() + ".createGrant: " + e.getClass().getName();
             throw new SystemException(msg, e);
         }
 
@@ -982,8 +834,7 @@ public class UserAccountHandler
         final String roleId = roleLinkHandler.getObjid();
         final EscidocRole role = roleDao.retrieveRole(roleId);
         if (role == null) {
-            throw new RoleNotFoundException(StringUtility.format(
-                "Role with provided id not found", roleId));
+            throw new RoleNotFoundException(StringUtility.format("Role with provided id not found", roleId));
         }
         grant.setEscidocRole(role);
 
@@ -998,21 +849,17 @@ public class UserAccountHandler
         if (objectId != null) {
             final Map<String, String> objectAttributes;
             try {
-                objectAttributes =
-                    objectAttributeResolver.resolveObjectAttributes(objectId);
+                objectAttributes = objectAttributeResolver.resolveObjectAttributes(objectId);
             }
             catch (final Exception e) {
                 throw new SystemException(e);
             }
 
             if (objectAttributes == null) {
-                throw new XmlCorruptedException(StringUtility.format(
-                    MSG_GRANT_RESTRICTION_VIOLATED, objectId));
+                throw new XmlCorruptedException(StringUtility.format(MSG_GRANT_RESTRICTION_VIOLATED, objectId));
             }
-            final String objectType =
-                objectAttributes.get(ObjectAttributeResolver.ATTR_OBJECT_TYPE);
-            String objectTitle =
-                objectAttributes.get(ObjectAttributeResolver.ATTR_OBJECT_TITLE);
+            final String objectType = objectAttributes.get(ObjectAttributeResolver.ATTR_OBJECT_TYPE);
+            String objectTitle = objectAttributes.get(ObjectAttributeResolver.ATTR_OBJECT_TITLE);
 
             // check if objectType may be scope
             boolean checkOk = false;
@@ -1026,8 +873,7 @@ public class UserAccountHandler
                 }
             }
             if (!checkOk) {
-                throw new InvalidScopeException("objectId " + objectId
-                    + " has objectType " + objectType
+                throw new InvalidScopeException("objectId " + objectId + " has objectType " + objectType
                     + " and may not be scope for role " + role.getRoleName());
             }
 
@@ -1035,9 +881,7 @@ public class UserAccountHandler
             // not be explicitly stored in the triple store.
             // Therefore, a default title will be set, if it is null, here.
             if (objectTitle == null) {
-                objectTitle =
-                    StringUtility.convertToUpperCaseLetterFormat(objectType)
-                        + " " + objectId;
+                objectTitle = StringUtility.convertToUpperCaseLetterFormat(objectType) + " " + objectId;
             }
             else if (objectTitle.length() > MAX_FIELD_LENGTH) {
                 objectTitle = objectTitle.substring(0, MAX_FIELD_LENGTH);
@@ -1048,20 +892,19 @@ public class UserAccountHandler
 
             // In case of REST it has to be checked if the provided href points
             // to the correct href.
-            if (objectLinkHandler.getHref() != null
-                && !objectLinkHandler.getHref().equals(objectHref)) {
+            if (objectLinkHandler.getHref() != null && !objectLinkHandler.getHref().equals(objectHref)) {
                 // FIXME: exception should be a resource not found exception
                 // but this changes the interface. To prevent problems on
                 // application side, currently an XmlCorruptedException is
                 // thrown.
-                throw new XmlCorruptedException(StringUtility.format(
-                    MSG_WRONG_HREF, objectLinkHandler.getHref(), objectType));
+                throw new XmlCorruptedException(StringUtility.format(MSG_WRONG_HREF, objectLinkHandler.getHref(),
+                    objectType));
             }
 
             // check if grant already exists
             if (dao.retrieveCurrentGrant(userAccount, role, objectId) != null) {
-                throw new AlreadyExistsException(StringUtility.format(
-                    "Grant already exists", userId, role.getId(), objectId));
+                throw new AlreadyExistsException(StringUtility.format("Grant already exists", userId, role.getId(),
+                    objectId));
             }
 
             // set object values in grant
@@ -1081,33 +924,22 @@ public class UserAccountHandler
 
     /**
      * See Interface for functional description.
-     * 
-     * @param userId
-     *            userId
-     * @param grantId
-     *            grantId
-     * @param taskParam
-     *            taskParam
-     * @throws UserAccountNotFoundException
-     *             e
-     * @throws GrantNotFoundException
-     *             e
-     * @throws AlreadyRevokedException
-     *             e
-     * @throws XmlCorruptedException
-     *             e
-     * @throws MissingAttributeValueException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
-     *      #revokeGrant(java.lang.String, java.lang.String, java.lang.String)
+     *
+     * @param userId    userId
+     * @param grantId   grantId
+     * @param taskParam taskParam
+     * @throws UserAccountNotFoundException   e
+     * @throws GrantNotFoundException         e
+     * @throws AlreadyRevokedException        e
+     * @throws XmlCorruptedException          e
+     * @throws MissingAttributeValueException e
+     * @throws SystemException                e
+     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface #revokeGrant(java.lang.String,
+     *      java.lang.String, java.lang.String)
      */
     @Override
-    public void revokeGrant(
-        final String userId, final String grantId, final String taskParam)
-        throws UserAccountNotFoundException, GrantNotFoundException,
-        AlreadyRevokedException, XmlCorruptedException,
+    public void revokeGrant(final String userId, final String grantId, final String taskParam)
+        throws UserAccountNotFoundException, GrantNotFoundException, AlreadyRevokedException, XmlCorruptedException,
         MissingAttributeValueException, SystemException {
 
         final RoleGrant grant = retrieveGrantByIds(userId, grantId);
@@ -1119,8 +951,7 @@ public class UserAccountHandler
         final GrantStaxHandler grantHandler = new GrantStaxHandler(grant);
         sp.addHandler(grantHandler);
 
-        final RevokeStaxHandler revokeStaxHandler =
-            new RevokeStaxHandler(grant, this.dao);
+        final RevokeStaxHandler revokeStaxHandler = new RevokeStaxHandler(grant, this.dao);
         sp.addHandler(revokeStaxHandler);
 
         try {
@@ -1139,9 +970,7 @@ public class UserAccountHandler
             throw e;
         }
         catch (final Exception e) {
-            final String msg =
-                MSG_UNEXPECTED_EXCEPTION + getClass().getName() + ".parse: "
-                    + e.getClass().getName();
+            final String msg = MSG_UNEXPECTED_EXCEPTION + getClass().getName() + ".parse: " + e.getClass().getName();
             throw new SystemException(msg, e);
         }
 
@@ -1153,34 +982,24 @@ public class UserAccountHandler
 
     /**
      * See Interface for functional description.
-     * 
-     * @param userId
-     *            userId
-     * @param taskParam
-     *            taskParam
-     * @throws UserAccountNotFoundException
-     *             e
-     * @throws GrantNotFoundException
-     *             e
-     * @throws AlreadyRevokedException
-     *             e
-     * @throws XmlCorruptedException
-     *             e
-     * @throws MissingAttributeValueException
-     *             e
-     * @throws SystemException
-     *             e
-     * @throws AuthorizationException
-     *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
-     *      #revokeGrants(java.lang.String, java.lang.String)
+     *
+     * @param userId    userId
+     * @param taskParam taskParam
+     * @throws UserAccountNotFoundException   e
+     * @throws GrantNotFoundException         e
+     * @throws AlreadyRevokedException        e
+     * @throws XmlCorruptedException          e
+     * @throws MissingAttributeValueException e
+     * @throws SystemException                e
+     * @throws AuthorizationException         e
+     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface #revokeGrants(java.lang.String,
+     *      java.lang.String)
      */
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="WMI_WRONG_MAP_ITERATOR")
-    public void revokeGrants(final String userId, final String taskParam)
-        throws UserAccountNotFoundException, GrantNotFoundException,
-        AlreadyRevokedException, XmlCorruptedException,
-        MissingAttributeValueException, SystemException, AuthorizationException {
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "WMI_WRONG_MAP_ITERATOR")
+    public void revokeGrants(final String userId, final String taskParam) throws UserAccountNotFoundException,
+        GrantNotFoundException, AlreadyRevokedException, XmlCorruptedException, MissingAttributeValueException,
+        SystemException, AuthorizationException {
 
         // check if user exists
         retrieveUserAccountById(userId);
@@ -1188,15 +1007,13 @@ public class UserAccountHandler
         // get all current grants of user
         final List<RoleGrant> grants = fetchCurrentGrants(userId);
         // build HashMap with grantId
-        final HashMap<String, RoleGrant> grantsHash =
-            new HashMap<String, RoleGrant>();
+        final HashMap<String, RoleGrant> grantsHash = new HashMap<String, RoleGrant>();
         for (final RoleGrant grant : grants) {
             grantsHash.put(grant.getId(), grant);
         }
 
         // Parse taskParam
-        final de.escidoc.core.common.util.stax.StaxParser fp =
-            new de.escidoc.core.common.util.stax.StaxParser();
+        final de.escidoc.core.common.util.stax.StaxParser fp = new de.escidoc.core.common.util.stax.StaxParser();
 
         final TaskParamHandler tph = new TaskParamHandler(fp);
         tph.setCheckLastModificationDate(false);
@@ -1204,8 +1021,7 @@ public class UserAccountHandler
         final FilterHandler fh = new FilterHandler(fp);
         fp.addHandler(fh);
         try {
-            fp.parse(new ByteArrayInputStream(taskParam
-                .getBytes(XmlUtility.CHARACTER_ENCODING)));
+            fp.parse(new ByteArrayInputStream(taskParam.getBytes(XmlUtility.CHARACTER_ENCODING)));
         }
         catch (final InvalidContentException e) {
             throw new XmlCorruptedException(e);
@@ -1236,8 +1052,7 @@ public class UserAccountHandler
         // check if all grants that shall get revoked are currentGrants
         for (final String grantId : grantIds) {
             if (!grantsHash.containsKey(grantId)) {
-                throw new GrantNotFoundException("Grant with id " + grantId
-                    + " is no current grant of user " + userId);
+                throw new GrantNotFoundException("Grant with id " + grantId + " is no current grant of user " + userId);
             }
         }
 
@@ -1248,15 +1063,12 @@ public class UserAccountHandler
             argumentList.add(args);
         }
         try {
-            final List<Object[]> returnList =
-                pdp.evaluateMethodForList("user-account", "revokeGrant",
-                    argumentList);
+            final List<Object[]> returnList = pdp.evaluateMethodForList("user-account", "revokeGrant", argumentList);
             if (returnList.size() < grantIds.size()) {
                 // user is not allowed to revoke at least one of the grants
                 // so throw AuthorizationException
-                throw new AuthorizationException(
-                    "You are not allowed to revoke at least "
-                        + "one of the specified grants");
+                throw new AuthorizationException("You are not allowed to revoke at least "
+                    + "one of the specified grants");
             }
         }
         catch (final MissingMethodParameterException e) {
@@ -1266,8 +1078,7 @@ public class UserAccountHandler
             throw new SystemException(MSG_UNEXPECTED_EXCEPTION_ACCESS_RIGHTS, e);
         }
 
-        final UserAccount authenticateUser =
-            getAuthenticatedUser(this.dao);
+        final UserAccount authenticateUser = getAuthenticatedUser(this.dao);
         try {
             for (final String grantId : grantIds) {
                 final RoleGrant roleGrant = grantsHash.get(grantId);
@@ -1279,7 +1090,8 @@ public class UserAccountHandler
                 dao.update(roleGrant);
             }
 
-        } catch (final Exception e) {
+        }
+        catch (final Exception e) {
             throw new SqlDatabaseSystemException(e);
         }
 
@@ -1289,23 +1101,18 @@ public class UserAccountHandler
 
     /**
      * See Interface for functional description.
-     * 
-     * @param userId
-     *            userId
+     *
+     * @param userId userId
      * @return List of userHandles
-     * @throws UserAccountNotFoundException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see UserAccountHandlerInterface
-     *      #retrieveUserHandles(java.lang.String)
+     * @throws UserAccountNotFoundException e
+     * @throws SystemException              e
+     * @see UserAccountHandlerInterface #retrieveUserHandles(java.lang.String)
      */
     @Override
-    public List<UserLoginData> retrieveUserHandles(final String userId)
-        throws UserAccountNotFoundException, SystemException {
+    public List<UserLoginData> retrieveUserHandles(final String userId) throws UserAccountNotFoundException,
+        SystemException {
 
-        final List<UserLoginData> ret =
-            dao.retrieveUserLoginDataByUserId(userId);
+        final List<UserLoginData> ret = dao.retrieveUserLoginDataByUserId(userId);
         if (ret == null || ret.isEmpty()) {
             assertUserAccount(userId, dao.retrieveUserAccountById(userId));
         }
@@ -1314,20 +1121,16 @@ public class UserAccountHandler
 
     /**
      * See Interface for functional description.
-     * 
-     * @param filter
-     *            userAccountFilter
+     *
+     * @param filter userAccountFilter
      * @return list of filtered user-accounts
-     * @throws InvalidSearchQueryException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
-     *      #retrieveUserAccounts(java.util.Map)
+     * @throws InvalidSearchQueryException e
+     * @throws SystemException             e
+     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface #retrieveUserAccounts(java.util.Map)
      */
     @Override
-    public String retrieveUserAccounts(final Map<String, String[]> filter)
-        throws InvalidSearchQueryException, SystemException {
+    public String retrieveUserAccounts(final Map<String, String[]> filter) throws InvalidSearchQueryException,
+        SystemException {
 
         Map<String, String[]> castedFilter = filter;
 
@@ -1336,8 +1139,7 @@ public class UserAccountHandler
         // then remove groupId from filter
         castedFilter = fixCqlGroupFilter(castedFilter);
 
-        final SRURequestParameters parameters =
-            new DbRequestParameters(castedFilter);
+        final SRURequestParameters parameters = new DbRequestParameters(castedFilter);
 
         final String query = parameters.getQuery();
         final int limit = parameters.getMaximumRecords();
@@ -1348,62 +1150,47 @@ public class UserAccountHandler
         if (explain) {
             final Map<String, Object> values = new HashMap<String, Object>();
 
-            values.put("PROPERTY_NAMES",
-                new UserAccountFilter(null).getPropertyNames());
-            result =
-                ExplainXmlProvider.getInstance().getExplainUserAccountXml(
-                    values);
+            values.put("PROPERTY_NAMES", new UserAccountFilter(null).getPropertyNames());
+            result = ExplainXmlProvider.getInstance().getExplainUserAccountXml(values);
         }
         else if (limit == 0) {
-            result =
-                renderer.renderUserAccounts(new ArrayList<UserAccount>(0),
-                    parameters.getRecordPacking());
+            result = renderer.renderUserAccounts(new ArrayList<UserAccount>(0), parameters.getRecordPacking());
         }
         else {
             final int currentLimit = offset + limit;
             int currentOffset = 0;
-            final List<UserAccount> permittedUserAccounts =
-                new ArrayList<UserAccount>();
+            final List<UserAccount> permittedUserAccounts = new ArrayList<UserAccount>();
             final int size = permittedUserAccounts.size();
             while (size <= currentLimit) {
 
-                final List<UserAccount> tmpUserAccounts =
-                    dao
-                        .retrieveUserAccounts(query, currentOffset,
-                            currentLimit);
+                final List<UserAccount> tmpUserAccounts = dao.retrieveUserAccounts(query, currentOffset, currentLimit);
                 if (tmpUserAccounts == null || tmpUserAccounts.isEmpty()) {
                     break;
                 }
-                Iterator<UserAccount> userAccountIter =
-                    tmpUserAccounts.iterator();
-                final List<String> ids =
-                    new ArrayList<String>(tmpUserAccounts.size());
+                Iterator<UserAccount> userAccountIter = tmpUserAccounts.iterator();
+                final List<String> ids = new ArrayList<String>(tmpUserAccounts.size());
                 while (userAccountIter.hasNext()) {
                     final UserAccount userAccount = userAccountIter.next();
                     ids.add(userAccount.getId());
                 }
 
                 try {
-                    final List<String> tmpPermitted =
-                        pdp.evaluateRetrieve("user-account", ids);
+                    final List<String> tmpPermitted = pdp.evaluateRetrieve("user-account", ids);
                     final int numberPermitted = tmpPermitted.size();
                     if (numberPermitted == 0) {
                         break;
                     }
                     else {
                         int permittedIndex = 0;
-                        String currentPermittedId =
-                            tmpPermitted.get(permittedIndex);
+                        String currentPermittedId = tmpPermitted.get(permittedIndex);
                         userAccountIter = tmpUserAccounts.iterator();
                         while (userAccountIter.hasNext()) {
-                            final UserAccount userAccount =
-                                userAccountIter.next();
+                            final UserAccount userAccount = userAccountIter.next();
                             if (currentPermittedId.equals(userAccount.getId())) {
                                 permittedUserAccounts.add(userAccount);
                                 ++permittedIndex;
                                 if (permittedIndex < numberPermitted) {
-                                    currentPermittedId =
-                                        tmpPermitted.get(permittedIndex);
+                                    currentPermittedId = tmpPermitted.get(permittedIndex);
                                 }
                                 else {
                                     break;
@@ -1413,12 +1200,10 @@ public class UserAccountHandler
                     }
                 }
                 catch (final MissingMethodParameterException e) {
-                    throw new SystemException(
-                        MSG_UNEXPECTED_EXCEPTION_ACCESS_RIGHTS, e);
+                    throw new SystemException(MSG_UNEXPECTED_EXCEPTION_ACCESS_RIGHTS, e);
                 }
                 catch (final ResourceNotFoundException e) {
-                    throw new SystemException(
-                        MSG_UNEXPECTED_EXCEPTION_ACCESS_RIGHTS, e);
+                    throw new SystemException(MSG_UNEXPECTED_EXCEPTION_ACCESS_RIGHTS, e);
                 }
                 currentOffset += currentLimit;
             }
@@ -1434,31 +1219,24 @@ public class UserAccountHandler
             else {
                 offsetUserAccounts = new ArrayList<UserAccount>(0);
             }
-            result =
-                renderer.renderUserAccounts(offsetUserAccounts,
-                    parameters.getRecordPacking());
+            result = renderer.renderUserAccounts(offsetUserAccounts, parameters.getRecordPacking());
         }
         return result;
     }
 
     /**
      * replaces group-id-filter with resolved userIds.
-     * 
-     * @param filter
-     *            cql-filter
-     * @throws InvalidSearchQueryException
-     *             e
-     * @throws SystemException
-     *             e
+     *
+     * @param filter cql-filter
      * @return Map with replaced cql-query (groupId replaced with userIds)
+     * @throws InvalidSearchQueryException e
+     * @throws SystemException             e
      */
-    private Map<String, String[]> fixCqlGroupFilter(
-        final Map<String, String[]> filter) throws InvalidSearchQueryException,
-        SystemException {
+    private Map<String, String[]> fixCqlGroupFilter(final Map<String, String[]> filter)
+        throws InvalidSearchQueryException, SystemException {
 
         Map<String, String[]> returnFilter = filter;
-        final Object[] queryPartsObject =
-            filter.get(Constants.SRU_PARAMETER_QUERY);
+        final Object[] queryPartsObject = filter.get(Constants.SRU_PARAMETER_QUERY);
         if (queryPartsObject != null) {
             final String[] queryParts = new String[queryPartsObject.length];
             for (int i = 0; i < queryPartsObject.length; i++) {
@@ -1468,32 +1246,23 @@ public class UserAccountHandler
             }
             boolean groupFilterFound = false;
             for (int i = 0; i < queryParts.length; i++) {
-                final Matcher matcher =
-                    GROUP_FILTER_PATTERN.matcher(queryParts[i]);
+                final Matcher matcher = GROUP_FILTER_PATTERN.matcher(queryParts[i]);
                 if (matcher.find()) {
                     groupFilterFound = true;
-                    final Matcher groupFilterMatcher =
-                        GROUP_FILTER_PATTERN.matcher(queryParts[i]);
+                    final Matcher groupFilterMatcher = GROUP_FILTER_PATTERN.matcher(queryParts[i]);
                     final StringBuffer result = new StringBuffer("");
                     while (groupFilterMatcher.find()) {
                         if (groupFilterMatcher.group(6).matches(".*?%.*")) {
-                            throw new InvalidSearchQueryException(
-                                "Wildcards not allowed in group-filter");
+                            throw new InvalidSearchQueryException("Wildcards not allowed in group-filter");
                         }
-                        if (groupFilterMatcher.group(3) != null && groupFilterMatcher
-                            .group(3).matches(">|<|<=|>=|<>")
-                            || groupFilterMatcher.group(4) != null
-                            || groupFilterMatcher.group(5) != null) {
-                            throw new InvalidSearchQueryException(
-                                "non-supported relation in group-filter");
+                        if (groupFilterMatcher.group(3) != null && groupFilterMatcher.group(3).matches(">|<|<=|>=|<>")
+                            || groupFilterMatcher.group(4) != null || groupFilterMatcher.group(5) != null) {
+                            throw new InvalidSearchQueryException("non-supported relation in group-filter");
                         }
                         // get users for group
-                        final StringBuilder replacement =
-                            new StringBuilder(" (");
+                        final StringBuilder replacement = new StringBuilder(" (");
                         try {
-                            final Set<String> userIds =
-                                retrieveUsersForGroup(groupFilterMatcher
-                                    .group(6));
+                            final Set<String> userIds = retrieveUsersForGroup(groupFilterMatcher.group(6));
                             // write user-cql-query
                             // and replace group-expression with it.
                             if (userIds != null && !userIds.isEmpty()) {
@@ -1502,11 +1271,8 @@ public class UserAccountHandler
                                         replacement.append(" or ");
                                     }
                                     replacement.append('\"');
-                                    replacement
-                                        .append(Constants.FILTER_PATH_ID);
-                                    replacement
-                                        .append("\"=").append(userId)
-                                        .append(' ');
+                                    replacement.append(Constants.FILTER_PATH_ID);
+                                    replacement.append("\"=").append(userId).append(' ');
                                 }
                             }
                             else {
@@ -1514,37 +1280,32 @@ public class UserAccountHandler
                             }
                         }
                         catch (final UserGroupNotFoundException e) {
-                            if(LOGGER.isWarnEnabled()) {
+                            if (LOGGER.isWarnEnabled()) {
                                 LOGGER.warn("Error on getting users for group.");
                             }
-                            if(LOGGER.isDebugEnabled()) {
+                            if (LOGGER.isDebugEnabled()) {
                                 LOGGER.debug("Error on getting users for group.", e);
                             }
                             // if group has no users or group not found,
                             // write nonexisting user in query
                             replacement.append('\"');
                             replacement.append(Constants.FILTER_PATH_ID);
-                            replacement
-                                .append("\"=").append("nonexistinguser")
-                                .append(' ');
+                            replacement.append("\"=").append("nonexistinguser").append(' ');
                         }
 
                         replacement.append(") ");
-                        groupFilterMatcher.appendReplacement(result,
-                            replacement.toString());
+                        groupFilterMatcher.appendReplacement(result, replacement.toString());
                     }
                     groupFilterMatcher.appendTail(result);
                     queryParts[i] = result.toString();
                 }
             }
             if (groupFilterFound) {
-                final Map<String, String[]> filter1 =
-                    new HashMap<String, String[]>();
+                final Map<String, String[]> filter1 = new HashMap<String, String[]>();
                 for (final Entry<String, String[]> entry : filter.entrySet()) {
                     if (entry.getValue() != null) {
                         // noinspection RedundantCast
-                        filter1.put(entry.getKey(),
-                            new String[((Object[]) entry.getValue()).length]);
+                        filter1.put(entry.getKey(), new String[((Object[]) entry.getValue()).length]);
                         // noinspection RedundantCast
                         for (int j = 0; j < ((Object[]) entry.getValue()).length; j++) {
                             filter1.get(entry.getKey())[j] = entry.getValue()[j];
@@ -1562,40 +1323,30 @@ public class UserAccountHandler
     }
 
     /**
-     * Retrieve all users that belong to the given group. Groups are gone
-     * through hierarchically.
-     * 
-     * @param groupId
-     *            id of group
-     * 
+     * Retrieve all users that belong to the given group. Groups are gone through hierarchically.
+     *
+     * @param groupId id of group
      * @return set of userIds (hierarchy)
-     * @throws UserGroupNotFoundException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
-     *      #retrieveUsersForGroup(java.lang.String)
+     * @throws UserGroupNotFoundException e
+     * @throws SystemException            e
+     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface #retrieveUsersForGroup(java.lang.String)
      */
-    private Set<String> retrieveUsersForGroup(final String groupId)
-        throws UserGroupNotFoundException, SystemException {
+    private Set<String> retrieveUsersForGroup(final String groupId) throws UserGroupNotFoundException, SystemException {
         // may not return null but empty list!!
         final Set<String> userIds = new HashSet<String>();
 
         // Try getting the userGroup
         final UserGroup userGroup = userGroupDao.retrieveUserGroup(groupId);
         if (userGroup == null) {
-            throw new UserGroupNotFoundException(StringUtility.format(
-                MSG_GROUP_NOT_FOUND_BY_ID, groupId));
+            throw new UserGroupNotFoundException(StringUtility.format(MSG_GROUP_NOT_FOUND_BY_ID, groupId));
         }
 
         final Set<UserGroupMember> members = userGroup.getMembers();
 
         // Get users that are integrated via their userId
         for (final UserGroupMember member : members) {
-            if (member.getType().equals(
-                Constants.TYPE_USER_GROUP_MEMBER_INTERNAL)
-                && member.getName().equals(
-                    Constants.NAME_USER_GROUP_MEMBER_USER_ACCOUNT)) {
+            if (member.getType().equals(Constants.TYPE_USER_GROUP_MEMBER_INTERNAL)
+                && member.getName().equals(Constants.NAME_USER_GROUP_MEMBER_USER_ACCOUNT)) {
                 userIds.add(member.getValue());
             }
         }
@@ -1604,20 +1355,16 @@ public class UserAccountHandler
         final String ouAttributeName;
         try {
             ouAttributeName =
-                EscidocConfiguration.getInstance().get(
-                    EscidocConfiguration.ESCIDOC_CORE_AA_OU_ATTRIBUTE_NAME);
+                EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_AA_OU_ATTRIBUTE_NAME);
         }
         catch (final IOException e) {
             throw new SystemException(e);
         }
 
-        final Set<HashMap<String, String>> attributesSet =
-            new HashSet<HashMap<String, String>>();
+        final Set<HashMap<String, String>> attributesSet = new HashSet<HashMap<String, String>>();
         for (final UserGroupMember member : members) {
-            if (member.getType().equals(
-                Constants.TYPE_USER_GROUP_MEMBER_USER_ATTRIBUTE)) {
-                final HashMap<String, String> attributeHash =
-                    new HashMap<String, String>();
+            if (member.getType().equals(Constants.TYPE_USER_GROUP_MEMBER_USER_ATTRIBUTE)) {
+                final HashMap<String, String> attributeHash = new HashMap<String, String>();
                 attributeHash.put(member.getName(), member.getValue());
                 attributesSet.add(attributeHash);
                 // check if attribute-name is ou-attribute
@@ -1626,12 +1373,9 @@ public class UserAccountHandler
                     && member.getName().equals(ouAttributeName)) {
                     final List<String> initialList = new ArrayList<String>();
                     initialList.add(member.getValue());
-                    final List<String> pathList =
-                        getOrgUnitChildrenPathList(member.getValue(),
-                            initialList);
+                    final List<String> pathList = getOrgUnitChildrenPathList(member.getValue(), initialList);
                     for (final String ouId : pathList) {
-                        final HashMap<String, String> ouAttributeHash =
-                            new HashMap<String, String>();
+                        final HashMap<String, String> ouAttributeHash = new HashMap<String, String>();
                         ouAttributeHash.put(ouAttributeName, ouId);
                         attributesSet.add(ouAttributeHash);
                     }
@@ -1639,8 +1383,7 @@ public class UserAccountHandler
             }
         }
         if (!attributesSet.isEmpty()) {
-            final List<UserAttribute> userAttributes =
-                dao.retrieveAttributes(attributesSet);
+            final List<UserAttribute> userAttributes = dao.retrieveAttributes(attributesSet);
             for (final UserAttribute userAttribute : userAttributes) {
                 userIds.add(userAttribute.getUserAccountByUserId().getId());
             }
@@ -1648,10 +1391,8 @@ public class UserAccountHandler
 
         // Get users that are integrated via other groups
         for (final UserGroupMember member : members) {
-            if (member.getType().equals(
-                Constants.TYPE_USER_GROUP_MEMBER_INTERNAL)
-                && member.getName().equals(
-                    Constants.NAME_USER_GROUP_MEMBER_USER_GROUP)) {
+            if (member.getType().equals(Constants.TYPE_USER_GROUP_MEMBER_INTERNAL)
+                && member.getName().equals(Constants.NAME_USER_GROUP_MEMBER_USER_GROUP)) {
                 userIds.addAll(retrieveUsersForGroup(member.getValue()));
             }
         }
@@ -1661,27 +1402,21 @@ public class UserAccountHandler
 
     /**
      * Compute the child paths of the actual organizational unit.
-     * 
-     * @param orgUnitId
-     *            the orgUnitId where pathList has to get retrieved.
-     * @param totalList
-     *            total list of all Children.
+     *
+     * @param orgUnitId the orgUnitId where pathList has to get retrieved.
+     * @param totalList total list of all Children.
      * @return List of child-orgUnits
-     * @throws SystemException
-     *             If anything fails while computing the paths.
+     * @throws SystemException If anything fails while computing the paths.
      */
-    private List<String> getOrgUnitChildrenPathList(
-        final String orgUnitId, final List<String> totalList)
+    private List<String> getOrgUnitChildrenPathList(final String orgUnitId, final List<String> totalList)
         throws SystemException {
 
         List<String> addableList = totalList;
-        final List<String> orgUnitIds =
-            tripleStoreUtility.getChildren(orgUnitId);
+        final List<String> orgUnitIds = tripleStoreUtility.getChildren(orgUnitId);
         if (orgUnitIds != null && !orgUnitIds.isEmpty()) {
             addableList.addAll(orgUnitIds);
             for (final String childOrgUnitId : orgUnitIds) {
-                addableList =
-                    getOrgUnitChildrenPathList(childOrgUnitId, addableList);
+                addableList = getOrgUnitChildrenPathList(childOrgUnitId, addableList);
             }
         }
         return addableList;
@@ -1689,27 +1424,20 @@ public class UserAccountHandler
 
     /**
      * See Interface for functional description.
-     * 
-     * @param handle
-     *            the handle
+     *
+     * @param handle the handle
      * @return UserDetails object
      * @throws MissingMethodParameterException
-     *             e
-     * @throws AuthenticationException
-     *             e
-     * @throws AuthorizationException
-     *             e
-     * @throws UserAccountNotFoundException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
-     *      #retrieveUserDetails(java.lang.String)
+     *                                      e
+     * @throws AuthenticationException      e
+     * @throws AuthorizationException       e
+     * @throws UserAccountNotFoundException e
+     * @throws SystemException              e
+     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface #retrieveUserDetails(java.lang.String)
      */
     @Override
-    public UserDetails retrieveUserDetails(final String handle)
-        throws MissingMethodParameterException, AuthenticationException,
-        AuthorizationException, UserAccountNotFoundException, SystemException {
+    public UserDetails retrieveUserDetails(final String handle) throws MissingMethodParameterException,
+        AuthenticationException, AuthorizationException, UserAccountNotFoundException, SystemException {
         final UserDetails ret = dao.retrieveUserDetails(handle);
         // FIXME: use this as the authentication service?
         // In this case, additional values have to be set in the user details
@@ -1717,79 +1445,61 @@ public class UserAccountHandler
         // thrown.?
 
         if (ret == null) {
-            throw new UserAccountNotFoundException(StringUtility.format(
-                "User not authenticated by provided handle", handle));
+            throw new UserAccountNotFoundException(StringUtility.format("User not authenticated by provided handle",
+                handle));
         }
         return ret;
     }
 
     /**
      * Gets the grant for the provided user id and grant id.
-     * 
-     * @param userId
-     *            The id of the user account.
-     * @param grantId
-     *            The id of the grant.
+     *
+     * @param userId  The id of the user account.
+     * @param grantId The id of the grant.
      * @return Returns the fetched grant object.
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database error.
-     * @throws UserAccountNotFoundException
-     *             Thrown if the user account does not exists.
-     * @throws GrantNotFoundException
-     *             Thrown if the grant does not exists for the user.
+     * @throws SqlDatabaseSystemException   Thrown in case of an internal database error.
+     * @throws UserAccountNotFoundException Thrown if the user account does not exists.
+     * @throws GrantNotFoundException       Thrown if the grant does not exists for the user.
      */
-    private RoleGrant retrieveGrantByIds(
-        final String userId, final String grantId)
-        throws SqlDatabaseSystemException, UserAccountNotFoundException,
-        GrantNotFoundException {
+    private RoleGrant retrieveGrantByIds(final String userId, final String grantId) throws SqlDatabaseSystemException,
+        UserAccountNotFoundException, GrantNotFoundException {
 
         final RoleGrant grant = dao.retrieveGrant(userId, grantId);
         if (grant == null) {
             if (dao.retrieveUserAccountById(userId) == null) {
                 throw new UserAccountNotFoundException();
             }
-            throw new GrantNotFoundException(StringUtility.format(
-                "Grant not found", userId, grantId));
+            throw new GrantNotFoundException(StringUtility.format("Grant not found", userId, grantId));
         }
         return grant;
     }
 
     /**
      * Gets the attribute for the provided user id and attribute id.
-     * 
-     * @param userId
-     *            The id of the user account.
-     * @param attributeId
-     *            The id of the attribute.
-     * @param forReadOnly
-     *            if this attribute is used for read only.
+     *
+     * @param userId      The id of the user account.
+     * @param attributeId The id of the attribute.
+     * @param forReadOnly if this attribute is used for read only.
      * @return Returns the fetched attribute object.
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database error.
-     * @throws UserAccountNotFoundException
-     *             Thrown if the user account does not exists.
-     * @throws UserAttributeNotFoundException
-     *             Thrown if the attribute does not exists for the user.
+     * @throws SqlDatabaseSystemException     Thrown in case of an internal database error.
+     * @throws UserAccountNotFoundException   Thrown if the user account does not exists.
+     * @throws UserAttributeNotFoundException Thrown if the attribute does not exists for the user.
      * @throws ReadonlyElementViolationException
-     *             Thrown if the attribute is external and may not get changed.
+     *                                        Thrown if the attribute is external and may not get changed.
      */
-    private UserAttribute retrieveAttributeById(
-        final String userId, final String attributeId, final boolean forReadOnly)
-        throws SqlDatabaseSystemException, UserAccountNotFoundException,
-        UserAttributeNotFoundException, ReadonlyElementViolationException {
+    private UserAttribute retrieveAttributeById(final String userId, final String attributeId, final boolean forReadOnly)
+        throws SqlDatabaseSystemException, UserAccountNotFoundException, UserAttributeNotFoundException,
+        ReadonlyElementViolationException {
 
-        final UserAttribute attribute =
-            dao.retrieveAttribute(userId, attributeId);
+        final UserAttribute attribute = dao.retrieveAttribute(userId, attributeId);
         if (attribute == null) {
             if (dao.retrieveUserAccountById(userId) == null) {
                 throw new UserAccountNotFoundException();
             }
-            throw new UserAttributeNotFoundException(StringUtility.format(
-                "Attribute not found", userId, attributeId));
+            throw new UserAttributeNotFoundException(StringUtility.format("Attribute not found", userId, attributeId));
         }
         if (!(forReadOnly || attribute.getInternal())) {
-            throw new ReadonlyElementViolationException(
-                "Attribute is external and may not get changed");
+            throw new ReadonlyElementViolationException("Attribute is external and may not get changed");
 
         }
         return attribute;
@@ -1797,21 +1507,14 @@ public class UserAccountHandler
 
     /**
      * Sends userAccountUpdateEvent to AA.
-     * 
-     * @param userId
-     *            The id of the updated user account.
-     * 
-     * @throws UserAccountNotFoundException
-     *             Thrown if an user account with the provided id cannot be
-     *             found.
-     * @throws SqlDatabaseSystemException
-     *             In case of a database error.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
+     *
+     * @param userId The id of the updated user account.
+     * @throws UserAccountNotFoundException Thrown if an user account with the provided id cannot be found.
+     * @throws SqlDatabaseSystemException   In case of a database error.
+     * @throws WebserverSystemException     Thrown in case of an internal error.
      */
-    private static void sendUserAccountUpdateEvent(final String userId)
-        throws SqlDatabaseSystemException, UserAccountNotFoundException,
-        WebserverSystemException {
+    private static void sendUserAccountUpdateEvent(final String userId) throws SqlDatabaseSystemException,
+        UserAccountNotFoundException, WebserverSystemException {
 
         PoliciesCache.clearUserPolicies(userId);
         PoliciesCache.clearUserGroups(userId);
@@ -1819,90 +1522,65 @@ public class UserAccountHandler
 
     /**
      * Sends userAttributeUpdateEvent to AA.
-     * 
-     * @param userId
-     *            The id of the updated user account.
-     * 
-     * @throws UserAccountNotFoundException
-     *             Thrown if an user account with the provided id cannot be
-     *             found.
-     * @throws SqlDatabaseSystemException
-     *             In case of a database error.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
+     *
+     * @param userId The id of the updated user account.
+     * @throws UserAccountNotFoundException Thrown if an user account with the provided id cannot be found.
+     * @throws SqlDatabaseSystemException   In case of a database error.
+     * @throws WebserverSystemException     Thrown in case of an internal error.
      */
-    private void sendUserAttributeUpdateEvent(final String userId)
-        throws SqlDatabaseSystemException, UserAccountNotFoundException,
-        WebserverSystemException {
+    private void sendUserAttributeUpdateEvent(final String userId) throws SqlDatabaseSystemException,
+        UserAccountNotFoundException, WebserverSystemException {
 
         PoliciesCache.clearUserGroups(userId);
         retrieveUserAccountById(userId).touch();
     }
 
     /**
-     * Retrieves the user account data identified by the provided user id and
-     * asserts that an user has been found. Before the user account is
-     * retrieved, it is asserted that an user id has been provided.
-     * 
-     * @param userId
-     *            The id of the user to retrieve the data for.
+     * Retrieves the user account data identified by the provided user id and asserts that an user has been found.
+     * Before the user account is retrieved, it is asserted that an user id has been provided.
+     *
+     * @param userId The id of the user to retrieve the data for.
      * @return Returns the identified <code>UserAccount</code> object.
-     * @throws UserAccountNotFoundException
-     *             Thrown if an user account with the provided id cannot be
-     *             found.
-     * @throws SqlDatabaseSystemException
-     *             In case of a database error.
+     * @throws UserAccountNotFoundException Thrown if an user account with the provided id cannot be found.
+     * @throws SqlDatabaseSystemException   In case of a database error.
      */
-    private UserAccount retrieveUserAccountById(final String userId)
-        throws UserAccountNotFoundException, SqlDatabaseSystemException {
+    private UserAccount retrieveUserAccountById(final String userId) throws UserAccountNotFoundException,
+        SqlDatabaseSystemException {
 
         final UserAccount user = dao.retrieveUserAccountById(userId);
         if (user == null) {
-            throw new UserAccountNotFoundException(StringUtility.format(
-                MSG_USER_NOT_FOUND_BY_ID, userId));
+            throw new UserAccountNotFoundException(StringUtility.format(MSG_USER_NOT_FOUND_BY_ID, userId));
         }
         return user;
     }
 
     /**
-     * Asserts that the user account is provided, i.e. it is not
-     * <code>null</code>.
-     * 
-     * @param userId
-     *            The user id for which the account should be provided (should
-     *            exist).
-     * @param user
-     *            The user account to assert.
-     * @throws UserAccountNotFoundException
-     *             Thrown if assertion fails.
+     * Asserts that the user account is provided, i.e. it is not <code>null</code>.
+     *
+     * @param userId The user id for which the account should be provided (should exist).
+     * @param user   The user account to assert.
+     * @throws UserAccountNotFoundException Thrown if assertion fails.
      */
     private static void assertUserAccount(final String userId, final UserAccount user)
         throws UserAccountNotFoundException {
 
         if (user == null) {
-            throw new UserAccountNotFoundException(StringUtility.format(
-                MSG_USER_NOT_FOUND_BY_IDENTITY_INFO, userId));
+            throw new UserAccountNotFoundException(StringUtility.format(MSG_USER_NOT_FOUND_BY_IDENTITY_INFO, userId));
         }
     }
 
     /**
-     * Fetches the current grants of the user account identified by the provided
-     * id.
-     * 
-     * @param userId
-     *            The id of the user account.
-     * @return Returns a <code>List</code> containing the grants of the user
-     *         account that are currently valid. If the user does not have a
-     *         grant, an empty <code>List</code> is returned.
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database error.
+     * Fetches the current grants of the user account identified by the provided id.
+     *
+     * @param userId The id of the user account.
+     * @return Returns a <code>List</code> containing the grants of the user account that are currently valid. If the
+     *         user does not have a grant, an empty <code>List</code> is returned.
+     * @throws SqlDatabaseSystemException Thrown in case of an internal database error.
      */
-    private List<RoleGrant> fetchCurrentGrants(final String userId)
-        throws SqlDatabaseSystemException {
+    private List<RoleGrant> fetchCurrentGrants(final String userId) throws SqlDatabaseSystemException {
 
         final List<RoleGrant> grants = dao.retrieveGrantsByUserId(userId);
-        final List<RoleGrant> currentGrants =
-            new ArrayList<RoleGrant>(grants.size());
+        final List<RoleGrant> currentGrants = new ArrayList<RoleGrant>(grants.size());
         if (!grants.isEmpty()) {
             for (final RoleGrant grant : grants) {
                 if (grant.getRevocationDate() == null) {
@@ -1915,9 +1593,8 @@ public class UserAccountHandler
 
     /**
      * Injects the user account data access object.
-     * 
-     * @param dao
-     *            The data access object.
+     *
+     * @param dao The data access object.
      */
     public void setDao(final UserAccountDaoInterface dao) {
         this.dao = dao;
@@ -1925,9 +1602,8 @@ public class UserAccountHandler
 
     /**
      * Injects the user group data access object.
-     * 
-     * @param userGroupDao
-     *            The data access object.
+     *
+     * @param userGroupDao The data access object.
      */
     public void setUserGroupDao(final UserGroupDaoInterface userGroupDao) {
         this.userGroupDao = userGroupDao;
@@ -1935,20 +1611,17 @@ public class UserAccountHandler
 
     /**
      * Injects the user group data access object.
-     * 
-     * @param objectAttributeResolver
-     *            The objectAttributeResolver.
+     *
+     * @param objectAttributeResolver The objectAttributeResolver.
      */
-    public void setObjectAttributeResolver(
-        final ObjectAttributeResolver objectAttributeResolver) {
+    public void setObjectAttributeResolver(final ObjectAttributeResolver objectAttributeResolver) {
         this.objectAttributeResolver = objectAttributeResolver;
     }
 
     /**
      * Injects the role data access object.
-     * 
-     * @param roleDao
-     *            The role data access object.
+     *
+     * @param roleDao The role data access object.
      */
     public void setRoleDao(final EscidocRoleDaoInterface roleDao) {
         this.roleDao = roleDao;
@@ -1957,19 +1630,16 @@ public class UserAccountHandler
     /**
      * Injects the TripleStore utility.
      *
-     * @param tripleStoreUtility
-     *            TripleStoreUtility from Spring
+     * @param tripleStoreUtility TripleStoreUtility from Spring
      */
-    public void setTripleStoreUtility(
-        final TripleStoreUtility tripleStoreUtility) {
+    public void setTripleStoreUtility(final TripleStoreUtility tripleStoreUtility) {
         this.tripleStoreUtility = tripleStoreUtility;
     }
 
     /**
      * Injects the renderer.
-     * 
-     * @param renderer
-     *            The renderer to inject.
+     *
+     * @param renderer The renderer to inject.
      */
     public void setRenderer(final UserAccountRendererInterface renderer) {
         this.renderer = renderer;
@@ -1977,88 +1647,68 @@ public class UserAccountHandler
 
     /**
      * Injects the permissions query generator.
-     * 
-     * @param permissionsQuery
-     *            The permissions query generator to inject.
+     *
+     * @param permissionsQuery The permissions query generator to inject.
      */
     public void setPermissionsQuery(final PermissionsQuery permissionsQuery) {
         this.permissionsQuery = permissionsQuery;
     }
 
     /**
-     * Sets the creation date and the created-by user in the provided
-     * <code>UserAccount</code> object.<br/>
-     * The values are set with the values of modification date and modifying
-     * user of the provided user account.<br/>
-     * Before calling this method, the last modification date and the modifying
-     * user must be set.
-     * 
-     * @param userAccount
-     *            The <code>UserAccount</code> object to modify.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     * Sets the creation date and the created-by user in the provided <code>UserAccount</code> object.<br/> The values
+     * are set with the values of modification date and modifying user of the provided user account.<br/> Before calling
+     * this method, the last modification date and the modifying user must be set.
+     *
+     * @param userAccount The <code>UserAccount</code> object to modify.
+     * @throws SystemException Thrown in case of an internal error.
      */
-    private static void setCreationValues(final UserAccount userAccount)
-        throws SystemException {
+    private static void setCreationValues(final UserAccount userAccount) throws SystemException {
 
         // initialize creation-date value
         userAccount.setCreationDate(userAccount.getLastModificationDate());
 
         // initialize created-by values
-        userAccount.setUserAccountByCreatorId(userAccount
-            .getUserAccountByModifiedById());
+        userAccount.setUserAccountByCreatorId(userAccount.getUserAccountByModifiedById());
     }
 
     /**
-     * Sets the last modification date and the modified-by user in the provided
-     * <code>UserAccount</code> object.<br/>
-     * The last modification date is set to the current time, and the modified
-     * by user to the user account of the current, authenticated user.
-     * 
-     * @param userAccount
-     *            The <code>UserAccount</code> object to modify.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     * Sets the last modification date and the modified-by user in the provided <code>UserAccount</code> object.<br/>
+     * The last modification date is set to the current time, and the modified by user to the user account of the
+     * current, authenticated user.
+     *
+     * @param userAccount The <code>UserAccount</code> object to modify.
+     * @throws SystemException Thrown in case of an internal error.
      */
-    private void setModificationValues(final UserAccount userAccount)
-        throws SystemException {
+    private void setModificationValues(final UserAccount userAccount) throws SystemException {
 
-        userAccount
-            .setLastModificationDate(new Date());
+        userAccount.setLastModificationDate(new Date());
         userAccount.setUserAccountByModifiedById(getAuthenticatedUser(this.dao));
     }
 
     /**
-     * Gets the user account of the authenticated user.<br>
-     * The authenticated user is retrieved from the <code>UserContext</code>.
-     * 
-     * @param dao
-     *            The data access object to use.
+     * Gets the user account of the authenticated user.<br> The authenticated user is retrieved from the
+     * <code>UserContext</code>.
+     *
+     * @param dao The data access object to use.
      * @return Returns the fetched user account.
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of a database error.
-     * @throws WebserverSystemException
-     *             Thrown if the account of the authenticated user cannot be
-     *             found.
+     * @throws SqlDatabaseSystemException Thrown in case of a database error.
+     * @throws WebserverSystemException   Thrown if the account of the authenticated user cannot be found.
      */
-    public static UserAccount getAuthenticatedUser(
-        final UserAccountDaoInterface dao) throws SqlDatabaseSystemException,
-        WebserverSystemException {
+    public static UserAccount getAuthenticatedUser(final UserAccountDaoInterface dao)
+        throws SqlDatabaseSystemException, WebserverSystemException {
 
-        final UserAccount userAccount =
-            dao.retrieveUserAccountById(UserContext.getId());
+        final UserAccount userAccount = dao.retrieveUserAccountById(UserContext.getId());
         if (userAccount == null) {
-            throw new WebserverSystemException(StringUtility.format(
-                "Account of authenticated user not found", UserContext.getId()));
+            throw new WebserverSystemException(StringUtility.format("Account of authenticated user not found",
+                UserContext.getId()));
         }
         return userAccount;
     }
 
     /**
      * Injects the policy decision point bean.
-     * 
-     * @param pdp
-     *            The {@link PolicyDecisionPoint}.
+     *
+     * @param pdp The {@link PolicyDecisionPoint}.
      */
     public void setPdp(final PolicyDecisionPointInterface pdp) {
         this.pdp = pdp;
@@ -2066,62 +1716,46 @@ public class UserAccountHandler
 
     /**
      * Injects the userGroupHandler bean.
-     * 
-     * @param userGroupHandler
-     *            The {@link UserGroupHandler}.
+     *
+     * @param userGroupHandler The {@link UserGroupHandler}.
      */
-    public void setUserGroupHandler(
-        final UserGroupHandlerInterface userGroupHandler) {
+    public void setUserGroupHandler(final UserGroupHandlerInterface userGroupHandler) {
         this.userGroupHandler = userGroupHandler;
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param userId
-     *            userId
+     *
+     * @param userId userId
      * @return list of preferences as xml
-     * @throws UserAccountNotFoundException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
-     *      #retrievePreferences(java.lang.String)
+     * @throws UserAccountNotFoundException e
+     * @throws SystemException              e
+     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface #retrievePreferences(java.lang.String)
      */
     @Override
-    public String retrievePreferences(final String userId)
-        throws UserAccountNotFoundException, SystemException {
+    public String retrievePreferences(final String userId) throws UserAccountNotFoundException, SystemException {
         final UserAccount userAccount = retrieveUserAccountById(userId);
-        final Set<UserPreference> currentPreferences =
-            userAccount.getUserPreferencesByUserId();
+        final Set<UserPreference> currentPreferences = userAccount.getUserPreferencesByUserId();
         return renderer.renderPreferences(userAccount, currentPreferences);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param userId
-     *            userId
-     * @param name
-     *            name of the preference to retrieve
+     *
+     * @param userId userId
+     * @param name   name of the preference to retrieve
      * @return preference as xml
-     * @throws UserAccountNotFoundException
-     *             e
-     * @throws PreferenceNotFoundException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
-     *      #retrievePreference(java.lang.String)
+     * @throws UserAccountNotFoundException e
+     * @throws PreferenceNotFoundException  e
+     * @throws SystemException              e
+     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface #retrievePreference(java.lang.String)
      */
     @Override
-    public String retrievePreference(final String userId, final String name)
-        throws UserAccountNotFoundException, PreferenceNotFoundException,
-        SystemException {
+    public String retrievePreference(final String userId, final String name) throws UserAccountNotFoundException,
+        PreferenceNotFoundException, SystemException {
 
         final UserAccount userAccount = retrieveUserAccountById(userId);
-        final Set<UserPreference> currentPreferences =
-            userAccount.getUserPreferencesByUserId();
+        final Set<UserPreference> currentPreferences = userAccount.getUserPreferencesByUserId();
 
         String result = null;
         for (final UserPreference preference : currentPreferences) {
@@ -2131,8 +1765,7 @@ public class UserAccountHandler
             }
         }
         if (result == null) {
-            throw new PreferenceNotFoundException("Preference with name "
-                + name + " not found");
+            throw new PreferenceNotFoundException("Preference with name " + name + " not found");
         }
 
         return result;
@@ -2140,35 +1773,25 @@ public class UserAccountHandler
 
     /**
      * See Interface for functional description.
-     * 
-     * @param userId
-     *            userId
-     * @param preferenceXML
-     *            preference as xml
+     *
+     * @param userId        userId
+     * @param preferenceXML preference as xml
      * @return created preference as xml
-     * @throws AlreadyExistsException
-     *             e
-     * @throws UserAccountNotFoundException
-     *             e
-     * @throws PreferenceNotFoundException
-     *             e
-     * @throws XmlCorruptedException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
-     *      #createPreference(java.lang.String, java.lang.String)
+     * @throws AlreadyExistsException       e
+     * @throws UserAccountNotFoundException e
+     * @throws PreferenceNotFoundException  e
+     * @throws XmlCorruptedException        e
+     * @throws SystemException              e
+     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface #createPreference(java.lang.String,
+     *      java.lang.String)
      */
     @Override
-    public String createPreference(
-        final String userId, final String preferenceXML)
-        throws AlreadyExistsException, UserAccountNotFoundException,
-        PreferenceNotFoundException, XmlCorruptedException, SystemException {
+    public String createPreference(final String userId, final String preferenceXML) throws AlreadyExistsException,
+        UserAccountNotFoundException, PreferenceNotFoundException, XmlCorruptedException, SystemException {
 
         final UserAccount userAccount = retrieveUserAccountById(userId);
 
-        final ByteArrayInputStream in =
-            XmlUtility.convertToByteArrayInputStream(preferenceXML);
+        final ByteArrayInputStream in = XmlUtility.convertToByteArrayInputStream(preferenceXML);
         final StaxParser sp = new StaxParser(Elements.ELEMENT_USER_PREFERENCE);
 
         final UserPreferenceReadHandler uprh = new UserPreferenceReadHandler();
@@ -2179,8 +1802,7 @@ public class UserAccountHandler
         }
         catch (final Exception e) {
             final String msg =
-                MSG_UNEXPECTED_EXCEPTION + getClass().getName()
-                    + ".createPreference: " + e.getClass().getName();
+                MSG_UNEXPECTED_EXCEPTION + getClass().getName() + ".createPreference: " + e.getClass().getName();
             throw new SystemException(msg, e);
         }
 
@@ -2190,8 +1812,7 @@ public class UserAccountHandler
         // there is only one entry
         // TODO ensure by xml schema that is true
         if (preferenceNames.size() > 1) {
-            throw new XmlCorruptedException("Only one preference allowed. "
-                + MSG_XML_SCHEMA_ENSURE);
+            throw new XmlCorruptedException("Only one preference allowed. " + MSG_XML_SCHEMA_ENSURE);
         }
         final Iterator<String> it = preferenceNames.iterator();
         final String preferenceName = it.next();
@@ -2200,14 +1821,12 @@ public class UserAccountHandler
         preference.setName(preferenceName);
         preference.setValue(preferenceValue);
 
-        final Set<UserPreference> userPreferences =
-            userAccount.getUserPreferencesByUserId();
+        final Set<UserPreference> userPreferences = userAccount.getUserPreferencesByUserId();
         // TODO check for same preference already set by getting preference by
         // PrimKey(userId,name)
         for (final UserPreference userPreference : userPreferences) {
             if (preferenceName.equals(userPreference.getName())) {
-                throw new AlreadyExistsException("Preference " + preferenceName
-                    + " already exists for user " + userId);
+                throw new AlreadyExistsException("Preference " + preferenceName + " already exists for user " + userId);
             }
         }
         userPreferences.add(preference);
@@ -2222,51 +1841,34 @@ public class UserAccountHandler
 
     /**
      * See Interface for functional description.
-     * 
-     * @param userId
-     *            userId
-     * @param preferenceName
-     *            name of preference to update
-     * @param preferenceXML
-     *            preference as xml
+     *
+     * @param userId         userId
+     * @param preferenceName name of preference to update
+     * @param preferenceXML  preference as xml
      * @return updated preference as xml
-     * @throws AlreadyExistsException
-     *             e
-     * @throws UserAccountNotFoundException
-     *             e
-     * @throws PreferenceNotFoundException
-     *             e
-     * @throws XmlCorruptedException
-     *             e
-     * @throws SystemException
-     *             e
-     * @throws OptimisticLockingException
-     *             If the give last modification timestamp does not match the
-     *             current one.
-     * @throws MissingAttributeValueException
-     *             If there is no last modificate date attribute.
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
-     *      #updatePreference(java.lang.String, java.lang.String)
+     * @throws AlreadyExistsException         e
+     * @throws UserAccountNotFoundException   e
+     * @throws PreferenceNotFoundException    e
+     * @throws XmlCorruptedException          e
+     * @throws SystemException                e
+     * @throws OptimisticLockingException     If the give last modification timestamp does not match the current one.
+     * @throws MissingAttributeValueException If there is no last modificate date attribute.
+     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface #updatePreference(java.lang.String,
+     *      java.lang.String)
      */
     @Override
-    public String updatePreference(
-        final String userId, final String preferenceName,
-        final String preferenceXML) throws AlreadyExistsException,
-        UserAccountNotFoundException, PreferenceNotFoundException,
-        XmlCorruptedException, SystemException, OptimisticLockingException,
-        MissingAttributeValueException {
+    public String updatePreference(final String userId, final String preferenceName, final String preferenceXML)
+        throws AlreadyExistsException, UserAccountNotFoundException, PreferenceNotFoundException,
+        XmlCorruptedException, SystemException, OptimisticLockingException, MissingAttributeValueException {
 
         final UserAccount userAccount = retrieveUserAccountById(userId);
-        final Set<UserPreference> userPreferences =
-            userAccount.getUserPreferencesByUserId();
+        final Set<UserPreference> userPreferences = userAccount.getUserPreferencesByUserId();
 
-        final ByteArrayInputStream in =
-            XmlUtility.convertToByteArrayInputStream(preferenceXML);
+        final ByteArrayInputStream in = XmlUtility.convertToByteArrayInputStream(preferenceXML);
         final StaxParser sp = new StaxParser(Elements.ELEMENT_USER_PREFERENCE);
 
         final OptimisticLockingStaxHandler optimisticLockingHandler =
-            new OptimisticLockingStaxHandler(
-                userAccount.getLastModificationDate());
+            new OptimisticLockingStaxHandler(userAccount.getLastModificationDate());
         sp.addHandler(optimisticLockingHandler);
 
         final UserPreferenceReadHandler uprh = new UserPreferenceReadHandler();
@@ -2283,8 +1885,7 @@ public class UserAccountHandler
         }
         catch (final Exception e) {
             final String msg =
-                MSG_UNEXPECTED_EXCEPTION + getClass().getName()
-                    + ".createPreference: " + e.getClass().getName();
+                MSG_UNEXPECTED_EXCEPTION + getClass().getName() + ".createPreference: " + e.getClass().getName();
             throw new SystemException(msg, e);
         }
 
@@ -2293,15 +1894,13 @@ public class UserAccountHandler
         // there is only one entry
         // TODO ensure by xml schema that is true
         if (preferenceNames.size() > 1) {
-            throw new XmlCorruptedException("Only one preference allowed. "
-                + MSG_XML_SCHEMA_ENSURE);
+            throw new XmlCorruptedException("Only one preference allowed. " + MSG_XML_SCHEMA_ENSURE);
         }
         final Iterator<String> it = preferenceNames.iterator();
         final String xmlPreferenceName = it.next();
         if (!xmlPreferenceName.equals(preferenceName)) {
-            throw new XmlCorruptedException(
-                "Given preference name does not match "
-                    + "preference name inside the xml representation.");
+            throw new XmlCorruptedException("Given preference name does not match "
+                + "preference name inside the xml representation.");
         }
 
         // TODO check for existence of preference by getting preference by
@@ -2316,8 +1915,7 @@ public class UserAccountHandler
         }
         if (preference == null) {
             // FIXME NotFoundException ?(FRS)
-            throw new AlreadyExistsException("Preference " + preferenceName
-                + " does not exist for user " + userId);
+            throw new AlreadyExistsException("Preference " + preferenceName + " does not exist for user " + userId);
         }
         preference.setValue(preferences.get(preferenceName));
         // unnecessary: userPreferences.add(preference);
@@ -2332,28 +1930,20 @@ public class UserAccountHandler
 
     /**
      * See Interface for functional description.
-     * 
-     * @param userId
-     *            userId
-     * @param preferenceName
-     *            name of preference to update
-     * @throws UserAccountNotFoundException
-     *             e
-     * @throws PreferenceNotFoundException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
-     *      #deletePreference(java.lang.String, java.lang.String)
+     *
+     * @param userId         userId
+     * @param preferenceName name of preference to update
+     * @throws UserAccountNotFoundException e
+     * @throws PreferenceNotFoundException  e
+     * @throws SystemException              e
+     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface #deletePreference(java.lang.String,
+     *      java.lang.String)
      */
     @Override
-    public void deletePreference(
-        final String userId, final String preferenceName)
-        throws UserAccountNotFoundException, PreferenceNotFoundException,
-        SystemException {
+    public void deletePreference(final String userId, final String preferenceName) throws UserAccountNotFoundException,
+        PreferenceNotFoundException, SystemException {
         final UserAccount userAccount = retrieveUserAccountById(userId);
-        final Set<UserPreference> userPreferences =
-            userAccount.getUserPreferencesByUserId();
+        final Set<UserPreference> userPreferences = userAccount.getUserPreferencesByUserId();
 
         // PrimKey(userId,name)
         for (final UserPreference userPreference : userPreferences) {
@@ -2365,51 +1955,39 @@ public class UserAccountHandler
                 return;
             }
         }
-        throw new PreferenceNotFoundException("The preference '"
-            + preferenceName + "' does not exist for user '" + userId + "'.");
+        throw new PreferenceNotFoundException("The preference '" + preferenceName + "' does not exist for user '"
+            + userId + "'.");
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param userId
-     *            The userId.
-     * @param preferencesXML
-     *            The xml.
+     *
+     * @param userId         The userId.
+     * @param preferencesXML The xml.
      * @return updated XML
-     * @throws UserAccountNotFoundException
-     *             If
-     * @throws XmlCorruptedException
-     *             If
-     * @throws SystemException
-     *             If
-     * @throws OptimisticLockingException
-     *             If the give last modification timestamp does not match the
-     *             current one.
-     * @throws MissingAttributeValueException
-     *             If there is no last modificate date attribute.
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
-     *      #createPreference(java.lang.String, java.lang.String)
+     * @throws UserAccountNotFoundException   If
+     * @throws XmlCorruptedException          If
+     * @throws SystemException                If
+     * @throws OptimisticLockingException     If the give last modification timestamp does not match the current one.
+     * @throws MissingAttributeValueException If there is no last modificate date attribute.
+     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface #createPreference(java.lang.String,
+     *      java.lang.String)
      */
     @Override
-    public String updatePreferences(
-        final String userId, final String preferencesXML)
-        throws UserAccountNotFoundException, XmlCorruptedException,
-        SystemException, OptimisticLockingException,
+    public String updatePreferences(final String userId, final String preferencesXML)
+        throws UserAccountNotFoundException, XmlCorruptedException, SystemException, OptimisticLockingException,
         MissingAttributeValueException {
 
         final UserAccount userAccount = retrieveUserAccountById(userId);
 
-        final ByteArrayInputStream in =
-            XmlUtility.convertToByteArrayInputStream(preferencesXML);
+        final ByteArrayInputStream in = XmlUtility.convertToByteArrayInputStream(preferencesXML);
         final StaxParser sp = new StaxParser(Elements.ELEMENT_USER_PREFERENCES);
 
         final UserPreferenceReadHandler uprh = new UserPreferenceReadHandler();
         sp.addHandler(uprh);
 
         final OptimisticLockingStaxHandler optimisticLockingHandler =
-            new OptimisticLockingStaxHandler(
-                userAccount.getLastModificationDate());
+            new OptimisticLockingStaxHandler(userAccount.getLastModificationDate());
         sp.addHandler(optimisticLockingHandler);
 
         try {
@@ -2423,15 +2001,13 @@ public class UserAccountHandler
         }
         catch (final Exception e) {
             final String msg =
-                MSG_UNEXPECTED_EXCEPTION + getClass().getName()
-                    + ".updatePreference: " + e.getClass().getName();
+                MSG_UNEXPECTED_EXCEPTION + getClass().getName() + ".updatePreference: " + e.getClass().getName();
             throw new SystemException(msg, e);
         }
 
         // delete all existing preferences
         // FIXME name/value may be defined as primary key
-        final Set<UserPreference> currentPreferences =
-            userAccount.getUserPreferencesByUserId();
+        final Set<UserPreference> currentPreferences = userAccount.getUserPreferencesByUserId();
         // Iterator<UserPreference> curPrefsIterator =
         // currentPreferences.iterator();
         // while (curPrefsIterator.hasNext()) {
@@ -2467,30 +2043,22 @@ public class UserAccountHandler
 
     /**
      * See Interface for functional description.
-     * 
-     * @param userId
-     *            id of user
-     * @param attributeXML
-     *            xml with attribute to create
+     *
+     * @param userId       id of user
+     * @param attributeXML xml with attribute to create
      * @return String xml with created attribute
-     * @throws AlreadyExistsException
-     *             e
-     * @throws UserAccountNotFoundException
-     *             e
-     * @throws XmlCorruptedException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
-     *      #createAttribute(java.lang.String, java.lang.String)
+     * @throws AlreadyExistsException       e
+     * @throws UserAccountNotFoundException e
+     * @throws XmlCorruptedException        e
+     * @throws SystemException              e
+     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface #createAttribute(java.lang.String,
+     *      java.lang.String)
      */
     @Override
-    public String createAttribute(final String userId, final String attributeXML)
-        throws AlreadyExistsException, UserAccountNotFoundException,
-        XmlCorruptedException, SystemException {
+    public String createAttribute(final String userId, final String attributeXML) throws AlreadyExistsException,
+        UserAccountNotFoundException, XmlCorruptedException, SystemException {
 
-        final ByteArrayInputStream in =
-            XmlUtility.convertToByteArrayInputStream(attributeXML);
+        final ByteArrayInputStream in = XmlUtility.convertToByteArrayInputStream(attributeXML);
         final StaxParser sp = new StaxParser(Elements.ELEMENT_USER_ATTRIBUTE);
 
         final UserAttributeReadHandler uarh = new UserAttributeReadHandler();
@@ -2501,8 +2069,7 @@ public class UserAccountHandler
         }
         catch (final Exception e) {
             final String msg =
-                MSG_UNEXPECTED_EXCEPTION + getClass().getName()
-                    + ".createAttribute: " + e.getClass().getName();
+                MSG_UNEXPECTED_EXCEPTION + getClass().getName() + ".createAttribute: " + e.getClass().getName();
             throw new SystemException(msg, e);
         }
 
@@ -2512,8 +2079,7 @@ public class UserAccountHandler
         // there is only one entry
         // TODO ensure by xml schema that is true
         if (attributeNames.size() > 1) {
-            throw new XmlCorruptedException("Only one attribute allowed. "
-                + MSG_XML_SCHEMA_ENSURE);
+            throw new XmlCorruptedException("Only one attribute allowed. " + MSG_XML_SCHEMA_ENSURE);
         }
 
         final UserAccount userAccount = retrieveUserAccountById(userId);
@@ -2526,14 +2092,11 @@ public class UserAccountHandler
         attribute.setValue(attributeValue);
         attribute.setInternal(true);
 
-        final Set<UserAttribute> userAttributes =
-            userAccount.getUserAttributesByUserId();
+        final Set<UserAttribute> userAttributes = userAccount.getUserAttributesByUserId();
 
         for (final UserAttribute userAttribute : userAttributes) {
-            if (attributeName.equals(userAttribute.getName())
-                && attributeValue.equals(userAttribute.getValue())) {
-                throw new AlreadyExistsException("Attribute " + attributeName
-                    + " with value " + attributeValue
+            if (attributeName.equals(userAttribute.getName()) && attributeValue.equals(userAttribute.getValue())) {
+                throw new AlreadyExistsException("Attribute " + attributeName + " with value " + attributeValue
                     + " already exists for user " + userId);
             }
         }
@@ -2544,54 +2107,40 @@ public class UserAccountHandler
 
     /**
      * See Interface for functional description.
-     * 
-     * @param userId
-     *            id of user
+     *
+     * @param userId id of user
      * @return String attributes as xml
-     * @throws UserAccountNotFoundException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
-     *      #retrieveAttributes(java.lang.String)
+     * @throws UserAccountNotFoundException e
+     * @throws SystemException              e
+     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface #retrieveAttributes(java.lang.String)
      */
     @Override
-    public String retrieveAttributes(final String userId)
-        throws UserAccountNotFoundException, SystemException {
+    public String retrieveAttributes(final String userId) throws UserAccountNotFoundException, SystemException {
         final UserAccount userAccount = retrieveUserAccountById(userId);
-        final Set<UserAttribute> currentAttributes =
-            userAccount.getUserAttributesByUserId();
+        final Set<UserAttribute> currentAttributes = userAccount.getUserAttributesByUserId();
         return renderer.renderAttributes(userAccount, currentAttributes);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param userId
-     *            id of user
-     * @param name
-     *            name of attribute
+     *
+     * @param userId id of user
+     * @param name   name of attribute
      * @return String xml with user-attributes
-     * @throws UserAccountNotFoundException
-     *             e
-     * @throws UserAttributeNotFoundException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
-     *      #retrieveAttribute(java.lang.String, java.lang.String)
+     * @throws UserAccountNotFoundException   e
+     * @throws UserAttributeNotFoundException e
+     * @throws SystemException                e
+     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface #retrieveAttribute(java.lang.String,
+     *      java.lang.String)
      */
     @Override
-    public String retrieveNamedAttributes(final String userId, final String name)
-        throws UserAccountNotFoundException, UserAttributeNotFoundException,
-        SystemException {
+    public String retrieveNamedAttributes(final String userId, final String name) throws UserAccountNotFoundException,
+        UserAttributeNotFoundException, SystemException {
 
         final UserAccount userAccount = retrieveUserAccountById(userId);
-        final Set<UserAttribute> currentAttributes =
-            userAccount.getUserAttributesByUserId();
+        final Set<UserAttribute> currentAttributes = userAccount.getUserAttributesByUserId();
 
-        final Set<UserAttribute> selectedAttributes =
-            new HashSet<UserAttribute>();
+        final Set<UserAttribute> selectedAttributes = new HashSet<UserAttribute>();
         if (currentAttributes != null) {
             for (final UserAttribute attribute : currentAttributes) {
                 final String attributeName = attribute.getName();
@@ -2605,26 +2154,19 @@ public class UserAccountHandler
 
     /**
      * See Interface for functional description.
-     * 
-     * @param userId
-     *            id of user
-     * @param attributeId
-     *            id of attribute
+     *
+     * @param userId      id of user
+     * @param attributeId id of attribute
      * @return String xml with user-attribute
-     * @throws UserAccountNotFoundException
-     *             e
-     * @throws UserAttributeNotFoundException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
-     *      #retrieveAttribute(java.lang.String, java.lang.String)
+     * @throws UserAccountNotFoundException   e
+     * @throws UserAttributeNotFoundException e
+     * @throws SystemException                e
+     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface #retrieveAttribute(java.lang.String,
+     *      java.lang.String)
      */
     @Override
-    public String retrieveAttribute(
-        final String userId, final String attributeId)
-        throws UserAccountNotFoundException, UserAttributeNotFoundException,
-        SystemException {
+    public String retrieveAttribute(final String userId, final String attributeId) throws UserAccountNotFoundException,
+        UserAttributeNotFoundException, SystemException {
         final UserAttribute attribute;
         try {
             attribute = retrieveAttributeById(userId, attributeId, true);
@@ -2637,47 +2179,33 @@ public class UserAccountHandler
 
     /**
      * See Interface for functional description.
-     * 
-     * @param userId
-     *            id of user
-     * @param attributeId
-     *            id of attribute
-     * @param attributeXML
-     *            xml with attribute
+     *
+     * @param userId       id of user
+     * @param attributeId  id of attribute
+     * @param attributeXML xml with attribute
      * @return String xml with updated attribute
-     * @throws UserAccountNotFoundException
-     *             e
-     * @throws UserAttributeNotFoundException
-     *             e
+     * @throws UserAccountNotFoundException   e
+     * @throws UserAttributeNotFoundException e
      * @throws ReadonlyElementViolationException
-     *             e
-     * @throws XmlCorruptedException
-     *             e
-     * @throws SystemException
-     *             e
-     * @throws OptimisticLockingException
-     *             If the give last modification timestamp does not match the
-     *             current one.
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
-     *      #updateAttribute(java.lang.String, java.lang.String)
+     *                                        e
+     * @throws XmlCorruptedException          e
+     * @throws SystemException                e
+     * @throws OptimisticLockingException     If the give last modification timestamp does not match the current one.
+     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface #updateAttribute(java.lang.String,
+     *      java.lang.String)
      */
     @Override
-    public String updateAttribute(
-        final String userId, final String attributeId, final String attributeXML)
-        throws UserAccountNotFoundException, OptimisticLockingException,
-        ReadonlyElementViolationException, UserAttributeNotFoundException,
-        XmlCorruptedException, SystemException {
+    public String updateAttribute(final String userId, final String attributeId, final String attributeXML)
+        throws UserAccountNotFoundException, OptimisticLockingException, ReadonlyElementViolationException,
+        UserAttributeNotFoundException, XmlCorruptedException, SystemException {
 
         final UserAccount userAccount = retrieveUserAccountById(userId);
-        final UserAttribute userAttribute =
-            retrieveAttributeById(userId, attributeId, false);
-        final ByteArrayInputStream in =
-            XmlUtility.convertToByteArrayInputStream(attributeXML);
+        final UserAttribute userAttribute = retrieveAttributeById(userId, attributeId, false);
+        final ByteArrayInputStream in = XmlUtility.convertToByteArrayInputStream(attributeXML);
         final StaxParser sp = new StaxParser(Elements.ELEMENT_USER_ATTRIBUTE);
         final UserAttributeReadHandler uarh = new UserAttributeReadHandler();
         final OptimisticLockingStaxHandler optimisticLockingHandler =
-            new OptimisticLockingStaxHandler(
-                userAccount.getLastModificationDate());
+            new OptimisticLockingStaxHandler(userAccount.getLastModificationDate());
         sp.addHandler(optimisticLockingHandler);
         sp.addHandler(uarh);
         try {
@@ -2688,8 +2216,7 @@ public class UserAccountHandler
         }
         catch (final Exception e) {
             final String msg =
-                MSG_UNEXPECTED_EXCEPTION + getClass().getName()
-                    + ".updateAttribute: " + e.getClass().getName();
+                MSG_UNEXPECTED_EXCEPTION + getClass().getName() + ".updateAttribute: " + e.getClass().getName();
             throw new SystemException(msg, e);
         }
 
@@ -2698,15 +2225,13 @@ public class UserAccountHandler
         // there is only one entry
         // TODO ensure by xml schema that is true
         if (attributeNames.size() > 1) {
-            throw new XmlCorruptedException("Only one attribute allowed. "
-                + MSG_XML_SCHEMA_ENSURE);
+            throw new XmlCorruptedException("Only one attribute allowed. " + MSG_XML_SCHEMA_ENSURE);
         }
         final Iterator<String> it = attributeNames.iterator();
         final String xmlAttributeName = it.next();
         if (!xmlAttributeName.equals(userAttribute.getName())) {
-            throw new XmlCorruptedException(
-                "Given attribute name does not match "
-                    + "attribute name inside the xml representation.");
+            throw new XmlCorruptedException("Given attribute name does not match "
+                + "attribute name inside the xml representation.");
         }
         userAttribute.setValue(attributes.get(xmlAttributeName));
         sendUserAttributeUpdateEvent(userId);
@@ -2715,29 +2240,22 @@ public class UserAccountHandler
 
     /**
      * See Interface for functional description.
-     * 
-     * @param userId
-     *            The userId.
-     * @param attributeId
-     *            The attributeId.
-     * @throws UserAccountNotFoundException
-     *             e
-     * @throws UserAttributeNotFoundException
-     *             e
+     *
+     * @param userId      The userId.
+     * @param attributeId The attributeId.
+     * @throws UserAccountNotFoundException   e
+     * @throws UserAttributeNotFoundException e
      * @throws ReadonlyElementViolationException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
-     *      #deleteAttribute(java.lang.String, java.lang.String)
+     *                                        e
+     * @throws SystemException                e
+     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface #deleteAttribute(java.lang.String,
+     *      java.lang.String)
      */
     @Override
-    public void deleteAttribute(final String userId, final String attributeId)
-        throws UserAccountNotFoundException, UserAttributeNotFoundException,
-        ReadonlyElementViolationException, SystemException {
+    public void deleteAttribute(final String userId, final String attributeId) throws UserAccountNotFoundException,
+        UserAttributeNotFoundException, ReadonlyElementViolationException, SystemException {
 
-        final UserAttribute userAttribute =
-            retrieveAttributeById(userId, attributeId, false);
+        final UserAttribute userAttribute = retrieveAttributeById(userId, attributeId, false);
 
         dao.delete(userAttribute);
         sendUserAttributeUpdateEvent(userId);
@@ -2745,28 +2263,19 @@ public class UserAccountHandler
 
     /**
      * See Interface for functional description.
-     * 
-     * @param parameters
-     *            parameter map
-     * 
+     *
+     * @param parameters parameter map
      * @return filter sub query with permission rules
-     * 
-     * @throws SystemException
-     *             e
-     * @throws InvalidSearchQueryException
-     *             e
-     * @throws AuthenticationException
-     *             e
-     * @throws AuthorizationException
-     *             e
+     * @throws SystemException             e
+     * @throws InvalidSearchQueryException e
+     * @throws AuthenticationException     e
+     * @throws AuthorizationException      e
      */
     @Override
-    public String retrievePermissionFilterQuery(
-        final Map<String, String[]> parameters)
+    public String retrievePermissionFilterQuery(final Map<String, String[]> parameters)
         throws InvalidSearchQueryException, SystemException {
         final Utility utility = Utility.getInstance();
-        final Set<ResourceType> resourceTypes =
-            EnumSet.noneOf(ResourceType.class);
+        final Set<ResourceType> resourceTypes = EnumSet.noneOf(ResourceType.class);
         final String[] types = parameters.get("index");
 
         if (types != null) {
@@ -2777,42 +2286,37 @@ public class UserAccountHandler
             final Map<String, Map<String, Map<String, Object>>> objectTypeParameters =
                 BeanLocator.locateIndexingHandler().getObjectTypeParameters();
 
-            for (final Entry<String, Map<String, Map<String, Object>>> entry : objectTypeParameters
-                .entrySet()) {
+            for (final Entry<String, Map<String, Map<String, Object>>> entry : objectTypeParameters.entrySet()) {
                 final Map<String, Map<String, Object>> index = entry.getValue();
 
                 for (final String indexName : index.keySet()) {
                     if (hashedTypes.contains(indexName)) {
-                        resourceTypes.add(ResourceType
-                            .getResourceTypeFromUri(entry.getKey()));
+                        resourceTypes.add(ResourceType.getResourceTypeFromUri(entry.getKey()));
                     }
                 }
             }
         }
         // noinspection RedundantCast
-        return Utility.prepareReturnXml(
-            null,
-            "<filter>"
-                + permissionsQuery.getFilterQuery(resourceTypes,
-                    utility.getCurrentUserId(), new FilterInterface() {
-                        @Override
-                        public String getRoleId() {
-                            final String[] parameter = parameters.get("role");
+        return Utility.prepareReturnXml(null, "<filter>"
+            + permissionsQuery.getFilterQuery(resourceTypes, utility.getCurrentUserId(), new FilterInterface() {
+                @Override
+                public String getRoleId() {
+                    final String[] parameter = parameters.get("role");
 
-                            return parameter != null && parameter.length > 0 ? parameter[0] : null;
-                        }
+                    return parameter != null && parameter.length > 0 ? parameter[0] : null;
+                }
 
-                        @Override
-                        public String getUserId() {
-                            final String[] parameter = parameters.get("user");
+                @Override
+                public String getUserId() {
+                    final String[] parameter = parameters.get("user");
 
-                            return parameter != null && parameter.length > 0 ? parameter[0] : null;
-                        }
-                        
-                        @Override
-                        public String toString() {
-                            return "[userId=" + getUserId() + ",roleId=" + getRoleId() + ']';
-                        }
-                    }) + "</filter>");
+                    return parameter != null && parameter.length > 0 ? parameter[0] : null;
+                }
+
+                @Override
+                public String toString() {
+                    return "[userId=" + getUserId() + ",roleId=" + getRoleId() + ']';
+                }
+            }) + "</filter>");
     }
 }

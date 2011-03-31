@@ -34,37 +34,26 @@ import java.util.Date;
 
 /**
  * Database-Backend Interface for the Statistic-Data database-table.
- * 
+ *
  * @author Michael Hoppe
  */
 public interface SmStatisticDataDaoInterface {
 
     /**
      * saves given statistic Data xml and timestamp to database.
-     * 
-     * @param xmlData
-     *            The statistic data xml.
-     * @param scopeId
-     *            The id of the scope.
-     * 
      *
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database access error.
+     * @param xmlData The statistic data xml.
+     * @param scopeId The id of the scope.
+     * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
-    void saveStatisticData(final String xmlData, final String scopeId)
-        throws SqlDatabaseSystemException;
+    void saveStatisticData(final String xmlData, final String scopeId) throws SqlDatabaseSystemException;
 
     /**
      * retrieves the statistic-data with the lowest timemarker for given scope.
-     * 
-     * @param scopeId
-     *            The id of the scope.
-     * @return Date lowest date
-     * 
      *
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database access error.
+     * @param scopeId The id of the scope.
+     * @return Date lowest date
+     * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
-    Date retrieveMinTimestamp(final String scopeId)
-        throws SqlDatabaseSystemException;
+    Date retrieveMinTimestamp(final String scopeId) throws SqlDatabaseSystemException;
 }

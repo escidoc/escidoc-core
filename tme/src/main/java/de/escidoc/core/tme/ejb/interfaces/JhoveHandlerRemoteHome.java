@@ -10,9 +10,9 @@ import java.rmi.RemoteException;
 public interface JhoveHandlerRemoteHome extends EJBHome {
 
     String COMP_NAME = "java:comp/env/ejb/JhoveHandler";
+
     String JNDI_NAME = "ejb/JhoveHandler";
 
-    JhoveHandlerRemote create()
-            throws CreateException, RemoteException;
+    JhoveHandlerRemote create() throws CreateException, RemoteException;
 
 }

@@ -39,8 +39,7 @@ public class RelsExtContentRelationsReadHandler extends DefaultHandler {
 
     private final StaxParser parser;
 
-    private final List<Map<String, String>> relations =
-        new ArrayList<Map<String, String>>();
+    private final List<Map<String, String>> relations = new ArrayList<Map<String, String>>();
 
     private boolean inRdf;
 
@@ -85,32 +84,25 @@ public class RelsExtContentRelationsReadHandler extends DefaultHandler {
     }
 
     @Override
-    public StartElement startElement(final StartElement element)
-        throws WebserverSystemException {
+    public StartElement startElement(final StartElement element) throws WebserverSystemException {
         final String curPath = parser.getCurPath();
 
         if (curPath.equals(PATH)) {
             this.inRdf = true;
         }
-        if (this.inRdf
-            && element.getPrefix().equals(
-                Constants.CONTENT_RELATIONS_NS_PREFIX_IN_RELSEXT)) {
+        if (this.inRdf && element.getPrefix().equals(Constants.CONTENT_RELATIONS_NS_PREFIX_IN_RELSEXT)) {
             this.inRelation = true;
 
-            final int indexOfResource =
-                element.indexOfAttribute(Constants.RDF_NAMESPACE_URI,
-                    "resource");
+            final int indexOfResource = element.indexOfAttribute(Constants.RDF_NAMESPACE_URI, "resource");
             if (indexOfResource == -1) {
                 throw new WebserverSystemException("The attribute 'rdf:resource' of the element '"
-                                + element.getLocalName() + "' is missing.");
+                    + element.getLocalName() + "' is missing.");
             }
-            final String resourceValue =
-                    element.getAttribute(indexOfResource).getValue();
+            final String resourceValue = element.getAttribute(indexOfResource).getValue();
             final String[] target = SPLIT_PATTERN.split(resourceValue);
             this.targetId = target[1];
             String predicateNs = element.getNamespace();
-            predicateNs =
-                predicateNs.substring(0, predicateNs.length() - 1);
+            predicateNs = predicateNs.substring(0, predicateNs.length() - 1);
             final String predicateValue = element.getLocalName();
             this.predicate = predicateNs + '#' + predicateValue;
         }
@@ -121,8 +113,7 @@ public class RelsExtContentRelationsReadHandler extends DefaultHandler {
     public EndElement endElement(final EndElement element) {
 
         if (this.inRelation) {
-            final Map<String, String> relationData =
-                new HashMap<String, String>();
+            final Map<String, String> relationData = new HashMap<String, String>();
             relations.add(relationData);
             relationData.put("predicate", this.predicate);
             relationData.put("target", this.targetId);

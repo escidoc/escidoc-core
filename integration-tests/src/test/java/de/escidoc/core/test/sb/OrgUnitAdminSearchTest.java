@@ -52,9 +52,8 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * Test the implementation of the admin search for items and containers.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 @RunWith(value = Parameterized.class)
 public class OrgUnitAdminSearchTest extends SearchTestBase {
@@ -62,14 +61,14 @@ public class OrgUnitAdminSearchTest extends SearchTestBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(OrgUnitAdminSearchTest.class);
 
     private static final String INDEX_NAME = "ou_admin";
-    
-    private static final ArrayList<String> RESULT_XPATHS = 
-        new ArrayList<String>() {
-            private static final long serialVersionUID = 1L;
-            { 
-                add(XPATH_SRW_RESPONSE_OBJECT + "organizational-unit");
-            }
-            };
+
+    private static final ArrayList<String> RESULT_XPATHS = new ArrayList<String>() {
+        private static final long serialVersionUID = 1L;
+
+        {
+            add(XPATH_SRW_RESPONSE_OBJECT + "organizational-unit");
+        }
+    };
 
     private static String[] ouIds = null;
 
@@ -78,43 +77,38 @@ public class OrgUnitAdminSearchTest extends SearchTestBase {
     private static String startTime = "";
 
     /**
-     * @param transport
-     *            The transport identifier.
-     * @throws Exception
-     *             e
+     * @param transport The transport identifier.
+     * @throws Exception e
      */
     public OrgUnitAdminSearchTest(final int transport) throws Exception {
         super(transport);
-        grant = new GrantHelper(
-                transport, GrantHelper.getUserAccountHandlerCode());
+        grant = new GrantHelper(transport, GrantHelper.getUserAccountHandlerCode());
     }
 
     /**
      * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Before
     public void initialize() throws Exception {
         if (methodCounter == 0) {
-          prepare();
-//          int c = 10001;
-//          ouIds = new String[14];
-//          for (int i = 0; i < 14; i++) {
-//              if (i != 4 && i != 6) {
-//                  ouIds[i] = "escidoc:" + c;
-//              }
-//              c++;
-//          }
+            prepare();
+            //          int c = 10001;
+            //          ouIds = new String[14];
+            //          for (int i = 0; i < 14; i++) {
+            //              if (i != 4 && i != 6) {
+            //                  ouIds[i] = "escidoc:" + c;
+            //              }
+            //              c++;
+            //          }
         }
     }
 
     /**
      * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @After
     public void deinitialize() throws Exception {
@@ -122,109 +116,78 @@ public class OrgUnitAdminSearchTest extends SearchTestBase {
         if (methodCounter == getTestAnnotationsCount()) {
             methodCounter = 0;
         }
-   }
+    }
 
     /**
      * insert item(s) into system for the tests.
-     * 
-     * @test.name prepare
-     * @test.id PREPARE
-     * @test.input
-     * @test.inputDescription
-     * @test.expected
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     private void prepare() throws Exception {
         LOGGER.info("starting SearchTest at "
-                + new DateTime(System.currentTimeMillis()
-                        + (60 * 60 * 1000), DateTimeZone.UTC).toString());
+            + new DateTime(System.currentTimeMillis() + (60 * 60 * 1000), DateTimeZone.UTC).toString());
         // create empty indices/////////////////////////////////////////////////
         String urlParameters =
-                "?operation=updateIndex" + "&action=createEmpty"
-                        + "&repositoryName=escidocrepository" + "&indexName=";
+            "?operation=updateIndex" + "&action=createEmpty" + "&repositoryName=escidocrepository" + "&indexName=";
         String httpUrl =
-                HttpHelper
-                        .createUrl(
-                                de.escidoc.core.test.common.client.servlet.Constants.PROTOCOL,
-                                de.escidoc.core.test.common.client.servlet.Constants.HOST_PORT,
-                                de.escidoc.core.test.common.client.servlet.Constants.FEDORAGSEARCH_BASE_URI
-                                        + urlParameters);
-        HttpHelper
-                .executeHttpRequest(
-                        de.escidoc.core.test.common.client.servlet.Constants.HTTP_METHOD_GET,
-                        httpUrl, null, null, null);
+            HttpHelper.createUrl(de.escidoc.core.test.common.client.servlet.Constants.PROTOCOL,
+                de.escidoc.core.test.common.client.servlet.Constants.HOST_PORT,
+                de.escidoc.core.test.common.client.servlet.Constants.FEDORAGSEARCH_BASE_URI + urlParameters);
+        HttpHelper.executeHttpRequest(de.escidoc.core.test.common.client.servlet.Constants.HTTP_METHOD_GET, httpUrl,
+            null, null, null);
         // /////////////////////////////////////////////////////////////////////
 
-        startTime =
-                new DateTime(System.currentTimeMillis(), DateTimeZone.UTC)
-                        .toString();
+        startTime = new DateTime(System.currentTimeMillis(), DateTimeZone.UTC).toString();
         // Create Org Units/////////////////////////////////////////////////////
         // Build Org-Unit-Hierarchy with one parent,
         // two members with each again having two members.
         String handle = PWCallback.SYSTEMADMINISTRATOR_HANDLE;
         ouIds = new String[14];
         // FOR DEFAULT-USER TESTS
-        ouIds[0] = getId(prepareOrgUnit(handle, getTemplateAsDocument(
-                TEMPLATE_SB_ORGANIZATIONAL_UNIT_PATH,
-                "escidoc_search_ou0.xml"), 
-                ORGANIZATIONAL_UNIT_STATUS_OPENED, null));
-        ouIds[1] = getId(prepareOrgUnit(handle, getTemplateAsDocument(
-                TEMPLATE_SB_ORGANIZATIONAL_UNIT_PATH,
-                "escidoc_search_ou1.xml"), 
-                ORGANIZATIONAL_UNIT_STATUS_OPENED, new String[] {ouIds[0]}));
-        ouIds[2] = getId(prepareOrgUnit(handle, getTemplateAsDocument(
-                TEMPLATE_SB_ORGANIZATIONAL_UNIT_PATH,
-                "escidoc_search_ou2.xml"), 
-                ORGANIZATIONAL_UNIT_STATUS_OPENED, new String[] {ouIds[0]}));
-        ouIds[3] = getId(prepareOrgUnit(handle, getTemplateAsDocument(
-                TEMPLATE_SB_ORGANIZATIONAL_UNIT_PATH,
-                "escidoc_search_ou3.xml"), 
-                ORGANIZATIONAL_UNIT_STATUS_CLOSED, new String[] {ouIds[1]}));
-        ouIds[4] = getId(prepareOrgUnit(handle, getTemplateAsDocument(
-                TEMPLATE_SB_ORGANIZATIONAL_UNIT_PATH,
-                "escidoc_search_ou4.xml"), 
-                ORGANIZATIONAL_UNIT_STATUS_DELETED, new String[] {ouIds[1]}));
-        ouIds[5] = getId(prepareOrgUnit(handle, getTemplateAsDocument(
-                TEMPLATE_SB_ORGANIZATIONAL_UNIT_PATH,
-                "escidoc_search_ou5.xml"), 
-                ORGANIZATIONAL_UNIT_STATUS_CLOSED, new String[] {ouIds[2]}));
-        ouIds[6] = getId(prepareOrgUnit(handle, getTemplateAsDocument(
-                TEMPLATE_SB_ORGANIZATIONAL_UNIT_PATH,
-                "escidoc_search_ou6.xml"), 
-                ORGANIZATIONAL_UNIT_STATUS_DELETED, new String[] {ouIds[2]}));
-        
+        ouIds[0] =
+            getId(prepareOrgUnit(handle, getTemplateAsDocument(TEMPLATE_SB_ORGANIZATIONAL_UNIT_PATH,
+                "escidoc_search_ou0.xml"), ORGANIZATIONAL_UNIT_STATUS_OPENED, null));
+        ouIds[1] =
+            getId(prepareOrgUnit(handle, getTemplateAsDocument(TEMPLATE_SB_ORGANIZATIONAL_UNIT_PATH,
+                "escidoc_search_ou1.xml"), ORGANIZATIONAL_UNIT_STATUS_OPENED, new String[] { ouIds[0] }));
+        ouIds[2] =
+            getId(prepareOrgUnit(handle, getTemplateAsDocument(TEMPLATE_SB_ORGANIZATIONAL_UNIT_PATH,
+                "escidoc_search_ou2.xml"), ORGANIZATIONAL_UNIT_STATUS_OPENED, new String[] { ouIds[0] }));
+        ouIds[3] =
+            getId(prepareOrgUnit(handle, getTemplateAsDocument(TEMPLATE_SB_ORGANIZATIONAL_UNIT_PATH,
+                "escidoc_search_ou3.xml"), ORGANIZATIONAL_UNIT_STATUS_CLOSED, new String[] { ouIds[1] }));
+        ouIds[4] =
+            getId(prepareOrgUnit(handle, getTemplateAsDocument(TEMPLATE_SB_ORGANIZATIONAL_UNIT_PATH,
+                "escidoc_search_ou4.xml"), ORGANIZATIONAL_UNIT_STATUS_DELETED, new String[] { ouIds[1] }));
+        ouIds[5] =
+            getId(prepareOrgUnit(handle, getTemplateAsDocument(TEMPLATE_SB_ORGANIZATIONAL_UNIT_PATH,
+                "escidoc_search_ou5.xml"), ORGANIZATIONAL_UNIT_STATUS_CLOSED, new String[] { ouIds[2] }));
+        ouIds[6] =
+            getId(prepareOrgUnit(handle, getTemplateAsDocument(TEMPLATE_SB_ORGANIZATIONAL_UNIT_PATH,
+                "escidoc_search_ou6.xml"), ORGANIZATIONAL_UNIT_STATUS_DELETED, new String[] { ouIds[2] }));
+
         //FOR OU-ADMIN TESTS
-        ouIds[7] = getId(prepareOrgUnit(handle, getTemplateAsDocument(
-                TEMPLATE_SB_ORGANIZATIONAL_UNIT_PATH,
-                "escidoc_search_ou0.xml"), 
-                ORGANIZATIONAL_UNIT_STATUS_CREATED, null));
-        ouIds[8] = getId(prepareOrgUnit(handle, getTemplateAsDocument(
-                TEMPLATE_SB_ORGANIZATIONAL_UNIT_PATH,
-                "escidoc_search_ou1.xml"), 
-                ORGANIZATIONAL_UNIT_STATUS_CREATED, new String[] {ouIds[7]}));
-        ouIds[9] = getId(prepareOrgUnit(handle, getTemplateAsDocument(
-                TEMPLATE_SB_ORGANIZATIONAL_UNIT_PATH,
-                "escidoc_search_ou2.xml"), 
-                ORGANIZATIONAL_UNIT_STATUS_CREATED, new String[] {ouIds[7]}));
-        ouIds[10] = getId(prepareOrgUnit(handle, getTemplateAsDocument(
-                TEMPLATE_SB_ORGANIZATIONAL_UNIT_PATH,
-                "escidoc_search_ou3.xml"), 
-                ORGANIZATIONAL_UNIT_STATUS_CREATED, new String[] {ouIds[8]}));
-        ouIds[11] = getId(prepareOrgUnit(handle, getTemplateAsDocument(
-                TEMPLATE_SB_ORGANIZATIONAL_UNIT_PATH,
-                "escidoc_search_ou4.xml"), 
-                ORGANIZATIONAL_UNIT_STATUS_CREATED, new String[] {ouIds[8]}));
-        ouIds[12] = getId(prepareOrgUnit(handle, getTemplateAsDocument(
-                TEMPLATE_SB_ORGANIZATIONAL_UNIT_PATH,
-                "escidoc_search_ou5.xml"), 
-                ORGANIZATIONAL_UNIT_STATUS_CREATED, new String[] {ouIds[9], ouIds[8]}));
-        ouIds[13] = getId(prepareOrgUnit(handle, getTemplateAsDocument(
-                TEMPLATE_SB_ORGANIZATIONAL_UNIT_PATH,
-                "escidoc_search_ou6.xml"), 
-                ORGANIZATIONAL_UNIT_STATUS_CREATED, new String[] {ouIds[9]}));
+        ouIds[7] =
+            getId(prepareOrgUnit(handle, getTemplateAsDocument(TEMPLATE_SB_ORGANIZATIONAL_UNIT_PATH,
+                "escidoc_search_ou0.xml"), ORGANIZATIONAL_UNIT_STATUS_CREATED, null));
+        ouIds[8] =
+            getId(prepareOrgUnit(handle, getTemplateAsDocument(TEMPLATE_SB_ORGANIZATIONAL_UNIT_PATH,
+                "escidoc_search_ou1.xml"), ORGANIZATIONAL_UNIT_STATUS_CREATED, new String[] { ouIds[7] }));
+        ouIds[9] =
+            getId(prepareOrgUnit(handle, getTemplateAsDocument(TEMPLATE_SB_ORGANIZATIONAL_UNIT_PATH,
+                "escidoc_search_ou2.xml"), ORGANIZATIONAL_UNIT_STATUS_CREATED, new String[] { ouIds[7] }));
+        ouIds[10] =
+            getId(prepareOrgUnit(handle, getTemplateAsDocument(TEMPLATE_SB_ORGANIZATIONAL_UNIT_PATH,
+                "escidoc_search_ou3.xml"), ORGANIZATIONAL_UNIT_STATUS_CREATED, new String[] { ouIds[8] }));
+        ouIds[11] =
+            getId(prepareOrgUnit(handle, getTemplateAsDocument(TEMPLATE_SB_ORGANIZATIONAL_UNIT_PATH,
+                "escidoc_search_ou4.xml"), ORGANIZATIONAL_UNIT_STATUS_CREATED, new String[] { ouIds[8] }));
+        ouIds[12] =
+            getId(prepareOrgUnit(handle, getTemplateAsDocument(TEMPLATE_SB_ORGANIZATIONAL_UNIT_PATH,
+                "escidoc_search_ou5.xml"), ORGANIZATIONAL_UNIT_STATUS_CREATED, new String[] { ouIds[9], ouIds[8] }));
+        ouIds[13] =
+            getId(prepareOrgUnit(handle, getTemplateAsDocument(TEMPLATE_SB_ORGANIZATIONAL_UNIT_PATH,
+                "escidoc_search_ou6.xml"), ORGANIZATIONAL_UNIT_STATUS_CREATED, new String[] { ouIds[9] }));
 
         // /////////////////////////////////////////////////////////////////////
 
@@ -234,17 +197,8 @@ public class OrgUnitAdminSearchTest extends SearchTestBase {
 
     /**
      * explain operation without parameters for existing database xyz.
-     * 
-     * @test.name explain (1)
-     * @test.id SB_EX-1
-     * @test.input
-     * @test.inputDescription
-     * @test.expected explain plan for the corresponding database according
-     *                ZeeRex Schema
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBEX1() throws Exception {
@@ -252,36 +206,28 @@ public class OrgUnitAdminSearchTest extends SearchTestBase {
         String response = explain(parameters, INDEX_NAME);
         assertXmlValidExplainPlan(response);
         assertEquals("srw/search/" + INDEX_NAME, getDatabase(response));
-        assertEquals(Constants.OU_ADMIN_INDEX_FIELD_COUNT,
-                                            getIndexFieldCount(response));
-        assertEquals(Constants.OU_ADMIN_SORT_FIELD_COUNT,
-                                            getSortFieldCount(response));
+        assertEquals(Constants.OU_ADMIN_INDEX_FIELD_COUNT, getIndexFieldCount(response));
+        assertEquals(Constants.OU_ADMIN_SORT_FIELD_COUNT, getSortFieldCount(response));
     }
 
     /**
      * Test searching as anonymous user.
-     * 
-     * @test.name Anonymous User Search
-     * @test.id SB_AnonymousUserSearch
-     * @test.input anonymous user searching all objects
-     * @test.expected 5 hits.
-     *              Anonymous may see OrgUnits in public-status open + closed
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSearchAsAnonymousUser() throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
             private static final long serialVersionUID = 1L;
+
             {
                 put("handle", PWCallback.ANONYMOUS_HANDLE);
                 put("expectedHits", "5");
                 put("searchresultIds", new HashMap<String, ArrayList<String>>() {
                     private static final long serialVersionUID = 1L;
+
                     {
-                        for (int i = 0; i < 3; i ++) {
+                        for (int i = 0; i < 3; i++) {
                             put(ouIds[i], getOuXpathList(i));
                         }
                         put(ouIds[3], getOuXpathList(3));
@@ -295,29 +241,22 @@ public class OrgUnitAdminSearchTest extends SearchTestBase {
 
     /**
      * Test searching as Systemadministrator user.
-     * 
-     * @test.name Systemadministrator User Search
-     * @test.id SB_SystemadministratorUserSearch
-     * @test.input Systemadministrator user searching all objects
-     * @test.expected 12 hits.
-     *              Systemadministrator may see all OrgUnits
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSearchAsSystemadministratorUser() throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
             private static final long serialVersionUID = 1L;
+
             {
-                put("role0",
-                               GrantHelper.ROLE_HREF_SYSTEM_ADMINISTRATOR);
+                put("role0", GrantHelper.ROLE_HREF_SYSTEM_ADMINISTRATOR);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "12");
                 put("searchresultIds", new HashMap<String, ArrayList<String>>() {
                     private static final long serialVersionUID = 1L;
+
                     {
                         for (int i = 0; i < 14; i++) {
                             if (i != 4 && i != 6) {
@@ -333,29 +272,22 @@ public class OrgUnitAdminSearchTest extends SearchTestBase {
 
     /**
      * Test searching as Systeminspector user.
-     * 
-     * @test.name Systeminspector User Search
-     * @test.id SB_SysteminspectorUserSearch
-     * @test.input Systeminspector user searching all objects
-     * @test.expected 12 hits.
-     *              Systeminspector may see all OrgUnits
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSearchAsSysteminspectorUser() throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
             private static final long serialVersionUID = 1L;
+
             {
-                put("role0",
-                               GrantHelper.ROLE_HREF_SYSTEM_INSPECTOR);
+                put("role0", GrantHelper.ROLE_HREF_SYSTEM_INSPECTOR);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "12");
                 put("searchresultIds", new HashMap<String, ArrayList<String>>() {
                     private static final long serialVersionUID = 1L;
+
                     {
                         for (int i = 0; i < 14; i++) {
                             if (i != 4 && i != 6) {
@@ -371,34 +303,24 @@ public class OrgUnitAdminSearchTest extends SearchTestBase {
 
     /**
      * Test searching as OU-Administrator user.
-     * 
-     * @test.name OU-Administrator User Search
-     * @test.id SB_OU-AdministratorUserSearch
-     * @test.input OU-Administrator user searching all objects
-     *              scope on TopLevel ORG_UNIT.
-     * @test.expected 12 hits.
-     *              OU-Administrator may see all OrgUnits 
-     *              below the scoped OrgUnit + scoped OrgUnit.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSearchAsOuAdminUser() throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
             private static final long serialVersionUID = 1L;
+
             {
-                put("role0",
-                               GrantHelper.ROLE_HREF_OU_ADMINISTRATOR);
-                put("scope0", de.escidoc.core.test.common.client
-                        .servlet.Constants.ORGANIZATIONAL_UNIT_BASE_URI
-                        + "/" + ouIds[7]);
+                put("role0", GrantHelper.ROLE_HREF_OU_ADMINISTRATOR);
+                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/"
+                    + ouIds[7]);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "12");
                 put("searchresultIds", new HashMap<String, ArrayList<String>>() {
                     private static final long serialVersionUID = 1L;
+
                     {
                         for (int i = 0; i < 3; i++) {
                             put(ouIds[i], getOuXpathList(i));
@@ -417,34 +339,24 @@ public class OrgUnitAdminSearchTest extends SearchTestBase {
 
     /**
      * Test searching as OU-Administrator user.
-     * 
-     * @test.name OU-Administrator User Search
-     * @test.id SB_OU-AdministratorUserSearch
-     * @test.input OU-Administrator user searching all objects
-     *              scope on FirstLevel ORG_UNIT.
-     * @test.expected 9 hits.
-     *              OU-Administrator may see all OrgUnits 
-     *              below the scoped OrgUnit + scoped OrgUnit.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSearchAsOuAdminUser1() throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
             private static final long serialVersionUID = 1L;
+
             {
-                put("role0",
-                               GrantHelper.ROLE_HREF_OU_ADMINISTRATOR);
-                put("scope0", de.escidoc.core.test.common.client
-                        .servlet.Constants.ORGANIZATIONAL_UNIT_BASE_URI
-                        + "/" + ouIds[8]);
+                put("role0", GrantHelper.ROLE_HREF_OU_ADMINISTRATOR);
+                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/"
+                    + ouIds[8]);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "9");
                 put("searchresultIds", new HashMap<String, ArrayList<String>>() {
                     private static final long serialVersionUID = 1L;
+
                     {
                         for (int i = 0; i < 3; i++) {
                             put(ouIds[i], getOuXpathList(i));
@@ -464,34 +376,24 @@ public class OrgUnitAdminSearchTest extends SearchTestBase {
 
     /**
      * Test searching as OU-Administrator user.
-     * 
-     * @test.name OU-Administrator User Search
-     * @test.id SB_OU-AdministratorUserSearch
-     * @test.input OU-Administrator user searching all objects
-     *              scope on FirstLevel ORG_UNIT.
-     * @test.expected 8 hits.
-     *              OU-Administrator may see all OrgUnits 
-     *              below the scoped OrgUnit + scoped OrgUnit.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSearchAsOuAdminUser2() throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
             private static final long serialVersionUID = 1L;
+
             {
-                put("role0",
-                               GrantHelper.ROLE_HREF_OU_ADMINISTRATOR);
-                put("scope0", de.escidoc.core.test.common.client
-                        .servlet.Constants.ORGANIZATIONAL_UNIT_BASE_URI
-                        + "/" + ouIds[9]);
+                put("role0", GrantHelper.ROLE_HREF_OU_ADMINISTRATOR);
+                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/"
+                    + ouIds[9]);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "8");
                 put("searchresultIds", new HashMap<String, ArrayList<String>>() {
                     private static final long serialVersionUID = 1L;
+
                     {
                         for (int i = 0; i < 3; i++) {
                             put(ouIds[i], getOuXpathList(i));
@@ -510,34 +412,24 @@ public class OrgUnitAdminSearchTest extends SearchTestBase {
 
     /**
      * Test searching as OU-Administrator user.
-     * 
-     * @test.name OU-Administrator User Search
-     * @test.id SB_OU-AdministratorUserSearch
-     * @test.input OU-Administrator user searching all objects
-     *              scope on SecondLevel ORG_UNIT.
-     * @test.expected 6 hits.
-     *              OU-Administrator may see all OrgUnits 
-     *              below the scoped OrgUnit + scoped OrgUnit.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSearchAsOuAdminUser3() throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
             private static final long serialVersionUID = 1L;
+
             {
-                put("role0",
-                               GrantHelper.ROLE_HREF_OU_ADMINISTRATOR);
-                put("scope0", de.escidoc.core.test.common.client
-                        .servlet.Constants.ORGANIZATIONAL_UNIT_BASE_URI
-                        + "/" + ouIds[12]);
+                put("role0", GrantHelper.ROLE_HREF_OU_ADMINISTRATOR);
+                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/"
+                    + ouIds[12]);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "6");
                 put("searchresultIds", new HashMap<String, ArrayList<String>>() {
                     private static final long serialVersionUID = 1L;
+
                     {
                         for (int i = 0; i < 3; i++) {
                             put(ouIds[i], getOuXpathList(i));
@@ -554,11 +446,9 @@ public class OrgUnitAdminSearchTest extends SearchTestBase {
 
     /**
      * search with roles provided in HashMap.
-     * 
-     * @param role
-     *            parameters
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param role parameters
+     * @throws Exception If anything fails.
      */
     private void search(final HashMap<String, Object> role) throws Exception {
         StringBuffer errorTrace = new StringBuffer();
@@ -568,15 +458,10 @@ public class OrgUnitAdminSearchTest extends SearchTestBase {
                 if ((String) role.get("role" + i) == null) {
                     break;
                 }
-                errorTrace.append("role: ")
-                        .append(role.get("role" + i)).append("\n");
-                errorTrace.append("scope: ")
-                        .append(role.get("scope" + i)).append("\n");
-                grant.doTestCreateGrant(
-                        null,
-                        (String) role.get("user"),
-                        (String) role.get("scope" + i),
-                        (String) role.get("role" + i), null);
+                errorTrace.append("role: ").append(role.get("role" + i)).append("\n");
+                errorTrace.append("scope: ").append(role.get("scope" + i)).append("\n");
+                grant.doTestCreateGrant(null, (String) role.get("user"), (String) role.get("scope" + i), (String) role
+                    .get("role" + i), null);
             }
             PWCallback.setHandle((String) role.get("handle"));
             HashMap<String, String> parameters = new HashMap<String, String>();
@@ -585,60 +470,45 @@ public class OrgUnitAdminSearchTest extends SearchTestBase {
             String response = search(parameters, INDEX_NAME);
             assertXmlValidSearchResult(response);
             Document searchResultDoc = getDocument(response, true);
-            Node n = selectSingleNode(searchResultDoc,
-                    "/searchRetrieveResponse/diagnostics/diagnostic/details");
+            Node n = selectSingleNode(searchResultDoc, "/searchRetrieveResponse/diagnostics/diagnostic/details");
             String textContent = null;
             if (n != null) {
                 textContent = n.getTextContent();
             }
-            assertEquals(errorTrace.toString() + "diagnostics: "
-                    + textContent, null, n);
+            assertEquals(errorTrace.toString() + "diagnostics: " + textContent, null, n);
             assertEquals(true, checkHighlighting(response));
-            assertEquals(errorTrace.toString()
-                    + "hits not as expected: expected: "
-                    + role.get("expectedHits")
-                    + ", but was "
-                    + getNumberOfHits(response)
-                    + " for ",
-                    role.get("expectedHits"), getNumberOfHits(response));
+            assertEquals(errorTrace.toString() + "hits not as expected: expected: " + role.get("expectedHits")
+                + ", but was " + getNumberOfHits(response) + " for ", role.get("expectedHits"),
+                getNumberOfHits(response));
             HashSet<String> foundIds = new HashSet<String>();
             // check if all items in result may be there
             for (String xPath : RESULT_XPATHS) {
-                NodeList nodes = selectNodeList(
-                        searchResultDoc, xPath);
+                NodeList nodes = selectNodeList(searchResultDoc, xPath);
                 for (int i = 0; i < nodes.getLength(); i++) {
                     Node node = nodes.item(i);
-                    String objId = getObjidValue(
-                            de.escidoc.core.test.common.client
-                            .servlet.Constants.TRANSPORT_REST, node, null);
+                    String objId =
+                        getObjidValue(de.escidoc.core.test.common.client.servlet.Constants.TRANSPORT_REST, node, null);
                     foundIds.add(objId);
-                    assertTrue(errorTrace.toString()
-                            + "object " + objId + " may not be in searchResult",
-                            ((HashMap<String, String>) role
-                                    .get("searchresultIds")).containsKey(objId));
-                    ArrayList<String> searchIds = 
-                        ((HashMap<String, ArrayList<String>>) role
-                            .get("searchresultIds")).get(objId);
+                    assertTrue(errorTrace.toString() + "object " + objId + " may not be in searchResult",
+                        ((HashMap<String, String>) role.get("searchresultIds")).containsKey(objId));
+                    ArrayList<String> searchIds =
+                        ((HashMap<String, ArrayList<String>>) role.get("searchresultIds")).get(objId);
                     if (searchIds != null) {
                         for (String searchId : searchIds) {
                             String[] parts = searchId.split("=");
-                            assertXmlEquals(errorTrace.toString()
-                                    + "not expected value in "
-                                    + parts[0] + " for objectId " 
-                                    + objId, node, parts[0], parts[1]);
+                            assertXmlEquals(errorTrace.toString() + "not expected value in " + parts[0]
+                                + " for objectId " + objId, node, parts[0], parts[1]);
                         }
                     }
                 }
             }
             // check if all objects that should be in result are there
-            for (String id : ((HashMap<String, String>) role
-                    .get("searchresultIds")).keySet()) {
-                assertTrue(errorTrace.toString()
-                        + id + " was not in searchResult",
-                        foundIds.contains(id));
+            for (String id : ((HashMap<String, String>) role.get("searchresultIds")).keySet()) {
+                assertTrue(errorTrace.toString() + id + " was not in searchResult", foundIds.contains(id));
 
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
             if (role.get("role0") != null) {
                 grant.revokeAllGrants((String) role.get("user"));
@@ -646,14 +516,13 @@ public class OrgUnitAdminSearchTest extends SearchTestBase {
         }
     }
 
-    private ArrayList<String> getOuXpathList(
-            final int i) {
+    private ArrayList<String> getOuXpathList(final int i) {
         ArrayList<String> xpaths = new ArrayList<String>();
         if (i >= 7 && i <= 13) {
             //created
             xpaths.add("properties/public-status=created");
         }
-        else if (i >= 0 && i <=2) {
+        else if (i >= 0 && i <= 2) {
             //opened
             xpaths.add("properties/public-status=opened");
         }
@@ -663,6 +532,5 @@ public class OrgUnitAdminSearchTest extends SearchTestBase {
         }
         return xpaths;
     }
-
 
 }

@@ -31,30 +31,23 @@ import org.springframework.core.Ordered;
 import java.util.regex.Pattern;
 
 /**
- * Interceptor to insert the xml header and an optional (in case access via
- * REST) a style sheet definition into an XML document.
- * 
+ * Interceptor to insert the xml header and an optional (in case access via REST) a style sheet definition into an XML
+ * document.
+ *
  * @author Torsten Tetteroo
  */
 @Aspect
 public class XmlHeaderInterceptor implements Ordered {
 
-    private static final Pattern PATTERN_XML_HEADER =
-        Pattern.compile("<\\?xml version=[^>]+\\?>");
+    private static final Pattern PATTERN_XML_HEADER = Pattern.compile("<\\?xml version=[^>]+\\?>");
 
-    private static final Pattern XML_DOCUMENT_START_PATTERN =
-        Pattern.compile("<?xml version=");
+    private static final Pattern XML_DOCUMENT_START_PATTERN = Pattern.compile("<?xml version=");
 
     private static final Pattern XML_DOCUMENT_START_XSLT_PATTERN =
         Pattern.compile("<?xml version=[^>]+<?xml-stylesheet ");
 
-
-
     /**
      * See Interface for functional description.
-     * 
-     * @return
-     *
      */
     @Override
     public int getOrder() {
@@ -62,24 +55,17 @@ public class XmlHeaderInterceptor implements Ordered {
         return AopUtil.PRECEDENCE_XML_HEADER_INTERCEPTOR;
     }
 
-
-
     /**
-     * Around advice to add xml header information and (in case of REST) a style
-     * sheet to the method result.<br>
-     * Note: As it is not possible to return different references when using
-     * after-returning advises, the around advice is used here.
-     * 
-     * @param joinPoint
-     *            The current {@link ProceedingJoinPoint}.
-     * @return Returns the changed result.
-     * @throws Throwable
-     *             Thrown in case of an error.
+     * Around advice to add xml header information and (in case of REST) a style sheet to the method result.<br> Note:
+     * As it is not possible to return different references when using after-returning advises, the around advice is
+     * used here.
      *
+     * @param joinPoint The current {@link ProceedingJoinPoint}.
+     * @return Returns the changed result.
+     * @throws Throwable Thrown in case of an error.
      */
     @Around("call(public !static java.lang.String de.escidoc.core.*.service.interfaces.*.*(..))"
-        + " && within(de.escidoc.core.*.ejb.*Bean)"
-        + " && !call(* de.escidoc.core..*.SemanticStoreHandler*.*(..))"
+        + " && within(de.escidoc.core.*.ejb.*Bean)" + " && !call(* de.escidoc.core..*.SemanticStoreHandler*.*(..))"
         + " && !call(* de.escidoc.core.common..*.*(..))")
     public Object processResult(final ProceedingJoinPoint joinPoint) throws Throwable {
         return post(joinPoint.proceed());
@@ -87,13 +73,11 @@ public class XmlHeaderInterceptor implements Ordered {
 
     /**
      * Post handling.
-     * 
-     * @param result
-     *            The result of the method call.
-     * @return Returns the method call result with inserted xml header and an
-     *         optional (in case access via REST) a style sheet definition
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal system error.
+     *
+     * @param result The result of the method call.
+     * @return Returns the method call result with inserted xml header and an optional (in case access via REST) a style
+     *         sheet definition
+     * @throws WebserverSystemException Thrown in case of an internal system error.
      */
     private static Object post(final Object result) throws WebserverSystemException {
 
@@ -101,21 +85,18 @@ public class XmlHeaderInterceptor implements Ordered {
         if (!XML_DOCUMENT_START_PATTERN.matcher(res).find()) {
 
             final StringBuilder ret = new StringBuilder(XmlUtility.DOCUMENT_START);
-            
+
             if (UserContext.isRestAccess()) {
-                ret.append(XmlUtility
-                    .getStylesheetDefinition());
+                ret.append(XmlUtility.getStylesheetDefinition());
             }
-            
+
             ret.append(result);
 
             return ret.toString();
         }
-        else if (UserContext.isRestAccess()
-            && !XML_DOCUMENT_START_XSLT_PATTERN.matcher(res).find()) {
+        else if (UserContext.isRestAccess() && !XML_DOCUMENT_START_XSLT_PATTERN.matcher(res).find()) {
             return PATTERN_XML_HEADER.matcher(res).replaceFirst(
-                XmlUtility.DOCUMENT_START 
-                + XmlUtility.getStylesheetDefinition());
+                XmlUtility.DOCUMENT_START + XmlUtility.getStylesheetDefinition());
         }
         return result;
     }

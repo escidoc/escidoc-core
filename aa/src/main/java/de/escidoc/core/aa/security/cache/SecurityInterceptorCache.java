@@ -40,20 +40,16 @@ import java.util.Map;
 import java.util.TreeMap;
 
 /**
- * Cache used in the {@link SecurityInterceptor} to avoid accesses to the
- * database.<br>
- * 
+ * Cache used in the {@link SecurityInterceptor} to avoid accesses to the database.<br>
+ *
  * @author Torsten Tetteroo
  */
 public class SecurityInterceptorCache {
 
     /**
      * Cache for method mappings.
-     * 
-     *
      */
-    private final Map<String, MethodMappingList> mappingsCache =
-        new TreeMap<String, MethodMappingList>();
+    private final Map<String, MethodMappingList> mappingsCache = new TreeMap<String, MethodMappingList>();
 
     /**
      * The data access object to access request mappings.
@@ -62,8 +58,6 @@ public class SecurityInterceptorCache {
 
     /**
      * The default constructor.
-     * 
-     *
      */
     public SecurityInterceptorCache() {
 
@@ -72,8 +66,6 @@ public class SecurityInterceptorCache {
 
     /**
      * Clears the cache.
-     * 
-     *
      */
     public final void clear() {
 
@@ -81,26 +73,18 @@ public class SecurityInterceptorCache {
     }
 
     /**
-     * Gets the method mapping for the provided class name and method name. <br>
-     * If the mappings are not stored within the cache they are fetched from the
-     * AA component.
-     * 
-     * @param className
-     *            The name of the class to get the method mappings for.
-     * @param methodName
-     *            The name of the method to get the mappings for.
-     * @return Returns the method mappings.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
+     * Gets the method mapping for the provided class name and method name. <br> If the mappings are not stored within
+     * the cache they are fetched from the AA component.
      *
+     * @param className  The name of the class to get the method mappings for.
+     * @param methodName The name of the method to get the mappings for.
+     * @return Returns the method mappings.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    public synchronized MethodMappingList getMethodMappings(
-        final String className, final String methodName)
+    public synchronized MethodMappingList getMethodMappings(final String className, final String methodName)
         throws WebserverSystemException {
 
-        final String key =
-            StringUtility
-                .concatenateWithColon(className, methodName).toString();
+        final String key = StringUtility.concatenateWithColon(className, methodName).toString();
         MethodMappingList methodMappings = mappingsCache.get(key);
 
         if (methodMappings == null) {
@@ -108,16 +92,11 @@ public class SecurityInterceptorCache {
                 methodMappings = retrieveMethodMappings(className, methodName);
             }
             catch (final Exception e) {
-                throw new WebserverSystemException(
-                    "Exception during method mappings retrieval. ", e);
+                throw new WebserverSystemException("Exception during method mappings retrieval. ", e);
             }
 
-            if (methodMappings == null
-                || methodMappings.sizeBefore() == 0 && methodMappings
-                    .sizeAfter() == 0) {
-                final String errorMsg =
-                        StringUtility.format(
-                                "No mapping found for key", key);
+            if (methodMappings == null || methodMappings.sizeBefore() == 0 && methodMappings.sizeAfter() == 0) {
+                final String errorMsg = StringUtility.format("No mapping found for key", key);
                 throw new WebserverSystemException(errorMsg);
             }
             mappingsCache.put(key, methodMappings);
@@ -127,38 +106,26 @@ public class SecurityInterceptorCache {
 
     /**
      * Retrieves the method mapping for the provided class name and method name.
-     * 
-     * @param className
-     *            The class name to retrieve the mapping for.
-     * @param methodName
-     *            The method name to retrieve the mapping for.
-     * @return List of method mappings, containing both kinds of mappings, for
-     *         before-mapping and for after-mapping
-     * 
-     * @throws MissingMethodParameterException
-     *             Thrown in case of a missing method parameter
-     * @throws SystemException
-     *             Thrown in case of an internal error.
-     * 
      *
+     * @param className  The class name to retrieve the mapping for.
+     * @param methodName The method name to retrieve the mapping for.
+     * @return List of method mappings, containing both kinds of mappings, for before-mapping and for after-mapping
+     * @throws MissingMethodParameterException
+     *                         Thrown in case of a missing method parameter
+     * @throws SystemException Thrown in case of an internal error.
      */
-    public MethodMappingList retrieveMethodMappings(
-        final String className, final String methodName)
+    public MethodMappingList retrieveMethodMappings(final String className, final String methodName)
         throws MissingMethodParameterException, SystemException {
 
-        return new MethodMappingList(this.requestMappingDao
-            .retrieveMethodMappings(className, methodName));
+        return new MethodMappingList(this.requestMappingDao.retrieveMethodMappings(className, methodName));
     }
 
     /**
      * Injects the request mapping data access object.
-     * 
-     * @param requestMappingDao
-     *            The {@link RequestMappingDaoInterface} implementation to
-     *            inject.
+     *
+     * @param requestMappingDao The {@link RequestMappingDaoInterface} implementation to inject.
      */
-    public void setRequestMappingDao(
-        final RequestMappingDaoInterface requestMappingDao) {
+    public void setRequestMappingDao(final RequestMappingDaoInterface requestMappingDao) {
 
         this.requestMappingDao = requestMappingDao;
     }

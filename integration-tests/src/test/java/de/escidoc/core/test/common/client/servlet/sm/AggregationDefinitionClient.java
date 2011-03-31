@@ -37,20 +37,16 @@ import javax.xml.rpc.ServiceException;
 import java.util.Map;
 
 /**
- * Offers access methods to the escidoc REST and SOAP interface of the Statistic
- * AggregationDefinition resource.
- * 
+ * Offers access methods to the escidoc REST and SOAP interface of the Statistic AggregationDefinition resource.
+ *
  * @author Michael Hoppe
- * 
  */
 public class AggregationDefinitionClient extends ClientBase {
 
     private AggregationDefinitionHandler soapClient = null;
 
     /**
-     * 
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public AggregationDefinitionClient(final int transport) {
         super(transport);
@@ -59,100 +55,73 @@ public class AggregationDefinitionClient extends ClientBase {
 
     /**
      * Create an item in the escidoc framework.
-     * 
-     * @param aggregationXml
-     *            The xml representation of the aggregation.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param aggregationXml The xml representation of the aggregation.
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     @Override
     public Object create(final Object aggregationXml) throws Exception {
 
-        return callEsciDoc("AggregationDefinition.create", METHOD_CREATE,
-            Constants.HTTP_METHOD_PUT,
-            Constants.STATISTIC_AGGREGATION_DEFINITION_BASE_URI,
-            new String[] {}, changeToString(aggregationXml));
+        return callEsciDoc("AggregationDefinition.create", METHOD_CREATE, Constants.HTTP_METHOD_PUT,
+            Constants.STATISTIC_AGGREGATION_DEFINITION_BASE_URI, new String[] {}, changeToString(aggregationXml));
     }
 
     /**
      * Delete an aggregation from the escidoc framework.
-     * 
-     * @param id
-     *            The id of the aggregation.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param id The id of the aggregation.
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     @Override
     public Object delete(final String id) throws Exception {
 
-        return callEsciDoc("AggregationDefinition.delete", METHOD_DELETE,
-            Constants.HTTP_METHOD_DELETE,
-            Constants.STATISTIC_AGGREGATION_DEFINITION_BASE_URI,
-            new String[] { id });
+        return callEsciDoc("AggregationDefinition.delete", METHOD_DELETE, Constants.HTTP_METHOD_DELETE,
+            Constants.STATISTIC_AGGREGATION_DEFINITION_BASE_URI, new String[] { id });
     }
 
     /**
      * Retrieve the xml representation of an aggregation.
-     * 
-     * @param id
-     *            The id of the aggregation.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param id The id of the aggregation.
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     @Override
     public Object retrieve(final String id) throws Exception {
 
-        return callEsciDoc("AggregationDefinition.retrieve", METHOD_RETRIEVE,
-            Constants.HTTP_METHOD_GET,
-            Constants.STATISTIC_AGGREGATION_DEFINITION_BASE_URI,
-            new String[] { id });
+        return callEsciDoc("AggregationDefinition.retrieve", METHOD_RETRIEVE, Constants.HTTP_METHOD_GET,
+            Constants.STATISTIC_AGGREGATION_DEFINITION_BASE_URI, new String[] { id });
     }
 
     /**
      * Retrieve the xml representation of the list of aggregation-definitions.
-     * 
-     * @param filter
-     *            filter
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param filter filter
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
-    public Object retrieveAggregationDefinitions(
-        final Map<String, String[]> filter) throws Exception {
+    public Object retrieveAggregationDefinitions(final Map<String, String[]> filter) throws Exception {
 
-        return callEsciDoc(
-            "AggregationDefinition.retrieveAggregationDefinitions",
+        return callEsciDoc("AggregationDefinition.retrieveAggregationDefinitions",
             METHOD_RETRIEVE_AGGREGATION_DEFINITIONS, Constants.HTTP_METHOD_GET,
-            Constants.STATISTIC_AGGREGATION_DEFINITIONS_BASE_URI, new String[] {},
-            filter);
+            Constants.STATISTIC_AGGREGATION_DEFINITIONS_BASE_URI, new String[] {}, filter);
     }
 
     /**
-     * 
      * @return Returns the soapClient.
-     * @throws ServiceException
-     *             If service instantiation fails.
+     * @throws ServiceException If service instantiation fails.
      */
     @Override
     public AggregationDefinitionHandler getSoapClient() throws ServiceException {
 
         if (soapClient == null) {
             AggregationDefinitionHandlerServiceLocator serviceLocator =
-                new AggregationDefinitionHandlerServiceLocator(
-                    getEngineConfig());
-            serviceLocator
-                .setAggregationDefinitionHandlerServiceEndpointAddress(
-                    checkSoapAddress(serviceLocator
-                    .getAggregationDefinitionHandlerServiceAddress()));
-            soapClient =
-                serviceLocator.getAggregationDefinitionHandlerService();
+                new AggregationDefinitionHandlerServiceLocator(getEngineConfig());
+            serviceLocator.setAggregationDefinitionHandlerServiceEndpointAddress(checkSoapAddress(serviceLocator
+                .getAggregationDefinitionHandlerServiceAddress()));
+            soapClient = serviceLocator.getAggregationDefinitionHandlerService();
         }
         return soapClient;
     }

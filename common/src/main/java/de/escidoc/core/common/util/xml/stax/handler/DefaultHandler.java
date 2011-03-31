@@ -29,72 +29,58 @@ import de.escidoc.core.common.util.xml.stax.events.StartElement;
 
 /**
  * Default stax handler. This should be the base class of all stax handlers.
- * 
  *
- * 
  * @author Torsten Tetteroo
- * 
  */
 public abstract class DefaultHandler {
 
     /**
-     * Mode indicating an attribute/element is discarded, i.e. it may be set but
-     * will be ignored.
+     * Mode indicating an attribute/element is discarded, i.e. it may be set but will be ignored.
      */
     public static final char DISCARDED = (char) 4;
 
-    /** Mode indicating an attribute/element is optional. */
+    /**
+     * Mode indicating an attribute/element is optional.
+     */
     public static final char OPTIONAL = (char) 2;
 
-    /** Mode indicating an attribute/element is mandatory. */
+    /**
+     * Mode indicating an attribute/element is mandatory.
+     */
     public static final char MANDATORY = (char) 1;
 
     /**
-     * Mode indicating an attribute/element is not allowed to be in the Xml
-     * data.
+     * Mode indicating an attribute/element is not allowed to be in the Xml data.
      */
     public static final char FORBIDDEN = (char) 0;
 
     /**
-     * Error message in case of not found attribute that is mandatory in schema.
-     * As this should not occur in a Stax handler (parsing is executed after
-     * schema validation), this should be reported as an internal system error.
+     * Error message in case of not found attribute that is mandatory in schema. As this should not occur in a Stax
+     * handler (parsing is executed after schema validation), this should be reported as an internal system error.
      */
-    public static final String MSG_MANDATORY_ATTRIBUTE_NOT_FOUND =
-        "Mandatory attribute not found.";
+    public static final String MSG_MANDATORY_ATTRIBUTE_NOT_FOUND = "Mandatory attribute not found.";
 
     private boolean ready;
 
     /**
-     * This method handles a start element.<br>
-     * The default implementation just returns the provided object.
-     * 
-     * @param element
-     *            The {@link StartElementStartElement} to handle.
-     * @return Returns a start element that shall be handled by further handlers
-     *         in the chain, or <code>null</code> to stop the chain.
-     * @throws Exception
-     *             Thrown if anything fails. This depends on the implementation
-     *             of the concrete class.
+     * This method handles a start element.<br> The default implementation just returns the provided object.
      *
+     * @param element The {@link StartElementStartElement} to handle.
+     * @return Returns a start element that shall be handled by further handlers in the chain, or <code>null</code> to
+     *         stop the chain.
+     * @throws Exception Thrown if anything fails. This depends on the implementation of the concrete class.
      */
-    public StartElement startElement(final StartElement element)
-        throws Exception {
+    public StartElement startElement(final StartElement element) throws Exception {
         return element;
     }
 
     /**
-     * This method handles an end element.<br>
-     * The default implementation just returns the provided object.
-     * 
-     * @param element
-     *            The {@link StartElementStartElement} to handle.
-     * @return Returns an end element that shall be handled by further handlers
-     *         in the chain, or <code>null</code> to stop the chain.
-     * @throws Exception
-     *             Thrown if anything fails. This depends on the implementation
-     *             of the concrete class.
+     * This method handles an end element.<br> The default implementation just returns the provided object.
      *
+     * @param element The {@link StartElementStartElement} to handle.
+     * @return Returns an end element that shall be handled by further handlers in the chain, or <code>null</code> to
+     *         stop the chain.
+     * @throws Exception Thrown if anything fails. This depends on the implementation of the concrete class.
      */
     public EndElement endElement(final EndElement element) throws Exception {
         return element;
@@ -102,81 +88,57 @@ public abstract class DefaultHandler {
 
     /**
      * This method handles the character content of an element.
-     * 
-     * @param data
-     *            The character content of the element.
-     * @param element
-     *            The current {@link StartElementStartElement} to that the
-     *            content belongs.
-     * @return Returns a {@link String} that shall be handled by further
-     *         handlers in the chain, or <code>null</code> to stop the chain.
-     * @throws Exception
-     *             Thrown if anything fails. This depends on the implementation
-     *             of the concrete class.
+     *
+     * @param data    The character content of the element.
+     * @param element The current {@link StartElementStartElement} to that the content belongs.
+     * @return Returns a {@link String} that shall be handled by further handlers in the chain, or <code>null</code> to
+     *         stop the chain.
+     * @throws Exception Thrown if anything fails. This depends on the implementation of the concrete class.
      */
-    public String characters(final String data, final StartElement element)
-        throws Exception {
+    public String characters(final String data, final StartElement element) throws Exception {
         return data;
     }
 
     /**
-     * Creates an exception for the situation that an attribute that is
-     * mandatory in the schema cannot be found during xml parsing, and this
-     * situation should not occur has the schema validation is done before the
-     * parsing.
-     * 
-     * @param startElement
-     *            The {@link StartElement} that does not contain the expected
-     *            attribute.
-     * @param namespaceUri
-     *            The namespace of the expected attribute.
-     * @param attributeName
-     *            The name of the expected attribute
-     * @param e
-     * @return Returns a {@link SystemException} as this situation can occur due
-     *         to internal errors, only.
+     * Creates an exception for the situation that an attribute that is mandatory in the schema cannot be found during
+     * xml parsing, and this situation should not occur has the schema validation is done before the parsing.
+     *
+     * @param startElement  The {@link StartElement} that does not contain the expected attribute.
+     * @param namespaceUri  The namespace of the expected attribute.
+     * @param attributeName The name of the expected attribute
+     * @return Returns a {@link SystemException} as this situation can occur due to internal errors, only.
      */
     protected SystemException createMandatoryAttributeNotFoundException(
-        final StartElement startElement, final String namespaceUri,
-        final String attributeName, final Exception e) {
+        final StartElement startElement, final String namespaceUri, final String attributeName, final Exception e) {
 
-        return new WebserverSystemException(StringUtility
-            .format(MSG_MANDATORY_ATTRIBUTE_NOT_FOUND,
-                startElement.getPath(), namespaceUri, attributeName), e);
+        return new WebserverSystemException(StringUtility.format(MSG_MANDATORY_ATTRIBUTE_NOT_FOUND, startElement
+            .getPath(), namespaceUri, attributeName), e);
     }
 
     /**
      * @return Returns <code>true</code> if the ready flag is not set.
      */
     protected boolean isNotReady() {
-        return ! this.ready;
+        return !this.ready;
     }
 
     /**
-     * Marks this handler has finished by setting the ready flag to
-     * <code>true</code>.
+     * Marks this handler has finished by setting the ready flag to <code>true</code>.
      */
     protected void setReady() {
         this.ready = true;
     }
 
     /**
-     * @deprecated Use StartElement.getAttributeValue(namespace, attributeName)
-     *             instead. Which does not return null but throws an exception.
-     *             Get the value of an Attribute.
-     * 
-     * @param element
-     *            XML StartElement
-     * @param namespace
-     *            Namespace (set null if undef).
-     * @param attributeName
-     *            The name of the Attribute.
+     * @param element       XML StartElement
+     * @param namespace     Namespace (set null if undef).
+     * @param attributeName The name of the Attribute.
      * @return Value of Attribute or null.
+     * @deprecated Use StartElement.getAttributeValue(namespace, attributeName) instead. Which does not return null but
+     *             throws an exception. Get the value of an Attribute.
      */
     @Deprecated
-    protected String getAttributeValue(
-        final StartElement element, final String namespace,
-        final String attributeName) {
+    protected String getAttributeValue(final StartElement element, final String namespace, final String attributeName) {
 
         String typeValue = null;
         final int indexOfType = element.indexOfAttribute(namespace, attributeName);

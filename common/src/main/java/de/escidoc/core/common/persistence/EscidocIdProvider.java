@@ -30,18 +30,15 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Provider for new eSciDoc object ids.<br>
- * This class prefetches a number of ids and provides ids on request. If no id
- * is available, a set of ids is fetched from a back end.<br>
- * Currently, {@link FedoraResourceIdentifierDao} is used to fetch the ids from
- * a fedora repository.
+ * Provider for new eSciDoc object ids.<br> This class prefetches a number of ids and provides ids on request. If no id
+ * is available, a set of ids is fetched from a back end.<br> Currently, {@link FedoraResourceIdentifierDao} is used to
+ * fetch the ids from a fedora repository.
  *
  * @author Torsten Tetteroo
  */
 public class EscidocIdProvider {
 
-    public static final String SPRING_BEAN_ID =
-        "escidoc.core.business.EscidocIdProvider";
+    public static final String SPRING_BEAN_ID = "escidoc.core.business.EscidocIdProvider";
 
     private int numberPrefetchedIds;
 
@@ -54,11 +51,9 @@ public class EscidocIdProvider {
 
     /**
      * Get next object identifier.
-     * 
-     * @return Returns the requested next available object id.
-     * @throws SystemException
-     *             Thrown in case of an internal system error.
      *
+     * @return Returns the requested next available object id.
+     * @throws SystemException Thrown in case of an internal system error.
      */
     public String getNextPid() throws SystemException {
 
@@ -67,16 +62,12 @@ public class EscidocIdProvider {
 
     /**
      * Get next object identifiers.
-     * 
-     * @param noOfPids
-     *            The number of pids to retrieve. (non negative integer)
-     * @return An array of the requested next available object id(s).
-     * @throws SystemException
-     *             Thrown in case of an internal system error.
      *
+     * @param noOfPids The number of pids to retrieve. (non negative integer)
+     * @return An array of the requested next available object id(s).
+     * @throws SystemException Thrown in case of an internal system error.
      */
-    public synchronized String[] getNextPids(final int noOfPids)
-        throws SystemException {
+    public synchronized String[] getNextPids(final int noOfPids) throws SystemException {
 
         final String[] ret = new String[noOfPids];
         for (int index = 0; index < noOfPids; index++) {
@@ -90,41 +81,33 @@ public class EscidocIdProvider {
     }
 
     /**
-     * Fetches a number of id from the back end. The maximum number of the
-     * provided number of needed ids and the configured number of ids to
-     * prefetch are fetched from the back end.
-     * 
-     * @param numberNeededIds
-     *            The number of ids that are at least needed to handle the
-     *            current request for ids.
-     * @throws SystemException
-     *             Thrown if fetched identifier contain capital letters or in
-     *             case of an internal system error.
+     * Fetches a number of id from the back end. The maximum number of the provided number of needed ids and the
+     * configured number of ids to prefetch are fetched from the back end.
      *
+     * @param numberNeededIds The number of ids that are at least needed to handle the current request for ids.
+     * @throws SystemException Thrown if fetched identifier contain capital letters or in case of an internal system
+     *                         error.
      */
     private void fetchIds(final int numberNeededIds) throws SystemException {
 
         final int number = Math.max(numberNeededIds, this.numberPrefetchedIds);
-        final List<String> idArryList =
-            Arrays.asList(resourceIdentifierDao.getNextPids(number));
+        final List<String> idArryList = Arrays.asList(resourceIdentifierDao.getNextPids(number));
 
         // check if prefixes have lower characters
         // I assume that its enough to check the first retrieved pid
         final String id = idArryList.get(0);
 
         if (!id.equals(id.toLowerCase())) {
-            throw new SystemException(
-                "Invalid identifier prefix configured in Fedora. "
-                    + "Capital letters are forbidden in eSciDoc as prefix.");
+            throw new SystemException("Invalid identifier prefix configured in Fedora. "
+                + "Capital letters are forbidden in eSciDoc as prefix.");
         }
         this.storedIds = idArryList.iterator();
     }
 
     /**
      * Injects the number of ids that shall be prefetched at one time.
-     * 
-     * @param numberPrefetchedIds
-     *            the number to inject.
+     *
+     * @param numberPrefetchedIds the number to inject.
      */
     public void setNumberPrefetchedIds(final int numberPrefetchedIds) {
         this.numberPrefetchedIds = numberPrefetchedIds;
@@ -132,12 +115,10 @@ public class EscidocIdProvider {
 
     /**
      * Injects the data access object used to retrieve resource identifiers.
-     * 
-     * @param resourceIdentifierDao
-     *            the resourceIdentifierDao to inject.
+     *
+     * @param resourceIdentifierDao the resourceIdentifierDao to inject.
      */
-    public void setResourceIdentifierDao(
-        final ResourceIdentifierDao resourceIdentifierDao) {
+    public void setResourceIdentifierDao(final ResourceIdentifierDao resourceIdentifierDao) {
         this.resourceIdentifierDao = resourceIdentifierDao;
     }
 

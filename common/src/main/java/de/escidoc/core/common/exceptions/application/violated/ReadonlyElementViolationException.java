@@ -21,16 +21,13 @@
 package de.escidoc.core.common.exceptions.application.violated;
 
 /**
- * The ReadonlyElementViolationException is used to indicate that a read only
- * Element was set by the user. returned httpStatusCode is 409. Status code
- * (409) indicating that the request could not be completed due to a conflict
- * with the current state of the resource.
- * 
- * @author Michael Hoppe (FIZ Karlsruhe)
+ * The ReadonlyElementViolationException is used to indicate that a read only Element was set by the user. returned
+ * httpStatusCode is 409. Status code (409) indicating that the request could not be completed due to a conflict with
+ * the current state of the resource.
  *
+ * @author Michael Hoppe (FIZ Karlsruhe)
  */
-public class ReadonlyElementViolationException
-    extends ReadonlyViolationException {
+public class ReadonlyElementViolationException extends ReadonlyViolationException {
 
     /**
      * The serial version uid.
@@ -43,8 +40,6 @@ public class ReadonlyElementViolationException
 
     /**
      * Default constructor.
-     * 
-     *
      */
     public ReadonlyElementViolationException() {
         super(HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -52,9 +47,8 @@ public class ReadonlyElementViolationException
 
     /**
      * Constructor used to map an initial exception.
-     * 
-     * @param error
-     *            Throwable
+     *
+     * @param error Throwable
      */
     public ReadonlyElementViolationException(final Throwable error) {
         super(error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -62,27 +56,21 @@ public class ReadonlyElementViolationException
 
     /**
      * Constructs a new exception with the specified detail message.
-     * 
-     * @param message -
-     *            the detail message.
      *
+     * @param message - the detail message.
      */
     public ReadonlyElementViolationException(final String message) {
         super(message, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 
     /**
-     * Constructor used to create a new Exception with the specified detail
-     * message and a mapping to an initial exception.
-     * 
-     * @param message -
-     *            the detail message.
-     * @param error
-     *            Throwable
+     * Constructor used to create a new Exception with the specified detail message and a mapping to an initial
+     * exception.
      *
+     * @param message - the detail message.
+     * @param error   Throwable
      */
-    public ReadonlyElementViolationException(final String message,
-        final Throwable error) {
+    public ReadonlyElementViolationException(final String message, final Throwable error) {
         super(message, error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 }

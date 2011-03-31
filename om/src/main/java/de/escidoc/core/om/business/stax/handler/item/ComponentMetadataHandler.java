@@ -42,10 +42,8 @@ import java.util.Map;
 
 /**
  * The MetadataHandler.
- * 
- * @author Michael Schneider
- * 
  *
+ * @author Michael Schneider
  */
 public class ComponentMetadataHandler extends DefaultHandler {
 
@@ -80,23 +78,18 @@ public class ComponentMetadataHandler extends DefaultHandler {
 
     private Map<String, Map<String, String>> componentMdRecords;
 
-    private final Map<String, String> escidocMdNamespacesMap =
-        new HashMap<String, String>();
+    private final Map<String, String> escidocMdNamespacesMap = new HashMap<String, String>();
 
     // FIXME: work around, mandatory md-record name will be defined in a content
     // model
 
     /**
      * Instantiate a MetaDataHandler.
-     * 
-     * @param parser
-     *            The parser.
-     * @param componentPath
-     *            XPath to component element.
      *
+     * @param parser        The parser.
+     * @param componentPath XPath to component element.
      */
-    public ComponentMetadataHandler(final StaxParser parser,
-        final String componentPath) {
+    public ComponentMetadataHandler(final StaxParser parser, final String componentPath) {
         this.parser = parser;
         this.componentPath = componentPath;
         this.mdRecordsPath = componentPath + "/md-records";
@@ -105,9 +98,8 @@ public class ComponentMetadataHandler extends DefaultHandler {
 
     /**
      * Sets component ids.
-     * 
-     * @param objids
-     *            list of objid of Components.
+     *
+     * @param objids list of objid of Components.
      */
     public void setObjids(final List<String> objids) {
         this.pids = objids;
@@ -115,18 +107,13 @@ public class ComponentMetadataHandler extends DefaultHandler {
 
     /**
      * Handle the start of an element.
-     * 
-     * @param element
-     *            The element.
-     * @return The element.
-     * @throws MissingAttributeValueException
-     * @throws MissingAttributeValueException
-     *             If a required attribute is missing.
      *
+     * @param element The element.
+     * @return The element.
+     * @throws MissingAttributeValueException If a required attribute is missing.
      */
     @Override
-    public StartElement startElement(final StartElement element)
-        throws MissingAttributeValueException {
+    public StartElement startElement(final StartElement element) throws MissingAttributeValueException {
 
         final String currentPath = parser.getCurPath();
 
@@ -139,7 +126,7 @@ public class ComponentMetadataHandler extends DefaultHandler {
 
             if (nameValue.length() == 0) {
                 throw new MissingAttributeValueException("The value of the" + " \"name\" atribute of the element "
-                        + theName + " is missing");
+                    + theName + " is missing");
 
             }
 
@@ -169,14 +156,12 @@ public class ComponentMetadataHandler extends DefaultHandler {
 
             metadataAttributes.put(this.componentId, this.componentMdRecords);
 
-
         }
-        else if (this.isInside && ! this.isRootMetadataElement) {
+        else if (this.isInside && !this.isRootMetadataElement) {
             this.isRootMetadataElement = true;
             if (this.nameValue.equals(Elements.MANDATORY_MD_RECORD_NAME)) {
                 this.escidocMdRecordNameSpace = element.getNamespace();
-                this.escidocMdNamespacesMap.put(this.componentId,
-                    this.escidocMdRecordNameSpace);
+                this.escidocMdNamespacesMap.put(this.componentId, this.escidocMdRecordNameSpace);
             }
 
         }
@@ -187,8 +172,7 @@ public class ComponentMetadataHandler extends DefaultHandler {
             }
         }
         else if (mdRecordsPath.equals(currentPath)) {
-            this.componentMdRecords =
-                new HashMap<String, Map<String, String>>();
+            this.componentMdRecords = new HashMap<String, Map<String, String>>();
 
         }
 
@@ -197,11 +181,9 @@ public class ComponentMetadataHandler extends DefaultHandler {
 
     /**
      * Handle the end of an element.
-     * 
-     * @param element
-     *            The element.
-     * @return The element.
      *
+     * @param element The element.
+     * @return The element.
      */
     @Override
     public EndElement endElement(final EndElement element) {
@@ -221,13 +203,10 @@ public class ComponentMetadataHandler extends DefaultHandler {
 
     /**
      * Handle the character section of an element.
-     * 
-     * @param s
-     *            The contents of the character section.
-     * @param element
-     *            The element.
-     * @return The character section.
      *
+     * @param s       The contents of the character section.
+     * @param element The element.
+     * @return The character section.
      */
     @Override
     public String characters(final String s, final StartElement element) {

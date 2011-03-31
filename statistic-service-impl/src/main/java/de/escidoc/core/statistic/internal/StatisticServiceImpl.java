@@ -21,11 +21,9 @@ public class StatisticServiceImpl {
         try {
             // TODO: Refactor StatisticDataHandler and move to this module.
             this.statisticDataHandler.insertStatisticData(statisticData);
-        } catch (final Exception e) {
-            throw new StatisticServiceException(
-                "Error on saving statistic data "
-                + statisticData
-                + ":\n"
+        }
+        catch (final Exception e) {
+            throw new StatisticServiceException("Error on saving statistic data " + statisticData + ":\n"
                 + e.getMessage(), e);
         }
     }
@@ -41,8 +39,6 @@ public class StatisticServiceImpl {
 
     @Override
     public String toString() {
-        return "StatisticServiceImpl{" +
-                "statisticDataHandler=" + this.statisticDataHandler +
-                '}';
+        return "StatisticServiceImpl{" + "statisticDataHandler=" + this.statisticDataHandler + '}';
     }
 }

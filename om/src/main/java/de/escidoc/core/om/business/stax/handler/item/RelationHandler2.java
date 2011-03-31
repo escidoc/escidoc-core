@@ -48,9 +48,8 @@ import java.util.regex.Pattern;
 
 /**
  * Obtains Content Relations values from XML.
- * 
+ *
  * @author Steffen Wagner
- * 
  */
 public class RelationHandler2 extends DefaultHandler {
 
@@ -62,13 +61,10 @@ public class RelationHandler2 extends DefaultHandler {
 
     private RelationCreate relation;
 
-    private static final Logger LOGGER =
-        LoggerFactory.getLogger(RelationHandler2.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RelationHandler2.class);
 
     /**
-     * 
-     * @param parser
-     *            StAX parser.
+     * @param parser StAX parser.
      */
     public RelationHandler2(final StaxParser parser) {
 
@@ -76,11 +72,8 @@ public class RelationHandler2 extends DefaultHandler {
     }
 
     /**
-     * 
-     * @param parser
-     *            StAX parser.
-     * @param path
-     *            XPath for relations
+     * @param parser StAX parser.
+     * @param path   XPath for relations
      */
     public RelationHandler2(final StaxParser parser, final String path) {
 
@@ -89,30 +82,22 @@ public class RelationHandler2 extends DefaultHandler {
     }
 
     /**
-     * @param element
-     *            StAX StartElement.
+     * @param element StAX StartElement.
      * @return StAX StartElement.
-     * @throws InvalidContentException
-     *             Thrown if the content relation attribute for predicate has
-     *             wrong structure.
-     * @throws WebserverSystemException
-     *             Thrown if check of transport protocol failed.
+     * @throws InvalidContentException  Thrown if the content relation attribute for predicate has wrong structure.
+     * @throws WebserverSystemException Thrown if check of transport protocol failed.
      */
     @Override
-    public StartElement startElement(final StartElement element)
-        throws InvalidContentException, WebserverSystemException {
+    public StartElement startElement(final StartElement element) throws InvalidContentException,
+        WebserverSystemException {
 
-        if (this.relationXPath.equals(parser.getCurPath())
-            && element
-            .indexOfAttribute(null, "inherited") < 0) {
+        if (this.relationXPath.equals(parser.getCurPath()) && element.indexOfAttribute(null, "inherited") < 0) {
 
             String predicateNs = null;
             String predicate = null;
 
             try {
-                final String predicateUri =
-                    element.getAttributeValue(null,
-                        Elements.ATTRIBUTE_PREDICATE);
+                final String predicateUri = element.getAttributeValue(null, Elements.ATTRIBUTE_PREDICATE);
 
                 if (predicateUri != null) {
                     final String[] predicateAndTarget = SPLIT_PATTERN.split(predicateUri);
@@ -124,11 +109,12 @@ public class RelationHandler2 extends DefaultHandler {
                     predicate = predicateAndTarget[1];
                 }
 
-            } catch (final NoSuchAttributeException e) {
-                if(LOGGER.isWarnEnabled()) {
+            }
+            catch (final NoSuchAttributeException e) {
+                if (LOGGER.isWarnEnabled()) {
                     LOGGER.warn("Error accessing attribute.");
                 }
-                if(LOGGER.isDebugEnabled()) {
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Error accessing attribute.", e);
                 }
             }
@@ -138,32 +124,28 @@ public class RelationHandler2 extends DefaultHandler {
                 // REST
                 if (UserContext.isRestAccess()) {
                     final String href =
-                        element.getAttributeValue(Constants.XLINK_NS_URI,
-                            Elements.ATTRIBUTE_XLINK_HREF);
+                        element.getAttributeValue(Constants.XLINK_NS_URI, Elements.ATTRIBUTE_XLINK_HREF);
                     id = Utility.getId(href);
                 }
                 // SOAP
                 else {
-                    id =
-                        element.getAttributeValue(null,
-                            Elements.ATTRIBUTE_XLINK_OBJID);
+                    id = element.getAttributeValue(null, Elements.ATTRIBUTE_XLINK_OBJID);
 
                 }
             }
             catch (final NoSuchAttributeException e) {
-                if(LOGGER.isWarnEnabled()) {
+                if (LOGGER.isWarnEnabled()) {
                     LOGGER.warn("Error accessing attribute.");
                 }
-                if(LOGGER.isDebugEnabled()) {
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Error accessing attribute.", e);
                 }
             }
             // handle objid
             if (XmlUtility.getVersionNumberFromObjid(id) != null) {
                 throw new InvalidContentException("A relation target may not be referenced by an "
-                        + " identifier containing a version number. "
-                        + "Use a floating identifier like 'escidoc:123' "
-                        + "to reference a target");
+                    + " identifier containing a version number. " + "Use a floating identifier like 'escidoc:123' "
+                    + "to reference a target");
             }
             this.relation = new RelationCreate(predicateNs, predicate, id);
 
@@ -172,8 +154,7 @@ public class RelationHandler2 extends DefaultHandler {
     }
 
     /**
-     * @param element
-     *            StAX EndElement
+     * @param element StAX EndElement
      * @return StAX EndElement
      */
     @Override
@@ -183,8 +164,7 @@ public class RelationHandler2 extends DefaultHandler {
     }
 
     /**
-     * @param relation
-     *            the relation to set
+     * @param relation the relation to set
      */
     public void setRelation(final RelationCreate relation) {
         this.relation = relation;

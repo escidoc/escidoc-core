@@ -41,22 +41,19 @@ import java.util.Collection;
 
 /**
  * Handle the Item within the ResourceCache.
- * 
+ *
  * @author
- * 
  */
 public class ItemResourceListener extends ItemHandlerRetrieve {
 
     private IndexingHandler indexingHandler;
 
-    private final Collection<ResourceListener> itemListeners =
-        new ArrayList<ResourceListener>();
+    private final Collection<ResourceListener> itemListeners = new ArrayList<ResourceListener>();
 
     /**
      * Injects the indexing handler.
      *
-     * @param indexingHandler
-     *            The indexing handler.
+     * @param indexingHandler The indexing handler.
      */
     public void setIndexingHandler(final IndexingHandler indexingHandler) {
         this.indexingHandler = indexingHandler;
@@ -65,9 +62,8 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
 
     /**
      * Register an item listener.
-     * 
-     * @param listener
-     *            listener which will be added to the list
+     *
+     * @param listener listener which will be added to the list
      */
     private void addItemListener(final ResourceListener listener) {
         itemListeners.add(listener);
@@ -75,17 +71,12 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
 
     /**
      * Notify the listeners that an item was created.
-     * 
-     * @param id
-     *            item id
-     * @param xmlData
-     *            complete item XML
-     * 
-     * @throws SystemException
-     *             One of the listeners threw an exception.
+     *
+     * @param id      item id
+     * @param xmlData complete item XML
+     * @throws SystemException One of the listeners threw an exception.
      */
-    protected void fireItemCreated(final String id, final String xmlData)
-        throws SystemException {
+    protected void fireItemCreated(final String id, final String xmlData) throws SystemException {
         final String restXml;
         final String soapXml;
 
@@ -104,21 +95,14 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
 
     /**
      * Notify the listeners that an item was modified.
-     * 
-     * @param id
-     *            item id
-     * 
-     * @throws ComponentNotFoundException
-     *             Thrown if a component of an item with the provided id does
-     *             not exist in the framework.
-     * @throws ItemNotFoundException
-     *             Thrown if an item with the provided id does not exist in the
-     *             framework.
-     * @throws SystemException
-     *             One of the listeners threw an exception.
+     *
+     * @param id item id
+     * @throws ComponentNotFoundException Thrown if a component of an item with the provided id does not exist in the
+     *                                    framework.
+     * @throws ItemNotFoundException      Thrown if an item with the provided id does not exist in the framework.
+     * @throws SystemException            One of the listeners threw an exception.
      */
-    protected void fireItemModified(final String id)
-        throws ComponentNotFoundException, ItemNotFoundException,
+    protected void fireItemModified(final String id) throws ComponentNotFoundException, ItemNotFoundException,
         SystemException {
 
         setItem(id);
@@ -139,17 +123,12 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
 
     /**
      * Notify the listeners that an item was modified.
-     * 
-     * @param id
-     *            item id
-     * @param xmlData
-     *            complete item XML
-     * 
-     * @throws SystemException
-     *             One of the listeners threw an exception.
+     *
+     * @param id      item id
+     * @param xmlData complete item XML
+     * @throws SystemException One of the listeners threw an exception.
      */
-    public void fireItemModified(final String id, final String xmlData)
-        throws SystemException {
+    public void fireItemModified(final String id, final String xmlData) throws SystemException {
         final String restXml;
         final String soapXml;
 
@@ -168,12 +147,9 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
 
     /**
      * Notify the listeners that an item was deleted.
-     * 
-     * @param id
-     *            item id
-     * 
-     * @throws SystemException
-     *             One of the listeners threw an exception.
+     *
+     * @param id item id
+     * @throws SystemException One of the listeners threw an exception.
      */
     protected void fireItemDeleted(final String id) throws SystemException {
         for (final ResourceListener itemListener : this.itemListeners) {
@@ -182,16 +158,12 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
     }
 
     /**
-     * Get the alternate form of an item representation. If the current request
-     * came in via REST, then the SOAP form will be returned here and vice
-     * versa.
-     * 
-     * @param id
-     *            item id
-     * 
+     * Get the alternate form of an item representation. If the current request came in via REST, then the SOAP form
+     * will be returned here and vice versa.
+     *
+     * @param id item id
      * @return alternate form of the item
-     * @throws SystemException
-     *             An internal error occurred.
+     * @throws SystemException An internal error occurred.
      */
     private String getAlternateForm(final String id) throws SystemException {
         String result = null;
@@ -222,22 +194,15 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
 
     /**
      * Notify the listeners that an item was modified.
-     * 
-     * @param ids
-     *            list of item ids
-     * 
-     * @throws ComponentNotFoundException
-     *             Thrown if a component of an item with the provided id does
-     *             not exist in the framework.
-     * @throws ItemNotFoundException
-     *             Thrown if an item with the provided id does not exist in the
-     *             framework.
-     * @throws SystemException
-     *             One of the listeners threw an exception.
+     *
+     * @param ids list of item ids
+     * @throws ComponentNotFoundException Thrown if a component of an item with the provided id does not exist in the
+     *                                    framework.
+     * @throws ItemNotFoundException      Thrown if an item with the provided id does not exist in the framework.
+     * @throws SystemException            One of the listeners threw an exception.
      */
-    protected void queueItemsModified(final Iterable<String> ids)
-        throws ComponentNotFoundException, ItemNotFoundException,
-        SystemException {
+    protected void queueItemsModified(final Iterable<String> ids) throws ComponentNotFoundException,
+        ItemNotFoundException, SystemException {
         if (this.indexingHandler != null) {
             for (final String id : ids) {
 

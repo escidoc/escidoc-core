@@ -47,9 +47,8 @@ import static junit.framework.Assert.fail;
 
 /**
  * Base class for testing the implementation of the StagingFile.
- * 
+ *
  * @author Torsten Tetteroo
- * 
  */
 public abstract class StagingFileTestBase extends EscidocTestBase {
 
@@ -71,8 +70,7 @@ public abstract class StagingFileTestBase extends EscidocTestBase {
     private static String dbPassword = "postgres";
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     protected StagingFileTestBase(final int transport) {
         super(transport);
@@ -88,13 +86,10 @@ public abstract class StagingFileTestBase extends EscidocTestBase {
 
     /**
      * Test retrieving a StagingFile from the mock framework.
-     * 
-     * @param id
-     *            The id of the StagingFile.
-     * @return The <code>HttpMethod</code> holding the binary content of the
-     *         retrieved StagingFile.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param id The id of the StagingFile.
+     * @return The <code>HttpMethod</code> holding the binary content of the retrieved StagingFile.
+     * @throws Exception If anything fails.
      */
     protected HttpResponse retrieveStagingFile(final String id) throws Exception {
 
@@ -104,38 +99,30 @@ public abstract class StagingFileTestBase extends EscidocTestBase {
             return httpRes;
         }
         else {
-            fail("Unexpected result type ["
-                + result.getClass().getName());
+            fail("Unexpected result type [" + result.getClass().getName());
             return null;
         }
     }
 
     /**
      * Test creating a StagingFile in the framework.
-     * 
-     * @param binaryContent
-     *            The binary content of the staging file.
-     * @param mimeType
-     *            The mime type of the data.
-     * @param filename
-     *            The name of the file.
+     *
+     * @param binaryContent The binary content of the staging file.
+     * @param mimeType      The mime type of the data.
+     * @param filename      The name of the file.
      * @return The <code>HttpMethod</code> object.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    protected HttpResponse create(
-        final InputStream binaryContent, final String mimeType,
-        final String filename) throws Exception {
+    protected HttpResponse create(final InputStream binaryContent, final String mimeType, final String filename)
+        throws Exception {
 
-        Object result =
-            getStagingFileClient().create(binaryContent, mimeType, filename);
+        Object result = getStagingFileClient().create(binaryContent, mimeType, filename);
         if (result instanceof HttpResponse) {
             HttpResponse httpRes = (HttpResponse) result;
             return httpRes;
         }
         else {
-            fail("Unsupported result type ["
-                + result.getClass().getName() + "]");
+            fail("Unsupported result type [" + result.getClass().getName() + "]");
             return null;
         }
 
@@ -143,19 +130,16 @@ public abstract class StagingFileTestBase extends EscidocTestBase {
 
     /**
      * Gets a database connection.
-     * 
+     *
      * @return Returns a database connection.
-     * @throws Exception
-     *             Thrown if anything fails.
+     * @throws Exception Thrown if anything fails.
      */
     private static Connection getDbConnection() throws Exception {
         if (dbConnetion == null) {
 
             Class.forName(dbDriver);
-            String jdbcUrl =
-                "jdbc:postgresql://" + dbHost + ":" + dbPort + "/" + dbName;
-            dbConnetion =
-                DriverManager.getConnection(jdbcUrl, dbUser, dbPassword);
+            String jdbcUrl = "jdbc:postgresql://" + dbHost + ":" + dbPort + "/" + dbName;
+            dbConnetion = DriverManager.getConnection(jdbcUrl, dbUser, dbPassword);
 
         }
         return dbConnetion;
@@ -163,29 +147,24 @@ public abstract class StagingFileTestBase extends EscidocTestBase {
 
     /**
      * Get the staging file for token from the database.
-     * 
-     * @param token
-     *            The token.
+     *
+     * @param token The token.
      * @return The staging file.
-     * @throws Exception
-     *             Thrown if anything fails.
+     * @throws Exception Thrown if anything fails.
      */
-    public static StagingFile retrieveStagingFileFromDatabase(final String token)
-        throws Exception {
+    public static StagingFile retrieveStagingFileFromDatabase(final String token) throws Exception {
         StagingFile result = null;
         Connection db = getDbConnection();
         if (db != null) {
             Statement sql = db.createStatement();
-            String select =
-                "select * from st.staging_file where token='" + token + "';";
+            String select = "select * from st.staging_file where token='" + token + "';";
             ResultSet resultSet;
 
             resultSet = sql.executeQuery(select);
 
             if ((resultSet != null) && (resultSet.next())) {
                 result =
-                    new StagingFile(resultSet.getLong("expiry_ts"), resultSet
-                        .getString("reference"), resultSet
+                    new StagingFile(resultSet.getLong("expiry_ts"), resultSet.getString("reference"), resultSet
                         .getString("mime_type"), resultSet.getBoolean("upload"));
                 result.setToken(token);
             }
@@ -196,14 +175,11 @@ public abstract class StagingFileTestBase extends EscidocTestBase {
 
     /**
      * Update the given staging file in the database.
-     * 
-     * @param stagingFile
-     *            The staging file.
-     * @throws Exception
-     *             Thrown if anything fails.
+     *
+     * @param stagingFile The staging file.
+     * @throws Exception Thrown if anything fails.
      */
-    public static void updateStagingFile(final StagingFile stagingFile)
-        throws Exception {
+    public static void updateStagingFile(final StagingFile stagingFile) throws Exception {
         Connection db = getDbConnection();
         if (db != null) {
             db.setAutoCommit(true);
@@ -213,11 +189,9 @@ public abstract class StagingFileTestBase extends EscidocTestBase {
                 uploadValue = "false";
             }
             String update =
-                "update st.staging_file set expiry_ts="
-                    + stagingFile.getExpiryTs() + ", reference='"
-                    + stagingFile.getReference() + "', mime_type='"
-                    + stagingFile.getMimeType() + "', upload=" + uploadValue
-                    + " where token='" + stagingFile.getToken() + "';";
+                "update st.staging_file set expiry_ts=" + stagingFile.getExpiryTs() + ", reference='"
+                    + stagingFile.getReference() + "', mime_type='" + stagingFile.getMimeType() + "', upload="
+                    + uploadValue + " where token='" + stagingFile.getToken() + "';";
 
             sql.executeUpdate(update);
 
@@ -227,47 +201,37 @@ public abstract class StagingFileTestBase extends EscidocTestBase {
 
     /**
      * Delete the staging file from the database.
-     * 
-     * @param stagingFile
-     *            The staging file.
-     * @throws Exception
-     *             Thrown if anything fails.
+     *
+     * @param stagingFile The staging file.
+     * @throws Exception Thrown if anything fails.
      */
-    public static void deleteStagingFile(final StagingFile stagingFile)
-        throws Exception {
+    public static void deleteStagingFile(final StagingFile stagingFile) throws Exception {
         deleteStagingFile(stagingFile.getToken());
     }
 
     /**
      * Delete the staging file for token from the database.
-     * 
-     * @param token
-     *            The token.
-     * @throws Exception
-     *             Thrown if anything fails.
+     *
+     * @param token The token.
+     * @throws Exception Thrown if anything fails.
      */
     public static void deleteStagingFile(final String token) throws Exception {
         Connection db = getDbConnection();
         if (db != null) {
             db.setAutoCommit(true);
             Statement sql = db.createStatement();
-            String delete =
-                "delete from st.staging_file where token='" + token + "';";
+            String delete = "delete from st.staging_file where token='" + token + "';";
             sql.executeUpdate(delete);
             sql.close();
         }
     }
 
     /**
-     * Delete the file identified by the token from the file system without
-     * updating persistent information.<br>
-     * This method can be used to simulate manually deleting a staging area
-     * file, e.g. by an administrator.
-     * 
-     * @param token
-     *            The token identifying the file.
-     * @throws Exception
-     *             Thrown if anything fails.
+     * Delete the file identified by the token from the file system without updating persistent information.<br> This
+     * method can be used to simulate manually deleting a staging area file, e.g. by an administrator.
+     *
+     * @param token The token identifying the file.
+     * @throws Exception Thrown if anything fails.
      */
     public static void deletePhysicalFile(final String token) throws Exception {
 
@@ -282,13 +246,10 @@ public abstract class StagingFileTestBase extends EscidocTestBase {
     }
 
     /**
-     * Set token as expired by changing its expiry timestamp to a time previous
-     * to the current time.
-     * 
-     * @param token
-     *            The token to set as expired.
-     * @throws Exception
-     *             Thrown if anything fails.
+     * Set token as expired by changing its expiry timestamp to a time previous to the current time.
+     *
+     * @param token The token to set as expired.
+     * @throws Exception Thrown if anything fails.
      */
     public static void setExpired(final String token) throws Exception {
 
@@ -301,64 +262,51 @@ public abstract class StagingFileTestBase extends EscidocTestBase {
 
     /**
      * Gets a file input stream for a source file identified by given file name.
-     * 
-     * @param filename
-     *            The file name of the source, e.g. UploadTest.zip
+     *
+     * @param filename The file name of the source, e.g. UploadTest.zip
      * @return Returns a file input stream to the source.
-     * @throws IOException
-     *             Thrown if the resource cannot be found.
+     * @throws IOException Thrown if the resource cannot be found.
      */
-    public static InputStream getFileInputStream(final String filename)
-        throws IOException {
+    public static InputStream getFileInputStream(final String filename) throws IOException {
 
         InputStream result = ResourceProvider.getFileInputStream(filename);
         return result;
     }
 
     /**
-     * Assert the content of the received response in givent http method object
-     * matches the conten of the last file copied to staging area.
-     * 
-     * @param httpRes
-     *            The http method containing the result to check.
-     * @param source
-     *            The name of the original source that shall be compared with
-     *            the response's content.
-     * @throws IOException
-     *             If an i/O operation failed.
+     * Assert the content of the received response in givent http method object matches the conten of the last file
+     * copied to staging area.
+     *
+     * @param httpRes The http method containing the result to check.
+     * @param source  The name of the original source that shall be compared with the response's content.
+     * @throws IOException If an i/O operation failed.
      */
-    public static void assertResponseContentMatchesSourceFile(
-        final HttpResponse httpRes, final String source) throws IOException {
+    public static void assertResponseContentMatchesSourceFile(final HttpResponse httpRes, final String source)
+        throws IOException {
 
         InputStream responseContent = httpRes.getEntity().getContent();
-        assertNotNull("GET failed! Response's content not found",
-            responseContent);
-        InputStream origContent =
-            StagingFileTestBase.getFileInputStream(source);
-        assertNotNull("Source not found! [" + source + "]",
-            responseContent);
+        assertNotNull("GET failed! Response's content not found", responseContent);
+        InputStream origContent = StagingFileTestBase.getFileInputStream(source);
+        assertNotNull("Source not found! [" + source + "]", responseContent);
         byte[] bufferR = new byte[1];
         byte[] bufferO = new byte[1];
         int i = 0;
         try {
             int lengthR = responseContent.read(bufferR);
             int lengthO = origContent.read(bufferO);
-            assertEquals("GET failed! Lengths of response content"
-                + " and original content do not match. Reading of " + (i + 1)
-                + ". byte failed (expected = #bytes read from original source,"
+            assertEquals("GET failed! Lengths of response content" + " and original content do not match. Reading of "
+                + (i + 1) + ". byte failed (expected = #bytes read from original source,"
                 + " was = #bytes read from response content", lengthO, lengthR);
             while (lengthR != -1 && lengthO != -1) {
-                assertEquals("GET failed! Response's content does not"
-                    + " match expected result. " + (i + 1)
+                assertEquals("GET failed! Response's content does not" + " match expected result. " + (i + 1)
                     + ". byte check failed,", bufferO[0], bufferR[0]);
                 i++;
                 lengthR = responseContent.read(bufferR);
                 lengthO = origContent.read(bufferO);
                 assertEquals("GET failed! Lengths of response content"
-                    + " and original content do not match. Reading of "
-                    + (i + 1) + ". byte failed (expected = #bytes read from "
-                    + " original source, was = #bytes read from response"
-                    + " content)", lengthO, lengthR);
+                    + " and original content do not match. Reading of " + (i + 1)
+                    + ". byte failed (expected = #bytes read from "
+                    + " original source, was = #bytes read from response" + " content)", lengthO, lengthR);
             }
 
         }

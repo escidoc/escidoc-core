@@ -76,50 +76,43 @@ public class ContentRelationsAddHandler2Edition extends DefaultHandler {
     }
 
     @Override
-    public String characters(final String data, final StartElement element)
-        throws MissingElementValueException,
-        ReferencedResourceNotFoundException,
-        RelationPredicateNotFoundException, InvalidContentException,
-        TripleStoreSystemException, WebserverSystemException,
-        XmlParserSystemException, EncodingSystemException, InvalidXmlException {
+    public String characters(final String data, final StartElement element) throws MissingElementValueException,
+        ReferencedResourceNotFoundException, RelationPredicateNotFoundException, InvalidContentException,
+        TripleStoreSystemException, WebserverSystemException, XmlParserSystemException, EncodingSystemException,
+        InvalidXmlException {
 
         if (this.inRelation) {
             if ("targetId".equals(element.getLocalName())) {
                 if (data == null || data.length() == 0) {
                     throw new MissingElementValueException("The value of the element " + element.getLocalName()
-                            + " is missing.");
+                        + " is missing.");
                 }
 
                 this.targetId = data;
-                final String targetIdWithoutVersion =
-                    XmlUtility.getObjidWithoutVersion(this.targetId);
-                String targetVersion =
-                    targetId.replaceFirst(targetIdWithoutVersion, "");
+                final String targetIdWithoutVersion = XmlUtility.getObjidWithoutVersion(this.targetId);
+                String targetVersion = targetId.replaceFirst(targetIdWithoutVersion, "");
                 if (targetVersion.length() > 0) {
                     targetVersion = targetVersion.substring(1);
                     throw new InvalidContentException("A relation target may not be referenced by an "
-                            + " identifier containing a version number. Use a floating "
-                            + "identifier like 'escidoc:123' to reference a target");
+                        + " identifier containing a version number. Use a floating "
+                        + "identifier like 'escidoc:123' to reference a target");
                 }
                 if (!TripleStoreUtility.getInstance().exists(this.targetId)) {
                     throw new ReferencedResourceNotFoundException("Referenced target resource with id " + this.targetId
-                            + " does not exist.");
+                        + " does not exist.");
                 }
-                final String targetObjectType =
-                    TripleStoreUtility.getInstance().getObjectType(this.targetId);
+                final String targetObjectType = TripleStoreUtility.getInstance().getObjectType(this.targetId);
 
                 if (!Constants.ITEM_OBJECT_TYPE.equals(targetObjectType)
-                    && !Constants.CONTAINER_OBJECT_TYPE
-                        .equals(targetObjectType)) {
+                    && !Constants.CONTAINER_OBJECT_TYPE.equals(targetObjectType)) {
                     throw new InvalidContentException("A related resource has to be either 'item' or 'container'. "
-                            + "A object with id " + this.targetId
-                            + " is neither 'item' nor 'container' ");
+                        + "A object with id " + this.targetId + " is neither 'item' nor 'container' ");
                 }
             }
             else if ("predicate".equals(element.getLocalName())) {
                 if (data == null || data.length() == 0) {
                     throw new MissingElementValueException("The value of the element " + element.getLocalName()
-                            + " is missing.");
+                        + " is missing.");
                 }
                 this.predicate = data;
                 if (!ContentRelationsUtility.validPredicate(data)) {
@@ -143,8 +136,7 @@ public class ContentRelationsAddHandler2Edition extends DefaultHandler {
     }
 
     @Override
-    public EndElement endElement(final EndElement element)
-        throws AlreadyExistsException, TripleStoreSystemException,
+    public EndElement endElement(final EndElement element) throws AlreadyExistsException, TripleStoreSystemException,
         WebserverSystemException {
         if (this.inRelation && "relation".equals(element.getLocalName())) {
             final String[] splittedPredicate = splitPredicate(this.predicate);
@@ -152,18 +144,15 @@ public class ContentRelationsAddHandler2Edition extends DefaultHandler {
             final String predicateValue = splittedPredicate[1];
             final String existRelationTarget =
                 TripleStoreUtility.getInstance().getRelation(this.sourceId, this.predicate);
-            if (existRelationTarget != null
-                && existRelationTarget.equals(this.targetId)) {
+            if (existRelationTarget != null && existRelationTarget.equals(this.targetId)) {
                 throw new AlreadyExistsException("A relation with predicate " + this.predicate
-                        + " between resources with ids " + this.sourceId
-                        + " and " + this.targetId + " already exists.");
+                    + " between resources with ids " + this.sourceId + " and " + this.targetId + " already exists.");
             }
             final String relationDataCheck = this.predicate + "###" + this.targetId;
             if (!relationsDataCheck.contains(relationDataCheck)) {
                 relationsDataCheck.add(relationDataCheck);
 
-                final Map<String, String> relationData =
-                    new HashMap<String, String>();
+                final Map<String, String> relationData = new HashMap<String, String>();
                 relationsData.add(relationData);
                 relationData.put("predicateNs", predicateNs);
                 relationData.put("predicateValue", predicateValue);
@@ -178,7 +167,7 @@ public class ContentRelationsAddHandler2Edition extends DefaultHandler {
 
     /**
      * Returns a Vector with relations data.
-     * 
+     *
      * @return Relations Map
      */
     public List<Map<String, String>> getRelations() {

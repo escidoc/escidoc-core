@@ -24,11 +24,10 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.service.UserContext;
 
 /**
- * XmlTemplateProvider implementation using the velocity template engine.<br>
- * This implementation uses the velocity singleton pattern.
- * 
- * @author Torsten Tetteroo
+ * XmlTemplateProvider implementation using the velocity template engine.<br> This implementation uses the velocity
+ * singleton pattern.
  *
+ * @author Torsten Tetteroo
  */
 public abstract class InfrastructureXmlProvider extends VelocityXmlProvider {
 
@@ -38,8 +37,6 @@ public abstract class InfrastructureXmlProvider extends VelocityXmlProvider {
 
     /**
      * Protected constructor to prevent initialization.
-     * 
-     *
      */
     protected InfrastructureXmlProvider() {
 

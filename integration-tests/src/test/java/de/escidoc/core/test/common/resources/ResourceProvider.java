@@ -44,25 +44,21 @@ import java.io.InputStream;
 
 /**
  * Provide loading of resource.
- * 
- * 
  */
 public class ResourceProvider {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ResourceProvider.class);
 
-    private static final String DEFAULT_PACKAGE =
-        "/data/";
+    private static final String DEFAULT_PACKAGE = "/data/";
 
     private static final int BUFFER_SIZE = 0x4FFF;
 
-    public static InputStream getFileInputStream(final String filename)
-        throws IOException {
+    public static InputStream getFileInputStream(final String filename) throws IOException {
         return getFileInputStreamFromResource(DEFAULT_PACKAGE, filename);
     }
 
-    public static InputStream getFileInputStreamFromResource(
-        final String path, final String filename) throws IOException {
+    public static InputStream getFileInputStreamFromResource(final String path, final String filename)
+        throws IOException {
         InputStream result = null;
 
         String search = concatenatePath(path, filename);
@@ -77,44 +73,32 @@ public class ResourceProvider {
 
     /**
      * Get InputStream from File.
-     * 
-     * @param path
-     *            Path ot file.
-     * @param filename
-     *            Name of file.
+     *
+     * @param path     Path ot file.
+     * @param filename Name of file.
      * @return InputStream from file.
-     * @throws IOException
-     *             Thrown if open FileInputStream failed.
+     * @throws IOException Thrown if open FileInputStream failed.
      */
-    public static InputStream getFileInputStreamFromFile(
-        final String path, final String filename) throws IOException {
-        final PathMatchingResourcePatternResolver pathMatchingResourcePatternResolver
-            = new PathMatchingResourcePatternResolver();
-        Resource resource = pathMatchingResourcePatternResolver.getResource("classpath:/" + path + "/" + filename );
+    public static InputStream getFileInputStreamFromFile(final String path, final String filename) throws IOException {
+        final PathMatchingResourcePatternResolver pathMatchingResourcePatternResolver =
+            new PathMatchingResourcePatternResolver();
+        Resource resource = pathMatchingResourcePatternResolver.getResource("classpath:/" + path + "/" + filename);
         return resource.getInputStream();
     }
 
     /**
      * Save the content to the file described by path and filename.
-     * 
-     * @param transport
-     *            TODO
-     * @param path
-     *            The path.
-     * @param filename
-     *            The filename. This should end with '.xml'. If this is not the
-     *            case, '.xml' is added to the filename. Depending on the
-     *            provided transport, '-rest' or '-soap' is inserted into the
-     *            name of the created file before '.xml'
-     * @param content
-     *            The content.
-     * 
-     * @throws IOException
-     *             If anything fails.
+     *
+     * @param transport TODO
+     * @param path      The path.
+     * @param filename  The filename. This should end with '.xml'. If this is not the case, '.xml' is added to the
+     *                  filename. Depending on the provided transport, '-rest' or '-soap' is inserted into the name of
+     *                  the created file before '.xml'
+     * @param content   The content.
+     * @throws IOException If anything fails.
      */
-    public static void saveToFile(
-        final int transport, final String path, final String filename,
-        final String content) throws IOException {
+    public static void saveToFile(final int transport, final String path, final String filename, final String content)
+        throws IOException {
 
         String fName = filename;
         if (!fName.endsWith(".xml")) {
@@ -131,27 +115,18 @@ public class ResourceProvider {
 
     /**
      * Save the content to the file described by path and filename.
-     * 
-     * @param path
-     *            The path.
-     * @param filename
-     *            The filename.
-     * @param content
-     *            The content.
-     * 
-     * @throws IOException
-     *             If anything fails.
+     *
+     * @param path     The path.
+     * @param filename The filename.
+     * @param content  The content.
+     * @throws IOException If anything fails.
      */
-    public static void saveToFile(
-        final String path, final String filename, final String content)
-        throws IOException {
+    public static void saveToFile(final String path, final String filename, final String content) throws IOException {
 
         try {
             File filepath = new File(path);
             filepath.mkdirs();
-            FileOutputStream f =
-                new FileOutputStream(new File(ResourceProvider.concatenatePath(
-                    path, filename)));
+            FileOutputStream f = new FileOutputStream(new File(ResourceProvider.concatenatePath(path, filename)));
             f.write(content.getBytes(HttpHelper.HTTP_DEFAULT_CHARSET));
             f.flush();
             f.close();
@@ -163,19 +138,14 @@ public class ResourceProvider {
     }
 
     /**
-     * Concatenates the two given path segments and returns a valid path, i.e.
-     * the method takes care that there is only one path separator between the
-     * path segments.
-     * 
-     * @param path
-     *            The path.
-     * @param appendix
-     *            The path to append.
-     * @return The concatenated path.
+     * Concatenates the two given path segments and returns a valid path, i.e. the method takes care that there is only
+     * one path separator between the path segments.
      *
+     * @param path     The path.
+     * @param appendix The path to append.
+     * @return The concatenated path.
      */
-    public static String concatenatePath(
-        final String path, final String appendix) {
+    public static String concatenatePath(final String path, final String appendix) {
         String result = path;
         String append = appendix;
         result = result.replace("\\", "/");
@@ -200,17 +170,13 @@ public class ResourceProvider {
     }
 
     /**
-     * Read InputStream and return the content as String. The InputStream in
-     * closed() if EOF.
-     * 
-     * @param inputStream
-     *            The InputStream.
+     * Read InputStream and return the content as String. The InputStream in closed() if EOF.
+     *
+     * @param inputStream The InputStream.
      * @return The file content as String.
-     * @throws IOException
-     *             Thrown in case of I/O error.
+     * @throws IOException Thrown in case of I/O error.
      */
-    public static String getContentsFromInputStream(
-        final InputStream inputStream) throws IOException {
+    public static String getContentsFromInputStream(final InputStream inputStream) throws IOException {
 
         byte[] buffer = new byte[BUFFER_SIZE];
 

@@ -36,9 +36,8 @@ import de.escidoc.core.common.util.xml.stax.interfaces.DefaultHandlerStackInterf
 
 /**
  * Base class for stax handlers.
- * 
+ *
  * @author Michael Schneider
- * 
  */
 public class HandlerBase extends DefaultHandler {
 
@@ -47,9 +46,7 @@ public class HandlerBase extends DefaultHandler {
     private TripleStoreUtility tripleStoreUtility;
 
     /**
-     * 
-     * @param parser
-     *            The stax parser.
+     * @param parser The stax parser.
      */
     public HandlerBase(final StaxParser parser) {
 
@@ -65,8 +62,7 @@ public class HandlerBase extends DefaultHandler {
     }
 
     /**
-     * @param parser
-     *            the parser to set
+     * @param parser the parser to set
      */
     public void setParser(final StaxParser parser) {
 
@@ -75,7 +71,7 @@ public class HandlerBase extends DefaultHandler {
 
     /**
      * Gets the {@link TripleStoreUtility}.
-     * 
+     *
      * @return TripleStoreUtility Returns the {@link TripleStoreUtility} object.
      */
     protected TripleStoreUtility getTripleStoreUtility() {
@@ -85,18 +81,15 @@ public class HandlerBase extends DefaultHandler {
 
     /**
      * Injects the {@link TripleStoreUtility}.
-     * 
-     * @param tripleStoreUtility
-     *            The {@link TripleStoreUtility} to set
+     *
+     * @param tripleStoreUtility The {@link TripleStoreUtility} to set
      */
-    public void setTripleStoreUtility(
-        final TripleStoreUtility tripleStoreUtility) {
+    public void setTripleStoreUtility(final TripleStoreUtility tripleStoreUtility) {
 
         this.tripleStoreUtility = tripleStoreUtility;
     }
 
     /**
-     * 
      * @return An instance of the Utility.
      */
     public Utility getUtility() {

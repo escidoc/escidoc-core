@@ -31,9 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 
  * @author
- * 
  */
 public class ComponentIdsInItemFoxmlHandler extends DefaultHandler {
 
@@ -49,9 +47,7 @@ public class ComponentIdsInItemFoxmlHandler extends DefaultHandler {
     private final List<String> componentIds = new ArrayList<String>();
 
     /**
-     * 
-     * @param parser
-     *            StAX parser.
+     * @param parser StAX parser.
      */
     public ComponentIdsInItemFoxmlHandler(final StaxParser parser) {
         this.parser = parser;
@@ -65,15 +61,13 @@ public class ComponentIdsInItemFoxmlHandler extends DefaultHandler {
 
         final String currentPath = parser.getCurPath();
 
-        if (! this.inDescription && DESCRIPTION_PATH.equals(currentPath)) {
+        if (!this.inDescription && DESCRIPTION_PATH.equals(currentPath)) {
             this.inDescription = true;
 
         }
         if (this.inDescription && "component".equals(theName)) {
 
-            final int indexOfComponentId =
-                element.indexOfAttribute(Constants.RDF_NAMESPACE_URI,
-                    "resource");
+            final int indexOfComponentId = element.indexOfAttribute(Constants.RDF_NAMESPACE_URI, "resource");
             if (indexOfComponentId != -1) {
                 final Attribute resource = element.getAttribute(indexOfComponentId);
                 String resourceValue = resource.getValue();
@@ -93,8 +87,7 @@ public class ComponentIdsInItemFoxmlHandler extends DefaultHandler {
     @Override
     public String characters(final String data, final StartElement element) {
         final String namespace = element.getNamespace();
-        if (this.inDescription && "pid".equals(element.getLocalName())
-            && namespace.equals(Constants.VERSION_NS_URI)) {
+        if (this.inDescription && "pid".equals(element.getLocalName()) && namespace.equals(Constants.VERSION_NS_URI)) {
             this.versionPid = data;
         }
         return data;
@@ -109,7 +102,6 @@ public class ComponentIdsInItemFoxmlHandler extends DefaultHandler {
     }
 
     /**
-     * 
      * @return Vector with ids of the Components.
      */
     public List<String> getComponentIds() {
@@ -118,7 +110,7 @@ public class ComponentIdsInItemFoxmlHandler extends DefaultHandler {
 
     /**
      * Get PID of the resource version.
-     * 
+     *
      * @return PID of version.
      */
     public String getVersionPid() {

@@ -43,9 +43,8 @@ import static org.junit.Assert.fail;
 
 /**
  * Test the mock implementation of the item resource.
- * 
+ *
  * @author Michael Schneider
- * 
  */
 @RunWith(value = Parameterized.class)
 public class RetrieveTest extends ContentModelTestBase {
@@ -55,8 +54,7 @@ public class RetrieveTest extends ContentModelTestBase {
     private String contentModelXml;
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public RetrieveTest(final int transport) {
         super(transport);
@@ -64,15 +62,13 @@ public class RetrieveTest extends ContentModelTestBase {
 
     /**
      * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Before
     public void setUp() throws Exception {
         Document contentModel =
-            EscidocRestSoapTestBase.getTemplateAsDocument(
-                TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
                 "content-model-all-for-create.xml");
         contentModelXml = toString(contentModel, false);
         contentModelXml = create(contentModelXml);
@@ -81,9 +77,8 @@ public class RetrieveTest extends ContentModelTestBase {
 
     /**
      * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Override
     @After
@@ -99,12 +94,10 @@ public class RetrieveTest extends ContentModelTestBase {
     }
 
     /**
-     * Test retrieving an existing ContentModel. The excepted result is a XML
-     * representation of the created ContentModel, corresponding to XML-schema
-     * "ContentModel.xsd"
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test retrieving an existing ContentModel. The excepted result is a XML representation of the created
+     * ContentModel, corresponding to XML-schema "ContentModel.xsd"
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testCtmRCt1() throws Exception {
@@ -114,23 +107,15 @@ public class RetrieveTest extends ContentModelTestBase {
         String retrievedXML = retrieve(this.contentModelId);
 
         validateContentModel(retrievedXML, getContentModelTitle(contentModel),
-            getContentModelDescription(contentModel),
-            getContentModelMdRecordDefinitions(contentModel),
-            getContentModelResourceDefinitions(contentModel),
-            getContentModelContentStreamDefinitions(contentModel), false);
+            getContentModelDescription(contentModel), getContentModelMdRecordDefinitions(contentModel),
+            getContentModelResourceDefinitions(contentModel), getContentModelContentStreamDefinitions(contentModel),
+            false);
     }
 
     /**
      * Test retrieving a not existing ContentModel.
-     * 
-     * @test.name: Retrieve Content Type - Unknown Id
-     * @test.id: CTM_Rct_2
-     * @test.input: Id that is unknown to the system.
-     * @test.expected: ContentModelNotFoundException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testCtmRCt2() throws Exception {
@@ -146,21 +131,9 @@ public class RetrieveTest extends ContentModelTestBase {
     }
 
     /**
-     * Test retrieving a ContentModel with providing an id of an existing
-     * resource of another type.
-     * 
-     * @test.name: Retrieve Content Type - Wrong Id
-     * @test.id: CTM_Rct_2-2
-     * @test.input: Id of an existing resource of another resource type.
-     * @test.expected: ContentModelNotFoundException
-     * @test.status Implemented
-     * 
-     * @test.issues 
-     *              http://www.escidoc-project.de/issueManagement/show_bug.cgi?id
-     *              =294
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test retrieving a ContentModel with providing an id of an existing resource of another type.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testCtmRCt2_2() throws Exception {
@@ -177,9 +150,8 @@ public class RetrieveTest extends ContentModelTestBase {
 
     /**
      * Test retrieving an ContentModel without id.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testCtmRCt3() throws Exception {
@@ -202,9 +174,8 @@ public class RetrieveTest extends ContentModelTestBase {
         Document contentModel = getDocument(this.contentModelXml);
         String subResource = retrieveProperties(this.contentModelId);
         assertXmlValidContentModel(subResource);
-        validateContentModelProperties(subResource, this.contentModelId,
-            "/properties", getContentModelTitle(contentModel),
-            getContentModelDescription(contentModel),
+        validateContentModelProperties(subResource, this.contentModelId, "/properties",
+            getContentModelTitle(contentModel), getContentModelDescription(contentModel),
             getLastModificationDateValue(contentModel));
     }
 
@@ -226,8 +197,7 @@ public class RetrieveTest extends ContentModelTestBase {
         if (getTransport() == Constants.TRANSPORT_SOAP) {
             fail("No Exception trying to call 'retrieveResources' via SOAP.");
         }
-        selectSingleNodeAsserted(getDocument(subResource),
-            "/resources/version-history");
+        selectSingleNodeAsserted(getDocument(subResource), "/resources/version-history");
         assertXmlValidContentModel(subResource);
     }
 
@@ -248,8 +218,7 @@ public class RetrieveTest extends ContentModelTestBase {
     public void testRetrieveContentModelContentStream() throws Exception {
         Document contentModel = getDocument(this.contentModelXml);
         String name =
-            selectSingleNodeAsserted(contentModel,
-                "/content-model/content-streams/content-stream[1]/@name")
+            selectSingleNodeAsserted(contentModel, "/content-model/content-streams/content-stream[1]/@name")
                 .getNodeValue();
 
         String subResource = retrieveContentStream(this.contentModelId, name);

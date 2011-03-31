@@ -37,37 +37,31 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Acts as collector for execution times for measured methods. Gets called by
- * the advisor configured via spring aop.
- * 
- * This class is exposed via JMX where statistics can be viewed and
- * reinitialized.
- * 
- * 
- * @author Kai Strnad
+ * Acts as collector for execution times for measured methods. Gets called by the advisor configured via spring aop.
+ * <p/>
+ * This class is exposed via JMX where statistics can be viewed and reinitialized.
  *
+ * @author Kai Strnad
  */
 // CHECKSTYLE:OFF
 @ManagedResource(objectName = "eSciDocCore:name=PerformanceStatistics", description = "Obtains and stores method execution times of desired operations.", log = true, logFile = "jmx.log", currencyTimeLimit = 15)
 public class Statistics {
+
     private Map<String, SummaryStatistics> statisticsMap;
 
     // cutoff number for the amount of measurements per class allowed.
     private int maxValues = 5000;
 
     /**
-     * Create new Statistics. Ensure that the Map holding all measurements is
-     * created.
+     * Create new Statistics. Ensure that the Map holding all measurements is created.
      */
     public Statistics() {
         this.statisticsMap = new HashMap<String, SummaryStatistics>();
     }
 
     /**
-     * @param key
-     *            the name of package.class.method
-     * @param value
-     *            the execution time of the method
+     * @param key   the name of package.class.method
+     * @param value the execution time of the method
      */
     public void addValueToStatistics(final String key, final long value) {
         final SummaryStatistics statistics = getStatistics(key);
@@ -75,9 +69,7 @@ public class Statistics {
     }
 
     /**
-     * 
-     * @param key
-     *            the name of package.class.method
+     * @param key the name of package.class.method
      * @return the Statistics of the method
      */
     private SummaryStatistics getStatistics(final String key) {
@@ -91,9 +83,8 @@ public class Statistics {
 
     /**
      * Sets the maximum of values allowed per class.
-     * 
-     * @param values
-     *            max values to be stored
+     *
+     * @param values max values to be stored
      */
     @ManagedAttribute(description = "Sets the maximum of values allowed per class (default: 5000)")
     public void setMaxValues(final int values) {
@@ -116,15 +107,10 @@ public class Statistics {
         for (final String key : this.statisticsMap.keySet()) {
             final SummaryStatistics s = getStatistics(key);
             if (s != null) {
-                b
-                        .append(key).append(", #:").append(s.getN()).append(
-                        ", min (ms):").append((long) s.getMin()).append(
-                        ", max (ms):").append((long) s.getMax()).append(
-                        ", mean (ms):").append((long) s.getMean()).append(
-                        ", stddev (ms):").append(
-                        (long) s.getStandardDeviation())
-                        .append(", total (ms):").append((long) s.getSum()).append(
-                        '\n');
+                b.append(key).append(", #:").append(s.getN()).append(", min (ms):").append((long) s.getMin()).append(
+                    ", max (ms):").append((long) s.getMax()).append(", mean (ms):").append((long) s.getMean()).append(
+                    ", stddev (ms):").append((long) s.getStandardDeviation()).append(", total (ms):").append(
+                    (long) s.getSum()).append('\n');
             }
         }
         return b.toString();

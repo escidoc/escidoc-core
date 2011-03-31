@@ -43,45 +43,37 @@ import java.util.regex.Pattern;
 import static org.junit.Assert.fail;
 
 /**
- * Test ingesting resource via ingest interface.<br>
- * By default, the tests are executed using a depositor user.
- * 
+ * Test ingesting resource via ingest interface.<br> By default, the tests are executed using a depositor user.
+ *
  * @author Steffen Wagner, KST
- * 
  */
 public class IngestAbstractTest extends IngestTestBase {
 
-    private static final Pattern OBJECT_PATTERN = Pattern.compile(
-        "<objid resourceType=\"([^\"][^\"]*)\">(escidoc:\\d+)</objid>",
-        Pattern.MULTILINE);
+    private static final Pattern OBJECT_PATTERN =
+        Pattern.compile("<objid resourceType=\"([^\"][^\"]*)\">(escidoc:\\d+)</objid>", Pattern.MULTILINE);
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public IngestAbstractTest(final int transport) {
         super(transport);
     }
 
     /**
-     * Test if a valid item gets ingested. The return value must be a xml
-     * fragment containing the object id. The return value gets first parsed to
-     * check if it is well formed xml. Then the xml gets matched against a
-     * pattern which looks for an object id.
-     * 
-     * @throws Exception
-     *             the Exception gets thrown in the following cases: <ul <li>The
-     *             ingest fails due to internal reasons (Fedora, eSciDoc) <li>
-     *             The return value is not well formed <li>The return value does
-     *             not contain a vaild object id. </ul>
+     * Test if a valid item gets ingested. The return value must be a xml fragment containing the object id. The return
+     * value gets first parsed to check if it is well formed xml. Then the xml gets matched against a pattern which
+     * looks for an object id.
+     *
+     * @throws Exception the Exception gets thrown in the following cases: <ul <li>The ingest fails due to internal
+     *                   reasons (Fedora, eSciDoc) <li> The return value is not well formed <li>The return value does
+     *                   not contain a vaild object id. </ul>
      */
     @Test
     public void testIngestItemValid() throws Exception {
 
         String toBeCreatedXml =
-            EscidocRestSoapTestBase
-                .getTemplateAsString(TEMPLATE_ITEM_PATH, getTransport(false)
-                    + "/escidoc_item_198_for_create_2_Component_Md-Records.xml");
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH, getTransport(false)
+                + "/escidoc_item_198_for_create_2_Component_Md-Records.xml");
 
         String createdXml = ingest(toBeCreatedXml);
 
@@ -102,42 +94,32 @@ public class IngestAbstractTest extends IngestTestBase {
             assert (objectId != null);
         }
         else {
-            fail("no match for item found, return value of ingest could not "
-                + "be matched successfully.");
+            fail("no match for item found, return value of ingest could not " + "be matched successfully.");
         }
     }
 
     /**
-     * Test if a valid Item in public-status 'released' gets ingested. The
-     * return value must be a xml fragment containing the object id. The return
-     * value gets first parsed to check if it is well formed xml. Then the xml
-     * gets matched against a pattern which looks for an object id.
-     * 
-     * @throws Exception
-     *             the Exception gets thrown in the following cases:
-     *             <ul>
-     *             <li>The ingest fails due to internal reasons (Fedora,
-     *             eSciDoc)</li>
-     *             <li>
-     *             The return value is not well formed</li>
-     *             <li>The return value does not contain a vaild object id.</li>
-     *             <li>No exception is thrown because object PID is missing</li>
-     *             </ul>
+     * Test if a valid Item in public-status 'released' gets ingested. The return value must be a xml fragment
+     * containing the object id. The return value gets first parsed to check if it is well formed xml. Then the xml gets
+     * matched against a pattern which looks for an object id.
+     *
+     * @throws Exception the Exception gets thrown in the following cases: <ul> <li>The ingest fails due to internal
+     *                   reasons (Fedora, eSciDoc)</li> <li> The return value is not well formed</li> <li>The return
+     *                   value does not contain a vaild object id.</li> <li>No exception is thrown because object PID is
+     *                   missing</li> </ul>
      */
     @Test
     public void testIngestReleasedItem01() throws Exception {
 
         Document toBeCreatedDocument =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH,
-                getTransport(false) + "/item_without_component.xml");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH, getTransport(false)
+                + "/item_without_component.xml");
 
         Element publicStatus =
-            createElementNode(toBeCreatedDocument,
-                "http://escidoc.de/core/01/properties/", "prop",
-                "public-status", "released");
+            createElementNode(toBeCreatedDocument, "http://escidoc.de/core/01/properties/", "prop", "public-status",
+                "released");
         Node parent = selectSingleNode(toBeCreatedDocument, "/item/properties");
-        Node refNode =
-            selectSingleNode(toBeCreatedDocument, "/item/properties/context");
+        Node refNode = selectSingleNode(toBeCreatedDocument, "/item/properties/context");
         parent.insertBefore(publicStatus, refNode);
 
         String toBeCreatedXml = toString(toBeCreatedDocument, false);
@@ -147,57 +129,43 @@ public class IngestAbstractTest extends IngestTestBase {
             fail("Exception for missing object PID wasn't thrown.");
         }
         catch (final Exception e) {
-            Class< ? > ec = InvalidStatusException.class;
+            Class<?> ec = InvalidStatusException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
     }
 
     /**
-     * Test if a valid Item in public-status 'released' gets ingested. The
-     * return value must be a xml fragment containing the object id. The return
-     * value gets first parsed to check if it is well formed xml. Then the xml
-     * gets matched against a pattern which looks for an object id.
-     * 
-     * @throws Exception
-     *             the Exception gets thrown in the following cases:
-     *             <ul>
-     *             <li>The ingest fails due to internal reasons (Fedora,
-     *             eSciDoc)</li>
-     *             <li>
-     *             The return value is not well formed</li>
-     *             <li>The return value does not contain a vaild object id.</li>
-     *             <li>The public-status 'released' is not copied</li>
-     *             <li>The object pid is not copied.</li>
-     *             </ul>
+     * Test if a valid Item in public-status 'released' gets ingested. The return value must be a xml fragment
+     * containing the object id. The return value gets first parsed to check if it is well formed xml. Then the xml gets
+     * matched against a pattern which looks for an object id.
+     *
+     * @throws Exception the Exception gets thrown in the following cases: <ul> <li>The ingest fails due to internal
+     *                   reasons (Fedora, eSciDoc)</li> <li> The return value is not well formed</li> <li>The return
+     *                   value does not contain a vaild object id.</li> <li>The public-status 'released' is not
+     *                   copied</li> <li>The object pid is not copied.</li> </ul>
      */
     @Test
     public void testIngestReleasedItem02() throws Exception {
 
         Document toBeCreatedDocument =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH,
-                getTransport(false) + "/item_without_component.xml");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH, getTransport(false)
+                + "/item_without_component.xml");
 
         Element publicStatus =
-            createElementNode(toBeCreatedDocument,
-                "http://escidoc.de/core/01/properties/", "prop",
-                "public-status", "released");
+            createElementNode(toBeCreatedDocument, "http://escidoc.de/core/01/properties/", "prop", "public-status",
+                "released");
         Node parent = selectSingleNode(toBeCreatedDocument, "/item/properties");
-        Node refNode =
-            selectSingleNode(toBeCreatedDocument, "/item/properties/context");
+        Node refNode = selectSingleNode(toBeCreatedDocument, "/item/properties/context");
         parent.insertBefore(publicStatus, refNode);
 
         // if pid is required for release than add pid
-        if (!getItemClient().getPidConfig(
-            "cmm.Item.objectPid.releaseWithoutPid", "false")) {
+        if (!getItemClient().getPidConfig("cmm.Item.objectPid.releaseWithoutPid", "false")) {
 
             Element objectPid =
-                createElementNode(toBeCreatedDocument,
-                    "http://escidoc.de/core/01/properties/", "prop", "pid",
+                createElementNode(toBeCreatedDocument, "http://escidoc.de/core/01/properties/", "prop", "pid",
                     "hdl:escidoc-dummy-pid");
             // this reference based on the template
-            Node refNodePid =
-                selectSingleNode(toBeCreatedDocument,
-                    "/item/properties/content-model-specific");
+            Node refNodePid = selectSingleNode(toBeCreatedDocument, "/item/properties/content-model-specific");
             parent.insertBefore(objectPid, refNodePid);
 
         }
@@ -223,39 +191,31 @@ public class IngestAbstractTest extends IngestTestBase {
             assert (objectId != null);
         }
         else {
-            fail("no match for item found, return value of ingest "
-                + "could not be matched successfully.");
+            fail("no match for item found, return value of ingest " + "could not be matched successfully.");
         }
 
         // assert at least public-status and objectPID
-        String createdItemXml =
-            handleXmlResult(getItemClient().retrieve(objectId));
+        String createdItemXml = handleXmlResult(getItemClient().retrieve(objectId));
 
-        assertXmlExists("Wrong public-status", createdItemXml,
-            "/item/properties/public-status[text() = 'released']");
-        assertXmlExists("Wrong version status", createdItemXml,
-            "/item/properties/version/status[text() = 'released']");
-        assertXmlNotNull("pid", getDocument(createdItemXml),
-            "/item/properties/pid");
+        assertXmlExists("Wrong public-status", createdItemXml, "/item/properties/public-status[text() = 'released']");
+        assertXmlExists("Wrong version status", createdItemXml, "/item/properties/version/status[text() = 'released']");
+        assertXmlNotNull("pid", getDocument(createdItemXml), "/item/properties/pid");
     }
 
     /**
-     * Test what happens if an invalid but well formed xml fragment gets
-     * ingested. An XmlSchemaValidationException has to be thrown as a result.
-     * 
-     * @throws Exception
-     *             the Exception, in this case XmlSchemaValidationException
+     * Test what happens if an invalid but well formed xml fragment gets ingested. An XmlSchemaValidationException has
+     * to be thrown as a result.
+     *
+     * @throws Exception the Exception, in this case XmlSchemaValidationException
      */
     @Test
     public void testIngestXmlNotValid() throws Exception {
-        String toBeCreatedXml =
-            "<?xml version=\"1.0\" encoding=\"UTF-8\"?><root><a/></root>";
+        String toBeCreatedXml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><root><a/></root>";
         try {
             ingest(toBeCreatedXml);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                InvalidResourceException.class.getName() + " expected.",
+            EscidocRestSoapTestBase.assertExceptionType(InvalidResourceException.class.getName() + " expected.",
                 InvalidResourceException.class, e);
             return;
         }
@@ -264,28 +224,21 @@ public class IngestAbstractTest extends IngestTestBase {
     }
 
     /**
-     * Tests what happens if a not well formed xml fragment gets ingested. First
-     * the exception type gets checked, then the content of the exception
-     * message gets checked. If either fail the test fails.
-     * 
-     * @throws Exception
+     * Tests what happens if a not well formed xml fragment gets ingested. First the exception type gets checked, then
+     * the content of the exception message gets checked. If either fail the test fails.
      */
     @Test
     public void testIngestXmlNotWellFormed() throws Exception {
 
-        String toBeCreatedXml =
-            "<?xml version=\"1.0\" encoding=\"UTF-8\"?><roo><a/></root>";
+        String toBeCreatedXml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><roo><a/></root>";
 
         try {
             ingest(toBeCreatedXml);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                InvalidResourceException.class.getName() + " expected.",
+            EscidocRestSoapTestBase.assertExceptionType(InvalidResourceException.class.getName() + " expected.",
                 InvalidResourceException.class, e);
-            Pattern p =
-                Pattern
-                    .compile("cvc-elt.1: Cannot find the declaration of element");
+            Pattern p = Pattern.compile("cvc-elt.1: Cannot find the declaration of element");
             assert (p.matcher(e.toString()).find());
             return;
         }
@@ -295,21 +248,15 @@ public class IngestAbstractTest extends IngestTestBase {
     }
 
     /**
-     * Test if a valid context gets ingested. The return value must be a xml
-     * fragment containing the object id and conforming the the result.xsd
-     * schema.
-     * 
-     * @throws Exception
-     * 
+     * Test if a valid context gets ingested. The return value must be a xml fragment containing the object id and
+     * conforming the the result.xsd schema.
      */
     @Test
     public void testIngestContextValid() throws Exception {
         Document toBeCreatedDocument =
-            EscidocRestSoapTestBase.getTemplateAsDocument(
-                TEMPLATE_CONTEXT_PATH, getTransport(false)
-                    + "/context_create.xml");
-        substitute(toBeCreatedDocument, XPATH_CONTEXT_PROPERTIES_NAME,
-            getUniqueName("Unique Name "));
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTEXT_PATH, getTransport(false)
+                + "/context_create.xml");
+        substitute(toBeCreatedDocument, XPATH_CONTEXT_PROPERTIES_NAME, getUniqueName("Unique Name "));
 
         String toBeCreatedXml = toString(toBeCreatedDocument, false);
 
@@ -334,26 +281,20 @@ public class IngestAbstractTest extends IngestTestBase {
             assert (objectId != null);
         }
         else {
-            fail("no match for context found, return value of ingest "
-                + "could not be matched successfully.");
+            fail("no match for context found, return value of ingest " + "could not be matched successfully.");
         }
 
     }
 
     /**
-     * Test if a valid container gets ingested. The return value must be a xml
-     * fragment containing the object id and conforming the the result.xsd
-     * schema.
-     * 
-     * @throws Exception
-     * 
+     * Test if a valid container gets ingested. The return value must be a xml fragment containing the object id and
+     * conforming the the result.xsd schema.
      */
     @Test
     public void testIngestContainerValid() throws Exception {
         Document toBeCreatedDocument =
-            EscidocRestSoapTestBase.getTemplateAsDocument(
-                TEMPLATE_CONTAINER_PATH, getTransport(false)
-                    + "/create_container.xml");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTAINER_PATH, getTransport(false)
+                + "/create_container.xml");
         String toBeCreatedXml = toString(toBeCreatedDocument, false);
         String createdXml = ingest(toBeCreatedXml);
 
@@ -374,49 +315,36 @@ public class IngestAbstractTest extends IngestTestBase {
             assert (objectId != null);
         }
         else {
-            fail("no match for container found, return value of ingest "
-                + "could not be matched successfully.");
+            fail("no match for container found, return value of ingest " + "could not be matched successfully.");
         }
     }
 
     /**
-     * Test if a valid Container in public-status 'released' gets ingested. The
-     * return value must be a xml fragment containing the object id. The return
-     * value gets first parsed to check if it is well formed xml. Then the xml
-     * gets matched against a pattern which looks for an object id.
-     * 
-     * @throws Exception
-     *             the Exception gets thrown in the following cases:
-     *             <ul>
-     *             <li>The ingest fails due to internal reasons (Fedora,
-     *             eSciDoc)</li>
-     *             <li>
-     *             The return value is not well formed</li>
-     *             <li>The return value does not contain a vaild object id.</li>
-     *             <li>No exception is thrown because object PID is missing</li>
-     *             </ul>
+     * Test if a valid Container in public-status 'released' gets ingested. The return value must be a xml fragment
+     * containing the object id. The return value gets first parsed to check if it is well formed xml. Then the xml gets
+     * matched against a pattern which looks for an object id.
+     *
+     * @throws Exception the Exception gets thrown in the following cases: <ul> <li>The ingest fails due to internal
+     *                   reasons (Fedora, eSciDoc)</li> <li> The return value is not well formed</li> <li>The return
+     *                   value does not contain a vaild object id.</li> <li>No exception is thrown because object PID is
+     *                   missing</li> </ul>
      */
     @Test
     public void testIngestReleasedContainer01() throws Exception {
 
         Document toBeCreatedDocument =
-            EscidocRestSoapTestBase.getTemplateAsDocument(
-                TEMPLATE_CONTAINER_PATH, getTransport(false)
-                    + "/create_container.xml");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTAINER_PATH, getTransport(false)
+                + "/create_container.xml");
 
         Element publicStatus =
-            createElementNode(toBeCreatedDocument,
-                "http://escidoc.de/core/01/properties/", "prop",
-                "public-status", "released");
-        Node parent =
-            selectSingleNode(toBeCreatedDocument, "/container/properties");
-        Node refNode =
-            selectSingleNode(toBeCreatedDocument, "/container/properties/name");
+            createElementNode(toBeCreatedDocument, "http://escidoc.de/core/01/properties/", "prop", "public-status",
+                "released");
+        Node parent = selectSingleNode(toBeCreatedDocument, "/container/properties");
+        Node refNode = selectSingleNode(toBeCreatedDocument, "/container/properties/name");
         parent.insertBefore(publicStatus, refNode);
 
         // delete object pid node
-        parent.removeChild(selectSingleNode(toBeCreatedDocument,
-            "/container/properties/pid"));
+        parent.removeChild(selectSingleNode(toBeCreatedDocument, "/container/properties/pid"));
 
         String toBeCreatedXml = toString(toBeCreatedDocument, false);
 
@@ -425,63 +353,46 @@ public class IngestAbstractTest extends IngestTestBase {
             fail("Exception for missing object PID wasn't thrown.");
         }
         catch (final Exception e) {
-            Class< ? > ec = InvalidStatusException.class;
+            Class<?> ec = InvalidStatusException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
     }
 
     /**
-     * Test if a valid Container in public-status 'released' gets ingested. The
-     * return value must be a xml fragment containing the object id. The return
-     * value gets first parsed to check if it is well formed xml. Then the xml
-     * gets matched against a pattern which looks for an object id.
-     * 
-     * @throws Exception
-     *             the Exception gets thrown in the following cases:
-     *             <ul>
-     *             <li>The ingest fails due to internal reasons (Fedora,
-     *             eSciDoc)</li>
-     *             <li>
-     *             The return value is not well formed</li>
-     *             <li>The return value does not contain a valid object id.</li>
-     *             <li>The public-status 'released' is not copied</li>
-     *             <li>The object PID is not copied.</li>
-     *             </ul>
+     * Test if a valid Container in public-status 'released' gets ingested. The return value must be a xml fragment
+     * containing the object id. The return value gets first parsed to check if it is well formed xml. Then the xml gets
+     * matched against a pattern which looks for an object id.
+     *
+     * @throws Exception the Exception gets thrown in the following cases: <ul> <li>The ingest fails due to internal
+     *                   reasons (Fedora, eSciDoc)</li> <li> The return value is not well formed</li> <li>The return
+     *                   value does not contain a valid object id.</li> <li>The public-status 'released' is not
+     *                   copied</li> <li>The object PID is not copied.</li> </ul>
      */
     @Test
     public void testIngestReleasedContainer02() throws Exception {
 
         Document toBeCreatedDocument =
-            EscidocRestSoapTestBase.getTemplateAsDocument(
-                TEMPLATE_CONTAINER_PATH, getTransport(false)
-                    + "/create_container.xml");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTAINER_PATH, getTransport(false)
+                + "/create_container.xml");
 
         Element publicStatus =
-            createElementNode(toBeCreatedDocument,
-                "http://escidoc.de/core/01/properties/", "prop",
-                "public-status", "released");
-        Node parent =
-            selectSingleNode(toBeCreatedDocument, "/container/properties");
-        Node refNode =
-            selectSingleNode(toBeCreatedDocument, "/container/properties/name");
+            createElementNode(toBeCreatedDocument, "http://escidoc.de/core/01/properties/", "prop", "public-status",
+                "released");
+        Node parent = selectSingleNode(toBeCreatedDocument, "/container/properties");
+        Node refNode = selectSingleNode(toBeCreatedDocument, "/container/properties/name");
         parent.insertBefore(publicStatus, refNode);
 
         // if pid is required for release than add pid
-        if (!getItemClient().getPidConfig(
-            "cmm.Item.objectPid.releaseWithoutPid", "false")) {
+        if (!getItemClient().getPidConfig("cmm.Item.objectPid.releaseWithoutPid", "false")) {
 
             // add object PID if it not exists
-            if (selectSingleNode(toBeCreatedDocument,
-                "/container/properties/pid") == null) {
+            if (selectSingleNode(toBeCreatedDocument, "/container/properties/pid") == null) {
 
                 Element objectPid =
-                    createElementNode(toBeCreatedDocument,
-                        "http://escidoc.de/core/01/properties/", "prop", "pid",
+                    createElementNode(toBeCreatedDocument, "http://escidoc.de/core/01/properties/", "prop", "pid",
                         "hdl:escidoc-dummy-pid");
                 // this reference based on the template
-                Node refNodePid =
-                    selectSingleNode(toBeCreatedDocument,
-                        "/container/properties/content-model-specific");
+                Node refNodePid = selectSingleNode(toBeCreatedDocument, "/container/properties/content-model-specific");
                 parent.insertBefore(objectPid, refNodePid);
             }
         }
@@ -500,42 +411,35 @@ public class IngestAbstractTest extends IngestTestBase {
             objectId = matcher.group(2);
 
             // Have we just ingested a container?
-            assert resourceType.equals("CONTAINER") : "wrong resource type: "
-                + resourceType;
+            assert resourceType.equals("CONTAINER") : "wrong resource type: " + resourceType;
 
             // We can't assume anything about the object's id except not being
             // null, can we ?
             assert (objectId != null);
         }
         else {
-            fail("no match for item found, return value of ingest could "
-                + "not be matched successfully.");
+            fail("no match for item found, return value of ingest could " + "not be matched successfully.");
         }
 
         // assert at least public-status and objectPID
-        String createdContainerXml =
-            handleXmlResult(getContainerClient().retrieve(objectId));
+        String createdContainerXml = handleXmlResult(getContainerClient().retrieve(objectId));
 
         assertXmlExists("Wrong public-status", createdContainerXml,
             "/container/properties/public-status[text() = 'released']");
         assertXmlExists("Wrong version status", createdContainerXml,
             "/container/properties/version/status[text() = 'released']");
-        assertXmlNotNull("pid", getDocument(createdContainerXml),
-            "/container/properties/pid");
+        assertXmlNotNull("pid", getDocument(createdContainerXml), "/container/properties/pid");
     }
 
     /**
-     * Test if a valid ou gets ingested. The return value must be a xml fragment
-     * containing the object id and conforming the the result.xsd schema.
-     * 
-     * @throws Exception
-     *             Throws Exception if test failes.
+     * Test if a valid ou gets ingested. The return value must be a xml fragment containing the object id and conforming
+     * the the result.xsd schema.
+     *
+     * @throws Exception Throws Exception if test failes.
      */
     @Test
     public void testIngestOuValid() throws Exception {
-        Document ou =
-            getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH,
-                "escidoc_ou_create.xml");
+        Document ou = getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, "escidoc_ou_create.xml");
 
         setUniqueValue(ou, XPATH_ORGANIZATIONAL_UNIT_TITLE);
         String toBeCreatedXml = toString(ou, false);
@@ -565,17 +469,14 @@ public class IngestAbstractTest extends IngestTestBase {
     }
 
     /**
-     * Test if a valid Content Model gets ingested. The return value must be a XML fragment
-     * containing the object id and conforming the the result.xsd schema.
-     * 
-     * @throws Exception
-     *             Throws Exception if test fail.
+     * Test if a valid Content Model gets ingested. The return value must be a XML fragment containing the object id and
+     * conforming the the result.xsd schema.
+     *
+     * @throws Exception Throws Exception if test fail.
      */
     @Test
     public void ingestContentModel() throws Exception {
-        String cmmTempl =
-            getTemplateAsString(TEMPLATE_CONTENT_MODEL_PATH,
-                "content-model-minimal-for-create.xml");
+        String cmmTempl = getTemplateAsString(TEMPLATE_CONTENT_MODEL_PATH, "content-model-minimal-for-create.xml");
 
         String createdXml = ingest(cmmTempl);
 
@@ -596,8 +497,7 @@ public class IngestAbstractTest extends IngestTestBase {
             assert (objectId != null);
         }
         else {
-            fail("no match for content model found, return value "
-                + "of ingest could not be matched successfully.");
+            fail("no match for content model found, return value " + "of ingest could not be matched successfully.");
         }
     }
 

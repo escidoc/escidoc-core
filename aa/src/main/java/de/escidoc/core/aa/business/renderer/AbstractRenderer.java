@@ -37,64 +37,48 @@ import java.util.Map;
 
 /**
  * Abstract renderer class.
- * 
+ *
  * @author Torsten Tetteroo
- * 
  */
 public class AbstractRenderer {
 
     /**
      * Adds the xlink name space values to the provided map.
-     * 
-     * @param values
-     *            The map to add values to.
      *
+     * @param values The map to add values to.
      */
     protected void addXlinkNamespaceValues(final Map<String, Object> values) {
 
-        values.put(XmlTemplateProvider.VAR_XLINK_NAMESPACE_PREFIX,
-            Constants.XLINK_NS_PREFIX);
-        values.put(XmlTemplateProvider.VAR_XLINK_NAMESPACE,
-            Constants.XLINK_NS_URI);
+        values.put(XmlTemplateProvider.VAR_XLINK_NAMESPACE_PREFIX, Constants.XLINK_NS_PREFIX);
+        values.put(XmlTemplateProvider.VAR_XLINK_NAMESPACE, Constants.XLINK_NS_URI);
     }
 
     /**
      * Adds the structural relations name space values to the provided map.
-     * 
-     * @param values
-     *            The map to add values to.
      *
+     * @param values The map to add values to.
      */
-    protected void addStructuralRelationNamespaceValues(
-        final Map<String, Object> values) {
+    protected void addStructuralRelationNamespaceValues(final Map<String, Object> values) {
 
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX,
-            Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS,
-            Constants.STRUCTURAL_RELATIONS_NS_URI);
+        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
+        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
     }
 
     /**
      * Adds the properties name space values to the provided map.
-     * 
-     * @param values
-     *            The map to add values to.
      *
+     * @param values The map to add values to.
      */
     protected void addPropertiesNamespaceValues(final Map<String, Object> values) {
 
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX,
-            Constants.PROPERTIES_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS,
-            Constants.PROPERTIES_NS_URI);
+        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX, Constants.PROPERTIES_NS_PREFIX);
+        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS, Constants.PROPERTIES_NS_URI);
     }
 
     /**
      * Adds the rdf values to the provided map.
-     * 
-     * @param values
-     *            The map to add values to.
      *
+     * @param values The map to add values to.
      */
     protected void addRdfValues(final Map<String, Object> values) {
 
@@ -104,17 +88,13 @@ public class AbstractRenderer {
 
     /**
      * Adds the value of the escidoc base url to the provided map.
-     * 
-     * @param values
-     *            The map to add the value to.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
+     *
+     * @param values The map to add the value to.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    protected void addEscidocBaseUrlValue(final Map<String, Object> values)
-        throws WebserverSystemException {
+    protected void addEscidocBaseUrlValue(final Map<String, Object> values) throws WebserverSystemException {
 
-        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, XmlUtility
-            .getEscidocBaseUrl());
+        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, XmlUtility.getEscidocBaseUrl());
     }
 
 }

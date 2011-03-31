@@ -24,29 +24,21 @@ import java.util.List;
 
 /**
  * Interface of a data access object for request mappings.
- * 
+ *
  * @author Torsten Tetteroo
- * 
  */
 public interface RequestMappingDaoInterface {
 
     /**
-     * Returns the mappings to the XACML business actions from the provided
-     * className and methodName.<p/> This method is thread-safe.
-     * 
-     * @param className
-     *            The class name to map.
-     * @param methodName
-     *            The method name to map.
-     * @return The method mapping as an array of MethodMapping objects. If the
-     *         method provided by input parameter methodName returns an array of
-     *         of objects, the array will contain two MethodMapping objects, one
-     *         for the authentication check (before the invocation) and one for
-     *         the filtering (after the invocation).
-     * 
+     * Returns the mappings to the XACML business actions from the provided className and methodName.<p/> This method is
+     * thread-safe.
      *
+     * @param className  The class name to map.
+     * @param methodName The method name to map.
+     * @return The method mapping as an array of MethodMapping objects. If the method provided by input parameter
+     *         methodName returns an array of of objects, the array will contain two MethodMapping objects, one for the
+     *         authentication check (before the invocation) and one for the filtering (after the invocation).
      */
-    List<MethodMapping> retrieveMethodMappings(
-        final String className, final String methodName);
+    List<MethodMapping> retrieveMethodMappings(final String className, final String methodName);
 
 }

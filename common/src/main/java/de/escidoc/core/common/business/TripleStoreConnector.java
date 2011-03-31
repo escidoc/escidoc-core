@@ -46,7 +46,7 @@ import java.util.regex.Pattern;
  * An utility class for Kowary request.
  *
  * @author Rozita Friedman
- * 
+ *         <p/>
  *         TODO move to TriplestoreUtility implementation
  */
 public class TripleStoreConnector {
@@ -77,8 +77,7 @@ public class TripleStoreConnector {
 
     public static final String FORMAT_ERROR = "Unrecognized format:";
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(
-        TripleStoreConnector.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TripleStoreConnector.class);
 
     private ConnectionUtility connectionUtility;
 
@@ -89,20 +88,10 @@ public class TripleStoreConnector {
     private String fedoraPassword;
 
     /**
-     * 
-     * @param spoQuery
-     * @param outputFormat
-     * @return
-     * @throws TripleStoreSystemException
-     * 
-     *             TODO move to TriplestoreUtility implementation
-     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidTripleStoreOutputFormatException
-     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidTripleStoreQueryException
+     * @throws TripleStoreSystemException TODO move to TriplestoreUtility implementation
      */
-    public String requestMPT(final String spoQuery, final String outputFormat)
-        throws TripleStoreSystemException,
-        InvalidTripleStoreOutputFormatException,
-        InvalidTripleStoreQueryException {
+    public String requestMPT(final String spoQuery, final String outputFormat) throws TripleStoreSystemException,
+        InvalidTripleStoreOutputFormatException, InvalidTripleStoreQueryException {
         try {
             final List<NameValuePair> params = new ArrayList<NameValuePair>();
 
@@ -118,16 +107,13 @@ public class TripleStoreConnector {
 
             final String url = this.fedoraUrl + "/risearch";
             final HttpPost httpPost = new HttpPost(url);
-            final HttpEntity entity =
-                new UrlEncodedFormEntity(params, XmlUtility.CHARACTER_ENCODING);
+            final HttpEntity entity = new UrlEncodedFormEntity(params, XmlUtility.CHARACTER_ENCODING);
 
             httpPost.setEntity(entity);
             connectionUtility.setAuthentication(new URL(url), this.fedoraUser, this.fedoraPassword);
 
-            final HttpResponse httpResponse =
-                connectionUtility.getHttpClient(url).execute(httpPost);
-            String responseContent =
-                connectionUtility.readResponse(httpResponse).trim();
+            final HttpResponse httpResponse = connectionUtility.getHttpClient(url).execute(httpPost);
+            String responseContent = connectionUtility.readResponse(httpResponse).trim();
 
             if (responseContent == null || responseContent.length() == 0) {
                 return null;
@@ -143,24 +129,17 @@ public class TripleStoreConnector {
                 final Matcher m2 = p2.matcher(responseContent);
                 if (m.find()) {
                     LOGGER.error(responseContent);
-                    responseContent =
-                        XmlUtility.CDATA_START + responseContent
-                            + XmlUtility.CDATA_END;
+                    responseContent = XmlUtility.CDATA_START + responseContent + XmlUtility.CDATA_END;
                     if (m1.find()) {
-                        throw new InvalidTripleStoreQueryException(
-                            responseContent);
+                        throw new InvalidTripleStoreQueryException(responseContent);
                     }
                     else if (m2.find()) {
-                        throw new InvalidTripleStoreOutputFormatException(
-                            responseContent);
+                        throw new InvalidTripleStoreOutputFormatException(responseContent);
                     }
                 }
                 else {
-                    responseContent =
-                        XmlUtility.CDATA_START + responseContent
-                            + XmlUtility.CDATA_END;
-                    throw new TripleStoreSystemException(
-                        "Request to MPT failed." + responseContent);
+                    responseContent = XmlUtility.CDATA_START + responseContent + XmlUtility.CDATA_END;
+                    throw new TripleStoreSystemException("Request to MPT failed." + responseContent);
                 }
             }
             return responseContent;
@@ -175,33 +154,29 @@ public class TripleStoreConnector {
 
     /**
      * Set the connection utility.
-     * 
-     * @param connectionUtility
-     *            ConnectionUtility.
+     *
+     * @param connectionUtility ConnectionUtility.
      */
     public void setConnectionUtility(final ConnectionUtility connectionUtility) {
         this.connectionUtility = connectionUtility;
     }
 
     /**
-     * @param fedoraUrl
-     *            the fedoraUrl to inject
+     * @param fedoraUrl the fedoraUrl to inject
      */
     public void setFedoraUrl(final String fedoraUrl) {
         this.fedoraUrl = fedoraUrl;
     }
 
     /**
-     * @param fedoraUser
-     *            the fedoraUser to inject
+     * @param fedoraUser the fedoraUser to inject
      */
     public void setFedoraUser(final String fedoraUser) {
         this.fedoraUser = fedoraUser;
     }
 
     /**
-     * @param fedoraPassword
-     *            the fedoraPassword to inject
+     * @param fedoraPassword the fedoraPassword to inject
      */
     public void setFedoraPassword(final String fedoraPassword) {
         this.fedoraPassword = fedoraPassword;

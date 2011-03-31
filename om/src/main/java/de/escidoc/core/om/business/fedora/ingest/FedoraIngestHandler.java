@@ -33,9 +33,8 @@ import de.escidoc.core.om.business.interfaces.IngestFacade;
 import de.escidoc.core.om.business.interfaces.IngestHandlerInterface;
 
 /**
- * Fedora Ingest Handler. Takes any resource, automatically determines its type
- * and tries to ingest.
- * 
+ * Fedora Ingest Handler. Takes any resource, automatically determines its type and tries to ingest.
+ *
  * @author Steffen Wagner,KST
  */
 
@@ -45,9 +44,8 @@ public class FedoraIngestHandler implements IngestHandlerInterface {
 
     /**
      * Setter for the ingest facade.
-     * 
-     * @param facade
-     *            Facade for ingest.
+     *
+     * @param facade Facade for ingest.
      */
     public void setIngestFacade(final IngestFacade facade) {
         this.ingestFacade = facade;
@@ -55,7 +53,7 @@ public class FedoraIngestHandler implements IngestHandlerInterface {
 
     /**
      * Getter for the ingest facade.
-     * 
+     *
      * @return ingestFacade the ingestFacade that has been injected
      */
     public IngestFacade getIngestFacade() {
@@ -64,13 +62,10 @@ public class FedoraIngestHandler implements IngestHandlerInterface {
 
     /**
      * Ingest a resource.
-     * 
-     * @param xmlData
-     *            The string that contains the resource
+     *
+     * @param xmlData The string that contains the resource
      * @return XML structure including objid and resource type.
-     * @throws EscidocException
-     *             Thrown if XML representation fulfills not all requirements or
-     *             internal errors occur.
+     * @throws EscidocException Thrown if XML representation fulfills not all requirements or internal errors occur.
      */
     @Override
     public String ingest(final String xmlData) throws EscidocException {

@@ -41,16 +41,14 @@ import static org.junit.Assert.fail;
 
 /**
  * Test creating Item objects.
- * 
+ *
  * @author Steffen Wagner
- * 
  */
 @RunWith(value = Parameterized.class)
 public class ItemCreateTest extends ItemTestBase {
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ItemCreateTest(final int transport) {
         super(transport);
@@ -58,9 +56,8 @@ public class ItemCreateTest extends ItemTestBase {
 
     /**
      * Test exception if XML string is empty.
-     * 
-     * @throws Exception
-     *             Thrown if creation of example Item failed.
+     *
+     * @throws Exception Thrown if creation of example Item failed.
      */
     @Test
     public void testEmptyCreate01() throws Exception {
@@ -70,17 +67,14 @@ public class ItemCreateTest extends ItemTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
     }
 
     /**
-     * Test if version public-status is ignored if an Item is created. (See
-     * issue INFR-775)
-     * 
-     * @throws Exception
-     *             Thrown if creation of example Item failed.
+     * Test if version public-status is ignored if an Item is created. (See issue INFR-775)
+     *
+     * @throws Exception Thrown if creation of example Item failed.
      */
     @Test
     public void testIgnoreStatus01() throws Exception {
@@ -90,11 +84,8 @@ public class ItemCreateTest extends ItemTestBase {
         String xml = create(itemXml);
 
         Document item = EscidocRestSoapTestBase.getDocument(xml);
-        Node itemChanged =
-            substitute(item, "/item/properties/public-status", "released");
-        itemChanged =
-            substitute(itemChanged, "/item/properties/version/status",
-                "released");
+        Node itemChanged = substitute(item, "/item/properties/public-status", "released");
+        itemChanged = substitute(itemChanged, "/item/properties/version/status", "released");
         String xmlTmp = toString(itemChanged, false);
 
         String xml2 = create(xmlTmp);
@@ -106,12 +97,10 @@ public class ItemCreateTest extends ItemTestBase {
     }
 
     /**
-     * Test if version public-status is ignored if an Item is created. The
-     * public-status is set to in-revision (see issue INFR-775, i guess
-     * in-rework means in-revision).
-     * 
-     * @throws Exception
-     *             Thrown if creation of example Item failed.
+     * Test if version public-status is ignored if an Item is created. The public-status is set to in-revision (see
+     * issue INFR-775, i guess in-rework means in-revision).
+     *
+     * @throws Exception Thrown if creation of example Item failed.
      */
     @Test
     public void testIgnoreStatus02() throws Exception {
@@ -121,11 +110,8 @@ public class ItemCreateTest extends ItemTestBase {
         String xml = create(itemXml);
 
         Document item = EscidocRestSoapTestBase.getDocument(xml);
-        Node itemChanged =
-            substitute(item, "/item/properties/public-status", "in-revision");
-        itemChanged =
-            substitute(itemChanged, "/item/properties/version/status",
-                "in-revision");
+        Node itemChanged = substitute(item, "/item/properties/public-status", "in-revision");
+        itemChanged = substitute(itemChanged, "/item/properties/version/status", "in-revision");
         String xmlTmp = toString(itemChanged, false);
 
         String xml2 = create(xmlTmp);
@@ -137,11 +123,9 @@ public class ItemCreateTest extends ItemTestBase {
     }
 
     /**
-     * Test if version and public-status is ignored if an Item is created. The
-     * public-status is set to withdrawn.
-     * 
-     * @throws Exception
-     *             Thrown if creation of example Item failed.
+     * Test if version and public-status is ignored if an Item is created. The public-status is set to withdrawn.
+     *
+     * @throws Exception Thrown if creation of example Item failed.
      */
     @Test
     public void testIgnoreStatus03() throws Exception {
@@ -151,11 +135,8 @@ public class ItemCreateTest extends ItemTestBase {
         String xml = create(itemXml);
 
         Document item = EscidocRestSoapTestBase.getDocument(xml);
-        Node itemChanged =
-            substitute(item, "/item/properties/public-status", "withdrawn");
-        itemChanged =
-            substitute(itemChanged, "/item/properties/version/status",
-                "withdrawn");
+        Node itemChanged = substitute(item, "/item/properties/public-status", "withdrawn");
+        itemChanged = substitute(itemChanged, "/item/properties/version/status", "withdrawn");
         String xmlTmp = toString(itemChanged, false);
 
         String xml2 = create(xmlTmp);
@@ -167,11 +148,9 @@ public class ItemCreateTest extends ItemTestBase {
     }
 
     /**
-     * Test unexpected parser exception instead of InvalidXmlException during
-     * create (see issue INFR-911).
-     * 
-     * @throws Exception
-     *             Thrown if behavior is not as expected.
+     * Test unexpected parser exception instead of InvalidXmlException during create (see issue INFR-911).
+     *
+     * @throws Exception Thrown if behavior is not as expected.
      */
     @Test
     public void testInvalidXml() throws Exception {

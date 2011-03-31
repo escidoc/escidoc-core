@@ -11,9 +11,8 @@ public class PurgeRequestBuilderTest {
 
     @Test
     public void testPurgeRequest() {
-        final PurgeRequest purgeRequest = PurgeRequestBuilder.createPurgeRequest()
-                .withResourceId("test") // NON-NLS
-                .build();
+        final PurgeRequest purgeRequest = PurgeRequestBuilder.createPurgeRequest().withResourceId("test") // NON-NLS
+        .build();
         assertEquals("wrong resource id", "test", purgeRequest.getResourceId()); // NON-NLS
     }
 }

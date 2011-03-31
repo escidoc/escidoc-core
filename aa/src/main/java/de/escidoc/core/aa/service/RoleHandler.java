@@ -52,130 +52,82 @@ import java.util.Map;
  */
 public class RoleHandler implements RoleHandlerInterface {
 
-    /** The business layer implementation bean. */
+    /**
+     * The business layer implementation bean.
+     */
     private de.escidoc.core.aa.business.interfaces.RoleHandlerInterface business;
-
-
 
     /**
      * See Interface for functional description.
-     * 
-     * @param xmlData
-     * @return
-     * @throws UniqueConstraintViolationException
-     * @throws InvalidXmlException
-     * @throws MissingMethodParameterException
-     * @throws AuthenticationException
-     * @throws AuthorizationException
-     * @throws SystemException
-     * @see RoleHandlerInterface
-     *      #create(java.lang.String)
      *
+     * @see RoleHandlerInterface #create(java.lang.String)
      */
     @Override
-    public String create(final String xmlData)
-        throws UniqueConstraintViolationException, 
-        XmlCorruptedException, XmlSchemaValidationException,
-        MissingMethodParameterException, AuthenticationException,
-        AuthorizationException, SystemException {
+    public String create(final String xmlData) throws UniqueConstraintViolationException, XmlCorruptedException,
+        XmlSchemaValidationException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
+        SystemException {
 
         return business.create(xmlData);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param id
-     * @throws AuthenticationException
-     * @throws AuthorizationException
-     * @throws MissingMethodParameterException
-     * @throws RoleNotFoundException
-     * @throws RoleInUseViolationException
-     * @throws SystemException
-     * @see RoleHandlerInterface
-     *      #delete(java.lang.String)
      *
+     * @see RoleHandlerInterface #delete(java.lang.String)
      */
     @Override
-    public void delete(final String id) throws AuthenticationException,
-        AuthorizationException, MissingMethodParameterException,
-        RoleNotFoundException, RoleInUseViolationException, SystemException {
+    public void delete(final String id) throws AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, RoleNotFoundException, RoleInUseViolationException, SystemException {
 
         business.delete(id);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param id
-     * @return
-     * @throws RoleNotFoundException
-     * @throws MissingMethodParameterException
-     * @throws AuthenticationException
-     * @throws AuthorizationException
-     * @throws SystemException
-     * @see RoleHandlerInterface
-     *      #retrieve(java.lang.String)
      *
+     * @see RoleHandlerInterface #retrieve(java.lang.String)
      */
     @Override
-    public String retrieve(final String id) throws RoleNotFoundException,
-        MissingMethodParameterException, AuthenticationException,
-        AuthorizationException, SystemException {
+    public String retrieve(final String id) throws RoleNotFoundException, MissingMethodParameterException,
+        AuthenticationException, AuthorizationException, SystemException {
 
         return business.retrieve(id);
     }
 
     @Override
-    public String retrieveResources(final String id)
-        throws AuthenticationException, AuthorizationException,
+    public String retrieveResources(final String id) throws AuthenticationException, AuthorizationException,
         MissingMethodParameterException, RoleNotFoundException, SystemException {
 
         return business.retrieveResources(id);
     }
 
     @Override
-    public String update(final String id, final String xmlData)
-        throws RoleNotFoundException, 
-        XmlCorruptedException, XmlSchemaValidationException,
-        MissingAttributeValueException, UniqueConstraintViolationException,
-        OptimisticLockingException, MissingMethodParameterException,
-        AuthenticationException, AuthorizationException, SystemException {
+    public String update(final String id, final String xmlData) throws RoleNotFoundException, XmlCorruptedException,
+        XmlSchemaValidationException, MissingAttributeValueException, UniqueConstraintViolationException,
+        OptimisticLockingException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
+        SystemException {
 
         return business.update(id, xmlData);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param filter
-     * @return
-     * @throws MissingMethodParameterException
-     * @throws AuthenticationException
-     * @throws AuthorizationException
-     * @throws SystemException
-     * @throws InvalidSearchQueryException
-     * @see RoleHandlerInterface
-     *      #retrieveRoles(java.util.Map)
+     *
+     * @see RoleHandlerInterface #retrieveRoles(java.util.Map)
      */
     @Override
-    public String retrieveRoles(final Map<String, String[]> filter)
-        throws MissingMethodParameterException, AuthenticationException,
-        AuthorizationException, SystemException, InvalidSearchQueryException {
+    public String retrieveRoles(final Map<String, String[]> filter) throws MissingMethodParameterException,
+        AuthenticationException, AuthorizationException, SystemException, InvalidSearchQueryException {
 
         return business.retrieveRoles(filter);
     }
 
-
-
     /**
      * Injects the business object.
-     * 
-     * @param business
-     *            The business layer bean
+     *
+     * @param business The business layer bean
      */
-    public void setBusiness(
-        final de.escidoc.core.aa.business.interfaces.RoleHandlerInterface business) {
+    public void setBusiness(final de.escidoc.core.aa.business.interfaces.RoleHandlerInterface business) {
 
         this.business = business;
     }

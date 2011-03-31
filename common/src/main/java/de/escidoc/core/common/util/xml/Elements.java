@@ -22,18 +22,16 @@ package de.escidoc.core.common.util.xml;
 
 /**
  * Elements of eSciDoc XML representation.
- * 
  */
 public final class Elements {
 
     /**
      * Private constructor to avoid instantiation.
      */
-     private Elements() {
-     }
+    private Elements() {
+    }
 
-    public static final String ATTRIBUTE_WOV_VERSION_CREATED_DATE =
-        "version-created-date";
+    public static final String ATTRIBUTE_WOV_VERSION_CREATED_DATE = "version-created-date";
 
     public static final String ATTRIBUTE_PREDICATE = "predicate";
 
@@ -49,8 +47,7 @@ public final class Elements {
 
     public static final String ELEMENT_WOV_VERSION_STATUS = "version-status";
 
-    public static final String ELEMENT_WOV_VERSION_VALID_STATUS =
-        "valid-status";
+    public static final String ELEMENT_WOV_VERSION_VALID_STATUS = "valid-status";
 
     public static final String ELEMENT_WOV_VERSION_COMMENT = "comment";
 
@@ -66,11 +63,9 @@ public final class Elements {
 
     public static final String ELEMENT_WOV_EVENT_COMMENT = "eventDetail";
 
-    public static final String ELEMENT_WOV_EVENT_USER =
-        "linkingAgentIdentifier";
+    public static final String ELEMENT_WOV_EVENT_USER = "linkingAgentIdentifier";
 
-    public static final String ELEMENT_WOV_EVENT_USER_ID =
-        "linkingAgentIdentifierValue";
+    public static final String ELEMENT_WOV_EVENT_USER_ID = "linkingAgentIdentifierValue";
 
     public static final String ELEMENT_USER_PREFERENCE = "preference";
 
@@ -94,14 +89,11 @@ public final class Elements {
 
     public static final String ELEMENT_WITHDRAWAL_DATE = "withdrawal-date";
 
-    public static final String ELEMENT_WITHDRAWAL_COMMENT =
-        "withdrawal-comment";
+    public static final String ELEMENT_WITHDRAWAL_COMMENT = "withdrawal-comment";
 
-    public static final String ELEMENT_COMPONENT_CONTENT_CATEGORY =
-        "content-category";
+    public static final String ELEMENT_COMPONENT_CONTENT_CATEGORY = "content-category";
 
-    public static final String ELEMENT_COMPONENT_CONTENT_CHECKSUM_ALGORITHM =
-        "checksum-algorithm";
+    public static final String ELEMENT_COMPONENT_CONTENT_CHECKSUM_ALGORITHM = "checksum-algorithm";
 
     public static final String ELEMENT_COMPONENT_CONTENT_CHECKSUM = "checksum";
 
@@ -127,22 +119,17 @@ public final class Elements {
 
     public static final String ELEMENT_PARAM_ORDER_BY = "order-by";
 
-    public static final String ELEMENT_PARAM_WITHDRAW_COMMENT =
-        "withdraw-comment";
+    public static final String ELEMENT_PARAM_WITHDRAW_COMMENT = "withdraw-comment";
 
-    public static final String ELEMENT_PARAM_REVOKATION_REMARK =
-        "revocation-remark";
+    public static final String ELEMENT_PARAM_REVOKATION_REMARK = "revocation-remark";
 
     public static final String ELEMENT_PARAM_COMMENT = "comment";
 
-    public static final String ATTRIBUTE_LAST_MODIFICATION_DATE =
-        "last-modification-date";
+    public static final String ATTRIBUTE_LAST_MODIFICATION_DATE = "last-modification-date";
 
-    public static final String ELEMENT_RESOURCES_VERSION_HISTORY =
-        "version-history";
+    public static final String ELEMENT_RESOURCES_VERSION_HISTORY = "version-history";
 
-    public static final String ELEMENT_CONTENT_MODEL_SPECIFIC =
-        "content-model-specific";
+    public static final String ELEMENT_CONTENT_MODEL_SPECIFIC = "content-model-specific";
 
     public static final String ELEMENT_CONTENT_MODEL = "content-model";
 
@@ -174,18 +161,15 @@ public final class Elements {
 
     public static final String ELEMENT_CONTEXT_CREATION_DATE = "creation-date";
 
-    public static final String ELEMENT_ORGANIZATIONAL_UNITS =
-        "organizational-units";
+    public static final String ELEMENT_ORGANIZATIONAL_UNITS = "organizational-units";
 
-    public static final String ELEMENT_ORGANIZATIONAL_UNIT =
-        "organizational-unit";
+    public static final String ELEMENT_ORGANIZATIONAL_UNIT = "organizational-unit";
 
     public static final String ELEMENT_PROPERTIES = "properties";
 
     public static final String ELEMENT_PUBLIC_STATUS = "public-status";
 
-    public static final String ELEMENT_PUBLIC_STATUS_COMMENT =
-        "public-status-comment";
+    public static final String ELEMENT_PUBLIC_STATUS_COMMENT = "public-status-comment";
 
     public static final String ELEMENT_STATUS = "status";
 

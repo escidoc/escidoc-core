@@ -37,12 +37,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
-
 /**
  * Test suite for the role Collaborator.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 public class CollaboratorAbstractTest extends GrantTestBase {
 
@@ -53,9 +51,9 @@ public class CollaboratorAbstractTest extends GrantTestBase {
     protected static final String PASSWORD = PWCallback.PASSWORD;
 
     protected static String grantCreationUserOrGroupId = null;
-    
+
     protected static int methodCounter = 0;
-    
+
     protected static String contextId = null;
 
     protected static String contextHref = null;
@@ -82,30 +80,22 @@ public class CollaboratorAbstractTest extends GrantTestBase {
 
     /**
      * The constructor.
-     * 
-     * @param transport
-     *            The transport identifier.
-     * @param handlerCode
-     *            handlerCode of either UserAccountHandler or UserGroupHandler.
-     * @param userOrGroupId
-     *            userOrGroupId for grantCreation.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param transport     The transport identifier.
+     * @param handlerCode   handlerCode of either UserAccountHandler or UserGroupHandler.
+     * @param userOrGroupId userOrGroupId for grantCreation.
+     * @throws Exception If anything fails.
      */
-    public CollaboratorAbstractTest(
-            final int transport, 
-            final int handlerCode,
-            final String userOrGroupId) throws Exception {
+    public CollaboratorAbstractTest(final int transport, final int handlerCode, final String userOrGroupId)
+        throws Exception {
         super(transport, handlerCode);
         grantCreationUserOrGroupId = userOrGroupId;
     }
 
     /**
      * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Before
     public void initialize() throws Exception {
@@ -117,9 +107,8 @@ public class CollaboratorAbstractTest extends GrantTestBase {
 
     /**
      * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @After
     public void deinitialize() throws Exception {
@@ -129,342 +118,169 @@ public class CollaboratorAbstractTest extends GrantTestBase {
 
     /**
      * insert data into system for the tests.
-     * 
-     * @test.name prepare
-     * @test.id PREPARE
-     * @test.input
-     * @test.inputDescription
-     * @test.expected
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     protected void prepare() throws Exception {
 
         //create container
-        String containerXml = 
-            prepareContainer(
-                PWCallback.DEFAULT_HANDLE, 
-                STATUS_PENDING, null,
-                false, false);
-        Document containerDocument =
-            EscidocRestSoapTestBase.getDocument(containerXml);
+        String containerXml = prepareContainer(PWCallback.DEFAULT_HANDLE, STATUS_PENDING, null, false, false);
+        Document containerDocument = EscidocRestSoapTestBase.getDocument(containerXml);
         containerId = getObjidValue(containerDocument);
         containerHref = Constants.CONTAINER_BASE_URI + "/" + containerId;
 
         //create container
-        containerXml = 
-            prepareContainer(
-                PWCallback.DEFAULT_HANDLE, 
-                STATUS_PENDING, null,
-                false, false);
-        Document containerDocument2 =
-            EscidocRestSoapTestBase.getDocument(containerXml);
+        containerXml = prepareContainer(PWCallback.DEFAULT_HANDLE, STATUS_PENDING, null, false, false);
+        Document containerDocument2 = EscidocRestSoapTestBase.getDocument(containerXml);
         containerId2 = getObjidValue(containerDocument2);
         containerHref2 = Constants.CONTAINER_BASE_URI + "/" + containerId2;
 
         //create item in status pending
         // in context /ir/context/escidoc:persistent3
-        String itemXml = 
-            prepareItem(
-                PWCallback.DEFAULT_HANDLE, 
-                STATUS_PENDING, 
-                null,
-                false, false);
-        Document document =
-            EscidocRestSoapTestBase.getDocument(itemXml);
-        
+        String itemXml = prepareItem(PWCallback.DEFAULT_HANDLE, STATUS_PENDING, null, false, false);
+        Document document = EscidocRestSoapTestBase.getDocument(itemXml);
+
         //save ids
         contextId = extractContextId(document);
         contextHref = Constants.CONTEXT_BASE_URI + "/" + contextId;
         itemId = getObjidValue(document);
         itemHref = Constants.ITEM_BASE_URI + "/" + itemId;
         publicComponentId = extractComponentId(document, VISIBILITY_PUBLIC);
-        publicComponentHref = 
-                itemHref 
-                    + "/" + Constants.SUB_COMPONENT 
-                    + "/" + publicComponentId;
+        publicComponentHref = itemHref + "/" + Constants.SUB_COMPONENT + "/" + publicComponentId;
         privateComponentId = extractComponentId(document, VISIBILITY_PRIVATE);
-        privateComponentHref = 
-            itemHref 
-                + "/" + Constants.SUB_COMPONENT 
-                + "/" + privateComponentId;
-        
+        privateComponentHref = itemHref + "/" + Constants.SUB_COMPONENT + "/" + privateComponentId;
+
         //add container2 to container
-        String lastModificationDate = 
-            getLastModificationDateValue(containerDocument);
-        String taskParam = 
-            "<param last-modification-date=\"" 
-            + lastModificationDate 
-            + "\"><id>" 
-            + containerId2 
-            + "</id></param>";
+        String lastModificationDate = getLastModificationDateValue(containerDocument);
+        String taskParam =
+            "<param last-modification-date=\"" + lastModificationDate + "\"><id>" + containerId2 + "</id></param>";
         getContainerClient().addMembers(containerId, taskParam);
-        
+
         //add item to container2
-        lastModificationDate = 
-            getLastModificationDateValue(containerDocument2);
-        taskParam = 
-            "<param last-modification-date=\"" 
-            + lastModificationDate 
-            + "\"><id>" 
-            + itemId 
-            + "</id></param>";
+        lastModificationDate = getLastModificationDateValue(containerDocument2);
+        taskParam = "<param last-modification-date=\"" + lastModificationDate + "\"><id>" + itemId + "</id></param>";
         getContainerClient().addMembers(containerId2, taskParam);
-        
+
         //update item to create new version
-        itemXml =
-            itemXml.replaceAll("semiconductor surfaces",
-                "semiconductor surfaces u");
+        itemXml = itemXml.replaceAll("semiconductor surfaces", "semiconductor surfaces u");
         itemXml = update(ITEM_HANDLER_CODE, itemId, itemXml);
-        
+
     }
-    
+
     /**
      * Test collaborator with scope on item.
-     * 
-     * @test.name Collaborator - Scope on Item
-     * @test.id AA-Collaborator-ScopeOnItem
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveItemWithItemScope() throws Exception {
-        doTestRetrieveWithRole(
-                grantCreationUserOrGroupId, 
-                ROLE_HREF_COLLABORATOR, 
-                itemHref, 
-                HANDLE, 
-                ITEM_HANDLER_CODE, 
-                itemId, 
-                true, 
-                null);
+        doTestRetrieveWithRole(grantCreationUserOrGroupId, ROLE_HREF_COLLABORATOR, itemHref, HANDLE, ITEM_HANDLER_CODE,
+            itemId, true, null);
     }
 
     /**
      * Test collaborator with scope on component.
-     * 
-     * @test.name Collaborator - Scope on Content
-     * @test.id AA-Collaborator-ScopeOnContent
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveItemWithContentScope() throws Exception {
-        doTestRetrieveWithRole(
-                grantCreationUserOrGroupId, 
-                ROLE_HREF_COLLABORATOR, 
-                privateComponentHref, 
-                HANDLE, 
-                ITEM_HANDLER_CODE, 
-                itemId, 
-                true, 
-                null);
+        doTestRetrieveWithRole(grantCreationUserOrGroupId, ROLE_HREF_COLLABORATOR, privateComponentHref, HANDLE,
+            ITEM_HANDLER_CODE, itemId, true, null);
     }
 
     /**
      * Test declining collaborator with scope on container.
-     * 
-     * @test.name Collaborator - Scope on Container
-     * @test.id AA-Collaborator-ScopeOnContainer
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveItemWithContainerScopeDecline() throws Exception {
-        doTestRetrieveWithRole(
-                grantCreationUserOrGroupId, 
-                ROLE_HREF_COLLABORATOR, 
-                containerHref2, 
-                HANDLE, 
-                ITEM_HANDLER_CODE, 
-                itemId, 
-                true, 
-                AuthorizationException.class);
+        doTestRetrieveWithRole(grantCreationUserOrGroupId, ROLE_HREF_COLLABORATOR, containerHref2, HANDLE,
+            ITEM_HANDLER_CODE, itemId, true, AuthorizationException.class);
     }
 
     /**
      * Test collaborator with scope on container.
-     * 
-     * @test.name Collaborator - Scope on Container
-     * @test.id AA-Collaborator-ScopeOnContainer
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveContainerWithContainerScope() throws Exception {
-        doTestRetrieveWithRole(
-                grantCreationUserOrGroupId, 
-                ROLE_HREF_COLLABORATOR, 
-                containerHref, 
-                HANDLE, 
-                CONTAINER_HANDLER_CODE, 
-                containerId, 
-                true, 
-                null);
+        doTestRetrieveWithRole(grantCreationUserOrGroupId, ROLE_HREF_COLLABORATOR, containerHref, HANDLE,
+            CONTAINER_HANDLER_CODE, containerId, true, null);
     }
 
     /**
      * Test declining collaborator with scope on container.
-     * 
-     * @test.name Collaborator - Scope on Container
-     * @test.id AA-Collaborator-ScopeOnContainer
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
-    public void testRetrieveContainerWithParentContainerScopeDecline()
-                                                        throws Exception {
-        doTestRetrieveWithRole(
-                grantCreationUserOrGroupId, 
-                ROLE_HREF_COLLABORATOR, 
-                containerHref, 
-                HANDLE, 
-                CONTAINER_HANDLER_CODE, 
-                containerId2, 
-                true, 
-                AuthorizationException.class);
+    public void testRetrieveContainerWithParentContainerScopeDecline() throws Exception {
+        doTestRetrieveWithRole(grantCreationUserOrGroupId, ROLE_HREF_COLLABORATOR, containerHref, HANDLE,
+            CONTAINER_HANDLER_CODE, containerId2, true, AuthorizationException.class);
     }
 
     /**
      * Test collaborator with scope on parent container, decline.
-     * 
-     * @test.name Collaborator - Scope on Parent Container
-     * @test.id AA-Collaborator-ScopeOnParentContainer
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
-    public void testRetrieveItemWithParentContainerScopeDecline() 
-                                                    throws Exception {
-        doTestRetrieveWithRole(
-                grantCreationUserOrGroupId, 
-                ROLE_HREF_COLLABORATOR, 
-                containerHref, 
-                HANDLE, 
-                ITEM_HANDLER_CODE, 
-                itemId, 
-                true, 
-                AuthorizationException.class);
+    public void testRetrieveItemWithParentContainerScopeDecline() throws Exception {
+        doTestRetrieveWithRole(grantCreationUserOrGroupId, ROLE_HREF_COLLABORATOR, containerHref, HANDLE,
+            ITEM_HANDLER_CODE, itemId, true, AuthorizationException.class);
     }
 
     /**
      * Test collaborator with scope on context.
-     * 
-     * @test.name Collaborator - Scope on Context
-     * @test.id AA-Collaborator-ScopeOnContext
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveItemWithContextScope() throws Exception {
-        doTestRetrieveWithRole(
-                grantCreationUserOrGroupId, 
-                ROLE_HREF_COLLABORATOR, 
-                contextHref, 
-                HANDLE, 
-                ITEM_HANDLER_CODE, 
-                itemId, 
-                true, 
-                null);
+        doTestRetrieveWithRole(grantCreationUserOrGroupId, ROLE_HREF_COLLABORATOR, contextHref, HANDLE,
+            ITEM_HANDLER_CODE, itemId, true, null);
     }
 
     /**
      * Test collaborator with scope on context.
-     * 
-     * @test.name Collaborator - Scope on Context
-     * @test.id AA-Collaborator-ScopeOnContext
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveParentContainerWithContextScope() throws Exception {
-        doTestRetrieveWithRole(
-                grantCreationUserOrGroupId, 
-                ROLE_HREF_COLLABORATOR, 
-                contextHref, 
-                HANDLE, 
-                CONTAINER_HANDLER_CODE, 
-                containerId, 
-                true, 
-                null);
+        doTestRetrieveWithRole(grantCreationUserOrGroupId, ROLE_HREF_COLLABORATOR, contextHref, HANDLE,
+            CONTAINER_HANDLER_CODE, containerId, true, null);
     }
 
     /**
      * Test collaborator with scope on context.
-     * 
-     * @test.name Collaborator - Scope on Context
-     * @test.id AA-Collaborator-ScopeOnContext
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveContainerWithContextScope() throws Exception {
-        doTestRetrieveWithRole(
-                grantCreationUserOrGroupId, 
-                ROLE_HREF_COLLABORATOR, 
-                contextHref, 
-                HANDLE, 
-                CONTAINER_HANDLER_CODE, 
-                containerId2, 
-                true, 
-                null);
+        doTestRetrieveWithRole(grantCreationUserOrGroupId, ROLE_HREF_COLLABORATOR, contextHref, HANDLE,
+            CONTAINER_HANDLER_CODE, containerId2, true, null);
     }
 
     /**
      * Test collaborator with no scope.
-     * 
-     * @test.name Collaborator - No Scope
-     * @test.id AA-Collaborator-NoContext
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveItemWithNoScope() throws Exception {
-        doTestRetrieveWithRole(
-                grantCreationUserOrGroupId, 
-                ROLE_HREF_COLLABORATOR, 
-                null, 
-                HANDLE, 
-                ITEM_HANDLER_CODE, 
-                itemId, 
-                true, 
-                AuthorizationException.class);
+        doTestRetrieveWithRole(grantCreationUserOrGroupId, ROLE_HREF_COLLABORATOR, null, HANDLE, ITEM_HANDLER_CODE,
+            itemId, true, AuthorizationException.class);
     }
 
     /**
      * Test logging out a collaborator.
-     * 
-     * @test.name Collaborator - Logout
-     * @test.id AA-Collaborator-Logout
-     * @test.input Valid handle of the user.
-     * @test.expected Successful logout.
-     * @test.status Implemented
-     * @test.issue http://www.escidoc-project.de/issueManagement/show_bug.cgi?id=278
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testAaCollaboratorLogout() throws Exception {

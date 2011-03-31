@@ -57,8 +57,7 @@ public class RemoveObjectRelationHandlerNew extends DefaultHandler {
      */
     private int noOfRemoved;
 
-    public RemoveObjectRelationHandlerNew(final String objid)
-        throws WebserverSystemException {
+    public RemoveObjectRelationHandlerNew(final String objid) throws WebserverSystemException {
         // TODO Auto-generated constructor stub
         this.objects = new ArrayList<String>();
         this.objects.add(objid);
@@ -77,8 +76,7 @@ public class RemoveObjectRelationHandlerNew extends DefaultHandler {
     }
 
     @Override
-    public String characters(final String data, final StartElement element)
-        throws XMLStreamException {
+    public String characters(final String data, final StartElement element) throws XMLStreamException {
 
         writer.writeCharacters(data);
 
@@ -97,13 +95,9 @@ public class RemoveObjectRelationHandlerNew extends DefaultHandler {
     }
 
     @Override
-    public StartElement startElement(final StartElement element)
-        throws XMLStreamException {
+    public StartElement startElement(final StartElement element) throws XMLStreamException {
 
-        final int k =
-            element.indexOfAttribute(
-                Constants.RDF_NAMESPACE_URI,
-                "resource");
+        final int k = element.indexOfAttribute(Constants.RDF_NAMESPACE_URI, "resource");
         if (k != -1) {
             final Iterator<String> it = objects.iterator();
             while (it.hasNext()) {
@@ -124,8 +118,8 @@ public class RemoveObjectRelationHandlerNew extends DefaultHandler {
         for (int i = 0; i < attCount; i++) {
             final Attribute att = element.getAttribute(i);
             // String namespace = att.getNamespace();
-            writeAttribute(att.getNamespace(), element.getLocalName(), att
-                .getLocalName(), att.getValue(), att.getPrefix());
+            writeAttribute(att.getNamespace(), element.getLocalName(), att.getLocalName(), att.getValue(), att
+                .getPrefix());
 
         }
 
@@ -140,9 +134,8 @@ public class RemoveObjectRelationHandlerNew extends DefaultHandler {
 
     /**
      * Set objid to remove.
-     * 
-     * @param objects
-     *            The objid to remove.
+     *
+     * @param objects The objid to remove.
      */
     public void setObjects(final List<String> objects) {
         this.objects = objects;
@@ -150,9 +143,8 @@ public class RemoveObjectRelationHandlerNew extends DefaultHandler {
 
     /**
      * Add objid to the remove list.
-     * 
-     * @param objid
-     *            objid to add to the remove list
+     *
+     * @param objid objid to add to the remove list
      */
     public void addObject(final String objid) {
         this.objects.add(objid);
@@ -160,7 +152,7 @@ public class RemoveObjectRelationHandlerNew extends DefaultHandler {
 
     /**
      * Get the number of removed objects.
-     * 
+     *
      * @return number of removed objects.
      */
     public int getNoOfRemovedObjects() {
@@ -183,10 +175,12 @@ public class RemoveObjectRelationHandlerNew extends DefaultHandler {
                 if (deepLevelInMAp >= this.deepLevel) {
                     writer.writeStartElement(prefix, name, uri);
                     writer.writeNamespace(prefix, uri);
-                } else {
+                }
+                else {
                     writer.writeStartElement(prefix, name, uri);
                 }
-            } else {
+            }
+            else {
                 final List namespaceTrace = new ArrayList();
                 namespaceTrace.add(this.deepLevel);
                 namespaceTrace.add(name);
@@ -200,8 +194,8 @@ public class RemoveObjectRelationHandlerNew extends DefaultHandler {
     }
 
     private void writeAttribute(
-        final String uri, final String elementName, final String attributeName,
-        final String attributeValue, String prefix) throws XMLStreamException {
+        final String uri, final String elementName, final String attributeName, final String attributeValue,
+        String prefix) throws XMLStreamException {
         if (uri != null) {
             if (nsuris.containsKey(uri)) {
                 final List namespaceTrace = (List) nsuris.get(uri);
@@ -211,12 +205,12 @@ public class RemoveObjectRelationHandlerNew extends DefaultHandler {
                 }
                 final Integer deepLevelInMAp = (Integer) namespaceTrace.get(0);
                 final String nameTrace = (String) namespaceTrace.get(1);
-                if (deepLevelInMAp == this.deepLevel && !elementName
-                        .equals(nameTrace)
-                        || deepLevelInMAp > this.deepLevel) {
+                if (deepLevelInMAp == this.deepLevel && !elementName.equals(nameTrace)
+                    || deepLevelInMAp > this.deepLevel) {
                     writer.writeNamespace(prefix, uri);
                 }
-            } else {
+            }
+            else {
                 final List namespaceTrace = new ArrayList();
                 namespaceTrace.add(this.deepLevel);
                 namespaceTrace.add(elementName);

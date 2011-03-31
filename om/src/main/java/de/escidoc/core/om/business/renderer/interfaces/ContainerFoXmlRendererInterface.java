@@ -37,83 +37,47 @@ import java.util.Map;
 
 /**
  * Interface of an container foxml renderer.
- * 
- * @author Rozita Friedman
  *
+ * @author Rozita Friedman
  */
 public interface ContainerFoXmlRendererInterface {
 
     /**
      * Gets the foxml representation of a container.
-     * 
-     * @param values
-     *            The values of the container.
-     * @param properties
-     * @param members
-     * @param containerId
-     * @param lastModificationDate
-     * @param contentRelations
-     * @param comment
-     * @param propertiesAsReferences
-     * @return Returns the foxml representation of the container.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
      *
+     * @param values The values of the container.
+     * @return Returns the foxml representation of the container.
+     * @throws SystemException Thrown in case of an internal error.
      */
     String render(
-        Map<String, Object> values, final Map<String, String> properties,
-        final List<String> members, final String containerId,
-        final String lastModificationDate,
-        final List<Map<String, String>> contentRelations,
-        final String comment,
-        final Map<String, String> propertiesAsReferences)
-        throws SystemException;
+        Map<String, Object> values, final Map<String, String> properties, final List<String> members,
+        final String containerId, final String lastModificationDate, final List<Map<String, String>> contentRelations,
+        final String comment, final Map<String, String> propertiesAsReferences) throws SystemException;
 
     /**
      * Render RELS-EXT.
-     * 
-     * @param properties
-     * @param title
-     * @param members
-     * @param adminDescriptorId
-     * @param containerId
-     * @param lastModificationDate
-     * @param contentRelations
-     * @param comment
-     * @param propertiesAsReferences
+     *
      * @return XML representation of RELS-EXT.
-     * @throws WebserverSystemException
-     *             Thrown in case of internal failure.
+     * @throws WebserverSystemException Thrown in case of internal failure.
      */
     String renderRelsExt(
-        final Map<String, String> properties, final List<String> members,
-        final String containerId, final String lastModificationDate,
-        final List<Map<String, String>> contentRelations,
-        final String comment,
-        final Map<String, String> propertiesAsReferences)
-        throws WebserverSystemException;
+        final Map<String, String> properties, final List<String> members, final String containerId,
+        final String lastModificationDate, final List<Map<String, String>> contentRelations, final String comment,
+        final Map<String, String> propertiesAsReferences) throws WebserverSystemException;
 
     /**
      * Render WOV to XML.
-     * 
-     * @param id
-     *            Objid of Container.
-     * @param title
-     *            Title of Container.
-     * @param versionNo
-     *            Number of Container version.
-     * @param lastModificationDate
-     *            Last Modification Date of Container.
-     * @param versionStatus
-     *            Status of Version.
-     * @param comment
-     *            Comment.
+     *
+     * @param id                   Objid of Container.
+     * @param title                Title of Container.
+     * @param versionNo            Number of Container version.
+     * @param lastModificationDate Last Modification Date of Container.
+     * @param versionStatus        Status of Version.
+     * @param comment              Comment.
      * @return XML representation of WOV.
-     * @throws WebserverSystemException
-     *             Thrown in case of internal failure.
+     * @throws WebserverSystemException Thrown in case of internal failure.
      */
     String renderWov(
-        final String id, final String title, final String versionNo,
-        final String lastModificationDate, final String versionStatus,
-        final String comment) throws WebserverSystemException;
+        final String id, final String title, final String versionNo, final String lastModificationDate,
+        final String versionStatus, final String comment) throws WebserverSystemException;
 }

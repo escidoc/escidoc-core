@@ -37,34 +37,27 @@ import java.util.Date;
 
 /**
  * Extracts dates out of processing-information.
- * 
- * @author Michael Hoppe
  *
+ * @author Michael Hoppe
  */
 public class PreprocessingInformationStaxHandler extends DefaultHandler {
 
     private Date startDate;
 
     private Date endDate;
-    
-    private static final SimpleDateFormat DATE_FORMAT = 
-                new SimpleDateFormat("yyyy-MM-dd");
+
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
     private final StaxParser parser;
-    
-    private static final String START_DATE_PATH = 
-                    "/preprocessing-information/start-date";
 
-    private static final String END_DATE_PATH = 
-                    "/preprocessing-information/end-date";
+    private static final String START_DATE_PATH = "/preprocessing-information/start-date";
+
+    private static final String END_DATE_PATH = "/preprocessing-information/end-date";
 
     /**
      * Cosntructor with StaxParser.
-     * 
-     * @param parser
-     *            StaxParser
-     * 
      *
+     * @param parser StaxParser
      */
     public PreprocessingInformationStaxHandler(final StaxParser parser) {
         this.parser = parser;
@@ -72,25 +65,20 @@ public class PreprocessingInformationStaxHandler extends DefaultHandler {
 
     /**
      * Handle the character section of an element.
-     * 
-     * @param s
-     *            The contents of the character section.
-     * @param element
-     *            The element.
+     *
+     * @param s       The contents of the character section.
+     * @param element The element.
      * @return The character section.
      * @throws Exception e
-     *
      */
     @Override
-    public String characters(
-                final String s, 
-                final StartElement element) 
-                    throws Exception {
+    public String characters(final String s, final StartElement element) throws Exception {
         final String currentPath = parser.getCurPath();
 
         if (START_DATE_PATH.equals(currentPath)) {
             this.startDate = DATE_FORMAT.parse(s);
-        } else if (END_DATE_PATH.equals(currentPath)) {
+        }
+        else if (END_DATE_PATH.equals(currentPath)) {
             this.endDate = DATE_FORMAT.parse(s);
         }
         return s;

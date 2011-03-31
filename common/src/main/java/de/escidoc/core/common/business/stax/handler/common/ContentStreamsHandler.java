@@ -40,12 +40,11 @@ import java.util.List;
 
 /**
  * Handle Item XML to obtain ContentStreams.
- * 
- * This handler obtains all (required) values of each ContentStream of an Item
- * and handle is within ContentStream objects.
- * 
+ * <p/>
+ * This handler obtains all (required) values of each ContentStream of an Item and handle is within ContentStream
+ * objects.
+ *
  * @author Steffen Wagner
- * 
  */
 public class ContentStreamsHandler extends DefaultHandler {
 
@@ -57,8 +56,7 @@ public class ContentStreamsHandler extends DefaultHandler {
 
     private final StaxParser parser;
 
-    private final List<ContentStreamCreate> contentStreams =
-        new ArrayList<ContentStreamCreate>();
+    private final List<ContentStreamCreate> contentStreams = new ArrayList<ContentStreamCreate>();
 
     private boolean parsingContentStream;
 
@@ -66,47 +64,34 @@ public class ContentStreamsHandler extends DefaultHandler {
 
     /**
      * ContentStreamsHandler.
-     * 
-     * @param parser
-     *            StAX Parser.
+     *
+     * @param parser StAX Parser.
      */
     public ContentStreamsHandler(final StaxParser parser) {
         this.parser = parser;
-        this.xpathContentStream =
-            this.xpathContentStreams + '/' + Elements.ELEMENT_CONTENT_STREAM;
+        this.xpathContentStream = this.xpathContentStreams + '/' + Elements.ELEMENT_CONTENT_STREAM;
     }
 
     /**
      * ContentStreamsHandler.
-     * 
-     * @param parser
-     *            StAX Parser.
-     * @param xpathContentStreams
+     *
+     * @param parser StAX Parser.
      */
-    public ContentStreamsHandler(final StaxParser parser,
-        final String xpathContentStreams) {
+    public ContentStreamsHandler(final StaxParser parser, final String xpathContentStreams) {
         this.xpathContentStreams = xpathContentStreams;
-        this.xpathContentStream =
-            this.xpathContentStreams + '/' + Elements.ELEMENT_CONTENT_STREAM;
+        this.xpathContentStream = this.xpathContentStreams + '/' + Elements.ELEMENT_CONTENT_STREAM;
         this.parser = parser;
     }
 
     /**
      * Parser hits an XML start element.
-     * 
-     * @param element
-     *            StartElement from StAX parser
+     *
+     * @param element StartElement from StAX parser
      * @return StAX StartElement
-     * 
-     * @throws MissingAttributeValueException
-     * @throws XMLStreamException
-     * @throws WebserverSystemException
-     * @throws IOException
      */
     @Override
-    public StartElement startElement(final StartElement element)
-        throws InvalidContentException, MissingAttributeValueException,
-        WebserverSystemException {
+    public StartElement startElement(final StartElement element) throws InvalidContentException,
+        MissingAttributeValueException, WebserverSystemException {
 
         if (this.parsingContentStream) {
             this.contentStreamHandler.startElement(element);
@@ -115,12 +100,11 @@ public class ContentStreamsHandler extends DefaultHandler {
             final String currentPath = parser.getCurPath();
 
             if (xpathContentStream.equals(currentPath)) {
-                if(LOGGER.isDebugEnabled()) {
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Parsing " + this.xpathContentStream);
                 }
                 this.parsingContentStream = true;
-                this.contentStreamHandler =
-                    new ContentStreamHandler2(this.parser, this.xpathContentStream);
+                this.contentStreamHandler = new ContentStreamHandler2(this.parser, this.xpathContentStream);
                 this.contentStreamHandler.startElement(element);
             }
         }
@@ -130,30 +114,24 @@ public class ContentStreamsHandler extends DefaultHandler {
 
     /**
      * Parser hits an XML end element.
-     * 
-     * @param element
-     *            StAX EndElement
+     *
+     * @param element StAX EndElement
      * @return StAX EndElement
-     * @throws XMLStreamException
-     * @throws UnsupportedEncodingException
      */
     @Override
-    public EndElement endElement(final EndElement element)
-        throws WebserverSystemException, InvalidContentException {
+    public EndElement endElement(final EndElement element) throws WebserverSystemException, InvalidContentException {
 
         final String currentPath = parser.getCurPath();
 
         if (xpathContentStream.equals(currentPath)) {
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Reached end of " + this.xpathContentStream);
             }
 
             this.parsingContentStream = false;
             this.contentStreamHandler.endElement(element);
-            checkUniqueContentStreamNames(this.contentStreamHandler
-                .getContentStream().getName());
-            this.contentStreams.add(this.contentStreamHandler
-                .getContentStream());
+            checkUniqueContentStreamNames(this.contentStreamHandler.getContentStream().getName());
+            this.contentStreams.add(this.contentStreamHandler.getContentStream());
         }
         else if (this.parsingContentStream) {
             this.contentStreamHandler.endElement(element);
@@ -164,23 +142,14 @@ public class ContentStreamsHandler extends DefaultHandler {
 
     /**
      * Parser hits an XML character element.
-     * 
-     * @param s
-     *            XML character element.
-     * @param element
-     *            StAX StartElement
+     *
+     * @param s       XML character element.
+     * @param element StAX StartElement
      * @return XML character element.
-     * 
-     * @throws InvalidContentException
-     * @throws MissingElementValueException
-     * @throws WebserverSystemException
-     * @throws XMLStreamException
-     * 
      */
     @Override
-    public String characters(final String s, final StartElement element)
-        throws InvalidContentException, MissingElementValueException,
-        WebserverSystemException {
+    public String characters(final String s, final StartElement element) throws InvalidContentException,
+        MissingElementValueException, WebserverSystemException {
 
         if (this.parsingContentStream) {
             this.contentStreamHandler.characters(s, element);
@@ -191,7 +160,7 @@ public class ContentStreamsHandler extends DefaultHandler {
 
     /**
      * Get all Components of the ComponentHandler.
-     * 
+     *
      * @return Vector with all ContentStreams.
      */
     public List<ContentStreamCreate> getContentStreams() {
@@ -201,19 +170,16 @@ public class ContentStreamsHandler extends DefaultHandler {
 
     /**
      * Check if the name of content stream is unique.
-     * 
-     * @param name
-     *            Name which is to check.
-     * @throws InvalidContentException
-     *             Thrown if the provided name is used multiple times.
+     *
+     * @param name Name which is to check.
+     * @throws InvalidContentException Thrown if the provided name is used multiple times.
      */
-    private void checkUniqueContentStreamNames(final String name)
-        throws InvalidContentException {
+    private void checkUniqueContentStreamNames(final String name) throws InvalidContentException {
 
         for (final ContentStreamCreate contentStream : this.contentStreams) {
             if (name.equals(contentStream.getName())) {
                 throw new InvalidContentException("The item representation contains multiple "
-                                + "content streams with a name '" + name + "'.");
+                    + "content streams with a name '" + name + "'.");
             }
         }
     }

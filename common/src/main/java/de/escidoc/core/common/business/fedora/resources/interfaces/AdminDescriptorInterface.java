@@ -30,63 +30,45 @@ public interface AdminDescriptorInterface extends FedoraResource {
 
     /**
      * Gets the RELS-EXT datastream of the fedora object.
-     * 
+     *
      * @return The Fedora RELS-EXT datastream.
-     * @throws StreamNotFoundException
-     *             If there is no RELS-EXT datastream of a fedora object with
-     *             <code>id</code>.
+     * @throws StreamNotFoundException If there is no RELS-EXT datastream of a fedora object with <code>id</code>.
      */
     @Override
     Datastream getRelsExt() throws StreamNotFoundException;
 
     /**
-     * Sets the RELS-EXT datastream and saves it in fedora. If the datastream is
-     * already set and unchanged, nothing will be done.
-     * 
-     * @param ds
-     *            A Datastream representing the Fedora RELS-EXT datastream.
-     * @throws StreamNotFoundException
-     *             If there is no RELS-EXT datastream of a fedora object with
-     *             <code>id</code>. This is probably an error cause a fedora
-     *             object have to have this datastream.
-     * @throws LockingException
+     * Sets the RELS-EXT datastream and saves it in fedora. If the datastream is already set and unchanged, nothing will
+     * be done.
+     *
+     * @param ds A Datastream representing the Fedora RELS-EXT datastream.
+     * @throws StreamNotFoundException If there is no RELS-EXT datastream of a fedora object with <code>id</code>. This
+     *                                 is probably an error cause a fedora object have to have this datastream.
      */
     @Override
-    void setRelsExt(Datastream ds) throws StreamNotFoundException,
-        LockingException;
+    void setRelsExt(Datastream ds) throws StreamNotFoundException, LockingException;
 
     /**
-     * 
      * @return A Map containing the metadata datastreams of this resource.
      */
     Map getMdRecords();
 
     /**
-     * 
-     * @param ds
-     *            A Map containing the metadata datastreams of this resource.
-     * @throws LockingException
-     *             If the container is locked.
+     * @param ds A Map containing the metadata datastreams of this resource.
+     * @throws LockingException If the container is locked.
      */
     void setMdRecords(Map ds) throws LockingException;
 
     /**
-     * 
-     * @param name
-     *            The name of a matadata datastream.
+     * @param name The name of a matadata datastream.
      * @return A metadata datastreams of this resource.
-     * @throws de.escidoc.core.common.exceptions.application.notfound.StreamNotFoundException
      */
     Datastream getMdRecord(String name) throws StreamNotFoundException;
 
     /**
-     * 
-     * @param name
-     *            The name of a matadata datastream.
-     * @param ds
-     *            A metadata datastreams of this resource.
-     * @throws LockingException
-     *             If the container is locked.
+     * @param name The name of a matadata datastream.
+     * @param ds   A metadata datastreams of this resource.
+     * @throws LockingException If the container is locked.
      */
     void setMdRecord(String name, Datastream ds) throws LockingException;
 

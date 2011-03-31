@@ -25,9 +25,8 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import java.util.Map;
 
 /**
- * Singleton which encapsulates method calls to render FOXML for the content
- * object.
- * 
+ * Singleton which encapsulates method calls to render FOXML for the content object.
+ *
  * @author André Schenk
  */
 public final class ContextFoXmlProvider extends InfrastructureFoXmlProvider {
@@ -44,22 +43,17 @@ public final class ContextFoXmlProvider extends InfrastructureFoXmlProvider {
 
     /**
      * Private constructor to prevent initialization.
-     * 
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
      *
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     private ContextFoXmlProvider() {
     }
 
     /**
      * Gets the context xml provider.
-     * 
-     * @return Returns the <code>ContextXmlProvider</code> object.
-     * @throws WebserverSystemException
-     *             Thrown if the instance cannot be created due to an internal
-     *             error.
      *
+     * @return Returns the <code>ContextXmlProvider</code> object.
+     * @throws WebserverSystemException Thrown if the instance cannot be created due to an internal error.
      */
     public static ContextFoXmlProvider getInstance() {
         return PROVIDER;
@@ -67,34 +61,22 @@ public final class ContextFoXmlProvider extends InfrastructureFoXmlProvider {
 
     /**
      * Gets the FOXML of the context.
-     * 
-     * @param values
-     *            Values to replace the variables in the XML template.
-     * 
-     * @return Returns the FOXML representation of this object.
-     * @throws WebserverSystemException
-     *             Thrown if the instance cannot be created due to an internal
-     *             error.
      *
+     * @param values Values to replace the variables in the XML template.
+     * @return Returns the FOXML representation of this object.
+     * @throws WebserverSystemException Thrown if the instance cannot be created due to an internal error.
      */
-    public String getContextFoXml(final Map<String, Object> values)
-        throws WebserverSystemException {
+    public String getContextFoXml(final Map<String, Object> values) throws WebserverSystemException {
 
         return getXml(CONTEXT_RESOURCE_NAME, CONTEXT_PATH, values);
     }
 
     /**
      * Gets the FOXML of the RELS-EXT data stream.
-     * 
-     * @param values
-     *            Values to replace the variables in the XML template.
-     * 
-     * @return Returns the FOXML representation of the RELS-EXT data stream for
-     *         this object.
-     * @throws WebserverSystemException
-     *             Thrown if the instance cannot be created due to an internal
-     *             error.
      *
+     * @param values Values to replace the variables in the XML template.
+     * @return Returns the FOXML representation of the RELS-EXT data stream for this object.
+     * @throws WebserverSystemException Thrown if the instance cannot be created due to an internal error.
      */
     public String getRelsExt(final Map values) throws WebserverSystemException {
 
@@ -103,16 +85,10 @@ public final class ContextFoXmlProvider extends InfrastructureFoXmlProvider {
 
     /**
      * Gets the FOXML of the DC data stream.
-     * 
-     * @param values
-     *            Values to replace the variables in the XML template.
-     * 
-     * @return Returns the FOXML representation of the DC data stream for this
-     *         object.
-     * @throws WebserverSystemException
-     *             Thrown if the instance cannot be created due to an internal
-     *             error.
      *
+     * @param values Values to replace the variables in the XML template.
+     * @return Returns the FOXML representation of the DC data stream for this object.
+     * @throws WebserverSystemException Thrown if the instance cannot be created due to an internal error.
      */
     public String getDc(final Map values) throws WebserverSystemException {
 

@@ -23,12 +23,10 @@ package de.escidoc.core.common.exceptions.application.invalid;
 import de.escidoc.core.common.exceptions.application.ApplicationException;
 
 /**
- * The ContextNotEmptyException is used to indicate that the context requested
- * in the service-call is not empty and therefore can't be deleted or closed.
- * returned httpStatusCode is 450.
- * 
- * @author Michael Schneider
+ * The ContextNotEmptyException is used to indicate that the context requested in the service-call is not empty and
+ * therefore can't be deleted or closed. returned httpStatusCode is 450.
  *
+ * @author Michael Schneider
  */
 public class TmeException extends ApplicationException {
 
@@ -39,13 +37,10 @@ public class TmeException extends ApplicationException {
 
     public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_INVALID;
 
-    public static final String HTTP_STATUS_MESSAGE =
-        "Technical metadata extraction failure.";
+    public static final String HTTP_STATUS_MESSAGE = "Technical metadata extraction failure.";
 
     /**
      * Default constructor.
-     * 
-     *
      */
     public TmeException() {
         super(HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -53,9 +48,8 @@ public class TmeException extends ApplicationException {
 
     /**
      * Constructor used to map an initial exception.
-     * 
-     * @param error
-     *            Throwable
+     *
+     * @param error Throwable
      */
     public TmeException(final Throwable error) {
         super(error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -63,24 +57,19 @@ public class TmeException extends ApplicationException {
 
     /**
      * Constructs a new exception with the specified detail message.
-     * 
-     * @param message -
-     *            the detail message.
      *
+     * @param message - the detail message.
      */
     public TmeException(final String message) {
         super(message, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 
     /**
-     * Constructor used to create a new Exception with the specified detail
-     * message and a mapping to an initial exception.
-     * 
-     * @param message -
-     *            the detail message.
-     * @param error
-     *            Throwable
+     * Constructor used to create a new Exception with the specified detail message and a mapping to an initial
+     * exception.
      *
+     * @param message - the detail message.
+     * @param error   Throwable
      */
     public TmeException(final String message, final Throwable error) {
         super(message, error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);

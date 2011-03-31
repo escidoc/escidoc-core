@@ -30,10 +30,11 @@ package de.escidoc.core.test.common.service;
 
 /**
  * The SOAP mapping container class.
- * 
+ *
  * @author Bernhard Kraus (Accenture)
  */
 public class BeanMapping {
+
     private String namespaceUri;
 
     private String namespace;
@@ -42,7 +43,7 @@ public class BeanMapping {
 
     /**
      * Returns the mappend Bean.
-     * 
+     *
      * @return Class The
      */
     public Class getBean() {
@@ -51,9 +52,8 @@ public class BeanMapping {
 
     /**
      * Sets the mapped bean.
-     * 
-     * @param bean
-     *            Mapped bean
+     *
+     * @param bean Mapped bean
      */
     public void setBean(final Class bean) {
         this.bean = bean;
@@ -61,7 +61,7 @@ public class BeanMapping {
 
     /**
      * Returns the NamespaceUri of the bean mapping.
-     * 
+     *
      * @return String Returns the NamespaceUri
      */
     public String getNamespaceUri() {
@@ -70,9 +70,8 @@ public class BeanMapping {
 
     /**
      * Sets the NamespaceUri of the bean mapping.
-     * 
-     * @param namespaceUri
-     *            The NamespaceUri
+     *
+     * @param namespaceUri The NamespaceUri
      */
     public void setNamespaceUri(final String namespaceUri) {
         this.namespaceUri = namespaceUri;
@@ -80,7 +79,7 @@ public class BeanMapping {
 
     /**
      * Returns the Namespace of the bean mapping.
-     * 
+     *
      * @return String The Namespace
      */
     public String getNamespace() {
@@ -89,9 +88,8 @@ public class BeanMapping {
 
     /**
      * Sets the Namespace of the bean mapping.
-     * 
-     * @param namespace
-     *            The Namespace
+     *
+     * @param namespace The Namespace
      */
     public void setNamespace(final String namespace) {
         this.namespace = namespace;

@@ -16,12 +16,15 @@ import static org.junit.Assert.fail;
 public class SetDefinitionRetrieveTest extends SetDefinitionTestBase {
 
     private String objid;
+
     private Document createdSetDefinitionDocument;
+
     private String specification = null;
+
     private String lmd = null;
+
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public SetDefinitionRetrieveTest(final int transport) {
         super(transport);
@@ -29,20 +32,17 @@ public class SetDefinitionRetrieveTest extends SetDefinitionTestBase {
 
     /**
      * Set up test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Before
     public void setUp() throws Exception {
 
-        createdSetDefinitionDocument =
-            createSuccessfully("escidoc_setdefinition_for_create.xml");
+        createdSetDefinitionDocument = createSuccessfully("escidoc_setdefinition_for_create.xml");
         objid = getObjidValue(createdSetDefinitionDocument);
-        specification = selectSingleNode(createdSetDefinitionDocument, 
-            "/set-definition/specification").getTextContent();
-        lmd = selectSingleNode(createdSetDefinitionDocument, 
-        "/set-definition/@last-modification-date").getNodeValue();
+        specification =
+            selectSingleNode(createdSetDefinitionDocument, "/set-definition/specification").getTextContent();
+        lmd = selectSingleNode(createdSetDefinitionDocument, "/set-definition/@last-modification-date").getNodeValue();
     }
 
     @Test
@@ -50,15 +50,15 @@ public class SetDefinitionRetrieveTest extends SetDefinitionTestBase {
         PWCallback.setHandle(PWCallback.ANONYMOUS_HANDLE);
         String retrieved = retrieve(objid);
         Document retrievedDocument = getDocument(retrieved, false);
-        String retrievedSpecification = selectSingleNode(retrievedDocument,
-            "/set-definition/specification").getTextContent();
-        String retrievedLmd = selectSingleNode(retrievedDocument,
-        "/set-definition/@last-modification-date").getNodeValue();
+        String retrievedSpecification =
+            selectSingleNode(retrievedDocument, "/set-definition/specification").getTextContent();
+        String retrievedLmd =
+            selectSingleNode(retrievedDocument, "/set-definition/@last-modification-date").getNodeValue();
         assertEquals("Retrieved set definition specification is wrong", this.specification, retrievedSpecification);
         assertEquals("Retrieved set definition last modofication date specification is wrong", this.lmd, retrievedLmd);
         PWCallback.setHandle(PWCallback.ADMINISTRATOR_HANDLE);
     }
-    
+
     @Test
     public void testRetrieveWithIdNull() throws Exception {
         try {
@@ -67,12 +67,9 @@ public class SetDefinitionRetrieveTest extends SetDefinitionTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
-        
+
     }
-    
-   
-   
+
 }

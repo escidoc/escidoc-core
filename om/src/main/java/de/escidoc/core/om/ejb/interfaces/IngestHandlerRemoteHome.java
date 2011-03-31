@@ -10,9 +10,9 @@ import java.rmi.RemoteException;
 public interface IngestHandlerRemoteHome extends EJBHome {
 
     String COMP_NAME = "java:comp/env/ejb/IngestHandler";
+
     String JNDI_NAME = "ejb/IngestHandler";
 
-    IngestHandlerRemote create()
-            throws CreateException, RemoteException;
+    IngestHandlerRemote create() throws CreateException, RemoteException;
 
 }

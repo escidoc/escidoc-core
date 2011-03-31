@@ -30,15 +30,14 @@ import java.util.Map;
 
 /**
  * Parses the GsearchIndexConfiguration-XML into a Hash-Structure.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 public class GsearchIndexConfigurationHandler extends DefaultHandler {
 
     private final Map<String, Map<String, String>> gsearchIndexConfiguration =
         new HashMap<String, Map<String, String>>();
-    
+
     private static final String INDEX_ELEMENT_NAME = "index";
 
     private static final String INDEX_NAME_ELEMENT_NAME = "name";
@@ -48,28 +47,25 @@ public class GsearchIndexConfigurationHandler extends DefaultHandler {
     private static final String KEY_ELEMENT_NAME = "key";
 
     private static final String VALUE_ELEMENT_NAME = "value";
-    
+
     private String indexName;
-    
+
     private Map<String, String> properties = new HashMap<String, String>();
-    
+
     private String key;
 
     private String value;
 
     /**
      * See Interface for functional description.
-     * 
+     *
      * @param element endElement
      * @return EndElement element
      * @throws WebserverSystemException e
-     * 
-     * @see DefaultHandler
-     *  #endElement(de.escidoc.core.common.util.xml.stax.events.EndElement)
+     * @see DefaultHandler #endElement(de.escidoc.core.common.util.xml.stax.events.EndElement)
      */
     @Override
-    public EndElement endElement(final EndElement element)
-        throws WebserverSystemException {
+    public EndElement endElement(final EndElement element) throws WebserverSystemException {
         if (element.getLocalName().equals(PROPERTY_ELEMENT_NAME)) {
             properties.put(this.key, this.value);
             this.key = null;
@@ -86,26 +82,19 @@ public class GsearchIndexConfigurationHandler extends DefaultHandler {
         return element;
     }
 
-
     /**
      * Handle the character section of an element.
-     * 
-     * @param s
-     *            The contents of the character section.
-     * @param element
-     *            The element.
+     *
+     * @param s       The contents of the character section.
+     * @param element The element.
      * @return The character section.
-     * @throws Exception
-     *             e
+     * @throws Exception e
      */
     @Override
-    public String characters(
-            final String s,
-            final StartElement element)
-            throws Exception {
+    public String characters(final String s, final StartElement element) throws Exception {
         if (INDEX_NAME_ELEMENT_NAME.equals(element.getLocalName())) {
             this.indexName = s;
-        } 
+        }
         else if (KEY_ELEMENT_NAME.equals(element.getLocalName())) {
             this.key = s;
         }
@@ -118,8 +107,7 @@ public class GsearchIndexConfigurationHandler extends DefaultHandler {
     /**
      * @return the gsearchIndexConfiguration
      */
-    public Map<String, Map<String, String>> 
-                        getGsearchIndexConfiguration() {
+    public Map<String, Map<String, String>> getGsearchIndexConfiguration() {
         return this.gsearchIndexConfiguration;
     }
 

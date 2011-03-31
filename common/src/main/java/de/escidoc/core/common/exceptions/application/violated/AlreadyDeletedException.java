@@ -21,13 +21,11 @@
 package de.escidoc.core.common.exceptions.application.violated;
 
 /**
- * The AlreadyDeletedException is used to indicate that the object cannot get
- * deleted because it already is deleted. returned httpStatusCode is 409. Status
- * code (409) indicating that the request could not be completed due to a
+ * The AlreadyDeletedException is used to indicate that the object cannot get deleted because it already is deleted.
+ * returned httpStatusCode is 409. Status code (409) indicating that the request could not be completed due to a
  * conflict with the current state of the resource.
- * 
- * @author Michael Hoppe (FIZ Karlsruhe)
  *
+ * @author Michael Hoppe (FIZ Karlsruhe)
  */
 public class AlreadyDeletedException extends RuleViolationException {
 
@@ -38,13 +36,10 @@ public class AlreadyDeletedException extends RuleViolationException {
 
     public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_VIOLATED;
 
-    public static final String HTTP_STATUS_MESSAGE =
-        "Resource already deleted.";
+    public static final String HTTP_STATUS_MESSAGE = "Resource already deleted.";
 
     /**
      * Default constructor.
-     * 
-     *
      */
     public AlreadyDeletedException() {
         super(HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -52,9 +47,8 @@ public class AlreadyDeletedException extends RuleViolationException {
 
     /**
      * Constructor used to map an initial exception.
-     * 
-     * @param error
-     *            Throwable
+     *
+     * @param error Throwable
      */
     public AlreadyDeletedException(final Throwable error) {
         super(error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -62,24 +56,19 @@ public class AlreadyDeletedException extends RuleViolationException {
 
     /**
      * Constructs a new exception with the specified detail message.
-     * 
-     * @param message -
-     *            the detail message.
      *
+     * @param message - the detail message.
      */
     public AlreadyDeletedException(final String message) {
         super(message, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 
     /**
-     * Constructor used to create a new Exception with the specified detail
-     * message and a mapping to an initial exception.
-     * 
-     * @param message -
-     *            the detail message.
-     * @param error
-     *            Throwable
+     * Constructor used to create a new Exception with the specified detail message and a mapping to an initial
+     * exception.
      *
+     * @param message - the detail message.
+     * @param error   Throwable
      */
     public AlreadyDeletedException(final String message, final Throwable error) {
         super(message, error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);

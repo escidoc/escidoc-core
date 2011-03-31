@@ -38,7 +38,7 @@ import de.escidoc.core.sm.service.interfaces.PreprocessingHandlerInterface;
 
 /**
  * A statistic data resource handler.
- * 
+ *
  * @author Michael Hoppe
  */
 public class PreprocessingHandler implements PreprocessingHandlerInterface {
@@ -47,9 +47,8 @@ public class PreprocessingHandler implements PreprocessingHandlerInterface {
 
     /**
      * Injects the Preprocessing handler.
-     * 
-     * @param preprocessingHandler
-     *            The Preprocessing handler bean to inject.
+     *
+     * @param preprocessingHandler The Preprocessing handler bean to inject.
      */
     public void setPreprocessingHandler(
         final de.escidoc.core.sm.business.interfaces.PreprocessingHandlerInterface preprocessingHandler) {
@@ -59,35 +58,21 @@ public class PreprocessingHandler implements PreprocessingHandlerInterface {
 
     /**
      * See Interface for functional description.
-     * 
-     * @see de.escidoc.core.sm.service.interfaces.PreprocessingHandlerInterface
-     *      #create(java.lang.String)
-     * 
-     * @param aggregationDefinitionId
-     *         id of the aggregation-definition to preprocess.
-     * @param xmlData
-     *            Preprocessing-information as xml in preprocessing-information schema.
-     * 
-     * @throws AuthenticationException
-     *             Thrown in case of failed authentication.
-     * @throws AuthorizationException
-     *             Thrown in case of failed authorization.
-     * @throws XmlSchemaValidationException
-     *             ex
-     * @throws XmlCorruptedException
-     *             ex
-     * @throws MissingMethodParameterException
-     *             ex
-     * @throws SystemException
-     *             ex
-     * 
      *
+     * @param aggregationDefinitionId id of the aggregation-definition to preprocess.
+     * @param xmlData                 Preprocessing-information as xml in preprocessing-information schema.
+     * @throws AuthenticationException      Thrown in case of failed authentication.
+     * @throws AuthorizationException       Thrown in case of failed authorization.
+     * @throws XmlSchemaValidationException ex
+     * @throws XmlCorruptedException        ex
+     * @throws MissingMethodParameterException
+     *                                      ex
+     * @throws SystemException              ex
+     * @see de.escidoc.core.sm.service.interfaces.PreprocessingHandlerInterface #create(java.lang.String)
      */
     @Override
-    public void preprocess(final String aggregationDefinitionId,
-            final String xmlData) throws AuthenticationException,
-        AuthorizationException, XmlSchemaValidationException,
-        XmlCorruptedException, MissingMethodParameterException,
+    public void preprocess(final String aggregationDefinitionId, final String xmlData) throws AuthenticationException,
+        AuthorizationException, XmlSchemaValidationException, XmlCorruptedException, MissingMethodParameterException,
         SystemException {
         handler.preprocess(aggregationDefinitionId, xmlData);
     }

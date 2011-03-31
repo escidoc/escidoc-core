@@ -21,8 +21,8 @@
 package de.escidoc.core.common.business.queue.errorprocessing;
 
 /**
- * Gets traces out of logfile and sends them via email to the
- * queue.error.administrator.email.
+ * Gets traces out of logfile and sends them via email to the queue.error.administrator.email.
+ *
  * @author Michael Hoppe
  */
 public class ErrorQueueProcessor {
@@ -32,21 +32,17 @@ public class ErrorQueueProcessor {
 
     /**
      * core Method.
-     * 
-     * @param logfile
-     *            name of the logfile
-     * 
+     *
+     * @param logfile name of the logfile
      */
     public void execute(final String logfile) {
         //read logfile and do something
     }
 
     /**
-     * @param errorMessageHandler
-     *            ErrorMessageHandler
+     * @param errorMessageHandler ErrorMessageHandler
      */
-    public void setErrorMessageHandler(
-        final ErrorMessageHandler errorMessageHandler) {
+    public void setErrorMessageHandler(final ErrorMessageHandler errorMessageHandler) {
         this.errorMessageHandler = errorMessageHandler;
     }
 

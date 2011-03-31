@@ -49,54 +49,40 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Implementation of an XACML (target) function that checks if a role has been
- * granted to the current user (for an object).<br>
- * The first parameter holds the role name, the second one the object type of
- * the object that shall be checked. <br>
- * This function returns <code>true</code>,
- * <ul>
- * <li>if the role is the dummy role holding the policies of the default user.
- * <li>if the role is a unlimited role and has been granted to the
- * subject(user), or</li>
- * <li>if the role is a limited role and has been granted for the object
- * identified by the resource-id of the context to the current user (subject).</li>
- * </ul>
- * 
+ * Implementation of an XACML (target) function that checks if a role has been granted to the current user (for an
+ * object).<br> The first parameter holds the role name, the second one the object type of the object that shall be
+ * checked. <br> This function returns <code>true</code>, <ul> <li>if the role is the dummy role holding the policies of
+ * the default user. <li>if the role is a unlimited role and has been granted to the subject(user), or</li> <li>if the
+ * role is a limited role and has been granted for the object identified by the resource-id of the context to the
+ * current user (subject).</li> </ul>
+ *
  * @author Michael Hoppe
  */
 public class XacmlFunctionRoleInList extends FunctionBase {
 
-    /** The name of this function. */
-    public static final String NAME =
-        AttributeIds.FUNCTION_PREFIX + "role-in-list";
+    /**
+     * The name of this function.
+     */
+    public static final String NAME = AttributeIds.FUNCTION_PREFIX + "role-in-list";
 
     /**
      * The constructor.
      */
     public XacmlFunctionRoleInList() {
 
-        super(NAME, 0, StringAttribute.identifier, false, 1,
-            BooleanAttribute.identifier, false);
+        super(NAME, 0, StringAttribute.identifier, false, 1, BooleanAttribute.identifier, false);
     }
-
-
 
     /**
      * See Interface for functional description.
-     * 
-     * @param inputs
-     * @param ctx
-     * @return
-     * @see Function#evaluate(List,
-     *      EvaluationCtx)
      *
+     * @see Function#evaluate(List, EvaluationCtx)
      */
     @Override
     public EvaluationResult evaluate(final List inputs, final EvaluationCtx ctx) {
 
         try {
-            final AttributeValue[] argValues =
-                new AttributeValue[inputs.size()];
+            final AttributeValue[] argValues = new AttributeValue[inputs.size()];
             EvaluationResult result = evalArgs(inputs, ctx, argValues);
             if (result != null) {
                 return result;
@@ -104,11 +90,8 @@ public class XacmlFunctionRoleInList extends FunctionBase {
 
             // Get the roles of the user
             final PolicyFinderResult policyFinderResult =
-                new PolicyFinderResult(PoliciesCache
-                    .getUserPolicies(getUserId()));
-            final Collection<String> roleNames =
-                getRoleNames(policyFinderResult.getPolicy(),
-                    new ArrayList<String>());
+                new PolicyFinderResult(PoliciesCache.getUserPolicies(getUserId()));
+            final Collection<String> roleNames = getRoleNames(policyFinderResult.getPolicy(), new ArrayList<String>());
 
             // Compare roles of user with roles in List
             if (argValues != null && argValues[0] != null) {
@@ -130,13 +113,10 @@ public class XacmlFunctionRoleInList extends FunctionBase {
 
     /**
      * Parse name of the Roles the user is in from the attached Policy-Set.
-     * 
-     * @param policy
-     *            policySet
-     * @param roleNames
-     *            Collection with name of roles
-     * @return Collection roleNames
      *
+     * @param policy    policySet
+     * @param roleNames Collection with name of roles
+     * @return Collection roleNames
      */
     private static Collection<String> getRoleNames(final PolicyTreeElement policy, final Collection<String> roleNames) {
         if (policy != null) {
@@ -151,9 +131,9 @@ public class XacmlFunctionRoleInList extends FunctionBase {
                         try {
                             abstractPolicy = (AbstractPolicy) o;
                             final PolicyTreeElement policyReference = abstractPolicy;
-                            roleNames.add(policyReference
-                                    .getId().getPath().toLowerCase());
-                        } catch (final Exception e1) {
+                            roleNames.add(policyReference.getId().getPath().toLowerCase());
+                        }
+                        catch (final Exception e1) {
                             getRoleNames(abstractPolicy, roleNames);
                         }
                     }
@@ -165,13 +145,11 @@ public class XacmlFunctionRoleInList extends FunctionBase {
 
     /**
      * gets UserId from UserContext.
-     * 
+     * <p/>
      * <pre>
      * </pre>
-     * 
+     *
      * @return String userId
-     * @wm
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private static String getUserId() throws WebserverSystemException {
         return UserContext.getId();

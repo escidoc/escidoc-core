@@ -33,22 +33,17 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 
 /**
  * Interface of an action renderer.
- * 
- * @author Torsten Tetteroo
  *
+ * @author Torsten Tetteroo
  */
 public interface ActionRendererInterface {
 
     /**
      * Gets the representation of the list of unsecured actions.
-     * 
-     * @param actions
-     *            The unsecured action list to render.
-     * @return Returns the XML representation of the list of unsecured actions.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
      *
+     * @param actions The unsecured action list to render.
+     * @return Returns the XML representation of the list of unsecured actions.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    String renderUnsecuredActionList(final UnsecuredActionList actions)
-        throws WebserverSystemException;
+    String renderUnsecuredActionList(final UnsecuredActionList actions) throws WebserverSystemException;
 }

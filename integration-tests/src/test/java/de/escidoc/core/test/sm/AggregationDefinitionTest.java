@@ -47,9 +47,8 @@ import static org.junit.Assert.fail;
 
 /**
  * Test the implementation of the AggregationDefinition resource.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 @RunWith(value = Parameterized.class)
 public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
@@ -62,12 +61,10 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
 
     private static int methodCounter = 0;
 
-    public static final String XPATH_SRW_AGG_DEF_LIST_AGG_DEF =
-        XPATH_SRW_RESPONSE_OBJECT + NAME_AGG_DEF;
-    
+    public static final String XPATH_SRW_AGG_DEF_LIST_AGG_DEF = XPATH_SRW_RESPONSE_OBJECT + NAME_AGG_DEF;
+
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public AggregationDefinitionTest(final int transport) {
         super(transport);
@@ -75,9 +72,8 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
 
     /**
      * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Before
     public void initialize() throws Exception {
@@ -91,9 +87,8 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
 
     /**
      * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @After
     public void deinitialize() throws Exception {
@@ -107,23 +102,19 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
 
     /**
      * Creates scope for tests.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     private void createScope() throws Exception {
-        String xml =
-            getTemplateAsFixedScopeString(TEMPLATE_SCOPE_PATH,
-                "escidoc_scope1.xml");
+        String xml = getTemplateAsFixedScopeString(TEMPLATE_SCOPE_PATH, "escidoc_scope1.xml");
         String result = scope.create(xml);
         scopeId = getPrimKey(result);
     }
 
     /**
      * delete scope to clean database.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     public void deleteScope() throws Exception {
         scope.delete(scopeId.toString());
@@ -131,14 +122,12 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
 
     /**
      * create new aggregation-definition.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     public void createAggregationDefinition() throws Exception {
         String xml =
-            getTemplateAsFixedAggregationDefinitionString(
-                TEMPLATE_AGG_DEF_PATH, "escidoc_aggregation_definition2.xml");
+            getTemplateAsFixedAggregationDefinitionString(TEMPLATE_AGG_DEF_PATH, "escidoc_aggregation_definition2.xml");
         xml = replaceElementPrimKey(xml, "scope", scopeId.toString());
         try {
             String result = create(xml);
@@ -152,9 +141,8 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
 
     /**
      * delete aggrgation-definition.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     public void deleteAggregationDefinition() throws Exception {
         for (String primKey : primKeys) {
@@ -164,9 +152,8 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
 
     /**
      * retrieve aggregation-definition.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSMAD1() throws Exception {
@@ -176,9 +163,8 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
 
     /**
      * retrieve aggregation-definition with invalid id.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSMAD2() throws Exception {
@@ -189,22 +175,19 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
         }
         catch (final Exception e) {
             String exceptionType = e.getClass().getSimpleName();
-            assertEquals("AggregationDefinitionNotFoundException",
-                exceptionType);
+            assertEquals("AggregationDefinitionNotFoundException", exceptionType);
         }
     }
 
     /**
      * create aggregation-definition with invalid xml.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSMAD3() throws Exception {
         String xml =
-            getTemplateAsFixedAggregationDefinitionString(
-                TEMPLATE_AGG_DEF_PATH,
+            getTemplateAsFixedAggregationDefinitionString(TEMPLATE_AGG_DEF_PATH,
                 "escidoc_aggregation_definition_invalid.xml");
         xml = replaceElementPrimKey(xml, "scope", scopeId.toString());
         try {
@@ -220,15 +203,13 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
 
     /**
      * create with wrong namespace-prefix.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSMAD4() throws Exception {
         String xml =
-            getTemplateAsFixedAggregationDefinitionString(
-                TEMPLATE_AGG_DEF_PATH, "escidoc_aggregation_definition4.xml");
+            getTemplateAsFixedAggregationDefinitionString(TEMPLATE_AGG_DEF_PATH, "escidoc_aggregation_definition4.xml");
         xml = replaceElementPrimKey(xml, "scope", scopeId.toString());
         try {
             create(xml);
@@ -243,15 +224,13 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
 
     /**
      * create correct namespace-prefix.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSMAD5() throws Exception {
         String xml =
-            getTemplateAsFixedAggregationDefinitionString(
-                TEMPLATE_AGG_DEF_PATH, "escidoc_aggregation_definition1.xml");
+            getTemplateAsFixedAggregationDefinitionString(TEMPLATE_AGG_DEF_PATH, "escidoc_aggregation_definition1.xml");
         xml = replaceElementPrimKey(xml, "scope", scopeId.toString());
         String result = create(xml);
         primKeys.add(getPrimKey(result));
@@ -260,15 +239,13 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
 
     /**
      * create with id-attribute.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSMAD6() throws Exception {
         String xml =
-            getTemplateAsFixedAggregationDefinitionString(
-                TEMPLATE_AGG_DEF_PATH, "escidoc_aggregation_definition2.xml");
+            getTemplateAsFixedAggregationDefinitionString(TEMPLATE_AGG_DEF_PATH, "escidoc_aggregation_definition2.xml");
         xml = replaceElementPrimKey(xml, "scope", scopeId.toString());
         String result = create(xml);
         String primKey = getPrimKey(result);
@@ -279,15 +256,13 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
 
     /**
      * create with wrong scope.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSMAD7() throws Exception {
         String xml =
-            getTemplateAsFixedAggregationDefinitionString(
-                TEMPLATE_AGG_DEF_PATH, "escidoc_aggregation_definition2.xml");
+            getTemplateAsFixedAggregationDefinitionString(TEMPLATE_AGG_DEF_PATH, "escidoc_aggregation_definition2.xml");
         try {
             create(xml);
             fail("No exception occured on create with wrong scope.");
@@ -301,20 +276,17 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
 
     /**
      * create with reserved expression in fieldname.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSMAD8() throws Exception {
         String xml =
-            getTemplateAsFixedAggregationDefinitionString(
-                TEMPLATE_AGG_DEF_PATH, "escidoc_aggregation_definition6.xml");
+            getTemplateAsFixedAggregationDefinitionString(TEMPLATE_AGG_DEF_PATH, "escidoc_aggregation_definition6.xml");
         xml = replaceElementPrimKey(xml, "scope", scopeId.toString());
         try {
             create(xml);
-            fail("No exception occured on create with "
-                + "reserved expression in fieldname.");
+            fail("No exception occured on create with " + "reserved expression in fieldname.");
 
         }
         catch (final Exception e) {
@@ -325,20 +297,17 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
 
     /**
      * create with whitespace in tablename.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSMAD8_1() throws Exception {
         String xml =
-            getTemplateAsFixedAggregationDefinitionString(
-                TEMPLATE_AGG_DEF_PATH, "escidoc_aggregation_definition7.xml");
+            getTemplateAsFixedAggregationDefinitionString(TEMPLATE_AGG_DEF_PATH, "escidoc_aggregation_definition7.xml");
         xml = replaceElementPrimKey(xml, "scope", scopeId.toString());
         try {
             create(xml);
-            fail("No exception occured on create with "
-                + "whitespace in tablename.");
+            fail("No exception occured on create with " + "whitespace in tablename.");
 
         }
         catch (final Exception e) {
@@ -349,20 +318,17 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
 
     /**
      * create with whitespace in fieldname.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSMAD8_2() throws Exception {
         String xml =
-            getTemplateAsFixedAggregationDefinitionString(
-                TEMPLATE_AGG_DEF_PATH, "escidoc_aggregation_definition8.xml");
+            getTemplateAsFixedAggregationDefinitionString(TEMPLATE_AGG_DEF_PATH, "escidoc_aggregation_definition8.xml");
         xml = replaceElementPrimKey(xml, "scope", scopeId.toString());
         try {
             create(xml);
-            fail("No exception occured on create with "
-                + "whitespace in fieldname.");
+            fail("No exception occured on create with " + "whitespace in fieldname.");
 
         }
         catch (final Exception e) {
@@ -373,20 +339,17 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
 
     /**
      * create with whitespace in indexname.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSMAD8_3() throws Exception {
         String xml =
-            getTemplateAsFixedAggregationDefinitionString(
-                TEMPLATE_AGG_DEF_PATH, "escidoc_aggregation_definition9.xml");
+            getTemplateAsFixedAggregationDefinitionString(TEMPLATE_AGG_DEF_PATH, "escidoc_aggregation_definition9.xml");
         xml = replaceElementPrimKey(xml, "scope", scopeId.toString());
         try {
             create(xml);
-            fail("No exception occured on create with "
-                + "whitespace in indexname.");
+            fail("No exception occured on create with " + "whitespace in indexname.");
 
         }
         catch (final Exception e) {
@@ -397,20 +360,17 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
 
     /**
      * create with whitespace in index fieldname.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSMAD8_4() throws Exception {
         String xml =
-            getTemplateAsFixedAggregationDefinitionString(
-                TEMPLATE_AGG_DEF_PATH, "escidoc_aggregation_definition10.xml");
+            getTemplateAsFixedAggregationDefinitionString(TEMPLATE_AGG_DEF_PATH, "escidoc_aggregation_definition10.xml");
         xml = replaceElementPrimKey(xml, "scope", scopeId.toString());
         try {
             create(xml);
-            fail("No exception occured on create with "
-                + "whitespace in index fieldname.");
+            fail("No exception occured on create with " + "whitespace in index fieldname.");
 
         }
         catch (final Exception e) {
@@ -421,20 +381,17 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
 
     /**
      * create with quote in tablename.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSMAD8_5() throws Exception {
         String xml =
-            getTemplateAsFixedAggregationDefinitionString(
-                TEMPLATE_AGG_DEF_PATH, "escidoc_aggregation_definition11.xml");
+            getTemplateAsFixedAggregationDefinitionString(TEMPLATE_AGG_DEF_PATH, "escidoc_aggregation_definition11.xml");
         xml = replaceElementPrimKey(xml, "scope", scopeId.toString());
         try {
             create(xml);
-            fail("No exception occured on create with "
-                + "quote in tablename.");
+            fail("No exception occured on create with " + "quote in tablename.");
 
         }
         catch (final Exception e) {
@@ -445,20 +402,17 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
 
     /**
      * create with quote in fieldname.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSMAD8_6() throws Exception {
         String xml =
-            getTemplateAsFixedAggregationDefinitionString(
-                TEMPLATE_AGG_DEF_PATH, "escidoc_aggregation_definition12.xml");
+            getTemplateAsFixedAggregationDefinitionString(TEMPLATE_AGG_DEF_PATH, "escidoc_aggregation_definition12.xml");
         xml = replaceElementPrimKey(xml, "scope", scopeId.toString());
         try {
             create(xml);
-            fail("No exception occured on create with "
-                + "quote in fieldname.");
+            fail("No exception occured on create with " + "quote in fieldname.");
 
         }
         catch (final Exception e) {
@@ -469,20 +423,17 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
 
     /**
      * create with quote in indexname.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSMAD8_7() throws Exception {
         String xml =
-            getTemplateAsFixedAggregationDefinitionString(
-                TEMPLATE_AGG_DEF_PATH, "escidoc_aggregation_definition13.xml");
+            getTemplateAsFixedAggregationDefinitionString(TEMPLATE_AGG_DEF_PATH, "escidoc_aggregation_definition13.xml");
         xml = replaceElementPrimKey(xml, "scope", scopeId.toString());
         try {
             create(xml);
-            fail("No exception occured on create with "
-                + "quote in indexname.");
+            fail("No exception occured on create with " + "quote in indexname.");
 
         }
         catch (final Exception e) {
@@ -493,20 +444,17 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
 
     /**
      * create with quote in index fieldname.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSMAD8_8() throws Exception {
         String xml =
-            getTemplateAsFixedAggregationDefinitionString(
-                TEMPLATE_AGG_DEF_PATH, "escidoc_aggregation_definition14.xml");
+            getTemplateAsFixedAggregationDefinitionString(TEMPLATE_AGG_DEF_PATH, "escidoc_aggregation_definition14.xml");
         xml = replaceElementPrimKey(xml, "scope", scopeId.toString());
         try {
             create(xml);
-            fail("No exception occured on create with "
-                + "quote in index fieldname.");
+            fail("No exception occured on create with " + "quote in index fieldname.");
 
         }
         catch (final Exception e) {
@@ -517,38 +465,26 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
 
     /**
      * retrieve list of all aggregation-definitions.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSMAD9CQL() throws Exception {
-        String result =
-            retrieveAggregationDefinitions(new HashMap<String, String[]>());
+        String result = retrieveAggregationDefinitions(new HashMap<String, String[]>());
         assertXmlValidSrwResponse(result);
     }
 
     /**
-     * Test successful retrieving a list of existing 
-     * AggregationDefinitions resources.
-     * Test if maximumRecords=0 delivers 0 Roles
-     * 
-     * @test.name Retrieve AggregationDefinitions - Success.
-     * @test.id emptyFilterZeroMaximumRecords
-     * @test.input Valid filter criteria.
-     * @test.expected: XML representation of the list of AggregationDefinitions
-     *                 containing 0 AggregationDefinitions.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test successful retrieving a list of existing AggregationDefinitions resources. Test if maximumRecords=0 delivers
+     * 0 Roles
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void emptyFilterZeroMaximumRecords() throws Exception {
 
-        final Map <String, String[]> filterParams =
-            new HashMap<String, String[]>();
-            filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] {"0"});
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "0" });
 
         String result = null;
 
@@ -556,41 +492,28 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
             result = retrieveAggregationDefinitions(filterParams);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Retrieving of list of AggregationDefinitions failed. ", e);
+            EscidocRestSoapTestBase.failException("Retrieving of list of AggregationDefinitions failed. ", e);
         }
 
         assertXmlValidSrwResponse(result);
-        Document retrievedDocument =
-            EscidocRestSoapTestBase.getDocument(result);
-        NodeList resultNodes =
-            selectNodeList(retrievedDocument,
-                XPATH_SRW_AGG_DEF_LIST_AGG_DEF);
+        Document retrievedDocument = EscidocRestSoapTestBase.getDocument(result);
+        NodeList resultNodes = selectNodeList(retrievedDocument, XPATH_SRW_AGG_DEF_LIST_AGG_DEF);
         final int totalRecordsWithZeroMaximum = resultNodes.getLength();
-        
-        assertEquals("Unexpected number of records.", 
-            totalRecordsWithZeroMaximum, 0);
+
+        assertEquals("Unexpected number of records.", totalRecordsWithZeroMaximum, 0);
 
     }
 
     /**
      * Test successfully retrieving an explain response.
-     * 
-     * @test.name explainTest
-     * @test.id explainTest
-     * @test.input
-     * @test.expected: valid explain response.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void explainTest() throws Exception {
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(EscidocRestSoapTestBase.FILTER_PARAMETER_EXPLAIN,
-            new String[] { "" });
+        filterParams.put(EscidocRestSoapTestBase.FILTER_PARAMETER_EXPLAIN, new String[] { "" });
 
         String result = null;
 

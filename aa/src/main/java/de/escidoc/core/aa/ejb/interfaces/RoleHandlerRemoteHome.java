@@ -10,9 +10,9 @@ import java.rmi.RemoteException;
 public interface RoleHandlerRemoteHome extends EJBHome {
 
     String COMP_NAME = "java:comp/env/ejb/RoleHandler";
+
     String JNDI_NAME = "ejb/RoleHandler";
 
-    RoleHandlerRemote create()
-            throws CreateException, RemoteException;
+    RoleHandlerRemote create() throws CreateException, RemoteException;
 
 }

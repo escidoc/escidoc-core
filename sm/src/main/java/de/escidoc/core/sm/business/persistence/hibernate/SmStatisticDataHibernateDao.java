@@ -39,73 +39,50 @@ import java.util.List;
 
 /**
  * Database-Backend for the Statistic-Data database-table.
- * 
+ *
  * @author Michael Hoppe
  */
-public class SmStatisticDataHibernateDao extends AbstractHibernateDao
-    implements SmStatisticDataDaoInterface {
+public class SmStatisticDataHibernateDao extends AbstractHibernateDao implements SmStatisticDataDaoInterface {
 
     public static final String QUERY_MIN_TIMESTAMP_FOR_SCOPE =
-        "select min(timemarker) from StatisticData sd "
-            + "where sd.scope.id = ?";
+        "select min(timemarker) from StatisticData sd " + "where sd.scope.id = ?";
 
     /**
      * See Interface for functional description.
-     * 
-     * @see SmStatisticDataDaoInterface
-     *      #saveStatisticData(java.lang.String, java.lang.String)
-     * 
-     * @param xmlData
-     *            The statistic data xml.
-     * @param scopeId
-     *            The id of the scope.
-     * @throws SqlDatabaseSystemException
-     *             e
-     * 
      *
+     * @param xmlData The statistic data xml.
+     * @param scopeId The id of the scope.
+     * @throws SqlDatabaseSystemException e
+     * @see SmStatisticDataDaoInterface #saveStatisticData(java.lang.String, java.lang.String)
      */
     @Override
-    public void saveStatisticData(final String xmlData, final String scopeId)
-        throws SqlDatabaseSystemException {
+    public void saveStatisticData(final String xmlData, final String scopeId) throws SqlDatabaseSystemException {
         final Scope scope = new Scope();
         scope.setId(scopeId);
-        final StatisticData data =
-            new StatisticData(xmlData,
-                new Timestamp(System.currentTimeMillis()), scope);
+        final StatisticData data = new StatisticData(xmlData, new Timestamp(System.currentTimeMillis()), scope);
         save(data);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @see de.escidoc.core.sm.business
-     *      .persistence.SmAggregationDefinitionsDaoInterface
-     *      #retrieveAggregationDefinition(java.lang.Integer)
-     * 
-     * @param scopeId
-     *            The scopeId.
-     * @return Date min date of given scope
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database access error.
-     * 
      *
+     * @param scopeId The scopeId.
+     * @return Date min date of given scope
+     * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
+     * @see de.escidoc.core.sm.business .persistence.SmAggregationDefinitionsDaoInterface
+     *      #retrieveAggregationDefinition(java.lang.Integer)
      */
     @Override
-    public Date retrieveMinTimestamp(final String scopeId)
-        throws SqlDatabaseSystemException {
+    public Date retrieveMinTimestamp(final String scopeId) throws SqlDatabaseSystemException {
 
-        final List results =
-            getHibernateTemplate().find(QUERY_MIN_TIMESTAMP_FOR_SCOPE,
-                new Object[] { scopeId });
+        final List results = getHibernateTemplate().find(QUERY_MIN_TIMESTAMP_FOR_SCOPE, new Object[] { scopeId });
         return results != null ? (Date) results.get(0) : null;
     }
 
     /**
-     * Wrapper of setSessionFactory to enable bean stuff generation for this
-     * bean.
-     * 
-     * @param mySessionFactory
-     *            The sessionFactory to set.
+     * Wrapper of setSessionFactory to enable bean stuff generation for this bean.
+     *
+     * @param mySessionFactory The sessionFactory to set.
      */
     public final void setMySessionFactory(final SessionFactory mySessionFactory) {
 

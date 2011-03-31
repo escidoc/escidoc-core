@@ -37,53 +37,42 @@ import org.junit.runners.Parameterized;
 import static org.junit.Assert.fail;
 
 /**
- * This tests test test methods. OK, it's clear that tests can't fully check
- * systems, but it seems reasonable to check some test methods.
- * 
+ * This tests test test methods. OK, it's clear that tests can't fully check systems, but it seems reasonable to check
+ * some test methods.
+ *
  * @author Steffen Wagner
- * 
  */
 @RunWith(value = Parameterized.class)
 public class AssertTests extends OmTestBase {
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public AssertTests(final int transport) {
         super(transport);
     }
 
     /**
-     * Check if the assertXmlEquals method throws an exception if the name of
-     * the root elements differs.
-     * 
-     * @throws Exception
+     * Check if the assertXmlEquals method throws an exception if the name of the root elements differs.
      */
     @Test
     public void testAssertXmlEquals() throws Exception {
 
         try {
             String xmlData =
-                EscidocRestSoapTestBase.getTemplateAsString(
-                    TEMPLATE_CONTAINER_PATH + "/" + getTransport(false),
+                EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_CONTAINER_PATH + "/" + getTransport(false),
                     "create_container.xml");
-            String containerXml =
-                handleXmlResult(getContainerClient().create(xmlData));
+            String containerXml = handleXmlResult(getContainerClient().create(xmlData));
 
             String tempItemXml =
-                EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
-                    + "/" + getTransport(false),
+                EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
                     "escidoc_item_198_for_create.xml");
 
             String containerId = getObjidValue(containerXml);
-            String itemXml =
-                handleXmlResult(getContainerClient().createItem(containerId,
-                    tempItemXml));
+            String itemXml = handleXmlResult(getContainerClient().createItem(containerId, tempItemXml));
 
             // both documents should differ at least in the root elements
-            assertXmlEquals("createItem() response should equals retrieve",
-                containerXml, itemXml);
+            assertXmlEquals("createItem() response should equals retrieve", containerXml, itemXml);
 
             fail("AssertXmlEquals does not recognize root element");
         }

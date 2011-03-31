@@ -14,16 +14,10 @@ import java.rmi.RemoteException;
  */
 public interface StatisticDataHandlerRemote extends EJBObject {
 
-    void create(String xmlData, SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            SystemException, RemoteException;
+    void create(String xmlData, SecurityContext securityContext) throws AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, SystemException, RemoteException;
 
-    void create(String xmlData, String authHandle, Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            SystemException, RemoteException;
+    void create(String xmlData, String authHandle, Boolean restAccess) throws AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, SystemException, RemoteException;
 
 }

@@ -63,7 +63,6 @@ import java.util.Collection;
 
 /**
  * Handle and obtain values from Item Properties section.
- * 
  */
 public class ItemPropertiesHandler extends DefaultHandler {
 
@@ -73,30 +72,24 @@ public class ItemPropertiesHandler extends DefaultHandler {
 
     private static final String XPATH_ITEM = '/' + Elements.ELEMENT_ITEM;
 
-    private static final String XPATH_ITEM_PROPERTIES =
-        XPATH_ITEM + '/' + Elements.ELEMENT_PROPERTIES;
+    private static final String XPATH_ITEM_PROPERTIES = XPATH_ITEM + '/' + Elements.ELEMENT_PROPERTIES;
 
     private static final String XPATH_ITEM_CONTENT_MODEL_SPECIFIC =
         XPATH_ITEM_PROPERTIES + '/' + Elements.ELEMENT_CONTENT_MODEL_SPECIFIC;
 
     private final Collection<String> expectedElements = new ArrayList<String>();
 
-    private static final Logger LOGGER =
-        LoggerFactory.getLogger(ItemPropertiesHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ItemPropertiesHandler.class);
 
     private boolean parsingContentModelSpecific;
 
     private MultipleExtractor contentModelHandler;
 
     /**
-     * 
-     * @param parser
-     *            StAX Parser
-     * @throws WebserverSystemException
-     *             Thrown by VersionProperties if obtaining user context failed.
+     * @param parser StAX Parser
+     * @throws WebserverSystemException Thrown by VersionProperties if obtaining user context failed.
      */
-    public ItemPropertiesHandler(final StaxParser parser)
-        throws WebserverSystemException {
+    public ItemPropertiesHandler(final StaxParser parser) throws WebserverSystemException {
 
         this.parser = parser;
         this.properties = new ItemProperties();
@@ -104,7 +97,7 @@ public class ItemPropertiesHandler extends DefaultHandler {
 
     /**
      * Get ItemProperties.
-     * 
+     *
      * @return ItemProperties.
      */
     public ItemProperties getProperties() {
@@ -113,19 +106,13 @@ public class ItemPropertiesHandler extends DefaultHandler {
     }
 
     /**
-     * @param element
-     *            StartElement
+     * @param element StartElement
      * @return StartElement
-     * @throws XMLStreamException
-     * @throws InvalidContentException
-     * 
      */
     @Override
-    public StartElement startElement(final StartElement element)
-        throws ContentModelNotFoundException, ContextNotFoundException,
-        MissingAttributeValueException, ReadonlyAttributeViolationException,
-        ReadonlyElementViolationException, WebserverSystemException,
-        XMLStreamException, InvalidContentException {
+    public StartElement startElement(final StartElement element) throws ContentModelNotFoundException,
+        ContextNotFoundException, MissingAttributeValueException, ReadonlyAttributeViolationException,
+        ReadonlyElementViolationException, WebserverSystemException, XMLStreamException, InvalidContentException {
 
         if (this.parsingContentModelSpecific) {
             this.contentModelHandler.startElement(element);
@@ -148,13 +135,10 @@ public class ItemPropertiesHandler extends DefaultHandler {
                 else if (theName.equals(Elements.ELEMENT_ORIGIN)) {
                     handleOrigin(element);
                 }
-                else if (theName
-                    .equals(Elements.ELEMENT_CONTENT_MODEL_SPECIFIC)) {
+                else if (theName.equals(Elements.ELEMENT_CONTENT_MODEL_SPECIFIC)) {
 
                     this.parsingContentModelSpecific = true;
-                    this.contentModelHandler =
-                        new MultipleExtractor(
-                            XPATH_ITEM_CONTENT_MODEL_SPECIFIC, this.parser);
+                    this.contentModelHandler = new MultipleExtractor(XPATH_ITEM_CONTENT_MODEL_SPECIFIC, this.parser);
 
                     this.contentModelHandler.startElement(element);
                 }
@@ -164,25 +148,18 @@ public class ItemPropertiesHandler extends DefaultHandler {
     }
 
     /**
-     * @param element
-     *            EndElement
+     * @param element EndElement
      * @return EndElement
-     * @throws XMLStreamException
-     * @throws UnsupportedEncodingException
-     * 
      */
     @Override
-    public EndElement endElement(final EndElement element)
-        throws InvalidXmlException, MissingAttributeValueException,
-        SystemException, ContextNotFoundException,
-        ContentModelNotFoundException, XMLStreamException,
+    public EndElement endElement(final EndElement element) throws InvalidXmlException, MissingAttributeValueException,
+        SystemException, ContextNotFoundException, ContentModelNotFoundException, XMLStreamException,
         UnsupportedEncodingException {
 
         final String currentPath = parser.getCurPath();
         if (currentPath.equals(XPATH_ITEM_PROPERTIES)) {
             if (!expectedElements.isEmpty()) {
-                throw new XmlCorruptedException("One of "
-                    + expectedElements.toString() + " missing.");
+                throw new XmlCorruptedException("One of " + expectedElements.toString() + " missing.");
             }
 
             // String id = properties.get(TripleStoreUtility.PROP_CONTEXT_ID);
@@ -191,20 +168,19 @@ public class ItemPropertiesHandler extends DefaultHandler {
             utility.checkIsContext(id);
             id = this.properties.getObjectProperties().getContentModelId();
             utility.checkIsContentModel(id);
-        } else if (currentPath.equals(XPATH_ITEM_CONTENT_MODEL_SPECIFIC)) {
-            if(LOGGER.isDebugEnabled()) {
+        }
+        else if (currentPath.equals(XPATH_ITEM_CONTENT_MODEL_SPECIFIC)) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Parser reached end of " + XPATH_ITEM_CONTENT_MODEL_SPECIFIC);
             }
             this.parsingContentModelSpecific = false;
             this.contentModelHandler.endElement(element);
 
             final ByteArrayOutputStream cms =
-                (ByteArrayOutputStream) this.contentModelHandler
-                    .getOutputStreams().get(
-                        Elements.ELEMENT_CONTENT_MODEL_SPECIFIC);
+                (ByteArrayOutputStream) this.contentModelHandler.getOutputStreams().get(
+                    Elements.ELEMENT_CONTENT_MODEL_SPECIFIC);
 
-            this.properties.setContentModelSpecific(cms.toString(
-                XmlUtility.CHARACTER_ENCODING).trim());
+            this.properties.setContentModelSpecific(cms.toString(XmlUtility.CHARACTER_ENCODING).trim());
             this.contentModelHandler = null;
         }
         else {
@@ -225,18 +201,16 @@ public class ItemPropertiesHandler extends DefaultHandler {
      * de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
-    public String characters(final String data, final StartElement element)
-        throws WebserverSystemException, InvalidStatusException {
+    public String characters(final String data, final StartElement element) throws WebserverSystemException,
+        InvalidStatusException {
 
         final String curPath = parser.getCurPath();
         if (curPath.equals(XPATH_ITEM_PROPERTIES + '/' + Elements.ELEMENT_PID)) {
             // properties.put(TripleStoreUtility.PROP_OBJECT_PID, data);
             this.properties.getObjectProperties().setPid(data);
         }
-        else if (curPath.equals(XPATH_ITEM_PROPERTIES + '/'
-            + Elements.ELEMENT_PUBLIC_STATUS)) {
-            this.properties
-                .getObjectProperties().setStatus(getStatusType(data));
+        else if (curPath.equals(XPATH_ITEM_PROPERTIES + '/' + Elements.ELEMENT_PUBLIC_STATUS)) {
+            this.properties.getObjectProperties().setStatus(getStatusType(data));
         }
         else if (this.parsingContentModelSpecific) {
             this.contentModelHandler.characters(data, element);
@@ -246,22 +220,15 @@ public class ItemPropertiesHandler extends DefaultHandler {
     }
 
     /**
-     * @param element
-     *            StAX StartElement
-     * @throws MissingAttributeValueException
-     * @throws WebserverSystemException
-     * @throws ContextNotFoundException
-     * 
+     * @param element StAX StartElement
      */
-    private void handleContextElement(final StartElement element)
-        throws MissingAttributeValueException, WebserverSystemException,
-        ContextNotFoundException {
+    private void handleContextElement(final StartElement element) throws MissingAttributeValueException,
+        WebserverSystemException, ContextNotFoundException {
 
         this.expectedElements.remove(Elements.ELEMENT_CONTEXT);
         String contextId;
         try {
-            contextId =
-                element.getAttributeValue(null, Elements.ATTRIBUTE_XLINK_OBJID);
+            contextId = element.getAttributeValue(null, Elements.ATTRIBUTE_XLINK_OBJID);
             if (contextId == null || contextId.length() < 1) {
                 throw new MissingAttributeValueException("No context id found.");
             }
@@ -269,17 +236,14 @@ public class ItemPropertiesHandler extends DefaultHandler {
         catch (final NoSuchAttributeException e) {
             final String href;
             try {
-                href =
-                    element.getAttributeValue(Constants.XLINK_NS_URI,
-                        Elements.ATTRIBUTE_XLINK_HREF);
+                href = element.getAttributeValue(Constants.XLINK_NS_URI, Elements.ATTRIBUTE_XLINK_HREF);
             }
             catch (final NoSuchAttributeException e1) {
                 String att = Elements.ATTRIBUTE_XLINK_OBJID;
                 if (UserContext.isRestAccess()) {
                     att = Elements.ATTRIBUTE_XLINK_HREF;
                 }
-                throw new MissingAttributeValueException("The attribute " + att
-                    + " of " + Elements.ELEMENT_CONTEXT
+                throw new MissingAttributeValueException("The attribute " + att + " of " + Elements.ELEMENT_CONTEXT
                     + " is missing in item for create.", e);
             }
             final int indexOfLastSlash = href.lastIndexOf('/');
@@ -287,46 +251,33 @@ public class ItemPropertiesHandler extends DefaultHandler {
             if (contextId == null || contextId.length() < 1) {
                 throw new MissingAttributeValueException("No context id found.", e);
             }
-            if (!href.substring(0, indexOfLastSlash + 1).equalsIgnoreCase(
-                Constants.CONTEXT_URL_BASE)) {
-                throw new ContextNotFoundException("The " + Elements.ELEMENT_CONTEXT
-                        + " element has a wrong url."
-                        + "the url have to look like: "
-                        + Constants.CONTEXT_URL_BASE + "[id] ", e);
+            if (!href.substring(0, indexOfLastSlash + 1).equalsIgnoreCase(Constants.CONTEXT_URL_BASE)) {
+                throw new ContextNotFoundException("The " + Elements.ELEMENT_CONTEXT + " element has a wrong url."
+                    + "the url have to look like: " + Constants.CONTEXT_URL_BASE + "[id] ", e);
             }
         }
         this.properties.getObjectProperties().setContextId(contextId);
     }
 
     /**
-     * 
-     * @param element
-     *            StAX StartElement
-     * @throws MissingAttributeValueException
-     * @throws WebserverSystemException
-     * @throws ContentModelNotFoundException
+     * @param element StAX StartElement
      */
-    private void handleContentModel(final StartElement element)
-        throws MissingAttributeValueException, WebserverSystemException,
-        ContentModelNotFoundException {
+    private void handleContentModel(final StartElement element) throws MissingAttributeValueException,
+        WebserverSystemException, ContentModelNotFoundException {
         expectedElements.remove(Elements.ELEMENT_CONTENT_MODEL);
         // FIXME check this method: it seams that here is a mixture
         // between variable names (contentModelId and contextId)
         String contentModelId;
         try {
-            contentModelId =
-                element.getAttributeValue(null, Elements.ATTRIBUTE_XLINK_OBJID);
+            contentModelId = element.getAttributeValue(null, Elements.ATTRIBUTE_XLINK_OBJID);
             if (contentModelId == null || contentModelId.length() < 1) {
-                throw new MissingAttributeValueException(
-                    "No content-model id found.");
+                throw new MissingAttributeValueException("No content-model id found.");
             }
         }
         catch (final NoSuchAttributeException e) {
             final String href;
             try {
-                href =
-                    element.getAttributeValue(Constants.XLINK_NS_URI,
-                        Elements.ATTRIBUTE_XLINK_HREF);
+                href = element.getAttributeValue(Constants.XLINK_NS_URI, Elements.ATTRIBUTE_XLINK_HREF);
             }
             catch (final NoSuchAttributeException e1) {
                 String att = Elements.ATTRIBUTE_XLINK_OBJID;
@@ -335,22 +286,18 @@ public class ItemPropertiesHandler extends DefaultHandler {
                 }
                 final String refType = Elements.ELEMENT_CONTENT_MODEL;
                 final String objType = "item";
-                throw new MissingAttributeValueException("The attribute " + att
-                    + " of " + refType + " is missing in " + objType
-                    + " for create.", e);
+                throw new MissingAttributeValueException("The attribute " + att + " of " + refType + " is missing in "
+                    + objType + " for create.", e);
             }
             final int indexOfLastSlash = href.lastIndexOf('/');
             contentModelId = href.substring(indexOfLastSlash + 1);
             if (contentModelId == null || contentModelId.length() < 1) {
-                throw new MissingAttributeValueException(
-                    "No content model id found.", e);
+                throw new MissingAttributeValueException("No content model id found.", e);
             }
-            if (!href.substring(0, indexOfLastSlash + 1).equalsIgnoreCase(
-                Constants.CONTENT_MODEL_URL_BASE)) {
+            if (!href.substring(0, indexOfLastSlash + 1).equalsIgnoreCase(Constants.CONTENT_MODEL_URL_BASE)) {
                 throw new ContentModelNotFoundException("The " + Elements.ELEMENT_CONTENT_MODEL
-                        + " element has a wrong url."
-                        + "the url have to look like: "
-                        + Constants.CONTENT_MODEL_URL_BASE + "[id] ", e);
+                    + " element has a wrong url." + "the url have to look like: " + Constants.CONTENT_MODEL_URL_BASE
+                    + "[id] ", e);
             }
         }
         this.properties.getObjectProperties().setContentModelId(contentModelId);
@@ -358,22 +305,14 @@ public class ItemPropertiesHandler extends DefaultHandler {
     }
 
     /**
-     * 
-     * @param element
-     *            StAX StartElement
-     * @throws MissingAttributeValueException
-     * @throws WebserverSystemException
-     * @throws ContentModelNotFoundException
-     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
+     * @param element StAX StartElement
      */
-    private void handleOrigin(final StartElement element)
-        throws MissingAttributeValueException, WebserverSystemException,
-        InvalidContentException {
+    private void handleOrigin(final StartElement element) throws MissingAttributeValueException,
+        WebserverSystemException, InvalidContentException {
 
         String originId;
         try {
-            originId =
-                element.getAttributeValue(null, Elements.ATTRIBUTE_XLINK_OBJID);
+            originId = element.getAttributeValue(null, Elements.ATTRIBUTE_XLINK_OBJID);
             if (originId == null || originId.length() < 1) {
                 throw new MissingAttributeValueException("No origin id found.");
             }
@@ -381,9 +320,7 @@ public class ItemPropertiesHandler extends DefaultHandler {
         catch (final NoSuchAttributeException e) {
             final String href;
             try {
-                href =
-                    element.getAttributeValue(Constants.XLINK_NS_URI,
-                        Elements.ATTRIBUTE_XLINK_HREF);
+                href = element.getAttributeValue(Constants.XLINK_NS_URI, Elements.ATTRIBUTE_XLINK_HREF);
             }
             catch (final NoSuchAttributeException e1) {
                 String att = Elements.ATTRIBUTE_XLINK_OBJID;
@@ -392,21 +329,17 @@ public class ItemPropertiesHandler extends DefaultHandler {
                 }
                 final String refType = Elements.ELEMENT_ORIGIN;
                 final String objType = "item";
-                throw new MissingAttributeValueException("The attribute " + att
-                    + " of " + refType + " is missing in " + objType
-                    + " for create.", e);
+                throw new MissingAttributeValueException("The attribute " + att + " of " + refType + " is missing in "
+                    + objType + " for create.", e);
             }
             final int indexOfLastSlash = href.lastIndexOf('/');
             originId = href.substring(indexOfLastSlash + 1);
             if (originId == null || originId.length() < 1) {
                 throw new MissingAttributeValueException("No origin id found.", e);
             }
-            if (!href.substring(0, indexOfLastSlash + 1).equalsIgnoreCase(
-                Constants.ITEM_URL_BASE)) {
-                throw new InvalidContentException("The " + Elements.ELEMENT_ORIGIN
-                        + " element has a wrong url."
-                        + "the url have to look like: "
-                        + Constants.ITEM_URL_BASE + "[id] ", e);
+            if (!href.substring(0, indexOfLastSlash + 1).equalsIgnoreCase(Constants.ITEM_URL_BASE)) {
+                throw new InvalidContentException("The " + Elements.ELEMENT_ORIGIN + " element has a wrong url."
+                    + "the url have to look like: " + Constants.ITEM_URL_BASE + "[id] ", e);
             }
         }
         this.properties.getObjectProperties().setOrigin(originId);
@@ -415,15 +348,12 @@ public class ItemPropertiesHandler extends DefaultHandler {
 
     /**
      * Convert status from String to Enum type.
-     * 
-     * @param type
-     *            object/version status type as String.
+     *
+     * @param type object/version status type as String.
      * @return StatusType
-     * @throws InvalidStatusException
-     *             Thrown if unknown or invalid status type was set.
+     * @throws InvalidStatusException Thrown if unknown or invalid status type was set.
      */
-    private static StatusType getStatusType(final String type)
-        throws InvalidStatusException {
+    private static StatusType getStatusType(final String type) throws InvalidStatusException {
 
         if (type != null) {
             if (type.equals(StatusType.PENDING.toString())) {

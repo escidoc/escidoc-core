@@ -46,9 +46,8 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * Test the implementation of the search resource.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 @Ignore("Test the implementation of the search resource")
 @RunWith(value = Parameterized.class)
@@ -59,12 +58,11 @@ public class TextExtractionSearchTest extends SearchTestBase {
     private static String itemId = null;
 
     private static int methodCounter = 0;
-    
+
     private static final String INDEX_NAME = "escidoc_all";
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public TextExtractionSearchTest(final int transport) {
         super(transport);
@@ -74,9 +72,8 @@ public class TextExtractionSearchTest extends SearchTestBase {
 
     /**
      * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Before
     public void initialize() throws Exception {
@@ -87,9 +84,8 @@ public class TextExtractionSearchTest extends SearchTestBase {
 
     /**
      * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @After
     public void deinitialize() throws Exception {
@@ -101,60 +97,39 @@ public class TextExtractionSearchTest extends SearchTestBase {
 
     /**
      * insert item(s) into system for the tests.
-     * 
-     * @test.name prepare
-     * @test.id PREPARE
-     * @test.input
-     * @test.inputDescription
-     * @test.expected
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     private void prepare() throws Exception {
         // create empty indices/////////////////////////////////////////////////
         String urlParameters =
-            "?operation=updateIndex" + "&action=createEmpty"
-                + "&repositoryName=escidocrepository" + "&INDEX_NAME=";
+            "?operation=updateIndex" + "&action=createEmpty" + "&repositoryName=escidocrepository" + "&INDEX_NAME=";
         String httpUrl =
-            HttpHelper.createUrl(
-                    de.escidoc.core.test.common.client.servlet
-                    .Constants.PROTOCOL, 
-                    de.escidoc.core.test.common.client.servlet
-                    .Constants.HOST_PORT,
-                    de.escidoc.core.test.common.client.servlet
-                    .Constants.FEDORAGSEARCH_BASE_URI
-                    + urlParameters);
-        HttpHelper.executeHttpRequest(
-                de.escidoc.core.test.common.client.servlet
-                .Constants.HTTP_METHOD_GET
-                , httpUrl
-            , null, null, null);
+            HttpHelper.createUrl(de.escidoc.core.test.common.client.servlet.Constants.PROTOCOL,
+                de.escidoc.core.test.common.client.servlet.Constants.HOST_PORT,
+                de.escidoc.core.test.common.client.servlet.Constants.FEDORAGSEARCH_BASE_URI + urlParameters);
+        HttpHelper.executeHttpRequest(de.escidoc.core.test.common.client.servlet.Constants.HTTP_METHOD_GET, httpUrl,
+            null, null, null);
         // /////////////////////////////////////////////////////////////////////
 
         try {
             // Create Item submit and release it //////////////////////////
             String xmlData =
-                EscidocRestSoapTestBase.getTemplateAsString(
-                    TEMPLATE_ITEM_PATH, "escidoc_text_extractor_error_item_"
-                        + getTransport(false) + ".xml");
+                EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH, "escidoc_text_extractor_error_item_"
+                    + getTransport(false) + ".xml");
             String xml = item.create(xmlData);
             String lastModDate = getLastModificationDate(xml);
             itemId = getId(xml);
 
             // submit item
-            item.submit(itemId, "<param last-modification-date=\""
-                + lastModDate + "\" />");
+            item.submit(itemId, "<param last-modification-date=\"" + lastModDate + "\" />");
 
             // assignPids
             Document itemDoc = EscidocRestSoapTestBase.getDocument(xml);
             String componentId = getComponentObjidValue(itemDoc, 1);
-            String pidParam =
-                getItemPidParam(itemId);
+            String pidParam = getItemPidParam(itemId);
             item.assignContentPid(itemId, componentId, pidParam);
-            pidParam =
-                getItemPidParam(itemId);
+            pidParam = getItemPidParam(itemId);
             item.assignObjectPid(itemId, pidParam);
             // version pid to item[0] is assigned in a later test
             // Sorry, but it depends on configuration if a release of an
@@ -169,9 +144,8 @@ public class TextExtractionSearchTest extends SearchTestBase {
             // release item
             xml = item.retrieve(itemId);
             lastModDate = getLastModificationDate(xml);
-            item.release(itemId, "<param last-modification-date=\""
-                + lastModDate + "\" />");
-            
+            item.release(itemId, "<param last-modification-date=\"" + lastModDate + "\" />");
+
             // ////////////////////////////////////////////////////////////
         }
         catch (final Exception e) {
@@ -182,20 +156,8 @@ public class TextExtractionSearchTest extends SearchTestBase {
 
     /**
      * Test searching for a all objects.
-     * 
-     * @test.name All Objects Search
-     * @test.id SB_TEERR_SR-1
-     * @test.input mandatory request parameters: - e* -
-     *             existing database
-     * @test.inputDescription execute all objects query on given database
-     * @test.expected List of search records according to eSciDoc Default Schema
-     *                for search results first record to be returned ist at the
-     *                1st position in the sequence of matched records. only
-     *                released objects are found.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Ignore("Test searching for a all objects")
     @Test
@@ -211,20 +173,8 @@ public class TextExtractionSearchTest extends SearchTestBase {
 
     /**
      * Test searching for objects where pdf-text-extraction failed.
-     * 
-     * @test.name pdf-text-extraction failed Search
-     * @test.id SB_TEERR_SR-2
-     * @test.input mandatory request parameters: - textfrompdffilenotextractable -
-     *             existing database
-     * @test.inputDescription execute all objects query on given database
-     * @test.expected List of search records according to eSciDoc Default Schema
-     *                for search results first record to be returned ist at the
-     *                1st position in the sequence of matched records. only
-     *                released objects are found.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Ignore("Test searching for objects where pdf-text-extraction failed")
     @Test

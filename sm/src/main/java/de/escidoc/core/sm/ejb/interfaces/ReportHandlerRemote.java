@@ -18,24 +18,12 @@ import java.rmi.RemoteException;
  */
 public interface ReportHandlerRemote extends EJBObject {
 
-    String retrieve(String xml, SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            XmlCorruptedException,
-            XmlSchemaValidationException,
-            ReportDefinitionNotFoundException,
-            MissingMethodParameterException,
-            InvalidSqlException,
-            SystemException, RemoteException;
+    String retrieve(String xml, SecurityContext securityContext) throws AuthenticationException,
+        AuthorizationException, XmlCorruptedException, XmlSchemaValidationException, ReportDefinitionNotFoundException,
+        MissingMethodParameterException, InvalidSqlException, SystemException, RemoteException;
 
-    String retrieve(String xml, String authHandle, Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            XmlCorruptedException,
-            XmlSchemaValidationException,
-            ReportDefinitionNotFoundException,
-            MissingMethodParameterException,
-            InvalidSqlException,
-            SystemException, RemoteException;
+    String retrieve(String xml, String authHandle, Boolean restAccess) throws AuthenticationException,
+        AuthorizationException, XmlCorruptedException, XmlSchemaValidationException, ReportDefinitionNotFoundException,
+        MissingMethodParameterException, InvalidSqlException, SystemException, RemoteException;
 
 }

@@ -39,23 +39,19 @@ import java.util.Collection;
 
 /**
  * Container cache handler.
- * 
+ *
  * @author Steffen Wagner
- * 
  */
 public class ContainerResourceListener extends ContainerHandlerRetrieve {
 
-    private final Collection<ResourceListener> containerListeners =
-        new ArrayList<ResourceListener>();
+    private final Collection<ResourceListener> containerListeners = new ArrayList<ResourceListener>();
 
-    private final Collection<ResourceListener> containerMemberListeners =
-        new ArrayList<ResourceListener>();
+    private final Collection<ResourceListener> containerMemberListeners = new ArrayList<ResourceListener>();
 
     /**
      * Register a container listener.
-     * 
-     * @param listener
-     *            listener which will be added to the list
+     *
+     * @param listener listener which will be added to the list
      */
     public void addContainerListener(final ResourceListener listener) {
         containerListeners.add(listener);
@@ -63,9 +59,8 @@ public class ContainerResourceListener extends ContainerHandlerRetrieve {
 
     /**
      * Unregister a container listener.
-     * 
-     * @param listener
-     *            listener which will be removed from the list
+     *
+     * @param listener listener which will be removed from the list
      */
     public void removeContainerListener(final ResourceListener listener) {
         containerListeners.remove(listener);
@@ -73,9 +68,8 @@ public class ContainerResourceListener extends ContainerHandlerRetrieve {
 
     /**
      * Register a container listener.
-     * 
-     * @param listener
-     *            listener which will be added to the list
+     *
+     * @param listener listener which will be added to the list
      */
     public void addContainerMemberListener(final ResourceListener listener) {
         containerMemberListeners.add(listener);
@@ -83,9 +77,8 @@ public class ContainerResourceListener extends ContainerHandlerRetrieve {
 
     /**
      * Unregister a container listener.
-     * 
-     * @param listener
-     *            listener which will be removed from the list
+     *
+     * @param listener listener which will be removed from the list
      */
     public void removeContainerMemberListener(final ResourceListener listener) {
         containerMemberListeners.remove(listener);
@@ -93,17 +86,12 @@ public class ContainerResourceListener extends ContainerHandlerRetrieve {
 
     /**
      * Notify the listeners that a container was created.
-     * 
-     * @param id
-     *            container id
-     * @param xmlData
-     *            complete container XML
-     * 
-     * @throws SystemException
-     *             One of the listeners threw an exception.
+     *
+     * @param id      container id
+     * @param xmlData complete container XML
+     * @throws SystemException One of the listeners threw an exception.
      */
-    protected void fireContainerCreated(final String id, final String xmlData)
-        throws SystemException {
+    protected void fireContainerCreated(final String id, final String xmlData) throws SystemException {
         final String restXml;
         final String soapXml;
 
@@ -116,19 +104,15 @@ public class ContainerResourceListener extends ContainerHandlerRetrieve {
             soapXml = xmlData;
         }
         for (final ResourceListener containerListener : this.containerListeners) {
-            containerListener.resourceCreated(id, restXml,
-                    soapXml);
+            containerListener.resourceCreated(id, restXml, soapXml);
         }
     }
 
     /**
      * Notify the listeners that a container was deleted.
-     * 
-     * @param id
-     *            container id
-     * 
-     * @throws SystemException
-     *             One of the listeners threw an exception.
+     *
+     * @param id container id
+     * @throws SystemException One of the listeners threw an exception.
      */
     protected void fireContainerDeleted(final String id) throws SystemException {
         for (final ResourceListener containerListener : this.containerListeners) {
@@ -138,18 +122,12 @@ public class ContainerResourceListener extends ContainerHandlerRetrieve {
 
     /**
      * Notify the listeners that a container was modified.
-     * 
-     * @param id
-     *            container id
      *
-     * @throws ContainerNotFoundException
-     *             Thrown if a container with the provided id does not exist in
-     *             the framework.
-     * @throws SystemException
-     *             One of the listeners threw an exception.
+     * @param id container id
+     * @throws ContainerNotFoundException Thrown if a container with the provided id does not exist in the framework.
+     * @throws SystemException            One of the listeners threw an exception.
      */
-    protected void fireContainerModified(final String id)
-        throws ContainerNotFoundException, SystemException {
+    protected void fireContainerModified(final String id) throws ContainerNotFoundException, SystemException {
 
         setContainer(id);
         final String soapXml;
@@ -163,24 +141,18 @@ public class ContainerResourceListener extends ContainerHandlerRetrieve {
             soapXml = getContainerXml(getContainer());
         }
         for (final ResourceListener containerListener : this.containerListeners) {
-            containerListener.resourceModified(id, restXml,
-                    soapXml);
+            containerListener.resourceModified(id, restXml, soapXml);
         }
     }
 
     /**
      * Notify the listeners that a container was modified.
-     * 
-     * @param id
-     *            container id
-     * @param xmlData
-     *            complete container XML
-     * 
-     * @throws SystemException
-     *             One of the listeners threw an exception.
+     *
+     * @param id      container id
+     * @param xmlData complete container XML
+     * @throws SystemException One of the listeners threw an exception.
      */
-    protected void fireContainerModified(final String id, final String xmlData)
-        throws SystemException {
+    protected void fireContainerModified(final String id, final String xmlData) throws SystemException {
         final String restXml;
         final String soapXml;
 
@@ -193,41 +165,32 @@ public class ContainerResourceListener extends ContainerHandlerRetrieve {
             soapXml = xmlData;
         }
         for (final ResourceListener containerListener : this.containerListeners) {
-            containerListener.resourceModified(id, restXml,
-                    soapXml);
+            containerListener.resourceModified(id, restXml, soapXml);
         }
     }
 
     /**
      * Notify the listeners that a container-member was modified.
-     * 
-     * @param id
-     *            member id
-     * @throws SystemException
-     *             One of the listeners threw an exception.
+     *
+     * @param id member id
+     * @throws SystemException One of the listeners threw an exception.
      */
-    protected void fireContainerMembersModified(final String id)
-        throws SystemException {
+    protected void fireContainerMembersModified(final String id) throws SystemException {
         final String restXml = null;
         final String soapXml = null;
 
         for (final ResourceListener containerMemberListener : this.containerMemberListeners) {
-            containerMemberListener
-                    .resourceModified(id, restXml, soapXml);
+            containerMemberListener.resourceModified(id, restXml, soapXml);
         }
     }
 
     /**
-     * Get the alternate form of a container representation. If the current
-     * request came in via REST, then the SOAP form will be returned here and
-     * vice versa.
-     * 
-     * @param id
-     *            container id
-     * 
+     * Get the alternate form of a container representation. If the current request came in via REST, then the SOAP form
+     * will be returned here and vice versa.
+     *
+     * @param id container id
      * @return alternate form of the container
-     * @throws SystemException
-     *             An internal error occurred.
+     * @throws SystemException An internal error occurred.
      */
     private String getAlternateForm(final String id) throws SystemException {
         String result = null;

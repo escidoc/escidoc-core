@@ -37,26 +37,22 @@ import static org.junit.Assert.fail;
 
 /**
  * Item tests with SOAP transport.
- * 
+ *
  * @author Michael Schneider
- * 
  */
 public class IngestRestTest extends IngestAbstractTest {
 
     /**
      * Constructor.
-     * 
      */
     public IngestRestTest() {
         super(Constants.TRANSPORT_REST);
     }
 
     /**
-     * Test unexpected parser exception instead of InvalidXmlException during
-     * create (see issue INFR-911).
-     * 
-     * @throws Exception
-     *             Thrown if behavior is not as expected.
+     * Test unexpected parser exception instead of InvalidXmlException during create (see issue INFR-911).
+     *
+     * @throws Exception Thrown if behavior is not as expected.
      */
     @Test(expected = InvalidXmlException.class)
     public void testInvalidXml() throws Exception {

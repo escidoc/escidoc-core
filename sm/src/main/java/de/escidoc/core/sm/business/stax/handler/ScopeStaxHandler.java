@@ -42,29 +42,25 @@ import java.util.Map;
 
 /**
  * Fills xml-data into hibernate object.
- * 
- * @author Michael Hoppe
  *
+ * @author Michael Hoppe
  */
 public class ScopeStaxHandler extends DefaultHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ScopeStaxHandler.class);
 
     private Scope scope = new Scope();
-    
+
     private final Map<String, Integer> charactersCounter = new HashMap<String, Integer>();
-    
-    private static final String MSG_INCONSISTENT_IDS = 
-        "id in xml is not the same as id provided in method.";
+
+    private static final String MSG_INCONSISTENT_IDS = "id in xml is not the same as id provided in method.";
 
     /**
      * Handle startElement event.
-     * 
+     *
      * @param element startElement
      * @return StartElement startElement
      * @throws Exception e
-     * 
-     *
      */
     @Override
     public StartElement startElement(final StartElement element) throws Exception {
@@ -74,11 +70,12 @@ public class ScopeStaxHandler extends DefaultHandler {
                 if (scope.getId() != null && !scope.getId().equals(scopeId)) {
                     throw new IntegritySystemException(MSG_INCONSISTENT_IDS);
                 }
-            } catch (final MissingAttributeValueException e) {
-                if(LOGGER.isWarnEnabled()) {
+            }
+            catch (final MissingAttributeValueException e) {
+                if (LOGGER.isWarnEnabled()) {
                     LOGGER.warn("Missing attribute value.");
                 }
-                if(LOGGER.isDebugEnabled()) {
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Missing attribute value.", e);
                 }
             }
@@ -88,25 +85,19 @@ public class ScopeStaxHandler extends DefaultHandler {
 
     /**
      * Handle the character section of an element.
-     * 
-     * @param s
-     *            The contents of the character section.
-     * @param element
-     *            The element.
+     *
+     * @param s       The contents of the character section.
+     * @param element The element.
      * @return The character section.
      * @throws Exception e
-     *
      */
     @Override
-    public String characters(
-                final String s, 
-                final StartElement element) 
-                    throws Exception {
+    public String characters(final String s, final StartElement element) throws Exception {
         if ("name".equals(element.getLocalName())) {
-            if (scope.getName() != null 
-                && charactersCounter.get(element.getLocalName()) != null) {
+            if (scope.getName() != null && charactersCounter.get(element.getLocalName()) != null) {
                 scope.setName(scope.getName() + s);
-            } else {
+            }
+            else {
                 scope.setName(s);
             }
             charactersCounter.put(element.getLocalName(), 1);

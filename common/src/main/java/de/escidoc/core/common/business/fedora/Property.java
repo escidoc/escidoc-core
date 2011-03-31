@@ -24,7 +24,7 @@ package de.escidoc.core.common.business.fedora;
 import java.io.Serializable;
 
 public class Property implements Serializable {
-    
+
     /**
      * The serial version uid.
      */
@@ -72,8 +72,7 @@ public class Property implements Serializable {
         else {
             this.__equalsCalc = obj;
             final boolean _equals =
-                (this.name == null && other.getName() == null || this.name != null
-                    && name.equals(other.getName()))
+                (this.name == null && other.getName() == null || this.name != null && name.equals(other.getName()))
                     && (this.value == null && other.getValue() == null || this.value != null
                         && value.equals(other.getValue()));
             this.__equalsCalc = null;

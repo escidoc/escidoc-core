@@ -51,9 +51,7 @@ import java.util.StringTokenizer;
 import java.util.Vector;
 
 /**
- * 
  * @author Michael Schneider
- * 
  */
 public class MigrationTestBase extends EscidocRestSoapTestBase {
 
@@ -63,24 +61,19 @@ public class MigrationTestBase extends EscidocRestSoapTestBase {
 
     private static final String CHECK_RESULT_PATH = "build/migration/check";
 
-    private final ContainerClient containerClient =
-        new ContainerClient(getTransport());
+    private final ContainerClient containerClient = new ContainerClient(getTransport());
 
-    private final ContentModelClient contentModelClient =
-        new ContentModelClient(getTransport());
+    private final ContentModelClient contentModelClient = new ContentModelClient(getTransport());
 
-    private final ContextClient contextClient =
-        new ContextClient(getTransport());
+    private final ContextClient contextClient = new ContextClient(getTransport());
 
     private final ItemClient itemClient = new ItemClient(getTransport());
 
-    private final OrganizationalUnitClient organizationalUnitClient =
-        new OrganizationalUnitClient(getTransport());
+    private final OrganizationalUnitClient organizationalUnitClient = new OrganizationalUnitClient(getTransport());
 
     private final RoleClient roleClient = new RoleClient(getTransport());
 
-    private final UserAccountClient userAccountClient =
-        new UserAccountClient(getTransport());
+    private final UserAccountClient userAccountClient = new UserAccountClient(getTransport());
 
     static final String OBJECT_TYPE_FED_2_CONTAINER = "container";
 
@@ -90,8 +83,7 @@ public class MigrationTestBase extends EscidocRestSoapTestBase {
 
     static final String OBJECT_TYPE_FED_2_ITEM = "item";
 
-    static final String OBJECT_TYPE_FED_2_ORGANIZATIONAL_UNIT =
-        "organizational-unit";
+    static final String OBJECT_TYPE_FED_2_ORGANIZATIONAL_UNIT = "organizational-unit";
 
     static final String OBJECT_TYPE_ROLE = "role";
 
@@ -102,8 +94,7 @@ public class MigrationTestBase extends EscidocRestSoapTestBase {
     private static final int SLEEP_TIME = 100;
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public MigrationTestBase(final int transport) {
         super(transport);
@@ -111,22 +102,17 @@ public class MigrationTestBase extends EscidocRestSoapTestBase {
 
     /**
      * Check the given container ids if they are retrievable.
-     * 
-     * @param ids
-     *            The list of ids.
-     * @param validate
-     *            If true, retrieved object is validated against the
-     *            corresponding schema.
+     *
+     * @param ids      The list of ids.
+     * @param validate If true, retrieved object is validated against the corresponding schema.
      * @return The list of ids for which the retrieval/validation failed.
      */
-    public Collection<String> checkContainers(
-        final Collection<String> ids, final boolean validate) {
+    public Collection<String> checkContainers(final Collection<String> ids, final boolean validate) {
 
         Collection<String> result = new Vector<String>();
 
         Iterator<String> idIter = ids.iterator();
-        System.out.println("[" + getTransport(true)
-            + "] Start checking containers: " + ids);
+        System.out.println("[" + getTransport(true) + "] Start checking containers: " + ids);
         while (idIter.hasNext()) {
             String id = idIter.next();
             try {
@@ -137,29 +123,23 @@ public class MigrationTestBase extends EscidocRestSoapTestBase {
             }
         }
         sleep();
-        System.out.println("[" + getTransport(true)
-            + "] Finished. Check failed for containers: " + result);
+        System.out.println("[" + getTransport(true) + "] Finished. Check failed for containers: " + result);
         return result;
     }
 
     /**
      * Check the given context ids if they are retrievable.
-     * 
-     * @param ids
-     *            The list of ids.
-     * @param validate
-     *            If true, retrieved object is validated against the
-     *            corresponding schema.
+     *
+     * @param ids      The list of ids.
+     * @param validate If true, retrieved object is validated against the corresponding schema.
      * @return The list of ids for which the retrieval/validation failed.
      */
-    public Collection<String> checkContexts(
-        final Collection<String> ids, final boolean validate) {
+    public Collection<String> checkContexts(final Collection<String> ids, final boolean validate) {
 
         Collection<String> result = new Vector<String>();
 
         Iterator<String> idIter = ids.iterator();
-        System.out.println("[" + getTransport(true)
-            + "] Start checking contexts: " + ids);
+        System.out.println("[" + getTransport(true) + "] Start checking contexts: " + ids);
         while (idIter.hasNext()) {
             String id = idIter.next();
             try {
@@ -170,16 +150,14 @@ public class MigrationTestBase extends EscidocRestSoapTestBase {
             }
         }
         sleep();
-        System.out.println("[" + getTransport(true)
-            + "] Finished. Check failed for contexts: " + result);
+        System.out.println("[" + getTransport(true) + "] Finished. Check failed for contexts: " + result);
         return result;
     }
 
     /**
      * Check the given content model ids if they are retrievable.
-     * 
-     * @param ids
-     *            The list of ids.
+     *
+     * @param ids The list of ids.
      * @return The list of ids for which the retrieval/validation failed.
      */
     public Collection<String> checkContentModels(final Collection<String> ids) {
@@ -187,8 +165,7 @@ public class MigrationTestBase extends EscidocRestSoapTestBase {
         Collection<String> result = new Vector<String>();
 
         Iterator<String> idIter = ids.iterator();
-        System.out.println("[" + getTransport(true)
-            + "] Start checking content models: " + ids);
+        System.out.println("[" + getTransport(true) + "] Start checking content models: " + ids);
         while (idIter.hasNext()) {
             String id = idIter.next();
             try {
@@ -199,29 +176,23 @@ public class MigrationTestBase extends EscidocRestSoapTestBase {
             }
         }
         sleep();
-        System.out.println("[" + getTransport(true)
-            + "] Finished. Check failed for content models: " + result);
+        System.out.println("[" + getTransport(true) + "] Finished. Check failed for content models: " + result);
         return result;
     }
 
     /**
      * Check the given item ids if they are retrievable.
-     * 
-     * @param ids
-     *            The list of ids.
-     * @param validate
-     *            If true, retrieved object is validated against the
-     *            corresponding schema.
+     *
+     * @param ids      The list of ids.
+     * @param validate If true, retrieved object is validated against the corresponding schema.
      * @return The list of ids for which the retrieval/validation failed.
      */
-    public Collection<String> checkItems(
-        final Collection<String> ids, final boolean validate) {
+    public Collection<String> checkItems(final Collection<String> ids, final boolean validate) {
 
         Collection<String> result = new Vector<String>();
 
         Iterator<String> idIter = ids.iterator();
-        System.out.println("[" + getTransport(true)
-            + "] Start checking items: " + ids);
+        System.out.println("[" + getTransport(true) + "] Start checking items: " + ids);
         while (idIter.hasNext()) {
             String id = idIter.next();
             try {
@@ -232,29 +203,23 @@ public class MigrationTestBase extends EscidocRestSoapTestBase {
             }
         }
         sleep();
-        System.out.println("[" + getTransport(true)
-            + "] Finished. Check failed for items: " + result);
+        System.out.println("[" + getTransport(true) + "] Finished. Check failed for items: " + result);
         return result;
     }
 
     /**
      * Check the given organizational unit ids if they are retrievable.
-     * 
-     * @param ids
-     *            The list of ids.
-     * @param validate
-     *            If true, retrieved object is validated against the
-     *            corresponding schema.
+     *
+     * @param ids      The list of ids.
+     * @param validate If true, retrieved object is validated against the corresponding schema.
      * @return The list of ids for which the retrieval/validation failed.
      */
-    public Collection<String> checkOrganizationalUnits(
-        final Collection<String> ids, final boolean validate) {
+    public Collection<String> checkOrganizationalUnits(final Collection<String> ids, final boolean validate) {
 
         Collection<String> result = new Vector<String>();
 
         Iterator<String> idIter = ids.iterator();
-        System.out.println("[" + getTransport(true)
-            + "] Start checking organizational units: " + ids);
+        System.out.println("[" + getTransport(true) + "] Start checking organizational units: " + ids);
         while (idIter.hasNext()) {
             String id = idIter.next();
             try {
@@ -265,29 +230,23 @@ public class MigrationTestBase extends EscidocRestSoapTestBase {
             }
         }
         sleep();
-        System.out.println("[" + getTransport(true)
-            + "] Finished. Check failed for organizational units: " + result);
+        System.out.println("[" + getTransport(true) + "] Finished. Check failed for organizational units: " + result);
         return result;
     }
 
     /**
      * Check the given role ids if they are retrievable.
-     * 
-     * @param ids
-     *            The list of ids.
-     * @param validate
-     *            If true, retrieved object is validated against the
-     *            corresponding schema.
+     *
+     * @param ids      The list of ids.
+     * @param validate If true, retrieved object is validated against the corresponding schema.
      * @return The list of ids for which the retrieval/validation failed.
      */
-    public Collection<String> checkRoles(
-        final Collection<String> ids, final boolean validate) {
+    public Collection<String> checkRoles(final Collection<String> ids, final boolean validate) {
 
         Collection<String> result = new Vector<String>();
 
         Iterator<String> idIter = ids.iterator();
-        System.out.println("[" + getTransport(true)
-            + "] Start checking roles: " + ids);
+        System.out.println("[" + getTransport(true) + "] Start checking roles: " + ids);
         while (idIter.hasNext()) {
             String id = idIter.next();
             try {
@@ -297,29 +256,23 @@ public class MigrationTestBase extends EscidocRestSoapTestBase {
                 result.add(id);
             }
         }
-        System.out.println("[" + getTransport(true)
-            + "] Finished. Check failed for roles: " + result);
+        System.out.println("[" + getTransport(true) + "] Finished. Check failed for roles: " + result);
         return result;
     }
 
     /**
      * Check the given user account ids if they are retrievable.
-     * 
-     * @param ids
-     *            The list of ids.
-     * @param validate
-     *            If true, retrieved object is validated against the
-     *            corresponding schema.
+     *
+     * @param ids      The list of ids.
+     * @param validate If true, retrieved object is validated against the corresponding schema.
      * @return The list of ids for which the retrieval/validation failed.
      */
-    public Collection<String> checkUserAccounts(
-        final Collection<String> ids, final boolean validate) {
+    public Collection<String> checkUserAccounts(final Collection<String> ids, final boolean validate) {
 
         Collection<String> result = new Vector<String>();
 
         Iterator<String> idIter = ids.iterator();
-        System.out.println("[" + getTransport(true)
-            + "] Start checking user accounts: " + ids);
+        System.out.println("[" + getTransport(true) + "] Start checking user accounts: " + ids);
         while (idIter.hasNext()) {
             String id = idIter.next();
             try {
@@ -329,25 +282,19 @@ public class MigrationTestBase extends EscidocRestSoapTestBase {
                 result.add(id);
             }
         }
-        System.out.println("[" + getTransport(true)
-            + "] Finished. Check failed for user accounts: " + result);
+        System.out.println("[" + getTransport(true) + "] Finished. Check failed for user accounts: " + result);
         return result;
     }
 
     /**
      * Retrieve a Container.
-     * 
-     * @param id
-     *            the id.
-     * @param validate
-     *            If true, retrieved object is validated against the
-     *            corresponding schema.
+     *
+     * @param id       the id.
+     * @param validate If true, retrieved object is validated against the corresponding schema.
      * @return The retrieved object.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    public String retrieveContainer(final String id, final boolean validate)
-        throws Exception {
+    public String retrieveContainer(final String id, final boolean validate) throws Exception {
         final String result = handleXmlResult(containerClient.retrieve(id));
         if (validate) {
             assertXmlValidContainer(result);
@@ -357,18 +304,13 @@ public class MigrationTestBase extends EscidocRestSoapTestBase {
 
     /**
      * Retrieve a Context.
-     * 
-     * @param id
-     *            the id.
-     * @param validate
-     *            If true, retrieved object is validated against the
-     *            corresponding schema.
+     *
+     * @param id       the id.
+     * @param validate If true, retrieved object is validated against the corresponding schema.
      * @return The retrieved object.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    public String retrieveContext(final String id, final boolean validate)
-        throws Exception {
+    public String retrieveContext(final String id, final boolean validate) throws Exception {
         final String result = handleXmlResult(contextClient.retrieve(id));
         if (validate) {
             assertXmlValidContext(result);
@@ -378,15 +320,11 @@ public class MigrationTestBase extends EscidocRestSoapTestBase {
 
     /**
      * Retrieve a Content-Model.
-     * 
-     * @param id
-     *            the id.
-     * @param validate
-     *            If true, retrieved object is validated against the
-     *            corresponding schema.
+     *
+     * @param id       the id.
+     * @param validate If true, retrieved object is validated against the corresponding schema.
      * @return The retrieved object.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     public String retrieveContentModel(final String id) throws Exception {
         final String result = handleXmlResult(contentModelClient.retrieve(id));
@@ -395,18 +333,13 @@ public class MigrationTestBase extends EscidocRestSoapTestBase {
 
     /**
      * Retrieve an Item.
-     * 
-     * @param id
-     *            the id.
-     * @param validate
-     *            If true, retrieved object is validated against the
-     *            corresponding schema.
+     *
+     * @param id       the id.
+     * @param validate If true, retrieved object is validated against the corresponding schema.
      * @return The retrieved object.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    public String retrieveItem(final String id, final boolean validate)
-        throws Exception {
+    public String retrieveItem(final String id, final boolean validate) throws Exception {
         final String result = handleXmlResult(itemClient.retrieve(id));
         if (validate) {
             assertXmlValidItem(result);
@@ -416,20 +349,14 @@ public class MigrationTestBase extends EscidocRestSoapTestBase {
 
     /**
      * Retrieve an Organizational-Unit.
-     * 
-     * @param id
-     *            the id.
-     * @param validate
-     *            If true, retrieved object is validated against the
-     *            corresponding schema.
+     *
+     * @param id       the id.
+     * @param validate If true, retrieved object is validated against the corresponding schema.
      * @return The retrieved object.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    public String retrieveOrganizationalUnit(
-        final String id, final boolean validate) throws Exception {
-        final String result =
-            handleXmlResult(organizationalUnitClient.retrieve(id));
+    public String retrieveOrganizationalUnit(final String id, final boolean validate) throws Exception {
+        final String result = handleXmlResult(organizationalUnitClient.retrieve(id));
         if (validate) {
             assertXmlValidOrganizationalUnit(result);
         }
@@ -438,18 +365,13 @@ public class MigrationTestBase extends EscidocRestSoapTestBase {
 
     /**
      * Retrieve a Role.
-     * 
-     * @param id
-     *            the id.
-     * @param validate
-     *            If true, retrieved object is validated against the
-     *            corresponding schema.
+     *
+     * @param id       the id.
+     * @param validate If true, retrieved object is validated against the corresponding schema.
      * @return The retrieved object.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    public String retrieveRole(final String id, final boolean validate)
-        throws Exception {
+    public String retrieveRole(final String id, final boolean validate) throws Exception {
         final String result = handleXmlResult(roleClient.retrieve(id));
         if (validate) {
             assertXmlValidRole(result);
@@ -459,18 +381,13 @@ public class MigrationTestBase extends EscidocRestSoapTestBase {
 
     /**
      * Retrieve an User-Account.
-     * 
-     * @param id
-     *            the id.
-     * @param validate
-     *            If true, retrieved object is validated against the
-     *            corresponding schema.
+     *
+     * @param id       the id.
+     * @param validate If true, retrieved object is validated against the corresponding schema.
      * @return The retrieved object.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    public String retrieveUserAccount(final String id, final boolean validate)
-        throws Exception {
+    public String retrieveUserAccount(final String id, final boolean validate) throws Exception {
         final String result = handleXmlResult(userAccountClient.retrieve(id));
         if (validate) {
             assertXmlValidUserAccount(result);
@@ -504,25 +421,19 @@ public class MigrationTestBase extends EscidocRestSoapTestBase {
     }
 
     /**
-     * Retrieve all object ids for the given object type from the resource index
-     * (Fedora 3.x).
-     * 
-     * @param objectType
-     *            The object type.
+     * Retrieve all object ids for the given object type from the resource index (Fedora 3.x).
+     *
+     * @param objectType The object type.
      * @return The list of ids (format CSV).
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    protected String retrieveObjectIdsHead(final String objectType)
-        throws Exception {
+    protected String retrieveObjectIdsHead(final String objectType) throws Exception {
 
         TripleStoreTestBase triplstoreConnector = new TripleStoreTestBase();
         String query =
             "select $s from <#ri> where $s <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://escidoc.de/core/01/resources/"
                 + objectType + ">";
-        String queryResult =
-            triplstoreConnector.requestMPT(query,
-                TripleStoreTestBase.FORMAT_CSV);
+        String queryResult = triplstoreConnector.requestMPT(query, TripleStoreTestBase.FORMAT_CSV);
         queryResult = queryResult.replaceAll("info:fedora", "");
         StringTokenizer resultTokenizer = new StringTokenizer(queryResult, "/");
         String ids = new String();
@@ -540,9 +451,7 @@ public class MigrationTestBase extends EscidocRestSoapTestBase {
         return ids;
     }
 
-    protected void saveCheckResult(
-        final Map<String, String> ids, Collection<String> formerlyFailed)
-        throws Exception {
+    protected void saveCheckResult(final Map<String, String> ids, Collection<String> formerlyFailed) throws Exception {
 
         String text = new String();
         Iterator<String> keysIter = ids.keySet().iterator();
@@ -558,21 +467,17 @@ public class MigrationTestBase extends EscidocRestSoapTestBase {
             text += "\n[TEST PASSED]\n";
         }
         else {
-            text +=
-                "\n[TEST FAILED] - failing objects=" + putValuesToCsv(failed)
-                    + "\n";
+            text += "\n[TEST FAILED] - failing objects=" + putValuesToCsv(failed) + "\n";
         }
-        ResourceProvider.saveToFile(CHECK_RESULT_PATH, getObjectIdFilename(),
-            text);
+        ResourceProvider.saveToFile(CHECK_RESULT_PATH, getObjectIdFilename(), text);
     }
 
     /**
-     * 
+     *
      * @param ids
      * @throws Exception
      */
-    protected void saveObjectIds(final Map<String, String> ids)
-        throws Exception {
+    protected void saveObjectIds(final Map<String, String> ids) throws Exception {
 
         String text = new String();
         Iterator<String> keysIter = ids.keySet().iterator();
@@ -583,8 +488,7 @@ public class MigrationTestBase extends EscidocRestSoapTestBase {
             }
         }
         text += "\n" + FAILING + "=" + ids.get(FAILING) + "\n";
-        ResourceProvider
-            .saveToFile(OBJECT_ID_PATH, getObjectIdFilename(), text);
+        ResourceProvider.saveToFile(OBJECT_ID_PATH, getObjectIdFilename(), text);
     }
 
     protected String getObjectIdFilename() {
@@ -597,14 +501,10 @@ public class MigrationTestBase extends EscidocRestSoapTestBase {
         Properties properties = new Properties();
         try {
             InputStream fis = null;
-            String search =
-                ResourceProvider.concatenatePath(OBJECT_ID_PATH,
-                    getObjectIdFilename());
+            String search = ResourceProvider.concatenatePath(OBJECT_ID_PATH, getObjectIdFilename());
             File file = new File(search);
             if (file.exists()) {
-                fis =
-                    ResourceProvider.getFileInputStreamFromFile(OBJECT_ID_PATH,
-                        getObjectIdFilename());
+                fis = ResourceProvider.getFileInputStreamFromFile(OBJECT_ID_PATH, getObjectIdFilename());
             }
             if (fis != null) {
                 properties.load(fis);

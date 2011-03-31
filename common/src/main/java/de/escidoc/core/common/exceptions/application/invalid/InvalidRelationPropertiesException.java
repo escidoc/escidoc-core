@@ -21,14 +21,11 @@
 package de.escidoc.core.common.exceptions.application.invalid;
 
 /**
- * The InvalidRelationPropertiesException is used to indicate that that one or
- * more properties of the given relation are invalid. returned httpStatusCode is
- * 412. Status code (412) indicating that the precondition given in one or more
- * of the request-header fields evaluated to false when it was tested on the
- * server.
- * 
- * @author Michael Hoppe (FIZ Karlsruhe)
+ * The InvalidRelationPropertiesException is used to indicate that that one or more properties of the given relation are
+ * invalid. returned httpStatusCode is 412. Status code (412) indicating that the precondition given in one or more of
+ * the request-header fields evaluated to false when it was tested on the server.
  *
+ * @author Michael Hoppe (FIZ Karlsruhe)
  */
 public class InvalidRelationPropertiesException extends ValidationException {
 
@@ -39,13 +36,10 @@ public class InvalidRelationPropertiesException extends ValidationException {
 
     public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_INVALID;
 
-    public static final String HTTP_STATUS_MESSAGE =
-        "Invalid relation property.";
+    public static final String HTTP_STATUS_MESSAGE = "Invalid relation property.";
 
     /**
      * Default constructor.
-     * 
-     *
      */
     public InvalidRelationPropertiesException() {
         super(HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -53,9 +47,8 @@ public class InvalidRelationPropertiesException extends ValidationException {
 
     /**
      * Constructor used to map an initial exception.
-     * 
-     * @param error
-     *            Throwable
+     *
+     * @param error Throwable
      */
     public InvalidRelationPropertiesException(final Throwable error) {
         super(error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -63,27 +56,21 @@ public class InvalidRelationPropertiesException extends ValidationException {
 
     /**
      * Constructs a new exception with the specified detail message.
-     * 
-     * @param message -
-     *            the detail message.
      *
+     * @param message - the detail message.
      */
     public InvalidRelationPropertiesException(final String message) {
         super(message, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 
     /**
-     * Constructor used to create a new Exception with the specified detail
-     * message and a mapping to an initial exception.
-     * 
-     * @param message -
-     *            the detail message.
-     * @param error
-     *            Throwable
+     * Constructor used to create a new Exception with the specified detail message and a mapping to an initial
+     * exception.
      *
+     * @param message - the detail message.
+     * @param error   Throwable
      */
-    public InvalidRelationPropertiesException(final String message,
-        final Throwable error) {
+    public InvalidRelationPropertiesException(final String message, final Throwable error) {
         super(message, error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 }

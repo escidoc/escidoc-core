@@ -24,43 +24,28 @@ import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 
 /**
  * Interface of an Binding Handler of the business layer.
- * 
- * @author Michael Hoppe
- * 
  *
+ * @author Michael Hoppe
  */
 public interface BindingHandlerInterface {
 
     /**
-     * Unmarshals given xml-data to java-binding-object. Needs contextPath
-     * (package-name of binding-object).
-     * 
-     * @param xml
-     *            xml.
-     * @param contextPath
-     *            contextPath.
-     * @return Returns Java binding Object.
-     * 
-     * @throws XmlParserSystemException
-     *             ex
-     * 
+     * Unmarshals given xml-data to java-binding-object. Needs contextPath (package-name of binding-object).
      *
+     * @param xml         xml.
+     * @param contextPath contextPath.
+     * @return Returns Java binding Object.
+     * @throws XmlParserSystemException ex
      */
-    Object unmarshal(final String xml, final String contextPath)
-        throws XmlParserSystemException;
+    Object unmarshal(final String xml, final String contextPath) throws XmlParserSystemException;
 
     /**
      * Marshals given Object to xml-String.
-     * 
-     * @param bindingObject
-     *            bindingObject.
-     * @return String xml.
-     * 
-     * @throws XmlParserSystemException
-     *             ex
-     * 
      *
+     * @param bindingObject bindingObject.
+     * @return String xml.
+     * @throws XmlParserSystemException ex
      */
     String marshal(final Object bindingObject) throws XmlParserSystemException;
-    
+
 }

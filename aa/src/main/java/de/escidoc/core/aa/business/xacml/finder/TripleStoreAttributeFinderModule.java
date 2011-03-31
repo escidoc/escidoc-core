@@ -53,158 +53,93 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 /**
- * Attribute finder that uses access to an attribute cache to retrieve attribute
- * values of a resource instead of retrieving them from the resource itself.<br>
- * This handler retrieves values of attributes that are stored in a triple
- * store. Commonly, these are attributes of non-versionized object or that are
- * common for all versions of an object, e.g. object status, created-by or
- * latest-version-status.<br>
- * This handler retrieves attributes of the current version, too, if the current
- * version is the latest version.
- * 
- * Supported Attributes:<br>
- * -info:escidoc/names:aa:1.0:resource:component:id<br>
- * the id of the component, single value attribute 
- * -info:escidoc/names:aa:1.0:resource:component-id<br>
- * the id of the component, single value attribute 
- * -info:escidoc/names:aa:1.0:resource:component:item<br>
- * the id of the item of the component, single value attribute
- * -info:escidoc/names:aa:1.0:resource:component:content-category<br>
- * the content-category of the component, single value attribute
- * -info:escidoc/names:aa:1.0:resource:component:created-by<br>
- * the id of the user who created the component, single value attribute
- * -info:escidoc/names:aa:1.0:resource:component:valid-status<br>
- * the valid-status of the component, single value attribute
- * -info:escidoc/names:aa:1.0:resource:component:visibility<br>
- * the visibility of the component, single value attribute
- * -info:escidoc/names:aa:1.0:resource:container:id<br>
- * the id of the container, single value attribute
- * -info:escidoc/names:aa:1.0:resource:container-id<br>
- * the id of the container, single value attribute
- * -info:escidoc/names:aa:1.0:resource:container:title<br>
- * the title of the container, single value attribute
- * -info:escidoc/names:aa:1.0:resource:container:container<br>
- * the (parent)container of the container, multi value attribute
- * -info:escidoc/names:aa:1.0:resource:container:hierarchical-containers<br>
- * the (parent)containers (hierarchical) of the container, multi value attribute
- * -info:escidoc/names:aa:1.0:resource:container:content-model<br>
- * the id of the content-model of the container, single value attribute
- * -info:escidoc/names:aa:1.0:resource:container:context<br>
- * the id of the context of the container, single value attribute
- * -info:escidoc/names:aa:1.0:resource:container:created-by<br>
- * the id of the user who created the container, single value attribute
- * -info:escidoc/names:aa:1.0:resource:container:latest-release-number<br>
- * the number of the latest release of the container, single value attribute
- * -info:escidoc/names:aa:1.0:resource:container:latest-release-pid<br>
- * the pid of the latest release of the container, single value attribute
- * -info:escidoc/names:aa:1.0:resource:container:latest-version-modified-by<br>
+ * Attribute finder that uses access to an attribute cache to retrieve attribute values of a resource instead of
+ * retrieving them from the resource itself.<br> This handler retrieves values of attributes that are stored in a triple
+ * store. Commonly, these are attributes of non-versionized object or that are common for all versions of an object,
+ * e.g. object status, created-by or latest-version-status.<br> This handler retrieves attributes of the current
+ * version, too, if the current version is the latest version.
+ * <p/>
+ * Supported Attributes:<br> -info:escidoc/names:aa:1.0:resource:component:id<br> the id of the component, single value
+ * attribute -info:escidoc/names:aa:1.0:resource:component-id<br> the id of the component, single value attribute
+ * -info:escidoc/names:aa:1.0:resource:component:item<br> the id of the item of the component, single value attribute
+ * -info:escidoc/names:aa:1.0:resource:component:content-category<br> the content-category of the component, single
+ * value attribute -info:escidoc/names:aa:1.0:resource:component:created-by<br> the id of the user who created the
+ * component, single value attribute -info:escidoc/names:aa:1.0:resource:component:valid-status<br> the valid-status of
+ * the component, single value attribute -info:escidoc/names:aa:1.0:resource:component:visibility<br> the visibility of
+ * the component, single value attribute -info:escidoc/names:aa:1.0:resource:container:id<br> the id of the container,
+ * single value attribute -info:escidoc/names:aa:1.0:resource:container-id<br> the id of the container, single value
+ * attribute -info:escidoc/names:aa:1.0:resource:container:title<br> the title of the container, single value attribute
+ * -info:escidoc/names:aa:1.0:resource:container:container<br> the (parent)container of the container, multi value
+ * attribute -info:escidoc/names:aa:1.0:resource:container:hierarchical-containers<br> the (parent)containers
+ * (hierarchical) of the container, multi value attribute -info:escidoc/names:aa:1.0:resource:container:content-model<br>
+ * the id of the content-model of the container, single value attribute -info:escidoc/names:aa:1.0:resource:container:context<br>
+ * the id of the context of the container, single value attribute -info:escidoc/names:aa:1.0:resource:container:created-by<br>
+ * the id of the user who created the container, single value attribute -info:escidoc/names:aa:1.0:resource:container:latest-release-number<br>
+ * the number of the latest release of the container, single value attribute -info:escidoc/names:aa:1.0:resource:container:latest-release-pid<br>
+ * the pid of the latest release of the container, single value attribute -info:escidoc/names:aa:1.0:resource:container:latest-version-modified-by<br>
  * the id of the user who created the latest-version of the container, single value attribute
- * -info:escidoc/names:aa:1.0:resource:container:latest-version-number<br>
- * the number of the latest-version of the container, single value attribute
- * -info:escidoc/names:aa:1.0:resource:container:latest-version-status<br>
- * the status of the latest-version of the container, single value attribute
- * -info:escidoc/names:aa:1.0:resource:container:public-status<br>
- * the public-status of the container, single value attribute
- * -info:escidoc/names:aa:1.0:resource:container:version-modified-by<br>
+ * -info:escidoc/names:aa:1.0:resource:container:latest-version-number<br> the number of the latest-version of the
+ * container, single value attribute -info:escidoc/names:aa:1.0:resource:container:latest-version-status<br> the status
+ * of the latest-version of the container, single value attribute -info:escidoc/names:aa:1.0:resource:container:public-status<br>
+ * the public-status of the container, single value attribute -info:escidoc/names:aa:1.0:resource:container:version-modified-by<br>
  * the id of the user who created the current version of the container, single value attribute
- * -info:escidoc/names:aa:1.0:resource:container:version-status<br>
- * the status of the current version of the container, single value attribute
- * -info:escidoc/names:aa:1.0:resource:content-model:id<br>
- * the id of the content-model, single value attribute
- * -info:escidoc/names:aa:1.0:resource:content-model-id<br>
- * the id of the content-model, single value attribute
- * -info:escidoc/names:aa:1.0:resource:content-model:title<br>
- * the title of the content-model
- * -info:escidoc/names:aa:1.0:resource:content-relation:id<br>
- * the id of the content-relation, single value attribute
- * -info:escidoc/names:aa:1.0:resource:content-relation-id<br>
- * the id of the content-relation, single value attribute
- * -info:escidoc/names:aa:1.0:resource:content-relation:created-by<br>
- * the id of the user who created the content-relation, single value attribute
- * -info:escidoc/names:aa:1.0:resource:content-relation:version-status<br>
- * the status of the current version of the content-relation, single value attribute
- * -info:escidoc/names:aa:1.0:resource:context:id<br>
- * the id of the context, single value attribute
- * -info:escidoc/names:aa:1.0:resource:context-id<br>
- * the id of the context, single value attribute
- * -info:escidoc/names:aa:1.0:resource:context:title<br>
- * the title of the context, single value attribute
- * -info:escidoc/names:aa:1.0:resource:context:created-by<br>
- * the id of the user who created the context, single value attribute
- * -info:escidoc/names:aa:1.0:resource:context:organizational-unit<br>
- * the organizational-unit of the context, single value attribute
- * -info:escidoc/names:aa:1.0:resource:context:public-status<br>
- * the public-status of the context, single value attribute
- * -info:escidoc/names:aa:1.0:resource:item:id<br>
- * the id of the item, single value attribute
- * -info:escidoc/names:aa:1.0:resource:item-id<br>
- * the id of the item, single value attribute
- * -info:escidoc/names:aa:1.0:resource:item:title<br>
- * the title of the item, single value attribute
- * -info:escidoc/names:aa:1.0:resource:item:component<br>
- * the id of the component of the item, multi value attribute
- * -info:escidoc/names:aa:1.0:resource:item:container<br>
- * the id of the container of the item, multi value attribute
- * -info:escidoc/names:aa:1.0:resource:item:hierarchical-containers<br>
- * the ids of the containers of the item (hierarchical), multi value attribute
- * -info:escidoc/names:aa:1.0:resource:item:content-model<br>
- * the id of the content-model of the item, single value attribute
- * -info:escidoc/names:aa:1.0:resource:item:context<br>
- * the id of the context of the item, single value attribute
- * -info:escidoc/names:aa:1.0:resource:item:created-by<br>
- * the id of the user who created the item, single value attribute
- * -info:escidoc/names:aa:1.0:resource:item:latest-release-number<br>
- * the latest-release-number of the item, single value attribute
- * -info:escidoc/names:aa:1.0:resource:item:latest-release-pid<br>
- * the latest-release-pid of the item, single value attribute
- * -info:escidoc/names:aa:1.0:resource:item:latest-version-modified-by<br>
+ * -info:escidoc/names:aa:1.0:resource:container:version-status<br> the status of the current version of the container,
+ * single value attribute -info:escidoc/names:aa:1.0:resource:content-model:id<br> the id of the content-model, single
+ * value attribute -info:escidoc/names:aa:1.0:resource:content-model-id<br> the id of the content-model, single value
+ * attribute -info:escidoc/names:aa:1.0:resource:content-model:title<br> the title of the content-model
+ * -info:escidoc/names:aa:1.0:resource:content-relation:id<br> the id of the content-relation, single value attribute
+ * -info:escidoc/names:aa:1.0:resource:content-relation-id<br> the id of the content-relation, single value attribute
+ * -info:escidoc/names:aa:1.0:resource:content-relation:created-by<br> the id of the user who created the
+ * content-relation, single value attribute -info:escidoc/names:aa:1.0:resource:content-relation:version-status<br> the
+ * status of the current version of the content-relation, single value attribute -info:escidoc/names:aa:1.0:resource:context:id<br>
+ * the id of the context, single value attribute -info:escidoc/names:aa:1.0:resource:context-id<br> the id of the
+ * context, single value attribute -info:escidoc/names:aa:1.0:resource:context:title<br> the title of the context,
+ * single value attribute -info:escidoc/names:aa:1.0:resource:context:created-by<br> the id of the user who created the
+ * context, single value attribute -info:escidoc/names:aa:1.0:resource:context:organizational-unit<br> the
+ * organizational-unit of the context, single value attribute -info:escidoc/names:aa:1.0:resource:context:public-status<br>
+ * the public-status of the context, single value attribute -info:escidoc/names:aa:1.0:resource:item:id<br> the id of
+ * the item, single value attribute -info:escidoc/names:aa:1.0:resource:item-id<br> the id of the item, single value
+ * attribute -info:escidoc/names:aa:1.0:resource:item:title<br> the title of the item, single value attribute
+ * -info:escidoc/names:aa:1.0:resource:item:component<br> the id of the component of the item, multi value attribute
+ * -info:escidoc/names:aa:1.0:resource:item:container<br> the id of the container of the item, multi value attribute
+ * -info:escidoc/names:aa:1.0:resource:item:hierarchical-containers<br> the ids of the containers of the item
+ * (hierarchical), multi value attribute -info:escidoc/names:aa:1.0:resource:item:content-model<br> the id of the
+ * content-model of the item, single value attribute -info:escidoc/names:aa:1.0:resource:item:context<br> the id of the
+ * context of the item, single value attribute -info:escidoc/names:aa:1.0:resource:item:created-by<br> the id of the
+ * user who created the item, single value attribute -info:escidoc/names:aa:1.0:resource:item:latest-release-number<br>
+ * the latest-release-number of the item, single value attribute -info:escidoc/names:aa:1.0:resource:item:latest-release-pid<br>
+ * the latest-release-pid of the item, single value attribute -info:escidoc/names:aa:1.0:resource:item:latest-version-modified-by<br>
  * the id of the user who created the latest-version of the item, single value attribute
- * -info:escidoc/names:aa:1.0:resource:item:latest-version-number<br>
- * the latest-version-number of the item, single value attribute
- * -info:escidoc/names:aa:1.0:resource:item:latest-version-status<br>
- * the latest-version-status of the item, single value attribute
- * -info:escidoc/names:aa:1.0:resource:item:public-status<br>
- * the public-status of the item, single value attribute
- * -info:escidoc/names:aa:1.0:resource:item:version-modified-by<br>
- * the id of the user who created the current version of the item, single value attribute
- * -info:escidoc/names:aa:1.0:resource:item:version-status<br>
- * the version-status of the item, single value attribute
- * -info:escidoc/names:aa:1.0:resource:organizational-unit:id<br>
- * the id of the organizational-unit, single value attribute
- * -info:escidoc/names:aa:1.0:resource:organizational-unit-id<br>
- * the id of the organizational-unit, single value attribute
- * -info:escidoc/names:aa:1.0:resource:organizational-unit:title<br>
- * the title of the organizational-unit, single value attribute
- * -info:escidoc/names:aa:1.0:resource:organizational-unit:created-by<br>
- * the id of the user who created the organizational-unit, single value attribute
- * -info:escidoc/names:aa:1.0:resource:organizational-unit:latest-version-number<br>
- * the latest-version-number of the organizational-unit, single value attribute
- * -info:escidoc/names:aa:1.0:resource:organizational-unit:public-status<br>
- * the public-status of the organizational-unit, single value attribute
- * -info:escidoc/names:aa:1.0:resource:organizational-unit:parent<br>
- * the ids of the parents of the organizational-unit, multi value attribute
- * -info:escidoc/names:aa:1.0:resource:organizational-unit:hierarchical-parents<br>
+ * -info:escidoc/names:aa:1.0:resource:item:latest-version-number<br> the latest-version-number of the item, single
+ * value attribute -info:escidoc/names:aa:1.0:resource:item:latest-version-status<br> the latest-version-status of the
+ * item, single value attribute -info:escidoc/names:aa:1.0:resource:item:public-status<br> the public-status of the
+ * item, single value attribute -info:escidoc/names:aa:1.0:resource:item:version-modified-by<br> the id of the user who
+ * created the current version of the item, single value attribute -info:escidoc/names:aa:1.0:resource:item:version-status<br>
+ * the version-status of the item, single value attribute -info:escidoc/names:aa:1.0:resource:organizational-unit:id<br>
+ * the id of the organizational-unit, single value attribute -info:escidoc/names:aa:1.0:resource:organizational-unit-id<br>
+ * the id of the organizational-unit, single value attribute -info:escidoc/names:aa:1.0:resource:organizational-unit:title<br>
+ * the title of the organizational-unit, single value attribute -info:escidoc/names:aa:1.0:resource:organizational-unit:created-by<br>
+ * the id of the user who created the organizational-unit, single value attribute -info:escidoc/names:aa:1.0:resource:organizational-unit:latest-version-number<br>
+ * the latest-version-number of the organizational-unit, single value attribute -info:escidoc/names:aa:1.0:resource:organizational-unit:public-status<br>
+ * the public-status of the organizational-unit, single value attribute -info:escidoc/names:aa:1.0:resource:organizational-unit:parent<br>
+ * the ids of the parents of the organizational-unit, multi value attribute -info:escidoc/names:aa:1.0:resource:organizational-unit:hierarchical-parents<br>
  * the ids of the parents of the organizational-unit (hierarchical), multi value attribute
- * 
+ *
  * @author Torsten Tetteroo
  */
-public class TripleStoreAttributeFinderModule
-    extends AbstractAttributeFinderModule {
+public class TripleStoreAttributeFinderModule extends AbstractAttributeFinderModule {
 
     private static final Pattern SPLIT_PATTERN = Pattern.compile(":");
 
     /**
-     * Pattern to detect item attributes that are version dependent: component,
-     * modified-by, and version-status.
+     * Pattern to detect item attributes that are version dependent: component, modified-by, and version-status.
      */
     private static final Pattern PATTERN_ITEM_DEPENDENT_ATTRS =
-        Pattern.compile(AttributeIds.URN_ITEM_COMPONENT_ATTR + ".*|"
-            + AttributeIds.URN_ITEM_MODIFIED_BY_ATTR + ".*|"
+        Pattern.compile(AttributeIds.URN_ITEM_COMPONENT_ATTR + ".*|" + AttributeIds.URN_ITEM_MODIFIED_BY_ATTR + ".*|"
             + AttributeIds.URN_ITEM_VERSION_STATUS_ATTR + ".*");
 
     /**
-     * Pattern to detect container attributes that are version dependent:
-     * member, modified-by, and version-status.
+     * Pattern to detect container attributes that are version dependent: member, modified-by, and version-status.
      */
     private static final Pattern PATTERN_CONTAINER_DEPENDENT_ATTRS =
         Pattern.compile(AttributeIds.URN_CONTAINER_MEMBER_ATTR + ".*|"
@@ -218,35 +153,28 @@ public class TripleStoreAttributeFinderModule
 
     private TripleStoreUtility tsu;
 
-    private final MapResult publicStatusMapResult =
-        new MapResult(TripleStoreUtility.PROP_PUBLIC_STATUS, false);
+    private final MapResult publicStatusMapResult = new MapResult(TripleStoreUtility.PROP_PUBLIC_STATUS, false);
 
-    private final MapResult createdByMapResult =
-        new MapResult(TripleStoreUtility.PROP_CREATED_BY_ID, false);
+    private final MapResult createdByMapResult = new MapResult(TripleStoreUtility.PROP_CREATED_BY_ID, false);
 
     private final MapResult latestVersionNumberMapResult =
         new MapResult(TripleStoreUtility.PROP_LATEST_VERSION_NUMBER, false);
 
-    private final MapResult contentModelMapResult =
-        new MapResult(TripleStoreUtility.PROP_CONTENT_MODEL_ID, false);
+    private final MapResult contentModelMapResult = new MapResult(TripleStoreUtility.PROP_CONTENT_MODEL_ID, false);
 
-    private final MapResult contextMapResult =
-        new MapResult(TripleStoreUtility.PROP_CONTEXT_ID, false);
+    private final MapResult contextMapResult = new MapResult(TripleStoreUtility.PROP_CONTEXT_ID, false);
 
-    private final MapResult memberMapResult =
-        new MapResult(TripleStoreUtility.PROP_MEMBER, true);
+    private final MapResult memberMapResult = new MapResult(TripleStoreUtility.PROP_MEMBER, true);
 
     private final MapResult hierarchicalMemberMapResult =
         new MapResult(TripleStoreUtility.PROP_MEMBER, true, true, false);
 
-    private final MapResult parentMapResult =
-        new MapResult(TripleStoreUtility.PROP_PARENT, false);
+    private final MapResult parentMapResult = new MapResult(TripleStoreUtility.PROP_PARENT, false);
 
     private final MapResult hierarchicalParentMapResult =
         new MapResult(TripleStoreUtility.PROP_PARENT, false, true, true);
 
-    private final MapResult componentMapResult =
-        new MapResult(TripleStoreUtility.PROP_COMPONENT, false);
+    private final MapResult componentMapResult = new MapResult(TripleStoreUtility.PROP_COMPONENT, false);
 
     private final MapResult latestReleaseNumberMapResult =
         new MapResult(TripleStoreUtility.PROP_LATEST_RELEASE_NUMBER, false);
@@ -261,9 +189,8 @@ public class TripleStoreAttributeFinderModule
         new MapResult(TripleStoreUtility.PROP_LATEST_VERSION_STATUS, false);
 
     private final MapResult organizationalUnitMapResult =
-        new MapResult(
-            de.escidoc.core.common.business.Constants.STRUCTURAL_RELATIONS_NS_URI
-                + "organizational-unit", false);
+        new MapResult(de.escidoc.core.common.business.Constants.STRUCTURAL_RELATIONS_NS_URI + "organizational-unit",
+            false);
 
     /**
      * The constructor.
@@ -273,51 +200,29 @@ public class TripleStoreAttributeFinderModule
         initMapping();
     }
 
-
-
     /**
      * See Interface for functional description.<br>
-     * 
-     * This handler is responsible for all eSciDoc attributes that can be
-     * fetched from the triple store, i.e. it is responsible for all attributes
-     * of objects stored in fedora if
-     * <ul>
-     * <li>the object is not under version control,</li>
-     * <li>the latest version is addressed, or</li>
-     * <li>if the attribute is not version specific, i.e. it has the same value
-     * for all versions of the object.</li>
-     * </ul>
-     * Therefore, the handler is responsible if the resource id does not contain
-     * a version number (resourceVersionNumber == null), as in this case always
-     * the latest version shall be addressed. It is responsible, too, if the
-     * version number specified in the resource id matches the latest-version
-     * number. And it is responsible to fetch all non-version specific
-     * attributes even if the specified version number does not match the
-     * latest-version-number.
-     * 
-     * @param attributeIdValue
-     * @param ctx
-     * @param resourceId
-     * @param resourceObjid
-     * @param resourceVersionNumber
-     * @param designatorType
-     * @return
-     * @throws EscidocException
-     *
+     * <p/>
+     * This handler is responsible for all eSciDoc attributes that can be fetched from the triple store, i.e. it is
+     * responsible for all attributes of objects stored in fedora if <ul> <li>the object is not under version
+     * control,</li> <li>the latest version is addressed, or</li> <li>if the attribute is not version specific, i.e. it
+     * has the same value for all versions of the object.</li> </ul> Therefore, the handler is responsible if the
+     * resource id does not contain a version number (resourceVersionNumber == null), as in this case always the latest
+     * version shall be addressed. It is responsible, too, if the version number specified in the resource id matches
+     * the latest-version number. And it is responsible to fetch all non-version specific attributes even if the
+     * specified version number does not match the latest-version-number.
      */
     @Override
     protected boolean assertAttribute(
-        final String attributeIdValue, final EvaluationCtx ctx,
-        final String resourceId, final String resourceObjid,
-        final String resourceVersionNumber, final int designatorType)
-        throws EscidocException {
+        final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
+        final String resourceVersionNumber, final int designatorType) throws EscidocException {
 
         // make sure it is an eSciDoc resource attribute and an id of the
         // resource for that the attribute shall be found
         // is specified, as this handler is not able to resolve values of
         // not existing resources.
-        if (!super.assertAttribute(attributeIdValue, ctx, resourceId,
-            resourceObjid, resourceVersionNumber, designatorType)
+        if (!super.assertAttribute(attributeIdValue, ctx, resourceId, resourceObjid, resourceVersionNumber,
+            designatorType)
             || FinderModuleHelper.isNewResourceId(resourceId)) {
 
             return false;
@@ -339,16 +244,14 @@ public class TripleStoreAttributeFinderModule
             // specific.
             if (PATTERN_ITEM_DEPENDENT_ATTRS.matcher(attributeIdValue).find()) {
                 final String latestVersionNumber =
-                    fetchSingleResourceAttribute(ctx, resourceObjid,
-                        AttributeIds.URN_ITEM_LATEST_VERSION_NUMBER_ATTR);
+                    fetchSingleResourceAttribute(ctx, resourceObjid, AttributeIds.URN_ITEM_LATEST_VERSION_NUMBER_ATTR);
                 if (!latestVersionNumber.equals(resourceVersionNumber)) {
                     return false;
                 }
             }
             // container members, modified-by, and version-status are version
             // specific.
-            else if (PATTERN_CONTAINER_DEPENDENT_ATTRS
-                .matcher(attributeIdValue).find()) {
+            else if (PATTERN_CONTAINER_DEPENDENT_ATTRS.matcher(attributeIdValue).find()) {
 
                 final String latestVersionNumber =
                     fetchSingleResourceAttribute(ctx, resourceObjid,
@@ -364,20 +267,10 @@ public class TripleStoreAttributeFinderModule
 
     /**
      * See Interface for functional description.
-     * 
-     * @param attributeIdValue
-     * @param ctx
-     * @param resourceId
-     * @param resourceObjid
-     * @param resourceVersionNumber
-     * @return
-     * @throws EscidocException
-     *
      */
     @Override
     protected Object[] resolveLocalPart(
-        final String attributeIdValue, final EvaluationCtx ctx,
-        final String resourceId, final String resourceObjid,
+        final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
         final String resourceVersionNumber) throws EscidocException {
 
         List<String> cachedAttribute = new ArrayList<String>();
@@ -391,12 +284,11 @@ public class TripleStoreAttributeFinderModule
         if (!mapresult.getresolvableAttributeId().equals(attributeIdValue)) {
             try {
                 result =
-                    ctx.getResourceAttribute(Constants.URI_XMLSCHEMA_STRING,
-                        new URI(mapresult.getresolvableAttributeId()), null);
+                    ctx.getResourceAttribute(Constants.URI_XMLSCHEMA_STRING, new URI(mapresult
+                        .getresolvableAttributeId()), null);
             }
             catch (final URISyntaxException e) {
-                result =
-                    CustomEvaluationResultBuilder.createSyntaxErrorResult(e);
+                result = CustomEvaluationResultBuilder.createSyntaxErrorResult(e);
             }
             return new Object[] { result, mapresult.getresolvableAttributeId() };
         }
@@ -408,16 +300,15 @@ public class TripleStoreAttributeFinderModule
             final Collection<String> attributesList = new ArrayList<String>();
             attributesList.add(resourceObjid);
             cachedAttribute = getHierarchicalCachedAttributes(attributesList, cachedAttribute, mapresult);
-        } else {
+        }
+        else {
             cachedAttribute =
-                    FinderModuleHelper.retrieveFromTripleStore(mapresult
-                            .isInverse(), mapresult.getResolveCurrentWhereClause(
-                            resourceObjid, this.tsu), resourceObjid,
-                            mapresult.getCacheId(), this.tsu);
+                FinderModuleHelper.retrieveFromTripleStore(mapresult.isInverse(), mapresult
+                    .getResolveCurrentWhereClause(resourceObjid, this.tsu), resourceObjid, mapresult.getCacheId(),
+                    this.tsu);
         }
 
-        final List<StringAttribute> stringAttributes =
-            new ArrayList<StringAttribute>();
+        final List<StringAttribute> stringAttributes = new ArrayList<StringAttribute>();
         if (cachedAttribute.isEmpty()) {
             // if Attribute was not found it is not there
             // to avoid repeatedly resolving, put marker in EvaluationCtx
@@ -429,57 +320,43 @@ public class TripleStoreAttributeFinderModule
             }
         }
 
-        result =
-            new EvaluationResult(new BagAttribute(
-                Constants.URI_XMLSCHEMA_STRING, stringAttributes));
+        result = new EvaluationResult(new BagAttribute(Constants.URI_XMLSCHEMA_STRING, stringAttributes));
 
         return new Object[] { result, mapresult.getresolvableAttributeId() };
     }
 
     /**
      * resolves Attributes hierarchically from TripleStore.
-     * 
-     * @param attributesList
-     *            list of Attributes to resolve
-     * @param totalAttributesList
-     *            list of total resolved Attributes
-     * @param mapresult
-     *            MapResult
-     * @return List
-     * @throws ResourceNotFoundException
-     *             e
-     * @throws SystemException
-     *             e
-     * 
      *
+     * @param attributesList      list of Attributes to resolve
+     * @param totalAttributesList list of total resolved Attributes
+     * @param mapresult           MapResult
+     * @return List
+     * @throws ResourceNotFoundException e
+     * @throws SystemException           e
      */
     protected List<String> getHierarchicalCachedAttributes(
-        final Collection<String> attributesList,
-        final List<String> totalAttributesList, final MapResult mapresult)
+        final Collection<String> attributesList, final List<String> totalAttributesList, final MapResult mapresult)
         throws ResourceNotFoundException, SystemException {
         List<String> hierarchicalAttributesList = totalAttributesList;
         if (attributesList != null && !attributesList.isEmpty()) {
             for (final String attribute : attributesList) {
                 final List<String> theseAttributes =
-                    FinderModuleHelper.retrieveFromTripleStore(mapresult
-                        .isInverse(), mapresult.getResolveCurrentWhereClause(
-                        attribute, this.tsu), attribute, mapresult.getCacheId(), this.tsu);
+                    FinderModuleHelper
+                        .retrieveFromTripleStore(mapresult.isInverse(), mapresult.getResolveCurrentWhereClause(
+                            attribute, this.tsu), attribute, mapresult.getCacheId(), this.tsu);
                 if (theseAttributes != null && !theseAttributes.isEmpty()) {
                     hierarchicalAttributesList.addAll(theseAttributes);
                     hierarchicalAttributesList =
-                        getHierarchicalCachedAttributes(theseAttributes,
-                            hierarchicalAttributesList, mapresult);
+                        getHierarchicalCachedAttributes(theseAttributes, hierarchicalAttributesList, mapresult);
                 }
             }
         }
         return hierarchicalAttributesList;
     }
 
-
-
     /**
-     * Initializes the mapping from the attribute id to the id used inside the
-     * triple store (e.g. MPT).
+     * Initializes the mapping from the attribute id to the id used inside the triple store (e.g. MPT).
      */
     private void initMapping() {
 
@@ -500,8 +377,7 @@ public class TripleStoreAttributeFinderModule
         // stream
         // of an Escidoc resource does not always contain dc:identifier entry
         // due to using of custom XSLTs for DC-Mapping
-        String cacheId =
-            TripleStoreUtility.FEDORA_CREATION_DATE_PREDICATE;
+        String cacheId = TripleStoreUtility.FEDORA_CREATION_DATE_PREDICATE;
 
         mapping.put("component-id", new MapResult(cacheId, true));
         mapping.put("component:id", new MapResult(cacheId, true));
@@ -582,9 +458,8 @@ public class TripleStoreAttributeFinderModule
     }
 
     /**
-     * Initializes the mapping from the attribute id to the id used inside the
-     * triple store (e.g. kowari) for attributes related to organizational
-     * units.
+     * Initializes the mapping from the attribute id to the id used inside the triple store (e.g. kowari) for attributes
+     * related to organizational units.
      */
     private void initMappingOrganizationalUnit() {
 
@@ -601,8 +476,8 @@ public class TripleStoreAttributeFinderModule
     }
 
     /**
-     * Initializes the mapping from the attribute id to the id used inside the
-     * triple store (e.g. mulgara) for attributes related to items.
+     * Initializes the mapping from the attribute id to the id used inside the triple store (e.g. mulgara) for
+     * attributes related to items.
      */
     private void initMappingItem() {
         mapping.put("item:component", this.componentMapResult);
@@ -610,8 +485,7 @@ public class TripleStoreAttributeFinderModule
         // container (of latest version, only? or version independent?)
         mapping.put("item:container", this.memberMapResult);
 
-        mapping
-            .put("item:hierarchical-containers", this.hierarchicalMemberMapResult);
+        mapping.put("item:hierarchical-containers", this.hierarchicalMemberMapResult);
 
         mapping.put("item:content-model", this.contentModelMapResult);
 
@@ -635,17 +509,15 @@ public class TripleStoreAttributeFinderModule
         mapping.put("item:public-status", this.publicStatusMapResult);
 
         // modified-by (of latest version)
-        mapping.put("item:version-modified-by", mapping
-            .get("item:latest-version-modified-by"));
+        mapping.put("item:version-modified-by", mapping.get("item:latest-version-modified-by"));
 
         // version status (of latest version)
-        mapping.put("item:version-status", mapping
-            .get("item:latest-version-status"));
+        mapping.put("item:version-status", mapping.get("item:latest-version-status"));
     }
 
     /**
-     * Initializes the mapping from the attribute id to the id used inside the
-     * triple store (e.g. mulgara) for attributes related to items.
+     * Initializes the mapping from the attribute id to the id used inside the triple store (e.g. mulgara) for
+     * attributes related to items.
      */
     private void initMappingContentRelation() {
         // created-by
@@ -655,8 +527,8 @@ public class TripleStoreAttributeFinderModule
     }
 
     /**
-     * Initializes the mapping from the attribute id to the id used inside the
-     * triple store (e.g. kowari) for attributes related to contexts.
+     * Initializes the mapping from the attribute id to the id used inside the triple store (e.g. kowari) for attributes
+     * related to contexts.
      */
     private void initMappingContext() {
         // created-by
@@ -669,8 +541,8 @@ public class TripleStoreAttributeFinderModule
     }
 
     /**
-     * Initializes the mapping from the attribute id to the id used inside the
-     * triple store (e.g. kowari) for attributes related to container.
+     * Initializes the mapping from the attribute id to the id used inside the triple store (e.g. kowari) for attributes
+     * related to container.
      */
     private void initMappingContainer() {
         // containers (of latest version, only? or version independent?)
@@ -706,53 +578,42 @@ public class TripleStoreAttributeFinderModule
         mapping.put("container:public-status", this.publicStatusMapResult);
 
         // modified-by (of latest version)
-        mapping.put("container:version-modified-by", mapping
-            .get("container:latest-version-modified-by"));
+        mapping.put("container:version-modified-by", mapping.get("container:latest-version-modified-by"));
 
         // version status (of latest version)
-        mapping.put("container:version-status", mapping
-            .get("container:latest-version-status"));
+        mapping.put("container:version-status", mapping.get("container:latest-version-status"));
     }
 
     /**
-     * Initializes the mapping from the attribute id to the id used inside the
-     * triple store (e.g. kowari) for attributes related to components.
+     * Initializes the mapping from the attribute id to the id used inside the triple store (e.g. kowari) for attributes
+     * related to components.
      */
     private void initMappingComponent() {
 
         // item
-        mapping.put("component:item", new MapResult(
-            TripleStoreUtility.PROP_COMPONENT, true));
+        mapping.put("component:item", new MapResult(TripleStoreUtility.PROP_COMPONENT, true));
 
         // content category
-        mapping.put("component:content-category", new MapResult(
-            TripleStoreUtility.PROP_CONTENT_CATEGORY, false));
+        mapping.put("component:content-category", new MapResult(TripleStoreUtility.PROP_CONTENT_CATEGORY, false));
 
         // created-by
         mapping.put("component:created-by", this.createdByMapResult);
 
         // status
-        mapping.put("component:valid-status", new MapResult(
-            TripleStoreUtility.PROP_VALID_STATUS, false));
+        mapping.put("component:valid-status", new MapResult(TripleStoreUtility.PROP_VALID_STATUS, false));
 
         // visibility
-        mapping.put("component:visibility", new MapResult(
-            TripleStoreUtility.PROP_VISIBILITY, false));
+        mapping.put("component:visibility", new MapResult(TripleStoreUtility.PROP_VISIBILITY, false));
     }
 
     /**
-     * Maps the specified attribute id specified to an id used inside the cache
-     * (e.g. kowari).<br>
-     * The longest match is searched in the mappings, i.e. if there are mapping
-     * defined for &quot;a:b&quot; and for &quot;a:b:c&quot;, the mapping for
-     * &quot;a:b:c&quot; is chosen.
-     * 
-     * @param attributeIdValue
-     *            The value of the attribute id to map.
-     * @return Returns a <code>MapResult</code> object containing the mapped
-     *         cache id for the longest found match<br>
-     *         If no match can be found, <code>null</code> is returned.
-     * 
+     * Maps the specified attribute id specified to an id used inside the cache (e.g. kowari).<br> The longest match is
+     * searched in the mappings, i.e. if there are mapping defined for &quot;a:b&quot; and for &quot;a:b:c&quot;, the
+     * mapping for &quot;a:b:c&quot; is chosen.
+     *
+     * @param attributeIdValue The value of the attribute id to map.
+     * @return Returns a <code>MapResult</code> object containing the mapped cache id for the longest found match<br> If
+     *         no match can be found, <code>null</code> is returned.
      */
     public MapResult mapIt(final String attributeIdValue) {
 
@@ -760,8 +621,8 @@ public class TripleStoreAttributeFinderModule
             return null;
         }
 
-        final String[] elements = SPLIT_PATTERN.split(attributeIdValue
-                .substring(AttributeIds.RESOURCE_ATTR_PREFIX_LENGTH));
+        final String[] elements =
+            SPLIT_PATTERN.split(attributeIdValue.substring(AttributeIds.RESOURCE_ATTR_PREFIX_LENGTH));
 
         String currentPath = "";
         String longestPath = null;
@@ -777,21 +638,17 @@ public class TripleStoreAttributeFinderModule
                 element = element.substring(0, dotIndex);
                 elements[i] = element;
             }
-            currentPath = i == 0 ? element : StringUtility
-                    .concatenateWithColon(currentPath, element).toString();
+            currentPath = i == 0 ? element : StringUtility.concatenateWithColon(currentPath, element).toString();
 
             if (mapping.get(currentPath) != null) {
-                longestMatch = new MapResult(
-                    mapping.get(currentPath).getCacheId(),
-                    mapping.get(currentPath).isInverse(),
-                    mapping.get(currentPath).isHierarchical(),
-                    mapping.get(currentPath).isIncludeHierarchyBase());
+                longestMatch =
+                    new MapResult(mapping.get(currentPath).getCacheId(), mapping.get(currentPath).isInverse(), mapping
+                        .get(currentPath).isHierarchical(), mapping.get(currentPath).isIncludeHierarchyBase());
                 longestPath = currentPath;
                 indexLongestMatch = i;
             }
             if (contentModelTitle != null) {
-                contentTypePredicateId =
-                    TripleStoreUtility.PROP_CONTENT_MODEL_ID;
+                contentTypePredicateId = TripleStoreUtility.PROP_CONTENT_MODEL_ID;
                 break;
             }
         }
@@ -801,8 +658,7 @@ public class TripleStoreAttributeFinderModule
 
         String tail = null;
         if (indexLongestMatch < elements.length - 1) {
-            final StringBuilder tailBuf =
-                    new StringBuilder(AttributeIds.RESOURCE_ATTR_PREFIX);
+            final StringBuilder tailBuf = new StringBuilder(AttributeIds.RESOURCE_ATTR_PREFIX);
             tail = AttributeIds.RESOURCE_ATTR_PREFIX;
             for (int i = indexLongestMatch; i < elements.length; i++) {
                 tailBuf.append(elements[i]);
@@ -811,9 +667,7 @@ public class TripleStoreAttributeFinderModule
             tail = tailBuf.substring(0, tailBuf.length() - 1);
         }
 
-        longestMatch
-            .setResolvableAttributeId(
-                AttributeIds.RESOURCE_ATTR_PREFIX + longestPath);
+        longestMatch.setResolvableAttributeId(AttributeIds.RESOURCE_ATTR_PREFIX + longestPath);
         longestMatch.setNextAttributeId(tail);
         longestMatch.setContentTypePredicateId(contentTypePredicateId);
         longestMatch.setContentTypeTitle(contentModelTitle);
@@ -823,9 +677,8 @@ public class TripleStoreAttributeFinderModule
 
     /**
      * Injects the triple store utility bean.
-     * 
-     * @param tsu
-     *            The {@link TripleStoreUtility}.
+     *
+     * @param tsu The {@link TripleStoreUtility}.
      */
     public void setTsu(final TripleStoreUtility tsu) {
         this.tsu = tsu;

@@ -37,25 +37,22 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GroupSelectorsRemoveHandler
-    extends DefaultHandler {
-    
+public class GroupSelectorsRemoveHandler extends DefaultHandler {
+
     private final List<String> memberIdsToRemove = new ArrayList<String>();
 
     @Override
-    public String characters(final String data, final StartElement element)
-        throws InvalidContentException, TripleStoreSystemException,
-        WebserverSystemException {
+    public String characters(final String data, final StartElement element) throws InvalidContentException,
+        TripleStoreSystemException, WebserverSystemException {
         final String localName = element.getLocalName();
 
         if ("id".equals(localName)) {
             memberIdsToRemove.add(data);
-           
+
         }
         return data;
     }
 
-   
     public List<String> getMemberIdsToRemove() {
         return this.memberIdsToRemove;
     }

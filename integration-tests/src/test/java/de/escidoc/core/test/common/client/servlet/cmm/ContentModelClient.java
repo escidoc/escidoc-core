@@ -38,17 +38,15 @@ import java.util.Map;
 
 /**
  * Offers access to the content type handler methods.
- * 
+ *
  * @author Torsten Tetteroo
- * 
  */
 public class ContentModelClient extends ClientBase {
 
     private ContentModelHandler soapClient = null;
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ContentModelClient(final int transport) {
         super(transport);
@@ -56,18 +54,15 @@ public class ContentModelClient extends ClientBase {
 
     /**
      * @return Returns the soapClient.
-     * @throws ServiceException
-     *             If service instantiation fails.
+     * @throws ServiceException If service instantiation fails.
      */
     @Override
     public ContentModelHandler getSoapClient() throws ServiceException {
 
         if (soapClient == null) {
-            ContentModelHandlerServiceLocator serviceLocator =
-                new ContentModelHandlerServiceLocator(getEngineConfig());
-            serviceLocator
-                .setContentModelHandlerServiceEndpointAddress(checkSoapAddress(serviceLocator
-                    .getContentModelHandlerServiceAddress()));
+            ContentModelHandlerServiceLocator serviceLocator = new ContentModelHandlerServiceLocator(getEngineConfig());
+            serviceLocator.setContentModelHandlerServiceEndpointAddress(checkSoapAddress(serviceLocator
+                .getContentModelHandlerServiceAddress()));
             soapClient = serviceLocator.getContentModelHandlerService();
         }
         return soapClient;
@@ -75,20 +70,16 @@ public class ContentModelClient extends ClientBase {
 
     /**
      * Retrieve the xml representation of a content model.
-     * 
-     * @param id
-     *            The id of the container.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param id The id of the container.
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     @Override
     public Object retrieve(final String id) throws Exception {
 
-        return callEsciDoc("ContentModel.retrieve", METHOD_RETRIEVE,
-            Constants.HTTP_METHOD_GET, Constants.CONTENT_MODEL_BASE_URI,
-            new String[] { id });
+        return callEsciDoc("ContentModel.retrieve", METHOD_RETRIEVE, Constants.HTTP_METHOD_GET,
+            Constants.CONTENT_MODEL_BASE_URI, new String[] { id });
     }
 
     /*
@@ -101,9 +92,8 @@ public class ContentModelClient extends ClientBase {
     @Override
     public Object create(final Object xml) throws Exception {
 
-        return callEsciDoc("ContentModel.create", METHOD_CREATE,
-            Constants.HTTP_METHOD_PUT, Constants.CONTENT_MODEL_BASE_URI,
-            new String[] {}, xml);
+        return callEsciDoc("ContentModel.create", METHOD_CREATE, Constants.HTTP_METHOD_PUT,
+            Constants.CONTENT_MODEL_BASE_URI, new String[] {}, xml);
     }
 
     /*
@@ -116,9 +106,8 @@ public class ContentModelClient extends ClientBase {
     @Override
     public Object update(final String id, final Object xml) throws Exception {
 
-        return callEsciDoc("ContentModel.update", METHOD_UPDATE,
-            Constants.HTTP_METHOD_PUT, Constants.CONTENT_MODEL_BASE_URI,
-            new String[] { id }, xml);
+        return callEsciDoc("ContentModel.update", METHOD_UPDATE, Constants.HTTP_METHOD_PUT,
+            Constants.CONTENT_MODEL_BASE_URI, new String[] { id }, xml);
     }
 
     /*
@@ -131,26 +120,20 @@ public class ContentModelClient extends ClientBase {
     @Override
     public Object delete(final String id) throws Exception {
 
-        return callEsciDoc("ContentModel.delete", METHOD_DELETE,
-            Constants.HTTP_METHOD_DELETE, Constants.CONTENT_MODEL_BASE_URI,
-            new String[] { id });
+        return callEsciDoc("ContentModel.delete", METHOD_DELETE, Constants.HTTP_METHOD_DELETE,
+            Constants.CONTENT_MODEL_BASE_URI, new String[] { id });
     }
 
     /**
      * Retrieve content models.
-     * 
-     * @param filter
-     *            The filter param.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param filter The filter param.
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
-    public Object retrieveContentModels(final Map<String, String[]> filter)
-        throws Exception {
-        return callEsciDoc("ContentModel.retrieveContentModels",
-            METHOD_RETRIEVE_CONTENT_MODELS, Constants.HTTP_METHOD_GET,
-            Constants.CONTENT_MODELS_BASE_URI, new String[] {}, filter);
+    public Object retrieveContentModels(final Map<String, String[]> filter) throws Exception {
+        return callEsciDoc("ContentModel.retrieveContentModels", METHOD_RETRIEVE_CONTENT_MODELS,
+            Constants.HTTP_METHOD_GET, Constants.CONTENT_MODELS_BASE_URI, new String[] {}, filter);
     }
 
     /*
@@ -162,52 +145,41 @@ public class ContentModelClient extends ClientBase {
      */
     public Object retrieveResources(final String id) throws Exception {
 
-        return callEsciDoc("ContentModel.retrieveResources",
-            METHOD_RETRIEVE_RESOURCES, Constants.HTTP_METHOD_GET,
+        return callEsciDoc("ContentModel.retrieveResources", METHOD_RETRIEVE_RESOURCES, Constants.HTTP_METHOD_GET,
             Constants.CONTENT_MODEL_BASE_URI, new String[] { id, "resources" });
     }
 
     public Object retrieveProperties(final String id) throws Exception {
 
-        return callEsciDoc("ContentModel.retrieveProperties",
-            METHOD_RETRIEVE_PROPERTIES, Constants.HTTP_METHOD_GET,
+        return callEsciDoc("ContentModel.retrieveProperties", METHOD_RETRIEVE_PROPERTIES, Constants.HTTP_METHOD_GET,
             Constants.CONTENT_MODEL_BASE_URI, new String[] { id, "properties" });
     }
 
     public Object retrieveContentStreams(final String id) throws Exception {
 
-        return callEsciDoc("ContentModel.retrieveContentStreams",
-            METHOD_RETRIEVE_CONTENT_STREAMS, Constants.HTTP_METHOD_GET,
-            Constants.CONTENT_MODEL_BASE_URI, new String[] { id,
-                "content-streams" });
+        return callEsciDoc("ContentModel.retrieveContentStreams", METHOD_RETRIEVE_CONTENT_STREAMS,
+            Constants.HTTP_METHOD_GET, Constants.CONTENT_MODEL_BASE_URI, new String[] { id, "content-streams" });
     }
 
-    public Object retrieveContentStream(final String id, final String name)
-        throws Exception {
+    public Object retrieveContentStream(final String id, final String name) throws Exception {
 
-        return callEsciDoc("ContentModel.retrieveContentStream",
-            METHOD_RETRIEVE_CONTENT_STREAM, Constants.HTTP_METHOD_GET,
-            Constants.CONTENT_MODEL_BASE_URI, new String[] { id,
+        return callEsciDoc("ContentModel.retrieveContentStream", METHOD_RETRIEVE_CONTENT_STREAM,
+            Constants.HTTP_METHOD_GET, Constants.CONTENT_MODEL_BASE_URI, new String[] { id,
                 "content-streams/content-stream", name });
     }
-    
+
     /**
      * Retrieve the history of an Content Model.
-     * 
-     * @param id
-     *            The id of the Content Model.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param id The id of the Content Model.
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     public Object retrieveVersionHistory(final String id) throws Exception {
 
-        return callEsciDoc("ContentModel.retrieveVersionHistory",
-            METHOD_RETRIEVE_VERSION_HISTORY, Constants.HTTP_METHOD_GET,
-            Constants.CONTENT_MODEL_BASE_URI, new String[] { id,
+        return callEsciDoc("ContentModel.retrieveVersionHistory", METHOD_RETRIEVE_VERSION_HISTORY,
+            Constants.HTTP_METHOD_GET, Constants.CONTENT_MODEL_BASE_URI, new String[] { id,
                 Constants.SUB_VERSION_HISTORY });
     }
 
-    
 }

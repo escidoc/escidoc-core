@@ -29,72 +29,55 @@
 package de.escidoc.core.test.common.client.servlet.interfaces;
 
 /**
- * Interface of a resource handler.<br />
- * This interface defines methods common to all resource handlers, e.g. create.
- * 
+ * Interface of a resource handler.<br /> This interface defines methods common to all resource handlers, e.g. create.
+ *
  * @author Torsten Tetteroo
- * 
  */
 public interface ResourceHandlerClientInterface {
 
     /**
      * Create a resource.
-     * 
-     * @param resourceXml
-     *            The xml representation of the resource
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param resourceXml The xml representation of the resource
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     Object create(final Object resourceXml) throws Exception;
 
     /**
      * Delete a resource.
-     * 
-     * @param id
-     *            The resource id.
+     *
+     * @param id The resource id.
      * @return The HttpMethod after the service call (REST) or null (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     * @throws Exception If the service call fails.
      */
     Object delete(final String id) throws Exception;
 
     /**
      * Retrieve the xml representation of a resource.
-     * 
-     * @param id
-     *            The resource id.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param id The resource id.
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     Object retrieve(final String id) throws Exception;
 
     /**
      * Retrieve the xml representation of the (virtual) resources of a resource.
-     * 
-     * @param id
-     *            The resource id.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param id The resource id.
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     Object retrieveResources(final String id) throws Exception;
 
     /**
      * Update an user.
-     * 
-     * @param id
-     *            The resource id.
-     * @param resourceXml
-     *            The xml representation of the resource
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param id          The resource id.
+     * @param resourceXml The xml representation of the resource
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     Object update(final String id, final Object resourceXml) throws Exception;
 }

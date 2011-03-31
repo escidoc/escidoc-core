@@ -39,38 +39,35 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Fills xml-data into VO.
- * 
- * @author Michael Hoppe
  *
+ * @author Michael Hoppe
  */
 public class ReportParametersStaxHandler extends DefaultHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ReportParametersStaxHandler.class);
-    
+
     private final ReportParametersVo reportParametersVo = new ReportParametersVo();
-    
+
     private ParameterVo parameterVo;
 
     /**
      * Handle startElement event.
-     * 
+     *
      * @param element startElement
      * @return StartElement startElement
      * @throws Exception e
-     * 
-     *
      */
     @Override
     public StartElement startElement(final StartElement element) throws Exception {
         if ("report-definition".equals(element.getLocalName())) {
             try {
-                reportParametersVo.setReportDefinitionId(
-                        XmlUtility.getIdFromStartElement(element));
-            } catch (final MissingAttributeValueException e) {
-                if(LOGGER.isWarnEnabled()) {
+                reportParametersVo.setReportDefinitionId(XmlUtility.getIdFromStartElement(element));
+            }
+            catch (final MissingAttributeValueException e) {
+                if (LOGGER.isWarnEnabled()) {
                     LOGGER.warn("Missing attribute value.");
                 }
-                if(LOGGER.isDebugEnabled()) {
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Missing attribute value.", e);
                 }
             }
@@ -83,12 +80,10 @@ public class ReportParametersStaxHandler extends DefaultHandler {
 
     /**
      * Handle endElement event.
-     * 
+     *
      * @param element endElement
      * @return EndElement endElement
      * @throws Exception e
-     * 
-     *
      */
     @Override
     public EndElement endElement(final EndElement element) throws Exception {
@@ -100,28 +95,22 @@ public class ReportParametersStaxHandler extends DefaultHandler {
 
     /**
      * Handle the character section of an element.
-     * 
-     * @param s
-     *            The contents of the character section.
-     * @param element
-     *            The element.
+     *
+     * @param s       The contents of the character section.
+     * @param element The element.
      * @return The character section.
      * @throws Exception e
-     *
      */
     @Override
-    public String characters(
-                final String s, 
-                final StartElement element) 
-                    throws Exception {
+    public String characters(final String s, final StartElement element) throws Exception {
         if ("datevalue".equals(element.getLocalName())) {
             parameterVo.setDateValue(new DateTime(s));
         }
         else if ("stringvalue".equals(element.getLocalName())) {
             if (parameterVo.getStringValue() != null) {
-                parameterVo.setStringValue(
-                    parameterVo.getStringValue() + s);
-            } else {
+                parameterVo.setStringValue(parameterVo.getStringValue() + s);
+            }
+            else {
                 parameterVo.setStringValue(s);
             }
         }

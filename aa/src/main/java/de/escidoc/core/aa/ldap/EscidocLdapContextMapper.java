@@ -48,50 +48,42 @@ import java.util.Collection;
 import java.util.HashSet;
 
 /**
- * Customized Springsecurity-ContextMapper.
- * Writes all attributes from LDAP into EscidocLdapUserDetails-Object.
- * 
- * @author Michael Hoppe
+ * Customized Springsecurity-ContextMapper. Writes all attributes from LDAP into EscidocLdapUserDetails-Object.
  *
+ * @author Michael Hoppe
  */
 public class EscidocLdapContextMapper implements UserDetailsContextMapper {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(
-        EscidocLdapContextMapper.class);
-    
+    private static final Logger LOGGER = LoggerFactory.getLogger(EscidocLdapContextMapper.class);
+
     private static final Collection<String> IGNORED_VALUES = new HashSet<String>();
 
     static {
         IGNORED_VALUES.add("objectClass");
     }
-    
+
     /**
      * Writes data from LDAP into EscidocLdapUserDetails-Object.
-     * 
-     * @param ctx DirContextOperations
-     * @param username name of user
-     * @param authority array of granted authorities
-     * 
-     * @return UserDetails object with userDetails
-     * 
      *
+     * @param ctx       DirContextOperations
+     * @param username  name of user
+     * @param authority array of granted authorities
+     * @return UserDetails object with userDetails
      */
     @Override
-    public UserDetails mapUserFromContext(final DirContextOperations ctx,
-            final String username, final GrantedAuthority[] authority) {
+    public UserDetails mapUserFromContext(
+        final DirContextOperations ctx, final String username, final GrantedAuthority[] authority) {
         final EscidocLdapUserDetails user = new EscidocLdapUserDetails();
 
         final String dn = ctx.getNameInNamespace();
         user.setDn(dn);
-        
+
         user.setUsername(username);
 
         final Collection<GrantedAuthority> compare = new ArrayList<GrantedAuthority>();
         for (final GrantedAuthority anAuthority : authority) {
             if (!compare.contains(anAuthority)) {
-                user.addStringAttribute(
-                        Constants.GROUP_ATTRIBUTE_NAME,
-                        anAuthority.getAuthority());
+                user.addStringAttribute(Constants.GROUP_ATTRIBUTE_NAME, anAuthority.getAuthority());
                 compare.add(anAuthority);
             }
         }
@@ -99,24 +91,25 @@ public class EscidocLdapContextMapper implements UserDetailsContextMapper {
         try {
             final Attributes atts = ctx.getAttributes("");
             if (atts != null) {
-                final NamingEnumeration< ? extends Attribute> enumer = atts.getAll();
+                final NamingEnumeration<? extends Attribute> enumer = atts.getAll();
                 if (enumer != null) {
                     while (enumer.hasMoreElements()) {
-                        final Attribute attribute =  enumer.nextElement();
+                        final Attribute attribute = enumer.nextElement();
                         final String key = attribute.getID();
                         if (!IGNORED_VALUES.contains(key)) {
-                            final NamingEnumeration< ? > values = attribute.getAll();
+                            final NamingEnumeration<?> values = attribute.getAll();
                             while (values.hasMoreElements()) {
                                 try {
                                     final String val = (String) values.nextElement();
                                     if (val != null && val.length() != 0) {
                                         user.addStringAttribute(key, val);
                                     }
-                                } catch (final Exception e) {
-                                    if(LOGGER.isWarnEnabled()) {
+                                }
+                                catch (final Exception e) {
+                                    if (LOGGER.isWarnEnabled()) {
                                         LOGGER.warn("Error on setting attribute.");
                                     }
-                                    if(LOGGER.isDebugEnabled()) {
+                                    if (LOGGER.isDebugEnabled()) {
                                         LOGGER.debug("Error on setting attribute.", e);
                                     }
                                 }
@@ -125,28 +118,22 @@ public class EscidocLdapContextMapper implements UserDetailsContextMapper {
                     }
                 }
             }
-        } catch (final NamingException e) {
-            throw new AuthenticationCredentialsNotFoundException(
-                    "User-Attributes not found", e);
         }
-
-
+        catch (final NamingException e) {
+            throw new AuthenticationCredentialsNotFoundException("User-Attributes not found", e);
+        }
 
         return user;
     }
 
     /**
      * See interface for detailed description.
-     * 
+     *
      * @param arg0 UserDetails
      * @param arg1 DirContextAdapter
-     * 
-     *
      */
     @Override
-    public void mapUserToContext(
-            final UserDetails arg0, 
-            final DirContextAdapter arg1) {
+    public void mapUserToContext(final UserDetails arg0, final DirContextAdapter arg1) {
         // TODO Auto-generated method stub
 
     }

@@ -36,13 +36,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * MetadataRecordDefinition for create. This his a helper construct until all
- * values can be handled within the standard MdRecord class.
- * 
+ * MetadataRecordDefinition for create. This his a helper construct until all values can be handled within the standard
+ * MdRecord class.
+ * <p/>
  * This class represent a metadata record.
- * 
+ *
  * @author Frank Schwichtenberg
- * 
  */
 public class MdRecordDefinitionCreate {
 
@@ -59,18 +58,15 @@ public class MdRecordDefinitionCreate {
 
     /**
      * Set Name of Metadata Record.
-     * 
-     * @param name
-     *            Name of MdRecord.
-     * @throws MissingAttributeValueException
-     *             Thrown if name is an empty String.
+     *
+     * @param name Name of MdRecord.
+     * @throws MissingAttributeValueException Thrown if name is an empty String.
      */
-    public void setName(final String name)
-        throws MissingAttributeValueException {
+    public void setName(final String name) throws MissingAttributeValueException {
 
         if (name == null || name.length() == 0) {
-            throw new MissingAttributeValueException("the value of the" +
-                    " \"name\" atribute of the element 'name' is missing");
+            throw new MissingAttributeValueException("the value of the"
+                + " \"name\" atribute of the element 'name' is missing");
         }
 
         this.mdRecordDefinitionName = name;
@@ -78,7 +74,7 @@ public class MdRecordDefinitionCreate {
 
     /**
      * Get Name of Metadata Record.
-     * 
+     *
      * @return name of metadata record.
      */
     public String getName() {
@@ -88,19 +84,16 @@ public class MdRecordDefinitionCreate {
 
     /**
      * Set schemaHref for metadata record.
-     * 
-     * @param schemaHref
-     *            XML SchemaHref URL
-     * @throws MalformedURLException
-     *             If the given schema href is no valid URL.
-     * @throws IOException
-     *             If the eSciDoc configuration file can not be read. FIXME
-     *             should probably not be thrown so late.
+     *
+     * @param schemaHref XML SchemaHref URL
+     * @throws MalformedURLException If the given schema href is no valid URL.
+     * @throws IOException           If the eSciDoc configuration file can not be read. FIXME should probably not be
+     *                               thrown so late.
      */
-    public void setSchemaHref(final String schemaHref)
-        throws MalformedURLException, IOException {
+    public void setSchemaHref(final String schemaHref) throws MalformedURLException, IOException {
         final URL url;
-        url = schemaHref.startsWith("/") ? new URL(EscidocConfiguration.getInstance().get(
+        url =
+            schemaHref.startsWith("/") ? new URL(EscidocConfiguration.getInstance().get(
                 EscidocConfiguration.ESCIDOC_CORE_BASEURL)
                 + schemaHref) : new URL(schemaHref);
         this.schemaHref = url.toString();
@@ -108,7 +101,7 @@ public class MdRecordDefinitionCreate {
 
     /**
      * Get schemaHref of metadata record.
-     * 
+     *
      * @return XML SchemaHref URL
      */
     public String getSchemaHref() {
@@ -118,19 +111,17 @@ public class MdRecordDefinitionCreate {
 
     /**
      * Set Content of MetadataRecord (the record itself).
-     * 
-     * @param mdRecordDefinition
-     *            The content itself.
+     *
+     * @param mdRecordDefinition The content itself.
      */
-    public void setMdRecordDefinition(
-        final ByteArrayOutputStream mdRecordDefinition) {
+    public void setMdRecordDefinition(final ByteArrayOutputStream mdRecordDefinition) {
 
         this.mdRecordDefinition = mdRecordDefinition;
     }
 
     /**
      * Get OutputStream of MdRecord.
-     * 
+     *
      * @return Content of MdRecord.
      */
     public ByteArrayOutputStream getMdRecordDefinition() {
@@ -142,12 +133,10 @@ public class MdRecordDefinitionCreate {
     }
 
     /**
-     * 
      * Persist Component to Repository.
-     * 
+     *
      * @return FoXML representation of metadata record.
-     * @throws SystemException
-     *             Thrown if rendering failed.
+     * @throws SystemException Thrown if rendering failed.
      */
     public String getFOXML() throws SystemException {
 
@@ -157,26 +146,22 @@ public class MdRecordDefinitionCreate {
 
     /**
      * Get a HashMap with all values of MdRecord (for FoXML renderer).
-     * 
+     *
      * @return HashMap with all values of MdRecord
-     * @throws SystemException
-     *             Thrown if character encoding failed.
+     * @throws SystemException Thrown if character encoding failed.
      */
     public Map<String, String> getValueMap() throws SystemException {
 
         final Map<String, String> templateValues = new HashMap<String, String>();
 
         templateValues.put(XmlTemplateProvider.MD_RECORD_TYPE, TYPE);
-        templateValues.put(XmlTemplateProvider.MD_RECORD_SCHEMA,
-            this.schemaHref);
-        templateValues.put(XmlTemplateProvider.MD_RECORD_NAME,
-            this.mdRecordDefinitionName);
+        templateValues.put(XmlTemplateProvider.MD_RECORD_SCHEMA, this.schemaHref);
+        templateValues.put(XmlTemplateProvider.MD_RECORD_NAME, this.mdRecordDefinitionName);
 
         // add Metadata (as BLOB)
         try {
-            templateValues.put(XmlTemplateProvider.MD_RECORD_CONTENT,
-                getMdRecordDefinition()
-                    .toString(XmlUtility.CHARACTER_ENCODING).trim());
+            templateValues.put(XmlTemplateProvider.MD_RECORD_CONTENT, getMdRecordDefinition().toString(
+                XmlUtility.CHARACTER_ENCODING).trim());
         }
         catch (final UnsupportedEncodingException e) {
             throw new SystemException(e);

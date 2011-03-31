@@ -57,30 +57,26 @@ public class MdRecordsUpdateHandler extends DefaultHandler {
 
     private boolean isRootMetadataElement;
 
-    private final Map<String, Map<String, String>> metadataAttributes =
-        new HashMap<String, Map<String, String>>();
+    private final Map<String, Map<String, String>> metadataAttributes = new HashMap<String, Map<String, String>>();
 
-    private static final Logger LOGGER =
-        LoggerFactory.getLogger(MetadataHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MetadataHandler.class);
 
     private boolean isMandatoryName;
-    
+
     private boolean origin;
 
     /**
-     * 
+     *
      * @param mdRecordsPath
      * @param parser
      */
-    public MdRecordsUpdateHandler(final String mdRecordsPath,
-        final StaxParser parser) {
+    public MdRecordsUpdateHandler(final String mdRecordsPath, final StaxParser parser) {
 
         this.mdRecordsPath = mdRecordsPath;
         this.parser = parser;
     }
-    
-    public MdRecordsUpdateHandler(final String mdRecordsPath,
-        final StaxParser parser, final boolean origin) {
+
+    public MdRecordsUpdateHandler(final String mdRecordsPath, final StaxParser parser, final boolean origin) {
 
         this.mdRecordsPath = mdRecordsPath;
         this.parser = parser;
@@ -88,15 +84,13 @@ public class MdRecordsUpdateHandler extends DefaultHandler {
     }
 
     @Override
-    public StartElement startElement(final StartElement element)
-        throws MissingAttributeValueException {
+    public StartElement startElement(final StartElement element) throws MissingAttributeValueException {
         final String curPath = parser.getCurPath();
         final String theName = element.getLocalName();
         final int indexInherited = element.indexOfAttribute(null, "inherited");
         if (curPath.startsWith(this.mdRecordsPath) || mdRecordsPath.length() == 0) {
 
-            if (curPath.equals(this.mdRecordsPath + "/md-record")
-                && indexInherited < 0) {
+            if (curPath.equals(this.mdRecordsPath + "/md-record") && indexInherited < 0) {
                 // the entire md-record element is stored in fedora, so adjust
                 // all values
                 this.isInside = true;
@@ -105,20 +99,19 @@ public class MdRecordsUpdateHandler extends DefaultHandler {
                 try {
                     this.name = element.getAttribute(null, "name").getValue();
                     if (name.length() == 0) {
-                        throw new MissingAttributeValueException(
-                            "the value of the"
-                                + " \"name\" atribute of the element "
-                                + theName + " is missing");
+                        throw new MissingAttributeValueException("the value of the"
+                            + " \"name\" atribute of the element " + theName + " is missing");
 
                     }
                     if (name.equals(Elements.MANDATORY_MD_RECORD_NAME)) {
                         this.isMandatoryName = true;
                     }
-                } catch (final NoSuchAttributeException e) {
-                    if(LOGGER.isWarnEnabled()) {
+                }
+                catch (final NoSuchAttributeException e) {
+                    if (LOGGER.isWarnEnabled()) {
                         LOGGER.warn("Error on getting attribute.");
                     }
-                    if(LOGGER.isDebugEnabled()) {
+                    if (LOGGER.isDebugEnabled()) {
                         LOGGER.debug("Error on getting attribute.", e);
                     }
                 }
@@ -150,7 +143,8 @@ public class MdRecordsUpdateHandler extends DefaultHandler {
                     md.put("schema", "unknown");
                 }
                 metadataAttributes.put(this.name, md);
-            } else if (this.isInside && ! this.isRootMetadataElement) {
+            }
+            else if (this.isInside && !this.isRootMetadataElement) {
                 this.isRootMetadataElement = true;
                 if ("escidoc".equals(this.name)) {
                     this.escidocMdRecordNameSpace = element.getNamespace();
@@ -163,31 +157,27 @@ public class MdRecordsUpdateHandler extends DefaultHandler {
 
     /**
      * Handle the end of an element.
-     * 
-     * @param element
-     *            The element.
-     * @return The element.
      *
+     * @param element The element.
+     * @return The element.
      */
     @Override
-    public EndElement endElement(final EndElement element)
-        throws MissingMdRecordException {
+    public EndElement endElement(final EndElement element) throws MissingMdRecordException {
         if (parser.getCurPath().equals(this.mdRecordsPath + "/md-record")) {
             this.isInside = false;
             this.isRootMetadataElement = false;
             this.name = null;
         }
-        else if (mdRecordsPath.equals(parser.getCurPath())
-            && ! this.isMandatoryName && ! this.origin) {
-            throw new MissingMdRecordException("Mandatory md-record with a name "
-                    + Elements.MANDATORY_MD_RECORD_NAME + " is missing.");
+        else if (mdRecordsPath.equals(parser.getCurPath()) && !this.isMandatoryName && !this.origin) {
+            throw new MissingMdRecordException("Mandatory md-record with a name " + Elements.MANDATORY_MD_RECORD_NAME
+                + " is missing.");
         }
         return element;
     }
 
     /**
      * Get attributes of md-record elements.
-     * 
+     *
      * @return Map with map of md-record attributes.
      */
     public Map<String, Map<String, String>> getMetadataAttributes() {
@@ -195,9 +185,8 @@ public class MdRecordsUpdateHandler extends DefaultHandler {
     }
 
     /**
-     * Retrieves a namespace uri of a child element of "md-record" element,
-     * whose attribute "name" set to "escidoc".
-     * 
+     * Retrieves a namespace uri of a child element of "md-record" element, whose attribute "name" set to "escidoc".
+     *
      * @return name space of md-record
      */
     public String getEscidocMdRecordNameSpace() {

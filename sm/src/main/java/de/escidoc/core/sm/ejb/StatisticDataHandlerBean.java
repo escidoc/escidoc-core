@@ -26,16 +26,19 @@ import java.rmi.RemoteException;
 public class StatisticDataHandlerBean implements SessionBean {
 
     StatisticDataHandlerInterface service;
+
     SessionContext sessionCtx;
+
     private static final Logger LOGGER = LoggerFactory.getLogger(StatisticDataHandlerBean.class);
 
     public void ejbCreate() throws CreateException {
         try {
             final BeanFactoryLocator beanFactoryLocator = SingletonBeanFactoryLocator.getInstance();
             final BeanFactory factory =
-                    beanFactoryLocator.useBeanFactory("StatisticDataHandler.spring.ejb.context").getFactory();
+                beanFactoryLocator.useBeanFactory("StatisticDataHandler.spring.ejb.context").getFactory();
             this.service = (StatisticDataHandlerInterface) factory.getBean("service.StatisticDataHandler");
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             LOGGER.error("ejbCreate(): Exception StatisticDataHandlerComponent: " + e);
             throw new CreateException(e.getMessage());
         }
@@ -56,28 +59,24 @@ public class StatisticDataHandlerBean implements SessionBean {
 
     }
 
-    public void create(final String xmlData, final SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            SystemException {
+    public void create(final String xmlData, final SecurityContext securityContext) throws AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, SystemException {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         service.create(xmlData);
     }
 
     public void create(final String xmlData, final String authHandle, final Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            SystemException {
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         service.create(xmlData);

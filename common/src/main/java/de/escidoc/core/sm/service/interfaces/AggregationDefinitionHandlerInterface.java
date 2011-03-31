@@ -35,153 +35,104 @@ import java.util.Map;
 
 /**
  * Interface of an Statistic AggregationDefinition Handler.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 public interface AggregationDefinitionHandlerInterface {
 
     /**
      * Creates new Aggregation Definition with given xmlData.<br/>
-     * 
+     * <p/>
      * <b>Prerequisites:</b><br/>
-     * 
-     * <b>Tasks:</b><br/>
-     * <ul>
-     * <li>Validation of the delivered XML-data</li>
-     * <li>Create the Aggregation Definition</li>
-     * <li>Create associated Aggregation Tables in database.</li>
-     * <li>The XML data is returned.</li>
-     * </ul>
-     * 
-     * @param xmlData
-     *            The XML representation of the Aggregation Definition to be
-     *            created corresponding to XML-schema
-     *            "aggregation-definition.xsd".
-     * @return The XML representation of the created Aggregation Definition
-     *         corresponding to XML-schema "aggregation-definition.xsd".
-     * 
-     * @throws AuthenticationException
-     *             Thrown in case of failed authentication.
-     * @throws AuthorizationException
-     *             Thrown in case of failed authorization.
-     * @throws XmlSchemaValidationException
-     *             ex
-     * @throws XmlCorruptedException
-     *             ex
+     * <p/>
+     * <b>Tasks:</b><br/> <ul> <li>Validation of the delivered XML-data</li> <li>Create the Aggregation Definition</li>
+     * <li>Create associated Aggregation Tables in database.</li> <li>The XML data is returned.</li> </ul>
+     *
+     * @param xmlData The XML representation of the Aggregation Definition to be created corresponding to XML-schema
+     *                "aggregation-definition.xsd".
+     * @return The XML representation of the created Aggregation Definition corresponding to XML-schema
+     *         "aggregation-definition.xsd".
+     * @throws AuthenticationException      Thrown in case of failed authentication.
+     * @throws AuthorizationException       Thrown in case of failed authorization.
+     * @throws XmlSchemaValidationException ex
+     * @throws XmlCorruptedException        ex
      * @throws MissingMethodParameterException
-     *             ex
-     * @throws ScopeNotFoundException
-     *             ex
-     * @throws SystemException
-     *             ex
-     * 
+     *                                      ex
+     * @throws ScopeNotFoundException       ex
+     * @throws SystemException              ex
      */
     @Validate(param = 0, resolver = "getAggregationDefinitionSchemaLocation")
-    String create(String xmlData) throws AuthenticationException,
-        AuthorizationException, XmlSchemaValidationException,
-        XmlCorruptedException, MissingMethodParameterException,
-        ScopeNotFoundException, SystemException;
+    String create(String xmlData) throws AuthenticationException, AuthorizationException, XmlSchemaValidationException,
+        XmlCorruptedException, MissingMethodParameterException, ScopeNotFoundException, SystemException;
 
     /**
      * Delete Aggregation Definition.<br/>
-     * 
+     * <p/>
      * <b>Prerequisites:</b><br/>
-     * 
+     * <p/>
      * The Aggregation Definition must exist<br/>
-     * 
-     * <b>Tasks:</b><br/>
-     * <ul>
-     * <li>The Aggregation Definition is accessed using the provided
-     * reference.</li>
-     * <li>The Aggregation Definition is deleted.</li>
-     * <li>Associated Aggregation Tables are deleted.</li>
-     * <li>No data is returned.</li>
-     * </ul>
-     * 
-     * @param aggregationDefinitionId
-     *            The Aggregation Definition ID.
-     * @throws AuthenticationException
-     *             Thrown in case of failed authentication.
-     * @throws AuthorizationException
-     *             Thrown in case of failed authorization.
+     * <p/>
+     * <b>Tasks:</b><br/> <ul> <li>The Aggregation Definition is accessed using the provided reference.</li> <li>The
+     * Aggregation Definition is deleted.</li> <li>Associated Aggregation Tables are deleted.</li> <li>No data is
+     * returned.</li> </ul>
+     *
+     * @param aggregationDefinitionId The Aggregation Definition ID.
+     * @throws AuthenticationException Thrown in case of failed authentication.
+     * @throws AuthorizationException  Thrown in case of failed authorization.
      * @throws AggregationDefinitionNotFoundException
-     *             e.
+     *                                 e.
      * @throws MissingMethodParameterException
-     *             e.
-     * @throws SystemException
-     *             e.
+     *                                 e.
+     * @throws SystemException         e.
      */
-    void delete(String aggregationDefinitionId) throws AuthenticationException,
-        AuthorizationException, AggregationDefinitionNotFoundException,
-        MissingMethodParameterException, SystemException;
+    void delete(String aggregationDefinitionId) throws AuthenticationException, AuthorizationException,
+        AggregationDefinitionNotFoundException, MissingMethodParameterException, SystemException;
 
     /**
      * Retrieve a specified Aggregation Definition.<br/>
-     * 
+     * <p/>
      * <b>Prerequisites:</b><br/>
-     * 
+     * <p/>
      * The Aggregation Definition must exist<br/>
-     * 
-     * <b>Tasks:</b><br/>
-     * <ul>
-     * <li>The Aggregation Definition is accessed using the provided
-     * reference.</li>
-     * <li>The XML data is returned.</li>
-     * </ul>
-     * 
-     * @param aggregationDefinitionId
-     *            The Aggregation Definition ID.
-     * @return The XML representation of the Aggregation Definition
-     *         corresponding to XML-schema "aggregation-definition.xsd".
-     * @throws AuthenticationException
-     *             Thrown in case of failed authentication.
-     * @throws AuthorizationException
-     *             Thrown in case of failed authorization.
+     * <p/>
+     * <b>Tasks:</b><br/> <ul> <li>The Aggregation Definition is accessed using the provided reference.</li> <li>The XML
+     * data is returned.</li> </ul>
+     *
+     * @param aggregationDefinitionId The Aggregation Definition ID.
+     * @return The XML representation of the Aggregation Definition corresponding to XML-schema
+     *         "aggregation-definition.xsd".
+     * @throws AuthenticationException Thrown in case of failed authentication.
+     * @throws AuthorizationException  Thrown in case of failed authorization.
      * @throws AggregationDefinitionNotFoundException
-     *             e.
+     *                                 e.
      * @throws MissingMethodParameterException
-     *             e.
-     * @throws SystemException
-     *             e.
-     * 
+     *                                 e.
+     * @throws SystemException         e.
      */
-    String retrieve(String aggregationDefinitionId) throws AuthenticationException,
-        AuthorizationException, AggregationDefinitionNotFoundException,
-        MissingMethodParameterException, SystemException;
+    String retrieve(String aggregationDefinitionId) throws AuthenticationException, AuthorizationException,
+        AggregationDefinitionNotFoundException, MissingMethodParameterException, SystemException;
 
     /**
-     * Retrieves all resources the User is allowed to see.<br/>
-     * <br/> NOTE: URI-Like Filters are deprecated and will be removed in the next version of the core-framework.
-     * Please use the new PATH-like filters (eg /id instead of http://purl.org/dc/elements/1.1/identifier).
-     * For further information about the filter-names, please see the explain-plan.<br/>
-     * 
+     * Retrieves all resources the User is allowed to see.<br/> <br/> NOTE: URI-Like Filters are deprecated and will be
+     * removed in the next version of the core-framework. Please use the new PATH-like filters (eg /id instead of
+     * http://purl.org/dc/elements/1.1/identifier). For further information about the filter-names, please see the
+     * explain-plan.<br/>
+     * <p/>
      * <b>Prerequisites:</b><br/>
-     * 
-     * <b>Tasks:</b><br/>
-     * <ul>
-     * <li>All Aggregation Definitions the user may see are accessed.</li>
-     * <li>The XML data is returned.</li>
-     * </ul>
-     * 
-     * @param parameters
-     *            filter as CQL query
-     * 
-     * @return The XML representation of the list of Aggregation Definitions
-     *         corresponding to XML-schema "aggregation-definition-list.xsd".
+     * <p/>
+     * <b>Tasks:</b><br/> <ul> <li>All Aggregation Definitions the user may see are accessed.</li> <li>The XML data is
+     * returned.</li> </ul>
+     *
+     * @param parameters filter as CQL query
+     * @return The XML representation of the list of Aggregation Definitions corresponding to XML-schema
+     *         "aggregation-definition-list.xsd".
      * @throws MissingMethodParameterException
-     *             If the parameter filter is not given.
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a SQL query
-     * @throws AuthenticationException
-     *             Thrown in case of failed authentication.
-     * @throws AuthorizationException
-     *             Thrown in case of failed authorization.
-     * @throws SystemException
-     *             e.
+     *                                     If the parameter filter is not given.
+     * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
+     * @throws AuthenticationException     Thrown in case of failed authentication.
+     * @throws AuthorizationException      Thrown in case of failed authorization.
+     * @throws SystemException             e.
      */
-    String retrieveAggregationDefinitions(Map<String, String[]> parameters)
-        throws InvalidSearchQueryException, MissingMethodParameterException,
-        AuthenticationException, AuthorizationException, SystemException;
+    String retrieveAggregationDefinitions(Map<String, String[]> parameters) throws InvalidSearchQueryException,
+        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
 }

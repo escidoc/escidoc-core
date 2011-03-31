@@ -25,20 +25,18 @@ import java.net.PasswordAuthentication;
 
 /**
  * @author Steffen Wagner
- * 
  */
 public class PidManagerAuthenticator extends Authenticator {
+
     private final String username;
 
     private final String password;
 
     /**
      * PidManagerAuthenticator.
-     * 
-     * @param username
-     *            The username.
-     * @param password
-     *            The password.
+     *
+     * @param username The username.
+     * @param password The password.
      */
     public PidManagerAuthenticator(final String username, final String password) {
         this.username = username;
@@ -47,7 +45,7 @@ public class PidManagerAuthenticator extends Authenticator {
 
     /**
      * Get password authentication.
-     * 
+     *
      * @return PasswordAuthentication
      */
     @Override

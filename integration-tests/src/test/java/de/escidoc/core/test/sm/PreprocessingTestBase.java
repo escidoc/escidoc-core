@@ -34,15 +34,13 @@ import org.apache.http.util.EntityUtils;
 
 /**
  * Base class for Preprocessing tests.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 public class PreprocessingTestBase extends SmTestBase {
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public PreprocessingTestBase(final int transport) {
         super(transport);
@@ -50,22 +48,15 @@ public class PreprocessingTestBase extends SmTestBase {
 
     /**
      * Test preprocessing raw statistic data.
-     * 
-     * @param dataXml
-     *            The preprocessing-information xml.
-     * @param aggregationDefinitionId
-     *            The id of the aggregationDefinition to preprocess.
+     *
+     * @param dataXml                 The preprocessing-information xml.
+     * @param aggregationDefinitionId The id of the aggregationDefinition to preprocess.
      * @return The created item.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    public String preprocess(
-        final String aggregationDefinitionId, final String dataXml)
-        throws Exception {
+    public String preprocess(final String aggregationDefinitionId, final String dataXml) throws Exception {
 
-        Object result =
-            getPreprocessingClient().preprocess(aggregationDefinitionId,
-                dataXml);
+        Object result = getPreprocessingClient().preprocess(aggregationDefinitionId, dataXml);
         String xmlResult = null;
         if (result instanceof HttpResponse) {
             HttpResponse httpRes = (HttpResponse) result;

@@ -21,13 +21,11 @@
 package de.escidoc.core.common.exceptions.application.missing;
 
 /**
- * The MissingMdRecordException is used to indicate that the a mandatory
- * md-record is missing. returned httpStatusCode is 417. Status code (417)
- * indicating that the server could not meet the expectation given in the Expect
- * request header.
- * 
- * @author Michael Hoppe (FIZ Karlsruhe)
+ * The MissingMdRecordException is used to indicate that the a mandatory md-record is missing. returned httpStatusCode
+ * is 417. Status code (417) indicating that the server could not meet the expectation given in the Expect request
+ * header.
  *
+ * @author Michael Hoppe (FIZ Karlsruhe)
  */
 public class MissingMdRecordException extends MissingParameterException {
 
@@ -42,8 +40,6 @@ public class MissingMdRecordException extends MissingParameterException {
 
     /**
      * Default constructor.
-     * 
-     *
      */
     public MissingMdRecordException() {
         super(HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -51,9 +47,8 @@ public class MissingMdRecordException extends MissingParameterException {
 
     /**
      * Constructor used to map an initial exception.
-     * 
-     * @param error
-     *            Throwable
+     *
+     * @param error Throwable
      */
     public MissingMdRecordException(final Throwable error) {
         super(error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -61,24 +56,19 @@ public class MissingMdRecordException extends MissingParameterException {
 
     /**
      * Constructs a new exception with the specified detail message.
-     * 
-     * @param message -
-     *            the detail message.
      *
+     * @param message - the detail message.
      */
     public MissingMdRecordException(final String message) {
         super(message, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 
     /**
-     * Constructor used to create a new Exception with the specified detail
-     * message and a mapping to an initial exception.
-     * 
-     * @param message -
-     *            the detail message.
-     * @param error
-     *            Throwable
+     * Constructor used to create a new Exception with the specified detail message and a mapping to an initial
+     * exception.
      *
+     * @param message - the detail message.
+     * @param error   Throwable
      */
     public MissingMdRecordException(final String message, final Throwable error) {
         super(message, error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);

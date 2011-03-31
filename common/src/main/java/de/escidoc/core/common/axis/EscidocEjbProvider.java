@@ -30,63 +30,38 @@ import org.apache.axis.providers.java.EJBProvider;
 import org.apache.axis.providers.java.JavaProvider;
 
 /**
- * EJBProvider implementation that extends
- * org.apache.axis.providers.java.EJBProvider to forward the security context
- * from the SOAP data to the EJB.<br>
- * This implementation overrides the makeNewServiceObject method.
- * 
- * @author Torsten Tetteroo
+ * EJBProvider implementation that extends org.apache.axis.providers.java.EJBProvider to forward the security context
+ * from the SOAP data to the EJB.<br> This implementation overrides the makeNewServiceObject method.
  *
+ * @author Torsten Tetteroo
  */
 public class EscidocEjbProvider extends EscidocSpringProvider {
+
     private static final long serialVersionUID = -4909005487534850667L;
-
-
 
     /**
      * See Interface for functional description.<br>
-     * 
-     * For providing "compatible" wsdl to previous implementation, the following
-     * is initialized:
-     * <ul>
-     * <li>the default name space of the service description is initialized
-     * using the value of option {@link EJBProvider.OPTION_REMOTEINTERFACENAME}.</li>
-     * </ul>
-     * Additionally, the following option should be defined properly in
-     * deployment descriptor:
-     * <ul>
-     * <li>OPTION_WSDL_PORTTYPE</li>
-     * <li>OPTION_WSDL_TARGETNAMESPACE</li>
-     * <li>OPTION_WSDL_SERVICEELEMENT</li>
-     * <li>OPTION_WSDL_SERVICEPORT</li>
-     * </ul>
-     * 
-     * @param service
-     * @param messageContext
-     * @throws AxisFault
-     * @see JavaProvider
-     *      #initServiceDesc(org.apache.axis.handlers.soap.SOAPService,
-     *      org.apache.axis.MessageContext)
+     * <p/>
+     * For providing "compatible" wsdl to previous implementation, the following is initialized: <ul> <li>the default
+     * name space of the service description is initialized using the value of option {@link
+     * EJBProvider.OPTION_REMOTEINTERFACENAME}.</li> </ul> Additionally, the following option should be defined properly
+     * in deployment descriptor: <ul> <li>OPTION_WSDL_PORTTYPE</li> <li>OPTION_WSDL_TARGETNAMESPACE</li>
+     * <li>OPTION_WSDL_SERVICEELEMENT</li> <li>OPTION_WSDL_SERVICEPORT</li> </ul>
      *
+     * @see JavaProvider #initServiceDesc(org.apache.axis.handlers.soap.SOAPService, org.apache.axis.MessageContext)
      */
     @Override
-    public void initServiceDesc(
-        final SOAPService service, final MessageContext messageContext)
-        throws AxisFault {
+    public void initServiceDesc(final SOAPService service, final MessageContext messageContext) throws AxisFault {
 
-    	TypeMappingImpl.dotnet_soapenc_bugfix = true;
-    	final ServiceDesc serviceDescription = service.getServiceDescription();
-        final String targetnamespace =
-            (String) service.getOption(OPTION_WSDL_TARGETNAMESPACE);
+        TypeMappingImpl.dotnet_soapenc_bugfix = true;
+        final ServiceDesc serviceDescription = service.getServiceDescription();
+        final String targetnamespace = (String) service.getOption(OPTION_WSDL_TARGETNAMESPACE);
         if (targetnamespace == null) {
-            throw new AxisFault(StringUtility.format(
-                MISSING_MANDATORY_PARAMETER, OPTION_WSDL_TARGETNAMESPACE));
+            throw new AxisFault(StringUtility.format(MISSING_MANDATORY_PARAMETER, OPTION_WSDL_TARGETNAMESPACE));
         }
         serviceDescription.setDefaultNamespace(targetnamespace);
 
         super.initServiceDesc(service, messageContext);
     }
-
-     
 
 }

@@ -34,30 +34,20 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 /**
  * Stax handler that manages the unsecured-action elements.
- * 
- * @author Torsten Tetteroo
  *
+ * @author Torsten Tetteroo
  */
 public class UnsecuredActionStaxHandler extends DefaultHandler {
 
-    private static final String UNSECURED_ACTION_PATH = '/'
-        + XmlUtility.NAME_UNSECURED_ACTIONS + '/'
-        + XmlUtility.NAME_UNSECURED_ACTION;
+    private static final String UNSECURED_ACTION_PATH =
+        '/' + XmlUtility.NAME_UNSECURED_ACTIONS + '/' + XmlUtility.NAME_UNSECURED_ACTION;
 
     private final StringBuffer unsecuredActions = new StringBuffer();
 
-
-
     /**
      * See Interface for functional description.
-     * 
-     * @param s
-     * @param element
-     * @return
-     * @see DefaultHandler
-     *      #characters(java.lang.String,
-     *      de.escidoc.core.common.util.xml.stax.events.StartElement)
      *
+     * @see DefaultHandler #characters(java.lang.String, de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
     public String characters(final String s, final StartElement element) {
@@ -71,13 +61,10 @@ public class UnsecuredActionStaxHandler extends DefaultHandler {
         return s;
     }
 
-
-
     /**
      * Gets the parsed unsecured actions.
-     * 
-     * @return Returns the unsecured actions in a {@link String} with spaces as
-     *         delimiters.
+     *
+     * @return Returns the unsecured actions in a {@link String} with spaces as delimiters.
      */
     public String getUnsecuredActions() {
 

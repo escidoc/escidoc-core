@@ -45,16 +45,14 @@ import java.util.Map;
 
 /**
  * Handle ContentStream XML to obtain all required ContentStream values.
- * 
+ *
  * @author Steffen Wagner
- * 
  */
 public class ContentStreamHandler2 extends DefaultHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ContentStreamHandler2.class);
 
-    private String xpathContentStream =
-        "/item/content-streams/content-stream";
+    private String xpathContentStream = "/item/content-streams/content-stream";
 
     private final StaxParser parser;
 
@@ -70,9 +68,8 @@ public class ContentStreamHandler2 extends DefaultHandler {
 
     /**
      * ContentStreamHandler.
-     * 
-     * @param parser
-     *            StAX Parser.
+     *
+     * @param parser StAX Parser.
      */
     public ContentStreamHandler2(final StaxParser parser) {
         this.parser = parser;
@@ -80,39 +77,30 @@ public class ContentStreamHandler2 extends DefaultHandler {
 
     /**
      * ContentStreamHandler
-     * 
-     * @param parser
-     *            StAX Parser.
-     * @param contentStreamPath
-     *            The content-stream element path.
+     *
+     * @param parser            StAX Parser.
+     * @param contentStreamPath The content-stream element path.
      */
-    public ContentStreamHandler2(final StaxParser parser,
-        final String contentStreamPath) {
+    public ContentStreamHandler2(final StaxParser parser, final String contentStreamPath) {
         this.parser = parser;
         this.xpathContentStream = contentStreamPath;
     }
 
     /**
      * Parser hits an XML start element.
-     * 
-     * @param element
-     *            StartElement from StAX parser
+     *
+     * @param element StartElement from StAX parser
      * @return StAX StartElement
-     * @throws InvalidContentException
-     * @throws MissingAttributeValueException
-     * @throws WebserverSystemException
      */
     @Override
-    public StartElement startElement(final StartElement element)
-        throws InvalidContentException, MissingAttributeValueException,
-        WebserverSystemException {
+    public StartElement startElement(final StartElement element) throws InvalidContentException,
+        MissingAttributeValueException, WebserverSystemException {
 
         if (this.parsingContent) {
             if (this.contentHandler == null) {
                 // reached first element after content-stream root element
                 this.contentHandler =
-                    new MultipleExtractor(this.xpathContentStream + '/'
-                        + element.getLocalName(), this.parser);
+                    new MultipleExtractor(this.xpathContentStream + '/' + element.getLocalName(), this.parser);
             }
             this.hasContent = true;
             this.contentHandler.startElement(element);
@@ -120,27 +108,22 @@ public class ContentStreamHandler2 extends DefaultHandler {
         else {
             final String currentPath = parser.getCurPath();
             if (currentPath.equals(this.xpathContentStream)) {
-                if(LOGGER.isDebugEnabled()) {
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Parser reached " + currentPath);
                 }
                 this.parsingContent = true;
 
                 this.contentStream = new ContentStreamCreate();
 
-                this.contentStream.setName(getAttributeValue(element, null,
-                    "name"));
-                this.contentStream.setMimeType(getAttributeValue(element, null,
-                    "mime-type"));
+                this.contentStream.setName(getAttributeValue(element, null, "name"));
+                this.contentStream.setMimeType(getAttributeValue(element, null, "mime-type"));
                 // this seams strange (title is a href attribute which should
                 // be ignored)
-                this.contentStream.setTitle(getAttributeValue(element,
-                    Constants.XLINK_NS_URI, "title"));
+                this.contentStream.setTitle(getAttributeValue(element, Constants.XLINK_NS_URI, "title"));
 
                 this.content = new BinaryContent();
-                this.content.setStorageType(getAttributeValue(element, null,
-                    "storage"));
-                this.content.setDataLocation(getAttributeValue(element,
-                    Constants.XLINK_NS_URI, "href"));
+                this.content.setStorageType(getAttributeValue(element, null, "storage"));
+                this.content.setDataLocation(getAttributeValue(element, Constants.XLINK_NS_URI, "href"));
             }
         }
 
@@ -149,18 +132,12 @@ public class ContentStreamHandler2 extends DefaultHandler {
 
     /**
      * Parser hits an XML end element.
-     * 
-     * @param element
-     *            StAX EndElement
+     *
+     * @param element StAX EndElement
      * @return StAX EndElement
-     * @throws MissingContentException
-     * @throws XMLStreamException
-     * @throws WebserverSystemException
-     * @throws UnsupportedEncodingException
      */
     @Override
-    public EndElement endElement(final EndElement element)
-        throws WebserverSystemException {
+    public EndElement endElement(final EndElement element) throws WebserverSystemException {
 
         final String currentPath = parser.getCurPath();
 
@@ -169,8 +146,7 @@ public class ContentStreamHandler2 extends DefaultHandler {
             this.parsingContent = false;
 
             if (this.hasContent) {
-                final Map<String, Object> outputStreams =
-                    this.contentHandler.getOutputStreams();
+                final Map<String, Object> outputStreams = this.contentHandler.getOutputStreams();
 
                 // MultipleExtractor could deliver a list of stream. But it
                 // should be only possible to extract one with this parser
@@ -179,16 +155,13 @@ public class ContentStreamHandler2 extends DefaultHandler {
                     LOGGER.warn("Multiple content-streams.");
                 }
                 final Iterator<String> it = outputStreams.keySet().iterator();
-                final ByteArrayOutputStream outStream =
-                    (ByteArrayOutputStream) outputStreams.get(it.next());
+                final ByteArrayOutputStream outStream = (ByteArrayOutputStream) outputStreams.get(it.next());
 
                 try {
-                    this.content.setContent(outStream
-                        .toString(XmlUtility.CHARACTER_ENCODING));
+                    this.content.setContent(outStream.toString(XmlUtility.CHARACTER_ENCODING));
                 }
                 catch (final UnsupportedEncodingException e) {
-                    throw new WebserverSystemException(
-                        "Application default encoding not supported.", e);
+                    throw new WebserverSystemException("Application default encoding not supported.", e);
                 }
                 this.hasContent = false;
                 this.contentHandler = null;
@@ -206,23 +179,14 @@ public class ContentStreamHandler2 extends DefaultHandler {
 
     /**
      * Parser hits an XML character element.
-     * 
-     * @param s
-     *            XML character element.
-     * @param element
-     *            StAX StartElement
+     *
+     * @param s       XML character element.
+     * @param element StAX StartElement
      * @return XML character element.
-     * 
-     * @throws InvalidContentException
-     * @throws MissingElementValueException
-     * @throws WebserverSystemException
-     * @throws XMLStreamException
-     * 
      */
     @Override
-    public String characters(final String s, final StartElement element)
-        throws InvalidContentException, MissingElementValueException,
-        WebserverSystemException {
+    public String characters(final String s, final StartElement element) throws InvalidContentException,
+        MissingElementValueException, WebserverSystemException {
 
         if (this.parsingContent && this.contentHandler != null) {
             this.contentHandler.characters(s, element);
@@ -232,10 +196,10 @@ public class ContentStreamHandler2 extends DefaultHandler {
 
     /**
      * Get the ContentStream.
-     * 
-     * Attention! ContentStreamCreate is only a transition object. Later
-     * implementation has to return the ContentStream class.
-     * 
+     * <p/>
+     * Attention! ContentStreamCreate is only a transition object. Later implementation has to return the ContentStream
+     * class.
+     *
      * @return ContentStream
      */
     public ContentStreamCreate getContentStream() {

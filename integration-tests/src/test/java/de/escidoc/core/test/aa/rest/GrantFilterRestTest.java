@@ -35,18 +35,16 @@ import org.junit.runners.JUnit4;
 
 /**
  * Testsuite for the GrantFilter with REST transport.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 @RunWith(JUnit4.class)
 public class GrantFilterRestTest extends GrantFilterAbstractTest {
 
     /**
      * Constructor.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     public GrantFilterRestTest() throws Exception {
         super(Constants.TRANSPORT_REST);

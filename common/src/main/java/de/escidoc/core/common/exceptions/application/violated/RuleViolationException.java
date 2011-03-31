@@ -23,13 +23,11 @@ package de.escidoc.core.common.exceptions.application.violated;
 import de.escidoc.core.common.exceptions.application.ApplicationException;
 
 /**
- * Main-Class for Exceptions that are thrown because a system-rule was violated.
- * returned httpStatusCode is 409. Status code (409) indicating that the request
- * could not be completed due to a conflict with the current state of the
+ * Main-Class for Exceptions that are thrown because a system-rule was violated. returned httpStatusCode is 409. Status
+ * code (409) indicating that the request could not be completed due to a conflict with the current state of the
  * resource.
- * 
+ *
  * @author Michael Hoppe (FIZ Karlsruhe)
- * 
  */
 public class RuleViolationException extends ApplicationException {
 
@@ -40,27 +38,21 @@ public class RuleViolationException extends ApplicationException {
 
     public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_VIOLATED;
 
-    public static final String HTTP_STATUS_MESSAGE =
-        "System rule was violated.";
+    public static final String HTTP_STATUS_MESSAGE = "System rule was violated.";
 
     /**
      * Default constructor.
-     * 
-     *
      */
     public RuleViolationException() {
         super(HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 
     /**
-     * Constructor used to create a new Exception with the specified detail
-     * message and a mapping to an initial exception.
-     * 
-     * @param message -
-     *            the detail message.
-     * @param cause
-     *            Throwable
+     * Constructor used to create a new Exception with the specified detail message and a mapping to an initial
+     * exception.
      *
+     * @param message - the detail message.
+     * @param cause   Throwable
      */
     public RuleViolationException(final String message, final Throwable cause) {
         super(message, cause, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -68,10 +60,8 @@ public class RuleViolationException extends ApplicationException {
 
     /**
      * Constructs a new exception with the specified detail message.
-     * 
-     * @param message -
-     *            the detail message.
      *
+     * @param message - the detail message.
      */
     public RuleViolationException(final String message) {
         super(message, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -79,10 +69,8 @@ public class RuleViolationException extends ApplicationException {
 
     /**
      * Constructor used to map an initial exception.
-     * 
-     * @param cause
-     *            Throwable
      *
+     * @param cause Throwable
      */
     public RuleViolationException(final Throwable cause) {
         super(cause, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -90,66 +78,47 @@ public class RuleViolationException extends ApplicationException {
 
     /**
      * Default constructor.
-     * 
-     * @param httpStatusCode
-     *            the http status code
-     * @param httpStatusMsg
-     *            the http status message
      *
+     * @param httpStatusCode the http status code
+     * @param httpStatusMsg  the http status message
      */
-    public RuleViolationException(final int httpStatusCode,
-        final String httpStatusMsg) {
+    public RuleViolationException(final int httpStatusCode, final String httpStatusMsg) {
         super(httpStatusCode, httpStatusMsg);
     }
 
     /**
-     * Constructor used to create a new Exception with the specified detail
-     * message and a mapping to an initial exception.
-     * 
-     * @param message
-     *            the detail message.
-     * @param cause
-     *            Throwable
-     * @param httpStatusCode
-     *            the http status code
-     * @param httpStatusMsg
-     *            the http status message
+     * Constructor used to create a new Exception with the specified detail message and a mapping to an initial
+     * exception.
      *
+     * @param message        the detail message.
+     * @param cause          Throwable
+     * @param httpStatusCode the http status code
+     * @param httpStatusMsg  the http status message
      */
-    public RuleViolationException(final String message, final Throwable cause,
-        final int httpStatusCode, final String httpStatusMsg) {
+    public RuleViolationException(final String message, final Throwable cause, final int httpStatusCode,
+        final String httpStatusMsg) {
         super(message, cause, httpStatusCode, httpStatusMsg);
     }
 
     /**
      * Constructs a new exception with the specified detail message.
-     * 
-     * @param message
-     *            the detail message.
-     * @param httpStatusCode
-     *            the http status code
-     * @param httpStatusMsg
-     *            the http status message
      *
+     * @param message        the detail message.
+     * @param httpStatusCode the http status code
+     * @param httpStatusMsg  the http status message
      */
-    public RuleViolationException(final String message,
-        final int httpStatusCode, final String httpStatusMsg) {
+    public RuleViolationException(final String message, final int httpStatusCode, final String httpStatusMsg) {
         super(message, httpStatusCode, httpStatusMsg);
     }
 
     /**
      * Constructor used to map an initial exception.
-     * 
-     * @param cause
-     *            Throwable
-     * @param httpStatusCode
-     *            the http status code
-     * @param httpStatusMsg
-     *            the http status message
      *
+     * @param cause          Throwable
+     * @param httpStatusCode the http status code
+     * @param httpStatusMsg  the http status message
      */
-    public RuleViolationException(final Throwable cause,
-        final int httpStatusCode, final String httpStatusMsg) {
+    public RuleViolationException(final Throwable cause, final int httpStatusCode, final String httpStatusMsg) {
         super(cause, httpStatusCode, httpStatusMsg);
     }
 

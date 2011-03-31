@@ -92,9 +92,8 @@ import static org.junit.Assert.fail;
 
 /**
  * Base class for AA tests.
- * 
+ *
  * @author Torsten Tetteroo
- * 
  */
 public class AaTestBase extends EscidocRestSoapTestBase {
 
@@ -159,213 +158,146 @@ public class AaTestBase extends EscidocRestSoapTestBase {
     protected static final String VISIBILITY_PUBLIC = "public";
 
     protected static final String VISIBILITY_AUDIENCE = "audience";
-    
+
     //ROLE-HREFS
     private static final String ROLE_HREF_PREFIX = "/aa/role/";
 
-    public static final String ROLE_ID_ADMINISTRATOR = 
-        "escidoc:role-administrator";
+    public static final String ROLE_ID_ADMINISTRATOR = "escidoc:role-administrator";
 
-    public static final String ROLE_ID_AUDIENCE = 
-        "escidoc:role-audience";
+    public static final String ROLE_ID_AUDIENCE = "escidoc:role-audience";
 
-    public static final String ROLE_ID_AUTHOR = 
-        "escidoc:role-author";
+    public static final String ROLE_ID_AUTHOR = "escidoc:role-author";
 
-    public static final String ROLE_ID_COLLABORATOR = 
-        "escidoc:role-collaborator";
+    public static final String ROLE_ID_COLLABORATOR = "escidoc:role-collaborator";
 
-    public static final String ROLE_ID_COLLABORATOR_MODIFIER = 
-        "escidoc:role-collaborator-modifier";
+    public static final String ROLE_ID_COLLABORATOR_MODIFIER = "escidoc:role-collaborator-modifier";
 
-    public static final String ROLE_ID_GRANT_TEST_1 = 
-        "escidoc:role-grant-test1";
+    public static final String ROLE_ID_GRANT_TEST_1 = "escidoc:role-grant-test1";
 
-    public static final String ROLE_ID_GRANT_TEST_2 = 
-        "escidoc:role-grant-test2";
+    public static final String ROLE_ID_GRANT_TEST_2 = "escidoc:role-grant-test2";
 
-    public static final String ROLE_ID_GRANT_TEST_3 = 
-        "escidoc:role-grant-test3";
+    public static final String ROLE_ID_GRANT_TEST_3 = "escidoc:role-grant-test3";
 
-    public static final String ROLE_ID_GRANT_TEST_4 = 
-        "escidoc:role-grant-test4";
+    public static final String ROLE_ID_GRANT_TEST_4 = "escidoc:role-grant-test4";
 
-    public static final String ROLE_ID_GRANT_TEST_5 = 
-        "escidoc:role-grant-test5";
+    public static final String ROLE_ID_GRANT_TEST_5 = "escidoc:role-grant-test5";
 
-    public static final String 
-        ROLE_ID_COLLABORATOR_MODIFIER_ADD_REMOVE_MEMBERS = 
+    public static final String ROLE_ID_COLLABORATOR_MODIFIER_ADD_REMOVE_MEMBERS =
         "escidoc:role-collaborator-modifier-container-add-remove-members";
 
-    public static final String 
-        ROLE_ID_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS = 
+    public static final String ROLE_ID_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS =
         "escidoc:role-collaborator-modifier-container-update-direct-members";
 
-    public static final String 
-        ROLE_ID_COLLABORATOR_MODIFIER_ADD_REMOVE_ANY_MEMBERS = 
+    public static final String ROLE_ID_COLLABORATOR_MODIFIER_ADD_REMOVE_ANY_MEMBERS =
         "escidoc:role-collaborator-modifier-container-add-remove-any-members";
 
-    public static final String 
-        ROLE_ID_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS = 
+    public static final String ROLE_ID_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS =
         "escidoc:role-collaborator-modifier-container-update-any-members";
 
-    public static final String ROLE_ID_DEPOSITOR = 
-        "escidoc:role-depositor";
+    public static final String ROLE_ID_DEPOSITOR = "escidoc:role-depositor";
 
-    public static final String ROLE_ID_INGESTER = 
-        "escidoc:role-ingester";
+    public static final String ROLE_ID_INGESTER = "escidoc:role-ingester";
 
-    public static final String ROLE_ID_MD_EDITOR = 
-        "escidoc:role-md-editor";
+    public static final String ROLE_ID_MD_EDITOR = "escidoc:role-md-editor";
 
-    public static final String ROLE_ID_MODERATOR = 
-        "escidoc:role-moderator";
+    public static final String ROLE_ID_MODERATOR = "escidoc:role-moderator";
 
-    public static final String ROLE_ID_USER_GROUP_ADMIN = 
-        "escidoc:role-user-group-administrator";
+    public static final String ROLE_ID_USER_GROUP_ADMIN = "escidoc:role-user-group-administrator";
 
-    public static final String ROLE_ID_USER_GROUP_INSPECTOR = 
-        "escidoc:role-user-group-inspector";
+    public static final String ROLE_ID_USER_GROUP_INSPECTOR = "escidoc:role-user-group-inspector";
 
-    public static final String ROLE_ID_USER_ACCOUNT_ADMIN = 
-        "escidoc:role-user-account-administrator";
+    public static final String ROLE_ID_USER_ACCOUNT_ADMIN = "escidoc:role-user-account-administrator";
 
-    public static final String ROLE_ID_USER_ACCOUNT_INSPECTOR = 
-        "escidoc:role-user-account-inspector";
+    public static final String ROLE_ID_USER_ACCOUNT_INSPECTOR = "escidoc:role-user-account-inspector";
 
-    public static final String ROLE_ID_CONTEXT_ADMIN = 
-        "escidoc:role-context-administrator";
+    public static final String ROLE_ID_CONTEXT_ADMIN = "escidoc:role-context-administrator";
 
-    public static final String ROLE_ID_CONTEXT_MODIFIER = 
-        "escidoc:role-context-modifier";
+    public static final String ROLE_ID_CONTEXT_MODIFIER = "escidoc:role-context-modifier";
 
-    public static final String ROLE_ID_PRIVILEGED_VIEWER = 
-        "escidoc:role-privileged-viewer";
+    public static final String ROLE_ID_PRIVILEGED_VIEWER = "escidoc:role-privileged-viewer";
 
-    public static final String ROLE_ID_CONTENT_RELATION_MANAGER = 
-        "escidoc:role-content-relation-manager";
+    public static final String ROLE_ID_CONTENT_RELATION_MANAGER = "escidoc:role-content-relation-manager";
 
-    public static final String ROLE_ID_CONTENT_RELATION_MODIFIER = 
-        "escidoc:role-content-relation-modifier";
+    public static final String ROLE_ID_CONTENT_RELATION_MODIFIER = "escidoc:role-content-relation-modifier";
 
-    public static final String ROLE_ID_STATISTICS_EDITOR = 
-        "escidoc:role-statistics-editor";
+    public static final String ROLE_ID_STATISTICS_EDITOR = "escidoc:role-statistics-editor";
 
-    public static final String ROLE_ID_STATISTICS_READER = 
-        "escidoc:role-statistics-reader";
+    public static final String ROLE_ID_STATISTICS_READER = "escidoc:role-statistics-reader";
 
-    public static final String ROLE_ID_SYSTEM_ADMINISTRATOR = 
-        "escidoc:role-system-administrator";
+    public static final String ROLE_ID_SYSTEM_ADMINISTRATOR = "escidoc:role-system-administrator";
 
-    public static final String ROLE_ID_OU_ADMINISTRATOR = 
-        "escidoc:role-ou-administrator";
+    public static final String ROLE_ID_OU_ADMINISTRATOR = "escidoc:role-ou-administrator";
 
-    public static final String ROLE_ID_SYSTEM_INSPECTOR = 
-        "escidoc:role-system-inspector";
+    public static final String ROLE_ID_SYSTEM_INSPECTOR = "escidoc:role-system-inspector";
 
-    public static final String ROLE_HREF_ADMINISTRATOR = 
-        ROLE_HREF_PREFIX + ROLE_ID_ADMINISTRATOR;
+    public static final String ROLE_HREF_ADMINISTRATOR = ROLE_HREF_PREFIX + ROLE_ID_ADMINISTRATOR;
 
-    public static final String ROLE_HREF_AUDIENCE = 
-        ROLE_HREF_PREFIX + ROLE_ID_AUDIENCE;
+    public static final String ROLE_HREF_AUDIENCE = ROLE_HREF_PREFIX + ROLE_ID_AUDIENCE;
 
-    public static final String ROLE_HREF_AUTHOR = 
-        ROLE_HREF_PREFIX + ROLE_ID_AUTHOR;
+    public static final String ROLE_HREF_AUTHOR = ROLE_HREF_PREFIX + ROLE_ID_AUTHOR;
 
-    public static final String ROLE_HREF_COLLABORATOR = 
-        ROLE_HREF_PREFIX + ROLE_ID_COLLABORATOR;
+    public static final String ROLE_HREF_COLLABORATOR = ROLE_HREF_PREFIX + ROLE_ID_COLLABORATOR;
 
-    public static final String ROLE_HREF_COLLABORATOR_MODIFIER = 
-        ROLE_HREF_PREFIX + ROLE_ID_COLLABORATOR_MODIFIER;
+    public static final String ROLE_HREF_COLLABORATOR_MODIFIER = ROLE_HREF_PREFIX + ROLE_ID_COLLABORATOR_MODIFIER;
 
-    public static final String ROLE_HREF_GRANT_TEST_1 = 
-        ROLE_HREF_PREFIX + ROLE_ID_GRANT_TEST_1;
+    public static final String ROLE_HREF_GRANT_TEST_1 = ROLE_HREF_PREFIX + ROLE_ID_GRANT_TEST_1;
 
-    public static final String ROLE_HREF_GRANT_TEST_2 = 
-        ROLE_HREF_PREFIX + ROLE_ID_GRANT_TEST_2;
+    public static final String ROLE_HREF_GRANT_TEST_2 = ROLE_HREF_PREFIX + ROLE_ID_GRANT_TEST_2;
 
-    public static final String ROLE_HREF_GRANT_TEST_3 = 
-        ROLE_HREF_PREFIX + ROLE_ID_GRANT_TEST_3;
+    public static final String ROLE_HREF_GRANT_TEST_3 = ROLE_HREF_PREFIX + ROLE_ID_GRANT_TEST_3;
 
-    public static final String ROLE_HREF_GRANT_TEST_4 = 
-        ROLE_HREF_PREFIX + ROLE_ID_GRANT_TEST_4;
+    public static final String ROLE_HREF_GRANT_TEST_4 = ROLE_HREF_PREFIX + ROLE_ID_GRANT_TEST_4;
 
-    public static final String ROLE_HREF_GRANT_TEST_5 = 
-        ROLE_HREF_PREFIX + ROLE_ID_GRANT_TEST_5;
+    public static final String ROLE_HREF_GRANT_TEST_5 = ROLE_HREF_PREFIX + ROLE_ID_GRANT_TEST_5;
 
-    public static final String 
-        ROLE_HREF_COLLABORATOR_MODIFIER_ADD_REMOVE_MEMBERS = 
-        ROLE_HREF_PREFIX 
-        + ROLE_ID_COLLABORATOR_MODIFIER_ADD_REMOVE_MEMBERS;
+    public static final String ROLE_HREF_COLLABORATOR_MODIFIER_ADD_REMOVE_MEMBERS =
+        ROLE_HREF_PREFIX + ROLE_ID_COLLABORATOR_MODIFIER_ADD_REMOVE_MEMBERS;
 
-    public static final String 
-        ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS = 
-        ROLE_HREF_PREFIX 
-        + ROLE_ID_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS;
+    public static final String ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS =
+        ROLE_HREF_PREFIX + ROLE_ID_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS;
 
-    public static final String 
-        ROLE_HREF_COLLABORATOR_MODIFIER_ADD_REMOVE_ANY_MEMBERS = 
-        ROLE_HREF_PREFIX 
-        + ROLE_ID_COLLABORATOR_MODIFIER_ADD_REMOVE_ANY_MEMBERS;
+    public static final String ROLE_HREF_COLLABORATOR_MODIFIER_ADD_REMOVE_ANY_MEMBERS =
+        ROLE_HREF_PREFIX + ROLE_ID_COLLABORATOR_MODIFIER_ADD_REMOVE_ANY_MEMBERS;
 
-    public static final String 
-        ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS = 
-        ROLE_HREF_PREFIX 
-        + ROLE_ID_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS;
+    public static final String ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS =
+        ROLE_HREF_PREFIX + ROLE_ID_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS;
 
-    public static final String ROLE_HREF_DEPOSITOR = 
-        ROLE_HREF_PREFIX + ROLE_ID_DEPOSITOR;
+    public static final String ROLE_HREF_DEPOSITOR = ROLE_HREF_PREFIX + ROLE_ID_DEPOSITOR;
 
-    public static final String ROLE_HREF_INGESTER = 
-        ROLE_HREF_PREFIX + ROLE_ID_INGESTER;
+    public static final String ROLE_HREF_INGESTER = ROLE_HREF_PREFIX + ROLE_ID_INGESTER;
 
-    public static final String ROLE_HREF_MD_EDITOR = 
-        ROLE_HREF_PREFIX + ROLE_ID_MD_EDITOR;
+    public static final String ROLE_HREF_MD_EDITOR = ROLE_HREF_PREFIX + ROLE_ID_MD_EDITOR;
 
-    public static final String ROLE_HREF_MODERATOR = 
-        ROLE_HREF_PREFIX + ROLE_ID_MODERATOR;
+    public static final String ROLE_HREF_MODERATOR = ROLE_HREF_PREFIX + ROLE_ID_MODERATOR;
 
-    public static final String ROLE_HREF_USER_GROUP_ADMIN = 
-        ROLE_HREF_PREFIX + ROLE_ID_USER_GROUP_ADMIN;
+    public static final String ROLE_HREF_USER_GROUP_ADMIN = ROLE_HREF_PREFIX + ROLE_ID_USER_GROUP_ADMIN;
 
-    public static final String ROLE_HREF_USER_GROUP_INSPECTOR = 
-        ROLE_HREF_PREFIX + ROLE_ID_USER_GROUP_INSPECTOR;
+    public static final String ROLE_HREF_USER_GROUP_INSPECTOR = ROLE_HREF_PREFIX + ROLE_ID_USER_GROUP_INSPECTOR;
 
-    public static final String ROLE_HREF_USER_ACCOUNT_ADMIN = 
-        ROLE_HREF_PREFIX + ROLE_ID_USER_ACCOUNT_ADMIN;
+    public static final String ROLE_HREF_USER_ACCOUNT_ADMIN = ROLE_HREF_PREFIX + ROLE_ID_USER_ACCOUNT_ADMIN;
 
-    public static final String ROLE_HREF_USER_ACCOUNT_INSPECTOR = 
-        ROLE_HREF_PREFIX + ROLE_ID_USER_ACCOUNT_INSPECTOR;
+    public static final String ROLE_HREF_USER_ACCOUNT_INSPECTOR = ROLE_HREF_PREFIX + ROLE_ID_USER_ACCOUNT_INSPECTOR;
 
-    public static final String ROLE_HREF_CONTEXT_ADMIN = 
-        ROLE_HREF_PREFIX + ROLE_ID_CONTEXT_ADMIN;
+    public static final String ROLE_HREF_CONTEXT_ADMIN = ROLE_HREF_PREFIX + ROLE_ID_CONTEXT_ADMIN;
 
-    public static final String ROLE_HREF_CONTEXT_MODIFIER = 
-        ROLE_HREF_PREFIX + ROLE_ID_CONTEXT_MODIFIER;
+    public static final String ROLE_HREF_CONTEXT_MODIFIER = ROLE_HREF_PREFIX + ROLE_ID_CONTEXT_MODIFIER;
 
-    public static final String ROLE_HREF_PRIVILEGED_VIEWER = 
-        ROLE_HREF_PREFIX + ROLE_ID_PRIVILEGED_VIEWER;
+    public static final String ROLE_HREF_PRIVILEGED_VIEWER = ROLE_HREF_PREFIX + ROLE_ID_PRIVILEGED_VIEWER;
 
-    public static final String ROLE_HREF_CONTENT_RELATION_MANAGER = 
-        ROLE_HREF_PREFIX + ROLE_ID_CONTENT_RELATION_MANAGER;
+    public static final String ROLE_HREF_CONTENT_RELATION_MANAGER = ROLE_HREF_PREFIX + ROLE_ID_CONTENT_RELATION_MANAGER;
 
-    public static final String ROLE_HREF_CONTENT_RELATION_MODIFIER = 
+    public static final String ROLE_HREF_CONTENT_RELATION_MODIFIER =
         ROLE_HREF_PREFIX + ROLE_ID_CONTENT_RELATION_MODIFIER;
 
-    public static final String ROLE_HREF_STATISTICS_EDITOR = 
-        ROLE_HREF_PREFIX + ROLE_ID_STATISTICS_EDITOR;
+    public static final String ROLE_HREF_STATISTICS_EDITOR = ROLE_HREF_PREFIX + ROLE_ID_STATISTICS_EDITOR;
 
-    public static final String ROLE_HREF_STATISTICS_READER = 
-        ROLE_HREF_PREFIX + ROLE_ID_STATISTICS_READER;
+    public static final String ROLE_HREF_STATISTICS_READER = ROLE_HREF_PREFIX + ROLE_ID_STATISTICS_READER;
 
-    public static final String ROLE_HREF_SYSTEM_ADMINISTRATOR = 
-        ROLE_HREF_PREFIX + ROLE_ID_SYSTEM_ADMINISTRATOR;
+    public static final String ROLE_HREF_SYSTEM_ADMINISTRATOR = ROLE_HREF_PREFIX + ROLE_ID_SYSTEM_ADMINISTRATOR;
 
-    public static final String ROLE_HREF_OU_ADMINISTRATOR = 
-        ROLE_HREF_PREFIX + ROLE_ID_OU_ADMINISTRATOR;
+    public static final String ROLE_HREF_OU_ADMINISTRATOR = ROLE_HREF_PREFIX + ROLE_ID_OU_ADMINISTRATOR;
 
-    public static final String ROLE_HREF_SYSTEM_INSPECTOR = 
-        ROLE_HREF_PREFIX + ROLE_ID_SYSTEM_INSPECTOR;
+    public static final String ROLE_HREF_SYSTEM_INSPECTOR = ROLE_HREF_PREFIX + ROLE_ID_SYSTEM_INSPECTOR;
 
     protected final ContainerClient containerClient;
 
@@ -400,28 +332,26 @@ public class AaTestBase extends EscidocRestSoapTestBase {
     protected final StatisticDataClient statisticDataClient;
 
     protected final PreprocessingClient preprocessingClient;
-    
+
     protected final ContentRelationClient contentRelationClient;
-    
+
     protected final PolicyDecisionPointClient policyDecisionPointClient;
-    
+
     protected final OrganizationalUnitHelper orgUnitHelper;
 
     private SmTestBase smTestBase = null;
-    
+
     private final String testUploadFile = "testDocuments/UploadTest.zip";
 
     private final String testUploadFileMimeType = "application/zip";
 
     private final Pattern SCOPE_PATTERN =
-        Pattern.compile(".*<[^>]*?scope[^>]*?objid=\"(.*?)\".*", Pattern.DOTALL
-            + Pattern.MULTILINE);
+        Pattern.compile(".*<[^>]*?scope[^>]*?objid=\"(.*?)\".*", Pattern.DOTALL + Pattern.MULTILINE);
 
     /**
      * The constructor.
-     * 
-     * @param transport
-     *            The transport identifier.
+     *
+     * @param transport The transport identifier.
      */
     public AaTestBase(final int transport) {
 
@@ -435,14 +365,11 @@ public class AaTestBase extends EscidocRestSoapTestBase {
         this.organizationalUnitClient = new OrganizationalUnitClient(transport);
         this.roleClient = new RoleClient(Constants.TRANSPORT_REST);
         this.semanticStoreClient = new SemanticStoreClient(transport);
-        this.stagingFileClient =
-            new StagingFileClient(Constants.TRANSPORT_REST);
+        this.stagingFileClient = new StagingFileClient(Constants.TRANSPORT_REST);
         this.userAccountClient = new UserAccountClient(transport);
         this.userGroupClient = new UserGroupClient(transport);
-        this.userManagementWrapperClient =
-            new UserManagementWrapperClient(transport);
-        this.aggregationDefinitionClient =
-            new AggregationDefinitionClient(transport);
+        this.userManagementWrapperClient = new UserManagementWrapperClient(transport);
+        this.aggregationDefinitionClient = new AggregationDefinitionClient(transport);
         this.reportDefinitionClient = new ReportDefinitionClient(transport);
         this.reportClient = new ReportClient(transport);
         this.scopeClient = new ScopeClient(transport);
@@ -455,11 +382,9 @@ public class AaTestBase extends EscidocRestSoapTestBase {
     }
 
     /**
-     * Clean up after test.<br>
-     * This method resets the current user handle in PWCallback.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Clean up after test.<br> This method resets the current user handle in PWCallback.
+     *
+     * @throws Exception If anything fails.
      */
     @After
     @Override
@@ -589,8 +514,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
         return policyDecisionPointClient;
     }
 
-    public String create(final int handlerCode, final String xml)
-        throws Exception {
+    public String create(final int handlerCode, final String xml) throws Exception {
 
         Object result = getClient(handlerCode).create(xml);
         return handleResult(result);
@@ -601,76 +525,57 @@ public class AaTestBase extends EscidocRestSoapTestBase {
         Object result = getClient(handlerCode).delete(id);
         if (result instanceof HttpResponse) {
             HttpResponse httpRes = (HttpResponse) result;
-            if(httpRes.getEntity() != null) {
+            if (httpRes.getEntity() != null) {
                 httpRes.getEntity().consumeContent();
             }
             assertHttpStatusOfMethod("204", httpRes);
         }
     }
 
-    public String retrieve(final int handlerCode, final String id)
-        throws Exception {
+    public String retrieve(final int handlerCode, final String id) throws Exception {
 
         Object result = getClient(handlerCode).retrieve(id);
         return handleResult(result);
     }
 
-    public String update(
-        final int handlerCode, final String id, final String xml)
-        throws Exception {
+    public String update(final int handlerCode, final String id, final String xml) throws Exception {
 
         Object result = getClient(handlerCode).update(id, xml);
         return handleResult(result);
     }
 
-    public String submit(
-        final int handlerCode, final String id, final String xml)
-        throws Exception {
+    public String submit(final int handlerCode, final String id, final String xml) throws Exception {
 
-        Object result =
-            ((SubmitReleaseReviseWithdrawClientInterface) getClient(handlerCode))
-                .submit(id, xml);
+        Object result = ((SubmitReleaseReviseWithdrawClientInterface) getClient(handlerCode)).submit(id, xml);
         return handleResult(result);
     }
 
-    public String release(
-        final int handlerCode, final String id, final String xml)
-        throws Exception {
+    public String release(final int handlerCode, final String id, final String xml) throws Exception {
 
-        Object result =
-            ((SubmitReleaseReviseWithdrawClientInterface) getClient(handlerCode))
-                .release(id, xml);
+        Object result = ((SubmitReleaseReviseWithdrawClientInterface) getClient(handlerCode)).release(id, xml);
         return handleResult(result);
     }
 
-    public String releaseWithPid(
-        final int handlerCode, final String id, final String creatorUserHandle)
+    public String releaseWithPid(final int handlerCode, final String id, final String creatorUserHandle)
         throws Exception {
 
         Object result =
-            ((SubmitReleaseReviseWithdrawClientInterface) getClient(handlerCode))
-                .releaseWithPid(id, creatorUserHandle);
+            ((SubmitReleaseReviseWithdrawClientInterface) getClient(handlerCode)).releaseWithPid(id, creatorUserHandle);
         return handleResult(result);
     }
 
-    public String withdraw(
-        final int handlerCode, final String id, final String xml)
-        throws Exception {
+    public String withdraw(final int handlerCode, final String id, final String xml) throws Exception {
 
-        Object result =
-            ((SubmitReleaseReviseWithdrawClientInterface) getClient(handlerCode))
-                .withdraw(id, xml);
+        Object result = ((SubmitReleaseReviseWithdrawClientInterface) getClient(handlerCode)).withdraw(id, xml);
         return handleResult(result);
     }
 
     /**
      * Handles the result of a base service access.
-     * 
-     * @param result
-     *            The result to handle.
+     *
+     * @param result The result to handle.
      * @return Returns the xml response.
-     * @throws Exception
-     *             Thrown if anything fails.
+     * @throws Exception Thrown if anything fails.
      */
     protected String handleResult(final Object result) throws Exception {
 
@@ -680,7 +585,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
             xmlResult = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
             httpRes.getEntity().consumeContent();
             assertHttpStatusOfMethod("", httpRes);
-           
+
         }
         else if (result instanceof String) {
             xmlResult = (String) result;
@@ -690,12 +595,10 @@ public class AaTestBase extends EscidocRestSoapTestBase {
 
     /**
      * Gets the corresponding client for the provided handler code.
-     * 
-     * @param handlerCode
-     *            The code identifying the handler.
+     *
+     * @param handlerCode The code identifying the handler.
      * @return Returns the client.
-     * @throws Exception
-     *             Thrown if anything fails.
+     * @throws Exception Thrown if anything fails.
      */
     protected ClientBase getClient(final int handlerCode) throws Exception {
 
@@ -751,8 +654,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 client = statisticDataClient;
                 break;
             default:
-                throw new Exception("Unknown handler code [" + handlerCode
-                    + "]");
+                throw new Exception("Unknown handler code [" + handlerCode + "]");
         }
 
         return client;
@@ -760,47 +662,36 @@ public class AaTestBase extends EscidocRestSoapTestBase {
 
     /**
      * Test creating a StagingFile.
-     * 
-     * @param binaryContent
-     *            The binary content of the staging file.
-     * @param mimeType
-     *            The mime type of the data.
-     * @param filename
-     *            The name of the file.
+     *
+     * @param binaryContent The binary content of the staging file.
+     * @param mimeType      The mime type of the data.
+     * @param filename      The name of the file.
      * @return The <code>HttpResponse</code> object.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     protected HttpResponse createStagingFile(
-        final InputStream binaryContent, final String mimeType,
-        final String filename) throws Exception {
+        final InputStream binaryContent, final String mimeType, final String filename) throws Exception {
 
-        Object result =
-            getStagingFileClient().create(binaryContent, mimeType, filename);
+        Object result = getStagingFileClient().create(binaryContent, mimeType, filename);
         if (result instanceof HttpResponse) {
             HttpResponse httpRes = (HttpResponse) result;
             httpRes.getEntity().consumeContent();
             return httpRes;
         }
         else {
-            fail("Unsupported result type ["
-                + result.getClass().getName() + "]");
+            fail("Unsupported result type [" + result.getClass().getName() + "]");
             return null;
         }
     }
 
     /**
      * Test deactivating an UserAccount.
-     * 
-     * @param id
-     *            The id of the user account.
-     * @param xml
-     *            The task param xml.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param id  The id of the user account.
+     * @param xml The task param xml.
+     * @throws Exception If anything fails.
      */
-    protected void deactivateUserAccount(final String id, final String xml)
-        throws Exception {
+    protected void deactivateUserAccount(final String id, final String xml) throws Exception {
 
         Object result = getUserAccountClient().deactivate(id, xml);
         if (result instanceof HttpResponse) {
@@ -825,34 +716,24 @@ public class AaTestBase extends EscidocRestSoapTestBase {
     }
 
     /**
-     * Prepares an item for a test.<br>
-     * The item is created and set into the specified state.
-     * 
-     * @param creatorUserHandle
-     *            The eSciDoc user handle of the creator.
-     * @param status
-     *            The status to set for the item. If this is <code>null</code>,
-     *            no item is created and <code>null</code> is returned.
-     * @param contextId
-     *         context to create container in
-     * @param createVersionsBefore
-     *            If this flag is set to <code>true</code>, before each
-     *            status change, the item is updated to create a new version.
-     * @param createVersionsAfter
-     *            If this flag is set to <code>true</code>, after each status
-     *            change, the item is updated to create a new version, if this
-     *            is allowed. Currently, this is not allowed for objects in
-     *            state release or withdrawn.
-     * @return Returns the XML representation of the created item. In case of
-     *         withdrawn item, the released item is returned.
-     * @throws Exception
-     *             If anything fails.
+     * Prepares an item for a test.<br> The item is created and set into the specified state.
+     *
+     * @param creatorUserHandle    The eSciDoc user handle of the creator.
+     * @param status               The status to set for the item. If this is <code>null</code>, no item is created and
+     *                             <code>null</code> is returned.
+     * @param contextId            context to create container in
+     * @param createVersionsBefore If this flag is set to <code>true</code>, before each status change, the item is
+     *                             updated to create a new version.
+     * @param createVersionsAfter  If this flag is set to <code>true</code>, after each status change, the item is
+     *                             updated to create a new version, if this is allowed. Currently, this is not allowed
+     *                             for objects in state release or withdrawn.
+     * @return Returns the XML representation of the created item. In case of withdrawn item, the released item is
+     *         returned.
+     * @throws Exception If anything fails.
      */
     protected String prepareItem(
-        final String creatorUserHandle, final String status,
-        final String contextId,
-        final boolean createVersionsBefore, final boolean createVersionsAfter)
-        throws Exception {
+        final String creatorUserHandle, final String status, final String contextId,
+        final boolean createVersionsBefore, final boolean createVersionsAfter) throws Exception {
 
         try {
             if (status == null) {
@@ -869,54 +750,37 @@ public class AaTestBase extends EscidocRestSoapTestBase {
             assertNotNull(createdXml);
 
             if (!STATUS_PENDING.equals(status)) {
-                Document document =
-                    EscidocRestSoapTestBase.getDocument(createdXml);
+                Document document = EscidocRestSoapTestBase.getDocument(createdXml);
                 final String objidValue = getObjidValue(document);
                 if (createVersionsBefore) {
-                    createdXml =
-                        createdXml.replaceAll("semiconductor surfaces",
-                            "semiconductor surfaces u");
+                    createdXml = createdXml.replaceAll("semiconductor surfaces", "semiconductor surfaces u");
                     createdXml = update(ITEM_HANDLER_CODE, objidValue, createdXml);
                     document = EscidocRestSoapTestBase.getDocument(createdXml);
                 }
-                submit(ITEM_HANDLER_CODE, objidValue,
-                    getTaskParam(getLastModificationDateValue(document)));
+                submit(ITEM_HANDLER_CODE, objidValue, getTaskParam(getLastModificationDateValue(document)));
                 createdXml = retrieve(ITEM_HANDLER_CODE, objidValue);
                 if (createVersionsAfter) {
-                    createdXml =
-                        createdXml.replaceAll("semiconductor surfaces",
-                            "semiconductor surfaces u");
+                    createdXml = createdXml.replaceAll("semiconductor surfaces", "semiconductor surfaces u");
                     createdXml = update(ITEM_HANDLER_CODE, objidValue, createdXml);
                 }
                 if (!STATUS_SUBMITTED.equals(status)) {
                     if (createVersionsBefore) {
-                        createdXml =
-                            createdXml.replaceAll("semiconductor surfaces",
-                                "semiconductor surfaces u");
-                        createdXml =
-                            update(ITEM_HANDLER_CODE, objidValue, createdXml);
+                        createdXml = createdXml.replaceAll("semiconductor surfaces", "semiconductor surfaces u");
+                        createdXml = update(ITEM_HANDLER_CODE, objidValue, createdXml);
                     }
                     document = EscidocRestSoapTestBase.getDocument(createdXml);
-                    releaseWithPid(
-                            ITEM_HANDLER_CODE, objidValue, creatorUserHandle);
+                    releaseWithPid(ITEM_HANDLER_CODE, objidValue, creatorUserHandle);
                     createdXml = retrieve(ITEM_HANDLER_CODE, objidValue);
                     if (!STATUS_RELEASED.equals(status)) {
                         if (createVersionsBefore) {
-                            createdXml =
-                                createdXml.replaceAll("semiconductor surfaces",
-                                    "semiconductor surfaces u");
-                            createdXml =
-                                update(ITEM_HANDLER_CODE, objidValue, createdXml);
+                            createdXml = createdXml.replaceAll("semiconductor surfaces", "semiconductor surfaces u");
+                            createdXml = update(ITEM_HANDLER_CODE, objidValue, createdXml);
                         }
                         if (STATUS_WITHDRAWN.equals(status)) {
-                            document = 
-                                EscidocRestSoapTestBase.getDocument(createdXml);
+                            document = EscidocRestSoapTestBase.getDocument(createdXml);
                             final String taskParam =
-                                getWithdrawTaskParam(
-                                    getLastModificationDateValue(document),
-                                    "Some withdraw comment");
-                            withdraw(ITEM_HANDLER_CODE, getObjidValue(document),
-                                taskParam);
+                                getWithdrawTaskParam(getLastModificationDateValue(document), "Some withdraw comment");
+                            withdraw(ITEM_HANDLER_CODE, getObjidValue(document), taskParam);
                             createdXml = retrieve(ITEM_HANDLER_CODE, objidValue);
                         }
                     }
@@ -924,40 +788,31 @@ public class AaTestBase extends EscidocRestSoapTestBase {
             }
 
             return createdXml;
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
     }
 
     /**
-     * Prepares a container for a test.<br>
-     * The container is created and set into the specified state.
-     * 
-     * @param creatorUserHandle
-     *            The eSciDoc user handle of the creator.
-     * @param status
-     *            The status to set for the item. If this is <code>null</code>,
-     *            no item is created and <code>null</code> is returned.
-     * @param contextId
-     *            id of context to create container in.
-     * @param createVersionsBefore
-     *            If this flag is set to <code>true</code>, before each
-     *            status change, the item is updated to create a new version.
-     * @param createVersionsAfter
-     *            If this flag is set to <code>true</code>, after each status
-     *            change, the item is updated to create a new version, if this
-     *            is allowed. Currently, this is not allowed for objects in
-     *            state release or withdrawn.
-     * @return Returns the XML representation of the created container. In case
-     *         of withdrawn container, the released container is returned.
-     * @throws Exception
-     *             If anything fails.
+     * Prepares a container for a test.<br> The container is created and set into the specified state.
+     *
+     * @param creatorUserHandle    The eSciDoc user handle of the creator.
+     * @param status               The status to set for the item. If this is <code>null</code>, no item is created and
+     *                             <code>null</code> is returned.
+     * @param contextId            id of context to create container in.
+     * @param createVersionsBefore If this flag is set to <code>true</code>, before each status change, the item is
+     *                             updated to create a new version.
+     * @param createVersionsAfter  If this flag is set to <code>true</code>, after each status change, the item is
+     *                             updated to create a new version, if this is allowed. Currently, this is not allowed
+     *                             for objects in state release or withdrawn.
+     * @return Returns the XML representation of the created container. In case of withdrawn container, the released
+     *         container is returned.
+     * @throws Exception If anything fails.
      */
     protected String prepareContainer(
-        final String creatorUserHandle, final String status,
-        final String contextId,
-        final boolean createVersionsBefore, final boolean createVersionsAfter)
-        throws Exception {
+        final String creatorUserHandle, final String status, final String contextId,
+        final boolean createVersionsBefore, final boolean createVersionsAfter) throws Exception {
 
         try {
             if (status == null) {
@@ -967,8 +822,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
             PWCallback.setHandle(creatorUserHandle);
             String createdXml = null;
             try {
-                createdXml = create(CONTAINER_HANDLER_CODE, 
-                                prepareContainerData(contextId));
+                createdXml = create(CONTAINER_HANDLER_CODE, prepareContainerData(contextId));
             }
             catch (final Exception e) {
                 EscidocRestSoapTestBase.failException(e);
@@ -976,36 +830,26 @@ public class AaTestBase extends EscidocRestSoapTestBase {
             assertNotNull(createdXml);
 
             if (!STATUS_PENDING.equals(status)) {
-                Document document =
-                    EscidocRestSoapTestBase.getDocument(createdXml);
+                Document document = EscidocRestSoapTestBase.getDocument(createdXml);
                 final String objidValue = getObjidValue(document);
                 if (createVersionsBefore) {
-                    createdXml =
-                        createdXml.replaceAll("the title", "the title - updated");
-                    createdXml =
-                        update(CONTAINER_HANDLER_CODE, objidValue, createdXml);
+                    createdXml = createdXml.replaceAll("the title", "the title - updated");
+                    createdXml = update(CONTAINER_HANDLER_CODE, objidValue, createdXml);
                     document = EscidocRestSoapTestBase.getDocument(createdXml);
                 }
-                submit(CONTAINER_HANDLER_CODE, objidValue,
-                    getTaskParam(getLastModificationDateValue(document)));
+                submit(CONTAINER_HANDLER_CODE, objidValue, getTaskParam(getLastModificationDateValue(document)));
                 createdXml = retrieve(CONTAINER_HANDLER_CODE, objidValue);
                 if (createVersionsAfter) {
-                    createdXml =
-                        createdXml.replaceAll("the title", "the title - updated");
-                    createdXml =
-                        update(CONTAINER_HANDLER_CODE, objidValue, createdXml);
+                    createdXml = createdXml.replaceAll("the title", "the title - updated");
+                    createdXml = update(CONTAINER_HANDLER_CODE, objidValue, createdXml);
                 }
                 if (!STATUS_SUBMITTED.equals(status)) {
                     if (createVersionsBefore) {
-                        createdXml =
-                            createdXml.replaceAll("the title",
-                                "the title - updated");
-                        createdXml =
-                            update(CONTAINER_HANDLER_CODE, objidValue, createdXml);
+                        createdXml = createdXml.replaceAll("the title", "the title - updated");
+                        createdXml = update(CONTAINER_HANDLER_CODE, objidValue, createdXml);
                     }
                     document = EscidocRestSoapTestBase.getDocument(createdXml);
-                    releaseWithPid(CONTAINER_HANDLER_CODE, objidValue,
-                        creatorUserHandle);
+                    releaseWithPid(CONTAINER_HANDLER_CODE, objidValue, creatorUserHandle);
                     createdXml = retrieve(CONTAINER_HANDLER_CODE, objidValue);
                     if (!STATUS_RELEASED.equals(status)) {
 
@@ -1015,51 +859,38 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                         // Thread.sleep(240000);
 
                         if (createVersionsBefore) {
-                            createdXml =
-                                createdXml.replaceAll("the title",
-                                    "the title - updated");
-                            createdXml =
-                                update(CONTAINER_HANDLER_CODE, objidValue,
-                                    createdXml);
+                            createdXml = createdXml.replaceAll("the title", "the title - updated");
+                            createdXml = update(CONTAINER_HANDLER_CODE, objidValue, createdXml);
                         }
-                        document = 
-                            EscidocRestSoapTestBase.getDocument(createdXml);
+                        document = EscidocRestSoapTestBase.getDocument(createdXml);
                         final String taskParam =
-                            getWithdrawTaskParam(
-                                getLastModificationDateValue(document),
-                                "Some withdraw comment");
-                        withdraw(CONTAINER_HANDLER_CODE, getObjidValue(document),
-                            taskParam);
+                            getWithdrawTaskParam(getLastModificationDateValue(document), "Some withdraw comment");
+                        withdraw(CONTAINER_HANDLER_CODE, getObjidValue(document), taskParam);
                         createdXml = retrieve(CONTAINER_HANDLER_CODE, objidValue);
                     }
                 }
             }
 
             return createdXml;
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
     }
 
     /**
-     * Prepares an organizational unit for a test.<br>
-     * The organizational unit is created and set into the specified state.
-     * 
-     * @param creatorUserHandle
-     *            The eSciDoc user handle of the creator.
-     * @param status
-     *            The status to set for the item. If this is <code>null</code>,
-     *            no item is created and <code>null</code> is returned.
-     * @param parentIds
-     *            parentIds of this orgUnit
-     * @return Returns the XML representation of the created organizational
-     *         unit.
-     * @throws Exception
-     *             If anything fails.
+     * Prepares an organizational unit for a test.<br> The organizational unit is created and set into the specified
+     * state.
+     *
+     * @param creatorUserHandle The eSciDoc user handle of the creator.
+     * @param status            The status to set for the item. If this is <code>null</code>, no item is created and
+     *                          <code>null</code> is returned.
+     * @param parentIds         parentIds of this orgUnit
+     * @return Returns the XML representation of the created organizational unit.
+     * @throws Exception If anything fails.
      */
-    public String prepareOrgUnit(
-        final String creatorUserHandle, final String status,
-        final String[] parentIds) throws Exception {
+    public String prepareOrgUnit(final String creatorUserHandle, final String status, final String[] parentIds)
+        throws Exception {
 
         try {
             if (status == null) {
@@ -1069,9 +900,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
             PWCallback.setHandle(creatorUserHandle);
             String createdXml = null;
             try {
-                createdXml =
-                    create(ORGANIZATIONAL_UNIT_HANDLER_CODE,
-                        prepareOrgUnitData(parentIds));
+                createdXml = create(ORGANIZATIONAL_UNIT_HANDLER_CODE, prepareOrgUnitData(parentIds));
             }
             catch (final Exception e) {
                 EscidocRestSoapTestBase.failException(e);
@@ -1079,50 +908,40 @@ public class AaTestBase extends EscidocRestSoapTestBase {
             assertNotNull(createdXml);
 
             if (!STATUS_NEW.equals(status)) {
-                Document document =
-                    EscidocRestSoapTestBase.getDocument(createdXml);
+                Document document = EscidocRestSoapTestBase.getDocument(createdXml);
                 final String objidValue = getObjidValue(document);
                 getOrganizationalUnitClient().open(objidValue,
                     orgUnitHelper.getTheLastModificationParam(false, objidValue));
-                createdXml = retrieve(
-                        ORGANIZATIONAL_UNIT_HANDLER_CODE, objidValue);
+                createdXml = retrieve(ORGANIZATIONAL_UNIT_HANDLER_CODE, objidValue);
                 if (!STATUS_OPEN.equals(status)) {
-                    getOrganizationalUnitClient().close(
-                        objidValue,
-                        orgUnitHelper
-                            .getTheLastModificationParam(false, objidValue));
-                    createdXml =
-                        retrieve(ORGANIZATIONAL_UNIT_HANDLER_CODE, objidValue);
+                    getOrganizationalUnitClient().close(objidValue,
+                        orgUnitHelper.getTheLastModificationParam(false, objidValue));
+                    createdXml = retrieve(ORGANIZATIONAL_UNIT_HANDLER_CODE, objidValue);
                 }
             }
 
             return createdXml;
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
     }
 
     /**
-     * Prepares an user-account for a test.<br>
-     * The user-account is created and set into the specified state.
-     * 
-     * @param creatorUserHandle
-     *            The eSciDoc user handle of the creator.
-     * @param status
-     *            The status to set for the user-account.
+     * Prepares an user-account for a test.<br> The user-account is created and set into the specified state.
+     *
+     * @param creatorUserHandle The eSciDoc user handle of the creator.
+     * @param status            The status to set for the user-account.
      * @return Returns the XML representation of the created item.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    protected String prepareUserAccount(
-        final String creatorUserHandle, final String status) throws Exception {
+    protected String prepareUserAccount(final String creatorUserHandle, final String status) throws Exception {
 
         try {
             PWCallback.setHandle(creatorUserHandle);
             String createdXml = null;
             try {
-                createdXml =
-                    create(USER_ACCOUNT_HANDLER_CODE, prepareUserAccountData());
+                createdXml = create(USER_ACCOUNT_HANDLER_CODE, prepareUserAccountData());
             }
             catch (final Exception e) {
                 EscidocRestSoapTestBase.failException(e);
@@ -1130,42 +949,37 @@ public class AaTestBase extends EscidocRestSoapTestBase {
             assertNotNull(createdXml);
 
             if (!STATUS_ACTIVE.equals(status)) {
-                Document document =
-                    EscidocRestSoapTestBase.getDocument(createdXml);
+                Document document = EscidocRestSoapTestBase.getDocument(createdXml);
                 String objidValue = getObjidValue(document);
-                deactivateUserAccount(getObjidValue(document),
-                    getTaskParam(getLastModificationDateValue(document)));
+                deactivateUserAccount(getObjidValue(document), getTaskParam(getLastModificationDateValue(document)));
                 createdXml = retrieve(USER_ACCOUNT_HANDLER_CODE, objidValue);
             }
 
             return createdXml;
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
     }
 
     /**
-     * Prepares an user-group for a test.<br>
-     * The user-group is created and set into the specified state.
-     * 
-     * @param creatorUserHandle
-     *            The eSciDoc user handle of the creator.
+     * Prepares an user-group for a test.<br> The user-group is created and set into the specified state.
+     *
+     * @param creatorUserHandle The eSciDoc user handle of the creator.
      * @return Returns the XML representation of the created user-group.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    protected String prepareUserGroup(
-        final String creatorUserHandle) throws Exception {
+    protected String prepareUserGroup(final String creatorUserHandle) throws Exception {
 
         PWCallback.setHandle(creatorUserHandle);
         String createdXml = null;
         try {
-            createdXml =
-                create(USER_GROUP_HANDLER_CODE, prepareUserGroupData());
+            createdXml = create(USER_GROUP_HANDLER_CODE, prepareUserGroupData());
         }
         catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
         assertNotNull(createdXml);
@@ -1174,39 +988,25 @@ public class AaTestBase extends EscidocRestSoapTestBase {
     }
 
     /**
-     * Prepares a content-relation for a test.<br>
-     * The content-relation is created and set into the specified state.
-     * 
-     * @param creatorUserHandle
-     *            The eSciDoc user handle of the creator.
-     * @param status
-     *            The status to set for the item. If this is <code>null</code>,
-     *            no item is created and <code>null</code> is returned.
-     * @param subjectHref
-     *            href to the subject of the content-relation.
-     * @param objectHref
-     *            href to the object of the content-relation.
-     * @param createVersionsBefore
-     *            If this flag is set to <code>true</code>, before each
-     *            status change, the content-relation is updated to create a new version.
-     * @param createVersionsAfter
-     *            If this flag is set to <code>true</code>, after each status
-     *            change, the content-relation is updated to create a new version, if this
-     *            is allowed. Currently, this is not allowed for objects in
-     *            state released or withdrawn.
-     * @return Returns the XML representation of the created content-relation. In case of
-     *         withdrawn content-relation, the released content-relation is returned.
-     * @throws Exception
-     *             If anything fails.
+     * Prepares a content-relation for a test.<br> The content-relation is created and set into the specified state.
+     *
+     * @param creatorUserHandle    The eSciDoc user handle of the creator.
+     * @param status               The status to set for the item. If this is <code>null</code>, no item is created and
+     *                             <code>null</code> is returned.
+     * @param subjectHref          href to the subject of the content-relation.
+     * @param objectHref           href to the object of the content-relation.
+     * @param createVersionsBefore If this flag is set to <code>true</code>, before each status change, the
+     *                             content-relation is updated to create a new version.
+     * @param createVersionsAfter  If this flag is set to <code>true</code>, after each status change, the
+     *                             content-relation is updated to create a new version, if this is allowed. Currently,
+     *                             this is not allowed for objects in state released or withdrawn.
+     * @return Returns the XML representation of the created content-relation. In case of withdrawn content-relation,
+     *         the released content-relation is returned.
+     * @throws Exception If anything fails.
      */
     protected String prepareContentRelation(
-        final String creatorUserHandle, 
-        final String status, 
-        final String subjectHref, 
-        final String objectHref,
-        final boolean createVersionsBefore, 
-        final boolean createVersionsAfter)
-        throws Exception {
+        final String creatorUserHandle, final String status, final String subjectHref, final String objectHref,
+        final boolean createVersionsBefore, final boolean createVersionsAfter) throws Exception {
 
         try {
             if (status == null) {
@@ -1215,9 +1015,8 @@ public class AaTestBase extends EscidocRestSoapTestBase {
             PWCallback.setHandle(creatorUserHandle);
             String createdXml = null;
             try {
-                createdXml = handleResult(
-                contentRelationClient.create(
-                        prepareContentRelationData(subjectHref, objectHref)));
+                createdXml =
+                    handleResult(contentRelationClient.create(prepareContentRelationData(subjectHref, objectHref)));
             }
             catch (final Exception e) {
                 EscidocRestSoapTestBase.failException(e);
@@ -1225,77 +1024,60 @@ public class AaTestBase extends EscidocRestSoapTestBase {
             assertNotNull(createdXml);
 
             if (!STATUS_PENDING.equals(status)) {
-                Document document =
-                    EscidocRestSoapTestBase.getDocument(createdXml);
+                Document document = EscidocRestSoapTestBase.getDocument(createdXml);
                 final String objidValue = getObjidValue(document);
                 if (createVersionsBefore) {
+                    createdXml = createdXml.replaceAll("Demo content relation", "Demo content relation u");
                     createdXml =
-                        createdXml.replaceAll("Demo content relation",
-                            "Demo content relation u");
-                    createdXml = handleResult(
-                    contentRelationClient.update(objidValue,
-                            prepareContentRelationData(subjectHref, objectHref)));
+                        handleResult(contentRelationClient.update(objidValue, prepareContentRelationData(subjectHref,
+                            objectHref)));
                     document = EscidocRestSoapTestBase.getDocument(createdXml);
                 }
-               contentRelationClient.submit(objidValue,
-                       getTaskParam(getLastModificationDateValue(document)));
-               createdXml = handleResult(
-               contentRelationClient.retrieve(objidValue));
+                contentRelationClient.submit(objidValue, getTaskParam(getLastModificationDateValue(document)));
+                createdXml = handleResult(contentRelationClient.retrieve(objidValue));
                 if (createVersionsAfter) {
-                    createdXml =
-                        createdXml.replaceAll("Demo content relation",
-                            "Demo content relation u");
+                    createdXml = createdXml.replaceAll("Demo content relation", "Demo content relation u");
                     createdXml = update(ITEM_HANDLER_CODE, objidValue, createdXml);
                 }
                 if (!STATUS_SUBMITTED.equals(status)) {
                     if (createVersionsBefore) {
-                        createdXml =
-                            createdXml.replaceAll("Demo content relation",
-                                "Demo content relation u");
-                        createdXml = handleResult(contentRelationClient.update(
-                                                    objidValue, createdXml));
+                        createdXml = createdXml.replaceAll("Demo content relation", "Demo content relation u");
+                        createdXml = handleResult(contentRelationClient.update(objidValue, createdXml));
                     }
                     document = EscidocRestSoapTestBase.getDocument(createdXml);
-                    contentRelationClient.release(objidValue, 
-                            getTaskParam(getLastModificationDateValue(document)));
-                    createdXml = handleResult(
-                            contentRelationClient.retrieve(objidValue));
+                    contentRelationClient.release(objidValue, getTaskParam(getLastModificationDateValue(document)));
+                    createdXml = handleResult(contentRelationClient.retrieve(objidValue));
                 }
             }
 
             return createdXml;
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
     }
 
     /**
      * Prepares the data for a container.
-     * 
-     * @param contextId
-     *         context to create container in
-     * @return Returns the xml representation of a container. Depending on the
-     *         current set transport of the class, the data is created by either
-     *         using the template file
-     *         create_container_WithoutMembers_Restv1.1.xml or by using the
-     *         template file create_container_WithoutMembers_Soapv1.1.xml
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param contextId context to create container in
+     * @return Returns the xml representation of a container. Depending on the current set transport of the class, the
+     *         data is created by either using the template file create_container_WithoutMembers_Restv1.1.xml or by
+     *         using the template file create_container_WithoutMembers_Soapv1.1.xml
+     * @throws Exception If anything fails.
      */
     private String prepareContainerData(final String contextId) throws Exception {
 
         Document xmlContainer =
-            EscidocRestSoapTestBase.getTemplateAsDocument(
-                TEMPLATE_CONTAINER_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTAINER_PATH + "/" + getTransport(false),
                 "create_container_WithoutMembers_v1.1.xml");
         if (contextId != null && !contextId.equals("")) {
             if (getTransport() == Constants.TRANSPORT_REST) {
                 String contextHref = Constants.CONTEXT_BASE_URI + "/" + contextId;
-                substitute(xmlContainer, 
-                    "/container/properties/context/@href", contextHref);
-            } else {
-                substitute(xmlContainer, 
-                    "/container/properties/context/@objid", contextId);
+                substitute(xmlContainer, "/container/properties/context/@href", contextHref);
+            }
+            else {
+                substitute(xmlContainer, "/container/properties/context/@objid", contextId);
             }
         }
         // deleteElement(xmlContainer, "/container/admin-descriptor");
@@ -1304,37 +1086,30 @@ public class AaTestBase extends EscidocRestSoapTestBase {
 
     /**
      * Prepares the data for an item.
-     * 
-     * @param contextId
-     *         context to create container in
-     * @return Returns the xml representation of an item. Depending on the
-     *         current set transport of the class, the data is created by either
-     *         using the template file escidoc_item_198_for_createREST.xml or by
-     *         using the template file escidoc_item_198_for_createSOAP.xml
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param contextId context to create container in
+     * @return Returns the xml representation of an item. Depending on the current set transport of the class, the data
+     *         is created by either using the template file escidoc_item_198_for_createREST.xml or by using the template
+     *         file escidoc_item_198_for_createSOAP.xml
+     * @throws Exception If anything fails.
      */
     protected String prepareItemData(final String contextId) throws Exception {
 
         final String templateName;
         if (getTransport() == Constants.TRANSPORT_REST) {
-            templateName =
-                "escidoc_item_198_for_create_one_component_privateREST.xml";
+            templateName = "escidoc_item_198_for_create_one_component_privateREST.xml";
         }
         else {
-            templateName =
-                "escidoc_item_198_for_create_one_component_privateSOAP.xml";
+            templateName = "escidoc_item_198_for_create_one_component_privateSOAP.xml";
         }
-        Document itemDoc = EscidocRestSoapTestBase.getTemplateAsDocument(
-            TEMPLATE_AA_ITEM_PATH, templateName);
+        Document itemDoc = EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_AA_ITEM_PATH, templateName);
         if (contextId != null && !contextId.equals("")) {
             if (getTransport() == Constants.TRANSPORT_REST) {
                 String contextHref = Constants.CONTEXT_BASE_URI + "/" + contextId;
-                substitute(itemDoc, 
-                    "/item/properties/context/@href", contextHref);
-            } else {
-                substitute(itemDoc, 
-                    "/item/properties/context/@objid", contextId);
+                substitute(itemDoc, "/item/properties/context/@href", contextHref);
+            }
+            else {
+                substitute(itemDoc, "/item/properties/context/@objid", contextId);
             }
         }
         return toString(itemDoc, false);
@@ -1342,41 +1117,32 @@ public class AaTestBase extends EscidocRestSoapTestBase {
 
     /**
      * Prepares the data for an item.
-     * 
-     * @param subjectHref
-     *         subjectHref for contentRelation
-     * @param objectHref
-     *         objectHref for contentRelation
+     *
+     * @param subjectHref subjectHref for contentRelation
+     * @param objectHref  objectHref for contentRelation
      * @return Returns the xml representation of a contentRelation.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    protected String prepareContentRelationData(
-            final String subjectHref, final String objectHref) throws Exception {
+    protected String prepareContentRelationData(final String subjectHref, final String objectHref) throws Exception {
 
-        final String contentRelationXml = 
-            getExampleTemplate("content-relation-01.xml");
-        Document contentRelationDoc = 
-            EscidocRestSoapTestBase.getDocument(contentRelationXml);
+        final String contentRelationXml = getExampleTemplate("content-relation-01.xml");
+        Document contentRelationDoc = EscidocRestSoapTestBase.getDocument(contentRelationXml);
         if (getTransport() == Constants.TRANSPORT_REST) {
             if (subjectHref != null) {
-                substitute(contentRelationDoc, 
-                        "/content-relation/subject/@href", subjectHref);
+                substitute(contentRelationDoc, "/content-relation/subject/@href", subjectHref);
             }
             if (objectHref != null) {
-                substitute(contentRelationDoc, 
-                        "/content-relation/object/@href", objectHref);
+                substitute(contentRelationDoc, "/content-relation/object/@href", objectHref);
             }
-        } else {
+        }
+        else {
             if (subjectHref != null) {
-                substitute(contentRelationDoc, 
-                        "/content-relation/subject/@objid", 
-                        subjectHref.replaceFirst(".*/(.*)", "$1"));
+                substitute(contentRelationDoc, "/content-relation/subject/@objid", subjectHref.replaceFirst(".*/(.*)",
+                    "$1"));
             }
             if (objectHref != null) {
-                substitute(contentRelationDoc, 
-                        "/content-relation/object/@objid", 
-                        objectHref.replaceFirst(".*/(.*)", "$1"));
+                substitute(contentRelationDoc, "/content-relation/object/@objid", objectHref.replaceFirst(".*/(.*)",
+                    "$1"));
             }
         }
         return toString(contentRelationDoc, false);
@@ -1384,24 +1150,18 @@ public class AaTestBase extends EscidocRestSoapTestBase {
 
     /**
      * Prepares the data for an user-account.
-     * 
-     * @return Returns the xml representation of an user-account. The data is
-     *         created by using the template file
+     *
+     * @return Returns the xml representation of an user-account. The data is created by using the template file
      *         escidoc_useraccount_for_create.xml
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     private String prepareUserAccountData() throws Exception {
 
-        
         Document document =
-            EscidocRestSoapTestBase
-            .getTemplateAsDocument(TEMPLATE_USER_ACCOUNT_PATH,
-                    "escidoc_useraccount_for_create.xml");
-        assertXmlExists("No login-name found in template data. ", document,
-            XPATH_USER_ACCOUNT_LOGINNAME);
-        final Node loginNameNode =
-            selectSingleNode(document, XPATH_USER_ACCOUNT_LOGINNAME);
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_USER_ACCOUNT_PATH,
+                "escidoc_useraccount_for_create.xml");
+        assertXmlExists("No login-name found in template data. ", document, XPATH_USER_ACCOUNT_LOGINNAME);
+        final Node loginNameNode = selectSingleNode(document, XPATH_USER_ACCOUNT_LOGINNAME);
         String loginname = loginNameNode.getTextContent().trim();
         loginname += System.currentTimeMillis();
         loginNameNode.setTextContent(loginname);
@@ -1411,18 +1171,15 @@ public class AaTestBase extends EscidocRestSoapTestBase {
 
     /**
      * Prepares the data for an user-group.
-     * 
-     * @return Returns the xml representation of an user-group. The data is
-     *         created by using the template file
+     *
+     * @return Returns the xml representation of an user-group. The data is created by using the template file
      *         escidoc_usergroup_for_create.xml
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     private String prepareUserGroupData() throws Exception {
 
         Document document =
-            getTemplateAsFixedUserGroupDocument(TEMPLATE_USER_GROUP_PATH,
-                "escidoc_usergroup_for_create.xml");
+            getTemplateAsFixedUserGroupDocument(TEMPLATE_USER_GROUP_PATH, "escidoc_usergroup_for_create.xml");
         insertUniqueLabel(document);
 
         return toString(document, false);
@@ -1430,20 +1187,15 @@ public class AaTestBase extends EscidocRestSoapTestBase {
 
     /**
      * Prepares the data for an organizational unit.
-     * 
+     *
+     * @param parentIds parentIds of this orgUnit
      * @return Returns the xml representation of an organizational unit.
-     * @param parentIds
-     *            parentIds of this orgUnit
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    protected String prepareOrgUnitData(final String[] parentIds)
-        throws Exception {
+    protected String prepareOrgUnitData(final String[] parentIds) throws Exception {
 
         final String templateName = "escidoc_ou_create.xml";
-        final Document toBeCreatedDocument =
-            getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH,
-                templateName);
+        final Document toBeCreatedDocument = getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, templateName);
         setUniqueValue(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_TITLE);
 
         if (parentIds != null && parentIds.length > 0) {
@@ -1453,8 +1205,8 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 parentValues[i] = parentIds[i];
                 parentValues[i + length] = null;
             }
-            orgUnitHelper.insertParentsElement(toBeCreatedDocument,
-                XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS, parentValues, false);
+            orgUnitHelper.insertParentsElement(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS, parentValues,
+                false);
         }
         final String toBeCreatedXml = toString(toBeCreatedDocument, true);
 
@@ -1462,22 +1214,16 @@ public class AaTestBase extends EscidocRestSoapTestBase {
     }
 
     /**
-     * Inserts a unique label into the provided document by adding the
-     * current timestamp to the contained label.
-     * 
-     * @param document
-     *            The document.
+     * Inserts a unique label into the provided document by adding the current timestamp to the contained label.
+     *
+     * @param document The document.
      * @return The inserted login name.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    protected String insertUniqueLabel(final Document document)
-        throws Exception {
+    protected String insertUniqueLabel(final Document document) throws Exception {
 
-        assertXmlExists("No label found in template data. ", document,
-            "/user-group/properties/label");
-        final Node labelNode =
-            selectSingleNode(document, "/user-group/properties/label");
+        assertXmlExists("No label found in template data. ", document, "/user-group/properties/label");
+        final Node labelNode = selectSingleNode(document, "/user-group/properties/label");
         String label = labelNode.getTextContent().trim();
         label += System.currentTimeMillis();
 
@@ -1488,54 +1234,40 @@ public class AaTestBase extends EscidocRestSoapTestBase {
 
     /**
      * Tests retrieving an item.
-     * 
-     * @param userHandle
-     *            The escidoc user handle.
-     * @param creatorUserHandle
-     *            The escidoc user handle of the creator.
-     * @param status
-     *            The status of the item. If this is <code>null</code>, no
-     *            item is created and it is tried to retrieve an unknown item.
-     * @param createVersions
-     *            If this flag is set to <code>true</code>, before each
-     *            status change, the item is updated to create a new version.
-     * @param versionNumber
-     *            The version that shall be retrieved. If this is
-     *            <code>null</code>, only the object id is sent to the
-     *            retrieve service. Otherwise, objectid:versionNumber is sent as
-     *            the identifier of the resource.
-     * @param expectedExceptionClass
-     *            The class of the expected exception or <code>null</code> in
-     *            case of expected success.
+     *
+     * @param userHandle             The escidoc user handle.
+     * @param creatorUserHandle      The escidoc user handle of the creator.
+     * @param status                 The status of the item. If this is <code>null</code>, no item is created and it is
+     *                               tried to retrieve an unknown item.
+     * @param createVersions         If this flag is set to <code>true</code>, before each status change, the item is
+     *                               updated to create a new version.
+     * @param versionNumber          The version that shall be retrieved. If this is <code>null</code>, only the object
+     *                               id is sent to the retrieve service. Otherwise, objectid:versionNumber is sent as
+     *                               the identifier of the resource.
+     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
+     *                               success.
      * @return String item xml
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     protected String doTestRetrieveItem(
-        final String userHandle, final String creatorUserHandle,
-        final String status, final boolean createVersions,
-        final String versionNumber, final Class< ? > expectedExceptionClass)
-        throws Exception {
+        final String userHandle, final String creatorUserHandle, final String status, final boolean createVersions,
+        final String versionNumber, final Class<?> expectedExceptionClass) throws Exception {
 
-        String createdXml =
-            prepareItem(
-                creatorUserHandle, status, null, createVersions, false);
+        String createdXml = prepareItem(creatorUserHandle, status, null, createVersions, false);
 
         String retrievedXml = null;
         try {
             PWCallback.setHandle(userHandle);
             if (createdXml != null) {
                 retrievedXml =
-                    retrieve(ITEM_HANDLER_CODE, createResourceId(
-                        getObjidValue(EscidocRestSoapTestBase
-                            .getDocument(createdXml)), versionNumber));
+                    retrieve(ITEM_HANDLER_CODE, createResourceId(getObjidValue(EscidocRestSoapTestBase
+                        .getDocument(createdXml)), versionNumber));
             }
             else {
                 retrievedXml = retrieve(ITEM_HANDLER_CODE, UNKNOWN_ID);
             }
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase
-                    .failMissingException(expectedExceptionClass);
+                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
@@ -1543,10 +1275,10 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(
-                    expectedExceptionClass, e);
+                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
 
@@ -1555,76 +1287,51 @@ public class AaTestBase extends EscidocRestSoapTestBase {
 
     /**
      * Tests retrieving a content of an item.
-     * 
-     * @param userHandle
-     *            The escidoc user handle.
-     * @param creatorUserHandle
-     *            The escidoc user handle of the creator.
-     * @param status
-     *            The status of the item. If this is <code>null</code>, no
-     *            item is created and it is tried to retrieve an unknown item.
-     * @param createVersionsBefore
-     *            If this flag is set to <code>true</code>, before each
-     *            status change, the item is updated to create a new version.
-     * @param createVersionsAfter
-     *            If this flag is set to <code>true</code>, after each status
-     *            change, the item is updated to create a new version, if this
-     *            is allowed. Currently, this is not allowed for objects in
-     *            state release or withdrawn.
-     * @param versionNumber
-     *            The version that shall be retrieved. If this is
-     *            <code>null</code>, only the object id is sent to the
-     *            retrieve service. Otherwise, objectid:versionNumber is sent as
-     *            the identifier of the resource.
-     * @param visibility
-     *            the visibility of the component that shall be retrieved.
-     * @param expectedExceptionClass
-     *            The class of the expected exception or <code>null</code> in
-     *            case of expected success.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param userHandle             The escidoc user handle.
+     * @param creatorUserHandle      The escidoc user handle of the creator.
+     * @param status                 The status of the item. If this is <code>null</code>, no item is created and it is
+     *                               tried to retrieve an unknown item.
+     * @param createVersionsBefore   If this flag is set to <code>true</code>, before each status change, the item is
+     *                               updated to create a new version.
+     * @param createVersionsAfter    If this flag is set to <code>true</code>, after each status change, the item is
+     *                               updated to create a new version, if this is allowed. Currently, this is not allowed
+     *                               for objects in state release or withdrawn.
+     * @param versionNumber          The version that shall be retrieved. If this is <code>null</code>, only the object
+     *                               id is sent to the retrieve service. Otherwise, objectid:versionNumber is sent as
+     *                               the identifier of the resource.
+     * @param visibility             the visibility of the component that shall be retrieved.
+     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
+     *                               success.
+     * @throws Exception If anything fails.
      */
     protected void doTestRetrieveContent(
-        final String userHandle, final String creatorUserHandle,
-        final String status, final boolean createVersionsBefore,
-        final boolean createVersionsAfter, final String versionNumber,
-        final String visibility, final Class< ? > expectedExceptionClass)
-        throws Exception {
+        final String userHandle, final String creatorUserHandle, final String status,
+        final boolean createVersionsBefore, final boolean createVersionsAfter, final String versionNumber,
+        final String visibility, final Class<?> expectedExceptionClass) throws Exception {
 
         final String createdXml =
-            prepareItem(
-                creatorUserHandle, status, null, createVersionsBefore,
-                createVersionsAfter);
+            prepareItem(creatorUserHandle, status, null, createVersionsBefore, createVersionsAfter);
 
-        final Document createdDocument =
-            EscidocRestSoapTestBase.getDocument(createdXml);
-        final String componentId =
-            extractComponentId(createdDocument, visibility);
+        final Document createdDocument = EscidocRestSoapTestBase.getDocument(createdXml);
+        final String componentId = extractComponentId(createdDocument, visibility);
 
         try {
             PWCallback.setHandle(userHandle);
             if (createdXml != null) {
-                String resourceId = 
-                    createResourceId(getObjidValue(EscidocRestSoapTestBase
-                    .getDocument(createdXml)), versionNumber);
-                SimpleDateFormat dateFormat =
-                    new SimpleDateFormat("dd.MM.yyyy kk:mm:ss");
+                String resourceId =
+                    createResourceId(getObjidValue(EscidocRestSoapTestBase.getDocument(createdXml)), versionNumber);
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy kk:mm:ss");
                 dateFormat.format(new Date(System.currentTimeMillis()));
-                System.out.println(
-                    "MIH: " 
-                    + dateFormat.format(new Date(System.currentTimeMillis())) 
-                    + " getting content of component:" 
-                    + componentId + ", item:" + resourceId);
-                ((ItemClient) getClient(ITEM_HANDLER_CODE)).retrieveContent(
-                    resourceId, componentId);
+                System.out.println("MIH: " + dateFormat.format(new Date(System.currentTimeMillis()))
+                    + " getting content of component:" + componentId + ", item:" + resourceId);
+                ((ItemClient) getClient(ITEM_HANDLER_CODE)).retrieveContent(resourceId, componentId);
             }
             else {
-                ((ItemClient) getClient(ITEM_HANDLER_CODE)).retrieveContent(
-                    UNKNOWN_ID, UNKNOWN_ID);
+                ((ItemClient) getClient(ITEM_HANDLER_CODE)).retrieveContent(UNKNOWN_ID, UNKNOWN_ID);
             }
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase
-                    .failMissingException(expectedExceptionClass);
+                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
@@ -1632,38 +1339,30 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(
-                    expectedExceptionClass, e);
+                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
     }
 
     /**
      * Tests retrieving a content of an item.
-     * 
-     * @param userHandle
-     *            The escidoc user handle.
-     * @param itemId
-     *            the itemId
-     * @param componentId
-     *            the componentId to retrieve
-     * @param versionNumber
-     *            The version that shall be retrieved. If this is
-     *            <code>null</code>, only the object id is sent to the
-     *            retrieve service. Otherwise, objectid:versionNumber is sent as
-     *            the identifier of the resource.
-     * @param expectedExceptionClass
-     *            The class of the expected exception or <code>null</code> in
-     *            case of expected success.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param userHandle             The escidoc user handle.
+     * @param itemId                 the itemId
+     * @param componentId            the componentId to retrieve
+     * @param versionNumber          The version that shall be retrieved. If this is <code>null</code>, only the object
+     *                               id is sent to the retrieve service. Otherwise, objectid:versionNumber is sent as
+     *                               the identifier of the resource.
+     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
+     *                               success.
+     * @throws Exception If anything fails.
      */
     protected void doTestRetrieveContent(
-        final String userHandle, final String itemId, final String componentId,
-        final String versionNumber, final Class< ? > expectedExceptionClass)
-        throws Exception {
+        final String userHandle, final String itemId, final String componentId, final String versionNumber,
+        final Class<?> expectedExceptionClass) throws Exception {
 
         try {
             PWCallback.setHandle(userHandle);
@@ -1671,11 +1370,9 @@ public class AaTestBase extends EscidocRestSoapTestBase {
             if (versionNumber != null) {
                 itemWithVersion += ":" + versionNumber;
             }
-            ((ItemClient) getClient(ITEM_HANDLER_CODE)).retrieveContent(
-                itemWithVersion, componentId);
+            ((ItemClient) getClient(ITEM_HANDLER_CODE)).retrieveContent(itemWithVersion, componentId);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase
-                    .failMissingException(expectedExceptionClass);
+                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
@@ -1683,66 +1380,50 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(
-                    expectedExceptionClass, e);
+                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
     }
 
     /**
      * Tests retrieving a container.
-     * 
-     * @param userHandle
-     *            The escidoc user handle.
-     * @param creatorUserHandle
-     *            The escidoc user handle of the creator.
-     * @param status
-     *            The status of the container. If this is <code>null</code>,
-     *            no container is created and it is tried to retrieve an unknown
-     *            container.
-     * @param createVersions
-     *            If this flag is set to <code>true</code>, before each
-     *            status change, the container is updated to create a new
-     *            version.
-     * @param versionNumber
-     *            The version that shall be retrieved. If this is
-     *            <code>null</code>, only the object id is sent to the
-     *            retrieve service. Otherwise, objectid:versionNumber is sent as
-     *            the identifier of the resource.
-     * @param expectedExceptionClass
-     *            The class of the expected exception or <code>null</code> in
-     *            case of expected success.
+     *
+     * @param userHandle             The escidoc user handle.
+     * @param creatorUserHandle      The escidoc user handle of the creator.
+     * @param status                 The status of the container. If this is <code>null</code>, no container is created
+     *                               and it is tried to retrieve an unknown container.
+     * @param createVersions         If this flag is set to <code>true</code>, before each status change, the container
+     *                               is updated to create a new version.
+     * @param versionNumber          The version that shall be retrieved. If this is <code>null</code>, only the object
+     *                               id is sent to the retrieve service. Otherwise, objectid:versionNumber is sent as
+     *                               the identifier of the resource.
+     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
+     *                               success.
      * @return String container xml
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     protected String doTestRetrieveContainer(
-        final String userHandle, final String creatorUserHandle,
-        final String status, final boolean createVersions,
-        final String versionNumber, final Class< ? > expectedExceptionClass)
-        throws Exception {
+        final String userHandle, final String creatorUserHandle, final String status, final boolean createVersions,
+        final String versionNumber, final Class<?> expectedExceptionClass) throws Exception {
 
-        String createdXml =
-            prepareContainer(
-                creatorUserHandle, status, null, createVersions, false);
+        String createdXml = prepareContainer(creatorUserHandle, status, null, createVersions, false);
 
         String retrievedXml = null;
         try {
             PWCallback.setHandle(userHandle);
             if (createdXml != null) {
                 retrievedXml =
-                    retrieve(CONTAINER_HANDLER_CODE, createResourceId(
-                        getObjidValue(EscidocRestSoapTestBase
-                            .getDocument(createdXml)), versionNumber));
+                    retrieve(CONTAINER_HANDLER_CODE, createResourceId(getObjidValue(EscidocRestSoapTestBase
+                        .getDocument(createdXml)), versionNumber));
             }
             else {
                 retrievedXml = retrieve(CONTAINER_HANDLER_CODE, UNKNOWN_ID);
             }
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase
-                    .failMissingException(expectedExceptionClass);
+                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
@@ -1750,10 +1431,10 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(
-                    expectedExceptionClass, e);
+                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
 
@@ -1762,18 +1443,14 @@ public class AaTestBase extends EscidocRestSoapTestBase {
 
     /**
      * Tests creating a container.
-     * 
-     * @param userHandle
-     *            The escidoc user handle.
-     * @param expectedExceptionClass
-     *            The class of the expected exception or <code>null</code> in
-     *            case of expected success.
+     *
+     * @param userHandle             The escidoc user handle.
+     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
+     *                               success.
      * @return String containerXml
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    protected String doTestCreateContainer(
-        final String userHandle, final Class< ? > expectedExceptionClass)
+    protected String doTestCreateContainer(final String userHandle, final Class<?> expectedExceptionClass)
         throws Exception {
 
         String toBeCreatedXml = prepareContainerData(null);
@@ -1783,8 +1460,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
             PWCallback.setHandle(userHandle);
             xml = create(CONTAINER_HANDLER_CODE, toBeCreatedXml);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase
-                    .failMissingException(expectedExceptionClass);
+                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
@@ -1792,10 +1468,10 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(
-                    expectedExceptionClass, e);
+                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
         return xml;
@@ -1803,78 +1479,58 @@ public class AaTestBase extends EscidocRestSoapTestBase {
 
     /**
      * Tests creating an item.
-     * 
-     * @param userHandle
-     *            The escidoc user handle.
-     * @param expectedExceptionClass
-     *            The class of the expected exception or <code>null</code> in
-     *            case of expected success.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param userHandle             The escidoc user handle.
+     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
+     *                               success.
+     * @throws Exception If anything fails.
      */
-    protected String doTestCreateItem(
-        final String userHandle, final Class< ? > expectedExceptionClass)
-        throws Exception {
+    protected String doTestCreateItem(final String userHandle, final Class<?> expectedExceptionClass) throws Exception {
 
         String itemWithoutComponents = prepareItemData(null);
 
-        return doTestCreateItem(userHandle, expectedExceptionClass,
-            itemWithoutComponents);
+        return doTestCreateItem(userHandle, expectedExceptionClass, itemWithoutComponents);
     }
 
     /**
      * Tests creating an item.
-     * 
-     * @param userHandle
-     *            The escidoc user handle.
-     * @param expectedExceptionClass
-     *            The class of the expected exception or <code>null</code> in
-     *            case of expected success.
-     * @param templatePath
-     *            The path to the directory containing the template.
-     * @param templateName
-     *            The name of the template to use.
+     *
+     * @param userHandle             The escidoc user handle.
+     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
+     *                               success.
+     * @param templatePath           The path to the directory containing the template.
+     * @param templateName           The name of the template to use.
      * @return Returns the xml representation of the created item.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     protected String doTestCreateItem(
-        final String userHandle, final Class< ? > expectedExceptionClass,
-        final String templatePath, final String templateName) throws Exception {
+        final String userHandle, final Class<?> expectedExceptionClass, final String templatePath,
+        final String templateName) throws Exception {
 
-        final String itemWithoutComponents =
-            EscidocRestSoapTestBase.getTemplateAsString(templatePath,
-                templateName);
+        final String itemWithoutComponents = EscidocRestSoapTestBase.getTemplateAsString(templatePath, templateName);
 
-        return doTestCreateItem(userHandle, expectedExceptionClass,
-            itemWithoutComponents);
+        return doTestCreateItem(userHandle, expectedExceptionClass, itemWithoutComponents);
     }
 
     /**
      * Tests creating an item.
-     * 
-     * @param userHandle
-     *            The escidoc user handle.
-     * @param expectedExceptionClass
-     *            The class of the expected exception or <code>null</code> in
-     *            case of expected success.
-     * @param xml
-     *            The xml representation.
+     *
+     * @param userHandle             The escidoc user handle.
+     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
+     *                               success.
+     * @param xml                    The xml representation.
      * @return Returns the xml representation of the created item.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    protected String doTestCreateItem(
-        final String userHandle, final Class< ? > expectedExceptionClass,
-        final String xml) throws Exception {
+    protected String doTestCreateItem(final String userHandle, final Class<?> expectedExceptionClass, final String xml)
+        throws Exception {
 
         String createdXml = null;
         try {
             PWCallback.setHandle(userHandle);
             createdXml = create(ITEM_HANDLER_CODE, xml);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase
-                    .failMissingException(expectedExceptionClass);
+                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
@@ -1882,10 +1538,10 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(
-                    expectedExceptionClass, e);
+                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
         return createdXml;
@@ -1893,16 +1549,13 @@ public class AaTestBase extends EscidocRestSoapTestBase {
 
     /**
      * Creates the resource id for the provided object id and version number.
-     * 
-     * @param objid
-     *            The object id.
-     * @param versionNumber
-     *            The version number. this may be <code>null</code>. In this
-     *            case, the objid is returned, only.
+     *
+     * @param objid         The object id.
+     * @param versionNumber The version number. this may be <code>null</code>. In this case, the objid is returned,
+     *                      only.
      * @return Returns objid[:versionNumber]
      */
-    protected String createResourceId(
-        final String objid, final String versionNumber) {
+    protected String createResourceId(final String objid, final String versionNumber) {
 
         if (versionNumber == null) {
             return objid;
@@ -1914,59 +1567,43 @@ public class AaTestBase extends EscidocRestSoapTestBase {
 
     /**
      * Tests updating an item.
-     * 
-     * @param userHandle
-     *            The escidoc user handle.
-     * @param creatorUserHandle
-     *            The escidoc user handle of the creator.
-     * @param status
-     *            The status of the item. If this is <code>null</code>, it is
-     *            tried to update an unknown item.
-     * @param versionNumber
-     *            TODO
-     * @param expectedExceptionClass
-     *            The class of the expected exception or <code>null</code> in
-     *            case of expected success.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param userHandle             The escidoc user handle.
+     * @param creatorUserHandle      The escidoc user handle of the creator.
+     * @param status                 The status of the item. If this is <code>null</code>, it is tried to update an
+     *                               unknown item.
+     * @param versionNumber          TODO
+     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
+     *                               success.
+     * @throws Exception If anything fails.
      */
     protected String doTestUpdateItem(
-        final String userHandle, final String creatorUserHandle,
-        final String status, final String versionNumber,
-        final Class< ? > expectedExceptionClass) throws Exception {
+        final String userHandle, final String creatorUserHandle, final String status, final String versionNumber,
+        final Class<?> expectedExceptionClass) throws Exception {
 
         String createdXml;
         if (status != null) {
-            createdXml =
-                prepareItem(creatorUserHandle, status, null, false, false);
+            createdXml = prepareItem(creatorUserHandle, status, null, false, false);
         }
         else {
-            createdXml =
-                prepareItem(creatorUserHandle, STATUS_PENDING, null, false,
-                    false);
+            createdXml = prepareItem(creatorUserHandle, STATUS_PENDING, null, false, false);
         }
 
-        String toBeUpdatedXml =
-            createdXml.replaceAll("semiconductor surfaces",
-                "semiconductor surfaces u");
+        String toBeUpdatedXml = createdXml.replaceAll("semiconductor surfaces", "semiconductor surfaces u");
 
         String updatedXml = null;
         try {
             PWCallback.setHandle(userHandle);
             if (status != null) {
                 updatedXml =
-                    update(ITEM_HANDLER_CODE, createResourceId(
-                        getObjidValue(EscidocRestSoapTestBase
-                            .getDocument(toBeUpdatedXml)), versionNumber),
-                        toBeUpdatedXml);
+                    update(ITEM_HANDLER_CODE, createResourceId(getObjidValue(EscidocRestSoapTestBase
+                        .getDocument(toBeUpdatedXml)), versionNumber), toBeUpdatedXml);
             }
             else {
-                updatedXml =
-                    update(ITEM_HANDLER_CODE, UNKNOWN_ID, toBeUpdatedXml);
+                updatedXml = update(ITEM_HANDLER_CODE, UNKNOWN_ID, toBeUpdatedXml);
             }
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase
-                    .failMissingException(expectedExceptionClass);
+                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
@@ -1974,10 +1611,10 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(
-                    expectedExceptionClass, e);
+                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
 
@@ -1986,41 +1623,31 @@ public class AaTestBase extends EscidocRestSoapTestBase {
 
     /**
      * Tests deleting an item.
-     * 
-     * @param userHandle
-     *            The eSciDoc user handle.
-     * @param creatorUserHandle
-     *            The eSciDoc user handle of the creator.
-     * @param status
-     *            The status of the item. If this is <code>null</code>, no
-     *            item is created and it is tried to delete an unknown item.
-     * @param expectedExceptionClass
-     *            The class of the expected exception or <code>null</code> in
-     *            case of expected success.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param userHandle             The eSciDoc user handle.
+     * @param creatorUserHandle      The eSciDoc user handle of the creator.
+     * @param status                 The status of the item. If this is <code>null</code>, no item is created and it is
+     *                               tried to delete an unknown item.
+     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
+     *                               success.
+     * @throws Exception If anything fails.
      */
     protected void doTestDeleteItem(
-        final String userHandle, final String creatorUserHandle,
-        final String status, final Class< ? > expectedExceptionClass)
-        throws Exception {
+        final String userHandle, final String creatorUserHandle, final String status,
+        final Class<?> expectedExceptionClass) throws Exception {
 
-        final String createdXml =
-            prepareItem(creatorUserHandle, status, null, false, false);
+        final String createdXml = prepareItem(creatorUserHandle, status, null, false, false);
 
         try {
             PWCallback.setHandle(userHandle);
             if (createdXml != null) {
-                delete(ITEM_HANDLER_CODE,
-                    getObjidValue(EscidocRestSoapTestBase
-                        .getDocument(createdXml)));
+                delete(ITEM_HANDLER_CODE, getObjidValue(EscidocRestSoapTestBase.getDocument(createdXml)));
             }
             else {
                 delete(ITEM_HANDLER_CODE, UNKNOWN_ID);
             }
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase
-                    .failMissingException(expectedExceptionClass);
+                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
@@ -2028,61 +1655,48 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(
-                    expectedExceptionClass, e);
+                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
     }
 
     /**
      * Tests submitting an item.
-     * 
-     * @param userHandle
-     *            The eSciDoc user handle.
-     * @param creatorUserHandle
-     *            The eSciDoc user handle of the creator.
-     * @param status
-     *            The status of the item. If this is <code>null</code>, it is
-     *            tried to submit an unknown item.
-     * @param expectedExceptionClass
-     *            The class of the expected exception or <code>null</code> in
-     *            case of expected success.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param userHandle             The eSciDoc user handle.
+     * @param creatorUserHandle      The eSciDoc user handle of the creator.
+     * @param status                 The status of the item. If this is <code>null</code>, it is tried to submit an
+     *                               unknown item.
+     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
+     *                               success.
+     * @throws Exception If anything fails.
      */
     protected void doTestSubmitItem(
-        final String userHandle, final String creatorUserHandle,
-        final String status, final Class< ? > expectedExceptionClass)
-        throws Exception {
+        final String userHandle, final String creatorUserHandle, final String status,
+        final Class<?> expectedExceptionClass) throws Exception {
 
         String createdXml;
         if (status != null) {
-            createdXml =
-                prepareItem(creatorUserHandle, status, null, false, false);
+            createdXml = prepareItem(creatorUserHandle, status, null, false, false);
         }
         else {
-            createdXml =
-                prepareItem(creatorUserHandle, STATUS_PENDING, null, false,
-                    false);
+            createdXml = prepareItem(creatorUserHandle, STATUS_PENDING, null, false, false);
         }
-        final Document document =
-            EscidocRestSoapTestBase.getDocument(createdXml);
+        final Document document = EscidocRestSoapTestBase.getDocument(createdXml);
 
         try {
             PWCallback.setHandle(userHandle);
             if (status != null) {
-                submit(ITEM_HANDLER_CODE, getObjidValue(document),
-                    getTaskParam(getLastModificationDateValue(document)));
+                submit(ITEM_HANDLER_CODE, getObjidValue(document), getTaskParam(getLastModificationDateValue(document)));
             }
             else {
-                submit(ITEM_HANDLER_CODE, UNKNOWN_ID,
-                    getTaskParam(getLastModificationDateValue(document)));
+                submit(ITEM_HANDLER_CODE, UNKNOWN_ID, getTaskParam(getLastModificationDateValue(document)));
             }
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase
-                    .failMissingException(expectedExceptionClass);
+                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
@@ -2090,59 +1704,45 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(
-                    expectedExceptionClass, e);
+                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
     }
 
     /**
      * Tests releasing an item.
-     * 
-     * @param userHandle
-     *            The eSciDoc user handle.
-     * @param creatorUserHandle
-     *            The eSciDoc user handle of the creator.
-     * @param status
-     *            The status of the item. If this is <code>null</code>, it is
-     *            tried to release an unknown item.
-     * @param expectedExceptionClass
-     *            The class of the expected exception or <code>null</code> in
-     *            case of expected success.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param userHandle             The eSciDoc user handle.
+     * @param creatorUserHandle      The eSciDoc user handle of the creator.
+     * @param status                 The status of the item. If this is <code>null</code>, it is tried to release an
+     *                               unknown item.
+     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
+     *                               success.
+     * @throws Exception If anything fails.
      */
     protected void doTestReleaseItem(
-        final String userHandle, final String creatorUserHandle,
-        final String status, final Class< ? > expectedExceptionClass)
-        throws Exception {
+        final String userHandle, final String creatorUserHandle, final String status,
+        final Class<?> expectedExceptionClass) throws Exception {
 
-        String createdXml =
-            prepareItem(creatorUserHandle, status, null, false, false);
+        String createdXml = prepareItem(creatorUserHandle, status, null, false, false);
         if (createdXml == null) {
-            createdXml =
-                prepareItem(
-                    creatorUserHandle, STATUS_SUBMITTED, null, false,
-                    false);
+            createdXml = prepareItem(creatorUserHandle, STATUS_SUBMITTED, null, false, false);
         }
-        final Document document =
-            EscidocRestSoapTestBase.getDocument(createdXml);
+        final Document document = EscidocRestSoapTestBase.getDocument(createdXml);
 
         try {
             PWCallback.setHandle(userHandle);
             if (status != null) {
-                releaseWithPid(ITEM_HANDLER_CODE, getObjidValue(document),
-                    userHandle);
+                releaseWithPid(ITEM_HANDLER_CODE, getObjidValue(document), userHandle);
             }
             else {
-                release(ITEM_HANDLER_CODE, UNKNOWN_ID,
-                    getTaskParam(getLastModificationDateValue(document)));
+                release(ITEM_HANDLER_CODE, UNKNOWN_ID, getTaskParam(getLastModificationDateValue(document)));
             }
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase
-                    .failMissingException(expectedExceptionClass);
+                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
@@ -2150,64 +1750,50 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(
-                    expectedExceptionClass, e);
+                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
     }
 
     /**
      * Tests withdrawing an item.
-     * 
-     * @param userHandle
-     *            The eSciDoc user handle.
-     * @param creatorUserHandle
-     *            The eSciDoc user handle of the creator.
-     * @param status
-     *            The status of the item. If this is <code>null</code>, it is
-     *            tried to withdraw an unknown item.
-     * @param expectedExceptionClass
-     *            The class of the expected exception or <code>null</code> in
-     *            case of expected success.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param userHandle             The eSciDoc user handle.
+     * @param creatorUserHandle      The eSciDoc user handle of the creator.
+     * @param status                 The status of the item. If this is <code>null</code>, it is tried to withdraw an
+     *                               unknown item.
+     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
+     *                               success.
+     * @throws Exception If anything fails.
      */
     protected void doTestWithdrawItem(
-        final String userHandle, final String creatorUserHandle,
-        final String status, final Class< ? > expectedExceptionClass)
-        throws Exception {
+        final String userHandle, final String creatorUserHandle, final String status,
+        final Class<?> expectedExceptionClass) throws Exception {
 
         String createdXml;
         if (status != null) {
-            createdXml =
-                prepareItem(creatorUserHandle, status, null, false, false);
+            createdXml = prepareItem(creatorUserHandle, status, null, false, false);
         }
         else {
-            createdXml =
-                prepareItem(creatorUserHandle, STATUS_RELEASED, null, false,
-                    false);
+            createdXml = prepareItem(creatorUserHandle, STATUS_RELEASED, null, false, false);
         }
-        final Document document =
-            EscidocRestSoapTestBase.getDocument(createdXml);
+        final Document document = EscidocRestSoapTestBase.getDocument(createdXml);
 
         try {
             PWCallback.setHandle(userHandle);
             if (status != null) {
-                withdraw(ITEM_HANDLER_CODE, getObjidValue(document),
-                    getWithdrawTaskParam(
-                        getLastModificationDateValue(document),
-                        "Some withdraw comment"));
+                withdraw(ITEM_HANDLER_CODE, getObjidValue(document), getWithdrawTaskParam(
+                    getLastModificationDateValue(document), "Some withdraw comment"));
             }
             else {
-                withdraw(ITEM_HANDLER_CODE, UNKNOWN_ID, getWithdrawTaskParam(
-                    getLastModificationDateValue(document),
+                withdraw(ITEM_HANDLER_CODE, UNKNOWN_ID, getWithdrawTaskParam(getLastModificationDateValue(document),
                     "Some withdraw comment"));
             }
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase
-                    .failMissingException(expectedExceptionClass);
+                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
@@ -2215,38 +1801,32 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(
-                    expectedExceptionClass, e);
+                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
     }
 
     /**
      * Tests creating a content-relation.
-     * 
-     * @param userHandle
-     *            The escidoc user handle.
-     * @param expectedExceptionClass
-     *            The class of the expected exception or <code>null</code> in
-     *            case of expected success.
+     *
+     * @param userHandle             The escidoc user handle.
+     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
+     *                               success.
      * @return Returns the xml representation of the created content-relation.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    protected String doTestCreateContentRelation(
-        final String userHandle, 
-        final Class< ? > expectedExceptionClass) throws Exception {
+    protected String doTestCreateContentRelation(final String userHandle, final Class<?> expectedExceptionClass)
+        throws Exception {
 
         String createdXml = null;
         try {
             PWCallback.setHandle(userHandle);
-            createdXml = handleResult(contentRelationClient.create(
-                    prepareContentRelationData(null, null)));
+            createdXml = handleResult(contentRelationClient.create(prepareContentRelationData(null, null)));
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase
-                    .failMissingException(expectedExceptionClass);
+                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
@@ -2254,10 +1834,10 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(
-                    expectedExceptionClass, e);
+                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
         return createdXml;
@@ -2265,72 +1845,50 @@ public class AaTestBase extends EscidocRestSoapTestBase {
 
     /**
      * Tests updating a content-relation.
-     * 
-     * @param userHandle
-     *            The escidoc user handle.
-     * @param creatorUserHandle
-     *            The escidoc user handle of the creator.
-     * @param status
-     *            The status of the item. If this is <code>null</code>, it is
-     *            tried to update an unknown content-relation.
-     * @param contentRelationId
-     *            The contentRelationId 
-     *            (if <code>null</code>, contentRelation will be created).
-     * @param versionNumber
-     *            TODO
-     * @param expectedExceptionClass
-     *            The class of the expected exception or <code>null</code> in
-     *            case of expected success.
+     *
+     * @param userHandle             The escidoc user handle.
+     * @param creatorUserHandle      The escidoc user handle of the creator.
+     * @param status                 The status of the item. If this is <code>null</code>, it is tried to update an
+     *                               unknown content-relation.
+     * @param contentRelationId      The contentRelationId (if <code>null</code>, contentRelation will be created).
+     * @param versionNumber          TODO
+     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
+     *                               success.
      * @return updated content-relation xml
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     protected String doTestUpdateContentRelation(
-        final String userHandle, final String creatorUserHandle,
-        final String status, final String contentRelationId, 
-        final String versionNumber,
-        final Class< ? > expectedExceptionClass) throws Exception {
+        final String userHandle, final String creatorUserHandle, final String status, final String contentRelationId,
+        final String versionNumber, final Class<?> expectedExceptionClass) throws Exception {
 
         String createdXml;
         if (contentRelationId == null) {
             if (status != null) {
-                createdXml =
-                    prepareContentRelation(
-                            creatorUserHandle, status, null, null,  false, false);
+                createdXml = prepareContentRelation(creatorUserHandle, status, null, null, false, false);
             }
             else {
-                createdXml =
-                    prepareContentRelation(
-                            creatorUserHandle, STATUS_PENDING, null, null, false,
-                        false);
+                createdXml = prepareContentRelation(creatorUserHandle, STATUS_PENDING, null, null, false, false);
             }
-        } else {
-            createdXml = 
-                handleResult(contentRelationClient.retrieve(contentRelationId));
+        }
+        else {
+            createdXml = handleResult(contentRelationClient.retrieve(contentRelationId));
         }
 
-        String toBeUpdatedXml =
-            createdXml.replaceAll("Demo content relation",
-                "Demo content relation u");
+        String toBeUpdatedXml = createdXml.replaceAll("Demo content relation", "Demo content relation u");
 
         String updatedXml = null;
         try {
             PWCallback.setHandle(userHandle);
             if (status != null) {
-                updatedXml = handleResult(
-                        contentRelationClient.update(createResourceId(
-                        getObjidValue(EscidocRestSoapTestBase
-                                .getDocument(toBeUpdatedXml)), versionNumber), 
-                                toBeUpdatedXml));
+                updatedXml =
+                    handleResult(contentRelationClient.update(createResourceId(getObjidValue(EscidocRestSoapTestBase
+                        .getDocument(toBeUpdatedXml)), versionNumber), toBeUpdatedXml));
             }
             else {
-                updatedXml = handleResult(
-                        contentRelationClient.update(UNKNOWN_ID, 
-                                toBeUpdatedXml));
+                updatedXml = handleResult(contentRelationClient.update(UNKNOWN_ID, toBeUpdatedXml));
             }
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase
-                    .failMissingException(expectedExceptionClass);
+                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
@@ -2338,10 +1896,10 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(
-                    expectedExceptionClass, e);
+                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
 
@@ -2350,52 +1908,38 @@ public class AaTestBase extends EscidocRestSoapTestBase {
 
     /**
      * Tests deleting a content-relation.
-     * 
-     * @param userHandle
-     *            The eSciDoc user handle.
-     * @param creatorUserHandle
-     *            The eSciDoc user handle of the creator.
-     * @param status
-     *            The status of the content-relation. If this is <code>null</code>, no
-     *            content-relation is created and it is tried to delete an unknown content-relation.
-     * @param contentRelationId
-     *            The contentRelationId 
-     *            (if <code>null</code>, contentRelation will be created).
-     * @param expectedExceptionClass
-     *            The class of the expected exception or <code>null</code> in
-     *            case of expected success.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param userHandle             The eSciDoc user handle.
+     * @param creatorUserHandle      The eSciDoc user handle of the creator.
+     * @param status                 The status of the content-relation. If this is <code>null</code>, no
+     *                               content-relation is created and it is tried to delete an unknown content-relation.
+     * @param contentRelationId      The contentRelationId (if <code>null</code>, contentRelation will be created).
+     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
+     *                               success.
+     * @throws Exception If anything fails.
      */
     protected void doTestDeleteContentRelation(
-        final String userHandle, final String creatorUserHandle,
-        final String status, final String contentRelationId, 
-        final Class< ? > expectedExceptionClass)
-        throws Exception {
+        final String userHandle, final String creatorUserHandle, final String status, final String contentRelationId,
+        final Class<?> expectedExceptionClass) throws Exception {
 
         String createdXml;
         if (contentRelationId == null) {
-            createdXml =
-                prepareContentRelation(
-                        creatorUserHandle, status, null, null, false, false);
-        } else {
-            createdXml = 
-                handleResult(contentRelationClient.retrieve(contentRelationId));
+            createdXml = prepareContentRelation(creatorUserHandle, status, null, null, false, false);
+        }
+        else {
+            createdXml = handleResult(contentRelationClient.retrieve(contentRelationId));
         }
 
         try {
             PWCallback.setHandle(userHandle);
             if (createdXml != null) {
-                contentRelationClient.delete(
-                        getObjidValue(EscidocRestSoapTestBase
-                        .getDocument(createdXml)));
+                contentRelationClient.delete(getObjidValue(EscidocRestSoapTestBase.getDocument(createdXml)));
             }
             else {
                 contentRelationClient.delete(UNKNOWN_ID);
             }
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase
-                    .failMissingException(expectedExceptionClass);
+                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
@@ -2403,77 +1947,59 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(
-                    expectedExceptionClass, e);
+                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
     }
 
     /**
      * Tests retrieving a content-relation.
-     * 
-     * @param userHandle
-     *            The escidoc user handle.
-     * @param creatorUserHandle
-     *            The escidoc user handle of the creator.
-     * @param status
-     *            The status of the content-relation. 
-     *            If this is <code>null</code>, no
-     *            content-relation is created 
-     *            and it is tried to retrieve an unknown content-relation.
-     * @param contentRelationId
-     *            The contentRelationId 
-     *            (if <code>null</code>, contentRelation will be created).
-     * @param createVersions
-     *            If this flag is set to <code>true</code>, before each
-     *            status change, the content-relation is updated to create a new version.
-     * @param versionNumber
-     *            The version that shall be retrieved. If this is
-     *            <code>null</code>, only the object id is sent to the
-     *            retrieve service. Otherwise, objectid:versionNumber is sent as
-     *            the identifier of the resource.
-     * @param expectedExceptionClass
-     *            The class of the expected exception or <code>null</code> in
-     *            case of expected success.
+     *
+     * @param userHandle             The escidoc user handle.
+     * @param creatorUserHandle      The escidoc user handle of the creator.
+     * @param status                 The status of the content-relation. If this is <code>null</code>, no
+     *                               content-relation is created and it is tried to retrieve an unknown
+     *                               content-relation.
+     * @param contentRelationId      The contentRelationId (if <code>null</code>, contentRelation will be created).
+     * @param createVersions         If this flag is set to <code>true</code>, before each status change, the
+     *                               content-relation is updated to create a new version.
+     * @param versionNumber          The version that shall be retrieved. If this is <code>null</code>, only the object
+     *                               id is sent to the retrieve service. Otherwise, objectid:versionNumber is sent as
+     *                               the identifier of the resource.
+     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
+     *                               success.
      * @return String content-relation xml
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     protected String doTestRetrieveContentRelation(
-        final String userHandle, final String creatorUserHandle,
-        final String status, final String contentRelationId, 
-        final boolean createVersions,
-        final String versionNumber, final Class< ? > expectedExceptionClass)
+        final String userHandle, final String creatorUserHandle, final String status, final String contentRelationId,
+        final boolean createVersions, final String versionNumber, final Class<?> expectedExceptionClass)
         throws Exception {
 
         String createdXml;
         if (contentRelationId == null) {
-            createdXml =
-                prepareContentRelation(
-                    creatorUserHandle, status, null, null, createVersions, false);
-        } else {
-            createdXml = 
-                handleResult(contentRelationClient.retrieve(contentRelationId));
+            createdXml = prepareContentRelation(creatorUserHandle, status, null, null, createVersions, false);
+        }
+        else {
+            createdXml = handleResult(contentRelationClient.retrieve(contentRelationId));
         }
 
         String retrievedXml = null;
         try {
             PWCallback.setHandle(userHandle);
             if (createdXml != null) {
-                retrievedXml = handleResult(contentRelationClient.retrieve(
-                        createResourceId(
-                        getObjidValue(EscidocRestSoapTestBase
-                                .getDocument(createdXml)), versionNumber)));
+                retrievedXml =
+                    handleResult(contentRelationClient.retrieve(createResourceId(getObjidValue(EscidocRestSoapTestBase
+                        .getDocument(createdXml)), versionNumber)));
             }
             else {
-                retrievedXml = handleResult(contentRelationClient.retrieve(
-                        UNKNOWN_ID));
+                retrievedXml = handleResult(contentRelationClient.retrieve(UNKNOWN_ID));
             }
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase
-                    .failMissingException(expectedExceptionClass);
+                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
@@ -2481,10 +2007,10 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(
-                    expectedExceptionClass, e);
+                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
 
@@ -2493,46 +2019,32 @@ public class AaTestBase extends EscidocRestSoapTestBase {
 
     /**
      * Tests submitting a content-relation.
-     * 
-     * @param userHandle
-     *            The eSciDoc user handle.
-     * @param creatorUserHandle
-     *            The eSciDoc user handle of the creator.
-     * @param contentRelationId
-     *            The contentRelationId 
-     *            (if <code>null</code>, contentRelation will be created).
-     * @param expectedExceptionClass
-     *            The class of the expected exception or <code>null</code> in
-     *            case of expected success.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param userHandle             The eSciDoc user handle.
+     * @param creatorUserHandle      The eSciDoc user handle of the creator.
+     * @param contentRelationId      The contentRelationId (if <code>null</code>, contentRelation will be created).
+     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
+     *                               success.
+     * @throws Exception If anything fails.
      */
     protected void doTestSubmitContentRelation(
-        final String userHandle, final String creatorUserHandle,
-        final String contentRelationId, 
-        final Class< ? > expectedExceptionClass)
-        throws Exception {
+        final String userHandle, final String creatorUserHandle, final String contentRelationId,
+        final Class<?> expectedExceptionClass) throws Exception {
 
         String createdXml;
         if (contentRelationId == null) {
-            createdXml =
-                prepareContentRelation(
-                        creatorUserHandle, STATUS_PENDING, null, null, false,
-                    false);
-        } else {
-            createdXml = 
-                handleResult(contentRelationClient.retrieve(contentRelationId));
+            createdXml = prepareContentRelation(creatorUserHandle, STATUS_PENDING, null, null, false, false);
         }
-        final Document document =
-            EscidocRestSoapTestBase.getDocument(createdXml);
+        else {
+            createdXml = handleResult(contentRelationClient.retrieve(contentRelationId));
+        }
+        final Document document = EscidocRestSoapTestBase.getDocument(createdXml);
 
         try {
             PWCallback.setHandle(userHandle);
-            contentRelationClient.submit(getObjidValue(document), 
-                    getTaskParam(getLastModificationDateValue(document)));
+            contentRelationClient.submit(getObjidValue(document), getTaskParam(getLastModificationDateValue(document)));
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase
-                    .failMissingException(expectedExceptionClass);
+                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
@@ -2540,58 +2052,45 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(
-                    expectedExceptionClass, e);
+                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
     }
 
     /**
      * Tests releasing a content-relation.
-     * 
-     * @param userHandle
-     *            The eSciDoc user handle.
-     * @param creatorUserHandle
-     *            The eSciDoc user handle of the creator.
-     * @param status
-     *            The status of the content-relation. If this is <code>null</code>, it is
-     *            tried to release an unknown content-relation.
-     * @param contentRelationId
-     *            The contentRelationId 
-     *            (if <code>null</code>, contentRelation will be created).
-     * @param expectedExceptionClass
-     *            The class of the expected exception or <code>null</code> in
-     *            case of expected success.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param userHandle             The eSciDoc user handle.
+     * @param creatorUserHandle      The eSciDoc user handle of the creator.
+     * @param status                 The status of the content-relation. If this is <code>null</code>, it is tried to
+     *                               release an unknown content-relation.
+     * @param contentRelationId      The contentRelationId (if <code>null</code>, contentRelation will be created).
+     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
+     *                               success.
+     * @throws Exception If anything fails.
      */
     protected void doTestReleaseContentRelation(
-        final String userHandle, final String creatorUserHandle,
-        final String contentRelationId, 
-        final Class< ? > expectedExceptionClass)
-        throws Exception {
+        final String userHandle, final String creatorUserHandle, final String contentRelationId,
+        final Class<?> expectedExceptionClass) throws Exception {
 
         String createdXml;
         if (contentRelationId == null) {
-            createdXml =
-                prepareContentRelation(
-                        creatorUserHandle, STATUS_SUBMITTED, null, null, false, false);
-        } else {
-            createdXml = 
-                handleResult(contentRelationClient.retrieve(contentRelationId));
+            createdXml = prepareContentRelation(creatorUserHandle, STATUS_SUBMITTED, null, null, false, false);
         }
-        final Document document =
-            EscidocRestSoapTestBase.getDocument(createdXml);
+        else {
+            createdXml = handleResult(contentRelationClient.retrieve(contentRelationId));
+        }
+        final Document document = EscidocRestSoapTestBase.getDocument(createdXml);
 
         try {
             PWCallback.setHandle(userHandle);
-            contentRelationClient.release(getObjidValue(document), 
-                    getTaskParam(getLastModificationDateValue(document)));
+            contentRelationClient
+                .release(getObjidValue(document), getTaskParam(getLastModificationDateValue(document)));
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase
-                    .failMissingException(expectedExceptionClass);
+                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
@@ -2599,61 +2098,45 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(
-                    expectedExceptionClass, e);
+                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
     }
 
     /**
      * Tests withdrawing a content-relation.
-     * 
-     * @param userHandle
-     *            The eSciDoc user handle.
-     * @param creatorUserHandle
-     *            The eSciDoc user handle of the creator.
-     * @param status
-     *            The status of the content-relation. If this is <code>null</code>, it is
-     *            tried to withdraw an unknown content-relation.
-     * @param contentRelationId
-     *            The contentRelationId 
-     *            (if <code>null</code>, contentRelation will be created).
-     * @param expectedExceptionClass
-     *            The class of the expected exception or <code>null</code> in
-     *            case of expected success.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param userHandle             The eSciDoc user handle.
+     * @param creatorUserHandle      The eSciDoc user handle of the creator.
+     * @param status                 The status of the content-relation. If this is <code>null</code>, it is tried to
+     *                               withdraw an unknown content-relation.
+     * @param contentRelationId      The contentRelationId (if <code>null</code>, contentRelation will be created).
+     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
+     *                               success.
+     * @throws Exception If anything fails.
      */
     protected void doTestReviseContentRelation(
-        final String userHandle, final String creatorUserHandle,
-        final String contentRelationId, 
-        final Class< ? > expectedExceptionClass)
-        throws Exception {
+        final String userHandle, final String creatorUserHandle, final String contentRelationId,
+        final Class<?> expectedExceptionClass) throws Exception {
 
         String createdXml;
         if (contentRelationId == null) {
-            createdXml =
-                prepareContentRelation(
-                        creatorUserHandle, STATUS_SUBMITTED, null, null, false,
-                    false);
-        } else {
-            createdXml = 
-                handleResult(contentRelationClient.retrieve(contentRelationId));
+            createdXml = prepareContentRelation(creatorUserHandle, STATUS_SUBMITTED, null, null, false, false);
         }
-        final Document document =
-            EscidocRestSoapTestBase.getDocument(createdXml);
+        else {
+            createdXml = handleResult(contentRelationClient.retrieve(contentRelationId));
+        }
+        final Document document = EscidocRestSoapTestBase.getDocument(createdXml);
 
         try {
             PWCallback.setHandle(userHandle);
-            contentRelationClient.revise(getObjidValue(document),
-                    getWithdrawTaskParam(
-                        getLastModificationDateValue(document),
-                        "Some withdraw comment"));
+            contentRelationClient.revise(getObjidValue(document), getWithdrawTaskParam(
+                getLastModificationDateValue(document), "Some withdraw comment"));
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase
-                    .failMissingException(expectedExceptionClass);
+                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
@@ -2661,72 +2144,55 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(
-                    expectedExceptionClass, e);
+                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
     }
 
     /**
      * Tests locking a content-relation.
-     * 
-     * @param userHandle
-     *            The eSciDoc user handle.
-     * @param creatorUserHandle
-     *            The eSciDoc user handle of the creator.
-     * @param status
-     *            The status of the content-relation. If this is <code>null</code>, it is
-     *            tried to lock an unknown content-relation.
-     * @param contentRelationId
-     *            The contentRelationId 
-     *            (if <code>null</code>, contentRelation will be created).
-     * @param expectedExceptionClass
-     *            The class of the expected exception or <code>null</code> in
-     *            case of expected success.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param userHandle             The eSciDoc user handle.
+     * @param creatorUserHandle      The eSciDoc user handle of the creator.
+     * @param status                 The status of the content-relation. If this is <code>null</code>, it is tried to
+     *                               lock an unknown content-relation.
+     * @param contentRelationId      The contentRelationId (if <code>null</code>, contentRelation will be created).
+     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
+     *                               success.
+     * @throws Exception If anything fails.
      */
     protected void doTestLockContentRelation(
-        final String userHandle, final String creatorUserHandle,
-        final String status, final String contentRelationId, 
-        final Class< ? > expectedExceptionClass)
-        throws Exception {
+        final String userHandle, final String creatorUserHandle, final String status, final String contentRelationId,
+        final Class<?> expectedExceptionClass) throws Exception {
 
         String createdXml;
         if (contentRelationId == null) {
             if (status != null) {
-                createdXml =
-                    prepareContentRelation(
-                            creatorUserHandle, status, null, null, false, false);
+                createdXml = prepareContentRelation(creatorUserHandle, status, null, null, false, false);
             }
             else {
-                createdXml =
-                    prepareContentRelation(
-                            creatorUserHandle, STATUS_SUBMITTED, null, null, false,
-                        false);
+                createdXml = prepareContentRelation(creatorUserHandle, STATUS_SUBMITTED, null, null, false, false);
             }
-        } else {
-            createdXml = 
-                handleResult(contentRelationClient.retrieve(contentRelationId));
         }
-        final Document document =
-            EscidocRestSoapTestBase.getDocument(createdXml);
+        else {
+            createdXml = handleResult(contentRelationClient.retrieve(contentRelationId));
+        }
+        final Document document = EscidocRestSoapTestBase.getDocument(createdXml);
 
         try {
             PWCallback.setHandle(userHandle);
             if (status != null) {
                 contentRelationClient.lock(getObjidValue(document),
-                        getTaskParam(getLastModificationDateValue(document)));
+                    getTaskParam(getLastModificationDateValue(document)));
             }
             else {
-                contentRelationClient.lock(UNKNOWN_ID,
-                        getTaskParam(getLastModificationDateValue(document)));
+                contentRelationClient.lock(UNKNOWN_ID, getTaskParam(getLastModificationDateValue(document)));
             }
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase
-                    .failMissingException(expectedExceptionClass);
+                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
@@ -2734,78 +2200,58 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(
-                    expectedExceptionClass, e);
+                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
     }
 
     /**
      * Tests unlocking a content-relation.
-     * 
-     * @param userHandle
-     *            The eSciDoc user handle.
-     * @param creatorUserHandle
-     *            The eSciDoc user handle of the creator.
-     * @param status
-     *            The status of the content-relation. If this is <code>null</code>, it is
-     *            tried to unlock an unknown content-relation.
-     * @param contentRelationId
-     *            The contentRelationId 
-     *            (if <code>null</code>, contentRelation will be created).
-     * @param expectedExceptionClass
-     *            The class of the expected exception or <code>null</code> in
-     *            case of expected success.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param userHandle             The eSciDoc user handle.
+     * @param creatorUserHandle      The eSciDoc user handle of the creator.
+     * @param status                 The status of the content-relation. If this is <code>null</code>, it is tried to
+     *                               unlock an unknown content-relation.
+     * @param contentRelationId      The contentRelationId (if <code>null</code>, contentRelation will be created).
+     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
+     *                               success.
+     * @throws Exception If anything fails.
      */
     protected void doTestUnlockContentRelation(
-        final String userHandle, final String creatorUserHandle,
-        final String status, final String contentRelationId, 
-        final Class< ? > expectedExceptionClass)
-        throws Exception {
+        final String userHandle, final String creatorUserHandle, final String status, final String contentRelationId,
+        final Class<?> expectedExceptionClass) throws Exception {
 
         String createdXml;
         if (contentRelationId == null) {
             if (status != null) {
-                createdXml =
-                    prepareContentRelation(
-                            creatorUserHandle, status, null, null, false, false);
+                createdXml = prepareContentRelation(creatorUserHandle, status, null, null, false, false);
             }
             else {
-                createdXml =
-                    prepareContentRelation(
-                            creatorUserHandle, STATUS_SUBMITTED, null, null, false,
-                        false);
+                createdXml = prepareContentRelation(creatorUserHandle, STATUS_SUBMITTED, null, null, false, false);
             }
-        } else {
-            createdXml = 
-                handleResult(contentRelationClient.retrieve(contentRelationId));
         }
-        Document document =
-            EscidocRestSoapTestBase.getDocument(createdXml);
+        else {
+            createdXml = handleResult(contentRelationClient.retrieve(contentRelationId));
+        }
+        Document document = EscidocRestSoapTestBase.getDocument(createdXml);
         String objId = getObjidValue(document);
-        createdXml = handleResult(
-                contentRelationClient.lock(objId,
-                        getTaskParam(getLastModificationDateValue(document))));
-        document =
-            EscidocRestSoapTestBase.getDocument(createdXml);
-        
+        createdXml =
+            handleResult(contentRelationClient.lock(objId, getTaskParam(getLastModificationDateValue(document))));
+        document = EscidocRestSoapTestBase.getDocument(createdXml);
+
         try {
             PWCallback.setHandle(userHandle);
             if (status != null) {
-                contentRelationClient.unlock(objId,
-                        getTaskParam(getLastModificationDateValue(document)));
+                contentRelationClient.unlock(objId, getTaskParam(getLastModificationDateValue(document)));
             }
             else {
-                contentRelationClient.unlock(UNKNOWN_ID,
-                        getTaskParam(getLastModificationDateValue(document)));
+                contentRelationClient.unlock(UNKNOWN_ID, getTaskParam(getLastModificationDateValue(document)));
             }
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase
-                    .failMissingException(expectedExceptionClass);
+                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
@@ -2813,72 +2259,55 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(
-                    expectedExceptionClass, e);
+                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
     }
 
     /**
      * Tests unlocking a content-relation.
-     * 
-     * @param userHandle
-     *            The eSciDoc user handle.
-     * @param creatorUserHandle
-     *            The eSciDoc user handle of the creator.
-     * @param status
-     *            The status of the content-relation. If this is <code>null</code>, it is
-     *            tried to assign objectPid to an unknown content-relation.
-     * @param contentRelationId
-     *            The contentRelationId 
-     *            (if <code>null</code>, contentRelation will be created).
-     * @param expectedExceptionClass
-     *            The class of the expected exception or <code>null</code> in
-     *            case of expected success.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param userHandle             The eSciDoc user handle.
+     * @param creatorUserHandle      The eSciDoc user handle of the creator.
+     * @param status                 The status of the content-relation. If this is <code>null</code>, it is tried to
+     *                               assign objectPid to an unknown content-relation.
+     * @param contentRelationId      The contentRelationId (if <code>null</code>, contentRelation will be created).
+     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
+     *                               success.
+     * @throws Exception If anything fails.
      */
     protected void doTestContentRelationAssignObjectPid(
-        final String userHandle, final String creatorUserHandle,
-        final String status, final String contentRelationId, 
-        final Class< ? > expectedExceptionClass)
-        throws Exception {
+        final String userHandle, final String creatorUserHandle, final String status, final String contentRelationId,
+        final Class<?> expectedExceptionClass) throws Exception {
 
         String createdXml;
         if (contentRelationId == null) {
             if (status != null) {
-                createdXml =
-                    prepareContentRelation(
-                            creatorUserHandle, status, null, null, false, false);
+                createdXml = prepareContentRelation(creatorUserHandle, status, null, null, false, false);
             }
             else {
-                createdXml =
-                    prepareContentRelation(
-                            creatorUserHandle, STATUS_SUBMITTED, null, null, false,
-                        false);
+                createdXml = prepareContentRelation(creatorUserHandle, STATUS_SUBMITTED, null, null, false, false);
             }
-        } else {
-            createdXml = 
-                handleResult(contentRelationClient.retrieve(contentRelationId));
         }
-        Document document =
-            EscidocRestSoapTestBase.getDocument(createdXml);
-        
+        else {
+            createdXml = handleResult(contentRelationClient.retrieve(contentRelationId));
+        }
+        Document document = EscidocRestSoapTestBase.getDocument(createdXml);
+
         try {
             PWCallback.setHandle(userHandle);
             if (status != null) {
                 contentRelationClient.assignObjectPid(getObjidValue(document),
-                        getTaskParam(getLastModificationDateValue(document)));
+                    getTaskParam(getLastModificationDateValue(document)));
             }
             else {
-                contentRelationClient.assignObjectPid(UNKNOWN_ID,
-                        getTaskParam(getLastModificationDateValue(document)));
+                contentRelationClient.assignObjectPid(UNKNOWN_ID, getTaskParam(getLastModificationDateValue(document)));
             }
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase
-                    .failMissingException(expectedExceptionClass);
+                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
@@ -2886,45 +2315,37 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(
-                    expectedExceptionClass, e);
+                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
     }
 
     /**
      * Test creating a StagingFile.
-     * 
-     * @param userHandle
-     *            The eSciDoc user handle.
-     * @param expectedExceptionClass
-     *            The class of the expected exception or <code>null</code> in
-     *            case of expected success.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param userHandle             The eSciDoc user handle.
+     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
+     *                               success.
+     * @throws Exception If anything fails.
      */
-    protected void doTestCreateStagingFile(
-        final String userHandle, final Class< ? > expectedExceptionClass)
+    protected void doTestCreateStagingFile(final String userHandle, final Class<?> expectedExceptionClass)
         throws Exception {
 
         PWCallback.setHandle(userHandle);
 
         File f =
-            downloadTempFile(new URL(
-                PropertiesProvider.getInstance()
-                .getProperty(PropertiesProvider.TESTDATA_URL) + "/"
-                    + testUploadFile));
+            downloadTempFile(new URL(PropertiesProvider.getInstance().getProperty(PropertiesProvider.TESTDATA_URL)
+                + "/" + testUploadFile));
 
         InputStream fileInputStream = new FileInputStream(f);
 
         try {
-            createStagingFile(fileInputStream, getUploadFileMimeType(),
-                getUploadFile());
+            createStagingFile(fileInputStream, getUploadFileMimeType(), getUploadFile());
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase
-                    .failMissingException(expectedExceptionClass);
+                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
@@ -2932,76 +2353,53 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(
-                    expectedExceptionClass, e);
+                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
     }
 
     /**
      * Test retrieving an UserAccount using the user id.
-     * 
-     * @param userHandle
-     *            The eSciDoc user handle.
-     * @param identifier
-     *            The identifier addressing the user account to fetch.<br>
-     *            If this parameter is not provided, a new user account will be
-     *            created by the specified creator and set to the specified
-     *            state. This account is the addressed as defined by the
-     *            parameter identifierSelection.
-     * @param identifierSelection
-     *            This parameter specifies with what kind of identifier the
-     *            account shall be addressed.<br>
-     *            It is only used, if no user account identifier has been
-     *            provided. Valid values are
-     *            <ul>
-     *            <li>byId</li>
-     *            <li>byLoginName</li>
-     *            <li>byHandle</li>.
-     *            </ul>
-     *            Note: Addressing by handle is currently not supported by this
-     *            method.
-     * @param creatorUserHandle
-     *            The eSciDoc user handle of the creator.
-     * @param status
-     *            The status of the item.
-     * @param expectedExceptionClass
-     *            The class of the expected exception or <code>null</code> in
-     *            case of expected success.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param userHandle             The eSciDoc user handle.
+     * @param identifier             The identifier addressing the user account to fetch.<br> If this parameter is not
+     *                               provided, a new user account will be created by the specified creator and set to
+     *                               the specified state. This account is the addressed as defined by the parameter
+     *                               identifierSelection.
+     * @param identifierSelection    This parameter specifies with what kind of identifier the account shall be
+     *                               addressed.<br> It is only used, if no user account identifier has been provided.
+     *                               Valid values are <ul> <li>byId</li> <li>byLoginName</li> <li>byHandle</li>. </ul>
+     *                               Note: Addressing by handle is currently not supported by this method.
+     * @param creatorUserHandle      The eSciDoc user handle of the creator.
+     * @param status                 The status of the item.
+     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
+     *                               success.
+     * @throws Exception If anything fails.
      */
     protected void doTestRetrieveUserAccount(
-        final String userHandle, final String identifier,
-        final String identifierSelection, final String creatorUserHandle,
-        final String status, final Class< ? > expectedExceptionClass)
-        throws Exception {
+        final String userHandle, final String identifier, final String identifierSelection,
+        final String creatorUserHandle, final String status, final Class<?> expectedExceptionClass) throws Exception {
 
         String accountIdentifier = identifier;
         if (accountIdentifier == null) {
             String createdXml = prepareUserAccount(creatorUserHandle, status);
             if ("byId".equals(identifierSelection)) {
-                accountIdentifier =
-                    getObjidValue(EscidocRestSoapTestBase
-                        .getDocument(createdXml));
+                accountIdentifier = getObjidValue(EscidocRestSoapTestBase.getDocument(createdXml));
             }
             else if ("byLoginName".equals(identifierSelection)) {
                 accountIdentifier =
-                    selectSingleNodeAsserted(
-                        EscidocRestSoapTestBase.getDocument(createdXml),
+                    selectSingleNodeAsserted(EscidocRestSoapTestBase.getDocument(createdXml),
                         XPATH_USER_ACCOUNT_LOGINNAME).getTextContent();
             }
             else if ("byHandle".equals(identifierSelection)) {
                 // FIXME: implement
-                throw new IllegalArgumentException(
-                    "byHandle currently not supported");
+                throw new IllegalArgumentException("byHandle currently not supported");
             }
             else {
-                throw new IllegalArgumentException(
-                    "Unsupported account identifier [" + identifierSelection
-                        + "]");
+                throw new IllegalArgumentException("Unsupported account identifier [" + identifierSelection + "]");
             }
         }
 
@@ -3009,8 +2407,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
             PWCallback.setHandle(userHandle);
             retrieve(USER_ACCOUNT_HANDLER_CODE, accountIdentifier);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase
-                    .failMissingException(expectedExceptionClass);
+                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
@@ -3018,37 +2415,31 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(
-                    expectedExceptionClass, e);
+                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
     }
 
     /**
      * Tests retrieving a content model.
-     * 
-     * @param userHandle
-     *            The escidoc user handle.
-     * @param contentTypeId
-     *            The id of the content type.
-     * @param expectedExceptionClass
-     *            The class of the expected exception or <code>null</code> in
-     *            case of expected success.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param userHandle             The escidoc user handle.
+     * @param contentTypeId          The id of the content type.
+     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
+     *                               success.
+     * @throws Exception If anything fails.
      */
     protected void doTestRetrieveContentModel(
-        final String userHandle, final String contentTypeId,
-        final Class< ? > expectedExceptionClass) throws Exception {
+        final String userHandle, final String contentTypeId, final Class<?> expectedExceptionClass) throws Exception {
 
         try {
             PWCallback.setHandle(userHandle);
             retrieve(CONTENT_MODEL_HANDLER_CODE, contentTypeId);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase
-                    .failMissingException(expectedExceptionClass);
+                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
@@ -3056,37 +2447,31 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(
-                    expectedExceptionClass, e);
+                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
     }
 
     /**
      * Tests retrieving a scope.
-     * 
-     * @param userHandle
-     *            The escidoc user handle.
-     * @param scopeId
-     *            The id of the scope.
-     * @param expectedExceptionClass
-     *            The class of the expected exception or <code>null</code> in
-     *            case of expected success.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param userHandle             The escidoc user handle.
+     * @param scopeId                The id of the scope.
+     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
+     *                               success.
+     * @throws Exception If anything fails.
      */
     protected void doTestRetrieveScope(
-        final String userHandle, final String scopeId,
-        final Class< ? > expectedExceptionClass) throws Exception {
+        final String userHandle, final String scopeId, final Class<?> expectedExceptionClass) throws Exception {
 
         try {
             PWCallback.setHandle(userHandle);
             retrieve(SCOPE_HANDLER_CODE, scopeId);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase
-                    .failMissingException(expectedExceptionClass);
+                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
@@ -3094,38 +2479,32 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(
-                    expectedExceptionClass, e);
+                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
     }
 
     /**
      * Tests retrieving a aggregation-definition.
-     * 
-     * @param userHandle
-     *            The escidoc user handle.
-     * @param aggregationDefinitionId
-     *            The id of the aggregation-definition.
-     * @param expectedExceptionClass
-     *            The class of the expected exception or <code>null</code> in
-     *            case of expected success.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param userHandle              The escidoc user handle.
+     * @param aggregationDefinitionId The id of the aggregation-definition.
+     * @param expectedExceptionClass  The class of the expected exception or <code>null</code> in case of expected
+     *                                success.
+     * @throws Exception If anything fails.
      */
     protected void doTestRetrieveAggregationDefinition(
-        final String userHandle, final String aggregationDefinitionId,
-        final Class< ? > expectedExceptionClass) throws Exception {
+        final String userHandle, final String aggregationDefinitionId, final Class<?> expectedExceptionClass)
+        throws Exception {
 
         try {
             PWCallback.setHandle(userHandle);
-            retrieve(AGGREGATION_DEFINITION_HANDLER_CODE,
-                aggregationDefinitionId);
+            retrieve(AGGREGATION_DEFINITION_HANDLER_CODE, aggregationDefinitionId);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase
-                    .failMissingException(expectedExceptionClass);
+                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
@@ -3133,37 +2512,32 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(
-                    expectedExceptionClass, e);
+                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
     }
 
     /**
      * Tests retrieving a report-definition.
-     * 
-     * @param userHandle
-     *            The escidoc user handle.
-     * @param reportDefinitionId
-     *            The id of the report-definition.
-     * @param expectedExceptionClass
-     *            The class of the expected exception or <code>null</code> in
-     *            case of expected success.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param userHandle             The escidoc user handle.
+     * @param reportDefinitionId     The id of the report-definition.
+     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
+     *                               success.
+     * @throws Exception If anything fails.
      */
     protected void doTestRetrieveReportDefinition(
-        final String userHandle, final String reportDefinitionId,
-        final Class< ? > expectedExceptionClass) throws Exception {
+        final String userHandle, final String reportDefinitionId, final Class<?> expectedExceptionClass)
+        throws Exception {
 
         try {
             PWCallback.setHandle(userHandle);
             retrieve(REPORT_DEFINITION_HANDLER_CODE, reportDefinitionId);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase
-                    .failMissingException(expectedExceptionClass);
+                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
@@ -3171,51 +2545,41 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(
-                    expectedExceptionClass, e);
+                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
     }
 
     /**
      * Tests retrieving a report.
-     * 
-     * @param userHandle
-     *            The escidoc user handle.
-     * @param templateName
-     *            The name of the template to use.
-     * @param reportDefinitionId
-     *            The id of the report-definition.
-     * @param expectedExceptionClass
-     *            The class of the expected exception or <code>null</code> in
-     *            case of expected success.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param userHandle             The escidoc user handle.
+     * @param templateName           The name of the template to use.
+     * @param reportDefinitionId     The id of the report-definition.
+     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
+     *                               success.
+     * @throws Exception If anything fails.
      */
     protected void doTestRetrieveReport(
-        final String userHandle, final String templateName,
-        final String reportDefinitionId, final Class< ? > expectedExceptionClass)
-        throws Exception {
+        final String userHandle, final String templateName, final String reportDefinitionId,
+        final Class<?> expectedExceptionClass) throws Exception {
 
-        String reportParametersXml = 
-            smTestBase.getTemplateAsFixedReportParametersString(
-            TEMPLATE_REP_PARAMETERS_PATH, templateName);
+        String reportParametersXml =
+            smTestBase.getTemplateAsFixedReportParametersString(TEMPLATE_REP_PARAMETERS_PATH, templateName);
 
         if (reportDefinitionId != null) {
-            Document document =
-                EscidocRestSoapTestBase.getDocument(reportParametersXml);
-            substituteId(document, XPATH_REPORT_PARAMETERS_REPORT_DEFINITION,
-                reportDefinitionId);
+            Document document = EscidocRestSoapTestBase.getDocument(reportParametersXml);
+            substituteId(document, XPATH_REPORT_PARAMETERS_REPORT_DEFINITION, reportDefinitionId);
             reportParametersXml = toString(document, false);
         }
         try {
             PWCallback.setHandle(userHandle);
             reportClient.retrieve(reportParametersXml);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase
-                    .failMissingException(expectedExceptionClass);
+                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
@@ -3223,37 +2587,29 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(
-                    expectedExceptionClass, e);
+                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
     }
 
     /**
-     * Tests creating a scope.<br>
-     * The scope is created using the template escidoc_scope3.xml
-     * 
-     * @param userHandle
-     *            The escidoc user handle.
-     * @param templateName
-     *            The name of the template to use.
-     * @param expectedExceptionClass
-     *            The class of the expected exception or <code>null</code> in
-     *            case of expected success.
+     * Tests creating a scope.<br> The scope is created using the template escidoc_scope3.xml
+     *
+     * @param userHandle             The escidoc user handle.
+     * @param templateName           The name of the template to use.
+     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
+     *                               success.
      * @return String scope-id
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     protected String doTestCreateScope(
-        final String userHandle, final String templateName,
-        final Class< ? > expectedExceptionClass) throws Exception {
+        final String userHandle, final String templateName, final Class<?> expectedExceptionClass) throws Exception {
 
         String objidValue = null;
-        String scopeXml =
-            smTestBase.getTemplateAsFixedScopeString(
-                TEMPLATE_SCOPE_PATH, templateName);
+        String scopeXml = smTestBase.getTemplateAsFixedScopeString(TEMPLATE_SCOPE_PATH, templateName);
 
         try {
             PWCallback.setHandle(userHandle);
@@ -3262,8 +2618,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
             objidValue = getObjidValue(getTransport(), document);
 
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase
-                    .failMissingException(expectedExceptionClass);
+                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
@@ -3271,61 +2626,49 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(
-                    expectedExceptionClass, e);
+                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
         return objidValue;
     }
 
     /**
-     * Tests creating a aggregation definition.<br>
-     * The aggregation definition is created using the template
+     * Tests creating a aggregation definition.<br> The aggregation definition is created using the template
      * escidoc_aggregation_definition1.xml
-     * 
-     * @param userHandle
-     *            The escidoc user handle.
-     * @param templateName
-     *            The name of the template to use.
-     * @param scopeId
-     *            The scope-id the template has to get substituted with.
-     * @param expectedExceptionClass
-     *            The class of the expected exception or <code>null</code> in
-     *            case of expected success.
+     *
+     * @param userHandle             The escidoc user handle.
+     * @param templateName           The name of the template to use.
+     * @param scopeId                The scope-id the template has to get substituted with.
+     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
+     *                               success.
      * @return String aggregation-definition-id
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     protected String doTestCreateAggregationDefinition(
-        final String userHandle, final String templateName,
-        final String scopeId, final Class< ? > expectedExceptionClass)
+        final String userHandle, final String templateName, final String scopeId, final Class<?> expectedExceptionClass)
         throws Exception {
 
         String objidValue = null;
         String aggregationDefinitionXml =
-            smTestBase.getTemplateAsFixedAggregationDefinitionString(
-                TEMPLATE_AGG_DEF_PATH, templateName);
+            smTestBase.getTemplateAsFixedAggregationDefinitionString(TEMPLATE_AGG_DEF_PATH, templateName);
 
         if (scopeId != null) {
-            Document document =
-                EscidocRestSoapTestBase.getDocument(aggregationDefinitionXml);
+            Document document = EscidocRestSoapTestBase.getDocument(aggregationDefinitionXml);
             substituteId(document, XPATH_AGGREGATION_DEFINITION_SCOPE, scopeId);
             aggregationDefinitionXml = toString(document, false);
         }
 
         try {
             PWCallback.setHandle(userHandle);
-            String result =
-                create(AGGREGATION_DEFINITION_HANDLER_CODE,
-                    aggregationDefinitionXml);
+            String result = create(AGGREGATION_DEFINITION_HANDLER_CODE, aggregationDefinitionXml);
             Document document = EscidocRestSoapTestBase.getDocument(result);
             objidValue = getObjidValue(getTransport(), document);
 
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase
-                    .failMissingException(expectedExceptionClass);
+                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
@@ -3333,69 +2676,54 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(
-                    expectedExceptionClass, e);
+                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
         return objidValue;
     }
 
     /**
-     * Tests creating a report definition.<br>
-     * The report definition is created using the template
+     * Tests creating a report definition.<br> The report definition is created using the template
      * escidoc_report_definition1.xml
-     * 
-     * @param userHandle
-     *            The escidoc user handle.
-     * @param templateName
-     *            The name of the template to use.
-     * @param scopeId
-     *            The scope-id the template has to get substituted with.
-     * @param aggregationDefinitionId
-     *            The aggregation-definition-Id the template has to get substituted
-     *            with.
-     * @param expectedExceptionClass
-     *            The class of the expected exception or <code>null</code> in
-     *            case of expected success.
+     *
+     * @param userHandle              The escidoc user handle.
+     * @param templateName            The name of the template to use.
+     * @param scopeId                 The scope-id the template has to get substituted with.
+     * @param aggregationDefinitionId The aggregation-definition-Id the template has to get substituted with.
+     * @param expectedExceptionClass  The class of the expected exception or <code>null</code> in case of expected
+     *                                success.
      * @return String report-definition-id
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     protected String doTestCreateReportDefinition(
-        final String userHandle, final String templateName,
-        final String scopeId, final String aggregationDefinitionId,
-        final Class< ? > expectedExceptionClass) throws Exception {
+        final String userHandle, final String templateName, final String scopeId, final String aggregationDefinitionId,
+        final Class<?> expectedExceptionClass) throws Exception {
 
-        String idWithoutSpecialSigns = 
-            aggregationDefinitionId.replaceAll("\\:", "");
+        String idWithoutSpecialSigns = aggregationDefinitionId.replaceAll("\\:", "");
         String objidValue = null;
         String reportDefinitionXml =
-            smTestBase.getTemplateAsFixedReportDefinitionString(
-                TEMPLATE_REP_DEF_PATH, templateName);
+            smTestBase.getTemplateAsFixedReportDefinitionString(TEMPLATE_REP_DEF_PATH, templateName);
 
         if (scopeId != null) {
-            Document document =
-                EscidocRestSoapTestBase.getDocument(reportDefinitionXml);
+            Document document = EscidocRestSoapTestBase.getDocument(reportDefinitionXml);
             substituteId(document, XPATH_REPORT_DEFINITION_SCOPE, scopeId);
             reportDefinitionXml = toString(document, false);
             reportDefinitionXml =
-                reportDefinitionXml.replaceFirst("(?s)<sql>.*?</sql>",
-                    "<sql>select month from " + idWithoutSpecialSigns
-                        + "_page_statistics;</sql>");
+                reportDefinitionXml.replaceFirst("(?s)<sql>.*?</sql>", "<sql>select month from "
+                    + idWithoutSpecialSigns + "_page_statistics;</sql>");
         }
 
         try {
             PWCallback.setHandle(userHandle);
-            String result =
-                create(REPORT_DEFINITION_HANDLER_CODE, reportDefinitionXml);
+            String result = create(REPORT_DEFINITION_HANDLER_CODE, reportDefinitionXml);
             Document document = EscidocRestSoapTestBase.getDocument(result);
             objidValue = getObjidValue(getTransport(), document);
 
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase
-                    .failMissingException(expectedExceptionClass);
+                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
@@ -3403,44 +2731,35 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(
-                    expectedExceptionClass, e);
+                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
         return objidValue;
     }
 
     /**
-     * Tests creating a statisticdata-record.<br>
-     * The statistic-data is created using the template
+     * Tests creating a statisticdata-record.<br> The statistic-data is created using the template
      * escidoc_statistic_data1.xml
-     * 
-     * @param userHandle
-     *            The escidoc user handle.
-     * @param templateName
-     *            The name of the template to use.
-     * @param scopeId
-     *            The scope-id the template has to get substituted with.
-     * @param expectedExceptionClass
-     *            The class of the expected exception or <code>null</code> in
-     *            case of expected success.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param userHandle             The escidoc user handle.
+     * @param templateName           The name of the template to use.
+     * @param scopeId                The scope-id the template has to get substituted with.
+     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
+     *                               success.
+     * @throws Exception If anything fails.
      */
     protected void doTestCreateStatisticData(
-        final String userHandle, final String templateName,
-        final String scopeId, final Class< ? > expectedExceptionClass)
+        final String userHandle, final String templateName, final String scopeId, final Class<?> expectedExceptionClass)
         throws Exception {
 
         String statisticDataXml =
-            toString(EscidocRestSoapTestBase.getTemplateAsDocument(
-                TEMPLATE_STAT_DATA_PATH, templateName), false);
+            toString(EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_STAT_DATA_PATH, templateName), false);
 
         if (scopeId != null) {
-            Document document =
-                EscidocRestSoapTestBase.getDocument(statisticDataXml);
+            Document document = EscidocRestSoapTestBase.getDocument(statisticDataXml);
             substitute(document, XPATH_STATISTIC_DATA_SCOPE_OBJID, scopeId);
             statisticDataXml = toString(document, false);
         }
@@ -3450,8 +2769,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
             create(STATISTIC_DATA_HANDLER_CODE, statisticDataXml);
 
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase
-                    .failMissingException(expectedExceptionClass);
+                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
@@ -3459,38 +2777,29 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(
-                    expectedExceptionClass, e);
+                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
     }
 
     /**
-     * Tests updating a scope.<br>
-     * The scope is updated using the template escidoc_scope2.xml
-     * 
-     * @param userHandle
-     *            The escidoc user handle.
-     * @param templateName
-     *            The name of the template to use.
-     * @param scopeId
-     *            The scope-id the template has to get substituted with.
-     * @param expectedExceptionClass
-     *            The class of the expected exception or <code>null</code> in
-     *            case of expected success.
-     * @throws Exception
-     *             If anything fails.
+     * Tests updating a scope.<br> The scope is updated using the template escidoc_scope2.xml
+     *
+     * @param userHandle             The escidoc user handle.
+     * @param templateName           The name of the template to use.
+     * @param scopeId                The scope-id the template has to get substituted with.
+     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
+     *                               success.
+     * @throws Exception If anything fails.
      */
     protected void doTestUpdateScope(
-        final String userHandle, final String templateName,
-        final String scopeId, final Class< ? > expectedExceptionClass)
+        final String userHandle, final String templateName, final String scopeId, final Class<?> expectedExceptionClass)
         throws Exception {
 
-        String scopeXml =
-            smTestBase.getTemplateAsFixedScopeString(
-                TEMPLATE_SCOPE_PATH, templateName);
+        String scopeXml = smTestBase.getTemplateAsFixedScopeString(TEMPLATE_SCOPE_PATH, templateName);
 
         if (scopeId != null) {
             Document document = EscidocRestSoapTestBase.getDocument(scopeXml);
@@ -3502,8 +2811,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
             PWCallback.setHandle(userHandle);
             update(SCOPE_HANDLER_CODE, scopeId, scopeXml);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase
-                    .failMissingException(expectedExceptionClass);
+                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
@@ -3511,69 +2819,51 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(
-                    expectedExceptionClass, e);
+                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
     }
 
     /**
-     * Tests updating a report-definition.<br>
-     * The report-definition is updated using the template
+     * Tests updating a report-definition.<br> The report-definition is updated using the template
      * escidoc_report_definition2.xml
-     * 
-     * @param userHandle
-     *            The escidoc user handle.
-     * @param templateName
-     *            The name of the template to use.
-     * @param reportDefinitionId
-     *            The reportDefinitionId the template has to get substituted
-     *            with.
-     * @param aggregationDefinitionId
-     *            The aggregationDefinitionId the template has to get
-     *            substituted with.
-     * @param scopeId
-     *            The scope-id the template has to get substituted with.
-     * @param expectedExceptionClass
-     *            The class of the expected exception or <code>null</code> in
-     *            case of expected success.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param userHandle              The escidoc user handle.
+     * @param templateName            The name of the template to use.
+     * @param reportDefinitionId      The reportDefinitionId the template has to get substituted with.
+     * @param aggregationDefinitionId The aggregationDefinitionId the template has to get substituted with.
+     * @param scopeId                 The scope-id the template has to get substituted with.
+     * @param expectedExceptionClass  The class of the expected exception or <code>null</code> in case of expected
+     *                                success.
+     * @throws Exception If anything fails.
      */
     protected void doTestUpdateReportDefinition(
-        final String userHandle, final String templateName,
-        final String reportDefinitionId, final String aggregationDefinitionId,
-        final String scopeId, final Class< ? > expectedExceptionClass)
+        final String userHandle, final String templateName, final String reportDefinitionId,
+        final String aggregationDefinitionId, final String scopeId, final Class<?> expectedExceptionClass)
         throws Exception {
 
-        String idWithoutSpecialSigns = 
-            aggregationDefinitionId.replaceAll("\\:", "");
+        String idWithoutSpecialSigns = aggregationDefinitionId.replaceAll("\\:", "");
         String reportDefinitionXml =
-            smTestBase.getTemplateAsFixedReportDefinitionString(
-                TEMPLATE_REP_DEF_PATH, templateName);
+            smTestBase.getTemplateAsFixedReportDefinitionString(TEMPLATE_REP_DEF_PATH, templateName);
 
         if (scopeId != null) {
-            Document document =
-                EscidocRestSoapTestBase.getDocument(reportDefinitionXml);
+            Document document = EscidocRestSoapTestBase.getDocument(reportDefinitionXml);
             substituteId(document, XPATH_REPORT_DEFINITION_SCOPE, scopeId);
-            substituteId(document, XPATH_REPORT_DEFINITION,
-                reportDefinitionId);
+            substituteId(document, XPATH_REPORT_DEFINITION, reportDefinitionId);
             reportDefinitionXml = toString(document, false);
             reportDefinitionXml =
-                reportDefinitionXml.replaceFirst("(?s)select.*?;",
-                    "select month from " + idWithoutSpecialSigns
-                        + "_page_statistics;");
+                reportDefinitionXml.replaceFirst("(?s)select.*?;", "select month from " + idWithoutSpecialSigns
+                    + "_page_statistics;");
         }
 
         try {
             PWCallback.setHandle(userHandle);
-            update(REPORT_DEFINITION_HANDLER_CODE, reportDefinitionId,
-                reportDefinitionXml);
+            update(REPORT_DEFINITION_HANDLER_CODE, reportDefinitionId, reportDefinitionXml);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase
-                    .failMissingException(expectedExceptionClass);
+                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
@@ -3581,37 +2871,31 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(
-                    expectedExceptionClass, e);
+                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
     }
 
     /**
      * Tests deleting a scope.<br>
-     * 
-     * @param userHandle
-     *            The escidoc user handle.
-     * @param scopeId
-     *            The scopeId to delete.
-     * @param expectedExceptionClass
-     *            The class of the expected exception or <code>null</code> in
-     *            case of expected success.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param userHandle             The escidoc user handle.
+     * @param scopeId                The scopeId to delete.
+     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
+     *                               success.
+     * @throws Exception If anything fails.
      */
     protected void doTestDeleteScope(
-        final String userHandle, final String scopeId,
-        final Class< ? > expectedExceptionClass) throws Exception {
+        final String userHandle, final String scopeId, final Class<?> expectedExceptionClass) throws Exception {
 
         try {
             PWCallback.setHandle(userHandle);
             delete(SCOPE_HANDLER_CODE, scopeId);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase
-                    .failMissingException(expectedExceptionClass);
+                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
@@ -3619,37 +2903,32 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(
-                    expectedExceptionClass, e);
+                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
     }
 
     /**
      * Tests deleting a aggregation-definition.<br>
-     * 
-     * @param userHandle
-     *            The escidoc user handle.
-     * @param aggregationDefinitionId
-     *            The aggregationDefinitionId to delete.
-     * @param expectedExceptionClass
-     *            The class of the expected exception or <code>null</code> in
-     *            case of expected success.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param userHandle              The escidoc user handle.
+     * @param aggregationDefinitionId The aggregationDefinitionId to delete.
+     * @param expectedExceptionClass  The class of the expected exception or <code>null</code> in case of expected
+     *                                success.
+     * @throws Exception If anything fails.
      */
     protected void doTestDeleteAggregationDefinition(
-        final String userHandle, final String aggregationDefinitionId,
-        final Class< ? > expectedExceptionClass) throws Exception {
+        final String userHandle, final String aggregationDefinitionId, final Class<?> expectedExceptionClass)
+        throws Exception {
 
         try {
             PWCallback.setHandle(userHandle);
             delete(AGGREGATION_DEFINITION_HANDLER_CODE, aggregationDefinitionId);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase
-                    .failMissingException(expectedExceptionClass);
+                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
@@ -3657,37 +2936,32 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(
-                    expectedExceptionClass, e);
+                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
     }
 
     /**
      * Tests deleting a report-definition.<br>
-     * 
-     * @param userHandle
-     *            The escidoc user handle.
-     * @param reportDefinitionId
-     *            The reportDefinitionId to delete.
-     * @param expectedExceptionClass
-     *            The class of the expected exception or <code>null</code> in
-     *            case of expected success.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param userHandle             The escidoc user handle.
+     * @param reportDefinitionId     The reportDefinitionId to delete.
+     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
+     *                               success.
+     * @throws Exception If anything fails.
      */
     protected void doTestDeleteReportDefinition(
-        final String userHandle, final String reportDefinitionId,
-        final Class< ? > expectedExceptionClass) throws Exception {
+        final String userHandle, final String reportDefinitionId, final Class<?> expectedExceptionClass)
+        throws Exception {
 
         try {
             PWCallback.setHandle(userHandle);
             delete(REPORT_DEFINITION_HANDLER_CODE, reportDefinitionId);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase
-                    .failMissingException(expectedExceptionClass);
+                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
@@ -3695,31 +2969,26 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(
-                    expectedExceptionClass, e);
+                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
     }
 
     /**
      * Tests retrieving a list of scopes.
-     * 
-     * @param userHandle
-     *            The escidoc user handle.
-     * @param expectedScope
-     *            only these scopes may be in the list.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param userHandle    The escidoc user handle.
+     * @param expectedScope only these scopes may be in the list.
+     * @throws Exception If anything fails.
      */
-    protected void doTestRetrieveScopeList(
-        final String userHandle, final String expectedScope) throws Exception {
+    protected void doTestRetrieveScopeList(final String userHandle, final String expectedScope) throws Exception {
 
         try {
             PWCallback.setHandle(userHandle);
-            String xml = handleResult(
-                    scopeClient.retrieveScopes(new HashMap<String, String[]>()));
+            String xml = handleResult(scopeClient.retrieveScopes(new HashMap<String, String[]>()));
             xml = xml.replaceAll("(?s).*?(<[^>]*?scope[\\s|>].*)", "$1");
             xml = xml.replaceAll("(?s)(.*)</[^>]*?scope[\\s|>].*", "$1");
             String[] parts = xml.split("<[^>]*?scope[^-]");
@@ -3728,28 +2997,25 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 scopeMatcher.reset("<scope " + parts[i]);
                 if (scopeMatcher.matches()) {
                     if (!scopeMatcher.group(1).equals(expectedScope)) {
-                        throw new Exception("Non expected Scope with id "
-                            + scopeMatcher.group(i) + " found");
+                        throw new Exception("Non expected Scope with id " + scopeMatcher.group(i) + " found");
                     }
                 }
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
     }
 
     /**
      * Tests retrieving a list of aggregation-definitions.
-     * 
-     * @param userHandle
-     *            The escidoc user handle.
-     * @param expectedScope
-     *            only these scopes may be in the list.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param userHandle    The escidoc user handle.
+     * @param expectedScope only these scopes may be in the list.
+     * @throws Exception If anything fails.
      */
-    protected void doTestRetrieveAggregationDefinitionList(
-        final String userHandle, final String expectedScope) throws Exception {
+    protected void doTestRetrieveAggregationDefinitionList(final String userHandle, final String expectedScope)
+        throws Exception {
 
         try {
             PWCallback.setHandle(userHandle);
@@ -3762,93 +3028,77 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 scopeMatcher.reset(parts[i]);
                 if (scopeMatcher.matches()) {
                     if (!scopeMatcher.group(1).equals(expectedScope)) {
-                        throw new Exception("Non expected Scope with id "
-                            + scopeMatcher.group(i) + " found");
+                        throw new Exception("Non expected Scope with id " + scopeMatcher.group(i) + " found");
                     }
                 }
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
     }
 
     /**
      * Tests retrieving a list of report-definitions.
-     * 
-     * @param userHandle
-     *            The escidoc user handle.
-     * @param expectedScope
-     *            only these scopes may be in the list.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param userHandle    The escidoc user handle.
+     * @param expectedScope only these scopes may be in the list.
+     * @throws Exception If anything fails.
      */
-    protected void doTestRetrieveReportDefinitionList(
-        final String userHandle, final String expectedScope) throws Exception {
+    protected void doTestRetrieveReportDefinitionList(final String userHandle, final String expectedScope)
+        throws Exception {
 
         try {
             PWCallback.setHandle(userHandle);
             String xml =
-                handleResult(reportDefinitionClient
-                        .retrieveReportDefinitions(new HashMap<String, String[]>()));
+                handleResult(reportDefinitionClient.retrieveReportDefinitions(new HashMap<String, String[]>()));
             String[] parts = xml.split("<[^>]*?report-definition[\\s|>].*?>");
             Matcher scopeMatcher = SCOPE_PATTERN.matcher("");
             for (int i = 1; i < parts.length; i++) {
                 scopeMatcher.reset(parts[i]);
                 if (scopeMatcher.matches()) {
                     if (!scopeMatcher.group(1).equals(expectedScope)) {
-                        throw new Exception("Non expected Scope with id "
-                            + scopeMatcher.group(i) + " found");
+                        throw new Exception("Non expected Scope with id " + scopeMatcher.group(i) + " found");
                     }
                 }
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
     }
 
     /**
      * Tests retrieving children of an organizational unit.
-     * 
-     * @param userHandle
-     *            The escidoc user handle.
-     * @param parentStatus
-     *            status of the parent org-unit to create.
-     * @param childStati
-     *            stati of the children org-unit to create.
-     * @param expectedExceptionClass
-     *            The class of the expected exception or <code>null</code> in
-     *            case of expected success.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param userHandle             The escidoc user handle.
+     * @param parentStatus           status of the parent org-unit to create.
+     * @param childStati             stati of the children org-unit to create.
+     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
+     *                               success.
+     * @throws Exception If anything fails.
      */
     protected void doTestRetrieveOrganizationalUnitChildren(
-        final String userHandle, final String parentStatus,
-        final String[] childStati, final Class< ? > expectedExceptionClass)
-        throws Exception {
+        final String userHandle, final String parentStatus, final String[] childStati,
+        final Class<?> expectedExceptionClass) throws Exception {
 
-        String createdXmlParent =
-            prepareOrgUnit(PWCallback.DEFAULT_HANDLE, parentStatus, null);
-        Document document =
-            EscidocRestSoapTestBase.getDocument(createdXmlParent);
+        String createdXmlParent = prepareOrgUnit(PWCallback.DEFAULT_HANDLE, parentStatus, null);
+        Document document = EscidocRestSoapTestBase.getDocument(createdXmlParent);
         final String objidValueParent = getObjidValue(document);
 
         if (childStati != null && childStati.length > 0) {
             for (int i = 0; i < childStati.length; i++) {
                 String createdXmlChild =
-                    prepareOrgUnit(PWCallback.DEFAULT_HANDLE, childStati[i],
-                        new String[] { objidValueParent });
-                document =
-                    EscidocRestSoapTestBase.getDocument(createdXmlChild);
+                    prepareOrgUnit(PWCallback.DEFAULT_HANDLE, childStati[i], new String[] { objidValueParent });
+                document = EscidocRestSoapTestBase.getDocument(createdXmlChild);
             }
         }
         try {
             PWCallback.setHandle(userHandle);
 
-            handleXmlResult(organizationalUnitClient
-                .retrieveChildObjects(objidValueParent));
+            handleXmlResult(organizationalUnitClient.retrieveChildObjects(objidValueParent));
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase
-                    .failMissingException(expectedExceptionClass);
+                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
@@ -3856,42 +3106,32 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(
-                    expectedExceptionClass, e);
+                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
     }
 
     /**
      * Tests creating an organizational unit.
-     * 
-     * @param userHandle
-     *            The escidoc user handle.
-     * @param templateName
-     *            templateName.
-     * @param expectedExceptionClass
-     *            expectedExceptionClass.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param userHandle             The escidoc user handle.
+     * @param templateName           templateName.
+     * @param expectedExceptionClass expectedExceptionClass.
+     * @throws Exception If anything fails.
      */
     protected void doTestCreateOu(
-        final String userHandle, 
-        final String templateName, final Class< ? > expectedExceptionClass)
-        throws Exception {
+        final String userHandle, final String templateName, final Class<?> expectedExceptionClass) throws Exception {
 
-        String ouXml =
-            EscidocRestSoapTestBase.getTemplateAsString(
-                TEMPLATE_ORGANIZATIONAL_UNIT_PATH,
-                templateName);
+        String ouXml = EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, templateName);
         try {
             PWCallback.setHandle(userHandle);
 
             organizationalUnitClient.create(ouXml);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase
-                    .failMissingException(expectedExceptionClass);
+                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
@@ -3899,48 +3139,37 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(
-                    expectedExceptionClass, e);
+                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
     }
 
     /**
      * Tests deleting an organizational-unit.
-     * 
-     * @param creatorHandle
-     *            The escidoc user handle that creates the org-unit.
-     * @param userHandle
-     *            The escidoc user handle.
-     * @param templateName
-     *            templateName.
-     * @param expectedExceptionClass
-     *            expectedExceptionClass.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param creatorHandle          The escidoc user handle that creates the org-unit.
+     * @param userHandle             The escidoc user handle.
+     * @param templateName           templateName.
+     * @param expectedExceptionClass expectedExceptionClass.
+     * @throws Exception If anything fails.
      */
-    protected void doTestDeleteOu(final String creatorHandle,
-        final String userHandle,
-        final String templateName, final Class< ? > expectedExceptionClass)
-        throws Exception {
+    protected void doTestDeleteOu(
+        final String creatorHandle, final String userHandle, final String templateName,
+        final Class<?> expectedExceptionClass) throws Exception {
 
-        String ouXml =
-            EscidocRestSoapTestBase.getTemplateAsString(
-                TEMPLATE_ORGANIZATIONAL_UNIT_PATH,
-                templateName);
+        String ouXml = EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, templateName);
         PWCallback.setHandle(creatorHandle);
-        String createdOuXml = 
-            handleResult(organizationalUnitClient.create(ouXml));
+        String createdOuXml = handleResult(organizationalUnitClient.create(ouXml));
         String ouId = getObjidValue(createdOuXml);
-        
+
         try {
             PWCallback.setHandle(userHandle);
             organizationalUnitClient.delete(ouId);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase
-                    .failMissingException(expectedExceptionClass);
+                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
@@ -3948,48 +3177,37 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(
-                    expectedExceptionClass, e);
+                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
     }
 
     /**
      * Tests retrieving an organizational-unit.
-     * 
-     * @param creatorHandle
-     *            The escidoc user handle that creates the org-unit.
-     * @param userHandle
-     *            The escidoc user handle.
-     * @param templateName
-     *            templateName.
-     * @param expectedExceptionClass
-     *            expectedExceptionClass.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param creatorHandle          The escidoc user handle that creates the org-unit.
+     * @param userHandle             The escidoc user handle.
+     * @param templateName           templateName.
+     * @param expectedExceptionClass expectedExceptionClass.
+     * @throws Exception If anything fails.
      */
-    protected void doTestRetrieveOu(final String creatorHandle,
-        final String userHandle,
-        final String templateName, final Class< ? > expectedExceptionClass)
-        throws Exception {
+    protected void doTestRetrieveOu(
+        final String creatorHandle, final String userHandle, final String templateName,
+        final Class<?> expectedExceptionClass) throws Exception {
 
-        String ouXml =
-            EscidocRestSoapTestBase.getTemplateAsString(
-                TEMPLATE_ORGANIZATIONAL_UNIT_PATH,
-                templateName);
+        String ouXml = EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, templateName);
         PWCallback.setHandle(creatorHandle);
-        String createdOuXml = 
-            handleResult(organizationalUnitClient.create(ouXml));
+        String createdOuXml = handleResult(organizationalUnitClient.create(ouXml));
         String ouId = getObjidValue(createdOuXml);
-        
+
         try {
             PWCallback.setHandle(userHandle);
             organizationalUnitClient.retrieve(ouId);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase
-                    .failMissingException(expectedExceptionClass);
+                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
@@ -3997,48 +3215,37 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(
-                    expectedExceptionClass, e);
+                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
     }
 
     /**
      * Tests retrieving children of an organizational-unit.
-     * 
-     * @param creatorHandle
-     *            The escidoc user handle that creates the org-unit.
-     * @param userHandle
-     *            The escidoc user handle.
-     * @param templateName
-     *            templateName.
-     * @param expectedExceptionClass
-     *            expectedExceptionClass.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param creatorHandle          The escidoc user handle that creates the org-unit.
+     * @param userHandle             The escidoc user handle.
+     * @param templateName           templateName.
+     * @param expectedExceptionClass expectedExceptionClass.
+     * @throws Exception If anything fails.
      */
-    protected void doTestRetrieveChildOus(final String creatorHandle,
-        final String userHandle,
-        final String templateName, final Class< ? > expectedExceptionClass)
-        throws Exception {
+    protected void doTestRetrieveChildOus(
+        final String creatorHandle, final String userHandle, final String templateName,
+        final Class<?> expectedExceptionClass) throws Exception {
 
-        String ouXml =
-            EscidocRestSoapTestBase.getTemplateAsString(
-                TEMPLATE_ORGANIZATIONAL_UNIT_PATH,
-                templateName);
+        String ouXml = EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, templateName);
         PWCallback.setHandle(creatorHandle);
-        String createdOuXml = 
-            handleResult(organizationalUnitClient.create(ouXml));
+        String createdOuXml = handleResult(organizationalUnitClient.create(ouXml));
         String ouId = getObjidValue(createdOuXml);
-        
+
         try {
             PWCallback.setHandle(userHandle);
             organizationalUnitClient.retrieveChildObjects(ouId);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase
-                    .failMissingException(expectedExceptionClass);
+                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
@@ -4046,48 +3253,37 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(
-                    expectedExceptionClass, e);
+                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
     }
 
     /**
      * Tests retrieving parents of an organizational-unit.
-     * 
-     * @param creatorHandle
-     *            The escidoc user handle that creates the org-unit.
-     * @param userHandle
-     *            The escidoc user handle.
-     * @param templateName
-     *            templateName.
-     * @param expectedExceptionClass
-     *            expectedExceptionClass.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param creatorHandle          The escidoc user handle that creates the org-unit.
+     * @param userHandle             The escidoc user handle.
+     * @param templateName           templateName.
+     * @param expectedExceptionClass expectedExceptionClass.
+     * @throws Exception If anything fails.
      */
-    protected void doTestRetrieveParentOus(final String creatorHandle,
-        final String userHandle,
-        final String templateName, final Class< ? > expectedExceptionClass)
-        throws Exception {
+    protected void doTestRetrieveParentOus(
+        final String creatorHandle, final String userHandle, final String templateName,
+        final Class<?> expectedExceptionClass) throws Exception {
 
-        String ouXml =
-            EscidocRestSoapTestBase.getTemplateAsString(
-                TEMPLATE_ORGANIZATIONAL_UNIT_PATH,
-                templateName);
+        String ouXml = EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, templateName);
         PWCallback.setHandle(creatorHandle);
-        String createdOuXml = 
-            handleResult(organizationalUnitClient.create(ouXml));
+        String createdOuXml = handleResult(organizationalUnitClient.create(ouXml));
         String ouId = getObjidValue(createdOuXml);
-        
+
         try {
             PWCallback.setHandle(userHandle);
             organizationalUnitClient.retrieveParentObjects(ouId);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase
-                    .failMissingException(expectedExceptionClass);
+                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
@@ -4095,50 +3291,38 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(
-                    expectedExceptionClass, e);
+                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
     }
 
     /**
      * Tests updating an organizational-unit.
-     * 
-     * @param creatorHandle
-     *            The escidoc user handle that creates the org-unit.
-     * @param userHandle
-     *            The escidoc user handle.
-     * @param templateName
-     *            templateName.
-     * @param expectedExceptionClass
-     *            expectedExceptionClass.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param creatorHandle          The escidoc user handle that creates the org-unit.
+     * @param userHandle             The escidoc user handle.
+     * @param templateName           templateName.
+     * @param expectedExceptionClass expectedExceptionClass.
+     * @throws Exception If anything fails.
      */
-    protected void doTestUpdateOu(final String creatorHandle,
-        final String userHandle,
-        final String templateName, final Class< ? > expectedExceptionClass)
-        throws Exception {
+    protected void doTestUpdateOu(
+        final String creatorHandle, final String userHandle, final String templateName,
+        final Class<?> expectedExceptionClass) throws Exception {
 
-        String ouXml =
-            EscidocRestSoapTestBase.getTemplateAsString(
-                TEMPLATE_ORGANIZATIONAL_UNIT_PATH,
-                templateName);
+        String ouXml = EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, templateName);
         PWCallback.setHandle(creatorHandle);
-        String createdOuXml = 
-            handleResult(organizationalUnitClient.create(ouXml));
+        String createdOuXml = handleResult(organizationalUnitClient.create(ouXml));
         String ouId = getObjidValue(createdOuXml);
-        createdOuXml = createdOuXml.replaceAll(
-                "(<[^\\/>]*?)title>", "$1title>replaced");
-        
+        createdOuXml = createdOuXml.replaceAll("(<[^\\/>]*?)title>", "$1title>replaced");
+
         try {
             PWCallback.setHandle(userHandle);
             organizationalUnitClient.update(ouId, createdOuXml);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase
-                    .failMissingException(expectedExceptionClass);
+                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
@@ -4146,52 +3330,39 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(
-                    expectedExceptionClass, e);
+                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
     }
 
     /**
      * Tests opening an organizational-unit.
-     * 
-     * @param creatorHandle
-     *            The escidoc user handle that creates the org-unit.
-     * @param userHandle
-     *            The escidoc user handle.
-     * @param templateName
-     *            templateName.
-     * @param expectedExceptionClass
-     *            expectedExceptionClass.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param creatorHandle          The escidoc user handle that creates the org-unit.
+     * @param userHandle             The escidoc user handle.
+     * @param templateName           templateName.
+     * @param expectedExceptionClass expectedExceptionClass.
+     * @throws Exception If anything fails.
      */
-    protected void doTestOpenOu(final String creatorHandle,
-        final String userHandle,
-        final String templateName, final Class< ? > expectedExceptionClass)
-        throws Exception {
+    protected void doTestOpenOu(
+        final String creatorHandle, final String userHandle, final String templateName,
+        final Class<?> expectedExceptionClass) throws Exception {
 
-        String ouXml =
-            EscidocRestSoapTestBase.getTemplateAsString(
-                TEMPLATE_ORGANIZATIONAL_UNIT_PATH,
-                templateName);
+        String ouXml = EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, templateName);
         PWCallback.setHandle(creatorHandle);
-        String createdOuXml = 
-            handleResult(organizationalUnitClient.create(ouXml));
+        String createdOuXml = handleResult(organizationalUnitClient.create(ouXml));
         String ouId = getObjidValue(createdOuXml);
-        String lastModificationDate =
-            getLastModificationDateValue(
-                EscidocRestSoapTestBase.getDocument(createdOuXml));
-        
+        String lastModificationDate = getLastModificationDateValue(EscidocRestSoapTestBase.getDocument(createdOuXml));
+
         try {
             PWCallback.setHandle(userHandle);
-            organizationalUnitClient.open(ouId, getTheLastModificationParam(
-                                true, ouId, "comment", lastModificationDate));
+            organizationalUnitClient.open(ouId,
+                getTheLastModificationParam(true, ouId, "comment", lastModificationDate));
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase
-                    .failMissingException(expectedExceptionClass);
+                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
@@ -4199,55 +3370,40 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(
-                    expectedExceptionClass, e);
+                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
     }
 
     /**
      * Tests closing an organizational-unit.
-     * 
-     * @param creatorHandle
-     *            The escidoc user handle that creates the org-unit.
-     * @param userHandle
-     *            The escidoc user handle.
-     * @param templateName
-     *            templateName.
-     * @param expectedExceptionClass
-     *            expectedExceptionClass.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param creatorHandle          The escidoc user handle that creates the org-unit.
+     * @param userHandle             The escidoc user handle.
+     * @param templateName           templateName.
+     * @param expectedExceptionClass expectedExceptionClass.
+     * @throws Exception If anything fails.
      */
-    protected void doTestCloseOu(final String creatorHandle,
-        final String userHandle,
-        final String templateName, final Class< ? > expectedExceptionClass)
-        throws Exception {
+    protected void doTestCloseOu(
+        final String creatorHandle, final String userHandle, final String templateName,
+        final Class<?> expectedExceptionClass) throws Exception {
 
-        String ouXml =
-            EscidocRestSoapTestBase.getTemplateAsString(
-                TEMPLATE_ORGANIZATIONAL_UNIT_PATH,
-                templateName);
+        String ouXml = EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, templateName);
         PWCallback.setHandle(creatorHandle);
-        String createdOuXml = 
-            handleResult(organizationalUnitClient.create(ouXml));
+        String createdOuXml = handleResult(organizationalUnitClient.create(ouXml));
         String ouId = getObjidValue(createdOuXml);
-        String lastModificationDate =
-            getLastModificationDateValue(
-                EscidocRestSoapTestBase.getDocument(createdOuXml));
-        organizationalUnitClient.open(ouId, getTheLastModificationParam(
-            true, ouId, "comment", lastModificationDate));
-        
+        String lastModificationDate = getLastModificationDateValue(EscidocRestSoapTestBase.getDocument(createdOuXml));
+        organizationalUnitClient.open(ouId, getTheLastModificationParam(true, ouId, "comment", lastModificationDate));
+
         try {
             PWCallback.setHandle(userHandle);
-            organizationalUnitClient.close(
-                ouId, getTheLastModificationParam(true, ouId,
-                "Closed organizational unit '" + ouId + "'."));
+            organizationalUnitClient.close(ouId, getTheLastModificationParam(true, ouId, "Closed organizational unit '"
+                + ouId + "'."));
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase
-                    .failMissingException(expectedExceptionClass);
+                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
@@ -4255,47 +3411,36 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(
-                    expectedExceptionClass, e);
+                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
     }
 
     /**
      * Tests creating an context.
-     * 
-     * @param userHandle
-     *            The escidoc user handle.
-     * @param templateName
-     *            templateName.
-     * @param expectedExceptionClass
-     *            expectedExceptionClass.
+     *
+     * @param userHandle             The escidoc user handle.
+     * @param templateName           templateName.
+     * @param expectedExceptionClass expectedExceptionClass.
      * @return String contextXml
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     protected String doTestCreateContext(
-        final String userHandle, 
-        final String templateName, final Class< ? > expectedExceptionClass)
-        throws Exception {
+        final String userHandle, final String templateName, final Class<?> expectedExceptionClass) throws Exception {
 
         Document context =
-            EscidocRestSoapTestBase.getTemplateAsDocument(
-                TEMPLATE_CONTEXT_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTEXT_PATH + "/" + getTransport(false),
                 templateName);
-        substitute(context, "/context/properties/name",
-                getUniqueName("PubMan Context "));
+        substitute(context, "/context/properties/name", getUniqueName("PubMan Context "));
         try {
             PWCallback.setHandle(userHandle);
 
-            String contextXml = 
-                handleResult(
-                        contextClient.create(toString(context, false)));
+            String contextXml = handleResult(contextClient.create(toString(context, false)));
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase
-                    .failMissingException(expectedExceptionClass);
+                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
             }
             return contextXml;
         }
@@ -4304,10 +3449,10 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(
-                    expectedExceptionClass, e);
+                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
         return null;
@@ -4315,36 +3460,27 @@ public class AaTestBase extends EscidocRestSoapTestBase {
 
     /**
      * Tests updating an context.
-     * 
-     * @param creatorHandle
-     *            The escidoc user handle that creates the context.
-     * @param userHandle
-     *            The escidoc user handle.
-     * @param templateName
-     *            templateName.
-     * @param expectedExceptionClass
-     *            expectedExceptionClass.
+     *
+     * @param creatorHandle          The escidoc user handle that creates the context.
+     * @param userHandle             The escidoc user handle.
+     * @param templateName           templateName.
+     * @param expectedExceptionClass expectedExceptionClass.
      * @return String contextXml
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    protected String doTestUpdateContext(final String creatorHandle,
-        final String userHandle,
-        final String templateName, final Class< ? > expectedExceptionClass)
-        throws Exception {
+    protected String doTestUpdateContext(
+        final String creatorHandle, final String userHandle, final String templateName,
+        final Class<?> expectedExceptionClass) throws Exception {
 
         String contextXml = doTestCreateContext(creatorHandle, templateName, null);
         String contextId = getObjidValue(contextXml);
-        contextXml = 
-            contextXml.replaceAll(
-                    "(<[^\\/>]*?)name>", "$1name>replaced");
-        
+        contextXml = contextXml.replaceAll("(<[^\\/>]*?)name>", "$1name>replaced");
+
         try {
             PWCallback.setHandle(userHandle);
             contextXml = handleResult(contextClient.update(contextId, contextXml));
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase
-                    .failMissingException(expectedExceptionClass);
+                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
             }
             return contextXml;
         }
@@ -4353,10 +3489,10 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(
-                    expectedExceptionClass, e);
+                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
         return null;
@@ -4364,33 +3500,26 @@ public class AaTestBase extends EscidocRestSoapTestBase {
 
     /**
      * Tests retrieving an context.
-     * 
-     * @param creatorHandle
-     *            The escidoc user handle that creates the context.
-     * @param userHandle
-     *            The escidoc user handle.
-     * @param templateName
-     *            templateName.
-     * @param expectedExceptionClass
-     *            expectedExceptionClass.
+     *
+     * @param creatorHandle          The escidoc user handle that creates the context.
+     * @param userHandle             The escidoc user handle.
+     * @param templateName           templateName.
+     * @param expectedExceptionClass expectedExceptionClass.
      * @return String contextXml
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    protected String doTestRetrieveContext(final String creatorHandle,
-        final String userHandle,
-        final String templateName, final Class< ? > expectedExceptionClass)
-        throws Exception {
+    protected String doTestRetrieveContext(
+        final String creatorHandle, final String userHandle, final String templateName,
+        final Class<?> expectedExceptionClass) throws Exception {
 
         String contextXml = doTestCreateContext(creatorHandle, templateName, null);
         String contextId = getObjidValue(contextXml);
-        
+
         try {
             PWCallback.setHandle(userHandle);
             contextXml = handleResult(contextClient.retrieve(contextId));
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase
-                    .failMissingException(expectedExceptionClass);
+                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
             }
             return contextXml;
         }
@@ -4399,10 +3528,10 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(
-                    expectedExceptionClass, e);
+                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
         return null;
@@ -4410,32 +3539,25 @@ public class AaTestBase extends EscidocRestSoapTestBase {
 
     /**
      * Tests deleting an context.
-     * 
-     * @param creatorHandle
-     *            The escidoc user handle that creates the context.
-     * @param userHandle
-     *            The escidoc user handle.
-     * @param templateName
-     *            templateName.
-     * @param expectedExceptionClass
-     *            expectedExceptionClass.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param creatorHandle          The escidoc user handle that creates the context.
+     * @param userHandle             The escidoc user handle.
+     * @param templateName           templateName.
+     * @param expectedExceptionClass expectedExceptionClass.
+     * @throws Exception If anything fails.
      */
-    protected void doTestDeleteContext(final String creatorHandle,
-        final String userHandle,
-        final String templateName, final Class< ? > expectedExceptionClass)
-        throws Exception {
+    protected void doTestDeleteContext(
+        final String creatorHandle, final String userHandle, final String templateName,
+        final Class<?> expectedExceptionClass) throws Exception {
 
         String contextXml = doTestCreateContext(creatorHandle, templateName, null);
         String contextId = getObjidValue(contextXml);
-        
+
         try {
             PWCallback.setHandle(userHandle);
             contextClient.delete(contextId);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase
-                    .failMissingException(expectedExceptionClass);
+                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
@@ -4443,49 +3565,39 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(
-                    expectedExceptionClass, e);
+                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
     }
 
     /**
      * Tests opening an context.
-     * 
-     * @param creatorHandle
-     *            The escidoc user handle that creates the org-unit.
-     * @param userHandle
-     *            The escidoc user handle.
-     * @param templateName
-     *            templateName.
-     * @param expectedExceptionClass
-     *            expectedExceptionClass.
+     *
+     * @param creatorHandle          The escidoc user handle that creates the org-unit.
+     * @param userHandle             The escidoc user handle.
+     * @param templateName           templateName.
+     * @param expectedExceptionClass expectedExceptionClass.
      * @return String contextXml
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    protected String doTestOpenContext(final String creatorHandle,
-        final String userHandle,
-        final String templateName, final Class< ? > expectedExceptionClass)
-        throws Exception {
+    protected String doTestOpenContext(
+        final String creatorHandle, final String userHandle, final String templateName,
+        final Class<?> expectedExceptionClass) throws Exception {
 
         String contextXml = doTestCreateContext(creatorHandle, templateName, null);
         String contextId = getObjidValue(contextXml);
-        String lastModificationDate =
-            getLastModificationDateValue(
-                EscidocRestSoapTestBase.getDocument(contextXml));
-        
+        String lastModificationDate = getLastModificationDateValue(EscidocRestSoapTestBase.getDocument(contextXml));
+
         try {
             PWCallback.setHandle(userHandle);
-            contextXml = handleResult(
-                    contextClient.open(contextId, getTheLastModificationParam(
-                                true, contextId, 
-                                "comment", lastModificationDate)));
+            contextXml =
+                handleResult(contextClient.open(contextId, getTheLastModificationParam(true, contextId, "comment",
+                    lastModificationDate)));
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase
-                    .failMissingException(expectedExceptionClass);
+                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
             }
             return contextXml;
         }
@@ -4494,10 +3606,10 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(
-                    expectedExceptionClass, e);
+                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
         return null;
@@ -4505,46 +3617,33 @@ public class AaTestBase extends EscidocRestSoapTestBase {
 
     /**
      * Tests closing an context.
-     * 
-     * @param creatorHandle
-     *            The escidoc user handle that creates the org-unit.
-     * @param userHandle
-     *            The escidoc user handle.
-     * @param templateName
-     *            templateName.
-     * @param expectedExceptionClass
-     *            expectedExceptionClass.
+     *
+     * @param creatorHandle          The escidoc user handle that creates the org-unit.
+     * @param userHandle             The escidoc user handle.
+     * @param templateName           templateName.
+     * @param expectedExceptionClass expectedExceptionClass.
      * @return String contextXml
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    protected String doTestCloseContext(final String creatorHandle,
-        final String userHandle,
-        final String templateName, final Class< ? > expectedExceptionClass)
-        throws Exception {
+    protected String doTestCloseContext(
+        final String creatorHandle, final String userHandle, final String templateName,
+        final Class<?> expectedExceptionClass) throws Exception {
 
-        String contextXml = doTestCreateContext(
-                creatorHandle, templateName, null);
+        String contextXml = doTestCreateContext(creatorHandle, templateName, null);
         String contextId = getObjidValue(contextXml);
-        String lastModificationDate =
-            getLastModificationDateValue(
-                EscidocRestSoapTestBase.getDocument(contextXml));
-        contextXml = handleResult(
-                contextClient.open(contextId, getTheLastModificationParam(
-                            true, contextId, 
-                            "comment", lastModificationDate)));
-        lastModificationDate =
-            getLastModificationDateValue(
-                EscidocRestSoapTestBase.getDocument(contextXml));
-        
+        String lastModificationDate = getLastModificationDateValue(EscidocRestSoapTestBase.getDocument(contextXml));
+        contextXml =
+            handleResult(contextClient.open(contextId, getTheLastModificationParam(true, contextId, "comment",
+                lastModificationDate)));
+        lastModificationDate = getLastModificationDateValue(EscidocRestSoapTestBase.getDocument(contextXml));
+
         try {
             PWCallback.setHandle(userHandle);
-            contextXml = handleResult(contextClient.close(
-                contextId, getTheLastModificationParam(true, contextId,
-                "Closed context '" + contextId + "'.", lastModificationDate)));
+            contextXml =
+                handleResult(contextClient.close(contextId, getTheLastModificationParam(true, contextId,
+                    "Closed context '" + contextId + "'.", lastModificationDate)));
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase
-                    .failMissingException(expectedExceptionClass);
+                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
             }
             return contextXml;
         }
@@ -4553,10 +3652,10 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(
-                    expectedExceptionClass, e);
+                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
         return null;
@@ -4564,36 +3663,24 @@ public class AaTestBase extends EscidocRestSoapTestBase {
 
     /**
      * Tests preprocessing statistic-data.
-     * 
-     * @param userHandle
-     *            The escidoc user handle.
-     * @param aggregationDefinitionId
-     *            aggregationDefinitionId to preprocess.
-     * @param templateName
-     *            templateName.
-     * @param expectedExceptionClass
-     *            expectedExceptionClass.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param userHandle              The escidoc user handle.
+     * @param aggregationDefinitionId aggregationDefinitionId to preprocess.
+     * @param templateName            templateName.
+     * @param expectedExceptionClass  expectedExceptionClass.
+     * @throws Exception If anything fails.
      */
     protected void doTestPreprocessStatisticData(
-        final String userHandle, final String templateName, 
-        final List<String> aggregationDefinitionIds, final String startDate, 
-        final String endDate, final Class< ? > expectedExceptionClass)
-        throws Exception {
+        final String userHandle, final String templateName, final List<String> aggregationDefinitionIds,
+        final String startDate, final String endDate, final Class<?> expectedExceptionClass) throws Exception {
 
         List<String> usedAggregationDefinitionIds = aggregationDefinitionIds;
-        String preprocessingInformationXml = 
-            EscidocRestSoapTestBase.getTemplateAsString(
-                    TEMPLATE_PREPROCESSING_INFO_PATH,
-                templateName);
-        Document doc = 
-            EscidocRestSoapTestBase.
-                getDocument(preprocessingInformationXml);
+        String preprocessingInformationXml =
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_PREPROCESSING_INFO_PATH, templateName);
+        Document doc = EscidocRestSoapTestBase.getDocument(preprocessingInformationXml);
         substitute(doc, "/preprocessing-information/start-date", startDate);
         substitute(doc, "/preprocessing-information/end-date", endDate);
-        if (usedAggregationDefinitionIds == null 
-            || usedAggregationDefinitionIds.isEmpty()) {
+        if (usedAggregationDefinitionIds == null || usedAggregationDefinitionIds.isEmpty()) {
             usedAggregationDefinitionIds = new ArrayList<String>();
             String xml =
                 handleResult(aggregationDefinitionClient
@@ -4607,8 +3694,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
             }
 
             NodeList aggregationDefinitions =
-                selectNodeList(EscidocRestSoapTestBase.getDocument(xml),
-                    XPATH_SRW_RESPONSE_OBJECT + objidPath);
+                selectNodeList(EscidocRestSoapTestBase.getDocument(xml), XPATH_SRW_RESPONSE_OBJECT + objidPath);
             for (int i = 0; i < aggregationDefinitions.getLength(); i++) {
                 Node aggregationDefinitionId = aggregationDefinitions.item(i);
                 String nodeValue = aggregationDefinitionId.getNodeValue();
@@ -4623,13 +3709,10 @@ public class AaTestBase extends EscidocRestSoapTestBase {
             PWCallback.setHandle(userHandle);
 
             for (String aggregationDefinitionId : usedAggregationDefinitionIds) {
-                preprocessingClient.preprocess(
-                    aggregationDefinitionId, 
-                    toString(doc, false));
-            if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase
-                    .failMissingException(expectedExceptionClass);
-            }
+                preprocessingClient.preprocess(aggregationDefinitionId, toString(doc, false));
+                if (expectedExceptionClass != null) {
+                    EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
+                }
             }
         }
         catch (final Exception e) {
@@ -4637,34 +3720,29 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(
-                    expectedExceptionClass, e);
+                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
     }
 
     /**
      * Tests logging out an user. Before logging out, the user is logged in.
-     * 
-     * @param loginname
-     *            The login name of the user to log in and log out.
-     * @param password
-     *            The password of the user.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param loginname The login name of the user to log in and log out.
+     * @param password  The password of the user.
+     * @throws Exception If anything fails.
      */
-    protected void doTestLogout(final String loginname, final String password)
-        throws Exception {
+    protected void doTestLogout(final String loginname, final String password) throws Exception {
 
         String userHandle = null;
         try {
             userHandle = login(loginname, password, true);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "INIT: Log in of the user failed.", e);
+            EscidocRestSoapTestBase.failException("INIT: Log in of the user failed.", e);
         }
         assertNotNull(userHandle);
 
@@ -4675,56 +3753,44 @@ public class AaTestBase extends EscidocRestSoapTestBase {
 
             //Check status-code when requesting resource with invalid handle
             String httpUrl =
-                Constants.PROTOCOL + "://" 
-                + Constants.HOST_PORT 
-                + Constants.ROLE_BASE_URI
-                + "/"
-                + getObjidFromHref(ROLE_HREF_SYSTEM_ADMINISTRATOR);
+                Constants.PROTOCOL + "://" + Constants.HOST_PORT + Constants.ROLE_BASE_URI + "/"
+                    + getObjidFromHref(ROLE_HREF_SYSTEM_ADMINISTRATOR);
 
             int statusCode = getStatusCode(httpUrl);
-            if (statusCode 
-                != HttpServletResponse.SC_FOUND) {
+            if (statusCode != HttpServletResponse.SC_FOUND) {
 
-                throw new Exception(
-                    "Retrieving resource with invalid handle "
-                    + "returned wrong status " 
-                    + statusCode);
+                throw new Exception("Retrieving resource with invalid handle " + "returned wrong status " + statusCode);
             }
 
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Logging out of the user failed.", e);
-        } finally {
+            EscidocRestSoapTestBase.failException("Logging out of the user failed.", e);
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
     }
-    
+
     /**
      * Returns the status-code after calling the given url.
-     * 
-     * @param url
-     *            The url to call.
+     *
+     * @param url The url to call.
      * @return int status-code.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     private int getStatusCode(final String url) throws Exception {
         DefaultHttpClient httpClient = new DefaultHttpClient();
         httpClient.removeRequestInterceptorByClass(RequestAddCookies.class);
         httpClient.removeResponseInterceptorByClass(ResponseProcessCookies.class);
         httpClient.setRedirectHandler(new RedirectHandler() {
-            public URI getLocationURI(HttpResponse response,
-                    HttpContext context) throws ProtocolException {
+            public URI getLocationURI(HttpResponse response, HttpContext context) throws ProtocolException {
                 return null;
             }
 
-            public boolean isRedirectRequested(HttpResponse response,
-                    HttpContext context) {
+            public boolean isRedirectRequested(HttpResponse response, HttpContext context) {
                 return false;
             }
         });
-
 
         HttpResponse httpRes = HttpHelper.doGet(httpClient, url, null);
 
@@ -4732,47 +3798,33 @@ public class AaTestBase extends EscidocRestSoapTestBase {
     }
 
     /**
-     * Extracts the id of the context found in
-     * the provided document.
-     * 
-     * @param document
-     *            The document holding the xml representation of an item.
+     * Extracts the id of the context found in the provided document.
+     *
+     * @param document The document holding the xml representation of an item.
      * @return Returns the extracted id.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    protected String extractContextId(
-        final Document document)
-        throws Exception {
+    protected String extractContextId(final Document document) throws Exception {
 
         final String contextId;
-        contextId =
-            getObjidValue(document, OmTestBase.XPATH_ITEM_CONTEXT);
+        contextId = getObjidValue(document, OmTestBase.XPATH_ITEM_CONTEXT);
 
         return contextId;
     }
 
     /**
-     * Extracts the id of the component with the specified visibility found in
-     * the provided document.
-     * 
-     * @param itemDocument
-     *            The document holding the xml representation of an item.
-     * @param visibility
-     *            if the id of a component shall be
-     *            retrieved, that has given visibility. 
+     * Extracts the id of the component with the specified visibility found in the provided document.
+     *
+     * @param itemDocument The document holding the xml representation of an item.
+     * @param visibility   if the id of a component shall be retrieved, that has given visibility.
      * @return Returns the extracted id.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    protected String extractComponentId(
-        final Document itemDocument, final String visibility)
-        throws Exception {
+    protected String extractComponentId(final Document itemDocument, final String visibility) throws Exception {
 
         final String componentId;
         componentId =
-            getObjidValue(itemDocument, OmTestBase.XPATH_ITEM_COMPONENTS
-                + "/" + NAME_COMPONENT
+            getObjidValue(itemDocument, OmTestBase.XPATH_ITEM_COMPONENTS + "/" + NAME_COMPONENT
                 + "[properties/visibility=\"" + visibility + "\"]");
 
         return componentId;
@@ -4780,128 +3832,98 @@ public class AaTestBase extends EscidocRestSoapTestBase {
 
     /**
      * Extracts the ids of the components of the provided document.
-     * 
-     * @param itemDocument
-     *            The document holding the xml representation of an item.
+     *
+     * @param itemDocument The document holding the xml representation of an item.
      * @return Returns the extracted ids as string-array.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    protected String[] extractComponentIds(final Document itemDocument)
-        throws Exception {
+    protected String[] extractComponentIds(final Document itemDocument) throws Exception {
 
         String[] componentIds =
-            getObjidValues(itemDocument, OmTestBase.XPATH_ITEM_COMPONENTS + "/"
-                + NAME_COMPONENT + "[properties/visibility=\"public\"]");
+            getObjidValues(itemDocument, OmTestBase.XPATH_ITEM_COMPONENTS + "/" + NAME_COMPONENT
+                + "[properties/visibility=\"public\"]");
 
         return componentIds;
     }
 
     /**
      * Executs spo query to semantic store.
-     * 
-     * @param queryParam
-     *            The Xml data defining the query
+     *
+     * @param queryParam The Xml data defining the query
      * @return Returns the result of the method call.
-     * 
-     * @throws Exception
-     *             Thrown if anything fails.
+     * @throws Exception Thrown if anything fails.
      */
     protected String spo(final String queryParam) throws Exception {
         return handleXmlResult(getSemanticStoreClient().spo(queryParam));
     }
 
     /**
-     * Retrieve a Template as a Document and fixes the "link" attributes in case
-     * of SOAP.<br>
-     * The used parser is NOT namespace aware!
-     * 
-     * @param path
-     *            The Path of the Template.
-     * @param templateName
-     *            The name of the template.
+     * Retrieve a Template as a Document and fixes the "link" attributes in case of SOAP.<br> The used parser is NOT
+     * namespace aware!
+     *
+     * @param path         The Path of the Template.
+     * @param templateName The name of the template.
      * @return The String representation of the Template.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    public Document getTemplateAsFixedUserGroupDocument(
-        final String path, final String templateName) throws Exception {
+    public Document getTemplateAsFixedUserGroupDocument(final String path, final String templateName) throws Exception {
 
-//        return fixLinkAttributes(EscidocRestSoapTestBase
-//            .getTemplateAsDocument(path, templateName),
-//            XPATH_USER_GROUP_SELECTORS);
-        return EscidocRestSoapTestBase
-            .getTemplateAsDocument(path, templateName);
+        //        return fixLinkAttributes(EscidocRestSoapTestBase
+        //            .getTemplateAsDocument(path, templateName),
+        //            XPATH_USER_GROUP_SELECTORS);
+        return EscidocRestSoapTestBase.getTemplateAsDocument(path, templateName);
     }
 
     /**
-     * Gets the document for the provided grant xml data and fixes the "link"
-     * attributes in case of SOAP.<br>
-     * The used parser is NOT namespace aware!
-     * 
-     * @param grantXml
-     *            The grant xml data to get the fixed document from.
+     * Gets the document for the provided grant xml data and fixes the "link" attributes in case of SOAP.<br> The used
+     * parser is NOT namespace aware!
+     *
+     * @param grantXml The grant xml data to get the fixed document from.
      * @return Returns the fixed document.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    public Document getFixedGrantDocument(final String grantXml)
-        throws Exception {
+    public Document getFixedGrantDocument(final String grantXml) throws Exception {
 
         return fixGrantDocument(EscidocRestSoapTestBase.getDocument(grantXml));
     }
 
     /**
-     * Retrieve a Template as a String and fixes the "link" attributes in case
-     * of SOAP.<br>
-     * The used parser is NOT namespace aware!
-     * 
-     * @param path
-     *            The Path of the Template.
-     * @param templateName
-     *            The name of the template.
+     * Retrieve a Template as a String and fixes the "link" attributes in case of SOAP.<br> The used parser is NOT
+     * namespace aware!
+     *
+     * @param path         The Path of the Template.
+     * @param templateName The name of the template.
      * @return The String representation of the Template.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    public String getTemplateAsFixedGrantString(
-        final String path, final String templateName) throws Exception {
+    public String getTemplateAsFixedGrantString(final String path, final String templateName) throws Exception {
 
-        final Document document =
-            getTemplateAsFixedGrantDocument(path, templateName);
+        final Document document = getTemplateAsFixedGrantDocument(path, templateName);
         return toString(document, false);
     }
 
     /**
-     * Retrieve a Template as a Document and fixes the "link" attributes in case
-     * of SOAP.<br>
-     * The used parser is NOT namespace aware!
-     * 
-     * @param path
-     *            The Path of the Template.
-     * @param templateName
-     *            The name of the template.
+     * Retrieve a Template as a Document and fixes the "link" attributes in case of SOAP.<br> The used parser is NOT
+     * namespace aware!
+     *
+     * @param path         The Path of the Template.
+     * @param templateName The name of the template.
      * @return The String representation of the Template.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    public Document getTemplateAsFixedGrantDocument(
-        final String path, final String templateName) throws Exception {
+    public Document getTemplateAsFixedGrantDocument(final String path, final String templateName) throws Exception {
 
-        final Document document =
-            EscidocRestSoapTestBase.getTemplateAsDocument(path, templateName);
+        final Document document = EscidocRestSoapTestBase.getTemplateAsDocument(path, templateName);
         fixGrantDocument(document);
         return document;
     }
 
     /**
      * Fixes the "link" attributes in case of SOAP.
-     * 
-     * @param document
-     *            The document to fix.
+     *
+     * @param document The document to fix.
      * @return Returns the provided (fixed) document.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     public Document fixGrantDocument(final Document document) throws Exception {
 
@@ -4912,13 +3934,10 @@ public class AaTestBase extends EscidocRestSoapTestBase {
 
     /**
      * Test logging out an user.
-     * 
-     * @param userHandle
-     *            The eSciDOc user handle that shall be sent in the cookie of
-     *            the logout request.
+     *
+     * @param userHandle The eSciDOc user handle that shall be sent in the cookie of the logout request.
      * @return The response of the logout.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     protected String logout(final String userHandle) throws Exception {
 
@@ -4930,7 +3949,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
             assertHttpStatusOfMethod("", httpRes);
             assertNoRedirect(httpRes);
             assertLogoutCookies(httpRes);
-           
+
         }
         else if (result instanceof String) {
             xmlResult = (String) result;
@@ -4940,28 +3959,20 @@ public class AaTestBase extends EscidocRestSoapTestBase {
 
     /**
      * Test logging out an user.
-     * 
-     * @param redirectUrl
-     *            The target to that the user shall be redirected after being
-     *            logged out. This may be <code>null</code> (no redirect).
-     * @param userHandle
-     *            The eSciDOc user handle that shall be sent in the cookie of
-     *            the logout request.
-     * @param encodeRedirectUrlSlashes
-     *            Flag indicating that the slashes contained in the redirectUrl
-     *            shall be encoded (<code>true</code>) or shall not be
-     *            encoded (<code>false</code>).
+     *
+     * @param redirectUrl              The target to that the user shall be redirected after being logged out. This may
+     *                                 be <code>null</code> (no redirect).
+     * @param userHandle               The eSciDOc user handle that shall be sent in the cookie of the logout request.
+     * @param encodeRedirectUrlSlashes Flag indicating that the slashes contained in the redirectUrl shall be encoded
+     *                                 (<code>true</code>) or shall not be encoded (<code>false</code>).
      * @return The response of the logout.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    protected String logout(
-        final String redirectUrl, final String userHandle,
-        final boolean encodeRedirectUrlSlashes) throws Exception {
+    protected String logout(final String redirectUrl, final String userHandle, final boolean encodeRedirectUrlSlashes)
+        throws Exception {
 
         final Object result =
-            getUserManagementWrapperClient().logout(redirectUrl, userHandle,
-                encodeRedirectUrlSlashes);
+            getUserManagementWrapperClient().logout(redirectUrl, userHandle, encodeRedirectUrlSlashes);
         String xmlResult = null;
         if (result instanceof HttpResponse) {
             HttpResponse httpRes = (HttpResponse) result;
@@ -4969,7 +3980,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
             assertHttpStatus("", HttpServletResponse.SC_SEE_OTHER, httpRes);
             assertRedirect(httpRes, redirectUrl);
             assertLogoutCookies(httpRes);
-         
+
         }
         else {
             fail("Unexpected result, expected result of type HttpResponse.");
@@ -4979,52 +3990,41 @@ public class AaTestBase extends EscidocRestSoapTestBase {
 
     /**
      * Asserts that vthe expected cookies exists in a logout response.
-     * 
-     * @param method
-     *            The {@link HttpResponse} to be asserted.
+     *
+     * @param method The {@link HttpResponse} to be asserted.
      */
     private void assertLogoutCookies(final HttpResponse httpRes) {
 
         final Header[] cookieHeaders = httpRes.getHeaders("Set-Cookie");
         assertNotNull(cookieHeaders);
-        assertEquals("Unexpected number of cookies (to delete cookies)", 2,
-            cookieHeaders.length);
+        assertEquals("Unexpected number of cookies (to delete cookies)", 2, cookieHeaders.length);
         assertNotNull(cookieHeaders[0]);
-        assertEquals(
-            "Unexpected cookie (to delete cookie)",
-            "escidocCookie=null; Expires=Thu, 01-Jan-1970 00:00:10 GMT; Path=/",
-            cookieHeaders[0].getValue());
+        assertEquals("Unexpected cookie (to delete cookie)",
+            "escidocCookie=null; Expires=Thu, 01-Jan-1970 00:00:10 GMT; Path=/", cookieHeaders[0].getValue());
         assertNotNull(cookieHeaders[1]);
         assertEquals("Unexpected cookie (to delete cookie)",
-            "JSESSIONID=null; Expires=Thu, 01-Jan-1970 00:00:10 GMT; Path=/",
-            cookieHeaders[1].getValue());
+            "JSESSIONID=null; Expires=Thu, 01-Jan-1970 00:00:10 GMT; Path=/", cookieHeaders[1].getValue());
     }
 
     /**
      * Asserts the redirect values.
-     * 
-     * @param method
-     *            The {@link HttpResponse} to be asserted.
-     * @param expectedRedirectUrl
-     *            The expected redirect url.
+     *
+     * @param method              The {@link HttpResponse} to be asserted.
+     * @param expectedRedirectUrl The expected redirect url.
      */
-    private void assertRedirect(
-        final HttpResponse httpResponse, final String expectedRedirectUrl) {
+    private void assertRedirect(final HttpResponse httpResponse, final String expectedRedirectUrl) {
 
         final Header locationHeader = httpResponse.getFirstHeader("Location");
         assertNotNull(locationHeader);
-        assertEquals("Unexpected redirect location", expectedRedirectUrl,
-            locationHeader.getValue());
+        assertEquals("Unexpected redirect location", expectedRedirectUrl, locationHeader.getValue());
     }
 
     /**
      * Asserts, that no redirect occurred for the provided {@link HttpResponse}.
-     * 
-     * @param method
-     *            The {@link HttpResponse} to be asserted.
+     *
+     * @param method The {@link HttpResponse} to be asserted.
      */
     private void assertNoRedirect(final HttpResponse httpRes) {
-        assertNull("Unexpected loction header", httpRes
-            .getFirstHeader("Location"));
+        assertNull("Unexpected loction header", httpRes.getFirstHeader("Location"));
     }
 }

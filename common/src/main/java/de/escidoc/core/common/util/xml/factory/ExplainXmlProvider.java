@@ -29,7 +29,7 @@ import java.util.Map;
 
 /**
  * XML provider to render an SRU explain response.
- * 
+ *
  * @author Andr&eacute; Schenk
  */
 public final class ExplainXmlProvider extends InfrastructureXmlProvider {
@@ -40,27 +40,20 @@ public final class ExplainXmlProvider extends InfrastructureXmlProvider {
 
     private static final ExplainXmlProvider provider = new ExplainXmlProvider();
 
-     /**
+    /**
      * private Constructor for Singleton.
-     *
      */
-    private ExplainXmlProvider()
-    {}
+    private ExplainXmlProvider() {
+    }
 
     /**
-     * Render an SRU explain response to describe the aggregation definition
-     * database.
-     * 
-     * @param values
-     *            map containing variable names and values to fill out the
-     *            Velocity macro.
-     * 
+     * Render an SRU explain response to describe the aggregation definition database.
+     *
+     * @param values map containing variable names and values to fill out the Velocity macro.
      * @return explain response XML
-     * @throws WebserverSystemException
-     *             Thrown if Velocity could not be initialized
+     * @throws WebserverSystemException Thrown if Velocity could not be initialized
      */
-    public String getExplainAggregationDefinitionXml(
-        final Map<String, Object> values) throws WebserverSystemException {
+    public String getExplainAggregationDefinitionXml(final Map<String, Object> values) throws WebserverSystemException {
         values.put("DATABASE", "statistic/aggregation-definitions");
         values.put("RESOURCE_NAME", XmlUtility.NAME_AGGREGATION_DEFINITION);
         return getExplainXml(values);
@@ -68,37 +61,25 @@ public final class ExplainXmlProvider extends InfrastructureXmlProvider {
 
     /**
      * Render an SRU explain response to describe the container member database.
-     * 
-     * @param values
-     *            map containing variable names and values to fill out the
-     *            Velocity macro.
-     * 
+     *
+     * @param values map containing variable names and values to fill out the Velocity macro.
      * @return explain response XML
-     * @throws WebserverSystemException
-     *             Thrown if Velocity could not be initialized
+     * @throws WebserverSystemException Thrown if Velocity could not be initialized
      */
-    public String getExplainContainerMembersXml(final Map<String, Object> values)
-        throws WebserverSystemException {
-        values.put("DATABASE",
-            "ir/container/&lt;container id&gt;/resources/members");
-        values.put("RESOURCE_NAME", ResourceType.CONTAINER.getLabel()
-            + " member");
+    public String getExplainContainerMembersXml(final Map<String, Object> values) throws WebserverSystemException {
+        values.put("DATABASE", "ir/container/&lt;container id&gt;/resources/members");
+        values.put("RESOURCE_NAME", ResourceType.CONTAINER.getLabel() + " member");
         return getExplainXml(values);
     }
 
     /**
      * Render an SRU explain response to describe the container database.
-     * 
-     * @param values
-     *            map containing variable names and values to fill out the
-     *            Velocity macro.
-     * 
+     *
+     * @param values map containing variable names and values to fill out the Velocity macro.
      * @return explain response XML
-     * @throws WebserverSystemException
-     *             Thrown if Velocity could not be initialized
+     * @throws WebserverSystemException Thrown if Velocity could not be initialized
      */
-    public String getExplainContainerXml(final Map<String, Object> values)
-        throws WebserverSystemException {
+    public String getExplainContainerXml(final Map<String, Object> values) throws WebserverSystemException {
         values.put("DATABASE", "ir/container");
         values.put("RESOURCE_NAME", ResourceType.CONTAINER.getLabel());
         return getExplainXml(values);
@@ -106,17 +87,12 @@ public final class ExplainXmlProvider extends InfrastructureXmlProvider {
 
     /**
      * Render an SRU explain response to describe the Content Model database.
-     * 
-     * @param values
-     *            map containing variable names and values to fill out the
-     *            Velocity macro.
-     * 
+     *
+     * @param values map containing variable names and values to fill out the Velocity macro.
      * @return explain response XML
-     * @throws WebserverSystemException
-     *             Thrown if Velocity could not be initialized
+     * @throws WebserverSystemException Thrown if Velocity could not be initialized
      */
-    public String getExplainContentModelXml(final Map<String, Object> values)
-        throws WebserverSystemException {
+    public String getExplainContentModelXml(final Map<String, Object> values) throws WebserverSystemException {
         values.put("DATABASE", "cmm/content-model");
         values.put("RESOURCE_NAME", ResourceType.CONTENT_MODEL.getLabel());
         return getExplainXml(values);
@@ -124,17 +100,12 @@ public final class ExplainXmlProvider extends InfrastructureXmlProvider {
 
     /**
      * Render an SRU explain response to describe the content relation database.
-     * 
-     * @param values
-     *            map containing variable names and values to fill out the
-     *            Velocity macro.
-     * 
+     *
+     * @param values map containing variable names and values to fill out the Velocity macro.
      * @return explain response XML
-     * @throws WebserverSystemException
-     *             Thrown if Velocity could not be initialized
+     * @throws WebserverSystemException Thrown if Velocity could not be initialized
      */
-    public String getExplainContentRelationXml(final Map<String, Object> values)
-        throws WebserverSystemException {
+    public String getExplainContentRelationXml(final Map<String, Object> values) throws WebserverSystemException {
         values.put("DATABASE", "ir/content-relations");
         values.put("RESOURCE_NAME", ResourceType.CONTENT_RELATION.getLabel());
         return getExplainXml(values);
@@ -142,37 +113,25 @@ public final class ExplainXmlProvider extends InfrastructureXmlProvider {
 
     /**
      * Render an SRU explain response to describe the context member database.
-     * 
-     * @param values
-     *            map containing variable names and values to fill out the
-     *            Velocity macro.
-     * 
+     *
+     * @param values map containing variable names and values to fill out the Velocity macro.
      * @return explain response XML
-     * @throws WebserverSystemException
-     *             Thrown if Velocity could not be initialized
+     * @throws WebserverSystemException Thrown if Velocity could not be initialized
      */
-    public String getExplainContextMembersXml(final Map<String, Object> values)
-        throws WebserverSystemException {
-        values.put("DATABASE",
-            "ir/context/&lt;context id&gt;/resources/members");
-        values
-            .put("RESOURCE_NAME", ResourceType.CONTEXT.getLabel() + " member");
+    public String getExplainContextMembersXml(final Map<String, Object> values) throws WebserverSystemException {
+        values.put("DATABASE", "ir/context/&lt;context id&gt;/resources/members");
+        values.put("RESOURCE_NAME", ResourceType.CONTEXT.getLabel() + " member");
         return getExplainXml(values);
     }
 
     /**
      * Render an SRU explain response to describe the context database.
-     * 
-     * @param values
-     *            map containing variable names and values to fill out the
-     *            Velocity macro.
-     * 
+     *
+     * @param values map containing variable names and values to fill out the Velocity macro.
      * @return explain response XML
-     * @throws WebserverSystemException
-     *             Thrown if Velocity could not be initialized
+     * @throws WebserverSystemException Thrown if Velocity could not be initialized
      */
-    public String getExplainContextXml(final Map<String, Object> values)
-        throws WebserverSystemException {
+    public String getExplainContextXml(final Map<String, Object> values) throws WebserverSystemException {
         values.put("DATABASE", "ir/contexts");
         values.put("RESOURCE_NAME", ResourceType.CONTEXT.getLabel());
         return getExplainXml(values);
@@ -180,55 +139,38 @@ public final class ExplainXmlProvider extends InfrastructureXmlProvider {
 
     /**
      * Render an SRU explain response to describe the item database.
-     * 
-     * @param values
-     *            map containing variable names and values to fill out the
-     *            Velocity macro.
-     * 
+     *
+     * @param values map containing variable names and values to fill out the Velocity macro.
      * @return explain response XML
-     * @throws WebserverSystemException
-     *             Thrown if Velocity could not be initialized
+     * @throws WebserverSystemException Thrown if Velocity could not be initialized
      */
-    public String getExplainItemXml(final Map<String, Object> values)
-        throws WebserverSystemException {
+    public String getExplainItemXml(final Map<String, Object> values) throws WebserverSystemException {
         values.put("DATABASE", "ir/items");
         values.put("RESOURCE_NAME", ResourceType.ITEM.getLabel());
         return getExplainXml(values);
     }
 
     /**
-     * Render an SRU explain response to describe the organizational unit
-     * database.
-     * 
-     * @param values
-     *            map containing variable names and values to fill out the
-     *            Velocity macro.
-     * 
+     * Render an SRU explain response to describe the organizational unit database.
+     *
+     * @param values map containing variable names and values to fill out the Velocity macro.
      * @return explain response XML
-     * @throws WebserverSystemException
-     *             Thrown if Velocity could not be initialized
+     * @throws WebserverSystemException Thrown if Velocity could not be initialized
      */
-    public String getExplainOuXml(final Map<String, Object> values)
-        throws WebserverSystemException {
+    public String getExplainOuXml(final Map<String, Object> values) throws WebserverSystemException {
         values.put("DATABASE", "oum/organizational-units");
         values.put("RESOURCE_NAME", ResourceType.OU.getLabel());
         return getExplainXml(values);
     }
 
     /**
-     * Render an SRU explain response to describe the report definition
-     * database.
-     * 
-     * @param values
-     *            map containing variable names and values to fill out the
-     *            Velocity macro.
-     * 
+     * Render an SRU explain response to describe the report definition database.
+     *
+     * @param values map containing variable names and values to fill out the Velocity macro.
      * @return explain response XML
-     * @throws WebserverSystemException
-     *             Thrown if Velocity could not be initialized
+     * @throws WebserverSystemException Thrown if Velocity could not be initialized
      */
-    public String getExplainReportDefinitionXml(final Map<String, Object> values)
-        throws WebserverSystemException {
+    public String getExplainReportDefinitionXml(final Map<String, Object> values) throws WebserverSystemException {
         values.put("DATABASE", "statistic/report-definitions");
         values.put("RESOURCE_NAME", XmlUtility.NAME_REPORT_DEFINITION);
         return getExplainXml(values);
@@ -236,17 +178,12 @@ public final class ExplainXmlProvider extends InfrastructureXmlProvider {
 
     /**
      * Render an SRU explain response to describe the role grant database.
-     * 
-     * @param values
-     *            map containing variable names and values to fill out the
-     *            Velocity macro.
-     * 
+     *
+     * @param values map containing variable names and values to fill out the Velocity macro.
      * @return explain response XML
-     * @throws WebserverSystemException
-     *             Thrown if Velocity could not be initialized
+     * @throws WebserverSystemException Thrown if Velocity could not be initialized
      */
-    public String getExplainRoleGrantXml(final Map<String, Object> values)
-        throws WebserverSystemException {
+    public String getExplainRoleGrantXml(final Map<String, Object> values) throws WebserverSystemException {
         values.put("DATABASE", "aa/grants");
         values.put("RESOURCE_NAME", XmlUtility.NAME_GRANT);
         return getExplainXml(values);
@@ -254,17 +191,12 @@ public final class ExplainXmlProvider extends InfrastructureXmlProvider {
 
     /**
      * Render an SRU explain response to describe the role database.
-     * 
-     * @param values
-     *            map containing variable names and values to fill out the
-     *            Velocity macro.
-     * 
+     *
+     * @param values map containing variable names and values to fill out the Velocity macro.
      * @return explain response XML
-     * @throws WebserverSystemException
-     *             Thrown if Velocity could not be initialized
+     * @throws WebserverSystemException Thrown if Velocity could not be initialized
      */
-    public String getExplainRoleXml(final Map<String, Object> values)
-        throws WebserverSystemException {
+    public String getExplainRoleXml(final Map<String, Object> values) throws WebserverSystemException {
         values.put("DATABASE", "aa/roles");
         values.put("RESOURCE_NAME", XmlUtility.NAME_ROLE);
         return getExplainXml(values);
@@ -272,17 +204,12 @@ public final class ExplainXmlProvider extends InfrastructureXmlProvider {
 
     /**
      * Render an SRU explain response to describe the scope database.
-     * 
-     * @param values
-     *            map containing variable names and values to fill out the
-     *            Velocity macro.
-     * 
+     *
+     * @param values map containing variable names and values to fill out the Velocity macro.
      * @return explain response XML
-     * @throws WebserverSystemException
-     *             Thrown if Velocity could not be initialized
+     * @throws WebserverSystemException Thrown if Velocity could not be initialized
      */
-    public String getExplainScopeXml(final Map<String, Object> values)
-        throws WebserverSystemException {
+    public String getExplainScopeXml(final Map<String, Object> values) throws WebserverSystemException {
         values.put("DATABASE", "statistic/scopes");
         values.put("RESOURCE_NAME", XmlUtility.NAME_SCOPE);
         return getExplainXml(values);
@@ -290,17 +217,12 @@ public final class ExplainXmlProvider extends InfrastructureXmlProvider {
 
     /**
      * Render an SRU explain response to describe the set definition database.
-     * 
-     * @param values
-     *            map containing variable names and values to fill out the
-     *            Velocity macro.
-     * 
+     *
+     * @param values map containing variable names and values to fill out the Velocity macro.
      * @return explain response XML
-     * @throws WebserverSystemException
-     *             Thrown if Velocity could not be initialized
+     * @throws WebserverSystemException Thrown if Velocity could not be initialized
      */
-    public String getExplainSetDefinitionXml(final Map<String, Object> values)
-        throws WebserverSystemException {
+    public String getExplainSetDefinitionXml(final Map<String, Object> values) throws WebserverSystemException {
         values.put("DATABASE", "oai/set-definitions");
         values.put("RESOURCE_NAME", XmlUtility.NAME_SET_DEFINITION);
         return getExplainXml(values);
@@ -308,17 +230,12 @@ public final class ExplainXmlProvider extends InfrastructureXmlProvider {
 
     /**
      * Render an SRU explain response to describe the toc database.
-     * 
-     * @param values
-     *            map containing variable names and values to fill out the
-     *            Velocity macro.
-     * 
+     *
+     * @param values map containing variable names and values to fill out the Velocity macro.
      * @return explain response XML
-     * @throws WebserverSystemException
-     *             Thrown if Velocity could not be initialized
+     * @throws WebserverSystemException Thrown if Velocity could not be initialized
      */
-    public String getExplainTocXml(final Map<String, Object> values)
-        throws WebserverSystemException {
+    public String getExplainTocXml(final Map<String, Object> values) throws WebserverSystemException {
         values.put("DATABASE", "ir/container/&lt;container id&gt;/tocs");
         values.put("RESOURCE_NAME", "toc");
         return getExplainXml(values);
@@ -326,17 +243,12 @@ public final class ExplainXmlProvider extends InfrastructureXmlProvider {
 
     /**
      * Render an SRU explain response to describe the user account database.
-     * 
-     * @param values
-     *            map containing variable names and values to fill out the
-     *            Velocity macro.
-     * 
+     *
+     * @param values map containing variable names and values to fill out the Velocity macro.
      * @return explain response XML
-     * @throws WebserverSystemException
-     *             Thrown if Velocity could not be initialized
+     * @throws WebserverSystemException Thrown if Velocity could not be initialized
      */
-    public String getExplainUserAccountXml(final Map<String, Object> values)
-        throws WebserverSystemException {
+    public String getExplainUserAccountXml(final Map<String, Object> values) throws WebserverSystemException {
         values.put("DATABASE", "aa/user-accounts");
         values.put("RESOURCE_NAME", XmlUtility.NAME_USER_ACCOUNT);
         return getExplainXml(values);
@@ -344,17 +256,12 @@ public final class ExplainXmlProvider extends InfrastructureXmlProvider {
 
     /**
      * Render an SRU explain response to describe the user group database.
-     * 
-     * @param values
-     *            map containing variable names and values to fill out the
-     *            Velocity macro.
-     * 
+     *
+     * @param values map containing variable names and values to fill out the Velocity macro.
      * @return explain response XML
-     * @throws WebserverSystemException
-     *             Thrown if Velocity could not be initialized
+     * @throws WebserverSystemException Thrown if Velocity could not be initialized
      */
-    public String getExplainUserGroupXml(final Map<String, Object> values)
-        throws WebserverSystemException {
+    public String getExplainUserGroupXml(final Map<String, Object> values) throws WebserverSystemException {
         values.put("DATABASE", "aa/user-groups");
         values.put("RESOURCE_NAME", XmlUtility.NAME_USER_GROUP);
         return getExplainXml(values);
@@ -362,17 +269,12 @@ public final class ExplainXmlProvider extends InfrastructureXmlProvider {
 
     /**
      * Render an SRU explain response.
-     * 
-     * @param values
-     *            map containing variable names and values to fill out the
-     *            Velocity macro.
-     * 
+     *
+     * @param values map containing variable names and values to fill out the Velocity macro.
      * @return explain response XML
-     * @throws WebserverSystemException
-     *             Thrown if Velocity could not be initialized
+     * @throws WebserverSystemException Thrown if Velocity could not be initialized
      */
-    private String getExplainXml(final Map<String, Object> values)
-        throws WebserverSystemException {
+    private String getExplainXml(final Map<String, Object> values) throws WebserverSystemException {
         try {
             final URL baseUrl = new URL(XmlUtility.getEscidocBaseUrl());
 
@@ -387,14 +289,11 @@ public final class ExplainXmlProvider extends InfrastructureXmlProvider {
 
     /**
      * Gets the explain XML provider.
-     * 
+     *
      * @return Returns the <code>ExplainXmlProvider</code> object.
-     * @throws WebserverSystemException
-     *             Thrown if the instance cannot be created due to an internal
-     *             error.
+     * @throws WebserverSystemException Thrown if the instance cannot be created due to an internal error.
      */
-    public static ExplainXmlProvider getInstance()
-        throws WebserverSystemException {
+    public static ExplainXmlProvider getInstance() throws WebserverSystemException {
         return provider;
     }
 }

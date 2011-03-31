@@ -31,9 +31,8 @@ package de.escidoc.core.adm.business.admin;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
 
 /**
- * Singleton which contains all information about a running or finished
- * reindexing process.
- * 
+ * Singleton which contains all information about a running or finished reindexing process.
+ *
  * @author Michael Hoppe
  */
 public final class ReindexStatus extends AdminMethodStatus {
@@ -50,11 +49,9 @@ public final class ReindexStatus extends AdminMethodStatus {
     }
 
     /**
-     * Decrease the number of resources of the given type which still have to be
-     * processed.
-     * 
-     * @param type
-     *            resource type
+     * Decrease the number of resources of the given type which still have to be processed.
+     *
+     * @param type resource type
      */
     public synchronized void dec(final ResourceType type) {
         final Integer oldValue = get(type);
@@ -74,7 +71,7 @@ public final class ReindexStatus extends AdminMethodStatus {
 
     /**
      * Get the singleton instance.
-     * 
+     *
      * @return ReindexStatus singleton
      */
     public static ReindexStatus getInstance() {
@@ -82,11 +79,9 @@ public final class ReindexStatus extends AdminMethodStatus {
     }
 
     /**
-     * Increase the number of resources of the given type which still have to be
-     * processed.
-     * 
-     * @param type
-     *            resource type
+     * Increase the number of resources of the given type which still have to be processed.
+     *
+     * @param type resource type
      */
     public synchronized void inc(final ResourceType type) {
         final Integer oldValue = get(type);
@@ -100,8 +95,8 @@ public final class ReindexStatus extends AdminMethodStatus {
     }
 
     /**
-     * Set a flag to signalize that the queue was completely filled. Now an
-     * empty queue would mean the whole process has been finished.
+     * Set a flag to signalize that the queue was completely filled. Now an empty queue would mean the whole process has
+     * been finished.
      */
     public void setFillingComplete() {
         this.setFillingComplete(true);
@@ -112,7 +107,7 @@ public final class ReindexStatus extends AdminMethodStatus {
 
     /**
      * Return a string representation of the object.
-     * 
+     *
      * @return a string representation of this object
      */
     @Override
@@ -120,9 +115,7 @@ public final class ReindexStatus extends AdminMethodStatus {
         final StringBuilder result = new StringBuilder();
 
         if (getCompletionDate() != null) {
-            result
-                .append("<message>reindexing finished at ")
-                .append(getCompletionDate()).append("</message>\n");
+            result.append("<message>reindexing finished at ").append(getCompletionDate()).append("</message>\n");
         }
         else {
             result.append("<message>reindexing currently running</message>\n");

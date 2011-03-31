@@ -25,17 +25,15 @@ import org.springframework.security.GrantedAuthority;
 import org.springframework.security.providers.AbstractAuthenticationToken;
 
 /**
- * {@link Authentication} implementation for indicating the access of the user
- * identified by a wrapped {@link Authentication} shall be executed as the
- * internal user, that is not further authorized.
- * 
- * @author Torsten Tetteroo
+ * {@link Authentication} implementation for indicating the access of the user identified by a wrapped {@link
+ * Authentication} shall be executed as the internal user, that is not further authorized.
  *
- * 
+ * @author Torsten Tetteroo
  */
 public class EscidocRunAsInternalUserToken extends AbstractAuthenticationToken {
 
     private static final long serialVersionUID = 2667370146760424716L;
+
     /**
      * The wrapped {@link Authentication}.
      */
@@ -43,13 +41,11 @@ public class EscidocRunAsInternalUserToken extends AbstractAuthenticationToken {
 
     /**
      * Constructs an EscidocRunAsInternalUserToken.
-     * 
-     * @param orginalAuthentication
-     *            The original {@link Authentication} whose access shall be
-     *            executed as the internal user without further authorizations.
+     *
+     * @param orginalAuthentication The original {@link Authentication} whose access shall be executed as the internal
+     *                              user without further authorizations.
      */
-    public EscidocRunAsInternalUserToken(
-        final Authentication orginalAuthentication) {
+    public EscidocRunAsInternalUserToken(final Authentication orginalAuthentication) {
 
         super(orginalAuthentication.getAuthorities());
         this.orginalAuthentication = orginalAuthentication;
@@ -57,13 +53,10 @@ public class EscidocRunAsInternalUserToken extends AbstractAuthenticationToken {
         setAuthenticated(true);
     }
 
-
-
     /**
      * Gets the original {@link Authentication}.
-     * 
-     * @return Returns the original {@link Authentication}.
      *
+     * @return Returns the original {@link Authentication}.
      */
     public Authentication getOrginalAuthentication() {
         return this.orginalAuthentication;
@@ -71,11 +64,8 @@ public class EscidocRunAsInternalUserToken extends AbstractAuthenticationToken {
 
     /**
      * See Interface for functional description.
-     * 
-     * @return
-     * @see AbstractAuthenticationToken
-     *      #getCredentials()
      *
+     * @see AbstractAuthenticationToken #getCredentials()
      */
     @Override
     public Object getCredentials() {
@@ -85,11 +75,8 @@ public class EscidocRunAsInternalUserToken extends AbstractAuthenticationToken {
 
     /**
      * See Interface for functional description.
-     * 
-     * @return
-     * @see AbstractAuthenticationToken
-     *      #getPrincipal()
      *
+     * @see AbstractAuthenticationToken #getPrincipal()
      */
     @Override
     public Object getPrincipal() {
@@ -99,11 +86,8 @@ public class EscidocRunAsInternalUserToken extends AbstractAuthenticationToken {
 
     /**
      * See Interface for functional description.
-     * 
-     * @return
-     * @see AbstractAuthenticationToken
-     *      #getDetails()
      *
+     * @see AbstractAuthenticationToken #getDetails()
      */
     @Override
     public Object getDetails() {
@@ -113,11 +97,8 @@ public class EscidocRunAsInternalUserToken extends AbstractAuthenticationToken {
 
     /**
      * See Interface for functional description.
-     * 
-     * @return
-     * @see AbstractAuthenticationToken
-     *      #getAuthorities()
      *
+     * @see AbstractAuthenticationToken #getAuthorities()
      */
     @Override
     public GrantedAuthority[] getAuthorities() {
@@ -127,18 +108,13 @@ public class EscidocRunAsInternalUserToken extends AbstractAuthenticationToken {
 
     /**
      * See Interface for functional description.
-     * 
-     * @return
-     * @see AbstractAuthenticationToken
-     *      #getName()
      *
+     * @see AbstractAuthenticationToken #getName()
      */
     @Override
     public String getName() {
 
         return orginalAuthentication.getName();
     }
-
-
 
 }

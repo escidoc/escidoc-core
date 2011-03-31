@@ -23,29 +23,23 @@ package de.escidoc.core.common.exceptions.application;
 import de.escidoc.core.common.exceptions.EscidocException;
 
 /**
- * Main-Class for Exceptions that are caused by the business logic
- * ApplicationException contains a HttpStatusCode and a HttpStatusMessage which
- * should be used in the REST interface. returned httpStatusCode is 400. Status
- * code (400) indicating the request sent by the client was syntactically
- * incorrect.
- * 
- * Subclasses are: ValidationException, throws statusCode 412 Status code (412)
- * indicating that the precondition given in one or more of the request-header
- * fields evaluated to false when it was tested on the server.
- * 
- * MissingParameterException, throws statusCode 417 Status code (417) indicating
- * that the server could not meet the expectation given in the Expect request
- * header.
- * 
- * ResourceNotFoundException, throws statusCode 404 Status code (404) indicating
- * that the requested resource is not available.
- * 
- * RuleViolationException, throws statusCode 409 Status code (409) indicating
- * that the request could not be completed due to a conflict with the current
- * state of the resource.
- * 
+ * Main-Class for Exceptions that are caused by the business logic ApplicationException contains a HttpStatusCode and a
+ * HttpStatusMessage which should be used in the REST interface. returned httpStatusCode is 400. Status code (400)
+ * indicating the request sent by the client was syntactically incorrect.
+ * <p/>
+ * Subclasses are: ValidationException, throws statusCode 412 Status code (412) indicating that the precondition given
+ * in one or more of the request-header fields evaluated to false when it was tested on the server.
+ * <p/>
+ * MissingParameterException, throws statusCode 417 Status code (417) indicating that the server could not meet the
+ * expectation given in the Expect request header.
+ * <p/>
+ * ResourceNotFoundException, throws statusCode 404 Status code (404) indicating that the requested resource is not
+ * available.
+ * <p/>
+ * RuleViolationException, throws statusCode 409 Status code (409) indicating that the request could not be completed
+ * due to a conflict with the current state of the resource.
+ *
  * @author Michael Hoppe (FIZ Karlsruhe)
- * 
  */
 public class ApplicationException extends EscidocException {
 
@@ -53,27 +47,21 @@ public class ApplicationException extends EscidocException {
 
     public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_BAD_REQUEST;
 
-    public static final String HTTP_STATUS_MESSAGE =
-        "eSciDoc Application Error";
+    public static final String HTTP_STATUS_MESSAGE = "eSciDoc Application Error";
 
     /**
      * Default constructor.
-     * 
-     *
      */
     protected ApplicationException() {
         super(HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 
     /**
-     * Constructor used to create a new Exception with the specified detail
-     * message and a mapping to an initial exception.
-     * 
-     * @param message
-     *            - the detail message.
-     * @param cause
-     *            Throwable
+     * Constructor used to create a new Exception with the specified detail message and a mapping to an initial
+     * exception.
      *
+     * @param message - the detail message.
+     * @param cause   Throwable
      */
     protected ApplicationException(final String message, final Throwable cause) {
         super(message, cause, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -81,10 +69,8 @@ public class ApplicationException extends EscidocException {
 
     /**
      * Constructs a new exception with the specified detail message.
-     * 
-     * @param message
-     *            - the detail message.
      *
+     * @param message - the detail message.
      */
     protected ApplicationException(final String message) {
         super(message, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -92,10 +78,8 @@ public class ApplicationException extends EscidocException {
 
     /**
      * Constructor used to map an initial exception.
-     * 
-     * @param cause
-     *            Throwable
      *
+     * @param cause Throwable
      */
     protected ApplicationException(final Throwable cause) {
         super(cause, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -103,66 +87,47 @@ public class ApplicationException extends EscidocException {
 
     /**
      * Default constructor.
-     * 
-     * @param httpStatusCode
-     *            the http status code
-     * @param httpStatusMsg
-     *            the http status message
      *
+     * @param httpStatusCode the http status code
+     * @param httpStatusMsg  the http status message
      */
-    protected ApplicationException(final int httpStatusCode,
-        final String httpStatusMsg) {
+    protected ApplicationException(final int httpStatusCode, final String httpStatusMsg) {
         super(httpStatusCode, httpStatusMsg);
     }
 
     /**
-     * Constructor used to create a new Exception with the specified detail
-     * message and a mapping to an initial exception.
-     * 
-     * @param message
-     *            the detail message.
-     * @param cause
-     *            Throwable
-     * @param httpStatusCode
-     *            the http status code
-     * @param httpStatusMsg
-     *            the http status message
+     * Constructor used to create a new Exception with the specified detail message and a mapping to an initial
+     * exception.
      *
+     * @param message        the detail message.
+     * @param cause          Throwable
+     * @param httpStatusCode the http status code
+     * @param httpStatusMsg  the http status message
      */
-    protected ApplicationException(final String message, final Throwable cause,
-        final int httpStatusCode, final String httpStatusMsg) {
+    protected ApplicationException(final String message, final Throwable cause, final int httpStatusCode,
+        final String httpStatusMsg) {
         super(message, cause, httpStatusCode, httpStatusMsg);
     }
 
     /**
      * Constructs a new exception with the specified detail message.
-     * 
-     * @param message
-     *            the detail message.
-     * @param httpStatusCode
-     *            the http status code
-     * @param httpStatusMsg
-     *            the http status message
      *
+     * @param message        the detail message.
+     * @param httpStatusCode the http status code
+     * @param httpStatusMsg  the http status message
      */
-    protected ApplicationException(final String message, final int httpStatusCode,
-        final String httpStatusMsg) {
+    protected ApplicationException(final String message, final int httpStatusCode, final String httpStatusMsg) {
         super(message, httpStatusCode, httpStatusMsg);
     }
 
     /**
      * Constructor used to map an initial exception.
-     * 
-     * @param cause
-     *            Throwable
-     * @param httpStatusCode
-     *            the http status code
-     * @param httpStatusMsg
-     *            the http status message
      *
+     * @param cause          Throwable
+     * @param httpStatusCode the http status code
+     * @param httpStatusMsg  the http status message
      */
-    protected ApplicationException(final Throwable cause,
-        final int httpStatusCode, final String httpStatusMsg) {
+    protected ApplicationException(final Throwable cause, final int httpStatusCode, final String httpStatusMsg) {
         super(cause, httpStatusCode, httpStatusMsg);
     }
 

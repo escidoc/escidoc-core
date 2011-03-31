@@ -34,11 +34,11 @@ import de.escidoc.core.sm.business.vo.database.DatabaseConventionChecker;
 
 /**
  * Holds all values needed to represent one Field out of one database-record.
- * 
- * @author Michael Hoppe
  *
+ * @author Michael Hoppe
  */
 public class DatabaseRecordFieldVo {
+
     private String fieldName;
 
     private String fieldValue;
@@ -54,20 +54,17 @@ public class DatabaseRecordFieldVo {
     }
 
     /**
-     * @param fieldName
-     *            the fieldName to set
-     *            
+     * @param fieldName the fieldName to set
      * @throws SqlDatabaseSystemException databaseException
      */
-    public void setFieldName(final String fieldName) 
-                    throws SqlDatabaseSystemException {
+    public void setFieldName(final String fieldName) throws SqlDatabaseSystemException {
         DatabaseConventionChecker.checkName(fieldName);
         this.fieldName = fieldName;
     }
 
     /**
      * Can be text, date or numeric.
-     * 
+     *
      * @return the fieldType
      */
     public String getFieldType() {
@@ -76,14 +73,11 @@ public class DatabaseRecordFieldVo {
 
     /**
      * Can be text, date or numeric.
-     * 
-     * @param fieldType
-     *            the fieldType to set
-     * @throws SqlDatabaseSystemException
-     *             e
+     *
+     * @param fieldType the fieldType to set
+     * @throws SqlDatabaseSystemException e
      */
-    public void setFieldType(final String fieldType)
-        throws SqlDatabaseSystemException {
+    public void setFieldType(final String fieldType) throws SqlDatabaseSystemException {
         if (fieldType == null || !fieldType.equals(Constants.DATABASE_FIELD_TYPE_TEXT)
             && !fieldType.equals(Constants.DATABASE_FIELD_TYPE_NUMERIC)
             && !fieldType.equals(Constants.DATABASE_FIELD_TYPE_DATE)) {
@@ -100,8 +94,7 @@ public class DatabaseRecordFieldVo {
     }
 
     /**
-     * @param fieldValue
-     *            the fieldValue to set
+     * @param fieldValue the fieldValue to set
      */
     public void setFieldValue(final String fieldValue) {
         this.fieldValue = fieldValue;

@@ -41,9 +41,8 @@ import static org.junit.Assert.assertNotNull;
 
 /**
  * PDP test suite.
- * 
+ *
  * @author Torsten Tetteroo
- * 
  */
 public class PdpAbstractTest extends AaTestBase {
 
@@ -51,18 +50,14 @@ public class PdpAbstractTest extends AaTestBase {
 
     /**
      * The constructor.
-     * 
-     * @param transport
-     *            The transport identifier.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param transport The transport identifier.
+     * @throws Exception If anything fails.
      */
     public PdpAbstractTest(final int transport) throws Exception {
 
         super(transport);
-        this.policyDecisionPointClient =
-            new PolicyDecisionPointClient(transport);
+        this.policyDecisionPointClient = new PolicyDecisionPointClient(transport);
     }
 
     /**
@@ -75,38 +70,25 @@ public class PdpAbstractTest extends AaTestBase {
 
     /**
      * Test evaluating the provided authorization requests.
-     * 
-     * @param requestsXml
-     *            The xml representation of the list of authorization requests.
-     * @return Returns the xml representation of the list of authorization
-     *         responses.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param requestsXml The xml representation of the list of authorization requests.
+     * @return Returns the xml representation of the list of authorization responses.
+     * @throws Exception If anything fails.
      */
     protected String evaluate(final String requestsXml) throws Exception {
 
-        return handleXmlResult(getPolicyDecisionPointClient().evaluate(
-            requestsXml));
+        return handleXmlResult(getPolicyDecisionPointClient().evaluate(requestsXml));
     }
 
     /**
      * Test successful evaluation of authorization requests.
-     * 
-     * @test.name Evaluate Authorization Requests - Success
-     * @test.id AA_EAR-1
-     * @test.input: Valid XML representation of a list of authorization
-     *              requests.
-     * @test.expected: Response contining the evaluation results.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testAAEar1() throws Exception {
 
-        String requestsXML =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_REQUESTS_PATH, "requests.xml");
+        String requestsXML = EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_REQUESTS_PATH, "requests.xml");
         assertXmlValidRequests(requestsXML);
 
         String evaluationResponsesXml = null;
@@ -124,18 +106,9 @@ public class PdpAbstractTest extends AaTestBase {
     }
 
     /**
-     * Test declining evaluation of authorization requests with corrupted XML
-     * data.
-     * 
-     * @test.name Evaluate Authorization Requests - corrupted xml
-     * @test.id AA_EAR-2
-     * @test.input: Corrupted XML representation of a list of authorization
-     *              requests.
-     * @test.expected: XmlCorruptedException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test declining evaluation of authorization requests with corrupted XML data.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testAAEar2() throws Exception {
@@ -150,18 +123,9 @@ public class PdpAbstractTest extends AaTestBase {
     }
 
     /**
-     * Test declining evaluation of authorization requests without providing XML
-     * data.
-     * 
-     * @test.name Evaluate Authorization Requests - no xml
-     * @test.id AA_EAR-3
-     * @test.input: No XML representation of a list of authorization requests is
-     *              provided.
-     * @test.expected: MissingMethodParameterException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test declining evaluation of authorization requests without providing XML data.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testAAEar3() throws Exception {
@@ -176,24 +140,14 @@ public class PdpAbstractTest extends AaTestBase {
     }
 
     /**
-     * Test declining evaluation of authorization requests 
-     * with providing unknown action.
-     * 
-     * @test.name Evaluate Authorization Requests - unknown action
-     * @test.id AA_EAR-4
-     * @test.input: XML representation of a list of authorization requests 
-     *              with unknown action is provided.
-     * @test.expected: MissingMethodParameterException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test declining evaluation of authorization requests with providing unknown action.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testAAEar4() throws Exception {
 
-        String requestsXML =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_REQUESTS_PATH, "requests3.xml");
+        String requestsXML = EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_REQUESTS_PATH, "requests3.xml");
         assertXmlValidRequests(requestsXML);
         String evaluationResponsesXml = null;
         try {
@@ -212,24 +166,14 @@ public class PdpAbstractTest extends AaTestBase {
     }
 
     /**
-     * Test evaluation of authorization requests 
-     * with providing load-examples action.
-     * 
-     * @test.name Evaluate Authorization Requests - unknown action
-     * @test.id AA_EAR-4
-     * @test.input: XML representation of a list of authorization requests 
-     *              with unknown action is provided.
-     * @test.expected: MissingMethodParameterException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test evaluation of authorization requests with providing load-examples action.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testAAEar5() throws Exception {
 
-        String requestsXML =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_REQUESTS_PATH, "requests4.xml");
+        String requestsXML = EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_REQUESTS_PATH, "requests4.xml");
         assertXmlValidRequests(requestsXML);
         String evaluationResponsesXml = null;
         try {

@@ -32,10 +32,9 @@ import java.lang.reflect.Method;
 
 /**
  * AOP Interceptor used for checking that no method parameter is null.<p/>
- * 
- * This Interceptor is invoked every time an EJB calls one of its service
- * classes.<br>
- * 
+ * <p/>
+ * This Interceptor is invoked every time an EJB calls one of its service classes.<br>
+ *
  * @author Michael Schneider
  */
 @Aspect
@@ -43,17 +42,12 @@ public class ParameterCheckInterceptor implements Ordered {
 
     /**
      * See Interface for functional description.
-     * 
-     * @return
-     *
      */
     @Override
     public int getOrder() {
 
         return AopUtil.PRECEDENCE_PARAMETER_CHECK_INTERCEPTOR;
     }
-
-
 
     @Before("call(public !static * de.escidoc.core.*.service.interfaces.*.*(..))"
         + " && !call(* de.escidoc.core..*.PolicyDecisionPoint*.evaluateRoles(..))"
@@ -70,10 +64,8 @@ public class ParameterCheckInterceptor implements Ordered {
                 final MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
                 final Method calledMethod = methodSignature.getMethod();
                 final String target = methodSignature.getDeclaringTypeName();
-                throw new MissingMethodParameterException(StringUtility
-                    .format("The parameter at position "+
-                            (i + 1) + " must be provided", target+ '.' + calledMethod
-                            .getName()));
+                throw new MissingMethodParameterException(StringUtility.format("The parameter at position " + (i + 1)
+                    + " must be provided", target + '.' + calledMethod.getName()));
             }
         }
     }

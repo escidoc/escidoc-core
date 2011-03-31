@@ -36,45 +36,32 @@ import java.util.Collection;
 
 /**
  * Interface of an aggregation definition renderer.
- * 
- * @author Michael Hoppe
  *
+ * @author Michael Hoppe
  */
 public interface AggregationDefinitionRendererInterface {
 
     /**
      * Gets the representation of an aggregation definition.
-     * 
-     * @param aggregationDefinition
-     *            The aggregation definition to render.
-     * @return Returns the XML representation of the aggregation definition.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
      *
+     * @param aggregationDefinition The aggregation definition to render.
+     * @return Returns the XML representation of the aggregation definition.
+     * @throws SystemException Thrown in case of an internal error.
      */
-    String render(final AggregationDefinition aggregationDefinition)
-        throws SystemException;
+    String render(final AggregationDefinition aggregationDefinition) throws SystemException;
 
     /**
      * Gets the representation of a list of the provided user accounts.
-     * 
-     * @param aggregationDefinitions
-     *            The <code>List</code> of
-     *            {@link de.escidoc.core.sm.business.persistence.AggregationDefinition}
-     *            objects to render.
-     * @param recordPacking
-     *            A string to determine how the record should be escaped in the
-     *            response. Defined values are 'string' and 'xml'. The default
-     *            is 'xml'.
-     * 
-     * @return Returns the XML representation of the list of
-     *         aggregationDefinitions.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
      *
+     * @param aggregationDefinitions The <code>List</code> of {@link de.escidoc.core.sm.business.persistence.AggregationDefinition}
+     *                               objects to render.
+     * @param recordPacking          A string to determine how the record should be escaped in the response. Defined
+     *                               values are 'string' and 'xml'. The default is 'xml'.
+     * @return Returns the XML representation of the list of aggregationDefinitions.
+     * @throws SystemException Thrown in case of an internal error.
      */
     String renderAggregationDefinitions(
-        final Collection<AggregationDefinition> aggregationDefinitions,
-        final RecordPacking recordPacking) throws SystemException;
+        final Collection<AggregationDefinition> aggregationDefinitions, final RecordPacking recordPacking)
+        throws SystemException;
 
 }

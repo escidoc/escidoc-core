@@ -39,68 +39,52 @@ import java.net.URL;
 import java.util.regex.Pattern;
 
 /**
- * {@link BaseKeyedPoolableObjectFactory} implementation creating
- * {@link Transformer} objects using a {@link TransformerFactory}.<br/>
- * The key must be a {@link String}, otherwise makeObject throws an exception.
- * It should be a namespaceUri that can be mapped to a style sheet. If this
- * mapping fails, the specified default style sheet is used.
- * 
- * @author Torsten Tetteroo
+ * {@link BaseKeyedPoolableObjectFactory} implementation creating {@link Transformer} objects using a {@link
+ * TransformerFactory}.<br/> The key must be a {@link String}, otherwise makeObject throws an exception. It should be a
+ * namespaceUri that can be mapped to a style sheet. If this mapping fails, the specified default style sheet is used.
  *
+ * @author Torsten Tetteroo
  */
 public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
 
     private static final Pattern SPLIT_PATTERN = Pattern.compile(";");
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(
-        PoolableTransformerFactory.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PoolableTransformerFactory.class);
 
     private static final String ERR_MSG_UNSUPPORTED_ARG_TYPE =
-        "Only keys of type " + String.class.getName()
-            + " are supported in makeObject.";
+        "Only keys of type " + String.class.getName() + " are supported in makeObject.";
 
-    private final TransformerFactory transformerFactory = TransformerFactory
-        .newInstance();
+    private final TransformerFactory transformerFactory = TransformerFactory.newInstance();
 
     private static final String NS_BASE_METADATAPROFILE_SCHEMA_ESCIDOC_MPG_DE =
         "http://escidoc.mpg.de/metadataprofile/schema/0.";
 
-    private static final String XSL_MAPPING_MPDL_TO_DC =
-        "/xsl/mapping-mpdl2dc-onlyMD.xsl";
+    private static final String XSL_MAPPING_MPDL_TO_DC = "/xsl/mapping-mpdl2dc-onlyMD.xsl";
 
-    private static final String XSL_MAPPING_UNKNOWN_TO_DC =
-        "/xsl/mapping-unknown2dc-onlyMD.xsl";
+    private static final String XSL_MAPPING_UNKNOWN_TO_DC = "/xsl/mapping-unknown2dc-onlyMD.xsl";
 
     private static final String CONTENT_MODEL_XSLT_DC_DATASTREAM = "DC-MAPPING";
 
-    private String defaultXsltUrl = "http://localhost:8080"
-        + XSL_MAPPING_UNKNOWN_TO_DC;
+    private String defaultXsltUrl = "http://localhost:8080" + XSL_MAPPING_UNKNOWN_TO_DC;
 
     /**
-     * The default constructor.<br/>
-     * The default style sheet uri is set to the value of the constant
+     * The default constructor.<br/> The default style sheet uri is set to the value of the constant
      * <code>XSL_MAPPING_UNKNOWN_TO_DC</code>.
-     * 
-     *
      */
     public PoolableTransformerFactory() {
 
         try {
-            setDefaultXsltUrl(EscidocConfiguration
-                .getInstance().appendToSelfURL(XSL_MAPPING_UNKNOWN_TO_DC));
+            setDefaultXsltUrl(EscidocConfiguration.getInstance().appendToSelfURL(XSL_MAPPING_UNKNOWN_TO_DC));
         }
         catch (final IOException e) {
-            LOGGER.warn("Unable to set URL of DC mapping XSLTs "
-                + "from configuration. " + e);
+            LOGGER.warn("Unable to set URL of DC mapping XSLTs " + "from configuration. " + e);
         }
     }
 
     /**
      * Sets the default style sheet url.
-     * 
-     * @param defaultXsltUrl
-     *            The default style sheet url.
      *
+     * @param defaultXsltUrl The default style sheet url.
      */
     public final void setDefaultXsltUrl(final String defaultXsltUrl) {
 
@@ -109,33 +93,30 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
 
     /**
      * See Interface for functional description.
-     * 
-     * @param key
-     *            Expecting String with XSLT location or String with XSLT
-     *            location and contentModelId (separated through semicolon).
+     *
+     * @param key Expecting String with XSLT location or String with XSLT location and contentModelId (separated through
+     *            semicolon).
      * @return Transformer
-     * @throws WebserverSystemException
-     * @throws FedoraSystemException
-     * @throws Exception
      */
     @Override
-    public Object makeObject(final Object key)
-        throws WebserverSystemException, FedoraSystemException {
+    public Object makeObject(final Object key) throws WebserverSystemException, FedoraSystemException {
         if (!(key instanceof String)) {
-            throw new UnsupportedOperationException(
-                ERR_MSG_UNSUPPORTED_ARG_TYPE);
+            throw new UnsupportedOperationException(ERR_MSG_UNSUPPORTED_ARG_TYPE);
         }
         Transformer result = null;
-        InputStream xslt =null;
+        InputStream xslt = null;
         try {
             xslt = mapKeyToXslt((String) key);
             final StreamSource streamSrc = new StreamSource(xslt);
             result = transformerFactory.newTransformer(streamSrc);
-        } catch (final IOException e) {
-                throw new WebserverSystemException("XSLT for DC-mapping not retrievable.", e);
-        } catch (final TransformerConfigurationException e) {
+        }
+        catch (final IOException e) {
+            throw new WebserverSystemException("XSLT for DC-mapping not retrievable.", e);
+        }
+        catch (final TransformerConfigurationException e) {
             throw new WebserverSystemException("Transformer for DC-mapping can not be created.", e);
-        } finally {
+        }
+        finally {
             IOUtils.closeStream(xslt);
         }
         return result;
@@ -143,49 +124,38 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
 
     /**
      * Maps the provided key to the related style sheet.
-     * 
-     * @param key
-     *            The key for that the related style sheet shall be identified.
-     * @return Returns the {@link URL} to the addressed style sheet. If no style
-     *         sheet can be identified for the provided key, the default one
-     *         identified by constant <code>XSL_MAPPING_UNKNOWN_TO_DC</code> is
-     *         returned.
-     * @throws FedoraSystemException
-     * @throws WebserverSystemException
-     * @throws IOException
-     *             Thrown if retrieving values from eSciDoc properties
-     *             (configuration) failed.
+     *
+     * @param key The key for that the related style sheet shall be identified.
+     * @return Returns the {@link URL} to the addressed style sheet. If no style sheet can be identified for the
+     *         provided key, the default one identified by constant <code>XSL_MAPPING_UNKNOWN_TO_DC</code> is returned.
+     * @throws IOException Thrown if retrieving values from eSciDoc properties (configuration) failed.
      */
-    private InputStream mapKeyToXslt(final String key)
-        throws WebserverSystemException, FedoraSystemException, IOException {
+    private InputStream mapKeyToXslt(final String key) throws WebserverSystemException, FedoraSystemException,
+        IOException {
 
         final String[] keyParts = SPLIT_PATTERN.split(key);
         final String nsUri = keyParts[0];
         final String contentModelId = keyParts[1];
 
         InputStream xslt;
-        xslt = nsUri != null
-                && nsUri.startsWith(NS_BASE_METADATAPROFILE_SCHEMA_ESCIDOC_MPG_DE) ? new URL(EscidocConfiguration.getInstance().appendToSelfURL(
-                XSL_MAPPING_MPDL_TO_DC)).openStream() : new URL(this.defaultXsltUrl).openStream();
+        xslt =
+            nsUri != null && nsUri.startsWith(NS_BASE_METADATAPROFILE_SCHEMA_ESCIDOC_MPG_DE) ? new URL(
+                EscidocConfiguration.getInstance().appendToSelfURL(XSL_MAPPING_MPDL_TO_DC)).openStream() : new URL(
+                this.defaultXsltUrl).openStream();
         // xslt is the mpdl-xslt- or default-xslt-stream
-        if (contentModelId.length() > 0
-            && !"null".equalsIgnoreCase(contentModelId)) {
+        if (contentModelId.length() > 0 && !"null".equalsIgnoreCase(contentModelId)) {
             // create link to content of DC-MAPPING in content model object
-            final String dcMappingXsltFedoraUrl =
-                "/get/" + contentModelId + '/'
-                    + CONTENT_MODEL_XSLT_DC_DATASTREAM;
+            final String dcMappingXsltFedoraUrl = "/get/" + contentModelId + '/' + CONTENT_MODEL_XSLT_DC_DATASTREAM;
             try {
-                xslt =
-                    FedoraUtility.getInstance().requestFedoraURL(
-                        dcMappingXsltFedoraUrl);
+                xslt = FedoraUtility.getInstance().requestFedoraURL(dcMappingXsltFedoraUrl);
 
             }
             catch (final WebserverSystemException e) {
                 // xslt is still the stream set above
-                if(LOGGER.isWarnEnabled()) {
+                if (LOGGER.isWarnEnabled()) {
                     LOGGER.warn("Error on requesting URL '" + dcMappingXsltFedoraUrl + '\'');
                 }
-                if(LOGGER.isDebugEnabled()) {
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Error on requesting URL '" + dcMappingXsltFedoraUrl + '\'', e);
                 }
             }

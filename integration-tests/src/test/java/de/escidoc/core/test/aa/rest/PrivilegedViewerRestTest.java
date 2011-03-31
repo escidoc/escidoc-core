@@ -43,43 +43,35 @@ import java.util.HashMap;
 
 /**
  * Test suite for the role PrivilegedViewer using the REST interface.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 @RunWith(Parameterized.class)
 public class PrivilegedViewerRestTest extends PrivilegedViewerAbstractTest {
 
     /**
      * Initializes test-class with data.
-     * 
+     *
      * @return Collection with data.
-     * 
      */
     @Parameters
     public static Collection<Object[]> data() {
-        return Arrays.asList(new Object[][]{
-                {USER_ACCOUNT_HANDLER_CODE, 
-                    PWCallback.ID_PREFIX + PWCallback.TEST_HANDLE},
-                {USER_GROUP_HANDLER_CODE, USER_GROUP_WITH_GROUP_LIST_ID},
-                {USER_GROUP_HANDLER_CODE, USER_GROUP_WITH_USER_LIST_ID},
-                {USER_GROUP_HANDLER_CODE, USER_GROUP_WITH_OU_LIST_ID},
-                {USER_GROUP_HANDLER_CODE, USER_GROUP_WITH_EXTERNAL_SELECTOR}
-        });
+        return Arrays.asList(new Object[][] {
+            { USER_ACCOUNT_HANDLER_CODE, PWCallback.ID_PREFIX + PWCallback.TEST_HANDLE },
+            { USER_GROUP_HANDLER_CODE, USER_GROUP_WITH_GROUP_LIST_ID },
+            { USER_GROUP_HANDLER_CODE, USER_GROUP_WITH_USER_LIST_ID },
+            { USER_GROUP_HANDLER_CODE, USER_GROUP_WITH_OU_LIST_ID },
+            { USER_GROUP_HANDLER_CODE, USER_GROUP_WITH_EXTERNAL_SELECTOR } });
     }
 
     /**
      * Constructor.
-     * 
-     * @param handlerCode handlerCode 
-     *      of UserAccountHandler or UserGroupHandler
-     * @param userOrGroupId
-     *            userOrGroupId for grantCreation.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param handlerCode   handlerCode of UserAccountHandler or UserGroupHandler
+     * @param userOrGroupId userOrGroupId for grantCreation.
+     * @throws Exception If anything fails.
      */
-    public PrivilegedViewerRestTest(final int handlerCode,
-            final String userOrGroupId) throws Exception {
+    public PrivilegedViewerRestTest(final int handlerCode, final String userOrGroupId) throws Exception {
 
         super(Constants.TRANSPORT_REST, handlerCode, userOrGroupId);
     }
@@ -87,123 +79,75 @@ public class PrivilegedViewerRestTest extends PrivilegedViewerAbstractTest {
     // REST only tests
 
     /**
-     * Tests successfully retrieving a private component 
-     * of an item in status pending by an privileged viewer.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests successfully retrieving a private component of an item in status pending by an privileged viewer.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
-    public void testRetrievePrivateComponentOfPendingItemAllowed()
-                                                    throws Exception {
-        HashMap<String, String> createdIds = 
-            prepare(STATUS_PENDING, ALLOWED_CONTEXT);
-        doTestRetrieveContent(
-                PWCallback.TEST_HANDLE, 
-                createdIds.get("itemId"), 
-                createdIds.get("privateComponentId"), 
-                null, 
-                null);
+    public void testRetrievePrivateComponentOfPendingItemAllowed() throws Exception {
+        HashMap<String, String> createdIds = prepare(STATUS_PENDING, ALLOWED_CONTEXT);
+        doTestRetrieveContent(PWCallback.TEST_HANDLE, createdIds.get("itemId"), createdIds.get("privateComponentId"),
+            null, null);
     }
 
     /**
-     * Tests unsuccessfully retrieving a private component 
-     * of an item in status pending by an privileged viewer.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests unsuccessfully retrieving a private component of an item in status pending by an privileged viewer.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
-    public void testRetrievePrivateComponentOfPendingItemDisallowed()
-                                                      throws Exception {
-        HashMap<String, String> createdIds = 
-            prepare(STATUS_PENDING, DISALLOWED_CONTEXT);
-        doTestRetrieveContent(
-                PWCallback.TEST_HANDLE, 
-                createdIds.get("itemId"), 
-                createdIds.get("privateComponentId"), 
-                null, 
-                AuthorizationException.class);
+    public void testRetrievePrivateComponentOfPendingItemDisallowed() throws Exception {
+        HashMap<String, String> createdIds = prepare(STATUS_PENDING, DISALLOWED_CONTEXT);
+        doTestRetrieveContent(PWCallback.TEST_HANDLE, createdIds.get("itemId"), createdIds.get("privateComponentId"),
+            null, AuthorizationException.class);
     }
 
     /**
-     * Tests successfully retrieving a private component 
-     * of an item in status released by an privileged viewer.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests successfully retrieving a private component of an item in status released by an privileged viewer.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
-    public void testRetrievePrivateComponentOfReleasedItemAllowed() 
-                                                       throws Exception {
-        HashMap<String, String> createdIds = 
-            prepare(STATUS_PENDING, ALLOWED_CONTEXT);
-        doTestRetrieveContent(
-                PWCallback.TEST_HANDLE, 
-                createdIds.get("itemId"), 
-                createdIds.get("privateComponentId"), 
-                null, 
-                null);
+    public void testRetrievePrivateComponentOfReleasedItemAllowed() throws Exception {
+        HashMap<String, String> createdIds = prepare(STATUS_PENDING, ALLOWED_CONTEXT);
+        doTestRetrieveContent(PWCallback.TEST_HANDLE, createdIds.get("itemId"), createdIds.get("privateComponentId"),
+            null, null);
     }
 
     /**
-     * Tests unsuccessfully retrieving a private component 
-     * of an item in status released by an privileged viewer.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests unsuccessfully retrieving a private component of an item in status released by an privileged viewer.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
-    public void testRetrievePrivateComponentOfReleasedItemDisallowed() 
-                                                        throws Exception {
-        HashMap<String, String> createdIds = 
-            prepare(STATUS_PENDING, DISALLOWED_CONTEXT);
-        doTestRetrieveContent(
-                PWCallback.TEST_HANDLE, 
-                createdIds.get("itemId"), 
-                createdIds.get("privateComponentId"), 
-                null, 
-                AuthorizationException.class);
+    public void testRetrievePrivateComponentOfReleasedItemDisallowed() throws Exception {
+        HashMap<String, String> createdIds = prepare(STATUS_PENDING, DISALLOWED_CONTEXT);
+        doTestRetrieveContent(PWCallback.TEST_HANDLE, createdIds.get("itemId"), createdIds.get("privateComponentId"),
+            null, AuthorizationException.class);
     }
 
     /**
-     * Tests successfully retrieving a private component 
-     * of an item in status released by an privileged viewer.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests successfully retrieving a private component of an item in status released by an privileged viewer.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
-    public void testRetrievePrivateComponentOfVersionAllowed() 
-                                                       throws Exception {
-        HashMap<String, String> createdIds = 
-            prepare(STATUS_PENDING, ALLOWED_CONTEXT);
-        doTestRetrieveContent(
-                PWCallback.TEST_HANDLE, 
-                createdIds.get("itemId"), 
-                createdIds.get("privateComponentId"), 
-                "1", 
-                null);
+    public void testRetrievePrivateComponentOfVersionAllowed() throws Exception {
+        HashMap<String, String> createdIds = prepare(STATUS_PENDING, ALLOWED_CONTEXT);
+        doTestRetrieveContent(PWCallback.TEST_HANDLE, createdIds.get("itemId"), createdIds.get("privateComponentId"),
+            "1", null);
     }
 
     /**
-     * Tests unsuccessfully retrieving a private component 
-     * of an item in status released by an privileged viewer.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests unsuccessfully retrieving a private component of an item in status released by an privileged viewer.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
-    public void testRetrievePrivateComponentOfVersionDisallowed() 
-                                                        throws Exception {
-        HashMap<String, String> createdIds = 
-            prepare(STATUS_PENDING, DISALLOWED_CONTEXT);
-        doTestRetrieveContent(
-                PWCallback.TEST_HANDLE, 
-                createdIds.get("itemId"), 
-                createdIds.get("privateComponentId"), 
-                "1", 
-                AuthorizationException.class);
+    public void testRetrievePrivateComponentOfVersionDisallowed() throws Exception {
+        HashMap<String, String> createdIds = prepare(STATUS_PENDING, DISALLOWED_CONTEXT);
+        doTestRetrieveContent(PWCallback.TEST_HANDLE, createdIds.get("itemId"), createdIds.get("privateComponentId"),
+            "1", AuthorizationException.class);
     }
 
 }

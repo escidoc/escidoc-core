@@ -10,17 +10,17 @@ import de.escidoc.core.index.IndexServiceException;
 public class IndexServiceImpl {
 
     private IndexingHandler indexingHandler;
+
     private AdminHandlerInterface adminHandler;
 
     public void onNewIndexRequest(final IndexRequest indexRequest) throws IndexServiceException {
         final String indexName = indexRequest.getIndexName();
-        final boolean allIndexes = indexName == null
-                || indexName.trim().length() == 0
-                || "all".equalsIgnoreCase(indexName); // NON-NLS
+        final boolean allIndexes =
+            indexName == null || indexName.trim().length() == 0 || "all".equalsIgnoreCase(indexName); // NON-NLS
         // TODO: Refactor this code. IndexingHandler should be moved from commons module to this module.
         try {
-            if (UserContext.getSecurityContext() == null 
-                    || UserContext.getSecurityContext().getAuthentication() == null) {
+            if (UserContext.getSecurityContext() == null
+                || UserContext.getSecurityContext().getAuthentication() == null) {
                 UserContext.setUserContext("");
             }
             UserContext.runAsInternalUser();
@@ -29,29 +29,28 @@ public class IndexServiceImpl {
                 adminHandler.decreaseReindexStatus(indexRequest.getObjectType());
             }
             if (allIndexes) {
-                indexingHandler.doIndexing(indexRequest.getResource(), indexRequest.getObjectType(), indexRequest.getAction(), true, null);
-            } else {
-                indexingHandler.doIndexing(indexRequest.getResource(), indexRequest.getObjectType(), indexName, indexRequest.getAction(), true, null);
+                indexingHandler.doIndexing(indexRequest.getResource(), indexRequest.getObjectType(), indexRequest
+                    .getAction(), true, null);
+            }
+            else {
+                indexingHandler.doIndexing(indexRequest.getResource(), indexRequest.getObjectType(), indexName,
+                    indexRequest.getAction(), true, null);
             }
             //If reindexer wrote in queue, also index synchronous indexes
             if (indexRequest.getIsReindexerCaller()) {
                 if (allIndexes) {
-                    indexingHandler.doIndexing(indexRequest.getResource(), indexRequest.getObjectType(), indexRequest.getAction(), false, null);
-                } else {
-                    indexingHandler.doIndexing(indexRequest.getResource(), indexRequest.getObjectType(), indexName, indexRequest.getAction(), false, null);
+                    indexingHandler.doIndexing(indexRequest.getResource(), indexRequest.getObjectType(), indexRequest
+                        .getAction(), false, null);
+                }
+                else {
+                    indexingHandler.doIndexing(indexRequest.getResource(), indexRequest.getObjectType(), indexName,
+                        indexRequest.getAction(), false, null);
                 }
             }
-        } catch (final EscidocException e) {
-            throw new IndexServiceException(
-                "Error on indexing resource " 
-                + indexRequest.getResource() 
-                + ", index "
-                + indexName
-                + ", all indexes "
-                + allIndexes
-                + ", action "
-                + indexRequest.getAction()
-                + ':'
+        }
+        catch (final EscidocException e) {
+            throw new IndexServiceException("Error on indexing resource " + indexRequest.getResource() + ", index "
+                + indexName + ", all indexes " + allIndexes + ", action " + indexRequest.getAction() + ':'
                 + e.getMessage(), e);
         }
     }
@@ -66,8 +65,6 @@ public class IndexServiceImpl {
 
     @Override
     public String toString() {
-        return "IndexServiceImpl{" +
-                "indexingHandler=" + this.indexingHandler +
-                '}';
+        return "IndexServiceImpl{" + "indexingHandler=" + this.indexingHandler + '}';
     }
 }

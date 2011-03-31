@@ -37,9 +37,8 @@ import org.junit.Test;
 
 /**
  * Test suite for the role ContentRelationManager.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 public class ContentRelationManagerAbstractTest extends GrantTestBase {
 
@@ -50,35 +49,27 @@ public class ContentRelationManagerAbstractTest extends GrantTestBase {
     private static final String PASSWORD = PWCallback.PASSWORD;
 
     protected static String grantCreationUserOrGroupId = null;
-    
+
     private static int methodCounter = 0;
-    
+
     /**
      * The constructor.
-     * 
-     * @param transport
-     *            The transport identifier.
-     * @param handlerCode
-     *            handlerCode of either UserAccountHandler or UserGroupHandler.
-     * @param userOrGroupId
-     *            userOrGroupId for grantCreation.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param transport     The transport identifier.
+     * @param handlerCode   handlerCode of either UserAccountHandler or UserGroupHandler.
+     * @param userOrGroupId userOrGroupId for grantCreation.
+     * @throws Exception If anything fails.
      */
-    public ContentRelationManagerAbstractTest(
-            final int transport, 
-            final int handlerCode,
-            final String userOrGroupId) throws Exception {
+    public ContentRelationManagerAbstractTest(final int transport, final int handlerCode, final String userOrGroupId)
+        throws Exception {
         super(transport, handlerCode);
         grantCreationUserOrGroupId = userOrGroupId;
     }
 
     /**
      * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Before
     public void initialize() throws Exception {
@@ -87,16 +78,14 @@ public class ContentRelationManagerAbstractTest extends GrantTestBase {
             revokeAllGrants(grantCreationUserOrGroupId);
             //create grant ContentRelationManager 
             //for user grantCreationUserOrGroupId 
-            doTestCreateGrant(null, grantCreationUserOrGroupId, 
-                null, ROLE_HREF_CONTENT_RELATION_MANAGER, null);
+            doTestCreateGrant(null, grantCreationUserOrGroupId, null, ROLE_HREF_CONTENT_RELATION_MANAGER, null);
         }
     }
 
     /**
      * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @After
     public void deinitialize() throws Exception {
@@ -109,9 +98,8 @@ public class ContentRelationManagerAbstractTest extends GrantTestBase {
 
     /**
      * Tests creating a content-relation by a content-relation-manager.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testCreateContentRelation() throws Exception {
@@ -120,316 +108,247 @@ public class ContentRelationManagerAbstractTest extends GrantTestBase {
 
     /**
      * Tests declining creating a content-relation by a anonymous user.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testCreateContentRelationDecline() throws Exception {
-        doTestCreateContentRelation(
-                PWCallback.ANONYMOUS_HANDLE, AuthorizationException.class);
+        doTestCreateContentRelation(PWCallback.ANONYMOUS_HANDLE, AuthorizationException.class);
     }
 
     /**
-     * Tests updating a content-relation by a content-relation-manager
-     * who has created the content-relation.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests updating a content-relation by a content-relation-manager who has created the content-relation.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testUpdateContentRelation() throws Exception {
-        doTestUpdateContentRelation(
-                HANDLE, HANDLE, 
-                STATUS_PENDING, null, null, null);
+        doTestUpdateContentRelation(HANDLE, HANDLE, STATUS_PENDING, null, null, null);
     }
 
     /**
-     * Tests declining updating a content-relation by a content-relation-manager
-     * who has not created the content-relation.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests declining updating a content-relation by a content-relation-manager who has not created the
+     * content-relation.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testUpdateContentRelationDecline() throws Exception {
-        doTestUpdateContentRelation(
-                HANDLE, PWCallback.DEFAULT_HANDLE, 
-                STATUS_PENDING, null, null, AuthorizationException.class);
+        doTestUpdateContentRelation(HANDLE, PWCallback.DEFAULT_HANDLE, STATUS_PENDING, null, null,
+            AuthorizationException.class);
     }
 
     /**
-     * Tests deleting a content-relation by a content-relation-manager
-     * who has created the content-relation.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests deleting a content-relation by a content-relation-manager who has created the content-relation.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testDeleteContentRelation() throws Exception {
-        doTestDeleteContentRelation(
-                HANDLE, HANDLE, 
-                STATUS_PENDING, null, null);
+        doTestDeleteContentRelation(HANDLE, HANDLE, STATUS_PENDING, null, null);
     }
 
     /**
-     * Tests declining deleting a content-relation by a content-relation-manager
-     * who has not created the content-relation.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests declining deleting a content-relation by a content-relation-manager who has not created the
+     * content-relation.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testDeleteContentRelationDecline() throws Exception {
-        doTestDeleteContentRelation(
-                HANDLE, PWCallback.DEFAULT_HANDLE, 
-                STATUS_PENDING, null, AuthorizationException.class);
+        doTestDeleteContentRelation(HANDLE, PWCallback.DEFAULT_HANDLE, STATUS_PENDING, null,
+            AuthorizationException.class);
     }
 
     /**
-     * Tests locking a content-relation by a content-relation-manager
-     * who has created the content-relation.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests locking a content-relation by a content-relation-manager who has created the content-relation.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testLockContentRelation() throws Exception {
-        doTestLockContentRelation(
-                HANDLE, HANDLE, 
-                STATUS_SUBMITTED, null, null);
+        doTestLockContentRelation(HANDLE, HANDLE, STATUS_SUBMITTED, null, null);
     }
 
     /**
-     * Tests declining locking a content-relation by a content-relation-manager
-     * who has not created the content-relation.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests declining locking a content-relation by a content-relation-manager who has not created the
+     * content-relation.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testLockContentRelationDecline() throws Exception {
-        doTestLockContentRelation(
-                HANDLE, PWCallback.DEFAULT_HANDLE, 
-                STATUS_SUBMITTED, null, AuthorizationException.class);
+        doTestLockContentRelation(HANDLE, PWCallback.DEFAULT_HANDLE, STATUS_SUBMITTED, null,
+            AuthorizationException.class);
     }
 
     /**
-     * Tests unlocking a content-relation by a content-relation-manager
-     * who has created the content-relation.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests unlocking a content-relation by a content-relation-manager who has created the content-relation.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testUnlockContentRelation() throws Exception {
-        doTestUnlockContentRelation(
-                HANDLE, HANDLE, 
-                STATUS_SUBMITTED, null, null);
+        doTestUnlockContentRelation(HANDLE, HANDLE, STATUS_SUBMITTED, null, null);
     }
 
     /**
-     * Tests declining unlocking a content-relation by a content-relation-manager
-     * who has not created the content-relation.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests declining unlocking a content-relation by a content-relation-manager who has not created the
+     * content-relation.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testUnlockContentRelationDecline() throws Exception {
-        doTestUnlockContentRelation(
-                HANDLE, PWCallback.DEFAULT_HANDLE, 
-                STATUS_SUBMITTED, null, AuthorizationException.class);
+        doTestUnlockContentRelation(HANDLE, PWCallback.DEFAULT_HANDLE, STATUS_SUBMITTED, null,
+            AuthorizationException.class);
     }
 
     /**
-     * Tests assigning an object-pid 
-     * to a content-relation by a content-relation-manager
-     * who has created the content-relation.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests assigning an object-pid to a content-relation by a content-relation-manager who has created the
+     * content-relation.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testAssignObjectPidContentRelation() throws Exception {
-        doTestContentRelationAssignObjectPid(
-                HANDLE, HANDLE, 
-                STATUS_SUBMITTED, null, null);
+        doTestContentRelationAssignObjectPid(HANDLE, HANDLE, STATUS_SUBMITTED, null, null);
     }
 
     /**
-     * Tests declining assigning an object-pid to 
-     * a content-relation by a content-relation-manager
-     * who has not created the content-relation.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests declining assigning an object-pid to a content-relation by a content-relation-manager who has not created
+     * the content-relation.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testAssignObjectPidContentRelationDecline() throws Exception {
-        doTestContentRelationAssignObjectPid(
-                HANDLE, PWCallback.DEFAULT_HANDLE, 
-                STATUS_SUBMITTED, null, AuthorizationException.class);
+        doTestContentRelationAssignObjectPid(HANDLE, PWCallback.DEFAULT_HANDLE, STATUS_SUBMITTED, null,
+            AuthorizationException.class);
     }
 
     /**
-     * Tests submitting a content-relation by a content-relation-manager
-     * who has created the content-relation.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests submitting a content-relation by a content-relation-manager who has created the content-relation.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSubmitContentRelation() throws Exception {
-        doTestSubmitContentRelation(
-                HANDLE, HANDLE, 
-                null, null);
+        doTestSubmitContentRelation(HANDLE, HANDLE, null, null);
     }
 
     /**
-     * Tests declining submitting a content-relation by a content-relation-manager
-     * who has not created the content-relation.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests declining submitting a content-relation by a content-relation-manager who has not created the
+     * content-relation.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSubmitContentRelationDecline() throws Exception {
-        doTestSubmitContentRelation(
-                HANDLE, PWCallback.DEFAULT_HANDLE, 
-                null, AuthorizationException.class);
+        doTestSubmitContentRelation(HANDLE, PWCallback.DEFAULT_HANDLE, null, AuthorizationException.class);
     }
 
     /**
-     * Tests releasing a content-relation by a content-relation-manager
-     * who has created the content-relation.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests releasing a content-relation by a content-relation-manager who has created the content-relation.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testReleaseContentRelation() throws Exception {
-        doTestReleaseContentRelation(
-                HANDLE, HANDLE, 
-                null, null);
+        doTestReleaseContentRelation(HANDLE, HANDLE, null, null);
     }
 
     /**
-     * Tests declining releasing a content-relation by a content-relation-manager
-     * who has not created the content-relation.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests declining releasing a content-relation by a content-relation-manager who has not created the
+     * content-relation.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testReleaseContentRelationDecline() throws Exception {
-        doTestReleaseContentRelation(
-                HANDLE, PWCallback.DEFAULT_HANDLE, 
-                null, AuthorizationException.class);
+        doTestReleaseContentRelation(HANDLE, PWCallback.DEFAULT_HANDLE, null, AuthorizationException.class);
     }
 
     /**
-     * Tests revising a content-relation by a content-relation-manager
-     * who has created the content-relation.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests revising a content-relation by a content-relation-manager who has created the content-relation.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testReviseContentRelation() throws Exception {
-        doTestReviseContentRelation(
-                HANDLE, HANDLE, 
-                null, null);
+        doTestReviseContentRelation(HANDLE, HANDLE, null, null);
     }
 
     /**
-     * Tests declining revising a content-relation by a content-relation-manager
-     * who has not created the content-relation.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests declining revising a content-relation by a content-relation-manager who has not created the
+     * content-relation.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testReviseContentRelationDecline() throws Exception {
-        doTestReviseContentRelation(
-                HANDLE, PWCallback.DEFAULT_HANDLE, 
-                null, AuthorizationException.class);
+        doTestReviseContentRelation(HANDLE, PWCallback.DEFAULT_HANDLE, null, AuthorizationException.class);
     }
 
     /**
-     * Tests creating a grant by a content-relation-manager
-     * for a content-relation the content-relation-manager created.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests creating a grant by a content-relation-manager for a content-relation the content-relation-manager
+     * created.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testCreateGrantForContentRelation() throws Exception {
         String createdXml = doTestCreateContentRelation(HANDLE, null);
-        
-        doTestCreateGrant(HANDLE, grantCreationUserOrGroupId, 
-                Constants.CONTENT_RELATION_BASE_URI + "/" 
-                + getObjidValue(createdXml), 
-                ROLE_HREF_CONTENT_RELATION_MODIFIER, null);
+
+        doTestCreateGrant(HANDLE, grantCreationUserOrGroupId, Constants.CONTENT_RELATION_BASE_URI + "/"
+            + getObjidValue(createdXml), ROLE_HREF_CONTENT_RELATION_MODIFIER, null);
     }
 
     /**
-     * Tests declining creating a grant by a content-relation-manager
-     * for a content-relation the content-relation-manager did not create.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests declining creating a grant by a content-relation-manager for a content-relation the
+     * content-relation-manager did not create.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testCreateGrantForContentRelationDecline() throws Exception {
-        String createdXml = doTestCreateContentRelation(
-                        PWCallback.DEFAULT_HANDLE, null);
-        
-        doTestCreateGrant(HANDLE, grantCreationUserOrGroupId, 
-                Constants.CONTENT_RELATION_BASE_URI + "/" 
-                + getObjidValue(createdXml), 
-                ROLE_HREF_CONTENT_RELATION_MODIFIER, AuthorizationException.class);
+        String createdXml = doTestCreateContentRelation(PWCallback.DEFAULT_HANDLE, null);
+
+        doTestCreateGrant(HANDLE, grantCreationUserOrGroupId, Constants.CONTENT_RELATION_BASE_URI + "/"
+            + getObjidValue(createdXml), ROLE_HREF_CONTENT_RELATION_MODIFIER, AuthorizationException.class);
     }
 
     /**
-     * Tests retrieving a content-relation by a content-relation-manager
-     * who has created the content-relation.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests retrieving a content-relation by a content-relation-manager who has created the content-relation.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveContentRelation() throws Exception {
-        doTestRetrieveContentRelation(
-                HANDLE, HANDLE, 
-                STATUS_SUBMITTED, null, false, null, null);
+        doTestRetrieveContentRelation(HANDLE, HANDLE, STATUS_SUBMITTED, null, false, null, null);
     }
 
     /**
      * Tests retrieving a released content-relation by a anonymous user.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveReleasedContentRelation() throws Exception {
-        doTestRetrieveContentRelation(
-                PWCallback.ANONYMOUS_HANDLE, PWCallback.DEFAULT_HANDLE, 
-                STATUS_RELEASED, null, false, null, null);
+        doTestRetrieveContentRelation(PWCallback.ANONYMOUS_HANDLE, PWCallback.DEFAULT_HANDLE, STATUS_RELEASED, null,
+            false, null, null);
     }
 
     /**
-     * Tests declining retrieving a content-relation by a content-relation-manager
-     * who has not created the content-relation.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests declining retrieving a content-relation by a content-relation-manager who has not created the
+     * content-relation.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveContentRelationDecline() throws Exception {
-        doTestRetrieveContentRelation(
-                HANDLE, PWCallback.DEFAULT_HANDLE, 
-                STATUS_SUBMITTED, null, false, null, AuthorizationException.class);
+        doTestRetrieveContentRelation(HANDLE, PWCallback.DEFAULT_HANDLE, STATUS_SUBMITTED, null, false, null,
+            AuthorizationException.class);
     }
 
 }

@@ -52,9 +52,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 
  * @author Steffen Wagner
- * 
  */
 public class ContextPropertiesUpdateHandler extends DefaultHandler {
 
@@ -74,19 +72,15 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
 
     private final List<String> orgunits = new ArrayList<String>();
 
-    private static final String organizationalUnitPath =
-        "/context/properties/organizational-units/organizational-unit";
+    private static final String organizationalUnitPath = "/context/properties/organizational-units/organizational-unit";
 
     /**
      * Handler to update Context properties.
-     * 
-     * @param contextId
-     *            Id of the Context object.
-     * @param parser
-     *            StaxParser
+     *
+     * @param contextId Id of the Context object.
+     * @param parser    StaxParser
      */
-    public ContextPropertiesUpdateHandler(final String contextId,
-        final StaxParser parser) {
+    public ContextPropertiesUpdateHandler(final String contextId, final StaxParser parser) {
         this.contextId = contextId;
         this.propertiesPath = "/context/properties";
         this.parser = parser;
@@ -100,22 +94,14 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
 
     /**
      * Handle the start of an element.
-     * 
-     * @param element
-     *            The element.
-     * @return The element.
-     * @throws MissingAttributeValueException
-     * @throws OrganizationalUnitNotFoundException
-     * @throws InvalidStatusException
-     * @throws SystemException
      *
+     * @param element The element.
+     * @return The element.
      */
     @Override
-    public StartElement startElement(final StartElement element)
-        throws InvalidContentException, ReadonlyElementViolationException,
-        ReadonlyAttributeViolationException, MissingAttributeValueException,
-        OrganizationalUnitNotFoundException, InvalidStatusException,
-        SystemException {
+    public StartElement startElement(final StartElement element) throws InvalidContentException,
+        ReadonlyElementViolationException, ReadonlyAttributeViolationException, MissingAttributeValueException,
+        OrganizationalUnitNotFoundException, InvalidStatusException, SystemException {
 
         final String currentPath = parser.getCurPath();
         // String theName = element.getLocalName();
@@ -126,21 +112,14 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
             Utility.getInstance().checkIsOrganizationalUnit(id);
 
             final String orgUnitStatus =
-                TripleStoreUtility.getInstance().getPropertiesElements(id,
-                    TripleStoreUtility.PROP_PUBLIC_STATUS);
+                TripleStoreUtility.getInstance().getPropertiesElements(id, TripleStoreUtility.PROP_PUBLIC_STATUS);
 
-            if (!orgUnitStatus
-                .equals(Constants.STATUS_OU_OPENED)) {
-                throw new InvalidStatusException("Organizational unit with id "
-                        + id
-                        + " should be in status "
-                        + Constants.STATUS_OU_OPENED
-                        + " but is in status " + orgUnitStatus);
+            if (!orgUnitStatus.equals(Constants.STATUS_OU_OPENED)) {
+                throw new InvalidStatusException("Organizational unit with id " + id + " should be in status "
+                    + Constants.STATUS_OU_OPENED + " but is in status " + orgUnitStatus);
             }
             this.orgunits.add(id);
         }
-
-
 
         return element;
     }
@@ -151,16 +130,14 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
     }
 
     @Override
-    public String characters(final String data, final StartElement element)
-        throws Exception {
+    public String characters(final String data, final StartElement element) throws Exception {
         final String curPath = parser.getCurPath();
 
         if (curPath.startsWith(this.propertiesPath)) {
             // name
             if (curPath.equals(this.propertiesPath + '/' + Elements.ELEMENT_NAME)) {
                 if (data.length() == 0) {
-                    throw new MissingElementValueException(
-                        "element 'name' is empty.");
+                    throw new MissingElementValueException("element 'name' is empty.");
                 }
                 if (checkValueChanged(Elements.ELEMENT_NAME, data)) {
                     this.changedValuesInDc.put(Elements.ELEMENT_NAME, data);
@@ -168,31 +145,25 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
             }
 
             // type
-            else if (curPath.equals(this.propertiesPath + '/'
-                + Elements.ELEMENT_TYPE)) {
+            else if (curPath.equals(this.propertiesPath + '/' + Elements.ELEMENT_TYPE)) {
                 if (data.length() == 0) {
-                    throw new MissingElementValueException(
-                        "element 'type' is empty.");
+                    throw new MissingElementValueException("element 'type' is empty.");
                 }
                 if (checkValueChanged(Elements.ELEMENT_TYPE, data)) {
-                    this.changedValuesInRelsExt
-                        .put(Elements.ELEMENT_TYPE, data);
+                    this.changedValuesInRelsExt.put(Elements.ELEMENT_TYPE, data);
                 }
 
             }
             // description
-            else if (curPath.equals(this.propertiesPath + '/'
-                + Elements.ELEMENT_DESCRIPTION)) {
+            else if (curPath.equals(this.propertiesPath + '/' + Elements.ELEMENT_DESCRIPTION)) {
                 deletableValues.remove(Elements.ELEMENT_DESCRIPTION);
                 if (TripleStoreUtility.getInstance().getPropertiesElements(this.contextId,
-                    Constants.DC_NS_URI
-                        + Elements.ELEMENT_DESCRIPTION) == null) {
+                    Constants.DC_NS_URI + Elements.ELEMENT_DESCRIPTION) == null) {
                     valuesToAdd.put(Elements.ELEMENT_DESCRIPTION, data);
                 }
                 else {
                     if (checkValueChanged(Elements.ELEMENT_DESCRIPTION, data)) {
-                        this.changedValuesInDc.put(
-                            Elements.ELEMENT_DESCRIPTION, data);
+                        this.changedValuesInDc.put(Elements.ELEMENT_DESCRIPTION, data);
                     }
                 }
 
@@ -205,7 +176,7 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
 
     /**
      * Return HashMap of values which are not equal to repository (TripleStore).
-     * 
+     *
      * @return changed values
      */
     public Map<String, String> getChangedValuesInRelsExt() {
@@ -214,44 +185,36 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
 
     /**
      * Return HashMap of values which are not equal to repository (TripleStore).
-     * 
+     *
      * @return changed values
      */
     public Map<String, String> getChangedValuesInDc() {
         return this.changedValuesInDc;
     }
 
-
-
     // FIXME ? This check requires triplestore access. Just set new datastream
     // and leave it to the resource to check if it is changed!? (FRS)
+
     /**
      * Check if value equals repository entry (only TripleStrore entries).
-     * 
-     * 
-     * @param key
-     *            search key
-     * @param value
-     *            value
-     * @return true If value does not compares to the reopsitory value. false If
-     *         value compares to the respository value.
-     * @throws SystemException
-     *             In case of TripeStore access error.
+     *
+     * @param key   search key
+     * @param value value
+     * @return true If value does not compares to the reopsitory value. false If value compares to the respository
+     *         value.
+     * @throws SystemException In case of TripeStore access error.
      */
-    private boolean checkValueChanged(final String key, final String value)
-        throws SystemException {
+    private boolean checkValueChanged(final String key, final String value) throws SystemException {
         final String repositoryValue;
 
-        repositoryValue = key.equals(Elements.ELEMENT_DESCRIPTION) ? TripleStoreUtility.getInstance().getPropertiesElements(
-                this.contextId,
-                Constants.DC_NS_URI + key) : key.equals(Elements.ELEMENT_NAME) ? TripleStoreUtility.getInstance().getTitle(
-                this.contextId) : TripleStoreUtility.getInstance().getPropertiesElements(this.contextId,
-                Constants.PROPERTIES_NS_URI
-                        + key);
+        repositoryValue =
+            key.equals(Elements.ELEMENT_DESCRIPTION) ? TripleStoreUtility.getInstance().getPropertiesElements(
+                this.contextId, Constants.DC_NS_URI + key) : key.equals(Elements.ELEMENT_NAME) ? TripleStoreUtility
+                .getInstance().getTitle(this.contextId) : TripleStoreUtility.getInstance().getPropertiesElements(
+                this.contextId, Constants.PROPERTIES_NS_URI + key);
 
         boolean changed = false;
-        if (!XmlUtility.escapeForbiddenXmlCharacters(value).equals(
-            repositoryValue)) {
+        if (!XmlUtility.escapeForbiddenXmlCharacters(value).equals(repositoryValue)) {
             changed = true;
         }
 
@@ -259,7 +222,7 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
     }
 
     /**
-     * 
+     *
      * @return
      */
     public List<String> getPropertiesToRemove() {
@@ -267,7 +230,7 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
     }
 
     /**
-     * 
+     *
      * @return
      */
     public Map<String, String> getPropertiesToAdd() {
@@ -276,7 +239,7 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
 
     /**
      * Get the organizational units of the Context.
-     * 
+     *
      * @return organizational units
      */
     public List<String> getOrganizationalUnits() {

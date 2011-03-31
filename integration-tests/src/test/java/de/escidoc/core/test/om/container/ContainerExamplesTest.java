@@ -38,57 +38,49 @@ import static org.junit.Assert.assertFalse;
 
 /**
  * Test processing Container examples from lecture tree.
- * 
+ *
  * @author Steffen Wagner
  */
 @RunWith(value = Parameterized.class)
 public class ContainerExamplesTest extends ContainerTestBase {
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ContainerExamplesTest(final int transport) {
         super(transport);
     }
 
     /**
-     * Test if the example container for create is still compatible with
-     * framework.
-     * 
-     * @throws Exception
-     *             Thrown if creation of example Container failed.
+     * Test if the example container for create is still compatible with framework.
+     *
+     * @throws Exception Thrown if creation of example Container failed.
      */
     @Test
     public void testCreatingExample01() throws Exception {
 
-        String containerXml =
-            getExampleTemplate("container-minimal-for-create-01.xml");
+        String containerXml = getExampleTemplate("container-minimal-for-create-01.xml");
         String xml = create(containerXml);
         assertXmlValidContainer(xml);
     }
-    
+
     /**
-     * Test if the example container for create is still compatible with
-     * framework.
-     * 
-     * @throws Exception
-     *             Thrown if creation of example Container failed.
+     * Test if the example container for create is still compatible with framework.
+     *
+     * @throws Exception Thrown if creation of example Container failed.
      */
     @Test
     public void testCreatingExample02() throws Exception {
 
-        String containerXml =
-            getExampleTemplate("container-minimal-for-create-02.xml");
+        String containerXml = getExampleTemplate("container-minimal-for-create-02.xml");
         String xml = create(containerXml);
         assertXmlValidContainer(xml);
     }
-    
+
     /**
      * Test if versionable for version-history datastream is set to false.
-     * 
-     * @throws Exception
-     *             Thrown if creation of example Item failed.
+     *
+     * @throws Exception Thrown if creation of example Item failed.
      */
     @Test
     public void testCreatingExample03() throws Exception {
@@ -100,8 +92,7 @@ public class ContainerExamplesTest extends ContainerTestBase {
         Client fc = new Client();
 
         Datastream ds = fc.getDatastreamInformation(objid, "version-history");
-        assertFalse("Version-History should not be versioned", ds
-            .isVersionable());
+        assertFalse("Version-History should not be versioned", ds.isVersionable());
     }
 
 }

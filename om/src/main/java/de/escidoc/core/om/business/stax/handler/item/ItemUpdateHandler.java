@@ -41,7 +41,7 @@ import javax.naming.directory.NoSuchAttributeException;
 
 /**
  * Stax handler implementation that handles the item update.
- * 
+ *
  * @author Frank Schwichtenberg
  */
 public class ItemUpdateHandler extends DefaultHandler {
@@ -58,11 +58,9 @@ public class ItemUpdateHandler extends DefaultHandler {
 
     /**
      * The constructor.
-     * 
-     * @param itemId
-     *            The id of the item that shall be updated.
-     * @param parser
-     *            The <code>StaxParser</code>.
+     *
+     * @param itemId The id of the item that shall be updated.
+     * @param parser The <code>StaxParser</code>.
      */
     public ItemUpdateHandler(final String itemId, final StaxParser parser) {
 
@@ -70,41 +68,31 @@ public class ItemUpdateHandler extends DefaultHandler {
         this.parser = parser;
     }
 
-
-
     /**
      * See Interface for functional description.
-     * 
-     * @param element
-     * @return
-     * @throws InvalidContentException
-     * @see de.escidoc.core.om.business.stax.handler.DefaultHandler#startElement
-     *      (de.escidoc.core.om.business.stax.events.StartElement)
+     *
+     * @see de.escidoc.core.om.business.stax.handler.DefaultHandler#startElement (de.escidoc.core.om.business.stax.events.StartElement)
      */
     @Override
-    public StartElement startElement(final StartElement element)
-        throws InvalidContentException {
+    public StartElement startElement(final StartElement element) throws InvalidContentException {
 
         final String curPath = parser.getCurPath();
-        if (! this.done && curPath.equals(ITEM_PATH)) {
+        if (!this.done && curPath.equals(ITEM_PATH)) {
             // handle xlink:href attribute
             try {
-                final String href = element
-                        .getAttribute(Constants.XLINK_URI, "href").getValue();
-                final String expectedHref =
-                    Constants.ITEM_URL_BASE + this.itemId;
+                final String href = element.getAttribute(Constants.XLINK_URI, "href").getValue();
+                final String expectedHref = Constants.ITEM_URL_BASE + this.itemId;
                 // check href
                 if (!href.equals(expectedHref)) {
-                    throw new InvalidContentException(StringUtility
-                        .format(
-                                "Attribute xlink:href has invalid value.", href,
-                                expectedHref));
+                    throw new InvalidContentException(StringUtility.format("Attribute xlink:href has invalid value.",
+                        href, expectedHref));
                 }
-            } catch (final NoSuchAttributeException e) {
-                if(LOGGER.isWarnEnabled()) {
+            }
+            catch (final NoSuchAttributeException e) {
+                if (LOGGER.isWarnEnabled()) {
                     LOGGER.warn("Error on parsing item.");
                 }
-                if(LOGGER.isDebugEnabled()) {
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Error on parsing item.", e);
                 }
                 // LAX
@@ -116,17 +104,16 @@ public class ItemUpdateHandler extends DefaultHandler {
             try {
                 final String objid = element.getAttribute(null, "objid").getValue();
                 if (!objid.equals(this.itemId)) {
-                    throw new InvalidContentException(
-                        StringUtility
-                            .format(
-                                    "Attribute objid has invalid value.", objid, this.itemId));
+                    throw new InvalidContentException(StringUtility.format("Attribute objid has invalid value.", objid,
+                        this.itemId));
                 }
 
-            } catch (final NoSuchAttributeException e) {
-                if(LOGGER.isWarnEnabled()) {
+            }
+            catch (final NoSuchAttributeException e) {
+                if (LOGGER.isWarnEnabled()) {
                     LOGGER.warn("Error on parsing item.");
                 }
-                if(LOGGER.isDebugEnabled()) {
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Error on parsing item.", e);
                 }
             }
@@ -134,7 +121,5 @@ public class ItemUpdateHandler extends DefaultHandler {
         }
         return element;
     }
-
-
 
 }

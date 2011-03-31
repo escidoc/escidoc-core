@@ -39,19 +39,16 @@ public final class MetadataRecordsXmlProvider extends InfrastructureXmlProvider 
     private MetadataRecordsXmlProvider() {
     }
 
-
     public static MetadataRecordsXmlProvider getInstance() {
         return PROVIDER;
     }
 
-    public String getMdRecordsXml(final Map values)
-        throws WebserverSystemException {
+    public String getMdRecordsXml(final Map values) throws WebserverSystemException {
 
         return getXml(MD_RECORDS_RESOURCE_NAME, MD_RECORDS_PATH, values);
     }
 
-    public String getMdRecordXml(final Map values)
-        throws WebserverSystemException {
+    public String getMdRecordXml(final Map values) throws WebserverSystemException {
 
         return getXml(MD_RECORD_RESOURCE_NAME, MD_RECORD_PATH, values);
     }

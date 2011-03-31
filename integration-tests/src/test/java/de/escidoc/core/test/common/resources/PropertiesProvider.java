@@ -44,7 +44,6 @@ import java.util.Properties;
 
 /**
  * @author Michael Schneider
- * 
  */
 public class PropertiesProvider {
 
@@ -66,17 +65,13 @@ public class PropertiesProvider {
 
     public static final String DIGILIB_SCALER_URL = "digilib.scaler";
 
-    public static final String PERFORMANCE_DB_DRIVER_CLASSNAME =
-        "escidoc.performance.db.driverClassName";
+    public static final String PERFORMANCE_DB_DRIVER_CLASSNAME = "escidoc.performance.db.driverClassName";
 
-    public static final String PERFORMANCE_DB_URL =
-        "escidoc.performance.db.url";
+    public static final String PERFORMANCE_DB_URL = "escidoc.performance.db.url";
 
-    public static final String PERFORMANCE_DB_USERNAME =
-        "escidoc.performance.db.username";
+    public static final String PERFORMANCE_DB_USERNAME = "escidoc.performance.db.username";
 
-    public static final String PERFORMANCE_DB_PASSWORD =
-        "escidoc.performance.db.password";
+    public static final String PERFORMANCE_DB_PASSWORD = "escidoc.performance.db.password";
 
     private Properties properties = null;
 
@@ -87,11 +82,12 @@ public class PropertiesProvider {
     static {
         try {
             instance = new PropertiesProvider();
-        } catch (final Exception e) {
-            if(LOGGER.isWarnEnabled()) {
+        }
+        catch (final Exception e) {
+            if (LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Problem initializing PropertiesProvider.");
             }
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Problem initializing PropertiesProvider.", e);
             }
         }
@@ -99,18 +95,16 @@ public class PropertiesProvider {
 
     /**
      * Returns and perhaps initializes Object.
-     * 
+     *
      * @return EscidocConfiguration self
-     * @throws IOException
-     *             Thrown if properties loading fails.
+     * @throws IOException Thrown if properties loading fails.
      */
     public static PropertiesProvider getInstance() {
         return instance;
     }
 
     /**
-     * @throws Exception
-     *             Thrown if init of properties failed.
+     * @throws Exception Thrown if init of properties failed.
      */
     private PropertiesProvider() throws Exception {
 
@@ -126,11 +120,9 @@ public class PropertiesProvider {
     }
 
     /**
-     * Returns the property with the given name or null if property was not
-     * found.
-     * 
-     * @param name
-     *            The name of the Property.
+     * Returns the property with the given name or null if property was not found.
+     *
+     * @param name The name of the Property.
      * @return Value of the given Property as String.
      */
     public String getProperty(final String name) {
@@ -139,13 +131,10 @@ public class PropertiesProvider {
     }
 
     /**
-     * Returns the property with the given name or the second parameter as
-     * default value if property was not found.
-     * 
-     * @param name
-     *            The name of the Property.
-     * @param defaultValue
-     *            The default vaule if property isn't given.
+     * Returns the property with the given name or the second parameter as default value if property was not found.
+     *
+     * @param name         The name of the Property.
+     * @param defaultValue The default vaule if property isn't given.
      * @return Value of the given Property as String.
      */
     public String getProperty(final String name, final String defaultValue) {
@@ -154,9 +143,7 @@ public class PropertiesProvider {
     }
 
     /**
-     * 
-     * @throws Exception
-     *             Thrown if init of properties failed.
+     * @throws Exception Thrown if init of properties failed.
      */
     private synchronized void init() throws Exception {
 
@@ -169,10 +156,10 @@ public class PropertiesProvider {
                 result.putAll(prop);
             }
             catch (final Exception e) {
-                if(LOGGER.isWarnEnabled()) {
+                if (LOGGER.isWarnEnabled()) {
                     LOGGER.warn("Error on loading properties file " + next);
                 }
-                if(LOGGER.isDebugEnabled()) {
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Error on loading properties file " + next, e);
                 }
             }
@@ -182,47 +169,34 @@ public class PropertiesProvider {
 
     /**
      * Get an InputStream for the given file.
-     * 
-     * @param filename
-     *            The name of the file.
+     *
+     * @param filename The name of the file.
      * @return The InputStream or null if the file could not be located.
-     * @throws IOException
-     *             If access to the specified file fails.
+     * @throws IOException If access to the specified file fails.
      */
-    private synchronized InputStream getInputStream(final String filename)
-        throws IOException {
-        final ApplicationContext applicationContext =
-            new ClassPathXmlApplicationContext(new String[] {});
-        Resource[] resource =
-            applicationContext.getResources("classpath*:" + filename);
+    private synchronized InputStream getInputStream(final String filename) throws IOException {
+        final ApplicationContext applicationContext = new ClassPathXmlApplicationContext(new String[] {});
+        Resource[] resource = applicationContext.getResources("classpath*:" + filename);
         if (resource.length == 0) {
-            resource =
-                applicationContext.getResources("classpath*:**/" + filename);
+            resource = applicationContext.getResources("classpath*:**/" + filename);
         }
         if (resource.length == 0) {
-            throw new FileNotFoundException("Unable to find file '" + filename
-                + "' in classpath.");
+            throw new FileNotFoundException("Unable to find file '" + filename + "' in classpath.");
         }
         return resource[0].getInputStream();
     }
 
     /**
-     * Loads the Properties from the possible files. First loads properties from
-     * the file escidoc-core.properties.default. Afterwards tries to load
-     * specific properties from the file escidoc.properties and merges them with
-     * the default properties. If any key is included in default and specific
-     * properties, the value of the specific property will overwrite the default
-     * property.
-     * 
-     * @param file
-     *            The name of the properties file.
+     * Loads the Properties from the possible files. First loads properties from the file
+     * escidoc-core.properties.default. Afterwards tries to load specific properties from the file escidoc.properties
+     * and merges them with the default properties. If any key is included in default and specific properties, the value
+     * of the specific property will overwrite the default property.
+     *
+     * @param file The name of the properties file.
      * @return The properties
-     * @throws Exception
-     *             If the loading of the default properties (file
-     *             escidoc-core.properties.default) fails.
+     * @throws Exception If the loading of the default properties (file escidoc-core.properties.default) fails.
      */
-    private synchronized Properties loadProperties(final String file)
-        throws Exception {
+    private synchronized Properties loadProperties(final String file) throws Exception {
         Properties result = new Properties();
         InputStream propertiesStream = getInputStream(file);
         result.load(propertiesStream);
@@ -231,9 +205,8 @@ public class PropertiesProvider {
 
     /**
      * Add a properties file to the list of properties.
-     * 
-     * @param name
-     *            Name of properties file.
+     *
+     * @param name Name of properties file.
      */
     private synchronized void addFile(final String name) {
 

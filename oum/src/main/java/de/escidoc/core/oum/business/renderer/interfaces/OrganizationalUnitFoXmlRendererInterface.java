@@ -35,34 +35,27 @@ import java.util.Map;
 
 /**
  * Interface of an organizational unit foxml renderer.
- * 
+ *
  * @author Michael Schneider
  */
 public interface OrganizationalUnitFoXmlRendererInterface {
 
     /**
      * Gets the foxml representation of an organizational unit.
-     * 
-     * @param values
-     *            The values of the organizational unit.
+     *
+     * @param values The values of the organizational unit.
      * @return Returns the foxml representation of the organizational unit.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     * @throws SystemException Thrown in case of an internal error.
      */
     String render(final Map<String, Object> values) throws SystemException;
 
     /**
-     * Gets the xml representation of the <code>RELS-EXT</code> datastream of
-     * an organizational unit.
-     * 
-     * @param values
-     *            The properites of the organizational unit to render.
-     * @return Returns the foxml representation of the <code>RELS-EXT</code>
-     *         datastream of an organizational unit.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
+     * Gets the xml representation of the <code>RELS-EXT</code> datastream of an organizational unit.
+     *
+     * @param values The properites of the organizational unit to render.
+     * @return Returns the foxml representation of the <code>RELS-EXT</code> datastream of an organizational unit.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    String renderRelsExt(final Map<String, Object> values)
-        throws WebserverSystemException;
+    String renderRelsExt(final Map<String, Object> values) throws WebserverSystemException;
 
 }

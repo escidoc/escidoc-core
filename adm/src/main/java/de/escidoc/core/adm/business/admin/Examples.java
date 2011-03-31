@@ -53,10 +53,11 @@ import java.util.Date;
 
 /**
  * Load some example objects as resource XMLs into the eSciDoc repository.
- * 
+ *
  * @author André Schenk
  */
 public class Examples {
+
     private static final String EXAMPLE_CONTAINER = "container.xml";
 
     private static final String EXAMPLE_CONTENT_MODEL = "content-model.xml";
@@ -70,11 +71,9 @@ public class Examples {
     private ConnectionUtility connectionUtility;
 
     /**
-     * Create an XML snippet for a message that can be displayed on the Web
-     * page.
-     * 
-     * @param message
-     *            message text
+     * Create an XML snippet for a message that can be displayed on the Web page.
+     *
+     * @param message message text
      * @return XML snippet
      */
     private static String createMessage(final String message) {
@@ -82,29 +81,23 @@ public class Examples {
     }
 
     /**
-     * Create a snippet for a task parameter XML including the last modification
-     * date.
-     * 
-     * @param lastModificationDate
-     *            the last modification date
+     * Create a snippet for a task parameter XML including the last modification date.
+     *
+     * @param lastModificationDate the last modification date
      * @return XML snippet
      */
     private static String createTaskParam(final String lastModificationDate) {
-        return "<param last-modification-date=\"" + lastModificationDate
-            + "\"/>";
+        return "<param last-modification-date=\"" + lastModificationDate + "\"/>";
     }
 
     /**
      * Extract the last modification date from the given result XML.
-     * 
-     * @param xml
-     *            result XML
+     *
+     * @param xml result XML
      * @return last modification date
-     * @throws Exception
-     *             thrown if the XPath evaluation failed
+     * @throws Exception thrown if the XPath evaluation failed
      */
-    private static String getLastModificationDate(final String xml)
-        throws Exception {
+    private static String getLastModificationDate(final String xml) throws Exception {
         String result = null;
 
         if (xml != null) {
@@ -125,17 +118,13 @@ public class Examples {
 
     /**
      * Extract the last modification date from the given resource XML.
-     * 
-     * @param xml
-     *            resource XML (item XML, container XML, ...)
-     * @param type
-     *            resource type
+     *
+     * @param xml  resource XML (item XML, container XML, ...)
+     * @param type resource type
      * @return last modification date
-     * @throws Exception
-     *             thrown if the XPath evaluation failed
+     * @throws Exception thrown if the XPath evaluation failed
      */
-    private static String getLastModificationDate(
-        final String xml, final ResourceType type) throws Exception {
+    private static String getLastModificationDate(final String xml, final ResourceType type) throws Exception {
         String result = null;
 
         if (xml != null) {
@@ -146,7 +135,8 @@ public class Examples {
                 final Document xmlDom = db.parse(input);
                 final XPath xpath = XPathFactory.newInstance().newXPath();
                 result = xpath.evaluate('/' + type.getLabel() + "/@last-modification-date", xmlDom);
-            } finally {
+            }
+            finally {
                 IOUtils.closeStream(input);
             }
         }
@@ -155,17 +145,13 @@ public class Examples {
 
     /**
      * Extract the object id from the given resource XML.
-     * 
-     * @param xml
-     *            resource XML (item XML, container XML, ...)
-     * @param type
-     *            resource type
+     *
+     * @param xml  resource XML (item XML, container XML, ...)
+     * @param type resource type
      * @return object id
-     * @throws Exception
-     *             thrown if the XPath evaluation failed
+     * @throws Exception thrown if the XPath evaluation failed
      */
-    private static String getObjectId(final String xml, final ResourceType type)
-        throws Exception {
+    private static String getObjectId(final String xml, final ResourceType type) throws Exception {
         String result = null;
 
         if (xml != null) {
@@ -175,10 +161,11 @@ public class Examples {
                 final DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
                 final Document xmlDom = db.parse(input);
                 final XPath xpath = XPathFactory.newInstance().newXPath();
-                final String href = xpath.evaluate('/' + type.getLabel() + "/@href|/" + type.getLabel()
-                            + "/@objid", xmlDom);
+                final String href =
+                    xpath.evaluate('/' + type.getLabel() + "/@href|/" + type.getLabel() + "/@objid", xmlDom);
                 result = href.substring(href.lastIndexOf('/') + 1);
-            } finally {
+            }
+            finally {
                 IOUtils.closeStream(input);
             }
         }
@@ -187,73 +174,52 @@ public class Examples {
 
     /**
      * Load all example objects.
-     * 
-     * @param directory
-     *            URL to the directory which contains the eSciDoc XML files
-     *            (including the trailing slash).
-     * 
+     *
+     * @param directory URL to the directory which contains the eSciDoc XML files (including the trailing slash).
      * @return some useful information to the user which objects were loaded
-     * @throws Exception
-     *             thrown in case of an internal error
+     * @throws Exception thrown in case of an internal error
      */
     public String load(final String directory) throws Exception {
         final StringBuilder result = new StringBuilder();
         final String ouId = loadOrganizationalUnit(loadFile(directory + EXAMPLE_OU));
 
-        result.append(createMessage("created " + ResourceType.OU.getLabel()
-            + ": " + ouId));
+        result.append(createMessage("created " + ResourceType.OU.getLabel() + ": " + ouId));
 
-        final String contextId =
-            loadContext(loadFile(directory + EXAMPLE_CONTEXT), ouId);
+        final String contextId = loadContext(loadFile(directory + EXAMPLE_CONTEXT), ouId);
 
-        result.append(createMessage("created "
-            + ResourceType.CONTEXT.getLabel() + ": " + contextId));
+        result.append(createMessage("created " + ResourceType.CONTEXT.getLabel() + ": " + contextId));
 
-        final String contentModelId =
-            loadContentModel(loadFile(directory + EXAMPLE_CONTENT_MODEL));
+        final String contentModelId = loadContentModel(loadFile(directory + EXAMPLE_CONTENT_MODEL));
 
-        result.append(createMessage("created "
-            + ResourceType.CONTENT_MODEL.getLabel() + ": " + contentModelId));
+        result.append(createMessage("created " + ResourceType.CONTENT_MODEL.getLabel() + ": " + contentModelId));
 
-        final String containerId =
-            loadContainer(loadFile(directory + EXAMPLE_CONTAINER), contextId,
-                contentModelId);
+        final String containerId = loadContainer(loadFile(directory + EXAMPLE_CONTAINER), contextId, contentModelId);
 
-        result.append(createMessage("created "
-            + ResourceType.CONTAINER.getLabel() + ": " + containerId));
+        result.append(createMessage("created " + ResourceType.CONTAINER.getLabel() + ": " + containerId));
 
-        final String itemId =
-            loadItem(loadFile(directory + EXAMPLE_ITEM), contextId,
-                contentModelId, containerId);
+        final String itemId = loadItem(loadFile(directory + EXAMPLE_ITEM), contextId, contentModelId, containerId);
 
-        result.append(createMessage("created " + ResourceType.ITEM.getLabel()
-            + ": " + itemId));
+        result.append(createMessage("created " + ResourceType.ITEM.getLabel() + ": " + itemId));
 
         return result.toString();
     }
 
     /**
      * Load the example container.
-     * 
-     * @param xml
-     *            container XML
-     * @param contextId
-     *            context id
-     * @param contentModelId
-     *            content model id
+     *
+     * @param xml            container XML
+     * @param contextId      context id
+     * @param contentModelId content model id
      * @return object id of the newly created container
-     * @throws Exception
-     *             thrown in case of an internal error
+     * @throws Exception thrown in case of an internal error
      */
     private static String loadContainer(final String xml, final String contextId, final String contentModelId)
         throws Exception {
         String result = null;
-        final ContainerHandlerInterface handler =
-            BeanLocator.locateContainerHandler();
+        final ContainerHandlerInterface handler = BeanLocator.locateContainerHandler();
 
         if (handler != null) {
-            final String createXml =
-                handler.create(MessageFormat.format(xml, contextId, contentModelId));
+            final String createXml = handler.create(MessageFormat.format(xml, contextId, contentModelId));
 
             result = getObjectId(createXml, ResourceType.CONTAINER);
         }
@@ -262,17 +228,14 @@ public class Examples {
 
     /**
      * Load the example content model.
-     * 
-     * @param xml
-     *            content model XML
+     *
+     * @param xml content model XML
      * @return object id of the newly created content model
-     * @throws Exception
-     *             thrown in case of an internal error
+     * @throws Exception thrown in case of an internal error
      */
     private static String loadContentModel(final String xml) throws Exception {
         String result = null;
-        final ContentModelHandlerInterface handler =
-            BeanLocator.locateContentModelHandler();
+        final ContentModelHandlerInterface handler = BeanLocator.locateContentModelHandler();
 
         if (handler != null) {
             final String createXml = handler.create(xml);
@@ -284,129 +247,96 @@ public class Examples {
 
     /**
      * Load the example context.
-     * 
-     * @param xml
-     *            context XML
-     * @param ouId
-     *            organizational unit id
+     *
+     * @param xml  context XML
+     * @param ouId organizational unit id
      * @return object id of the newly created context
-     * @throws Exception
-     *             thrown in case of an internal error
+     * @throws Exception thrown in case of an internal error
      */
-    private static String loadContext(final String xml, final String ouId)
-        throws Exception {
+    private static String loadContext(final String xml, final String ouId) throws Exception {
         String result = null;
         final ContextHandlerInterface handler = BeanLocator.locateContextHandler();
 
         if (handler != null) {
-            final String createXml =
-                handler.create(MessageFormat.format(xml, new Date().getTime(), ouId));
+            final String createXml = handler.create(MessageFormat.format(xml, new Date().getTime(), ouId));
 
             result = getObjectId(createXml, ResourceType.CONTEXT);
-            handler.open(
-                result,
-                createTaskParam(getLastModificationDate(createXml,
-                    ResourceType.CONTEXT)));
+            handler.open(result, createTaskParam(getLastModificationDate(createXml, ResourceType.CONTEXT)));
         }
         return result;
     }
 
     /**
      * Load the file from the given URL into a string.
-     * 
-     * @param url
-     *            file URL
+     *
+     * @param url file URL
      * @return string which contains the file content
-     * @throws MalformedURLException
-     *             malformed URL
-     * @throws WebserverSystemException
-     *             thrown if the file couldn't be loaded
+     * @throws MalformedURLException    malformed URL
+     * @throws WebserverSystemException thrown if the file couldn't be loaded
      */
-    private String loadFile(final String url) throws WebserverSystemException,
-        MalformedURLException {
+    private String loadFile(final String url) throws WebserverSystemException, MalformedURLException {
         return connectionUtility.getRequestURLAsString(new URL(url));
     }
 
     /**
      * Load the example item.
-     * 
-     * @param xml
-     *            item XML
-     * @param contextId
-     *            context id
-     * @param contentModelId
-     *            content model id
-     * @param containerId
-     *            container id
+     *
+     * @param xml            item XML
+     * @param contextId      context id
+     * @param contentModelId content model id
+     * @param containerId    container id
      * @return object id of the newly created item
-     * @throws Exception
-     *             thrown in case of an internal error
+     * @throws Exception thrown in case of an internal error
      */
-    private static String loadItem(final String xml, final String contextId, final String contentModelId,
-                                   final String containerId) throws Exception {
+    private static String loadItem(
+        final String xml, final String contextId, final String contentModelId, final String containerId)
+        throws Exception {
         String result = null;
-        final ContainerHandlerInterface containerHandler =
-            BeanLocator.locateContainerHandler();
+        final ContainerHandlerInterface containerHandler = BeanLocator.locateContainerHandler();
         final ItemHandlerInterface itemHandler = BeanLocator.locateItemHandler();
 
         if (containerHandler != null && itemHandler != null) {
             final String createXml =
-                containerHandler.createItem(
-                    containerId,
-                    MessageFormat.format(xml, contextId,
-                            contentModelId));
+                containerHandler.createItem(containerId, MessageFormat.format(xml, contextId, contentModelId));
 
             result = getObjectId(createXml, ResourceType.ITEM);
 
             final String submitXml =
-                itemHandler.submit(
-                    result,
-                    createTaskParam(getLastModificationDate(createXml,
-                        ResourceType.ITEM)));
+                itemHandler.submit(result, createTaskParam(getLastModificationDate(createXml, ResourceType.ITEM)));
             final String objectPidXml =
-                itemHandler.assignObjectPid(result,
-                    createTaskParam(getLastModificationDate(submitXml)));
+                itemHandler.assignObjectPid(result, createTaskParam(getLastModificationDate(submitXml)));
             final String versionPidXml =
-                itemHandler.assignVersionPid(result,
-                    createTaskParam(getLastModificationDate(objectPidXml)));
+                itemHandler.assignVersionPid(result, createTaskParam(getLastModificationDate(objectPidXml)));
 
-            itemHandler.release(result,
-                createTaskParam(getLastModificationDate(versionPidXml)));
+            itemHandler.release(result, createTaskParam(getLastModificationDate(versionPidXml)));
         }
         return result;
     }
 
     /**
      * Load the example organizational unit.
-     * 
-     * @param xml
-     *            organizational unit XML
+     *
+     * @param xml organizational unit XML
      * @return object id of the newly created organizational unit
-     * @throws Exception
-     *             thrown in case of an internal error
+     * @throws Exception thrown in case of an internal error
      */
     private static String loadOrganizationalUnit(final String xml) throws Exception {
         String result = null;
-        final OrganizationalUnitHandlerInterface handler =
-            BeanLocator.locateOrganizationalUnitHandler();
+        final OrganizationalUnitHandlerInterface handler = BeanLocator.locateOrganizationalUnitHandler();
 
         if (handler != null) {
             final String createXml = handler.create(xml);
 
             result = getObjectId(createXml, ResourceType.OU);
-            handler.open(
-                result,
-                createTaskParam(getLastModificationDate(createXml,
-                    ResourceType.OU)));
+            handler.open(result, createTaskParam(getLastModificationDate(createXml, ResourceType.OU)));
         }
         return result;
     }
 
     /**
      * Ingest the ConnectionUtility object.
-     * 
-     * @param connectionUtility
-     *            ConnectionUtility object to be ingested
+     *
+     * @param connectionUtility ConnectionUtility object to be ingested
      */
     public void setConnectionUtility(final ConnectionUtility connectionUtility) {
         this.connectionUtility = connectionUtility;

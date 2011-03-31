@@ -51,9 +51,8 @@ public abstract class AbstractElement {
 
     /**
      * Gets the path to the element.
-     * 
-     * @return Returns the path to the element.
      *
+     * @return Returns the path to the element.
      */
     public String getPath() {
         return this.path;

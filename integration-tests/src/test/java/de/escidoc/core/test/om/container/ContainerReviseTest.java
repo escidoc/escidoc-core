@@ -42,9 +42,8 @@ import org.w3c.dom.Document;
 
 /**
  * Test suite for ContainerHandler.revise service.
- * 
+ *
  * @author Torsten Tetteroo
- * 
  */
 @RunWith(value = Parameterized.class)
 public class ContainerReviseTest extends ContainerTestBase {
@@ -54,8 +53,7 @@ public class ContainerReviseTest extends ContainerTestBase {
     private String theContainerId;
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ContainerReviseTest(final int transport) {
         super(transport);
@@ -63,52 +61,34 @@ public class ContainerReviseTest extends ContainerTestBase {
 
     /**
      * Set up test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Before
     public void setUp() throws Exception {
-        String xmlData =
-            getContainerTemplate("create_container_WithoutMembers_v1.1.xml");
+        String xmlData = getContainerTemplate("create_container_WithoutMembers_v1.1.xml");
 
         this.theContainerXml = create(xmlData);
         this.theContainerId = getObjidValue(this.theContainerXml);
     }
 
     /**
-     * Gets the task param including the last modification date of the resource
-     * object identified by the field <code>containerId</code>.
-     * 
-     * @param includeWithdrawComment
-     *            Flag indicating if the withdrawal comment shall be
-     *            additionally included.
+     * Gets the task param including the last modification date of the resource object identified by the field
+     * <code>containerId</code>.
+     *
+     * @param includeWithdrawComment Flag indicating if the withdrawal comment shall be additionally included.
      * @return Returns the created task param
-     * @throws Exception
-     *             Thrown if anything fails.
+     * @throws Exception Thrown if anything fails.
      */
-    protected String getTheLastModificationParam(
-        final boolean includeWithdrawComment) throws Exception {
+    protected String getTheLastModificationParam(final boolean includeWithdrawComment) throws Exception {
 
-        return super.getTheLastModificationParam(includeWithdrawComment,
-            this.theContainerId);
+        return super.getTheLastModificationParam(includeWithdrawComment, this.theContainerId);
     }
 
     /**
      * Test successful revising a container.
-     * 
-     * @test.name Revise Container - Submitted
-     * @test.id OM_RVC-1
-     * @test.input
-     *          <ul>
-     *          <li>existing container id of a container in state submitted</li>
-     *          <li>timestamp of the last modification of the container</li>
-     *          </ul>
-     * @test.expected: No result, no exception, Container has been revised.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOMRvc1() throws Exception {
@@ -118,46 +98,30 @@ public class ContainerReviseTest extends ContainerTestBase {
         assertXmlValidResult(resultXml);
 
         paramXml = getTheLastModificationParam(false);
-        final Document paramDocument =
-            EscidocRestSoapTestBase.getDocument(paramXml);
-        final String submittedLastModificationDate =
-            getLastModificationDateValue(paramDocument);
+        final Document paramDocument = EscidocRestSoapTestBase.getDocument(paramXml);
+        final String submittedLastModificationDate = getLastModificationDateValue(paramDocument);
 
         try {
             resultXml = revise(theContainerId, paramXml);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Revising the submitted container failed", e);
+            EscidocRestSoapTestBase.failException("Revising the submitted container failed", e);
         }
         assertXmlValidResult(resultXml);
 
         final String revisedXml = retrieve(theContainerId);
-        final Document revisedDocument =
-            EscidocRestSoapTestBase.getDocument(revisedXml);
-        assertDateBeforeAfter(submittedLastModificationDate,
-            getLastModificationDateValue(revisedDocument));
-//        assertXmlEquals("Unexpected status. ", revisedDocument,
-//            XPATH_CONTAINER_STATUS, STATE_IN_REVISION);
-        assertXmlEquals("Unexpected current version status", revisedDocument,
-            XPATH_CONTAINER_CURRENT_VERSION_STATUS, STATE_IN_REVISION);
+        final Document revisedDocument = EscidocRestSoapTestBase.getDocument(revisedXml);
+        assertDateBeforeAfter(submittedLastModificationDate, getLastModificationDateValue(revisedDocument));
+        //        assertXmlEquals("Unexpected status. ", revisedDocument,
+        //            XPATH_CONTAINER_STATUS, STATE_IN_REVISION);
+        assertXmlEquals("Unexpected current version status", revisedDocument, XPATH_CONTAINER_CURRENT_VERSION_STATUS,
+            STATE_IN_REVISION);
     }
 
     /**
      * Test declining revising a container in state pending.
-     * 
-     * @test.name Revise Container - Pending
-     * @test.id OM_RVC-2
-     * @test.input
-     *          <ul>
-     *          <li>existing container id of a container in state pending</li>
-     *          <li>timestamp of the last modification of the container</li>
-     *          </ul>
-     * @test.expected: InvalidStatusException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOMRvc2() throws Exception {
@@ -166,31 +130,18 @@ public class ContainerReviseTest extends ContainerTestBase {
 
         try {
             revise(theContainerId, param);
-            EscidocRestSoapTestBase
-                .failMissingException(InvalidStatusException.class);
+            EscidocRestSoapTestBase.failMissingException(InvalidStatusException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                "Revising failed with unexpected exception. ",
+            EscidocRestSoapTestBase.assertExceptionType("Revising failed with unexpected exception. ",
                 InvalidStatusException.class, e);
         }
     }
 
     /**
      * Test declining revising a container in state released.
-     * 
-     * @test.name Revise Container - Released
-     * @test.id OM_RVC-3
-     * @test.input
-     *          <ul>
-     *          <li>existing container id of a container in state released</li>
-     *          <li>timestamp of the last modification of the container</li>
-     *          </ul>
-     * @test.expected: InvalidStatusException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOMRvc3() throws Exception {
@@ -200,25 +151,17 @@ public class ContainerReviseTest extends ContainerTestBase {
         assertXmlValidResult(resultXml);
 
         String pidParam;
-        if (getContainerClient().getPidConfig(
-            "cmm.Container.objectPid.setPidBeforeRelease", "true")
-            && !getContainerClient().getPidConfig(
-                "cmm.Container.objectPid.releaseWithoutPid", "false")) {
-            if (selectSingleNode(EscidocRestSoapTestBase
-                .getDocument(theContainerXml), "/container/properties/pid") == null) {
-                pidParam =
-                    getPidParam(this.theContainerId, "http://somewhere"
-                        + this.theContainerId);
+        if (getContainerClient().getPidConfig("cmm.Container.objectPid.setPidBeforeRelease", "true")
+            && !getContainerClient().getPidConfig("cmm.Container.objectPid.releaseWithoutPid", "false")) {
+            if (selectSingleNode(EscidocRestSoapTestBase.getDocument(theContainerXml), "/container/properties/pid") == null) {
+                pidParam = getPidParam(this.theContainerId, "http://somewhere" + this.theContainerId);
                 assignObjectPid(this.theContainerId, pidParam);
             }
         }
-        if (getContainerClient().getPidConfig(
-            "cmm.Container.versionPid.setPidBeforeRelease", "true")
-            && !getContainerClient().getPidConfig(
-                "cmm.Container.versionPid.releaseWithoutPid", "false")) {
+        if (getContainerClient().getPidConfig("cmm.Container.versionPid.setPidBeforeRelease", "true")
+            && !getContainerClient().getPidConfig("cmm.Container.versionPid.releaseWithoutPid", "false")) {
             String latestVersion = getLatestVersionObjidValue(theContainerXml);
-            pidParam =
-                getPidParam(latestVersion, "http://somewhere" + latestVersion);
+            pidParam = getPidParam(latestVersion, "http://somewhere" + latestVersion);
             assignVersionPid(latestVersion, pidParam);
         }
 
@@ -229,31 +172,18 @@ public class ContainerReviseTest extends ContainerTestBase {
         param = getTheLastModificationParam(false);
         try {
             revise(theContainerId, param);
-            EscidocRestSoapTestBase
-                .failMissingException(InvalidStatusException.class);
+            EscidocRestSoapTestBase.failMissingException(InvalidStatusException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                "Revising failed with unexpected exception. ",
+            EscidocRestSoapTestBase.assertExceptionType("Revising failed with unexpected exception. ",
                 InvalidStatusException.class, e);
         }
     }
 
     /**
      * Test declining revising a container in state withdrawn.
-     * 
-     * @test.name Revise Container - Withdrawn
-     * @test.id OM_RVC-4
-     * @test.input
-     *          <ul>
-     *          <li>existing container id of a container in state withdrawn</li>
-     *          <li>timestamp of the last modification of the container</li>
-     *          </ul>
-     * @test.expected: InvalidStatusException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOMRvc4() throws Exception {
@@ -263,25 +193,17 @@ public class ContainerReviseTest extends ContainerTestBase {
         assertXmlValidResult(resultXml);
 
         String pidParam;
-        if (getContainerClient().getPidConfig(
-            "cmm.Container.objectPid.setPidBeforeRelease", "true")
-            && !getContainerClient().getPidConfig(
-                "cmm.Container.objectPid.releaseWithoutPid", "false")) {
-            if (selectSingleNode(EscidocRestSoapTestBase
-                .getDocument(theContainerXml), "/container/properties/pid") == null) {
-                pidParam =
-                    getPidParam(this.theContainerId, "http://somewhere"
-                        + this.theContainerId);
+        if (getContainerClient().getPidConfig("cmm.Container.objectPid.setPidBeforeRelease", "true")
+            && !getContainerClient().getPidConfig("cmm.Container.objectPid.releaseWithoutPid", "false")) {
+            if (selectSingleNode(EscidocRestSoapTestBase.getDocument(theContainerXml), "/container/properties/pid") == null) {
+                pidParam = getPidParam(this.theContainerId, "http://somewhere" + this.theContainerId);
                 assignObjectPid(this.theContainerId, pidParam);
             }
         }
-        if (getContainerClient().getPidConfig(
-            "cmm.Container.versionPid.setPidBeforeRelease", "true")
-            && !getContainerClient().getPidConfig(
-                "cmm.Container.versionPid.releaseWithoutPid", "false")) {
+        if (getContainerClient().getPidConfig("cmm.Container.versionPid.setPidBeforeRelease", "true")
+            && !getContainerClient().getPidConfig("cmm.Container.versionPid.releaseWithoutPid", "false")) {
             String latestVersion = getLatestVersionObjidValue(theContainerXml);
-            pidParam =
-                getPidParam(latestVersion, "http://somewhere" + latestVersion);
+            pidParam = getPidParam(latestVersion, "http://somewhere" + latestVersion);
             assignVersionPid(latestVersion, pidParam);
         }
 
@@ -297,31 +219,18 @@ public class ContainerReviseTest extends ContainerTestBase {
 
         try {
             revise(theContainerId, param);
-            EscidocRestSoapTestBase
-                .failMissingException(InvalidStatusException.class);
+            EscidocRestSoapTestBase.failMissingException(InvalidStatusException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                "Revising failed with unexpected exception. ",
+            EscidocRestSoapTestBase.assertExceptionType("Revising failed with unexpected exception. ",
                 InvalidStatusException.class, e);
         }
     }
 
     /**
      * Test declining revising an unknown container.
-     * 
-     * @test.name Revise Container - Unknown container
-     * @test.id OM_RVC-5
-     * @test.input
-     *          <ul>
-     *          <li>id for that no container exists</li>
-     *          <li>timestamp of the last modification of the container</li>
-     *          </ul>
-     * @test.expected: ContainerNotFoundException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOMRvc5() throws Exception {
@@ -330,32 +239,18 @@ public class ContainerReviseTest extends ContainerTestBase {
 
         try {
             revise(UNKNOWN_ID, param);
-            EscidocRestSoapTestBase
-                .failMissingException(ContainerNotFoundException.class);
+            EscidocRestSoapTestBase.failMissingException(ContainerNotFoundException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase
-                .assertExceptionType(
-                    "Revising unknown container failed with unexpected exception. ",
-                    ContainerNotFoundException.class, e);
+            EscidocRestSoapTestBase.assertExceptionType(
+                "Revising unknown container failed with unexpected exception. ", ContainerNotFoundException.class, e);
         }
     }
 
     /**
      * Test declining revising a container without providing a container id.
-     * 
-     * @test.name Revise Container - Missing container id
-     * @test.id OM_RVC-6
-     * @test.input
-     *          <ul>
-     *          <li>no container id is provided</li>
-     *          <li>timestamp of the last modification of the container</li>
-     *          </ul>
-     * @test.expected: MissingMethodParameterException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOMRvc6() throws Exception {
@@ -364,31 +259,18 @@ public class ContainerReviseTest extends ContainerTestBase {
 
         try {
             revise(null, param);
-            EscidocRestSoapTestBase
-                .failMissingException(MissingMethodParameterException.class);
+            EscidocRestSoapTestBase.failMissingException(MissingMethodParameterException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                "Revising without id failed with unexpected exception. ",
+            EscidocRestSoapTestBase.assertExceptionType("Revising without id failed with unexpected exception. ",
                 MissingMethodParameterException.class, e);
         }
     }
 
     /**
      * Test declining revising a container without providing task param.
-     * 
-     * @test.name Revise Container - Missing task param
-     * @test.id OM_RVC-7
-     * @test.input
-     *          <ul>
-     *          <li>existing container id of a container in state submitted</li>
-     *          <li>No task param is provided</li>
-     *          </ul>
-     * @test.expected: MissingMethodParameterException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOMRvc7() throws Exception {
@@ -401,32 +283,18 @@ public class ContainerReviseTest extends ContainerTestBase {
 
         try {
             revise(theContainerId, null);
-            EscidocRestSoapTestBase
-                .failMissingException(MissingMethodParameterException.class);
+            EscidocRestSoapTestBase.failMissingException(MissingMethodParameterException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                "Revising without id failed with unexpected exception. ",
+            EscidocRestSoapTestBase.assertExceptionType("Revising without id failed with unexpected exception. ",
                 MissingMethodParameterException.class, e);
         }
     }
 
     /**
-     * Test declining revising a container without providing last modification
-     * date in task param.
-     * 
-     * @test.name Revise Container - Missing last modification date
-     * @test.id OM_RVC-8
-     * @test.input
-     *          <ul>
-     *          <li>existing container id of a container in state submitted</li>
-     *          <li>No last modification date is provided in task param</li>
-     *          </ul>
-     * @test.expected: MissingAttributeValueException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test declining revising a container without providing last modification date in task param.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOMRvc8() throws Exception {
@@ -440,31 +308,18 @@ public class ContainerReviseTest extends ContainerTestBase {
         try {
             revise(theContainerId, param);
             // TODO should be XmlCorruptedException ???
-            EscidocRestSoapTestBase
-                .failMissingException(XmlCorruptedException.class);
+            EscidocRestSoapTestBase.failMissingException(XmlCorruptedException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                "Revising without last modification date failed with"
-                    + " unexpected exception. ", XmlCorruptedException.class, e);
+            EscidocRestSoapTestBase.assertExceptionType("Revising without last modification date failed with"
+                + " unexpected exception. ", XmlCorruptedException.class, e);
         }
     }
 
     /**
      * Test declining revising a container with corrupted task param.
-     * 
-     * @test.name Revise Container - Corrupted task param
-     * @test.id OM_RVC-9
-     * @test.input
-     *          <ul>
-     *          <li>existing container id of a container in state submitted</li>
-     *          <li>Corrupted task param is provided</li>
-     *          </ul>
-     * @test.expected: XmlCorruptedException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOMRvc9() throws Exception {
@@ -476,33 +331,18 @@ public class ContainerReviseTest extends ContainerTestBase {
         try {
             revise(theContainerId, param);
             // TODO should be XmlCorruptedException ???
-            EscidocRestSoapTestBase
-                .failMissingException(XmlCorruptedException.class);
+            EscidocRestSoapTestBase.failMissingException(XmlCorruptedException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                "Revising without last modification date failed with"
-                    + " unexpected exception. ", XmlCorruptedException.class, e);
+            EscidocRestSoapTestBase.assertExceptionType("Revising without last modification date failed with"
+                + " unexpected exception. ", XmlCorruptedException.class, e);
         }
     }
 
     /**
-     * Test declining revising a container with providing outdated last
-     * modification date in task param.
-     * 
-     * @test.name Revise Container - Corrupted task param
-     * @test.id OM_RVC-10
-     * @test.input
-     *          <ul>
-     *          <li>existing container id of a container in state submitted</li>
-     *          <li>task param is provided that contains an outdated last
-     *          modificaton date</li>
-     *          </ul>
-     * @test.expected: XmlCorruptedException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test declining revising a container with providing outdated last modification date in task param.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOMRvc10() throws Exception {
@@ -512,14 +352,11 @@ public class ContainerReviseTest extends ContainerTestBase {
 
         try {
             revise(theContainerId, param);
-            EscidocRestSoapTestBase
-                .failMissingException(OptimisticLockingException.class);
+            EscidocRestSoapTestBase.failMissingException(OptimisticLockingException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                "Revising with outdated last modification date failed "
-                    + "with unexpected exception. ",
-                OptimisticLockingException.class, e);
+            EscidocRestSoapTestBase.assertExceptionType("Revising with outdated last modification date failed "
+                + "with unexpected exception. ", OptimisticLockingException.class, e);
         }
     }
 }

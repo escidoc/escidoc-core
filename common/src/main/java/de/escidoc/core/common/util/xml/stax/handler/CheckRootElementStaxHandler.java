@@ -28,9 +28,8 @@ import de.escidoc.core.common.util.xml.stax.events.StartElement;
 
 /**
  * Stax handler that asserts the name of the root element.
- * 
- * @author Torsten Tetteroo
  *
+ * @author Torsten Tetteroo
  */
 public class CheckRootElementStaxHandler extends DefaultHandler {
 
@@ -38,38 +37,28 @@ public class CheckRootElementStaxHandler extends DefaultHandler {
 
     /**
      * The constructor.
-     * 
-     * @param expectedRootElement
-     *            The expected root element.
+     *
+     * @param expectedRootElement The expected root element.
      */
     public CheckRootElementStaxHandler(final String expectedRootElement) {
 
         this.expectedRootElement = expectedRootElement;
     }
 
-
-
     /**
      * See Interface for functional description.
-     * 
-     * @param element
-     * @return
-     * @see DefaultHandler
-     *      #startElement
-     *      (de.escidoc.core.common.util.xml.stax.events.StartElement)
+     *
+     * @see DefaultHandler #startElement (de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
-    public StartElement startElement(final StartElement element)
-        throws EscidocException {
+    public StartElement startElement(final StartElement element) throws EscidocException {
 
         if (element.getLocalName().equals(this.expectedRootElement)) {
-            throw new WebserverSystemException(
-                    "Check successful, please ignore.");
-        } else {
-            throw new XmlCorruptedException(StringUtility
-                    .format(
-                            "Root element is not as expected", this.expectedRootElement,
-                            element.getLocalName()));
+            throw new WebserverSystemException("Check successful, please ignore.");
+        }
+        else {
+            throw new XmlCorruptedException(StringUtility.format("Root element is not as expected",
+                this.expectedRootElement, element.getLocalName()));
         }
     }
 

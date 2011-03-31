@@ -25,7 +25,7 @@ import java.lang.reflect.Array;
 import java.util.Arrays;
 
 public class MIMETypedStream implements Serializable {
-    
+
     /**
      * The serial version uid.
      */
@@ -81,12 +81,13 @@ public class MIMETypedStream implements Serializable {
         }
         else {
             this.equalsCalc = obj;
-            final boolean equals = (this.mimeType == null && other.getMIMEType() == null || this.mimeType != null
-                && mimeType.equals(other.getMIMEType()))
-                && (this.stream == null && other.getStream() == null || this.stream != null
-                    && Arrays.equals(this.stream, other.getStream()))
-                && (this.header == null && other.getHeader() == null || this.header != null
-                    && Arrays.equals(this.header, other.getHeader()));
+            final boolean equals =
+                (this.mimeType == null && other.getMIMEType() == null || this.mimeType != null
+                    && mimeType.equals(other.getMIMEType()))
+                    && (this.stream == null && other.getStream() == null || this.stream != null
+                        && Arrays.equals(this.stream, other.getStream()))
+                    && (this.header == null && other.getHeader() == null || this.header != null
+                        && Arrays.equals(this.header, other.getHeader()));
             this.equalsCalc = null;
             return equals;
         }

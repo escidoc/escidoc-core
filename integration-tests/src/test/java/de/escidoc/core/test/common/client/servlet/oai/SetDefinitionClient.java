@@ -38,20 +38,16 @@ import javax.xml.rpc.ServiceException;
 import java.util.Map;
 
 /**
- * Offers access methods to the escidoc REST interface of the setDefintion
- * resource.
- * 
+ * Offers access methods to the escidoc REST interface of the setDefintion resource.
+ *
  * @author Rozita Friedman
- * 
  */
-public class SetDefinitionClient extends ClientBase
-    implements ResourceHandlerClientInterface {
+public class SetDefinitionClient extends ClientBase implements ResourceHandlerClientInterface {
 
     private SetDefinitionHandler soapClient = null;
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public SetDefinitionClient(final int transport) {
         super(transport);
@@ -59,98 +55,74 @@ public class SetDefinitionClient extends ClientBase
 
     /**
      * Retrieve the Containers of a Container.
-     * 
-     * @param id
-     *            The id of the container.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param id The id of the container.
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     public Object retrieve(final String id) throws Exception {
 
-        return callEsciDoc("SetDefinition.retrieve", METHOD_RETRIEVE,
-            Constants.HTTP_METHOD_GET, Constants.SET_DEFINITION_BASE_URI,
-            new String[] { id });
+        return callEsciDoc("SetDefinition.retrieve", METHOD_RETRIEVE, Constants.HTTP_METHOD_GET,
+            Constants.SET_DEFINITION_BASE_URI, new String[] { id });
     }
 
     /**
      * Create an defintion set in the escidoc framework.
-     * 
-     * @param setDefinitionXml
-     *            The xml representation of the defintion set.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param setDefinitionXml The xml representation of the defintion set.
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     @Override
     public Object create(final Object setDefinitionXml) throws Exception {
 
-        return callEsciDoc("SetDefinition.create", METHOD_CREATE,
-            Constants.HTTP_METHOD_PUT, Constants.SET_DEFINITION_BASE_URI,
-            new String[] {}, changeToString(setDefinitionXml));
+        return callEsciDoc("SetDefinition.create", METHOD_CREATE, Constants.HTTP_METHOD_PUT,
+            Constants.SET_DEFINITION_BASE_URI, new String[] {}, changeToString(setDefinitionXml));
     }
 
     /**
      * Delete an item from the escidoc framework.
-     * 
-     * @param id
-     *            The id of the item.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param id The id of the item.
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     @Override
     public Object delete(final String id) throws Exception {
 
-        return callEsciDoc("SetDefinition.delete", METHOD_DELETE,
-            Constants.HTTP_METHOD_DELETE, Constants.SET_DEFINITION_BASE_URI,
-            new String[] { id });
+        return callEsciDoc("SetDefinition.delete", METHOD_DELETE, Constants.HTTP_METHOD_DELETE,
+            Constants.SET_DEFINITION_BASE_URI, new String[] { id });
     }
 
     /**
      * Update an item in the escidoc framework.
-     * 
-     * @param id
-     *            The id of the setDefinition.
-     * @param setDefinitionXml
-     *            The xml representation of the setDefintion.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param id               The id of the setDefinition.
+     * @param setDefinitionXml The xml representation of the setDefintion.
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     @Override
-    public Object update(final String id, final Object setDefinitionXml)
-        throws Exception {
+    public Object update(final String id, final Object setDefinitionXml) throws Exception {
 
-        return callEsciDoc("SetDefinition.update", METHOD_UPDATE,
-            Constants.HTTP_METHOD_PUT, Constants.SET_DEFINITION_BASE_URI,
-            new String[] { id }, changeToString(setDefinitionXml));
+        return callEsciDoc("SetDefinition.update", METHOD_UPDATE, Constants.HTTP_METHOD_PUT,
+            Constants.SET_DEFINITION_BASE_URI, new String[] { id }, changeToString(setDefinitionXml));
     }
 
     /**
      * Retrieve set definitions.
-     * 
-     * @param filter
-     *            The filter query.
      *
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     * @param filter The filter query.
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
-    public Object retrieveSetDefinitions(final Map<String, String[]> filter)
-        throws Exception {
-        return callEsciDoc("SetDefinition.retrieveSetDefinitions",
-            METHOD_RETRIEVE_SET_DEFINITIONS, Constants.HTTP_METHOD_GET,
-            Constants.SET_DEFINITIONS_BASE_URI, new String[] {}, filter);
+    public Object retrieveSetDefinitions(final Map<String, String[]> filter) throws Exception {
+        return callEsciDoc("SetDefinition.retrieveSetDefinitions", METHOD_RETRIEVE_SET_DEFINITIONS,
+            Constants.HTTP_METHOD_GET, Constants.SET_DEFINITIONS_BASE_URI, new String[] {}, filter);
     }
 
     /**
-     * 
+     *
      */
     public Object retrieveResources(final String id) throws Exception {
         return null;
@@ -158,17 +130,15 @@ public class SetDefinitionClient extends ClientBase
 
     /**
      * @return Returns the soapClient.
-     * @throws ServiceException
-     *             If service instantiation fails.
+     * @throws ServiceException If service instantiation fails.
      */
     public SetDefinitionHandler getSoapClient() throws ServiceException {
 
         if (soapClient == null) {
             SetDefinitionHandlerServiceLocator serviceLocator =
                 new SetDefinitionHandlerServiceLocator(getEngineConfig());
-            serviceLocator
-                .setSetDefinitionHandlerServiceEndpointAddress(checkSoapAddress(serviceLocator
-                    .getSetDefinitionHandlerServiceAddress()));
+            serviceLocator.setSetDefinitionHandlerServiceEndpointAddress(checkSoapAddress(serviceLocator
+                .getSetDefinitionHandlerServiceAddress()));
             soapClient = serviceLocator.getSetDefinitionHandlerService();
         }
         return soapClient;

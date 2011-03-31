@@ -55,9 +55,8 @@ import static org.junit.Assert.fail;
 
 /**
  * Test the implementation of the search resource.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 @RunWith(value = Parameterized.class)
 public class SearchTest extends SearchTestBase {
@@ -78,8 +77,7 @@ public class SearchTest extends SearchTestBase {
     private static String startTime = "";
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public SearchTest(final int transport) {
         super(transport);
@@ -89,9 +87,8 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Before
     public void initialize() throws Exception {
@@ -102,9 +99,8 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @After
     public void deinitialize() throws Exception {
@@ -112,64 +108,43 @@ public class SearchTest extends SearchTestBase {
         if (methodCounter == getTestAnnotationsCount()) {
             methodCounter = 0;
             deprepare();
-            versionCheckMap =
-                new HashMap<String, HashMap<String, String>>();
+            versionCheckMap = new HashMap<String, HashMap<String, String>>();
         }
     }
 
     /**
      * insert item(s) into system for the tests.
-     * 
-     * @test.name prepare
-     * @test.id PREPARE
-     * @test.input
-     * @test.inputDescription
-     * @test.expected
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     private void prepare() throws Exception {
         LOGGER.info("starting SearchTest at "
-                + new DateTime(System.currentTimeMillis() 
-                + (60 * 60 * 1000), DateTimeZone.UTC).toString());
+            + new DateTime(System.currentTimeMillis() + (60 * 60 * 1000), DateTimeZone.UTC).toString());
         // create empty indices/////////////////////////////////////////////////
         String urlParameters =
-            "?operation=updateIndex" + "&action=createEmpty"
-                + "&repositoryName=escidocrepository" + "&indexName=";
+            "?operation=updateIndex" + "&action=createEmpty" + "&repositoryName=escidocrepository" + "&indexName=";
         String httpUrl =
-            HttpHelper
-                .createUrl(
-                    de.escidoc.core.test.common.client.servlet.Constants.PROTOCOL,
-                    de.escidoc.core.test.common.client.servlet.Constants.HOST_PORT,
-                    de.escidoc.core.test.common.client.servlet.Constants.FEDORAGSEARCH_BASE_URI
-                        + urlParameters);
-        HttpHelper
-            .executeHttpRequest(
-                de.escidoc.core.test.common.client.servlet.Constants.HTTP_METHOD_GET,
-                httpUrl, null, null, null);
+            HttpHelper.createUrl(de.escidoc.core.test.common.client.servlet.Constants.PROTOCOL,
+                de.escidoc.core.test.common.client.servlet.Constants.HOST_PORT,
+                de.escidoc.core.test.common.client.servlet.Constants.FEDORAGSEARCH_BASE_URI + urlParameters);
+        HttpHelper.executeHttpRequest(de.escidoc.core.test.common.client.servlet.Constants.HTTP_METHOD_GET, httpUrl,
+            null, null, null);
         // /////////////////////////////////////////////////////////////////////
 
-        startTime =
-            new DateTime(System.currentTimeMillis(), DateTimeZone.UTC)
-                .toString();
+        startTime = new DateTime(System.currentTimeMillis(), DateTimeZone.UTC).toString();
         // Create Container/////////////////////////////////////////////////////
         try {
             containerIds = new String[Constants.NUM_CONTAINERS];
             for (int i = 0; i < Constants.NUM_CONTAINERS; i++) {
                 String xmlData =
-                    EscidocRestSoapTestBase.getTemplateAsString(
-                        TEMPLATE_CONTAINER_SEARCH_PATH, 
-                        "escidoc_search_container" + i
-                            + "_" + getTransport(false) + ".xml");
+                    EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_CONTAINER_SEARCH_PATH,
+                        "escidoc_search_container" + i + "_" + getTransport(false) + ".xml");
                 String xml = container.create(xmlData);
                 String lastModDate = getLastModificationDate(xml);
                 containerIds[i] = getId(xml);
 
                 // submit container
-                container.submit(containerIds[i],
-                    "<param last-modification-date=\"" + lastModDate + "\" />");
+                container.submit(containerIds[i], "<param last-modification-date=\"" + lastModDate + "\" />");
 
                 // assign pids
                 String pidParam = getContainerPidParam(containerIds[i]);
@@ -180,26 +155,22 @@ public class SearchTest extends SearchTestBase {
                 // release container
                 xml = container.retrieve(containerIds[i]);
                 lastModDate = getLastModificationDate(xml);
-                container.release(containerIds[i],
-                    "<param last-modification-date=\"" + lastModDate + "\" />");
+                container.release(containerIds[i], "<param last-modification-date=\"" + lastModDate + "\" />");
                 xml = container.retrieve(containerIds[i]);
                 lastModDate = getLastModificationDate(xml);
                 xml = xml.replaceAll("Hoppe", "Hoppe1");
                 container.update(containerIds[i], xml);
-                versionCheckMap.put(
-                    de.escidoc.core.test.common.client.servlet
-                    .Constants.CONTAINER_BASE_URI + "/" + containerIds[i],
-                    new HashMap<String, String>() {
-                        private static final long serialVersionUID =
-                            -615466009125477112L;
+                versionCheckMap.put(de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + "/"
+                    + containerIds[i], new HashMap<String, String>() {
+                    private static final long serialVersionUID = -615466009125477112L;
 
-                        {
-                            put("objectType", "container");
-                            put("expectedPublicStatus", "released");
-                            put("expectedVersionNumber", "12");
-                            put("expectedLatestVersionNumber", "12");
-                        }
-                    });
+                    {
+                        put("objectType", "container");
+                        put("expectedPublicStatus", "released");
+                        put("expectedVersionNumber", "12");
+                        put("expectedLatestVersionNumber", "12");
+                    }
+                });
             }
         }
         catch (final Exception e) {
@@ -212,16 +183,14 @@ public class SearchTest extends SearchTestBase {
             for (int i = 0; i < Constants.NUM_ITEMS; i++) {
                 // Create Item submit and release it //////////////////////////
                 String xmlData =
-                    EscidocRestSoapTestBase.getTemplateAsString(
-                        TEMPLATE_ITEM_SEARCH_PATH, "escidoc_search_item" + i + "_"
-                            + getTransport(false) + ".xml");
+                    EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_SEARCH_PATH, "escidoc_search_item" + i
+                        + "_" + getTransport(false) + ".xml");
                 String xml = container.createItem(containerIds[0], xmlData);
                 String lastModDate = getLastModificationDate(xml);
                 itemIds[i] = getId(xml);
 
                 // submit item
-                item.submit(itemIds[i], "<param last-modification-date=\""
-                    + lastModDate + "\" />");
+                item.submit(itemIds[i], "<param last-modification-date=\"" + lastModDate + "\" />");
 
                 // assignPids
                 Document itemDoc = EscidocRestSoapTestBase.getDocument(xml);
@@ -243,43 +212,36 @@ public class SearchTest extends SearchTestBase {
                 // release item
                 xml = item.retrieve(itemIds[i]);
                 lastModDate = getLastModificationDate(xml);
-                item.release(itemIds[i], "<param last-modification-date=\""
-                    + lastModDate + "\" />");
+                item.release(itemIds[i], "<param last-modification-date=\"" + lastModDate + "\" />");
                 if (i % 2 == 0) {
                     xml = item.retrieve(itemIds[i]);
                     lastModDate = getLastModificationDate(xml);
                     xml = xml.replaceAll("Huffman", "Huffman1");
                     item.update(itemIds[i], xml);
-                    versionCheckMap.put(
-                        de.escidoc.core.test.common.client.servlet
-                        .Constants.ITEM_BASE_URI + "/" + itemIds[i] + ":1" ,
-                        new HashMap<String, String>() {
-                            private static final long serialVersionUID =
-                                -5739781891807617223L;
+                    versionCheckMap.put(de.escidoc.core.test.common.client.servlet.Constants.ITEM_BASE_URI + "/"
+                        + itemIds[i] + ":1", new HashMap<String, String>() {
+                        private static final long serialVersionUID = -5739781891807617223L;
 
-                            {
-                                put("objectType", "item");
-                                put("expectedPublicStatus", "released");
-                                put("expectedVersionNumber", "1");
-                                put("expectedLatestVersionNumber", "2");
-                            }
-                        });
+                        {
+                            put("objectType", "item");
+                            put("expectedPublicStatus", "released");
+                            put("expectedVersionNumber", "1");
+                            put("expectedLatestVersionNumber", "2");
+                        }
+                    });
                 }
                 else {
-                    versionCheckMap.put(
-                        de.escidoc.core.test.common.client.servlet
-                        .Constants.ITEM_BASE_URI + "/" + itemIds[i],
-                        new HashMap<String, String>() {
-                            private static final long serialVersionUID =
-                                -562673198784019069L;
+                    versionCheckMap.put(de.escidoc.core.test.common.client.servlet.Constants.ITEM_BASE_URI + "/"
+                        + itemIds[i], new HashMap<String, String>() {
+                        private static final long serialVersionUID = -562673198784019069L;
 
-                            {
-                                put("objectType", "item");
-                                put("expectedPublicStatus", "released");
-                                put("expectedVersionNumber", "1");
-                                put("expectedLatestVersionNumber", "1");
-                            }
-                        });
+                        {
+                            put("objectType", "item");
+                            put("expectedPublicStatus", "released");
+                            put("expectedVersionNumber", "1");
+                            put("expectedLatestVersionNumber", "1");
+                        }
+                    });
                 }
 
                 // ////////////////////////////////////////////////////////////
@@ -294,22 +256,19 @@ public class SearchTest extends SearchTestBase {
             String xml = container.retrieve(containerIds[0]);
             String lastModDate = getLastModificationDate(xml);
             // submit container
-            container.submit(containerIds[0],
-                "<param last-modification-date=\"" + lastModDate + "\" />");
+            container.submit(containerIds[0], "<param last-modification-date=\"" + lastModDate + "\" />");
             String version =
-                selectSingleNode(EscidocRestSoapTestBase.getDocument(xml),
-                    "/container/properties/version/number").getTextContent();
+                selectSingleNode(EscidocRestSoapTestBase.getDocument(xml), "/container/properties/version/number")
+                    .getTextContent();
 
             // assign pids
             String pidParam = getContainerPidParam(containerIds[0]);
-            container.assignVersionPid(containerIds[0] + ":" + version,
-                pidParam);
+            container.assignVersionPid(containerIds[0] + ":" + version, pidParam);
 
             // release container
             xml = container.retrieve(containerIds[0]);
             lastModDate = getLastModificationDate(xml);
-            container.release(containerIds[0],
-                "<param last-modification-date=\"" + lastModDate + "\" />");
+            container.release(containerIds[0], "<param last-modification-date=\"" + lastModDate + "\" />");
         }
         catch (final Exception e) {
             LOGGER.error("", e);
@@ -320,33 +279,19 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * insert item(s) into system for the tests.
-     * 
-     * @test.name prepare
-     * @test.id PREPARE
-     * @test.input
-     * @test.inputDescription
-     * @test.expected
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     private void prepareZip() throws Exception {
         // create empty indices/////////////////////////////////////////////////
         String urlParameters =
-            "?operation=updateIndex" + "&action=createEmpty"
-                + "&repositoryName=escidocrepository" + "&indexName=";
+            "?operation=updateIndex" + "&action=createEmpty" + "&repositoryName=escidocrepository" + "&indexName=";
         String httpUrl =
-            HttpHelper
-                .createUrl(
-                    de.escidoc.core.test.common.client.servlet.Constants.PROTOCOL,
-                    de.escidoc.core.test.common.client.servlet.Constants.HOST_PORT,
-                    de.escidoc.core.test.common.client.servlet.Constants.FEDORAGSEARCH_BASE_URI
-                        + urlParameters);
-        HttpHelper
-            .executeHttpRequest(
-                de.escidoc.core.test.common.client.servlet.Constants.HTTP_METHOD_GET,
-                httpUrl, null, null, null);
+            HttpHelper.createUrl(de.escidoc.core.test.common.client.servlet.Constants.PROTOCOL,
+                de.escidoc.core.test.common.client.servlet.Constants.HOST_PORT,
+                de.escidoc.core.test.common.client.servlet.Constants.FEDORAGSEARCH_BASE_URI + urlParameters);
+        HttpHelper.executeHttpRequest(de.escidoc.core.test.common.client.servlet.Constants.HTTP_METHOD_GET, httpUrl,
+            null, null, null);
         // /////////////////////////////////////////////////////////////////////
 
         // Create Container/////////////////////////////////////////////////////
@@ -354,17 +299,14 @@ public class SearchTest extends SearchTestBase {
             containerIds = new String[Constants.NUM_CONTAINERS];
             for (int i = 0; i < Constants.NUM_CONTAINERS; i++) {
                 String xmlData =
-                    EscidocRestSoapTestBase.getTemplateAsString(
-                        TEMPLATE_CONTAINER_SEARCH_PATH, 
-                        "escidoc_search_container" + i
-                            + "_" + getTransport(false) + ".xml");
+                    EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_CONTAINER_SEARCH_PATH,
+                        "escidoc_search_container" + i + "_" + getTransport(false) + ".xml");
                 String xml = container.create(xmlData);
                 String lastModDate = getLastModificationDate(xml);
                 containerIds[i] = getId(xml);
 
                 // submit container
-                container.submit(containerIds[i],
-                    "<param last-modification-date=\"" + lastModDate + "\" />");
+                container.submit(containerIds[i], "<param last-modification-date=\"" + lastModDate + "\" />");
 
                 // assign pids
                 String pidParam = getContainerPidParam(containerIds[i]);
@@ -375,8 +317,7 @@ public class SearchTest extends SearchTestBase {
                 // release container
                 xml = container.retrieve(containerIds[i]);
                 lastModDate = getLastModificationDate(xml);
-                container.release(containerIds[i],
-                    "<param last-modification-date=\"" + lastModDate + "\" />");
+                container.release(containerIds[i], "<param last-modification-date=\"" + lastModDate + "\" />");
 
             }
         }
@@ -389,9 +330,8 @@ public class SearchTest extends SearchTestBase {
             ZipInputStream zipinputstream = null;
             ZipEntry zipentry;
             zipinputstream =
-                new ZipInputStream(new FileInputStream(
-                    "C:/eprojects/eSciDocCoreTest/src/java"
-                        + TEMPLATE_ITEM_PATH + "/all_items.zip"));
+                new ZipInputStream(new FileInputStream("C:/eprojects/eSciDocCoreTest/src/java" + TEMPLATE_ITEM_PATH
+                    + "/all_items.zip"));
             itemIds = new String[100000];
             int i = 0;
             while ((zipentry = zipinputstream.getNextEntry()) != null) {
@@ -413,12 +353,10 @@ public class SearchTest extends SearchTestBase {
                     itemIds[i] = getId(xml);
 
                     // submit item
-                    item.submit(itemIds[i], "<param last-modification-date=\""
-                        + lastModDate + "\" />");
+                    item.submit(itemIds[i], "<param last-modification-date=\"" + lastModDate + "\" />");
 
                     // assignPids
-                    Document itemDoc =
-                        EscidocRestSoapTestBase.getDocument(xml);
+                    Document itemDoc = EscidocRestSoapTestBase.getDocument(xml);
                     String componentId = getComponentObjidValue(itemDoc, 1);
                     String pidParam = getItemPidParam(itemIds[i]);
                     item.assignContentPid(itemIds[i], componentId, pidParam);
@@ -438,8 +376,7 @@ public class SearchTest extends SearchTestBase {
                     // release item
                     xml = item.retrieve(itemIds[i]);
                     lastModDate = getLastModificationDate(xml);
-                    item.release(itemIds[i], "<param last-modification-date=\""
-                        + lastModDate + "\" />");
+                    item.release(itemIds[i], "<param last-modification-date=\"" + lastModDate + "\" />");
 
                     // ////////////////////////////////////////////////////////////
                     i++;
@@ -456,19 +393,16 @@ public class SearchTest extends SearchTestBase {
             String xml = container.retrieve(containerIds[0]);
             String lastModDate = getLastModificationDate(xml);
             // submit container
-            container.submit(containerIds[0],
-                "<param last-modification-date=\"" + lastModDate + "\" />");
+            container.submit(containerIds[0], "<param last-modification-date=\"" + lastModDate + "\" />");
 
             // assign pids
             String pidParam = getContainerPidParam(containerIds[0]);
-            container.assignVersionPid(containerIds[0] + ":"
-                + (Constants.NUM_ITEMS + 1), pidParam);
+            container.assignVersionPid(containerIds[0] + ":" + (Constants.NUM_ITEMS + 1), pidParam);
 
             // release container
             xml = container.retrieve(containerIds[0]);
             lastModDate = getLastModificationDate(xml);
-            container.release(containerIds[0],
-                "<param last-modification-date=\"" + lastModDate + "\" />");
+            container.release(containerIds[0], "<param last-modification-date=\"" + lastModDate + "\" />");
         }
         catch (final Exception e) {
             LOGGER.error("", e);
@@ -478,17 +412,8 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * explain operation without parameters for existing database xyz.
-     * 
-     * @test.name explain (1)
-     * @test.id SB_EX-1
-     * @test.input
-     * @test.inputDescription
-     * @test.expected explain plan for the corresponding database according
-     *                ZeeRex Schema
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBEX1() throws Exception {
@@ -501,19 +426,9 @@ public class SearchTest extends SearchTestBase {
     }
 
     /**
-     * explain operation where operation=explain for existing database xyz is
-     * explicitly given.
-     * 
-     * @test.name explain (2)
-     * @test.id SB_EX-2
-     * @test.input existing database
-     * @test.inputDescription database has to exist
-     * @test.expected explain plan for the corresponding database according
-     *                ZeeRex Schema
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * explain operation where operation=explain for existing database xyz is explicitly given.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBEX2() throws Exception {
@@ -528,16 +443,8 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * explain operation with operation=explain for a not existing database zzz.
-     * 
-     * @test.name explain (2)
-     * @test.id SB_EX-2
-     * @test.input existing database
-     * @test.inputDescription database has to exist
-     * @test.expected error message describing the reason for failure
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBEX3() throws Exception {
@@ -555,20 +462,8 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Test searching for a single term.
-     * 
-     * @test.name Single Term Search
-     * @test.id SB_SR-1
-     * @test.input mandatory request parameters: - any single term query -
-     *             existing database
-     * @test.inputDescription execute single term query on given database
-     * @test.expected List of search records according to eSciDoc Default Schema
-     *                for search results first record to be returned ist at the
-     *                1st position in the sequence of matched records. only
-     *                released objects are found.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR1() throws Exception {
@@ -584,20 +479,8 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Test searching for a single term without Highlighting.
-     * 
-     * @test.name Single Term Search without Highlighting
-     * @test.id SB_SR-1
-     * @test.input mandatory request parameters: - any single term query -
-     *             existing database
-     * @test.inputDescription execute single term query on given database
-     * @test.expected List of search records according to eSciDoc Default Schema
-     *                for search results first record to be returned ist at the
-     *                1st position in the sequence of matched records. only
-     *                released objects are found.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR1_1() throws Exception {
@@ -614,17 +497,8 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Database not existing.
-     * 
-     * @test.name Database not existing
-     * @test.id SB_SR-2
-     * @test.input mandatory request parameters - any single term query -
-     *             non-existing database --- no additional request parameters
-     * @test.inputDescription input contains wrong database
-     * @test.expected error message describing the reason for failure
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR2() throws Exception {
@@ -641,23 +515,8 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Request parameter startRecord \u2013 (1).
-     * 
-     * @test.name Request parameter startRecord \u2013 (1)
-     * @test.id SB_SR-6
-     * @test.input mandatory request parameters: - any single term query which
-     *             results in more hits than are shown on one page by default -
-     *             existing database --- additional request parameter: -
-     *             startRecord = one digit greater than the number of hits that
-     *             are shown on one page by default
-     * @test.inputDescription
-     * @test.expected List of search records according to eSciDoc Default Schema
-     *                for search results the 1st record to be returned ist at
-     *                the corresponding position in the sequence of matched
-     *                records only released objects are found
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR6() throws Exception {
@@ -672,19 +531,8 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Request parameter startrecord \u2013 (2).
-     * 
-     * @test.name Request parameter startrecord \u2013 (2)
-     * @test.id SB_SR-7
-     * @test.input mandatory request parameters: - any single term query which
-     *             results in more hits than are shown on one page by default -
-     *             existing database --- additional request parameter: -
-     *             startRecord = 0
-     * @test.inputDescription
-     * @test.expected error message describing the reason for failure
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR7() throws Exception {
@@ -703,24 +551,8 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Request parameter maximumRecords \u2013 (1).
-     * 
-     * @test.name Request parameter maximumRecords \u2013 (1)
-     * @test.id SB_SR-8
-     * @test.input mandatory request parameters: - any single term query which
-     *             results in many hits - existing database --- additional
-     *             request parameter: - maximumRecords = any value greater than
-     *             0
-     * @test.inputDescription
-     * @test.expected List of search records according to eSciDoc Default Schema
-     *                for search results first record to be returned ist at the
-     *                1st position in the sequence of matched records Number of
-     *                records to be returned may be equal or less than the value
-     *                of the parameter maximumRecords only released objects are
-     *                found
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR8() throws Exception {
@@ -736,18 +568,8 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Request parameter maximumRecords \u2013 (2).
-     * 
-     * @test.name Request parameter maximumRecords \u2013 (2)
-     * @test.id SB_SR-9
-     * @test.input --- mandatory request parameters: - any single term query
-     *             which results in many hits - existing database --- additional
-     *             request parameter: - maximumRecords = 0
-     * @test.inputDescription
-     * @test.expected
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR9() throws Exception {
@@ -758,9 +580,7 @@ public class SearchTest extends SearchTestBase {
         try {
             response = search(parameters, INDEX_NAME);
             assertXmlValidSearchResult(response);
-            assertEquals(
-                    "1/java.lang.IllegalArgumentException: nDocs must be &gt; 0", 
-                    getDiagnostics(response));
+            assertEquals("1/java.lang.IllegalArgumentException: nDocs must be &gt; 0", getDiagnostics(response));
         }
         catch (final Exception e) {
         }
@@ -768,18 +588,8 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Request parameter maximumRecords \u2013 (3).
-     * 
-     * @test.name Request parameter maximumRecords \u2013 (3)
-     * @test.id SB_SR-10
-     * @test.input mandatory request parameters: - any single term query which
-     *             results in many hits - existing database --- additional
-     *             request parameter: - maximumRecords = any negative value
-     * @test.inputDescription
-     * @test.expected error message describing the reason for failure
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR10() throws Exception {
@@ -797,19 +607,8 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Request parameter recordPacking \u2013 (1).
-     * 
-     * @test.name Request parameter recordPacking \u2013 (1)
-     * @test.id SB_SR-11
-     * @test.input mandatory request parameters: - any single term query which
-     *             results in some hits - existing database --- additional
-     *             request parameter: - RecordPacking = xml
-     * @test.inputDescription
-     * @test.expected List of search records (xml) according to eSciDoc Default
-     *                Schema for search results
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR11() throws Exception {
@@ -824,18 +623,8 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Request parameter recordPacking \u2013 (2).
-     * 
-     * @test.name Request parameter recordPacking \u2013 (2)
-     * @test.id SB_SR-12
-     * @test.input mandatory request parameters: - any single term query which
-     *             results in some hits - existing database --- additional
-     *             request parameter: - RecordPacking = string
-     * @test.inputDescription
-     * @test.expected List of search records (string)
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR12() throws Exception {
@@ -849,19 +638,8 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Request parameter recordPacking \u2013 (3).
-     * 
-     * @test.name Request parameter recordPacking \u2013 (3)
-     * @test.id SB_SR-13
-     * @test.input mandatory request parameters: - any single term query which
-     *             results in some hits - existing database --- additional
-     *             request parameter: - RecordPacking = any invalid value, e.g.
-     *             invalid
-     * @test.inputDescription
-     * @test.expected error message describing the reason for failure
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR13() throws Exception {
@@ -875,20 +653,8 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Request parameter recordSchema \u2013 (1).
-     * 
-     * @test.name Request parameter recordSchema \u2013 (1)
-     * @test.id SB_SR-14
-     * @test.input mandatory request parameters: - any single term query which
-     *             results in some hits - existing database --- additional
-     *             request parameter: - valid RecordSchema shall explicitly be
-     *             named
-     * @test.inputDescription
-     * @test.expected List of search records according to the explicitly named
-     *                eSciDoc Schema for search results
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR14() throws Exception {
@@ -903,18 +669,8 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Request parameter recordSchema \u2013 (2).
-     * 
-     * @test.name Request parameter recordSchema \u2013 (2)
-     * @test.id SB_SR-15
-     * @test.input mandatory request parameters: - any single term query which
-     *             results in some hits - existing database --- additional
-     *             request parameter: - invalid RecordSchema
-     * @test.inputDescription
-     * @test.expected error message describing the reason for failure
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR15() throws Exception {
@@ -928,20 +684,8 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Request parameter sortKeys \u2013 (1).
-     * 
-     * @test.name Request parameter sortKeys \u2013 (1)
-     * @test.id SB_SR-16
-     * @test.input mandatory request parameters: - any single term query which
-     *             results in some hits - existing database --- additional
-     *             request parameter: - a single valid sortkey
-     * @test.inputDescription
-     * @test.expected List of search records according to eSciDoc Default Schema
-     *                for search results search results are sorted by
-     *                corresponding sortkey
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR16() throws Exception {
@@ -951,16 +695,14 @@ public class SearchTest extends SearchTestBase {
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
         String[] dates = response.split("created[\\s]");
-        String[] datesToCheck =
-            { "1980-01-25", "1980-01-26", "1980-01-27", "1980-01-28" };
+        String[] datesToCheck = { "1980-01-25", "1980-01-26", "1980-01-27", "1980-01-28" };
         int j = 0;
         for (int i = 1; i < dates.length; i++) {
             String datepart = dates[i];
             if (!datepart.matches("(?s)[^0-9]*" + datesToCheck[j] + ".*")) {
                 j++;
                 if (!datepart.matches("(?s)[^0-9]*" + datesToCheck[j] + ".*")) {
-                    assertTrue("wrong sortorder, should: " + datesToCheck[j]
-                        + ", is: " + datepart, false);
+                    assertTrue("wrong sortorder, should: " + datesToCheck[j] + ", is: " + datepart, false);
                 }
             }
         }
@@ -969,50 +711,30 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Request parameter sortKeys \u2013 (2).
-     * 
-     * @test.name Request parameter sortKeys \u2013 (2)
-     * @test.id SB_SR-17
-     * @test.input mandatory request parameters: - any single term query which
-     *             results in some hits - existing database --- additional
-     *             request parameter: - two valid sortkeys
-     * @test.inputDescription
-     * @test.expected List of search records according to eSciDoc Default Schema
-     *                for search results search results are sorted by
-     *                corresponding sortkeys
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR17() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.language=de");
-        parameters
-            .put(FILTER_PARAMETER_SORTKEYS, "sort.escidoc.created,,0 sort.escidoc.title");
+        parameters.put(FILTER_PARAMETER_SORTKEYS, "sort.escidoc.created,,0 sort.escidoc.title");
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
         String[] records = response.split("<record>");
         String[] valuesToCheck =
-            { "", "1980-01-28|Antriebsvorrichtung aus einem",
-                "1980-01-27|Verfahren und Vorrichtung",
-                "1980-01-27|Verfahren zum Vermessen",
-                "1980-01-27|Verfahren zur Steuerung",
-                "1980-01-26|Methode zum Auffinden",
-                "1980-01-26|Methode zur Herstellung",
-                "1980-01-26|Verfahren zur direkten",
-                "1980-01-25|Ber&#xFC;hrungs- bzw. Einklemmschutz",
-                "1980-01-25|Elektrochemischer Gassensor",
-                "1980-01-25|Verfahren zur thermischen" };
+            { "", "1980-01-28|Antriebsvorrichtung aus einem", "1980-01-27|Verfahren und Vorrichtung",
+                "1980-01-27|Verfahren zum Vermessen", "1980-01-27|Verfahren zur Steuerung",
+                "1980-01-26|Methode zum Auffinden", "1980-01-26|Methode zur Herstellung",
+                "1980-01-26|Verfahren zur direkten", "1980-01-25|Ber&#xFC;hrungs- bzw. Einklemmschutz",
+                "1980-01-25|Elektrochemischer Gassensor", "1980-01-25|Verfahren zur thermischen" };
         assertEquals(records.length, valuesToCheck.length);
         for (int i = 1; i < records.length; i++) {
             String[] parts = valuesToCheck[i].split("\\|");
-            if (!records[i].matches("(?s).*<dcterms:created.*?>" + parts[0]
-                + ".*")
-                || !records[i].toLowerCase().matches(
-                    "(?s).*<dc:title.*?>" + parts[1].toLowerCase() + ".*")) {
-                assertTrue("wrong sortorder, should: " + parts[1].toLowerCase()
-                    + ", is: " + records[i].toLowerCase(), false);
+            if (!records[i].matches("(?s).*<dcterms:created.*?>" + parts[0] + ".*")
+                || !records[i].toLowerCase().matches("(?s).*<dc:title.*?>" + parts[1].toLowerCase() + ".*")) {
+                assertTrue("wrong sortorder, should: " + parts[1].toLowerCase() + ", is: " + records[i].toLowerCase(),
+                    false);
 
             }
 
@@ -1022,20 +744,8 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Request parameter sortKeys \u2013 (2).
-     * 
-     * @test.name Request parameter sortKeys \u2013 (2)
-     * @test.id SB_SR-171
-     * @test.input mandatory request parameters: - any single term query which
-     *             results in some hits - existing database --- additional
-     *             request parameter: - valid sortkey
-     * @test.inputDescription
-     * @test.expected List of search records according to eSciDoc Default Schema
-     *                for search results search results are sorted by
-     *                corresponding sortkeys
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR171() throws Exception {
@@ -1047,22 +757,16 @@ public class SearchTest extends SearchTestBase {
         String[] records = response.split("<record>");
         String[] valuesToCheck =
             { "", "&#xC4;Driving device consisting of a motor and a gear",
-                "&#xE4;Process for controlling a long-stroke positioning",
-                "aMethod of retreiving documents",
-                "Anti-nipping device for power operated parts",
-                "Electrochemical gas sensor",
-                "&#xD6;Method and device for calibrating the penetration",
-                "&#xF6;METHOD FOR PRODUCING A BIOACTIVE",
+                "&#xE4;Process for controlling a long-stroke positioning", "aMethod of retreiving documents",
+                "Anti-nipping device for power operated parts", "Electrochemical gas sensor",
+                "&#xD6;Method and device for calibrating the penetration", "&#xF6;METHOD FOR PRODUCING A BIOACTIVE",
                 "Process of thermal oxidation of an implanted semiconductor",
-                "&#xFC;METHOD FOR DIRECT METHANE PYROLYSIS",
-                "&#xDC;Method of measuring a borehole" };
+                "&#xFC;METHOD FOR DIRECT METHANE PYROLYSIS", "&#xDC;Method of measuring a borehole" };
         assertEquals(records.length, valuesToCheck.length);
         for (int i = 1; i < records.length; i++) {
             if (!records[i].toLowerCase().matches(
-                "(?s).*<dcterms:alternative.*?>"
-                    + valuesToCheck[i].toLowerCase() + ".*")) {
-                assertTrue("wrong sortorder, should: "
-                    + valuesToCheck[i].toLowerCase() + ", is: "
+                "(?s).*<dcterms:alternative.*?>" + valuesToCheck[i].toLowerCase() + ".*")) {
+                assertTrue("wrong sortorder, should: " + valuesToCheck[i].toLowerCase() + ", is: "
                     + records[i].toLowerCase(), false);
 
             }
@@ -1073,20 +777,8 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Request parameter sortKeys \u2013 (2).
-     * 
-     * @test.name Request parameter sortKeys \u2013 (2)
-     * @test.id SB_SR-172
-     * @test.input mandatory request parameters: - any single term query which
-     *             results in some hits - existing database --- additional
-     *             request parameter: - _relevance_ sortkey
-     * @test.inputDescription
-     * @test.expected List of search records according to eSciDoc Default Schema
-     *                for search results search results are sorted by
-     *                _relevance_ sortkeys
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR172() throws Exception {
@@ -1095,8 +787,7 @@ public class SearchTest extends SearchTestBase {
         parameters.put(FILTER_PARAMETER_SORTKEYS, "_relevance_");
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
-        Pattern scorePattern =
-            Pattern.compile("(?s).*<search-result:score.*?>(.*?)<.*");
+        Pattern scorePattern = Pattern.compile("(?s).*<search-result:score.*?>(.*?)<.*");
         Matcher scoreMatcher = scorePattern.matcher("");
         String[] records = response.split("<record>");
         assertEquals(records.length, 11);
@@ -1118,20 +809,8 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Request parameter sortKeys \u2013 (2).
-     * 
-     * @test.name Request parameter sortKeys \u2013 (2)
-     * @test.id SB_SR-173
-     * @test.input mandatory request parameters: - any single term query which
-     *             results in some hits - existing database --- additional
-     *             request parameter: - _relevance_ sortkey and title sortkey
-     * @test.inputDescription
-     * @test.expected List of search records according to eSciDoc Default Schema
-     *                for search results search results are sorted by
-     *                _relevance_ and title sortkeys
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR173() throws Exception {
@@ -1142,13 +821,11 @@ public class SearchTest extends SearchTestBase {
         assertXmlValidSearchResult(response);
         assertEquals("10", getNumberOfHits(response));
 
-        Pattern scorePattern =
-            Pattern.compile("(?s).*<search-result:score.*?>(.*?)<.*");
+        Pattern scorePattern = Pattern.compile("(?s).*<search-result:score.*?>(.*?)<.*");
         Matcher scoreMatcher = scorePattern.matcher("");
 
         Pattern titlePattern =
-            Pattern.compile("(?s).*?md-record[^>]*?name=\"escidoc\".*?"
-                + "<[^>]*?title.*?>\\s*?(.*?)\\s*?<.*");
+            Pattern.compile("(?s).*?md-record[^>]*?name=\"escidoc\".*?" + "<[^>]*?title.*?>\\s*?(.*?)\\s*?<.*");
         Matcher titleMatcher = titlePattern.matcher("");
 
         String[] records = response.split("<record>");
@@ -1191,18 +868,8 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Request parameter sortKeys \u2013 (3).
-     * 
-     * @test.name Request parameter sortKeys \u2013 (3)
-     * @test.id SB_SR-18
-     * @test.input mandatory request parameters: - any single term query which
-     *             results in some hits - existing database --- additional
-     *             request parameter: - invalid sortkey
-     * @test.inputDescription
-     * @test.expected 
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR18() throws Exception {
@@ -1216,21 +883,8 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Request parameter sortKeys \u2013 (4).
-     * 
-     * @test.name Request parameter sortKeys \u2013 (4)
-     * @test.id SB_SR-19
-     * @test.input mandatory request parameters: - any single term query which
-     *             results in some hits - existing database --- additional
-     *             request parameter: - sortkey that sorts for
-     *             escidoc.member-count This is a index-field that only occurs
-     *             with containers --> This should sort the container at the
-     *             bottom
-     * @test.inputDescription
-     * @test.expected error message describing the reason for failure
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR19() throws Exception {
@@ -1241,22 +895,16 @@ public class SearchTest extends SearchTestBase {
         assertXmlValidSearchResult(response);
         String[] records = response.split("<record>");
         String[] valuesToCheck =
-            { "(<[^>]*?:item[^>]*?>|<item[^>]*?>)",
-                "(<[^>]*?:item[^>]*?>|<item[^>]*?>)",
-                "(<[^>]*?:item[^>]*?>|<item[^>]*?>)",
-                "(<[^>]*?:item[^>]*?>|<item[^>]*?>)",
-                "(<[^>]*?:item[^>]*?>|<item[^>]*?>)",
-                "(<[^>]*?:item[^>]*?>|<item[^>]*?>)",
-                "(<[^>]*?:item[^>]*?>|<item[^>]*?>)",
-                "(<[^>]*?:item[^>]*?>|<item[^>]*?>)",
-                "(<[^>]*?:item[^>]*?>|<item[^>]*?>)",
-                "(<[^>]*?:item[^>]*?>|<item[^>]*?>)",
+            { "(<[^>]*?:item[^>]*?>|<item[^>]*?>)", "(<[^>]*?:item[^>]*?>|<item[^>]*?>)",
+                "(<[^>]*?:item[^>]*?>|<item[^>]*?>)", "(<[^>]*?:item[^>]*?>|<item[^>]*?>)",
+                "(<[^>]*?:item[^>]*?>|<item[^>]*?>)", "(<[^>]*?:item[^>]*?>|<item[^>]*?>)",
+                "(<[^>]*?:item[^>]*?>|<item[^>]*?>)", "(<[^>]*?:item[^>]*?>|<item[^>]*?>)",
+                "(<[^>]*?:item[^>]*?>|<item[^>]*?>)", "(<[^>]*?:item[^>]*?>|<item[^>]*?>)",
                 "(<[^>]*?:container[^>]*?>|<container[^>]*?>)" };
         for (int i = 1; i < records.length; i++) {
             String record = records[i];
             if (!record.matches("(?s).*?" + valuesToCheck[i - 1] + ".*")) {
-                assertTrue("wrong sortorder, should: " + valuesToCheck[i - 1]
-                    + ", is: " + record, false);
+                assertTrue("wrong sortorder, should: " + valuesToCheck[i - 1] + ", is: " + record, false);
             }
         }
         assertEquals(true, checkHighlighting(response));
@@ -1264,20 +912,8 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Request parameter sortKeys \u2013 (4).
-     * 
-     * @test.name Request parameter sortKeys \u2013 (4)
-     * @test.id SB_SR-20
-     * @test.input mandatory request parameters: - any single term query which
-     *             results in some hits - existing database --- additional
-     *             request parameter: - sortkey that sorts for
-     *             escidoc.member-count This is a index-field that only occurs
-     *             with containers --> This should sort the container at the top
-     * @test.inputDescription
-     * @test.expected error message describing the reason for failure
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR20() throws Exception {
@@ -1288,22 +924,16 @@ public class SearchTest extends SearchTestBase {
         assertXmlValidSearchResult(response);
         String[] records = response.split("<record>");
         String[] valuesToCheck =
-            { "(<[^>]*?:container[^>]*?>|<container[^>]*?>)",
-                "(<[^>]*?:item[^>]*?>|<item[^>]*?>)",
-                "(<[^>]*?:item[^>]*?>|<item[^>]*?>)",
-                "(<[^>]*?:item[^>]*?>|<item[^>]*?>)",
-                "(<[^>]*?:item[^>]*?>|<item[^>]*?>)",
-                "(<[^>]*?:item[^>]*?>|<item[^>]*?>)",
-                "(<[^>]*?:item[^>]*?>|<item[^>]*?>)",
-                "(<[^>]*?:item[^>]*?>|<item[^>]*?>)",
-                "(<[^>]*?:item[^>]*?>|<item[^>]*?>)",
-                "(<[^>]*?:item[^>]*?>|<item[^>]*?>)",
+            { "(<[^>]*?:container[^>]*?>|<container[^>]*?>)", "(<[^>]*?:item[^>]*?>|<item[^>]*?>)",
+                "(<[^>]*?:item[^>]*?>|<item[^>]*?>)", "(<[^>]*?:item[^>]*?>|<item[^>]*?>)",
+                "(<[^>]*?:item[^>]*?>|<item[^>]*?>)", "(<[^>]*?:item[^>]*?>|<item[^>]*?>)",
+                "(<[^>]*?:item[^>]*?>|<item[^>]*?>)", "(<[^>]*?:item[^>]*?>|<item[^>]*?>)",
+                "(<[^>]*?:item[^>]*?>|<item[^>]*?>)", "(<[^>]*?:item[^>]*?>|<item[^>]*?>)",
                 "(<[^>]*?:item[^>]*?>|<item[^>]*?>)" };
         for (int i = 1; i < records.length; i++) {
             String record = records[i];
             if (!record.matches("(?s).*?" + valuesToCheck[i - 1] + ".*")) {
-                assertTrue("wrong sortorder, should: " + valuesToCheck[i - 1]
-                    + ", is: " + record, false);
+                assertTrue("wrong sortorder, should: " + valuesToCheck[i - 1] + ", is: " + record, false);
             }
         }
         assertEquals(true, checkHighlighting(response));
@@ -1311,25 +941,14 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * : Request parameter stylesheet \u2013 (1).
-     * 
-     * @test.name : Request parameter stylesheet \u2013 (1)
-     * @test.id SB_SR-21
-     * @test.input mandatory request parameters: - any single term query which
-     *             results in some hits - existing database --- additional
-     *             request parameter: - existent styleSheet
-     * @test.inputDescription
-     * @test.expected
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR21() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.language=de");
-        parameters.put(FILTER_PARAMETER_STYLESHEET,
-            "http://escidev5:8080/srw/searchRetrieveResponse.xsl");
+        parameters.put(FILTER_PARAMETER_STYLESHEET, "http://escidev5:8080/srw/searchRetrieveResponse.xsl");
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
         assertEquals("10", getNumberOfHits(response));
@@ -1338,18 +957,8 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Request parameter stylesheet \u2013 (2).
-     * 
-     * @test.name Request parameter stylesheet \u2013 (2)
-     * @test.id SB_SR-22
-     * @test.input mandatory request parameters: - any single term query which
-     *             results in some hits - existing database --- additional
-     *             request parameter: - nonexistent styleSheet
-     * @test.inputDescription
-     * @test.expected error message describing the reason for failure
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR22() throws Exception {
@@ -1364,19 +973,8 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Boolean Operator AND.
-     * 
-     * @test.name Boolean Operator AND
-     * @test.id SB_SR-23
-     * @test.input --- mandatory request parameters: - query where two terms are
-     *             connected by Boolean AND - existing database --- no
-     *             additional request parameters
-     * @test.inputDescription
-     * @test.expected List of search records according to eSciDoc Default Schema
-     *                for search results Both search terms have to match
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR23() throws Exception {
@@ -1385,8 +983,7 @@ public class SearchTest extends SearchTestBase {
         String response = search(parameters, INDEX_NAME);
         assertEquals("1", getNumberOfHits(response));
         parameters = new HashMap<String, String>();
-        parameters.put(FILTER_PARAMETER_QUERY,
-            "escidoc.metadata=motor and escidoc.title=getriebe");
+        parameters.put(FILTER_PARAMETER_QUERY, "escidoc.metadata=motor and escidoc.title=getriebe");
         response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
         assertEquals("1", getNumberOfHits(response));
@@ -1395,19 +992,8 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Boolean Operator OR .
-     * 
-     * @test.name Boolean Operator OR
-     * @test.id SB_SR-24
-     * @test.input mandatory request parameters: - query where two terms are
-     *             connected by Boolean OR - existing database --- no additional
-     *             request parameters
-     * @test.inputDescription
-     * @test.expected List of search records according to eSciDoc Default Schema
-     *                for search results Only one search term needs to match
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR24() throws Exception {
@@ -1416,8 +1002,7 @@ public class SearchTest extends SearchTestBase {
         String response = search(parameters, INDEX_NAME);
         assertEquals("2", getNumberOfHits(response));
         parameters = new HashMap<String, String>();
-        parameters.put(FILTER_PARAMETER_QUERY,
-            "escidoc.metadata=motor or escidoc.metadata=automatic");
+        parameters.put(FILTER_PARAMETER_QUERY, "escidoc.metadata=motor or escidoc.metadata=automatic");
         response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
         assertEquals("2", getNumberOfHits(response));
@@ -1426,19 +1011,8 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Use of * as Wildcard (1).
-     * 
-     * @test.name Use of * as Wildcard (1)
-     * @test.id SB_SR-25
-     * @test.input mandatory request parameters: - single term query where start
-     *             of term is masked by * - existing database --- no additional
-     *             request parameters
-     * @test.inputDescription
-     * @test.expected List of search records according to eSciDoc Default Schema
-     *                for search results
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR25() throws Exception {
@@ -1447,19 +1021,8 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Use of * as Wildcard (2).
-     * 
-     * @test.name Use of * as Wildcard (2)
-     * @test.id SB_SR-26
-     * @test.input mandatory request parameters: - single term query where
-     *             wildcard * is used in the middle of the term - existing
-     *             database --- no additional request parameters
-     * @test.inputDescription
-     * @test.expected List of search records according to eSciDoc Default Schema
-     *                for search results
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR26() throws Exception {
@@ -1473,19 +1036,8 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Use of * as Wildcard (3).
-     * 
-     * @test.name Use of * as Wildcard (3)
-     * @test.id SB_SR-27
-     * @test.input mandatory request parameters: - single term query where end
-     *             of term is masked by * - existing database --- no additional
-     *             request parameters
-     * @test.inputDescription
-     * @test.expected List of search records according to eSciDoc Default Schema
-     *                for search results
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR27() throws Exception {
@@ -1499,19 +1051,8 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Use of ? as Wildcard (1).
-     * 
-     * @test.name Use of ? as Wildcard (1)
-     * @test.id SB_SR-28
-     * @test.input mandatory request parameters: - single term query where start
-     *             of term is masked by ? - existing database --- no additional
-     *             request parameters
-     * @test.inputDescription
-     * @test.expected List of search records according to eSciDoc Default Schema
-     *                for search results
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR28() throws Exception {
@@ -1520,19 +1061,8 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Use of ? as Wildcard (2).
-     * 
-     * @test.name Use of ? as Wildcard (2)
-     * @test.id SB_SR-29
-     * @test.input mandatory request parameters: - single term query where
-     *             wildcard ? is used in the middle of the term - existing
-     *             database --- no additional request parameters
-     * @test.inputDescription
-     * @test.expected List of search records according to eSciDoc Default Schema
-     *                for search results
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR29() throws Exception {
@@ -1546,19 +1076,8 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Use of ? as Wildcard (3) .
-     * 
-     * @test.name Use of ? as Wildcard (3)
-     * @test.id SB_SR-30
-     * @test.input mandatory request parameters: - single term query where end
-     *             of term is masked by ? - existing database --- no additional
-     *             request parameters
-     * @test.inputDescription
-     * @test.expected List of search records according to eSciDoc Default Schema
-     *                for search results
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR30() throws Exception {
@@ -1572,19 +1091,8 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Fuzzy Search.
-     * 
-     * @test.name Fuzzy Search
-     * @test.id SB_SR-31
-     * @test.input mandatory request parameters: - single term query where
-     *             relation modifier fuzzy is provided - existing database ---
-     *             no additional request parameters
-     * @test.inputDescription
-     * @test.expected List of search records according to eSciDoc Default Schema
-     *                for search results
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR31() throws Exception {
@@ -1598,25 +1106,14 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * : Umlaut as request-parameter .
-     * 
-     * @test.name : Umlaut as request-parameter \u2013 (1)
-     * @test.id SB_SR-32
-     * @test.input mandatory request parameters: - any single term query which
-     *             contains umlaut and results in some hits - existing database
-     * @test.inputDescription
-     * @test.expected
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR32() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
-        parameters.put(FILTER_PARAMETER_QUERY, new String(
-            "escidoc.metadata=patentanw\u00e4lte"
-                .getBytes(ClientBase.DEFAULT_CHARSET),
-            ClientBase.DEFAULT_CHARSET));
+        parameters.put(FILTER_PARAMETER_QUERY, new String("escidoc.metadata=patentanw\u00e4lte"
+            .getBytes(ClientBase.DEFAULT_CHARSET), ClientBase.DEFAULT_CHARSET));
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
         assertEquals("1", getNumberOfHits(response));
@@ -1625,26 +1122,14 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * : UTF-8 characters in fulltext as request-parameter .
-     * 
-     * @test.name : UTF-8 characters in fulltext as request-parameter \u2013 (1)
-     * @test.id SB_SR-33
-     * @test.input mandatory request parameters: - any single term query which
-     *             contains Special sign and results in some hits - existing
-     *             database
-     * @test.inputDescription
-     * @test.expected
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR33() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
-        parameters.put(FILTER_PARAMETER_QUERY, new String(
-            "escidoc.fulltext=\u7b80\u4f53\u4e2d\u6587\u7f51\u9875"
-                .getBytes(ClientBase.DEFAULT_CHARSET),
-            ClientBase.DEFAULT_CHARSET));
+        parameters.put(FILTER_PARAMETER_QUERY, new String("escidoc.fulltext=\u7b80\u4f53\u4e2d\u6587\u7f51\u9875"
+            .getBytes(ClientBase.DEFAULT_CHARSET), ClientBase.DEFAULT_CHARSET));
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
         assertEquals("10", getNumberOfHits(response));
@@ -1653,26 +1138,14 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * : UTF-8 characters as request-parameter .
-     * 
-     * @test.name : UTF-8 characters as request-parameter \u2013 (1)
-     * @test.id SB_SR-34
-     * @test.input mandatory request parameters: - any single term query which
-     *             contains Special sign and results in some hits - existing
-     *             database
-     * @test.inputDescription
-     * @test.expected
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR34() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
-        parameters.put(FILTER_PARAMETER_QUERY, new String(
-            ("escidoc.any-source=\u5161\u4e5f\u5305\u56e0\u6c98"
-                + "\u6c13\u4fb7\u67f5\u82d7\u5b6b\u5b6b\u8ca1")
-                .getBytes(ClientBase.DEFAULT_CHARSET),
+        parameters.put(FILTER_PARAMETER_QUERY, new String(("escidoc.any-source=\u5161\u4e5f\u5305\u56e0\u6c98"
+            + "\u6c13\u4fb7\u67f5\u82d7\u5b6b\u5b6b\u8ca1").getBytes(ClientBase.DEFAULT_CHARSET),
             ClientBase.DEFAULT_CHARSET));
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
@@ -1682,212 +1155,119 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * : Availability of userdefined indexes for items.
-     * 
-     * @test.name : search in userdefined indexes, restrict to items
-     * @test.id SB_SR-35
-     * @test.input mandatory request parameters: - any single term query which
-     *             searches an any.. index and results in some hits - existing
-     *             database
-     * @test.inputDescription
-     * @test.expected
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR35() throws Exception {
         Pattern itemIdPattern = Pattern.compile("(.*)\\$\\{ITEM_ID\\}(.*)");
         Matcher itemIdMatcher = itemIdPattern.matcher("");
         HashMap<String, String> parameters = new HashMap<String, String>();
-        for (String indexName : Constants.ITEM_INDEX_USERDEFINED_SEARCHES
-            .keySet()) {
-            HashMap<String, String> info =
-                Constants.ITEM_INDEX_USERDEFINED_SEARCHES.get(indexName);
-            String searchString =
-                itemIdMatcher.reset(info.get("searchString")).replaceAll(
-                    "$1" + itemIds[3] + "$2");
+        for (String indexName : Constants.ITEM_INDEX_USERDEFINED_SEARCHES.keySet()) {
+            HashMap<String, String> info = Constants.ITEM_INDEX_USERDEFINED_SEARCHES.get(indexName);
+            String searchString = itemIdMatcher.reset(info.get("searchString")).replaceAll("$1" + itemIds[3] + "$2");
             String expectedHits = info.get("expectedHits");
-            parameters.put(FILTER_PARAMETER_QUERY, searchString
-                + " and escidoc.objecttype=item");
+            parameters.put(FILTER_PARAMETER_QUERY, searchString + " and escidoc.objecttype=item");
             String response = search(parameters, INDEX_NAME);
             assertXmlValidSearchResult(response);
-            assertEquals("expected " + expectedHits + " for " + indexName
-                + " but was " + getNumberOfHits(response), expectedHits,
-                getNumberOfHits(response));
+            assertEquals("expected " + expectedHits + " for " + indexName + " but was " + getNumberOfHits(response),
+                expectedHits, getNumberOfHits(response));
         }
     }
 
     /**
      * : Availability of userdefined indexes for container.
-     * 
-     * @test.name : search in userdefined indexes, restrict to container
-     * @test.id SB_SR-36
-     * @test.input mandatory request parameters: - any single term query which
-     *             searches an any.. index and results in some hits - existing
-     *             database
-     * @test.inputDescription
-     * @test.expected
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR36() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
-        for (String indexName : Constants.CONTAINER_INDEX_USERDEFINED_SEARCHES
-            .keySet()) {
-            HashMap<String, String> info =
-                Constants.CONTAINER_INDEX_USERDEFINED_SEARCHES.get(indexName);
+        for (String indexName : Constants.CONTAINER_INDEX_USERDEFINED_SEARCHES.keySet()) {
+            HashMap<String, String> info = Constants.CONTAINER_INDEX_USERDEFINED_SEARCHES.get(indexName);
             String searchString = info.get("searchString");
             String expectedHits = info.get("expectedHits");
-            parameters.put(FILTER_PARAMETER_QUERY, searchString
-                + " and escidoc.objecttype=container");
+            parameters.put(FILTER_PARAMETER_QUERY, searchString + " and escidoc.objecttype=container");
             String response = search(parameters, INDEX_NAME);
             assertXmlValidSearchResult(response);
-            assertEquals("expected " + expectedHits + " for " + indexName
-                + " but was " + getNumberOfHits(response), expectedHits,
-                getNumberOfHits(response));
+            assertEquals("expected " + expectedHits + " for " + indexName + " but was " + getNumberOfHits(response),
+                expectedHits, getNumberOfHits(response));
         }
     }
 
     /**
      * : Availability of properties indexes for item.
-     * 
-     * @test.name : search in property indexes, restrict to item
-     * @test.id SB_SR-37
-     * @test.input mandatory request parameters: - any single term query which
-     *             searches an properties index and results in some hits -
-     *             existing database
-     * @test.inputDescription
-     * @test.expected
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR37() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
-        for (String indexName : Constants.ITEM_INDEX_PROPERTIES_SEARCHES
-            .keySet()) {
-            HashMap<String, String> info =
-                Constants.ITEM_INDEX_PROPERTIES_SEARCHES.get(indexName);
+        for (String indexName : Constants.ITEM_INDEX_PROPERTIES_SEARCHES.keySet()) {
+            HashMap<String, String> info = Constants.ITEM_INDEX_PROPERTIES_SEARCHES.get(indexName);
             String searchString = info.get("searchString");
             String expectedHits = info.get("expectedHits");
-            parameters.put(FILTER_PARAMETER_QUERY, searchString
-                + " and escidoc.objecttype=item");
+            parameters.put(FILTER_PARAMETER_QUERY, searchString + " and escidoc.objecttype=item");
             String response = search(parameters, INDEX_NAME);
             assertXmlValidSearchResult(response);
-            assertEquals("expected " + expectedHits + " for " + indexName
-                + " but was " + getNumberOfHits(response), expectedHits,
-                getNumberOfHits(response));
+            assertEquals("expected " + expectedHits + " for " + indexName + " but was " + getNumberOfHits(response),
+                expectedHits, getNumberOfHits(response));
         }
     }
 
     /**
      * : Availability of properties indexes for container.
-     * 
-     * @test.name : search in property indexes, restrict to container
-     * @test.id SB_SR-38
-     * @test.input mandatory request parameters: - any single term query which
-     *             searches an properties index and results in some hits -
-     *             existing database
-     * @test.inputDescription
-     * @test.expected
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR38() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
-        for (String indexName : Constants.CONTAINER_INDEX_PROPERTIES_SEARCHES
-            .keySet()) {
-            HashMap<String, String> info =
-                Constants.CONTAINER_INDEX_PROPERTIES_SEARCHES.get(indexName);
+        for (String indexName : Constants.CONTAINER_INDEX_PROPERTIES_SEARCHES.keySet()) {
+            HashMap<String, String> info = Constants.CONTAINER_INDEX_PROPERTIES_SEARCHES.get(indexName);
             String searchString = info.get("searchString");
             String expectedHits = info.get("expectedHits");
-            parameters.put(FILTER_PARAMETER_QUERY, searchString
-                + " and escidoc.objecttype=container");
+            parameters.put(FILTER_PARAMETER_QUERY, searchString + " and escidoc.objecttype=container");
             String response = search(parameters, INDEX_NAME);
             assertXmlValidSearchResult(response);
-            assertEquals("expected " + expectedHits + " for " + indexName
-                + " but was " + getNumberOfHits(response), expectedHits,
-                getNumberOfHits(response));
+            assertEquals("expected " + expectedHits + " for " + indexName + " but was " + getNumberOfHits(response),
+                expectedHits, getNumberOfHits(response));
         }
     }
 
     /**
      * : Availability of component indexes for item.
-     * 
-     * @test.name : search in component indexes, restrict to item
-     * @test.id SB_SR-39
-     * @test.input mandatory request parameters: - any single term query which
-     *             searches an properties index and results in some hits -
-     *             existing database
-     * @test.inputDescription
-     * @test.expected
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR39() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
-        for (String indexName : Constants.ITEM_INDEX_COMPONENTS_SEARCHES
-            .keySet()) {
-            HashMap<String, String> info =
-                Constants.ITEM_INDEX_COMPONENTS_SEARCHES.get(indexName);
+        for (String indexName : Constants.ITEM_INDEX_COMPONENTS_SEARCHES.keySet()) {
+            HashMap<String, String> info = Constants.ITEM_INDEX_COMPONENTS_SEARCHES.get(indexName);
             String searchString = info.get("searchString");
             String expectedHits = info.get("expectedHits");
-            parameters.put(FILTER_PARAMETER_QUERY, searchString
-                + " and escidoc.objecttype=item");
+            parameters.put(FILTER_PARAMETER_QUERY, searchString + " and escidoc.objecttype=item");
             String response = search(parameters, INDEX_NAME);
             assertXmlValidSearchResult(response);
-            assertEquals("expected " + expectedHits + " for " + indexName
-                + " but was " + getNumberOfHits(response), expectedHits,
-                getNumberOfHits(response));
+            assertEquals("expected " + expectedHits + " for " + indexName + " but was " + getNumberOfHits(response),
+                expectedHits, getNumberOfHits(response));
         }
     }
 
     /**
-     * Test searching for a single term and check availability of version pids,
-     * see issue 370.
-     * 
-     * @test.name Version Pid in Item - Issue 370
-     * @test.id SB_SR-40
-     * @test.input mandatory request parameters: - any single term query -
-     *             existing database
-     * @test.inputDescription execute single term query on given database
-     * @test.expected List of search records according to eSciDoc Default Schema
-     *                for search results first record to be returned ist at the
-     *                1st position in the sequence of matched records. only
-     *                released objects are found. Found object has set version
-     *                pid.
-     * @test.status Implemented
-     * @test.issues 
-     *              http://www.escidoc-project.de/issueManagement/show_bug.cgi?id
-     *              =370
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test searching for a single term and check availability of version pids, see issue 370.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR40() throws Exception {
-        if (item.getItemClient().getPidConfig(
-            "cmm.Item.versionPid.setPidAfterRelease", "true")
-            && item.getItemClient().getPidConfig(
-                "cmm.Item.versionPid.releaseWithoutPid", "false")) {
+        if (item.getItemClient().getPidConfig("cmm.Item.versionPid.setPidAfterRelease", "true")
+            && item.getItemClient().getPidConfig("cmm.Item.versionPid.releaseWithoutPid", "false")) {
 
             // first search for version-pid
             // should find no records
-            String searchString =
-                "escidoc.any-identifier=\"hdl:somehandle/test/" + itemIds[0]
-                    + ":1\"";
+            String searchString = "escidoc.any-identifier=\"hdl:somehandle/test/" + itemIds[0] + ":1\"";
             HashMap<String, String> parameters = new HashMap<String, String>();
             parameters.put(FILTER_PARAMETER_QUERY, searchString);
             String response = search(parameters, INDEX_NAME);
@@ -1909,21 +1289,8 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Test searching for all containers.
-     * 
-     * @test.name Search for Containers
-     * @test.id SB_SR-41
-     * @test.input mandatory request parameters: - query with
-     *             escidoc.objecttype=container - existing database
-     * @test.inputDescription execute single term query on given database
-     * @test.expected List of search records according to eSciDoc Default Schema
-     *                for search results first record to be returned ist at the
-     *                1st position in the sequence of matched records. only
-     *                released objects are found. Found object is container.
-     * @test.status Implemented
-     * @test.issues http://www.escidoc-project.de/issueManagement/
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR41() throws Exception {
@@ -1936,21 +1303,8 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Test searching for all items.
-     * 
-     * @test.name Search for Items
-     * @test.id SB_SR-42
-     * @test.input mandatory request parameters: - query with
-     *             escidoc.objecttype=item - existing database
-     * @test.inputDescription execute single term query on given database
-     * @test.expected List of search records according to eSciDoc Default Schema
-     *                for search results first record to be returned ist at the
-     *                1st position in the sequence of matched records. only
-     *                released objects are found. Found object are items.
-     * @test.status Implemented
-     * @test.issues http://www.escidoc-project.de/issueManagement/
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR42() throws Exception {
@@ -1963,20 +1317,8 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Test searching for ISSN in escidoc.metadata 1.
-     * 
-     * @test.name Search for ISSN
-     * @test.id SB_SR-43
-     * @test.input mandatory request parameters: - query with
-     *             escidoc.metadata=ISSN - existing database
-     * @test.inputDescription execute single term query on given database
-     * @test.expected List of search records according to eSciDoc Default Schema
-     *                for search results first record to be returned ist at the
-     *                1st position in the sequence of matched records. only
-     *                released objects are found. Found object are items.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR43() throws Exception {
@@ -1989,20 +1331,8 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Test searching for ISSN in escidoc.metadata 2.
-     * 
-     * @test.name Search for ISSN
-     * @test.id SB_SR-44
-     * @test.input mandatory request parameters: - query with
-     *             escidoc.metadata=ISSN* - existing database
-     * @test.inputDescription execute single term query on given database
-     * @test.expected List of search records according to eSciDoc Default Schema
-     *                for search results first record to be returned ist at the
-     *                1st position in the sequence of matched records. only
-     *                released objects are found. Found object are items.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR44() throws Exception {
@@ -2015,20 +1345,8 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Test searching for ISSN in escidoc.metadata 3.
-     * 
-     * @test.name Search for ISSN
-     * @test.id SB_SR-45
-     * @test.input mandatory request parameters: - query with escidoc.metadata
-     *             all ISSN 12* - existing database
-     * @test.inputDescription execute single term query on given database
-     * @test.expected List of search records according to eSciDoc Default Schema
-     *                for search results first record to be returned ist at the
-     *                1st position in the sequence of matched records. only
-     *                released objects are found. Found object are items.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR45() throws Exception {
@@ -2041,20 +1359,8 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Test searching for ISSN in escidoc.any-identifier 1.
-     * 
-     * @test.name Search for ISSN
-     * @test.id SB_SR-46
-     * @test.input mandatory request parameters: - query with
-     *             escidoc.any-identifier=ISSN:12* - existing database
-     * @test.inputDescription execute single term query on given database
-     * @test.expected List of search records according to eSciDoc Default Schema
-     *                for search results first record to be returned ist at the
-     *                1st position in the sequence of matched records. only
-     *                released objects are found. Found object are items.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR46() throws Exception {
@@ -2067,20 +1373,8 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Test searching for ISSN in escidoc.any-identifier 2.
-     * 
-     * @test.name Search for ISSN
-     * @test.id SB_SR-47
-     * @test.input mandatory request parameters: - query with
-     *             escidoc.any-identifier=ISSN:1271137 - existing database
-     * @test.inputDescription execute single term query on given database
-     * @test.expected List of search records according to eSciDoc Default Schema
-     *                for search results first record to be returned ist at the
-     *                1st position in the sequence of matched records. only
-     *                released objects are found. Found object are items.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR47() throws Exception {
@@ -2093,20 +1387,8 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Test searching for ISSN in escidoc.any-identifier 3.
-     * 
-     * @test.name Search for ISSN
-     * @test.id SB_SR-48
-     * @test.input mandatory request parameters: - query with
-     *             escidoc.any-identifier=ISSN* - existing database
-     * @test.inputDescription execute single term query on given database
-     * @test.expected List of search records according to eSciDoc Default Schema
-     *                for search results first record to be returned ist at the
-     *                1st position in the sequence of matched records. only
-     *                released objects are found. Found object are items.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR48() throws Exception {
@@ -2119,20 +1401,8 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Test searching for component-properties.
-     * 
-     * @test.name Search for component-pid
-     * @test.id SB_SR-49
-     * @test.input mandatory request parameters: - query with
-     *             escidoc.component.pid=hdl:somehandle* - existing database
-     * @test.inputDescription execute single term query on given database
-     * @test.expected List of search records according to eSciDoc Default Schema
-     *                for search results first record to be returned ist at the
-     *                1st position in the sequence of matched records. only
-     *                released objects are found. Found object are items.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR49() throws Exception {
@@ -2145,27 +1415,13 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Test searching for component-properties.
-     * 
-     * @test.name Search for mime-type
-     * @test.id SB_SR-50
-     * @test.input mandatory request parameters: - query with
-     *             escidoc.component.mime-type=application/pdf - existing
-     *             database
-     * @test.inputDescription execute single term query on given database
-     * @test.expected List of search records according to eSciDoc Default Schema
-     *                for search results first record to be returned ist at the
-     *                1st position in the sequence of matched records. only
-     *                released objects are found. Found object are items.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR50() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
-        parameters.put(FILTER_PARAMETER_QUERY,
-            "escidoc.component.mime-type=\"application/pdf\"");
+        parameters.put(FILTER_PARAMETER_QUERY, "escidoc.component.mime-type=\"application/pdf\"");
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
         assertEquals("10", getNumberOfHits(response));
@@ -2173,20 +1429,8 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Test searching for component-metadata.
-     * 
-     * @test.name Search for complete-name in component
-     * @test.id SB_SR-51
-     * @test.input mandatory request parameters: - query with
-     *             escidoc.component.complete-name=comp* - existing database
-     * @test.inputDescription execute single term query on given database
-     * @test.expected List of search records according to eSciDoc Default Schema
-     *                for search results first record to be returned ist at the
-     *                1st position in the sequence of matched records. only
-     *                released objects are found. Found object are items.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR51() throws Exception {
@@ -2199,20 +1443,8 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Test searching for component-metadata.
-     * 
-     * @test.name Check if pdf-fulltext is indexed.
-     * @test.id SB_SR-52
-     * @test.input mandatory request parameters: - query with
-     *             escidoc.fulltext=pdffulltext - existing database
-     * @test.inputDescription execute single term query on given database
-     * @test.expected All indexed items are found. If not found, pdfs where not
-     *                indexed. pdfs visibility is private, so if they are not
-     *                indexed, the access-rights are not correctly set while
-     *                indexing.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR52() throws Exception {
@@ -2225,17 +1457,8 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Test searching for escidoc.most-recent-date.
-     * 
-     * @test.name Check if escidoc.most-recent-date of item is 1980*.
-     * @test.id SB_SR-53
-     * @test.input mandatory request parameters: - query with
-     *             escidoc.most-recent-date=1980* - existing database
-     * @test.inputDescription execute single term query on given database
-     * @test.expected 10 indexed items are found.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR53() throws Exception {
@@ -2248,51 +1471,28 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * : Test searching for special signs.
-     * 
-     * @test.name : search for special signs
-     * @test.id SB_SR-54
-     * @test.input mandatory request parameters: - any single term query which
-     *             results in some hits - existing database
-     * @test.inputDescription
-     * @test.expected
-     * @test.status Implemented for Bug
-     *              http://www.escidoc-project.de/issueManagement
-     *              /show_bug.cgi?id=662
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR54() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
-        for (String indexName : Constants.ITEM_INDEX_SPECIAL_CHAR_SEARCHES
-            .keySet()) {
-            HashMap<String, String> info =
-                Constants.ITEM_INDEX_SPECIAL_CHAR_SEARCHES.get(indexName);
+        for (String indexName : Constants.ITEM_INDEX_SPECIAL_CHAR_SEARCHES.keySet()) {
+            HashMap<String, String> info = Constants.ITEM_INDEX_SPECIAL_CHAR_SEARCHES.get(indexName);
             String searchString = info.get("searchString");
             String expectedHits = info.get("expectedHits");
-            parameters.put(FILTER_PARAMETER_QUERY, searchString
-                + " and escidoc.objecttype=item");
+            parameters.put(FILTER_PARAMETER_QUERY, searchString + " and escidoc.objecttype=item");
             String response = search(parameters, INDEX_NAME);
             assertXmlValidSearchResult(response);
-            assertEquals("expected " + expectedHits + " for " + indexName
-                + " but was " + getNumberOfHits(response), expectedHits,
-                getNumberOfHits(response));
+            assertEquals("expected " + expectedHits + " for " + indexName + " but was " + getNumberOfHits(response),
+                expectedHits, getNumberOfHits(response));
         }
     }
 
     /**
      * : Test searching for special signs.
-     * 
-     * @test.name : check search result for correct versions
-     * @test.id SB_SR-55
-     * @test.input mandatory request parameters: - any single term query which
-     *             results in all hits - existing database
-     * @test.inputDescription
-     * @test.expected
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR55() throws Exception {
@@ -2306,22 +1506,13 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * : Test searching for dates.
-     * 
-     * @test.name : check search result for correct dates
-     * @test.id SB_SR-56
-     * @test.input mandatory request parameters: - any single date term query
-     *             which results in all hits - existing database
-     * @test.inputDescription
-     * @test.expected
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR56() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
-        parameters.put(
-                FILTER_PARAMETER_QUERY, "escidoc.latest-release.date>\"" + startTime + "\"");
+        parameters.put(FILTER_PARAMETER_QUERY, "escidoc.latest-release.date>\"" + startTime + "\"");
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
         assertEquals("11", getNumberOfHits(response));
@@ -2330,22 +1521,13 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * : Test searching for phrase.
-     * 
-     * @test.name : check search result
-     * @test.id SB_SR-57
-     * @test.input mandatory request parameters: - any single date term query
-     *             which results in all hits - existing database
-     * @test.inputDescription
-     * @test.expected
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR57() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
-        parameters.put(
-                FILTER_PARAMETER_QUERY, "escidoc.complete-name=\"Gollmer Werner\"");
+        parameters.put(FILTER_PARAMETER_QUERY, "escidoc.complete-name=\"Gollmer Werner\"");
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
         assertEquals("1", getNumberOfHits(response));
@@ -2353,22 +1535,13 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * : Test searching for phrase over field boundary.
-     * 
-     * @test.name : check search result
-     * @test.id SB_SR-58
-     * @test.input mandatory request parameters: - any single date term query
-     *             which results in all hits - existing database
-     * @test.inputDescription
-     * @test.expected
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSR58() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
-        parameters.put(
-                FILTER_PARAMETER_QUERY, "escidoc.complete-name=\"Werner Wolfer\"");
+        parameters.put(FILTER_PARAMETER_QUERY, "escidoc.complete-name=\"Werner Wolfer\"");
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
         assertEquals("0", getNumberOfHits(response));
@@ -2376,19 +1549,8 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Operation without optional parameters.
-     * 
-     * @test.name Operation without optional parameters
-     * @test.id SB_SC-1
-     * @test.input - mandatory request parameters (scanClause and Operation) -
-     *             no optional request parameters
-     * @test.inputDescription
-     * @test.expected XML document in scanresponse Type-schema that contains the
-     *                terms and information about the scan request requested
-     *                term is 1st term in the response (default)
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSC1() throws Exception {
@@ -2402,19 +1564,8 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Operation with parameterresponse position (1).
-     * 
-     * @test.name Operation with parameterresponse position (1)
-     * @test.id SB_SC-2
-     * @test.input - mandatory request parameters (scanClause and Operation) -
-     *             request parameter response position = 0
-     * @test.inputDescription
-     * @test.expected XML document in scanresponse Type-schema that contains the
-     *                terms and information about the scan request requested
-     *                term is immediately before the 1st term in the response
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSC2() throws Exception {
@@ -2434,19 +1585,8 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Operation with parameterresponse position (2).
-     * 
-     * @test.name Operation with parameterresponse position (2)
-     * @test.id SB_SC-3
-     * @test.input - mandatory request parameters (scanClause and Operation) -
-     *             request parameter response position = 1
-     * @test.inputDescription
-     * @test.expected XML document in scanresponse Type-schema that contains the
-     *                terms and information about the scan request requested
-     *                term is 1st in the response (default)
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSC3() throws Exception {
@@ -2462,17 +1602,8 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Operation with parameterresponse position (3).
-     * 
-     * @test.name Operation with parameterresponse position (3)
-     * @test.id SB_SC-4
-     * @test.input - mandatory request parameters (scanClause and Operation) -
-     *             request parameter response position = -n (negative value)
-     * @test.inputDescription
-     * @test.expected error message describing the reason for failure
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSC4() throws Exception {
@@ -2491,19 +1622,8 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Operation with parametermaximum terms (1).
-     * 
-     * @test.name Operation with parametermaximum terms (1)
-     * @test.id SB_SC-5
-     * @test.input - mandatory request parameters (scanClause and Operation) -
-     *             request parameter maximum terms = any positive integer
-     * @test.inputDescription
-     * @test.expected XML document in scanresponse Type-schema that contains the
-     *                terms and information about the scan request requested
-     *                term is 1st term in the response (default)
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSC5() throws Exception {
@@ -2519,17 +1639,8 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Operation with parametermaximum terms (2).
-     * 
-     * @test.name Operation with parametermaximum terms (2)
-     * @test.id SB_SC-6
-     * @test.input - mandatory request parameters (scanClause and Operation) -
-     *             request parameter maximum terms = any negative integer
-     * @test.inputDescription
-     * @test.expected error message describing the reason for failure
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSC6() throws Exception {
@@ -2548,27 +1659,15 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Operation with parameter stylesheet (1).
-     * 
-     * @test.name Operation with parameter stylesheet (1)
-     * @test.id SB_SC-7
-     * @test.input - mandatory request parameters (scanClause and Operation) -
-     *             request parameter stylesheet = existent stylesheet
-     * 
-     * @test.inputDescription
-     * @test.expected
-     * 
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSC7() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_OPERATION, FILTER_PARAMETER_SCAN);
         parameters.put(FILTER_PARAMETER_SCAN_CLAUSE, "escidoc.metadata=berg");
-        parameters.put(FILTER_PARAMETER_STYLESHEET,
-            "http://escidev5:8080/srw/scanResponse.xsl");
+        parameters.put(FILTER_PARAMETER_STYLESHEET, "http://escidev5:8080/srw/scanResponse.xsl");
         String response = scan(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
         assertEquals(null, getDiagnostics(response));
@@ -2576,17 +1675,8 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Operation with parameter stylesheet (2).
-     * 
-     * @test.name Operation with parameter stylesheet (2)
-     * @test.id SB_SC-8
-     * @test.input mandatory request parameters (scanClause and Operation) -
-     *             request parameter stylesheet = non-existent stylesheet
-     * @test.inputDescription
-     * @test.expected error message describing the reason for failure
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBSC8() throws Exception {
@@ -2601,9 +1691,8 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * withdraw items to delete from index.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     private void deprepare() throws Exception {
         // Withdraw
@@ -2613,11 +1702,8 @@ public class SearchTest extends SearchTestBase {
                 if (itemIds[i] != null && !itemIds[i].equals("")) {
                     String xml = item.retrieve(itemIds[i]);
                     String lastModDate = getLastModificationDate(xml);
-                    item.withdraw(itemIds[i],
-                        "<param last-modification-date=\"" + lastModDate
-                            + "\">" + "<withdraw-comment>"
-                            + "This is a withdraw comment."
-                            + "</withdraw-comment>" + "</param>");
+                    item.withdraw(itemIds[i], "<param last-modification-date=\"" + lastModDate + "\">"
+                        + "<withdraw-comment>" + "This is a withdraw comment." + "</withdraw-comment>" + "</param>");
                     // ////////////////////////////////////////////////////////
 
                 }
@@ -2627,12 +1713,10 @@ public class SearchTest extends SearchTestBase {
                 if (itemIds[i] != null && !itemIds[i].equals("")) {
                     // Do search. Must be 0
                     // results///////////////////////////////////////////
-                    HashMap<String, String> parameters =
-                        new HashMap<String, String>();
+                    HashMap<String, String> parameters = new HashMap<String, String>();
                     parameters.put(FILTER_PARAMETER_QUERY, "escidoc.objid=" + itemIds[i]);
                     String response = search(parameters, INDEX_NAME);
-                    assertEquals("Withdrawn Item found:" + itemIds[i], 
-                                        "0", getNumberOfHits(response));
+                    assertEquals("Withdrawn Item found:" + itemIds[i], "0", getNumberOfHits(response));
                     // ////////////////////////////////////////////////////////
                 }
             }
@@ -2644,27 +1728,21 @@ public class SearchTest extends SearchTestBase {
                 if (containerIds[i] != null && !containerIds[i].equals("")) {
                     String xml = container.retrieve(containerIds[i]);
                     String lastModDate = getLastModificationDate(xml);
-                    container.withdraw(containerIds[i],
-                        "<param last-modification-date=\"" + lastModDate
-                            + "\">" + "<withdraw-comment>"
-                            + "This is a withdraw comment."
-                            + "</withdraw-comment>" + "</param>");
+                    container.withdraw(containerIds[i], "<param last-modification-date=\"" + lastModDate + "\">"
+                        + "<withdraw-comment>" + "This is a withdraw comment." + "</withdraw-comment>" + "</param>");
                     // ////////////////////////////////////////////////////////
 
                 }
             }
-            waitForIndexerToDisappear(containerIds[containerIds.length - 1],
-                INDEX_NAME);
+            waitForIndexerToDisappear(containerIds[containerIds.length - 1], INDEX_NAME);
             for (int i = 0; i < containerIds.length; i++) {
                 if (containerIds[i] != null && !containerIds[i].equals("")) {
                     // Do search. Must be 0
                     // results///////////////////////////////////////////
-                    HashMap<String, String> parameters =
-                        new HashMap<String, String>();
+                    HashMap<String, String> parameters = new HashMap<String, String>();
                     parameters.put(FILTER_PARAMETER_QUERY, "escidoc.objid=" + containerIds[i]);
                     String response = search(parameters, INDEX_NAME);
-                    assertEquals("Withdrawn Container found:" + containerIds[i],
-                                                   "0", getNumberOfHits(response));
+                    assertEquals("Withdrawn Container found:" + containerIds[i], "0", getNumberOfHits(response));
                     // ////////////////////////////////////////////////////////
                 }
             }

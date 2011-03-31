@@ -21,15 +21,14 @@
 package de.escidoc.core.common.exceptions.application.invalid;
 
 /**
- * The InvalidResourceException indicates that the given resource could not be
- * ingested because the ingest interface could not detect its type. Hence it is
- * not a valid resource. Due to the similarity to the
+ * The InvalidResourceException indicates that the given resource could not be ingested because the ingest interface
+ * could not detect its type. Hence it is not a valid resource. Due to the similarity to the
  * XmlSchemaValidationException the same httpStatusCode(412) is returned.
- * 
- * @author Kai Strnad
  *
+ * @author Kai Strnad
  */
 public class InvalidResourceException extends ValidationException {
+
     /**
      * The serial version uid.
      */
@@ -41,18 +40,14 @@ public class InvalidResourceException extends ValidationException {
 
     /**
      * Default constructor.
-     * 
-     *
      */
     public InvalidResourceException() {
     }
 
     /**
      * Constructs a new exception with the specified detail message.
-     * 
-     * @param message
-     *            - the detail message.
      *
+     * @param message - the detail message.
      */
     public InvalidResourceException(final String message) {
         super(message);
@@ -60,23 +55,19 @@ public class InvalidResourceException extends ValidationException {
 
     /**
      * Constructor used to map an initial exception.
-     * 
-     * @param error
-     *            Throwable
+     *
+     * @param error Throwable
      */
     public InvalidResourceException(final Throwable error) {
         super(error);
     }
 
     /**
-     * Constructor used to create a new Exception with the specified detail
-     * message and a mapping to an initial exception.
-     * 
-     * @param message
-     *            - the detail message.
-     * @param error
-     *            Throwable
+     * Constructor used to create a new Exception with the specified detail message and a mapping to an initial
+     * exception.
      *
+     * @param message - the detail message.
+     * @param error   Throwable
      */
     public InvalidResourceException(final String message, final Throwable error) {
         super(message);

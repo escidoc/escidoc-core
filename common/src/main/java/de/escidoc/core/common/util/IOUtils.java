@@ -41,39 +41,36 @@ public final class IOUtils {
     private static final Logger LOGGER = LoggerFactory.getLogger(IOUtils.class);
 
     public static final Charset UTF8_CHARSET = Charset.forName("UTF-8");
+
     private static final int DEFAULT_BUFFER_SIZE = 1024 * 4;
 
     private IOUtils() {
     }
 
-    public static int copy(final InputStream input,
-                           final OutputStream output)
-            throws IOException {
+    public static int copy(final InputStream input, final OutputStream output) throws IOException {
         return copy(input, output, DEFAULT_BUFFER_SIZE);
     }
 
-    public static int copyAndCloseInput(final InputStream input,
-                                        final OutputStream output) throws IOException {
+    public static int copyAndCloseInput(final InputStream input, final OutputStream output) throws IOException {
         try {
             return copy(input, output, DEFAULT_BUFFER_SIZE);
-        } finally {
+        }
+        finally {
             closeStream(input);
         }
     }
 
-    public static int copyAndCloseInput(final InputStream input,
-                                        final OutputStream output,
-                                        final int bufferSize) throws IOException {
+    public static int copyAndCloseInput(final InputStream input, final OutputStream output, final int bufferSize)
+        throws IOException {
         try {
             return copy(input, output, bufferSize);
-        } finally {
+        }
+        finally {
             closeStream(input);
         }
     }
 
-    public static int copy(final InputStream input,
-                           final OutputStream output,
-                           int bufferSize) throws IOException {
+    public static int copy(final InputStream input, final OutputStream output, int bufferSize) throws IOException {
         int avail = input.available();
         if (avail > 262144) {
             avail = 262144;
@@ -118,10 +115,10 @@ public final class IOUtils {
     public static String newStringFromBytes(final byte[] bytes, final String charsetName) {
         try {
             return new String(bytes, charsetName);
-        } catch (final UnsupportedEncodingException e) {
-            throw
-                    new RuntimeException("Unexpected failure: Charset.forName(\""
-                            + charsetName + "\") returns invalid name.", e);
+        }
+        catch (final UnsupportedEncodingException e) {
+            throw new RuntimeException("Unexpected failure: Charset.forName(\"" + charsetName
+                + "\") returns invalid name.", e);
 
         }
     }
@@ -130,16 +127,14 @@ public final class IOUtils {
         return newStringFromBytes(bytes, UTF8_CHARSET.name());
     }
 
-    public static String newStringFromBytes(final byte[] bytes,
-                                            final String charsetName,
-                                            final int start,
-                                            final int length) {
+    public static String newStringFromBytes(
+        final byte[] bytes, final String charsetName, final int start, final int length) {
         try {
             return new String(bytes, start, length, charsetName);
-        } catch (final UnsupportedEncodingException e) {
-            throw
-                    new RuntimeException("Unexpected failure: Charset.forName(\""
-                            + charsetName + "\") returns invalid name.", e);
+        }
+        catch (final UnsupportedEncodingException e) {
+            throw new RuntimeException("Unexpected failure: Charset.forName(\"" + charsetName
+                + "\") returns invalid name.", e);
 
         }
     }
@@ -154,11 +149,12 @@ public final class IOUtils {
         }
         try {
             stream.close();
-        } catch (final IOException e) {
-            if(LOGGER.isWarnEnabled()) {
+        }
+        catch (final IOException e) {
+            if (LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on closing stream.");
             }
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on closing stream.", e);
             }
         }
@@ -170,11 +166,12 @@ public final class IOUtils {
         }
         try {
             writer.close();
-        } catch (final IOException e) {
-            if(LOGGER.isWarnEnabled()) {
+        }
+        catch (final IOException e) {
+            if (LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on closing writer.");
             }
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on closing writer.", e);
             }
         }
@@ -186,11 +183,12 @@ public final class IOUtils {
         }
         try {
             connection.close();
-        } catch (final SQLException e) {
-            if(LOGGER.isWarnEnabled()) {
+        }
+        catch (final SQLException e) {
+            if (LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on closing connection.");
             }
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on closing connection.", e);
             }
         }
@@ -202,15 +200,15 @@ public final class IOUtils {
         }
         try {
             resultSet.close();
-        } catch (final SQLException e) {
-            if(LOGGER.isWarnEnabled()) {
+        }
+        catch (final SQLException e) {
+            if (LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on closing result set.");
             }
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on closing result set.", e);
             }
         }
     }
 
 }
-

@@ -40,105 +40,79 @@ import java.util.Map;
 
 /**
  * Interface of an Statistic Report Definition Handler of the business layer.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 public interface ReportDefinitionHandlerInterface {
 
     /**
      * Creates new Report Definition with given xmlData.
-     * 
-     * @param xmlData
-     *            Report Definition as xml in Report Definition schema.
+     *
+     * @param xmlData Report Definition as xml in Report Definition schema.
      * @return Returns the XML representation of the Report Definition.
-     * 
      * @throws MissingMethodParameterException
-     *             ex
-     * @throws ScopeNotFoundException
-     *             ex
+     *                                        ex
+     * @throws ScopeNotFoundException         ex
      * @throws ScopeContextViolationException ex
-     * @throws InvalidSqlException ex
-     * @throws SystemException
-     *             ex
-     * 
+     * @throws InvalidSqlException            ex
+     * @throws SystemException                ex
      */
-    String create(String xmlData) throws MissingMethodParameterException, 
-        InvalidSqlException, ScopeNotFoundException, 
+    String create(String xmlData) throws MissingMethodParameterException, InvalidSqlException, ScopeNotFoundException,
         ScopeContextViolationException, SystemException;
 
     /**
      * Deletes the specified Report Definition.
-     * 
-     * @param reportDefinitionId
-     *            The Report Definition ID.
+     *
+     * @param reportDefinitionId The Report Definition ID.
      * @throws ReportDefinitionNotFoundException
-     *             e.
+     *                         e.
      * @throws MissingMethodParameterException
-     *             e.
-     * @throws SystemException
-     *             e.
-     * 
+     *                         e.
+     * @throws SystemException e.
      */
-    void delete(String reportDefinitionId) 
-            throws ReportDefinitionNotFoundException,
-        MissingMethodParameterException, SystemException;
+    void delete(String reportDefinitionId) throws ReportDefinitionNotFoundException, MissingMethodParameterException,
+        SystemException;
 
     /**
      * Retrieves the specified Report Definition.
-     * 
-     * @param reportDefinitionId
-     *            The Report Definition ID.
+     *
+     * @param reportDefinitionId The Report Definition ID.
      * @return Returns the XML representation of the Report Definition.
      * @throws ReportDefinitionNotFoundException
-     *             e.
+     *                         e.
      * @throws MissingMethodParameterException
-     *             e.
-     * @throws SystemException
-     *             e.
-     * 
+     *                         e.
+     * @throws SystemException e.
      */
-    String retrieve(String reportDefinitionId) 
-            throws ReportDefinitionNotFoundException,
+    String retrieve(String reportDefinitionId) throws ReportDefinitionNotFoundException,
         MissingMethodParameterException, SystemException;
 
     /**
      * Retrieves all Report Definitions the user is allowed to see.
-     * 
-     * @param filter filter as CQL query
      *
+     * @param filter filter as CQL query
      * @return Returns the XML representation of the Report Definition-list.
-     * @throws InvalidSearchQueryException thrown if the given search query could
-     *                                     not be translated into a SQL query
-     * @throws SystemException
-     *             e.
+     * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
+     * @throws SystemException             e.
      */
-    String retrieveReportDefinitions(Map<String, String[]> filter) 
-        throws InvalidSearchQueryException, SystemException;
+    String retrieveReportDefinitions(Map<String, String[]> filter) throws InvalidSearchQueryException, SystemException;
 
     /**
      * Updates the specified Report Definition with the provided data.
-     * 
-     * @param reportDefinitionId
-     *            The Report Definition ID.
-     * @param xmlData
-     *            The new data of the Report Definition.
+     *
+     * @param reportDefinitionId The Report Definition ID.
+     * @param xmlData            The new data of the Report Definition.
      * @return Returns the XML representation of the updated Report Definition.
      * @throws ReportDefinitionNotFoundException
-     *             e.
+     *                                        e.
      * @throws MissingMethodParameterException
-     *             e.
-     * @throws ScopeNotFoundException
-     *             ex
+     *                                        e.
+     * @throws ScopeNotFoundException         ex
      * @throws ScopeContextViolationException ex
-     * @throws InvalidSqlException ex
-     * @throws SystemException
-     *             e.
-     * 
+     * @throws InvalidSqlException            ex
+     * @throws SystemException                e.
      */
-    String update(String reportDefinitionId, String xmlData)
-        throws ReportDefinitionNotFoundException,
-        MissingMethodParameterException, ScopeNotFoundException, 
-        InvalidSqlException,
-        ScopeContextViolationException, SystemException;
+    String update(String reportDefinitionId, String xmlData) throws ReportDefinitionNotFoundException,
+        MissingMethodParameterException, ScopeNotFoundException, InvalidSqlException, ScopeContextViolationException,
+        SystemException;
 }

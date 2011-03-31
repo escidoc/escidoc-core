@@ -24,15 +24,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This is the Postgres implementation of the DDL generator for the MPTStore which
- * sets a maximum prefix length for indices.
+ * This is the Postgres implementation of the DDL generator for the MPTStore which sets a maximum prefix length for
+ * indices.
  *
  * @author André Schenk
  */
 public class PostgresDDLGenerator extends BasicDDLGenerator {
+
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.nsdl.mptstore.impl.postgres.PostgresDDLGenerator#getCreateMapTableDDL(java.lang.String)
      */
     @Override
@@ -40,15 +41,10 @@ public class PostgresDDLGenerator extends BasicDDLGenerator {
 
         final List<String> cmds = new ArrayList<String>();
 
-        cmds.add("CREATE TABLE " + table + " (\n"
-               + "  pKey SERIAL,\n"
-               + "  p TEXT NOT NULL\n"
-               + ')');
-        cmds.add("CREATE INDEX " + table + "_pKey "
-               + " on " + table + " (pKey)");
-        cmds.add("CREATE INDEX " + table + "_p "
-               + " on " + table + " (substring(p from 1 for "
-               + INDEX_PREFIX_LENGTH + "))");
+        cmds.add("CREATE TABLE " + table + " (\n" + "  pKey SERIAL,\n" + "  p TEXT NOT NULL\n" + ')');
+        cmds.add("CREATE INDEX " + table + "_pKey " + " on " + table + " (pKey)");
+        cmds.add("CREATE INDEX " + table + "_p " + " on " + table + " (substring(p from 1 for " + INDEX_PREFIX_LENGTH
+            + "))");
         addSelectGrants(cmds, table);
 
         return cmds;
@@ -64,16 +60,11 @@ public class PostgresDDLGenerator extends BasicDDLGenerator {
 
         final List<String> cmds = new ArrayList<String>();
 
-        cmds.add("CREATE TABLE " + table + " (\n"
-               + "  s TEXT NOT NULL,\n"
-               + "  o TEXT NOT NULL\n"
-               + ')');
-        cmds.add("CREATE INDEX " + table + "_s "
-               + " on " + table + " (substring(s from 1 for "
-               + INDEX_PREFIX_LENGTH + "))");
-        cmds.add("CREATE INDEX " + table + "_o "
-               + " on " + table + " (substring(o from 1 for "
-               + INDEX_PREFIX_LENGTH + "))");
+        cmds.add("CREATE TABLE " + table + " (\n" + "  s TEXT NOT NULL,\n" + "  o TEXT NOT NULL\n" + ')');
+        cmds.add("CREATE INDEX " + table + "_s " + " on " + table + " (substring(s from 1 for " + INDEX_PREFIX_LENGTH
+            + "))");
+        cmds.add("CREATE INDEX " + table + "_o " + " on " + table + " (substring(o from 1 for " + INDEX_PREFIX_LENGTH
+            + "))");
         addSelectGrants(cmds, table);
 
         return cmds;

@@ -44,11 +44,9 @@ import java.util.Stack;
 
 /**
  * Parser with Handler Chain.
- * 
- * @see de.escidoc.core.common.util.xml.stax.handler
- * 
+ *
  * @author Frank Schwichtenberg
- * 
+ * @see de.escidoc.core.common.util.xml.stax.handler
  */
 public class StaxParser implements DefaultHandlerStackInterface {
 
@@ -68,11 +66,9 @@ public class StaxParser implements DefaultHandlerStackInterface {
 
     /**
      * The constructor.
-     * 
-     * @param rootElementName
-     *            The expected name of the root element. If the parsed document
-     *            does not contain a root element of the same name, an exception
-     *            is thrown.
+     *
+     * @param rootElementName The expected name of the root element. If the parsed document does not contain a root
+     *                        element of the same name, an exception is thrown.
      */
     public StaxParser(final String rootElementName) {
 
@@ -80,11 +76,10 @@ public class StaxParser implements DefaultHandlerStackInterface {
     }
 
     /**
-     * Returns the path to the element which is processed right now. The path
-     * consists of the local name of the elements seperated by '/'. There is no
-     * '/' at the end of the path. So a handler does not need to implement some
-     * code to get the position in the document.
-     * 
+     * Returns the path to the element which is processed right now. The path consists of the local name of the elements
+     * seperated by '/'. There is no '/' at the end of the path. So a handler does not need to implement some code to
+     * get the position in the document.
+     *
      * @return The path to the current element consisting of local names.
      */
     @Override
@@ -94,11 +89,9 @@ public class StaxParser implements DefaultHandlerStackInterface {
 
     /**
      * Sets the list of handlers.
-     * 
-     * @param hc
-     *            A {@link List List} of DefaultHandler
-     *            implementations. Same as call <code>clearHandlerChain()</code>
-     *            and add every single Handler in list order.
+     *
+     * @param hc A {@link List List} of DefaultHandler implementations. Same as call <code>clearHandlerChain()</code>
+     *           and add every single Handler in list order.
      */
     public void setHandlerChain(final List hc) {
         this.handlerChain = hc;
@@ -113,35 +106,29 @@ public class StaxParser implements DefaultHandlerStackInterface {
 
     /**
      * Parse.
-     * 
-     * @param in
-     *            XML
-     * @throws Exception
-     *             If anything fails. This depends on the implementation of the
-     *             handlers in the used handler chain
+     *
+     * @param in XML
+     * @throws Exception If anything fails. This depends on the implementation of the handlers in the used handler
+     *                   chain
      */
     public void parse(final InputStream in) throws Exception {
         if (this.handlerChain == null || handlerChain.isEmpty()) {
-            throw new XMLStreamException(
-                "Parser has no handlers. Try StaxParser sp.addHandler"
-                    + "(new DefaultHandler());");
+            throw new XMLStreamException("Parser has no handlers. Try StaxParser sp.addHandler"
+                + "(new DefaultHandler());");
         }
         parseStream(in);
     }
 
     /**
      * Parse with {@link XMLStreamReader XMLStreamReader}.
-     * 
-     * @param in
-     *            XML
-     * @throws Exception
-     *             If anything fails. This depends on the implementation of the
-     *             handlers in the used handler chain
+     *
+     * @param in XML
+     * @throws Exception If anything fails. This depends on the implementation of the handlers in the used handler
+     *                   chain
      */
     protected void parseStream(final InputStream in) throws Exception {
 
-        final XMLStreamReader parser =
-            factory.createXMLStreamReader(in, XmlUtility.CHARACTER_ENCODING);
+        final XMLStreamReader parser = factory.createXMLStreamReader(in, XmlUtility.CHARACTER_ENCODING);
 
         while (parser.hasNext()) {
             final int event = parser.next();
@@ -161,15 +148,14 @@ public class StaxParser implements DefaultHandlerStackInterface {
 
                 case XMLStreamConstants.START_ELEMENT:
                     // bug?
-                    if (! this.started) {
+                    if (!this.started) {
                         init();
                     }
 
                     ((StartElement) startElements.peek()).setHasChild(true);
                     curPath.append('/');
                     curPath.append(parser.getLocalName());
-                    final StartElement startElement =
-                        new StartElement(parser, curPath.toString());
+                    final StartElement startElement = new StartElement(parser, curPath.toString());
                     startElements.push(startElement);
                     handle(startElement);
                     break;
@@ -177,8 +163,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
                 case XMLStreamConstants.CHARACTERS:
                     final String data = parser.getText();
                     if (data.length() != 0) {
-                        ((StartElement) startElements.peek())
-                            .setHasCharacters(true);
+                        ((StartElement) startElements.peek()).setHasCharacters(true);
                         handle(data);
                     }
                     break;
@@ -188,8 +173,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
                         // Throw empty CHARACTERS event!");
                         handle("");
                     }
-                    final EndElement endElement =
-                        new EndElement(parser, curPath.toString());
+                    final EndElement endElement = new EndElement(parser, curPath.toString());
                     handle(endElement);
                     startElements.pop();
                     curPath.setLength(curPath.lastIndexOf("/"));
@@ -203,12 +187,10 @@ public class StaxParser implements DefaultHandlerStackInterface {
 
     /**
      * Parse with {@link XMLEventReader XMLEventReader}.
-     * 
-     * @param in
-     *            XML
-     * @throws Exception
-     *             If anything fails. This depends on the implementation of the
-     *             handlers in the used handler chain
+     *
+     * @param in XML
+     * @throws Exception If anything fails. This depends on the implementation of the handlers in the used handler
+     *                   chain
      */
     protected void parseEvents(final InputStream in) throws Exception {
 
@@ -235,26 +217,21 @@ public class StaxParser implements DefaultHandlerStackInterface {
 
                 case XMLStreamConstants.START_ELEMENT:
                     // bug?
-                    if (! this.started) {
+                    if (!this.started) {
                         init();
                     }
                     ((StartElement) startElements.peek()).setHasChild(true);
-                    final javax.xml.stream.events.StartElement se =
-                        event.asStartElement();
+                    final javax.xml.stream.events.StartElement se = event.asStartElement();
                     final StartElement startElement =
-                        new StartElement(se.getName().getLocalPart(), se
-                            .getName().getNamespaceURI(), se
+                        new StartElement(se.getName().getLocalPart(), se.getName().getNamespaceURI(), se
                             .getName().getPrefix(), se.getNamespaceContext());
                     // add attributes
                     final Iterator attIt = se.getAttributes();
                     while (attIt.hasNext()) {
-                        final javax.xml.stream.events.Attribute a =
-                            (javax.xml.stream.events.Attribute) attIt.next();
+                        final javax.xml.stream.events.Attribute a = (javax.xml.stream.events.Attribute) attIt.next();
                         final QName name = a.getName();
                         final Attribute attribute =
-                            new Attribute(name.getLocalPart(), name
-                                .getNamespaceURI(), name.getPrefix(), a
-                                .getValue());
+                            new Attribute(name.getLocalPart(), name.getNamespaceURI(), name.getPrefix(), a.getValue());
                         startElement.addAttribute(attribute);
                     }
                     startElements.push(startElement);
@@ -266,18 +243,15 @@ public class StaxParser implements DefaultHandlerStackInterface {
                 case XMLStreamConstants.CHARACTERS:
                     final String data = event.asCharacters().getData();
                     if (data.length() != 0) {
-                        ((StartElement) startElements.peek())
-                            .setHasCharacters(true);
+                        ((StartElement) startElements.peek()).setHasCharacters(true);
                         handle(data);
                     }
                     break;
 
                 case XMLStreamConstants.END_ELEMENT:
-                    final javax.xml.stream.events.EndElement ee =
-                        event.asEndElement();
+                    final javax.xml.stream.events.EndElement ee = event.asEndElement();
                     final EndElement endElement =
-                        new EndElement(ee.getName().getLocalPart(), ee
-                            .getName().getNamespaceURI(), ee
+                        new EndElement(ee.getName().getLocalPart(), ee.getName().getNamespaceURI(), ee
                             .getName().getPrefix());
                     startElements.pop();
                     curPath.setLength(curPath.lastIndexOf("/"));
@@ -300,9 +274,8 @@ public class StaxParser implements DefaultHandlerStackInterface {
 
     /**
      * Adds a Handler at the end of the handler chain.
-     * 
-     * @param dh
-     *            A DefaultHandler implementation.
+     *
+     * @param dh A DefaultHandler implementation.
      */
     public void addHandler(final DefaultHandler dh) {
         handlerChain.add(dh);
@@ -310,51 +283,42 @@ public class StaxParser implements DefaultHandlerStackInterface {
 
     /**
      * Adds all Handlers at the end of the handler chain.
-     * 
-     * @param c
-     *            A Collection of DefaultHandler implementations.
+     *
+     * @param c A Collection of DefaultHandler implementations.
      */
     public void addHandler(final Collection c) {
         handlerChain.addAll(c);
     }
 
     /**
-     * Inserts the specified Handler at the specified position in the handler
-     * chain. Shifts the element currently at that position (if any) and any
-     * subsequent elements to the right (adds one to their indices).
-     * @param index
-     * @param dh
+     * Inserts the specified Handler at the specified position in the handler chain. Shifts the element currently at
+     * that position (if any) and any subsequent elements to the right (adds one to their indices).
      */
     public void addHandler(final int index, final DefaultHandler dh) {
         handlerChain.add(index, dh);
     }
 
     /**
-     * Calls startElement() for every Handler in the handler chain. If the
-     * current start element is the root element, the name is asserted using the
-     * value set during creation of the parser..
-     * 
-     * @param e
-     *            {@link StartElement
-     *            StartElement}
-     * @throws Exception
-     *             If anything fails. This depends on the implementation of the
-     *             handlers in the used handler chain.
+     * Calls startElement() for every Handler in the handler chain. If the current start element is the root element,
+     * the name is asserted using the value set during creation of the parser..
+     *
+     * @param e {@link StartElement StartElement}
+     * @throws Exception If anything fails. This depends on the implementation of the handlers in the used handler
+     *                   chain.
      */
     protected void handle(final StartElement e) throws Exception {
 
         StartElement element = e;
-        if (! this.rootChecked) {
+        if (!this.rootChecked) {
             final String localName = e.getLocalName();
             if (!expectedName.equals(localName)) {
-                throw new XmlCorruptedException(
-                    "Unexpected root element, expected " + this.expectedName
-                        + "but was " + localName + '.');
+                throw new XmlCorruptedException("Unexpected root element, expected " + this.expectedName + "but was "
+                    + localName + '.');
             }
             this.rootChecked = true;
         }
 
-//        int chainSize = handlerChain.size();
+        //        int chainSize = handlerChain.size();
         for (final Object aHandlerChain : this.handlerChain) {
             final DefaultHandler handler = (DefaultHandler) aHandlerChain;
             if (handler != null) {
@@ -365,17 +329,14 @@ public class StaxParser implements DefaultHandlerStackInterface {
 
     /**
      * Calls endElement() for every Handler in the handler chain.
-     * 
-     * @param e
-     *            {@link EndElement
-     *            EndElement}
-     * @throws Exception
-     *             If anything fails. This depends on the implementation of the
-     *             handlers in the used handler chain
+     *
+     * @param e {@link EndElement EndElement}
+     * @throws Exception If anything fails. This depends on the implementation of the handlers in the used handler
+     *                   chain
      */
     protected void handle(final EndElement e) throws Exception {
         EndElement element = e;
-//        int chainSize = handlerChain.size();
+        //        int chainSize = handlerChain.size();
         for (final Object aHandlerChain : this.handlerChain) {
             final DefaultHandler handler = (DefaultHandler) aHandlerChain;
             if (handler != null) {
@@ -386,16 +347,14 @@ public class StaxParser implements DefaultHandlerStackInterface {
 
     /**
      * Calls characters() for every Handler in the handler chain.
-     * 
-     * @param s
-     *            Characters
-     * @throws Exception
-     *             If anything fails. This depends on the implementation of the
-     *             handlers in the used handler chain
+     *
+     * @param s Characters
+     * @throws Exception If anything fails. This depends on the implementation of the handlers in the used handler
+     *                   chain
      */
     protected void handle(final String s) throws Exception {
         String chars = s;
-//        int chainSize = handlerChain.size();
+        //        int chainSize = handlerChain.size();
         for (final Object aHandlerChain : this.handlerChain) {
             final DefaultHandler handler = (DefaultHandler) aHandlerChain;
             if (handler != null) {

@@ -26,45 +26,34 @@ import java.util.Map;
 
 /**
  * AggregationDefinition renderer implementation using the velocity template engine.
- * 
- * @author Michael Hoppe
  *
+ * @author Michael Hoppe
  */
-public final class AggregationDefinitionXmlProvider 
-                    extends InfrastructureXmlProvider {
+public final class AggregationDefinitionXmlProvider extends InfrastructureXmlProvider {
 
-    private static final String AGGREGATION_DEFINITION_RESOURCE_NAME = 
-        "aggregation-definition";
+    private static final String AGGREGATION_DEFINITION_RESOURCE_NAME = "aggregation-definition";
 
-    private static final String AGGREGATION_DEFINITIONS_RESOURCE_NAME =
-        "aggregation-definition-list";
+    private static final String AGGREGATION_DEFINITIONS_RESOURCE_NAME = "aggregation-definition-list";
 
-    private static final String AGGREGATION_DEFINITIONS_SRW_RESOURCE_NAME =
-        "aggregation-definition-srw-list";
+    private static final String AGGREGATION_DEFINITIONS_SRW_RESOURCE_NAME = "aggregation-definition-srw-list";
 
-    private static final String AGGREGATION_DEFINITION_PATH = 
-        "/aggregation-definition";
+    private static final String AGGREGATION_DEFINITION_PATH = "/aggregation-definition";
 
     private static final AggregationDefinitionXmlProvider PROVIDER = new AggregationDefinitionXmlProvider();
 
     /**
      * Private constructor to prevent initialization.
-     * 
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
      *
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     private AggregationDefinitionXmlProvider() {
     }
 
     /**
      * Gets the AggregationDefinition xml PROVIDER.
-     * 
-     * @return Returns the <code>AggregationDefinitionXmlProvider</code> object.
-     * @throws WebserverSystemException
-     *             Thrown if the instance cannot be created due to an internal
-     *             error.
      *
+     * @return Returns the <code>AggregationDefinitionXmlProvider</code> object.
+     * @throws WebserverSystemException Thrown if the instance cannot be created due to an internal error.
      */
     public static AggregationDefinitionXmlProvider getInstance() {
         return PROVIDER;
@@ -72,57 +61,38 @@ public final class AggregationDefinitionXmlProvider
 
     /**
      * Gets the AggregationDefinition xml.
-     * 
+     *
      * @param values rendering values
      * @return String rendered xml
-     * @throws WebserverSystemException
-     *             Thrown if the instance cannot be created due to an internal
-     *             error.
-     *
+     * @throws WebserverSystemException Thrown if the instance cannot be created due to an internal error.
      */
-    public String getAggregationDefinitionXml(
-            final Map values)
-        throws WebserverSystemException {
+    public String getAggregationDefinitionXml(final Map values) throws WebserverSystemException {
 
-        return getXml(
-                AGGREGATION_DEFINITION_RESOURCE_NAME, 
-                AGGREGATION_DEFINITION_PATH, values);
+        return getXml(AGGREGATION_DEFINITION_RESOURCE_NAME, AGGREGATION_DEFINITION_PATH, values);
     }
 
     /**
      * Gets the AggregationDefinitions xml.
-     * 
+     *
      * @param values rendering values
      * @return String rendered xml
-     * @throws WebserverSystemException
-     *             Thrown if the instance cannot be created due to an internal
-     *             error.
-     *
+     * @throws WebserverSystemException Thrown if the instance cannot be created due to an internal error.
      */
-    public String getAggregationDefinitionsXml(final Map values)
-        throws WebserverSystemException {
+    public String getAggregationDefinitionsXml(final Map values) throws WebserverSystemException {
 
-        return getXml(
-                AGGREGATION_DEFINITIONS_RESOURCE_NAME, 
-                AGGREGATION_DEFINITION_PATH, values);
+        return getXml(AGGREGATION_DEFINITIONS_RESOURCE_NAME, AGGREGATION_DEFINITION_PATH, values);
     }
 
     /**
      * Gets the AggregationDefinitions xml in srw-schema.
-     * 
+     *
      * @param values rendering values
      * @return String rendered xml
-     * @throws WebserverSystemException
-     *             Thrown if the instance cannot be created due to an internal
-     *             error.
-     *
+     * @throws WebserverSystemException Thrown if the instance cannot be created due to an internal error.
      */
-    public String getAggregationDefinitionsSrwXml(final Map values)
-            throws WebserverSystemException {
+    public String getAggregationDefinitionsSrwXml(final Map values) throws WebserverSystemException {
 
-        return getXml(
-                AGGREGATION_DEFINITIONS_SRW_RESOURCE_NAME,
-                AGGREGATION_DEFINITION_PATH, values);
+        return getXml(AGGREGATION_DEFINITIONS_SRW_RESOURCE_NAME, AGGREGATION_DEFINITION_PATH, values);
     }
-    
+
 }

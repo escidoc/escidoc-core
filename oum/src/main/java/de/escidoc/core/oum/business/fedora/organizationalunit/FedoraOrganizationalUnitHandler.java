@@ -92,35 +92,31 @@ import java.util.Map;
 /**
  * @author Frank Schwichtenberg
  */
-public class FedoraOrganizationalUnitHandler
-    extends OrganizationalUnitHandlerUpdate
+public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUpdate
     implements OrganizationalUnitHandlerInterface {
 
-    /** SRU request. */
+    /**
+     * SRU request.
+     */
     private SRURequest sruRequest;
 
-    private final Collection<ResourceListener> ouListeners =
-        new ArrayList<ResourceListener>();
+    private final Collection<ResourceListener> ouListeners = new ArrayList<ResourceListener>();
 
     private final ContentRelationHandlerInterface contentRelationHandler;
 
     /**
-     * Construct a new FedoraOrganizationalUnitHandler. Get a reference to the
-     * ContentRelationHandler object.
-     * 
-     * @throws WebserverSystemException
-     *             getting the ContentRelationHandler failed
+     * Construct a new FedoraOrganizationalUnitHandler. Get a reference to the ContentRelationHandler object.
+     *
+     * @throws WebserverSystemException getting the ContentRelationHandler failed
      */
     public FedoraOrganizationalUnitHandler() throws WebserverSystemException {
-        this.contentRelationHandler =
-            BeanLocator.locateContentRelationHandler();
+        this.contentRelationHandler = BeanLocator.locateContentRelationHandler();
     }
 
     /**
      * Register an ou listener.
-     * 
-     * @param listener
-     *            listener which will be added to the list
+     *
+     * @param listener listener which will be added to the list
      */
     public void addOuListener(final ResourceListener listener) {
         ouListeners.add(listener);
@@ -128,25 +124,20 @@ public class FedoraOrganizationalUnitHandler
 
     /**
      * Unregister an ou listener.
-     * 
-     * @param listener
-     *            listener which will be removed from the list
+     *
+     * @param listener listener which will be removed from the list
      */
     public void removeItemListener(final ResourceListener listener) {
         ouListeners.remove(listener);
     }
 
     /**
-     * Get the alternate form of an ou representation. If the current request
-     * came in via REST, then the SOAP form will be returned here and vice
-     * versa.
-     * 
-     * @param id
-     *            ou id
-     * 
+     * Get the alternate form of an ou representation. If the current request came in via REST, then the SOAP form will
+     * be returned here and vice versa.
+     *
+     * @param id ou id
      * @return alternate form of the ou
-     * @throws SystemException
-     *             An internal error occurred.
+     * @throws SystemException An internal error occurred.
      */
     private String getAlternateForm(final String id) throws SystemException {
         String result = null;
@@ -177,17 +168,12 @@ public class FedoraOrganizationalUnitHandler
 
     /**
      * Notify the listeners that an ou was created.
-     * 
-     * @param id
-     *            ou id
-     * @param xmlData
-     *            complete ou XML
-     * 
-     * @throws SystemException
-     *             One of the listeners threw an exception.
+     *
+     * @param id      ou id
+     * @param xmlData complete ou XML
+     * @throws SystemException One of the listeners threw an exception.
      */
-    private void fireOuCreated(final String id, final String xmlData)
-        throws SystemException {
+    private void fireOuCreated(final String id, final String xmlData) throws SystemException {
         final String restXml;
         final String soapXml;
 
@@ -206,12 +192,9 @@ public class FedoraOrganizationalUnitHandler
 
     /**
      * Notify the listeners that an ou was deleted.
-     * 
-     * @param id
-     *            item id
-     * 
-     * @throws SystemException
-     *             One of the listeners threw an exception.
+     *
+     * @param id item id
+     * @throws SystemException One of the listeners threw an exception.
      */
     private void fireOuDeleted(final String id) throws SystemException {
         for (final ResourceListener ouListener : this.ouListeners) {
@@ -221,17 +204,12 @@ public class FedoraOrganizationalUnitHandler
 
     /**
      * Notify the listeners that an item was modified.
-     * 
-     * @param id
-     *            item id
-     * @param xmlData
-     *            complete item XML
-     * 
-     * @throws SystemException
-     *             One of the listeners threw an exception.
+     *
+     * @param id      item id
+     * @param xmlData complete item XML
+     * @throws SystemException One of the listeners threw an exception.
      */
-    private void fireOuModified(final String id, final String xmlData)
-        throws SystemException {
+    private void fireOuModified(final String id, final String xmlData) throws SystemException {
         final String restXml;
         final String soapXml;
 
@@ -250,113 +228,77 @@ public class FedoraOrganizationalUnitHandler
 
     /**
      * Ingest an organizational unit.
-     * 
-     * @param xmlData
-     *            XML containing the ou
-     * @throws SystemException
-     *             e
-     * @throws OrganizationalUnitNotFoundException
-     *             e
-     * @throws MissingAttributeValueException
-     *             e
-     * @throws MissingElementValueException
-     *             e
-     * @throws InvalidXmlException
-     *             e
-     * @throws InvalidStatusException
-     *             e
-     * @throws MissingMdRecordException
-     *             If the required md-record is missing
+     *
+     * @param xmlData XML containing the ou
      * @return the id of the created organizational unit.
+     * @throws SystemException                e
+     * @throws OrganizationalUnitNotFoundException
+     *                                        e
+     * @throws MissingAttributeValueException e
+     * @throws MissingElementValueException   e
+     * @throws InvalidXmlException            e
+     * @throws InvalidStatusException         e
+     * @throws MissingMdRecordException       If the required md-record is missing
      */
     @Override
-    public String ingest(final String xmlData) throws InvalidStatusException,
-        InvalidXmlException, MissingElementValueException,
-        MissingAttributeValueException, OrganizationalUnitNotFoundException,
+    public String ingest(final String xmlData) throws InvalidStatusException, InvalidXmlException,
+        MissingElementValueException, MissingAttributeValueException, OrganizationalUnitNotFoundException,
         SystemException, MissingMdRecordException {
         return doCreate(xmlData, false);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param xml
-     * @return
-     * @throws InvalidStatusException
-     *             e
-     * @throws MissingElementValueException
-     *             e
-     * @throws MissingAttributeValueException
-     *             e
-     * @throws SystemException
-     *             e
+     *
+     * @throws InvalidStatusException         e
+     * @throws MissingElementValueException   e
+     * @throws MissingAttributeValueException e
+     * @throws SystemException                e
      * @throws OrganizationalUnitNotFoundException
-     *             e
-     * @throws XmlCorruptedException
-     *             e
-     * @throws XmlSchemaValidationException
-     *             e
-     * @throws MissingMdRecordException
-     *             If the required md-record is missing
+     *                                        e
+     * @throws XmlCorruptedException          e
+     * @throws XmlSchemaValidationException   e
+     * @throws MissingMdRecordException       If the required md-record is missing
      */
     @Override
-    public String create(final String xmlData) throws InvalidStatusException,
-        MissingElementValueException, MissingAttributeValueException,
-        SystemException, OrganizationalUnitNotFoundException,
-        XmlCorruptedException, XmlSchemaValidationException,
-        MissingMdRecordException {
+    public String create(final String xmlData) throws InvalidStatusException, MissingElementValueException,
+        MissingAttributeValueException, SystemException, OrganizationalUnitNotFoundException, XmlCorruptedException,
+        XmlSchemaValidationException, MissingMdRecordException {
         return doCreate(xmlData, true);
     }
 
     /**
      * Wrapper for the create method.
-     * 
-     * @param xml
-     *            Organizational Unit as eSciDoc XML representation.
-     * @param isCreate
-     *            True if the Organizational Unit use the create method. False
-     *            if ingest is used. Create has higher restrictions for
-     *            public-status and requires a return of the whole created data
-     *            strucutre.
-     * @return Either the eSciDoc XML representation (if create method is used)
-     *         or only the objid (if ingest method is used).
-     * 
-     * @throws InvalidStatusException
-     *             e
-     * @throws MissingElementValueException
-     *             e
-     * @throws MissingAttributeValueException
-     *             e
-     * @throws SystemException
-     *             e
+     *
+     * @param xml      Organizational Unit as eSciDoc XML representation.
+     * @param isCreate True if the Organizational Unit use the create method. False if ingest is used. Create has higher
+     *                 restrictions for public-status and requires a return of the whole created data strucutre.
+     * @return Either the eSciDoc XML representation (if create method is used) or only the objid (if ingest method is
+     *         used).
+     * @throws InvalidStatusException         e
+     * @throws MissingElementValueException   e
+     * @throws MissingAttributeValueException e
+     * @throws SystemException                e
      * @throws OrganizationalUnitNotFoundException
-     *             e
-     * @throws XmlCorruptedException
-     *             e
-     * @throws MissingMdRecordException
-     *             If the required md-record is missing
+     *                                        e
+     * @throws XmlCorruptedException          e
+     * @throws MissingMdRecordException       If the required md-record is missing
      */
-    public String doCreate(final String xml, final boolean isCreate)
-        throws InvalidStatusException, MissingElementValueException,
-        MissingAttributeValueException, SystemException,
-        OrganizationalUnitNotFoundException, XmlCorruptedException,
-        MissingMdRecordException {
+    public String doCreate(final String xml, final boolean isCreate) throws InvalidStatusException,
+        MissingElementValueException, MissingAttributeValueException, SystemException,
+        OrganizationalUnitNotFoundException, XmlCorruptedException, MissingMdRecordException {
 
         final StaxParser sp = new StaxParser();
-        final OrganizationalUnitParentsHandler parentsHandler =
-            new OrganizationalUnitParentsHandler(sp);
+        final OrganizationalUnitParentsHandler parentsHandler = new OrganizationalUnitParentsHandler(sp);
         sp.addHandler(parentsHandler);
 
-        final OrganizationalUnitPredecessorsHandler predecessorsHandler =
-            new OrganizationalUnitPredecessorsHandler(sp);
+        final OrganizationalUnitPredecessorsHandler predecessorsHandler = new OrganizationalUnitPredecessorsHandler(sp);
         sp.addHandler(predecessorsHandler);
 
         final OrganizationalUnitMetadataHandler metadataHandler =
-            new OrganizationalUnitMetadataHandler(sp,
-                '/' + XmlUtility.NAME_ORGANIZATIONAL_UNIT);
+            new OrganizationalUnitMetadataHandler(sp, '/' + XmlUtility.NAME_ORGANIZATIONAL_UNIT);
         sp.addHandler(metadataHandler);
-        final MultipleExtractor2 me =
-            createMultipleExtractor(sp, metadataHandler.getMdRecordPath());
+        final MultipleExtractor2 me = createMultipleExtractor(sp, metadataHandler.getMdRecordPath());
         sp.addHandler(me);
 
         parseIncomingXmlForCreate(xml, sp);
@@ -365,19 +307,17 @@ public class FedoraOrganizationalUnitHandler
 
         final Map<String, Object> relsExtValues = new HashMap<String, Object>();
         final String[] creator = Utility.getCurrentUser();
-        relsExtValues.put(XmlTemplateProvider.PUBLIC_STATUS,
-            Constants.STATUS_OU_CREATED);
+        relsExtValues.put(XmlTemplateProvider.PUBLIC_STATUS, Constants.STATUS_OU_CREATED);
 
         relsExtValues.put(XmlTemplateProvider.CREATED_BY_ID, creator[0]);
         relsExtValues.put(XmlTemplateProvider.CREATED_BY_TITLE, creator[1]);
         relsExtValues.put(XmlTemplateProvider.MODIFIED_BY_ID, creator[0]);
         relsExtValues.put(XmlTemplateProvider.MODIFIED_BY_TITLE, creator[1]);
-        relsExtValues.put(XmlTemplateProvider.TITLE,
-            metadataHandler.getDcTitle());
+        relsExtValues.put(XmlTemplateProvider.TITLE, metadataHandler.getDcTitle());
 
         // add predecessors to RELS-EXT
-        relsExtValues.put(XmlTemplateProvider.PREDECESSORS,
-            getPredessorsMap(predecessorsHandler.getPredecessors(), null));
+        relsExtValues.put(XmlTemplateProvider.PREDECESSORS, getPredessorsMap(predecessorsHandler.getPredecessors(),
+            null));
 
         // parents
         final List<String> parents = parentsHandler.getParentOus();
@@ -388,8 +328,7 @@ public class FedoraOrganizationalUnitHandler
         final String escidocMdRecord;
         try {
             escidocMdRecord =
-                ((Map<String, ByteArrayOutputStream>) streams
-                    .get(XmlUtility.NAME_MDRECORDS)).get("escidoc").toString(
+                ((Map<String, ByteArrayOutputStream>) streams.get(XmlUtility.NAME_MDRECORDS)).get("escidoc").toString(
                     XmlUtility.CHARACTER_ENCODING);
         }
         catch (final UnsupportedEncodingException e) {
@@ -397,16 +336,11 @@ public class FedoraOrganizationalUnitHandler
         }
         String dcStream = "";
         if (escidocMdRecord != null) {
-            dcStream =
-                XmlUtility.createDC(
-                    metadataHandler.getEscidocMetadataRecordNameSpace(),
-                    escidocMdRecord, id);
+            dcStream = XmlUtility.createDC(metadataHandler.getEscidocMetadataRecordNameSpace(), escidocMdRecord, id);
         }
         final String orgUnitFoxml =
-            getOrganizationalUnitFoxml(id, relsExtValues, parents,
-                metadataHandler.getMetadataAttributes(),
-                (Map<String, ByteArrayOutputStream>) streams
-                    .get(XmlUtility.NAME_MDRECORDS), dcStream);
+            getOrganizationalUnitFoxml(id, relsExtValues, parents, metadataHandler.getMetadataAttributes(),
+                (Map<String, ByteArrayOutputStream>) streams.get(XmlUtility.NAME_MDRECORDS), dcStream);
         getFedoraUtility().storeObjectInFedora(orgUnitFoxml, true);
 
         String resultOrgUnit;
@@ -415,9 +349,7 @@ public class FedoraOrganizationalUnitHandler
             resultOrgUnit = retrieve(id);
         }
         catch (final OrganizationalUnitNotFoundException e) {
-            throw new IntegritySystemException(
-                "Error retrieving created organizational-unit with id " + id
-                    + '!', e);
+            throw new IntegritySystemException("Error retrieving created organizational-unit with id " + id + '!', e);
         }
 
         fireOuCreated(id, resultOrgUnit);
@@ -429,10 +361,8 @@ public class FedoraOrganizationalUnitHandler
         }
         // reload all predecessor OUs in the DB cache to update the property
         // "successor"
-        for (final Predecessor predecessor : predecessorsHandler
-            .getPredecessors()) {
-            fireOuModified(predecessor.getObjid(),
-                retrieve(predecessor.getObjid()));
+        for (final Predecessor predecessor : predecessorsHandler.getPredecessors()) {
+            fireOuModified(predecessor.getObjid(), retrieve(predecessor.getObjid()));
         }
         if (!isCreate) {
             resultOrgUnit = id;
@@ -443,22 +373,17 @@ public class FedoraOrganizationalUnitHandler
 
     /**
      * See Interface for functional description.
-     * 
-     * @param id
+     *
      * @throws OrganizationalUnitNotFoundException
-     *             e
-     * @throws InvalidStatusException
-     *             e
+     *                                e
+     * @throws InvalidStatusException e
      * @throws OrganizationalUnitHasChildrenException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see de.escidoc.core.oum.business.interfaces.
-     *      OrganizationalUnitHandlerInterface#delete(java.lang.String)
+     *                                e
+     * @throws SystemException        e
+     * @see de.escidoc.core.oum.business.interfaces. OrganizationalUnitHandlerInterface#delete(java.lang.String)
      */
     @Override
-    public void delete(final String id)
-        throws OrganizationalUnitNotFoundException, InvalidStatusException,
+    public void delete(final String id) throws OrganizationalUnitNotFoundException, InvalidStatusException,
         OrganizationalUnitHasChildrenException, SystemException {
 
         setOrganizationalUnit(id);
@@ -480,19 +405,14 @@ public class FedoraOrganizationalUnitHandler
 
     /**
      * See Interface for functional description.
-     * 
-     * @param id
-     * @return
+     *
      * @throws OrganizationalUnitNotFoundException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see de.escidoc.core.oum.business.interfaces.
-     *      OrganizationalUnitHandlerInterface#retrieve(java.lang.String)
+     *                         e
+     * @throws SystemException e
+     * @see de.escidoc.core.oum.business.interfaces. OrganizationalUnitHandlerInterface#retrieve(java.lang.String)
      */
     @Override
-    public String retrieve(final String id)
-        throws OrganizationalUnitNotFoundException, SystemException {
+    public String retrieve(final String id) throws OrganizationalUnitNotFoundException, SystemException {
 
         setOrganizationalUnit(id);
         return getRenderer().render(getOrganizationalUnit());
@@ -500,63 +420,45 @@ public class FedoraOrganizationalUnitHandler
 
     /**
      * See Interface for functional description.
-     * 
-     * @param id
-     * @param xml
-     * @return
-     * @throws InvalidStatusException
-     *             e
-     * @throws InvalidXmlException
-     *             e
-     * @throws MissingElementValueException
-     *             e
-     * @throws OptimisticLockingException
-     *             e
+     *
+     * @throws InvalidStatusException       e
+     * @throws InvalidXmlException          e
+     * @throws MissingElementValueException e
+     * @throws OptimisticLockingException   e
      * @throws OrganizationalUnitHierarchyViolationException
-     *             e
+     *                                      e
      * @throws OrganizationalUnitNotFoundException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see de.escidoc.core.oum.business.interfaces.
-     *      OrganizationalUnitHandlerInterface#update(java.lang.String,
+     *                                      e
+     * @throws SystemException              e
+     * @see de.escidoc.core.oum.business.interfaces. OrganizationalUnitHandlerInterface#update(java.lang.String,
      *      java.lang.String)
      */
     @Override
-    public String update(final String id, final String xml)
-        throws InvalidXmlException, MissingElementValueException,
-        OrganizationalUnitNotFoundException, SystemException,
-        OptimisticLockingException,
+    public String update(final String id, final String xml) throws InvalidXmlException, MissingElementValueException,
+        OrganizationalUnitNotFoundException, SystemException, OptimisticLockingException,
         OrganizationalUnitHierarchyViolationException, InvalidStatusException {
 
         setOrganizationalUnit(id);
-        final List<String> parentsBeforeUpdate =
-            getOrganizationalUnit().getParents();
-        final List<Predecessor> predecessorsBeforeUpdate =
-            getOrganizationalUnit().getPredecessors();
+        final List<String> parentsBeforeUpdate = getOrganizationalUnit().getParents();
+        final List<Predecessor> predecessorsBeforeUpdate = getOrganizationalUnit().getPredecessors();
 
-        final String startTimeStamp =
-            getOrganizationalUnit().getLastFedoraModificationDate();
+        final String startTimeStamp = getOrganizationalUnit().getLastFedoraModificationDate();
         final StaxParser sp = new StaxParser();
         final OptimisticLockingHandler optimisticLockingHandler =
-            new OptimisticLockingHandler(getOrganizationalUnit().getId(),
-                Constants.ORGANIZATIONAL_UNIT_OBJECT_TYPE, startTimeStamp, sp);
+            new OptimisticLockingHandler(getOrganizationalUnit().getId(), Constants.ORGANIZATIONAL_UNIT_OBJECT_TYPE,
+                startTimeStamp, sp);
         sp.addHandler(optimisticLockingHandler);
 
         final OrganizationalUnitMetadataHandler metadataHandler =
-            new OrganizationalUnitMetadataHandler(sp,
-                '/' + XmlUtility.NAME_ORGANIZATIONAL_UNIT);
+            new OrganizationalUnitMetadataHandler(sp, '/' + XmlUtility.NAME_ORGANIZATIONAL_UNIT);
         sp.addHandler(metadataHandler);
-        final MultipleExtractor2 me =
-            createMultipleExtractor(sp, metadataHandler.getMdRecordPath());
+        final MultipleExtractor2 me = createMultipleExtractor(sp, metadataHandler.getMdRecordPath());
         sp.addHandler(me);
 
-        final OrganizationalUnitPredecessorsHandler predecessorsHandler =
-            new OrganizationalUnitPredecessorsHandler(sp);
+        final OrganizationalUnitPredecessorsHandler predecessorsHandler = new OrganizationalUnitPredecessorsHandler(sp);
         sp.addHandler(predecessorsHandler);
 
-        final OrganizationalUnitParentsHandler parentsHandler =
-            new OrganizationalUnitParentsHandler(sp);
+        final OrganizationalUnitParentsHandler parentsHandler = new OrganizationalUnitParentsHandler(sp);
         sp.addHandler(parentsHandler);
 
         parseIncomingXmlForUpdate(xml, sp);
@@ -569,33 +471,26 @@ public class FedoraOrganizationalUnitHandler
         final Map<String, Object> relsExtValues = new HashMap<String, Object>();
         final String[] creator = Utility.getCurrentUser();
         relsExtValues.put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER, Utility.getBuildNumber());
-        relsExtValues.put(XmlTemplateProvider.PUBLIC_STATUS,
-            getOrganizationalUnit().getPublicStatus());
-        relsExtValues.put(XmlTemplateProvider.CREATED_BY_ID,
-            getOrganizationalUnit().getCreatedBy());
-        relsExtValues.put(XmlTemplateProvider.CREATED_BY_TITLE,
-            getOrganizationalUnit().getCreatedByTitle());
+        relsExtValues.put(XmlTemplateProvider.PUBLIC_STATUS, getOrganizationalUnit().getPublicStatus());
+        relsExtValues.put(XmlTemplateProvider.CREATED_BY_ID, getOrganizationalUnit().getCreatedBy());
+        relsExtValues.put(XmlTemplateProvider.CREATED_BY_TITLE, getOrganizationalUnit().getCreatedByTitle());
         relsExtValues.put(XmlTemplateProvider.MODIFIED_BY_ID, creator[0]);
         relsExtValues.put(XmlTemplateProvider.MODIFIED_BY_TITLE, creator[1]);
-        relsExtValues.put(XmlTemplateProvider.TITLE,
-            metadataHandler.getDcTitle());
+        relsExtValues.put(XmlTemplateProvider.TITLE, metadataHandler.getDcTitle());
 
         checkName(id, metadataHandler.getDcTitle(), parents);
 
         // predecessors
-        relsExtValues.put(XmlTemplateProvider.PREDECESSORS,
-            getPredessorsMap(predecessorsHandler.getPredecessors(), id));
+        relsExtValues
+            .put(XmlTemplateProvider.PREDECESSORS, getPredessorsMap(predecessorsHandler.getPredecessors(), id));
 
         try {
-            setMdRecords((Map<String, ByteArrayOutputStream>) me
-                .getOutputStreams().get(XmlUtility.NAME_MDRECORDS),
-                metadataHandler.getMetadataAttributes(),
-                metadataHandler.getEscidocMetadataRecordNameSpace());
+            setMdRecords((Map<String, ByteArrayOutputStream>) me.getOutputStreams().get(XmlUtility.NAME_MDRECORDS),
+                metadataHandler.getMetadataAttributes(), metadataHandler.getEscidocMetadataRecordNameSpace());
             // call getRelsExt, otherwise it is not initialized and unmodified
             // properties cause an update
             getOrganizationalUnit().getRelsExt();
-            getOrganizationalUnit().setRelsExt(
-                getOrganizationalUnitRelsExt(id, relsExtValues, parents));
+            getOrganizationalUnit().setRelsExt(getOrganizationalUnitRelsExt(id, relsExtValues, parents));
             getOrganizationalUnit().persist();
         }
         catch (final StreamNotFoundException e) {
@@ -607,34 +502,25 @@ public class FedoraOrganizationalUnitHandler
             result = retrieve(getOrganizationalUnit().getId());
         }
         catch (final OrganizationalUnitNotFoundException e) {
-            throw new IntegritySystemException(
-                "Error retrieving updated organizational-unit with id " + id
-                    + '!', e);
+            throw new IntegritySystemException("Error retrieving updated organizational-unit with id " + id + '!', e);
         }
-        final String endTimeStamp =
-            getOrganizationalUnit().getLastFedoraModificationDate();
+        final String endTimeStamp = getOrganizationalUnit().getLastFedoraModificationDate();
         if (!startTimeStamp.equals(endTimeStamp)) {
             fireOuModified(getOrganizationalUnit().getId(), result);
             updateModifiedParents(parentsBeforeUpdate, parents);
-            updateModifiedPredecessors(predecessorsBeforeUpdate,
-                predecessorsHandler.getPredecessors());
+            updateModifiedPredecessors(predecessorsBeforeUpdate, predecessorsHandler.getPredecessors());
         }
 
         return result;
     }
 
     /**
-     * 
-     * @param parentsBeforeUpdate
-     * @param updatedParents
      * @throws OrganizationalUnitNotFoundException
-     *             e
-     * @throws SystemException
-     *             e
+     *                         e
+     * @throws SystemException e
      */
     protected void updateModifiedParents(
-        final Collection<String> parentsBeforeUpdate,
-        final Collection<String> updatedParents)
+        final Collection<String> parentsBeforeUpdate, final Collection<String> updatedParents)
         throws OrganizationalUnitNotFoundException, SystemException {
 
         for (final String id : parentsBeforeUpdate) {
@@ -651,106 +537,80 @@ public class FedoraOrganizationalUnitHandler
 
     /**
      * Update Predecessors within cache-db.
-     * 
-     * @param predecessorBeforeUpdate
-     *            List of predecessors before relation where updated.
-     * @param updatedPredecessors
-     *            List of predecessors after update.
+     *
+     * @param predecessorBeforeUpdate List of predecessors before relation where updated.
+     * @param updatedPredecessors     List of predecessors after update.
      * @throws OrganizationalUnitNotFoundException
-     *             Thrown if OU with id was not found.
-     * @throws SystemException
-     *             Thrown if update db-cache failed.
+     *                         Thrown if OU with id was not found.
+     * @throws SystemException Thrown if update db-cache failed.
      */
     private void updateModifiedPredecessors(
-        final Collection<Predecessor> predecessorBeforeUpdate,
-        final Collection<Predecessor> updatedPredecessors)
+        final Collection<Predecessor> predecessorBeforeUpdate, final Collection<Predecessor> updatedPredecessors)
         throws OrganizationalUnitNotFoundException, SystemException {
 
         for (final Predecessor predecessor : predecessorBeforeUpdate) {
             if (!updatedPredecessors.contains(predecessor)) {
-                fireOuModified(predecessor.getObjid(),
-                    retrieve(predecessor.getObjid()));
+                fireOuModified(predecessor.getObjid(), retrieve(predecessor.getObjid()));
             }
         }
         for (final Predecessor predecessor : updatedPredecessors) {
             if (!predecessorBeforeUpdate.contains(predecessor)) {
-                fireOuModified(predecessor.getObjid(),
-                    retrieve(predecessor.getObjid()));
+                fireOuModified(predecessor.getObjid(), retrieve(predecessor.getObjid()));
             }
         }
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param id
-     * @param xml
-     * @return
-     * @throws InvalidXmlException
-     *             e
-     * @throws MissingElementValueException
-     *             e
-     * @throws OptimisticLockingException
-     *             e
+     *
+     * @throws InvalidXmlException          e
+     * @throws MissingElementValueException e
+     * @throws OptimisticLockingException   e
      * @throws OrganizationalUnitNotFoundException
-     *             e
-     * @throws SystemException
-     *             e
-     * @throws InvalidStatusException
-     *             e
+     *                                      e
+     * @throws SystemException              e
+     * @throws InvalidStatusException       e
      */
     @Override
-    public String updateMdRecords(final String id, final String xml)
-        throws InvalidXmlException, MissingElementValueException,
-        OptimisticLockingException, OrganizationalUnitNotFoundException,
-        SystemException, InvalidStatusException {
+    public String updateMdRecords(final String id, final String xml) throws InvalidXmlException,
+        MissingElementValueException, OptimisticLockingException, OrganizationalUnitNotFoundException, SystemException,
+        InvalidStatusException {
 
         setOrganizationalUnit(id);
-        final String startTimeStamp =
-            getOrganizationalUnit().getLastFedoraModificationDate();
+        final String startTimeStamp = getOrganizationalUnit().getLastFedoraModificationDate();
         final StaxParser sp = new StaxParser();
         final OptimisticLockingHandler optimisticLockingHandler =
-            new OptimisticLockingHandler(getOrganizationalUnit().getId(),
-                Constants.ORGANIZATIONAL_UNIT_OBJECT_TYPE, startTimeStamp, sp);
+            new OptimisticLockingHandler(getOrganizationalUnit().getId(), Constants.ORGANIZATIONAL_UNIT_OBJECT_TYPE,
+                startTimeStamp, sp);
         sp.addHandler(optimisticLockingHandler);
 
-        final OrganizationalUnitMetadataHandler metadataHandler =
-            new OrganizationalUnitMetadataHandler(sp, "");
+        final OrganizationalUnitMetadataHandler metadataHandler = new OrganizationalUnitMetadataHandler(sp, "");
         sp.addHandler(metadataHandler);
 
-        final MultipleExtractor2 me =
-            createMultipleExtractor(sp, metadataHandler.getMdRecordPath());
+        final MultipleExtractor2 me = createMultipleExtractor(sp, metadataHandler.getMdRecordPath());
         sp.addHandler(me);
         parseIncomingXmlForUpdate(xml, sp);
-        checkName(id, metadataHandler.getDcTitle(), getOrganizationalUnit()
-            .getParents());
+        checkName(id, metadataHandler.getDcTitle(), getOrganizationalUnit().getParents());
 
         final Map<String, Object> relsExtValues = new HashMap<String, Object>();
         final String[] creator = Utility.getCurrentUser();
         relsExtValues.put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER, Utility.getBuildNumber());
-        relsExtValues.put(XmlTemplateProvider.PUBLIC_STATUS,
-            getOrganizationalUnit().getPublicStatus());
-        relsExtValues.put(XmlTemplateProvider.CREATED_BY_ID,
-            getOrganizationalUnit().getCreatedBy());
-        relsExtValues.put(XmlTemplateProvider.CREATED_BY_TITLE,
-            getOrganizationalUnit().getCreatedByTitle());
+        relsExtValues.put(XmlTemplateProvider.PUBLIC_STATUS, getOrganizationalUnit().getPublicStatus());
+        relsExtValues.put(XmlTemplateProvider.CREATED_BY_ID, getOrganizationalUnit().getCreatedBy());
+        relsExtValues.put(XmlTemplateProvider.CREATED_BY_TITLE, getOrganizationalUnit().getCreatedByTitle());
         relsExtValues.put(XmlTemplateProvider.MODIFIED_BY_ID, creator[0]);
         relsExtValues.put(XmlTemplateProvider.MODIFIED_BY_TITLE, creator[1]);
-        relsExtValues.put(XmlTemplateProvider.TITLE,
-            metadataHandler.getDcTitle());
+        relsExtValues.put(XmlTemplateProvider.TITLE, metadataHandler.getDcTitle());
         // add predecessors to RELS-EXT
-        relsExtValues.put(XmlTemplateProvider.PREDECESSORS,
-            getPredessorsMap(getOrganizationalUnit().getPredecessors(), null));
+        relsExtValues.put(XmlTemplateProvider.PREDECESSORS, getPredessorsMap(getOrganizationalUnit().getPredecessors(),
+            null));
 
         try {
 
-            setMdRecords((Map<String, ByteArrayOutputStream>) me
-                .getOutputStreams().get(XmlUtility.NAME_MDRECORDS),
-                metadataHandler.getMetadataAttributes(),
-                metadataHandler.getEscidocMetadataRecordNameSpace());
+            setMdRecords((Map<String, ByteArrayOutputStream>) me.getOutputStreams().get(XmlUtility.NAME_MDRECORDS),
+                metadataHandler.getMetadataAttributes(), metadataHandler.getEscidocMetadataRecordNameSpace());
             getOrganizationalUnit().setRelsExt(
-                getOrganizationalUnitRelsExt(id, relsExtValues,
-                    getOrganizationalUnit().getParents()));
+                getOrganizationalUnitRelsExt(id, relsExtValues, getOrganizationalUnit().getParents()));
         }
         catch (final StreamNotFoundException e) {
             throw new IntegritySystemException(e.getMessage(), e);
@@ -762,60 +622,42 @@ public class FedoraOrganizationalUnitHandler
             result = retrieveMdRecords(getOrganizationalUnit().getId());
         }
         catch (final OrganizationalUnitNotFoundException e) {
-            throw new IntegritySystemException(
-                "Error retrieving updated organizational-unit with id " + id
-                    + '!', e);
+            throw new IntegritySystemException("Error retrieving updated organizational-unit with id " + id + '!', e);
         }
-        final String endTimeStamp =
-            getOrganizationalUnit().getLastFedoraModificationDate();
+        final String endTimeStamp = getOrganizationalUnit().getLastFedoraModificationDate();
         if (!startTimeStamp.equals(endTimeStamp)) {
-            fireOuModified(getOrganizationalUnit().getId(),
-                retrieve(getOrganizationalUnit().getId()));
+            fireOuModified(getOrganizationalUnit().getId(), retrieve(getOrganizationalUnit().getId()));
         }
         return result;
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param id
-     * @param xml
-     * @return
-     * @throws InvalidStatusException
-     *             e
-     * @throws InvalidXmlException
-     *             e
-     * @throws MissingElementValueException
-     *             e
-     * @throws OptimisticLockingException
-     *             e
+     *
+     * @throws InvalidStatusException       e
+     * @throws InvalidXmlException          e
+     * @throws MissingElementValueException e
+     * @throws OptimisticLockingException   e
      * @throws OrganizationalUnitHierarchyViolationException
-     *             e
+     *                                      e
      * @throws OrganizationalUnitNotFoundException
-     *             e
-     * @throws SystemException
-     *             e
+     *                                      e
+     * @throws SystemException              e
      */
     @Override
-    public String updateParents(final String id, final String xml)
-        throws InvalidXmlException, MissingElementValueException,
-        OptimisticLockingException,
-        OrganizationalUnitHierarchyViolationException,
-        OrganizationalUnitNotFoundException, SystemException,
-        InvalidStatusException {
+    public String updateParents(final String id, final String xml) throws InvalidXmlException,
+        MissingElementValueException, OptimisticLockingException, OrganizationalUnitHierarchyViolationException,
+        OrganizationalUnitNotFoundException, SystemException, InvalidStatusException {
 
         setOrganizationalUnit(id);
-        final List<String> parentsBeforeUpdate =
-            getOrganizationalUnit().getParents();
-        final String startTimeStamp =
-            getOrganizationalUnit().getLastFedoraModificationDate();
+        final List<String> parentsBeforeUpdate = getOrganizationalUnit().getParents();
+        final String startTimeStamp = getOrganizationalUnit().getLastFedoraModificationDate();
         final StaxParser sp = new StaxParser();
         final OptimisticLockingHandler optimisticLockingHandler =
-            new OptimisticLockingHandler(getOrganizationalUnit().getId(),
-                Constants.ORGANIZATIONAL_UNIT_OBJECT_TYPE, startTimeStamp, sp);
+            new OptimisticLockingHandler(getOrganizationalUnit().getId(), Constants.ORGANIZATIONAL_UNIT_OBJECT_TYPE,
+                startTimeStamp, sp);
         sp.addHandler(optimisticLockingHandler);
-        final OrganizationalUnitParentsHandler parentsHandler =
-            new OrganizationalUnitParentsHandler(sp);
+        final OrganizationalUnitParentsHandler parentsHandler = new OrganizationalUnitParentsHandler(sp);
         parentsHandler.setRootElement(XmlUtility.NAME_PARENTS);
         sp.addHandler(parentsHandler);
 
@@ -828,28 +670,21 @@ public class FedoraOrganizationalUnitHandler
 
         final Map<String, Object> relsExtValues = new HashMap<String, Object>();
         final String buildNumber = Utility.getBuildNumber();
-        relsExtValues.put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER,
-            buildNumber);
-        relsExtValues.put(TripleStoreUtility.PROP_NAME, getOrganizationalUnit()
-            .getName());
+        relsExtValues.put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER, buildNumber);
+        relsExtValues.put(TripleStoreUtility.PROP_NAME, getOrganizationalUnit().getName());
         final String[] creator = Utility.getCurrentUser();
-        relsExtValues.put(XmlTemplateProvider.PUBLIC_STATUS,
-            getOrganizationalUnit().getPublicStatus());
-        relsExtValues.put(XmlTemplateProvider.CREATED_BY_ID,
-            getOrganizationalUnit().getCreatedBy());
-        relsExtValues.put(XmlTemplateProvider.CREATED_BY_TITLE,
-            getOrganizationalUnit().getCreatedByTitle());
+        relsExtValues.put(XmlTemplateProvider.PUBLIC_STATUS, getOrganizationalUnit().getPublicStatus());
+        relsExtValues.put(XmlTemplateProvider.CREATED_BY_ID, getOrganizationalUnit().getCreatedBy());
+        relsExtValues.put(XmlTemplateProvider.CREATED_BY_TITLE, getOrganizationalUnit().getCreatedByTitle());
         relsExtValues.put(XmlTemplateProvider.MODIFIED_BY_ID, creator[0]);
         relsExtValues.put(XmlTemplateProvider.MODIFIED_BY_TITLE, creator[1]);
-        relsExtValues.put(TripleStoreUtility.PROP_TITLE,
-            relsExtValues.get(TripleStoreUtility.PROP_NAME));
+        relsExtValues.put(TripleStoreUtility.PROP_TITLE, relsExtValues.get(TripleStoreUtility.PROP_NAME));
 
         // add predecessors to RELS-EXT
-        relsExtValues.put(XmlTemplateProvider.PREDECESSORS,
-            getPredessorsMap(getOrganizationalUnit().getPredecessors(), null));
+        relsExtValues.put(XmlTemplateProvider.PREDECESSORS, getPredessorsMap(getOrganizationalUnit().getPredecessors(),
+            null));
 
-        getOrganizationalUnit().setRelsExt(
-            getOrganizationalUnitRelsExt(id, relsExtValues, parents));
+        getOrganizationalUnit().setRelsExt(getOrganizationalUnitRelsExt(id, relsExtValues, parents));
 
         getOrganizationalUnit().persist();
 
@@ -857,14 +692,10 @@ public class FedoraOrganizationalUnitHandler
         try {
             result = retrieveParents(getOrganizationalUnit().getId());
         }
-
         catch (final OrganizationalUnitNotFoundException e) {
-            throw new IntegritySystemException(
-                "Error retrieving updated organizational-unit with id " + id
-                    + '!', e);
+            throw new IntegritySystemException("Error retrieving updated organizational-unit with id " + id + '!', e);
         }
-        fireOuModified(getOrganizationalUnit().getId(),
-            retrieve(getOrganizationalUnit().getId()));
+        fireOuModified(getOrganizationalUnit().getId(), retrieve(getOrganizationalUnit().getId()));
         updateModifiedParents(parentsBeforeUpdate, parents);
 
         return result;
@@ -872,19 +703,14 @@ public class FedoraOrganizationalUnitHandler
 
     /**
      * See Interface for functional description.
-     * 
-     * @param id
-     * @return
+     *
      * @throws OrganizationalUnitNotFoundException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see de.escidoc.core.oum.business.interfaces.
-     *      OrganizationalUnitHandlerInterface#retrieveProperties(java.lang.String)
+     *                         e
+     * @throws SystemException e
+     * @see de.escidoc.core.oum.business.interfaces. OrganizationalUnitHandlerInterface#retrieveProperties(java.lang.String)
      */
     @Override
-    public String retrieveProperties(final String id)
-        throws OrganizationalUnitNotFoundException, SystemException {
+    public String retrieveProperties(final String id) throws OrganizationalUnitNotFoundException, SystemException {
 
         setOrganizationalUnit(id);
         return getPropertiesXml();
@@ -892,59 +718,45 @@ public class FedoraOrganizationalUnitHandler
 
     /**
      * Retrieve a virtual resource by name.
-     * 
-     * @param id
-     *            organizational unit id
-     * @param resourceName
-     *            name of the virtual resource
-     * 
+     *
+     * @param id           organizational unit id
+     * @param resourceName name of the virtual resource
      * @return virtual resource as XML representation
-     * @throws OperationNotFoundException
-     *             thrown if there is no method configured for the given
-     *             resource name
+     * @throws OperationNotFoundException thrown if there is no method configured for the given resource name
      * @throws OrganizationalUnitNotFoundException
-     *             thrown if no organizational unit with that id exists
-     * @throws SystemException
-     *             If an internal error occurred.
+     *                                    thrown if no organizational unit with that id exists
+     * @throws SystemException            If an internal error occurred.
      */
     @Override
-    public EscidocBinaryContent retrieveResource(
-        final String id, final String resourceName)
-        throws OperationNotFoundException, OrganizationalUnitNotFoundException,
-        SystemException {
+    public EscidocBinaryContent retrieveResource(final String id, final String resourceName)
+        throws OperationNotFoundException, OrganizationalUnitNotFoundException, SystemException {
 
         final EscidocBinaryContent content = new EscidocBinaryContent();
         content.setMimeType(Constants.DEFAULT_MIME_TYPE);
 
         try {
             if ("relations".equals(resourceName)) {
-                content.setContent(new ByteArrayInputStream(
-                    retrieveContentRelations(id).getBytes(
-                        XmlUtility.CHARACTER_ENCODING)));
+                content.setContent(new ByteArrayInputStream(retrieveContentRelations(id).getBytes(
+                    XmlUtility.CHARACTER_ENCODING)));
             }
             else if ("parent-objects".equals(resourceName)) {
-                content.setContent(new ByteArrayInputStream(
-                    retrieveParentObjects(id).getBytes(
-                        XmlUtility.CHARACTER_ENCODING)));
+                content.setContent(new ByteArrayInputStream(retrieveParentObjects(id).getBytes(
+                    XmlUtility.CHARACTER_ENCODING)));
             }
             else if ("successors".equals(resourceName)) {
-                content.setContent(new ByteArrayInputStream(retrieveSuccessors(
-                    id).getBytes(XmlUtility.CHARACTER_ENCODING)));
+                content.setContent(new ByteArrayInputStream(retrieveSuccessors(id).getBytes(
+                    XmlUtility.CHARACTER_ENCODING)));
             }
             else if ("child-objects".equals(resourceName)) {
-                content.setContent(new ByteArrayInputStream(
-                    retrieveChildObjects(id).getBytes(
-                        XmlUtility.CHARACTER_ENCODING)));
+                content.setContent(new ByteArrayInputStream(retrieveChildObjects(id).getBytes(
+                    XmlUtility.CHARACTER_ENCODING)));
             }
             else if ("path-list".equals(resourceName)) {
-                content.setContent(new ByteArrayInputStream(
-                    retrievePathList(id)
-                        .getBytes(XmlUtility.CHARACTER_ENCODING)));
+                content.setContent(new ByteArrayInputStream(retrievePathList(id)
+                    .getBytes(XmlUtility.CHARACTER_ENCODING)));
             }
             else {
-                throw new OperationNotFoundException(
-                    "no virtual resource with name '" + resourceName
-                        + "' defined");
+                throw new OperationNotFoundException("no virtual resource with name '" + resourceName + "' defined");
             }
         }
         catch (final UnsupportedEncodingException e) {
@@ -956,19 +768,14 @@ public class FedoraOrganizationalUnitHandler
 
     /**
      * See Interface for functional description.
-     * 
-     * @param id
-     * @return
+     *
      * @throws OrganizationalUnitNotFoundException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see de.escidoc.core.oum.business.interfaces.
-     *      OrganizationalUnitHandlerInterface#retrieveResources(java.lang.String)
+     *                         e
+     * @throws SystemException e
+     * @see de.escidoc.core.oum.business.interfaces. OrganizationalUnitHandlerInterface#retrieveResources(java.lang.String)
      */
     @Override
-    public String retrieveResources(final String id)
-        throws OrganizationalUnitNotFoundException, SystemException {
+    public String retrieveResources(final String id) throws OrganizationalUnitNotFoundException, SystemException {
 
         setOrganizationalUnit(id);
         return getResourcesXml();
@@ -976,19 +783,14 @@ public class FedoraOrganizationalUnitHandler
 
     /**
      * See Interface for functional description.
-     * 
-     * @param id
-     * @return
+     *
      * @throws OrganizationalUnitNotFoundException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see de.escidoc.core.oum.business.interfaces.
-     *      OrganizationalUnitHandlerInterface#retrieveMdRecords(java.lang.String)
+     *                         e
+     * @throws SystemException e
+     * @see de.escidoc.core.oum.business.interfaces. OrganizationalUnitHandlerInterface#retrieveMdRecords(java.lang.String)
      */
     @Override
-    public String retrieveMdRecords(final String id)
-        throws OrganizationalUnitNotFoundException, SystemException {
+    public String retrieveMdRecords(final String id) throws OrganizationalUnitNotFoundException, SystemException {
 
         setOrganizationalUnit(id);
         return getMdRecordsXml();
@@ -996,45 +798,34 @@ public class FedoraOrganizationalUnitHandler
 
     /**
      * See Interface for functional description.
-     * 
-     * @param id
-     * @param name
-     * @return
-     * @throws MdRecordNotFoundException
-     *             e
+     *
+     * @throws MdRecordNotFoundException e
      * @throws OrganizationalUnitNotFoundException
-     *             e
-     * @throws SystemException
-     *             e
+     *                                   e
+     * @throws SystemException           e
      */
     @Override
-    public String retrieveMdRecord(final String id, final String name)
-        throws MdRecordNotFoundException, OrganizationalUnitNotFoundException,
-        SystemException {
+    public String retrieveMdRecord(final String id, final String name) throws MdRecordNotFoundException,
+        OrganizationalUnitNotFoundException, SystemException {
         setOrganizationalUnit(id);
         final String mdRecord = getMdRecordXml(name);
         if (mdRecord.length() == 0) {
             throw new MdRecordNotFoundException("Md-record with a name " + name + " does not "
-                    + " exist in the organization unit with id " + id);
+                + " exist in the organization unit with id " + id);
         }
         return getMdRecordXml(name);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param id
-     * @return
+     *
      * @throws OrganizationalUnitNotFoundException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see de.escidoc.core.oum.business.interfaces.
-     *      OrganizationalUnitHandlerInterface#retrieveParents(java.lang.String)
+     *                         e
+     * @throws SystemException e
+     * @see de.escidoc.core.oum.business.interfaces. OrganizationalUnitHandlerInterface#retrieveParents(java.lang.String)
      */
     @Override
-    public String retrieveParents(final String id)
-        throws OrganizationalUnitNotFoundException, SystemException {
+    public String retrieveParents(final String id) throws OrganizationalUnitNotFoundException, SystemException {
 
         setOrganizationalUnit(id);
         return getParentsXml();
@@ -1042,44 +833,32 @@ public class FedoraOrganizationalUnitHandler
 
     /**
      * See Interface for functional description.
-     * 
-     * @param id
-     * @return
+     *
      * @throws OrganizationalUnitNotFoundException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see de.escidoc.core.oum.business.interfaces.
-     *      OrganizationalUnitHandlerInterface#retrieveChildObjects(java.lang.String)
+     *                         e
+     * @throws SystemException e
+     * @see de.escidoc.core.oum.business.interfaces. OrganizationalUnitHandlerInterface#retrieveChildObjects(java.lang.String)
      */
     @Override
-    public String retrieveChildObjects(final String id)
-        throws OrganizationalUnitNotFoundException, SystemException {
+    public String retrieveChildObjects(final String id) throws OrganizationalUnitNotFoundException, SystemException {
         final StringWriter result = new StringWriter();
 
         Utility.getInstance().checkIsOrganizationalUnit(id);
-        sruRequest.searchRetrieve(result,
-            new ResourceType[] { ResourceType.OU }, "\"/parents/parent/id\"="
-                + id, LuceneRequestParameters.DEFAULT_MAXIMUM_RECORDS,
-            LuceneRequestParameters.DEFAULT_START_RECORD, null, null);
+        sruRequest.searchRetrieve(result, new ResourceType[] { ResourceType.OU }, "\"/parents/parent/id\"=" + id,
+            LuceneRequestParameters.DEFAULT_MAXIMUM_RECORDS, LuceneRequestParameters.DEFAULT_START_RECORD, null, null);
         return result.toString();
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param id
-     * @return
+     *
      * @throws OrganizationalUnitNotFoundException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see de.escidoc.core.oum.business.interfaces.
-     *      OrganizationalUnitHandlerInterface#retrieveParentObjects(java.lang.String)
+     *                         e
+     * @throws SystemException e
+     * @see de.escidoc.core.oum.business.interfaces. OrganizationalUnitHandlerInterface#retrieveParentObjects(java.lang.String)
      */
     @Override
-    public String retrieveParentObjects(final String id)
-        throws OrganizationalUnitNotFoundException, SystemException {
+    public String retrieveParentObjects(final String id) throws OrganizationalUnitNotFoundException, SystemException {
         final StringWriter result = new StringWriter();
 
         Utility.getInstance().checkIsOrganizationalUnit(id);
@@ -1097,29 +876,23 @@ public class FedoraOrganizationalUnitHandler
             //restrict so 0 ous will be found
             filter.append("nonexistingField=nonexistingValue");
         }
-        sruRequest.searchRetrieve(result,
-            new ResourceType[] { ResourceType.OU }, filter.toString(),
-            LuceneRequestParameters.DEFAULT_MAXIMUM_RECORDS,
-            LuceneRequestParameters.DEFAULT_START_RECORD, null, null);
+        sruRequest.searchRetrieve(result, new ResourceType[] { ResourceType.OU }, filter.toString(),
+            LuceneRequestParameters.DEFAULT_MAXIMUM_RECORDS, LuceneRequestParameters.DEFAULT_START_RECORD, null, null);
         return result.toString();
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param id
-     *            objid of Organizational Unit
+     *
+     * @param id objid of Organizational Unit
      * @return Path list of the OU
      * @throws OrganizationalUnitNotFoundException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see de.escidoc.core.oum.business.interfaces.
-     *      OrganizationalUnitHandlerInterface#retrievePathList(java.lang.String)
+     *                         e
+     * @throws SystemException e
+     * @see de.escidoc.core.oum.business.interfaces. OrganizationalUnitHandlerInterface#retrievePathList(java.lang.String)
      */
     @Override
-    public String retrievePathList(final String id)
-        throws OrganizationalUnitNotFoundException, SystemException {
+    public String retrievePathList(final String id) throws OrganizationalUnitNotFoundException, SystemException {
 
         setOrganizationalUnit(id);
         return getPathListXml();
@@ -1127,129 +900,97 @@ public class FedoraOrganizationalUnitHandler
 
     /**
      * See Interface for functional description.
-     * 
-     * @param parameters
-     *            parameters from the SRU request
-     * 
+     *
+     * @param parameters parameters from the SRU request
      * @return The list of Organizational Units matching filter parameter.
-     * @throws SystemException
-     *             e
-     * @see de.escidoc.core.oum.business.interfaces.
-     *      OrganizationalUnitHandlerInterface#retrieveOrganizationalUnits(de.escidoc.core.common.business.filter.SRURequestParameters)
+     * @throws SystemException e
+     * @see de.escidoc.core.oum.business.interfaces. OrganizationalUnitHandlerInterface#retrieveOrganizationalUnits(de.escidoc.core.common.business.filter.SRURequestParameters)
      */
     @Override
-    public String retrieveOrganizationalUnits(
-        final SRURequestParameters parameters) throws SystemException {
+    public String retrieveOrganizationalUnits(final SRURequestParameters parameters) throws SystemException {
         final StringWriter result = new StringWriter();
 
         if (parameters.isExplain()) {
             sruRequest.explain(result, ResourceType.OU);
         }
         else {
-            sruRequest.searchRetrieve(result,
-                new ResourceType[] { ResourceType.OU }, parameters);
+            sruRequest.searchRetrieve(result, new ResourceType[] { ResourceType.OU }, parameters);
         }
         return result.toString();
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param id
-     * @param taskParam
-     * @throws InvalidStatusException
-     *             e
-     * @throws InvalidXmlException
-     *             e
-     * @throws OptimisticLockingException
-     *             e
+     *
+     * @throws InvalidStatusException     e
+     * @throws InvalidXmlException        e
+     * @throws OptimisticLockingException e
      * @throws OrganizationalUnitNotFoundException
-     *             e
+     *                                    e
      */
     @Override
-    public String close(final String id, final String taskParam)
-        throws OrganizationalUnitNotFoundException, InvalidStatusException,
-        SystemException, OptimisticLockingException, InvalidXmlException {
+    public String close(final String id, final String taskParam) throws OrganizationalUnitNotFoundException,
+        InvalidStatusException, SystemException, OptimisticLockingException, InvalidXmlException {
 
         setOrganizationalUnit(id);
-        final TaskParamHandler taskParamHandler =
-            XmlUtility.parseTaskParam(taskParam);
+        final TaskParamHandler taskParamHandler = XmlUtility.parseTaskParam(taskParam);
         checkUpToDate(taskParamHandler.getLastModificationDate());
         checkInState(Constants.STATUS_OU_CLOSED, Constants.STATUS_OU_OPENED);
         checkWithoutChildrenOrChildrenClosed(Constants.STATUS_OU_CLOSED);
         updateState(Constants.STATUS_OU_CLOSED);
         getOrganizationalUnit().persist();
 
-        fireOuModified(getOrganizationalUnit().getId(),
-            retrieve(getOrganizationalUnit().getId()));
+        fireOuModified(getOrganizationalUnit().getId(), retrieve(getOrganizationalUnit().getId()));
 
-        return getUtility().prepareReturnXmlFromLastModificationDate(
-            getOrganizationalUnit().getLastModificationDate());
+        return getUtility().prepareReturnXmlFromLastModificationDate(getOrganizationalUnit().getLastModificationDate());
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param id
-     * @param taskParam
-     * @throws InvalidStatusException
-     *             e
-     * @throws InvalidXmlException
-     *             e
-     * @throws OptimisticLockingException
-     *             e
+     *
+     * @throws InvalidStatusException     e
+     * @throws InvalidXmlException        e
+     * @throws OptimisticLockingException e
      * @throws OrganizationalUnitNotFoundException
-     *             e
+     *                                    e
      */
     @Override
-    public String open(final String id, final String taskParam)
-        throws OrganizationalUnitNotFoundException, InvalidStatusException,
-        SystemException, OptimisticLockingException, InvalidXmlException {
+    public String open(final String id, final String taskParam) throws OrganizationalUnitNotFoundException,
+        InvalidStatusException, SystemException, OptimisticLockingException, InvalidXmlException {
 
         setOrganizationalUnit(id);
-        final TaskParamHandler taskParamHandler =
-            XmlUtility.parseTaskParam(taskParam);
+        final TaskParamHandler taskParamHandler = XmlUtility.parseTaskParam(taskParam);
         checkUpToDate(taskParamHandler.getLastModificationDate());
         checkInState(Constants.STATUS_OU_OPENED, Constants.STATUS_OU_CREATED);
-        checkParentsInState(Constants.STATUS_OU_OPENED,
-            Constants.STATUS_OU_OPENED);
+        checkParentsInState(Constants.STATUS_OU_OPENED, Constants.STATUS_OU_OPENED);
         updateState(Constants.STATUS_OU_OPENED);
         getOrganizationalUnit().persist();
 
-        fireOuModified(getOrganizationalUnit().getId(),
-            retrieve(getOrganizationalUnit().getId()));
+        fireOuModified(getOrganizationalUnit().getId(), retrieve(getOrganizationalUnit().getId()));
 
-        return getUtility().prepareReturnXmlFromLastModificationDate(
-            getOrganizationalUnit().getLastModificationDate());
+        return getUtility().prepareReturnXmlFromLastModificationDate(getOrganizationalUnit().getLastModificationDate());
     }
 
     /**
-     * Retrieve all content relation in which the current resource is subject or
-     * object.
-     * 
-     * @param id
-     *            organizational-unit id
-     * 
+     * Retrieve all content relation in which the current resource is subject or object.
+     *
+     * @param id organizational-unit id
      * @return list of content relations
      * @throws OrganizationalUnitNotFoundException
-     *             e Thrown if an item with the specified id could not be found.
-     * @throws SystemException
-     *             If an error occurs.
+     *                         e Thrown if an item with the specified id could not be found.
+     * @throws SystemException If an error occurs.
      */
-    private String retrieveContentRelations(final String id)
-        throws OrganizationalUnitNotFoundException, SystemException {
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+    private String retrieveContentRelations(final String id) throws OrganizationalUnitNotFoundException,
+        SystemException {
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
         setOrganizationalUnit(id);
-        filterParams.put("query", new String[] { "\"/subject/id\"="
-            + getOrganizationalUnit().getId() + " or " + "\"/object/id\"="
-            + getOrganizationalUnit().getId() });
+        filterParams.put("query", new String[] { "\"/subject/id\"=" + getOrganizationalUnit().getId() + " or "
+            + "\"/object/id\"=" + getOrganizationalUnit().getId() });
 
         final String result;
         try {
-            final String searchResponse =
-                contentRelationHandler.retrieveContentRelations(filterParams);
+            final String searchResponse = contentRelationHandler.retrieveContentRelations(filterParams);
             result = transformSearchResponse2relations(searchResponse);
         }
         catch (final InvalidSearchQueryException e) {
@@ -1262,9 +1003,8 @@ public class FedoraOrganizationalUnitHandler
 
     /**
      * Set the SRURequest object.
-     * 
-     * @param sruRequest
-     *            SRURequest
+     *
+     * @param sruRequest SRURequest
      */
     public void setSruRequest(final SRURequest sruRequest) {
         this.sruRequest = sruRequest;
@@ -1272,10 +1012,8 @@ public class FedoraOrganizationalUnitHandler
 
     /**
      * Injects the triple store utility bean.
-     * 
-     * @param tsu
-     *            The {@link TripleStoreUtility}.
-     * 
+     *
+     * @param tsu The {@link TripleStoreUtility}.
      */
     @Override
     public void setTripleStoreUtility(final TripleStoreUtility tsu) {
@@ -1284,11 +1022,9 @@ public class FedoraOrganizationalUnitHandler
 
     /**
      * See Interface for functional description.
-     * 
-     * @param fedoraUtility
-     *            FedoraUtility
-     * @see HandlerBase
-     *      #setFedoraUtility(de.escidoc.core.common.business.fedora.FedoraUtility)
+     *
+     * @param fedoraUtility FedoraUtility
+     * @see HandlerBase #setFedoraUtility(de.escidoc.core.common.business.fedora.FedoraUtility)
      */
     @Override
     public void setFedoraUtility(final FedoraUtility fedoraUtility) {
@@ -1298,11 +1034,9 @@ public class FedoraOrganizationalUnitHandler
 
     /**
      * See Interface for functional description.
-     * 
-     * @param idProvider
-     *            ID Provider.
-     * @see HandlerBase
-     *      #setIdProvider(de.escidoc.core.common.persistence.EscidocIdProvider)
+     *
+     * @param idProvider ID Provider.
+     * @see HandlerBase #setIdProvider(de.escidoc.core.common.persistence.EscidocIdProvider)
      */
     @Override
     public void setIdProvider(final EscidocIdProvider idProvider) {
@@ -1312,8 +1046,8 @@ public class FedoraOrganizationalUnitHandler
 
     /**
      * Injects the indexing handler.
-     * @param indexingHandler
-     *            The indexing handler.
+     *
+     * @param indexingHandler The indexing handler.
      */
     public void setIndexingHandler(final ResourceListener indexingHandler) {
         addOuListener(indexingHandler);
@@ -1321,18 +1055,15 @@ public class FedoraOrganizationalUnitHandler
 
     /**
      * Render list of successors of Organizational Units.
-     * 
-     * @param objid
-     *            Organizational Unit Id.
+     *
+     * @param objid Organizational Unit Id.
      * @return XML representation of successor list.
      * @throws OrganizationalUnitNotFoundException
-     *             Thrown if no Organizational Unit exists with provided objid.
-     * @throws SystemException
-     *             Thrown if render failed.
+     *                         Thrown if no Organizational Unit exists with provided objid.
+     * @throws SystemException Thrown if render failed.
      */
     @Override
-    public String retrieveSuccessors(final String objid)
-        throws OrganizationalUnitNotFoundException, SystemException {
+    public String retrieveSuccessors(final String objid) throws OrganizationalUnitNotFoundException, SystemException {
 
         setOrganizationalUnit(objid);
         return getRenderer().renderSuccessors(getOrganizationalUnit());
@@ -1340,48 +1071,35 @@ public class FedoraOrganizationalUnitHandler
 
     /**
      * Get Vector/map structure of Predecessors for Velocity.
-     * 
-     * @param predecessors
-     *            List of predecessors.
-     * @param oUobjid
-     *            objid of the current OU
+     *
+     * @param predecessors List of predecessors.
+     * @param oUobjid      objid of the current OU
      * @return Velocity vector/map structure of predecessor.
      * @throws OrganizationalUnitNotFoundException
-     *             Thrown if under the Predecessor objid was no Organizational
-     *             Unit found.
-     * @throws SystemException
-     *             Thrown if internal error occurs.
-     * @throws InvalidStatusException
-     *             Thrown if predecessor has same id than current OU
-     *             (predecessor points to itself).
+     *                                Thrown if under the Predecessor objid was no Organizational Unit found.
+     * @throws SystemException        Thrown if internal error occurs.
+     * @throws InvalidStatusException Thrown if predecessor has same id than current OU (predecessor points to itself).
      */
-    private List<Map<String, String>> getPredessorsMap(
-        final List<Predecessor> predecessors, final String oUobjid)
-        throws OrganizationalUnitNotFoundException, SystemException,
-        InvalidStatusException {
+    private List<Map<String, String>> getPredessorsMap(final List<Predecessor> predecessors, final String oUobjid)
+        throws OrganizationalUnitNotFoundException, SystemException, InvalidStatusException {
 
         List<Map<String, String>> predecessorsMap = null;
 
         if (!predecessors.isEmpty()) {
             predecessorsMap = new ArrayList<Map<String, String>>();
             for (final Predecessor predecessor : predecessors) {
-                final Map<String, String> predecessorMap =
-                    new HashMap<String, String>();
+                final Map<String, String> predecessorMap = new HashMap<String, String>();
 
                 // check if predecessor exists and is OU (its not required to
                 // check if it does not point to itself, because itself does not
                 // exists yet.)
-                Utility.getInstance().checkIsOrganizationalUnit(
-                    predecessor.getObjid());
+                Utility.getInstance().checkIsOrganizationalUnit(predecessor.getObjid());
                 if (oUobjid != null && predecessor.getObjid().equals(oUobjid)) {
 
-                    throw new InvalidStatusException(
-                        "Organizational Unit points to itself as predecessor.");
+                    throw new InvalidStatusException("Organizational Unit points to itself as predecessor.");
                 }
-                predecessorMap.put(XmlTemplateProvider.PREDECESSOR_FORM,
-                    predecessor.getForm().getLabel());
-                predecessorMap.put(XmlTemplateProvider.OBJID,
-                    predecessor.getObjid());
+                predecessorMap.put(XmlTemplateProvider.PREDECESSOR_FORM, predecessor.getForm().getLabel());
+                predecessorMap.put(XmlTemplateProvider.OBJID, predecessor.getObjid());
 
                 // add to the predecessors map
                 predecessorsMap.add(predecessorMap);
@@ -1395,13 +1113,10 @@ public class FedoraOrganizationalUnitHandler
 
     /**
      * Checks if definition of predecessors follows the defined rules.
-     * 
-     * @param predecessors
-     *            List of predecessors.
-     * @param oUobjid
-     *            Objid of the current Organizational Unit.
-     * @throws InvalidStatusException
-     *             Thrown if predecessor form not follows rules.
+     *
+     * @param predecessors List of predecessors.
+     * @param oUobjid      Objid of the current Organizational Unit.
+     * @throws InvalidStatusException Thrown if predecessor form not follows rules.
      */
     private static void checkPredecessorRules(final List<Predecessor> predecessors, final String oUobjid)
         throws InvalidStatusException {
@@ -1413,10 +1128,8 @@ public class FedoraOrganizationalUnitHandler
              */
             for (final Predecessor predecessor : predecessors) {
                 if (predecessor.getForm() != PredecessorForm.FUSION) {
-                    throw new InvalidStatusException(
-                        "Predecessor forms are inconsistent. At least one "
-                            + " predecesssor has not form '"
-                            + PredecessorForm.FUSION.getLabel() + "'.");
+                    throw new InvalidStatusException("Predecessor forms are inconsistent. At least one "
+                        + " predecesssor has not form '" + PredecessorForm.FUSION.getLabel() + "'.");
                 }
             }
         }
@@ -1425,8 +1138,7 @@ public class FedoraOrganizationalUnitHandler
              * check replacement: only one predecessor is allowed
              */
             if (predecessors.get(0).getForm() == PredecessorForm.FUSION) {
-                throw new InvalidStatusException("Predecessor form to '"
-                    + PredecessorForm.FUSION.getLabel()
+                throw new InvalidStatusException("Predecessor form to '" + PredecessorForm.FUSION.getLabel()
                     + "' requires more than on predecessor.");
             }
         }

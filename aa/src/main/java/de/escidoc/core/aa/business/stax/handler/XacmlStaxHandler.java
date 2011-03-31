@@ -46,11 +46,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * StaxHandler that manages the Xacml policy (set) of a role.<br>
- * This handler extracts the policy (set) from the xml data, creates an
- * <code>EscidocPolicy</code> object from this data and sets it in the
- * <code>EscidocRole</code>object.
- * 
+ * StaxHandler that manages the Xacml policy (set) of a role.<br> This handler extracts the policy (set) from the xml
+ * data, creates an <code>EscidocPolicy</code> object from this data and sets it in the <code>EscidocRole</code>object.
+ *
  * @author Torsten Tetteroo
  */
 public class XacmlStaxHandler extends DefaultHandler {
@@ -69,39 +67,27 @@ public class XacmlStaxHandler extends DefaultHandler {
 
     /**
      * The constructor.
-     * 
-     * @param role
-     *            The role to handle
      *
+     * @param role The role to handle
      */
     public XacmlStaxHandler(final EscidocRole role) {
 
         this.role = role;
     }
 
-
-
     /**
-     * See Interface for functional description.<br>
-     * If the current element is the link element, the xlink attributes and the
-     * objid attribute is fetched and stored. After that,
-     * <code>startLinkElement is called.</code>
-     * 
-     * @param element
-     * @return
-     * @throws EscidocException
-     *             Thrown exceptions depend on sub class implementations.
-     * @see DefaultHandler
-     *      #startElement
-     *      (de.escidoc.core.common.util.xml.stax.events.StartElement)
+     * See Interface for functional description.<br> If the current element is the link element, the xlink attributes
+     * and the objid attribute is fetched and stored. After that, <code>startLinkElement is called.</code>
+     *
+     * @throws EscidocException Thrown exceptions depend on sub class implementations.
+     * @see DefaultHandler #startElement (de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
-    public StartElement startElement(final StartElement element)
-        throws EscidocException {
+    public StartElement startElement(final StartElement element) throws EscidocException {
 
         if (isNotReady()) {
             final String elementName = element.getLocalName();
-            if (! this.insidePolicy && elementName.startsWith("Policy")) {
+            if (!this.insidePolicy && elementName.startsWith("Policy")) {
 
                 this.insidePolicy = true;
                 this.writer = new StringWriter();
@@ -123,8 +109,7 @@ public class XacmlStaxHandler extends DefaultHandler {
                     policyWriter.writeStartElement(elementName);
                     for (int i = 0; i < element.getAttributeCount(); i++) {
                         final Attribute attribute = element.getAttribute(i);
-                        policyWriter.writeAttribute(attribute.getLocalName(),
-                            attribute.getValue());
+                        policyWriter.writeAttribute(attribute.getLocalName(), attribute.getValue());
                     }
                 }
                 catch (final Exception e) {
@@ -138,15 +123,9 @@ public class XacmlStaxHandler extends DefaultHandler {
 
     /**
      * See Interface for functional description.
-     * 
-     * @param data
-     * @param element
-     * @return
-     * @throws Exception
      */
     @Override
-    public String characters(final String data, final StartElement element)
-        throws Exception {
+    public String characters(final String data, final StartElement element) throws Exception {
 
         if (isNotReady() && this.insidePolicy) {
             policyWriter.writeCharacters(data);
@@ -156,12 +135,8 @@ public class XacmlStaxHandler extends DefaultHandler {
 
     /**
      * See Interface for functional description.
-     * 
-     * @param element
-     * @return
-     * @throws Exception
-     * @see DefaultHandler
-     *      #endElement(de.escidoc.core.common.util.xml.stax.events.EndElement)
+     *
+     * @see DefaultHandler #endElement(de.escidoc.core.common.util.xml.stax.events.EndElement)
      */
     @Override
     public EndElement endElement(final EndElement element) throws Exception {
@@ -179,21 +154,18 @@ public class XacmlStaxHandler extends DefaultHandler {
                     IOUtils.closeWriter(this.writer);
                     this.policyXml = writer.toString();
 
-                    Collection<EscidocPolicy> escidocPolicies =
-                        role.getEscidocPolicies();
+                    Collection<EscidocPolicy> escidocPolicies = role.getEscidocPolicies();
                     if (escidocPolicies == null) {
                         escidocPolicies = new ArrayList<EscidocPolicy>(1);
                         role.setEscidocPolicies(escidocPolicies);
                     }
 
                     if (escidocPolicies.isEmpty()) {
-                        final EscidocPolicy policy =
-                            new EscidocPolicy(this.policyXml, this.role);
+                        final EscidocPolicy policy = new EscidocPolicy(this.policyXml, this.role);
                         escidocPolicies.add(policy);
                     }
                     else {
-                        final EscidocPolicy policy =
-                            escidocPolicies.iterator().next();
+                        final EscidocPolicy policy = escidocPolicies.iterator().next();
                         policy.setXml(this.policyXml);
                     }
 
@@ -204,13 +176,11 @@ public class XacmlStaxHandler extends DefaultHandler {
         return element;
     }
 
-
-
     /**
      * Gets the xml representation of the XACML policy (set).
-     * 
-     * @return Returns the xml representation of the XACML policy (set) or
-     *         <code>null</code> if no policy has been found.
+     *
+     * @return Returns the xml representation of the XACML policy (set) or <code>null</code> if no policy has been
+     *         found.
      */
     public String getPolicyXml() {
         return this.policyXml;

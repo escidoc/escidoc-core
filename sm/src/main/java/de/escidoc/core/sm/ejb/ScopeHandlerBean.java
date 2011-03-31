@@ -31,15 +31,19 @@ import java.util.Map;
 public class ScopeHandlerBean implements SessionBean {
 
     ScopeHandlerInterface service;
+
     SessionContext sessionCtx;
+
     private static final Logger LOGGER = LoggerFactory.getLogger(ScopeHandlerBean.class);
 
     public void ejbCreate() throws CreateException {
         try {
             final BeanFactoryLocator beanFactoryLocator = SingletonBeanFactoryLocator.getInstance();
-            final BeanFactory factory = beanFactoryLocator.useBeanFactory("ScopeHandler.spring.ejb.context").getFactory();
+            final BeanFactory factory =
+                beanFactoryLocator.useBeanFactory("ScopeHandler.spring.ejb.context").getFactory();
             this.service = (ScopeHandlerInterface) factory.getBean("service.ScopeHandler");
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             LOGGER.error("ejbCreate(): Exception ScopeHandlerComponent: " + e);
             throw new CreateException(e.getMessage());
         }
@@ -60,158 +64,124 @@ public class ScopeHandlerBean implements SessionBean {
 
     }
 
-    public String create(final String xmlData,
-                                   final SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            XmlSchemaValidationException,
-            XmlCorruptedException,
-            MissingMethodParameterException,
-            SystemException {
+    public String create(final String xmlData, final SecurityContext securityContext) throws AuthenticationException,
+        AuthorizationException, XmlSchemaValidationException, XmlCorruptedException, MissingMethodParameterException,
+        SystemException {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.create(xmlData);
     }
 
     public String create(final String xmlData, final String authHandle, final Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            XmlSchemaValidationException,
-            XmlCorruptedException,
-            MissingMethodParameterException,
-            SystemException {
+        throws AuthenticationException, AuthorizationException, XmlSchemaValidationException, XmlCorruptedException,
+        MissingMethodParameterException, SystemException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.create(xmlData);
     }
 
-    public void delete(final String id, final SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            ScopeNotFoundException,
-            MissingMethodParameterException,
-            SystemException {
+    public void delete(final String id, final SecurityContext securityContext) throws AuthenticationException,
+        AuthorizationException, ScopeNotFoundException, MissingMethodParameterException, SystemException {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         service.delete(id);
     }
 
     public void delete(final String id, final String authHandle, final Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            ScopeNotFoundException,
-            MissingMethodParameterException,
-            SystemException {
+        throws AuthenticationException, AuthorizationException, ScopeNotFoundException,
+        MissingMethodParameterException, SystemException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         service.delete(id);
     }
 
-    public String retrieve(final String id,
-                                     final SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            ScopeNotFoundException,
-            MissingMethodParameterException,
-            SystemException {
+    public String retrieve(final String id, final SecurityContext securityContext) throws AuthenticationException,
+        AuthorizationException, ScopeNotFoundException, MissingMethodParameterException, SystemException {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.retrieve(id);
     }
 
     public String retrieve(final String id, final String authHandle, final Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            ScopeNotFoundException,
-            MissingMethodParameterException,
-            SystemException {
+        throws AuthenticationException, AuthorizationException, ScopeNotFoundException,
+        MissingMethodParameterException, SystemException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.retrieve(id);
     }
 
-    public String retrieveScopes(final Map parameters,
-                                           final SecurityContext securityContext)
-            throws InvalidSearchQueryException,
-            MissingMethodParameterException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException {
+    public String retrieveScopes(final Map parameters, final SecurityContext securityContext)
+        throws InvalidSearchQueryException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.retrieveScopes(parameters);
     }
 
-    public String retrieveScopes(final Map parameters, final String authHandle,
-                                           final Boolean restAccess)
-            throws InvalidSearchQueryException,
-            MissingMethodParameterException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException {
+    public String retrieveScopes(final Map parameters, final String authHandle, final Boolean restAccess)
+        throws InvalidSearchQueryException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.retrieveScopes(parameters);
     }
 
-    public String update(final String id, final String xmlData,
-                                   final SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            ScopeNotFoundException,
-            MissingMethodParameterException,
-            XmlSchemaValidationException,
-            XmlCorruptedException,
-            SystemException {
+    public String update(final String id, final String xmlData, final SecurityContext securityContext)
+        throws AuthenticationException, AuthorizationException, ScopeNotFoundException,
+        MissingMethodParameterException, XmlSchemaValidationException, XmlCorruptedException, SystemException {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.update(id, xmlData);
     }
 
-    public String update(final String id, final String xmlData, final String authHandle,
-                                   final Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            ScopeNotFoundException,
-            MissingMethodParameterException,
-            XmlSchemaValidationException,
-            XmlCorruptedException,
-            SystemException {
+    public String update(final String id, final String xmlData, final String authHandle, final Boolean restAccess)
+        throws AuthenticationException, AuthorizationException, ScopeNotFoundException,
+        MissingMethodParameterException, XmlSchemaValidationException, XmlCorruptedException, SystemException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.update(id, xmlData);

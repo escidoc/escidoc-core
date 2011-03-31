@@ -49,27 +49,18 @@ import java.util.Map;
 
 /**
  * Set definition renderer implementation using the velocity template engine.
- * 
+ *
  * @author Rozita Friedman
  */
-public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer
-    implements SetDefinitionRendererInterface {
-
-
+public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer implements SetDefinitionRendererInterface {
 
     /**
      * See Interface for functional description.
-     * 
-     * @param setDefinition
-     * 
-     * @return
-     * @throws SystemException
-     * @see SetDefinitionRendererInterface#render(Map)
      *
+     * @see SetDefinitionRendererInterface#render(Map)
      */
     @Override
-    public String render(final SetDefinition setDefinition)
-        throws SystemException {
+    public String render(final SetDefinition setDefinition) throws SystemException {
         final Map<String, Object> values = new HashMap<String, Object>();
         values.put("isRootSetDefinition", XmlTemplateProvider.TRUE);
         addCommonValues(values);
@@ -79,48 +70,35 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer
 
     /**
      * Adds the values of the {@link SetDefinition} to the provided {@link Map}.
-     * 
-     * @param setDefinition
-     *            The {@link SetDefinition}.
-     * @param values
-     *            The {@link Map} to add the values to.
-     * 
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     *
+     * @param setDefinition The {@link SetDefinition}.
+     * @param values        The {@link Map} to add the values to.
+     * @throws SystemException Thrown in case of an internal error.
      */
-    private static void addSetDefinitionValues(
-        final SetDefinition setDefinition, final Map<String, Object> values)
+    private static void addSetDefinitionValues(final SetDefinition setDefinition, final Map<String, Object> values)
         throws SystemException {
-        DateTime lmdDateTime =
-            new DateTime(setDefinition.getLastModificationDate());
+        DateTime lmdDateTime = new DateTime(setDefinition.getLastModificationDate());
         lmdDateTime = lmdDateTime.withZone(DateTimeZone.UTC);
         final String lmd = lmdDateTime.toString(Constants.TIMESTAMP_FORMAT);
         values.put("setDefinitionLastModificationDate", lmd);
         values.put("setDefinitionHref", setDefinition.getHref());
-        DateTime creationDateTime =
-            new DateTime(setDefinition.getCreationDate());
+        DateTime creationDateTime = new DateTime(setDefinition.getCreationDate());
         creationDateTime = creationDateTime.withZone(DateTimeZone.UTC);
-        final String creationDate =
-            creationDateTime.toString(Constants.TIMESTAMP_FORMAT);
+        final String creationDate = creationDateTime.toString(Constants.TIMESTAMP_FORMAT);
         values.put("setDefinitionCreationDate", creationDate);
         values.put("setDefinitionName", setDefinition.getName());
-        values.put("setDefinitionSpecification",
-            setDefinition.getSpecification());
+        values.put("setDefinitionSpecification", setDefinition.getSpecification());
         values.put("setDefinitionQuery", setDefinition.getQuery());
         values.put("setDefinitionDescription", setDefinition.getDescription());
         values.put("setDefinitionId", setDefinition.getId());
-        values.put("setDefinitionCreatedByTitle",
-            setDefinition.getCreatorTitle());
+        values.put("setDefinitionCreatedByTitle", setDefinition.getCreatorTitle());
         final String createdById = setDefinition.getCreatorId();
         final String cratedByHref = XmlUtility.getUserAccountHref(createdById);
         values.put("setDefinitionCreatedByHref", cratedByHref);
         values.put("setDefinitionCreatedById", createdById);
-        values.put("setDefinitionModifiedByTitle",
-            setDefinition.getModifiedByTitle());
-        values.put("setDefinitionModifiedByHref",
-            XmlUtility.getUserAccountHref(setDefinition.getModifiedById()));
-        values
-            .put("setDefinitionModifiedById", setDefinition.getModifiedById());
+        values.put("setDefinitionModifiedByTitle", setDefinition.getModifiedByTitle());
+        values.put("setDefinitionModifiedByHref", XmlUtility.getUserAccountHref(setDefinition.getModifiedById()));
+        values.put("setDefinitionModifiedById", setDefinition.getModifiedById());
 
     }
 
@@ -131,9 +109,8 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer
      * SetDefinitionRendererInterface#renderSetDefinitions(java.util.List)
      */
     @Override
-    public String renderSetDefinitions(
-        final List<SetDefinition> setDefinitions,
-        final RecordPacking recordPacking) throws SystemException {
+    public String renderSetDefinitions(final List<SetDefinition> setDefinitions, final RecordPacking recordPacking)
+        throws SystemException {
         final Map<String, Object> values = new HashMap<String, Object>();
 
         values.put("isRootSetDefinition", "false");
@@ -152,20 +129,13 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer
         return getSetDefinitionXmlProvider().getSetDefinitionsSrwXml(values);
     }
 
-
-
     /**
      * Adds the common values to the provided map.
-     * 
-     * @param values
-     *            The map to add values to.
-     * 
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
      *
+     * @param values The map to add values to.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private void addCommonValues(final Map<String, Object> values)
-        throws WebserverSystemException {
+    private void addCommonValues(final Map<String, Object> values) throws WebserverSystemException {
 
         addSetDefinitionNamespaceValues(values);
         addPropertiesNamespaceValues(values);
@@ -175,41 +145,30 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer
 
     /**
      * Adds the structural relations name space values to the provided map.
-     * 
-     * @param values
-     *            The map to add values to.
      *
+     * @param values The map to add values to.
      */
     @Override
-    protected void addStructuralRelationNamespaceValues(
-        final Map<String, Object> values) {
+    protected void addStructuralRelationNamespaceValues(final Map<String, Object> values) {
 
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX,
-            Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS,
-            Constants.STRUCTURAL_RELATIONS_NS_URI);
+        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
+        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
     }
 
     /**
      * Adds the set definition name space values.
-     * 
-     * @param values
-     *            The {@link Map} to that the values shall be added.
      *
+     * @param values The {@link Map} to that the values shall be added.
      */
-    private static void addSetDefinitionNamespaceValues(
-        final Map<String, Object> values) {
-        values.put("setDefinitionNamespacePrefix",
-            Constants.SET_DEFINITION_NS_PREFIX);
+    private static void addSetDefinitionNamespaceValues(final Map<String, Object> values) {
+        values.put("setDefinitionNamespacePrefix", Constants.SET_DEFINITION_NS_PREFIX);
         values.put("setDefinitionNamespace", Constants.SET_DEFINITION_NS_URI);
     }
 
     /**
      * Adds the set definition list values to the provided map.
-     * 
-     * @param values
-     *            The map to add values to.
      *
+     * @param values The map to add values to.
      */
     private static void addSetDefinitionListValues(final Map<String, Object> values) {
 
@@ -219,48 +178,34 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer
     }
 
     /**
-     * Adds the values related to the set definitions name space to the provided
-     * {@link Map}.
-     * 
-     * @param values
-     *            The MAP to add the values to.
+     * Adds the values related to the set definitions name space to the provided {@link Map}.
      *
+     * @param values The MAP to add the values to.
      */
-    private static void addSetDefinitionsNamespaceValues(
-        final Map<String, Object> values) {
+    private static void addSetDefinitionsNamespaceValues(final Map<String, Object> values) {
 
-        values.put("setDefinitionListNamespacePrefix",
-            Constants.SET_DEFINITION_LIST_NS_PREFIX);
-        values.put("setDefinitionListNamespace",
-            Constants.SET_DEFINITION_LIST_NS_URI);
+        values.put("setDefinitionListNamespacePrefix", Constants.SET_DEFINITION_LIST_NS_PREFIX);
+        values.put("setDefinitionListNamespace", Constants.SET_DEFINITION_LIST_NS_URI);
     }
 
     /**
      * Adds the escidoc base URL to the provided map.
-     * 
-     * @param values
-     *            The map to add values to.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
      *
+     * @param values The map to add values to.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private static void addEscidocBaseUrl(final Map<String, Object> values)
-        throws WebserverSystemException {
+    private static void addEscidocBaseUrl(final Map<String, Object> values) throws WebserverSystemException {
 
-        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL,
-            XmlUtility.getEscidocBaseUrl());
+        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, XmlUtility.getEscidocBaseUrl());
     }
 
     /**
      * Gets the <code>SetDefinitionXmlProvider</code> object.
-     * 
-     * @return Returns the <code>SetDefinitionXmlProvider</code> object.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
      *
+     * @return Returns the <code>SetDefinitionXmlProvider</code> object.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private static SetDefinitionXmlProvider getSetDefinitionXmlProvider()
-        throws WebserverSystemException {
+    private static SetDefinitionXmlProvider getSetDefinitionXmlProvider() throws WebserverSystemException {
 
         return SetDefinitionXmlProvider.getInstance();
     }

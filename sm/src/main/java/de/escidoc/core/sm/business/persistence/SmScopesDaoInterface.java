@@ -37,123 +37,82 @@ import java.util.Collection;
 
 /**
  * Database-Backend Interface for the Scopes database-table.
- * 
+ *
  * @author Michael Hoppe
  */
 public interface SmScopesDaoInterface {
 
     /**
      * saves given Scope to the database.
-     * 
-     * @param scope
-     *            The Scope Hibernate Object.
-     * 
      *
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database access error.
+     * @param scope The Scope Hibernate Object.
+     * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
     void save(final Scope scope) throws SqlDatabaseSystemException;
 
     /**
      * updates Scope in the database.
-     * 
-     * @param scope
-     *            The Scope Hibernate Object.
-     * 
      *
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database access error.
+     * @param scope The Scope Hibernate Object.
+     * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
-    void update(final Scope scope)
-        throws SqlDatabaseSystemException;
+    void update(final Scope scope) throws SqlDatabaseSystemException;
 
     /**
      * deletes Scope with given id in the database.
-     * 
-     * @param scope
-     *            The Scope Hibernate Object.
-     * 
      *
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database access error.
+     * @param scope The Scope Hibernate Object.
+     * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
     void delete(final Scope scope) throws SqlDatabaseSystemException;
 
     /**
      * retrieves Scope with given id in the database.
-     * 
-     * @param id
-     *            The id of the Scope.
-     * @return Scope scope object
-     * 
      *
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database access error.
-     * @throws ScopeNotFoundException
-     *             Thrown if scope with given id was not found.
+     * @param id The id of the Scope.
+     * @return Scope scope object
+     * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
+     * @throws ScopeNotFoundException     Thrown if scope with given id was not found.
      */
-    Scope retrieve(final String id) 
-        throws SqlDatabaseSystemException, ScopeNotFoundException;
+    Scope retrieve(final String id) throws SqlDatabaseSystemException, ScopeNotFoundException;
 
     /**
      * retrieves all Scopes from the database.
-     * 
-     * @return Collection of Scopes as Hibernate Objects
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database access error.
-     * 
      *
+     * @return Collection of Scopes as Hibernate Objects
+     * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
     Collection<Scope> retrieveScopes() throws SqlDatabaseSystemException;
 
     /**
      * retrieves all Scopes from the database with scopeId in given list.
-     * 
-     * @param scopeIds
-     *            Collection of scopeIds
-     * @return Collection of Scopes as xml
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database access error.
-     * 
      *
+     * @param scopeIds Collection of scopeIds
+     * @return Collection of Scopes as xml
+     * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
-    Collection<Scope> retrieveScopes(Collection<String> scopeIds)
-        throws SqlDatabaseSystemException;
+    Collection<Scope> retrieveScopes(Collection<String> scopeIds) throws SqlDatabaseSystemException;
 
     /**
-     * retrieves Scopes from the database with scopeId in given list that match
-     * the given filter.
-     * 
-     * @param scopeIds
-     *            Collection of scopeIds
-     * @param criteria
-     *            The {@link String} containing the filter criteria as CQL
-     *            query.
-     * @param offset
-     *            The index of the first result to be returned.
-     * @param maxResults
-     *            The maximal number of results to be returned.
-     * 
+     * retrieves Scopes from the database with scopeId in given list that match the given filter.
+     *
+     * @param scopeIds   Collection of scopeIds
+     * @param criteria   The {@link String} containing the filter criteria as CQL query.
+     * @param offset     The index of the first result to be returned.
+     * @param maxResults The maximal number of results to be returned.
      * @return Collection of Scopes as XML
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a SQL query
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database access error.
+     * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
+     * @throws SqlDatabaseSystemException  Thrown in case of an internal database access error.
      */
     Collection<Scope> retrieveScopes(
-        final Collection<String> scopeIds, final String criteria,
-        final int offset, final int maxResults)
+        final Collection<String> scopeIds, final String criteria, final int offset, final int maxResults)
         throws InvalidSearchQueryException, SqlDatabaseSystemException;
 
     /**
      * retrieves all Scope-ids from the database.
-     * 
-     * @return Collection of Scope-ids
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database access error.
-     * 
      *
+     * @return Collection of Scope-ids
+     * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
     Collection<String> retrieveScopeIds() throws SqlDatabaseSystemException;
 }

@@ -40,7 +40,6 @@ import org.w3c.dom.Document;
 
 /**
  * Test Context delete methods.
- * 
  */
 @RunWith(value = Parameterized.class)
 public class DeleteTest extends ContextTestBase {
@@ -48,8 +47,7 @@ public class DeleteTest extends ContextTestBase {
     private String path = TEMPLATE_CONTEXT_PATH;
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public DeleteTest(final int transport) {
         super(transport);
@@ -57,9 +55,8 @@ public class DeleteTest extends ContextTestBase {
 
     /**
      * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Before
     public void setUp() throws Exception {
@@ -68,17 +65,13 @@ public class DeleteTest extends ContextTestBase {
 
     /**
      * Test successfully deleting context in status created.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test(expected = ContextNotFoundException.class)
     public void testOmDc1() throws Exception {
-        Document context =
-            EscidocRestSoapTestBase.getTemplateAsDocument(this.path,
-                "context_create.xml");
-        substitute(context, "/context/properties/name",
-            getUniqueName("PubMan Context "));
+        Document context = EscidocRestSoapTestBase.getTemplateAsDocument(this.path, "context_create.xml");
+        substitute(context, "/context/properties/name", getUniqueName("PubMan Context "));
         String template = toString(context, false);
         String created = create(template);
         final String objid = getObjidValue(getDocument(created));
@@ -89,9 +82,8 @@ public class DeleteTest extends ContextTestBase {
 
     /**
      * Test deleting a context with non existing context id.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test(expected = ContextNotFoundException.class)
     public void testOmDc2() throws Exception {
@@ -101,9 +93,8 @@ public class DeleteTest extends ContextTestBase {
 
     /**
      * Test deleting a context with missing context id.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test(expected = MissingMethodParameterException.class)
     public void testOmDc3() throws Exception {
@@ -113,17 +104,13 @@ public class DeleteTest extends ContextTestBase {
 
     /**
      * Test deleting a context with status opened.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test(expected = InvalidStatusException.class)
     public void testOmDc4() throws Exception {
-        Document context =
-            EscidocRestSoapTestBase.getTemplateAsDocument(this.path,
-                "context_create.xml");
-        substitute(context, "/context/properties/name",
-            getUniqueName("PubMan Context "));
+        Document context = EscidocRestSoapTestBase.getTemplateAsDocument(this.path, "context_create.xml");
+        substitute(context, "/context/properties/name", getUniqueName("PubMan Context "));
         String template = toString(context, false);
         String created = create(template);
         assertXmlValidContext(created);

@@ -35,11 +35,11 @@ import java.util.Collection;
 
 /**
  * Holds information about an index in the database.
- * 
- * @author Michael Hoppe
  *
+ * @author Michael Hoppe
  */
 public class DatabaseIndexVo {
+
     private String indexName;
 
     private Collection<String> fields;
@@ -52,12 +52,10 @@ public class DatabaseIndexVo {
     }
 
     /**
-     * @param fields
-     *            the fields to set
+     * @param fields the fields to set
      * @throws SqlDatabaseSystemException databaseException
      */
-    public void setFields(final Collection<String> fields) 
-                            throws SqlDatabaseSystemException {
+    public void setFields(final Collection<String> fields) throws SqlDatabaseSystemException {
         for (final String field : fields) {
             DatabaseConventionChecker.checkName(field);
         }
@@ -72,12 +70,10 @@ public class DatabaseIndexVo {
     }
 
     /**
-     * @param indexName
-     *            the indexName to set
+     * @param indexName the indexName to set
      * @throws SqlDatabaseSystemException databaseException
      */
-    public void setIndexName(final String indexName) 
-                    throws SqlDatabaseSystemException {
+    public void setIndexName(final String indexName) throws SqlDatabaseSystemException {
         DatabaseConventionChecker.checkName(indexName);
         this.indexName = indexName;
     }

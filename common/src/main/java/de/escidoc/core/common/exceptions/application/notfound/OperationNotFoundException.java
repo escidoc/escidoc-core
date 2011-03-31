@@ -23,7 +23,7 @@ package de.escidoc.core.common.exceptions.application.notfound;
 public class OperationNotFoundException extends ResourceNotFoundException {
 
     /**
-     * 
+     *
      */
     private static final long serialVersionUID = 7360676821283154190L;
 
@@ -32,7 +32,7 @@ public class OperationNotFoundException extends ResourceNotFoundException {
     public static final String HTTP_STATUS_MESSAGE = "Operation was not found";
 
     /**
-     * 
+     *
      */
     public OperationNotFoundException() {
         // TODO Auto-generated constructor stub
@@ -52,8 +52,7 @@ public class OperationNotFoundException extends ResourceNotFoundException {
      * @param httpStatusCode
      * @param httpStatusMsg
      */
-    public OperationNotFoundException(final String message, final int httpStatusCode,
-        final String httpStatusMsg) {
+    public OperationNotFoundException(final String message, final int httpStatusCode, final String httpStatusMsg) {
         super(message, httpStatusCode, httpStatusMsg);
         // TODO Auto-generated constructor stub
     }
@@ -64,8 +63,8 @@ public class OperationNotFoundException extends ResourceNotFoundException {
      * @param httpStatusCode
      * @param httpStatusMsg
      */
-    public OperationNotFoundException(final String message, final Throwable cause,
-        final int httpStatusCode, final String httpStatusMsg) {
+    public OperationNotFoundException(final String message, final Throwable cause, final int httpStatusCode,
+        final String httpStatusMsg) {
         super(message, cause, httpStatusCode, httpStatusMsg);
         // TODO Auto-generated constructor stub
     }
@@ -92,8 +91,7 @@ public class OperationNotFoundException extends ResourceNotFoundException {
      * @param httpStatusCode
      * @param httpStatusMsg
      */
-    public OperationNotFoundException(final Throwable cause, final int httpStatusCode,
-        final String httpStatusMsg) {
+    public OperationNotFoundException(final Throwable cause, final int httpStatusCode, final String httpStatusMsg) {
         super(cause, httpStatusCode, httpStatusMsg);
         // TODO Auto-generated constructor stub
     }

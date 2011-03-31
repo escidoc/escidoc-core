@@ -48,7 +48,7 @@ import java.util.Map;
 
 /**
  * Scope renderer implementation using the velocity template engine.
- * 
+ *
  * @author Michael Hoppe
  */
 public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
@@ -59,17 +59,10 @@ public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
     private VelocityXmlScopeRenderer() {
     }
 
-
-
     /**
      * See Interface for functional description.
-     * 
-     * @param scope
-     * @return
-     * @throws SystemException
-     * @see de.escidoc.core.sm.business.renderer.interfaces.
-     *      ScopeRendererInterface#render(Map)
      *
+     * @see de.escidoc.core.sm.business.renderer.interfaces. ScopeRendererInterface#render(Map)
      */
     @Override
     public String render(final Scope scope) throws SystemException {
@@ -82,17 +75,12 @@ public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
 
     /**
      * Adds the values of the {@link Scope} to the provided {@link Map}.
-     * 
-     * @param scope
-     *            The {@link Scope}.
-     * @param values
-     *            The {@link Map} to add the values to.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     *
+     * @param scope  The {@link Scope}.
+     * @param values The {@link Map} to add the values to.
+     * @throws SystemException Thrown in case of an internal error.
      */
-    private static void addScopeValues(
-        final Scope scope, final Map<String, Object> values)
-        throws SystemException {
+    private static void addScopeValues(final Scope scope, final Map<String, Object> values) throws SystemException {
         DateTime createDateTime = new DateTime(scope.getCreationDate());
         createDateTime = createDateTime.withZone(DateTimeZone.UTC);
         final String create = createDateTime.toString(Constants.TIMESTAMP_FORMAT);
@@ -103,13 +91,11 @@ public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
         values.put("scopeCreationDate", create);
         values.put("scopeCreatedById", scope.getCreatorId());
         values.put("scopeCreatedByTitle", "user " + scope.getCreatorId());
-        values.put("scopeCreatedByHref",
-            XmlUtility.getUserAccountHref(scope.getCreatorId()));
+        values.put("scopeCreatedByHref", XmlUtility.getUserAccountHref(scope.getCreatorId()));
         values.put("scopeLastModificationDate", lmd);
         values.put("scopeModifiedById", scope.getModifiedById());
         values.put("scopeModifiedByTitle", "user " + scope.getModifiedById());
-        values.put("scopeModifiedByHref",
-            XmlUtility.getUserAccountHref(scope.getModifiedById()));
+        values.put("scopeModifiedByHref", XmlUtility.getUserAccountHref(scope.getModifiedById()));
         values.put("scopeId", scope.getId());
         values.put("scopeName", scope.getName());
         values.put("scopeHref", XmlUtility.getScopeHref(scope.getId()));
@@ -118,23 +104,13 @@ public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
 
     /**
      * See Interface for functional description.
-     * 
-     * @param scope
-     * @param recordPacking
-     *            A string to determine how the record should be escaped in the
-     *            response. Defined values are 'string' and 'xml'. The default
-     *            is 'xml'.
-     * 
-     * @return
-     * @throws WebserverSystemException
-     * @see de.escidoc.core.aa.business.renderer.interfaces.
-     *      ScopeRendererInterface
-     *      #renderScopes(de.escidoc.core.sm.business.Scope)
      *
+     * @param recordPacking A string to determine how the record should be escaped in the response. Defined values are
+     *                      'string' and 'xml'. The default is 'xml'.
+     * @see de.escidoc.core.aa.business.renderer.interfaces. ScopeRendererInterface #renderScopes(de.escidoc.core.sm.business.Scope)
      */
     @Override
-    public String renderScopes(
-        final Collection<Scope> scopes, final RecordPacking recordPacking)
+    public String renderScopes(final Collection<Scope> scopes, final RecordPacking recordPacking)
         throws SystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
@@ -162,43 +138,29 @@ public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
         return getScopeXmlProvider().getScopesSrwXml(values);
     }
 
-
-
     /**
      * Adds the scope name space values.
-     * 
-     * @param values
-     *            The {@link Map} to that the values shall be added.
-     * @throws SystemException
-     *             e
      *
+     * @param values The {@link Map} to that the values shall be added.
+     * @throws SystemException e
      */
-    private static void addScopeNamespaceValues(final Map<String, Object> values)
-        throws SystemException {
+    private static void addScopeNamespaceValues(final Map<String, Object> values) throws SystemException {
         addEscidocBaseUrl(values);
         values.put("scopeNamespacePrefix", Constants.SCOPE_NS_PREFIX);
         values.put("scopeNamespace", Constants.SCOPE_NS_URI);
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX,
-            Constants.PROPERTIES_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS,
-            Constants.PROPERTIES_NS_URI);
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX,
-            Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS,
-            Constants.STRUCTURAL_RELATIONS_NS_URI);
+        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX, Constants.PROPERTIES_NS_PREFIX);
+        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS, Constants.PROPERTIES_NS_URI);
+        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
+        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
     }
 
     /**
      * Adds the scope list name space values.
-     * 
-     * @param values
-     *            The {@link Map} to that the values shall be added.
-     * @throws SystemException
-     *             e
      *
+     * @param values The {@link Map} to that the values shall be added.
+     * @throws SystemException e
      */
-    private static void addScopeListNamespaceValues(final Map<String, Object> values)
-        throws SystemException {
+    private static void addScopeListNamespaceValues(final Map<String, Object> values) throws SystemException {
         addEscidocBaseUrl(values);
         values.put("searchResultNamespace", Constants.SEARCH_RESULT_NS_URI);
         values.put("scopeListNamespacePrefix", Constants.SCOPE_LIST_NS_PREFIX);
@@ -207,30 +169,22 @@ public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
 
     /**
      * Adds the escidoc base URL to the provided map.
-     * 
-     * @param values
-     *            The map to add values to.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
      *
+     * @param values The map to add values to.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private static void addEscidocBaseUrl(final Map<String, Object> values)
-        throws WebserverSystemException {
+    private static void addEscidocBaseUrl(final Map<String, Object> values) throws WebserverSystemException {
 
-        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL,
-            XmlUtility.getEscidocBaseUrl());
+        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, XmlUtility.getEscidocBaseUrl());
     }
 
     /**
      * Gets the <code>ScopeXmlProvider</code> object.
-     * 
-     * @return Returns the <code>ScopeXmlProvider</code> object.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
      *
+     * @return Returns the <code>ScopeXmlProvider</code> object.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private static ScopeXmlProvider getScopeXmlProvider()
-        throws WebserverSystemException {
+    private static ScopeXmlProvider getScopeXmlProvider() throws WebserverSystemException {
 
         return ScopeXmlProvider.getInstance();
     }

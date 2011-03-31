@@ -32,10 +32,8 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 
 /**
  * Class holding the user group member data.
- * 
- * @author André Schenk
  *
- * 
+ * @author André Schenk
  */
 public class UserGroupMember extends UserGroupMemberBase {
 
@@ -55,7 +53,7 @@ public class UserGroupMember extends UserGroupMemberBase {
      * @return Returns the href to this UserGroupMember object.
      */
     public String getHref() {
- 
+
         return XmlUtility.getUserGroupMemberHref(getUserGroup().getHref(), getId());
     }
 }

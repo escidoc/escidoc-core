@@ -38,9 +38,9 @@ import java.util.regex.Pattern;
 
 /**
  * @author Michael Hoppe
- * 
  */
 public class ItemThreadRunnable implements Runnable {
+
     private int transport;
 
     /**
@@ -49,9 +49,7 @@ public class ItemThreadRunnable implements Runnable {
     public void run() {
         ItemHelper item = new ItemHelper(transport);
         try {
-            String xml =
-                item.create(item
-                    .getTemplateAsString("escidoc_item_198_for_create.xml"));
+            String xml = item.create(item.getTemplateAsString("escidoc_item_198_for_create.xml"));
             String id = getId(xml);
             xml = item.retrieve(id);
         }
@@ -67,8 +65,7 @@ public class ItemThreadRunnable implements Runnable {
     }
 
     /**
-     * @param transport
-     *            The transport to set.
+     * @param transport The transport to set.
      */
     public void setTransport(final int transport) {
         this.transport = transport;
@@ -76,11 +73,9 @@ public class ItemThreadRunnable implements Runnable {
 
     /**
      * extract id out of item-xml.
-     * 
-     * @param xml
-     *            String xml
+     *
+     * @param xml String xml
      * @return String id
-     * 
      */
     private String getId(final String xml) {
         String id = null;

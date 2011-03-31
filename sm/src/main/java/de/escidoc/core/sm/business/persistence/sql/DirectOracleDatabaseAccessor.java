@@ -61,11 +61,10 @@ import java.util.regex.Pattern;
 
 /**
  * Class for direct JDBC Database access via Hibernate.
- * 
+ *
  * @author Michael Hoppe
  */
-public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
-    implements DirectDatabaseAccessorInterface {
+public class DirectOracleDatabaseAccessor extends JdbcDaoSupport implements DirectDatabaseAccessorInterface {
 
     private static final Pattern SPLIT_PATTERN = Pattern.compile(",");
 
@@ -76,33 +75,25 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
     private static final String TEXT_FIELD_TYPE = "CLOB";
 
     private static final String NUMERIC_FIELD_TYPE = "NUMBER";
-    
+
     private static final String SYSDATE = "SYSDATE";
 
-    private static final String DATE_FUNCTION =
-            "to_date('${date_placeholder}', 'yyyy-mm-dd hh24:mi:ss')";
+    private static final String DATE_FUNCTION = "to_date('${date_placeholder}', 'yyyy-mm-dd hh24:mi:ss')";
 
-    private static final String DAY_OF_MONTH_FUNCTION =
-        "to_char(${FIELD_NAME}, 'yyyy-mm-dd')";
+    private static final String DAY_OF_MONTH_FUNCTION = "to_char(${FIELD_NAME}, 'yyyy-mm-dd')";
 
-    private static final Pattern FIELD_NAME_PATTERN = 
-        Pattern.compile("\\$\\{FIELD_NAME\\}");
+    private static final Pattern FIELD_NAME_PATTERN = Pattern.compile("\\$\\{FIELD_NAME\\}");
 
-    private static final Matcher FIELD_NAME_MATCHER =
-        FIELD_NAME_PATTERN.matcher("");
+    private static final Matcher FIELD_NAME_MATCHER = FIELD_NAME_PATTERN.matcher("");
 
-    private static final String XPATH_BOOLEAN_FUNCTION = 
-        "${FIELD_NAME}.EXTRACT('${XPATH}').getStringVal() IS NOT NULL";
-    
-    private static final String XPATH_STRING_FUNCTION = 
-        "${FIELD_NAME}.EXTRACT('${XPATH}').getStringVal()";
-    
-    private static final String XPATH_NUMBER_FUNCTION = 
-        "${FIELD_NAME}.EXTRACT('${XPATH}').getStringVal()";
-    
-    private static final Pattern XPATH_PATTERN = 
-                    Pattern.compile("\\$\\{FIELD_NAME\\}(.*?)\\$\\{XPATH\\}");
-    
+    private static final String XPATH_BOOLEAN_FUNCTION = "${FIELD_NAME}.EXTRACT('${XPATH}').getStringVal() IS NOT NULL";
+
+    private static final String XPATH_STRING_FUNCTION = "${FIELD_NAME}.EXTRACT('${XPATH}').getStringVal()";
+
+    private static final String XPATH_NUMBER_FUNCTION = "${FIELD_NAME}.EXTRACT('${XPATH}').getStringVal()";
+
+    private static final Pattern XPATH_PATTERN = Pattern.compile("\\$\\{FIELD_NAME\\}(.*?)\\$\\{XPATH\\}");
+
     private static final Matcher XPATH_MATCHER = XPATH_PATTERN.matcher("");
 
     private static final Map<String, String> RESERVED_EXPRESSIONS = new HashMap<String, String>();
@@ -113,48 +104,33 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
     }
 
     /**
-     * Converts xmldate into database-specific format.
-     * Method is synchronized because 
-     * SimpleDateFormatter is not Thread-Safe!
-     * 
-     * @param xmldate
-     *            date in xml-format
-     * @return String date in database-specific format
+     * Converts xmldate into database-specific format. Method is synchronized because SimpleDateFormatter is not
+     * Thread-Safe!
      *
-     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
+     * @param xmldate date in xml-format
+     * @return String date in database-specific format
      */
-    private static String convertDate(final String xmldate)
-                    throws SqlDatabaseSystemException {
+    private static String convertDate(final String xmldate) throws SqlDatabaseSystemException {
         try {
-            final XMLGregorianCalendar xmlCal =
-                DatatypeFactory.newInstance().newXMLGregorianCalendar(
-                    xmldate);
+            final XMLGregorianCalendar xmlCal = DatatypeFactory.newInstance().newXMLGregorianCalendar(xmldate);
             final Calendar cal = xmlCal.toGregorianCalendar();
             final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            return DATE_FUNCTION.replaceFirst(
-                "\\$\\{date_placeholder\\}", dateFormat.format(cal.getTime()));
-        } catch (final Exception e) {
+            return DATE_FUNCTION.replaceFirst("\\$\\{date_placeholder\\}", dateFormat.format(cal.getTime()));
+        }
+        catch (final Exception e) {
             throw new SqlDatabaseSystemException(e);
         }
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @see DirectDatabaseAccessorInterface
-     *      #createTable(DatabaseTableVo)
-     * 
-     * @param databaseTableVo
-     *            databaseTableVo with information about tablename, fieldnames
-     *            and indexnames.
-     * 
-     * @throws SqlDatabaseSystemException
-     *             If an error occurs accessing the database.
-     * 
+     *
+     * @param databaseTableVo databaseTableVo with information about tablename, fieldnames and indexnames.
+     * @throws SqlDatabaseSystemException If an error occurs accessing the database.
+     * @see DirectDatabaseAccessorInterface #createTable(DatabaseTableVo)
      */
     @Override
-    public void createTable(final DatabaseTableVo databaseTableVo)
-        throws SqlDatabaseSystemException {
+    public void createTable(final DatabaseTableVo databaseTableVo) throws SqlDatabaseSystemException {
         checkDatabaseTableVo(databaseTableVo);
         final Collection<String> sqls = getCreateStatements(databaseTableVo);
         try {
@@ -169,19 +145,13 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
 
     /**
      * See Interface for functional description.
-     * 
-     * @see DirectDatabaseAccessorInterface
-     *      #dropTable(DatabaseTableVo)
-     * 
-     * @param databaseTableVo
-     *            databaseTableVo.
-     * @throws SqlDatabaseSystemException
-     *             If an error occurs accessing the database.
-     * 
+     *
+     * @param databaseTableVo databaseTableVo.
+     * @throws SqlDatabaseSystemException If an error occurs accessing the database.
+     * @see DirectDatabaseAccessorInterface #dropTable(DatabaseTableVo)
      */
     @Override
-    public void dropTable(final DatabaseTableVo databaseTableVo)
-        throws SqlDatabaseSystemException {
+    public void dropTable(final DatabaseTableVo databaseTableVo) throws SqlDatabaseSystemException {
         checkDatabaseTableVo(databaseTableVo);
         final Collection<String> sqls = getDropStatements(databaseTableVo);
         try {
@@ -197,20 +167,13 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
 
     /**
      * See Interface for functional description.
-     * 
-     * @see DirectDatabaseAccessorInterface
-     *      #createRecord(DatabaseRecordVo)
-     * 
-     * @param databaseRecordVo
-     *            databaseRecordVo with information about tablename and
-     *            fieldnames + values.
-     * @throws SqlDatabaseSystemException
-     *             If an error occurs accessing the database.
-     * 
+     *
+     * @param databaseRecordVo databaseRecordVo with information about tablename and fieldnames + values.
+     * @throws SqlDatabaseSystemException If an error occurs accessing the database.
+     * @see DirectDatabaseAccessorInterface #createRecord(DatabaseRecordVo)
      */
     @Override
-    public void createRecord(final DatabaseRecordVo databaseRecordVo)
-        throws SqlDatabaseSystemException {
+    public void createRecord(final DatabaseRecordVo databaseRecordVo) throws SqlDatabaseSystemException {
         checkDatabaseRecordVo(databaseRecordVo);
         try {
             final String tablename = handleTableName(databaseRecordVo.getTableName());
@@ -218,8 +181,7 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
             final StringBuilder fieldsSql = new StringBuilder("");
             final StringBuilder valuesSql = new StringBuilder(" VALUES (");
             fieldsSql.append("INSERT INTO ").append(tablename).append(" (");
-            final Collection<DatabaseRecordFieldVo> fields =
-                databaseRecordVo.getDatabaseRecordFieldVos();
+            final Collection<DatabaseRecordFieldVo> fields = databaseRecordVo.getDatabaseRecordFieldVos();
             int i = 0;
             for (final DatabaseRecordFieldVo field : fields) {
                 if (i > 0) {
@@ -232,11 +194,10 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
 
                 // Case type=date and value=sysdate => sysdate
                 // (is 'now' in postgres)
-                if (field.getFieldType().equalsIgnoreCase(
-                    Constants.DATABASE_FIELD_TYPE_DATE)) {
+                if (field.getFieldType().equalsIgnoreCase(Constants.DATABASE_FIELD_TYPE_DATE)) {
                     value = "sysdate".equalsIgnoreCase(value) ? SYSDATE : convertDate(value);
-                } else if (field.getFieldType().equalsIgnoreCase(
-                    Constants.DATABASE_FIELD_TYPE_TEXT)) {
+                }
+                else if (field.getFieldType().equalsIgnoreCase(Constants.DATABASE_FIELD_TYPE_TEXT)) {
                     value = value.replaceAll("'", "''");
                     value = '\'' + value + '\'';
                 }
@@ -257,24 +218,16 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
 
     /**
      * See Interface for functional description.
-     * 
-     * @see DirectDatabaseAccessorInterface
-     *      #deleteRecord(DatabaseRecordVo)
-     * 
-     * @param databaseSelectVo
-     *            databaseSelectVo.
-     * @throws SqlDatabaseSystemException
-     *             If an error occurs accessing the database.
-     * 
+     *
+     * @param databaseSelectVo databaseSelectVo.
+     * @throws SqlDatabaseSystemException If an error occurs accessing the database.
+     * @see DirectDatabaseAccessorInterface #deleteRecord(DatabaseRecordVo)
      */
     @Override
-    public void deleteRecord(final DatabaseSelectVo databaseSelectVo)
-        throws SqlDatabaseSystemException {
+    public void deleteRecord(final DatabaseSelectVo databaseSelectVo) throws SqlDatabaseSystemException {
         checkDatabaseSelectVo(databaseSelectVo);
         try {
-            final String tablename =
-                handleTableName(databaseSelectVo
-                    .getTableNames().iterator().next());
+            final String tablename = handleTableName(databaseSelectVo.getTableNames().iterator().next());
             final StringBuilder sql = new StringBuilder("");
             sql.append("DELETE FROM ").append(tablename);
             if (databaseSelectVo.getRootWhereGroupVo() != null) {
@@ -292,34 +245,24 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
 
     /**
      * See Interface for functional description.
-     * 
-     * @see DirectDatabaseAccessorInterface
-     *      #updateRecord(DatabaseSelectVo)
-     * 
-     * @param databaseSelectVo
-     *            databaseSelectVo.
-     * @throws SqlDatabaseSystemException
-     *             If an error occurs accessing the database.
-     * 
+     *
+     * @param databaseSelectVo databaseSelectVo.
+     * @throws SqlDatabaseSystemException If an error occurs accessing the database.
+     * @see DirectDatabaseAccessorInterface #updateRecord(DatabaseSelectVo)
      */
     @Override
-    public void updateRecord(final DatabaseSelectVo databaseSelectVo)
-        throws SqlDatabaseSystemException {
+    public void updateRecord(final DatabaseSelectVo databaseSelectVo) throws SqlDatabaseSystemException {
         checkDatabaseSelectVo(databaseSelectVo);
         try {
-            final String tablename =
-                handleTableName(databaseSelectVo
-                    .getTableNames().iterator().next());
+            final String tablename = handleTableName(databaseSelectVo.getTableNames().iterator().next());
             final StringBuilder sql = new StringBuilder("");
             sql.append("UPDATE ").append(tablename).append(" SET ");
             int i = 0;
-            for (final SelectFieldVo selectFieldVo
-                : databaseSelectVo.getSelectFieldVos()) {
+            for (final SelectFieldVo selectFieldVo : databaseSelectVo.getSelectFieldVos()) {
                 if (i > 0) {
                     sql.append(',');
                 }
-                sql.append(handleFieldTypeWhere(null, selectFieldVo
-                    .getFieldName(), selectFieldVo.getFieldType(),
+                sql.append(handleFieldTypeWhere(null, selectFieldVo.getFieldName(), selectFieldVo.getFieldType(),
                     selectFieldVo.getFieldValue(), "=", null));
                 i++;
             }
@@ -338,42 +281,28 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
 
     /**
      * See Interface for functional description.
-     * 
-     * @see DirectDatabaseAccessorInterface
-     *      #executeSql(DatabaseSelectVo)
-     * 
-     * @param databaseSelectVo
-     *            databaseSelectVo with information about sql.
+     *
+     * @param databaseSelectVo databaseSelectVo with information about sql.
      * @return List of Maps with data (one Map per db-record)
-     * @throws SqlDatabaseSystemException
-     *             If an error occurs accessing the database.
-     * 
+     * @throws SqlDatabaseSystemException If an error occurs accessing the database.
+     * @see DirectDatabaseAccessorInterface #executeSql(DatabaseSelectVo)
      */
     @Override
-    public List executeSql(final DatabaseSelectVo databaseSelectVo)
-        throws SqlDatabaseSystemException {
+    public List executeSql(final DatabaseSelectVo databaseSelectVo) throws SqlDatabaseSystemException {
         checkDatabaseSelectVo(databaseSelectVo);
         try {
             final StringBuilder sql = new StringBuilder("");
             sql.append(databaseSelectVo.getSelectType()).append(' ');
-            if (databaseSelectVo.getSelectType().equalsIgnoreCase(
-                Constants.DATABASE_SELECT_TYPE_UPDATE)) {
-                final String tablename =
-                    handleTableName(databaseSelectVo
-                        .getTableNames().iterator().next());
+            if (databaseSelectVo.getSelectType().equalsIgnoreCase(Constants.DATABASE_SELECT_TYPE_UPDATE)) {
+                final String tablename = handleTableName(databaseSelectVo.getTableNames().iterator().next());
                 sql.append(tablename).append(" SET ");
             }
-            else if (databaseSelectVo.getSelectType().equalsIgnoreCase(
-                Constants.DATABASE_SELECT_TYPE_DELETE)) {
-                final String tablename =
-                    handleTableName(databaseSelectVo
-                        .getTableNames().iterator().next());
+            else if (databaseSelectVo.getSelectType().equalsIgnoreCase(Constants.DATABASE_SELECT_TYPE_DELETE)) {
+                final String tablename = handleTableName(databaseSelectVo.getTableNames().iterator().next());
                 sql.append(" FROM ").append(tablename).append(' ');
             }
-            else if (databaseSelectVo.getSelectType().equalsIgnoreCase(
-                Constants.DATABASE_SELECT_TYPE_SELECT)) {
-                sql.append(handleSelectFields(databaseSelectVo
-                    .getSelectFieldVos()));
+            else if (databaseSelectVo.getSelectType().equalsIgnoreCase(Constants.DATABASE_SELECT_TYPE_SELECT)) {
+                sql.append(handleSelectFields(databaseSelectVo.getSelectFieldVos()));
                 sql.append(" FROM ");
                 int i = 0;
                 for (final String tabname : databaseSelectVo.getTableNames()) {
@@ -382,9 +311,7 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
                         sql.append(',');
                     }
                     sql.append(tablename).append(' ');
-                    sql
-                        .append(tablename.replaceFirst(".*?\\.", "")).append(
-                            ' ');
+                    sql.append(tablename.replaceFirst(".*?\\.", "")).append(' ');
                     i++;
                 }
                 if (databaseSelectVo.getRootWhereGroupVo() != null) {
@@ -404,16 +331,11 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
 
     /**
      * See Interface for functional description.
-     * 
-     * @see DirectDatabaseAccessorInterface
-     *      #executeSql(java.lang.String)
-     * 
-     * @param sql
-     *            sql-String
+     *
+     * @param sql sql-String
      * @return List of Maps with data
-     * @throws SqlDatabaseSystemException
-     *             If an error occurs accessing the database.
-     * 
+     * @throws SqlDatabaseSystemException If an error occurs accessing the database.
+     * @see DirectDatabaseAccessorInterface #executeSql(java.lang.String)
      */
     @Override
     public List executeReadOnlySql(final String sql) throws SqlDatabaseSystemException {
@@ -424,9 +346,9 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
             condition = true;
         }
         final String fromClause;
-        fromClause = condition ? executionSql.replaceFirst(
-                "(?i).*?from(.*?)(where|order by|group by).*", "$1") 
-                    : executionSql.replaceFirst("(?i).*?from(.*)", "$1");
+        fromClause =
+            condition ? executionSql.replaceFirst("(?i).*?from(.*?)(where|order by|group by).*", "$1") : executionSql
+                .replaceFirst("(?i).*?from(.*)", "$1");
         final String[] tables = SPLIT_PATTERN.split(fromClause);
         final StringBuilder replacedFromClause = new StringBuilder(" ");
         for (int i = 0; i < tables.length; i++) {
@@ -436,15 +358,13 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
             replacedFromClause.append(handleTableName(tables[i].trim()));
         }
         replacedFromClause.append(' ');
-        executionSql = condition ? executionSql.replaceFirst(
-                "(?i)(.*?from).*?((where|order by|group by).*)", "$1"
-                        + Matcher
-                        .quoteReplacement(replacedFromClause.toString())
-                        + "$2") : executionSql.replaceFirst("(?i)(.*?from).*", "$1"
-                + Matcher.quoteReplacement(replacedFromClause.toString()));
+        executionSql =
+            condition ? executionSql.replaceFirst("(?i)(.*?from).*?((where|order by|group by).*)", "$1"
+                + Matcher.quoteReplacement(replacedFromClause.toString()) + "$2") : executionSql.replaceFirst(
+                "(?i)(.*?from).*", "$1" + Matcher.quoteReplacement(replacedFromClause.toString()));
 
-       try {
-             return getJdbcTemplate().queryForList(executionSql);
+        try {
+            return getJdbcTemplate().queryForList(executionSql);
         }
         catch (final Exception e) {
             throw new SqlDatabaseSystemException(e);
@@ -453,15 +373,11 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
 
     /**
      * Create create sql-statement from databaseTableVo.
-     * 
-     * @param databaseTableVo
-     *            databaseTableVo with information about tablename, fieldnames
-     *            and indexnames.
+     *
+     * @param databaseTableVo databaseTableVo with information about tablename, fieldnames and indexnames.
      * @return Collection with sql-statements
-     * 
      */
-    private Collection<String> getCreateStatements(
-            final DatabaseTableVo databaseTableVo) {
+    private Collection<String> getCreateStatements(final DatabaseTableVo databaseTableVo) {
 
         final Collection<String> sqlStatements = new ArrayList<String>();
         // Get Create-Statement for Table
@@ -469,40 +385,33 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
         final StringBuilder createSql = new StringBuilder("CREATE TABLE ");
         createSql.append(tablename).append(" (");
         int i = 0;
-        for (final DatabaseTableFieldVo databaseTableFieldVo
-                : databaseTableVo.getDatabaseFieldVos()) {
+        for (final DatabaseTableFieldVo databaseTableFieldVo : databaseTableVo.getDatabaseFieldVos()) {
             if (i > 0) {
                 createSql.append(',');
             }
             String dbDataType = "";
-            if (databaseTableFieldVo.getFieldType().equals(
-                Constants.DATABASE_FIELD_TYPE_DATE)) {
+            if (databaseTableFieldVo.getFieldType().equals(Constants.DATABASE_FIELD_TYPE_DATE)) {
                 dbDataType = TIMESTAMP_FIELD_TYPE;
-            } else if (databaseTableFieldVo.getFieldType().equals(
-                    Constants.DATABASE_FIELD_TYPE_NUMERIC)) {
+            }
+            else if (databaseTableFieldVo.getFieldType().equals(Constants.DATABASE_FIELD_TYPE_NUMERIC)) {
                 dbDataType = NUMERIC_FIELD_TYPE;
-            } else if (databaseTableFieldVo.getFieldType().equals(
-                    Constants.DATABASE_FIELD_TYPE_TEXT)) {
+            }
+            else if (databaseTableFieldVo.getFieldType().equals(Constants.DATABASE_FIELD_TYPE_TEXT)) {
                 dbDataType = TEXT_FIELD_TYPE;
             }
-            createSql
-                .append(databaseTableFieldVo.getFieldName()).append(' ')
-                .append(dbDataType).append("");
+            createSql.append(databaseTableFieldVo.getFieldName()).append(' ').append(dbDataType).append("");
             i++;
         }
         createSql.append(");");
         sqlStatements.add(createSql.toString());
 
         // Get Create-Statements for Indexes
-        final Collection<DatabaseIndexVo> databaseIndexVos =
-            databaseTableVo.getDatabaseIndexVos();
+        final Collection<DatabaseIndexVo> databaseIndexVos = databaseTableVo.getDatabaseIndexVos();
         if (databaseIndexVos != null) {
             for (final DatabaseIndexVo databaseIndexVo : databaseIndexVos) {
                 final StringBuilder indexSql = new StringBuilder("CREATE INDEX ");
                 final String indexName = databaseIndexVo.getIndexName();
-                indexSql
-                    .append(indexName).append(" ON ").append(tablename).append(
-                        " (");
+                indexSql.append(indexName).append(" ON ").append(tablename).append(" (");
                 final Collection<String> indexFields = databaseIndexVo.getFields();
                 int j = 0;
                 for (final String indexField : indexFields) {
@@ -522,27 +431,19 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
 
     /**
      * Create drop sql-statements from databaseTableVo.
-     * 
-     * @param databaseTableVo
-     *            databaseTableVo with information about tablename and
-     *            indexnames.
+     *
+     * @param databaseTableVo databaseTableVo with information about tablename and indexnames.
      * @return Collection with sql-statements
-     * 
      */
-    private Collection<String> getDropStatements(
-            final DatabaseTableVo databaseTableVo) {
+    private Collection<String> getDropStatements(final DatabaseTableVo databaseTableVo) {
         final Collection<String> sqlStatements = new ArrayList<String>();
         final String tablename = handleTableName(databaseTableVo.getTableName());
         // Get Drop-Statements for Indexes
-        final Collection<DatabaseIndexVo> databaseIndexVos =
-            databaseTableVo.getDatabaseIndexVos();
+        final Collection<DatabaseIndexVo> databaseIndexVos = databaseTableVo.getDatabaseIndexVos();
         if (databaseIndexVos != null) {
             for (final DatabaseIndexVo databaseIndexVo : databaseIndexVos) {
                 final StringBuilder indexSql = new StringBuilder("DROP INDEX ");
-                indexSql.append(databaseIndexVo.getIndexName())
-                        .append(" ON ")
-                        .append(tablename)
-                        .append(';');
+                indexSql.append(databaseIndexVo.getIndexName()).append(" ON ").append(tablename).append(';');
                 sqlStatements.add(indexSql.toString());
             }
         }
@@ -558,16 +459,12 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
 
     /**
      * makes string for where-clause out of databaseSelectVo.
-     * 
-     * @param databaseSelectVo
-     *            databaseSelectVo.
+     *
+     * @param databaseSelectVo databaseSelectVo.
      * @return String string for where clause
-     * @throws SqlDatabaseSystemException
-     *             If an error occurs accessing the database.
-     * 
+     * @throws SqlDatabaseSystemException If an error occurs accessing the database.
      */
-    private String handleWhereClause(final DatabaseSelectVo databaseSelectVo)
-        throws SqlDatabaseSystemException {
+    private String handleWhereClause(final DatabaseSelectVo databaseSelectVo) throws SqlDatabaseSystemException {
         final StringBuilder whereClause = new StringBuilder(" ");
         boolean additionalWhereGroups = false;
         if (databaseSelectVo.getAdditionalWhereGroupVos() != null
@@ -577,76 +474,53 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
         if (additionalWhereGroups) {
             whereClause.append('(');
         }
-        final RootWhereGroupVo rootWhereGroupVo =
-            databaseSelectVo.getRootWhereGroupVo();
-        RootWhereFieldVo rootWhereFieldVo =
-            rootWhereGroupVo.getRootWhereFieldVo();
-        if (databaseSelectVo.getSelectType().equals(
-            Constants.DATABASE_SELECT_TYPE_UPDATE)
-            || databaseSelectVo.getSelectType().equals(
-                Constants.DATABASE_SELECT_TYPE_DELETE)) {
+        final RootWhereGroupVo rootWhereGroupVo = databaseSelectVo.getRootWhereGroupVo();
+        RootWhereFieldVo rootWhereFieldVo = rootWhereGroupVo.getRootWhereFieldVo();
+        if (databaseSelectVo.getSelectType().equals(Constants.DATABASE_SELECT_TYPE_UPDATE)
+            || databaseSelectVo.getSelectType().equals(Constants.DATABASE_SELECT_TYPE_DELETE)) {
             rootWhereFieldVo.setTableName(null);
         }
-        whereClause.append(handleFieldTypeWhere(
-            rootWhereFieldVo.getTableName(), rootWhereFieldVo.getFieldName(),
-            rootWhereFieldVo.getFieldType(), rootWhereFieldVo.getFieldValue(),
-            rootWhereFieldVo.getOperator(), rootWhereFieldVo.getXpath()));
+        whereClause.append(handleFieldTypeWhere(rootWhereFieldVo.getTableName(), rootWhereFieldVo.getFieldName(),
+            rootWhereFieldVo.getFieldType(), rootWhereFieldVo.getFieldValue(), rootWhereFieldVo.getOperator(),
+            rootWhereFieldVo.getXpath()));
         if (rootWhereGroupVo.getAdditionalWhereFieldVos() != null
             && !rootWhereGroupVo.getAdditionalWhereFieldVos().isEmpty()) {
-            for (final AdditionalWhereFieldVo additionalWhereFieldVo
-                : rootWhereGroupVo.getAdditionalWhereFieldVos()) {
+            for (final AdditionalWhereFieldVo additionalWhereFieldVo : rootWhereGroupVo.getAdditionalWhereFieldVos()) {
                 whereClause.append(additionalWhereFieldVo.getAlliance());
-                if (databaseSelectVo.getSelectType().equals(
-                    Constants.DATABASE_SELECT_TYPE_UPDATE)
-                    || databaseSelectVo.getSelectType().equals(
-                        Constants.DATABASE_SELECT_TYPE_DELETE)) {
+                if (databaseSelectVo.getSelectType().equals(Constants.DATABASE_SELECT_TYPE_UPDATE)
+                    || databaseSelectVo.getSelectType().equals(Constants.DATABASE_SELECT_TYPE_DELETE)) {
                     additionalWhereFieldVo.setTableName(null);
                 }
-                whereClause.append(handleFieldTypeWhere(additionalWhereFieldVo
-                    .getTableName(), additionalWhereFieldVo.getFieldName(),
-                    additionalWhereFieldVo.getFieldType(),
-                    additionalWhereFieldVo.getFieldValue(),
-                    additionalWhereFieldVo.getOperator(),
-                    additionalWhereFieldVo.getXpath()));
+                whereClause.append(handleFieldTypeWhere(additionalWhereFieldVo.getTableName(), additionalWhereFieldVo
+                    .getFieldName(), additionalWhereFieldVo.getFieldType(), additionalWhereFieldVo.getFieldValue(),
+                    additionalWhereFieldVo.getOperator(), additionalWhereFieldVo.getXpath()));
             }
         }
         if (additionalWhereGroups) {
             whereClause.append(") ");
-            for (final AdditionalWhereGroupVo additionalWhereGroupVo
-                : databaseSelectVo.getAdditionalWhereGroupVos()) {
+            for (final AdditionalWhereGroupVo additionalWhereGroupVo : databaseSelectVo.getAdditionalWhereGroupVos()) {
                 whereClause.append(additionalWhereGroupVo.getAlliance());
                 whereClause.append(" (");
                 rootWhereFieldVo = additionalWhereGroupVo.getRootWhereFieldVo();
-                if (databaseSelectVo.getSelectType().equals(
-                    Constants.DATABASE_SELECT_TYPE_UPDATE)
-                    || databaseSelectVo.getSelectType().equals(
-                        Constants.DATABASE_SELECT_TYPE_DELETE)) {
+                if (databaseSelectVo.getSelectType().equals(Constants.DATABASE_SELECT_TYPE_UPDATE)
+                    || databaseSelectVo.getSelectType().equals(Constants.DATABASE_SELECT_TYPE_DELETE)) {
                     rootWhereFieldVo.setTableName(null);
                 }
-                whereClause.append(handleFieldTypeWhere(rootWhereFieldVo
-                    .getTableName(), rootWhereFieldVo.getFieldName(),
-                    rootWhereFieldVo.getFieldType(), rootWhereFieldVo
-                        .getFieldValue(), rootWhereFieldVo.getOperator(),
-                    rootWhereFieldVo.getXpath()));
+                whereClause.append(handleFieldTypeWhere(rootWhereFieldVo.getTableName(), rootWhereFieldVo
+                    .getFieldName(), rootWhereFieldVo.getFieldType(), rootWhereFieldVo.getFieldValue(),
+                    rootWhereFieldVo.getOperator(), rootWhereFieldVo.getXpath()));
                 if (additionalWhereGroupVo.getAdditionalWhereFieldVos() != null
-                    && !additionalWhereGroupVo
-                        .getAdditionalWhereFieldVos().isEmpty()) {
-                    for (final AdditionalWhereFieldVo additionalWhereFieldVo
-                        : additionalWhereGroupVo.getAdditionalWhereFieldVos()) {
-                        whereClause
-                            .append(additionalWhereFieldVo.getAlliance());
-                        if (databaseSelectVo.getSelectType().equals(
-                            Constants.DATABASE_SELECT_TYPE_UPDATE)
-                            || databaseSelectVo.getSelectType().equals(
-                                Constants.DATABASE_SELECT_TYPE_DELETE)) {
+                    && !additionalWhereGroupVo.getAdditionalWhereFieldVos().isEmpty()) {
+                    for (final AdditionalWhereFieldVo additionalWhereFieldVo : additionalWhereGroupVo
+                        .getAdditionalWhereFieldVos()) {
+                        whereClause.append(additionalWhereFieldVo.getAlliance());
+                        if (databaseSelectVo.getSelectType().equals(Constants.DATABASE_SELECT_TYPE_UPDATE)
+                            || databaseSelectVo.getSelectType().equals(Constants.DATABASE_SELECT_TYPE_DELETE)) {
                             additionalWhereFieldVo.setTableName(null);
                         }
-                        whereClause.append(handleFieldTypeWhere(
-                            additionalWhereFieldVo.getTableName(),
-                            additionalWhereFieldVo.getFieldName(),
-                            additionalWhereFieldVo.getFieldType(),
-                            additionalWhereFieldVo.getFieldValue(),
-                            additionalWhereFieldVo.getOperator(),
+                        whereClause.append(handleFieldTypeWhere(additionalWhereFieldVo.getTableName(),
+                            additionalWhereFieldVo.getFieldName(), additionalWhereFieldVo.getFieldType(),
+                            additionalWhereFieldVo.getFieldValue(), additionalWhereFieldVo.getOperator(),
                             additionalWhereFieldVo.getXpath()));
                     }
                 }
@@ -659,52 +533,36 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
 
     /**
      * makes string for where-clause out of databaseSelectVo.
-     * 
-     * @param tableName
-     *            tableName.
-     * @param fieldName
-     *            fieldName.
-     * @param fieldType
-     *            fieldType.
-     * @param fieldValue
-     *            fieldValue.
-     * @param operator
-     *            operator.
-     * @param xpath
-     *            xpath.
+     *
+     * @param tableName  tableName.
+     * @param fieldName  fieldName.
+     * @param fieldType  fieldType.
+     * @param fieldValue fieldValue.
+     * @param operator   operator.
+     * @param xpath      xpath.
      * @return String string for where clause
-     * @throws SqlDatabaseSystemException
-     *             If an error occurs accessing the database.
-     * 
+     * @throws SqlDatabaseSystemException If an error occurs accessing the database.
      */
     private String handleFieldTypeWhere(
-        final String tableName, final String fieldName, final String fieldType,
-        final String fieldValue, final String operator, final String xpath)
-        throws SqlDatabaseSystemException {
+        final String tableName, final String fieldName, final String fieldType, final String fieldValue,
+        final String operator, final String xpath) throws SqlDatabaseSystemException {
         final StringBuilder whereClause = new StringBuilder(" ");
         final StringBuilder longFieldName = new StringBuilder("");
         if (tableName != null && tableName.length() != 0) {
-            longFieldName.append(
-                handleTableName(tableName).replaceFirst(".*?\\.", "")).append(
-                    '.');
+            longFieldName.append(handleTableName(tableName).replaceFirst(".*?\\.", "")).append('.');
         }
         longFieldName.append(fieldName);
         if (fieldType.equalsIgnoreCase(Constants.DATABASE_FIELD_TYPE_TEXT)) {
             final String value = fieldValue.replaceAll("'", "''");
-            whereClause
-                .append(longFieldName).append(' ').append(operator)
-                .append(" '").append(value).append("' ");
+            whereClause.append(longFieldName).append(' ').append(operator).append(" '").append(value).append("' ");
         }
         else if (fieldType.endsWith(Constants.DATABASE_FIELD_TYPE_DATE)) {
-            if (fieldType
-                .equalsIgnoreCase(Constants.DATABASE_FIELD_TYPE_DAYDATE)) {
-                final String dayOfMonthFunction = FIELD_NAME_MATCHER
-                    .reset(DAY_OF_MONTH_FUNCTION)
-                    .replaceAll(Matcher.quoteReplacement(
-                            longFieldName.toString()));
+            if (fieldType.equalsIgnoreCase(Constants.DATABASE_FIELD_TYPE_DAYDATE)) {
+                final String dayOfMonthFunction =
+                    FIELD_NAME_MATCHER.reset(DAY_OF_MONTH_FUNCTION).replaceAll(
+                        Matcher.quoteReplacement(longFieldName.toString()));
 
-            whereClause
-                .append(dayOfMonthFunction).append(operator).append(' ');
+                whereClause.append(dayOfMonthFunction).append(operator).append(' ');
             }
             else {
                 whereClause.append(longFieldName).append(operator).append(' ');
@@ -713,30 +571,21 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
             value = "sysdate".equalsIgnoreCase(fieldValue) ? SYSDATE : convertDate(fieldValue);
             whereClause.append(value).append(' ');
         }
-        else if (fieldType
-            .equalsIgnoreCase(Constants.DATABASE_FIELD_TYPE_NUMERIC)) {
-            whereClause
-                .append(longFieldName).append(' ').append(operator).append(
-                    fieldValue).append(' ');
+        else if (fieldType.equalsIgnoreCase(Constants.DATABASE_FIELD_TYPE_NUMERIC)) {
+            whereClause.append(longFieldName).append(' ').append(operator).append(fieldValue).append(' ');
         }
-        else if (fieldType
-            .equalsIgnoreCase(Constants.DATABASE_FIELD_TYPE_XPATH_BOOLEAN)) {
+        else if (fieldType.equalsIgnoreCase(Constants.DATABASE_FIELD_TYPE_XPATH_BOOLEAN)) {
             whereClause.append(getXpathBoolean(xpath, fieldName)).append(' ');
         }
-        else if (fieldType
-            .equalsIgnoreCase(Constants.DATABASE_FIELD_TYPE_XPATH_STRING)) {
-            whereClause
-                .append(getXpathString(xpath, fieldName)).append(' ').append(
-                    operator).append(" '").append(fieldValue.trim()).append("' ");
+        else if (fieldType.equalsIgnoreCase(Constants.DATABASE_FIELD_TYPE_XPATH_STRING)) {
+            whereClause.append(getXpathString(xpath, fieldName)).append(' ').append(operator).append(" '").append(
+                fieldValue.trim()).append("' ");
         }
-        else if (fieldType
-            .equalsIgnoreCase(Constants.DATABASE_FIELD_TYPE_XPATH_NUMERIC)) {
-            whereClause
-                .append(getXpathNumeric(xpath, fieldName)).append(' ').append(
-                    operator).append(' ').append(fieldValue).append(' ');
+        else if (fieldType.equalsIgnoreCase(Constants.DATABASE_FIELD_TYPE_XPATH_NUMERIC)) {
+            whereClause.append(getXpathNumeric(xpath, fieldName)).append(' ').append(operator).append(' ').append(
+                fieldValue).append(' ');
         }
-        else if (fieldType
-            .equalsIgnoreCase(Constants.DATABASE_FIELD_TYPE_FREE_SQL)) {
+        else if (fieldType.equalsIgnoreCase(Constants.DATABASE_FIELD_TYPE_FREE_SQL)) {
             whereClause.append(fieldValue);
         }
         else {
@@ -747,17 +596,12 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
 
     /**
      * Handles select-fields for sql-query.
-     * 
-     * @param selectFieldVos
-     *            Collection of SelectFieldVo.
+     *
+     * @param selectFieldVos Collection of SelectFieldVo.
      * @return String string with fields to select
-     * @throws SqlDatabaseSystemException
-     *             If an error occurs accessing the database.
-     * 
+     * @throws SqlDatabaseSystemException If an error occurs accessing the database.
      */
-    private String handleSelectFields(
-        final Iterable<SelectFieldVo> selectFieldVos)
-        throws SqlDatabaseSystemException {
+    private String handleSelectFields(final Iterable<SelectFieldVo> selectFieldVos) throws SqlDatabaseSystemException {
         final StringBuilder selectFields = new StringBuilder(" ");
         int i = 0;
         for (final SelectFieldVo selectFieldVo : selectFieldVos) {
@@ -768,11 +612,8 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
                 selectFields.append('*');
                 break;
             }
-            if (selectFieldVo.getTableName() != null
-                && selectFieldVo.getTableName().length() != 0) {
-                final String tablename =
-                    handleTableName(selectFieldVo.getTableName()).replaceFirst(
-                        ".*?\\.", "");
+            if (selectFieldVo.getTableName() != null && selectFieldVo.getTableName().length() != 0) {
+                final String tablename = handleTableName(selectFieldVo.getTableName()).replaceFirst(".*?\\.", "");
                 selectFields.append(tablename).append('.');
             }
             selectFields.append(selectFieldVo.getFieldName());
@@ -784,109 +625,81 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
 
     /**
      * Get database-dependant sql-query-part for an xpath-boolean request.
-     * 
-     * @param xpath
-     *            xpath-expression.
-     * @param field
-     *            db-field.
+     *
+     * @param xpath xpath-expression.
+     * @param field db-field.
      * @return String database-dependant query for an xpath-boolean request.
-     * 
      */
     @Override
     public String getXpathBoolean(final String xpath, final String field) {
-        return XPATH_MATCHER.reset(XPATH_BOOLEAN_FUNCTION).replaceAll(Matcher.quoteReplacement(field) + "$1"
-                + Matcher.quoteReplacement(xpath));
+        return XPATH_MATCHER.reset(XPATH_BOOLEAN_FUNCTION).replaceAll(
+            Matcher.quoteReplacement(field) + "$1" + Matcher.quoteReplacement(xpath));
     }
 
     /**
      * Get database-dependant sql-query-part for an xpath-string request.
-     * 
-     * @param xpath
-     *            xpath-expression.
-     * @param field
-     *            db-field.
+     *
+     * @param xpath xpath-expression.
+     * @param field db-field.
      * @return String database-dependant query for an xpath-string request.
-     * 
      */
     @Override
     public String getXpathString(final String xpath, final String field) {
         return XPATH_MATCHER.reset(XPATH_STRING_FUNCTION).replaceAll(
-            Matcher.quoteReplacement(field) + "$1"
-                + Matcher.quoteReplacement(xpath));
+            Matcher.quoteReplacement(field) + "$1" + Matcher.quoteReplacement(xpath));
     }
 
     /**
      * Get database-dependant sql-query-part for an xpath-numeric request.
-     * 
-     * @param xpath
-     *            xpath-expression.
-     * @param field
-     *            db-field.
+     *
+     * @param xpath xpath-expression.
+     * @param field db-field.
      * @return String database-dependant query for an xpath-string request.
-     * 
      */
     public String getXpathNumeric(final String xpath, final String field) {
-        return XPATH_MATCHER.reset(XPATH_NUMBER_FUNCTION).replaceAll(Matcher.quoteReplacement(field) + "$1"
-                + Matcher.quoteReplacement(xpath));
+        return XPATH_MATCHER.reset(XPATH_NUMBER_FUNCTION).replaceAll(
+            Matcher.quoteReplacement(field) + "$1" + Matcher.quoteReplacement(xpath));
     }
 
     /**
      * checks DatabaseTableVo for validity.
-     * 
-     * @param databaseTableVo
-     *            databaseTableVo.
-     * @throws SqlDatabaseSystemException
-     *             SqlDatabaseSystemException
-     * 
+     *
+     * @param databaseTableVo databaseTableVo.
+     * @throws SqlDatabaseSystemException SqlDatabaseSystemException
      */
-    public void checkDatabaseTableVo(final DatabaseTableVo databaseTableVo)
-        throws SqlDatabaseSystemException {
-        if (databaseTableVo.getTableName() == null
-            || databaseTableVo.getTableName().length() == 0
+    public void checkDatabaseTableVo(final DatabaseTableVo databaseTableVo) throws SqlDatabaseSystemException {
+        if (databaseTableVo.getTableName() == null || databaseTableVo.getTableName().length() == 0
             || databaseTableVo.getTableName().length() > 30) {
-            throw new SqlDatabaseSystemException(
-                "tablename may not be empty or have more than 30 characters " 
+            throw new SqlDatabaseSystemException("tablename may not be empty or have more than 30 characters "
                 + databaseTableVo.getTableName());
         }
-        if (databaseTableVo.getDatabaseFieldVos() == null
-            || databaseTableVo.getDatabaseFieldVos().isEmpty()) {
-            throw new SqlDatabaseSystemException(
-                "database-fields may not be empty");
+        if (databaseTableVo.getDatabaseFieldVos() == null || databaseTableVo.getDatabaseFieldVos().isEmpty()) {
+            throw new SqlDatabaseSystemException("database-fields may not be empty");
         }
-        for (final DatabaseTableFieldVo databaseTableFieldVo
-                : databaseTableVo.getDatabaseFieldVos()) {
-            if (databaseTableFieldVo.getFieldName() == null
-                || databaseTableFieldVo.getFieldName().length() == 0
+        for (final DatabaseTableFieldVo databaseTableFieldVo : databaseTableVo.getDatabaseFieldVos()) {
+            if (databaseTableFieldVo.getFieldName() == null || databaseTableFieldVo.getFieldName().length() == 0
                 || databaseTableFieldVo.getFieldName().length() > 30) {
-                throw new SqlDatabaseSystemException(
-                    "fieldname may not be empty or have more than 30 characters " 
+                throw new SqlDatabaseSystemException("fieldname may not be empty or have more than 30 characters "
                     + databaseTableFieldVo.getFieldName());
             }
-            if (databaseTableFieldVo.getFieldType() == null
-                || databaseTableFieldVo.getFieldType().length() == 0) {
-                throw new SqlDatabaseSystemException(
-                    "fieldtype may not be empty");
+            if (databaseTableFieldVo.getFieldType() == null || databaseTableFieldVo.getFieldType().length() == 0) {
+                throw new SqlDatabaseSystemException("fieldtype may not be empty");
             }
 
         }
         if (databaseTableVo.getDatabaseIndexVos() != null) {
-            for (final DatabaseIndexVo databaseIndexVo
-                : databaseTableVo.getDatabaseIndexVos()) {
-                if (databaseIndexVo.getIndexName() == null
-                    || databaseIndexVo.getIndexName().length() == 0
+            for (final DatabaseIndexVo databaseIndexVo : databaseTableVo.getDatabaseIndexVos()) {
+                if (databaseIndexVo.getIndexName() == null || databaseIndexVo.getIndexName().length() == 0
                     || databaseIndexVo.getIndexName().length() > 30) {
-                    throw new SqlDatabaseSystemException(
-                        "indexname may not be empty or have more than 30 characters " 
+                    throw new SqlDatabaseSystemException("indexname may not be empty or have more than 30 characters "
                         + databaseIndexVo.getIndexName());
                 }
                 if (databaseIndexVo.getFields() == null) {
-                    throw new SqlDatabaseSystemException(
-                        "indexfields may not be empty");
+                    throw new SqlDatabaseSystemException("indexfields may not be empty");
                 }
                 for (final String field : databaseIndexVo.getFields()) {
                     if (field == null || field.length() == 0) {
-                        throw new SqlDatabaseSystemException(
-                            "indexfield may not be null");
+                        throw new SqlDatabaseSystemException("indexfield may not be null");
                     }
                 }
 
@@ -896,101 +709,68 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
 
     /**
      * checks DatabaseRecordVo for validity.
-     * 
-     * @param databaseRecordVo
-     *            databaseRecordVo.
-     * @throws SqlDatabaseSystemException
-     *             SqlDatabaseSystemException
-     * 
+     *
+     * @param databaseRecordVo databaseRecordVo.
+     * @throws SqlDatabaseSystemException SqlDatabaseSystemException
      */
-    public void checkDatabaseRecordVo(final DatabaseRecordVo databaseRecordVo)
-        throws SqlDatabaseSystemException {
-        if (databaseRecordVo.getTableName() == null
-            || databaseRecordVo.getTableName().length() == 0) {
+    public void checkDatabaseRecordVo(final DatabaseRecordVo databaseRecordVo) throws SqlDatabaseSystemException {
+        if (databaseRecordVo.getTableName() == null || databaseRecordVo.getTableName().length() == 0) {
             throw new SqlDatabaseSystemException("tablename may not be empty");
         }
         if (databaseRecordVo.getDatabaseRecordFieldVos() == null
             || databaseRecordVo.getDatabaseRecordFieldVos().isEmpty()) {
-            throw new SqlDatabaseSystemException(
-                "database-fields may not be empty");
+            throw new SqlDatabaseSystemException("database-fields may not be empty");
         }
-        for (final DatabaseRecordFieldVo databaseRecordFieldVo
-            : databaseRecordVo.getDatabaseRecordFieldVos()) {
-            if (databaseRecordFieldVo.getFieldName() == null
-                || databaseRecordFieldVo.getFieldName().length() == 0) {
-                throw new SqlDatabaseSystemException(
-                    "fieldname may not be empty");
+        for (final DatabaseRecordFieldVo databaseRecordFieldVo : databaseRecordVo.getDatabaseRecordFieldVos()) {
+            if (databaseRecordFieldVo.getFieldName() == null || databaseRecordFieldVo.getFieldName().length() == 0) {
+                throw new SqlDatabaseSystemException("fieldname may not be empty");
             }
-            if (databaseRecordFieldVo.getFieldType() == null
-                || databaseRecordFieldVo.getFieldType().length() == 0) {
-                throw new SqlDatabaseSystemException(
-                    "fieldtype may not be empty");
+            if (databaseRecordFieldVo.getFieldType() == null || databaseRecordFieldVo.getFieldType().length() == 0) {
+                throw new SqlDatabaseSystemException("fieldtype may not be empty");
             }
             if (databaseRecordFieldVo.getFieldValue() == null) {
-                throw new SqlDatabaseSystemException(
-                    "fieldvalue may not be empty");
+                throw new SqlDatabaseSystemException("fieldvalue may not be empty");
             }
         }
     }
 
     /**
      * checks DatabaseSelectVo for validity.
-     * 
-     * @param databaseSelectVo
-     *            databaseSelectVo.
-     * @throws SqlDatabaseSystemException
-     *             SqlDatabaseSystemException
-     * 
+     *
+     * @param databaseSelectVo databaseSelectVo.
+     * @throws SqlDatabaseSystemException SqlDatabaseSystemException
      */
-    public void checkDatabaseSelectVo(final DatabaseSelectVo databaseSelectVo)
-        throws SqlDatabaseSystemException {
-        if (databaseSelectVo.getTableNames() == null
-            || databaseSelectVo.getTableNames().isEmpty()) {
+    public void checkDatabaseSelectVo(final DatabaseSelectVo databaseSelectVo) throws SqlDatabaseSystemException {
+        if (databaseSelectVo.getTableNames() == null || databaseSelectVo.getTableNames().isEmpty()) {
             throw new SqlDatabaseSystemException("tablenames may not be empty");
         }
         for (final String tablename : databaseSelectVo.getTableNames()) {
             if (tablename == null || tablename.length() == 0) {
-                throw new SqlDatabaseSystemException(
-                    "tablename may not be null");
+                throw new SqlDatabaseSystemException("tablename may not be null");
             }
         }
-        if (databaseSelectVo.getSelectType() == null
-            || databaseSelectVo.getSelectType().length() == 0) {
-            throw new SqlDatabaseSystemException(
-                "database-fields may not be empty");
+        if (databaseSelectVo.getSelectType() == null || databaseSelectVo.getSelectType().length() == 0) {
+            throw new SqlDatabaseSystemException("database-fields may not be empty");
         }
-        if (databaseSelectVo.getSelectType().equals(
-            Constants.DATABASE_SELECT_TYPE_SELECT)
-            || databaseSelectVo.getSelectType().equals(
-                Constants.DATABASE_SELECT_TYPE_UPDATE)) {
-            if (databaseSelectVo.getSelectFieldVos() == null
-                || databaseSelectVo.getSelectFieldVos().isEmpty()) {
-                throw new SqlDatabaseSystemException(
-                    "select-fields may not be empty");
+        if (databaseSelectVo.getSelectType().equals(Constants.DATABASE_SELECT_TYPE_SELECT)
+            || databaseSelectVo.getSelectType().equals(Constants.DATABASE_SELECT_TYPE_UPDATE)) {
+            if (databaseSelectVo.getSelectFieldVos() == null || databaseSelectVo.getSelectFieldVos().isEmpty()) {
+                throw new SqlDatabaseSystemException("select-fields may not be empty");
             }
-            for (final SelectFieldVo selectFieldVo
-                : databaseSelectVo.getSelectFieldVos()) {
-                if (selectFieldVo.getFieldName() == null
-                    || selectFieldVo.getFieldName().length() == 0) {
-                    throw new SqlDatabaseSystemException(
-                        "select-fieldname may not be empty");
+            for (final SelectFieldVo selectFieldVo : databaseSelectVo.getSelectFieldVos()) {
+                if (selectFieldVo.getFieldName() == null || selectFieldVo.getFieldName().length() == 0) {
+                    throw new SqlDatabaseSystemException("select-fieldname may not be empty");
                 }
                 if (databaseSelectVo.getTableNames().size() > 1
-                    && (selectFieldVo.getTableName() == null || selectFieldVo
-                        .getTableName().length() == 0)) {
-                    throw new SqlDatabaseSystemException(
-                        "select-field-tablename may not be empty");
+                    && (selectFieldVo.getTableName() == null || selectFieldVo.getTableName().length() == 0)) {
+                    throw new SqlDatabaseSystemException("select-field-tablename may not be empty");
                 }
-                if (databaseSelectVo.getSelectType().equals(
-                    Constants.DATABASE_SELECT_TYPE_UPDATE)) {
+                if (databaseSelectVo.getSelectType().equals(Constants.DATABASE_SELECT_TYPE_UPDATE)) {
                     if (selectFieldVo.getFieldValue() == null) {
-                        throw new SqlDatabaseSystemException(
-                            "select-field-value may not be null");
+                        throw new SqlDatabaseSystemException("select-field-value may not be null");
                     }
-                    if (selectFieldVo.getFieldType() == null
-                        || selectFieldVo.getFieldType().length() == 0) {
-                        throw new SqlDatabaseSystemException(
-                            "select-field-type may not be empty");
+                    if (selectFieldVo.getFieldType() == null || selectFieldVo.getFieldType().length() == 0) {
+                        throw new SqlDatabaseSystemException("select-field-type may not be empty");
                     }
                 }
             }
@@ -998,55 +778,39 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
         if (databaseSelectVo.getAdditionalWhereGroupVos() != null
             && !databaseSelectVo.getAdditionalWhereGroupVos().isEmpty()
             && databaseSelectVo.getRootWhereGroupVo() == null) {
-            throw new SqlDatabaseSystemException(
-                "root where group may not be empty");
+            throw new SqlDatabaseSystemException("root where group may not be empty");
         }
         if (databaseSelectVo.getRootWhereGroupVo() != null) {
-            final RootWhereGroupVo rootWhereGroupVo =
-                databaseSelectVo.getRootWhereGroupVo();
+            final RootWhereGroupVo rootWhereGroupVo = databaseSelectVo.getRootWhereGroupVo();
             if (rootWhereGroupVo.getRootWhereFieldVo() == null) {
-                throw new SqlDatabaseSystemException(
-                    "root where field may not be empty");
+                throw new SqlDatabaseSystemException("root where field may not be empty");
             }
-            final RootWhereFieldVo rootWhereFieldVo =
-                rootWhereGroupVo.getRootWhereFieldVo();
-            checkWhereFieldVo("root", rootWhereFieldVo.getFieldName(),
-                rootWhereFieldVo.getFieldType(), rootWhereFieldVo
-                    .getFieldValue(), rootWhereFieldVo.getOperator(),
-                rootWhereFieldVo.getXpath());
+            final RootWhereFieldVo rootWhereFieldVo = rootWhereGroupVo.getRootWhereFieldVo();
+            checkWhereFieldVo("root", rootWhereFieldVo.getFieldName(), rootWhereFieldVo.getFieldType(),
+                rootWhereFieldVo.getFieldValue(), rootWhereFieldVo.getOperator(), rootWhereFieldVo.getXpath());
             if (rootWhereGroupVo.getAdditionalWhereFieldVos() != null) {
-                for (final AdditionalWhereFieldVo additionalWhereFieldVo
-                    : rootWhereGroupVo.getAdditionalWhereFieldVos()) {
-                    checkWhereFieldVo("additional", additionalWhereFieldVo
-                        .getFieldName(), additionalWhereFieldVo.getFieldType(),
-                        additionalWhereFieldVo.getFieldValue(),
-                        additionalWhereFieldVo.getOperator(),
+                for (final AdditionalWhereFieldVo additionalWhereFieldVo : rootWhereGroupVo
+                    .getAdditionalWhereFieldVos()) {
+                    checkWhereFieldVo("additional", additionalWhereFieldVo.getFieldName(), additionalWhereFieldVo
+                        .getFieldType(), additionalWhereFieldVo.getFieldValue(), additionalWhereFieldVo.getOperator(),
                         additionalWhereFieldVo.getXpath());
                 }
             }
 
         }
         if (databaseSelectVo.getAdditionalWhereGroupVos() != null) {
-            for (final AdditionalWhereGroupVo additionalWhereGroupVo
-                : databaseSelectVo.getAdditionalWhereGroupVos()) {
+            for (final AdditionalWhereGroupVo additionalWhereGroupVo : databaseSelectVo.getAdditionalWhereGroupVos()) {
                 if (additionalWhereGroupVo.getRootWhereFieldVo() == null) {
-                    throw new SqlDatabaseSystemException(
-                        "root where field may not be empty");
+                    throw new SqlDatabaseSystemException("root where field may not be empty");
                 }
-                final RootWhereFieldVo rootWhereFieldVo =
-                    additionalWhereGroupVo.getRootWhereFieldVo();
-                checkWhereFieldVo("root", rootWhereFieldVo.getFieldName(),
-                    rootWhereFieldVo.getFieldType(), rootWhereFieldVo
-                        .getFieldValue(), rootWhereFieldVo.getOperator(),
-                    rootWhereFieldVo.getXpath());
-                if (additionalWhereGroupVo
-                        .getAdditionalWhereFieldVos() != null) {
-                    for (final AdditionalWhereFieldVo additionalWhereFieldVo
-                        : additionalWhereGroupVo.getAdditionalWhereFieldVos()) {
-                        checkWhereFieldVo("additional", additionalWhereFieldVo
-                            .getFieldName(), additionalWhereFieldVo
-                            .getFieldType(), additionalWhereFieldVo
-                            .getFieldValue(), additionalWhereFieldVo
+                final RootWhereFieldVo rootWhereFieldVo = additionalWhereGroupVo.getRootWhereFieldVo();
+                checkWhereFieldVo("root", rootWhereFieldVo.getFieldName(), rootWhereFieldVo.getFieldType(),
+                    rootWhereFieldVo.getFieldValue(), rootWhereFieldVo.getOperator(), rootWhereFieldVo.getXpath());
+                if (additionalWhereGroupVo.getAdditionalWhereFieldVos() != null) {
+                    for (final AdditionalWhereFieldVo additionalWhereFieldVo : additionalWhereGroupVo
+                        .getAdditionalWhereFieldVos()) {
+                        checkWhereFieldVo("additional", additionalWhereFieldVo.getFieldName(), additionalWhereFieldVo
+                            .getFieldType(), additionalWhereFieldVo.getFieldValue(), additionalWhereFieldVo
                             .getOperator(), additionalWhereFieldVo.getXpath());
                     }
 
@@ -1057,33 +821,22 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
 
     /**
      * checks WhereFieldVo for validity.
-     * 
-     * @param type
-     *            type (root or additional).
-     * @param fieldName
-     *            fieldName.
-     * @param fieldType
-     *            fieldType.
-     * @param fieldValue
-     *            fieldValue.
-     * @param operator
-     *            operator.
-     * @param xpath
-     *            xpath.
-     * @throws SqlDatabaseSystemException
-     *             SqlDatabaseSystemException
-     * 
+     *
+     * @param type       type (root or additional).
+     * @param fieldName  fieldName.
+     * @param fieldType  fieldType.
+     * @param fieldValue fieldValue.
+     * @param operator   operator.
+     * @param xpath      xpath.
+     * @throws SqlDatabaseSystemException SqlDatabaseSystemException
      */
-    private static void checkWhereFieldVo(final CharSequence type, final CharSequence fieldName, final String fieldType,
-                                          final String fieldValue, final CharSequence operator,
-                                          final CharSequence xpath)
-        throws SqlDatabaseSystemException {
-        if (type == null || type.length() == 0
-            || !"root".equals(type) && !"additional".equals(type)) {
+    private static void checkWhereFieldVo(
+        final CharSequence type, final CharSequence fieldName, final String fieldType, final String fieldValue,
+        final CharSequence operator, final CharSequence xpath) throws SqlDatabaseSystemException {
+        if (type == null || type.length() == 0 || !"root".equals(type) && !"additional".equals(type)) {
             throw new SqlDatabaseSystemException("wrong type given");
         }
-        if ("additional".equals(type)
-            && (operator == null || operator.length() == 0)) {
+        if ("additional".equals(type) && (operator == null || operator.length() == 0)) {
             throw new SqlDatabaseSystemException("operator may not be null");
         }
         if (fieldType == null || fieldType.length() == 0) {
@@ -1094,62 +847,46 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
         }
         if (!fieldType.equals(Constants.DATABASE_FIELD_TYPE_FREE_SQL)) {
             if (fieldName == null || fieldName.length() == 0) {
-                throw new SqlDatabaseSystemException(
-                    "fieldname may not be null");
+                throw new SqlDatabaseSystemException("fieldname may not be null");
             }
             if (operator == null || operator.length() == 0) {
-                throw new SqlDatabaseSystemException(
-                            "operator may not be null");
+                throw new SqlDatabaseSystemException("operator may not be null");
             }
             if (fieldType.startsWith("xpath") && (xpath == null || xpath.length() == 0)) {
-                throw new SqlDatabaseSystemException(
-                    "xpath may not be null");
+                throw new SqlDatabaseSystemException("xpath may not be null");
             }
         }
     }
 
     /**
      * extends tablename with schemaname and quotes.
-     * 
-     * @param tablename
-     *            name of table
+     *
+     * @param tablename name of table
      * @return String replaced tablename
-     * 
      */
     public String handleTableName(final String tablename) {
-        return tablename.matches(".*\\..*") ? 
-            tablename.substring(tablename.indexOf('.')) : tablename;
+        return tablename.matches(".*\\..*") ? tablename.substring(tablename.indexOf('.')) : tablename;
 
     }
 
     /**
      * checks if given fieldname is a reserved expression in the database.
-     * 
-     * @param fieldname
-     *            name of field
-     * @throws SqlDatabaseSystemException
-     *             e
-     * 
+     *
+     * @param fieldname name of field
+     * @throws SqlDatabaseSystemException e
      */
     @Override
-    public void checkReservedExpressions(final String fieldname)
-        throws SqlDatabaseSystemException {
+    public void checkReservedExpressions(final String fieldname) throws SqlDatabaseSystemException {
         if (RESERVED_EXPRESSIONS.get(fieldname) != null) {
-            throw new SqlDatabaseSystemException(fieldname
-                + " must not be used as fieldname");
+            throw new SqlDatabaseSystemException(fieldname + " must not be used as fieldname");
         }
 
     }
 
     /**
-     * Wrapper of setDataSource to enable bean stuff generation for this
-     * handler.
-     * 
-     * @spring.property ref="escidoc-core.DataSource"
-     * @param myDataSource
-     *            ds
-     * 
-     * @sm
+     * Wrapper of setDataSource to enable bean stuff generation for this handler.
+     *
+     * @param myDataSource ds
      */
     public void setMyDataSource(final DataSource myDataSource) {
         setDataSource(myDataSource);

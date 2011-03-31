@@ -56,17 +56,15 @@ import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
 /**
- * This is a helper class to convert an XACML policy into an SQL / Lucene
- * fragment.
- * 
+ * This is a helper class to convert an XACML policy into an SQL / Lucene fragment.
+ *
  * @author André Schenk
  */
-public class    PolicyParser {
-    private static final String ACTION_ID =
-        "urn:oasis:names:tc:xacml:1.0:action:action-id";
+public class PolicyParser {
 
-    private static final String MATCH_PREFIX =
-        "info:escidoc/names:aa:1.0:action:retrieve-";
+    private static final String ACTION_ID = "urn:oasis:names:tc:xacml:1.0:action:action-id";
+
+    private static final String MATCH_PREFIX = "info:escidoc/names:aa:1.0:action:retrieve-";
 
     private static final Collection<String> MATCHES = new HashSet<String>();
 
@@ -84,27 +82,21 @@ public class    PolicyParser {
     private Values values;
 
     /**
-     * This map only contains these actions which match the actions collected in
-     * "MATCHES".
+     * This map only contains these actions which match the actions collected in "MATCHES".
      */
-    private final Map<Object, AttributeValue> actions =
-        new HashMap<Object, AttributeValue>();
+    private final Map<Object, AttributeValue> actions = new HashMap<Object, AttributeValue>();
 
     /**
-     * Return a list of all rules for the given resource type which match the
-     * actions listed in "MATCHES".
-     * 
-     * @param resourceType
-     *            resource type
-     * 
+     * Return a list of all rules for the given resource type which match the actions listed in "MATCHES".
+     *
+     * @param resourceType resource type
      * @return list of matching rules
      */
     public List<String> getMatchingRules(final ResourceType resourceType) {
         final List<String> result = new LinkedList<String>();
 
         for (final Entry<Object, AttributeValue> objectAttributeValueEntry : actions.entrySet()) {
-            if (matches(objectAttributeValueEntry.getValue(),
-                MATCH_PREFIX + resourceType.getLabel())) {
+            if (matches(objectAttributeValueEntry.getValue(), MATCH_PREFIX + resourceType.getLabel())) {
                 if (objectAttributeValueEntry.getKey() instanceof Policy) {
                     result.add(values.getNeutralAndElement(resourceType));
                 }
@@ -112,8 +104,7 @@ public class    PolicyParser {
                     result.add(con.parse(((Rule) objectAttributeValueEntry.getKey()).getCondition()));
                 }
                 else {
-                    throw new IllegalArgumentException(objectAttributeValueEntry.getKey()
-                        + ": unknown action type");
+                    throw new IllegalArgumentException(objectAttributeValueEntry.getKey() + ": unknown action type");
                 }
             }
         }
@@ -122,33 +113,25 @@ public class    PolicyParser {
 
     /**
      * Determine whether or not the given expression is an action id.
-     * 
-     * @param evaluatable
-     *            expression to be analyzed
-     * 
+     *
+     * @param evaluatable expression to be analyzed
      * @return true if the given expression is an action id
      */
     private static boolean isActionId(final Evaluatable evaluatable) {
         return evaluatable instanceof AttributeDesignator
-            && ((AttributeDesignator) evaluatable)
-            .getId().toString().equals(ACTION_ID);
+            && ((AttributeDesignator) evaluatable).getId().toString().equals(ACTION_ID);
     }
 
     /**
-     * Check if the given value list contains a value which has a match in
-     * "MATCHES".
-     * 
-     * @param valueList
-     *            value list
-     * 
-     * @return true if the given value list contains a value which has a match
-     *         in "MATCHES"
+     * Check if the given value list contains a value which has a match in "MATCHES".
+     *
+     * @param valueList value list
+     * @return true if the given value list contains a value which has a match in "MATCHES"
      */
     private boolean matches(final Object valueList) {
 
         if (!(valueList instanceof StringAttribute)) {
-            throw new IllegalArgumentException(
-                "only XMLSchema#string is supported");
+            throw new IllegalArgumentException("only XMLSchema#string is supported");
         }
         boolean result = false;
         for (final String match : MATCHES) {
@@ -161,33 +144,26 @@ public class    PolicyParser {
     }
 
     /**
-     * Check if the given value list contains a value which matches the given
-     * action.
-     * 
-     * @param valueList
-     *            value list
-     * @param action
-     *            action which must be matched
-     * 
-     * @return true if the given value list contains a value which matches the
-     *         given action
+     * Check if the given value list contains a value which matches the given action.
+     *
+     * @param valueList value list
+     * @param action    action which must be matched
+     * @return true if the given value list contains a value which matches the given action
      */
     private static boolean matches(final Object valueList, final String action) {
 
         if (!(valueList instanceof StringAttribute)) {
-            throw new IllegalArgumentException(
-                "only XMLSchema#string is supported");
+            throw new IllegalArgumentException("only XMLSchema#string is supported");
         }
         final Pattern p = Pattern.compile(".*(\\A|\\s)" + action + "(\\s|\\z).*", Pattern.MULTILINE | Pattern.DOTALL);
         return p.matcher(((StringAttribute) valueList).getValue()).matches();
     }
 
     /**
-     * Parse the given policy and collect all interesting rules (which match the
-     * actions listed in "MATCHES") internally.
-     * 
-     * @param policy
-     *            policy to be parsed
+     * Parse the given policy and collect all interesting rules (which match the actions listed in "MATCHES")
+     * internally.
+     *
+     * @param policy policy to be parsed
      */
     public void parse(final AbstractPolicy policy) {
         actions.clear();
@@ -196,56 +172,47 @@ public class    PolicyParser {
             if (action instanceof Rule) {
                 parseRule((Rule) action);
             }
-            else if (!(action instanceof Policy)){
-                throw new IllegalArgumentException(action
-                    + ": unknown action type");
+            else if (!(action instanceof Policy)) {
+                throw new IllegalArgumentException(action + ": unknown action type");
             }
         }
     }
 
     /**
      * Parse an object.
-     * 
-     * @param targetObject
-     *            target object
-     * @param match
-     *            match
+     *
+     * @param targetObject target object
+     * @param match        match
      */
     private void parseAction(final Object targetObject, final Object match) {
         if (match != null) {
             if (match instanceof TargetMatch) {
-                if (!(((TargetMatch) match).getMatchFunction()
-                    instanceof EqualFunction || ((TargetMatch) match)
+                if (!(((TargetMatch) match).getMatchFunction() instanceof EqualFunction || ((TargetMatch) match)
                     .getMatchFunction() instanceof XacmlFunctionContains)) {
-                    throw new IllegalArgumentException(((TargetMatch) match)
-                        .getMatchFunction().getClass().getName()
+                    throw new IllegalArgumentException(((TargetMatch) match).getMatchFunction().getClass().getName()
                         + ": unknown action");
                 }
                 if (matches(((TargetMatch) match).getMatchValue())
                     && isActionId(((TargetMatch) match).getMatchEvaluatable())) {
-                    parseEvaluatable(((TargetMatch) match)
-                        .getMatchEvaluatable());
-                    actions.put(targetObject,
-                        ((TargetMatch) match).getMatchValue());
+                    parseEvaluatable(((TargetMatch) match).getMatchEvaluatable());
+                    actions.put(targetObject, ((TargetMatch) match).getMatchValue());
                 }
             }
-            else if (match instanceof Iterable< ? >) {
-                for (final Object m : (Iterable< ? >) match) {
+            else if (match instanceof Iterable<?>) {
+                for (final Object m : (Iterable<?>) match) {
                     parseAction(targetObject, m);
                 }
             }
             else {
-                throw new IllegalArgumentException(match
-                    + ": unknown action type");
+                throw new IllegalArgumentException(match + ": unknown action type");
             }
         }
     }
 
     /**
      * Parse a list of objects.
-     * 
-     * @param children
-     *            list of objects to be parsed
+     *
+     * @param children list of objects to be parsed
      */
     private void parseChildren(final Iterable<?> children) {
         if (children != null) {
@@ -263,8 +230,7 @@ public class    PolicyParser {
                     parseRule((Rule) child);
                 }
                 else {
-                    throw new IllegalArgumentException(child
-                        + ": unknown child type");
+                    throw new IllegalArgumentException(child + ": unknown child type");
                 }
             }
         }
@@ -272,9 +238,8 @@ public class    PolicyParser {
 
     /**
      * Parse an object.
-     * 
-     * @param apply
-     *            object to be parsed
+     *
+     * @param apply object to be parsed
      */
     private void parseCondition(final Evaluatable apply) {
         if (apply != null) {
@@ -284,9 +249,8 @@ public class    PolicyParser {
 
     /**
      * Parse an object.
-     * 
-     * @param evaluatable
-     *            object to be parsed
+     *
+     * @param evaluatable object to be parsed
      */
     private void parseEvaluatable(final Evaluatable evaluatable) {
         if (evaluatable != null) {
@@ -296,18 +260,14 @@ public class    PolicyParser {
 
     /**
      * Parse an object.
-     * 
-     * @param policy
-     *            object to be parsed
+     *
+     * @param policy object to be parsed
      */
     private void parsePolicy(final AbstractPolicy policy) {
         if (policy != null) {
             parseChildren(policy.getChildren());
-            if (!(policy.getCombiningAlg()
-                instanceof OrderedPermitOverridesPolicyAlg || policy
-                .getCombiningAlg() instanceof OrderedPermitOverridesRuleAlg)) {
-                throw new IllegalArgumentException(
-                    "only ordered-permit-overrides is supported");
+            if (!(policy.getCombiningAlg() instanceof OrderedPermitOverridesPolicyAlg || policy.getCombiningAlg() instanceof OrderedPermitOverridesRuleAlg)) {
+                throw new IllegalArgumentException("only ordered-permit-overrides is supported");
             }
             parseTarget(policy, policy.getTarget());
         }
@@ -315,15 +275,13 @@ public class    PolicyParser {
 
     /**
      * Parse an object.
-     * 
-     * @param rule
-     *            object to be parsed
+     *
+     * @param rule object to be parsed
      */
     private void parseRule(final Rule rule) {
         if (rule != null) {
             if (rule.getChildren() != null && !rule.getChildren().isEmpty()) {
-                throw new IllegalArgumentException(
-                    "rule with children not supported");
+                throw new IllegalArgumentException("rule with children not supported");
             }
             if (rule.getEffect() != Result.DECISION_PERMIT) {
                 throw new IllegalArgumentException("only Permit is supported");
@@ -336,15 +294,12 @@ public class    PolicyParser {
 
     /**
      * Parse an object.
-     * 
-     * @param targetObject
-     *            target object
-     * @param target
-     *            target
+     *
+     * @param targetObject target object
+     * @param target       target
      */
     private void parseTarget(final Object targetObject, final Target target) {
-        if (target != null
-            && target.getActions() != null) {
+        if (target != null && target.getActions() != null) {
             for (final Object match : target.getActions()) {
                 parseAction(targetObject, match);
             }
@@ -353,9 +308,8 @@ public class    PolicyParser {
 
     /**
      * Injects the condition parser object.
-     * 
-     * @param con
-     *            condition parser from Spring
+     *
+     * @param con condition parser from Spring
      */
     public void setConditionParser(final ConditionParser con) {
         this.con = con;
@@ -363,9 +317,8 @@ public class    PolicyParser {
 
     /**
      * Injects the filter values object.
-     * 
-     * @param values
-     *            filter values object from Spring
+     *
+     * @param values filter values object from Spring
      */
     public void setValues(final Values values) {
         this.values = values;

@@ -61,17 +61,13 @@ import java.util.Collection;
 
 /**
  * @author Michael Hoppe
- * 
- *         Singleton for caching Resources (items, container, fulltexts) For
- *         indexing by fedoragsearch
- * 
+ *         <p/>
+ *         Singleton for caching Resources (items, container, fulltexts) For indexing by fedoragsearch
  */
 public final class IndexerResourceCache {
 
     /**
-     * Fall back value if reading property
-     * {@link <code>EscidocConfiguration.INDEXER_CACHE_SIZE</code>} fails.
-     * 
+     * Fall back value if reading property {@link <code>EscidocConfiguration.INDEXER_CACHE_SIZE</code>} fails.
      */
     private static final int INDEXER_CACHE_SIZE_FALL_BACK = 30;
 
@@ -79,7 +75,9 @@ public final class IndexerResourceCache {
 
     private static final int BUFFER_SIZE = 0xFFFF;
 
-    /** Holds identifier and object. */
+    /**
+     * Holds identifier and object.
+     */
     private final Cache resources;
 
     private MethodMapper methodMapper;
@@ -94,16 +92,13 @@ public final class IndexerResourceCache {
 
     /**
      * private Constructor for Singleton.
-     * 
      */
     private IndexerResourceCache() {
         try {
             this.methodMapper =
-                (MethodMapper) BeanLocator.getBean("Common.spring.ejb.context",
-                    "common.CommonMethodMapper");
+                (MethodMapper) BeanLocator.getBean("Common.spring.ejb.context", "common.CommonMethodMapper");
             this.connectionUtility =
-                (ConnectionUtility) BeanLocator.getBean(
-                    "Common.spring.ejb.context",
+                (ConnectionUtility) BeanLocator.getBean("Common.spring.ejb.context",
                     "escidoc.core.common.util.service.ConnectionUtility");
             this.tripleStoreUtility = TripleStoreUtility.getInstance();
 
@@ -112,20 +107,22 @@ public final class IndexerResourceCache {
                 this.indexerCacheSize =
                     Integer.parseInt(EscidocConfiguration.getInstance().get(
                         EscidocConfiguration.ESCIDOC_CORE_INDEXER_CACHE_SIZE));
-            } catch (final Exception e) {
-                if(LOGGER.isWarnEnabled()) {
+            }
+            catch (final Exception e) {
+                if (LOGGER.isWarnEnabled()) {
                     LOGGER.warn("Error on parsing indexer resource cache size.");
                 }
-                if(LOGGER.isDebugEnabled()) {
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Error on parsing indexer resource cache size.", e);
                 }
                 this.indexerCacheSize = INDEXER_CACHE_SIZE_FALL_BACK;
             }
-        } catch (final Exception e) {
-            if(LOGGER.isWarnEnabled()) {
+        }
+        catch (final Exception e) {
+            if (LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on initializing indexer resource cache.");
             }
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on initializing indexer resource cache.", e);
             }
         }
@@ -136,9 +133,8 @@ public final class IndexerResourceCache {
 
     /**
      * Only initialize Object once. Check for old objects in cache.
-     * 
+     *
      * @return IndexerResourceCache IndexerResourceCache
-     * 
      */
     public static IndexerResourceCache getInstance() {
         return instance;
@@ -146,13 +142,10 @@ public final class IndexerResourceCache {
 
     /**
      * Get resource with given identifier.
-     * 
-     * @param identifier
-     *            identifier
+     *
+     * @param identifier identifier
      * @return Object resource-object
-     * @throws SystemException
-     *             e
-     * 
+     * @throws SystemException e
      */
     public Object getResource(final String identifier) throws SystemException {
         final String href = getHref(identifier);
@@ -169,16 +162,12 @@ public final class IndexerResourceCache {
 
     /**
      * Set resource with given identifier.
-     * 
-     * @param identifier
-     *            identifier
-     * @param resource
-     *            resource-object
-     * @throws SystemException
-     *             e
+     *
+     * @param identifier identifier
+     * @param resource   resource-object
+     * @throws SystemException e
      */
-    public void setResource(final String identifier, final Object resource)
-        throws SystemException {
+    public void setResource(final String identifier, final Object resource) throws SystemException {
         final String href = getHref(identifier);
         final Element element = new Element(href, resource);
         resources.put(element);
@@ -186,26 +175,21 @@ public final class IndexerResourceCache {
 
     /**
      * Get resource with given identifier.
-     * 
-     * @param identifier
-     *            identifier
-     * @throws SystemException
-     *             e
+     *
+     * @param identifier identifier
      * @return Resource with required identifier.
+     * @throws SystemException e
      */
-    private Object getResourceWithInternalKey(final String identifier)
-        throws SystemException {
+    private Object getResourceWithInternalKey(final String identifier) throws SystemException {
         final Element element = resources.get(identifier);
         return element != null ? element.getObjectValue() : null;
     }
 
     /**
      * delete resource with given identifier.
-     * 
-     * @param identifier
-     *            identifier
-     * @throws SystemException
-     *             e
+     *
+     * @param identifier identifier
+     * @throws SystemException e
      */
     public void deleteResource(final String identifier) throws SystemException {
         final String href = getHref(identifier);
@@ -223,12 +207,9 @@ public final class IndexerResourceCache {
 
     /**
      * delete resource with given identifier.
-     * 
-     * @param identifier
-     *            identifier
-     * @param resource
-     * @throws SystemException
-     *             e
+     *
+     * @param identifier identifier
+     * @throws SystemException e
      */
     public void replaceResource(final String identifier, final Object resource) throws SystemException {
         final String href = getHref(identifier);
@@ -247,44 +228,37 @@ public final class IndexerResourceCache {
     }
 
     /**
-     * get resource with given identifier from framework and write it into
-     * cache.
-     * 
-     * @param identifier
-     *            identifier
-     * @throws SystemException
-     *             e
+     * get resource with given identifier from framework and write it into cache.
+     *
+     * @param identifier identifier
+     * @throws SystemException e
      */
-    private void cacheInternalResource(final String identifier)
-        throws SystemException {
+    private void cacheInternalResource(final String identifier) throws SystemException {
         try {
             if (UserContext.getHandle() != null) {
                 UserContext.setRestAccess(Constants.USE_REST_REQUEST_PROTOCOL);
             }
-            final BeanMethod method =
-                methodMapper.getMethod(identifier, null, null, "GET", "");
-            final Object content =
-                method.invokeWithProtocol(null,
-                    Constants.USE_REST_REQUEST_PROTOCOL);
-            if (content != null
-                && "EscidocBinaryContent".equals(content.getClass().getSimpleName())) {
-                final EscidocBinaryContent escidocBinaryContent =
-                    (EscidocBinaryContent) content;
+            final BeanMethod method = methodMapper.getMethod(identifier, null, null, "GET", "");
+            final Object content = method.invokeWithProtocol(null, Constants.USE_REST_REQUEST_PROTOCOL);
+            if (content != null && "EscidocBinaryContent".equals(content.getClass().getSimpleName())) {
+                final EscidocBinaryContent escidocBinaryContent = (EscidocBinaryContent) content;
                 final ByteArrayOutputStream out = new ByteArrayOutputStream();
                 final InputStream in = escidocBinaryContent.getContent();
                 try {
-                     final byte[] bytes = new byte[BUFFER_SIZE];
-                     int i;
-                     while ((i = in.read(bytes)) > -1) {
+                    final byte[] bytes = new byte[BUFFER_SIZE];
+                    int i;
+                    while ((i = in.read(bytes)) > -1) {
                         out.write(bytes, 0, i);
-                     }
-                out.flush();
-                final MIMETypedStream stream = new MIMETypedStream(
-                        escidocBinaryContent.getMimeType(), out.toByteArray(), null);
-                setResource(identifier, stream);
-                } catch (final Exception e) {
+                    }
+                    out.flush();
+                    final MIMETypedStream stream =
+                        new MIMETypedStream(escidocBinaryContent.getMimeType(), out.toByteArray(), null);
+                    setResource(identifier, stream);
+                }
+                catch (final Exception e) {
                     throw new SystemException(e);
-                } finally {
+                }
+                finally {
                     IOUtils.closeStream(in);
                     IOUtils.closeStream(out);
                 }
@@ -299,11 +273,12 @@ public final class IndexerResourceCache {
                 && !"InvalidStatusException".equals(e.getTargetException().getClass().getSimpleName())) {
                 throw new SystemException(e);
             }
-        } catch (final MethodNotFoundException e) {
-            if(LOGGER.isWarnEnabled()) {
+        }
+        catch (final MethodNotFoundException e) {
+            if (LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on caching internal resource.");
             }
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on caching internal resource.", e);
             }
         }
@@ -314,14 +289,11 @@ public final class IndexerResourceCache {
 
     /**
      * get resource with given URL and write it into cache.
-     * 
-     * @param identifier
-     *            identifier
-     * @throws SystemException
-     *             e
+     *
+     * @param identifier identifier
+     * @throws SystemException e
      */
-    private void cacheExternalResource(final String identifier)
-        throws SystemException {
+    private void cacheExternalResource(final String identifier) throws SystemException {
         ByteArrayOutputStream out = null;
         InputStream in = null;
         try {
@@ -340,15 +312,15 @@ public final class IndexerResourceCache {
                 while ((byteval = in.read()) > -1) {
                     out.write(byteval);
                 }
-                final MIMETypedStream stream =
-                    new MIMETypedStream(mimeType, out.toByteArray(), null);
+                final MIMETypedStream stream = new MIMETypedStream(mimeType, out.toByteArray(), null);
                 setResource(identifier, stream);
             }
-        } catch (final Exception e) {
-            if(LOGGER.isWarnEnabled()) {
+        }
+        catch (final Exception e) {
+            if (LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on caching external resource.");
             }
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on caching external resource.", e);
             }
         }
@@ -360,12 +332,10 @@ public final class IndexerResourceCache {
 
     /**
      * generate href out of pid.
-     * 
-     * @param identifier
-     *            identifier
+     *
+     * @param identifier identifier
      * @return String href
-     * @throws SystemException
-     *             e
+     * @throws SystemException e
      */
     private String getHref(final String identifier) throws SystemException {
         String href = identifier;
@@ -375,8 +345,7 @@ public final class IndexerResourceCache {
             href = XmlUtility.getObjidWithoutVersion(href);
             final String objectType = tripleStoreUtility.getObjectType(href);
             if (objectType == null) {
-            	throw new SystemException(
-            			"couldnt get objectType for object " + href);
+                throw new SystemException("couldnt get objectType for object " + href);
             }
 
             href = XmlUtility.getHref(objectType, identifier);

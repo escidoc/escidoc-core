@@ -27,10 +27,11 @@ import java.util.Map;
 
 /**
  * This class is a value object for all parameters used in an SRU request.
- * 
+ *
  * @author André Schenk
  */
 public abstract class SRURequestParameters {
+
     private final String query;
 
     private final int maximumRecords;
@@ -45,38 +46,28 @@ public abstract class SRURequestParameters {
 
     /**
      * Create a new parameters object from the given map.
-     * 
-     * @param parameters
-     *            map map containing the CQL request parameters
+     *
+     * @param parameters map map containing the CQL request parameters
      */
     protected SRURequestParameters(final Map<String, String[]> parameters) {
-        this.query =
-            getStringParameter(parameters.get(Constants.SRU_PARAMETER_QUERY));
+        this.query = getStringParameter(parameters.get(Constants.SRU_PARAMETER_QUERY));
         this.maximumRecords =
-            getIntParameter(
-                parameters.get(Constants.SRU_PARAMETER_MAXIMUM_RECORDS),
-                getDefaultMaximumRecords());
-        final int givenStartRecord =
-            getIntParameter(
-                parameters.get(Constants.SRU_PARAMETER_START_RECORD), -1);
-        this.startRecord = givenStartRecord > -1 ? givenStartRecord + getDefaultStartRecord() - 1 : getDefaultStartRecord();
-        putExtraDataParameter(Constants.SRU_PARAMETER_USER, 
-            parameters.get(Constants.SRU_PARAMETER_USER));
-        putExtraDataParameter(Constants.SRU_PARAMETER_ROLE, 
-            parameters.get(Constants.SRU_PARAMETER_ROLE));
-        putExtraDataParameter(Constants.SRU_PARAMETER_OMIT_HIGHLIGHTING, 
-            parameters.get(Constants.SRU_PARAMETER_OMIT_HIGHLIGHTING));
+            getIntParameter(parameters.get(Constants.SRU_PARAMETER_MAXIMUM_RECORDS), getDefaultMaximumRecords());
+        final int givenStartRecord = getIntParameter(parameters.get(Constants.SRU_PARAMETER_START_RECORD), -1);
+        this.startRecord =
+            givenStartRecord > -1 ? givenStartRecord + getDefaultStartRecord() - 1 : getDefaultStartRecord();
+        putExtraDataParameter(Constants.SRU_PARAMETER_USER, parameters.get(Constants.SRU_PARAMETER_USER));
+        putExtraDataParameter(Constants.SRU_PARAMETER_ROLE, parameters.get(Constants.SRU_PARAMETER_ROLE));
+        putExtraDataParameter(Constants.SRU_PARAMETER_OMIT_HIGHLIGHTING, parameters
+            .get(Constants.SRU_PARAMETER_OMIT_HIGHLIGHTING));
 
-        final String operation =
-            getStringParameter(parameters
-                .get(Constants.SRU_PARAMETER_OPERATION));
+        final String operation = getStringParameter(parameters.get(Constants.SRU_PARAMETER_OPERATION));
 
         this.explain =
             getStringParameter(parameters.get(Constants.SRU_PARAMETER_EXPLAIN)) != null
                 || Constants.SRU_PARAMETER_EXPLAIN.equalsIgnoreCase(operation);
         this.recordPacking =
-            RecordPacking.fromType(getStringParameter(
-                parameters.get(Constants.SRU_PARAMETER_RECORD_PACKING), "xml"));
+            RecordPacking.fromType(getStringParameter(parameters.get(Constants.SRU_PARAMETER_RECORD_PACKING), "xml"));
         if (this.recordPacking == null) {
             this.recordPacking = RecordPacking.XML;
         }
@@ -108,28 +99,24 @@ public abstract class SRURequestParameters {
 
     /**
      * Get the default maximum records value for search.
-     * 
+     *
      * @return default maximum records value for search
      */
     protected abstract int getDefaultMaximumRecords();
 
     /**
      * Get the default start record for search.
-     * 
+     *
      * @return default start record for search
      */
     protected abstract int getDefaultStartRecord();
 
     /**
-     * Get the first parameter from the given array and convert it into an
-     * integer value. If the array is empty the default value is returned
-     * instead.
-     * 
-     * @param parameter
-     *            array containing the parameter to be extracted
-     * @param defaultValue
-     *            default value
-     * 
+     * Get the first parameter from the given array and convert it into an integer value. If the array is empty the
+     * default value is returned instead.
+     *
+     * @param parameter    array containing the parameter to be extracted
+     * @param defaultValue default value
      * @return first value from the given array as integer or the default value
      */
     private static int getIntParameter(final Object[] parameter, final int defaultValue) {
@@ -143,16 +130,12 @@ public abstract class SRURequestParameters {
 
     /**
      * Get the first parameter from the given array.
-     * 
-     * @param parameter
-     *            array containing the parameter to be extracted
-     * @param defaultValue
-     *            default value
-     * 
+     *
+     * @param parameter    array containing the parameter to be extracted
+     * @param defaultValue default value
      * @return first value from the given array or the default value
      */
-    private static String getStringParameter(
-        final Object[] parameter, final String defaultValue) {
+    private static String getStringParameter(final Object[] parameter, final String defaultValue) {
         String result = defaultValue;
 
         if (parameter != null && parameter.length > 0) {
@@ -163,10 +146,8 @@ public abstract class SRURequestParameters {
 
     /**
      * Get the first parameter from the given array.
-     * 
-     * @param parameter
-     *            array containing the parameter to be extracted
-     * 
+     *
+     * @param parameter array containing the parameter to be extracted
      * @return first value from the given array or null
      */
     private static String getStringParameter(final Object[] parameter) {
@@ -174,16 +155,12 @@ public abstract class SRURequestParameters {
     }
 
     /**
-     * Get the key and the first parameter from the given array 
-     * and put it in extraData HashMap.
-     * 
-     * @param key
-     *            the key
-     * @param parameter
-     *            array containing the parameter to be extracted
+     * Get the key and the first parameter from the given array and put it in extraData HashMap.
+     *
+     * @param key       the key
+     * @param parameter array containing the parameter to be extracted
      */
-    private void putExtraDataParameter(
-        final String key, final Object[] parameter) {
+    private void putExtraDataParameter(final String key, final Object[] parameter) {
         if (key != null && parameter != null && parameter.length > 0) {
             if (this.extraData == null) {
                 this.extraData = new HashMap<String, String>();

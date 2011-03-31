@@ -35,9 +35,8 @@ import org.junit.runners.JUnit4;
 
 /**
  * Testsuite for the UserManagementWrapper with REST transport.
- * 
+ *
  * @author Torsten Tetteroo
- * 
  */
 @RunWith(JUnit4.class)
 public class UserManagementWrapperRestTest extends UserManagementWrapperAbstractTest {

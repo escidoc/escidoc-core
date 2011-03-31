@@ -9,6 +9,7 @@ import javax.ejb.EJBLocalHome;
 public interface PreprocessingHandlerLocalHome extends EJBLocalHome {
 
     String COMP_NAME = "java:comp/env/ejb/PreprocessingHandlerLocal";
+
     String JNDI_NAME = "ejb/PreprocessingHandlerLocal";
 
     PreprocessingHandlerLocal create() throws CreateException;

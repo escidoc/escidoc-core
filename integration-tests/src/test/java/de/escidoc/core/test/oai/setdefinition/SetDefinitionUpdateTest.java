@@ -41,20 +41,17 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 /**
- * 
  * @author Rozita Friedman
- *
  */
 @RunWith(value = Parameterized.class)
 public class SetDefinitionUpdateTest extends SetDefinitionTestBase {
-    
+
     private String objid;
 
     private Document createdSetDefinitionDocument;
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public SetDefinitionUpdateTest(final int transport) {
         super(transport);
@@ -62,54 +59,42 @@ public class SetDefinitionUpdateTest extends SetDefinitionTestBase {
 
     /**
      * Set up test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Before
     public void setUp() throws Exception {
 
-        createdSetDefinitionDocument =
-            createSuccessfully("escidoc_setdefinition_for_create.xml");
+        createdSetDefinitionDocument = createSuccessfully("escidoc_setdefinition_for_create.xml");
         objid = getObjidValue(createdSetDefinitionDocument);
     }
 
     /**
-     * 
+     *
      * @throws Exception
      */
     @Test
     public void testUpdateSuccessfullyNameAndDescription() throws Exception {
-        final String retrievedLastModificationDate =
-            getLastModificationDateValue(createdSetDefinitionDocument);
+        final String retrievedLastModificationDate = getLastModificationDateValue(createdSetDefinitionDocument);
         String nameXPath = "/set-definition/properties/name";
         String descriptionXPath = "/set-definition/properties/description";
         String newName = "newName";
         String newDescription = "newDescription";
-        Node toBeUpdated =
-            substitute(createdSetDefinitionDocument, nameXPath, newName);
+        Node toBeUpdated = substitute(createdSetDefinitionDocument, nameXPath, newName);
         toBeUpdated = substitute(toBeUpdated, descriptionXPath, newDescription);
         String createdSetDefinition = toString(toBeUpdated, false);
         String updatedSetDefinition = update(objid, createdSetDefinition);
-        Document updatedSetDefinitionDocument =
-            getDocument(updatedSetDefinition);
-        String name =
-            selectSingleNode(updatedSetDefinitionDocument, nameXPath)
-                .getTextContent();
-        String description =
-            selectSingleNode(updatedSetDefinitionDocument, descriptionXPath)
-                .getTextContent();
-        final String updatedLastModificationDate =
-            getLastModificationDateValue(updatedSetDefinitionDocument);
+        Document updatedSetDefinitionDocument = getDocument(updatedSetDefinition);
+        String name = selectSingleNode(updatedSetDefinitionDocument, nameXPath).getTextContent();
+        String description = selectSingleNode(updatedSetDefinitionDocument, descriptionXPath).getTextContent();
+        final String updatedLastModificationDate = getLastModificationDateValue(updatedSetDefinitionDocument);
         assertEquals("Set definition name after update is wrong", name, newName);
-        assertEquals("Set definition description after update is wrong",
-            description, newDescription);
-        assertDateBeforeAfter(retrievedLastModificationDate,
-            updatedLastModificationDate);
+        assertEquals("Set definition description after update is wrong", description, newDescription);
+        assertDateBeforeAfter(retrievedLastModificationDate, updatedLastModificationDate);
     }
 
     /**
-     * 
+     *
      * @throws Exception
      */
     @Test
@@ -119,38 +104,24 @@ public class SetDefinitionUpdateTest extends SetDefinitionTestBase {
         String queryXPath = "/set-definition/query";
         String newSpecification = "newSpecification";
         String newQuery = "newQuery";
-        String oldSpecification =
-            selectSingleNode(createdSetDefinitionDocument, specificationXPath)
-                .getTextContent();
-        String oldQuery =
-            selectSingleNode(createdSetDefinitionDocument, queryXPath)
-                .getTextContent();
-        Node toBeUpdated =
-            substitute(createdSetDefinitionDocument, specificationXPath,
-                newSpecification);
+        String oldSpecification = selectSingleNode(createdSetDefinitionDocument, specificationXPath).getTextContent();
+        String oldQuery = selectSingleNode(createdSetDefinitionDocument, queryXPath).getTextContent();
+        Node toBeUpdated = substitute(createdSetDefinitionDocument, specificationXPath, newSpecification);
         toBeUpdated = substitute(toBeUpdated, queryXPath, newQuery);
         String createdSetDefinition = toString(toBeUpdated, false);
         String updatedSetDefinition = update(objid, createdSetDefinition);
-        Document updatedSetDefinitionDocument =
-            getDocument(updatedSetDefinition);
-        String specification =
-            selectSingleNode(updatedSetDefinitionDocument, specificationXPath)
-                .getTextContent();
-        String query =
-            selectSingleNode(updatedSetDefinitionDocument, queryXPath)
-                .getTextContent();
-        assertEquals("Set definition specification is changed after update",
-            oldSpecification, specification);
-        assertEquals("Set definition query is changed after update", oldQuery,
-            query);
-        assertEquals(
-            "Creation date and last modification date are different. ",
+        Document updatedSetDefinitionDocument = getDocument(updatedSetDefinition);
+        String specification = selectSingleNode(updatedSetDefinitionDocument, specificationXPath).getTextContent();
+        String query = selectSingleNode(updatedSetDefinitionDocument, queryXPath).getTextContent();
+        assertEquals("Set definition specification is changed after update", oldSpecification, specification);
+        assertEquals("Set definition query is changed after update", oldQuery, query);
+        assertEquals("Creation date and last modification date are different. ",
             getLastModificationDateValue(createdSetDefinitionDocument),
             getLastModificationDateValue(updatedSetDefinitionDocument));
     }
 
     /**
-     * 
+     *
      * @throws Exception
      */
     @Test
@@ -161,8 +132,7 @@ public class SetDefinitionUpdateTest extends SetDefinitionTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
     }
 }

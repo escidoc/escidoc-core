@@ -39,16 +39,14 @@ import org.junit.runners.Parameterized;
 
 /**
  * Test the mock implementation of the item resource.
- * 
+ *
  * @author Michael Schneider
- * 
  */
 @RunWith(value = Parameterized.class)
 public class ContentModelDeleteTest extends ContentModelTestBase {
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ContentModelDeleteTest(final int transport) {
         super(transport);
@@ -56,9 +54,8 @@ public class ContentModelDeleteTest extends ContentModelTestBase {
 
     /**
      * Test deleting a ContentModel with minimal content.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testCmDelete() throws Exception {
@@ -69,8 +66,7 @@ public class ContentModelDeleteTest extends ContentModelTestBase {
 
         // minimal Content Model
         cmXml =
-            EscidocRestSoapTestBase.getTemplateAsString(
-                TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
                 "content-model-minimal-for-create.xml");
         createdXML = create(cmXml);
         contentModelId = getObjidValue(createdXML);
@@ -81,8 +77,7 @@ public class ContentModelDeleteTest extends ContentModelTestBase {
         Class<?> ec = ContentModelNotFoundException.class;
         try {
             retrieve(contentModelId);
-            EscidocRestSoapTestBase.failMissingException(
-                "No exception retrieving deleted content model.", ec);
+            EscidocRestSoapTestBase.failMissingException("No exception retrieving deleted content model.", ec);
         }
         catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
@@ -90,11 +85,9 @@ public class ContentModelDeleteTest extends ContentModelTestBase {
     }
 
     /**
-     * Test deleting a ContentModel with minimal content which is referenced by
-     * a content object.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test deleting a ContentModel with minimal content which is referenced by a content object.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testCmDeleteWhileInUse() throws Exception {
@@ -105,8 +98,7 @@ public class ContentModelDeleteTest extends ContentModelTestBase {
 
         // minimal Content Model
         cmXml =
-            EscidocRestSoapTestBase.getTemplateAsString(
-                TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
                 "content-model-minimal-for-create.xml");
         createdXML = create(cmXml);
         contentModelId = getObjidValue(createdXML);
@@ -114,8 +106,7 @@ public class ContentModelDeleteTest extends ContentModelTestBase {
 
         // create item with this content model
         String itemXml =
-            EscidocRestSoapTestBase.getTemplateAsString(
-                TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
                 "item-minimal-for-content-model.xml");
         itemXml = itemXml.replace("##CONTENT_MODEL_ID##", contentModelId);
         OmTestBase omBase = new OmTestBase(getTransport());
@@ -133,15 +124,8 @@ public class ContentModelDeleteTest extends ContentModelTestBase {
 
     /**
      * Test deleting a not existing ContentModel.
-     * 
-     * @test.name: Deleting Content Model - Unknown Id
-     * @test.id: CTM_Dct_2
-     * @test.input: Id that is unknown to the system.
-     * @test.expected: ContentModelNotFoundException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testCtmDCt2() throws Exception {
@@ -156,17 +140,9 @@ public class ContentModelDeleteTest extends ContentModelTestBase {
     }
 
     /**
-     * Test deleting a ContentModel with providing an id of an existing resource
-     * of another type.
-     * 
-     * @test.name: Update Content Model - Wrong Id
-     * @test.id: CTM_Dct_2-2
-     * @test.input: Id of an existing resource of another resource type.
-     * @test.expected: ContentModelNotFoundException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test deleting a ContentModel with providing an id of an existing resource of another type.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testCtmDCt2_2() throws Exception {
@@ -183,9 +159,8 @@ public class ContentModelDeleteTest extends ContentModelTestBase {
 
     /**
      * Test deleting an ContentModel without id.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testCtmDCt3() throws Exception {

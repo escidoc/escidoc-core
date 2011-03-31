@@ -43,19 +43,17 @@ import java.util.Map;
 
 /**
  * An statistic aggregationDefinition resource handler.
- * 
+ *
  * @author Michael Hoppe
  */
-public class AggregationDefinitionHandler
-    implements AggregationDefinitionHandlerInterface {
+public class AggregationDefinitionHandler implements AggregationDefinitionHandlerInterface {
 
     private de.escidoc.core.sm.business.interfaces.AggregationDefinitionHandlerInterface handler;
 
     /**
      * Injects the AggregationDefinition handler.
-     * 
-     * @param aggregationDefinitionHandler
-     *            The AggregationDefinition handler bean to inject.
+     *
+     * @param aggregationDefinitionHandler The AggregationDefinition handler bean to inject.
      */
     public void setAggregationDefinitionHandler(
         final de.escidoc.core.sm.business.interfaces.AggregationDefinitionHandlerInterface aggregationDefinitionHandler) {
@@ -65,126 +63,83 @@ public class AggregationDefinitionHandler
 
     /**
      * See Interface for functional description.
-     * 
-     * @see de.escidoc.core.sm.service.interfaces
-     *      .AggregationDefinitionHandlerInterface #create(java.lang.String)
-     * 
-     * @param xmlData
-     *            aggregationDefinition as xml in aggregationDefinition schema.
-     * @return Returns the XML representation of the resource.
-     * 
-     * @throws AuthenticationException
-     *             Thrown in case of failed authentication.
-     * @throws AuthorizationException
-     *             Thrown in case of failed authorization.
-     * @throws XmlSchemaValidationException
-     *             ex
-     * @throws XmlCorruptedException
-     *             ex
-     * @throws MissingMethodParameterException
-     *             ex
-     * @throws ScopeNotFoundException
-     *             ex
-     * @throws SystemException
-     *             ex
-     * 
      *
+     * @param xmlData aggregationDefinition as xml in aggregationDefinition schema.
+     * @return Returns the XML representation of the resource.
+     * @throws AuthenticationException      Thrown in case of failed authentication.
+     * @throws AuthorizationException       Thrown in case of failed authorization.
+     * @throws XmlSchemaValidationException ex
+     * @throws XmlCorruptedException        ex
+     * @throws MissingMethodParameterException
+     *                                      ex
+     * @throws ScopeNotFoundException       ex
+     * @throws SystemException              ex
+     * @see de.escidoc.core.sm.service.interfaces .AggregationDefinitionHandlerInterface #create(java.lang.String)
      */
     @Override
-    public String create(final String xmlData) throws AuthenticationException,
-        AuthorizationException, XmlSchemaValidationException,
-        XmlCorruptedException, MissingMethodParameterException,
-        ScopeNotFoundException, SystemException {
+    public String create(final String xmlData) throws AuthenticationException, AuthorizationException,
+        XmlSchemaValidationException, XmlCorruptedException, MissingMethodParameterException, ScopeNotFoundException,
+        SystemException {
         return handler.create(xmlData);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @see de.escidoc.core.sm.service.interfaces
-     *      .AggregationDefinitionHandlerInterface #delete(java.lang.String)
-     * 
-     * @param id
-     *            resource id.
-     * 
-     * @throws AuthenticationException
-     *             Thrown in case of failed authentication.
-     * @throws AuthorizationException
-     *             Thrown in case of failed authorization.
-     * @throws AggregationDefinitionNotFoundException
-     *             e.
-     * @throws MissingMethodParameterException
-     *             e.
-     * @throws SystemException
-     *             e.
-     * 
      *
+     * @param id resource id.
+     * @throws AuthenticationException Thrown in case of failed authentication.
+     * @throws AuthorizationException  Thrown in case of failed authorization.
+     * @throws AggregationDefinitionNotFoundException
+     *                                 e.
+     * @throws MissingMethodParameterException
+     *                                 e.
+     * @throws SystemException         e.
+     * @see de.escidoc.core.sm.service.interfaces .AggregationDefinitionHandlerInterface #delete(java.lang.String)
      */
     @Override
-    public void delete(final String id) throws AuthenticationException,
-        AuthorizationException, AggregationDefinitionNotFoundException,
-        MissingMethodParameterException, SystemException {
+    public void delete(final String id) throws AuthenticationException, AuthorizationException,
+        AggregationDefinitionNotFoundException, MissingMethodParameterException, SystemException {
         handler.delete(id);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @see de.escidoc.core.sm.service.interfaces
-     *      .AggregationDefinitionHandlerInterface #retrieve(java.lang.String)
-     * 
-     * @param id
-     *            resource id.
-     * @return Returns the XML representation of the resource.
-     * 
-     * @throws AuthenticationException
-     *             Thrown in case of failed authentication.
-     * @throws AuthorizationException
-     *             Thrown in case of failed authorization.
-     * @throws AggregationDefinitionNotFoundException
-     *             e.
-     * @throws MissingMethodParameterException
-     *             e.
-     * @throws SystemException
-     *             e.
-     * 
      *
+     * @param id resource id.
+     * @return Returns the XML representation of the resource.
+     * @throws AuthenticationException Thrown in case of failed authentication.
+     * @throws AuthorizationException  Thrown in case of failed authorization.
+     * @throws AggregationDefinitionNotFoundException
+     *                                 e.
+     * @throws MissingMethodParameterException
+     *                                 e.
+     * @throws SystemException         e.
+     * @see de.escidoc.core.sm.service.interfaces .AggregationDefinitionHandlerInterface #retrieve(java.lang.String)
      */
     @Override
-    public String retrieve(final String id) throws AuthenticationException,
-        AuthorizationException, AggregationDefinitionNotFoundException,
-        MissingMethodParameterException, SystemException {
+    public String retrieve(final String id) throws AuthenticationException, AuthorizationException,
+        AggregationDefinitionNotFoundException, MissingMethodParameterException, SystemException {
         return handler.retrieve(id);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @see de.escidoc.core.sm.service.interfaces
-     *      .AggregationDefinitionHandlerInterface
-     *      #retrieveAggregationDefinitions(java.util.Map)
-     * 
-     * @param parameters
-     *            filter as CQL query
-     * 
+     *
+     * @param parameters filter as CQL query
      * @return Returns the XML representation of the resource-list.
      * @throws MissingMethodParameterException
-     *             If the parameter filter is not given.
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a SQL query
-     * @throws AuthenticationException
-     *             Thrown in case of failed authentication.
-     * @throws AuthorizationException
-     *             Thrown in case of failed authorization.
-     * @throws SystemException
-     *             e.
+     *                                     If the parameter filter is not given.
+     * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
+     * @throws AuthenticationException     Thrown in case of failed authentication.
+     * @throws AuthorizationException      Thrown in case of failed authorization.
+     * @throws SystemException             e.
+     * @see de.escidoc.core.sm.service.interfaces .AggregationDefinitionHandlerInterface
+     *      #retrieveAggregationDefinitions(java.util.Map)
      */
     @Override
-    public String retrieveAggregationDefinitions(
-        final Map<String, String[]> parameters)
-        throws InvalidSearchQueryException, MissingMethodParameterException,
-        AuthenticationException, AuthorizationException, SystemException {
+    public String retrieveAggregationDefinitions(final Map<String, String[]> parameters)
+        throws InvalidSearchQueryException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException {
         return handler.retrieveAggregationDefinitions(parameters);
     }
 }

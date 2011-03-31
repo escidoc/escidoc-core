@@ -38,18 +38,15 @@ import javax.xml.rpc.ServiceException;
 
 /**
  * Offers access methods to the escidoc interfaces of the item resource.
- * 
+ *
  * @author Michael Schneider
- * 
  */
-public class IngestClient extends ClientBase
-    implements ResourceHandlerClientInterface {
+public class IngestClient extends ClientBase implements ResourceHandlerClientInterface {
 
     private IngestHandler soapClient = null;
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public IngestClient(final int transport) {
         super(transport);
@@ -57,50 +54,37 @@ public class IngestClient extends ClientBase
 
     /**
      * Ingest a resource.
-     * 
-     * @param xmlData
-     *            the string containing the resource in XML representation.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param xmlData the string containing the resource in XML representation.
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     public Object ingest(final String xmlData) throws Exception {
-        return callEsciDoc("Ingest.ingest", "ingest",
-            Constants.HTTP_METHOD_PUT, Constants.INGEST_BASE_URI,
+        return callEsciDoc("Ingest.ingest", "ingest", Constants.HTTP_METHOD_PUT, Constants.INGEST_BASE_URI,
             new String[] {}, changeToString(xmlData));
 
     }
 
     /**
-     * 
      * @return Returns the soapClient.
-     * @throws ServiceException
-     *             If service instantiation fails.
+     * @throws ServiceException If service instantiation fails.
      */
     @Override
     public IngestHandler getSoapClient() throws ServiceException {
 
         if (soapClient == null) {
-            IngestHandlerServiceLocator serviceLocator =
-                new IngestHandlerServiceLocator(getEngineConfig());
-            String ep = checkSoapAddress(serviceLocator
-                .getIngestHandlerServiceAddress());
-            serviceLocator
-                .setIngestHandlerServiceEndpointAddress(ep);
+            IngestHandlerServiceLocator serviceLocator = new IngestHandlerServiceLocator(getEngineConfig());
+            String ep = checkSoapAddress(serviceLocator.getIngestHandlerServiceAddress());
+            serviceLocator.setIngestHandlerServiceEndpointAddress(ep);
             soapClient = serviceLocator.getIngestHandlerService();
         }
         return soapClient;
     }
 
     /**
-     * 
-     * @param id
-     *            The id of the item.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     * @param id The id of the item.
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     public Object retrieveResources(final String id) throws Exception {
 

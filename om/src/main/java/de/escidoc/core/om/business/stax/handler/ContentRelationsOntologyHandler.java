@@ -59,8 +59,7 @@ public class ContentRelationsOntologyHandler extends DefaultHandler {
 
     private boolean inRdfType;
 
-    private static final String RDF_PROPERTY_URI =
-        Constants.RDF_NAMESPACE_URI + "Property";
+    private static final String RDF_PROPERTY_URI = Constants.RDF_NAMESPACE_URI + "Property";
 
     private static final String PROPERTY_PATH = "/RDF/Property";
 
@@ -70,8 +69,7 @@ public class ContentRelationsOntologyHandler extends DefaultHandler {
 
     private static final String RDF_TYPE_PATH = "/RDF/Description/type";
 
-    private static final Logger LOGGER =
-        LoggerFactory.getLogger(ContentRelationsOntologyHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ContentRelationsOntologyHandler.class);
 
     public ContentRelationsOntologyHandler(final StaxParser parser) {
 
@@ -80,33 +78,27 @@ public class ContentRelationsOntologyHandler extends DefaultHandler {
     }
 
     @Override
-    public StartElement startElement(final StartElement element)
-        throws InvalidXmlException, InvalidContentException {
+    public StartElement startElement(final StartElement element) throws InvalidXmlException, InvalidContentException {
 
         final String currentPath = parser.getCurPath();
         if (BASE_PATH.equals(currentPath)) {
-            final int indexOfBase =
-                element.indexOfAttribute(XMLConstants.XML_NS_URI, "base");
+            final int indexOfBase = element.indexOfAttribute(XMLConstants.XML_NS_URI, "base");
             if (indexOfBase != -1) {
                 this.base = element.getAttribute(indexOfBase).getValue();
             }
         }
         // check if a parent element 'Description' defines rdf:Property
         else if (this.inDescription && currentPath.startsWith(DESCRIPTION_PATH)) {
-            if (RDF_TYPE_PATH.equals(currentPath)
-                && element.getNamespace().equals(Constants.RDF_NAMESPACE_URI)) {
+            if (RDF_TYPE_PATH.equals(currentPath) && element.getNamespace().equals(Constants.RDF_NAMESPACE_URI)) {
                 this.inRdfType = true;
 
-                final int indexOfResource =
-                    element.indexOfAttribute(Constants.RDF_NAMESPACE_URI,
-                        "resource");
+                final int indexOfResource = element.indexOfAttribute(Constants.RDF_NAMESPACE_URI, "resource");
                 if (indexOfResource == -1) {
                     throw new XmlCorruptedException("The ontology-xml is not valide rdf/xml. "
-                                    + "The element 'rdf:type' must have "
-                                    + "the attribute 'resource'.");
-                } else {
-                    final String resourceValue =
-                            element.getAttribute(indexOfResource).getValue();
+                        + "The element 'rdf:type' must have " + "the attribute 'resource'.");
+                }
+                else {
+                    final String resourceValue = element.getAttribute(indexOfResource).getValue();
                     if (!resourceValue.equals(RDF_PROPERTY_URI)) {
                         this.predicate = null;
 
@@ -114,45 +106,37 @@ public class ContentRelationsOntologyHandler extends DefaultHandler {
                 }
             }
         }
-        else if (PROPERTY_PATH.equals(currentPath)
-            && element.getNamespace().equals(Constants.RDF_NAMESPACE_URI)) {
+        else if (PROPERTY_PATH.equals(currentPath) && element.getNamespace().equals(Constants.RDF_NAMESPACE_URI)) {
             setPredicate(element);
             if (this.predicate == null) {
                 throw new XmlCorruptedException("The ontology-xml is not valide rdf/xml."
-                        + "The element 'rdf:Property' must have "
-                        + "one of the attributes 'id' or 'about'");
+                    + "The element 'rdf:Property' must have " + "one of the attributes 'id' or 'about'");
             }
         }
-        else if (DESCRIPTION_PATH.equals(currentPath)
-            && element.getNamespace().equals(Constants.RDF_NAMESPACE_URI)) {
+        else if (DESCRIPTION_PATH.equals(currentPath) && element.getNamespace().equals(Constants.RDF_NAMESPACE_URI)) {
             this.inDescription = true;
             setPredicate(element);
             if (this.predicate == null) {
                 throw new XmlCorruptedException("The ontology-xml is not valide rdf/xml."
-                        + "The element 'rdf:Description' must have "
-                        + "one of the attributes 'id' or 'about'");
+                    + "The element 'rdf:Description' must have " + "one of the attributes 'id' or 'about'");
             }
         }
         return element;
     }
 
     @Override
-    public EndElement endElement(final EndElement element)
-        throws InvalidContentException {
+    public EndElement endElement(final EndElement element) throws InvalidContentException {
 
         final String currentPath = parser.getCurPath();
-        if (DESCRIPTION_PATH.equals(currentPath)
-            && element.getNamespace().equals(Constants.RDF_NAMESPACE_URI)) {
-            if (! this.inRdfType) {
+        if (DESCRIPTION_PATH.equals(currentPath) && element.getNamespace().equals(Constants.RDF_NAMESPACE_URI)) {
+            if (!this.inRdfType) {
                 this.predicate = null;
             }
             this.inDescription = false;
         }
 
-        if (this.predicate != null
-            && (PROPERTY_PATH.equals(currentPath) || DESCRIPTION_PATH
-                .equals(currentPath))
-                && element.getNamespace().equals(Constants.RDF_NAMESPACE_URI)) {
+        if (this.predicate != null && (PROPERTY_PATH.equals(currentPath) || DESCRIPTION_PATH.equals(currentPath))
+            && element.getNamespace().equals(Constants.RDF_NAMESPACE_URI)) {
             predicates.add(this.predicate);
             this.predicate = null;
         }
@@ -160,18 +144,10 @@ public class ContentRelationsOntologyHandler extends DefaultHandler {
 
     }
 
-    private void setPredicate(final StartElement element)
-        throws InvalidContentException {
-        final int indexOfId =
-            element.indexOfAttribute(
-                Constants.RDF_NAMESPACE_URI,
-                "ID");
+    private void setPredicate(final StartElement element) throws InvalidContentException {
+        final int indexOfId = element.indexOfAttribute(Constants.RDF_NAMESPACE_URI, "ID");
         if (indexOfId == -1) {
-            final int indexOfAbout =
-                    element
-                            .indexOfAttribute(
-                                    Constants.RDF_NAMESPACE_URI,
-                                    "about");
+            final int indexOfAbout = element.indexOfAttribute(Constants.RDF_NAMESPACE_URI, "about");
             if (indexOfAbout != -1) {
                 final String about = element.getAttribute(indexOfAbout).getValue();
                 if (this.base != null) {
@@ -179,27 +155,30 @@ public class ContentRelationsOntologyHandler extends DefaultHandler {
                         // test if a value of about is an absolute URI
                         new URI(about);
                         this.predicate = about;
-                    } catch (final URISyntaxException e) {
-                        if(LOGGER.isWarnEnabled()) {
+                    }
+                    catch (final URISyntaxException e) {
+                        if (LOGGER.isWarnEnabled()) {
                             LOGGER.warn("Invalid URL '" + about + '\'');
                         }
-                        if(LOGGER.isDebugEnabled()) {
+                        if (LOGGER.isDebugEnabled()) {
                             LOGGER.debug("Invalid URL '" + about + '\'', e);
                         }
                         this.predicate = this.base + about;
                     }
-                } else {
+                }
+                else {
                     this.predicate = about;
                 }
             }
-        } else {
+        }
+        else {
             final String id = element.getAttribute(indexOfId).getValue();
             if (this.base != null) {
                 this.predicate = this.base + '#' + id;
-            } else {
+            }
+            else {
                 throw new InvalidContentException("The ontology-xml does not contain a "
-                                + "base-url. Therefore the element 'Description' "
-                                + "may not contain the attribute 'id'.");
+                    + "base-url. Therefore the element 'Description' " + "may not contain the attribute 'id'.");
             }
         }
     }

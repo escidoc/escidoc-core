@@ -24,9 +24,8 @@ import java.util.regex.Pattern;
 
 /**
  * Helper class for strings.
- * 
+ *
  * @author Torsten Tetteroo
- * 
  */
 public final class StringUtility {
 
@@ -37,8 +36,6 @@ public final class StringUtility {
 
     /**
      * Private constructor to prevent initialization.
-     * 
-     *
      */
     private StringUtility() {
     }
@@ -51,12 +48,10 @@ public final class StringUtility {
      * @param template a non-null string containing 0 or more {@code %s} placeholders.
      * @param args     the arguments to be substituted into the message template. Arguments are converted to strings
      *                 using {@link String#valueOf(Object)}. Arguments can be null.
-     * @return
      */
     public static String format(final String template, final Object... args) { // visible for testing
         // start substituting the arguments into the '%s' placeholders
-        final StringBuilder builder = new StringBuilder(
-                template.length() + 16 * args.length);
+        final StringBuilder builder = new StringBuilder(template.length() + 16 * args.length);
         int templateStart = 0;
         int i = 0;
         while (i < args.length) {
@@ -87,14 +82,10 @@ public final class StringUtility {
 
     /**
      * Concatenates the first value with a colon and then with the second value.
-     * 
-     * @param firstPart
-     *            The first part of the key.
-     * @param secondPart
-     *            The second part of the key.
-     * @return Returns the created StringBuffer object with content
-     *         "firstPart:secondPart".
      *
+     * @param firstPart  The first part of the key.
+     * @param secondPart The second part of the key.
+     * @return Returns the created StringBuffer object with content "firstPart:secondPart".
      */
     public static StringBuffer concatenateWithColon(final String firstPart, final Object secondPart) {
         final StringBuffer ret = new StringBuffer(firstPart);
@@ -104,11 +95,7 @@ public final class StringUtility {
     }
 
     /**
-     * @param firstPart
-     * @param secondPart
      * @see StringUtility#concatenateWithColon(String, Object)
-     *
-     * @return
      */
     public static String concatenateWithColonToString(final String firstPart, final Object secondPart) {
         return concatenateWithColon(firstPart, secondPart).toString();
@@ -116,15 +103,13 @@ public final class StringUtility {
 
     /**
      * Gets the String of the object type like it is used in class names.
-     * 
-     * @param objectType
-     *            The object-type to be converted into ObjectType
-     *            representation.
+     *
+     * @param objectType The object-type to be converted into ObjectType representation.
      * @return Returns the converted value.
      */
     public static StringBuffer convertToUpperCaseLetterFormat(final CharSequence objectType) {
         final StringBuffer ret = new StringBuffer();
-        if(objectType != null) {
+        if (objectType != null) {
             final String[] splitted = PATTERN_MINUS.split(objectType);
             for (final String split : splitted) {
                 ret.append(split.substring(0, 1).toUpperCase());

@@ -42,13 +42,11 @@ import java.util.Map;
 
 public class PrepareHandler extends DefaultHandler {
 
-    private static final String ELEMENT_PATH =
-        "/item/components/component/content";
+    private static final String ELEMENT_PATH = "/item/components/component/content";
 
     private final StaxParser parser;
 
-    private final Map<Integer, Map<String, String>> binaryData =
-        new HashMap<Integer, Map<String, String>>();
+    private final Map<Integer, Map<String, String>> binaryData = new HashMap<Integer, Map<String, String>>();
 
     private String uploadUrl;
 
@@ -69,8 +67,7 @@ public class PrepareHandler extends DefaultHandler {
     }
 
     @Override
-    public StartElement startElement(final StartElement element)
-        throws InvalidContentException {
+    public StartElement startElement(final StartElement element) throws InvalidContentException {
 
         final String currentPath = parser.getCurPath();
 
@@ -78,13 +75,11 @@ public class PrepareHandler extends DefaultHandler {
 
             this.storageValue = getStorageAttribute(element);
             this.inContent = true;
-            final Map<String, String> componentBinary =
-                new HashMap<String, String>();
+            final Map<String, String> componentBinary = new HashMap<String, String>();
             componentBinary.put("storage", this.storageValue);
             binaryData.put(this.componentNumber, componentBinary);
 
-            final int indexOfHref =
-                element.indexOfAttribute(Constants.XLINK_URI, "href");
+            final int indexOfHref = element.indexOfAttribute(Constants.XLINK_URI, "href");
             if (indexOfHref != -1) {
                 final Attribute href = element.getAttribute(indexOfHref);
                 this.uploadUrl = href.getValue();
@@ -95,8 +90,7 @@ public class PrepareHandler extends DefaultHandler {
     }
 
     @Override
-    public EndElement endElement(final EndElement element)
-        throws MissingContentException {
+    public EndElement endElement(final EndElement element) throws MissingContentException {
 
         if (this.inContent) {
             final Map<String, String> componentBinary = binaryData.get(this.componentNumber);
@@ -105,9 +99,10 @@ public class PrepareHandler extends DefaultHandler {
                     // FIXME use constant as in
                     // ItemHandlerCreate.handleComponent()
                     componentBinary.put("uploadUrl", this.uploadUrl);
-                } else {
+                }
+                else {
                     throw new MissingContentException("The content of component with id " + this.componentNumber
-                            + " is missing");
+                        + " is missing");
                 }
             }
             this.inContent = false;
@@ -120,19 +115,17 @@ public class PrepareHandler extends DefaultHandler {
     }
 
     @Override
-    public String characters(final String s, final StartElement element)
-        throws InvalidContentException {
+    public String characters(final String s, final StartElement element) throws InvalidContentException {
 
         if (this.inContent) {
 
-            final Map<String, String> componentBinary =
-                binaryData.get(this.componentNumber);
+            final Map<String, String> componentBinary = binaryData.get(this.componentNumber);
             if (s != null && s.length() > 0) {
-                if (this.storageValue
-                    .equals(de.escidoc.core.common.business.fedora.Constants.STORAGE_EXTERNAL_URL)
+                if (this.storageValue.equals(de.escidoc.core.common.business.fedora.Constants.STORAGE_EXTERNAL_URL)
                     || this.storageValue
                         .equals(de.escidoc.core.common.business.fedora.Constants.STORAGE_EXTERNAL_MANAGED)) {
-                    throw new InvalidContentException("The component section 'content' with the attribute 'storage' set to 'external-url' "
+                    throw new InvalidContentException(
+                        "The component section 'content' with the attribute 'storage' set to 'external-url' "
                             + "or 'external-managed' may not have an inline content.");
                 }
 
@@ -147,21 +140,17 @@ public class PrepareHandler extends DefaultHandler {
 
     /**
      * Get value of attribute storage.
-     * 
-     * @param element
-     *            StartElement.
+     *
+     * @param element StartElement.
      * @return Value of attribute storage.
-     * 
-     * @throws InvalidContentException
-     *             Thrown if attribute Storage not exists.
+     * @throws InvalidContentException Thrown if attribute Storage not exists.
      */
-    private static String getStorageAttribute(final StartElement element)
-        throws InvalidContentException {
+    private static String getStorageAttribute(final StartElement element) throws InvalidContentException {
 
         final int indexOfStorage = element.indexOfAttribute(null, "storage");
         if (indexOfStorage == -1) {
-            throw new InvalidContentException("The attribute 'storage' of the element '"
-                    + element.getLocalName() + "' is missing.");
+            throw new InvalidContentException("The attribute 'storage' of the element '" + element.getLocalName()
+                + "' is missing.");
         }
         final Attribute storage = element.getAttribute(indexOfStorage);
         return storage.getValue();

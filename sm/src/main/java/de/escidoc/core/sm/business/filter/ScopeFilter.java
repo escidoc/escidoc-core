@@ -38,29 +38,24 @@ import org.z3950.zing.cql.CQLParser;
 import org.z3950.zing.cql.CQLTermNode;
 
 /**
- * This class parses a CQL filter to filter for scopes and translates
- * it into a Hibernate query.
- * 
+ * This class parses a CQL filter to filter for scopes and translates it into a Hibernate query.
+ *
  * @author André Schenk
  */
 public class ScopeFilter extends CqlFilter {
 
     /**
-     * Parse the given CQL query and create a corresponding Hibernate query to
-     * filter for scopes from it.
+     * Parse the given CQL query and create a corresponding Hibernate query to filter for scopes from it.
      *
      * @param query CQL query
-     * @throws InvalidSearchQueryException thrown if the given search query could
-     *                                     not be translated into a SQL query
+     * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
      */
-    public ScopeFilter(final String query)
-        throws InvalidSearchQueryException {
+    public ScopeFilter(final String query) throws InvalidSearchQueryException {
         //Adding or Removal of values has also to be done in Method evaluate
         //and in the Hibernate-Class-Method retrieveScopes
         // URI-style filters/////////////////////////////////////////////////////
         //Filter-Names
-        criteriaMap.put(Constants.DC_IDENTIFIER_URI,
-            new Object[] {COMPARE_EQ, "id"});
+        criteriaMap.put(Constants.DC_IDENTIFIER_URI, new Object[] { COMPARE_EQ, "id" });
 
         //Sortby-Names
         propertyNamesMap.put(Constants.DC_IDENTIFIER_URI, "id");
@@ -68,8 +63,7 @@ public class ScopeFilter extends CqlFilter {
 
         // Path-style filters////////////////////////////////////////////////////
         //Filter-Names
-        criteriaMap.put(Constants.FILTER_PATH_ID,
-            new Object[] {COMPARE_EQ, "id"});
+        criteriaMap.put(Constants.FILTER_PATH_ID, new Object[] { COMPARE_EQ, "id" });
 
         //Sortby-Names
         propertyNamesMap.put(Constants.FILTER_PATH_ID, "id");
@@ -79,8 +73,7 @@ public class ScopeFilter extends CqlFilter {
             try {
                 final CQLParser parser = new CQLParser();
 
-                this.detachedCriteria =
-                    DetachedCriteria.forClass(Scope.class, "s");
+                this.detachedCriteria = DetachedCriteria.forClass(Scope.class, "s");
 
                 final Criterion criterion = evaluate(parser.parse(query));
 
@@ -98,28 +91,23 @@ public class ScopeFilter extends CqlFilter {
      * Evaluate a CQL term node.
      *
      * @param node CQL node
-     *
      * @return Hibernate query reflecting the given CQL query
-     * @throws InvalidSearchQueryException thrown if the given search query could
-     *                                     not be translated into a SQL query
+     * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
      */
     @Override
-    protected Criterion evaluate(final CQLTermNode node)
-        throws InvalidSearchQueryException {
+    protected Criterion evaluate(final CQLTermNode node) throws InvalidSearchQueryException {
         Criterion result = null;
         final Object[] parts = criteriaMap.get(node.getIndex());
         final String value = node.getTerm();
 
         if (parts != null) {
-            result = evaluate(node.getRelation(), (String) parts[1], value,
-                (Integer) parts[0] == COMPARE_LIKE);
+            result = evaluate(node.getRelation(), (String) parts[1], value, (Integer) parts[0] == COMPARE_LIKE);
         }
         else {
             final String columnName = node.getIndex();
 
             if (columnName != null) {
-                throw new InvalidSearchQueryException(
-                    "unknown filter criteria: " + columnName);
+                throw new InvalidSearchQueryException("unknown filter criteria: " + columnName);
             }
         }
         return result;

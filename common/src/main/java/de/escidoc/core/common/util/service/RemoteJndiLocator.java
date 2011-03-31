@@ -30,11 +30,10 @@ import java.io.IOException;
 import java.util.Properties;
 
 /**
- * Customized Proxy factory Bean for the Remote and Stateless EJB lookup.
- * Provides the jndiUser and jndiPassword to the InitialContext
- * 
+ * Customized Proxy factory Bean for the Remote and Stateless EJB lookup. Provides the jndiUser and jndiPassword to the
+ * InitialContext
+ *
  * @author Bernhard Kraus (Accenture)
- * 
  */
 public class RemoteJndiLocator extends JndiObjectFactoryBean {
 
@@ -44,20 +43,17 @@ public class RemoteJndiLocator extends JndiObjectFactoryBean {
 
     /**
      * Set the package name.
-     * 
-     * @param packageName
-     *            set the component name
+     *
+     * @param packageName set the component name
      */
     public void setPackageName(final String packageName) {
         this.packageName = packageName;
     }
 
     /**
-     * Business interface is required for casting. If the interface does not
-     * exist an exception is thrown.
-     * 
-     * @throws NamingException
-     *             From the lookup
+     * Business interface is required for casting. If the interface does not exist an exception is thrown.
+     *
+     * @throws NamingException From the lookup
      */
     @Override
     public void afterPropertiesSet() throws NamingException {
@@ -74,7 +70,7 @@ public class RemoteJndiLocator extends JndiObjectFactoryBean {
 
     /**
      * Returns the package name.
-     * 
+     *
      * @return String the package name
      */
     public String getPackageName() {
@@ -83,7 +79,7 @@ public class RemoteJndiLocator extends JndiObjectFactoryBean {
 
     /**
      * Returns true, because the object is a Spring singleton.
-     * 
+     *
      * @return boolean true because is a Spring singleton
      */
     @Override
@@ -93,28 +89,23 @@ public class RemoteJndiLocator extends JndiObjectFactoryBean {
 
     /**
      * Set the JNDI properties.
-     * 
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
+     *
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private void setInitialContextJndiProperties()
-        throws WebserverSystemException {
+    private void setInitialContextJndiProperties() throws WebserverSystemException {
         String providerUrl;
         try {
-            providerUrl =
-                EscidocConfiguration.getInstance().get(this.packageName + CONFIG_PROVIDER_URL_NAME);
+            providerUrl = EscidocConfiguration.getInstance().get(this.packageName + CONFIG_PROVIDER_URL_NAME);
             if (providerUrl == null) {
                 providerUrl =
-                    EscidocConfiguration.getInstance().get(
-                        EscidocConfiguration.ESCIDOC_CORE_DEFAULT_JNDI_URL);
+                    EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_DEFAULT_JNDI_URL);
             }
         }
         catch (final IOException e) {
             throw new WebserverSystemException(e);
         }
         final Properties properties = new Properties();
-        properties.setProperty(Context.URL_PKG_PREFIXES,
-            "org.jboss.naming:org.jnp.interfaces");
+        properties.setProperty(Context.URL_PKG_PREFIXES, "org.jboss.naming:org.jnp.interfaces");
         // properties.setProperty(Context.INITIAL_CONTEXT_FACTORY,
         // "org.jboss.security.jndi.JndiLoginInitialContextFactory");
         properties.setProperty(Context.PROVIDER_URL, providerUrl);

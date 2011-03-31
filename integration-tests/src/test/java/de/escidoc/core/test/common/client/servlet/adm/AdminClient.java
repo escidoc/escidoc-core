@@ -38,9 +38,8 @@ import javax.xml.rpc.ServiceException;
 
 /**
  * Offers access to the AdminHandler.
- * 
+ *
  * @author Steffen Wagner
- * 
  */
 public class AdminClient extends ClientBase implements AdminClientInterface {
 
@@ -48,9 +47,8 @@ public class AdminClient extends ClientBase implements AdminClientInterface {
 
     /**
      * Admin Client.
-     * 
-     * @param transport
-     *            The transport identifier.
+     *
+     * @param transport The transport identifier.
      */
     public AdminClient(final int transport) {
         super(transport);
@@ -58,83 +56,66 @@ public class AdminClient extends ClientBase implements AdminClientInterface {
 
     /**
      * Delete objects from repository.
-     * 
-     * @param xml
-     *            XML containing the object id's
-     * 
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param xml XML containing the object id's
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     public Object deleteObjects(final String xml) throws Exception {
-        return callEsciDoc("Admin.deleteObjects", METHOD_DELETE_OBJECTS,
-            Constants.HTTP_METHOD_POST, Constants.DELETE_OBJECTS_BASE_URI,
-            new String[] {}, changeToString(xml));
+        return callEsciDoc("Admin.deleteObjects", METHOD_DELETE_OBJECTS, Constants.HTTP_METHOD_POST,
+            Constants.DELETE_OBJECTS_BASE_URI, new String[] {}, changeToString(xml));
 
     }
 
     /**
      * Get the purge status.
-     * 
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     public Object getPurgeStatus() throws Exception {
 
-        return callEsciDoc("Admin.getPurgeStatus", METHOD_GET_PURGE_STATUS,
-            Constants.HTTP_METHOD_GET, Constants.DELETE_OBJECTS_BASE_URI,
-            new String[] {});
+        return callEsciDoc("Admin.getPurgeStatus", METHOD_GET_PURGE_STATUS, Constants.HTTP_METHOD_GET,
+            Constants.DELETE_OBJECTS_BASE_URI, new String[] {});
     }
 
     /**
      * Get repository information.
-     * 
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     public Object getRepositoryInfo() throws Exception {
 
-        return callEsciDoc("Admin.getRepositoryInfo",
-            METHOD_GET_REPOSITORY_INFO, Constants.HTTP_METHOD_GET,
+        return callEsciDoc("Admin.getRepositoryInfo", METHOD_GET_REPOSITORY_INFO, Constants.HTTP_METHOD_GET,
             Constants.REPOSITORY_INFO_BASE_URI, new String[] {});
     }
 
     /**
      * Get repository information.
-     * 
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     public Object getIndexConfiguration() throws Exception {
 
-        return callEsciDoc("Admin.getIndexConfiguration",
-            METHOD_GET_INDEX_CONFIGURATION, Constants.HTTP_METHOD_GET,
+        return callEsciDoc("Admin.getIndexConfiguration", METHOD_GET_INDEX_CONFIGURATION, Constants.HTTP_METHOD_GET,
             Constants.INDEX_CONFIGURATION_BASE_URI, new String[] {});
     }
 
     /**
      * Return the SOAP client.
-     * 
+     *
      * @return the SOAP client
-     * @throws ServiceException
-     *             If the client creation fails.
+     * @throws ServiceException If the client creation fails.
      */
     @Override
     public AdminHandler getSoapClient() throws ServiceException {
 
         if (soapClient == null) {
-            AdminHandlerServiceLocator serviceLocator =
-                new AdminHandlerServiceLocator(getEngineConfig());
-            serviceLocator
-                .setAdminHandlerServiceEndpointAddress(checkSoapAddress(serviceLocator
-                    .getAdminHandlerServiceAddress()));
+            AdminHandlerServiceLocator serviceLocator = new AdminHandlerServiceLocator(getEngineConfig());
+            serviceLocator.setAdminHandlerServiceEndpointAddress(checkSoapAddress(serviceLocator
+                .getAdminHandlerServiceAddress()));
             soapClient = serviceLocator.getAdminHandlerService();
         }
         return soapClient;
@@ -142,31 +123,25 @@ public class AdminClient extends ClientBase implements AdminClientInterface {
 
     /**
      * Load example objects.
-     * 
-     * @param type
-     *            examples type (only "common" allowed at the moment)
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param type examples type (only "common" allowed at the moment)
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     public Object loadExamples(final String type) throws Exception {
-        return callEsciDoc("Admin.loadExamples", METHOD_LOAD_EXAMPLES,
-            Constants.HTTP_METHOD_GET, Constants.LOAD_EXAMPLES_BASE_URI,
-            new String[] { type });
+        return callEsciDoc("Admin.loadExamples", METHOD_LOAD_EXAMPLES, Constants.HTTP_METHOD_GET,
+            Constants.LOAD_EXAMPLES_BASE_URI, new String[] { type });
     }
 
     /**
      * Reindex
+     *
      * @param indexName name of Index
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     public Object reindex(final boolean clearIndex, final String indexName) throws Exception {
-        return callEsciDoc("Admin.reindex", METHOD_REINDEX,
-            Constants.HTTP_METHOD_POST, Constants.REINDEX_BASE_URI,
+        return callEsciDoc("Admin.reindex", METHOD_REINDEX, Constants.HTTP_METHOD_POST, Constants.REINDEX_BASE_URI,
             new String[] { new Boolean(clearIndex).toString(), indexName });
     }
 }

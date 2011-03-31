@@ -38,12 +38,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Thin facade on top of the FedoraIngestHandler. This class separates the
- * Handler from the individual classes used for the ingest and the determination
- * process of the resource type.
+ * Thin facade on top of the FedoraIngestHandler. This class separates the Handler from the individual classes used for
+ * the ingest and the determination process of the resource type.
  *
  * @author Kai Strnad
- *
  */
 public class FedoraIngestFacade implements IngestFacade {
 
@@ -52,8 +50,7 @@ public class FedoraIngestFacade implements IngestFacade {
     private ValueFormatter formatter;
 
     /**
-     * @param formatter
-     *            the formatter to set
+     * @param formatter the formatter to set
      */
     public void setFormatter(final ValueFormatter formatter) {
         this.formatter = formatter;
@@ -77,24 +74,18 @@ public class FedoraIngestFacade implements IngestFacade {
 
     /**
      * Setter for the ResourceMapperDao
-     *
-     * @param resourceMapperDao
      */
     public void setResourceMapperDao(final ResourceMapperDao resourceMapperDao) {
         this.resourceMapperDao = resourceMapperDao;
     }
 
     /**
-     * Ingest a given resource and return the id which has been assigned by the
-     * framework. Format the return value according to the rule implemented in
-     * the injected Formatter instance.
-     *
-     * @throws EscidocException
+     * Ingest a given resource and return the id which has been assigned by the framework. Format the return value
+     * according to the rule implemented in the injected Formatter instance.
      */
     @Override
     public String ingest(final String xmlData) throws EscidocException {
-        final ResourceMapperBean bean =
-            getResourceMapperDao().getIngestableForResource(xmlData);
+        final ResourceMapperBean bean = getResourceMapperDao().getIngestableForResource(xmlData);
         final String objectId = bean.getResource().ingest(xmlData);
 
         final Map<String, String> values = new HashMap<String, String>();

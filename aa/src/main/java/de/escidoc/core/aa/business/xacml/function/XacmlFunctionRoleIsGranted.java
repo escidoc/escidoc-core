@@ -55,19 +55,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Implementation of an XACML (target) function that checks if a role has been
- * granted to the current user (for an object).<br>
- * The first parameter holds the role name, the second one the object type of
- * the object that shall be checked. <br>
- * This function returns <code>true</code>,
- * <ul>
- * <li>if the role is the dummy role holding the policies of the default user.
- * <li>if the role is a unlimited role and has been granted to the
- * subject(user), or</li>
- * <li>if the role is a limited role and has been granted for the object
- * identified by the resource-id of the context to the current user (subject).</li>
- * </ul>
- * 
+ * Implementation of an XACML (target) function that checks if a role has been granted to the current user (for an
+ * object).<br> The first parameter holds the role name, the second one the object type of the object that shall be
+ * checked. <br> This function returns <code>true</code>, <ul> <li>if the role is the dummy role holding the policies of
+ * the default user. <li>if the role is a unlimited role and has been granted to the subject(user), or</li> <li>if the
+ * role is a limited role and has been granted for the object identified by the resource-id of the context to the
+ * current user (subject).</li> </ul>
+ *
  * @author Torsten Tetteroo
  */
 public class XacmlFunctionRoleIsGranted extends FunctionBase {
@@ -75,34 +69,29 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
     private static final Pattern SPLIT_PATTERN = Pattern.compile("/");
 
     /**
-     * The pattern to find the position to insert the "-new" marker in attribute
-     * ids for new resources.
-     * 
+     * The pattern to find the position to insert the "-new" marker in attribute ids for new resources.
+     *
      * @see PATTERN_INSERT_MARKER
      */
-    private static final Pattern PATTERN_FIND_PLACE_FOR_MARKER = Pattern
-        .compile('(' + AttributeIds.RESOURCE_ATTR_PREFIX
-            + "[^:]*:[^:]*)(:{0,1}.*)");
+    private static final Pattern PATTERN_FIND_PLACE_FOR_MARKER =
+        Pattern.compile('(' + AttributeIds.RESOURCE_ATTR_PREFIX + "[^:]*:[^:]*)(:{0,1}.*)");
 
     /**
-     * The replacement pattern to insert the "-new" marker at the found
-     * position.
-     * 
+     * The replacement pattern to insert the "-new" marker at the found position.
+     *
      * @see PATTERN_FIND_PLACE_FOR_MARKER
      */
-    private static final String PATTERN_INSERT_MARKER = "$1"
-        + AttributeIds.MARKER + "$2";
+    private static final String PATTERN_INSERT_MARKER = "$1" + AttributeIds.MARKER + "$2";
 
     /**
-     * The pattern used to check if a role name is the name of the dummy roles
-     * holding the default policies.
+     * The pattern used to check if a role name is the name of the dummy roles holding the default policies.
      */
-    private static final Pattern PATTERN_DEFAULT_USER_ROLE_ID = Pattern
-        .compile(EscidocRole.DEFAULT_USER_ROLE_ID);
+    private static final Pattern PATTERN_DEFAULT_USER_ROLE_ID = Pattern.compile(EscidocRole.DEFAULT_USER_ROLE_ID);
 
-    /** The name of this function. */
-    public static final String NAME = AttributeIds.FUNCTION_PREFIX
-        + "role-is-granted";
+    /**
+     * The name of this function.
+     */
+    public static final String NAME = AttributeIds.FUNCTION_PREFIX + "role-is-granted";
 
     private PoliciesCacheProxy policiesCacheProxy;
 
@@ -113,27 +102,19 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
      */
     public XacmlFunctionRoleIsGranted() {
 
-        super(NAME, 0, StringAttribute.identifier, false, 2,
-            BooleanAttribute.identifier, false);
+        super(NAME, 0, StringAttribute.identifier, false, 2, BooleanAttribute.identifier, false);
     }
-
-
 
     /**
      * See Interface for functional description.
-     * 
-     * @param inputs
-     * @param ctx
-     * @return
-     * @see Function#evaluate(List,
-     *      EvaluationCtx)
+     *
+     * @see Function#evaluate(List, EvaluationCtx)
      */
     @Override
     public EvaluationResult evaluate(final List inputs, final EvaluationCtx ctx) {
 
         try {
-            final AttributeValue[] argValues =
-                new AttributeValue[inputs.size()];
+            final AttributeValue[] argValues = new AttributeValue[inputs.size()];
             final EvaluationResult result = evalArgs(inputs, ctx, argValues);
             if (result != null) {
                 return result;
@@ -159,7 +140,8 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
             }
             // Get the userOrGroupid from the policyId
             final String userOrGroupId;
-            userOrGroupId = parts.length > 2 ? parts[parts.length - 1] : FinderModuleHelper.retrieveSingleSubjectAttribute(ctx,
+            userOrGroupId =
+                parts.length > 2 ? parts[parts.length - 1] : FinderModuleHelper.retrieveSingleSubjectAttribute(ctx,
                     Constants.URI_SUBJECT_ID, true);
 
             // Get the resource id from the context
@@ -175,13 +157,11 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
                 PoliciesCache.putRole(role.getId(), role);
             }
 
-            return getUserGroupEvaluationResult(userOrGroupId, resourceId,
-                role, ctx);
+            return getUserGroupEvaluationResult(userOrGroupId, resourceId, role, ctx);
 
         }
         catch (final ResourceNotFoundException e) {
-            return CustomEvaluationResultBuilder
-                .createResourceNotFoundResult(e);
+            return CustomEvaluationResultBuilder.createResourceNotFoundResult(e);
         }
         catch (final Exception e) {
             return CustomEvaluationResultBuilder.createProcessingErrorResult(e);
@@ -189,30 +169,21 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
     }
 
     /**
-     * Tries to fetch an {@link EvaluationResult} for the provided values of a
-     * user.
-     * 
-     * @param userOrGroupId
-     *            The id of the user account for that the result shall be
-     *            determined. This value must not be <code>null</code>.
-     * @param resourceId
-     *            The id of the resource for that the result shall be
-     *            determined. This may be <code>null</code>.
-     * @param role
-     *            The role for that the result shall be determined. This value
-     *            must not be <code>null</code>.
-     * @param ctx
-     *            The EvaluationCtx.
-     * @return Returns the {@link EvaluationResult} found in the cache or
-     *         <code>null</code>.
+     * Tries to fetch an {@link EvaluationResult} for the provided values of a user.
+     *
+     * @param userOrGroupId The id of the user account for that the result shall be determined. This value must not be
+     *                      <code>null</code>.
+     * @param resourceId    The id of the resource for that the result shall be determined. This may be
+     *                      <code>null</code>.
+     * @param role          The role for that the result shall be determined. This value must not be <code>null</code>.
+     * @param ctx           The EvaluationCtx.
+     * @return Returns the {@link EvaluationResult} found in the cache or <code>null</code>.
      */
     private EvaluationResult getUserGroupEvaluationResult(
-        final String userOrGroupId, final String resourceId,
-        final EscidocRole role, final EvaluationCtx ctx) {
+        final String userOrGroupId, final String resourceId, final EscidocRole role, final EvaluationCtx ctx) {
         try {
             // try to find result in cache
-            final EvaluationResult result =
-                fetchFromCache(userOrGroupId, role.getId(), resourceId);
+            final EvaluationResult result = fetchFromCache(userOrGroupId, role.getId(), resourceId);
             if (result != null) {
                 // TODO: one problem exists. The cached result can be invalid,
                 // because the addressed resource does not exists anymore, or
@@ -238,16 +209,14 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
             if (grantsOfRole == null) {
                 // No grant of the role is found, i.e. the role has not been
                 // granted to the user. Therefore, false is returned.
-                return createCachedResult(userOrGroupId, role.getId(), null,
-                    false);
+                return createCachedResult(userOrGroupId, role.getId(), null, false);
             }
             // At least one grant of the role is owned by the user.
             else if (!role.isLimited()) {
                 // The role has been granted to the user. As this is an
                 // unlimited role, this grant is valid for all objects,
                 // therefore true is returned.
-                return createCachedResult(userOrGroupId, role.getId(), null,
-                    true);
+                return createCachedResult(userOrGroupId, role.getId(), null, true);
             }
             else {
                 // The role has been granted to the user. As this is a limited
@@ -255,8 +224,7 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
 
                 // Get the object type from the context
                 final String objectType =
-                    FinderModuleHelper.retrieveSingleResourceAttribute(ctx,
-                        Constants.URI_OBJECT_TYPE, true);
+                    FinderModuleHelper.retrieveSingleResourceAttribute(ctx, Constants.URI_OBJECT_TYPE, true);
 
                 if (role.getObjectTypes().contains(objectType)) {
                     // role is defined for the object type. Find the related
@@ -265,16 +233,15 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
                         if (scopeDef.getObjectType().equals(objectType)) {
                             // scope definition for the current object type has
                             // been found
-                            String scopeDefAttributeId =
-                                    scopeDef.getAttributeId();
+                            String scopeDefAttributeId = scopeDef.getAttributeId();
                             if (scopeDefAttributeId == null) {
                                 // The role is a limited one, but it is valid
                                 // for all objects of the object type.
                                 // Therefore, true is returned here, as the role
                                 // has been granted to the user.
-                                return createCachedResult(userOrGroupId,
-                                        role.getId(), resourceId, true);
-                            } else {
+                                return createCachedResult(userOrGroupId, role.getId(), resourceId, true);
+                            }
+                            else {
                                 // The role is a limited one and is limited to
                                 // objects related to the object identified by
                                 // the scope definition's attribute id (for that
@@ -284,30 +251,22 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
 
                                 // Resolve the scope definition's attribute
                                 final Set<String> resolvedAttributeValues;
-                                if (FinderModuleHelper
-                                        .isNewResourceId(resourceId)) {
-                                    final Matcher matcher =
-                                            PATTERN_FIND_PLACE_FOR_MARKER
-                                                    .matcher(scopeDefAttributeId);
+                                if (FinderModuleHelper.isNewResourceId(resourceId)) {
+                                    final Matcher matcher = PATTERN_FIND_PLACE_FOR_MARKER.matcher(scopeDefAttributeId);
                                     if (matcher.find()) {
-                                        scopeDefAttributeId =
-                                                matcher
-                                                        .replaceAll(PATTERN_INSERT_MARKER);
+                                        scopeDefAttributeId = matcher.replaceAll(PATTERN_INSERT_MARKER);
                                     }
                                     resolvedAttributeValues =
-                                            FinderModuleHelper
-                                                    .retrieveMultiResourceAttribute(
-                                                            ctx, new URI(
-                                                                    scopeDefAttributeId), false);
+                                        FinderModuleHelper.retrieveMultiResourceAttribute(ctx, new URI(
+                                            scopeDefAttributeId), false);
 
-                                } else {
+                                }
+                                else {
                                     // for existing resources, the existing
                                     // attribute is resolved
                                     resolvedAttributeValues =
-                                            FinderModuleHelper
-                                                    .retrieveMultiResourceAttribute(
-                                                            ctx, new URI(
-                                                                    scopeDefAttributeId), false);
+                                        FinderModuleHelper.retrieveMultiResourceAttribute(ctx, new URI(
+                                            scopeDefAttributeId), false);
                                 }
 
                                 // the resolved attribute may be empty, e.g.
@@ -317,34 +276,29 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
                                 // in this case (see issue 529). Otherwise, it
                                 // has to be checked if the user has a grant
                                 // for the addressed object.
-                                if (resolvedAttributeValues != null
-                                        && !resolvedAttributeValues.isEmpty()) {
+                                if (resolvedAttributeValues != null && !resolvedAttributeValues.isEmpty()) {
                                     for (final String resolvedAttributeValue : resolvedAttributeValues) {
                                         final Collection grantsOfRoleAndObject =
-                                                (Collection) grantsOfRole.get(resolvedAttributeValue);
-                                        if (grantsOfRoleAndObject != null
-                                                && !grantsOfRoleAndObject.isEmpty()) {
-                                            return createCachedResult(
-                                                    userOrGroupId, role.getId(),
-                                                    resourceId, true);
+                                            (Collection) grantsOfRole.get(resolvedAttributeValue);
+                                        if (grantsOfRoleAndObject != null && !grantsOfRoleAndObject.isEmpty()) {
+                                            return createCachedResult(userOrGroupId, role.getId(), resourceId, true);
                                         }
                                     }
                                 }
                             }
-                        } else {
+                        }
+                        else {
                             // scope definitions for other object types than the
                             // object type of the current resource are skipped.
                             continue;
                         }
                     }
                 }
-                return createCachedResult(userOrGroupId, role.getId(),
-                    resourceId, false);
+                return createCachedResult(userOrGroupId, role.getId(), resourceId, false);
             }
         }
         catch (final ResourceNotFoundException e) {
-            return CustomEvaluationResultBuilder
-                .createResourceNotFoundResult(e);
+            return CustomEvaluationResultBuilder.createResourceNotFoundResult(e);
         }
         catch (final Exception e) {
             return CustomEvaluationResultBuilder.createProcessingErrorResult(e);
@@ -353,73 +307,53 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
     }
 
     /**
-     * Tries to fetch an {@link EvaluationResult} for the provided values from
-     * the {@link PoliciesCache}.
-     * 
-     * @param userId
-     *            The id of the user account for that the result shall be
-     *            determined. This value must not be <code>null</code>.
-     * @param roleId
-     *            The id of the role for that the result shall be determined.
-     *            This value must not be <code>null</code>.
-     * @param resourceId
-     *            The id of the resource for that the result shall be
-     *            determined. This may be <code>null</code>.
-     * @return Returns the {@link EvaluationResult} found in the cache or
-     *         <code>null</code>.
+     * Tries to fetch an {@link EvaluationResult} for the provided values from the {@link PoliciesCache}.
+     *
+     * @param userId     The id of the user account for that the result shall be determined. This value must not be
+     *                   <code>null</code>.
+     * @param roleId     The id of the role for that the result shall be determined. This value must not be
+     *                   <code>null</code>.
+     * @param resourceId The id of the resource for that the result shall be determined. This may be <code>null</code>.
+     * @return Returns the {@link EvaluationResult} found in the cache or <code>null</code>.
      */
     private static EvaluationResult fetchFromCache(final String userId, final String roleId, final String resourceId) {
 
         // try to get a result for unlimited role or role not granted to the
         // user (resource-id = null)
-        EvaluationResult result =
-            PoliciesCache
-                .getRoleIsGrantedEvaluationResult(userId, roleId, null);
+        EvaluationResult result = PoliciesCache.getRoleIsGrantedEvaluationResult(userId, roleId, null);
         if (result == null) {
             // try to get a result for limited role
-            result =
-                PoliciesCache.getRoleIsGrantedEvaluationResult(userId, roleId,
-                    resourceId);
+            result = PoliciesCache.getRoleIsGrantedEvaluationResult(userId, roleId, resourceId);
         }
         return result;
     }
 
     /**
-     * Creates and caches an {@link EvaluationResult} for the provided values.<br>
-     * The result is only cached if the resource id is not the id of a new
-     * resource that shall be created, as this would lead to fetching wrong
-     * results from the cache for the next new resource.
-     * 
-     * @param userId
-     *            The id of the user account for that the result has been
-     *            determined. This value must not be <code>null</code>.
-     * @param roleId
-     *            The id of the role for that the result has been determined.
-     *            This value must not be <code>null</code>.
-     * @param resourceId
-     *            The id of the resource for that the result has been
-     *            determined. This may be <code>null</code>.
-     * @param roleIsGranted
-     *            Flag indicating if the role has been granted to the user
-     *            (optional: for the provided resource).
-     * @return
+     * Creates and caches an {@link EvaluationResult} for the provided values.<br> The result is only cached if the
+     * resource id is not the id of a new resource that shall be created, as this would lead to fetching wrong results
+     * from the cache for the next new resource.
+     *
+     * @param userId        The id of the user account for that the result has been determined. This value must not be
+     *                      <code>null</code>.
+     * @param roleId        The id of the role for that the result has been determined. This value must not be
+     *                      <code>null</code>.
+     * @param resourceId    The id of the resource for that the result has been determined. This may be
+     *                      <code>null</code>.
+     * @param roleIsGranted Flag indicating if the role has been granted to the user (optional: for the provided
+     *                      resource).
      */
-    private static EvaluationResult createCachedResult(final String userId, final String roleId,
-                                                       final String resourceId, final boolean roleIsGranted) {
+    private static EvaluationResult createCachedResult(
+        final String userId, final String roleId, final String resourceId, final boolean roleIsGranted) {
 
-        final EvaluationResult result =
-            EvaluationResult.getInstance(roleIsGranted);
+        final EvaluationResult result = EvaluationResult.getInstance(roleIsGranted);
         if (!FinderModuleHelper.isNewResourceId(resourceId)) {
-            PoliciesCache.putRoleIsGrantedEvaluationResult(userId, roleId,
-                resourceId, result);
+            PoliciesCache.putRoleIsGrantedEvaluationResult(userId, roleId, resourceId, result);
         }
         return result;
     }
 
     /**
-     * Gets the data access object bean used to access role data from the
-     * database.<br>
-     * @return
+     * Gets the data access object bean used to access role data from the database.<br>
      */
     private EscidocRoleDaoInterface getRoleDao() {
 
@@ -428,9 +362,8 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
 
     /**
      * Injects the role dao.
-     * 
-     * @param roleDao
-     *            the {@link EscidocRoleDaoInterface} implementation to inject.
+     *
+     * @param roleDao the {@link EscidocRoleDaoInterface} implementation to inject.
      */
     public void setRoleDao(final EscidocRoleDaoInterface roleDao) {
         this.roleDao = roleDao;
@@ -438,12 +371,10 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
 
     /**
      * Injects the policies cache proxy.
-     * 
-     * @param policiesCacheProxy
-     *            the {@link PoliciesCacheProxy} to inject.
+     *
+     * @param policiesCacheProxy the {@link PoliciesCacheProxy} to inject.
      */
-    public void setPoliciesCacheProxy(
-        final PoliciesCacheProxy policiesCacheProxy) {
+    public void setPoliciesCacheProxy(final PoliciesCacheProxy policiesCacheProxy) {
         this.policiesCacheProxy = policiesCacheProxy;
     }
 }

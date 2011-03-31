@@ -30,12 +30,9 @@ package de.escidoc.core.st.business.interfaces;
 
 /**
  * Business interface of an StagingFile handler.
- * 
- * @author Torsten Tetteroo
  *
- * 
+ * @author Torsten Tetteroo
  */
-public interface StagingFileHandlerInterface
-    extends de.escidoc.core.st.service.interfaces.StagingFileHandlerInterface {
+public interface StagingFileHandlerInterface extends de.escidoc.core.st.service.interfaces.StagingFileHandlerInterface {
 
 }

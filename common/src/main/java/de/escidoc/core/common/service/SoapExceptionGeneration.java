@@ -19,7 +19,7 @@
  */
 
 /**
- * 
+ *
  */
 package de.escidoc.core.common.service;
 
@@ -125,161 +125,41 @@ import de.escidoc.core.common.service.interfaces.SoapExceptionGenerationInterfac
 /**
  * @author Michael Hoppe
  */
-public class SoapExceptionGeneration
-    implements SoapExceptionGenerationInterface {
-
-
+public class SoapExceptionGeneration implements SoapExceptionGenerationInterface {
 
     /**
      * See Interface for functional description.
-     * 
-     * @throws EscidocException
-     * @throws AggregationDefinitionNotFoundException
-     * @throws ApplicationException
-     * @throws ValidationException
-     * @throws ResourceNotFoundException
-     * @throws MissingAttributeValueException
-     * @throws MissingElementValueException
-     * @throws MissingParameterException
-     * @throws RuleViolationException
-     * @throws InvalidContextException
-     * @throws InvalidContextStatusException
-     * @throws InvalidAggregationTypeException
-     * @throws InvalidContentException
-     * @throws InvalidItemStatusException
-     * @throws ReadonlyVersionException
-     * @throws InvalidContentModelException
-     * @throws InvalidPidException
-     * @throws InvalidRelationPropertiesException
-     * @throws InvalidScopeException
-     * @throws InvalidSearchQueryException
-     * @throws InvalidSqlException
-     * @throws InvalidStatusException
-     * @throws InvalidXmlException
-     * @throws ReferenceCycleException
-     * @throws XmlCorruptedException
-     * @throws XmlSchemaValidationException
-     * @throws MissingLicenceException
-     * @throws MissingMethodParameterException
-     * @throws MissingContentException
-     * @throws MissingUserListException
-     * @throws MissingMdRecordException
-     * @throws ActionNotFoundException
-     * @throws ContextNotFoundException
-     * @throws AdminDescriptorNotFoundException
-     * @throws AggregationTypeNotFoundException
-     * @throws ComponentNotFoundException
-     * @throws ContainerNotFoundException
-     * @throws ItemNotFoundException
-     * @throws ItemReferenceNotFoundException
-     * @throws ContentModelNotFoundException
-     * @throws FileNotFoundException
-     * @throws IndexNotFoundException
-     * @throws IngestionDefinitionNotFoundException
-     * @throws IngestionSourceNotFoundException
-     * @throws IngestionTaskNotFoundException
-     * @throws MdRecordNotFoundException
-     * @throws OptimisticLockingException
-     * @throws OrganizationalUnitHierarchyViolationException
-     * @throws PidNotFoundException
-     * @throws RelationNotFoundException
-     * @throws RelationTypeNotFoundException
-     * @throws ReportDefinitionNotFoundException
-     * @throws RevisionNotFoundException
-     * @throws RoleNotFoundException
-     * @throws ScopeContextViolationException
-     * @throws ScopeNotFoundException
-     * @throws SearchNotFoundException
-     * @throws ContentRelationNotFoundException
-     * @throws ContentRelationNotFoundException
-     * @throws ReferencedResourceNotFoundException
-     * @throws RelationPredicateNotFoundException
-     * @throws StructuralMapEntryNotFoundException
-     * @throws TargetBasketNotFoundException
-     * @throws TaskListNotFoundException
-     * @throws TaskNotFoundException
-     * @throws TransitionNotFoundException
-     * @throws UserAccountNotFoundException
-     * @throws UserGroupNotFoundException
-     * @throws UserNotFoundException
-     * @throws VersionNotFoundException
-     * @throws XmlSchemaNotFoundException
-     * @throws AdminDescriptorViolationException
-     * @throws AlreadyDeletedException
-     * @throws AlreadyExistsException
-     * @throws AlreadyPublishedException
-     * @throws AlreadyWithdrawnException
-     * @throws LockingException
-     * @throws NotPublishedException
-     * @throws ReadonlyViolationException
-     * @throws ReadonlyElementViolationException
-     * @throws ReadonlyAttributeViolationException
-     * @throws RelationRuleViolationException
-     * @throws RoleInUseViolationException
-     * @throws TimeFrameViolationException
-     * @throws InvalidTripleStoreQueryException
-     * @throws InvalidTripleStoreOutputFormatException
-     * @throws SystemException
-     * @throws ApplicationServerSystemException
-     * @throws FedoraSystemException
-     * @throws FileSystemException
-     * @throws IntegritySystemException
-     * @throws SqlDatabaseSystemException
-     * @throws TripleStoreSystemException
-     * @throws WebserverSystemException
-     * @throws XmlParserSystemException
-     * @throws UserGroupHierarchyViolationException
      */
     @Override
-    public void generateExceptions() throws EscidocException,
-        AggregationDefinitionNotFoundException, ApplicationException,
-        ValidationException, ResourceNotFoundException,
-        MissingAttributeValueException, MissingElementValueException,
-        MissingParameterException, RuleViolationException,
-        InvalidContextException, InvalidContextStatusException,
-        InvalidAggregationTypeException, InvalidContentException,
-        InvalidItemStatusException, ReadonlyVersionException,
-        InvalidContentModelException, InvalidPidException,
-        InvalidRelationPropertiesException, InvalidSearchQueryException,
-        InvalidScopeException, InvalidSqlException, InvalidStatusException,
-        InvalidXmlException, ReferenceCycleException, XmlCorruptedException,
-        XmlSchemaValidationException, MissingLicenceException,
-        MissingMethodParameterException, MissingContentException,
-        MissingUserListException, MissingMdRecordException,
-        ActionNotFoundException, ContextNotFoundException,
-        AdminDescriptorNotFoundException, AggregationTypeNotFoundException,
-        ComponentNotFoundException, ContainerNotFoundException,
-        ItemNotFoundException, ItemReferenceNotFoundException,
-        ContentModelNotFoundException, FileNotFoundException,
-        IndexNotFoundException, IngestionDefinitionNotFoundException,
-        IngestionSourceNotFoundException, IngestionTaskNotFoundException,
-        MdRecordNotFoundException, OptimisticLockingException,
-        OrganizationalUnitHierarchyViolationException, PidNotFoundException,
-        RelationNotFoundException, RelationTypeNotFoundException,
-        ReportDefinitionNotFoundException, RevisionNotFoundException,
-        RoleNotFoundException, ScopeContextViolationException,
-        ScopeNotFoundException, SearchNotFoundException,
-        ContentRelationNotFoundException, ReferencedResourceNotFoundException,
-        RelationPredicateNotFoundException,
-        StructuralMapEntryNotFoundException, TargetBasketNotFoundException,
-        TaskListNotFoundException, TaskNotFoundException,
-        TransitionNotFoundException, UserAccountNotFoundException,
-        UserGroupNotFoundException, UserNotFoundException,
-        VersionNotFoundException, XmlSchemaNotFoundException,
-        AdminDescriptorViolationException, AlreadyDeletedException,
-        AlreadyExistsException, AlreadyPublishedException,
-        AlreadyWithdrawnException, LockingException, NotPublishedException,
-        ReadonlyViolationException, ReadonlyElementViolationException,
-        ReadonlyAttributeViolationException, RelationRuleViolationException,
-        RoleInUseViolationException, TimeFrameViolationException,
-        ContentRelationNotFoundException, InvalidTripleStoreQueryException,
-        InvalidTripleStoreOutputFormatException, SystemException,
-        ApplicationServerSystemException, FedoraSystemException,
-        FileSystemException, IntegritySystemException,
-        SqlDatabaseSystemException, TripleStoreSystemException,
-        WebserverSystemException, XmlParserSystemException, TmeException,
+    public void generateExceptions() throws EscidocException, AggregationDefinitionNotFoundException,
+        ApplicationException, ValidationException, ResourceNotFoundException, MissingAttributeValueException,
+        MissingElementValueException, MissingParameterException, RuleViolationException, InvalidContextException,
+        InvalidContextStatusException, InvalidAggregationTypeException, InvalidContentException,
+        InvalidItemStatusException, ReadonlyVersionException, InvalidContentModelException, InvalidPidException,
+        InvalidRelationPropertiesException, InvalidSearchQueryException, InvalidScopeException, InvalidSqlException,
+        InvalidStatusException, InvalidXmlException, ReferenceCycleException, XmlCorruptedException,
+        XmlSchemaValidationException, MissingLicenceException, MissingMethodParameterException,
+        MissingContentException, MissingUserListException, MissingMdRecordException, ActionNotFoundException,
+        ContextNotFoundException, AdminDescriptorNotFoundException, AggregationTypeNotFoundException,
+        ComponentNotFoundException, ContainerNotFoundException, ItemNotFoundException, ItemReferenceNotFoundException,
+        ContentModelNotFoundException, FileNotFoundException, IndexNotFoundException,
+        IngestionDefinitionNotFoundException, IngestionSourceNotFoundException, IngestionTaskNotFoundException,
+        MdRecordNotFoundException, OptimisticLockingException, OrganizationalUnitHierarchyViolationException,
+        PidNotFoundException, RelationNotFoundException, RelationTypeNotFoundException,
+        ReportDefinitionNotFoundException, RevisionNotFoundException, RoleNotFoundException,
+        ScopeContextViolationException, ScopeNotFoundException, SearchNotFoundException,
+        ContentRelationNotFoundException, ReferencedResourceNotFoundException, RelationPredicateNotFoundException,
+        StructuralMapEntryNotFoundException, TargetBasketNotFoundException, TaskListNotFoundException,
+        TaskNotFoundException, TransitionNotFoundException, UserAccountNotFoundException, UserGroupNotFoundException,
+        UserNotFoundException, VersionNotFoundException, XmlSchemaNotFoundException, AdminDescriptorViolationException,
+        AlreadyDeletedException, AlreadyExistsException, AlreadyPublishedException, AlreadyWithdrawnException,
+        LockingException, NotPublishedException, ReadonlyViolationException, ReadonlyElementViolationException,
+        ReadonlyAttributeViolationException, RelationRuleViolationException, RoleInUseViolationException,
+        TimeFrameViolationException, ContentRelationNotFoundException, InvalidTripleStoreQueryException,
+        InvalidTripleStoreOutputFormatException, SystemException, ApplicationServerSystemException,
+        FedoraSystemException, FileSystemException, IntegritySystemException, SqlDatabaseSystemException,
+        TripleStoreSystemException, WebserverSystemException, XmlParserSystemException, TmeException,
         UserGroupHierarchyViolationException, ResourceInUseException {
     }
-
 
 }

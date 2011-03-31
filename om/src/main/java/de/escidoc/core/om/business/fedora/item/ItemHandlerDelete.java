@@ -49,97 +49,78 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 /**
- * 
- * Contains methods pertaining deletion of an item. Is extended at least by
- * FedoraItemHandler.
- * 
+ * Contains methods pertaining deletion of an item. Is extended at least by FedoraItemHandler.
+ *
  * @author Michael Schneider
- * 
  */
 public class ItemHandlerDelete extends ItemHandlerCreate {
 
     /**
      * Removes an item from repository.
-     * 
-     * @param id
-     *            The item ID.
-     * 
-     * @throws ItemNotFoundException
-     *             If the item can not be found in the repository.
-     * @throws LockingException
-     *             If the item is locked and the current user is not the one who
-     *             locked it.
-     * @throws InvalidStatusException
-     *             If the item can not be deleted because it is released.
-     * @throws SystemException
-     *             Thrown in case of an internal system error.
-     * @throws AuthorizationException
-     *             If further needed access rights are not given.
+     *
+     * @param id The item ID.
+     * @throws ItemNotFoundException  If the item can not be found in the repository.
+     * @throws LockingException       If the item is locked and the current user is not the one who locked it.
+     * @throws InvalidStatusException If the item can not be deleted because it is released.
+     * @throws SystemException        Thrown in case of an internal system error.
+     * @throws AuthorizationException If further needed access rights are not given.
      */
-    protected void remove(final String id) throws ItemNotFoundException,
-        LockingException, InvalidStatusException, SystemException,
-        AuthorizationException {
+    protected void remove(final String id) throws ItemNotFoundException, LockingException, InvalidStatusException,
+        SystemException, AuthorizationException {
 
         // TODO move precondition checks to service method (? FRS)
         setItem(id);
         checkLocked();
         // check if never released
-        final String status =
-            getItem().getProperty(PropertyMapKeys.PUBLIC_STATUS);
-        if (! status.equals(Constants.STATUS_PENDING)
-            && ! status.equals(Constants.STATUS_IN_REVISION)) {
-            throw new InvalidStatusException("Item " + getItem().getId()
-                + " is in status " + status + ". Can not delete.");
+        final String status = getItem().getProperty(PropertyMapKeys.PUBLIC_STATUS);
+        if (!status.equals(Constants.STATUS_PENDING) && !status.equals(Constants.STATUS_IN_REVISION)) {
+            throw new InvalidStatusException("Item " + getItem().getId() + " is in status " + status
+                + ". Can not delete.");
         }
 
         // remove member entries referring this
-        final List<String> containers =
-            getTripleStoreUtility().getContainers(getItem().getId());
+        final List<String> containers = getTripleStoreUtility().getContainers(getItem().getId());
         for (final String parent : containers) {
             try {
                 final Container container = new Container(parent);
                 // call removeMember with current user context (access rights)
                 final String param =
-                        "<param last-modification-date=\""
-                                + container.getLastModificationDate() + "\"><id>"
-                                + getItem().getId() + "</id></param>";
+                    "<param last-modification-date=\"" + container.getLastModificationDate() + "\"><id>"
+                        + getItem().getId() + "</id></param>";
 
                 final MethodMapper methodMapper =
-                        (MethodMapper) BeanLocator.getBean(
-                                "Common.spring.ejb.context",
-                                "common.CommonMethodMapper");
+                    (MethodMapper) BeanLocator.getBean("Common.spring.ejb.context", "common.CommonMethodMapper");
                 final BeanMethod method =
-                        methodMapper.getMethod("/ir/container/" + parent
-                                + "/members/remove", null, null, "POST", param);
-                method
-                        .invokeWithProtocol(
-                                UserContext.getHandle(),
-                                de.escidoc.core.om.business.fedora.deviation.Constants.USE_SOAP_REQUEST_PROTOCOL);
-            } catch (final InvocationTargetException e) {
+                    methodMapper.getMethod("/ir/container/" + parent + "/members/remove", null, null, "POST", param);
+                method.invokeWithProtocol(UserContext.getHandle(),
+                    de.escidoc.core.om.business.fedora.deviation.Constants.USE_SOAP_REQUEST_PROTOCOL);
+            }
+            catch (final InvocationTargetException e) {
                 // unpack Exception from reflection API
                 final Throwable cause = e.getCause();
-                if(cause instanceof Error) {
-                    throw (Error)cause;
-                } else if (cause instanceof AuthorizationException) {
-                    throw (AuthorizationException)cause;
-                } else {
-                    throw new SystemException("An error occured removing member entries for item "
-                                + getItem().getId() + ". Container can not be deleted.", cause);
+                if (cause instanceof Error) {
+                    throw (Error) cause;
                 }
-            } catch (final Exception e) {
-                throw new SystemException("An error occured removing member entries for item "
-                                + getItem().getId() + ". Container can not be deleted.", e);
+                else if (cause instanceof AuthorizationException) {
+                    throw (AuthorizationException) cause;
+                }
+                else {
+                    throw new SystemException("An error occured removing member entries for item " + getItem().getId()
+                        + ". Container can not be deleted.", cause);
+                }
+            }
+            catch (final Exception e) {
+                throw new SystemException("An error occured removing member entries for item " + getItem().getId()
+                    + ". Container can not be deleted.", e);
             }
         }
 
         // delete every component, even those referred from old versions
-        final byte[] foxml =
-            getFedoraUtility().getObjectFoxml(getItem().getId());
+        final byte[] foxml = getFedoraUtility().getObjectFoxml(getItem().getId());
         final ByteArrayInputStream in = new ByteArrayInputStream(foxml);
 
         final StaxParser sp = new StaxParser();
-        final ComponentIdsInItemFoxmlHandler cih =
-            new ComponentIdsInItemFoxmlHandler(sp);
+        final ComponentIdsInItemFoxmlHandler cih = new ComponentIdsInItemFoxmlHandler(sp);
         sp.addHandler(cih);
         try {
             sp.parse(in);

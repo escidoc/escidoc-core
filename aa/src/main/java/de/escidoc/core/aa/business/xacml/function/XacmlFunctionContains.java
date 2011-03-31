@@ -42,29 +42,28 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Implementation of a XACML (target) function that checks if the first
- * attribute contains the second one.<br>
- * The first parameter has to be a StringAttribute that contains a space
- * separated list of strings. The second parameter has to be a StringAttribute
- * whose value shall be check for existing in the list. <br>
- * The function returns true, if the value of the second parameter is found in
- * the value of the first parameter.
- * 
- * @author Torsten Tetteroo
+ * Implementation of a XACML (target) function that checks if the first attribute contains the second one.<br> The first
+ * parameter has to be a StringAttribute that contains a space separated list of strings. The second parameter has to be
+ * a StringAttribute whose value shall be check for existing in the list. <br> The function returns true, if the value
+ * of the second parameter is found in the value of the first parameter.
  *
- * 
+ * @author Torsten Tetteroo
  */
 public class XacmlFunctionContains extends FunctionBase {
 
-    /** The name of this function. */
-    public static final String NAME =
-        AttributeIds.FUNCTION_PREFIX + "string-contains";
+    /**
+     * The name of this function.
+     */
+    public static final String NAME = AttributeIds.FUNCTION_PREFIX + "string-contains";
 
-    /** The parameter types. */
-    private static final String[] PARAMS =
-        { StringAttribute.identifier, StringAttribute.identifier };
+    /**
+     * The parameter types.
+     */
+    private static final String[] PARAMS = { StringAttribute.identifier, StringAttribute.identifier };
 
-    /** The definitions of bag or non-bag parameters. */
+    /**
+     * The definitions of bag or non-bag parameters.
+     */
     private static final boolean[] BAG_PARAMS = { false, false };
 
     /**
@@ -75,20 +74,13 @@ public class XacmlFunctionContains extends FunctionBase {
         super(NAME, 0, PARAMS, BAG_PARAMS, BooleanAttribute.identifier, false);
     }
 
-
-
     /**
      * See Interface for functional description.
-     * 
-     * @param inputs
-     * @param context
-     * @return
-     * @see Function#evaluate(List,
-     *      EvaluationCtx)
+     *
+     * @see Function#evaluate(List, EvaluationCtx)
      */
     @Override
-    public EvaluationResult evaluate(
-        final List inputs, final EvaluationCtx context) {
+    public EvaluationResult evaluate(final List inputs, final EvaluationCtx context) {
 
         final AttributeValue[] argValues = new AttributeValue[inputs.size()];
         final EvaluationResult result = evalArgs(inputs, context, argValues);
@@ -99,8 +91,7 @@ public class XacmlFunctionContains extends FunctionBase {
         final StringAttribute encodedList = (StringAttribute) argValues[0];
         final StringAttribute value = (StringAttribute) argValues[1];
         final Pattern p =
-            Pattern.compile(".*(\\A|\\s)" + value.getValue() + "(\\s|\\z).*",
-                Pattern.MULTILINE | Pattern.DOTALL);
+            Pattern.compile(".*(\\A|\\s)" + value.getValue() + "(\\s|\\z).*", Pattern.MULTILINE | Pattern.DOTALL);
         final Matcher m = p.matcher(encodedList.getValue());
 
         return EvaluationResult.getInstance(m.matches());

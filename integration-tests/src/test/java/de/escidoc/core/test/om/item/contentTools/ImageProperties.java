@@ -5,9 +5,8 @@ import java.io.File;
 
 /**
  * Reading and determinig properties from Image file.
- * 
+ *
  * @author Steffen Wagner
- * 
  */
 public class ImageProperties extends Canvas {
 
@@ -21,11 +20,9 @@ public class ImageProperties extends Canvas {
 
     /**
      * Construct ImageProperties.
-     * 
-     * @param file
-     *            The image file.
-     * @throws InterruptedException
-     *             Thrown if loading image via toolkit failed.
+     *
+     * @param file The image file.
+     * @throws InterruptedException Thrown if loading image via toolkit failed.
      */
     public ImageProperties(final File file) throws InterruptedException {
 
@@ -34,11 +31,9 @@ public class ImageProperties extends Canvas {
 
     /**
      * Construct ImageProperties.
-     * 
-     * @param filePath
-     *            The name and path to image file.
-     * @throws InterruptedException
-     *             Thrown if loading image via toolkit failed.
+     *
+     * @param filePath The name and path to image file.
+     * @throws InterruptedException Thrown if loading image via toolkit failed.
      */
     public ImageProperties(final String filePath) throws InterruptedException {
 
@@ -47,10 +42,9 @@ public class ImageProperties extends Canvas {
 
     /**
      * Get width of image.
-     * 
+     *
      * @return image width in pixel
-     * @throws InterruptedException
-     *             Thrown if loading image via toolkit failed.
+     * @throws InterruptedException Thrown if loading image via toolkit failed.
      */
     public int getImageWidth() throws InterruptedException {
 
@@ -59,10 +53,9 @@ public class ImageProperties extends Canvas {
 
     /**
      * Get height of image.
-     * 
+     *
      * @return image height in pixel
-     * @throws InterruptedException
-     *             Thrown if loading image via toolkit failed.
+     * @throws InterruptedException Thrown if loading image via toolkit failed.
      */
     public int getImageHeight() throws InterruptedException {
 
@@ -71,11 +64,9 @@ public class ImageProperties extends Canvas {
 
     /**
      * Wait until Image with id is loaded.
-     * 
-     * @param imageID
-     *            the id of the image within the toolkit
-     * @throws InterruptedException
-     *             Thrown if loading image via toolkit failed.
+     *
+     * @param imageID the id of the image within the toolkit
+     * @throws InterruptedException Thrown if loading image via toolkit failed.
      */
     private void waitImageLoad(final int imageID) throws InterruptedException {
 
@@ -87,11 +78,9 @@ public class ImageProperties extends Canvas {
 
     /**
      * Loading image.
-     * 
-     * @param filePath
-     *            Path to image file
-     * @throws InterruptedException
-     *             Thrown if loading image failed.
+     *
+     * @param filePath Path to image file
+     * @throws InterruptedException Thrown if loading image failed.
      */
     private void loadImage(final String filePath) throws InterruptedException {
         // loading image

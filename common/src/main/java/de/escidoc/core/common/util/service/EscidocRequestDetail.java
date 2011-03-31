@@ -24,10 +24,8 @@ import java.io.Serializable;
 
 /**
  * Class encapsulating the details of an eSciDoc request.
- * 
- * @author Torsten Tetteroo
  *
- * 
+ * @author Torsten Tetteroo
  */
 public class EscidocRequestDetail implements Serializable {
 
@@ -37,29 +35,21 @@ public class EscidocRequestDetail implements Serializable {
     private static final long serialVersionUID = -4779944843870131966L;
 
     /**
-     * Flag indicating if this is a REST access (<code>true</code>) or a
-     * SOAP/EJB access (<code>false</code>). The latter one is the default
-     * value.
-     * 
-     *
+     * Flag indicating if this is a REST access (<code>true</code>) or a SOAP/EJB access (<code>false</code>). The
+     * latter one is the default value.
      */
     private boolean restAccess;
 
     /**
      * The restricted permission, if any.
-     * 
-     *
      */
     private int restrictedPermissionCode = UserContext.UNRESTRICTED_PERMISSION;
 
     /**
      * Sets the REST access flag.
-     * 
-     * @param restAccess
-     *            The flag indicating if this is a REST user (<code>true</code>)
-     *            or a SOAP/EJB user (<code>false</code>). The latter one is
-     *            the default value.
      *
+     * @param restAccess The flag indicating if this is a REST user (<code>true</code>) or a SOAP/EJB user
+     *                   (<code>false</code>). The latter one is the default value.
      */
     public void setRestAccess(final boolean restAccess) {
 
@@ -68,10 +58,8 @@ public class EscidocRequestDetail implements Serializable {
 
     /**
      * Checks if this is a REST access.
-     * 
-     * @return Returns <code>true</code> if this is a REST access, else
-     *         <code>false</code>.
      *
+     * @return Returns <code>true</code> if this is a REST access, else <code>false</code>.
      */
     public boolean isRestAccess() {
 
@@ -80,10 +68,8 @@ public class EscidocRequestDetail implements Serializable {
 
     /**
      * Sets restricted permissions, e.g. retrieval restricted to releases.
-     * 
-     * @param restrictedPermissions
-     *            The code identifying the restricted permissions.
      *
+     * @param restrictedPermissions The code identifying the restricted permissions.
      */
     public void setRestrictedPermissions(final int restrictedPermissions) {
 
@@ -92,9 +78,8 @@ public class EscidocRequestDetail implements Serializable {
 
     /**
      * Gets restricted permissions.
-     * 
-     * @return Returns the code identifying the restricted permissions.
      *
+     * @return Returns the code identifying the restricted permissions.
      */
     public int getRestrictedPermissions() {
 

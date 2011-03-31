@@ -21,13 +21,11 @@
 package de.escidoc.core.common.exceptions.application.notfound;
 
 /**
- * The AggregationTypeNotFoundException is used to indicate that the aggregation
- * type requested in the context of the service-call is null or does not exist
- * in the System. returned httpStatusCode is 404. Status code (404) indicating
+ * The AggregationTypeNotFoundException is used to indicate that the aggregation type requested in the context of the
+ * service-call is null or does not exist in the System. returned httpStatusCode is 404. Status code (404) indicating
  * that the requested resource is not available.
- * 
- * @author Michael Hoppe (FIZ Karlsruhe)
  *
+ * @author Michael Hoppe (FIZ Karlsruhe)
  */
 public class AggregationTypeNotFoundException extends ResourceNotFoundException {
 
@@ -38,13 +36,10 @@ public class AggregationTypeNotFoundException extends ResourceNotFoundException 
 
     public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_NOT_FOUND;
 
-    public static final String HTTP_STATUS_MESSAGE =
-        "Aggregation type was not found.";
+    public static final String HTTP_STATUS_MESSAGE = "Aggregation type was not found.";
 
     /**
      * Default constructor.
-     * 
-     *
      */
     public AggregationTypeNotFoundException() {
         super(HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -52,9 +47,8 @@ public class AggregationTypeNotFoundException extends ResourceNotFoundException 
 
     /**
      * Constructor used to map an initial exception.
-     * 
-     * @param error
-     *            Throwable
+     *
+     * @param error Throwable
      */
     public AggregationTypeNotFoundException(final Throwable error) {
         super(error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -62,27 +56,21 @@ public class AggregationTypeNotFoundException extends ResourceNotFoundException 
 
     /**
      * Constructs a new exception with the specified detail message.
-     * 
-     * @param message -
-     *            the detail message.
      *
+     * @param message - the detail message.
      */
     public AggregationTypeNotFoundException(final String message) {
         super(message, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 
     /**
-     * Constructor used to create a new Exception with the specified detail
-     * message and a mapping to an initial exception.
-     * 
-     * @param message -
-     *            the detail message.
-     * @param error
-     *            Throwable
+     * Constructor used to create a new Exception with the specified detail message and a mapping to an initial
+     * exception.
      *
+     * @param message - the detail message.
+     * @param error   Throwable
      */
-    public AggregationTypeNotFoundException(final String message,
-        final Throwable error) {
+    public AggregationTypeNotFoundException(final String message, final Throwable error) {
         super(message, error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 }

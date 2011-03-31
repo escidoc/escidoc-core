@@ -40,49 +40,44 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * IndexOptimizerService. sends index.optimize-message to gsearch.
- * gsearch then optimizes all lucene-indexes
- * 
+ * IndexOptimizerService. sends index.optimize-message to gsearch. gsearch then optimizes all lucene-indexes
+ *
  * @author Michael Hoppe
  */
 @ManagedResource(objectName = "eSciDocCore:name=IndexOptimizerService", description = "sends index-optimize request to gsearch", log = true, logFile = "jmx.log", currencyTimeLimit = 15)
 public class IndexOptimizerService {
-    private static final Logger LOGGER =
-        LoggerFactory.getLogger(IndexOptimizerService.class);
-    
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(IndexOptimizerService.class);
+
     private GsearchHandler gsearchHandler;
 
     private ErrorMessageHandler errorMessageHandler;
-    
+
     /**
      * call optimize.
-     * 
      */
     @ManagedOperation(description = "call optimize.")
     public void execute() {
-        final long lastExecutionTime =
-            IndexOptimizerServiceTimer.getInstance().getLastExecutionTime();
-        if (lastExecutionTime > 0L
-            && System.currentTimeMillis() - lastExecutionTime < 1000L) {
+        final long lastExecutionTime = IndexOptimizerServiceTimer.getInstance().getLastExecutionTime();
+        if (lastExecutionTime > 0L && System.currentTimeMillis() - lastExecutionTime < 1000L) {
             return;
         }
         try {
             LOGGER.info("optimizing search-indices");
             gsearchHandler.requestOptimize(null);
-        } catch (final Exception e) {
+        }
+        catch (final Exception e) {
             final Map<String, String> parameters = new HashMap<String, String>();
             parameters.put("message", "optimizing search-indices failed");
-            errorMessageHandler.putErrorMessage(parameters, e,
-                    Constants.INDEXING_ERROR_LOGFILE);
+            errorMessageHandler.putErrorMessage(parameters, e, Constants.INDEXING_ERROR_LOGFILE);
             LOGGER.error("Optimizing search-indices failed.", e);
         }
     }
 
     /**
      * Injects the {@link GsearchHandler} to use.
-     * 
-     * @param gsearchHandler
-     *            The {@link GsearchHandler}.
+     *
+     * @param gsearchHandler The {@link GsearchHandler}.
      */
     public void setGsearchHandler(final GsearchHandler gsearchHandler) {
         this.gsearchHandler = gsearchHandler;
@@ -90,12 +85,10 @@ public class IndexOptimizerService {
 
     /**
      * Setting the errorMessageHandler.
-     * 
-     * @param errorMessageHandler
-     *            The ErrorMessageHandler to set.
+     *
+     * @param errorMessageHandler The ErrorMessageHandler to set.
      */
-    public final void setErrorMessageHandler(
-        final ErrorMessageHandler errorMessageHandler) {
+    public final void setErrorMessageHandler(final ErrorMessageHandler errorMessageHandler) {
         this.errorMessageHandler = errorMessageHandler;
     }
 

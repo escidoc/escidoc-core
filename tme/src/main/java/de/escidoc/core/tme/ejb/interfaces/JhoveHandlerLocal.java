@@ -16,22 +16,12 @@ import javax.ejb.EJBLocalObject;
  */
 public interface JhoveHandlerLocal extends EJBLocalObject {
 
-    String extract(String requests, SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            XmlCorruptedException,
-            XmlSchemaValidationException,
-            MissingMethodParameterException,
-            SystemException,
-            TmeException;
+    String extract(String requests, SecurityContext securityContext) throws AuthenticationException,
+        AuthorizationException, XmlCorruptedException, XmlSchemaValidationException, MissingMethodParameterException,
+        SystemException, TmeException;
 
-    String extract(String requests, String authHandle, Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            XmlCorruptedException,
-            XmlSchemaValidationException,
-            MissingMethodParameterException,
-            SystemException,
-            TmeException;
+    String extract(String requests, String authHandle, Boolean restAccess) throws AuthenticationException,
+        AuthorizationException, XmlCorruptedException, XmlSchemaValidationException, MissingMethodParameterException,
+        SystemException, TmeException;
 
 }

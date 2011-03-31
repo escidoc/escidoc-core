@@ -26,8 +26,7 @@ import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RelsExtContentRelationsReadHandlerForUpdate
-    extends RelsExtContentRelationsReadHandler {
+public class RelsExtContentRelationsReadHandlerForUpdate extends RelsExtContentRelationsReadHandler {
 
     private final List<String> relationsStrings = new ArrayList<String>();
 

@@ -33,30 +33,23 @@ import de.escidoc.core.common.exceptions.remote.EscidocException;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Reimplementation of the MethodNotFoundException thrown by eSciDoc. <br>
- * Reimplemented for the eSciDocTestProject.<br>
- * From the original exception:<br>
- * The MethodNotFoundException is used to indicate that no matching method could
- * be found to a REST call.
- * 
- * @author Michael Schneider
+ * Reimplementation of the MethodNotFoundException thrown by eSciDoc. <br> Reimplemented for the eSciDocTestProject.<br>
+ * From the original exception:<br> The MethodNotFoundException is used to indicate that no matching method could be
+ * found to a REST call.
  *
+ * @author Michael Schneider
  */
 public class MethodNotFoundException extends EscidocException {
 
-    private static final int HTTP_STATUS_CODE =
-        HttpServletResponse.SC_NOT_IMPLEMENTED;
+    private static final int HTTP_STATUS_CODE = HttpServletResponse.SC_NOT_IMPLEMENTED;
 
     private static final String HTTP_STATUS_MESSAGE = "Method Not Found";
 
     /**
      * Default constructor.
-     * 
-     *
      */
     public MethodNotFoundException() {
-        super(HTTP_STATUS_CODE, HTTP_STATUS_CODE + " " + HTTP_STATUS_MESSAGE,
-            HTTP_STATUS_MESSAGE);
+        super(HTTP_STATUS_CODE, HTTP_STATUS_CODE + " " + HTTP_STATUS_MESSAGE, HTTP_STATUS_MESSAGE);
     }
 
     // /**

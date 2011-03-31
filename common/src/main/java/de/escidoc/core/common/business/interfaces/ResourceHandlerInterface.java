@@ -29,73 +29,57 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 
 /**
  * Common interface implemented by all resource handlers.
- * 
- * @author André Schenk
  *
+ * @author André Schenk
  */
 public interface ResourceHandlerInterface {
 
     /**
-     * Retrieve the XML representation of a resource object representing an
-     * eSciDoc resource.
+     * Retrieve the XML representation of a resource object representing an eSciDoc resource.
      *
      * @param resourceId unique identifier of the resource
-     *
      * @return The XML representation of the resource.
-     * @throws ResourceNotFoundException Thrown if no resource with the provided
-     *                                   id exists.
-     * @throws SystemException Thrown in case of an internal system error.
+     * @throws ResourceNotFoundException Thrown if no resource with the provided id exists.
+     * @throws SystemException           Thrown in case of an internal system error.
      */
-    String retrieve(final String resourceId)
-        throws ResourceNotFoundException, SystemException;
+    String retrieve(final String resourceId) throws ResourceNotFoundException, SystemException;
 
     /**
      * Create a resource object representing an eSciDoc resource.
      *
      * @param xmlData XML representation of the resource to be created
-     *
      * @return XML representation of the created resource.
-     * @throws UniqueConstraintViolationException Thrown if the provided login
-     *                                            name of the user is not unique.
+     * @throws UniqueConstraintViolationException
+     *                             Thrown if the provided login name of the user is not unique.
      * @throws InvalidXmlException Thrown if the provided XML data is invalid.
-     * @throws SystemException Thrown in case of an internal system error.
+     * @throws SystemException     Thrown in case of an internal system error.
      */
-    String create(final String xmlData)
-        throws UniqueConstraintViolationException, InvalidXmlException,
-               SystemException;
+    String create(final String xmlData) throws UniqueConstraintViolationException, InvalidXmlException, SystemException;
 
     /**
      * Delete the specified resource.
      *
      * @param resourceId unique identifier of the resource
-     *
-     * @throws ResourceNotFoundException Thrown if no resource with the provided
-     *                                   id exists.
-     * @throws SystemException Thrown in case of an internal system error.
+     * @throws ResourceNotFoundException Thrown if no resource with the provided id exists.
+     * @throws SystemException           Thrown in case of an internal system error.
      */
-    void delete(final String resourceId)
-        throws ResourceNotFoundException, SystemException;
+    void delete(final String resourceId) throws ResourceNotFoundException, SystemException;
 
     /**
      * Update the data of a resource object representing an eSciDoc resource.
      *
      * @param resourceId unique identifier of the resource
-     * @param xmlData XML representation of the resource to be created
-     *
+     * @param xmlData    XML representation of the resource to be created
      * @return XML representation of the updated resource.
-     * @throws ResourceNotFoundException Thrown if no resource with the provided
-     *                                   id exists.
-     * @throws UniqueConstraintViolationException Thrown if the provided login
-     *                                            name of the user is not unique.
-     * @throws InvalidXmlException Thrown if the provided XML data is invalid.
-     * @throws MissingAttributeValueException Thrown if a mandatory attribute is
-     *                                        not provided within the XML data.
-     * @throws OptimisticLockingException Thrown in case of an optimistic locking
-     *                                    error.
-     * @throws SystemException Thrown in case of an internal system error.
+     * @throws ResourceNotFoundException      Thrown if no resource with the provided id exists.
+     * @throws UniqueConstraintViolationException
+     *                                        Thrown if the provided login name of the user is not unique.
+     * @throws InvalidXmlException            Thrown if the provided XML data is invalid.
+     * @throws MissingAttributeValueException Thrown if a mandatory attribute is not provided within the XML data.
+     * @throws OptimisticLockingException     Thrown in case of an optimistic locking error.
+     * @throws SystemException                Thrown in case of an internal system error.
      */
-    String update(final String resourceId, final String xmlData)
-        throws ResourceNotFoundException, UniqueConstraintViolationException,
-               InvalidXmlException, MissingAttributeValueException,
-               OptimisticLockingException, SystemException;
+    String update(final String resourceId, final String xmlData) throws ResourceNotFoundException,
+        UniqueConstraintViolationException, InvalidXmlException, MissingAttributeValueException,
+        OptimisticLockingException, SystemException;
 }

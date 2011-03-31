@@ -42,9 +42,8 @@ import static org.junit.Assert.fail;
 
 /**
  * Testing predecessor/successor relation of OU.
- * 
+ *
  * @author Steffen Wagner
- * 
  */
 @RunWith(value = Parameterized.class)
 public class PredecessorTest extends OrganizationalUnitTestBase {
@@ -60,8 +59,7 @@ public class PredecessorTest extends OrganizationalUnitTestBase {
     private static final String INVALID = "invalid";
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public PredecessorTest(final int transport) {
         super(transport);
@@ -69,9 +67,8 @@ public class PredecessorTest extends OrganizationalUnitTestBase {
 
     /**
      * Test creating predecessor relation.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumPredecessorCreate01() throws Exception {
@@ -80,52 +77,41 @@ public class PredecessorTest extends OrganizationalUnitTestBase {
         String ou1Xml = createSuccessfully("escidoc_ou_create.xml");
         final String ou1Id = getObjidValue(getDocument(ou1Xml));
 
-        open(ou1Id, getTheLastModificationParam(true, ou1Id,
-            "Opened organizational unit."));
+        open(ou1Id, getTheLastModificationParam(true, ou1Id, "Opened organizational unit."));
 
         Document toBeCreatedDocument =
-            getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH,
-                "escidoc_ou_create.xml");
+            getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, "escidoc_ou_create.xml");
         setUniqueValue(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_TITLE);
 
         // add predecessor to OU 2
         Element predecessorsElement =
-            toBeCreatedDocument.createElementNS(ORGANIZATIONAL_UNIT_NS_URI,
-                "prefix-organizational-unit:predecessors");
+            toBeCreatedDocument.createElementNS(ORGANIZATIONAL_UNIT_NS_URI, "prefix-organizational-unit:predecessors");
 
-        Element predecessorElement =
-            toBeCreatedDocument.createElementNS(SREL_NS_URI,
-                "prefix-srel:predecessor");
+        Element predecessorElement = toBeCreatedDocument.createElementNS(SREL_NS_URI, "prefix-srel:predecessor");
         if (getTransport() == Constants.TRANSPORT_REST) {
-            predecessorElement.setAttributeNS(XLINK_NS_URI,
-                "prefix-xlink:href", Constants.ORGANIZATIONAL_UNIT_BASE_URI
-                    + "/" + ou1Id);
+            predecessorElement.setAttributeNS(XLINK_NS_URI, "prefix-xlink:href", Constants.ORGANIZATIONAL_UNIT_BASE_URI
+                + "/" + ou1Id);
         }
         else {
-            predecessorElement.setAttribute(EscidocXmlElements.ATTR_OBJID,
-                ou1Id);
+            predecessorElement.setAttribute(EscidocXmlElements.ATTR_OBJID, ou1Id);
         }
-        predecessorElement.setAttribute(
-            EscidocXmlElements.OU_PREDECESSORS_ATTR_FORM, REPLACEMENT);
+        predecessorElement.setAttribute(EscidocXmlElements.OU_PREDECESSORS_ATTR_FORM, REPLACEMENT);
 
         predecessorsElement.appendChild(predecessorElement);
 
-        toBeCreatedDocument.getDocumentElement().appendChild(
-            predecessorsElement);
+        toBeCreatedDocument.getDocumentElement().appendChild(predecessorsElement);
 
         String tmp = toString(toBeCreatedDocument, true);
         String ou2Xml = create(tmp);
 
         // check if predecessor is set
         if (getTransport() == Constants.TRANSPORT_REST) {
-            assertXmlExists("Predecessor missing", ou2Xml,
-                "/organizational-unit/predecessors/predecessor[@href='"
-                    + "/oum/organizational-unit/" + ou1Id + "']");
+            assertXmlExists("Predecessor missing", ou2Xml, "/organizational-unit/predecessors/predecessor[@href='"
+                + "/oum/organizational-unit/" + ou1Id + "']");
         }
         else {
-            assertXmlExists("Predecessor missing", ou2Xml,
-                "/organizational-unit/predecessors/predecessor[@objid='"
-                    + ou1Id + "']");
+            assertXmlExists("Predecessor missing", ou2Xml, "/organizational-unit/predecessors/predecessor[@objid='"
+                + ou1Id + "']");
         }
 
         final String ou2Id = getObjidValue(getDocument(ou2Xml));
@@ -136,22 +122,19 @@ public class PredecessorTest extends OrganizationalUnitTestBase {
         ou2Xml = retrieve(ou2Id);
         // check if predecessor is set
         if (getTransport() == Constants.TRANSPORT_REST) {
-            assertXmlExists("Predecessor missing", ou2Xml,
-                "/organizational-unit/predecessors/predecessor[@href='"
-                    + "/oum/organizational-unit/" + ou1Id + "']");
+            assertXmlExists("Predecessor missing", ou2Xml, "/organizational-unit/predecessors/predecessor[@href='"
+                + "/oum/organizational-unit/" + ou1Id + "']");
         }
         else {
-            assertXmlExists("Predecessor missing", ou2Xml,
-                "/organizational-unit/predecessors/predecessor[@objid='"
-                    + ou1Id + "']");
+            assertXmlExists("Predecessor missing", ou2Xml, "/organizational-unit/predecessors/predecessor[@objid='"
+                + ou1Id + "']");
         }
     }
 
     /**
      * Test creating successfully predecessor with form 'fusion'.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumPredecessorCreate02() throws Exception {
@@ -160,86 +143,67 @@ public class PredecessorTest extends OrganizationalUnitTestBase {
         String ou1Xml = createSuccessfully("escidoc_ou_create.xml");
         final String ou1Id = getObjidValue(getDocument(ou1Xml));
 
-        open(ou1Id, getTheLastModificationParam(true, ou1Id,
-            "Opened organizational unit."));
+        open(ou1Id, getTheLastModificationParam(true, ou1Id, "Opened organizational unit."));
 
         String ou2Xml = createSuccessfully("escidoc_ou_create.xml");
         final String ou2Id = getObjidValue(getDocument(ou2Xml));
 
-        open(ou2Id, getTheLastModificationParam(true, ou2Id,
-            "Opened organizational unit."));
+        open(ou2Id, getTheLastModificationParam(true, ou2Id, "Opened organizational unit."));
 
         // creating successor
 
         Document toBeCreatedDocument =
-            getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH,
-                "escidoc_ou_create.xml");
+            getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, "escidoc_ou_create.xml");
         setUniqueValue(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_TITLE);
 
         // add predecessor to OU 3
         Element predecessorsElement =
-            toBeCreatedDocument.createElementNS(ORGANIZATIONAL_UNIT_NS_URI,
-                "prefix-organizational-unit:predecessors");
+            toBeCreatedDocument.createElementNS(ORGANIZATIONAL_UNIT_NS_URI, "prefix-organizational-unit:predecessors");
 
         // add predecessor 1
-        Element predecessorElement =
-            toBeCreatedDocument.createElementNS(SREL_NS_URI,
-                "prefix-srel:predecessor");
+        Element predecessorElement = toBeCreatedDocument.createElementNS(SREL_NS_URI, "prefix-srel:predecessor");
         if (getTransport() == Constants.TRANSPORT_REST) {
-            predecessorElement.setAttributeNS(XLINK_NS_URI,
-                "prefix-xlink:href", Constants.ORGANIZATIONAL_UNIT_BASE_URI
-                    + "/" + ou1Id);
+            predecessorElement.setAttributeNS(XLINK_NS_URI, "prefix-xlink:href", Constants.ORGANIZATIONAL_UNIT_BASE_URI
+                + "/" + ou1Id);
         }
         else {
-            predecessorElement.setAttribute(EscidocXmlElements.ATTR_OBJID,
-                ou1Id);
+            predecessorElement.setAttribute(EscidocXmlElements.ATTR_OBJID, ou1Id);
         }
-        predecessorElement.setAttribute(
-            EscidocXmlElements.OU_PREDECESSORS_ATTR_FORM, FUSION);
+        predecessorElement.setAttribute(EscidocXmlElements.OU_PREDECESSORS_ATTR_FORM, FUSION);
 
         predecessorsElement.appendChild(predecessorElement);
 
         // add predecessor 2
-        Element predecessorElement2 =
-            toBeCreatedDocument.createElementNS(SREL_NS_URI,
-                "prefix-srel:predecessor");
+        Element predecessorElement2 = toBeCreatedDocument.createElementNS(SREL_NS_URI, "prefix-srel:predecessor");
         if (getTransport() == Constants.TRANSPORT_REST) {
-            predecessorElement2.setAttributeNS(XLINK_NS_URI,
-                "prefix-xlink:href", Constants.ORGANIZATIONAL_UNIT_BASE_URI
-                    + "/" + ou2Id);
+            predecessorElement2.setAttributeNS(XLINK_NS_URI, "prefix-xlink:href",
+                Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/" + ou2Id);
         }
         else {
-            predecessorElement2.setAttribute(EscidocXmlElements.ATTR_OBJID,
-                ou2Id);
+            predecessorElement2.setAttribute(EscidocXmlElements.ATTR_OBJID, ou2Id);
         }
-        predecessorElement2.setAttribute(
-            EscidocXmlElements.OU_PREDECESSORS_ATTR_FORM, FUSION);
+        predecessorElement2.setAttribute(EscidocXmlElements.OU_PREDECESSORS_ATTR_FORM, FUSION);
 
         predecessorsElement.appendChild(predecessorElement2);
 
         // add predecessors element
-        toBeCreatedDocument.getDocumentElement().appendChild(
-            predecessorsElement);
+        toBeCreatedDocument.getDocumentElement().appendChild(predecessorsElement);
 
         String tmp = toString(toBeCreatedDocument, true);
         String ou3Xml = create(tmp);
 
         // check if predecessor is set
         if (getTransport() == Constants.TRANSPORT_REST) {
-            assertXmlExists("Predecessor missing", ou3Xml,
-                "/organizational-unit/predecessors/predecessor[@href='"
-                    + "/oum/organizational-unit/" + ou1Id + "']");
-            assertXmlExists("Predecessor missing", ou3Xml,
-                "/organizational-unit/predecessors/predecessor[@href='"
-                    + "/oum/organizational-unit/" + ou2Id + "']");
+            assertXmlExists("Predecessor missing", ou3Xml, "/organizational-unit/predecessors/predecessor[@href='"
+                + "/oum/organizational-unit/" + ou1Id + "']");
+            assertXmlExists("Predecessor missing", ou3Xml, "/organizational-unit/predecessors/predecessor[@href='"
+                + "/oum/organizational-unit/" + ou2Id + "']");
         }
         else {
-            assertXmlExists("Predecessor missing", ou3Xml,
-                "/organizational-unit/predecessors/predecessor[@objid='"
-                    + ou1Id + "']");
-            assertXmlExists("Predecessor missing", ou3Xml,
-                "/organizational-unit/predecessors/predecessor[@objid='"
-                    + ou2Id + "']");
+            assertXmlExists("Predecessor missing", ou3Xml, "/organizational-unit/predecessors/predecessor[@objid='"
+                + ou1Id + "']");
+            assertXmlExists("Predecessor missing", ou3Xml, "/organizational-unit/predecessors/predecessor[@objid='"
+                + ou2Id + "']");
         }
 
         final String ou3Id = getObjidValue(getDocument(ou3Xml));
@@ -248,52 +212,42 @@ public class PredecessorTest extends OrganizationalUnitTestBase {
 
         // check if predecessor is set
         if (getTransport() == Constants.TRANSPORT_REST) {
-            assertXmlExists("Predecessor missing", ou3Xml,
-                "/organizational-unit/predecessors/predecessor[@href='"
-                    + "/oum/organizational-unit/" + ou1Id + "']");
-            assertXmlExists("Predecessor missing", ou3Xml,
-                "/organizational-unit/predecessors/predecessor[@href='"
-                    + "/oum/organizational-unit/" + ou2Id + "']");
+            assertXmlExists("Predecessor missing", ou3Xml, "/organizational-unit/predecessors/predecessor[@href='"
+                + "/oum/organizational-unit/" + ou1Id + "']");
+            assertXmlExists("Predecessor missing", ou3Xml, "/organizational-unit/predecessors/predecessor[@href='"
+                + "/oum/organizational-unit/" + ou2Id + "']");
         }
         else {
-            assertXmlExists("Predecessor missing", ou3Xml,
-                "/organizational-unit/predecessors/predecessor[@objid='"
-                    + ou1Id + "']");
-            assertXmlExists("Predecessor missing", ou3Xml,
-                "/organizational-unit/predecessors/predecessor[@objid='"
-                    + ou2Id + "']");
+            assertXmlExists("Predecessor missing", ou3Xml, "/organizational-unit/predecessors/predecessor[@objid='"
+                + ou1Id + "']");
+            assertXmlExists("Predecessor missing", ou3Xml, "/organizational-unit/predecessors/predecessor[@objid='"
+                + ou2Id + "']");
         }
 
         // check if successors are set
         ou1Xml = retrieveSuccessors(ou1Id);
         // check if successor is set
         if (getTransport() == Constants.TRANSPORT_REST) {
-            assertXmlExists("Predecessor missing", ou1Xml,
-                "/successors/successor" + "[@href='/oum/organizational-unit/"
-                    + ou3Id + "']");
+            assertXmlExists("Predecessor missing", ou1Xml, "/successors/successor"
+                + "[@href='/oum/organizational-unit/" + ou3Id + "']");
         }
         else {
-            assertXmlExists("Successor missing", ou1Xml,
-                "/successors/successor" + "[@objid='" + ou3Id + "']");
+            assertXmlExists("Successor missing", ou1Xml, "/successors/successor" + "[@objid='" + ou3Id + "']");
         }
         ou2Xml = retrieveSuccessors(ou2Id);
         if (getTransport() == Constants.TRANSPORT_REST) {
-            assertXmlExists("Predecessor missing", ou1Xml,
-                "/successors/successor" + "[@href='/oum/organizational-unit/"
-                    + ou3Id + "']");
+            assertXmlExists("Predecessor missing", ou1Xml, "/successors/successor"
+                + "[@href='/oum/organizational-unit/" + ou3Id + "']");
         }
         else {
-            assertXmlExists("Successor missing", ou1Xml,
-                "/successors/successor" + "[@objid='" + ou3Id + "']");
+            assertXmlExists("Successor missing", ou1Xml, "/successors/successor" + "[@objid='" + ou3Id + "']");
         }
     }
 
     /**
-     * Test if an exception is thrown if multiple predecessors are defined with
-     * form 'replacement'.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test if an exception is thrown if multiple predecessors are defined with form 'replacement'.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumPredecessorCreate03() throws Exception {
@@ -302,72 +256,56 @@ public class PredecessorTest extends OrganizationalUnitTestBase {
         String ou1Xml = createSuccessfully("escidoc_ou_create.xml");
         final String ou1Id = getObjidValue(getDocument(ou1Xml));
 
-        open(ou1Id, getTheLastModificationParam(true, ou1Id,
-            "Opened organizational unit."));
+        open(ou1Id, getTheLastModificationParam(true, ou1Id, "Opened organizational unit."));
 
         String ou2Xml = createSuccessfully("escidoc_ou_create.xml");
         final String ou2Id = getObjidValue(getDocument(ou2Xml));
 
-        open(ou2Id, getTheLastModificationParam(true, ou2Id,
-            "Opened organizational unit."));
+        open(ou2Id, getTheLastModificationParam(true, ou2Id, "Opened organizational unit."));
 
         // creating successor
 
         Document toBeCreatedDocument =
-            getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH,
-                "escidoc_ou_create.xml");
+            getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, "escidoc_ou_create.xml");
         setUniqueValue(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_TITLE);
 
         // add predecessor to OU 3
         Element predecessorsElement =
-            toBeCreatedDocument.createElementNS(ORGANIZATIONAL_UNIT_NS_URI,
-                "prefix-organizational-unit:predecessors");
+            toBeCreatedDocument.createElementNS(ORGANIZATIONAL_UNIT_NS_URI, "prefix-organizational-unit:predecessors");
 
         // add predecessor 1
-        Element predecessorElement =
-            toBeCreatedDocument.createElementNS(SREL_NS_URI,
-                "prefix-srel:predecessor");
+        Element predecessorElement = toBeCreatedDocument.createElementNS(SREL_NS_URI, "prefix-srel:predecessor");
         if (getTransport() == Constants.TRANSPORT_REST) {
-            predecessorElement.setAttributeNS(XLINK_NS_URI,
-                "prefix-xlink:href", Constants.ORGANIZATIONAL_UNIT_BASE_URI
-                    + "/" + ou1Id);
+            predecessorElement.setAttributeNS(XLINK_NS_URI, "prefix-xlink:href", Constants.ORGANIZATIONAL_UNIT_BASE_URI
+                + "/" + ou1Id);
         }
         else {
-            predecessorElement.setAttribute(EscidocXmlElements.ATTR_OBJID,
-                ou1Id);
+            predecessorElement.setAttribute(EscidocXmlElements.ATTR_OBJID, ou1Id);
         }
-        predecessorElement.setAttribute(
-            EscidocXmlElements.OU_PREDECESSORS_ATTR_FORM, REPLACEMENT);
+        predecessorElement.setAttribute(EscidocXmlElements.OU_PREDECESSORS_ATTR_FORM, REPLACEMENT);
 
         predecessorsElement.appendChild(predecessorElement);
 
         // add predecessor 2
-        Element predecessorElement2 =
-            toBeCreatedDocument.createElementNS(SREL_NS_URI,
-                "prefix-srel:predecessor");
+        Element predecessorElement2 = toBeCreatedDocument.createElementNS(SREL_NS_URI, "prefix-srel:predecessor");
         if (getTransport() == Constants.TRANSPORT_REST) {
-            predecessorElement2.setAttributeNS(XLINK_NS_URI,
-                "prefix-xlink:href", Constants.ORGANIZATIONAL_UNIT_BASE_URI
-                    + "/" + ou2Id);
+            predecessorElement2.setAttributeNS(XLINK_NS_URI, "prefix-xlink:href",
+                Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/" + ou2Id);
         }
         else {
-            predecessorElement2.setAttribute(EscidocXmlElements.ATTR_OBJID,
-                ou2Id);
+            predecessorElement2.setAttribute(EscidocXmlElements.ATTR_OBJID, ou2Id);
         }
-        predecessorElement2.setAttribute(
-            EscidocXmlElements.OU_PREDECESSORS_ATTR_FORM, REPLACEMENT);
+        predecessorElement2.setAttribute(EscidocXmlElements.OU_PREDECESSORS_ATTR_FORM, REPLACEMENT);
 
         predecessorsElement.appendChild(predecessorElement2);
 
         // add predecessors element
-        toBeCreatedDocument.getDocumentElement().appendChild(
-            predecessorsElement);
+        toBeCreatedDocument.getDocumentElement().appendChild(predecessorsElement);
 
         String tmp = toString(toBeCreatedDocument, true);
         try {
             create(tmp);
-            fail("It is possible to define a 'replacement' with multiple OUs"
-                + " as predecessors.");
+            fail("It is possible to define a 'replacement' with multiple OUs" + " as predecessors.");
         }
         catch (final Exception e) {
 
@@ -376,9 +314,8 @@ public class PredecessorTest extends OrganizationalUnitTestBase {
 
     /**
      * Test updating predecessor relation.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumPredecessorUpdate01() throws Exception {
@@ -386,38 +323,29 @@ public class PredecessorTest extends OrganizationalUnitTestBase {
         String ou1Xml = createSuccessfully("escidoc_ou_create.xml");
         final String ou1Id = getObjidValue(getDocument(ou1Xml));
 
-        open(ou1Id, getTheLastModificationParam(true, ou1Id,
-            "Opened organizational unit."));
+        open(ou1Id, getTheLastModificationParam(true, ou1Id, "Opened organizational unit."));
 
         // create second OU and set OU1 as predecessor
         Document toBeCreatedDocument =
-            getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH,
-                "escidoc_ou_create.xml");
+            getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, "escidoc_ou_create.xml");
         setUniqueValue(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_TITLE);
 
         Element predecessorsElement =
-            toBeCreatedDocument.createElementNS(ORGANIZATIONAL_UNIT_NS_URI,
-                "prefix-organizational-unit:predecessors");
+            toBeCreatedDocument.createElementNS(ORGANIZATIONAL_UNIT_NS_URI, "prefix-organizational-unit:predecessors");
 
-        Element predecessorElement =
-            toBeCreatedDocument.createElementNS(SREL_NS_URI,
-                "prefix-srel:predecessor");
+        Element predecessorElement = toBeCreatedDocument.createElementNS(SREL_NS_URI, "prefix-srel:predecessor");
         if (getTransport() == Constants.TRANSPORT_REST) {
-            predecessorElement.setAttributeNS(XLINK_NS_URI,
-                "prefix-xlink:href", Constants.ORGANIZATIONAL_UNIT_BASE_URI
-                    + "/" + ou1Id);
+            predecessorElement.setAttributeNS(XLINK_NS_URI, "prefix-xlink:href", Constants.ORGANIZATIONAL_UNIT_BASE_URI
+                + "/" + ou1Id);
         }
         else {
-            predecessorElement.setAttribute(EscidocXmlElements.ATTR_OBJID,
-                ou1Id);
+            predecessorElement.setAttribute(EscidocXmlElements.ATTR_OBJID, ou1Id);
         }
-        predecessorElement.setAttribute(
-            EscidocXmlElements.OU_PREDECESSORS_ATTR_FORM, REPLACEMENT);
+        predecessorElement.setAttribute(EscidocXmlElements.OU_PREDECESSORS_ATTR_FORM, REPLACEMENT);
 
         predecessorsElement.appendChild(predecessorElement);
 
-        toBeCreatedDocument.getDocumentElement().appendChild(
-            predecessorsElement);
+        toBeCreatedDocument.getDocumentElement().appendChild(predecessorsElement);
 
         String tmp = toString(toBeCreatedDocument, true);
         String ou2Xml = create(tmp);
@@ -429,57 +357,45 @@ public class PredecessorTest extends OrganizationalUnitTestBase {
         String ou3Xml = createSuccessfully("escidoc_ou_create.xml");
         final String ou3Id = getObjidValue(getDocument(ou3Xml));
 
-        open(ou3Id, getTheLastModificationParam(true, ou3Id,
-            "Opened organizational unit."));
+        open(ou3Id, getTheLastModificationParam(true, ou3Id, "Opened organizational unit."));
 
         // update OU2
         Document ou2doc = getDocument(retrieve(ou2Id));
 
-        predecessorElement =
-            toBeCreatedDocument.createElementNS(SREL_NS_URI,
-                "srel:predecessor");
+        predecessorElement = toBeCreatedDocument.createElementNS(SREL_NS_URI, "srel:predecessor");
 
         if (getTransport() == Constants.TRANSPORT_REST) {
-            predecessorElement.setAttributeNS(XLINK_NS_URI,
-                "xlink:href", Constants.ORGANIZATIONAL_UNIT_BASE_URI
-                    + "/" + ou3Id);
+            predecessorElement.setAttributeNS(XLINK_NS_URI, "xlink:href", Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/"
+                + ou3Id);
         }
         else {
-            predecessorElement.setAttribute(EscidocXmlElements.ATTR_OBJID,
-                ou3Id);
+            predecessorElement.setAttribute(EscidocXmlElements.ATTR_OBJID, ou3Id);
         }
-        predecessorElement.setAttribute(
-            EscidocXmlElements.OU_PREDECESSORS_ATTR_FORM, REPLACEMENT);
+        predecessorElement.setAttribute(EscidocXmlElements.OU_PREDECESSORS_ATTR_FORM, REPLACEMENT);
 
         ou2doc.adoptNode(predecessorElement);
-        selectSingleNode(ou2doc, "/organizational-unit/predecessors")
-            .replaceChild(
-                predecessorElement,
-                selectSingleNode(ou2doc,
-                    "/organizational-unit/predecessors/predecessor"));
+        selectSingleNode(ou2doc, "/organizational-unit/predecessors").replaceChild(predecessorElement,
+            selectSingleNode(ou2doc, "/organizational-unit/predecessors/predecessor"));
 
         tmp = toString(ou2doc, true);
         ou2Xml = update(ou2Id, tmp);
 
         // check if predecessor is set
         if (getTransport() == Constants.TRANSPORT_REST) {
-            assertXmlExists("Predecessor missing", ou2Xml,
-                "/organizational-unit/predecessors/predecessor[@href='"
-                    + "/oum/organizational-unit/" + ou3Id + "']");
+            assertXmlExists("Predecessor missing", ou2Xml, "/organizational-unit/predecessors/predecessor[@href='"
+                + "/oum/organizational-unit/" + ou3Id + "']");
         }
         else {
-            assertXmlExists("Predecessor missing", ou2Xml,
-                "/organizational-unit/predecessors/predecessor[@objid='"
-                    + ou3Id + "']");
+            assertXmlExists("Predecessor missing", ou2Xml, "/organizational-unit/predecessors/predecessor[@objid='"
+                + ou3Id + "']");
         }
 
     }
 
     /**
      * Test creating predecessor relation from OU1 to OU1 (to itself loop).
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumPredecessorUpdate02() throws Exception {
@@ -488,28 +404,23 @@ public class PredecessorTest extends OrganizationalUnitTestBase {
         String ou1Xml = createSuccessfully("escidoc_ou_create.xml");
         final String ou1Id = getObjidValue(getDocument(ou1Xml));
 
-        open(ou1Id, getTheLastModificationParam(true, ou1Id,
-            "Opened organizational unit."));
+        open(ou1Id, getTheLastModificationParam(true, ou1Id, "Opened organizational unit."));
 
         Document ou1doc = getDocument(retrieve(ou1Id));
 
         // append OU1 as predecessor to OU1
         Element predecessorsElement =
-            ou1doc.createElementNS(ORGANIZATIONAL_UNIT_NS_URI,
-                "organizational-unit:predecessors");
+            ou1doc.createElementNS(ORGANIZATIONAL_UNIT_NS_URI, "organizational-unit:predecessors");
 
-        Element predecessorElement =
-            ou1doc.createElementNS(SREL_NS_URI, "srel:predecessor");
+        Element predecessorElement = ou1doc.createElementNS(SREL_NS_URI, "srel:predecessor");
         if (getTransport() == Constants.TRANSPORT_REST) {
-            predecessorElement.setAttributeNS(XLINK_NS_URI, "xlink:href",
-                Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/" + ou1Id);
+            predecessorElement.setAttributeNS(XLINK_NS_URI, "xlink:href", Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/"
+                + ou1Id);
         }
         else {
-            predecessorElement.setAttribute(EscidocXmlElements.ATTR_OBJID,
-                ou1Id);
+            predecessorElement.setAttribute(EscidocXmlElements.ATTR_OBJID, ou1Id);
         }
-        predecessorElement.setAttribute(
-            EscidocXmlElements.OU_PREDECESSORS_ATTR_FORM, REPLACEMENT);
+        predecessorElement.setAttribute(EscidocXmlElements.OU_PREDECESSORS_ATTR_FORM, REPLACEMENT);
 
         predecessorsElement.appendChild(predecessorElement);
 
@@ -529,9 +440,8 @@ public class PredecessorTest extends OrganizationalUnitTestBase {
 
     /**
      * Test updating predecessor relation.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Ignore("Test updating predecessor relation")
     @Test
@@ -541,38 +451,29 @@ public class PredecessorTest extends OrganizationalUnitTestBase {
         String ou1Xml = createSuccessfully("escidoc_ou_create.xml");
         final String ou1Id = getObjidValue(getDocument(ou1Xml));
 
-        open(ou1Id, getTheLastModificationParam(true, ou1Id,
-            "Opened organizational unit."));
+        open(ou1Id, getTheLastModificationParam(true, ou1Id, "Opened organizational unit."));
 
         Document toBeCreatedDocument =
-            getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH,
-                "escidoc_ou_create.xml");
+            getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, "escidoc_ou_create.xml");
         setUniqueValue(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_TITLE);
 
         // add OU1 as predecessor to OU 2
         Element predecessorsElement =
-            toBeCreatedDocument.createElementNS(ORGANIZATIONAL_UNIT_NS_URI,
-                "prefix-organizational-unit:predecessors");
+            toBeCreatedDocument.createElementNS(ORGANIZATIONAL_UNIT_NS_URI, "prefix-organizational-unit:predecessors");
 
-        Element predecessorElement =
-            toBeCreatedDocument.createElementNS(SREL_NS_URI,
-                "prefix-srel:predecessor");
+        Element predecessorElement = toBeCreatedDocument.createElementNS(SREL_NS_URI, "prefix-srel:predecessor");
         if (getTransport() == Constants.TRANSPORT_REST) {
-            predecessorElement.setAttributeNS(XLINK_NS_URI,
-                "prefix-xlink:href", Constants.ORGANIZATIONAL_UNIT_BASE_URI
-                    + "/" + ou1Id);
+            predecessorElement.setAttributeNS(XLINK_NS_URI, "prefix-xlink:href", Constants.ORGANIZATIONAL_UNIT_BASE_URI
+                + "/" + ou1Id);
         }
         else {
-            predecessorElement.setAttribute(EscidocXmlElements.ATTR_OBJID,
-                ou1Id);
+            predecessorElement.setAttribute(EscidocXmlElements.ATTR_OBJID, ou1Id);
         }
-        predecessorElement.setAttribute(
-            EscidocXmlElements.OU_PREDECESSORS_ATTR_FORM, REPLACEMENT);
+        predecessorElement.setAttribute(EscidocXmlElements.OU_PREDECESSORS_ATTR_FORM, REPLACEMENT);
 
         predecessorsElement.appendChild(predecessorElement);
 
-        toBeCreatedDocument.getDocumentElement().appendChild(
-            predecessorsElement);
+        toBeCreatedDocument.getDocumentElement().appendChild(predecessorsElement);
 
         String tmp = toString(toBeCreatedDocument, true);
         String ou2Xml = create(tmp);
@@ -585,45 +486,36 @@ public class PredecessorTest extends OrganizationalUnitTestBase {
         String ou3Xml = createSuccessfully("escidoc_ou_create.xml");
         final String ou3Id = getObjidValue(getDocument(ou3Xml));
 
-        open(ou3Id, getTheLastModificationParam(true, ou3Id,
-            "Opened organizational unit."));
+        open(ou3Id, getTheLastModificationParam(true, ou3Id, "Opened organizational unit."));
 
         // append OU3 as predecessor to OU
 
-        Element predOU3 =
-            ou2doc.createElementNS(SREL_NS_URI, "srel:predecessor");
+        Element predOU3 = ou2doc.createElementNS(SREL_NS_URI, "srel:predecessor");
         if (getTransport() == Constants.TRANSPORT_REST) {
-            predOU3.setAttributeNS(XLINK_NS_URI, "xlink:href",
-                Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/" + ou3Id);
+            predOU3.setAttributeNS(XLINK_NS_URI, "xlink:href", Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/" + ou3Id);
         }
         else {
             predOU3.setAttribute(EscidocXmlElements.ATTR_OBJID, ou3Id);
         }
-        predOU3.setAttribute(EscidocXmlElements.OU_PREDECESSORS_ATTR_FORM,
-            FUSION);
+        predOU3.setAttribute(EscidocXmlElements.OU_PREDECESSORS_ATTR_FORM, FUSION);
 
-        selectSingleNode(ou2doc, "/organizational-unit/predecessors")
-            .appendChild(predOU3);
+        selectSingleNode(ou2doc, "/organizational-unit/predecessors").appendChild(predOU3);
 
         tmp = toString(ou2doc, true);
         ou2Xml = update(ou2Id, tmp);
 
         // check if predecessor is set
         if (getTransport() == Constants.TRANSPORT_REST) {
-            assertXmlExists("Predecessor missing", ou2Xml,
-                "/organizational-unit/predecessors/predecessor[@href='"
-                    + "/oum/organizational-unit/" + ou1Id + "']");
-            assertXmlExists("Predecessor missing", ou2Xml,
-                "/organizational-unit/predecessors/predecessor[@href='"
-                    + "/oum/organizational-unit/" + ou3Id + "']");
+            assertXmlExists("Predecessor missing", ou2Xml, "/organizational-unit/predecessors/predecessor[@href='"
+                + "/oum/organizational-unit/" + ou1Id + "']");
+            assertXmlExists("Predecessor missing", ou2Xml, "/organizational-unit/predecessors/predecessor[@href='"
+                + "/oum/organizational-unit/" + ou3Id + "']");
         }
         else {
-            assertXmlExists("Predecessor missing", ou2Xml,
-                "/organizational-unit/predecessors/predecessor[@objid='"
-                    + ou1Id + "']");
-            assertXmlExists("Predecessor missing", ou2Xml,
-                "/organizational-unit/predecessors/predecessor[@objid='"
-                    + ou3Id + "']");
+            assertXmlExists("Predecessor missing", ou2Xml, "/organizational-unit/predecessors/predecessor[@objid='"
+                + ou1Id + "']");
+            assertXmlExists("Predecessor missing", ou2Xml, "/organizational-unit/predecessors/predecessor[@objid='"
+                + ou3Id + "']");
         }
 
     }

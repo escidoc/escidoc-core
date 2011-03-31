@@ -48,12 +48,10 @@ import org.springframework.security.userdetails.UsernameNotFoundException;
 
 /**
  * Interceptor used to authenticate the current user.<br>
- * 
- * This Interceptor is invoked every time an EJB calls one of its service
- * classes.<br>
- * It must be the first Interceptor after the StatisticInterceptor, i.e. it has
- * to be the second interceptor in the chain.
- * 
+ * <p/>
+ * This Interceptor is invoked every time an EJB calls one of its service classes.<br> It must be the first Interceptor
+ * after the StatisticInterceptor, i.e. it has to be the second interceptor in the chain.
+ *
  * @author Torsten Tetteroo
  */
 @Aspect
@@ -62,18 +60,15 @@ public class AuthenticationInterceptor implements Ordered {
     /**
      * The logger.
      */
-    private static final Logger LOGGER =
-        LoggerFactory.getLogger(AuthenticationInterceptor.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationInterceptor.class);
 
-    private static final String HANDLE_MUST_NOT_BE_NULL =
-        "eSciDoc user handle must not be null";
+    private static final String HANDLE_MUST_NOT_BE_NULL = "eSciDoc user handle must not be null";
 
     private static final String USER_CONTEXT_HAS_NOT_BEEN_CORRECTLY_SET_UP =
         "UserContext has not been correctly set up: " + HANDLE_MUST_NOT_BE_NULL;
 
     private static final String INTERNAL_INTERCEPTION_IS_DISABLED =
-        "Internal interception is disabled, calling method without further"
-            + " authorization";
+        "Internal interception is disabled, calling method without further" + " authorization";
 
     private static final String FAILED_TO_AUTHENTICATE_USER_BY_HANDLE =
         "Failed to authenticate user with provided handle";
@@ -87,9 +82,6 @@ public class AuthenticationInterceptor implements Ordered {
 
     /**
      * See Interface for functional description.
-     * 
-     * @return
-     *
      */
     @Override
     public int getOrder() {
@@ -97,63 +89,46 @@ public class AuthenticationInterceptor implements Ordered {
         return AopUtil.PRECEDENCE_AUTHENTICATION_INTERCEPTOR;
     }
 
-
-
     /**
-     * Before advice to perform the authentication of the user of the current
-     * request.
-     * 
-     * @param joinPoint
-     *            The current {@link JoinPoint}.
-     * @throws Throwable
-     *             Thrown in case of an error.
+     * Before advice to perform the authentication of the user of the current request.
      *
+     * @param joinPoint The current {@link JoinPoint}.
+     * @throws Throwable Thrown in case of an error.
      */
     @Before("call(public !static * de.escidoc.core.*.service.interfaces.*.*(..))")
     public void authenticate(final JoinPoint joinPoint) throws Throwable {
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug(StringUtility.format(
-                    "authenticate", this, UserContext.getSecurityContext()));
+            LOGGER.debug(StringUtility.format("authenticate", this, UserContext.getSecurityContext()));
         }
 
         doAuthentication();
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug(StringUtility.format(
-                    "continuation", this, UserContext.getSecurityContext()));
+            LOGGER.debug(StringUtility.format("continuation", this, UserContext.getSecurityContext()));
         }
     }
 
     /**
      * Does the authentication part of the interception.
      * <p/>
-     * 
-     * Checks if an anonymous user tries to access the services.<br>
-     * In this case, the user id is set to the empty string and the real name to
-     * "Anonymous".<br>
-     * 
-     * Otherwise it retrieves the eSciDoc user handle from the UserContext and
-     * calls method <code>retrieve</code> from EJB UserAccountHandlerBean using
-     * this key and extracts the internal user id and the real name of the user.
-     * <br>
-     * This method stores the user id and the user's real name in the
-     * <code>UserContext</code>. <br>
-     * 
-     * @throws AuthenticationException
-     *             Thrown if no user is found for the handle
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error
+     * <p/>
+     * Checks if an anonymous user tries to access the services.<br> In this case, the user id is set to the empty
+     * string and the real name to "Anonymous".<br>
+     * <p/>
+     * Otherwise it retrieves the eSciDoc user handle from the UserContext and calls method <code>retrieve</code> from
+     * EJB UserAccountHandlerBean using this key and extracts the internal user id and the real name of the user. <br>
+     * This method stores the user id and the user's real name in the <code>UserContext</code>. <br>
      *
+     * @throws AuthenticationException  Thrown if no user is found for the handle
+     * @throws WebserverSystemException Thrown in case of an internal error
      */
-    private void doAuthentication() throws AuthenticationException,
-        WebserverSystemException {
+    private void doAuthentication() throws AuthenticationException, WebserverSystemException {
 
         final String handle = UserContext.getHandle();
         if (handle == null) {
-            throw new WebserverSystemException(
-                USER_CONTEXT_HAS_NOT_BEEN_CORRECTLY_SET_UP,
-                new NullPointerException(HANDLE_MUST_NOT_BE_NULL));
+            throw new WebserverSystemException(USER_CONTEXT_HAS_NOT_BEEN_CORRECTLY_SET_UP, new NullPointerException(
+                HANDLE_MUST_NOT_BE_NULL));
         }
 
         // check if internal interception has been set to false
@@ -179,14 +154,10 @@ public class AuthenticationInterceptor implements Ordered {
         // exists
 
         try {
-            UserContext
-                .setPrincipal((EscidocUserDetails) userDetailsService
-                    .loadUserByUsername(handle));
+            UserContext.setPrincipal((EscidocUserDetails) userDetailsService.loadUserByUsername(handle));
         }
         catch (final UsernameNotFoundException e) {
-            throw new AuthenticationException(StringUtility
-                    .format(
-                            FAILED_TO_AUTHENTICATE_USER_BY_HANDLE, handle), e);
+            throw new AuthenticationException(StringUtility.format(FAILED_TO_AUTHENTICATE_USER_BY_HANDLE, handle), e);
         }
         catch (final DataAccessException e) {
             throw new WebserverSystemException(e.getMessage(), e);
@@ -200,17 +171,20 @@ public class AuthenticationInterceptor implements Ordered {
             wasExternalBefore = UserContext.runAsInternalUser();
 
             userManagementWrapper.initHandleExpiryTimestamp(handle);
-        } catch (final SystemException e) {
+        }
+        catch (final SystemException e) {
             throw new WebserverSystemException(e);
-        } finally {
+        }
+        finally {
             if (wasExternalBefore) {
                 try {
                     UserContext.runAsExternalUser();
-                } catch (final WebserverSystemException e) {
-                    if(LOGGER.isWarnEnabled()) {
+                }
+                catch (final WebserverSystemException e) {
+                    if (LOGGER.isWarnEnabled()) {
                         LOGGER.warn("Error on changing user context.");
                     }
-                    if(LOGGER.isDebugEnabled()) {
+                    if (LOGGER.isDebugEnabled()) {
                         LOGGER.debug("Error on changing user context.", e);
                     }
                 }
@@ -219,14 +193,11 @@ public class AuthenticationInterceptor implements Ordered {
     }
 
     /**
-     * Authenticates the internal user.<br>
-     * The values for authentication are fetched from the
+     * Authenticates the internal user.<br> The values for authentication are fetched from the
      * <code>UserContext</code>.
-     * 
-     * @return Returns <code>true</code> in case of successfully authentication.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error
      *
+     * @return Returns <code>true</code> in case of successfully authentication.
+     * @throws WebserverSystemException Thrown in case of an internal error
      */
     private static boolean authenticateInternalUser() throws WebserverSystemException {
         return UserContext.isInternalUser();
@@ -234,24 +205,20 @@ public class AuthenticationInterceptor implements Ordered {
 
     /**
      * Injects the {@link UserDetailsService}.
-     * 
-     * @param userDetailsService
-     *            the {@link UserDetailsService} to inject.
+     *
+     * @param userDetailsService the {@link UserDetailsService} to inject.
      */
-    public void setUserDetailsService(
-        final UserDetailsService userDetailsService) {
+    public void setUserDetailsService(final UserDetailsService userDetailsService) {
 
         this.userDetailsService = userDetailsService;
     }
 
     /**
      * Injects the {@link UserManagementWrapper}.
-     * 
-     * @param userManagementWrapper
-     *            the {@link UserManagementWrapper} to inject.
+     *
+     * @param userManagementWrapper the {@link UserManagementWrapper} to inject.
      */
-    public void setUserManagementWrapper(
-        final UserManagementWrapperInterface userManagementWrapper) {
+    public void setUserManagementWrapper(final UserManagementWrapperInterface userManagementWrapper) {
         this.userManagementWrapper = userManagementWrapper;
     }
 

@@ -37,31 +37,22 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.om.business.interfaces.IngestValidator;
 
 /**
- * Implementation of IngestValidator. This class knows how to validate a given
- * resource agains XML Schemas.
- * 
+ * Implementation of IngestValidator. This class knows how to validate a given resource agains XML Schemas.
+ *
  * @author Kai Strnad
  */
 public class XmlIngestValidator implements IngestValidator {
 
     /**
-     * Check if the given resource is valid. If it is not valid, an Exception
-     * gets thrown
-     * 
-     * @param xmlData
-     *            the xmlData
-     * @param type
-     *            the type of the resource
+     * Check if the given resource is valid. If it is not valid, an Exception gets thrown
+     *
+     * @param xmlData the xmlData
+     * @param type    the type of the resource
      * @return if the data is valid or not
-     * @throws WebserverSystemException
-     * @throws XmlCorruptedException
-     * @throws InvalidResourceException
-     * 
      */
     @Override
-    public boolean isResourceValid(final String xmlData, final ResourceType type)
-        throws WebserverSystemException, XmlCorruptedException,
-        InvalidResourceException {
+    public boolean isResourceValid(final String xmlData, final ResourceType type) throws WebserverSystemException,
+        XmlCorruptedException, InvalidResourceException {
         try {
             XmlUtility.validate(xmlData, type);
         }

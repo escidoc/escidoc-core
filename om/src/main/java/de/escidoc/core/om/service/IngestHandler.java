@@ -33,7 +33,7 @@ import de.escidoc.core.om.service.interfaces.IngestHandlerInterface;
 
 /**
  * The resource ingest handler.
- * 
+ *
  * @author Steffen Wagner
  */
 public class IngestHandler implements IngestHandlerInterface {
@@ -42,25 +42,20 @@ public class IngestHandler implements IngestHandlerInterface {
 
     /**
      * Injects the ingest handler.
-     * 
-     * @param ingestHandler
-     *            The ingest handler bean to inject.
+     *
+     * @param ingestHandler The ingest handler bean to inject.
      */
-    public void setIngestHandler(
-        final de.escidoc.core.om.business.interfaces.IngestHandlerInterface ingestHandler) {
+    public void setIngestHandler(final de.escidoc.core.om.business.interfaces.IngestHandlerInterface ingestHandler) {
 
         this.handler = ingestHandler;
     }
 
     /**
      * Ingest method.
-     * 
-     * @param xmlData
-     *            XML representation of resource which is to create via ingest.
+     *
+     * @param xmlData XML representation of resource which is to create via ingest.
      * @return objid of created resource.
-     * @throws EscidocException
-     *             Thrown if XML representation fulfills not all requirements or
-     *             internal errors occur.
+     * @throws EscidocException Thrown if XML representation fulfills not all requirements or internal errors occur.
      */
     @Override
     public String ingest(final String xmlData) throws EscidocException {

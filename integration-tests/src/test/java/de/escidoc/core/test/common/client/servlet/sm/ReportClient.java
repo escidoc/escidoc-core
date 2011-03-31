@@ -36,20 +36,16 @@ import de.escidoc.core.test.common.client.servlet.Constants;
 import javax.xml.rpc.ServiceException;
 
 /**
- * Offers access methods to the escidoc REST and SOAP interface of the Statistic
- * Report resource.
- * 
+ * Offers access methods to the escidoc REST and SOAP interface of the Statistic Report resource.
+ *
  * @author Michael Hoppe
- * 
  */
 public class ReportClient extends ClientBase {
 
     private ReportHandler soapClient = null;
 
     /**
-     * 
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ReportClient(final int transport) {
         super(transport);
@@ -58,35 +54,27 @@ public class ReportClient extends ClientBase {
 
     /**
      * Create an item in the escidoc framework.
-     * 
-     * @param xml
-     *            report-parameters xml.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param xml report-parameters xml.
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     public Object retrieve(final String xml) throws Exception {
 
-        return callEsciDoc("Report.retrieve", METHOD_RETRIEVE,
-            Constants.HTTP_METHOD_POST, Constants.STATISTIC_REPORT_BASE_URI,
-            new String[] {}, xml);
+        return callEsciDoc("Report.retrieve", METHOD_RETRIEVE, Constants.HTTP_METHOD_POST,
+            Constants.STATISTIC_REPORT_BASE_URI, new String[] {}, xml);
     }
 
     /**
-     * 
      * @return Returns the soapClient.
-     * @throws ServiceException
-     *             If service instantiation fails.
+     * @throws ServiceException If service instantiation fails.
      */
     public ReportHandler getSoapClient() throws ServiceException {
 
         if (soapClient == null) {
-            ReportHandlerServiceLocator serviceLocator =
-                new ReportHandlerServiceLocator(getEngineConfig());
-            serviceLocator
-                .setReportHandlerServiceEndpointAddress(checkSoapAddress(serviceLocator
-                    .getReportHandlerServiceAddress()));
+            ReportHandlerServiceLocator serviceLocator = new ReportHandlerServiceLocator(getEngineConfig());
+            serviceLocator.setReportHandlerServiceEndpointAddress(checkSoapAddress(serviceLocator
+                .getReportHandlerServiceAddress()));
             soapClient = serviceLocator.getReportHandlerService();
         }
         return soapClient;

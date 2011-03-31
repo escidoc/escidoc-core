@@ -29,211 +29,101 @@ import java.util.Map;
  */
 public interface ContentModelHandlerLocal extends EJBLocalObject {
 
-    String create(String xmlData, SecurityContext securityContext)
-            throws InvalidContentException,
-            MissingAttributeValueException,
-            SystemException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            XmlCorruptedException,
-            XmlSchemaValidationException;
+    String create(String xmlData, SecurityContext securityContext) throws InvalidContentException,
+        MissingAttributeValueException, SystemException, AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, XmlCorruptedException, XmlSchemaValidationException;
 
-    String create(String xmlData, String authHandle, Boolean restAccess)
-            throws InvalidContentException,
-            MissingAttributeValueException,
-            SystemException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            XmlCorruptedException,
-            XmlSchemaValidationException;
+    String create(String xmlData, String authHandle, Boolean restAccess) throws InvalidContentException,
+        MissingAttributeValueException, SystemException, AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, XmlCorruptedException, XmlSchemaValidationException;
 
-    void delete(String id, SecurityContext securityContext)
-            throws SystemException,
-            ContentModelNotFoundException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            LockingException,
-            InvalidStatusException,
-            ResourceInUseException;
+    void delete(String id, SecurityContext securityContext) throws SystemException, ContentModelNotFoundException,
+        AuthenticationException, AuthorizationException, MissingMethodParameterException, LockingException,
+        InvalidStatusException, ResourceInUseException;
 
-    void delete(String id, String authHandle, Boolean restAccess)
-            throws SystemException,
-            ContentModelNotFoundException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            LockingException,
-            InvalidStatusException,
-            ResourceInUseException;
+    void delete(String id, String authHandle, Boolean restAccess) throws SystemException,
+        ContentModelNotFoundException, AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, LockingException, InvalidStatusException, ResourceInUseException;
 
-    String retrieve(String id, SecurityContext securityContext)
-            throws ContentModelNotFoundException,
-            SystemException,
-            MissingMethodParameterException,
-            AuthenticationException,
-            AuthorizationException;
+    String retrieve(String id, SecurityContext securityContext) throws ContentModelNotFoundException, SystemException,
+        MissingMethodParameterException, AuthenticationException, AuthorizationException;
 
-    String retrieve(String id, String authHandle, Boolean restAccess)
-            throws ContentModelNotFoundException,
-            SystemException,
-            MissingMethodParameterException,
-            AuthenticationException,
-            AuthorizationException;
+    String retrieve(String id, String authHandle, Boolean restAccess) throws ContentModelNotFoundException,
+        SystemException, MissingMethodParameterException, AuthenticationException, AuthorizationException;
 
-    String retrieveProperties(String id, SecurityContext securityContext)
-            throws ContentModelNotFoundException,
-            SystemException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException;
+    String retrieveProperties(String id, SecurityContext securityContext) throws ContentModelNotFoundException,
+        SystemException, AuthenticationException, AuthorizationException, MissingMethodParameterException;
 
-    String retrieveProperties(String id, String authHandle, Boolean restAccess)
-            throws ContentModelNotFoundException,
-            SystemException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException;
+    String retrieveProperties(String id, String authHandle, Boolean restAccess) throws ContentModelNotFoundException,
+        SystemException, AuthenticationException, AuthorizationException, MissingMethodParameterException;
 
-    String retrieveContentStreams(String id, SecurityContext securityContext)
-            throws ContentModelNotFoundException,
-            SystemException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException;
+    String retrieveContentStreams(String id, SecurityContext securityContext) throws ContentModelNotFoundException,
+        SystemException, AuthenticationException, AuthorizationException, MissingMethodParameterException;
 
     String retrieveContentStreams(String id, String authHandle, Boolean restAccess)
-            throws ContentModelNotFoundException,
-            SystemException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException;
+        throws ContentModelNotFoundException, SystemException, AuthenticationException, AuthorizationException,
+        MissingMethodParameterException;
 
     String retrieveContentStream(String id, String name, SecurityContext securityContext)
-            throws ContentModelNotFoundException,
-            SystemException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException;
+        throws ContentModelNotFoundException, SystemException, AuthenticationException, AuthorizationException,
+        MissingMethodParameterException;
 
     String retrieveContentStream(String id, String name, String authHandle, Boolean restAccess)
-            throws ContentModelNotFoundException,
-            SystemException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException;
+        throws ContentModelNotFoundException, SystemException, AuthenticationException, AuthorizationException,
+        MissingMethodParameterException;
 
     EscidocBinaryContent retrieveContentStreamContent(String id, String name, SecurityContext securityContext)
-            throws ContentModelNotFoundException,
-            SystemException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            ContentStreamNotFoundException,
-            InvalidStatusException;
+        throws ContentModelNotFoundException, SystemException, AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, ContentStreamNotFoundException, InvalidStatusException;
 
     EscidocBinaryContent retrieveContentStreamContent(String id, String name, String authHandle, Boolean restAccess)
-            throws ContentModelNotFoundException,
-            SystemException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            ContentStreamNotFoundException,
-            InvalidStatusException;
+        throws ContentModelNotFoundException, SystemException, AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, ContentStreamNotFoundException, InvalidStatusException;
 
-    String retrieveResources(String id, SecurityContext securityContext)
-            throws ContentModelNotFoundException,
-            SystemException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException;
+    String retrieveResources(String id, SecurityContext securityContext) throws ContentModelNotFoundException,
+        SystemException, AuthenticationException, AuthorizationException, MissingMethodParameterException;
 
-    String retrieveResources(String id, String authHandle, Boolean restAccess)
-            throws ContentModelNotFoundException,
-            SystemException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException;
+    String retrieveResources(String id, String authHandle, Boolean restAccess) throws ContentModelNotFoundException,
+        SystemException, AuthenticationException, AuthorizationException, MissingMethodParameterException;
 
-    String retrieveVersionHistory(String id, SecurityContext securityContext)
-            throws ContentModelNotFoundException,
-            SystemException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException;
+    String retrieveVersionHistory(String id, SecurityContext securityContext) throws ContentModelNotFoundException,
+        SystemException, AuthenticationException, AuthorizationException, MissingMethodParameterException;
 
     String retrieveVersionHistory(String id, String authHandle, Boolean restAccess)
-            throws ContentModelNotFoundException,
-            SystemException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException;
+        throws ContentModelNotFoundException, SystemException, AuthenticationException, AuthorizationException,
+        MissingMethodParameterException;
 
-    String retrieveContentModels(Map parameterMap, SecurityContext securityContext)
-            throws InvalidSearchQueryException,
-            SystemException;
+    String retrieveContentModels(Map parameterMap, SecurityContext securityContext) throws InvalidSearchQueryException,
+        SystemException;
 
     String retrieveContentModels(Map parameterMap, String authHandle, Boolean restAccess)
-            throws InvalidSearchQueryException,
-            SystemException;
+        throws InvalidSearchQueryException, SystemException;
 
-    String update(String id, String xmlData, SecurityContext securityContext)
-            throws InvalidXmlException,
-            ContentModelNotFoundException,
-            OptimisticLockingException,
-            SystemException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            ReadonlyVersionException,
-            MissingAttributeValueException,
-            InvalidContentException;
+    String update(String id, String xmlData, SecurityContext securityContext) throws InvalidXmlException,
+        ContentModelNotFoundException, OptimisticLockingException, SystemException, AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, ReadonlyVersionException,
+        MissingAttributeValueException, InvalidContentException;
 
-    String update(String id, String xmlData, String authHandle, Boolean restAccess)
-            throws InvalidXmlException,
-            ContentModelNotFoundException,
-            OptimisticLockingException,
-            SystemException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            ReadonlyVersionException,
-            MissingAttributeValueException,
-            InvalidContentException;
+    String update(String id, String xmlData, String authHandle, Boolean restAccess) throws InvalidXmlException,
+        ContentModelNotFoundException, OptimisticLockingException, SystemException, AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, ReadonlyVersionException,
+        MissingAttributeValueException, InvalidContentException;
 
-    EscidocBinaryContent retrieveMdRecordDefinitionSchemaContent(String id, String name,
-                                                                 SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            ContentModelNotFoundException,
-            SystemException;
+    EscidocBinaryContent retrieveMdRecordDefinitionSchemaContent(String id, String name, SecurityContext securityContext)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        ContentModelNotFoundException, SystemException;
 
-    EscidocBinaryContent retrieveMdRecordDefinitionSchemaContent(String id, String name, String authHandle,
-                                                                 Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            ContentModelNotFoundException,
-            SystemException;
+    EscidocBinaryContent retrieveMdRecordDefinitionSchemaContent(
+        String id, String name, String authHandle, Boolean restAccess) throws AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, ContentModelNotFoundException, SystemException;
 
     EscidocBinaryContent retrieveResourceDefinitionXsltContent(String id, String name, SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            ContentModelNotFoundException,
-            ResourceNotFoundException,
-            SystemException;
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        ContentModelNotFoundException, ResourceNotFoundException, SystemException;
 
-    EscidocBinaryContent retrieveResourceDefinitionXsltContent(String id, String name, String authHandle,
-                                                               Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            ContentModelNotFoundException,
-            ResourceNotFoundException,
-            SystemException;
+    EscidocBinaryContent retrieveResourceDefinitionXsltContent(
+        String id, String name, String authHandle, Boolean restAccess) throws AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, ContentModelNotFoundException,
+        ResourceNotFoundException, SystemException;
 
 }

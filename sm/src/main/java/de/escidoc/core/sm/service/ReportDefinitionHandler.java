@@ -45,19 +45,17 @@ import java.util.Map;
 
 /**
  * A statistic ReportDefinition resource handler.
- * 
+ *
  * @author Michael Hoppe
  */
-public class ReportDefinitionHandler
-    implements ReportDefinitionHandlerInterface {
+public class ReportDefinitionHandler implements ReportDefinitionHandlerInterface {
 
     private de.escidoc.core.sm.business.interfaces.ReportDefinitionHandlerInterface handler;
 
     /**
      * Injects the ReportDefinition handler.
-     * 
-     * @param reportDefinitionHandler
-     *            The ReportDefinition handler bean to inject.
+     *
+     * @param reportDefinitionHandler The ReportDefinition handler bean to inject.
      */
     public void setReportDefinitionHandler(
         final de.escidoc.core.sm.business.interfaces.ReportDefinitionHandlerInterface reportDefinitionHandler) {
@@ -67,174 +65,111 @@ public class ReportDefinitionHandler
 
     /**
      * See Interface for functional description.
-     * 
-     * @see de.escidoc.core.sm.service.interfaces
-     *      .ReportDefinitionHandlerInterface #create(java.lang.String)
-     * 
-     * @param xmlData
-     *            ReportDefinition as xml in ReportDefinition schema.
-     * @return Returns the XML representation of the resource.
-     * 
-     * @throws AuthenticationException
-     *             Thrown in case of failed authentication.
-     * @throws AuthorizationException
-     *             Thrown in case of failed authorization.
-     * @throws XmlSchemaValidationException
-     *             ex
-     * @throws XmlCorruptedException
-     *             ex
-     * @throws MissingMethodParameterException
-     *             ex
-     * @throws ScopeNotFoundException
-     *             ex
-     * @throws ScopeContextViolationException
-     *             ex
-     * @throws InvalidSqlException
-     *             ex
-     * @throws SystemException
-     *             ex
-     * 
      *
+     * @param xmlData ReportDefinition as xml in ReportDefinition schema.
+     * @return Returns the XML representation of the resource.
+     * @throws AuthenticationException        Thrown in case of failed authentication.
+     * @throws AuthorizationException         Thrown in case of failed authorization.
+     * @throws XmlSchemaValidationException   ex
+     * @throws XmlCorruptedException          ex
+     * @throws MissingMethodParameterException
+     *                                        ex
+     * @throws ScopeNotFoundException         ex
+     * @throws ScopeContextViolationException ex
+     * @throws InvalidSqlException            ex
+     * @throws SystemException                ex
+     * @see de.escidoc.core.sm.service.interfaces .ReportDefinitionHandlerInterface #create(java.lang.String)
      */
     @Override
-    public String create(final String xmlData) throws AuthenticationException,
-        AuthorizationException, XmlSchemaValidationException,
-        XmlCorruptedException, InvalidSqlException,
-        MissingMethodParameterException, ScopeNotFoundException,
-        ScopeContextViolationException, SystemException {
+    public String create(final String xmlData) throws AuthenticationException, AuthorizationException,
+        XmlSchemaValidationException, XmlCorruptedException, InvalidSqlException, MissingMethodParameterException,
+        ScopeNotFoundException, ScopeContextViolationException, SystemException {
         return handler.create(xmlData);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @see de.escidoc.core.sm.service.interfaces
-     *      .ReportDefinitionHandlerInterface #delete(java.lang.String)
-     * 
-     * @param id
-     *            resource id.
-     * 
-     * @throws AuthenticationException
-     *             Thrown in case of failed authentication.
-     * @throws AuthorizationException
-     *             Thrown in case of failed authorization.
-     * @throws ReportDefinitionNotFoundException
-     *             e.
-     * @throws MissingMethodParameterException
-     *             e.
-     * @throws SystemException
-     *             e.
-     * 
      *
+     * @param id resource id.
+     * @throws AuthenticationException Thrown in case of failed authentication.
+     * @throws AuthorizationException  Thrown in case of failed authorization.
+     * @throws ReportDefinitionNotFoundException
+     *                                 e.
+     * @throws MissingMethodParameterException
+     *                                 e.
+     * @throws SystemException         e.
+     * @see de.escidoc.core.sm.service.interfaces .ReportDefinitionHandlerInterface #delete(java.lang.String)
      */
     @Override
-    public void delete(final String id) throws AuthenticationException,
-        AuthorizationException, ReportDefinitionNotFoundException,
-        MissingMethodParameterException, SystemException {
+    public void delete(final String id) throws AuthenticationException, AuthorizationException,
+        ReportDefinitionNotFoundException, MissingMethodParameterException, SystemException {
         handler.delete(id);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @see de.escidoc.core.sm.service.interfaces
-     *      .ReportDefinitionHandlerInterface #retrieve(java.lang.String)
-     * 
-     * @param id
-     *            resource id.
-     * @return Returns the XML representation of the resource.
-     * 
-     * @throws AuthenticationException
-     *             Thrown in case of failed authentication.
-     * @throws AuthorizationException
-     *             Thrown in case of failed authorization.
-     * @throws ReportDefinitionNotFoundException
-     *             e.
-     * @throws MissingMethodParameterException
-     *             e.
-     * @throws SystemException
-     *             e.
-     * 
      *
+     * @param id resource id.
+     * @return Returns the XML representation of the resource.
+     * @throws AuthenticationException Thrown in case of failed authentication.
+     * @throws AuthorizationException  Thrown in case of failed authorization.
+     * @throws ReportDefinitionNotFoundException
+     *                                 e.
+     * @throws MissingMethodParameterException
+     *                                 e.
+     * @throws SystemException         e.
+     * @see de.escidoc.core.sm.service.interfaces .ReportDefinitionHandlerInterface #retrieve(java.lang.String)
      */
     @Override
-    public String retrieve(final String id) throws AuthenticationException,
-        AuthorizationException, ReportDefinitionNotFoundException,
-        MissingMethodParameterException, SystemException {
+    public String retrieve(final String id) throws AuthenticationException, AuthorizationException,
+        ReportDefinitionNotFoundException, MissingMethodParameterException, SystemException {
         return handler.retrieve(id);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @see de.escidoc.core.sm.service.interfaces
-     *      .ReportDefinitionHandlerInterface #retrieveReportDefinitions()
-     * 
-     * @param filter filter as CQL query
      *
+     * @param filter filter as CQL query
      * @return Returns the XML representation of the resource-list.
      * @throws MissingMethodParameterException
-     *             If the parameter filter is not given.
-     * @throws InvalidSearchQueryException thrown if the given search query could
-     *                                     not be translated into a SQL query
-     * @throws AuthenticationException
-     *             Thrown in case of failed authentication.
-     * @throws AuthorizationException
-     *             Thrown in case of failed authorization.
-     * @throws SystemException
-     *             e.
+     *                                     If the parameter filter is not given.
+     * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
+     * @throws AuthenticationException     Thrown in case of failed authentication.
+     * @throws AuthorizationException      Thrown in case of failed authorization.
+     * @throws SystemException             e.
+     * @see de.escidoc.core.sm.service.interfaces .ReportDefinitionHandlerInterface #retrieveReportDefinitions()
      */
     @Override
-    public String retrieveReportDefinitions(final Map<String, String[]> filter)
-        throws InvalidSearchQueryException, 
-        MissingMethodParameterException, AuthenticationException,
-        AuthorizationException, SystemException {
+    public String retrieveReportDefinitions(final Map<String, String[]> filter) throws InvalidSearchQueryException,
+        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
         return handler.retrieveReportDefinitions(filter);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @see de.escidoc.core.sm.service.interfaces
-     *      .ReportDefinitionHandlerInterface
-     *      #update(java.lang.String,java.lang.String)
-     * 
-     * @param xmlData
-     *            ReportDefinition data as xml in ReportDefinition schema.
-     * @param id
-     *            resource id.
-     * @return Returns the XML representation of the resource.
-     * 
-     * @throws AuthenticationException
-     *             Thrown in case of failed authentication.
-     * @throws AuthorizationException
-     *             Thrown in case of failed authorization.
-     * @throws ReportDefinitionNotFoundException
-     *             e.
-     * @throws MissingMethodParameterException
-     *             e.
-     * @throws ScopeNotFoundException
-     *             ex
-     * @throws ScopeContextViolationException
-     *             ex
-     * @throws InvalidSqlException
-     *             ex
-     * @throws XmlSchemaValidationException
-     *             e.
-     * @throws XmlCorruptedException
-     *             e.
-     * @throws SystemException
-     *             e.
-     * 
      *
+     * @param xmlData ReportDefinition data as xml in ReportDefinition schema.
+     * @param id      resource id.
+     * @return Returns the XML representation of the resource.
+     * @throws AuthenticationException        Thrown in case of failed authentication.
+     * @throws AuthorizationException         Thrown in case of failed authorization.
+     * @throws ReportDefinitionNotFoundException
+     *                                        e.
+     * @throws MissingMethodParameterException
+     *                                        e.
+     * @throws ScopeNotFoundException         ex
+     * @throws ScopeContextViolationException ex
+     * @throws InvalidSqlException            ex
+     * @throws XmlSchemaValidationException   e.
+     * @throws XmlCorruptedException          e.
+     * @throws SystemException                e.
+     * @see de.escidoc.core.sm.service.interfaces .ReportDefinitionHandlerInterface #update(java.lang.String,java.lang.String)
      */
     @Override
-    public String update(final String id, final String xmlData)
-        throws AuthenticationException, AuthorizationException,
-        ReportDefinitionNotFoundException, MissingMethodParameterException,
-        ScopeNotFoundException, InvalidSqlException,
-        ScopeContextViolationException, XmlSchemaValidationException,
-        XmlCorruptedException, SystemException {
+    public String update(final String id, final String xmlData) throws AuthenticationException, AuthorizationException,
+        ReportDefinitionNotFoundException, MissingMethodParameterException, ScopeNotFoundException,
+        InvalidSqlException, ScopeContextViolationException, XmlSchemaValidationException, XmlCorruptedException,
+        SystemException {
         return handler.update(id, xmlData);
     }
 

@@ -35,15 +35,13 @@ import org.junit.Test;
 
 /**
  * Item tests with REST transport.
- * 
+ *
  * @author Michael Schneider
- * 
  */
 public class ItemRetrieveRestTest extends ItemTestBase {
 
     /**
      * Constructor.
-     * 
      */
     public ItemRetrieveRestTest() {
         super(Constants.TRANSPORT_REST);
@@ -51,15 +49,14 @@ public class ItemRetrieveRestTest extends ItemTestBase {
 
     /**
      * Test retrieve resources of Item.
-     * 
-     * @throws Exception
-     *             Thrown if anything fails.
+     *
+     * @throws Exception Thrown if anything fails.
      */
     @Test
     public void testRetrieveResources() throws Exception {
         String xml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
-                + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                "escidoc_item_198_for_create.xml");
         String itemXml = create(xml);
         String itemId = getObjidValue(itemXml);
 

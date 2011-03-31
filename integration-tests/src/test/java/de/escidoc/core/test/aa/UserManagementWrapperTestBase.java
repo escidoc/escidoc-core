@@ -30,17 +30,14 @@ package de.escidoc.core.test.aa;
 
 /**
  * Base class for testing the implementation of the UserAccount resource.
- * 
+ *
  * @author Torsten Tetteroo
- * 
  */
 public abstract class UserManagementWrapperTestBase extends UserAccountTestBase {
 
     /**
-     * @param transport
-     *            The transport identifier.
-     * @throws Exception
-     *             If anything fails
+     * @param transport The transport identifier.
+     * @throws Exception If anything fails
      */
     public UserManagementWrapperTestBase(final int transport) throws Exception {
 

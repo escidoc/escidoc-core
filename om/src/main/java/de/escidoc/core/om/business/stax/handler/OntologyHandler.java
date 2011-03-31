@@ -62,7 +62,7 @@ public class OntologyHandler extends DefaultHandler {
         if (p.endsWith(">")) {
             p = p.substring(0, p.length() - 1);
         }
-        
+
         //TODO: If a predicate contains character #, this character wil be 
         //thrown away
         final String[] predicateArray = SPLIT_PATTERN.split(p);
@@ -81,8 +81,7 @@ public class OntologyHandler extends DefaultHandler {
         final String basePath = "/RDF";
         final String currentPath = parser.getCurPath();
         if (basePath.equals(currentPath)) {
-            final int indexOfBase =
-                element.indexOfAttribute(XMLConstants.XML_NS_URI, "base");
+            final int indexOfBase = element.indexOfAttribute(XMLConstants.XML_NS_URI, "base");
             if (indexOfBase != -1) {
                 this.base = element.getAttribute(indexOfBase).getValue();
             }
@@ -90,15 +89,11 @@ public class OntologyHandler extends DefaultHandler {
         final String elementPath = "/RDF/Property";
         if (elementPath.equals(currentPath)) {
 
-            final int indexOfId =
-                element.indexOfAttribute(
-                    Constants.RDF_NAMESPACE_URI,
-                    "ID");
+            final int indexOfId = element.indexOfAttribute(Constants.RDF_NAMESPACE_URI, "ID");
 
             if (indexOfId != -1) {
                 final String id = element.getAttribute(indexOfId).getValue();
-                if (id.equals(this.predicateWithoutBase) && base
-                    .equals(this.predicateBase)
+                if (id.equals(this.predicateWithoutBase) && base.equals(this.predicateBase)
                     || id.equals(this.predicate)) {
                     this.exist = true;
                 }

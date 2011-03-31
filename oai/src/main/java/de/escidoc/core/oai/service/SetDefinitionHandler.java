@@ -15,10 +15,11 @@ import java.util.Map;
 
 /**
  * A set definition resource handler.
- * 
+ *
  * @author Rozita Friedman
  */
 public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
+
     /**
      * The logger.
      */
@@ -33,10 +34,8 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
      * create(java.lang.String)
      */
     @Override
-    public String create(final String setDefinition)
-        throws UniqueConstraintViolationException, InvalidXmlException,
-        MissingMethodParameterException, SystemException,
-        AuthenticationException, AuthorizationException {
+    public String create(final String setDefinition) throws UniqueConstraintViolationException, InvalidXmlException,
+        MissingMethodParameterException, SystemException, AuthenticationException, AuthorizationException {
         return handler.create(setDefinition);
     }
 
@@ -48,9 +47,8 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
      * retrieve(java.lang.String)
      */
     @Override
-    public String retrieve(final String setDefinitionId)
-        throws ResourceNotFoundException, MissingMethodParameterException,
-        SystemException, AuthenticationException, AuthorizationException {
+    public String retrieve(final String setDefinitionId) throws ResourceNotFoundException,
+        MissingMethodParameterException, SystemException, AuthenticationException, AuthorizationException {
         return handler.retrieve(setDefinitionId);
     }
 
@@ -62,10 +60,9 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
      * update(java.lang.String, java.lang.String)
      */
     @Override
-    public String update(final String setDefinitionId, final String xmlData)
-        throws ResourceNotFoundException, OptimisticLockingException,
-        MissingMethodParameterException, SystemException,
-        AuthenticationException, AuthorizationException {
+    public String update(final String setDefinitionId, final String xmlData) throws ResourceNotFoundException,
+        OptimisticLockingException, MissingMethodParameterException, SystemException, AuthenticationException,
+        AuthorizationException {
         return handler.update(setDefinitionId, xmlData);
     }
 
@@ -77,8 +74,7 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
      * delete(java.lang.String)
      */
     @Override
-    public void delete(final String setDefinitionId)
-        throws ResourceNotFoundException, MissingMethodParameterException,
+    public void delete(final String setDefinitionId) throws ResourceNotFoundException, MissingMethodParameterException,
         SystemException, AuthenticationException, AuthorizationException {
         handler.delete(setDefinitionId);
     }
@@ -91,18 +87,15 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
      * retrieveSetDefinitions(java.util.Map)
      */
     @Override
-    public String retrieveSetDefinitions(final Map<String, String[]> filter)
-        throws AuthenticationException, AuthorizationException,
-        MissingMethodParameterException, InvalidSearchQueryException,
-        SystemException {
+    public String retrieveSetDefinitions(final Map<String, String[]> filter) throws AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, InvalidSearchQueryException, SystemException {
         return handler.retrieveSetDefinitions(filter);
     }
 
     /**
      * Injects the set definition handler.
-     * 
-     * @param handler
-     *            The set definition handler bean to inject.
+     *
+     * @param handler The set definition handler bean to inject.
      */
     public void setSetDefinitionHandler(
         final de.escidoc.core.oai.business.interfaces.SetDefinitionHandlerInterface handler) {

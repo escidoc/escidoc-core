@@ -34,9 +34,8 @@ import java.util.Date;
 
 /**
  * Class holding the user data.
- * 
+ *
  * @author Torsten Tetteroo
- * 
  */
 public class UserAccount extends UserAccountBase {
 

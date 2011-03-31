@@ -36,38 +36,27 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.util.string.StringUtility;
 
 /**
- * 
  * @author Steffen Wagner
- * 
  */
 public class ContextHandlerDelete extends ContextHandlerCreate {
 
     /**
      * Removes an context from repository.
-     * 
-     * @param contextHandler
-     *            FedoraContextHandler
-     * @throws ContextNotEmptyException
-     *             If context depending structure exist.
-     * @throws ContextNotFoundException
-     *             If context could not be found.
-     * @throws InvalidStatusException
-     *             If context is in invalid status.
-     * @throws SystemException
-     *             If anything else fails.
+     *
+     * @param contextHandler FedoraContextHandler
+     * @throws ContextNotEmptyException If context depending structure exist.
+     * @throws ContextNotFoundException If context could not be found.
+     * @throws InvalidStatusException   If context is in invalid status.
+     * @throws SystemException          If anything else fails.
      */
-    public void remove(final FedoraContextHandler contextHandler)
-        throws ContextNotEmptyException, ContextNotFoundException,
-        InvalidStatusException, SystemException {
+    public void remove(final FedoraContextHandler contextHandler) throws ContextNotEmptyException,
+        ContextNotFoundException, InvalidStatusException, SystemException {
 
         final Context context = contextHandler.getContext();
-        final String objectType =
-            getTripleStoreUtility().getObjectType(context.getId());
+        final String objectType = getTripleStoreUtility().getObjectType(context.getId());
 
-        if (!getTripleStoreUtility().exists(context.getId())
-            || !Constants.CONTEXT_OBJECT_TYPE.equals(objectType)) {
-            throw new ContextNotFoundException(StringUtility.format(
-                    "Context not found", context.getId()));
+        if (!getTripleStoreUtility().exists(context.getId()) || !Constants.CONTEXT_OBJECT_TYPE.equals(objectType)) {
+            throw new ContextNotFoundException(StringUtility.format("Context not found", context.getId()));
         }
 
         checkStatus(Constants.STATUS_CONTEXT_CREATED);

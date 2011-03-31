@@ -38,12 +38,9 @@ import org.junit.Test;
 import org.w3c.dom.Document;
 
 /**
- * Test suite for the role user-account-inspector.
- * user-account-inspector may
- * -retrieve user-account (s)he has scope on
- * 
+ * Test suite for the role user-account-inspector. user-account-inspector may -retrieve user-account (s)he has scope on
+ *
  * @author Michael Hoppe
- * 
  */
 public class UserAccountInspectorAbstractTest extends GrantTestBase {
 
@@ -54,32 +51,25 @@ public class UserAccountInspectorAbstractTest extends GrantTestBase {
     protected static final String PASSWORD = PWCallback.PASSWORD;
 
     protected static String grantCreationUserOrGroupId = null;
-    
+
     private static UserAccountTestBase userAccountTestBase = null;
-    
+
     private static int methodCounter = 0;
-    
+
     private static String userId = null;
-    
+
     private static String userId1 = null;
-    
+
     /**
      * The constructor.
-     * 
-     * @param transport
-     *            The transport identifier.
-     * @param handlerCode
-     *            handlerCode of either UserAccountHandler or UserGroupHandler.
-     * @param userOrGroupId
-     *            userOrGroupId for grantCreation.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param transport     The transport identifier.
+     * @param handlerCode   handlerCode of either UserAccountHandler or UserGroupHandler.
+     * @param userOrGroupId userOrGroupId for grantCreation.
+     * @throws Exception If anything fails.
      */
-    public UserAccountInspectorAbstractTest(
-            final int transport, 
-            final int handlerCode,
-            final String userOrGroupId) throws Exception {
+    public UserAccountInspectorAbstractTest(final int transport, final int handlerCode, final String userOrGroupId)
+        throws Exception {
         super(transport, handlerCode);
         grantCreationUserOrGroupId = userOrGroupId;
         userAccountTestBase = new UserAccountTestBase(transport);
@@ -87,9 +77,8 @@ public class UserAccountInspectorAbstractTest extends GrantTestBase {
 
     /**
      * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Before
     public void initialize() throws Exception {
@@ -102,9 +91,8 @@ public class UserAccountInspectorAbstractTest extends GrantTestBase {
 
     /**
      * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @After
     public void deinitialize() throws Exception {
@@ -117,36 +105,29 @@ public class UserAccountInspectorAbstractTest extends GrantTestBase {
 
     /**
      * prepare tests (create user-accounts).
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     public void prepare() throws Exception {
-        String userXml = prepareUserAccount(
-                PWCallback.DEFAULT_HANDLE, STATUS_ACTIVE);
-        Document userDocument =
-            EscidocRestSoapTestBase.getDocument(userXml);
+        String userXml = prepareUserAccount(PWCallback.DEFAULT_HANDLE, STATUS_ACTIVE);
+        Document userDocument = EscidocRestSoapTestBase.getDocument(userXml);
         userId = getObjidValue(userDocument);
-        String lastModificationDate = 
-            getLastModificationDateValue(userDocument);
+        String lastModificationDate = getLastModificationDateValue(userDocument);
 
         userXml = prepareUserAccount(PWCallback.DEFAULT_HANDLE, STATUS_ACTIVE);
-        userDocument =
-            EscidocRestSoapTestBase.getDocument(userXml);
+        userDocument = EscidocRestSoapTestBase.getDocument(userXml);
         userId1 = getObjidValue(userDocument);
 
         //create grant user-account-inspector for user grantCreationUserOrGroupId 
         //and scope on userAccount
-        doTestCreateGrant(null, grantCreationUserOrGroupId, 
-                Constants.USER_ACCOUNT_BASE_URI + "/" 
-                + userId, ROLE_HREF_USER_ACCOUNT_INSPECTOR, null);
+        doTestCreateGrant(null, grantCreationUserOrGroupId, Constants.USER_ACCOUNT_BASE_URI + "/" + userId,
+            ROLE_HREF_USER_ACCOUNT_INSPECTOR, null);
     }
 
     /**
      * Tests successfully retrieving a user-account.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveUserAccount() throws Exception {
@@ -155,14 +136,12 @@ public class UserAccountInspectorAbstractTest extends GrantTestBase {
 
     /**
      * Tests declining retrieving a user-account.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testDeclineRetrieveUserAccount() throws Exception {
-        userAccountTestBase.doTestRetrieveUserAccount(
-                HANDLE, userId1, AuthorizationException.class);
+        userAccountTestBase.doTestRetrieveUserAccount(HANDLE, userId1, AuthorizationException.class);
     }
 
 }

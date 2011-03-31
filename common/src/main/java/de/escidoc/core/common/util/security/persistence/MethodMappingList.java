@@ -26,15 +26,11 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Class holding the list of method mappings for a method.<br>
- * The methosMappings are stored inernally in two lists, one for the
- * before-mappings and one for the after-mappings.<br>
- * This class provides iterators for both lists and methods to retrieve the
- * number of before- and after-mappings and elements of the before- and
- * after-appigs lists..
- * 
+ * Class holding the list of method mappings for a method.<br> The methosMappings are stored inernally in two lists, one
+ * for the before-mappings and one for the after-mappings.<br> This class provides iterators for both lists and methods
+ * to retrieve the number of before- and after-mappings and elements of the before- and after-appigs lists..
+ *
  * @author Torsten Tetteroo
- * 
  */
 public class MethodMappingList {
 
@@ -44,7 +40,6 @@ public class MethodMappingList {
 
     /**
      * Default constructor.
-     * 
      */
     public MethodMappingList() {
 
@@ -52,9 +47,8 @@ public class MethodMappingList {
 
     /**
      * Constructor.
-     * 
-     * @param methodMappings
-     *            A <code>Collection</code> of method mappings
+     *
+     * @param methodMappings A <code>Collection</code> of method mappings
      */
     public MethodMappingList(final Collection<MethodMapping> methodMappings) {
 
@@ -63,9 +57,8 @@ public class MethodMappingList {
 
     /**
      * Setter for method mappings.
-     * 
-     * @param methodMappings
-     *            Collection of method mappings.
+     *
+     * @param methodMappings Collection of method mappings.
      */
     public final void setMethodMappings(final Iterable<MethodMapping> methodMappings) {
 
@@ -81,7 +74,8 @@ public class MethodMappingList {
         for (final MethodMapping methodMapping : methodMappings) {
             if (methodMapping.isExecBefore()) {
                 methodMappingsBefore.add(methodMapping);
-            } else {
+            }
+            else {
                 methodMappingsAfter.add(methodMapping);
             }
         }
@@ -89,7 +83,7 @@ public class MethodMappingList {
 
     /**
      * Gets the number of before-mappings.
-     * 
+     *
      * @return The number of mapping for before-mappings.
      */
     public int sizeBefore() {
@@ -99,7 +93,7 @@ public class MethodMappingList {
 
     /**
      * Gets the number of after-mappings.
-     * 
+     *
      * @return The number of mapping for after-mappings.
      */
     public int sizeAfter() {
@@ -109,7 +103,7 @@ public class MethodMappingList {
 
     /**
      * Gets the iterator pointing to before-mappings.
-     * 
+     *
      * @return Returns an <code>Iterator</code> over before-mappings.
      */
     public Iterator<MethodMapping> iteratorBefore() {
@@ -119,7 +113,7 @@ public class MethodMappingList {
 
     /**
      * Gets the iterator pointing to after-mappings.
-     * 
+     *
      * @return Returns an <code>Iterator</code> over after-mappings.
      */
     public Iterator<MethodMapping> iteratorAfter() {
@@ -129,10 +123,8 @@ public class MethodMappingList {
 
     /**
      * Gets a before-mapping.
-     * 
-     * @param index
-     *            The index of the element to return in the before-mappings
-     *            list.
+     *
+     * @param index The index of the element to return in the before-mappings list.
      * @return Returns the specified element.
      */
     public MethodMapping getBefore(final int index) {
@@ -142,9 +134,8 @@ public class MethodMappingList {
 
     /**
      * Gets an after-mapping.
-     * 
-     * @param index
-     *            The index of the element to return in the after-mappings list.
+     *
+     * @param index The index of the element to return in the after-mappings list.
      * @return Returns the specified element.
      */
     public MethodMapping getAfter(final int index) {
@@ -158,8 +149,7 @@ public class MethodMappingList {
      * @return a string representation of this object
      */
     public String toString() {
-        return
-            "[methodMappingsBefore=" + this.methodMappingsBefore + ','
-            + "methodMappingsAfter=" + this.methodMappingsAfter + ']';
+        return "[methodMappingsBefore=" + this.methodMappingsBefore + ',' + "methodMappingsAfter="
+            + this.methodMappingsAfter + ']';
     }
 }

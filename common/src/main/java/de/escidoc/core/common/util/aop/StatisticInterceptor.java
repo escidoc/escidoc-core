@@ -40,54 +40,31 @@ import java.util.regex.Pattern;
 /**
  * Interceptor used to create statistic data for the eSciDoc base services.
  * <p/>
- * 
- * This Interceptor is invoked every time an EJB calls one of its service
- * classes.<br/>
- * It must be the first interceptor in the chain.<br/>
- * This interceptor performs user authentication, too, as the user data is
- * needed for the statistics.<br/>
- * This interceptor stores in the thread local <code>StatisticDataVo</code>
- * object the following information before calling the handler method:
- * <ul>
- * <li><code>PARAM_HANDLER</code>, the name of the called handler.</li>
- * <li><code>PARAM_REQUEST</code>, the name of the called handler method.</li>
- * <li><code>PARAM_INTERFACE</code>, the interface that has been called, i.e.
- * REST or SOAP.</li>
- * <li><code>PARAM_INTERNAL</code>, the flag indicating if this is an internal
- * call from one infrastructure service (EJB) to another (
- * <code>VALUE_INTERNAL_TRUE</code>), or if it is an external call from a
- * non-infrastructure service or application (<code>VALUE_INTERNAL_FALSE</code>
- * ).</li>
- * <li><code>PARAM_USER_ID</code>, the id of the user performing the current
- * request.</li>
- * <li><code>PARAM_OBJECT_ID</code>, the id of the accessed resource, if this is
- * available in the first parameter. To check this, it is asserted that the
- * first parameter does not seem to contain XML data, i.e. does not contain a
- * &lt;</li>
- * </ul>
- * After the handler method call, the interceptor adds the following information
- * and sends the statistics data to the <code>StatisticQueueHandler</code>.
- * <ul>
- * <li><code>PARAM_SUCCESS</code>, flag indicating if the method call has
- * successfully returned (<code>VALUE_SUCCESS_TRUE</code>) or if an exception
- * has occurred (<code>VALUE_SUCCESS_FALSE</code>).</li>
- * <li><code>PARAM_ELAPSED_TIME</code>, the elapsed time from start of this
- * interceptor to the returning from the called method.</li>
- * <li><code>PARAM_EXCEPTION_NAME</code>, in case of an error, the name of the
- * exception.</li>
- * <li><code>PARAM_EXCEPTION_MESSAGE</code>, in case of an error, the message of
- * the exception.</li>
- * <li><code>PARAM_EXCEPTION_SOURCE</code>, in case of an error, the source of
- * the top level exception. This source information consist of the full class
- * name, the method name and the line from that the exception has been thrown.</li>
- * </ul>
- * <br/>
- * The called business methods may add further information to the statistic data
- * record. For information about how to access the thread local statistic data
- * record and adding information to it.
- * 
- * @author Torsten Tetteroo
+ * <p/>
+ * This Interceptor is invoked every time an EJB calls one of its service classes.<br/> It must be the first interceptor
+ * in the chain.<br/> This interceptor performs user authentication, too, as the user data is needed for the
+ * statistics.<br/> This interceptor stores in the thread local <code>StatisticDataVo</code> object the following
+ * information before calling the handler method: <ul> <li><code>PARAM_HANDLER</code>, the name of the called
+ * handler.</li> <li><code>PARAM_REQUEST</code>, the name of the called handler method.</li>
+ * <li><code>PARAM_INTERFACE</code>, the interface that has been called, i.e. REST or SOAP.</li>
+ * <li><code>PARAM_INTERNAL</code>, the flag indicating if this is an internal call from one infrastructure service
+ * (EJB) to another ( <code>VALUE_INTERNAL_TRUE</code>), or if it is an external call from a non-infrastructure service
+ * or application (<code>VALUE_INTERNAL_FALSE</code> ).</li> <li><code>PARAM_USER_ID</code>, the id of the user
+ * performing the current request.</li> <li><code>PARAM_OBJECT_ID</code>, the id of the accessed resource, if this is
+ * available in the first parameter. To check this, it is asserted that the first parameter does not seem to contain XML
+ * data, i.e. does not contain a &lt;</li> </ul> After the handler method call, the interceptor adds the following
+ * information and sends the statistics data to the <code>StatisticQueueHandler</code>. <ul>
+ * <li><code>PARAM_SUCCESS</code>, flag indicating if the method call has successfully returned
+ * (<code>VALUE_SUCCESS_TRUE</code>) or if an exception has occurred (<code>VALUE_SUCCESS_FALSE</code>).</li>
+ * <li><code>PARAM_ELAPSED_TIME</code>, the elapsed time from start of this interceptor to the returning from the called
+ * method.</li> <li><code>PARAM_EXCEPTION_NAME</code>, in case of an error, the name of the exception.</li>
+ * <li><code>PARAM_EXCEPTION_MESSAGE</code>, in case of an error, the message of the exception.</li>
+ * <li><code>PARAM_EXCEPTION_SOURCE</code>, in case of an error, the source of the top level exception. This source
+ * information consist of the full class name, the method name and the line from that the exception has been
+ * thrown.</li> </ul> <br/> The called business methods may add further information to the statistic data record. For
+ * information about how to access the thread local statistic data record and adding information to it.
  *
+ * @author Torsten Tetteroo
  */
 @Aspect
 public class StatisticInterceptor implements Ordered {
@@ -95,8 +72,7 @@ public class StatisticInterceptor implements Ordered {
     private static final Logger LOGGER = LoggerFactory.getLogger(StatisticInterceptor.class);
 
     /**
-     * Pattern used to determine that a method parameter is XML parameter and
-     * not an id parameter.
+     * Pattern used to determine that a method parameter is XML parameter and not an id parameter.
      */
     private static final Pattern PATTERN_DETERMINE_XML_PARAMETER = Pattern.compile("<");
 
@@ -131,36 +107,24 @@ public class StatisticInterceptor implements Ordered {
 
     private StatisticService statisticService;
 
-
-
     /**
      * See Interface for functional description.
-     * 
-     * @return
-     *
      */
     @Override
     public int getOrder() {
         return AopUtil.PRECEDENCE_STATISTIC_INTERCEPTOR;
     }
 
-
-
     /**
      * Around advice to create a statistic record for the current method call.<br>
-     * 
-     * @param joinPoint
-     *            The current {@link ProceedingJoinPoint}.
-     * @return Returns the changed result.
-     * @throws Throwable
-     *             Thrown in case of an error.
      *
+     * @param joinPoint The current {@link ProceedingJoinPoint}.
+     * @return Returns the changed result.
+     * @throws Throwable Thrown in case of an error.
      */
     @Around("call(public !static * de.escidoc.core.*.service.interfaces.*.*(..))"
-        + " && within(de.escidoc.core.*.ejb.*Bean)"
-        + " && !call(* de.escidoc.core..*.SemanticStoreHandler*.*(..))"
-        + " && !call(* de.escidoc.core..*.StatisticService*.*(..))"
-        + " && !call(* de.escidoc.core.common..*.*(..))")
+        + " && within(de.escidoc.core.*.ejb.*Bean)" + " && !call(* de.escidoc.core..*.SemanticStoreHandler*.*(..))"
+        + " && !call(* de.escidoc.core..*.StatisticService*.*(..))" + " && !call(* de.escidoc.core.common..*.*(..))")
     public Object createStatisticRecord(final ProceedingJoinPoint joinPoint) throws Throwable {
         final long invocationStartTime = System.currentTimeMillis();
         boolean successful = true;
@@ -173,24 +137,28 @@ public class StatisticInterceptor implements Ordered {
                 internal = true;
             }
             return proceed(joinPoint);
-        } catch (final Exception e) {
+        }
+        catch (final Exception e) {
             successful = false;
             exceptionName = e.getClass().getName();
             final StackTraceElement[] elements = e.getStackTrace();
             if (elements != null && elements.length > 0) {
                 final StackTraceElement element = elements[0];
-                exceptionSource = StringUtility.format(element.getClassName(),
-                            element.getMethodName(), element.getLineNumber());
-            } else {
+                exceptionSource =
+                    StringUtility.format(element.getClassName(), element.getMethodName(), element.getLineNumber());
+            }
+            else {
                 exceptionSource = "unknown";
             }
             if (e instanceof EscidocException) {
                 throw e;
-            } else {
+            }
+            else {
                 // this should not occur. To report this failure, the exception is wrapped by a SystemException
                 throw new SystemException("Service throws unexpected exception. ", e);
             }
-        } finally {
+        }
+        finally {
             // get callee and method info
             final MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
             // get interface info
@@ -201,13 +169,16 @@ public class StatisticInterceptor implements Ordered {
             // create a new statistic data record stored in thread local for this scope
             final StatisticRecordBuilder statisticRecordBuilder = StatisticRecordBuilder.createStatisticRecord();
             handleObjectIds(statisticRecordBuilder, methodSignature.getMethod().getName(), joinPoint.getArgs());
-            final StatisticRecord statisticRecord = statisticRecordBuilder
-                    .withParameter(PARAM_HANDLER, methodSignature.getDeclaringTypeName()
-                                .replaceAll("\\.interfaces", "").replaceAll("Interface$", ""))
+            final StatisticRecord statisticRecord =
+                statisticRecordBuilder
+                    .withParameter(
+                        PARAM_HANDLER,
+                        methodSignature.getDeclaringTypeName().replaceAll("\\.interfaces", "").replaceAll("Interface$",
+                            ""))
                     .withParameter(PARAM_REQUEST, methodSignature.getMethod().getName())
                     .withParameter(PARAM_INTERFACE, interfaceInfo)
                     .withParameter(PARAM_INTERNAL, internal)
-                    .withParameter(PARAM_SUCCESSFUL , successful)
+                    .withParameter(PARAM_SUCCESSFUL, successful)
                     .withParameter(PARAM_EXCEPTION_NAME, exceptionName)
                     .withParameter(PARAM_EXCEPTION_SOURCE, exceptionSource)
                     .withParameter(PARAM_USER_ID, UserContext.getId())
@@ -219,38 +190,28 @@ public class StatisticInterceptor implements Ordered {
 
     /**
      * Continue the invocation.
-     * 
-     * @param joinPoint
-     *            The current {@link ProceedingJoinPoint}.
+     *
+     * @param joinPoint The current {@link ProceedingJoinPoint}.
      * @return Returns the result of the continued invocation.
-     * @throws Throwable
-     *             Thrown in case of an error during proceeding the method call.
+     * @throws Throwable Thrown in case of an error during proceeding the method call.
      */
-    private static Object proceed(final ProceedingJoinPoint joinPoint)
-        throws Throwable {
+    private static Object proceed(final ProceedingJoinPoint joinPoint) throws Throwable {
         return joinPoint.proceed();
     }
 
-/**
-     * Inserts the method parameter that hold object ids into the provided
-     * {@link StatisticRecord} object.<br>
-     * The objids are taken from the method parameters, that are string
-     * parameters, contain a :, but do not seem to be XML data, i.e. does not
-     * contain '<'. <br>
-     * The last found objid is logged as PARAM_OBJID, because this addresses the
-     * accessed (sub- )resource, e.g. item or component of an item. The other
-     * object ids (if any) are logged as PARAM_PARENT_OBJID + index.
-     * 
-     * @param statisticRecordBuilder
-     *            The {@link StatisticRecordBuilder} object to put the object ids into.
-     * @param calledMethodName
-     *            The name of the called method.
-     * @param arguments
-     *            The arguments of the method call.
+    /**
+     * Inserts the method parameter that hold object ids into the provided {@link StatisticRecord} object.<br> The
+     * objids are taken from the method parameters, that are string parameters, contain a :, but do not seem to be XML
+     * data, i.e. does not contain '<'. <br> The last found objid is logged as PARAM_OBJID, because this addresses the
+     * accessed (sub- )resource, e.g. item or component of an item. The other object ids (if any) are logged as
+     * PARAM_PARENT_OBJID + index.
      *
+     * @param statisticRecordBuilder The {@link StatisticRecordBuilder} object to put the object ids into.
+     * @param calledMethodName       The name of the called method.
+     * @param arguments              The arguments of the method call.
      */
-    private static void handleObjectIds(final StatisticRecordBuilder statisticRecordBuilder,
-                                        final String calledMethodName, final Object[] arguments) {
+    private static void handleObjectIds(
+        final StatisticRecordBuilder statisticRecordBuilder, final String calledMethodName, final Object[] arguments) {
 
         if (arguments != null && arguments.length > 0) {
             int indexLastObjid = -1;
@@ -268,7 +229,7 @@ public class StatisticInterceptor implements Ordered {
                     break;
                 }
                 final CharSequence argument = (CharSequence) arguments[i];
-                if (argument != null && !PATTERN_DETERMINE_XML_PARAMETER .matcher(argument).find()) {
+                if (argument != null && !PATTERN_DETERMINE_XML_PARAMETER.matcher(argument).find()) {
                     indexLastObjid = i;
                 }
                 else {

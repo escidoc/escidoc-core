@@ -40,16 +40,14 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * Test Content Model versioning behavior.
- * 
+ *
  * @author Steffen Wagner
- * 
  */
 @RunWith(value = Parameterized.class)
 public class ContentModelVersioningTest extends ContentModelTestBase {
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ContentModelVersioningTest(final int transport) {
         super(transport);
@@ -57,112 +55,82 @@ public class ContentModelVersioningTest extends ContentModelTestBase {
 
     /**
      * Test timestamps of Content Model.
-     * 
+     * <p/>
      * Related to issue INFR-707
-     * 
-     * @throws Exception
-     *             If behavior or timestamps is not as expected.
+     *
+     * @throws Exception If behavior or timestamps is not as expected.
      */
     @Test
     public void testContentModelTimestamps01() throws Exception {
 
         String contentModelXml =
-            EscidocRestSoapTestBase.getTemplateAsString(
-                TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
                 "content-model-minimal-for-create.xml");
         String cmV1E1 = create(contentModelXml);
 
         Document cmDocV1E1 = getDocument(cmV1E1);
         String objid = getObjidValue(cmV1E1);
 
-        Document wovDocV1E1 =
-            EscidocRestSoapTestBase.getDocument(retrieveVersionHistory(objid));
+        Document wovDocV1E1 = EscidocRestSoapTestBase.getDocument(retrieveVersionHistory(objid));
 
         // check timestamps consistency ----------------------------------
         // /content-model/@last-modification-date ==
         // /content-model/properties/creation-date
-        assertEquals("Timestamp in root attribute of Content Model [" + objid
-            + "] differs from creation-date"
-            + " (create was the one and only event)", XPathAPI
-            .selectSingleNode(cmDocV1E1,
-                "/content-model/@last-modification-date").getTextContent(),
-            XPathAPI.selectSingleNode(cmDocV1E1,
-                "/content-model/properties/creation-date").getTextContent());
+        assertEquals("Timestamp in root attribute of Content Model [" + objid + "] differs from creation-date"
+            + " (create was the one and only event)", XPathAPI.selectSingleNode(cmDocV1E1,
+            "/content-model/@last-modification-date").getTextContent(), XPathAPI.selectSingleNode(cmDocV1E1,
+            "/content-model/properties/creation-date").getTextContent());
 
         // /content-model/@last-modification-date ==
         // /content-model/properties/version/date
         assertEquals("Timestamp in root attribute differs from version-date"
-            + " (this Content Model has only one version)", XPathAPI
-            .selectSingleNode(cmDocV1E1,
-                "/content-model/@last-modification-date").getTextContent(),
-            XPathAPI.selectSingleNode(cmDocV1E1,
-                "/content-model/properties/version/date").getTextContent());
+            + " (this Content Model has only one version)", XPathAPI.selectSingleNode(cmDocV1E1,
+            "/content-model/@last-modification-date").getTextContent(), XPathAPI.selectSingleNode(cmDocV1E1,
+            "/content-model/properties/version/date").getTextContent());
 
         // /content-model/@last-modification-date ==
         // /content-model/latest-version/date
-        assertEquals("Timestamp in root attribute differs from creation-date",
-            XPathAPI.selectSingleNode(cmDocV1E1,
-                "/content-model/@last-modification-date").getTextContent(),
-            XPathAPI
-                .selectSingleNode(cmDocV1E1,
-                    "/content-model/properties/latest-version/date")
-                .getTextContent());
+        assertEquals("Timestamp in root attribute differs from creation-date", XPathAPI.selectSingleNode(cmDocV1E1,
+            "/content-model/@last-modification-date").getTextContent(), XPathAPI.selectSingleNode(cmDocV1E1,
+            "/content-model/properties/latest-version/date").getTextContent());
 
         // /content-model/@last-modification-date ==
         // /version-history/@last-modification-date
-        assertEquals("Timestamp in root attribute differs from creation-date",
-            XPathAPI.selectSingleNode(cmDocV1E1,
-                "/content-model/@last-modification-date").getTextContent(),
-            XPathAPI.selectSingleNode(wovDocV1E1,
-                "/version-history/@last-modification-date").getTextContent());
+        assertEquals("Timestamp in root attribute differs from creation-date", XPathAPI.selectSingleNode(cmDocV1E1,
+            "/content-model/@last-modification-date").getTextContent(), XPathAPI.selectSingleNode(wovDocV1E1,
+            "/version-history/@last-modification-date").getTextContent());
 
         // /content-model/@last-modification-date ==
         // /version-history/version[version-number='1']/timestamp
-        assertEquals("Timestamp in root attribute differs from creation-date",
-            XPathAPI.selectSingleNode(cmDocV1E1,
-                "/content-model/@last-modification-date").getTextContent(),
-            XPathAPI
-                .selectSingleNode(wovDocV1E1,
-                    "/version-history/version[version-number='1']/timestamp")
-                .getTextContent());
+        assertEquals("Timestamp in root attribute differs from creation-date", XPathAPI.selectSingleNode(cmDocV1E1,
+            "/content-model/@last-modification-date").getTextContent(), XPathAPI.selectSingleNode(wovDocV1E1,
+            "/version-history/version[version-number='1']/timestamp").getTextContent());
 
         // /content-model/@last-modification-date ==
         // /version-history/version[<objid>:1]/events/event/eventDateTime
-        assertEquals("Timestamp in root attribute differs from creation-date",
-            XPathAPI.selectSingleNode(cmDocV1E1,
-                "/content-model/@last-modification-date").getTextContent(),
-            XPathAPI.selectSingleNode(
-                wovDocV1E1,
-                "/version-history/version[version-number='1']"
-                    + "/events/event[last()]/eventDateTime").getTextContent());
+        assertEquals("Timestamp in root attribute differs from creation-date", XPathAPI.selectSingleNode(cmDocV1E1,
+            "/content-model/@last-modification-date").getTextContent(), XPathAPI.selectSingleNode(wovDocV1E1,
+            "/version-history/version[version-number='1']" + "/events/event[last()]/eventDateTime").getTextContent());
 
     }
 
     /**
      * Test timestamps of Content Model.
-     * 
+     * <p/>
      * Related to issue INFR-820
-     * 
-     * Content Model changed in following way:
-     * <ul>
-     * <li>create</li>
-     * <li>update</li>
-     * <li>update</li>
-     * </ul>
-     * The datastructure is check only after update to version 2 to keep this
-     * test clearly arranged. There is an other test which checks the data
-     * structure for a lifecycle where release of version 1 is the latest event.
-     * 
-     * @throws Exception
-     *             If behavior or timestamps is not as expected.
+     * <p/>
+     * Content Model changed in following way: <ul> <li>create</li> <li>update</li> <li>update</li> </ul> The
+     * datastructure is check only after update to version 2 to keep this test clearly arranged. There is an other test
+     * which checks the data structure for a lifecycle where release of version 1 is the latest event.
+     *
+     * @throws Exception If behavior or timestamps is not as expected.
      */
     @Test
     public void testContentModelTimestamps03() throws Exception {
 
         // version 1
         String contentModelXml =
-            EscidocRestSoapTestBase.getTemplateAsString(
-                TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
                 "content-model-minimal-for-create.xml");
         String cmV1E1 = create(contentModelXml);
 
@@ -171,29 +139,22 @@ public class ContentModelVersioningTest extends ContentModelTestBase {
 
         Node tmpl = substitute(cmDocV1E1, "/content-model/properties/name", "Update Test CM");
 
-
         // version 2
         String cmXmlV2E1 = update(objid, toString(tmpl, false));
-        Document cmDocV2E1 =
-            EscidocRestSoapTestBase.getDocument(cmXmlV2E1);
+        Document cmDocV2E1 = EscidocRestSoapTestBase.getDocument(cmXmlV2E1);
 
         // FIXME the test is uncomplete because update() failed.
         /*
          * check data structure
          */
-        Document wovDocV2E1 =
-            EscidocRestSoapTestBase.getDocument(retrieveVersionHistory(objid));
+        Document wovDocV2E1 = EscidocRestSoapTestBase.getDocument(retrieveVersionHistory(objid));
 
         // check timestamp of version 1
         assertEquals("timestamp of version 1 of Content Model [" + objid
-            + "] differs from timestamp of latest event of version 1 "
-            + "in version-history", XPathAPI
-            .selectSingleNode(wovDocV2E1,
-                "/version-history/version[version-number='1']/timestamp")
-            .getTextContent(), XPathAPI.selectSingleNode(
-            wovDocV2E1,
-            "/version-history/version[version-number='1']"
-                + "/events/event[1]/eventDateTime").getTextContent());
+            + "] differs from timestamp of latest event of version 1 " + "in version-history", XPathAPI
+            .selectSingleNode(wovDocV2E1, "/version-history/version[version-number='1']/timestamp").getTextContent(),
+            XPathAPI.selectSingleNode(wovDocV2E1,
+                "/version-history/version[version-number='1']" + "/events/event[1]/eventDateTime").getTextContent());
     }
 
 }

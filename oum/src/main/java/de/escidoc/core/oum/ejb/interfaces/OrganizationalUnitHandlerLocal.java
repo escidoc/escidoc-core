@@ -30,352 +30,153 @@ import java.util.Map;
  */
 public interface OrganizationalUnitHandlerLocal extends EJBLocalObject {
 
-    String ingest(String xmlData, SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            SystemException,
-            MissingAttributeValueException,
-            MissingElementValueException,
-            OrganizationalUnitNotFoundException,
-            InvalidXmlException,
-            InvalidStatusException,
-            EscidocException;
+    String ingest(String xmlData, SecurityContext securityContext) throws AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, SystemException, MissingAttributeValueException,
+        MissingElementValueException, OrganizationalUnitNotFoundException, InvalidXmlException, InvalidStatusException,
+        EscidocException;
 
-    String ingest(String xmlData, String authHandle, Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            SystemException,
-            MissingAttributeValueException,
-            MissingElementValueException,
-            OrganizationalUnitNotFoundException,
-            InvalidXmlException,
-            InvalidStatusException,
-            EscidocException;
+    String ingest(String xmlData, String authHandle, Boolean restAccess) throws AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, SystemException, MissingAttributeValueException,
+        MissingElementValueException, OrganizationalUnitNotFoundException, InvalidXmlException, InvalidStatusException,
+        EscidocException;
 
-    String create(String xml, SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            SystemException,
-            MissingAttributeValueException,
-            MissingElementValueException,
-            OrganizationalUnitNotFoundException,
-            InvalidStatusException,
-            XmlCorruptedException,
-            XmlSchemaValidationException,
-            MissingMdRecordException;
+    String create(String xml, SecurityContext securityContext) throws AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, SystemException, MissingAttributeValueException, MissingElementValueException,
+        OrganizationalUnitNotFoundException, InvalidStatusException, XmlCorruptedException,
+        XmlSchemaValidationException, MissingMdRecordException;
 
-    String create(String xml, String authHandle, Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            SystemException,
-            MissingAttributeValueException,
-            MissingElementValueException,
-            OrganizationalUnitNotFoundException,
-            InvalidStatusException,
-            XmlCorruptedException,
-            XmlSchemaValidationException,
-            MissingMdRecordException;
+    String create(String xml, String authHandle, Boolean restAccess) throws AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, SystemException, MissingAttributeValueException,
+        MissingElementValueException, OrganizationalUnitNotFoundException, InvalidStatusException,
+        XmlCorruptedException, XmlSchemaValidationException, MissingMdRecordException;
 
-    void delete(String id, SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            OrganizationalUnitNotFoundException,
-            InvalidStatusException,
-            OrganizationalUnitHasChildrenException,
-            SystemException;
+    void delete(String id, SecurityContext securityContext) throws AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, OrganizationalUnitNotFoundException, InvalidStatusException,
+        OrganizationalUnitHasChildrenException, SystemException;
 
-    void delete(String id, String authHandle, Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            OrganizationalUnitNotFoundException,
-            InvalidStatusException,
-            OrganizationalUnitHasChildrenException,
-            SystemException;
+    void delete(String id, String authHandle, Boolean restAccess) throws AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException,
+        InvalidStatusException, OrganizationalUnitHasChildrenException, SystemException;
 
-    String update(String id, String user, SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            OrganizationalUnitNotFoundException,
-            SystemException,
-            OptimisticLockingException,
-            OrganizationalUnitHierarchyViolationException,
-            InvalidXmlException,
-            MissingElementValueException,
-            InvalidStatusException;
+    String update(String id, String user, SecurityContext securityContext) throws AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException,
+        OptimisticLockingException, OrganizationalUnitHierarchyViolationException, InvalidXmlException,
+        MissingElementValueException, InvalidStatusException;
 
-    String update(String id, String user, String authHandle, Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            OrganizationalUnitNotFoundException,
-            SystemException,
-            OptimisticLockingException,
-            OrganizationalUnitHierarchyViolationException,
-            InvalidXmlException,
-            MissingElementValueException,
-            InvalidStatusException;
+    String update(String id, String user, String authHandle, Boolean restAccess) throws AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException,
+        OptimisticLockingException, OrganizationalUnitHierarchyViolationException, InvalidXmlException,
+        MissingElementValueException, InvalidStatusException;
 
-    String updateMdRecords(String id, String xml, SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            InvalidXmlException,
-            InvalidStatusException,
-            MissingMethodParameterException,
-            OptimisticLockingException,
-            OrganizationalUnitNotFoundException,
-            MissingElementValueException,
-            SystemException;
+    String updateMdRecords(String id, String xml, SecurityContext securityContext) throws AuthenticationException,
+        AuthorizationException, InvalidXmlException, InvalidStatusException, MissingMethodParameterException,
+        OptimisticLockingException, OrganizationalUnitNotFoundException, MissingElementValueException, SystemException;
 
     String updateMdRecords(String id, String xml, String authHandle, Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            InvalidXmlException,
-            InvalidStatusException,
-            MissingMethodParameterException,
-            OptimisticLockingException,
-            OrganizationalUnitNotFoundException,
-            MissingElementValueException,
-            SystemException;
+        throws AuthenticationException, AuthorizationException, InvalidXmlException, InvalidStatusException,
+        MissingMethodParameterException, OptimisticLockingException, OrganizationalUnitNotFoundException,
+        MissingElementValueException, SystemException;
 
-    String updateParents(String id, String xml, SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            InvalidXmlException,
-            MissingMethodParameterException,
-            OptimisticLockingException,
-            OrganizationalUnitHierarchyViolationException,
-            OrganizationalUnitNotFoundException,
-            MissingElementValueException,
-            SystemException,
-            InvalidStatusException;
+    String updateParents(String id, String xml, SecurityContext securityContext) throws AuthenticationException,
+        AuthorizationException, InvalidXmlException, MissingMethodParameterException, OptimisticLockingException,
+        OrganizationalUnitHierarchyViolationException, OrganizationalUnitNotFoundException,
+        MissingElementValueException, SystemException, InvalidStatusException;
 
-    String updateParents(String id, String xml, String authHandle, Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            InvalidXmlException,
-            MissingMethodParameterException,
-            OptimisticLockingException,
-            OrganizationalUnitHierarchyViolationException,
-            OrganizationalUnitNotFoundException,
-            MissingElementValueException,
-            SystemException,
-            InvalidStatusException;
+    String updateParents(String id, String xml, String authHandle, Boolean restAccess) throws AuthenticationException,
+        AuthorizationException, InvalidXmlException, MissingMethodParameterException, OptimisticLockingException,
+        OrganizationalUnitHierarchyViolationException, OrganizationalUnitNotFoundException,
+        MissingElementValueException, SystemException, InvalidStatusException;
 
-    String retrieve(String id, SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            OrganizationalUnitNotFoundException,
-            SystemException;
+    String retrieve(String id, SecurityContext securityContext) throws AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
 
-    String retrieve(String id, String authHandle, Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            OrganizationalUnitNotFoundException,
-            SystemException;
+    String retrieve(String id, String authHandle, Boolean restAccess) throws AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
 
-    String retrieveProperties(String id, SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            OrganizationalUnitNotFoundException,
-            SystemException;
+    String retrieveProperties(String id, SecurityContext securityContext) throws AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
 
-    String retrieveProperties(String id, String authHandle, Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            OrganizationalUnitNotFoundException,
-            SystemException;
+    String retrieveProperties(String id, String authHandle, Boolean restAccess) throws AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
 
     EscidocBinaryContent retrieveResource(String id, String resourceName, SecurityContext securityContext)
-            throws OrganizationalUnitNotFoundException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            OperationNotFoundException,
-            SystemException;
+        throws OrganizationalUnitNotFoundException, AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, OperationNotFoundException, SystemException;
 
     EscidocBinaryContent retrieveResource(String id, String resourceName, String authHandle, Boolean restAccess)
-            throws OrganizationalUnitNotFoundException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            OperationNotFoundException,
-            SystemException;
+        throws OrganizationalUnitNotFoundException, AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, OperationNotFoundException, SystemException;
 
-    String retrieveResources(String ouId, SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            OrganizationalUnitNotFoundException,
-            SystemException;
+    String retrieveResources(String ouId, SecurityContext securityContext) throws AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
 
-    String retrieveResources(String ouId, String authHandle, Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            OrganizationalUnitNotFoundException,
-            SystemException;
+    String retrieveResources(String ouId, String authHandle, Boolean restAccess) throws AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
 
-    String retrieveMdRecords(String id, SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            OrganizationalUnitNotFoundException,
-            SystemException;
+    String retrieveMdRecords(String id, SecurityContext securityContext) throws AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
 
-    String retrieveMdRecords(String id, String authHandle, Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            OrganizationalUnitNotFoundException,
-            SystemException;
+    String retrieveMdRecords(String id, String authHandle, Boolean restAccess) throws AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
 
-    String retrieveMdRecord(String id, String name, SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            MdRecordNotFoundException,
-            MissingMethodParameterException,
-            OrganizationalUnitNotFoundException,
-            SystemException;
+    String retrieveMdRecord(String id, String name, SecurityContext securityContext) throws AuthenticationException,
+        AuthorizationException, MdRecordNotFoundException, MissingMethodParameterException,
+        OrganizationalUnitNotFoundException, SystemException;
 
     String retrieveMdRecord(String id, String name, String authHandle, Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            MdRecordNotFoundException,
-            MissingMethodParameterException,
-            OrganizationalUnitNotFoundException,
-            SystemException;
+        throws AuthenticationException, AuthorizationException, MdRecordNotFoundException,
+        MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
 
-    String retrieveParents(String id, SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            OrganizationalUnitNotFoundException,
-            SystemException;
+    String retrieveParents(String id, SecurityContext securityContext) throws AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
 
-    String retrieveParents(String id, String authHandle, Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            OrganizationalUnitNotFoundException,
-            SystemException;
+    String retrieveParents(String id, String authHandle, Boolean restAccess) throws AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
 
-    String retrieveParentObjects(String ouId, SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            OrganizationalUnitNotFoundException,
-            SystemException;
+    String retrieveParentObjects(String ouId, SecurityContext securityContext) throws AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
 
-    String retrieveParentObjects(String ouId, String authHandle, Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            OrganizationalUnitNotFoundException,
-            SystemException;
+    String retrieveParentObjects(String ouId, String authHandle, Boolean restAccess) throws AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
 
-    String retrieveSuccessors(String id, SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            OrganizationalUnitNotFoundException,
-            SystemException;
+    String retrieveSuccessors(String id, SecurityContext securityContext) throws AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
 
-    String retrieveSuccessors(String id, String authHandle, Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            OrganizationalUnitNotFoundException,
-            SystemException;
+    String retrieveSuccessors(String id, String authHandle, Boolean restAccess) throws AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
 
-    String retrieveChildObjects(String ouId, SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            OrganizationalUnitNotFoundException,
-            SystemException;
+    String retrieveChildObjects(String ouId, SecurityContext securityContext) throws AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
 
-    String retrieveChildObjects(String ouId, String authHandle, Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            OrganizationalUnitNotFoundException,
-            SystemException;
+    String retrieveChildObjects(String ouId, String authHandle, Boolean restAccess) throws AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
 
-    String retrievePathList(String ouId, SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            OrganizationalUnitNotFoundException,
-            SystemException,
-            MissingMethodParameterException;
+    String retrievePathList(String ouId, SecurityContext securityContext) throws AuthenticationException,
+        AuthorizationException, OrganizationalUnitNotFoundException, SystemException, MissingMethodParameterException;
 
-    String retrievePathList(String ouId, String authHandle, Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            OrganizationalUnitNotFoundException,
-            SystemException,
-            MissingMethodParameterException;
+    String retrievePathList(String ouId, String authHandle, Boolean restAccess) throws AuthenticationException,
+        AuthorizationException, OrganizationalUnitNotFoundException, SystemException, MissingMethodParameterException;
 
     String retrieveOrganizationalUnits(Map filter, SecurityContext securityContext)
-            throws MissingMethodParameterException,
-            SystemException,
-            InvalidSearchQueryException,
-            InvalidXmlException;
+        throws MissingMethodParameterException, SystemException, InvalidSearchQueryException, InvalidXmlException;
 
     String retrieveOrganizationalUnits(Map filter, String authHandle, Boolean restAccess)
-            throws MissingMethodParameterException,
-            SystemException,
-            InvalidSearchQueryException,
-            InvalidXmlException;
+        throws MissingMethodParameterException, SystemException, InvalidSearchQueryException, InvalidXmlException;
 
-    String close(String id, String taskParam, SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            OrganizationalUnitNotFoundException,
-            InvalidStatusException,
-            SystemException,
-            OptimisticLockingException,
-            InvalidXmlException;
+    String close(String id, String taskParam, SecurityContext securityContext) throws AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException,
+        InvalidStatusException, SystemException, OptimisticLockingException, InvalidXmlException;
 
-    String close(String id, String taskParam, String authHandle, Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            OrganizationalUnitNotFoundException,
-            InvalidStatusException,
-            SystemException,
-            OptimisticLockingException,
-            InvalidXmlException;
+    String close(String id, String taskParam, String authHandle, Boolean restAccess) throws AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException,
+        InvalidStatusException, SystemException, OptimisticLockingException, InvalidXmlException;
 
-    String open(String id, String taskParam, SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            OrganizationalUnitNotFoundException,
-            InvalidStatusException,
-            SystemException,
-            OptimisticLockingException,
-            InvalidXmlException;
+    String open(String id, String taskParam, SecurityContext securityContext) throws AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException,
+        InvalidStatusException, SystemException, OptimisticLockingException, InvalidXmlException;
 
-    String open(String id, String taskParam, String authHandle, Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            OrganizationalUnitNotFoundException,
-            InvalidStatusException,
-            SystemException,
-            OptimisticLockingException,
-            InvalidXmlException;
+    String open(String id, String taskParam, String authHandle, Boolean restAccess) throws AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException,
+        InvalidStatusException, SystemException, OptimisticLockingException, InvalidXmlException;
 
 }

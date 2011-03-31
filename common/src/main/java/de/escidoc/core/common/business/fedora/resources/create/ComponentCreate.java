@@ -45,16 +45,12 @@ import java.util.concurrent.Callable;
 
 /**
  * Component for create method.
- * 
- * Attention! This is only a helper class for the transition to integrate this
- * functionality into the Component class.
- * 
- * 
+ * <p/>
+ * Attention! This is only a helper class for the transition to integrate this functionality into the Component class.
+ *
  * @author Steffen Wagner
- * 
  */
-public class ComponentCreate extends GenericResourceCreate
-    implements Callable<String> {
+public class ComponentCreate extends GenericResourceCreate implements Callable<String> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ComponentCreate.class);
 
@@ -70,10 +66,8 @@ public class ComponentCreate extends GenericResourceCreate
 
     /**
      * Set ItemProperties.
-     * 
-     * @param properties
-     *            The properties of Item.
-     * @throws WebserverSystemException
+     *
+     * @param properties The properties of Item.
      */
     public void setProperties(final ComponentProperties properties) {
 
@@ -82,9 +76,8 @@ public class ComponentCreate extends GenericResourceCreate
 
     /**
      * Add a metadata record to the Component.
-     * 
-     * @param mdRecord
-     *            New metadata record.
+     *
+     * @param mdRecord New metadata record.
      */
     public void addMdRecord(final MdRecordCreate mdRecord) {
 
@@ -97,9 +90,8 @@ public class ComponentCreate extends GenericResourceCreate
 
     /**
      * Get MetadataRecord by name.
-     * 
-     * @param name
-     *            Name of MetadataRecord.
+     *
+     * @param name Name of MetadataRecord.
      * @return MetadataRecord with required name or null.
      */
     public MdRecordCreate getMetadataRecord(final String name) {
@@ -116,9 +108,8 @@ public class ComponentCreate extends GenericResourceCreate
 
     /**
      * Add content to Component.
-     * 
-     * @param content
-     *            New content of Component
+     *
+     * @param content New content of Component
      */
     public void setContent(final BinaryContent content) {
 
@@ -127,7 +118,7 @@ public class ComponentCreate extends GenericResourceCreate
 
     /**
      * Get content of Component.
-     * 
+     *
      * @return Content of Component
      */
     public BinaryContent getContent() {
@@ -137,9 +128,8 @@ public class ComponentCreate extends GenericResourceCreate
 
     /**
      * Injects the {@link EscidocIdProvider}.
-     * 
-     * @param idProvider
-     *            The {@link EscidocIdProvider} to set.
+     *
+     * @param idProvider The {@link EscidocIdProvider} to set.
      */
     public void setIdProvider(final EscidocIdProvider idProvider) {
 
@@ -148,12 +138,10 @@ public class ComponentCreate extends GenericResourceCreate
 
     /**
      * Persist Component to Repository.
-     * 
+     *
      * @return FoXML
-     * @throws SystemException
-     *             Thrown if getting new objid from ID-Provider failed.
-     * @throws IOException
-     *             Thrown if preparing of properties, meta data record failed.
+     * @throws SystemException Thrown if getting new objid from ID-Provider failed.
+     * @throws IOException     Thrown if preparing of properties, meta data record failed.
      */
     public String getFOXML() throws SystemException, IOException {
 
@@ -167,37 +155,29 @@ public class ComponentCreate extends GenericResourceCreate
         valueMap.put(XmlTemplateProvider.DC, getDC());
         valueMap.putAll(preparePropertiesValueMap());
         valueMap.putAll(getRelsExtNamespaceValues());
-        valueMap.put(XmlTemplateProvider.MD_RECORDS,
-            getMetadataRecordsMap(this.mdRecords));
+        valueMap.put(XmlTemplateProvider.MD_RECORDS, getMetadataRecordsMap(this.mdRecords));
 
         valueMap.putAll(getContentValues());
         // control template
         valueMap.put(XmlTemplateProvider.IN_CREATE, XmlTemplateProvider.TRUE);
-        valueMap.put(XmlTemplateProvider.DS_VERSIONABLE,
-            XmlTemplateProvider.TRUE);
+        valueMap.put(XmlTemplateProvider.DS_VERSIONABLE, XmlTemplateProvider.TRUE);
 
         return ItemFoXmlProvider.getInstance().getComponentFoXml(valueMap);
     }
 
     /**
      * Get DC (mapped from default metadata). Value is cached.
-     * 
+     * <p/>
      * Precondition: The objid has to be set before getDC() is called.
-     * 
+     *
      * @return DC or null if default metadata is missing).
-     * 
-     * @throws WebserverSystemException
-     *             Thrown if an error occurs during DC creation.
-     * @throws EncodingSystemException
-     *             Thrown if the conversion to default encoding failed.
+     * @throws WebserverSystemException Thrown if an error occurs during DC creation.
+     * @throws EncodingSystemException  Thrown if the conversion to default encoding failed.
      */
-    public String getDC() throws WebserverSystemException,
-        EncodingSystemException {
+    public String getDC() throws WebserverSystemException, EncodingSystemException {
 
         if (this.dcXml == null) {
-            final MdRecordCreate mdRecord =
-                getMetadataRecord(
-                    XmlTemplateProvider.DEFAULT_METADATA_FOR_DC_MAPPING);
+            final MdRecordCreate mdRecord = getMetadataRecord(XmlTemplateProvider.DEFAULT_METADATA_FOR_DC_MAPPING);
 
             if (mdRecord != null) {
                 try {
@@ -217,34 +197,25 @@ public class ComponentCreate extends GenericResourceCreate
 
     /**
      * Persist Component to Repository.
-     * 
-     * @param forceSync
-     *            Set true to force a TripleStore sync.
+     *
+     * @param forceSync Set true to force a TripleStore sync.
      * @return Fedora objid.
-     * 
-     * @throws InvalidContentException
-     *             Thrown if validation of Component structure failed.
-     * @throws SystemException
-     *             Thrown if getting new objid from ID-Provider or Fedora
-     *             synchronization failed.
-     * @throws IOException
-     *             Thrown if preparing of properties, meta data record failed.
+     * @throws InvalidContentException Thrown if validation of Component structure failed.
+     * @throws SystemException         Thrown if getting new objid from ID-Provider or Fedora synchronization failed.
+     * @throws IOException             Thrown if preparing of properties, meta data record failed.
      */
-    public String persist(final boolean forceSync) throws SystemException,
-        InvalidContentException, IOException {
+    public String persist(final boolean forceSync) throws SystemException, InvalidContentException, IOException {
 
         validate();
         final String foxml = getFOXML();
-        return FedoraUtility
-            .getInstance().storeObjectInFedora(foxml, forceSync);
+        return FedoraUtility.getInstance().storeObjectInFedora(foxml, forceSync);
     }
 
     /**
      * Thread persist. TODO Change construct later!
-     * 
+     *
      * @return objid of Component
-     * @throws Exception
-     *             Thrown if a Thread failed.
+     * @throws Exception Thrown if a Thread failed.
      */
     @Override
     public String call() throws Exception {
@@ -263,58 +234,45 @@ public class ComponentCreate extends GenericResourceCreate
 
     /**
      * Prepare values for FOXML Template Renderer (Velocity).
-     * 
+     *
      * @return HashMap with template values.
-     * @throws WebserverSystemException
-     *             In case of an internal error.
+     * @throws WebserverSystemException In case of an internal error.
      */
-    private Map<String, String> preparePropertiesValueMap()
-        throws WebserverSystemException {
+    private Map<String, String> preparePropertiesValueMap() throws WebserverSystemException {
 
         final Map<String, String> valueMap = new HashMap<String, String>();
 
         valueMap.put(XmlTemplateProvider.OBJID, getObjid());
 
         // add RELS-EXT values -------------------------------------------------
-        valueMap.put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER,
-            getBuildNumber());
+        valueMap.put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER, getBuildNumber());
 
         // add RELS-EXT object properties
-        valueMap.put(XmlTemplateProvider.CREATED_BY_ID, this.properties
-            .getCreatedById());
-        valueMap.put(XmlTemplateProvider.CREATED_BY_TITLE, this.properties
-            .getCreatedByName());
+        valueMap.put(XmlTemplateProvider.CREATED_BY_ID, this.properties.getCreatedById());
+        valueMap.put(XmlTemplateProvider.CREATED_BY_TITLE, this.properties.getCreatedByName());
 
-        valueMap.put(XmlTemplateProvider.VALID_STATUS, this.properties
-            .getValidStatus());
+        valueMap.put(XmlTemplateProvider.VALID_STATUS, this.properties.getValidStatus());
 
-        valueMap.put(XmlTemplateProvider.MIME_TYPE, this.properties
-            .getMimeType());
+        valueMap.put(XmlTemplateProvider.MIME_TYPE, this.properties.getMimeType());
 
-        valueMap.put(XmlTemplateProvider.VISIBILITY, this.properties
-            .getVisibility());
+        valueMap.put(XmlTemplateProvider.VISIBILITY, this.properties.getVisibility());
 
-        valueMap.put(XmlTemplateProvider.CONTENT_CATEGORY, this.properties
-            .getContentCatagory());
+        valueMap.put(XmlTemplateProvider.CONTENT_CATEGORY, this.properties.getContentCatagory());
 
         if (this.content.getDataLocation() == null) {
             if (this.content.getDataLocation() != null) {
-                valueMap.put(XmlTemplateProvider.REF, this.content
-                    .getDataLocation().toString());
+                valueMap.put(XmlTemplateProvider.REF, this.content.getDataLocation().toString());
                 valueMap.put(XmlTemplateProvider.REF_TYPE, "URL");
             }
             else {
-                this.content.setDataLocation(uploadBase64EncodedContent(
-                    getContent().getContent(), "content " + getObjid(),
-                    this.properties.getMimeType()));
-                valueMap.put(XmlTemplateProvider.REF, this.content
-                    .getDataLocation().toString());
+                this.content.setDataLocation(uploadBase64EncodedContent(getContent().getContent(), "content "
+                    + getObjid(), this.properties.getMimeType()));
+                valueMap.put(XmlTemplateProvider.REF, this.content.getDataLocation().toString());
                 valueMap.put(XmlTemplateProvider.REF_TYPE, "URL");
             }
 
         }
-        valueMap.put(XmlTemplateProvider.CONTROL_GROUP, this.content
-            .getStorageType().getAbbreviation());
+        valueMap.put(XmlTemplateProvider.CONTROL_GROUP, this.content.getStorageType().getAbbreviation());
 
         return valueMap;
 
@@ -327,44 +285,28 @@ public class ComponentCreate extends GenericResourceCreate
 
         final Map<String, String> values = new HashMap<String, String>();
 
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX,
-            Constants.PROPERTIES_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS,
-            Constants.PROPERTIES_NS_URI);
+        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX, Constants.PROPERTIES_NS_PREFIX);
+        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS, Constants.PROPERTIES_NS_URI);
 
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_VERSION_NS_PREFIX,
-            Constants.VERSION_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_VERSION_NS,
-            Constants.VERSION_NS_URI);
+        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_VERSION_NS_PREFIX, Constants.VERSION_NS_PREFIX);
+        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_VERSION_NS, Constants.VERSION_NS_URI);
 
-        values.put(XmlTemplateProvider.ESCIDOC_RELEASE_NS_PREFIX,
-            Constants.RELEASE_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_RELEASE_NS,
-            Constants.RELEASE_NS_URI);
+        values.put(XmlTemplateProvider.ESCIDOC_RELEASE_NS_PREFIX, Constants.RELEASE_NS_PREFIX);
+        values.put(XmlTemplateProvider.ESCIDOC_RELEASE_NS, Constants.RELEASE_NS_URI);
 
-        values
-            .put(
-                XmlTemplateProvider.ESCIDOC_RESOURCE_NS_PREFIX,
-                Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_RESOURCE_NS,
-            Constants.RESOURCES_NS_URI);
+        values.put(XmlTemplateProvider.ESCIDOC_RESOURCE_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
+        values.put(XmlTemplateProvider.ESCIDOC_RESOURCE_NS, Constants.RESOURCES_NS_URI);
 
-        values
-            .put(
-                XmlTemplateProvider.ESCIDOC_RELATION_NS,
-                Constants.STRUCTURAL_RELATIONS_NS_URI);
+        values.put(XmlTemplateProvider.ESCIDOC_RELATION_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
 
-        values
-            .put(
-                XmlTemplateProvider.ESCIDOC_RELATION_NS_PREFIX,
-                Constants.CONTENT_RELATIONS_NS_PREFIX_IN_RELSEXT);
+        values.put(XmlTemplateProvider.ESCIDOC_RELATION_NS_PREFIX, Constants.CONTENT_RELATIONS_NS_PREFIX_IN_RELSEXT);
 
         return values;
     }
 
     /**
      * Get values for Content.
-     * 
+     *
      * @return HashMap of content values
      */
     private Map<String, String> getContentValues() {
@@ -372,24 +314,18 @@ public class ComponentCreate extends GenericResourceCreate
         final Map<String, String> values = new HashMap<String, String>();
 
         try {
-            values
-                .put(
-                    XmlTemplateProvider.CONTENT_CHECKSUM_ALGORITHM,
-                    EscidocConfiguration
-                        .getInstance()
-                        .get(
-                            EscidocConfiguration.ESCIDOC_CORE_OM_CONTENT_CHECKSUM_ALGORITHM,
-                            "DISABLED"));
-        } catch (final IOException e) {
-            if(LOGGER.isWarnEnabled()) {
+            values.put(XmlTemplateProvider.CONTENT_CHECKSUM_ALGORITHM, EscidocConfiguration.getInstance().get(
+                EscidocConfiguration.ESCIDOC_CORE_OM_CONTENT_CHECKSUM_ALGORITHM, "DISABLED"));
+        }
+        catch (final IOException e) {
+            if (LOGGER.isWarnEnabled()) {
                 LOGGER.warn("No configuration can be found.");
             }
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("No configuration can be found.", e);
             }
         }
-        values.put(XmlTemplateProvider.REF, this.content
-            .getDataLocation().toString());
+        values.put(XmlTemplateProvider.REF, this.content.getDataLocation().toString());
         values.put(XmlTemplateProvider.REF_TYPE, "URL");
 
         return values;
@@ -397,30 +333,22 @@ public class ComponentCreate extends GenericResourceCreate
 
     /**
      * Upload the content (a base64 encoded byte stream) to the staging area.
-     * 
-     * @param contentAsString
-     *            Base64 encoded byte stream.
-     * @param fileName
-     *            The file name.
-     * @param mimeType
-     *            The mime type of the content.
-     * @return The url to the staging area where the resulting file is
-     *         accessible.
-     * @throws WebserverSystemException
-     *             In case of an internal error during decoding or storing the
-     *             content.
+     *
+     * @param contentAsString Base64 encoded byte stream.
+     * @param fileName        The file name.
+     * @param mimeType        The mime type of the content.
+     * @return The url to the staging area where the resulting file is accessible.
+     * @throws WebserverSystemException In case of an internal error during decoding or storing the content.
      */
-    private static String uploadBase64EncodedContent(final String contentAsString, final String fileName,
-                                                     final String mimeType) throws WebserverSystemException {
+    private static String uploadBase64EncodedContent(
+        final String contentAsString, final String fileName, final String mimeType) throws WebserverSystemException {
         final String uploadUrl;
         try {
             final byte[] streamContent = Base64.decodeBase64(contentAsString.getBytes());
-            uploadUrl =
-                Utility.getInstance().upload(streamContent, fileName, mimeType);
+            uploadUrl = Utility.getInstance().upload(streamContent, fileName, mimeType);
         }
         catch (final FileSystemException e) {
-            throw new WebserverSystemException(
-                "Error while uploading of content to the staging area. ", e);
+            throw new WebserverSystemException("Error while uploading of content to the staging area. ", e);
         }
 
         return uploadUrl;
@@ -428,9 +356,8 @@ public class ComponentCreate extends GenericResourceCreate
 
     /**
      * Validates Component of logical structure.
-     * 
-     * @throws InvalidContentException
-     *             Thrown if content not fits to storage type.
+     *
+     * @throws InvalidContentException Thrown if content not fits to storage type.
      */
     private void validate() throws InvalidContentException {
 
@@ -441,12 +368,9 @@ public class ComponentCreate extends GenericResourceCreate
         }
 
         // check if storage attributes fits to content
-        if ((this.content.getStorageType() == StorageType.EXTERNAL_URL
-            || this.content.getStorageType() == StorageType.EXTERNAL_MANAGED)
-            && this.content.getDataLocation() == null
-                && this.content.getContent() != null) {
-            throw new InvalidContentException(
-                "Attribute 'storage' fits not to inline content.");
+        if ((this.content.getStorageType() == StorageType.EXTERNAL_URL || this.content.getStorageType() == StorageType.EXTERNAL_MANAGED)
+            && this.content.getDataLocation() == null && this.content.getContent() != null) {
+            throw new InvalidContentException("Attribute 'storage' fits not to inline content.");
         }
     }
 

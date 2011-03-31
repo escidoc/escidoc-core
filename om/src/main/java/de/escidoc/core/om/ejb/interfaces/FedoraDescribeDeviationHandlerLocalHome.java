@@ -9,9 +9,9 @@ import javax.ejb.EJBLocalHome;
 public interface FedoraDescribeDeviationHandlerLocalHome extends EJBLocalHome {
 
     String COMP_NAME = "java:comp/env/ejb/FedoraDescribeDeviationHandlerLocal";
+
     String JNDI_NAME = "ejb/FedoraDescribeDeviationHandlerLocal";
 
-    FedoraDescribeDeviationHandlerLocal create()
-            throws CreateException;
+    FedoraDescribeDeviationHandlerLocal create() throws CreateException;
 
 }

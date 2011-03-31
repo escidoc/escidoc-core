@@ -42,9 +42,8 @@ import java.net.URL;
 
 /**
  * Test the mock implementation of the Container resource.
- * 
+ *
  * @author Michael Schneider
- * 
  */
 @RunWith(value = Parameterized.class)
 public class ContainerReleaseForOaiTest extends ContainerTestBase {
@@ -58,8 +57,7 @@ public class ContainerReleaseForOaiTest extends ContainerTestBase {
     private String theSubcontainerId;
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ContainerReleaseForOaiTest(final int transport) {
         super(transport);
@@ -67,7 +65,7 @@ public class ContainerReleaseForOaiTest extends ContainerTestBase {
 
     /**
      * Successfully release of 20 containers with sub-container (member).
-     * 
+     * <p/>
      * TODO check the member release procedure
      */
     @Test
@@ -88,21 +86,15 @@ public class ContainerReleaseForOaiTest extends ContainerTestBase {
             assertTimestampIsEqualOrAfter("Wrong last modification date", itemLmd, lmd1);
 
             // prepare a Container child to release
-            String xmlData =
-                getContainerTemplate("create_container_WithoutMembers_v1.1.xml");
-            xmlData =
-                xmlData.replaceAll("<prop:pid>hdl:123/container456</prop:pid>",
-                    "");
+            String xmlData = getContainerTemplate("create_container_WithoutMembers_v1.1.xml");
+            xmlData = xmlData.replaceAll("<prop:pid>hdl:123/container456</prop:pid>", "");
 
             xmlData = createContainer(this.theContainerId, xmlData);
             subContainerId = getObjidValue(xmlData);
-            String lmdSubCont =
-                getLastModificationDateValue(getDocument(xmlData));
+            String lmdSubCont = getLastModificationDateValue(getDocument(xmlData));
 
             lmdSubCont = prepareContainerPid(subContainerId, lmdSubCont);
-            String param =
-                getTheLastModificationParam(false, this.theContainerId, "",
-                    lmdSubCont);
+            String param = getTheLastModificationParam(false, this.theContainerId, "", lmdSubCont);
             submit(subContainerId, param);
 
             // prepare the Container it self to release
@@ -112,28 +104,21 @@ public class ContainerReleaseForOaiTest extends ContainerTestBase {
             lmd = getLastModificationDateValue(getDocument(resultXml));
 
             // release the Container
-            String containerLmd =
-                getTheLastModificationDate(this.theContainerId);
-            containerLmd =
-                prepareContainerPid(this.theContainerId, containerLmd);
-            param =
-                getTheLastModificationParam(false, this.theContainerId, "",
-                    containerLmd);
+            String containerLmd = getTheLastModificationDate(this.theContainerId);
+            containerLmd = prepareContainerPid(this.theContainerId, containerLmd);
+            param = getTheLastModificationParam(false, this.theContainerId, "", containerLmd);
             resultXml = release(theContainerId, param);
             assertXmlValidResult(resultXml);
             lmd = getLastModificationDateValue(getDocument(resultXml));
-            assertTimestampIsEqualOrAfter("Wrong last modification date", lmd,
-                containerLmd);
+            assertTimestampIsEqualOrAfter("Wrong last modification date", lmd, containerLmd);
 
             // check the Container and children
             String containerXml = retrieve(theContainerId);
-            assertXmlEquals("Container Status not as expected",
-                EscidocRestSoapTestBase.getDocument(containerXml),
+            assertXmlEquals("Container Status not as expected", EscidocRestSoapTestBase.getDocument(containerXml),
                 "/container/properties/public-status", "released");
 
             String subContainerXml = retrieve(subContainerId);
-            assertXmlEquals("Container Status not as expected",
-                EscidocRestSoapTestBase.getDocument(subContainerXml),
+            assertXmlEquals("Container Status not as expected", EscidocRestSoapTestBase.getDocument(subContainerXml),
                 "/container/properties/public-status", "released");
             if (i > 0) {
                 tearDown();
@@ -142,30 +127,24 @@ public class ContainerReleaseForOaiTest extends ContainerTestBase {
 
     }
 
-    
     /**
      * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Before
     public void setUp() throws Exception {
-        this.theItemId =
-            createItemFromTemplate("escidoc_item_198_for_create.xml");
+        this.theItemId = createItemFromTemplate("escidoc_item_198_for_create.xml");
 
-        String xmlData =
-            getContainerTemplate("create_container_WithoutMembers_v1.1.xml");
+        String xmlData = getContainerTemplate("create_container_WithoutMembers_v1.1.xml");
         theContainerXml = create(xmlData);
 
         this.theSubcontainerId = getObjidValue(theContainerXml);
 
-        String xmlData1 =
-            getContainerTemplate("create_container_v1.1-forItemAndforContainer.xml");
+        String xmlData1 = getContainerTemplate("create_container_v1.1-forItemAndforContainer.xml");
 
         String xmlWithItem = xmlData1.replaceAll("##ITEMID##", theItemId);
-        String xmlWithItemAndContainer =
-            xmlWithItem.replaceAll("##CONTAINERID##", theSubcontainerId);
+        String xmlWithItemAndContainer = xmlWithItem.replaceAll("##CONTAINERID##", theSubcontainerId);
         theContainerXml = create(xmlWithItemAndContainer);
 
         this.theContainerId = getObjidValue(theContainerXml);
@@ -174,9 +153,8 @@ public class ContainerReleaseForOaiTest extends ContainerTestBase {
 
     /**
      * Clean up after test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Override
     @After
@@ -192,39 +170,30 @@ public class ContainerReleaseForOaiTest extends ContainerTestBase {
     }
 
     /**
-     * Submit the Item. the Item is retrieved before call submit method to
-     * determine the last-modification-date.
-     * 
-     * @param itemId
-     *            The id of the item.
+     * Submit the Item. the Item is retrieved before call submit method to determine the last-modification-date.
+     *
+     * @param itemId The id of the item.
      * @return The return value of the submit method.
-     * 
-     * @throws Exception
-     *             Thrown if submitting failed.
+     * @throws Exception Thrown if submitting failed.
      */
     private String submitItemHelp(final String itemId) throws Exception {
 
         String lmd =
-            getLastModificationDateValue(EscidocRestSoapTestBase
-                .getDocument(handleXmlResult(getItemClient().retrieve(itemId))));
+            getLastModificationDateValue(EscidocRestSoapTestBase.getDocument(handleXmlResult(getItemClient().retrieve(
+                itemId))));
 
         return submitItemHelp(itemId, lmd);
     }
 
     /**
      * Submit the Item.
-     * 
-     * @param itemId
-     *            The id of the item.
-     * @param lmd
-     *            The last-modification-date of the Item.
+     *
+     * @param itemId The id of the item.
+     * @param lmd    The last-modification-date of the Item.
      * @return The return value of the submit method.
-     * 
-     * @throws Exception
-     *             Thrown if submitting failed.
+     * @throws Exception Thrown if submitting failed.
      */
-    private String submitItemHelp(final String itemId, final String lmd)
-        throws Exception {
+    private String submitItemHelp(final String itemId, final String lmd) throws Exception {
 
         String param = getTaskParam(lmd);
 
@@ -238,22 +207,16 @@ public class ContainerReleaseForOaiTest extends ContainerTestBase {
     }
 
     /**
-     * Prepare the PIDs of Container. Depending on configuration must have a
-     * Container an object and a version Pid before you can release it.
-     * 
-     * @param containerId
-     *            The id of the Container.
-     * @param lmd
-     *            The last modification date of the Container.
-     * @return The new last modification date of the Container. The return last
-     *         modification date equals the param last modification date if the
-     *         Container resource was not altered.
-     * 
-     * @throws Exception
-     *             Thrown if pid assignment failed.
+     * Prepare the PIDs of Container. Depending on configuration must have a Container an object and a version Pid
+     * before you can release it.
+     *
+     * @param containerId The id of the Container.
+     * @param lmd         The last modification date of the Container.
+     * @return The new last modification date of the Container. The return last modification date equals the param last
+     *         modification date if the Container resource was not altered.
+     * @throws Exception Thrown if pid assignment failed.
      */
-    private String prepareContainerPid(
-        final String containerId, final String lmd) throws Exception {
+    private String prepareContainerPid(final String containerId, final String lmd) throws Exception {
 
         String newLmd = lmd;
         String objectPidXml = null;
@@ -261,30 +224,18 @@ public class ContainerReleaseForOaiTest extends ContainerTestBase {
 
         String pidParam;
         // assign pid to member (Container)
-        if (getContainerClient().getPidConfig(
-            "cmm.Container.objectPid.setPidBeforeRelease", "true")
-            && !getContainerClient().getPidConfig(
-                "cmm.Container.objectPid.releaseWithoutPid", "false")) {
-            pidParam =
-                getPidParam2(new DateTime(newLmd, DateTimeZone.UTC), new URL(
-                    "http://somewhere" + containerId));
-            objectPidXml =
-                handleXmlResult(getContainerClient().assignObjectPid(
-                    containerId, pidParam));
+        if (getContainerClient().getPidConfig("cmm.Container.objectPid.setPidBeforeRelease", "true")
+            && !getContainerClient().getPidConfig("cmm.Container.objectPid.releaseWithoutPid", "false")) {
+            pidParam = getPidParam2(new DateTime(newLmd, DateTimeZone.UTC), new URL("http://somewhere" + containerId));
+            objectPidXml = handleXmlResult(getContainerClient().assignObjectPid(containerId, pidParam));
             assertXmlValidResult(objectPidXml);
             newLmd = getLastModificationDateValue(getDocument(objectPidXml));
         }
-        if (getContainerClient().getPidConfig(
-            "cmm.Container.versionPid.setPidBeforeRelease", "true")
-            && !getContainerClient().getPidConfig(
-                "cmm.Container.versionPid.releaseWithoutPid", "false")) {
+        if (getContainerClient().getPidConfig("cmm.Container.versionPid.setPidBeforeRelease", "true")
+            && !getContainerClient().getPidConfig("cmm.Container.versionPid.releaseWithoutPid", "false")) {
 
-            pidParam =
-                getPidParam2(new DateTime(newLmd, DateTimeZone.UTC), new URL(
-                    "http://somewhere" + containerId));
-            versionPidXml =
-                handleXmlResult(getContainerClient().assignVersionPid(
-                    containerId, pidParam));
+            pidParam = getPidParam2(new DateTime(newLmd, DateTimeZone.UTC), new URL("http://somewhere" + containerId));
+            versionPidXml = handleXmlResult(getContainerClient().assignVersionPid(containerId, pidParam));
             assertXmlValidResult(versionPidXml);
             newLmd = getLastModificationDateValue(getDocument(versionPidXml));
         }
@@ -293,22 +244,16 @@ public class ContainerReleaseForOaiTest extends ContainerTestBase {
     }
 
     /**
-     * Prepare the release of Item. Depending on configuration must have a Item
-     * an object and a version Pid before you can release it.
-     * 
-     * @param itemId
-     *            The id of the Item.
-     * @param lmd
-     *            The lastmodification date of the Item.
-     * @return The new last modification date of the Item. The return last
-     *         modification date equals the param last modification date if the
-     *         Item resource was not altered.
-     * 
-     * @throws Exception
-     *             Thrown if pid assignment failed.
+     * Prepare the release of Item. Depending on configuration must have a Item an object and a version Pid before you
+     * can release it.
+     *
+     * @param itemId The id of the Item.
+     * @param lmd    The lastmodification date of the Item.
+     * @return The new last modification date of the Item. The return last modification date equals the param last
+     *         modification date if the Item resource was not altered.
+     * @throws Exception Thrown if pid assignment failed.
      */
-    private String prepareItemPid(final String itemId, final String lmd)
-        throws Exception {
+    private String prepareItemPid(final String itemId, final String lmd) throws Exception {
 
         String newLmd = lmd;
         String objectPidXml = null;
@@ -316,32 +261,20 @@ public class ContainerReleaseForOaiTest extends ContainerTestBase {
 
         String pidParam;
         // assign pid to member (item)
-        if (getItemClient().getPidConfig(
-            "cmm.Item.objectPid.setPidBeforeRelease", "true")
-            && !getItemClient().getPidConfig(
-                "cmm.Item.objectPid.releaseWithoutPid", "false")) {
-            pidParam =
-                getPidParam2(new DateTime(newLmd, DateTimeZone.UTC), new URL(
-                    "http://somewhere" + itemId));
+        if (getItemClient().getPidConfig("cmm.Item.objectPid.setPidBeforeRelease", "true")
+            && !getItemClient().getPidConfig("cmm.Item.objectPid.releaseWithoutPid", "false")) {
+            pidParam = getPidParam2(new DateTime(newLmd, DateTimeZone.UTC), new URL("http://somewhere" + itemId));
 
-            objectPidXml =
-                handleXmlResult(getItemClient().assignObjectPid(itemId,
-                    pidParam));
+            objectPidXml = handleXmlResult(getItemClient().assignObjectPid(itemId, pidParam));
             assertXmlValidResult(objectPidXml);
             newLmd = getLastModificationDateValue(getDocument(objectPidXml));
         }
-        if (getItemClient().getPidConfig(
-            "cmm.Item.versionPid.setPidBeforeRelease", "true")
-            && !getItemClient().getPidConfig(
-                "cmm.Item.versionPid.releaseWithoutPid", "false")) {
+        if (getItemClient().getPidConfig("cmm.Item.versionPid.setPidBeforeRelease", "true")
+            && !getItemClient().getPidConfig("cmm.Item.versionPid.releaseWithoutPid", "false")) {
 
-            pidParam =
-                getPidParam2(new DateTime(newLmd, DateTimeZone.UTC), new URL(
-                    "http://somewhere" + itemId));
+            pidParam = getPidParam2(new DateTime(newLmd, DateTimeZone.UTC), new URL("http://somewhere" + itemId));
 
-            versionPidXml =
-                handleXmlResult(getItemClient().assignVersionPid(itemId,
-                    pidParam));
+            versionPidXml = handleXmlResult(getItemClient().assignVersionPid(itemId, pidParam));
             assertXmlValidResult(versionPidXml);
             newLmd = getLastModificationDateValue(getDocument(versionPidXml));
         }

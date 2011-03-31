@@ -35,94 +35,69 @@ import java.util.List;
 
 /**
  * Interface of the data access layer.
- * 
+ *
  * @author Torsten Tetteroo
- * 
  */
 public interface StagingFileDao {
 
     /**
      * Finds the staging file identified by the given token.
-     * 
-     * @param token
-     *            The token identifying the staging file.
-     * @return Returns the staging file object identified by the token or
-     *         <code>null</code>.
      *
-     * @throws SqlDatabaseSystemException
-     *             TODO
+     * @param token The token identifying the staging file.
+     * @return Returns the staging file object identified by the token or <code>null</code>.
+     * @throws SqlDatabaseSystemException TODO
      */
-    StagingFile findStagingFile(final String token)
-        throws SqlDatabaseSystemException;
+    StagingFile findStagingFile(final String token) throws SqlDatabaseSystemException;
 
     /**
      * Find the staging files with expired token.
-     * 
-     * @return <code>List</code> containing all staging files that have an
-     *         expired token, i.e. for which the expiry timestamp is less than
-     *         the current timestamp.
-     * @throws SqlDatabaseSystemException
-     *             TODO
+     *
+     * @return <code>List</code> containing all staging files that have an expired token, i.e. for which the expiry
+     *         timestamp is less than the current timestamp.
+     * @throws SqlDatabaseSystemException TODO
      */
-    List<StagingFile> findExpiredStagingFiles()
-        throws SqlDatabaseSystemException;
+    List<StagingFile> findExpiredStagingFiles() throws SqlDatabaseSystemException;
 
     /**
-     * Save the given staging file to database.<br>
-     * While saving the object, the unique token identifying the staging file
-     * object is generated.
-     * 
-     * @param stagingFile
-     *            The staging file to save.
-     * @throws SqlDatabaseSystemException
-     *             TODO
+     * Save the given staging file to database.<br> While saving the object, the unique token identifying the staging
+     * file object is generated.
+     *
+     * @param stagingFile The staging file to save.
+     * @throws SqlDatabaseSystemException TODO
      */
     void save(final StagingFile stagingFile) throws SqlDatabaseSystemException;
 
     /**
      * Update the given staging file to database.
-     * 
-     * @param stagingFile
-     *            The staging file to update.
-     * @throws SqlDatabaseSystemException
-     *             TODO
+     *
+     * @param stagingFile The staging file to update.
+     * @throws SqlDatabaseSystemException TODO
      */
-    void update(final StagingFile stagingFile)
-        throws SqlDatabaseSystemException;
+    void update(final StagingFile stagingFile) throws SqlDatabaseSystemException;
 
     /**
-     * Save or update the given staging file to database.<br>
-     * While saving the object, the unique token identifying the staging file
-     * object is generated.
-     * 
-     * @param stagingFile
-     *            The staging file to save/update.
-     * @throws SqlDatabaseSystemException
-     *             TODO
+     * Save or update the given staging file to database.<br> While saving the object, the unique token identifying the
+     * staging file object is generated.
+     *
+     * @param stagingFile The staging file to save/update.
+     * @throws SqlDatabaseSystemException TODO
      */
-    void saveOrUpdate(final StagingFile stagingFile)
-        throws SqlDatabaseSystemException;
+    void saveOrUpdate(final StagingFile stagingFile) throws SqlDatabaseSystemException;
 
     /**
      * Delete the given staging file from database.
-     * 
-     * @param stagingFile
-     *            The staging file to delete.
-     * @throws SqlDatabaseSystemException
-     *             TODO
+     *
+     * @param stagingFile The staging file to delete.
+     * @throws SqlDatabaseSystemException TODO
      */
-    void delete(final StagingFile stagingFile)
-        throws SqlDatabaseSystemException;
+    void delete(final StagingFile stagingFile) throws SqlDatabaseSystemException;
 
     /**
      * Delete the given staging files from database.
-     * 
-     * @param stagingFiles
-     *            The staging files to delete.
-     * @throws SqlDatabaseSystemException
-     *             TODO
+     *
+     * @param stagingFiles The staging files to delete.
+     * @throws SqlDatabaseSystemException TODO
      */
-    void delete(final StagingFile[] stagingFiles)
-        throws SqlDatabaseSystemException;
+    void delete(final StagingFile[] stagingFiles) throws SqlDatabaseSystemException;
 
 }

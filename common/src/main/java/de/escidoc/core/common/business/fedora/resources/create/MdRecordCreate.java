@@ -37,13 +37,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * MetadataRecord for create. This his a helper construct until all values can
- * be handled within the standard MdRecord class.
- * 
+ * MetadataRecord for create. This his a helper construct until all values can be handled within the standard MdRecord
+ * class.
+ * <p/>
  * This class represent a metadata record.
- * 
+ *
  * @author Steffen Wagner
- * 
  */
 public class MdRecordCreate implements Serializable {
 
@@ -81,11 +80,9 @@ public class MdRecordCreate implements Serializable {
 
     /**
      * Set Name of Metadata Record.
-     * 
-     * @param name
-     *            Name of MdRecord.
-     * @throws InvalidContentException
-     *             Thrown if name is an empty String.
+     *
+     * @param name Name of MdRecord.
+     * @throws InvalidContentException Thrown if name is an empty String.
      */
     public void setName(final String name) throws InvalidContentException {
 
@@ -98,7 +95,7 @@ public class MdRecordCreate implements Serializable {
 
     /**
      * Get Name of Metadata Record.
-     * 
+     *
      * @return name of metadata record.
      */
     public String getName() {
@@ -107,12 +104,9 @@ public class MdRecordCreate implements Serializable {
     }
 
     /**
-     * Set type. Type is a String with unknown content and no influence of data
-     * structure of the infrastructure.
-     * 
-     * @param type
-     *            Type of Md Record (Type is defined by Solution and has no
-     *            influence of framework.)
+     * Set type. Type is a String with unknown content and no influence of data structure of the infrastructure.
+     *
+     * @param type Type of Md Record (Type is defined by Solution and has no influence of framework.)
      */
     public void setType(final String type) {
 
@@ -120,9 +114,8 @@ public class MdRecordCreate implements Serializable {
     }
 
     /**
-     * Get type. Type is a String with unknown content and no influence of data
-     * structure of the infrastructure.
-     * 
+     * Get type. Type is a String with unknown content and no influence of data structure of the infrastructure.
+     *
      * @return Type of MetaData.
      */
     public String getType() {
@@ -132,9 +125,8 @@ public class MdRecordCreate implements Serializable {
 
     /**
      * Set schema for metadata record.
-     * 
-     * @param schema
-     *            XML Schema URL
+     *
+     * @param schema XML Schema URL
      */
     public void setSchema(final String schema) {
 
@@ -143,7 +135,7 @@ public class MdRecordCreate implements Serializable {
 
     /**
      * Get schema of metadata record.
-     * 
+     *
      * @return XML Schema URL
      */
     public String getSchema() {
@@ -153,9 +145,8 @@ public class MdRecordCreate implements Serializable {
 
     /**
      * Set Content of MetadataRecord (the record itself).
-     * 
-     * @param content
-     *            The content itself.
+     *
+     * @param content The content itself.
      */
     public void setContent(final String content) {
 
@@ -164,22 +155,18 @@ public class MdRecordCreate implements Serializable {
 
     /**
      * Set Content of MetadataRecord (the record itself).
-     * 
-     * @param content
-     *            The content itself.
-     * @throws UnsupportedEncodingException
-     *             Thrown if content has unsupported character for default
-     *             entcoding
+     *
+     * @param content The content itself.
+     * @throws UnsupportedEncodingException Thrown if content has unsupported character for default entcoding
      */
-    public void setContent(final ByteArrayOutputStream content)
-        throws UnsupportedEncodingException {
+    public void setContent(final ByteArrayOutputStream content) throws UnsupportedEncodingException {
 
         this.content = content.toString(XmlUtility.CHARACTER_ENCODING);
     }
 
     /**
      * Get OutputStream of MdRecord.
-     * 
+     *
      * @return Content of MdRecord.
      */
     public String getContent() {
@@ -192,9 +179,8 @@ public class MdRecordCreate implements Serializable {
 
     /**
      * Set the namespace of Metadata Record.
-     * 
-     * @param nameSpace
-     *            Namespace of Md Record.
+     *
+     * @param nameSpace Namespace of Md Record.
      */
     public void setNameSpace(final String nameSpace) {
 
@@ -203,7 +189,7 @@ public class MdRecordCreate implements Serializable {
 
     /**
      * Get the namespace of Metadata Record.
-     * 
+     *
      * @return Namespace of Md Record.
      */
     public String getNameSpace() {
@@ -212,12 +198,10 @@ public class MdRecordCreate implements Serializable {
     }
 
     /**
-     * 
      * Persist Component to Repository.
-     * 
+     *
      * @return FoXML representation of metadata record.
-     * @throws SystemException
-     *             Thrown if rendering failed.
+     * @throws SystemException Thrown if rendering failed.
      */
     public String getFOXML() throws SystemException {
 
@@ -227,10 +211,9 @@ public class MdRecordCreate implements Serializable {
 
     /**
      * Get a HashMap with all values of MdRecord (for FoXML renderer).
-     * 
+     *
      * @return HashMap with all values of MdRecord
-     * @throws SystemException
-     *             Thrown if character encoding failed.
+     * @throws SystemException Thrown if character encoding failed.
      */
     public Map<String, String> getValueMap() throws SystemException {
 
@@ -238,8 +221,7 @@ public class MdRecordCreate implements Serializable {
 
         templateValues.put(XmlTemplateProvider.MD_RECORD_TYPE, this.type);
         templateValues.put(XmlTemplateProvider.MD_RECORD_SCHEMA, this.schema);
-        templateValues.put(XmlTemplateProvider.MD_RECORD_NAME,
-            this.mdRecordName);
+        templateValues.put(XmlTemplateProvider.MD_RECORD_NAME, this.mdRecordName);
 
         // add Metadata (as BLOB)
         templateValues.put(XmlTemplateProvider.MD_RECORD_CONTENT, getContent());
@@ -249,9 +231,8 @@ public class MdRecordCreate implements Serializable {
 
     /**
      * Set Fedora datastream label.
-     * 
-     * @param label
-     *            Fedora datastream label
+     *
+     * @param label Fedora datastream label
      */
     public void setLabel(final String label) {
         this.label = label;
@@ -259,7 +240,7 @@ public class MdRecordCreate implements Serializable {
 
     /**
      * Get Fedora datastream label.
-     * 
+     *
      * @return datastream label
      */
     public String getLabel() {
@@ -268,9 +249,8 @@ public class MdRecordCreate implements Serializable {
 
     /**
      * Set datastream checksum.
-     * 
-     * @param checksum
-     *            Fedora datastream checksum
+     *
+     * @param checksum Fedora datastream checksum
      */
     public void setChecksum(final String checksum) {
         this.checksum = checksum;
@@ -278,7 +258,7 @@ public class MdRecordCreate implements Serializable {
 
     /**
      * Get datastream checksum.
-     * 
+     *
      * @return datastream checksum
      */
     public String getChecksum() {
@@ -287,9 +267,8 @@ public class MdRecordCreate implements Serializable {
 
     /**
      * Enable datastream checksum for storage (Fedora).
-     * 
-     * @param checksumEnabled
-     *            Enable checksum
+     *
+     * @param checksumEnabled Enable checksum
      */
     public void setChecksumEnabled(final boolean checksumEnabled) {
         this.checksumEnabled = checksumEnabled;
@@ -297,7 +276,7 @@ public class MdRecordCreate implements Serializable {
 
     /**
      * Check if datastream checksum is enabled.
-     * 
+     *
      * @return true if checksum is enabled, false otherwise
      */
     public boolean isChecksumEnabled() {
@@ -306,9 +285,8 @@ public class MdRecordCreate implements Serializable {
 
     /**
      * Set mime type of meta data. Default is text/xml.
-     * 
-     * @param mimeType
-     *            mime type
+     *
+     * @param mimeType mime type
      */
     public void setMimeType(final String mimeType) {
         this.mimeType = mimeType;
@@ -316,7 +294,7 @@ public class MdRecordCreate implements Serializable {
 
     /**
      * Get meta data mime type.
-     * 
+     *
      * @return mime type of meta data
      */
     public String getMimeType() {
@@ -325,9 +303,8 @@ public class MdRecordCreate implements Serializable {
 
     /**
      * Set ControlGroup (Fedora storage).
-     * 
-     * @param controlGroup
-     *            Fedora ControlGroup
+     *
+     * @param controlGroup Fedora ControlGroup
      */
     public void setControlGroup(final String controlGroup) {
         this.controlGroup = controlGroup;
@@ -335,7 +312,7 @@ public class MdRecordCreate implements Serializable {
 
     /**
      * Get Fedora ControlGroup.
-     * 
+     *
      * @return ControlGroup
      */
     public String getControlGroup() {
@@ -344,9 +321,8 @@ public class MdRecordCreate implements Serializable {
 
     /**
      * Set location of datastream (Fedora).
-     * 
-     * @param datastreamLocation
-     *            location of datastream
+     *
+     * @param datastreamLocation location of datastream
      */
     public void setDatastreamLocation(final String datastreamLocation) {
         this.datastreamLocation = datastreamLocation;
@@ -354,7 +330,7 @@ public class MdRecordCreate implements Serializable {
 
     /**
      * Get location of datastream.
-     * 
+     *
      * @return location of datastream
      */
     public String getDatastreamLocation() {
@@ -363,15 +339,12 @@ public class MdRecordCreate implements Serializable {
 
     /**
      * Merge values from new MdRecord into current object.
-     * 
-     * @param mdrecord
-     *            MdRecord which has values to merge
+     *
+     * @param mdrecord MdRecord which has values to merge
      * @return number of changes
-     * @throws InvalidContentException
-     *             Thrown if values contain invalid content
+     * @throws InvalidContentException Thrown if values contain invalid content
      */
-    public int merge(final MdRecordCreate mdrecord)
-        throws InvalidContentException {
+    public int merge(final MdRecordCreate mdrecord) throws InvalidContentException {
 
         int changes = 0;
 
@@ -443,8 +416,7 @@ public class MdRecordCreate implements Serializable {
                 changes++;
             }
         }
-        else if (mdrecord.getLabel() != null
-            && !this.label.equals(mdrecord.getLabel())) {
+        else if (mdrecord.getLabel() != null && !this.label.equals(mdrecord.getLabel())) {
             this.label = mdrecord.getLabel();
             changes++;
         }
@@ -456,8 +428,7 @@ public class MdRecordCreate implements Serializable {
                 changes++;
             }
         }
-        else if (mdrecord.getChecksum() != null
-            && !this.checksum.equals(mdrecord.getChecksum())) {
+        else if (mdrecord.getChecksum() != null && !this.checksum.equals(mdrecord.getChecksum())) {
             this.checksum = mdrecord.getChecksum();
             changes++;
         }
@@ -475,8 +446,7 @@ public class MdRecordCreate implements Serializable {
                 changes++;
             }
         }
-        else if (mdrecord.getControlGroup() != null
-            && !this.controlGroup.equals(mdrecord.getControlGroup())) {
+        else if (mdrecord.getControlGroup() != null && !this.controlGroup.equals(mdrecord.getControlGroup())) {
             this.controlGroup = mdrecord.getControlGroup();
             changes++;
         }
@@ -488,8 +458,7 @@ public class MdRecordCreate implements Serializable {
                 changes++;
             }
         }
-        else if (!this.datastreamLocation.equals(mdrecord
-            .getDatastreamLocation())) {
+        else if (!this.datastreamLocation.equals(mdrecord.getDatastreamLocation())) {
             this.datastreamLocation = mdrecord.getDatastreamLocation();
             changes++;
         }
@@ -503,7 +472,7 @@ public class MdRecordCreate implements Serializable {
 
     /**
      * Get the repository indicator.
-     * 
+     *
      * @return RepositoryIndicator
      */
     public RepositoryIndicator getRepositoryIndicator() {
@@ -512,15 +481,12 @@ public class MdRecordCreate implements Serializable {
 
     /**
      * Merge XML content.
-     * 
-     * @param mdrecord
-     *            The mdrecord which content is to merge.
+     *
+     * @param mdrecord The mdrecord which content is to merge.
      * @return number of changes.
-     * @throws InvalidContentException
-     *             Thrown if content is invalid.
+     * @throws InvalidContentException Thrown if content is invalid.
      */
-    private int mergeContent(final MdRecordCreate mdrecord)
-        throws InvalidContentException {
+    private int mergeContent(final MdRecordCreate mdrecord) throws InvalidContentException {
 
         int changes = 0;
         if (this.content == null) {
@@ -535,8 +501,7 @@ public class MdRecordCreate implements Serializable {
             final String md5HashNew;
             try {
                 md5HashThis = XmlUtility.getMd5Hash(this.content.getBytes());
-                md5HashNew =
-                    XmlUtility.getMd5Hash(mdrecord.getContent().getBytes());
+                md5HashNew = XmlUtility.getMd5Hash(mdrecord.getContent().getBytes());
             }
             catch (final ParserConfigurationException e) {
                 throw new InvalidContentException(e);

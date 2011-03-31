@@ -21,13 +21,11 @@
 package de.escidoc.core.common.exceptions.system;
 
 /**
- * The XmlParserSystemException is used to indicate that an internal system
- * exception with the XML-Parser occured. returned httpStatusCode is 500. Status
- * code (500) indicating an error inside the HTTP server which prevented it from
+ * The XmlParserSystemException is used to indicate that an internal system exception with the XML-Parser occured.
+ * returned httpStatusCode is 500. Status code (500) indicating an error inside the HTTP server which prevented it from
  * fulfilling the request.
- * 
- * @author Michael Hoppe (FIZ Karlsruhe)
  *
+ * @author Michael Hoppe (FIZ Karlsruhe)
  */
 public class XmlParserSystemException extends SystemException {
 
@@ -36,16 +34,12 @@ public class XmlParserSystemException extends SystemException {
      */
     private static final long serialVersionUID = -88364859213846020L;
 
-    public static final int HTTP_STATUS_CODE =
-        ESCIDOC_HTTP_SC_INTERNAL_SERVER_ERROR;
+    public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_INTERNAL_SERVER_ERROR;
 
-    public static final String HTTP_STATUS_MESSAGE =
-        "Internal XML-Parser Error";
+    public static final String HTTP_STATUS_MESSAGE = "Internal XML-Parser Error";
 
     /**
      * Default constructor.
-     * 
-     *
      */
     public XmlParserSystemException() {
         super(HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -53,10 +47,8 @@ public class XmlParserSystemException extends SystemException {
 
     /**
      * Constructor used to map an initial exception.
-     * 
-     * @param error
-     *            Throwable
      *
+     * @param error Throwable
      */
     public XmlParserSystemException(final Throwable error) {
         super(error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -64,24 +56,19 @@ public class XmlParserSystemException extends SystemException {
 
     /**
      * Constructs a new exception with the specified detail message.
-     * 
-     * @param message -
-     *            the detail message.
      *
+     * @param message - the detail message.
      */
     public XmlParserSystemException(final String message) {
         super(message, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 
     /**
-     * Constructor used to create a new Exception with the specified detail
-     * message and a mapping to an initial exception.
-     * 
-     * @param message -
-     *            the detail message.
-     * @param error
-     *            Throwable
+     * Constructor used to create a new Exception with the specified detail message and a mapping to an initial
+     * exception.
      *
+     * @param message - the detail message.
+     * @param error   Throwable
      */
     public XmlParserSystemException(final String message, final Throwable error) {
         super(message, error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);

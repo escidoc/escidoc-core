@@ -10,9 +10,9 @@ import java.rmi.RemoteException;
 public interface PreprocessingHandlerRemoteHome extends EJBHome {
 
     String COMP_NAME = "java:comp/env/ejb/PreprocessingHandler";
+
     String JNDI_NAME = "ejb/PreprocessingHandler";
 
-    PreprocessingHandlerRemote create()
-            throws CreateException, RemoteException;
+    PreprocessingHandlerRemote create() throws CreateException, RemoteException;
 
 }

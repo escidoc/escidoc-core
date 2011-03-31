@@ -40,123 +40,86 @@ import java.util.Map;
 
 /**
  * Interface of a Context renderer.
- * 
- * @author Steffen Wagner
  *
+ * @author Steffen Wagner
  */
 public interface ContextRendererInterface {
 
     /**
      * Gets the representation of an Context.
-     * 
-     * @param contextHandler
-     *            The Context to render.
+     *
+     * @param contextHandler The Context to render.
      * @return Returns the XML representation of the Context.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     * @throws SystemException Thrown in case of an internal error.
      */
-    String render(final FedoraContextHandler contextHandler)
-        throws SystemException;
+    String render(final FedoraContextHandler contextHandler) throws SystemException;
 
     /**
-     * Gets the representation of the sub resource <code>properties</code> of
-     * Context.
-     * 
-     * @param contextHandler
-     *            The Context to render.
-     * @return Returns the XML representation of the sub resource
-     *         <code>properties</code> of a context.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
+     * Gets the representation of the sub resource <code>properties</code> of Context.
+     *
+     * @param contextHandler The Context to render.
+     * @return Returns the XML representation of the sub resource <code>properties</code> of a context.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    String renderProperties(final FedoraContextHandler contextHandler)
-        throws WebserverSystemException;
+    String renderProperties(final FedoraContextHandler contextHandler) throws WebserverSystemException;
 
     /**
-     * Gets the representation of the sub resource <code>resources</code> of a
-     * Context.
-     * 
-     * @param contextHandler
-     *            The FedoraContextHandler to render.
-     * @return Returns the XML representation of the sub resource
-     *         <code>resources</code> a Context.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
+     * Gets the representation of the sub resource <code>resources</code> of a Context.
+     *
+     * @param contextHandler The FedoraContextHandler to render.
+     * @return Returns the XML representation of the sub resource <code>resources</code> a Context.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    String renderResources(final FedoraContextHandler contextHandler)
-        throws WebserverSystemException;
+    String renderResources(final FedoraContextHandler contextHandler) throws WebserverSystemException;
 
     /**
      * Render all AdminDescriptors as full list.
-     * 
-     * @param contextHandler
-     *            The FedoraContextHandler.
-     * @param values
-     *            HashMap with Renderer values.
+     *
+     * @param contextHandler The FedoraContextHandler.
+     * @param values         HashMap with Renderer values.
      * @return The XML representation of all admin-descriptors of the Context.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     * @throws SystemException Thrown in case of an internal error.
      */
-    String renderAdminDescriptors(
-        final FedoraContextHandler contextHandler, Map<String, Object> values)
+    String renderAdminDescriptors(final FedoraContextHandler contextHandler, Map<String, Object> values)
         throws SystemException;
 
     /**
      * Get the XML representation of one admin-descriptor datastream.
-     * 
-     * @param contextHandler
-     *            The FedoraContextHandler to render.
-     * @param name
-     *            Name of the admin-descriptor (unique).
-     * @param admDesc
-     *            The datastream of the admin-descriptor.
-     * @param isRoot
-     *            Set true if render with XML root element.
-     * @return Returns the XML representation of the sub resource
-     *         <code>admin-descriptor</code> of the Context.
-     * @throws EncodingSystemException
-     *             Thrown if transforming of datastream to required encoding
-     *             fails.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
+     *
+     * @param contextHandler The FedoraContextHandler to render.
+     * @param name           Name of the admin-descriptor (unique).
+     * @param admDesc        The datastream of the admin-descriptor.
+     * @param isRoot         Set true if render with XML root element.
+     * @return Returns the XML representation of the sub resource <code>admin-descriptor</code> of the Context.
+     * @throws EncodingSystemException  Thrown if transforming of datastream to required encoding fails.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     String renderAdminDescriptor(
-        final FedoraContextHandler contextHandler, final String name,
-        final Datastream admDesc, final boolean isRoot)
+        final FedoraContextHandler contextHandler, final String name, final Datastream admDesc, final boolean isRoot)
         throws EncodingSystemException, WebserverSystemException;
 
     /**
      * Gets the representation of a filtered member list of Context.
-     * 
-     * @param contextHandler
-     *            The FedoraContextHandler.
-     * @param memberList
-     *            List of context members.
+     *
+     * @param contextHandler The FedoraContextHandler.
+     * @param memberList     List of context members.
      * @return Returns the XML representation of a filtered Context list.
-     * @throws AuthorizationException
-     *             Thrown if access to origin Item is restricted.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     * @throws AuthorizationException Thrown if access to origin Item is restricted.
+     * @throws SystemException        Thrown in case of an internal error.
      */
-    String renderMemberList(
-        final FedoraContextHandler contextHandler, final List<String> memberList)
+    String renderMemberList(final FedoraContextHandler contextHandler, final List<String> memberList)
         throws SystemException, AuthorizationException;
 
     /**
      * Gets the representation of a filtered member reference list of Context.
-     * 
-     * @param contextHandler
-     *            The FedoraContextHandler.
-     * @param memberList
-     *            List of context members.
+     *
+     * @param contextHandler The FedoraContextHandler.
+     * @param memberList     List of context members.
      * @return Returns the XML representation of a filtered Context list.
-     * @throws AuthorizationException
-     *             Thrown if access to origin Item is restricted.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     * @throws AuthorizationException Thrown if access to origin Item is restricted.
+     * @throws SystemException        Thrown in case of an internal error.
      */
-    String renderMemberRefList(
-        final FedoraContextHandler contextHandler, final List<String> memberList)
+    String renderMemberRefList(final FedoraContextHandler contextHandler, final List<String> memberList)
         throws SystemException, AuthorizationException;
 
 }

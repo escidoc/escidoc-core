@@ -100,7 +100,7 @@ import java.util.regex.Pattern;
 
 /**
  * Some utilities.
- * 
+ *
  * @author Michael Schneider
  */
 public class Utility {
@@ -110,17 +110,14 @@ public class Utility {
     private TripleStoreUtility tripleStoreUtility;
 
     /**
-     * The pattern used to extract the redirect base url and path from the
-     * staging file XML representation.
+     * The pattern used to extract the redirect base url and path from the staging file XML representation.
      */
-    private static final Pattern REDIRECT_URL_PATTERN = Pattern
-        .compile("xml:base=\"(.*?)\".*xlink:href=\"(.*?)\"");
+    private static final Pattern REDIRECT_URL_PATTERN = Pattern.compile("xml:base=\"(.*?)\".*xlink:href=\"(.*?)\"");
 
     /**
      * Splits a Predicate at the last slash (/).
-     * 
-     * @param predicate
-     *            Predicate.
+     *
+     * @param predicate Predicate.
      * @return split predicate
      */
     public static String[] splitPredicate(final String predicate) {
@@ -134,34 +131,27 @@ public class Utility {
     }
 
     /**
-     * Concatenates the two given path segments and returns a valid path, i.e.
-     * the method takes care that there is only one path separator between the
-     * path segments.
-     * 
-     * @param path
-     *            The path.
-     * @param appendix
-     *            The path to append.
-     * @return The concatenated path.
+     * Concatenates the two given path segments and returns a valid path, i.e. the method takes care that there is only
+     * one path separator between the path segments.
      *
+     * @param path     The path.
+     * @param appendix The path to append.
+     * @return The concatenated path.
      */
-    public static String concatenatePath(
-        final String path, final String appendix) {
+    public static String concatenatePath(final String path, final String appendix) {
         String result = path;
         String append = appendix;
         result = result.replace("\\", "/");
         append = append.replace("\\", "/");
-        result += result.endsWith("/") ? append.startsWith("/") ? append.substring(1) : append :
-                append.startsWith("/") ? append : '/' + append;
+        result +=
+            result.endsWith("/") ? append.startsWith("/") ? append.substring(1) : append : append.startsWith("/") ? append : '/' + append;
         return result;
     }
 
     /**
-     * Fetches the id from the link. It is the String after the last '/' in the
-     * link.
-     * 
-     * @param link
-     *            The link
+     * Fetches the id from the link. It is the String after the last '/' in the link.
+     *
+     * @param link The link
      * @return The extracted id.
      */
     public static String getId(final String link) {
@@ -174,49 +164,36 @@ public class Utility {
     }
 
     /**
-     * Check if locked is set to false. If it set to true a LockingException is
-     * thrown.
-     * 
-     * @param locked
-     *            Indicates if the object is locked.
-     * @param method
-     *            The method which shall be executed.
-     * @param label
-     *            The label identifying the object.
-     * @param lockOwner
-     *            The lock owner if there was one found.
+     * Check if locked is set to false. If it set to true a LockingException is thrown.
+     *
+     * @param locked    Indicates if the object is locked.
+     * @param method    The method which shall be executed.
+     * @param label     The label identifying the object.
+     * @param lockOwner The lock owner if there was one found.
      * @return true if the object is not locked.
-     * @throws LockingException
-     *             Thrown if the object is locked.
+     * @throws LockingException Thrown if the object is locked.
      */
-    public static boolean checkUnlocked(final boolean locked, final String method, final String label,
-                                        final String lockOwner) throws LockingException {
+    public static boolean checkUnlocked(
+        final boolean locked, final String method, final String label, final String lockOwner) throws LockingException {
 
         if (locked) {
-            throw new LockingException(method + " failed!" + label
-                + " is locked by " + lockOwner + '.');
+            throw new LockingException(method + " failed!" + label + " is locked by " + lockOwner + '.');
         }
         return true;
     }
 
     /**
-     * Checks if the given dates are equal. If so the change is permitted and
-     * true is returned. Otherwise a LockingException is throws.
-     * 
-     * @param fedoraLatestVersionDate
-     *            The date of the latest version stored in Fedora.
-     * @param updateLatestVersionDate
-     *            The date of the version the application retrieved and wants to
-     *            update.
-     * @param label
-     *            A label to identify the object to change.
-     * @throws OptimisticLockingException
-     *             Thrown if a change of the object is not permitted.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
+     * Checks if the given dates are equal. If so the change is permitted and true is returned. Otherwise a
+     * LockingException is throws.
+     *
+     * @param fedoraLatestVersionDate The date of the latest version stored in Fedora.
+     * @param updateLatestVersionDate The date of the version the application retrieved and wants to update.
+     * @param label                   A label to identify the object to change.
+     * @throws OptimisticLockingException Thrown if a change of the object is not permitted.
+     * @throws WebserverSystemException   Thrown in case of an internal error.
      */
-    public static void checkOptimisticLockingCriteria(final DateTime fedoraLatestVersionDate,
-                                                      final DateTime updateLatestVersionDate, final String label)
+    public static void checkOptimisticLockingCriteria(
+        final DateTime fedoraLatestVersionDate, final DateTime updateLatestVersionDate, final String label)
         throws OptimisticLockingException, WebserverSystemException {
 
         if (!fedoraLatestVersionDate.equals(updateLatestVersionDate)) {
@@ -227,38 +204,28 @@ public class Utility {
             }
 
             final String message =
-                "Optimistic locking error! Version of " + text
-                    + " does not match most recent version (requested:"
-                    + updateLatestVersionDate + " saved:"
-                    + fedoraLatestVersionDate + ")! Changes are not permitted.";
+                "Optimistic locking error! Version of " + text + " does not match most recent version (requested:"
+                    + updateLatestVersionDate + " saved:" + fedoraLatestVersionDate + ")! Changes are not permitted.";
             throw new OptimisticLockingException(message);
         }
     }
 
     /**
-     * Checks if the given dates are equal. If so the change is permitted and
-     * true is returned. Otherwise a LockingException is throws.
-     * 
-     * @param fedoraLatestVersionDate
-     *            The date of the latest version stored in Fedora.
-     * @param updateLatestVersionDate
-     *            The date of the version the application retrieved and wants to
-     *            update.
-     * @param label
-     *            A label to identify the object to change.
+     * Checks if the given dates are equal. If so the change is permitted and true is returned. Otherwise a
+     * LockingException is throws.
+     *
+     * @param fedoraLatestVersionDate The date of the latest version stored in Fedora.
+     * @param updateLatestVersionDate The date of the version the application retrieved and wants to update.
+     * @param label                   A label to identify the object to change.
      * @return true if change is permitted
-     * @throws OptimisticLockingException
-     *             Thrown if a change of the object is not permitted.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
+     * @throws OptimisticLockingException Thrown if a change of the object is not permitted.
+     * @throws WebserverSystemException   Thrown in case of an internal error.
      */
     public boolean checkOptimisticLockingCriteria(
-        final String fedoraLatestVersionDate,
-        final String updateLatestVersionDate, final String label)
+        final String fedoraLatestVersionDate, final String updateLatestVersionDate, final String label)
         throws OptimisticLockingException, WebserverSystemException {
 
-        if (fedoraLatestVersionDate != null
-            && updateLatestVersionDate != null) {
+        if (fedoraLatestVersionDate != null && updateLatestVersionDate != null) {
 
             final DateTime tFedora = new DateTime(fedoraLatestVersionDate);
             final DateTime tUpdate = new DateTime(updateLatestVersionDate);
@@ -270,18 +237,14 @@ public class Utility {
 
     /**
      * Get the id and the name of the current user from the UserContext.
-     * 
-     * @return The the id and the name of the current user. ([0] = id, [1] =
-     *         name)
-     * @throws WebserverSystemException
-     *             If the current user could not be retrieved.
+     *
+     * @return The the id and the name of the current user. ([0] = id, [1] = name)
+     * @throws WebserverSystemException If the current user could not be retrieved.
      */
     public static String[] getCurrentUser() throws WebserverSystemException {
 
-        if (UserContext.getId() == null
-            || UserContext.getRealName() == null) {
-            throw new WebserverSystemException(
-                "System fault: Current user not set!");
+        if (UserContext.getId() == null || UserContext.getRealName() == null) {
+            throw new WebserverSystemException("System fault: Current user not set!");
         }
         final String[] result = new String[2];
         result[0] = UserContext.getId();
@@ -292,17 +255,13 @@ public class Utility {
 
     /**
      * Returns true if both objects specified by id have the same context.
-     * 
-     * @param id0
-     *            of object
-     * @param id1
-     *            of object
+     *
+     * @param id0 of object
+     * @param id1 of object
      * @return true if objects has same context else false.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     * @throws SystemException Thrown in case of an internal error.
      */
-    public boolean hasSameContext(final String id0, final String id1)
-        throws SystemException {
+    public boolean hasSameContext(final String id0, final String id1) throws SystemException {
         final String context0 = tripleStoreUtility.getContext(id0);
         final String context1 = tripleStoreUtility.getContext(id1);
 
@@ -311,50 +270,38 @@ public class Utility {
 
     /**
      * Returns an Utility instance.
-     * 
+     *
      * @return An Utility instance.
      */
     public static Utility getInstance() {
-        final BeanFactoryLocator beanFactoryLocator =
-            SingletonBeanFactoryLocator.getInstance();
-        final BeanFactory factory =
-            beanFactoryLocator
-                .useBeanFactory(BeanLocator.COMMON_FACTORY_ID).getFactory();
+        final BeanFactoryLocator beanFactoryLocator = SingletonBeanFactoryLocator.getInstance();
+        final BeanFactory factory = beanFactoryLocator.useBeanFactory(BeanLocator.COMMON_FACTORY_ID).getFactory();
         return (Utility) factory.getBean("business.Utility");
     }
 
     /**
      * Checks if the given param is not null.
-     * 
-     * @param param
-     *            The param to check.
-     * @param label
-     *            The label to add to the exception message.
+     *
+     * @param param The param to check.
+     * @param label The label to add to the exception message.
      * @throws MissingMethodParameterException
-     *             If the param is null.
+     *          If the param is null.
      */
-    public static void checkNotNull(final Object param, final String label)
-        throws MissingMethodParameterException {
+    public static void checkNotNull(final Object param, final String label) throws MissingMethodParameterException {
         if (param == null) {
-            throw new MissingMethodParameterException(label
-                + " must not be null!");
+            throw new MissingMethodParameterException(label + " must not be null!");
         }
 
     }
 
     /**
      * Checks if a component with id exists.
-     * 
-     * @param id
-     *            The id of the object.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
-     * @throws ComponentNotFoundException
-     *             If the component does not exist or if the object is no
-     *             component.
+     *
+     * @param id The id of the object.
+     * @throws SystemException            Thrown in case of an internal error.
+     * @throws ComponentNotFoundException If the component does not exist or if the object is no component.
      */
-    public void checkIsComponent(final String id) throws SystemException,
-        ComponentNotFoundException {
+    public void checkIsComponent(final String id) throws SystemException, ComponentNotFoundException {
 
         try {
             checkIsOfObjectType(id, Constants.COMPONENT_OBJECT_TYPE);
@@ -366,17 +313,12 @@ public class Utility {
 
     /**
      * Checks if a container with id exists.
-     * 
-     * @param id
-     *            The id of the object.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
-     * @throws ContainerNotFoundException
-     *             If the container does not exist or if the object is no
-     *             container.
+     *
+     * @param id The id of the object.
+     * @throws SystemException            Thrown in case of an internal error.
+     * @throws ContainerNotFoundException If the container does not exist or if the object is no container.
      */
-    public void checkIsContainer(final String id) throws SystemException,
-        ContainerNotFoundException {
+    public void checkIsContainer(final String id) throws SystemException, ContainerNotFoundException {
 
         try {
             checkIsOfObjectType(id, Constants.CONTAINER_OBJECT_TYPE);
@@ -388,16 +330,12 @@ public class Utility {
 
     /**
      * Checks if a context with id exists.
-     * 
-     * @param id
-     *            The id of the object.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
-     * @throws ContextNotFoundException
-     *             If the context does not exist or if the object is no context.
+     *
+     * @param id The id of the object.
+     * @throws SystemException          Thrown in case of an internal error.
+     * @throws ContextNotFoundException If the context does not exist or if the object is no context.
      */
-    public void checkIsContext(final String id) throws SystemException,
-        ContextNotFoundException {
+    public void checkIsContext(final String id) throws SystemException, ContextNotFoundException {
 
         try {
             checkIsOfObjectType(id, Constants.CONTEXT_OBJECT_TYPE);
@@ -409,16 +347,13 @@ public class Utility {
 
     /**
      * Checks if a Content Relation with id exists.
-     * 
-     * @param id
-     *            The id of the object.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     *
+     * @param id The id of the object.
+     * @throws SystemException Thrown in case of an internal error.
      * @throws ContentRelationNotFoundException
-     *             Thrown if Content Relation the does not exist.
+     *                         Thrown if Content Relation the does not exist.
      */
-    public void checkIsContentRelation(final String id) throws SystemException,
-        ContentRelationNotFoundException {
+    public void checkIsContentRelation(final String id) throws SystemException, ContentRelationNotFoundException {
 
         try {
             checkIsOfObjectType(id, Constants.CONTENT_RELATION2_OBJECT_TYPE);
@@ -430,20 +365,12 @@ public class Utility {
 
     /**
      * Checks if a content model with id exists.
-     * 
-     * @param id
-     *            The id of the object.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
-     * @throws ContentModelNotFoundException
-     *             If the content model does not exist or if the object is no
-     *             content model.
-     * @throws IntegritySystemException
-     * @throws WebserverSystemException
-     * @throws TripleStoreSystemException
+     *
+     * @param id The id of the object.
+     * @throws SystemException               Thrown in case of an internal error.
+     * @throws ContentModelNotFoundException If the content model does not exist or if the object is no content model.
      */
-    public void checkIsContentModel(final String id)
-        throws ContentModelNotFoundException, TripleStoreSystemException,
+    public void checkIsContentModel(final String id) throws ContentModelNotFoundException, TripleStoreSystemException,
         WebserverSystemException, IntegritySystemException {
 
         try {
@@ -456,22 +383,15 @@ public class Utility {
 
     /**
      * Checks if an item with id exists.
-     * 
-     * @param id
-     *            The id of the object.
-     * @throws ItemNotFoundException
-     *             If the item does not exist or if the object is no item.
-     * @throws WebserverSystemException
-     *             Thrown if instance of TripleStore failed.
-     * @throws TripleStoreSystemException
-     *             Thrown in case of Triple Store request or connection failure.
-     * @throws IntegritySystemException
-     *             Thrown if there is an integrity error with the addressed
-     *             object.
+     *
+     * @param id The id of the object.
+     * @throws ItemNotFoundException      If the item does not exist or if the object is no item.
+     * @throws WebserverSystemException   Thrown if instance of TripleStore failed.
+     * @throws TripleStoreSystemException Thrown in case of Triple Store request or connection failure.
+     * @throws IntegritySystemException   Thrown if there is an integrity error with the addressed object.
      */
-    public void checkIsItem(final String id) throws ItemNotFoundException,
-        TripleStoreSystemException, WebserverSystemException,
-        IntegritySystemException {
+    public void checkIsItem(final String id) throws ItemNotFoundException, TripleStoreSystemException,
+        WebserverSystemException, IntegritySystemException {
 
         try {
             checkIsOfObjectType(id, Constants.ITEM_OBJECT_TYPE);
@@ -483,22 +403,15 @@ public class Utility {
 
     /**
      * Checks if a relation with id exists.
-     * 
-     * @param id
-     *            The id.
+     *
+     * @param id The id.
      * @throws ContentRelationNotFoundException
-     *             If the relation does not exist or if the object is no
-     *             relation.
-     * @throws WebserverSystemException
-     *             Thrown if instance of TripleStore failed.
-     * @throws TripleStoreSystemException
-     *             Thrown in case of Triple Store request or connection failure.
-     * @throws IntegritySystemException
-     *             Thrown if there is an integrity error with the addressed
-     *             object.
+     *                                    If the relation does not exist or if the object is no relation.
+     * @throws WebserverSystemException   Thrown if instance of TripleStore failed.
+     * @throws TripleStoreSystemException Thrown in case of Triple Store request or connection failure.
+     * @throws IntegritySystemException   Thrown if there is an integrity error with the addressed object.
      */
-    public void checkIsRelation(final String id)
-        throws ContentRelationNotFoundException, TripleStoreSystemException,
+    public void checkIsRelation(final String id) throws ContentRelationNotFoundException, TripleStoreSystemException,
         WebserverSystemException, IntegritySystemException {
 
         try {
@@ -511,17 +424,13 @@ public class Utility {
 
     /**
      * Checks if an organizational-unit with id exists.
-     * 
-     * @param id
-     *            The id of the object.
+     *
+     * @param id The id of the object.
      * @throws OrganizationalUnitNotFoundException
-     *             If the organizational-unit does not exist or if the object is
-     *             no organizational-unit.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     *                         If the organizational-unit does not exist or if the object is no organizational-unit.
+     * @throws SystemException Thrown in case of an internal error.
      */
-    public void checkIsOrganizationalUnit(final String id)
-        throws OrganizationalUnitNotFoundException, SystemException {
+    public void checkIsOrganizationalUnit(final String id) throws OrganizationalUnitNotFoundException, SystemException {
 
         try {
             checkIsOfObjectType(id, Constants.ORGANIZATIONAL_UNIT_OBJECT_TYPE);
@@ -533,61 +442,45 @@ public class Utility {
 
     /**
      * Check if the object given by id exists and is of the given type.
-     * 
-     * @param id
-     *            The id.
-     * @param type
-     *            The expected type.
-     * @throws ResourceNotFoundException
-     *             Thrown if resource with provided type does not exist.
-     * @throws WebserverSystemException
-     *             Thrown if instance of TripleStore failed.
-     * @throws TripleStoreSystemException
-     *             Thrown if request or connection to Triple Store failed.
-     * @throws IntegritySystemException
-     *             Thrown if no object type is found for an existing object.
+     *
+     * @param id   The id.
+     * @param type The expected type.
+     * @throws ResourceNotFoundException  Thrown if resource with provided type does not exist.
+     * @throws WebserverSystemException   Thrown if instance of TripleStore failed.
+     * @throws TripleStoreSystemException Thrown if request or connection to Triple Store failed.
+     * @throws IntegritySystemException   Thrown if no object type is found for an existing object.
      */
-    public void checkIsOfObjectType(final String id, final String type)
-        throws ResourceNotFoundException, TripleStoreSystemException,
-        WebserverSystemException, IntegritySystemException {
+    public void checkIsOfObjectType(final String id, final String type) throws ResourceNotFoundException,
+        TripleStoreSystemException, WebserverSystemException, IntegritySystemException {
 
         final String idWithoutVersionNumber = XmlUtility.getObjidWithoutVersion(id);
-        final String objectType =
-            tripleStoreUtility.getObjectType(idWithoutVersionNumber);
+        final String objectType = tripleStoreUtility.getObjectType(idWithoutVersionNumber);
 
         if (objectType == null) {
             if (tripleStoreUtility.exists(idWithoutVersionNumber)) {
                 // object exists but has no object-type
-                throw new IntegritySystemException(
-                        StringUtility.format(
-                                "Object has no object-type ", idWithoutVersionNumber));
-            } else {
-                throw new ResourceNotFoundException("Object with id "
-                        + idWithoutVersionNumber + " does not exist!");
+                throw new IntegritySystemException(StringUtility.format("Object has no object-type ",
+                    idWithoutVersionNumber));
+            }
+            else {
+                throw new ResourceNotFoundException("Object with id " + idWithoutVersionNumber + " does not exist!");
             }
         }
         else if (!objectType.equals(type)) {
-            throw new ResourceNotFoundException("Object with id "
-                + idWithoutVersionNumber + " is not a " + type + '!');
+            throw new ResourceNotFoundException("Object with id " + idWithoutVersionNumber + " is not a " + type + '!');
         }
     }
 
     /**
-     * Check if the provided object in the xmlData has the same Context id than
-     * the object provided by id.
-     * 
-     * @param id
-     *            It of the reference object.
-     * @param xmlData
-     *            The XML representation of an object.
-     * @throws InvalidContextException
-     *             Thrown if the contextId of xmlData differs from the ContextId
-     *             of the reference object.
-     * @throws SystemException
-     *             Thrown in case of internal failure.
+     * Check if the provided object in the xmlData has the same Context id than the object provided by id.
+     *
+     * @param id      It of the reference object.
+     * @param xmlData The XML representation of an object.
+     * @throws InvalidContextException Thrown if the contextId of xmlData differs from the ContextId of the reference
+     *                                 object.
+     * @throws SystemException         Thrown in case of internal failure.
      */
-    public void checkSameContext(final String id, final String xmlData)
-        throws InvalidContextException, SystemException {
+    public void checkSameContext(final String id, final String xmlData) throws InvalidContextException, SystemException {
 
         // TODO This is a quick fix hack. Change to StAX parser. And, may be,
         // move the check to another level in create to avoid a double XML
@@ -596,28 +489,20 @@ public class Utility {
         final String dataContextId;
 
         try {
-            final DocumentBuilderFactory docBuilderFactory =
-                DocumentBuilderFactory.newInstance();
+            final DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
             final DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
-            final InputStream in =
-                new ByteArrayInputStream(
-                    xmlData.getBytes(XmlUtility.CHARACTER_ENCODING));
+            final InputStream in = new ByteArrayInputStream(xmlData.getBytes(XmlUtility.CHARACTER_ENCODING));
             final Document result = docBuilder.parse(new InputSource(in));
             result.getDocumentElement().normalize();
 
             if (UserContext.isRestAccess()) {
-                final Node n =
-                    XPathAPI.selectSingleNode(result,
-                        "//properties/context/@href");
+                final Node n = XPathAPI.selectSingleNode(result, "//properties/context/@href");
 
                 final String contextHref = n.getNodeValue();
-                dataContextId =
-                    contextHref.substring(contextHref.lastIndexOf('/') + 1);
+                dataContextId = contextHref.substring(contextHref.lastIndexOf('/') + 1);
             }
             else {
-                final Node n =
-                    XPathAPI.selectSingleNode(result,
-                        "//properties/context/@objid");
+                final Node n = XPathAPI.selectSingleNode(result, "//properties/context/@objid");
 
                 dataContextId = n.getNodeValue();
             }
@@ -637,26 +522,23 @@ public class Utility {
         }
 
         if (!dataContextId.equals(tripleStoreUtility.getContext(id))) {
-            throw new InvalidContextException(
-                "Objects are not in same Context.");
+            throw new InvalidContextException("Objects are not in same Context.");
         }
 
     }
 
-    public String getPath(final String id, final String newVersionNumber)
-        throws WebserverSystemException, TripleStoreSystemException {
+    public String getPath(final String id, final String newVersionNumber) throws WebserverSystemException,
+        TripleStoreSystemException {
 
         final StringBuilder result = new StringBuilder("/");
 
         final String objectType = tripleStoreUtility.getObjectType(id);
-        if (Constants.ITEM_OBJECT_TYPE.equals(objectType)
-            || Constants.CONTAINER_OBJECT_TYPE.equals(objectType)
+        if (Constants.ITEM_OBJECT_TYPE.equals(objectType) || Constants.CONTAINER_OBJECT_TYPE.equals(objectType)
             || Constants.CONTEXT_OBJECT_TYPE.equals(objectType)) {
             result.append("ir/");
         }
         else {
-            throw new WebserverSystemException(
-                "Can not create path for object-type " + objectType + '.');
+            throw new WebserverSystemException("Can not create path for object-type " + objectType + '.');
         }
 
         result.append(objectType);
@@ -672,23 +554,16 @@ public class Utility {
 
     /**
      * Create new object version.
-     * 
-     * @param versionComment
-     *            Comment of event (version or status change)
-     * @param newStatus
-     *            New status of object.
-     * @param resource
-     *            resource object.
-     * @param fedoraUtility
-     *            The {@link FedoraUtility} to use for accessing the data store
-     *            back end.
-     * @throws SystemException
-     *             Thrown in case of an internal system error.
+     *
+     * @param versionComment Comment of event (version or status change)
+     * @param newStatus      New status of object.
+     * @param resource       resource object.
+     * @param fedoraUtility  The {@link FedoraUtility} to use for accessing the data store back end.
+     * @throws SystemException Thrown in case of an internal system error.
      */
     public void makeVersion(
-        final String versionComment, final String newStatus,
-        final VersionableResource resource, final FedoraUtility fedoraUtility)
-        throws SystemException {
+        final String versionComment, final String newStatus, final VersionableResource resource,
+        final FedoraUtility fedoraUtility) throws SystemException {
 
         final String comment = createComment(resource, newStatus, versionComment);
 
@@ -697,34 +572,27 @@ public class Utility {
             new TreeMap<String, StartElementWithChildElements>();
         final Map<String, List<StartElementWithChildElements>> removeElementsRelsExt =
             new TreeMap<String, List<StartElementWithChildElements>>();
-        final Map<String, String> currentVersionProperties =
-            resource.getResourceProperties();
+        final Map<String, String> currentVersionProperties = resource.getResourceProperties();
 
         // elements to update in RELS-EXT in any case
         // - latest-version.date
         // - latest-version.user
         final StartElementWithChildElements modifiedBy =
-            new StartElementWithChildElements(Elements.ELEMENT_MODIFIED_BY,
-                Constants.STRUCTURAL_RELATIONS_NS_URI,
-                Constants.STRUCTURAL_RELATIONS_NS_PREFIX, null,
-                getCurrentUserId(), null);
+            new StartElementWithChildElements(Elements.ELEMENT_MODIFIED_BY, Constants.STRUCTURAL_RELATIONS_NS_URI,
+                Constants.STRUCTURAL_RELATIONS_NS_PREFIX, null, getCurrentUserId(), null);
         final Attribute resourceAttribute =
-            new Attribute("resource", Constants.RDF_NAMESPACE_URI,
-                Constants.RDF_NAMESPACE_PREFIX, "info:fedora/"
-                    + getCurrentUserId());
+            new Attribute("resource", Constants.RDF_NAMESPACE_URI, Constants.RDF_NAMESPACE_PREFIX, "info:fedora/"
+                + getCurrentUserId());
         modifiedBy.addAttribute(resourceAttribute);
         updateElementsRelsExt.put(Elements.ELEMENT_MODIFIED_BY, modifiedBy);
 
-        updateElementsRelsExt.put(Elements.ELEMENT_MODIFIED_BY_TITLE,
-            new StartElementWithChildElements(
-                Elements.ELEMENT_MODIFIED_BY_TITLE,
-                Constants.PROPERTIES_NS_URI, Constants.PROPERTIES_NS_PREFIX,
-                null, getCurrentUserRealName(), null));
+        updateElementsRelsExt.put(Elements.ELEMENT_MODIFIED_BY_TITLE, new StartElementWithChildElements(
+            Elements.ELEMENT_MODIFIED_BY_TITLE, Constants.PROPERTIES_NS_URI, Constants.PROPERTIES_NS_PREFIX, null,
+            getCurrentUserRealName(), null));
 
         final String buildNumber = getBuildNumber();
-        updateElementsRelsExt.put("build", new StartElementWithChildElements(
-            "build", "http://escidoc.de/core/01/system/", "system", null,
-            buildNumber, null));
+        updateElementsRelsExt.put("build", new StartElementWithChildElements("build",
+            "http://escidoc.de/core/01/system/", "system", null, buildNumber, null));
 
         boolean release = false;
         if (newStatus != null) {
@@ -741,32 +609,24 @@ public class Utility {
 
             // if status is already "released", leave it untouched
             // unless withdraw
-            if (!Constants.STATUS_RELEASED.equals(currentVersionProperties
-                .get(PropertyMapKeys.PUBLIC_STATUS))
+            if (!Constants.STATUS_RELEASED.equals(currentVersionProperties.get(PropertyMapKeys.PUBLIC_STATUS))
                 || Constants.STATUS_WITHDRAWN.equals(newStatus)) {
-                updateElementsRelsExt.put(Elements.ELEMENT_PUBLIC_STATUS,
-                    new StartElementWithChildElements(
-                        Elements.ELEMENT_PUBLIC_STATUS,
-                        Constants.PROPERTIES_NS_URI,
-                        Constants.PROPERTIES_NS_PREFIX, null, newStatus, null));
+                updateElementsRelsExt.put(Elements.ELEMENT_PUBLIC_STATUS, new StartElementWithChildElements(
+                    Elements.ELEMENT_PUBLIC_STATUS, Constants.PROPERTIES_NS_URI, Constants.PROPERTIES_NS_PREFIX, null,
+                    newStatus, null));
                 // - public-status-comment
-                updateElementsRelsExt.put(
-                    Elements.ELEMENT_PUBLIC_STATUS_COMMENT,
-                    new StartElementWithChildElements(
-                        Elements.ELEMENT_PUBLIC_STATUS_COMMENT,
-                        Constants.PROPERTIES_NS_URI,
-                        Constants.PROPERTIES_NS_PREFIX, null, comment, null));
+                updateElementsRelsExt.put(Elements.ELEMENT_PUBLIC_STATUS_COMMENT, new StartElementWithChildElements(
+                    Elements.ELEMENT_PUBLIC_STATUS_COMMENT, Constants.PROPERTIES_NS_URI,
+                    Constants.PROPERTIES_NS_PREFIX, null, comment, null));
             }
             if (!Constants.STATUS_WITHDRAWN.equals(newStatus)) {
-                updateElementsRelsExt.put(Elements.ELEMENT_STATUS,
-                    new StartElementWithChildElements(Elements.ELEMENT_STATUS,
-                        Constants.VERSION_NS_URI, Constants.VERSION_NS_PREFIX,
-                        null, newStatus, null));
+                updateElementsRelsExt.put(Elements.ELEMENT_STATUS, new StartElementWithChildElements(
+                    Elements.ELEMENT_STATUS, Constants.VERSION_NS_URI, Constants.VERSION_NS_PREFIX, null, newStatus,
+                    null));
                 // - latest-version.comment
-                updateElementsRelsExt.put(Elements.ELEMENT_COMMENT,
-                    new StartElementWithChildElements(Elements.ELEMENT_COMMENT,
-                        Constants.VERSION_NS_URI, Constants.VERSION_NS_PREFIX,
-                        null, comment, null));
+                updateElementsRelsExt.put(Elements.ELEMENT_COMMENT, new StartElementWithChildElements(
+                    Elements.ELEMENT_COMMENT, Constants.VERSION_NS_URI, Constants.VERSION_NS_PREFIX, null, comment,
+                    null));
             }
 
             if (Constants.STATUS_RELEASED.equals(newStatus)) {
@@ -779,28 +639,20 @@ public class Utility {
                 // - latest-release.number
                 // - latest-release.date
                 // - latest-release.pid
-                updateElementsRelsExt.put(
-                    Elements.ELEMENT_PUBLIC_STATUS_COMMENT,
-                    new StartElementWithChildElements(
-                        Elements.ELEMENT_PUBLIC_STATUS_COMMENT,
-                        Constants.PROPERTIES_NS_URI,
-                        Constants.PROPERTIES_NS_PREFIX, null, comment, null));
-                updateElementsRelsExt.put(
-                    Elements.ELEMENT_NUMBER,
-                    new StartElementWithChildElements(Elements.ELEMENT_NUMBER,
-                        Constants.RELEASE_NS_URI, Constants.RELEASE_NS_PREFIX,
-                        null, currentVersionProperties
-                            .get(PropertyMapKeys.LATEST_VERSION_NUMBER), null));
+                updateElementsRelsExt.put(Elements.ELEMENT_PUBLIC_STATUS_COMMENT, new StartElementWithChildElements(
+                    Elements.ELEMENT_PUBLIC_STATUS_COMMENT, Constants.PROPERTIES_NS_URI,
+                    Constants.PROPERTIES_NS_PREFIX, null, comment, null));
+                updateElementsRelsExt.put(Elements.ELEMENT_NUMBER, new StartElementWithChildElements(
+                    Elements.ELEMENT_NUMBER, Constants.RELEASE_NS_URI, Constants.RELEASE_NS_PREFIX, null,
+                    currentVersionProperties.get(PropertyMapKeys.LATEST_VERSION_NUMBER), null));
 
                 // SWA: The release date has to be the same as the version/date
                 // which is written as latest.
 
                 // update latest-release/pid (properties/release/pid)
-                updateElementsRelsExt.put(
-                    Constants.RELEASE_NS_URI + Elements.ELEMENT_PID,
-                    new StartElementWithChildElements(Elements.ELEMENT_PID,
-                        Constants.RELEASE_NS_URI, Constants.RELEASE_NS_PREFIX,
-                        null, currentVersionProperties
+                updateElementsRelsExt.put(Constants.RELEASE_NS_URI + Elements.ELEMENT_PID,
+                    new StartElementWithChildElements(Elements.ELEMENT_PID, Constants.RELEASE_NS_URI,
+                        Constants.RELEASE_NS_PREFIX, null, currentVersionProperties
                             .get(PropertyMapKeys.CURRENT_VERSION_PID), null));
             }
 
@@ -818,60 +670,47 @@ public class Utility {
 
             if (!Constants.STATUS_WITHDRAWN.equals(newStatus)) {
                 // change first occurrence of comment in version-history
-                updateElementsWOV.put(TripleStoreUtility.PROP_VERSION_COMMENT,
-                    new StartElementWithChildElements(
-                        TripleStoreUtility.PROP_VERSION_COMMENT,
-                        Constants.WOV_NAMESPACE_URI,
-                        Constants.WOV_NAMESPACE_PREFIX, null, comment, null));
+                updateElementsWOV.put(TripleStoreUtility.PROP_VERSION_COMMENT, new StartElementWithChildElements(
+                    TripleStoreUtility.PROP_VERSION_COMMENT, Constants.WOV_NAMESPACE_URI,
+                    Constants.WOV_NAMESPACE_PREFIX, null, comment, null));
                 // change first occurrence of version-status in version-history
                 // but not for withdraw
-                updateElementsWOV.put(TripleStoreUtility.PROP_VERSION_STATUS,
-                    new StartElementWithChildElements(
-                        TripleStoreUtility.PROP_VERSION_STATUS,
-                        Constants.WOV_NAMESPACE_URI,
-                        Constants.WOV_NAMESPACE_PREFIX, null, newStatus, null));
+                updateElementsWOV.put(TripleStoreUtility.PROP_VERSION_STATUS, new StartElementWithChildElements(
+                    TripleStoreUtility.PROP_VERSION_STATUS, Constants.WOV_NAMESPACE_URI,
+                    Constants.WOV_NAMESPACE_PREFIX, null, newStatus, null));
             }
-            final List<StartElementWithChildElements> elementsToAdd =
-                new ArrayList<StartElementWithChildElements>();
+            final List<StartElementWithChildElements> elementsToAdd = new ArrayList<StartElementWithChildElements>();
             // elementsToAdd.add(versionStatus);
 
             // add premis:event to version-history/version[1]/events as
             // first child
             final String newEventEntry =
-                createEventXml(resource.getId(),
-                    resBaseData.get("resourceBaseUrl"),
-                    getCurrentUserRealName(), getCurrentUserId(),
-                    XmlTemplateProvider.TIMESTAMP_PLACEHOLDER, newStatus,
-                    comment, currentVersionProperties);
+                createEventXml(resource.getId(), resBaseData.get("resourceBaseUrl"), getCurrentUserRealName(),
+                    getCurrentUserId(), XmlTemplateProvider.TIMESTAMP_PLACEHOLDER, newStatus, comment,
+                    currentVersionProperties);
 
             // change /version-history/version[version-number='x']/timestamp
             // this method changes exactly the first occurrence of the timestamp
             // - which is in this case the same (A support for XPath expressions
             // is not given due this parsers.)
-            updateElementsWOV.put(Constants.WOV_NAMESPACE_URI + "timestamp",
-                new StartElementWithChildElements("timestamp",
-                    Constants.WOV_NAMESPACE_URI,
-                    Constants.WOV_NAMESPACE_PREFIX, null,
-                    XmlTemplateProvider.TIMESTAMP_PLACEHOLDER, null, 1));
+            updateElementsWOV.put(Constants.WOV_NAMESPACE_URI + "timestamp", new StartElementWithChildElements(
+                "timestamp", Constants.WOV_NAMESPACE_URI, Constants.WOV_NAMESPACE_PREFIX, null,
+                XmlTemplateProvider.TIMESTAMP_PLACEHOLDER, null, 1));
 
             // do update WOV
-            writeEvent(resource, newEventEntry, updateElementsWOV,
-                elementsToAdd);
+            writeEvent(resource, newEventEntry, updateElementsWOV, elementsToAdd);
 
             // Update the status in the resource
             if (!Constants.STATUS_WITHDRAWN.equals(newStatus)) {
-                resource.setResourceProperties(
-                    PropertyMapKeys.CURRENT_VERSION_STATUS, newStatus);
+                resource.setResourceProperties(PropertyMapKeys.CURRENT_VERSION_STATUS, newStatus);
             }
         }
         else { // if (newStatus == null)
-               // this is an update
+            // this is an update
 
             // - latest-version.comment
-            updateElementsRelsExt.put(Elements.ELEMENT_COMMENT,
-                new StartElementWithChildElements(Elements.ELEMENT_COMMENT,
-                    Constants.VERSION_NS_URI, Constants.VERSION_NS_PREFIX,
-                    null, comment, null));
+            updateElementsRelsExt.put(Elements.ELEMENT_COMMENT, new StartElementWithChildElements(
+                Elements.ELEMENT_COMMENT, Constants.VERSION_NS_URI, Constants.VERSION_NS_PREFIX, null, comment, null));
 
             // create new version entry
             // renew in RELS-EXT:
@@ -883,36 +722,29 @@ public class Utility {
             // - latest-version.comment ( done )
 
             final int newVersionNumberInt =
-                Integer.parseInt(currentVersionProperties
-                    .get(PropertyMapKeys.LATEST_VERSION_NUMBER)) + 1;
+                Integer.parseInt(currentVersionProperties.get(PropertyMapKeys.LATEST_VERSION_NUMBER)) + 1;
 
-            updateElementsRelsExt.put(Elements.ELEMENT_NUMBER,
-                new StartElementWithChildElements(Elements.ELEMENT_NUMBER,
-                    Constants.VERSION_NS_URI, Constants.VERSION_NS_PREFIX,
-                    null, Integer.toString(newVersionNumberInt), null));
+            updateElementsRelsExt.put(Elements.ELEMENT_NUMBER, new StartElementWithChildElements(
+                Elements.ELEMENT_NUMBER, Constants.VERSION_NS_URI, Constants.VERSION_NS_PREFIX, null, Integer
+                    .toString(newVersionNumberInt), null));
 
             if (Constants.STATUS_RELEASED.equals(currentVersionProperties
                 .get(PropertyMapKeys.LATEST_VERSION_VERSION_STATUS))) {
                 // update of resource in state released
                 // change latest-version.status to pending
 
-                updateElementsRelsExt.put(Elements.ELEMENT_STATUS,
-                    new StartElementWithChildElements(Elements.ELEMENT_STATUS,
-                        Constants.VERSION_NS_URI, Constants.VERSION_NS_PREFIX,
-                        null, Constants.STATUS_PENDING, null));
+                updateElementsRelsExt.put(Elements.ELEMENT_STATUS, new StartElementWithChildElements(
+                    Elements.ELEMENT_STATUS, Constants.VERSION_NS_URI, Constants.VERSION_NS_PREFIX, null,
+                    Constants.STATUS_PENDING, null));
 
-                currentVersionProperties.put(
-                    PropertyMapKeys.LATEST_VERSION_VERSION_STATUS,
-                    Constants.STATUS_PENDING);
+                currentVersionProperties.put(PropertyMapKeys.LATEST_VERSION_VERSION_STATUS, Constants.STATUS_PENDING);
             }
 
             // remove version.pid
             final StartElementWithChildElements propertyToDelete =
-                new StartElementWithChildElements(Constants.RELEASE_NS_URI
-                    + Elements.ELEMENT_PID, Constants.VERSION_NS_URI,
-                    Constants.VERSION_NS_PREFIX, null, null, null);
-            final List<StartElementWithChildElements> toRemove =
-                new ArrayList<StartElementWithChildElements>();
+                new StartElementWithChildElements(Constants.RELEASE_NS_URI + Elements.ELEMENT_PID,
+                    Constants.VERSION_NS_URI, Constants.VERSION_NS_PREFIX, null, null, null);
+            final List<StartElementWithChildElements> toRemove = new ArrayList<StartElementWithChildElements>();
             toRemove.add(propertyToDelete);
             removeElementsRelsExt.put("/RDF/Description/pid", toRemove);
 
@@ -920,46 +752,35 @@ public class Utility {
             // placeholder for the timestamp is written. This placeholder is
             // replaced during persist().)
             final String newVersionXml =
-                createVersionXml(resource, resBaseData,
-                    currentVersionProperties, newVersionNumberInt, comment);
+                createVersionXml(resource, resBaseData, currentVersionProperties, newVersionNumberInt, comment);
 
             prependVersion(resource, newVersionXml);
         }
 
         // last operation is to update the timestamp in RELS-EXT
         if (release) {
-            resource.setResourceProperties(
-                PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER,
-                currentVersionProperties
-                    .get(PropertyMapKeys.CURRENT_VERSION_VERSION_NUMBER));
+            resource.setResourceProperties(PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER, currentVersionProperties
+                .get(PropertyMapKeys.CURRENT_VERSION_VERSION_NUMBER));
         }
         // write changes to RELS-EXT
-        updateElementsInRelsExt(updateElementsRelsExt, removeElementsRelsExt,
-            resource,
-            currentVersionProperties.get(PropertyMapKeys.PUBLIC_STATUS),
-            release);
+        updateElementsInRelsExt(updateElementsRelsExt, removeElementsRelsExt, resource, currentVersionProperties
+            .get(PropertyMapKeys.PUBLIC_STATUS), release);
     }
 
     /**
      * Update elements in RELS-EXt of versionable resource.
-     * 
-     * @param updateElementsRelsExt
-     *            elements to update
-     * @param removeElementsRelsExt
-     *            elements to remove from RELS-EXT
-     * @param resource
-     *            object resource
-     * @param currentPublicStatus
-     *            public-status of current version
-     * @param release
-     *            set true if version is release, false otherwise
-     * @throws SystemException
-     *             Thrown in case of internal failure.
+     *
+     * @param updateElementsRelsExt elements to update
+     * @param removeElementsRelsExt elements to remove from RELS-EXT
+     * @param resource              object resource
+     * @param currentPublicStatus   public-status of current version
+     * @param release               set true if version is release, false otherwise
+     * @throws SystemException Thrown in case of internal failure.
      */
-    private static void updateElementsInRelsExt(final Map<String, StartElementWithChildElements> updateElementsRelsExt,
-                                                final Map<String, List<StartElementWithChildElements>> removeElementsRelsExt,
-                                                final FedoraResource resource, final String currentPublicStatus,
-                                                final boolean release) throws SystemException {
+    private static void updateElementsInRelsExt(
+        final Map<String, StartElementWithChildElements> updateElementsRelsExt,
+        final Map<String, List<StartElementWithChildElements>> removeElementsRelsExt, final FedoraResource resource,
+        final String currentPublicStatus, final boolean release) throws SystemException {
 
         final StaxParser sp = new StaxParser();
         final ItemRelsExtUpdateHandler itemRelsExtUpdateHandler =
@@ -974,39 +795,26 @@ public class Utility {
 
         try {
             final ByteArrayInputStream relsExtBA;
-            if (release
-                && !Constants.STATUS_RELEASED.equals(currentPublicStatus)) {
+            if (release && !Constants.STATUS_RELEASED.equals(currentPublicStatus)) {
 
                 // FIXME if FIRST release add "latest-release" properties but
                 // not by string replace
-                String relsExtS =
-                    new String(resource.getRelsExt().getStream(),
-                        XmlUtility.CHARACTER_ENCODING);
+                String relsExtS = new String(resource.getRelsExt().getStream(), XmlUtility.CHARACTER_ENCODING);
                 relsExtS =
-                    relsExtS.replaceFirst("(</rdf:Description>)", '<'
-                        + Constants.RELEASE_NS_PREFIX + ':'
-                        + Elements.ELEMENT_NUMBER + " xmlns:"
-                        + Constants.RELEASE_NS_PREFIX + "=\""
-                        + Constants.RELEASE_NS_URI + "\"/>\n<"
-                        + Constants.RELEASE_NS_PREFIX + ':'
-                        + Elements.ELEMENT_DATE + " xmlns:"
-                        + Constants.RELEASE_NS_PREFIX + "=\""
-                        + Constants.RELEASE_NS_URI + "\">---</"
-                        + Constants.RELEASE_NS_PREFIX + ':'
+                    relsExtS.replaceFirst("(</rdf:Description>)", '<' + Constants.RELEASE_NS_PREFIX + ':'
+                        + Elements.ELEMENT_NUMBER + " xmlns:" + Constants.RELEASE_NS_PREFIX + "=\""
+                        + Constants.RELEASE_NS_URI + "\"/>\n<" + Constants.RELEASE_NS_PREFIX + ':'
+                        + Elements.ELEMENT_DATE + " xmlns:" + Constants.RELEASE_NS_PREFIX + "=\""
+                        + Constants.RELEASE_NS_URI + "\">---</" + Constants.RELEASE_NS_PREFIX + ':'
                         + Elements.ELEMENT_DATE + ">\n" + "$1");
-                relsExtBA =
-                    new ByteArrayInputStream(
-                        relsExtS.getBytes(XmlUtility.CHARACTER_ENCODING));
+                relsExtBA = new ByteArrayInputStream(relsExtS.getBytes(XmlUtility.CHARACTER_ENCODING));
             }
             else {
-                relsExtBA =
-                    new ByteArrayInputStream(resource.getRelsExt().getStream());
+                relsExtBA = new ByteArrayInputStream(resource.getRelsExt().getStream());
             }
             sp.parse(relsExtBA);
-            final ByteArrayOutputStream relsExt =
-                (ByteArrayOutputStream) me.getOutputStreams().get("RDF");
-            resource
-                .setRelsExt(relsExt.toString(XmlUtility.CHARACTER_ENCODING));
+            final ByteArrayOutputStream relsExt = (ByteArrayOutputStream) me.getOutputStreams().get("RDF");
+            resource.setRelsExt(relsExt.toString(XmlUtility.CHARACTER_ENCODING));
         }
         catch (final NullPointerException e) { // TODO: Refactor this! Don't use exceptions for controll flow!
             throw new XmlParserSystemException(e);
@@ -1028,137 +836,87 @@ public class Utility {
 
     /**
      * Create a new entry for the version-history (WOV).
-     * 
-     * @param resource
-     *            The versionable resource.
-     * @param resBaseData
-     * @param currentVersionProperties
-     * @param newVersionNumberInt
-     * @param comment
-     *            The version comment.
+     *
+     * @param resource The versionable resource.
+     * @param comment  The version comment.
      * @return WOV entry for new version
-     * @throws WebserverSystemException
-     * @throws TripleStoreSystemException
      */
     private String createVersionXml(
-        final FedoraResource resource,
-        final Map<String, String> resBaseData,
-        final Map<String, String> currentVersionProperties,
-        final int newVersionNumberInt, final String comment)
+        final FedoraResource resource, final Map<String, String> resBaseData,
+        final Map<String, String> currentVersionProperties, final int newVersionNumberInt, final String comment)
         throws WebserverSystemException, TripleStoreSystemException {
 
         // Map for version entry values
         final Map<String, String> newVersionEntry = new HashMap<String, String>();
 
         // compute new latest version data
-        newVersionEntry.put(XmlTemplateProvider.VAR_NAMESPACE_PREFIX,
-            Constants.WOV_NAMESPACE_PREFIX);
-        newVersionEntry.put(XmlTemplateProvider.VAR_NAMESPACE,
-            Constants.WOV_NAMESPACE_URI);
-        newVersionEntry.put(XmlTemplateProvider.OBJID, resource.getId() + ':'
-            + Integer.toString(newVersionNumberInt));
-        newVersionEntry.put(XmlTemplateProvider.TITLE,
-            "Version " + Integer.toString(newVersionNumberInt));
+        newVersionEntry.put(XmlTemplateProvider.VAR_NAMESPACE_PREFIX, Constants.WOV_NAMESPACE_PREFIX);
+        newVersionEntry.put(XmlTemplateProvider.VAR_NAMESPACE, Constants.WOV_NAMESPACE_URI);
+        newVersionEntry.put(XmlTemplateProvider.OBJID, resource.getId() + ':' + Integer.toString(newVersionNumberInt));
+        newVersionEntry.put(XmlTemplateProvider.TITLE, "Version " + Integer.toString(newVersionNumberInt));
 
-        newVersionEntry.put(XmlTemplateProvider.HREF, resource.getHref() + ':'
-            + Integer.toString(newVersionNumberInt));
-        newVersionEntry.put(XmlTemplateProvider.VERSION_NUMBER,
-            Integer.toString(newVersionNumberInt));
+        newVersionEntry.put(XmlTemplateProvider.HREF, resource.getHref() + ':' + Integer.toString(newVersionNumberInt));
+        newVersionEntry.put(XmlTemplateProvider.VERSION_NUMBER, Integer.toString(newVersionNumberInt));
         // real timestamp is not clear at this point (will pre fixed lated
         // during persist)
         // newVersionEntry.put(XmlTemplateProvider.TIMESTAMP,
         // newLatestModificationTimestamp);
-        newVersionEntry.put(XmlTemplateProvider.TIMESTAMP,
-            XmlTemplateProvider.TIMESTAMP_PLACEHOLDER);
-        newVersionEntry.put(XmlTemplateProvider.VAR_STATUS,
-            currentVersionProperties
-                .get(PropertyMapKeys.LATEST_VERSION_VERSION_STATUS));
-        newVersionEntry.put(XmlTemplateProvider.VALID_STATUS,
-            currentVersionProperties
-                .get(PropertyMapKeys.LATEST_VERSION_VALID_STATUS));
-        newVersionEntry.put(XmlTemplateProvider.VAR_COMMENT,
-            XmlUtility.escapeForbiddenXmlCharacters(comment));
-        newVersionEntry.put(XmlTemplateProvider.VAR_AGENT_ID_VALUE,
-            getCurrentUserId());
-        newVersionEntry.put(XmlTemplateProvider.VAR_AGENT_ID_TYPE,
-            Constants.PREMIS_ID_TYPE_ESCIDOC);
-        newVersionEntry.put(XmlTemplateProvider.VAR_AGENT_BASE_URI,
-            Constants.USER_ACCOUNT_URL_BASE);
-        newVersionEntry.put(XmlTemplateProvider.VAR_AGENT_TITLE,
-            getCurrentUserRealName());
+        newVersionEntry.put(XmlTemplateProvider.TIMESTAMP, XmlTemplateProvider.TIMESTAMP_PLACEHOLDER);
+        newVersionEntry.put(XmlTemplateProvider.VAR_STATUS, currentVersionProperties
+            .get(PropertyMapKeys.LATEST_VERSION_VERSION_STATUS));
+        newVersionEntry.put(XmlTemplateProvider.VALID_STATUS, currentVersionProperties
+            .get(PropertyMapKeys.LATEST_VERSION_VALID_STATUS));
+        newVersionEntry.put(XmlTemplateProvider.VAR_COMMENT, XmlUtility.escapeForbiddenXmlCharacters(comment));
+        newVersionEntry.put(XmlTemplateProvider.VAR_AGENT_ID_VALUE, getCurrentUserId());
+        newVersionEntry.put(XmlTemplateProvider.VAR_AGENT_ID_TYPE, Constants.PREMIS_ID_TYPE_ESCIDOC);
+        newVersionEntry.put(XmlTemplateProvider.VAR_AGENT_BASE_URI, Constants.USER_ACCOUNT_URL_BASE);
+        newVersionEntry.put(XmlTemplateProvider.VAR_AGENT_TITLE, getCurrentUserRealName());
 
         newVersionEntry.put(XmlTemplateProvider.VAR_EVENT_TYPE, "update");
-        newVersionEntry.put(
-            XmlTemplateProvider.VAR_EVENT_XMLID,
-                'v' + Integer.toString(newVersionNumberInt) + 'e'
-                + System.currentTimeMillis());
-        newVersionEntry.put(XmlTemplateProvider.VAR_EVENT_ID_VALUE,
-            resBaseData.get("resourceBaseUrl") + resource.getId()
-                + "/resources/" + Elements.ELEMENT_WOV_VERSION_HISTORY + '#'
-                + newVersionEntry.get(XmlTemplateProvider.VAR_EVENT_XMLID));
-        newVersionEntry.put(XmlTemplateProvider.VAR_EVENT_ID_TYPE,
-            Constants.PREMIS_ID_TYPE_URL_RELATIVE);
-        newVersionEntry.put(XmlTemplateProvider.VAR_OBJECT_ID_TYPE,
-            Constants.PREMIS_ID_TYPE_ESCIDOC);
-        newVersionEntry.put(XmlTemplateProvider.VAR_OBJECT_ID_VALUE,
-            resource.getId());
+        newVersionEntry.put(XmlTemplateProvider.VAR_EVENT_XMLID, 'v' + Integer.toString(newVersionNumberInt) + 'e'
+            + System.currentTimeMillis());
+        newVersionEntry.put(XmlTemplateProvider.VAR_EVENT_ID_VALUE, resBaseData.get("resourceBaseUrl")
+            + resource.getId() + "/resources/" + Elements.ELEMENT_WOV_VERSION_HISTORY + '#'
+            + newVersionEntry.get(XmlTemplateProvider.VAR_EVENT_XMLID));
+        newVersionEntry.put(XmlTemplateProvider.VAR_EVENT_ID_TYPE, Constants.PREMIS_ID_TYPE_URL_RELATIVE);
+        newVersionEntry.put(XmlTemplateProvider.VAR_OBJECT_ID_TYPE, Constants.PREMIS_ID_TYPE_ESCIDOC);
+        newVersionEntry.put(XmlTemplateProvider.VAR_OBJECT_ID_VALUE, resource.getId());
         // get xml representation of new version
         return CommonFoXmlProvider.getInstance().getWovVersionEntryXml(newVersionEntry);
     }
 
     /**
      * Set event values to HashMap and call version-history event entry.
-     * 
-     * @param resourceId
-     *            The id of the resource.
-     * @param resourceBaseUrl
-     *            The resource base URL
-     * @param currentUserName
-     *            The name of the current user.
-     * @param currentUserId
-     *            The id of the current user.
-     * @param latestModificationTimestamp
-     * @param newStatus
-     *            New version-status
-     * @param comment
-     *            The version comment.
-     * @param currentVersionProperties
-     *            map with properties of current version
+     *
+     * @param resourceId               The id of the resource.
+     * @param resourceBaseUrl          The resource base URL
+     * @param currentUserName          The name of the current user.
+     * @param currentUserId            The id of the current user.
+     * @param newStatus                New version-status
+     * @param comment                  The version comment.
+     * @param currentVersionProperties map with properties of current version
      * @return XML event entry for version-history
-     * @throws WebserverSystemException
-     *             Thrown in case of internal error.
+     * @throws WebserverSystemException Thrown in case of internal error.
      */
-    private static String createEventXml(final String resourceId, final String resourceBaseUrl,
-                                         final String currentUserName, final String currentUserId,
-                                         final String latestModificationTimestamp, final String newStatus,
-                                         final String comment, final Map<String, String> currentVersionProperties)
-        throws WebserverSystemException {
+    private static String createEventXml(
+        final String resourceId, final String resourceBaseUrl, final String currentUserName,
+        final String currentUserId, final String latestModificationTimestamp, final String newStatus,
+        final String comment, final Map<String, String> currentVersionProperties) throws WebserverSystemException {
 
         final HashMap<String, String> eventValues = new HashMap<String, String>();
         eventValues.put(XmlTemplateProvider.VAR_EVENT_TYPE, newStatus);
-        eventValues.put(
-            XmlTemplateProvider.VAR_EVENT_XMLID,
-                'v'
-                + currentVersionProperties
-                    .get(PropertyMapKeys.LATEST_VERSION_NUMBER) + 'e'
-                + System.currentTimeMillis());
-        eventValues.put(XmlTemplateProvider.VAR_EVENT_ID_TYPE,
-            Constants.PREMIS_ID_TYPE_URL_RELATIVE);
-        eventValues.put(XmlTemplateProvider.VAR_EVENT_ID_VALUE, resourceBaseUrl
-            + resourceId + "/resources/" + Elements.ELEMENT_WOV_VERSION_HISTORY
-            + '#' + eventValues.get(XmlTemplateProvider.VAR_EVENT_XMLID));
-        eventValues.put(XmlTemplateProvider.TIMESTAMP,
-            latestModificationTimestamp);
-        eventValues.put(XmlTemplateProvider.VAR_COMMENT,
-            XmlUtility.escapeForbiddenXmlCharacters(comment));
-        eventValues.put(XmlTemplateProvider.VAR_AGENT_BASE_URI,
-            Constants.USER_ACCOUNT_URL_BASE);
+        eventValues.put(XmlTemplateProvider.VAR_EVENT_XMLID, 'v'
+            + currentVersionProperties.get(PropertyMapKeys.LATEST_VERSION_NUMBER) + 'e' + System.currentTimeMillis());
+        eventValues.put(XmlTemplateProvider.VAR_EVENT_ID_TYPE, Constants.PREMIS_ID_TYPE_URL_RELATIVE);
+        eventValues.put(XmlTemplateProvider.VAR_EVENT_ID_VALUE, resourceBaseUrl + resourceId + "/resources/"
+            + Elements.ELEMENT_WOV_VERSION_HISTORY + '#' + eventValues.get(XmlTemplateProvider.VAR_EVENT_XMLID));
+        eventValues.put(XmlTemplateProvider.TIMESTAMP, latestModificationTimestamp);
+        eventValues.put(XmlTemplateProvider.VAR_COMMENT, XmlUtility.escapeForbiddenXmlCharacters(comment));
+        eventValues.put(XmlTemplateProvider.VAR_AGENT_BASE_URI, Constants.USER_ACCOUNT_URL_BASE);
         eventValues.put(XmlTemplateProvider.VAR_AGENT_TITLE, currentUserName);
-        eventValues.put(XmlTemplateProvider.VAR_AGENT_ID_TYPE,
-            Constants.PREMIS_ID_TYPE_ESCIDOC);
+        eventValues.put(XmlTemplateProvider.VAR_AGENT_ID_TYPE, Constants.PREMIS_ID_TYPE_ESCIDOC);
         eventValues.put(XmlTemplateProvider.VAR_AGENT_ID_VALUE, currentUserId);
-        eventValues.put(XmlTemplateProvider.VAR_OBJECT_ID_TYPE,
-            Constants.PREMIS_ID_TYPE_ESCIDOC);
+        eventValues.put(XmlTemplateProvider.VAR_OBJECT_ID_TYPE, Constants.PREMIS_ID_TYPE_ESCIDOC);
         eventValues.put(XmlTemplateProvider.VAR_OBJECT_ID_VALUE, resourceId);
 
         return CommonFoXmlProvider.getInstance().getPremisEventXml(eventValues);
@@ -1166,31 +924,25 @@ public class Utility {
 
     /**
      * Create comment for version update.
-     * 
-     * @param resource
-     *            The versionable resource.
-     * @param newStatus
-     *            New status of resource.
-     * @param versionComment
-     *            Comment for version.
+     *
+     * @param resource       The versionable resource.
+     * @param newStatus      New status of resource.
+     * @param versionComment Comment for version.
      * @return Comment
      */
-    private static String createComment(final FedoraResource resource, final String newStatus,
-                                        final String versionComment) {
+    private static String createComment(
+        final FedoraResource resource, final String newStatus, final String versionComment) {
         String comment = versionComment;
         if (versionComment == null) {
             comment = newStatus != null ? "Status changed to " + newStatus : "New version created";
-            comment +=
-                " for " + resource.getClass().getSimpleName() + ' '
-                    + resource.getId() + '.';
+            comment += " for " + resource.getClass().getSimpleName() + ' ' + resource.getId() + '.';
         }
         return comment;
     }
 
     /**
      * @return id of current user.
-     * @throws WebserverSystemException
-     *             Thrown if current user is not set.
+     * @throws WebserverSystemException Thrown if current user is not set.
      */
     public String getCurrentUserId() throws WebserverSystemException {
         return getCurrentUser()[0];
@@ -1198,8 +950,7 @@ public class Utility {
 
     /**
      * @return real name of current user.
-     * @throws WebserverSystemException
-     *             Thrown if current user is not set.
+     * @throws WebserverSystemException Thrown if current user is not set.
      */
     public String getCurrentUserRealName() throws WebserverSystemException {
         return getCurrentUser()[1];
@@ -1207,67 +958,55 @@ public class Utility {
 
     /**
      * Get basic XML data from resource.
-     * 
-     * @param resource
-     *            the resource.
+     *
+     * @param resource the resource.
      * @return Map with baseURL, xml namespace and prefix
-     * @throws SystemException
-     *             Thrown if anything fails.
+     * @throws SystemException Thrown if anything fails.
      */
     private static Map<String, String> getResourceBaseData(final VersionableResource resource) throws SystemException {
 
         final Map<String, String> baseData = new HashMap<String, String>();
         if (resource instanceof Item) {
             baseData.put("resourceBaseUrl", Constants.ITEM_URL_BASE);
-            baseData.put("resourcePrefix",
-                Constants.ITEM_PROPERTIES_NAMESPACE_PREFIX);
-            baseData.put("resourceNamespace",
-                Constants.ITEM_PROPERTIES_NAMESPACE_URI);
+            baseData.put("resourcePrefix", Constants.ITEM_PROPERTIES_NAMESPACE_PREFIX);
+            baseData.put("resourceNamespace", Constants.ITEM_PROPERTIES_NAMESPACE_URI);
         }
         else if (resource instanceof Container) {
             baseData.put("resourceBaseUrl", Constants.CONTAINER_URL_BASE);
-            baseData.put("resourcePrefix",
-                Constants.CONTAINER_PROPERTIES_PREFIX);
-            baseData.put("resourceNamespace",
-                Constants.CONTAINER_PROPERTIES_NAMESPACE_URI);
+            baseData.put("resourcePrefix", Constants.CONTAINER_PROPERTIES_PREFIX);
+            baseData.put("resourceNamespace", Constants.CONTAINER_PROPERTIES_NAMESPACE_URI);
         }
         else if (resource instanceof ContentModel) {
             baseData.put("resourceBaseUrl", Constants.CONTENT_MODEL_URL_BASE);
-            baseData.put("resourcePrefix",
-                Constants.CONTENT_MODEL_NAMESPACE_PREFIX);
-            baseData.put("resourceNamespace",
-                Constants.CONTENT_MODEL_NAMESPACE_URI);
+            baseData.put("resourcePrefix", Constants.CONTENT_MODEL_NAMESPACE_PREFIX);
+            baseData.put("resourceNamespace", Constants.CONTENT_MODEL_NAMESPACE_URI);
         }
         else if (resource instanceof Relation) {
             // FIXME resourceBaseUrl = Constants.CONTENT_RELATIONS_URL_BASE;
-            baseData.put("resourcePrefix",
-                Constants.CONTENT_RELATIONS_NAMESPACE_PREFIX);
-            baseData.put("resourceNamespace",
-                Constants.CONTENT_RELATIONS_NAMESPACE_URI);
+            baseData.put("resourcePrefix", Constants.CONTENT_RELATIONS_NAMESPACE_PREFIX);
+            baseData.put("resourceNamespace", Constants.CONTENT_RELATIONS_NAMESPACE_URI);
         }
         else {
-            throw new SystemException(
-                "'makeVersion' not supported for object-type '"
-                    + resource.getClass().getName() + "'.");
+            throw new SystemException("'makeVersion' not supported for object-type '" + resource.getClass().getName()
+                + "'.");
         }
 
         return baseData;
     }
 
     private static void prependVersion(final VersionableResource resource, final String versionEntry)
-        throws EncodingSystemException, FedoraSystemException,
-        IntegritySystemException {
+        throws EncodingSystemException, FedoraSystemException, IntegritySystemException {
 
         // TODO insert new version in version-history
         try {
-            final String wov =
-                resource.getWov().toString(XmlUtility.CHARACTER_ENCODING);
+            final String wov = resource.getWov().toString(XmlUtility.CHARACTER_ENCODING);
             final String newWov =
-                wov.replaceFirst("(<" + Constants.WOV_NAMESPACE_PREFIX
-                    + ":version-history[^>]+>)", "$1" + versionEntry);
+                wov
+                    .replaceFirst("(<" + Constants.WOV_NAMESPACE_PREFIX + ":version-history[^>]+>)", "$1"
+                        + versionEntry);
             final Datastream ds =
-                new Datastream("version-history", resource.getId(),
-                    newWov.getBytes(XmlUtility.CHARACTER_ENCODING), "text/xml");
+                new Datastream("version-history", resource.getId(), newWov.getBytes(XmlUtility.CHARACTER_ENCODING),
+                    "text/xml");
             resource.setWov(ds);
         }
         catch (final StreamNotFoundException e) {
@@ -1286,21 +1025,17 @@ public class Utility {
         }
     }
 
-    private static void writeEvent(final VersionableResource resource, final String newEventEntry,
-                                   final Map<String, StartElementWithChildElements> updateElementsWOV,
-                                   final List<StartElementWithChildElements> elementsToAdd)
-        throws WebserverSystemException {
+    private static void writeEvent(
+        final VersionableResource resource, final String newEventEntry,
+        final Map<String, StartElementWithChildElements> updateElementsWOV,
+        final List<StartElementWithChildElements> elementsToAdd) throws WebserverSystemException {
 
         final StaxParser sp = new StaxParser();
-        final ItemRelsExtUpdateHandler ireuh =
-            new ItemRelsExtUpdateHandler(updateElementsWOV, sp);
+        final ItemRelsExtUpdateHandler ireuh = new ItemRelsExtUpdateHandler(updateElementsWOV, sp);
         ireuh.setPath("/version-history/version/");
         sp.addHandler(ireuh);
-        final AddNewSubTreesToDatastream addNewSubtreesHandler =
-            new AddNewSubTreesToDatastream("/version-history", sp);
-        final StartElement pointer =
-            new StartElement("version", Constants.WOV_NAMESPACE_URI,
-                "escidocVersions", null);
+        final AddNewSubTreesToDatastream addNewSubtreesHandler = new AddNewSubTreesToDatastream("/version-history", sp);
+        final StartElement pointer = new StartElement("version", Constants.WOV_NAMESPACE_URI, "escidocVersions", null);
         addNewSubtreesHandler.setPointerElement(pointer);
         addNewSubtreesHandler.setSubtreeToInsert(elementsToAdd);
         sp.addHandler(addNewSubtreesHandler);
@@ -1308,18 +1043,13 @@ public class Utility {
         try {
             sp.parse(resource.getWov().getStream());
             sp.clearHandlerChain();
-            final ByteArrayOutputStream newWovStream =
-                addNewSubtreesHandler.getOutputStreams();
+            final ByteArrayOutputStream newWovStream = addNewSubtreesHandler.getOutputStreams();
             final String newWovString =
-                newWovStream
-                    .toString(XmlUtility.CHARACTER_ENCODING).replaceFirst(
-                        "(<" + Constants.WOV_NAMESPACE_PREFIX
-                            + ":events[^>]*>)", "$1" + newEventEntry);
+                newWovStream.toString(XmlUtility.CHARACTER_ENCODING).replaceFirst(
+                    "(<" + Constants.WOV_NAMESPACE_PREFIX + ":events[^>]*>)", "$1" + newEventEntry);
 
-            resource.setWov(new Datastream(
-                Elements.ELEMENT_WOV_VERSION_HISTORY, resource.getId(),
-                newWovString.getBytes(XmlUtility.CHARACTER_ENCODING),
-                "text/xml"));
+            resource.setWov(new Datastream(Elements.ELEMENT_WOV_VERSION_HISTORY, resource.getId(), newWovString
+                .getBytes(XmlUtility.CHARACTER_ENCODING), "text/xml"));
         }
         catch (final Exception e) {
             throw new WebserverSystemException(e);
@@ -1329,37 +1059,24 @@ public class Utility {
 
     /**
      * Adds and removes the provided elements to/from RELS-EXT.
-     * 
-     * @param addToRelsExt
-     *            - Vector with elements, which should be added to RELS-EXT
-     * @param deleteFromRelsExt
-     *            - Map containing key-value pairs: keys - paths to elements,
-     *            which should be deleted from RELS-EXT and values - elements
-     *            thereself.
-     * @param relsExtBytes
-     *            - optional parameter: byte [] with content of RELS-EXT
-     *            datastream. If no relsExtBytes provided (relsExtBytes is set
-     *            to null), the method retrieves the RELS-EXT from Fedora
-     * @param resource
-     *            The resource which RELS-EXT is to alter.
-     * @param updateProperties
+     *
+     * @param addToRelsExt      - Vector with elements, which should be added to RELS-EXT
+     * @param deleteFromRelsExt - Map containing key-value pairs: keys - paths to elements, which should be deleted from
+     *                          RELS-EXT and values - elements thereself.
+     * @param relsExtBytes      - optional parameter: byte [] with content of RELS-EXT datastream. If no relsExtBytes
+     *                          provided (relsExtBytes is set to null), the method retrieves the RELS-EXT from Fedora
+     * @param resource          The resource which RELS-EXT is to alter.
      * @return byte [] RELS-EXT datastream content
-     * @throws IntegritySystemException
-     *             If the integrity of the repository is violated.
-     * @throws XmlParserSystemException
-     *             If parsing of xml data fails.
-     * @throws WebserverSystemException
-     *             In case of an internal error.
-     * @throws FedoraSystemException
-     *             If the Fedora reports an error
+     * @throws IntegritySystemException If the integrity of the repository is violated.
+     * @throws XmlParserSystemException If parsing of xml data fails.
+     * @throws WebserverSystemException In case of an internal error.
+     * @throws FedoraSystemException    If the Fedora reports an error
      */
     public static byte[] updateRelsExt(
         final List<StartElementWithChildElements> addToRelsExt,
-        final Map<String, List<StartElementWithChildElements>> deleteFromRelsExt,
-        final byte[] relsExtBytes, final FedoraResource resource,
-        final Map<String, StartElementWithChildElements> updateProperties)
-        throws IntegritySystemException, FedoraSystemException,
-        XmlParserSystemException, WebserverSystemException {
+        final Map<String, List<StartElementWithChildElements>> deleteFromRelsExt, final byte[] relsExtBytes,
+        final FedoraResource resource, final Map<String, StartElementWithChildElements> updateProperties)
+        throws IntegritySystemException, FedoraSystemException, XmlParserSystemException, WebserverSystemException {
 
         final byte[] relsExtContent;
         if (relsExtBytes == null) {
@@ -1373,8 +1090,7 @@ public class Utility {
         else {
             relsExtContent = relsExtBytes;
         }
-        ByteArrayInputStream relsExtIs =
-            new ByteArrayInputStream(relsExtContent);
+        ByteArrayInputStream relsExtIs = new ByteArrayInputStream(relsExtContent);
 
         final StaxParser sp = new StaxParser();
         byte[] relsExtNewBytes = null;
@@ -1387,8 +1103,7 @@ public class Utility {
                 sp.addHandler(itemRelsExtUpdateHandler);
 
             }
-            final AddNewSubTreesToDatastream addNewEntriesHandler =
-                new AddNewSubTreesToDatastream("/RDF", sp);
+            final AddNewSubTreesToDatastream addNewEntriesHandler = new AddNewSubTreesToDatastream("/RDF", sp);
 
             final StartElement pointer = new StartElement();
             pointer.setLocalName("Description");
@@ -1414,8 +1129,7 @@ public class Utility {
                 throw new WebserverSystemException(e);
             }
             sp.clearHandlerChain();
-            final ByteArrayOutputStream relsExtNewStream =
-                addNewEntriesHandler.getOutputStreams();
+            final ByteArrayOutputStream relsExtNewStream = addNewEntriesHandler.getOutputStreams();
             relsExtNewBytes = relsExtNewStream.toByteArray();
         }
 
@@ -1424,21 +1138,18 @@ public class Utility {
             if (relsExtNewBytes != null) {
                 relsExtIs = new ByteArrayInputStream(relsExtNewBytes);
             }
-            if (updateProperties != null && !updateProperties.isEmpty()
-                && !updatedRelsExtProperties) {
+            if (updateProperties != null && !updateProperties.isEmpty() && !updatedRelsExtProperties) {
                 updatedRelsExtProperties = true;
                 final ItemRelsExtUpdateHandler itemRelsExtUpdateHandler =
                     new ItemRelsExtUpdateHandler(updateProperties, sp);
                 sp.addHandler(itemRelsExtUpdateHandler);
 
             }
-            final HashMap<String, String> extractPathes =
-                new HashMap<String, String>();
+            final HashMap<String, String> extractPathes = new HashMap<String, String>();
 
             extractPathes.put("/RDF", null);
 
-            final MultipleExtractor multipleExtractor =
-                new MultipleExtractor(extractPathes, sp);
+            final MultipleExtractor multipleExtractor = new MultipleExtractor(extractPathes, sp);
 
             multipleExtractor.removeElements(deleteFromRelsExt);
             sp.addHandler(multipleExtractor);
@@ -1456,21 +1167,17 @@ public class Utility {
                 throw new WebserverSystemException(e);
             }
             sp.clearHandlerChain();
-            final Map<String, Object> streams =
-                multipleExtractor.getOutputStreams();
-            final ByteArrayOutputStream relsExtNewStream =
-                (ByteArrayOutputStream) streams.get("RDF");
+            final Map<String, Object> streams = multipleExtractor.getOutputStreams();
+            final ByteArrayOutputStream relsExtNewStream = (ByteArrayOutputStream) streams.get("RDF");
             relsExtNewBytes = relsExtNewStream.toByteArray();
         }
-        if (updateProperties != null && !updateProperties.isEmpty()
-            && !updatedRelsExtProperties) {
+        if (updateProperties != null && !updateProperties.isEmpty() && !updatedRelsExtProperties) {
             final ItemRelsExtUpdateHandler itemRelsExtUpdateHandler =
                 new ItemRelsExtUpdateHandler(updateProperties, sp);
             sp.addHandler(itemRelsExtUpdateHandler);
             final HashMap<String, String> pathes = new HashMap<String, String>();
             pathes.put("/RDF", null);
-            final MultipleExtractor multipleExtractor =
-                new MultipleExtractor(pathes, sp);
+            final MultipleExtractor multipleExtractor = new MultipleExtractor(pathes, sp);
             sp.addHandler(multipleExtractor);
             try {
                 sp.parse(relsExtIs);
@@ -1481,7 +1188,6 @@ public class Utility {
             catch (final XMLStreamException e) {
                 throw new XmlParserSystemException(e);
             }
-
             catch (final LockingException e) {
                 throw new IntegritySystemException(e);
             }
@@ -1489,10 +1195,8 @@ public class Utility {
                 throw new WebserverSystemException("Unexpected Exception.", e);
             }
             sp.clearHandlerChain();
-            final Map<String, Object> streams =
-                multipleExtractor.getOutputStreams();
-            final ByteArrayOutputStream relsExtNewStream =
-                (ByteArrayOutputStream) streams.get("RDF");
+            final Map<String, Object> streams = multipleExtractor.getOutputStreams();
+            final ByteArrayOutputStream relsExtNewStream = (ByteArrayOutputStream) streams.get("RDF");
             relsExtNewBytes = relsExtNewStream.toByteArray();
         }
         return relsExtNewBytes != null ? relsExtNewBytes : relsExtContent;
@@ -1500,24 +1204,17 @@ public class Utility {
     }
 
     /**
-     * The method uses the staging file handler to create a new staging file
-     * that stores the provided stream in to staging area. The URL to this
-     * staging file is extracted from the XML representation of the staging file
-     * and is returned as the redirect URL.
-     * 
-     * @param streamContent
-     *            stream content
-     * @param fileName
-     *            file name, which will be included in returned redirect url
-     * @param mimeType
-     *            mime type
-     * @return redirectUrl url
-     * @throws FileSystemException
-     *             In case of an internal error during storing the content.
+     * The method uses the staging file handler to create a new staging file that stores the provided stream in to
+     * staging area. The URL to this staging file is extracted from the XML representation of the staging file and is
+     * returned as the redirect URL.
      *
+     * @param streamContent stream content
+     * @param fileName      file name, which will be included in returned redirect url
+     * @param mimeType      mime type
+     * @return redirectUrl url
+     * @throws FileSystemException In case of an internal error during storing the content.
      */
-    public String upload(
-        final byte[] streamContent, final String fileName, final String mimeType)
+    public String upload(final byte[] streamContent, final String fileName, final String mimeType)
         throws FileSystemException {
 
         final EscidocBinaryContent content = new EscidocBinaryContent();
@@ -1533,8 +1230,7 @@ public class Utility {
             throw new FileSystemException(e.getMessage(), e);
         }
         catch (final Exception e) {
-            throw new FileSystemException(
-                "Unexpected exception from StagingFileHandler.create", e);
+            throw new FileSystemException("Unexpected exception from StagingFileHandler.create", e);
         }
         final Matcher matcher = REDIRECT_URL_PATTERN.matcher(stagingFileXml);
         if (matcher.find()) {
@@ -1544,18 +1240,15 @@ public class Utility {
                 return base + path;
             }
         }
-        throw new FileSystemException(
-            "Unparseable result from StagingFileHandler.create");
+        throw new FileSystemException("Unparseable result from StagingFileHandler.create");
     }
 
     /**
      * Injects the staging file handler bean.
-     * 
-     * @param stagingFileHandler
-     *            The stanging file handler bean to inject.
+     *
+     * @param stagingFileHandler The stanging file handler bean to inject.
      */
-    public void setStagingFileHandler(
-        final StagingFileHandlerInterface stagingFileHandler) {
+    public void setStagingFileHandler(final StagingFileHandlerInterface stagingFileHandler) {
 
         this.stagingFileHandler = stagingFileHandler;
     }
@@ -1563,17 +1256,15 @@ public class Utility {
     /**
      * Injects the TripleStore utility.
      *
-     * @param tripleStoreUtility
-     *            TripleStoreUtility from Spring
+     * @param tripleStoreUtility TripleStoreUtility from Spring
      */
-    public void setTripleStoreUtility(
-        final TripleStoreUtility tripleStoreUtility) {
+    public void setTripleStoreUtility(final TripleStoreUtility tripleStoreUtility) {
         this.tripleStoreUtility = tripleStoreUtility;
     }
 
     /**
      * Get StagingFileHandlerBean.
-     * 
+     *
      * @return the stagingFileHandler
      */
     public StagingFileHandlerInterface getStagingFileHandler() {
@@ -1583,39 +1274,31 @@ public class Utility {
 
     /**
      * Prepare the XML for the return of all task oriented methods.
-     * 
+     * <p/>
      * TODO either use velocity template and/or move to an own class (ReturnXY)
-     * 
-     * @param lastModificationDate
-     *            The last-modification-date of the resource.
+     *
+     * @param lastModificationDate The last-modification-date of the resource.
      * @return The result XML structure.
-     * @throws SystemException
-     *             Thrown if parsing last modification or retrieving xml:base
-     *             failed.
+     * @throws SystemException Thrown if parsing last modification or retrieving xml:base failed.
      */
-    public String prepareReturnXmlFromLastModificationDate(final String lastModificationDate)
-        throws SystemException {
+    public String prepareReturnXmlFromLastModificationDate(final String lastModificationDate) throws SystemException {
         final DateTime t = new DateTime(lastModificationDate, DateTimeZone.UTC);
         return prepareReturnXml(t, null);
     }
 
     public String prepareReturnXml(final String content) throws SystemException {
-       return prepareReturnXml(null, content);
+        return prepareReturnXml(null, content);
     }
 
     /**
      * Prepare the XML for the return of all task oriented methods.
-     * 
+     * <p/>
      * TODO either use velocity template and/or move to an own class (ReturnXY)
-     * 
-     * @param lastModificationDate
-     *            The last-modification-date of the resource.
-     * @param content
-     *            The XML content elements of the result structure.
+     *
+     * @param lastModificationDate The last-modification-date of the resource.
+     * @param content              The XML content elements of the result structure.
      * @return The result XML structure.
-     * @throws SystemException
-     *             Thrown if parsing last modification or retrieving xml:base
-     *             failed.
+     * @throws SystemException Thrown if parsing last modification or retrieving xml:base failed.
      */
     public static String prepareReturnXml(final DateTime lastModificationDate, final String content)
         throws SystemException {
@@ -1627,14 +1310,9 @@ public class Utility {
         }
 
         String xml =
-            "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-                + "<result "
-                + "xmlns=\""
-                + Constants.RESULT_NAMESPACE_URI
-                + "\" "
-                + "last-modification-date=\""
-                + t.withZone(DateTimeZone.UTC).toString(
-                    Constants.TIMESTAMP_FORMAT) + '\"';
+            "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + "<result " + "xmlns=\"" + Constants.RESULT_NAMESPACE_URI
+                + "\" " + "last-modification-date=\""
+                + t.withZone(DateTimeZone.UTC).toString(Constants.TIMESTAMP_FORMAT) + '\"';
 
         xml += content == null ? " />" : ">\n" + content + "</result>\n";
 
@@ -1642,31 +1320,19 @@ public class Utility {
     }
 
     /**
-     * Makes a given URL full qualified by prepending eSciDoc base URL if
-     * necessary. Returns null, if the IDs of an item and a component are given
-     * and the URL refers to the content of that component of that item. Throws
-     * an Exception if the URL is invalid in the given context; that means it is
-     * of a form that is not allowed.
-     * 
-     * @param url
-     *            A URL.
-     * @param itemId
-     *            The id of an Item or null.
-     * @param componentId
-     *            The id of a Component or null.
-     * 
-     * @return The full qualified URL or null if the URL refers to the content
-     *         of the component, identified by componentId, of the item,
-     *         identified by itemId.
-     * 
-     * @throws InvalidContentException
-     *             If the String given as url is not a URI or invalid in the
-     *             current context.
-     * @throws WebserverSystemException
-     *             If an error occurs.
+     * Makes a given URL full qualified by prepending eSciDoc base URL if necessary. Returns null, if the IDs of an item
+     * and a component are given and the URL refers to the content of that component of that item. Throws an Exception
+     * if the URL is invalid in the given context; that means it is of a form that is not allowed.
+     *
+     * @param url         A URL.
+     * @param itemId      The id of an Item or null.
+     * @param componentId The id of a Component or null.
+     * @return The full qualified URL or null if the URL refers to the content of the component, identified by
+     *         componentId, of the item, identified by itemId.
+     * @throws InvalidContentException  If the String given as url is not a URI or invalid in the current context.
+     * @throws WebserverSystemException If an error occurs.
      */
-    public static String processUrl(
-        final String url, final String itemId, final String componentId)
+    public static String processUrl(final String url, final String itemId, final String componentId)
         throws InvalidContentException, WebserverSystemException {
         final String escidocBaseUrl = XmlUtility.getEscidocBaseUrl();
 
@@ -1696,10 +1362,8 @@ public class Utility {
             if (itemId != null && componentId != null) {
                 // expected
                 final String thisUrl =
-                    Constants.ITEM_URL_BASE
-                        + itemId
-                        + de.escidoc.core.common.business.fedora.Constants.COMPONENT_URL_PART
-                        + componentId
+                    Constants.ITEM_URL_BASE + itemId
+                        + de.escidoc.core.common.business.fedora.Constants.COMPONENT_URL_PART + componentId
                         + de.escidoc.core.common.business.fedora.Constants.COMPONENT_CONTENT_URL_PART;
                 final URI thisLocal = new URI(thisUrl);
                 final URI thisFq = new URI(escidocBaseUrl + thisUrl);
@@ -1719,38 +1383,32 @@ public class Utility {
 
     /**
      * Get number of build from escidoc.properties.
-     * 
+     *
      * @return build number
-     * @throws WebserverSystemException
-     *             Thrown if obtaining from properties failed.
+     * @throws WebserverSystemException Thrown if obtaining from properties failed.
      */
     public static String getBuildNumber() throws WebserverSystemException {
         final String buildNumber;
         try {
-            buildNumber =
-                EscidocConfiguration.getInstance().get(
-                    EscidocConfiguration.BUILD_NUMBER);
+            buildNumber = EscidocConfiguration.getInstance().get(EscidocConfiguration.BUILD_NUMBER);
         }
         catch (final Exception e) {
             throw new WebserverSystemException("Failed to retrieve configuration parameter "
-                    + EscidocConfiguration.FEDORA_URL, e);
+                + EscidocConfiguration.FEDORA_URL, e);
         }
         return buildNumber;
     }
 
     /**
      * Check if an URL is an URL to the framework itself.
-     * 
-     * @param url
-     *            URL as String.
-     * @throws InvalidContentException
-     *             Thrown if URL points not to the framework itself.
+     *
+     * @param url URL as String.
+     * @throws InvalidContentException Thrown if URL points not to the framework itself.
      */
-    private static void checkESciDocLocalURL(final String url)
-        throws InvalidContentException {
+    private static void checkESciDocLocalURL(final String url) throws InvalidContentException {
         if (!(url.startsWith("/ir/") || url.startsWith("/st/"))) {
             throw new InvalidContentException("The local URL '" + url
-                    + "' does not point into an eSciDoc Core component.");
+                + "' does not point into an eSciDoc Core component.");
         }
 
     }

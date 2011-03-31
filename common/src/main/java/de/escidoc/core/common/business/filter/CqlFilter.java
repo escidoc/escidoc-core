@@ -44,12 +44,13 @@ import java.util.TreeSet;
 
 /**
  * This class parses a CQL filter and translates it into a Hibernate query.
- * 
+ *
  * @author André Schenk
  */
 public abstract class CqlFilter {
 
     protected static final int COMPARE_LIKE = 0;
+
     protected static final int COMPARE_EQ = 1;
 
     /**
@@ -77,32 +78,26 @@ public abstract class CqlFilter {
      * Evaluate a CQL boolean node.
      *
      * @param node CQL node
-     *
      * @return Hibernate query reflecting the given CQL query
-     * @throws InvalidSearchQueryException thrown if the given search query could
-     *                                     not be translated into a SQL query
+     * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
      */
-    protected Criterion evaluate(final CQLBooleanNode node)
-        throws InvalidSearchQueryException {
+    protected Criterion evaluate(final CQLBooleanNode node) throws InvalidSearchQueryException {
         Criterion result = null;
         final Criterion left = evaluate(node.left);
         final Criterion right = evaluate(node.right);
 
         if (node instanceof CQLAndNode) {
             if (left != null || right != null) {
-                result = Restrictions.and(
-                    getAndRestriction(left), getAndRestriction(right));
+                result = Restrictions.and(getAndRestriction(left), getAndRestriction(right));
             }
         }
         else if (node instanceof CQLOrNode) {
             if (left != null || right != null) {
-                result = Restrictions.or(
-                    getOrRestriction(left), getOrRestriction(right));
+                result = Restrictions.or(getOrRestriction(left), getOrRestriction(right));
             }
         }
         else {
-            throw new InvalidSearchQueryException(
-                node + ": node type not implemented");
+            throw new InvalidSearchQueryException(node + ": node type not implemented");
         }
         return result;
     }
@@ -111,13 +106,10 @@ public abstract class CqlFilter {
      * Evaluate a CQL node.
      *
      * @param node CQL node
-     *
      * @return Hibernate query reflecting the given CQL query
-     * @throws InvalidSearchQueryException thrown if the given search query could
-     *                                     not be translated into a SQL query
+     * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
      */
-    protected Criterion evaluate(final CQLNode node)
-        throws InvalidSearchQueryException {
+    protected Criterion evaluate(final CQLNode node) throws InvalidSearchQueryException {
         final Criterion result;
 
         if (node instanceof CQLBooleanNode) {
@@ -130,8 +122,7 @@ public abstract class CqlFilter {
             result = evaluate((CQLTermNode) node);
         }
         else {
-            throw new InvalidSearchQueryException(
-                node + ": node type not implemented");
+            throw new InvalidSearchQueryException(node + ": node type not implemented");
         }
         return result;
     }
@@ -139,17 +130,15 @@ public abstract class CqlFilter {
     /**
      * Evaluate a CQL relation.
      *
-     * @param relation CQL relation
+     * @param relation     CQL relation
      * @param propertyName left side of the statement
-     * @param value right side of the statement
-     * @param useLike use LIKE instead of = in case of an equality relation
-     *
+     * @param value        right side of the statement
+     * @param useLike      use LIKE instead of = in case of an equality relation
      * @return Hibernate query reflecting the given CQL query
-     * @throws InvalidSearchQueryException thrown if the given search query could
-     *                                     not be translated into a SQL query
+     * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
      */
-    protected Criterion evaluate(final CQLRelation relation,
-        final String propertyName, final Object value, final boolean useLike)
+    protected Criterion evaluate(
+        final CQLRelation relation, final String propertyName, final Object value, final boolean useLike)
         throws InvalidSearchQueryException {
         final Criterion result;
         final String rel = relation.getBase();
@@ -177,8 +166,7 @@ public abstract class CqlFilter {
                 result = Restrictions.ne(propertyName, value);
             }
             else {
-                throw new InvalidSearchQueryException(
-                    rel + ": relation not implemented");
+                throw new InvalidSearchQueryException(rel + ": relation not implemented");
             }
         }
         return result;
@@ -188,37 +176,29 @@ public abstract class CqlFilter {
      * Evaluate a CQL sort node.
      *
      * @param node CQL node
-     *
      * @return Hibernate query reflecting the given CQL query
-     * @throws InvalidSearchQueryException thrown if the given search query could
-     *                                     not be translated into a SQL query
+     * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
      */
-   protected Criterion evaluate(final CQLSortNode node)
-        throws InvalidSearchQueryException {
+    protected Criterion evaluate(final CQLSortNode node) throws InvalidSearchQueryException {
         setOrderBy(node.getSortIndexes());
         return evaluate(node.subtree);
     }
 
-   /**
-    * Evaluate a CQL term node.
-    *
-    * @param node CQL node
-    *
-    * @return Hibernate query reflecting the given CQL query
-    * @throws InvalidSearchQueryException thrown if the given search query could
-    *                                     not be translated into a SQL query
-    */
-    protected Criterion evaluate(final CQLTermNode node)
-        throws InvalidSearchQueryException {
-        return evaluate(
-            node.getRelation(), node.getIndex(), node.getTerm(), false);
+    /**
+     * Evaluate a CQL term node.
+     *
+     * @param node CQL node
+     * @return Hibernate query reflecting the given CQL query
+     * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
+     */
+    protected Criterion evaluate(final CQLTermNode node) throws InvalidSearchQueryException {
+        return evaluate(node.getRelation(), node.getIndex(), node.getTerm(), false);
     }
 
     /**
      * Return the given criterion if it is not NULL. Otherwise return "TRUE".
-     * 
-     * @param criterion Hibernate query or NULL
      *
+     * @param criterion Hibernate query or NULL
      * @return the given Hibernate query or "TRUE"
      */
     private static Criterion getAndRestriction(final Criterion criterion) {
@@ -229,20 +209,17 @@ public abstract class CqlFilter {
     }
 
     /**
-     * get an in-restriction. Eventually concatenated with an isNull-restriction
-     * if criteria-set contains a null-value.
+     * get an in-restriction. Eventually concatenated with an isNull-restriction if criteria-set contains a null-value.
      *
-     * @param criteria criteria to put in in-restriction
+     * @param criteria  criteria to put in in-restriction
      * @param fieldName field-name for in-restriction
-     *
      * @return Criterion
      */
-    protected Criterion getInRestrictions(
-        final Collection<String> criteria, final String fieldName) {
+    protected Criterion getInRestrictions(final Collection<String> criteria, final String fieldName) {
         if (criteria.contains("")) {
             criteria.remove("");
-            return criteria.isEmpty() ? Restrictions.isNull(fieldName) : Restrictions.or(Restrictions.isNull(fieldName),
-                    Restrictions.in(fieldName, criteria.toArray()));
+            return criteria.isEmpty() ? Restrictions.isNull(fieldName) : Restrictions.or(
+                Restrictions.isNull(fieldName), Restrictions.in(fieldName, criteria.toArray()));
         }
         else {
             return Restrictions.in(fieldName, criteria.toArray());
@@ -251,9 +228,8 @@ public abstract class CqlFilter {
 
     /**
      * Return the given criterion if it is not NULL. Otherwise return "FALSE".
-     * 
-     * @param criterion Hibernate query or NULL
      *
+     * @param criterion Hibernate query or NULL
      * @return the given Hibernate query or "FALSE"
      */
     private static Criterion getOrRestriction(final Criterion criterion) {
@@ -306,35 +282,31 @@ public abstract class CqlFilter {
 
     /**
      * Set all sorting attributes.
-     * 
-     * @param orderBy order by attributes
      *
-     * @throws InvalidSearchQueryException thrown if the given search query could
-     *                                     not be translated into a SQL query
+     * @param orderBy order by attributes
+     * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
      */
-    protected void setOrderBy(final Iterable<ModifierSet> orderBy)
-        throws InvalidSearchQueryException {
+    protected void setOrderBy(final Iterable<ModifierSet> orderBy) throws InvalidSearchQueryException {
         for (final ModifierSet modifier : orderBy) {
             if (modifier.getModifiers().isEmpty()) {
                 detachedCriteria.addOrder(Order.asc(modifier.getBase()));
-            } else {
+            }
+            else {
                 for (final Modifier mod : modifier.getModifiers()) {
-                    final String columnName =
-                            propertyNamesMap.get(modifier.getBase());
+                    final String columnName = propertyNamesMap.get(modifier.getBase());
 
                     if (columnName == null) {
-                        throw new InvalidSearchQueryException(
-                                "attribute \"" + modifier.getBase()
-                                        + "\" not allowed for sorting");
+                        throw new InvalidSearchQueryException("attribute \"" + modifier.getBase()
+                            + "\" not allowed for sorting");
                     }
                     if ("sort.ascending".equals(mod.getType())) {
                         detachedCriteria.addOrder(Order.asc(columnName));
-                    } else if ("sort.descending".equals(mod.getType())) {
+                    }
+                    else if ("sort.descending".equals(mod.getType())) {
                         detachedCriteria.addOrder(Order.desc(columnName));
-                    } else {
-                        throw new InvalidSearchQueryException(
-                                mod.getType()
-                                        + ": index modifier type not implemented");
+                    }
+                    else {
+                        throw new InvalidSearchQueryException(mod.getType() + ": index modifier type not implemented");
                     }
                 }
             }
@@ -345,8 +317,7 @@ public abstract class CqlFilter {
      * Convert the CQL filter into a Hibernate query.
      *
      * @return Hibernate query representing this filter
-     * @throws InvalidSearchQueryException thrown if the given search query could
-     *                                     not be translated into a SQL query
+     * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
      */
     public DetachedCriteria toSql() throws InvalidSearchQueryException {
         return this.detachedCriteria;

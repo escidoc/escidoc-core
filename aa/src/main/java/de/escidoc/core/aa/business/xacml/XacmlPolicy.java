@@ -39,17 +39,14 @@ import java.util.List;
 
 /**
  * Class holding data of an XACML policy.
- * 
- * @author Torsten Tetteroo
- * 
  *
+ * @author Torsten Tetteroo
  */
 public class XacmlPolicy extends Policy {
 
     private final String roleId;
 
-    public static final String URN_RULE_COMBINING_ALGORITHM =
-        "urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:";
+    public static final String URN_RULE_COMBINING_ALGORITHM = "urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:";
 
     public static final String URN_RULE_COMBINING_ALGORITHM_ORDERED_DENY_OVERRIDES =
         URN_RULE_COMBINING_ALGORITHM + "ordered-deny-overrides";
@@ -59,54 +56,38 @@ public class XacmlPolicy extends Policy {
 
     /**
      * Constructor.
-     * 
-     * @param policyId
-     *            The policy id.
-     * @param ruleCombiningAlgorithm
-     *            The rule combining algorithm.
-     * @param description
-     *            The policy description.
-     * @param targetSubjects
-     *            The subjects part of the target of the policy.
-     * @param targetResources
-     *            The resources part of the target of the policy.
-     * @param rules
-     *            The policy rules.
-     * @param roleId
-     *            The role id.
-     * @param actions
-     *            The actions for which this policy is defined.
-     * @throws URISyntaxException
-     *             Thrown if creation fails due to URI syntax error.
      *
+     * @param policyId               The policy id.
+     * @param ruleCombiningAlgorithm The rule combining algorithm.
+     * @param description            The policy description.
+     * @param targetSubjects         The subjects part of the target of the policy.
+     * @param targetResources        The resources part of the target of the policy.
+     * @param rules                  The policy rules.
+     * @param roleId                 The role id.
+     * @param actions                The actions for which this policy is defined.
+     * @throws URISyntaxException Thrown if creation fails due to URI syntax error.
      */
-    public XacmlPolicy(final URI policyId,
-        final RuleCombiningAlgorithm ruleCombiningAlgorithm,
-        final String description, final List targetSubjects,
-        final List targetResources, final List rules, final String roleId,
-        final List actions) throws URISyntaxException {
+    public XacmlPolicy(final URI policyId, final RuleCombiningAlgorithm ruleCombiningAlgorithm,
+        final String description, final List targetSubjects, final List targetResources, final List rules,
+        final String roleId, final List actions) throws URISyntaxException {
 
-        super(policyId, ruleCombiningAlgorithm, description, new XacmlTarget(
-            targetSubjects, targetResources, actions), rules);
+        super(policyId, ruleCombiningAlgorithm, description, new XacmlTarget(targetSubjects, targetResources, actions),
+            rules);
         this.roleId = roleId;
     }
 
     /**
      * Gets the role id.
-     * 
-     * @return Returns the role id.
      *
+     * @return Returns the role id.
      */
     public String getRoleId() {
         return this.roleId;
     }
 
-
-
     /**
      * See Interface for functional description.
-     * 
-     * @return
+     *
      * @see Object#toString()
      */
     public String toString() {

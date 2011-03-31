@@ -9,9 +9,9 @@ import javax.ejb.EJBLocalHome;
 public interface AggregationDefinitionHandlerLocalHome extends EJBLocalHome {
 
     String COMP_NAME = "java:comp/env/ejb/AggregationDefinitionHandlerLocal";
+
     String JNDI_NAME = "ejb/AggregationDefinitionHandlerLocal";
 
-    AggregationDefinitionHandlerLocal create()
-            throws CreateException;
+    AggregationDefinitionHandlerLocal create() throws CreateException;
 
 }

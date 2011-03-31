@@ -42,9 +42,8 @@ import java.util.Map;
 
 /**
  * Handler for content of one Component.
- * 
+ *
  * @author ??
- * 
  */
 public class OneComponentContentHandler extends DefaultHandler {
 
@@ -52,8 +51,7 @@ public class OneComponentContentHandler extends DefaultHandler {
 
     private final String elementPath;
 
-    private final Map<String, String> componentBinary =
-        new HashMap<String, String>();
+    private final Map<String, String> componentBinary = new HashMap<String, String>();
 
     private String uploadUrl;
 
@@ -63,9 +61,8 @@ public class OneComponentContentHandler extends DefaultHandler {
 
     /**
      * OneComponentContentHandler.
-     * 
-     * @param parser
-     *            StAX parser.
+     *
+     * @param parser StAX parser.
      */
     public OneComponentContentHandler(final StaxParser parser) {
         this.parser = parser;
@@ -74,11 +71,9 @@ public class OneComponentContentHandler extends DefaultHandler {
 
     /**
      * OneComponentContentHandler.
-     * 
-     * @param parser
-     *            StAX parser.
-     * @param path
-     *            XPath to component content.
+     *
+     * @param parser StAX parser.
+     * @param path   XPath to component content.
      */
     public OneComponentContentHandler(final StaxParser parser, final String path) {
         this.parser = parser;
@@ -86,9 +81,8 @@ public class OneComponentContentHandler extends DefaultHandler {
     }
 
     /**
-     * Data structure which contains keys (storage, uploadUrl, content)
-     * depending on XML of Component.
-     * 
+     * Data structure which contains keys (storage, uploadUrl, content) depending on XML of Component.
+     *
      * @return Map with Component content.
      */
     public Map<String, String> getComponentBinary() {
@@ -100,8 +94,7 @@ public class OneComponentContentHandler extends DefaultHandler {
 
         final String currentPath = parser.getCurPath();
         if (elementPath.equals(currentPath)) {
-            final int indexOfStorage =
-                element.indexOfAttribute(null, Elements.ATTRIBUTE_STORAGE);
+            final int indexOfStorage = element.indexOfAttribute(null, Elements.ATTRIBUTE_STORAGE);
             String storageValue = null;
             if (indexOfStorage != -1) {
                 final Attribute storage = element.getAttribute(indexOfStorage);
@@ -109,9 +102,7 @@ public class OneComponentContentHandler extends DefaultHandler {
             }
             componentBinary.put(Elements.ATTRIBUTE_STORAGE, storageValue);
             this.inContent = true;
-            final int indexOfHref =
-                element.indexOfAttribute(Constants.XLINK_URI,
-                    Elements.ATTRIBUTE_XLINK_HREF);
+            final int indexOfHref = element.indexOfAttribute(Constants.XLINK_URI, Elements.ATTRIBUTE_XLINK_HREF);
             if (indexOfHref >= 0) {
                 final Attribute href = element.getAttribute(indexOfHref);
 
@@ -123,8 +114,7 @@ public class OneComponentContentHandler extends DefaultHandler {
     }
 
     @Override
-    public EndElement endElement(final EndElement element)
-        throws MissingContentException {
+    public EndElement endElement(final EndElement element) throws MissingContentException {
 
         if (this.inContent) {
 
@@ -134,8 +124,7 @@ public class OneComponentContentHandler extends DefaultHandler {
 
                 }
                 else {
-                    throw new MissingContentException(
-                        "The content of one component is missing");
+                    throw new MissingContentException("The content of one component is missing");
                 }
             }
             this.inContent = false;

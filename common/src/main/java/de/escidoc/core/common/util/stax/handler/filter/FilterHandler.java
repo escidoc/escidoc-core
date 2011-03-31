@@ -40,11 +40,9 @@ import java.util.regex.Pattern;
 
 public class FilterHandler extends DefaultHandler {
 
-    private static final String XPATH_ORDER_BY = '/' + XmlUtility.NAME_PARAM
-        + '/' + XmlUtility.NAME_ORDER_BY;
+    private static final String XPATH_ORDER_BY = '/' + XmlUtility.NAME_PARAM + '/' + XmlUtility.NAME_ORDER_BY;
 
-    private static final String XPATH_FILTER = '/' + XmlUtility.NAME_PARAM
-        + '/' + XmlUtility.NAME_FILTER;
+    private static final String XPATH_FILTER = '/' + XmlUtility.NAME_PARAM + '/' + XmlUtility.NAME_FILTER;
 
     /**
      * The default offset used if no offset is defined in parsed data.
@@ -52,8 +50,7 @@ public class FilterHandler extends DefaultHandler {
     public static final int DEFAULT_OFFSET = 0;
 
     /**
-     * The default limitation of the max. number of results used if no
-     * limitation is defined in parsed data.
+     * The default limitation of the max. number of results used if no limitation is defined in parsed data.
      */
     public static final int DEFAULT_LIMIT = 1000;
 
@@ -67,12 +64,11 @@ public class FilterHandler extends DefaultHandler {
      */
     private static final Pattern URI_PATTERN = Pattern.compile("[^/]+:.*/.*");
 
-    private static final Pattern NON_URI_PATTERN = Pattern
-        .compile("user|role|top-level-organizational-units"
+    private static final Pattern NON_URI_PATTERN =
+        Pattern.compile("user|role|top-level-organizational-units"
             + "|primary-affiliation|limited|granted|policyId|objectId"
             + "|userId|groupId|roleId|objectId|status|revocationDateFrom"
-            + "|revocationDateTo|grantedDateFrom|grantedDateTo"
-            + "|creatorId|revokerId");
+            + "|revocationDateTo|grantedDateFrom|grantedDateTo" + "|creatorId|revokerId");
 
     private final StaxParser parser;
 
@@ -93,18 +89,11 @@ public class FilterHandler extends DefaultHandler {
     private String orderBy;
 
     /**
-     * Constructs a FilterHandler object. This constructor implicitly
-     * sets default values:
-     * <ul>
-     * <li>{@link DEFAULT_LIMIT} used if no limit is defined in parsed data</li>
-     * <li>{@link DEFAULT_OFFSET} used if no offset is defined in parsed data</li>
-     * <li>{@link DEFAULT_SORTING} used if no sorting is defined in parsed data</li>
-     * </ul>
-     * 
-     * @param parser
-     *            The {@link StaxParser} to use.
-     * 
+     * Constructs a FilterHandler object. This constructor implicitly sets default values: <ul> <li>{@link
+     * DEFAULT_LIMIT} used if no limit is defined in parsed data</li> <li>{@link DEFAULT_OFFSET} used if no offset is
+     * defined in parsed data</li> <li>{@link DEFAULT_SORTING} used if no sorting is defined in parsed data</li> </ul>
      *
+     * @param parser The {@link StaxParser} to use.
      */
     public FilterHandler(final StaxParser parser) {
 
@@ -113,25 +102,17 @@ public class FilterHandler extends DefaultHandler {
         this.objectsToFindIdList = new HashSet<String>();
     }
 
-
     /**
      * See Interface for functional description.
-     * 
-     * @param data
-     * @param element
-     * @return
-     * @throws InvalidContentException
      */
     @Override
-    public String characters(final String data, final StartElement element)
-        throws InvalidContentException {
+    public String characters(final String data, final StartElement element) throws InvalidContentException {
 
         final String localName = element.getLocalName();
         if (this.inFilter) {
             if ("id".equals(localName)) {
-                if (! this.inObjectList) {
-                    throw new InvalidContentException(
-                        "Invalid id element in filter rule.");
+                if (!this.inObjectList) {
+                    throw new InvalidContentException("Invalid id element in filter rule.");
                 }
                 objectsToFindIdList.add(data);
             }
@@ -139,29 +120,24 @@ public class FilterHandler extends DefaultHandler {
                 // filtername=objectsToFind has no character data
                 final int indexOfName = element.indexOfAttribute(null, "name");
                 if (indexOfName >= 0) {
-                    final String filterName =
-                        element.getAttribute(indexOfName).getValue();
+                    final String filterName = element.getAttribute(indexOfName).getValue();
                     // filter name MUST be a URI or "user", "role" or
                     // "top-level-organizational-units"
                     final Matcher uriMatcher = URI_PATTERN.matcher(filterName);
                     final Matcher nonUriMatcher = NON_URI_PATTERN.matcher(filterName);
                     if (!uriMatcher.matches() && !nonUriMatcher.matches()) {
-                        throw new InvalidContentException(
-                            StringUtility.format(
-                                    "Filter is no URI.", filterName));
+                        throw new InvalidContentException(StringUtility.format("Filter is no URI.", filterName));
                     }
                     // filter name MUST NOT occur twice
                     if (rules.containsKey(filterName)) {
-                        throw new InvalidContentException(
-                            StringUtility.format(
-                                "Filter name occurs twice in filter param.",
-                                filterName));
+                        throw new InvalidContentException(StringUtility.format(
+                            "Filter name occurs twice in filter param.", filterName));
                     }
                     rules.put(filterName, data);
 
-                } else if (!element.isEmpty()) {
-                   throw new InvalidContentException(
-                        "Filter has no name.");
+                }
+                else if (!element.isEmpty()) {
+                    throw new InvalidContentException("Filter has no name.");
                 }
             }
         }
@@ -180,9 +156,6 @@ public class FilterHandler extends DefaultHandler {
 
     /**
      * See Interface for functional description.
-     * 
-     * @param element
-     * @return
      */
     @Override
     public StartElement startElement(final StartElement element) {
@@ -191,20 +164,16 @@ public class FilterHandler extends DefaultHandler {
             this.inFilter = true;
             final int indexOfName = element.indexOfAttribute(null, "name");
             if (indexOfName >= 0) {
-                final String filterName =
-                    element.getAttribute(indexOfName).getValue();
+                final String filterName = element.getAttribute(indexOfName).getValue();
                 if (filterName.equals(Constants.DC_IDENTIFIER_URI)) {
                     this.inObjectList = true;
                 }
             }
         }
         else if (curPath.equals(XPATH_ORDER_BY)) {
-            final int indexOfSorting =
-                element.indexOfAttribute(null, XmlUtility.NAME_SORTING);
+            final int indexOfSorting = element.indexOfAttribute(null, XmlUtility.NAME_SORTING);
             if (indexOfSorting >= 0) {
-                this.sorting =
-                    ListSorting.valueOf(element
-                        .getAttribute(indexOfSorting).getValue().toUpperCase());
+                this.sorting = ListSorting.valueOf(element.getAttribute(indexOfSorting).getValue().toUpperCase());
             }
         }
         return element;
@@ -212,9 +181,6 @@ public class FilterHandler extends DefaultHandler {
 
     /**
      * See Interface for functional description.
-     * 
-     * @param element
-     * @return
      */
     @Override
     public EndElement endElement(final EndElement element) {
@@ -229,15 +195,11 @@ public class FilterHandler extends DefaultHandler {
         return element;
     }
 
-
-
     /**
-     * Returns a Map with the filter names as keys for the filter values. A
-     * special entry is the key <code>objectsToFind</code> for a Set of object
-     * IDs.
-     * 
-     * @return Filter Map
+     * Returns a Map with the filter names as keys for the filter values. A special entry is the key
+     * <code>objectsToFind</code> for a Set of object IDs.
      *
+     * @return Filter Map
      */
     public Map<String, Object> getRules() {
         return this.rules;
@@ -245,13 +207,9 @@ public class FilterHandler extends DefaultHandler {
 
     /**
      * Puts a new Rule into rule-map.
-     * 
-     * @param ruleName
-     *            name of rule
-     * @param ruleValues
-     *            values for rule
-     * 
      *
+     * @param ruleName   name of rule
+     * @param ruleValues values for rule
      */
     @SuppressWarnings("unchecked")
     public void putRule(final String ruleName, final Collection<String> ruleValues) {
@@ -268,11 +226,8 @@ public class FilterHandler extends DefaultHandler {
 
     /**
      * Removes a Rule from rule-map.
-     * 
-     * @param ruleName
-     *            name of rule
-     * 
      *
+     * @param ruleName name of rule
      */
     public void removeRule(final String ruleName) {
         rules.remove(ruleName);
@@ -280,10 +235,9 @@ public class FilterHandler extends DefaultHandler {
 
     /**
      * Gets the parsed offset.
-     * 
-     * @return Returns the parsed offset. If none has been found, the default
-     *         value {@link FilterHandler.DEFAULT_OFFSET} is returned
      *
+     * @return Returns the parsed offset. If none has been found, the default value {@link FilterHandler.DEFAULT_OFFSET}
+     *         is returned
      */
     public int getOffset() {
 
@@ -292,10 +246,9 @@ public class FilterHandler extends DefaultHandler {
 
     /**
      * Gets the parsed limit.
-     * 
-     * @return Returns the parsed limit. If none has been found, the default
-     *         value {@link FilterHandler.DEFAULT_LIMIT} is returned.
      *
+     * @return Returns the parsed limit. If none has been found, the default value {@link FilterHandler.DEFAULT_LIMIT}
+     *         is returned.
      */
     public int getLimit() {
 
@@ -304,10 +257,8 @@ public class FilterHandler extends DefaultHandler {
 
     /**
      * Gets the parsed ordering information.
-     * 
-     * @return Returns the parsed ordering information. If none has been found,
-     *         <code>null</code> is returned.
      *
+     * @return Returns the parsed ordering information. If none has been found, <code>null</code> is returned.
      */
     public String getOrderBy() {
         return this.orderBy;
@@ -315,11 +266,9 @@ public class FilterHandler extends DefaultHandler {
 
     /**
      * Gets the parsed sorting information.
-     * 
-     * @return Returns the parsed ordering information. If none has been found,
-     *         the default value {@link FilterHandler.DEFAULT_SORTING} is
-     *         returned.
      *
+     * @return Returns the parsed ordering information. If none has been found, the default value {@link
+     *         FilterHandler.DEFAULT_SORTING} is returned.
      */
     public ListSorting getSorting() {
         return this.sorting;

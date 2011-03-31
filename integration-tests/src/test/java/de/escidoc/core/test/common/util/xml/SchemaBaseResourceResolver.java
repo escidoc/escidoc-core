@@ -39,48 +39,37 @@ import java.util.regex.Pattern;
 
 /**
  * Helper class to change the base-url of imported schemas.
- * 
- * @author Michael Hoppe
  *
+ * @author Michael Hoppe
  */
 public class SchemaBaseResourceResolver implements LSResourceResolver {
 
     /**
-     * Pattern used to detect base-url of schema-location
-     * in imported schemas.
+     * Pattern used to detect base-url of schema-location in imported schemas.
      */
-    private static final Pattern PATTERN_SCHEMA_LOCATION_BASE =
-        Pattern.compile(Constants.SCHEMA_LOCATION_BASE);
+    private static final Pattern PATTERN_SCHEMA_LOCATION_BASE = Pattern.compile(Constants.SCHEMA_LOCATION_BASE);
 
     /**
      * Replaces base-part of system-id.
-     * 
-     * @param s String
+     *
+     * @param s  String
      * @param s1 String1
      * @param s2 String2
      * @param s3 String3
      * @param s4 String4
      * @return LSInput LSInput.
-     * 
-     *
      */
-    public LSInput resolveResource(final String s,
-            final String s1, final String s2,
-            final String s3, final String s4) {
+    public LSInput resolveResource(final String s, final String s1, final String s2, final String s3, final String s4) {
         if (s3 != null) {
-            Matcher schemaLocationMatcher =
-                    PATTERN_SCHEMA_LOCATION_BASE.matcher(s3);
+            Matcher schemaLocationMatcher = PATTERN_SCHEMA_LOCATION_BASE.matcher(s3);
             if (schemaLocationMatcher.find()) {
-                return new DOMInputImpl(
-                        s2,
-                        schemaLocationMatcher
-                        .replaceAll(
-                        Constants.SCHEMA_LOCATION_REPLACEMENT),
-                        s4);
-            } else {
+                return new DOMInputImpl(s2, schemaLocationMatcher.replaceAll(Constants.SCHEMA_LOCATION_REPLACEMENT), s4);
+            }
+            else {
                 return null;
             }
-        } else {
+        }
+        else {
             return null;
         }
     }

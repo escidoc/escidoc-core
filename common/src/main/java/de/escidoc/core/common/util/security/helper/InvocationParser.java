@@ -61,37 +61,30 @@ import java.util.regex.Pattern;
 
 /**
  * @author Roland Werner (Accenture)
- * @spring.bean id="eSciDoc.core.common.helper.InvocationParser" lazy-init =
- *              "true"
- * 
  */
 public class InvocationParser {
 
     /**
      * Pattern used to detect the place holder for indices in the defined xpath.
      */
-    private static final Pattern PATTERN_INDEXED =
-        Pattern.compile(InvocationMapping.INDEXED_PATTERN);
+    private static final Pattern PATTERN_INDEXED = Pattern.compile(InvocationMapping.INDEXED_PATTERN);
 
     /**
      * Pattern used to detect sub-resource-attributes in invocation-mappings.
      */
-    private static final Pattern PATTERN_SUBRESOURCE =
-        Pattern.compile(InvocationMapping.SUBRESOURCE_PATTERN);
-    private static final Matcher matcherSubresource =
-                        PATTERN_SUBRESOURCE.matcher("");
+    private static final Pattern PATTERN_SUBRESOURCE = Pattern.compile(InvocationMapping.SUBRESOURCE_PATTERN);
+
+    private static final Matcher matcherSubresource = PATTERN_SUBRESOURCE.matcher("");
 
     private static final int CACHE_SIZE = 20;
 
     private final DocumentCache documentCache = new DocumentCache(CACHE_SIZE);
 
     /**
-     * Cache for xml <code>Document</code> objects.<br>
-     * This cache is used to avoid multiple parsing of the same document. It
-     * provides an method to retrieve a document with creation of not found
-     * documents. It uses a <code>LRUMap</code> that is synchronized (via
-     * {@link Collections}.synchronizedMap({@link Map})).
-     * 
+     * Cache for xml <code>Document</code> objects.<br> This cache is used to avoid multiple parsing of the same
+     * document. It provides an method to retrieve a document with creation of not found documents. It uses a
+     * <code>LRUMap</code> that is synchronized (via {@link Collections}.synchronizedMap({@link Map})).
+     *
      * @author Torsten Tetteroo
      */
     private static final class DocumentCache {
@@ -100,9 +93,8 @@ public class InvocationParser {
 
         /**
          * Creates cache of specified size.
-         * 
-         * @param size
-         *            The number of elements in the cache.
+         *
+         * @param size The number of elements in the cache.
          */
         @SuppressWarnings("unchecked")
         private DocumentCache(final int size) {
@@ -111,33 +103,24 @@ public class InvocationParser {
         }
 
         /**
-         * Retrieves the document for the provided document data.<br>
-         * If it does not exist in the cache, it will be created from the
-         * document data and saved.
-         * 
-         * @param documentData
-         *            The object to get the xml document for, or
-         *            <code>null</code> in case of an error.
-         * @return Returns the xml <code>Document</code> object representing
-         *         the provided xml data.
-         * @throws IOException
-         *             Thrown in case of an i/o error.
-         * @throws ParserConfigurationException
-         *             Thrown in case of an error in parser configuration
-         * @throws SAXException
-         *             Thrown in case of a parse error
+         * Retrieves the document for the provided document data.<br> If it does not exist in the cache, it will be
+         * created from the document data and saved.
+         *
+         * @param documentData The object to get the xml document for, or <code>null</code> in case of an error.
+         * @return Returns the xml <code>Document</code> object representing the provided xml data.
+         * @throws IOException                  Thrown in case of an i/o error.
+         * @throws ParserConfigurationException Thrown in case of an error in parser configuration
+         * @throws SAXException                 Thrown in case of a parse error
          */
-        public Document retrieveDocument(final Object documentData)
-            throws IOException, ParserConfigurationException, SAXException {
+        public Document retrieveDocument(final Object documentData) throws IOException, ParserConfigurationException,
+            SAXException {
 
             Document document = map.get(documentData);
             if (document == null) {
-                final DocumentBuilder builder =
-                    DocumentBuilderFactory.newInstance().newDocumentBuilder();
+                final DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
                 document =
-                    builder.parse(new ByteArrayInputStream(
-                        ((String) documentData)
-                            .getBytes(XmlUtility.CHARACTER_ENCODING)));
+                    builder.parse(new ByteArrayInputStream(((String) documentData)
+                        .getBytes(XmlUtility.CHARACTER_ENCODING)));
                 map.put(documentData, document);
             }
 
@@ -146,108 +129,79 @@ public class InvocationParser {
     }
 
     /**
-     * Builds a {@link List} of {@link Map} objects that are holding the
-     * attributes for a authorization request to the PDP from the provided
-     * methodName and arguments, and from the stored user context.<br>
-     * This method delegates to
+     * Builds a {@link List} of {@link Map} objects that are holding the attributes for a authorization request to the
+     * PDP from the provided methodName and arguments, and from the stored user context.<br> This method delegates to
      * <code>buildRequestsList(Object MethodMapping, boolean)</code>
-     * 
-     * @param arguments
-     *            The arguments
-     * @param methodMapping
-     *            The method mappings to use
+     *
+     * @param arguments     The arguments
+     * @param methodMapping The method mappings to use
      * @return The generated {@link List} of {@link Map} objects.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
-     * @throws MissingElementValueException
-     *             Thrown if an argument does not contain a mandatory element.
-     * @throws MissingAttributeValueException
-     *             Thrown if an argument does not contain a mandatory attribute .
+     * @throws SystemException                Thrown in case of an internal error.
+     * @throws MissingElementValueException   Thrown if an argument does not contain a mandatory element.
+     * @throws MissingAttributeValueException Thrown if an argument does not contain a mandatory attribute .
      * @throws MissingMethodParameterException
-     *             Thrown if an argument has not been provided but is needed for
-     *             authorization.
-     * @throws InvalidXmlException
-     *             Thrown if an argument is expected to contain XML data but
-     *             cannot be parsed.
+     *                                        Thrown if an argument has not been provided but is needed for
+     *                                        authorization.
+     * @throws InvalidXmlException            Thrown if an argument is expected to contain XML data but cannot be
+     *                                        parsed.
      */
-    public List<Map<String, String>> buildRequestsList(
-        final Object[] arguments, final MethodMapping methodMapping)
-        throws MissingMethodParameterException, MissingAttributeValueException,
-        MissingElementValueException, InvalidXmlException, SystemException {
+    public List<Map<String, String>> buildRequestsList(final Object[] arguments, final MethodMapping methodMapping)
+        throws MissingMethodParameterException, MissingAttributeValueException, MissingElementValueException,
+        InvalidXmlException, SystemException {
 
         return buildRequestsList(arguments, methodMapping, true);
     }
 
     /**
-     * Builds a {@link List} of {@link Map} objects that are holding the
-     * attributes for a authorization request to the PDP from the provided
-     * methodName and arguments, and from the stored user context.<br>
-     * This method delegates to
+     * Builds a {@link List} of {@link Map} objects that are holding the attributes for a authorization request to the
+     * PDP from the provided methodName and arguments, and from the stored user context.<br> This method delegates to
      * <code>buildRequestsList(Object MethodMapping, boolean)</code>
-     * 
-     * @param argument
-     *            The arguments
-     * @param methodMapping
-     *            The method mappings to use
+     *
+     * @param argument      The arguments
+     * @param methodMapping The method mappings to use
      * @return The generated {@link List} of {@link Map} objects.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
-     * @throws MissingElementValueException
-     *             Thrown if an argument does not contain a mandatory element.
-     * @throws MissingAttributeValueException
-     *             Thrown if an argument does not contain a mandatory attribute .
+     * @throws SystemException                Thrown in case of an internal error.
+     * @throws MissingElementValueException   Thrown if an argument does not contain a mandatory element.
+     * @throws MissingAttributeValueException Thrown if an argument does not contain a mandatory attribute .
      * @throws MissingMethodParameterException
-     *             Thrown if an argument has not been provided but is needed for
-     *             authorization.
-     * @throws InvalidXmlException
-     *             Thrown if an argument is expected to contain XML data but
-     *             cannot be parsed.
+     *                                        Thrown if an argument has not been provided but is needed for
+     *                                        authorization.
+     * @throws InvalidXmlException            Thrown if an argument is expected to contain XML data but cannot be
+     *                                        parsed.
      */
-    public List<Map<String, String>> buildRequestsList(
-        final Object argument, final MethodMapping methodMapping)
-        throws MissingMethodParameterException, MissingAttributeValueException,
-        MissingElementValueException, InvalidXmlException, SystemException {
+    public List<Map<String, String>> buildRequestsList(final Object argument, final MethodMapping methodMapping)
+        throws MissingMethodParameterException, MissingAttributeValueException, MissingElementValueException,
+        InvalidXmlException, SystemException {
 
         return buildRequestsList(argument, methodMapping, false);
     }
 
     /**
-     * Builds a {@link List} of {@link Map} objects that are holding the
-     * attributes for a authorization request to the PDP from the provided
-     * methodName and arguments, and from the stored user context.
-     * 
-     * @param arguments
-     *            The arguments
-     * @param methodMapping
-     *            The method mappings to use
-     * @param isArray
-     *            Flag that indicates that the given arguments parameter is an
-     *            array (<code>true</code>) or not (<code>false</code>).
+     * Builds a {@link List} of {@link Map} objects that are holding the attributes for a authorization request to the
+     * PDP from the provided methodName and arguments, and from the stored user context.
+     *
+     * @param arguments     The arguments
+     * @param methodMapping The method mappings to use
+     * @param isArray       Flag that indicates that the given arguments parameter is an array (<code>true</code>) or
+     *                      not (<code>false</code>).
      * @return The generated {@link List} of {@link Map} objects.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
-     * @throws MissingElementValueException
-     *             Thrown if an argument does not contain a mandatory element.
-     * @throws MissingAttributeValueException
-     *             Thrown if an argument does not contain a mandatory attribute .
+     * @throws SystemException                Thrown in case of an internal error.
+     * @throws MissingElementValueException   Thrown if an argument does not contain a mandatory element.
+     * @throws MissingAttributeValueException Thrown if an argument does not contain a mandatory attribute .
      * @throws MissingMethodParameterException
-     *             Thrown if an argument has not been provided but is needed for
-     *             authorization.
-     * @throws InvalidXmlException
-     *             Thrown if an argument is expected to contain XML data but
-     *             cannot be parsed.
+     *                                        Thrown if an argument has not been provided but is needed for
+     *                                        authorization.
+     * @throws InvalidXmlException            Thrown if an argument is expected to contain XML data but cannot be
+     *                                        parsed.
      */
     private List<Map<String, String>> buildRequestsList(
-        final Object arguments, final MethodMapping methodMapping,
-        final boolean isArray) throws MissingMethodParameterException,
-        MissingAttributeValueException, MissingElementValueException,
+        final Object arguments, final MethodMapping methodMapping, final boolean isArray)
+        throws MissingMethodParameterException, MissingAttributeValueException, MissingElementValueException,
         InvalidXmlException, SystemException {
 
-        final Set<InvocationMapping> invocationMappings =
-            methodMapping.getInvocationMappings();
+        final Set<InvocationMapping> invocationMappings = methodMapping.getInvocationMappings();
 
-        final List<Map<String, String>> requests =
-            new ArrayList<Map<String, String>>();
+        final List<Map<String, String>> requests = new ArrayList<Map<String, String>>();
 
         // for each resource, loop will be left in case of IndexOutOfBounds
         // exception
@@ -263,12 +217,10 @@ public class InvocationParser {
                 request.put(AttributeIds.URN_SUBJECT_ID, id);
 
                 // setup resource
-                request.putAll(setupResourceAttributes(arguments,
-                    invocationMappings, isArray, index));
+                request.putAll(setupResourceAttributes(arguments, invocationMappings, isArray, index));
 
                 // setup action
-                request.put(AttributeIds.URN_ACTION_ID, methodMapping
-                    .getActionName());
+                request.put(AttributeIds.URN_ACTION_ID, methodMapping.getActionName());
             }
             catch (final IndexOutOfBoundsException e) {
                 break;
@@ -284,46 +236,31 @@ public class InvocationParser {
 
     /**
      * Creates XACML resource attributes for the provided data.<br>
-     * 
-     * For this the arguments' data referenced by the provided invocation
-     * mappings are relevant. Each of these referenced objects will be
-     * transformed into an XACML resource attribute.
-     * 
-     * @param arguments
-     *            The arguments of the method call.
-     * @param invocationMappings
-     *            The invocation mappings for that the request shall be
-     *            generated.
-     * @param isArray
-     *            Flag that indicates that the given arguments parameter is an
-     *            array (<code>true</code>) or not (<code>false</code>).
-     * @param index
-     *            The index of the current object.
-     * @return Returns a <code>Map</code> from attribute urn to attribute
-     *         value defining the resource attributes.
-     * 
+     * <p/>
+     * For this the arguments' data referenced by the provided invocation mappings are relevant. Each of these
+     * referenced objects will be transformed into an XACML resource attribute.
+     *
+     * @param arguments          The arguments of the method call.
+     * @param invocationMappings The invocation mappings for that the request shall be generated.
+     * @param isArray            Flag that indicates that the given arguments parameter is an array (<code>true</code>)
+     *                           or not (<code>false</code>).
+     * @param index              The index of the current object.
+     * @return Returns a <code>Map</code> from attribute urn to attribute value defining the resource attributes.
      * @throws MissingMethodParameterException
-     *             Thrown if an invocation mapping references an argument that
-     *             is set to <code>null</code>.
-     * @throws MissingAttributeValueException
-     *             Thrown if an invocation mapping references an attribute in an
-     *             argument that holds XML data but the attribute cannot be
-     *             found.
-     * @throws MissingElementValueException
-     *             Thrown if an invocation mapping references an element in an
-     *             argument that holds XML data but the element cannot be found.
-     * @throws WebserverSystemException
-     *             Thrown if there is a problem with an invocation mapping.
-     * @throws InvalidXmlException
-     *             Thrown if an argument should contain XML but cannot be parsed
-     *             or an argument or element is expected but missing.
+     *                                        Thrown if an invocation mapping references an argument that is set to
+     *                                        <code>null</code>.
+     * @throws MissingAttributeValueException Thrown if an invocation mapping references an attribute in an argument
+     *                                        that holds XML data but the attribute cannot be found.
+     * @throws MissingElementValueException   Thrown if an invocation mapping references an element in an argument that
+     *                                        holds XML data but the element cannot be found.
+     * @throws WebserverSystemException       Thrown if there is a problem with an invocation mapping.
+     * @throws InvalidXmlException            Thrown if an argument should contain XML but cannot be parsed or an
+     *                                        argument or element is expected but missing.
      */
     private Map<String, String> setupResourceAttributes(
-        final Object arguments,
-        final Iterable<InvocationMapping> invocationMappings, final boolean isArray,
-        final int index) throws MissingMethodParameterException,
-        MissingAttributeValueException, MissingElementValueException,
-        WebserverSystemException, InvalidXmlException {
+        final Object arguments, final Iterable<InvocationMapping> invocationMappings, final boolean isArray,
+        final int index) throws MissingMethodParameterException, MissingAttributeValueException,
+        MissingElementValueException, WebserverSystemException, InvalidXmlException {
 
         if (arguments == null || invocationMappings == null) {
             return new HashMap<String, String>();
@@ -336,9 +273,7 @@ public class InvocationParser {
         // for each invocation mapping...
         for (final InvocationMapping invocationMapping : invocationMappings) {
             // FIXME: resolve this
-            final StringAttribute value =
-                    getValueForInvocationMapping(arguments, isArray, index,
-                            invocationMapping);
+            final StringAttribute value = getValueForInvocationMapping(arguments, isArray, index, invocationMapping);
 
             // and put the resource attribute in the Vector
             if (value != null) {
@@ -346,10 +281,9 @@ public class InvocationParser {
                 if (attributeId.equals(EvaluationCtx.RESOURCE_ID)) {
                     // found the resource ID
                     resourceIdProvided = true;
-                } else if (matcherSubresource.reset(attributeId).matches()) {
-                    resourceAttributes.put(
-                            AttributeIds.URN_SUBRESOURCE_ATTR,
-                            value.getValue());
+                }
+                else if (matcherSubresource.reset(attributeId).matches()) {
+                    resourceAttributes.put(AttributeIds.URN_SUBRESOURCE_ATTR, value.getValue());
                     subresourceIdProvided = true;
                 }
                 resourceAttributes.put(attributeId, value.getValue());
@@ -371,36 +305,25 @@ public class InvocationParser {
 
     /**
      * Gets the {@link StringAttribute} for the provided values.
-     * 
-     * @param arguments
-     *            The arguments of the method call.
-     * @param isArray
-     *            Flag that indicates that the given arguments parameter is an
-     *            array (<code>true</code>) or not (<code>false</code>).
-     * @param index
-     *            The index of the current object.
-     * 
-     * @param invocationMapping
-     *            The {@link InvocationMapping} to get the value for.
-     * @return Returns a {@link StringAttribute} with the value for the
-     *         invocation mapping.
+     *
+     * @param arguments         The arguments of the method call.
+     * @param isArray           Flag that indicates that the given arguments parameter is an array (<code>true</code>)
+     *                          or not (<code>false</code>).
+     * @param index             The index of the current object.
+     * @param invocationMapping The {@link InvocationMapping} to get the value for.
+     * @return Returns a {@link StringAttribute} with the value for the invocation mapping.
      * @throws MissingMethodParameterException
-     *             Thrown if a mandatory method parameter is not provided.
-     * @throws InvalidXmlException
-     *             Thrown in case of provided invalid xml.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
+     *                                  Thrown if a mandatory method parameter is not provided.
+     * @throws InvalidXmlException      Thrown in case of provided invalid xml.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     private StringAttribute getValueForInvocationMapping(
-        final Object arguments, final boolean isArray, final int index,
-        final InvocationMapping invocationMapping)
-        throws WebserverSystemException, MissingMethodParameterException,
-        InvalidXmlException {
+        final Object arguments, final boolean isArray, final int index, final InvocationMapping invocationMapping)
+        throws WebserverSystemException, MissingMethodParameterException, InvalidXmlException {
 
         // set the value
         final StringAttribute value;
-        if (invocationMapping.getMappingType() 
-                == InvocationMapping.VALUE_MAPPING) {
+        if (invocationMapping.getMappingType() == InvocationMapping.VALUE_MAPPING) {
             // fetch the value from inside the invocation mapping
             value = new StringAttribute(invocationMapping.getValue());
         }
@@ -408,49 +331,38 @@ public class InvocationParser {
             // Get the current object addressed by the invocation mapping
             final Object currentObject;
             if (isArray) {
-                currentObject =
-                    ((Object[]) arguments)[invocationMapping.getPosition()];
+                currentObject = ((Object[]) arguments)[invocationMapping.getPosition()];
             }
             else {
                 if (invocationMapping.getPosition() != 0) {
-                    throw new WebserverSystemException(
-                            "Invocation mapping error. Position "+
-                            invocationMapping.getPosition()+
-                            " invalid for single argument, must be 0. [id="+
-                            invocationMapping.getId()+ ']');
+                    throw new WebserverSystemException("Invocation mapping error. Position "
+                        + invocationMapping.getPosition() + " invalid for single argument, must be 0. [id="
+                        + invocationMapping.getId() + ']');
                 }
                 currentObject = arguments;
             }
 
             // assert the addressed object has been provided
             if (currentObject == null) {
-                throw new MissingMethodParameterException(
-                                "The parameter at specified "
-                                + "position must be provided"
-                            + (invocationMapping.getPosition() + 1));
+                throw new MissingMethodParameterException("The parameter at specified " + "position must be provided"
+                    + (invocationMapping.getPosition() + 1));
             }
-            if (invocationMapping.getMappingType() 
-                    == InvocationMapping.SIMPLE_ATTRIBUTE_MAPPING) {
+            if (invocationMapping.getMappingType() == InvocationMapping.SIMPLE_ATTRIBUTE_MAPPING) {
                 value = new StringAttribute(currentObject.toString());
             }
-            else if (invocationMapping.getMappingType() 
-                    == InvocationMapping.XML_ATTRIBUTE_MAPPING
-                || invocationMapping.getMappingType() 
-                == InvocationMapping.OPTIONAL_XML_ATTRIBUTE_MAPPING) {
+            else if (invocationMapping.getMappingType() == InvocationMapping.XML_ATTRIBUTE_MAPPING
+                || invocationMapping.getMappingType() == InvocationMapping.OPTIONAL_XML_ATTRIBUTE_MAPPING) {
                 // fetch the value from XML document
                 final Document document;
                 try {
                     document = documentCache.retrieveDocument(currentObject);
                 }
                 catch (final SAXException e) {
-                    throw new XmlCorruptedException(StringUtility
-                        .format(
-                                "Parsing of provided XML data failed. ", e
-                                .getMessage()), e);
+                    throw new XmlCorruptedException(StringUtility.format("Parsing of provided XML data failed. ", e
+                        .getMessage()), e);
                 }
                 catch (final Exception e) {
-                    throw new WebserverSystemException(
-                        "Internal error. Parsing of XML failed.", e);
+                    throw new WebserverSystemException("Internal error. Parsing of XML failed.", e);
                 }
 
                 String path = invocationMapping.getPath();
@@ -459,32 +371,23 @@ public class InvocationParser {
                     path = path.substring("extractObjid:".length());
                     extractObjidNeeded = true;
                 }
-                final String xpath =
-                    PATTERN_INDEXED.matcher(path).replaceAll(
-                                    "["+ (index + 1)+ ']');
+                final String xpath = PATTERN_INDEXED.matcher(path).replaceAll("[" + (index + 1) + ']');
                 final NodeList nodeList;
                 try {
                     nodeList = XPathAPI.selectNodeList(document, xpath);
                 }
                 catch (final TransformerException e) {
-                    throw new WebserverSystemException(StringUtility
-                        .format(
-                            "Invocation mapping error. Xpath invalid?", xpath,
-                            index, invocationMapping.getId()), e);
+                    throw new WebserverSystemException(StringUtility.format("Invocation mapping error. Xpath invalid?",
+                        xpath, index, invocationMapping.getId()), e);
                 }
 
                 if (nodeList == null || nodeList.getLength() == 0) {
                     if (index > 0) {
                         throw new IndexOutOfBoundsException();
                     }
-                    else if (invocationMapping.getMappingType() 
-                            == InvocationMapping.XML_ATTRIBUTE_MAPPING) {
-                        throw new XmlCorruptedException(
-                                StringUtility
-                                    .format(
-                                            "Expected value not found "
-                                                    + "in provided XML data ",
-                                            xpath));
+                    else if (invocationMapping.getMappingType() == InvocationMapping.XML_ATTRIBUTE_MAPPING) {
+                        throw new XmlCorruptedException(StringUtility.format("Expected value not found "
+                            + "in provided XML data ", xpath));
                     }
                     else {
                         // skip undefined optional attribute by setting
@@ -511,13 +414,14 @@ public class InvocationParser {
                             values.add(tmpValue.trim());
                         }
                     }
-                    if(values.isEmpty()) {
+                    if (values.isEmpty()) {
                         value = null;
-                    } else {
+                    }
+                    else {
                         final StringBuilder valueBuf = new StringBuilder("");
-                        for(final String val : values) {
-                            if(! val.isEmpty()) {
-                                if(valueBuf.length() > 0) {
+                        for (final String val : values) {
+                            if (!val.isEmpty()) {
+                                if (valueBuf.length() > 0) {
                                     valueBuf.append(' ');
                                 }
                                 valueBuf.append(val);
@@ -528,11 +432,8 @@ public class InvocationParser {
                 }
             }
             else {
-                throw new WebserverSystemException(StringUtility
-                    .format(
-                            "Unsupported invocation mapping type",
-                            invocationMapping.getMappingType(), invocationMapping
-                            .getId()));
+                throw new WebserverSystemException(StringUtility.format("Unsupported invocation mapping type",
+                    invocationMapping.getMappingType(), invocationMapping.getId()));
             }
         }
         return value;

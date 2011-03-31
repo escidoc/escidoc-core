@@ -10,10 +10,8 @@ import javax.ejb.EJBLocalObject;
  */
 public interface IngestHandlerLocal extends EJBLocalObject {
 
-    String ingest(String xmlData, SecurityContext securityContext)
-            throws EscidocException;
+    String ingest(String xmlData, SecurityContext securityContext) throws EscidocException;
 
-    String ingest(String xmlData, String authHandle, Boolean restAccess)
-            throws EscidocException;
+    String ingest(String xmlData, String authHandle, Boolean restAccess) throws EscidocException;
 
 }

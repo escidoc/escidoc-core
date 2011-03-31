@@ -17,22 +17,12 @@ import java.rmi.RemoteException;
  */
 public interface SemanticStoreHandlerRemote extends EJBObject {
 
-    String spo(String taskParam, SecurityContext securityContext)
-            throws SystemException,
-            InvalidTripleStoreQueryException,
-            InvalidTripleStoreOutputFormatException,
-            InvalidXmlException,
-            MissingElementValueException,
-            AuthenticationException,
-            AuthorizationException, RemoteException;
+    String spo(String taskParam, SecurityContext securityContext) throws SystemException,
+        InvalidTripleStoreQueryException, InvalidTripleStoreOutputFormatException, InvalidXmlException,
+        MissingElementValueException, AuthenticationException, AuthorizationException, RemoteException;
 
-    String spo(String taskParam, String authHandle, Boolean restAccess)
-            throws SystemException,
-            InvalidTripleStoreQueryException,
-            InvalidTripleStoreOutputFormatException,
-            InvalidXmlException,
-            MissingElementValueException,
-            AuthenticationException,
-            AuthorizationException, RemoteException;
+    String spo(String taskParam, String authHandle, Boolean restAccess) throws SystemException,
+        InvalidTripleStoreQueryException, InvalidTripleStoreOutputFormatException, InvalidXmlException,
+        MissingElementValueException, AuthenticationException, AuthorizationException, RemoteException;
 
 }

@@ -36,44 +36,37 @@ import org.slf4j.LoggerFactory;
 
 /**
  * DAO implementation used by the renderer to get needed data.
- * 
+ *
  * @author Torsten Tetteroo
- * 
  */
 public class RendererDao {
 
     /**
      * The logger.
      */
-    private static final Logger LOGGER =
-        LoggerFactory.getLogger(RendererDao.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RendererDao.class);
 
     private TripleStoreUtility tsu;
 
     /**
-     * Gets the title of the specified organizational unit.<br>
-     * First, the triple store is asked for the ou's title. If this fails, the
-     * organizationalUnitHandler is asked for the xml representation of the
-     * organizational unit and the title is set to the name extracted from the
-     * xml data. The latter has been implemented as a fallback to handle old ous
-     * for that no title may be specified in the triple store.
-     * 
-     * @param ouId
-     *            The id of the organizational unit.
+     * Gets the title of the specified organizational unit.<br> First, the triple store is asked for the ou's title. If
+     * this fails, the organizationalUnitHandler is asked for the xml representation of the organizational unit and the
+     * title is set to the name extracted from the xml data. The latter has been implemented as a fallback to handle old
+     * ous for that no title may be specified in the triple store.
+     *
+     * @param ouId The id of the organizational unit.
      * @return Returns the title of the organizational unit.
      * @throws OrganizationalUnitNotFoundException
-     *             Thrown if no organizational unit with the provided id exists.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
-     *
+     *                         Thrown if no organizational unit with the provided id exists.
+     * @throws SystemException Thrown in case of an internal error.
      */
-    public String getOrganizationalUnitTitle(final String ouId)
-        throws OrganizationalUnitNotFoundException, SystemException {
+    public String getOrganizationalUnitTitle(final String ouId) throws OrganizationalUnitNotFoundException,
+        SystemException {
 
         String title = tsu.getTitle(ouId);
 
         if (title == null) {
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("OU title not found in triple store, returning 'Non existing Organizational Unit'");
             }
             // no title indicates the OU does not exist. Report unknown title or
@@ -88,9 +81,8 @@ public class RendererDao {
 
     /**
      * Injects the triple store utility bean.
-     * 
-     * @param tsu
-     *            The {@link TripleStoreUtility}.
+     *
+     * @param tsu The {@link TripleStoreUtility}.
      */
     public void setTsu(final TripleStoreUtility tsu) {
         this.tsu = tsu;

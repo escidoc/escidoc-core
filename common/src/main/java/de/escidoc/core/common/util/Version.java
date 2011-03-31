@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
 
 /**
  * Container object for version information.
- * 
+ *
  * @author Andr&eacute; Schenk
  */
 public class Version implements Comparable<Version> {
@@ -40,16 +40,12 @@ public class Version implements Comparable<Version> {
 
     /**
      * Create a new Version object.
-     * 
-     * @param majorNumber
-     *            major number (first digit)
-     * @param minorNumber
-     *            minor number (second digit)
-     * @param revisionNumber
-     *            revision number (third digit)
+     *
+     * @param majorNumber    major number (first digit)
+     * @param minorNumber    minor number (second digit)
+     * @param revisionNumber revision number (third digit)
      */
-    public Version(final int majorNumber, final int minorNumber,
-        final int revisionNumber) {
+    public Version(final int majorNumber, final int minorNumber, final int revisionNumber) {
         this.majorNumber = majorNumber;
         this.minorNumber = minorNumber;
         this.revisionNumber = revisionNumber;
@@ -57,9 +53,8 @@ public class Version implements Comparable<Version> {
 
     /**
      * Create a new version object.
-     * 
-     * @param version
-     *            version number as string of the form "major.minor.revision"
+     *
+     * @param version version number as string of the form "major.minor.revision"
      */
     public Version(final String version) {
         final String[] parts = SPLIT_PATTERN.split(version);
@@ -71,12 +66,9 @@ public class Version implements Comparable<Version> {
 
     /**
      * Compares this object with the specified object for order.
-     * 
-     * @param o
-     *            the Object to be compared
-     * 
-     * @return -1, 0 or 1 as this object is less than, equal to, or greater than
-     *         the specified object.
+     *
+     * @param o the Object to be compared
+     * @return -1, 0 or 1 as this object is less than, equal to, or greater than the specified object.
      */
     @Override
     public int compareTo(final Version o) {
@@ -90,7 +82,7 @@ public class Version implements Comparable<Version> {
                 result = -1;
             }
             else if (o.minorNumber == this.minorNumber) {
-                result = o.revisionNumber > this.revisionNumber ? - 1 : o.revisionNumber == this.revisionNumber ? 0 : 1;
+                result = o.revisionNumber > this.revisionNumber ? -1 : o.revisionNumber == this.revisionNumber ? 0 : 1;
             }
             else {
                 result = 1;
@@ -104,12 +96,9 @@ public class Version implements Comparable<Version> {
 
     /**
      * Indicates whether some other object is "equal to" this one.
-     * 
-     * @param obj
-     *            the reference object with which to compare.
-     * 
-     * @return true if this object is the same as the obj argument; false
-     *         otherwise
+     *
+     * @param obj the reference object with which to compare.
+     * @return true if this object is the same as the obj argument; false otherwise
      */
     public boolean equals(final Object obj) {
         if (this == obj) {
@@ -121,15 +110,13 @@ public class Version implements Comparable<Version> {
 
         final Version other = (Version) obj;
 
-        return !(this.majorNumber != other.majorNumber || this.minorNumber != other.minorNumber ||
-                this.revisionNumber != other.revisionNumber);
+        return !(this.majorNumber != other.majorNumber || this.minorNumber != other.minorNumber || this.revisionNumber != other.revisionNumber);
     }
 
     /**
-     * Return a hash code value for the object. This method is supported for the
-     * benefit of hash tables such as those provided by
-     * {@link Hashtable}.
-     * 
+     * Return a hash code value for the object. This method is supported for the benefit of hash tables such as those
+     * provided by {@link Hashtable}.
+     *
      * @return a hash code value for this object
      */
     public int hashCode() {
@@ -144,7 +131,7 @@ public class Version implements Comparable<Version> {
 
     /**
      * Returns a string representation of the object.
-     * 
+     *
      * @return a string representation of the object
      */
     public String toString() {

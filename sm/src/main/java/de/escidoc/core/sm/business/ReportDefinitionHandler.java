@@ -65,8 +65,7 @@ import java.util.Map;
  *
  * @author Michael Hoppe
  */
-public class ReportDefinitionHandler
-    implements ReportDefinitionHandlerInterface {
+public class ReportDefinitionHandler implements ReportDefinitionHandlerInterface {
 
     private SmReportDefinitionsDaoInterface dao;
 
@@ -84,31 +83,20 @@ public class ReportDefinitionHandler
 
     /**
      * See Interface for functional description.
-     * 
-     * @see de.escidoc.core.sm.business.interfaces
-     *      .ReportDefinitionHandlerInterface #create(java.lang.String)
-     * 
-     * @param xmlData
-     *            ReportDefinition as xml in ReportDefinition schema.
-     * @return Returns the XML representation of the resource.
-     * 
-     * @throws MissingMethodParameterException
-     *             ex
-     * @throws ScopeNotFoundException
-     *             ex
-     * @throws ScopeContextViolationException
-     *             ex
-     * @throws InvalidSqlException
-     *             ex
-     * @throws SystemException
-     *             ex
-     * 
      *
+     * @param xmlData ReportDefinition as xml in ReportDefinition schema.
+     * @return Returns the XML representation of the resource.
+     * @throws MissingMethodParameterException
+     *                                        ex
+     * @throws ScopeNotFoundException         ex
+     * @throws ScopeContextViolationException ex
+     * @throws InvalidSqlException            ex
+     * @throws SystemException                ex
+     * @see de.escidoc.core.sm.business.interfaces .ReportDefinitionHandlerInterface #create(java.lang.String)
      */
     @Override
-    public String create(final String xmlData) throws InvalidSqlException,
-        MissingMethodParameterException, ScopeNotFoundException,
-        ScopeContextViolationException, SystemException {
+    public String create(final String xmlData) throws InvalidSqlException, MissingMethodParameterException,
+        ScopeNotFoundException, ScopeContextViolationException, SystemException {
         if (xmlData == null || xmlData.length() == 0) {
             throw new MissingMethodParameterException("xml may not be null");
         }
@@ -130,10 +118,8 @@ public class ReportDefinitionHandler
         final Utility utility = new Utility();
         reportDefinition.setCreatorId(utility.getCurrentUserId());
         reportDefinition.setModifiedById(reportDefinition.getCreatorId());
-        reportDefinition.setLastModificationDate(new Timestamp(System
-            .currentTimeMillis()));
-        reportDefinition.setCreationDate(reportDefinition
-            .getLastModificationDate());
+        reportDefinition.setLastModificationDate(new Timestamp(System.currentTimeMillis()));
+        reportDefinition.setCreationDate(reportDefinition.getLastModificationDate());
         reportDefinition.setScope(scope);
 
         // check if sql is executable and
@@ -147,26 +133,18 @@ public class ReportDefinitionHandler
 
     /**
      * See Interface for functional description.
-     * 
-     * @see de.escidoc.core.sm.business.interfaces
-     *      .ReportDefinitionHandlerInterface #delete(java.lang.String)
-     * 
-     * @param id
-     *            resource id.
-     * 
-     * @throws ReportDefinitionNotFoundException
-     *             e.
-     * @throws MissingMethodParameterException
-     *             e.
-     * @throws SystemException
-     *             e.
-     * 
      *
+     * @param id resource id.
+     * @throws ReportDefinitionNotFoundException
+     *                         e.
+     * @throws MissingMethodParameterException
+     *                         e.
+     * @throws SystemException e.
+     * @see de.escidoc.core.sm.business.interfaces .ReportDefinitionHandlerInterface #delete(java.lang.String)
      */
     @Override
-    public void delete(final String id)
-        throws ReportDefinitionNotFoundException,
-        MissingMethodParameterException, SystemException {
+    public void delete(final String id) throws ReportDefinitionNotFoundException, MissingMethodParameterException,
+        SystemException {
         if (id == null) {
             throw new MissingMethodParameterException("id may not be null");
         }
@@ -177,27 +155,19 @@ public class ReportDefinitionHandler
 
     /**
      * See Interface for functional description.
-     * 
-     * @see de.escidoc.core.sm.business.interfaces
-     *      .ReportDefinitionHandlerInterface #retrieve(java.lang.String)
-     * 
-     * @param id
-     *            resource id.
-     * @return Returns the XML representation of the resource.
-     * 
-     * @throws ReportDefinitionNotFoundException
-     *             e.
-     * @throws MissingMethodParameterException
-     *             e.
-     * @throws SystemException
-     *             e.
-     * 
      *
+     * @param id resource id.
+     * @return Returns the XML representation of the resource.
+     * @throws ReportDefinitionNotFoundException
+     *                         e.
+     * @throws MissingMethodParameterException
+     *                         e.
+     * @throws SystemException e.
+     * @see de.escidoc.core.sm.business.interfaces .ReportDefinitionHandlerInterface #retrieve(java.lang.String)
      */
     @Override
-    public String retrieve(final String id)
-        throws ReportDefinitionNotFoundException,
-        MissingMethodParameterException, SystemException {
+    public String retrieve(final String id) throws ReportDefinitionNotFoundException, MissingMethodParameterException,
+        SystemException {
         if (id == null) {
             throw new MissingMethodParameterException("id may not be null");
         }
@@ -206,27 +176,18 @@ public class ReportDefinitionHandler
 
     /**
      * See Interface for functional description.
-     * 
-     * @see de.escidoc.core.sm.business.interfaces
-     *      .ReportDefinitionHandlerInterface #retrieveReportDefinitions()
-     * 
-     * @param parameters
-     *            filter as CQL query
-     * 
+     *
+     * @param parameters filter as CQL query
      * @return Returns the XML representation of the resource-list.
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a SQL query
-     * @throws SystemException
-     *             e.
+     * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
+     * @throws SystemException             e.
+     * @see de.escidoc.core.sm.business.interfaces .ReportDefinitionHandlerInterface #retrieveReportDefinitions()
      */
     @Override
-    public String retrieveReportDefinitions(
-        final Map<String, String[]> parameters)
-        throws InvalidSearchQueryException, SystemException {
+    public String retrieveReportDefinitions(final Map<String, String[]> parameters) throws InvalidSearchQueryException,
+        SystemException {
         final String result;
-        final SRURequestParameters params =
-            new DbRequestParameters(parameters);
+        final SRURequestParameters params = new DbRequestParameters(parameters);
         final String query = params.getQuery();
         final int limit = params.getMaximumRecords();
         final int offset = params.getStartRecord();
@@ -234,17 +195,11 @@ public class ReportDefinitionHandler
         if (params.isExplain()) {
             final Map<String, Object> values = new HashMap<String, Object>();
 
-            values.put("PROPERTY_NAMES",
-                new ReportDefinitionFilter(null).getPropertyNames());
-            result =
-                ExplainXmlProvider.getInstance().getExplainReportDefinitionXml(
-                    values);
+            values.put("PROPERTY_NAMES", new ReportDefinitionFilter(null).getPropertyNames());
+            result = ExplainXmlProvider.getInstance().getExplainReportDefinitionXml(values);
         }
         else if (limit == 0) {
-            result =
-                renderer.renderReportDefinitions(
-                    new ArrayList<ReportDefinition>(0),
-                    params.getRecordPacking());
+            result = renderer.renderReportDefinitions(new ArrayList<ReportDefinition>(0), params.getRecordPacking());
         }
         else {
             // get all scope-ids from database
@@ -254,58 +209,39 @@ public class ReportDefinitionHandler
 
             if (scopeIds != null && !scopeIds.isEmpty()) {
                 // get scope-ids filtered by user-privileges
-                filteredScopeIds =
-                    filterUtility.filterRetrievePrivilege(
-                        Constants.SCOPE_OBJECT_TYPE, scopeIds);
+                filteredScopeIds = filterUtility.filterRetrievePrivilege(Constants.SCOPE_OBJECT_TYPE, scopeIds);
             }
             Collection<ReportDefinition> reportDefinitions = null;
             if (filteredScopeIds != null && !filteredScopeIds.isEmpty()) {
                 // get report-definitions as xml
-                reportDefinitions =
-                    dao.retrieveReportDefinitions(filteredScopeIds, query,
-                        offset, limit);
+                reportDefinitions = dao.retrieveReportDefinitions(filteredScopeIds, query, offset, limit);
             }
 
-            result =
-                renderer.renderReportDefinitions(reportDefinitions,
-                    params.getRecordPacking());
+            result = renderer.renderReportDefinitions(reportDefinitions, params.getRecordPacking());
         }
         return result;
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @see de.escidoc.core.sm.business.interfaces
-     *      .ReportDefinitionHandlerInterface
-     *      #update(java.lang.String,java.lang.String)
-     * 
-     * @param xmlData
-     *            ReportDefinition data as xml in ReportDefinition schema.
-     * @param id
-     *            resource id.
-     * @return Returns the XML representation of the resource.
-     * 
-     * @throws ReportDefinitionNotFoundException
-     *             e.
-     * @throws MissingMethodParameterException
-     *             e.
-     * @throws ScopeNotFoundException
-     *             ex
-     * @throws ScopeContextViolationException
-     *             ex
-     * @throws InvalidSqlException
-     *             ex
-     * @throws SystemException
-     *             e.
-     * 
      *
+     * @param xmlData ReportDefinition data as xml in ReportDefinition schema.
+     * @param id      resource id.
+     * @return Returns the XML representation of the resource.
+     * @throws ReportDefinitionNotFoundException
+     *                                        e.
+     * @throws MissingMethodParameterException
+     *                                        e.
+     * @throws ScopeNotFoundException         ex
+     * @throws ScopeContextViolationException ex
+     * @throws InvalidSqlException            ex
+     * @throws SystemException                e.
+     * @see de.escidoc.core.sm.business.interfaces .ReportDefinitionHandlerInterface #update(java.lang.String,java.lang.String)
      */
     @Override
-    public String update(final String id, final String xmlData)
-        throws ReportDefinitionNotFoundException,
-        MissingMethodParameterException, ScopeNotFoundException,
-        InvalidSqlException, ScopeContextViolationException, SystemException {
+    public String update(final String id, final String xmlData) throws ReportDefinitionNotFoundException,
+        MissingMethodParameterException, ScopeNotFoundException, InvalidSqlException, ScopeContextViolationException,
+        SystemException {
         if (id == null || id.length() == 0) {
             throw new MissingMethodParameterException("id may not be null");
         }
@@ -332,8 +268,7 @@ public class ReportDefinitionHandler
 
         final Utility utility = new Utility();
         reportDefinition.setModifiedById(utility.getCurrentUserId());
-        reportDefinition.setLastModificationDate(new Timestamp(System
-            .currentTimeMillis()));
+        reportDefinition.setLastModificationDate(new Timestamp(System.currentTimeMillis()));
         reportDefinition.setScope(scope);
 
         // check if sql is executable and
@@ -346,29 +281,18 @@ public class ReportDefinitionHandler
     }
 
     /**
-     * Checks: -if sql only accesses aggregation-tables that belong to the scope
-     * with the given scopeId. -if sql is executable -if sql only selects and
-     * doesnt do other things
-     * 
-     * @param sql
-     *            sql-statement of report-definition.
-     * @param scopeId
-     *            scope-id of report-definition.
-     * 
-     * @throws ScopeContextViolationException
-     *             ex
-     * @throws InvalidSqlException
-     *             ex
-     * @throws ScopeNotFoundException
-     *             ex
-     * @throws SystemException
-     *             ex
-     * 
+     * Checks: -if sql only accesses aggregation-tables that belong to the scope with the given scopeId. -if sql is
+     * executable -if sql only selects and doesnt do other things
      *
+     * @param sql     sql-statement of report-definition.
+     * @param scopeId scope-id of report-definition.
+     * @throws ScopeContextViolationException ex
+     * @throws InvalidSqlException            ex
+     * @throws ScopeNotFoundException         ex
+     * @throws SystemException                ex
      */
-    private void checkSql(final String sql, final String scopeId)
-        throws ScopeContextViolationException, InvalidSqlException,
-        ScopeNotFoundException, SystemException {
+    private void checkSql(final String sql, final String scopeId) throws ScopeContextViolationException,
+        InvalidSqlException, ScopeNotFoundException, SystemException {
         // getScope
         final Scope scope = scopesDao.retrieve(scopeId);
 
@@ -396,8 +320,7 @@ public class ReportDefinitionHandler
             final Collection<String> scopeIds = new ArrayList<String>();
             scopeIds.add(scopeId);
             final Collection<AggregationDefinition> aggregationDefinitions =
-                aggregationDefinitionsDao
-                    .retrieveAggregationDefinitions(scopeIds);
+                aggregationDefinitionsDao.retrieveAggregationDefinitions(scopeIds);
 
             // Collect aggregation-definition primary-keys
             final Collection<String> allowedPrimKeys = new HashSet<String>();
@@ -408,16 +331,13 @@ public class ReportDefinitionHandler
             }
 
             // extract tablenames from sql
-            final Collection<String> primKeys =
-                xmlUtility.extractAggregationPrimKeysFromSql(sql);
+            final Collection<String> primKeys = xmlUtility.extractAggregationPrimKeysFromSql(sql);
 
             // check primKeys against allowed primKeys
             for (final String primKey : primKeys) {
                 if (!allowedPrimKeys.contains(primKey)) {
-                    throw new ScopeContextViolationException(
-                        "AggregationTable with prefix=" + primKey
-                            + "_ does not belong to the scope "
-                            + "of the reportDefinition");
+                    throw new ScopeContextViolationException("AggregationTable with prefix=" + primKey
+                        + "_ does not belong to the scope " + "of the reportDefinition");
                 }
 
             }
@@ -427,11 +347,9 @@ public class ReportDefinitionHandler
 
     /**
      * replaces placeholders from sql and returns replaced sql.
-     * 
-     * @param sql
-     *            sql-statement of report-definition.
-     * @return String replacedSql
      *
+     * @param sql sql-statement of report-definition.
+     * @return String replacedSql
      */
     private static String generateFakeSql(final String sql) {
         return sql.replaceAll("(?s)'?\"?\\{.*?\\}'?\"?", "'1'");
@@ -440,8 +358,7 @@ public class ReportDefinitionHandler
     /**
      * Setter for the dao.
      *
-     * @param dao
-     *            The data access object.
+     * @param dao The data access object.
      */
     public void setDao(final SmReportDefinitionsDaoInterface dao) {
         this.dao = dao;
@@ -449,9 +366,8 @@ public class ReportDefinitionHandler
 
     /**
      * Setting the xmlUtility.
-     * 
-     * @param xmlUtility
-     *            The xmlUtility to set.
+     *
+     * @param xmlUtility The xmlUtility to set.
      */
     public final void setXmlUtility(final SmXmlUtility xmlUtility) {
         this.xmlUtility = xmlUtility;
@@ -459,9 +375,8 @@ public class ReportDefinitionHandler
 
     /**
      * Setter for the scopesDao.
-     * 
-     * @param scopesDao
-     *            The data access object.
+     *
+     * @param scopesDao The data access object.
      */
     public void setScopesDao(final SmScopesDaoInterface scopesDao) {
         this.scopesDao = scopesDao;
@@ -469,31 +384,26 @@ public class ReportDefinitionHandler
 
     /**
      * Setter for the aggregationDefinitions.
-     * 
-     * @param aggregationDefinitionsDao
-     *            The data access object.
+     *
+     * @param aggregationDefinitionsDao The data access object.
      */
-    public void setAggregationDefinitionsDao(
-        final SmAggregationDefinitionsDaoInterface aggregationDefinitionsDao) {
+    public void setAggregationDefinitionsDao(final SmAggregationDefinitionsDaoInterface aggregationDefinitionsDao) {
         this.aggregationDefinitionsDao = aggregationDefinitionsDao;
     }
 
     /**
      * Setting the directDatabaseAccessor.
-     * 
-     * @param dbAccessorIn
-     *            The directDatabaseAccessor to set.
+     *
+     * @param dbAccessorIn The directDatabaseAccessor to set.
      */
-    public final void setDirectDatabaseAccessor(
-        final DirectDatabaseAccessorInterface dbAccessorIn) {
+    public final void setDirectDatabaseAccessor(final DirectDatabaseAccessorInterface dbAccessorIn) {
         this.dbAccessor = dbAccessorIn;
     }
 
     /**
      * Setting the filterUtility.
-     * 
-     * @param filterUtility
-     *            The filterUtility to set.
+     *
+     * @param filterUtility The filterUtility to set.
      */
     public final void setFilterUtility(final SmFilterUtility filterUtility) {
         this.filterUtility = filterUtility;
@@ -501,9 +411,8 @@ public class ReportDefinitionHandler
 
     /**
      * Injects the renderer.
-     * 
-     * @param renderer
-     *            The renderer to inject.
+     *
+     * @param renderer The renderer to inject.
      */
     public void setRenderer(final ReportDefinitionRendererInterface renderer) {
         this.renderer = renderer;

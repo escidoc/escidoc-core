@@ -32,18 +32,15 @@ import org.apache.http.HttpResponse;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
-
 /**
  * Base class for statistic data tests.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 public class StatisticDataTestBase extends SmTestBase {
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public StatisticDataTestBase(final int transport) {
         super(transport);
@@ -51,12 +48,10 @@ public class StatisticDataTestBase extends SmTestBase {
 
     /**
      * Test creating statistic data.
-     * 
-     * @param dataXml
-     *            The xml representation of the item.
+     *
+     * @param dataXml The xml representation of the item.
      * @return The created item.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     public String create(final String dataXml) throws Exception {
 
@@ -66,7 +61,7 @@ public class StatisticDataTestBase extends SmTestBase {
             HttpResponse httpRes = (HttpResponse) result;
             xmlResult = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
             assertHttpStatusOfMethod("", httpRes);
-          
+
         }
         else if (result instanceof String) {
             xmlResult = (String) result;

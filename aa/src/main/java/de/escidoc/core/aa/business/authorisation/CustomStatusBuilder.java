@@ -43,63 +43,44 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Utility class to create XACML statuses used in policy results or evaluation
- * results.
- * 
+ * Utility class to create XACML statuses used in policy results or evaluation results.
+ *
  * @author Torsten Tetteroo
- * 
  */
 public final class CustomStatusBuilder {
 
-    private static final Pattern PATTERN_CDATA_END =
-        Pattern.compile(XmlUtility.CDATA_END);
+    private static final Pattern PATTERN_CDATA_END = Pattern.compile(XmlUtility.CDATA_END);
 
     /**
      * Private constructor to prevent instantiation.
-     * 
-     *
      */
     private CustomStatusBuilder() {
     }
 
     /**
-     * Creates an <code>Status</code> object holding information about an
-     * error.<br>
-     * This can be used to tunnel an exception through the XACML engine.<br>
-     * If the provided exception is not an <code>EscidocException</code>, it
-     * is wrapped by a <code>WebserverSystemException .</code><br>
-     * The created error status holds a status code with the eSciDoc status code
-     * prefix and the name of the exception.
-     * 
-     * @param e
-     *            The <code>Exception</code> that caused this error result.
-     * @return Returns the created <code>EvaluationResult</code> object.
+     * Creates an <code>Status</code> object holding information about an error.<br> This can be used to tunnel an
+     * exception through the XACML engine.<br> If the provided exception is not an <code>EscidocException</code>, it is
+     * wrapped by a <code>WebserverSystemException .</code><br> The created error status holds a status code with the
+     * eSciDoc status code prefix and the name of the exception.
      *
+     * @param e The <code>Exception</code> that caused this error result.
+     * @return Returns the created <code>EvaluationResult</code> object.
      */
     public static Status createErrorStatus(final Exception e) {
 
-        return createErrorStatus(
-            AttributeIds.STATUS_PREFIX
-                + e.getClass().getName(), e);
+        return createErrorStatus(AttributeIds.STATUS_PREFIX + e.getClass().getName(), e);
     }
 
     /**
-     * Creates an <code>Status</code> object holding information about an
-     * error.<br>
-     * This can be used to tunnel an exception through the XACML engine.<br>
-     * If the provided exception is not an <code>EscidocException</code>, it
-     * is wrapped by a <code>WebserverSystemException .</code>
-     * 
-     * @param status
-     *            The status code, one of the codes defined in the class
-     *            <code>com.sun.xacml.ctx.Status</code>.
-     * @param e
-     *            The <code>Exception</code> that caused this error result.
-     * @return Returns the created <code>EvaluationResult</code> object.
+     * Creates an <code>Status</code> object holding information about an error.<br> This can be used to tunnel an
+     * exception through the XACML engine.<br> If the provided exception is not an <code>EscidocException</code>, it is
+     * wrapped by a <code>WebserverSystemException .</code>
      *
+     * @param status The status code, one of the codes defined in the class <code>com.sun.xacml.ctx.Status</code>.
+     * @param e      The <code>Exception</code> that caused this error result.
+     * @return Returns the created <code>EvaluationResult</code> object.
      */
-    public static Status createErrorStatus(
-        final String status, final Exception e) {
+    public static Status createErrorStatus(final String status, final Exception e) {
 
         final List<String> codeList = new ArrayList<String>();
         codeList.add(status);
@@ -112,15 +93,13 @@ public final class CustomStatusBuilder {
                 final StringBuilder errorMsg = new StringBuilder(message);
                 errorMsg.append('\n');
                 errorMsg.append(XmlUtility.CDATA_START);
-                errorMsg
-                    .append(quoteCdata(((EscidocException) e).toXmlString()));
+                errorMsg.append(quoteCdata(((EscidocException) e).toXmlString()));
                 errorMsg.append(XmlUtility.CDATA_END);
                 return new Status(codeList, errorMsg.toString());
             }
             catch (final Exception e1) {
                 final StringBuilder errorMsg = new StringBuilder(message);
-                errorMsg
-                    .append(quoteCdata(((EscidocException) e).toXmlString()));
+                errorMsg.append(quoteCdata(((EscidocException) e).toXmlString()));
                 errorMsg.append("\n\nException deserializing failed due to ");
                 errorMsg.append(e1);
                 return new Status(codeList, errorMsg.toString());
@@ -130,8 +109,7 @@ public final class CustomStatusBuilder {
             try {
                 final StringBuilder errorMsg = new StringBuilder(message);
                 errorMsg.append("\n<exception>");
-                errorMsg
-                    .append(quoteCdata(EscidocException.getStackTraceXml(e)));
+                errorMsg.append(quoteCdata(EscidocException.getStackTraceXml(e)));
                 errorMsg.append("</exception>");
                 return new Status(codeList, errorMsg.toString());
             }
@@ -145,7 +123,8 @@ public final class CustomStatusBuilder {
                     errorMsg.append(sw.toString());
                     errorMsg.append("\n\nException deserializing failed due to ");
                     errorMsg.append(e1);
-                } finally {
+                }
+                finally {
                     IOUtils.closeWriter(sw);
                 }
                 return new Status(codeList, errorMsg.toString());
@@ -155,11 +134,9 @@ public final class CustomStatusBuilder {
 
     /**
      * Quotes the CDATA end "]]>" in the provided string.
-     * 
-     * @param str
-     *            The string to quote
-     * @return Returns the provided string with "]]>" replaced by "]]&gt;"
      *
+     * @param str The string to quote
+     * @return Returns the provided string with "]]>" replaced by "]]&gt;"
      */
     private static String quoteCdata(final CharSequence str) {
 
@@ -170,18 +147,14 @@ public final class CustomStatusBuilder {
 
     /**
      * Gets the status code for the provided exception class.
-     * 
-     * @param exception
-     *            The resource not found exception. If tis is <code>null</code>,
-     *            the <code>ResourceNotFoundException</code> is used.
-     * @return Returns the error status code in case of a resource not found
-     *         exception.
+     *
+     * @param exception The resource not found exception. If tis is <code>null</code>, the
+     *                  <code>ResourceNotFoundException</code> is used.
+     * @return Returns the error status code in case of a resource not found exception.
      */
-    public static String getResourceNotFoundStatusCode(
-        final ResourceNotFoundException exception) {
+    public static String getResourceNotFoundStatusCode(final ResourceNotFoundException exception) {
 
-        return exception == null ? AttributeIds.STATUS_PREFIX
-                + ResourceNotFoundException.class.getName() : AttributeIds.STATUS_PREFIX
-                + exception.getClass().getName();
+        return exception == null ? AttributeIds.STATUS_PREFIX + ResourceNotFoundException.class.getName() : AttributeIds.STATUS_PREFIX
+            + exception.getClass().getName();
     }
 }

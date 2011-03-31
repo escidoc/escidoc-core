@@ -53,9 +53,8 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * Test the implementation of the admin search for content-relations.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 @RunWith(value = Parameterized.class)
 public class ContentRelationAdminSearchTest extends SearchTestBase {
@@ -64,13 +63,13 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
 
     private static final String INDEX_NAME = "content_relation_admin";
 
-    private static final ArrayList<String> RESULT_XPATHS = 
-        new ArrayList<String>() {
-            private static final long serialVersionUID = 1L;
-            { 
-                add(XPATH_SRW_RESPONSE_OBJECT + "content-relation");
-            }
-            };
+    private static final ArrayList<String> RESULT_XPATHS = new ArrayList<String>() {
+        private static final long serialVersionUID = 1L;
+
+        {
+            add(XPATH_SRW_RESPONSE_OBJECT + "content-relation");
+        }
+    };
 
     private static String[] contentRelationIds = null;
 
@@ -81,50 +80,45 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
     private static String startTime = "";
 
     /**
-     * @param transport
-     *            The transport identifier.
-     * @throws Exception
-     *             e
+     * @param transport The transport identifier.
+     * @throws Exception e
      */
     public ContentRelationAdminSearchTest(final int transport) throws Exception {
         super(transport);
         contentRelation = new ContentRelationHelper(transport);
         item = new ItemHelper(transport);
-        grant = new GrantHelper(
-                transport, GrantHelper.getUserAccountHandlerCode());
+        grant = new GrantHelper(transport, GrantHelper.getUserAccountHandlerCode());
     }
 
     /**
      * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Before
     public void initialize() throws Exception {
         if (methodCounter == 0) {
             prepare();
-//          int c = 8324;
-//          itemIds = new String[10];
-//          for (int i = 0; i < 10; i++) {
-//              itemIds[i] = "escidoc:" + c;
-//              c += 3;
-//          }
-//          c -= 2;
-//
-//          contentRelationIds = new String[5];
-//          for (int i = 0; i < 5; i++) {
-//              contentRelationIds[i] = "escidoc:" + c;
-//              c++;
-//          }
+            //          int c = 8324;
+            //          itemIds = new String[10];
+            //          for (int i = 0; i < 10; i++) {
+            //              itemIds[i] = "escidoc:" + c;
+            //              c += 3;
+            //          }
+            //          c -= 2;
+            //
+            //          contentRelationIds = new String[5];
+            //          for (int i = 0; i < 5; i++) {
+            //              contentRelationIds[i] = "escidoc:" + c;
+            //              c++;
+            //          }
         }
     }
 
     /**
      * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @After
     public void deinitialize() throws Exception {
@@ -136,84 +130,52 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
 
     /**
      * insert content-relation(s) into system for the tests.
-     * 
-     * @test.name prepare
-     * @test.id PREPARE
-     * @test.input
-     * @test.inputDescription
-     * @test.expected
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     private void prepare() throws Exception {
         LOGGER.info("starting SearchTest at "
-                + new DateTime(System.currentTimeMillis()
-                        + (60 * 60 * 1000), DateTimeZone.UTC).toString());
+            + new DateTime(System.currentTimeMillis() + (60 * 60 * 1000), DateTimeZone.UTC).toString());
         // create empty indices/////////////////////////////////////////////////
         String urlParameters =
-                "?operation=updateIndex" + "&action=createEmpty"
-                        + "&repositoryName=escidocrepository" + "&indexName=";
+            "?operation=updateIndex" + "&action=createEmpty" + "&repositoryName=escidocrepository" + "&indexName=";
         String httpUrl =
-                HttpHelper
-                        .createUrl(
-                                de.escidoc.core.test.common.client.servlet.Constants.PROTOCOL,
-                                de.escidoc.core.test.common.client.servlet.Constants.HOST_PORT,
-                                de.escidoc.core.test.common.client.servlet.Constants.FEDORAGSEARCH_BASE_URI
-                                        + urlParameters);
-        HttpHelper
-                .executeHttpRequest(
-                        de.escidoc.core.test.common.client.servlet.Constants.HTTP_METHOD_GET,
-                        httpUrl, null, null, null);
+            HttpHelper.createUrl(de.escidoc.core.test.common.client.servlet.Constants.PROTOCOL,
+                de.escidoc.core.test.common.client.servlet.Constants.HOST_PORT,
+                de.escidoc.core.test.common.client.servlet.Constants.FEDORAGSEARCH_BASE_URI + urlParameters);
+        HttpHelper.executeHttpRequest(de.escidoc.core.test.common.client.servlet.Constants.HTTP_METHOD_GET, httpUrl,
+            null, null, null);
         // /////////////////////////////////////////////////////////////////////
 
-        startTime =
-                new DateTime(System.currentTimeMillis(), DateTimeZone.UTC)
-                        .toString();
+        startTime = new DateTime(System.currentTimeMillis(), DateTimeZone.UTC).toString();
         // Create Items to relate
         itemIds = new String[10];
         for (int k = 0; k < 10; k++) {
             String status = STATUS_PENDING;
             HashMap<String, String> itemHash =
-                    prepareItem(PWCallback.SYSTEMADMINISTRATOR_HANDLE, 
-                            CONTEXT_ID, 
-                            null,
-                            "escidoc_search_item"
-                                    + k + "_"
-                                    + getTransport(false) + ".xml",
-                            status);
+                prepareItem(PWCallback.SYSTEMADMINISTRATOR_HANDLE, CONTEXT_ID, null, "escidoc_search_item" + k + "_"
+                    + getTransport(false) + ".xml", status);
             itemIds[k] = itemHash.get("itemId");
         }
 
         // Create Content-Relations with different status/////////////////////////////////////////////////
         String handle = PWCallback.CONTENT_RELATION_MANAGER_HANDLE;
         contentRelationIds = new String[5];
-        contentRelationIds[0] = prepareContentRelation(PWCallback.SYSTEMADMINISTRATOR_HANDLE,
-                itemIds[0],
-                itemIds[1],
-                "escidoc_search_content_relation0_" + getTransport(false) + ".xml", 
-                STATUS_PENDING);
-        contentRelationIds[1] = prepareContentRelation(PWCallback.SYSTEMADMINISTRATOR_HANDLE,
-                itemIds[2],
-                itemIds[3],
-                "escidoc_search_content_relation0_" + getTransport(false) + ".xml", 
-                STATUS_SUBMITTED);
-        contentRelationIds[2] = prepareContentRelation(PWCallback.SYSTEMADMINISTRATOR_HANDLE,
-                itemIds[4],
-                itemIds[5],
-                "escidoc_search_content_relation0_" + getTransport(false) + ".xml", 
-                STATUS_RELEASED);
-        contentRelationIds[3] = prepareContentRelation(PWCallback.SYSTEMADMINISTRATOR_HANDLE,
-                itemIds[6],
-                itemIds[7],
-                "escidoc_search_content_relation0_" + getTransport(false) + ".xml", 
-                STATUS_IN_REVISION);
-        contentRelationIds[4] = prepareContentRelation(handle,
-                itemIds[8],
-                itemIds[9],
-                "escidoc_search_content_relation0_" + getTransport(false) + ".xml", 
-                STATUS_PENDING);
+        contentRelationIds[0] =
+            prepareContentRelation(PWCallback.SYSTEMADMINISTRATOR_HANDLE, itemIds[0], itemIds[1],
+                "escidoc_search_content_relation0_" + getTransport(false) + ".xml", STATUS_PENDING);
+        contentRelationIds[1] =
+            prepareContentRelation(PWCallback.SYSTEMADMINISTRATOR_HANDLE, itemIds[2], itemIds[3],
+                "escidoc_search_content_relation0_" + getTransport(false) + ".xml", STATUS_SUBMITTED);
+        contentRelationIds[2] =
+            prepareContentRelation(PWCallback.SYSTEMADMINISTRATOR_HANDLE, itemIds[4], itemIds[5],
+                "escidoc_search_content_relation0_" + getTransport(false) + ".xml", STATUS_RELEASED);
+        contentRelationIds[3] =
+            prepareContentRelation(PWCallback.SYSTEMADMINISTRATOR_HANDLE, itemIds[6], itemIds[7],
+                "escidoc_search_content_relation0_" + getTransport(false) + ".xml", STATUS_IN_REVISION);
+        contentRelationIds[4] =
+            prepareContentRelation(handle, itemIds[8], itemIds[9], "escidoc_search_content_relation0_"
+                + getTransport(false) + ".xml", STATUS_PENDING);
 
         // /////////////////////////////////////////////////////////////////////
 
@@ -223,17 +185,8 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
 
     /**
      * explain operation without parameters for existing database xyz.
-     * 
-     * @test.name explain (1)
-     * @test.id SB_EX-1
-     * @test.input
-     * @test.inputDescription
-     * @test.expected explain plan for the corresponding database according
-     *                ZeeRex Schema
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBEX1() throws Exception {
@@ -241,34 +194,26 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
         String response = explain(parameters, INDEX_NAME);
         assertXmlValidExplainPlan(response);
         assertEquals("srw/search/" + INDEX_NAME, getDatabase(response));
-        assertEquals(Constants.CONTENT_RELATION_ADMIN_INDEX_FIELD_COUNT,
-                                            getIndexFieldCount(response));
-        assertEquals(Constants.CONTENT_RELATION_ADMIN_SORT_FIELD_COUNT,
-                                            getSortFieldCount(response));
+        assertEquals(Constants.CONTENT_RELATION_ADMIN_INDEX_FIELD_COUNT, getIndexFieldCount(response));
+        assertEquals(Constants.CONTENT_RELATION_ADMIN_SORT_FIELD_COUNT, getSortFieldCount(response));
     }
 
     /**
      * Test searching as anonymous user.
-     * 
-     * @test.name Anonymous User Search
-     * @test.id SB_AnonymousUserSearch
-     * @test.input anonymous user searching all objects
-     * @test.expected 1 hits.
-     *              Anonymous may see ContentRelations in public-status released
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSearchAsAnonymousUser() throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
             private static final long serialVersionUID = 1L;
+
             {
                 put("handle", PWCallback.ANONYMOUS_HANDLE);
                 put("expectedHits", "1");
                 put("searchresultIds", new HashMap<String, ArrayList<String>>() {
                     private static final long serialVersionUID = 1L;
+
                     {
                         put(contentRelationIds[2], getContentRelationXpathList(2, null));
                     }
@@ -280,29 +225,22 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
 
     /**
      * Test searching as Systemadministrator user.
-     * 
-     * @test.name Systemadministrator User Search
-     * @test.id SB_SystemadministratorUserSearch
-     * @test.input Systemadministrator user searching all objects
-     * @test.expected 5 hits.
-     *              Systemadministrator may see all ContentRelations
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSearchAsSystemadministratorUser() throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
             private static final long serialVersionUID = 1L;
+
             {
-                put("role0",
-                               GrantHelper.ROLE_HREF_SYSTEM_ADMINISTRATOR);
+                put("role0", GrantHelper.ROLE_HREF_SYSTEM_ADMINISTRATOR);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "5");
                 put("searchresultIds", new HashMap<String, ArrayList<String>>() {
                     private static final long serialVersionUID = 1L;
+
                     {
                         put(contentRelationIds[0], getContentRelationXpathList(0, null));
                         put(contentRelationIds[1], getContentRelationXpathList(1, null));
@@ -318,29 +256,22 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
 
     /**
      * Test searching as Systeminspector user.
-     * 
-     * @test.name Systeminspector User Search
-     * @test.id SB_SysteminspectorUserSearch
-     * @test.input Systeminspector user searching all objects
-     * @test.expected 5 hits.
-     *              Systeminspector may see all ContentRelations
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSearchAsSysteminspectorUser() throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
             private static final long serialVersionUID = 1L;
+
             {
-                put("role0",
-                               GrantHelper.ROLE_HREF_SYSTEM_INSPECTOR);
+                put("role0", GrantHelper.ROLE_HREF_SYSTEM_INSPECTOR);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "5");
                 put("searchresultIds", new HashMap<String, ArrayList<String>>() {
                     private static final long serialVersionUID = 1L;
+
                     {
                         put(contentRelationIds[0], getContentRelationXpathList(0, null));
                         put(contentRelationIds[1], getContentRelationXpathList(1, null));
@@ -356,27 +287,20 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
 
     /**
      * Test searching as ContentRelationManager user.
-     * 
-     * @test.name ContentRelationManager User Search
-     * @test.id SB_ContentRelationManagerUserSearch
-     * @test.input ContentRelationManager user searching all objects
-     * @test.expected 2 hits.
-     *              ContentRelationManager may see the ContentRelations 
-     *              (s)he created 
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSearchAsContentRelationManagerUser() throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
             private static final long serialVersionUID = 1L;
+
             {
                 put("handle", PWCallback.CONTENT_RELATION_MANAGER_HANDLE);
                 put("expectedHits", "2");
                 put("searchresultIds", new HashMap<String, ArrayList<String>>() {
                     private static final long serialVersionUID = 1L;
+
                     {
                         put(contentRelationIds[2], getContentRelationXpathList(2, null));
                         put(contentRelationIds[4], getContentRelationXpathList(4, null));
@@ -389,32 +313,24 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
 
     /**
      * Test searching as ContentRelationModifier user.
-     * 
-     * @test.name ContentRelationModifier User Search
-     * @test.id SB_ContentRelationModifierUserSearch
-     * @test.input ContentRelationModifier user searching all objects
-     * @test.expected 2 hits.
-     *              ContentRelationModifier may see the ContentRelations 
-     *              (s)he has scope on 
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSearchAsContentRelationModifierUser() throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
             private static final long serialVersionUID = 1L;
+
             {
                 put("role0", GrantHelper.ROLE_HREF_CONTENT_RELATION_MODIFIER);
-                put("scope0", de.escidoc.core.test.common.client
-                        .servlet.Constants.CONTENT_RELATION_BASE_URI
-                        + "/" + contentRelationIds[0]);
+                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.CONTENT_RELATION_BASE_URI + "/"
+                    + contentRelationIds[0]);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "2");
                 put("searchresultIds", new HashMap<String, ArrayList<String>>() {
                     private static final long serialVersionUID = 1L;
+
                     {
                         put(contentRelationIds[0], getContentRelationXpathList(0, null));
                         put(contentRelationIds[2], getContentRelationXpathList(2, null));
@@ -427,11 +343,9 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
 
     /**
      * search with roles provided in HashMap.
-     * 
-     * @param role
-     *            parameters
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param role parameters
+     * @throws Exception If anything fails.
      */
     private void search(final HashMap<String, Object> role) throws Exception {
         StringBuffer errorTrace = new StringBuffer();
@@ -441,15 +355,10 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
                 if ((String) role.get("role" + i) == null) {
                     break;
                 }
-                errorTrace.append("role: ")
-                        .append(role.get("role" + i)).append("\n");
-                errorTrace.append("scope: ")
-                        .append(role.get("scope" + i)).append("\n");
-                grant.doTestCreateGrant(
-                        null,
-                        (String) role.get("user"),
-                        (String) role.get("scope" + i),
-                        (String) role.get("role" + i), null);
+                errorTrace.append("role: ").append(role.get("role" + i)).append("\n");
+                errorTrace.append("scope: ").append(role.get("scope" + i)).append("\n");
+                grant.doTestCreateGrant(null, (String) role.get("user"), (String) role.get("scope" + i), (String) role
+                    .get("role" + i), null);
             }
             PWCallback.setHandle((String) role.get("handle"));
             HashMap<String, String> parameters = new HashMap<String, String>();
@@ -458,60 +367,45 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
             String response = search(parameters, INDEX_NAME);
             assertXmlValidSearchResult(response);
             Document searchResultDoc = getDocument(response, true);
-            Node n = selectSingleNode(searchResultDoc,
-                    "/searchRetrieveResponse/diagnostics/diagnostic/details");
+            Node n = selectSingleNode(searchResultDoc, "/searchRetrieveResponse/diagnostics/diagnostic/details");
             String textContent = null;
             if (n != null) {
                 textContent = n.getTextContent();
             }
-            assertEquals(errorTrace.toString() + "diagnostics: "
-                    + textContent, null, n);
-//            assertEquals(true, checkHighlighting(response));
-            assertEquals(errorTrace.toString()
-                    + "hits not as expected: expected: "
-                    + role.get("expectedHits")
-                    + ", but was "
-                    + getNumberOfHits(response)
-                    + " for ",
-                    role.get("expectedHits"), getNumberOfHits(response));
+            assertEquals(errorTrace.toString() + "diagnostics: " + textContent, null, n);
+            //            assertEquals(true, checkHighlighting(response));
+            assertEquals(errorTrace.toString() + "hits not as expected: expected: " + role.get("expectedHits")
+                + ", but was " + getNumberOfHits(response) + " for ", role.get("expectedHits"),
+                getNumberOfHits(response));
             HashSet<String> foundIds = new HashSet<String>();
             // check if all items in result may be there
             for (String xPath : RESULT_XPATHS) {
-                NodeList nodes = selectNodeList(
-                        searchResultDoc, xPath);
+                NodeList nodes = selectNodeList(searchResultDoc, xPath);
                 for (int i = 0; i < nodes.getLength(); i++) {
                     Node node = nodes.item(i);
-                    String objId = getObjidValue(
-                            de.escidoc.core.test.common.client
-                            .servlet.Constants.TRANSPORT_REST, node, null);
+                    String objId =
+                        getObjidValue(de.escidoc.core.test.common.client.servlet.Constants.TRANSPORT_REST, node, null);
                     foundIds.add(objId);
-                    assertTrue(errorTrace.toString()
-                            + "object " + objId + " may not be in searchResult",
-                            ((HashMap<String, String>) role
-                                    .get("searchresultIds")).containsKey(objId));
-                    ArrayList<String> searchIds = 
-                        ((HashMap<String, ArrayList<String>>) role
-                            .get("searchresultIds")).get(objId);
+                    assertTrue(errorTrace.toString() + "object " + objId + " may not be in searchResult",
+                        ((HashMap<String, String>) role.get("searchresultIds")).containsKey(objId));
+                    ArrayList<String> searchIds =
+                        ((HashMap<String, ArrayList<String>>) role.get("searchresultIds")).get(objId);
                     if (searchIds != null) {
                         for (String searchId : searchIds) {
                             String[] parts = searchId.split("=");
-                            assertXmlEquals(errorTrace.toString()
-                                    + "not expected value in "
-                                    + parts[0] + " for objectId " 
-                                    + objId, node, parts[0], parts[1]);
+                            assertXmlEquals(errorTrace.toString() + "not expected value in " + parts[0]
+                                + " for objectId " + objId, node, parts[0], parts[1]);
                         }
                     }
                 }
             }
             // check if all objects that should be in result are there
-            for (String id : ((HashMap<String, String>) role
-                    .get("searchresultIds")).keySet()) {
-                assertTrue(errorTrace.toString()
-                        + id + " was not in searchResult",
-                        foundIds.contains(id));
+            for (String id : ((HashMap<String, String>) role.get("searchresultIds")).keySet()) {
+                assertTrue(errorTrace.toString() + id + " was not in searchResult", foundIds.contains(id));
 
             }
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
             if (role.get("role0") != null) {
                 grant.revokeAllGrants((String) role.get("user"));
@@ -521,44 +415,32 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
 
     /**
      * prepare item for tests.
-     * 
-     * @param creatorHandle
-     *            handle of creator
-     * @param contextId
-     *            id of context to create item in
-     * @param containerIds
-     *            ids of container to create item in
-     * @param templateName
-     *            template for item to create
-     * @param status
-     *            status of item to create
+     *
+     * @param creatorHandle handle of creator
+     * @param contextId     id of context to create item in
+     * @param containerIds  ids of container to create item in
+     * @param templateName  template for item to create
+     * @param status        status of item to create
      * @return HashMap id of created item + componentIds
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     private HashMap<String, String> prepareItem(
-                final String creatorHandle,
-                final String contextId,
-                final String[] containerIds,
-                final String templateName,
-                final String status) throws Exception {
+        final String creatorHandle, final String contextId, final String[] containerIds, final String templateName,
+        final String status) throws Exception {
         HashMap<String, String> returnHash = new HashMap<String, String>();
         try {
             if (creatorHandle != null) {
                 PWCallback.setHandle(creatorHandle);
             }
             Document xmlData =
-                    EscidocRestSoapTestBase.getTemplateAsDocument(
-                            TEMPLATE_ITEM_SEARCH_ADMIN_PATH, templateName);
+                EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_SEARCH_ADMIN_PATH, templateName);
             if (getTransport() == de.escidoc.core.test.common.client.servlet.Constants.TRANSPORT_REST) {
-                String contextHref = de.escidoc.core.test.common
-                        .client.servlet.Constants.CONTEXT_BASE_URI + "/"
-                        + contextId;
-                substitute(xmlData,
-                        "/item/properties/context/@href", contextHref);
-            } else {
-                substitute(xmlData,
-                        "/item/properties/context/@objid", contextId);
+                String contextHref =
+                    de.escidoc.core.test.common.client.servlet.Constants.CONTEXT_BASE_URI + "/" + contextId;
+                substitute(xmlData, "/item/properties/context/@href", contextHref);
+            }
+            else {
+                substitute(xmlData, "/item/properties/context/@objid", contextId);
             }
             String xml = item.create(toString(xmlData, false));
             String objectId = getId(xml);
@@ -574,15 +456,15 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
                         break;
                     }
                     returnHash.put("componentId" + i, componentId);
-                } catch (final NullPointerException e) {
+                }
+                catch (final NullPointerException e) {
                     break;
                 }
             }
 
             if (!status.equals(STATUS_PENDING)) {
                 // submit item
-                item.submit(objectId, "<param last-modification-date=\""
-                        + lastModDate + "\" />");
+                item.submit(objectId, "<param last-modification-date=\"" + lastModDate + "\" />");
                 xml = item.retrieve(objectId);
                 xml = xml.replaceAll("Meier", "Meier1");
                 xml = item.update(objectId, xml);
@@ -592,10 +474,9 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
                         xml = item.retrieve(objectId);
                         lastModDate = getLastModificationDate(xml);
                         PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
-                        item.revise(objectId,
-                                "<param last-modification-date=\"" + lastModDate
-                                        + "\" />");
-                    } else {
+                        item.revise(objectId, "<param last-modification-date=\"" + lastModDate + "\" />");
+                    }
+                    else {
                         // assignPids
                         xml = item.retrieve(objectId);
                         String componentId = getComponentObjidValue(itemDoc, 1);
@@ -603,8 +484,7 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
                         item.assignContentPid(objectId, componentId, pidParam);
                         pidParam = getItemPidParam(objectId);
                         item.assignObjectPid(objectId, pidParam);
-                        Node n = selectSingleNode(getDocument(xml),
-                                "/item/properties/version/number");
+                        Node n = selectSingleNode(getDocument(xml), "/item/properties/version/number");
                         String versionNumber = n.getTextContent();
                         String versionId = objectId + ":" + versionNumber;
                         pidParam = getItemPidParam(versionId);
@@ -614,25 +494,19 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
                         // release item
                         xml = item.retrieve(objectId);
                         lastModDate = getLastModificationDate(xml);
-                        item.release(objectId, "<param last-modification-date=\""
-                                + lastModDate + "\" />");
+                        item.release(objectId, "<param last-modification-date=\"" + lastModDate + "\" />");
                     }
-                    if (!status.equals(STATUS_RELEASED)
-                            && !status.equals(STATUS_WITHDRAWN)
-                            && !status.equals(STATUS_IN_REVISION)) {
+                    if (!status.equals(STATUS_RELEASED) && !status.equals(STATUS_WITHDRAWN)
+                        && !status.equals(STATUS_IN_REVISION)) {
                         xml = item.retrieve(objectId);
                         xml = xml.replaceAll("Meier", "Meier1");
                         item.update(objectId, xml);
-                    } else if (!status.equals(STATUS_RELEASED)
-                        && !status.equals(STATUS_IN_REVISION)) {
+                    }
+                    else if (!status.equals(STATUS_RELEASED) && !status.equals(STATUS_IN_REVISION)) {
                         xml = item.retrieve(objectId);
                         lastModDate = getLastModificationDate(xml);
-                        item.withdraw(objectId,
-                                "<param last-modification-date=\""
-                                        + lastModDate
-                                        + "\"><withdraw-comment>"
-                                        + "This is a withdraw comment."
-                                        + "</withdraw-comment></param>");
+                        item.withdraw(objectId, "<param last-modification-date=\"" + lastModDate
+                            + "\"><withdraw-comment>" + "This is a withdraw comment." + "</withdraw-comment></param>");
                     }
                 }
             }
@@ -641,67 +515,49 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
                     xml = container.retrieve(containerIds[i]);
                     lastModDate = getLastModificationDate(xml);
                     String taskParam =
-                            "<param last-modification-date=\"" + lastModDate
-                                    + "\">"
-                                    + "<id>" + objectId + "</id></param>";
+                        "<param last-modification-date=\"" + lastModDate + "\">" + "<id>" + objectId + "</id></param>";
 
                     container.addMembers(containerIds[i], taskParam);
                 }
             }
             return returnHash;
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
     }
 
     /**
-    /**
-     * prepare content-relation for tests.
-     * 
-     * @param creatorHandle
-     *            handle of creator
-     * @param subjectId
-     *            id of subject
-     * @param objectId
-     *            id of object
-     * @param templateName
-     *            template for content-relation to create
-     * @param status
-     *            status of content-relation to create
+     * /** prepare content-relation for tests.
+     *
+     * @param creatorHandle handle of creator
+     * @param subjectId     id of subject
+     * @param objectId      id of object
+     * @param templateName  template for content-relation to create
+     * @param status        status of content-relation to create
      * @return String id of created content-relation
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     private String prepareContentRelation(
-                final String creatorHandle,
-                final String subjectId,
-                final String objectId,
-                final String templateName,
-                final String status) throws Exception {
+        final String creatorHandle, final String subjectId, final String objectId, final String templateName,
+        final String status) throws Exception {
         String resourceId = null;
         try {
             if (creatorHandle != null) {
                 PWCallback.setHandle(creatorHandle);
             }
             Document xmlData =
-                    EscidocRestSoapTestBase.getTemplateAsDocument(
-                            TEMPLATE_SB_CONTENT_RELATION_PATH, templateName);
+                EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_SB_CONTENT_RELATION_PATH, templateName);
             if (getTransport() == de.escidoc.core.test.common.client.servlet.Constants.TRANSPORT_REST) {
-                String subjectHref = de.escidoc.core.test.common
-                        .client.servlet.Constants.ITEM_BASE_URI + "/"
-                        + subjectId;
-                String objectHref = de.escidoc.core.test.common
-                .client.servlet.Constants.ITEM_BASE_URI + "/"
-                + objectId;
-                substitute(xmlData,
-                        "/content-relation/subject/@href", subjectHref);
-                substitute(xmlData,
-                        "/content-relation/object/@href", objectHref);
-            } else {
-                substitute(xmlData,
-                        "/content-relation/subject/@objid", subjectId);
-                substitute(xmlData,
-                        "/content-relation/object/@objid", objectId);
+                String subjectHref =
+                    de.escidoc.core.test.common.client.servlet.Constants.ITEM_BASE_URI + "/" + subjectId;
+                String objectHref = de.escidoc.core.test.common.client.servlet.Constants.ITEM_BASE_URI + "/" + objectId;
+                substitute(xmlData, "/content-relation/subject/@href", subjectHref);
+                substitute(xmlData, "/content-relation/object/@href", objectHref);
+            }
+            else {
+                substitute(xmlData, "/content-relation/subject/@objid", subjectId);
+                substitute(xmlData, "/content-relation/object/@objid", objectId);
             }
             String xml = contentRelation.create(toString(xmlData, false));
             resourceId = getId(xml);
@@ -711,8 +567,7 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
 
             if (!status.equals(STATUS_PENDING)) {
                 // submit content-relation
-                contentRelation.submit(resourceId, "<param last-modification-date=\""
-                        + lastModDate + "\" />");
+                contentRelation.submit(resourceId, "<param last-modification-date=\"" + lastModDate + "\" />");
                 xml = contentRelation.retrieve(resourceId);
                 xml = xml.replaceAll("Meier", "Meier1");
                 xml = contentRelation.update(resourceId, xml);
@@ -722,18 +577,15 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
                         xml = contentRelation.retrieve(resourceId);
                         lastModDate = getLastModificationDate(xml);
                         PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
-                        contentRelation.revise(resourceId,
-                                "<param last-modification-date=\"" + lastModDate
-                                        + "\" />");
-                    } else {
+                        contentRelation.revise(resourceId, "<param last-modification-date=\"" + lastModDate + "\" />");
+                    }
+                    else {
                         // release item
                         xml = contentRelation.retrieve(resourceId);
                         lastModDate = getLastModificationDate(xml);
-                        contentRelation.release(resourceId, "<param last-modification-date=\""
-                                + lastModDate + "\" />");
+                        contentRelation.release(resourceId, "<param last-modification-date=\"" + lastModDate + "\" />");
                     }
-                    if (!status.equals(STATUS_RELEASED)
-                            && !status.equals(STATUS_IN_REVISION)) {
+                    if (!status.equals(STATUS_RELEASED) && !status.equals(STATUS_IN_REVISION)) {
                         xml = contentRelation.retrieve(resourceId);
                         xml = xml.replaceAll("Meier", "Meier1");
                         contentRelation.update(resourceId, xml);
@@ -741,13 +593,13 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
                 }
             }
             return resourceId;
-        } finally {
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
     }
 
-    private ArrayList<String> getContentRelationXpathList(
-            final int i, final String postreleasedStatus) {
+    private ArrayList<String> getContentRelationXpathList(final int i, final String postreleasedStatus) {
         ArrayList<String> xpaths = new ArrayList<String>();
         if (postreleasedStatus != null) {
             xpaths.add("properties/version/status=" + postreleasedStatus);
@@ -774,6 +626,5 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
         }
         return xpaths;
     }
-
 
 }

@@ -31,9 +31,8 @@ import java.net.URL;
 
 /**
  * BinaryContent of Component, Content Stream.
- * 
+ *
  * @author Steffen Wagner
- * 
  */
 public class BinaryContent {
 
@@ -48,9 +47,8 @@ public class BinaryContent {
 
     /**
      * Set the type of storage.
-     * 
-     * @param storageType
-     *            Type of Storage.
+     *
+     * @param storageType Type of Storage.
      */
     public void setStorageType(final StorageType storageType) {
 
@@ -59,14 +57,11 @@ public class BinaryContent {
 
     /**
      * Set the storage type via String. (Try to avoid String for storage type.)
-     * 
-     * @param storageType
-     *            StorageType
-     * @throws InvalidContentException
-     *             Thrown if StorageType is not supported.
+     *
+     * @param storageType StorageType
+     * @throws InvalidContentException Thrown if StorageType is not supported.
      */
-    public void setStorageType(final String storageType)
-        throws InvalidContentException {
+    public void setStorageType(final String storageType) throws InvalidContentException {
 
         if (storageType != null) {
             if (storageType.equals(Constants.STORAGE_EXTERNAL_URL)) {
@@ -80,15 +75,14 @@ public class BinaryContent {
             }
             else {
                 throw new InvalidContentException("The component section 'content' with the attribute "
-                        + "'storage' set to 'external-url' or "
-                        + "'external-managed' may not have an inline content.");
+                    + "'storage' set to 'external-url' or " + "'external-managed' may not have an inline content.");
             }
         }
     }
 
     /**
      * Get type of storage.
-     * 
+     *
      * @return Type of Storage (within Fedora).
      */
     public StorageType getStorageType() {
@@ -98,9 +92,8 @@ public class BinaryContent {
 
     /**
      * Set content (payload).
-     * 
-     * @param content
-     *            Binary Content (payload).
+     *
+     * @param content Binary Content (payload).
      */
     public void setContent(final String content) {
 
@@ -109,7 +102,7 @@ public class BinaryContent {
 
     /**
      * Get Binary Content payload.
-     * 
+     *
      * @return payload of binary content.
      */
     public String getContent() {
@@ -119,9 +112,8 @@ public class BinaryContent {
 
     /**
      * Set location of content via URL.
-     * 
-     * @param url
-     *            URL of bianry content.
+     *
+     * @param url URL of bianry content.
      */
     public void setDataLocation(final URL url) {
 
@@ -130,20 +122,17 @@ public class BinaryContent {
 
     /**
      * Set location of content via String.
-     * 
-     * @param url
-     *            URL of data location
-     * @throws WebserverSystemException
-     * @throws IOException
-     *             Thrown if obtaining eSciDoc base url failed.
+     *
+     * @param url URL of data location
+     * @throws IOException Thrown if obtaining eSciDoc base url failed.
      */
-    public void setDataLocation(final String url)
-        throws WebserverSystemException {
+    public void setDataLocation(final String url) throws WebserverSystemException {
 
         try {
-            this.dataLocation = url == null ? null : url.startsWith("/") ?
-                    new URL(EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_BASEURL) + url) :
-                    new URL(url);
+            this.dataLocation =
+                url == null ? null : url.startsWith("/") ? new URL(EscidocConfiguration.getInstance().get(
+                    EscidocConfiguration.ESCIDOC_CORE_BASEURL)
+                    + url) : new URL(url);
         }
         catch (final MalformedURLException e) {
             throw new WebserverSystemException("Invalid URL.", e);
@@ -155,7 +144,7 @@ public class BinaryContent {
 
     /**
      * Get URL of binary data.
-     * 
+     *
      * @return URL of data location
      */
     public URL getDataLocation() {

@@ -36,15 +36,13 @@ import java.util.Map;
 
 /**
  * Base class for reportDefinition tests.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 public class ReportDefinitionTestBase extends SmTestBase {
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ReportDefinitionTestBase(final int transport) {
         super(transport);
@@ -52,12 +50,10 @@ public class ReportDefinitionTestBase extends SmTestBase {
 
     /**
      * Test creating a reportDefinition.
-     * 
-     * @param dataXml
-     *            The xml representation of the reportDefinition.
+     *
+     * @param dataXml The xml representation of the reportDefinition.
      * @return The created ReportDefinition.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     @Override
     public String create(final String dataXml) throws Exception {
@@ -78,11 +74,9 @@ public class ReportDefinitionTestBase extends SmTestBase {
 
     /**
      * Test deleting an reportDefinition from the mock framework.
-     * 
-     * @param id
-     *            The id of the reportDefinition.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param id The id of the reportDefinition.
+     * @throws Exception If anything fails.
      */
     @Override
     public void delete(final String id) throws Exception {
@@ -96,14 +90,11 @@ public class ReportDefinitionTestBase extends SmTestBase {
 
     /**
      * Test updating an reportDefinition of the mock framework.
-     * 
-     * @param id
-     *            The id of the reportDefinition.
-     * @param xml
-     *            The xml representation of the reportDefinition.
+     *
+     * @param id  The id of the reportDefinition.
+     * @param xml The xml representation of the reportDefinition.
      * @return The updated report description.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     @Override
     public String update(final String id, final String xml) throws Exception {
@@ -113,8 +104,7 @@ public class ReportDefinitionTestBase extends SmTestBase {
         if (result instanceof HttpResponse) {
             HttpResponse httpRes = (HttpResponse) result;
             xmlResult = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
-            if (httpRes.getStatusLine().getStatusCode() >= 300
-                || httpRes.getStatusLine().getStatusCode() < 200) {
+            if (httpRes.getStatusLine().getStatusCode() >= 300 || httpRes.getStatusLine().getStatusCode() < 200) {
                 throw new Exception(xmlResult);
             }
 
@@ -127,12 +117,10 @@ public class ReportDefinitionTestBase extends SmTestBase {
 
     /**
      * Test retrieving an reportDefinition from the mock framework.
-     * 
-     * @param id
-     *            The id of the reportDefinition.
+     *
+     * @param id The id of the reportDefinition.
      * @return The retrieved reportDefinition.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     @Override
     public String retrieve(final String id) throws Exception {
@@ -151,21 +139,15 @@ public class ReportDefinitionTestBase extends SmTestBase {
     }
 
     /**
-     * Test retrieving the list of all reportDefinitions from the mock
-     * framework.
-     * 
-     * @param filter
-     *            filter as CQL query
-     * 
+     * Test retrieving the list of all reportDefinitions from the mock framework.
+     *
+     * @param filter filter as CQL query
      * @return The retrieved reportDefinitions as xml.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    public String retrieveReportDefinitions(final Map<String, String[]> filter)
-        throws Exception {
+    public String retrieveReportDefinitions(final Map<String, String[]> filter) throws Exception {
 
-        Object result =
-            getReportDefinitionClient().retrieveReportDefinitions(filter);
+        Object result = getReportDefinitionClient().retrieveReportDefinitions(filter);
         String xmlResult = null;
         if (result instanceof HttpResponse) {
             HttpResponse httpRes = (HttpResponse) result;

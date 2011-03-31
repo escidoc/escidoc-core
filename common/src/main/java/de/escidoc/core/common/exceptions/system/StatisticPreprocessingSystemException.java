@@ -20,16 +20,12 @@
 
 package de.escidoc.core.common.exceptions.system;
 
-
 /**
- * The StatisticPreprocessingSystemException is used to indicate 
- * that an internal system exception in the statistic-preprocessor occured.
- * returned httpStatusCode is 500.
- * Status code (500) indicating an error inside 
- * the HTTP server which prevented it from fulfilling the request.
- * 
- * @author Michael Hoppe (FIZ Karlsruhe)
+ * The StatisticPreprocessingSystemException is used to indicate that an internal system exception in the
+ * statistic-preprocessor occured. returned httpStatusCode is 500. Status code (500) indicating an error inside the HTTP
+ * server which prevented it from fulfilling the request.
  *
+ * @author Michael Hoppe (FIZ Karlsruhe)
  */
 public class StatisticPreprocessingSystemException extends SystemException {
 
@@ -38,45 +34,43 @@ public class StatisticPreprocessingSystemException extends SystemException {
      */
     private static final long serialVersionUID = -3022542774020568793L;
 
-    public static final int HTTP_STATUS_CODE = 
-        ESCIDOC_HTTP_SC_INTERNAL_SERVER_ERROR;
+    public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_INTERNAL_SERVER_ERROR;
 
-    public static final String HTTP_STATUS_MESSAGE = 
-        "Internal Statistic Preprocessing Error";
-    
+    public static final String HTTP_STATUS_MESSAGE = "Internal Statistic Preprocessing Error";
+
     /**
      * Default constructor.
-     *
      */
     public StatisticPreprocessingSystemException() {
         super(HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
+
     /**
      * Constructor used to map an initial exception.
-     * @param error Throwable
      *
+     * @param error Throwable
      */
     public StatisticPreprocessingSystemException(final Throwable error) {
         super(error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
+
     /**
      * Constructs a new exception with the specified detail message.
-     * @param message - the detail message. 
      *
+     * @param message - the detail message.
      */
     public StatisticPreprocessingSystemException(final String message) {
         super(message, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
+
     /**
-     * Constructor used to create a new Exception
-     * with the specified detail message 
-     * and a mapping to an initial exception.
-     * @param message - the detail message. 
-     * @param error Throwable
+     * Constructor used to create a new Exception with the specified detail message and a mapping to an initial
+     * exception.
      *
+     * @param message - the detail message.
+     * @param error   Throwable
      */
-    public StatisticPreprocessingSystemException(final String message,
-                                   final Throwable error) {
+    public StatisticPreprocessingSystemException(final String message, final Throwable error) {
         super(message, error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 }

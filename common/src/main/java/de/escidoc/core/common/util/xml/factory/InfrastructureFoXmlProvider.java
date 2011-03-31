@@ -29,11 +29,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * XmlTemplateProvider implementation using the velocity template engine.<br>
- * This implementation uses the velocity singleton pattern.
- * 
- * @author Torsten Tetteroo
+ * XmlTemplateProvider implementation using the velocity template engine.<br> This implementation uses the velocity
+ * singleton pattern.
  *
+ * @author Torsten Tetteroo
  */
 public abstract class InfrastructureFoXmlProvider extends VelocityXmlProvider {
 
@@ -47,8 +46,6 @@ public abstract class InfrastructureFoXmlProvider extends VelocityXmlProvider {
 
     /**
      * Protected constructor to prevent initialization.
-     * 
-     *
      */
     protected InfrastructureFoXmlProvider() {
 
@@ -59,10 +56,9 @@ public abstract class InfrastructureFoXmlProvider extends VelocityXmlProvider {
 
     /**
      * Get sub-path for resource template.
-     * 
+     *
      * @return sub-path for resource template
-     * @throws WebserverSystemException
-     *             Never.
+     * @throws WebserverSystemException Never.
      */
     @Override
     protected String completePath() throws WebserverSystemException {
@@ -71,18 +67,14 @@ public abstract class InfrastructureFoXmlProvider extends VelocityXmlProvider {
 
     /**
      * Render metadata to FoXML.
-     * 
-     * @param values
-     *            value map for metadata
+     *
+     * @param values value map for metadata
      * @return FoXML Representation of metadata
-     * @throws WebserverSystemException
-     *             Thrown if rendering failed.
+     * @throws WebserverSystemException Thrown if rendering failed.
      */
-    public String getMetadataFoXml(final Map<String, String> values)
-        throws WebserverSystemException {
+    public String getMetadataFoXml(final Map<String, String> values) throws WebserverSystemException {
 
-        return getXml(METADATA_RECORD_RESOURCE_NAME, COMMON_TEMPLATE_PATH,
-            values);
+        return getXml(METADATA_RECORD_RESOURCE_NAME, COMMON_TEMPLATE_PATH, values);
     }
 
     // /**
@@ -226,19 +218,15 @@ public abstract class InfrastructureFoXmlProvider extends VelocityXmlProvider {
 
     /**
      * Generate FoXML for all MetadataRecords.
-     * 
-     * @param mdRecords
-     *            Vector with MdRecordCreate.
+     *
+     * @param mdRecords Vector with MdRecordCreate.
      * @return MetadataReocrd FoXML.
-     * @throws SystemException
-     *             Thrown if converting of characters to default character set
-     *             failed.
+     * @throws SystemException Thrown if converting of characters to default character set failed.
      */
-    public List<Map<String, String>> getMetadataRecordsMap(
-        final Iterable<MdRecordCreate> mdRecords) throws SystemException {
+    public List<Map<String, String>> getMetadataRecordsMap(final Iterable<MdRecordCreate> mdRecords)
+        throws SystemException {
 
-        final List<Map<String, String>> values =
-            new ArrayList<Map<String, String>>();
+        final List<Map<String, String>> values = new ArrayList<Map<String, String>>();
 
         if (mdRecords != null) {
             for (final MdRecordCreate mdRecord : mdRecords) {

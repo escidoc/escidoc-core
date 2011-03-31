@@ -27,7 +27,7 @@
  * All rights reserved.  Use is subject to license terms.
  */
 /**
- * 
+ *
  */
 package de.escidoc.core.om.business.stax.handler.context;
 
@@ -55,12 +55,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * The PropertiesHandler. Verifies the elements <code>organizational-unit</code>
- * of a properties snippet of a parsed context XML. These elements must contain
- * <code>xlink:href</code> attribute in the REST case and <code>objid</code>
+ * The PropertiesHandler. Verifies the elements <code>organizational-unit</code> of a properties snippet of a parsed
+ * context XML. These elements must contain <code>xlink:href</code> attribute in the REST case and <code>objid</code>
  * attribute in the SOAP case.
- * 
- *
  */
 public class ContextPropertiesHandler extends DefaultHandler {
 
@@ -73,22 +70,16 @@ public class ContextPropertiesHandler extends DefaultHandler {
     private final List<String> orgunits = new ArrayList<String>();
 
     /**
-     * 
-     * @param propertiesPath
-     *            XPath to properties.
-     * @param parser
-     *            StaxParser
+     * @param propertiesPath XPath to properties.
+     * @param parser         StaxParser
      */
-    public ContextPropertiesHandler(final String propertiesPath,
-        final StaxParser parser) {
+    public ContextPropertiesHandler(final String propertiesPath, final StaxParser parser) {
         this.propertiesPath = propertiesPath;
         this.parser = parser;
     }
 
     /**
-     * 
-     * @param parser
-     *            StaxParser
+     * @param parser StaxParser
      */
     public ContextPropertiesHandler(final StaxParser parser) {
         this.parser = parser;
@@ -107,9 +98,8 @@ public class ContextPropertiesHandler extends DefaultHandler {
     }
 
     @Override
-    public String characters(final String data, final StartElement element)
-        throws InvalidStatusException, OrganizationalUnitNotFoundException,
-        SystemException, ReadonlyAttributeViolationException,
+    public String characters(final String data, final StartElement element) throws InvalidStatusException,
+        OrganizationalUnitNotFoundException, SystemException, ReadonlyAttributeViolationException,
         MissingElementValueException {
         final String curPath = parser.getCurPath();
 
@@ -117,23 +107,17 @@ public class ContextPropertiesHandler extends DefaultHandler {
             final String theName = element.getLocalName();
 
             // organizational-unit
-            if (curPath.equals(this.propertiesPath
-                + "/organizational-units/organizational-unit")) {
+            if (curPath.equals(this.propertiesPath + "/organizational-units/organizational-unit")) {
 
                 try {
                     final String id;
                     if (UserContext.isRestAccess()) {
-                        final String xlinkHref =
-                            element
-                                .getAttribute(
-                                    Constants.XLINK_URI,
-                                    "href").getValue();
+                        final String xlinkHref = element.getAttribute(Constants.XLINK_URI, "href").getValue();
                         id = XmlUtility.getIdFromURI(xlinkHref);
 
                         if (!xlinkHref.equals("/oum/organizational-unit/" + id)) {
                             throw new OrganizationalUnitNotFoundException(
-                                "The 'organizational-unit' element has a wrong "
-                                    + "url. the url have to look like: "
+                                "The 'organizational-unit' element has a wrong " + "url. the url have to look like: "
                                     + "/oum/organizational-unit/id");
                         }
                     }
@@ -145,20 +129,15 @@ public class ContextPropertiesHandler extends DefaultHandler {
                     Utility.getInstance().checkIsOrganizationalUnit(id);
 
                     final String orgUnitStatus =
-                        TripleStoreUtility.getInstance().getPropertiesElements(
-                            id, TripleStoreUtility.PROP_PUBLIC_STATUS);
+                        TripleStoreUtility.getInstance().getPropertiesElements(id,
+                            TripleStoreUtility.PROP_PUBLIC_STATUS);
 
-                    if (!orgUnitStatus
-                        .equals(Constants.STATUS_OU_OPENED)) {
-                        throw new InvalidStatusException("organizational-unit with id "
-                                + id
-                                + " should be in status "
-                                + Constants.STATUS_OU_OPENED
-                                + " but is in status " + orgUnitStatus);
+                    if (!orgUnitStatus.equals(Constants.STATUS_OU_OPENED)) {
+                        throw new InvalidStatusException("organizational-unit with id " + id + " should be in status "
+                            + Constants.STATUS_OU_OPENED + " but is in status " + orgUnitStatus);
                     }
                     this.orgunits.add(id);
-                    this.propertiesMap.put(
-                        Elements.ELEMENT_ORGANIZATIONAL_UNITS, this.orgunits);
+                    this.propertiesMap.put(Elements.ELEMENT_ORGANIZATIONAL_UNITS, this.orgunits);
                 }
                 catch (final NoSuchAttributeException e) {
                     throw new ReadonlyAttributeViolationException(e);
@@ -166,8 +145,7 @@ public class ContextPropertiesHandler extends DefaultHandler {
             }
             else if (theName.equals(Elements.ELEMENT_NAME)) {
                 if (data.length() == 0) {
-                    throw new MissingElementValueException(
-                        "The value of the element " + theName + " is missing");
+                    throw new MissingElementValueException("The value of the element " + theName + " is missing");
                 }
                 else {
                     // propertiesMap.put(theName, data);
@@ -176,8 +154,7 @@ public class ContextPropertiesHandler extends DefaultHandler {
             }
             else if (theName.equals(Elements.ELEMENT_TYPE)) {
                 if (data.length() == 0) {
-                    throw new MissingElementValueException(
-                        "The value of the element " + theName + " is missing");
+                    throw new MissingElementValueException("The value of the element " + theName + " is missing");
                 }
                 else {
                     propertiesMap.put(Elements.ELEMENT_TYPE, data);
@@ -206,7 +183,7 @@ public class ContextPropertiesHandler extends DefaultHandler {
 
     /**
      * Return property elements as HashMap without Organizational Units.
-     * 
+     *
      * @return map of properties without organizational units.
      */
     public Map<String, Object> getPropertiesMap() {
@@ -215,7 +192,7 @@ public class ContextPropertiesHandler extends DefaultHandler {
 
     /**
      * Get the organizational units of the Context.
-     * 
+     *
      * @return organizational units
      */
     public Collection<String> getOrganizationalUnits() {

@@ -60,80 +60,59 @@ import org.springframework.security.userdetails.UserDetails;
 import java.util.Map;
 
 /**
- * User account handler implementation for the service layer of the AA
- * component.
- * 
+ * User account handler implementation for the service layer of the AA component.
+ *
  * @author Michael Schneider
  */
-public class UserAccountHandler
-    implements UserAccountHandlerInterface {
+public class UserAccountHandler implements UserAccountHandlerInterface {
 
     /**
      * The logger.
      */
-    private static final Logger LOGGER = LoggerFactory.getLogger(
-        UserAccountHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserAccountHandler.class);
 
     private de.escidoc.core.aa.business.interfaces.UserAccountHandlerInterface business;
 
     /**
      * See Interface for functional description.
-     * 
-     * @param user
-     *            userId
+     *
+     * @param user userId
      * @return created userAccount as xml
      * @throws UniqueConstraintViolationException
-     *             e
-     * @throws InvalidXmlException
-     *             e
-     * @throws InvalidStatusException
-     *             e
+     *                                 e
+     * @throws InvalidXmlException     e
+     * @throws InvalidStatusException  e
      * @throws OrganizationalUnitNotFoundException
-     *             e
+     *                                 e
      * @throws MissingMethodParameterException
-     *             e
-     * @throws AuthenticationException
-     *             e
-     * @throws AuthorizationException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see UserAccountHandlerInterface
-     *      #create(java.lang.String)
-     *
+     *                                 e
+     * @throws AuthenticationException e
+     * @throws AuthorizationException  e
+     * @throws SystemException         e
+     * @see UserAccountHandlerInterface #create(java.lang.String)
      */
     @Override
-    public String create(final String user)
-        throws UniqueConstraintViolationException, XmlCorruptedException,
-        XmlSchemaValidationException, OrganizationalUnitNotFoundException,
-        MissingMethodParameterException, AuthenticationException,
-        AuthorizationException, SystemException, InvalidStatusException {
+    public String create(final String user) throws UniqueConstraintViolationException, XmlCorruptedException,
+        XmlSchemaValidationException, OrganizationalUnitNotFoundException, MissingMethodParameterException,
+        AuthenticationException, AuthorizationException, SystemException, InvalidStatusException {
 
         return business.create(user);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param userId
-     *            userId
-     * @throws UserAccountNotFoundException
-     *             e
-     * @throws MissingMethodParameterException
-     *             e
-     * @throws AuthenticationException
-     *             e
-     * @throws AuthorizationException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see UserAccountHandlerInterface
-     *      #delete(java.lang.String)
      *
+     * @param userId userId
+     * @throws UserAccountNotFoundException e
+     * @throws MissingMethodParameterException
+     *                                      e
+     * @throws AuthenticationException      e
+     * @throws AuthorizationException       e
+     * @throws SystemException              e
+     * @see UserAccountHandlerInterface #delete(java.lang.String)
      */
     @Override
-    public void delete(final String userId)
-        throws UserAccountNotFoundException, MissingMethodParameterException,
+    public void delete(final String userId) throws UserAccountNotFoundException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException {
 
         business.delete(userId);
@@ -141,48 +120,32 @@ public class UserAccountHandler
 
     /**
      * See Interface for functional description.
-     * 
-     * @param userId
-     *            userId
-     * @param user
-     *            updated user-xml
-     * @return updated user-xml
-     * @throws UserAccountNotFoundException
-     *             e
-     * @throws UniqueConstraintViolationException
-     *             e
-     * @throws XmlCorruptedException
-     *             e
-     * @throws XmlSchemaValidationException
-     *             , e
-     * @throws InvalidStatusException
-     *             e
-     * @throws MissingMethodParameterException
-     *             e
-     * @throws MissingAttributeValueException
-     *             e
-     * @throws OptimisticLockingException
-     *             e
-     * @throws AuthenticationException
-     *             e
-     * @throws AuthorizationException
-     *             e
-     * @throws OrganizationalUnitNotFoundException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see UserAccountHandlerInterface
-     *      #update(java.lang.String, java.lang.String)
      *
+     * @param userId userId
+     * @param user   updated user-xml
+     * @return updated user-xml
+     * @throws UserAccountNotFoundException   e
+     * @throws UniqueConstraintViolationException
+     *                                        e
+     * @throws XmlCorruptedException          e
+     * @throws XmlSchemaValidationException   , e
+     * @throws InvalidStatusException         e
+     * @throws MissingMethodParameterException
+     *                                        e
+     * @throws MissingAttributeValueException e
+     * @throws OptimisticLockingException     e
+     * @throws AuthenticationException        e
+     * @throws AuthorizationException         e
+     * @throws OrganizationalUnitNotFoundException
+     *                                        e
+     * @throws SystemException                e
+     * @see UserAccountHandlerInterface #update(java.lang.String, java.lang.String)
      */
     @Override
-    public String update(final String userId, final String user)
-        throws UserAccountNotFoundException,
-        UniqueConstraintViolationException, XmlCorruptedException,
-        XmlSchemaValidationException, MissingMethodParameterException,
-        MissingAttributeValueException, OptimisticLockingException,
-        AuthenticationException, AuthorizationException,
-        OrganizationalUnitNotFoundException, SystemException,
+    public String update(final String userId, final String user) throws UserAccountNotFoundException,
+        UniqueConstraintViolationException, XmlCorruptedException, XmlSchemaValidationException,
+        MissingMethodParameterException, MissingAttributeValueException, OptimisticLockingException,
+        AuthenticationException, AuthorizationException, OrganizationalUnitNotFoundException, SystemException,
         InvalidStatusException {
 
         return business.update(userId, user);
@@ -190,62 +153,42 @@ public class UserAccountHandler
 
     /**
      * See Interface for functional description.
-     * 
-     * @param userId
-     *            userId
-     * @param taskParam
-     *            taskParam
-     * @throws UserAccountNotFoundException
-     *             e
-     * @throws InvalidStatusException
-     *             e
-     * @throws XmlCorruptedException
-     *             e
-     * @throws MissingMethodParameterException
-     *             e
-     * @throws OptimisticLockingException
-     *             e
-     * @throws AuthenticationException
-     *             e
-     * @throws AuthorizationException
-     *             e
-     * @throws SystemException
-     *             e
      *
+     * @param userId    userId
+     * @param taskParam taskParam
+     * @throws UserAccountNotFoundException e
+     * @throws InvalidStatusException       e
+     * @throws XmlCorruptedException        e
+     * @throws MissingMethodParameterException
+     *                                      e
+     * @throws OptimisticLockingException   e
+     * @throws AuthenticationException      e
+     * @throws AuthorizationException       e
+     * @throws SystemException              e
      */
     @Override
-    public void updatePassword(final String userId, final String taskParam)
-        throws UserAccountNotFoundException, InvalidStatusException,
-        XmlCorruptedException, MissingMethodParameterException,
-        OptimisticLockingException, AuthenticationException,
-        AuthorizationException, SystemException {
+    public void updatePassword(final String userId, final String taskParam) throws UserAccountNotFoundException,
+        InvalidStatusException, XmlCorruptedException, MissingMethodParameterException, OptimisticLockingException,
+        AuthenticationException, AuthorizationException, SystemException {
 
         business.updatePassword(userId, taskParam);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param userId
-     *            userId
-     * @return user as xml
-     * @throws UserAccountNotFoundException
-     *             e
-     * @throws MissingMethodParameterException
-     *             e
-     * @throws AuthenticationException
-     *             e
-     * @throws AuthorizationException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see UserAccountHandlerInterface
-     *      #retrieve(java.lang.String)
      *
+     * @param userId userId
+     * @return user as xml
+     * @throws UserAccountNotFoundException e
+     * @throws MissingMethodParameterException
+     *                                      e
+     * @throws AuthenticationException      e
+     * @throws AuthorizationException       e
+     * @throws SystemException              e
+     * @see UserAccountHandlerInterface #retrieve(java.lang.String)
      */
     @Override
-    public String retrieve(final String userId)
-        throws UserAccountNotFoundException, MissingMethodParameterException,
+    public String retrieve(final String userId) throws UserAccountNotFoundException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException {
 
         return business.retrieve(userId);
@@ -253,820 +196,554 @@ public class UserAccountHandler
 
     /**
      * See Interface for functional description.
-     * 
+     *
      * @return user as xml
-     * @throws UserAccountNotFoundException
-     *             e
-     * @throws AuthenticationException
-     *             e
-     * @throws AuthorizationException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see UserAccountHandlerInterface
-     *      #retrieveCurrentUser(java.lang.String)
+     * @throws UserAccountNotFoundException e
+     * @throws AuthenticationException      e
+     * @throws AuthorizationException       e
+     * @throws SystemException              e
+     * @see UserAccountHandlerInterface #retrieveCurrentUser(java.lang.String)
      */
     @Override
-    public String retrieveCurrentUser() throws UserAccountNotFoundException,
-        AuthenticationException, AuthorizationException, SystemException {
+    public String retrieveCurrentUser() throws UserAccountNotFoundException, AuthenticationException,
+        AuthorizationException, SystemException {
 
         return business.retrieveCurrentUser();
     }
 
     @Override
-    public String retrieveResources(final String userId)
-        throws UserAccountNotFoundException, MissingMethodParameterException,
-        AuthenticationException, AuthorizationException, SystemException {
+    public String retrieveResources(final String userId) throws UserAccountNotFoundException,
+        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
 
         return business.retrieveResources(userId);
     }
 
     @Override
-    public String retrieveCurrentGrants(final String userId)
-        throws UserAccountNotFoundException, MissingMethodParameterException,
-        AuthenticationException, AuthorizationException, SystemException {
+    public String retrieveCurrentGrants(final String userId) throws UserAccountNotFoundException,
+        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
 
         return business.retrieveCurrentGrants(userId);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param userId
-     *            userId
-     * @param grantId
-     *            grantId
-     * @return grant as xml
-     * @throws UserAccountNotFoundException
-     *             e
-     * @throws GrantNotFoundException
-     *             e
-     * @throws MissingMethodParameterException
-     *             e
-     * @throws AuthenticationException
-     *             e
-     * @throws AuthorizationException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see UserAccountHandlerInterface
-     *      #retrieveGrant(java.lang.String, java.lang.String)
      *
+     * @param userId  userId
+     * @param grantId grantId
+     * @return grant as xml
+     * @throws UserAccountNotFoundException e
+     * @throws GrantNotFoundException       e
+     * @throws MissingMethodParameterException
+     *                                      e
+     * @throws AuthenticationException      e
+     * @throws AuthorizationException       e
+     * @throws SystemException              e
+     * @see UserAccountHandlerInterface #retrieveGrant(java.lang.String, java.lang.String)
      */
     @Override
-    public String retrieveGrant(final String userId, final String grantId)
-        throws UserAccountNotFoundException, GrantNotFoundException,
-        MissingMethodParameterException, AuthenticationException,
-        AuthorizationException, SystemException {
+    public String retrieveGrant(final String userId, final String grantId) throws UserAccountNotFoundException,
+        GrantNotFoundException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
+        SystemException {
 
         return business.retrieveGrant(userId, grantId);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param filter
-     *            filter as CQL query
+     *
+     * @param filter filter as CQL query
      * @return String xml
      * @throws MissingMethodParameterException
-     *             e
-     * @throws InvalidSearchQueryException
-     *             e
-     * @throws AuthenticationException
-     *             e
-     * @throws AuthorizationException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see UserAccountHandlerInterface
-     *      #retrieveGrants(java.lang.String)
+     *                                     e
+     * @throws InvalidSearchQueryException e
+     * @throws AuthenticationException     e
+     * @throws AuthorizationException      e
+     * @throws SystemException             e
+     * @see UserAccountHandlerInterface #retrieveGrants(java.lang.String)
      */
     @Override
-    public String retrieveGrants(final Map<String, String[]> filter)
-        throws MissingMethodParameterException, InvalidSearchQueryException,
-        AuthenticationException, AuthorizationException, SystemException {
+    public String retrieveGrants(final Map<String, String[]> filter) throws MissingMethodParameterException,
+        InvalidSearchQueryException, AuthenticationException, AuthorizationException, SystemException {
 
         return business.retrieveGrants(filter);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param userId
-     *            userId
-     * @param taskParam
-     *            taskParam
-     * @throws AlreadyActiveException
-     *             e
-     * @throws UserAccountNotFoundException
-     *             e
-     * @throws XmlCorruptedException
-     *             e
-     * @throws MissingMethodParameterException
-     *             e
-     * @throws MissingAttributeValueException
-     *             e
-     * @throws OptimisticLockingException
-     *             e
-     * @throws AuthenticationException
-     *             e
-     * @throws AuthorizationException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see UserAccountHandlerInterface
-     *      #activate(java.lang.String, java.lang.String)
      *
+     * @param userId    userId
+     * @param taskParam taskParam
+     * @throws AlreadyActiveException         e
+     * @throws UserAccountNotFoundException   e
+     * @throws XmlCorruptedException          e
+     * @throws MissingMethodParameterException
+     *                                        e
+     * @throws MissingAttributeValueException e
+     * @throws OptimisticLockingException     e
+     * @throws AuthenticationException        e
+     * @throws AuthorizationException         e
+     * @throws SystemException                e
+     * @see UserAccountHandlerInterface #activate(java.lang.String, java.lang.String)
      */
     @Override
-    public void activate(final String userId, final String taskParam)
-        throws AlreadyActiveException, UserAccountNotFoundException,
-        XmlCorruptedException, MissingMethodParameterException,
-        MissingAttributeValueException, OptimisticLockingException,
-        AuthenticationException, AuthorizationException, SystemException {
+    public void activate(final String userId, final String taskParam) throws AlreadyActiveException,
+        UserAccountNotFoundException, XmlCorruptedException, MissingMethodParameterException,
+        MissingAttributeValueException, OptimisticLockingException, AuthenticationException, AuthorizationException,
+        SystemException {
 
         business.activate(userId, taskParam);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param userId
-     *            userId
-     * @param taskParam
-     *            taskParam
-     * @throws AlreadyDeactiveException
-     *             e
-     * @throws UserAccountNotFoundException
-     *             e
-     * @throws XmlCorruptedException
-     *             e
-     * @throws MissingMethodParameterException
-     *             e
-     * @throws MissingAttributeValueException
-     *             e
-     * @throws OptimisticLockingException
-     *             e
-     * @throws AuthenticationException
-     *             e
-     * @throws AuthorizationException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see UserAccountHandlerInterface
-     *      #deactivate(java.lang.String, java.lang.String)
      *
+     * @param userId    userId
+     * @param taskParam taskParam
+     * @throws AlreadyDeactiveException       e
+     * @throws UserAccountNotFoundException   e
+     * @throws XmlCorruptedException          e
+     * @throws MissingMethodParameterException
+     *                                        e
+     * @throws MissingAttributeValueException e
+     * @throws OptimisticLockingException     e
+     * @throws AuthenticationException        e
+     * @throws AuthorizationException         e
+     * @throws SystemException                e
+     * @see UserAccountHandlerInterface #deactivate(java.lang.String, java.lang.String)
      */
     @Override
-    public void deactivate(final String userId, final String taskParam)
-        throws AlreadyDeactiveException, UserAccountNotFoundException,
-        XmlCorruptedException, MissingMethodParameterException,
-        MissingAttributeValueException, OptimisticLockingException,
-        AuthenticationException, AuthorizationException, SystemException {
+    public void deactivate(final String userId, final String taskParam) throws AlreadyDeactiveException,
+        UserAccountNotFoundException, XmlCorruptedException, MissingMethodParameterException,
+        MissingAttributeValueException, OptimisticLockingException, AuthenticationException, AuthorizationException,
+        SystemException {
 
         business.deactivate(userId, taskParam);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param userId
-     *            userId
-     * @param grantXML
-     *            grant as xml
-     * @return created grant as xml
-     * @throws AlreadyExistsException
-     *             e
-     * @throws UserAccountNotFoundException
-     *             e
-     * @throws InvalidScopeException
-     *             e
-     * @throws RoleNotFoundException
-     *             e
-     * @throws XmlCorruptedException
-     *             e
-     * @throws XmlSchemaValidationException
-     *             e
-     * @throws MissingMethodParameterException
-     *             e
-     * @throws AuthenticationException
-     *             e
-     * @throws AuthorizationException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see UserAccountHandlerInterface
-     *      #createGrant(java.lang.String, java.lang.String)
      *
+     * @param userId   userId
+     * @param grantXML grant as xml
+     * @return created grant as xml
+     * @throws AlreadyExistsException       e
+     * @throws UserAccountNotFoundException e
+     * @throws InvalidScopeException        e
+     * @throws RoleNotFoundException        e
+     * @throws XmlCorruptedException        e
+     * @throws XmlSchemaValidationException e
+     * @throws MissingMethodParameterException
+     *                                      e
+     * @throws AuthenticationException      e
+     * @throws AuthorizationException       e
+     * @throws SystemException              e
+     * @see UserAccountHandlerInterface #createGrant(java.lang.String, java.lang.String)
      */
     @Override
-    public String createGrant(final String userId, final String grantXML)
-        throws AlreadyExistsException, UserAccountNotFoundException,
-        InvalidScopeException, RoleNotFoundException, XmlCorruptedException,
-        XmlSchemaValidationException, MissingMethodParameterException,
-        AuthenticationException, AuthorizationException, SystemException {
+    public String createGrant(final String userId, final String grantXML) throws AlreadyExistsException,
+        UserAccountNotFoundException, InvalidScopeException, RoleNotFoundException, XmlCorruptedException,
+        XmlSchemaValidationException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
+        SystemException {
 
         return business.createGrant(userId, grantXML);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param userId
-     *            userId
-     * @param grantId
-     *            grantId
-     * @param taskParam
-     *            taskParam
-     * @throws UserAccountNotFoundException
-     *             e
-     * @throws GrantNotFoundException
-     *             e
-     * @throws AlreadyRevokedException
-     *             e
-     * @throws XmlCorruptedException
-     *             e
-     * @throws MissingAttributeValueException
-     *             e
-     * @throws MissingMethodParameterException
-     *             e
-     * @throws AuthenticationException
-     *             e
-     * @throws AuthorizationException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see UserAccountHandlerInterface
-     *      #revokeGrant(java.lang.String, java.lang.String, java.lang.String)
      *
+     * @param userId    userId
+     * @param grantId   grantId
+     * @param taskParam taskParam
+     * @throws UserAccountNotFoundException   e
+     * @throws GrantNotFoundException         e
+     * @throws AlreadyRevokedException        e
+     * @throws XmlCorruptedException          e
+     * @throws MissingAttributeValueException e
+     * @throws MissingMethodParameterException
+     *                                        e
+     * @throws AuthenticationException        e
+     * @throws AuthorizationException         e
+     * @throws SystemException                e
+     * @see UserAccountHandlerInterface #revokeGrant(java.lang.String, java.lang.String, java.lang.String)
      */
     @Override
-    public void revokeGrant(
-        final String userId, final String grantId, final String taskParam)
-        throws UserAccountNotFoundException, GrantNotFoundException,
-        AlreadyRevokedException, XmlCorruptedException,
-        MissingAttributeValueException, MissingMethodParameterException,
-        AuthenticationException, AuthorizationException, SystemException {
+    public void revokeGrant(final String userId, final String grantId, final String taskParam)
+        throws UserAccountNotFoundException, GrantNotFoundException, AlreadyRevokedException, XmlCorruptedException,
+        MissingAttributeValueException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException {
 
         business.revokeGrant(userId, grantId, taskParam);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param userId
-     *            userId
-     * @param taskParam
-     *            taskParam
-     * @throws UserAccountNotFoundException
-     *             e
-     * @throws GrantNotFoundException
-     *             e
-     * @throws AlreadyRevokedException
-     *             e
-     * @throws XmlCorruptedException
-     *             e
-     * @throws MissingAttributeValueException
-     *             e
-     * @throws MissingMethodParameterException
-     *             e
-     * @throws AuthenticationException
-     *             e
-     * @throws AuthorizationException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see UserAccountHandlerInterface
-     *      #revokeGrants(java.lang.String, java.lang.String)
      *
+     * @param userId    userId
+     * @param taskParam taskParam
+     * @throws UserAccountNotFoundException   e
+     * @throws GrantNotFoundException         e
+     * @throws AlreadyRevokedException        e
+     * @throws XmlCorruptedException          e
+     * @throws MissingAttributeValueException e
+     * @throws MissingMethodParameterException
+     *                                        e
+     * @throws AuthenticationException        e
+     * @throws AuthorizationException         e
+     * @throws SystemException                e
+     * @see UserAccountHandlerInterface #revokeGrants(java.lang.String, java.lang.String)
      */
     @Override
-    public void revokeGrants(final String userId, final String taskParam)
-        throws UserAccountNotFoundException, GrantNotFoundException,
-        AlreadyRevokedException, XmlCorruptedException,
-        MissingAttributeValueException, MissingMethodParameterException,
-        AuthenticationException, AuthorizationException, SystemException {
+    public void revokeGrants(final String userId, final String taskParam) throws UserAccountNotFoundException,
+        GrantNotFoundException, AlreadyRevokedException, XmlCorruptedException, MissingAttributeValueException,
+        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
 
         business.revokeGrants(userId, taskParam);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param filter
-     *            filterXml
+     *
+     * @param filter filterXml
      * @return filtered user-accounts as xml
      * @throws MissingMethodParameterException
-     *             e
-     * @throws InvalidSearchQueryException
-     *             e
-     * @throws AuthenticationException
-     *             e
-     * @throws AuthorizationException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see UserAccountHandlerInterface
-     *      #retrieveUserAccounts(java.util.Map)
+     *                                     e
+     * @throws InvalidSearchQueryException e
+     * @throws AuthenticationException     e
+     * @throws AuthorizationException      e
+     * @throws SystemException             e
+     * @see UserAccountHandlerInterface #retrieveUserAccounts(java.util.Map)
      */
     @Override
-    public String retrieveUserAccounts(final Map<String, String[]> filter)
-        throws MissingMethodParameterException, AuthenticationException,
-        AuthorizationException, SystemException, InvalidSearchQueryException {
+    public String retrieveUserAccounts(final Map<String, String[]> filter) throws MissingMethodParameterException,
+        AuthenticationException, AuthorizationException, SystemException, InvalidSearchQueryException {
 
         return business.retrieveUserAccounts(filter);
     }
 
     @Override
-    public UserDetails retrieveUserDetails(final String handle)
-        throws MissingMethodParameterException, AuthenticationException,
-        AuthorizationException, UserAccountNotFoundException, SystemException {
+    public UserDetails retrieveUserDetails(final String handle) throws MissingMethodParameterException,
+        AuthenticationException, AuthorizationException, UserAccountNotFoundException, SystemException {
         return business.retrieveUserDetails(handle);
     }
 
     /**
      * Setter for the business object.
-     * 
-     * @param business
-     *            business object.
+     *
+     * @param business business object.
      */
-    public void setBusiness(
-        final de.escidoc.core.aa.business.interfaces.UserAccountHandlerInterface business) {
+    public void setBusiness(final de.escidoc.core.aa.business.interfaces.UserAccountHandlerInterface business) {
         this.business = business;
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param userId
-     *            userId
-     * @return preferences as xml
-     * @throws UserAccountNotFoundException
-     *             e
-     * @throws MissingMethodParameterException
-     *             e
-     * @throws AuthenticationException
-     *             e
-     * @throws AuthorizationException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see UserAccountHandlerInterface
-     *      #retrieveCurrentGrants(java.lang.String)
      *
+     * @param userId userId
+     * @return preferences as xml
+     * @throws UserAccountNotFoundException e
+     * @throws MissingMethodParameterException
+     *                                      e
+     * @throws AuthenticationException      e
+     * @throws AuthorizationException       e
+     * @throws SystemException              e
+     * @see UserAccountHandlerInterface #retrieveCurrentGrants(java.lang.String)
      */
     @Override
-    public String retrievePreferences(final String userId)
-        throws UserAccountNotFoundException, MissingMethodParameterException,
-        AuthenticationException, AuthorizationException, SystemException {
+    public String retrievePreferences(final String userId) throws UserAccountNotFoundException,
+        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
 
         return business.retrievePreferences(userId);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param userId
-     *            The userId.
-     * @param preferenceXML
-     *            The preferencesXML.
-     * @return created preferenceXML
-     * @throws AlreadyExistsException
-     *             If
-     * @throws UserAccountNotFoundException
-     *             If
-     * @throws PreferenceNotFoundException
-     *             If
-     * @throws XmlCorruptedException
-     *             If
-     * @throws XmlSchemaValidationException
-     *             If
-     * @throws SystemException
-     *             If
-     * @throws MissingMethodParameterException
-     *             Thrown if no user id or no task parameters are provided.
-     * @throws AuthenticationException
-     *             Thrown if the authentication fails due to an invalid provided
-     *             eSciDocUserHandle.
-     * @throws AuthorizationException
-     *             Thrown if the authorization fails.
-     * @see UserAccountHandlerInterface
-     *      #createPreference(java.lang.String, java.lang.String)
      *
+     * @param userId        The userId.
+     * @param preferenceXML The preferencesXML.
+     * @return created preferenceXML
+     * @throws AlreadyExistsException       If
+     * @throws UserAccountNotFoundException If
+     * @throws PreferenceNotFoundException  If
+     * @throws XmlCorruptedException        If
+     * @throws XmlSchemaValidationException If
+     * @throws SystemException              If
+     * @throws MissingMethodParameterException
+     *                                      Thrown if no user id or no task parameters are provided.
+     * @throws AuthenticationException      Thrown if the authentication fails due to an invalid provided
+     *                                      eSciDocUserHandle.
+     * @throws AuthorizationException       Thrown if the authorization fails.
+     * @see UserAccountHandlerInterface #createPreference(java.lang.String, java.lang.String)
      */
     @Override
-    public String createPreference(
-        final String userId, final String preferenceXML)
-        throws AlreadyExistsException, UserAccountNotFoundException,
-        PreferenceNotFoundException, XmlCorruptedException,
-        XmlSchemaValidationException, MissingMethodParameterException,
-        AuthenticationException, AuthorizationException, SystemException {
+    public String createPreference(final String userId, final String preferenceXML) throws AlreadyExistsException,
+        UserAccountNotFoundException, PreferenceNotFoundException, XmlCorruptedException, XmlSchemaValidationException,
+        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
         return business.createPreference(userId, preferenceXML);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param userId
-     *            The userId.
-     * @param preferencesXML
-     *            The preferencesXML.
-     * @return updated preferenceXML
-     * @throws UserAccountNotFoundException
-     *             If
-     * @throws XmlCorruptedException
-     *             If
-     * @throws XmlSchemaValidationException
-     *             If
-     * @throws MissingAttributeValueException
-     *             If
-     * @throws SystemException
-     *             If
-     * @throws OptimisticLockingException
-     *             Thrown in case of an optimistic locking error.
-     * @throws MissingMethodParameterException
-     *             Thrown if no user id or no task parameters are provided.
-     * @throws AuthenticationException
-     *             Thrown if the authentication fails due to an invalid provided
-     *             eSciDocUserHandle.
-     * @throws AuthorizationException
-     *             Thrown if the authorization fails.
-     * @throws MissingAttributeValueException
-     * @see UserAccountHandlerInterface
-     *      #updatePreferences(java.lang.String, java.lang.String)
      *
+     * @param userId         The userId.
+     * @param preferencesXML The preferencesXML.
+     * @return updated preferenceXML
+     * @throws UserAccountNotFoundException   If
+     * @throws XmlCorruptedException          If
+     * @throws XmlSchemaValidationException   If
+     * @throws MissingAttributeValueException If
+     * @throws SystemException                If
+     * @throws OptimisticLockingException     Thrown in case of an optimistic locking error.
+     * @throws MissingMethodParameterException
+     *                                        Thrown if no user id or no task parameters are provided.
+     * @throws AuthenticationException        Thrown if the authentication fails due to an invalid provided
+     *                                        eSciDocUserHandle.
+     * @throws AuthorizationException         Thrown if the authorization fails.
+     * @see UserAccountHandlerInterface #updatePreferences(java.lang.String, java.lang.String)
      */
     @Override
-    public String updatePreferences(
-        final String userId, final String preferencesXML)
-        throws UserAccountNotFoundException, XmlCorruptedException,
-        XmlSchemaValidationException, OptimisticLockingException,
-        MissingMethodParameterException, AuthenticationException,
-        AuthorizationException, SystemException, MissingAttributeValueException {
+    public String updatePreferences(final String userId, final String preferencesXML)
+        throws UserAccountNotFoundException, XmlCorruptedException, XmlSchemaValidationException,
+        OptimisticLockingException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
+        SystemException, MissingAttributeValueException {
         return business.updatePreferences(userId, preferencesXML);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param userId
-     *            The userId.
-     * @param preferenceName
-     *            The preferenceName.
-     * @param preferenceXML
-     *            The preferenceXML.
-     * @return updated preferenceXML
-     * @throws UserAccountNotFoundException
-     *             If
-     * @throws AlreadyExistsException
-     *             If
-     * @throws UserAccountNotFoundException
-     *             If
-     * @throws PreferenceNotFoundException
-     *             If
-     * @throws OptimisticLockingException
-     *             If
-     * @throws XmlCorruptedException
-     *             If
-     * @throws XmlSchemaValidationException
-     *             If
-     * @throws MissingAttributeValueException
-     *             If
-     * @throws SystemException
-     *             If
-     * @throws OptimisticLockingException
-     *             Thrown in case of an optimistic locking error.
-     * @throws MissingMethodParameterException
-     *             Thrown if no user id or no task parameters are provided.
-     * @throws AuthenticationException
-     *             Thrown if the authentication fails due to an invalid provided
-     *             eSciDocUserHandle.
-     * @throws AuthorizationException
-     *             Thrown if the authorization fails.
-     * @throws MissingAttributeValueException
-     * @see UserAccountHandlerInterface
-     *      #updatePreference(java.lang.String, java.lang.String,
-     *      java.lang.String)
      *
+     * @param userId         The userId.
+     * @param preferenceName The preferenceName.
+     * @param preferenceXML  The preferenceXML.
+     * @return updated preferenceXML
+     * @throws UserAccountNotFoundException   If
+     * @throws AlreadyExistsException         If
+     * @throws UserAccountNotFoundException   If
+     * @throws PreferenceNotFoundException    If
+     * @throws OptimisticLockingException     If
+     * @throws XmlCorruptedException          If
+     * @throws XmlSchemaValidationException   If
+     * @throws MissingAttributeValueException If
+     * @throws SystemException                If
+     * @throws OptimisticLockingException     Thrown in case of an optimistic locking error.
+     * @throws MissingMethodParameterException
+     *                                        Thrown if no user id or no task parameters are provided.
+     * @throws AuthenticationException        Thrown if the authentication fails due to an invalid provided
+     *                                        eSciDocUserHandle.
+     * @throws AuthorizationException         Thrown if the authorization fails.
+     * @see UserAccountHandlerInterface #updatePreference(java.lang.String, java.lang.String, java.lang.String)
      */
     @Override
-    public String updatePreference(
-        final String userId, final String preferenceName,
-        final String preferenceXML) throws AlreadyExistsException,
-        UserAccountNotFoundException, XmlCorruptedException,
-        XmlSchemaValidationException, MissingMethodParameterException,
-        AuthenticationException, AuthorizationException, SystemException,
-        PreferenceNotFoundException, OptimisticLockingException,
-        MissingAttributeValueException {
+    public String updatePreference(final String userId, final String preferenceName, final String preferenceXML)
+        throws AlreadyExistsException, UserAccountNotFoundException, XmlCorruptedException,
+        XmlSchemaValidationException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
+        SystemException, PreferenceNotFoundException, OptimisticLockingException, MissingAttributeValueException {
         return business.updatePreference(userId, preferenceName, preferenceXML);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param userId
-     *            The userId.
-     * @param preferenceName
-     *            The preferenceName.
-     * @return preferenceXML
-     * @throws UserAccountNotFoundException
-     *             If
-     * @throws UserAccountNotFoundException
-     *             If
-     * @throws PreferenceNotFoundException
-     *             If
-     * @throws SystemException
-     *             If
-     * @throws MissingMethodParameterException
-     *             Thrown if no user id or no task parameters are provided.
-     * @throws AuthenticationException
-     *             Thrown if the authentication fails due to an invalid provided
-     *             eSciDocUserHandle.
-     * @throws AuthorizationException
-     *             Thrown if the authorization fails.
-     * @throws MissingAttributeValueException
-     * @see UserAccountHandlerInterface
-     *      #retrievePreference(java.lang.String, java.lang.String)
      *
+     * @param userId         The userId.
+     * @param preferenceName The preferenceName.
+     * @return preferenceXML
+     * @throws UserAccountNotFoundException If
+     * @throws UserAccountNotFoundException If
+     * @throws PreferenceNotFoundException  If
+     * @throws SystemException              If
+     * @throws MissingMethodParameterException
+     *                                      Thrown if no user id or no task parameters are provided.
+     * @throws AuthenticationException      Thrown if the authentication fails due to an invalid provided
+     *                                      eSciDocUserHandle.
+     * @throws AuthorizationException       Thrown if the authorization fails.
+     * @see UserAccountHandlerInterface #retrievePreference(java.lang.String, java.lang.String)
      */
     @Override
-    public String retrievePreference(
-        final String userId, final String preferenceName)
-        throws UserAccountNotFoundException, PreferenceNotFoundException,
-        MissingMethodParameterException, AuthenticationException,
-        AuthorizationException, SystemException {
+    public String retrievePreference(final String userId, final String preferenceName)
+        throws UserAccountNotFoundException, PreferenceNotFoundException, MissingMethodParameterException,
+        AuthenticationException, AuthorizationException, SystemException {
         return business.retrievePreference(userId, preferenceName);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param userId
-     *            The userId.
-     * @param preferenceName
-     *            The preferenceName.
-     * @throws UserAccountNotFoundException
-     *             If
-     * @throws UserAccountNotFoundException
-     *             If
-     * @throws PreferenceNotFoundException
-     *             If
-     * @throws SystemException
-     *             If
-     * @throws MissingMethodParameterException
-     *             Thrown if no user id or no task parameters are provided.
-     * @throws AuthenticationException
-     *             Thrown if the authentication fails due to an invalid provided
-     *             eSciDocUserHandle.
-     * @throws AuthorizationException
-     *             Thrown if the authorization fails.
-     * @throws MissingAttributeValueException
-     * @see UserAccountHandlerInterface
-     *      #deletePreference(java.lang.String, java.lang.String)
      *
+     * @param userId         The userId.
+     * @param preferenceName The preferenceName.
+     * @throws UserAccountNotFoundException If
+     * @throws UserAccountNotFoundException If
+     * @throws PreferenceNotFoundException  If
+     * @throws SystemException              If
+     * @throws MissingMethodParameterException
+     *                                      Thrown if no user id or no task parameters are provided.
+     * @throws AuthenticationException      Thrown if the authentication fails due to an invalid provided
+     *                                      eSciDocUserHandle.
+     * @throws AuthorizationException       Thrown if the authorization fails.
+     * @see UserAccountHandlerInterface #deletePreference(java.lang.String, java.lang.String)
      */
     @Override
-    public void deletePreference(
-        final String userId, final String preferenceName)
-        throws UserAccountNotFoundException, PreferenceNotFoundException,
-        MissingMethodParameterException, AuthenticationException,
-        AuthorizationException, SystemException {
+    public void deletePreference(final String userId, final String preferenceName) throws UserAccountNotFoundException,
+        PreferenceNotFoundException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
+        SystemException {
         business.deletePreference(userId, preferenceName);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param userId
-     *            The userId.
-     * @param attributeXml
-     *            The attributeXml.
-     * @return created attributeXml
-     * @throws AlreadyExistsException
-     *             If
-     * @throws UserAccountNotFoundException
-     *             If
-     * @throws XmlCorruptedException
-     *             If
-     * @throws XmlSchemaValidationException
-     *             If
-     * @throws SystemException
-     *             If
-     * @throws MissingMethodParameterException
-     *             Thrown if no user id or no task parameters are provided.
-     * @throws AuthenticationException
-     *             Thrown if the authentication fails due to an invalid provided
-     *             eSciDocUserHandle.
-     * @throws AuthorizationException
-     *             Thrown if the authorization fails.
-     * @see UserAccountHandlerInterface
-     *      #createAttribute(java.lang.String, java.lang.String)
      *
+     * @param userId       The userId.
+     * @param attributeXml The attributeXml.
+     * @return created attributeXml
+     * @throws AlreadyExistsException       If
+     * @throws UserAccountNotFoundException If
+     * @throws XmlCorruptedException        If
+     * @throws XmlSchemaValidationException If
+     * @throws SystemException              If
+     * @throws MissingMethodParameterException
+     *                                      Thrown if no user id or no task parameters are provided.
+     * @throws AuthenticationException      Thrown if the authentication fails due to an invalid provided
+     *                                      eSciDocUserHandle.
+     * @throws AuthorizationException       Thrown if the authorization fails.
+     * @see UserAccountHandlerInterface #createAttribute(java.lang.String, java.lang.String)
      */
     @Override
-    public String createAttribute(final String userId, final String attributeXml)
-        throws AlreadyExistsException, UserAccountNotFoundException,
-        XmlCorruptedException, XmlSchemaValidationException,
-        MissingMethodParameterException, AuthenticationException,
-        AuthorizationException, SystemException {
+    public String createAttribute(final String userId, final String attributeXml) throws AlreadyExistsException,
+        UserAccountNotFoundException, XmlCorruptedException, XmlSchemaValidationException,
+        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
         return business.createAttribute(userId, attributeXml);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param userId
-     *            id of user
-     * @return String attributes as xml
-     * @throws UserAccountNotFoundException
-     *             e
-     * @throws SystemException
-     *             e
-     * @throws MissingMethodParameterException
-     *             Thrown if no user id or no task parameters are provided.
-     * @throws AuthenticationException
-     *             Thrown if the authentication fails due to an invalid provided
-     *             eSciDocUserHandle.
-     * @throws AuthorizationException
-     *             Thrown if the authorization fails.
-     * @see UserAccountHandlerInterface
-     *      #retrieveAttributes(java.lang.String)
      *
+     * @param userId id of user
+     * @return String attributes as xml
+     * @throws UserAccountNotFoundException e
+     * @throws SystemException              e
+     * @throws MissingMethodParameterException
+     *                                      Thrown if no user id or no task parameters are provided.
+     * @throws AuthenticationException      Thrown if the authentication fails due to an invalid provided
+     *                                      eSciDocUserHandle.
+     * @throws AuthorizationException       Thrown if the authorization fails.
+     * @see UserAccountHandlerInterface #retrieveAttributes(java.lang.String)
      */
     @Override
-    public String retrieveAttributes(final String userId)
-        throws UserAccountNotFoundException, MissingMethodParameterException,
-        AuthenticationException, AuthorizationException, SystemException {
+    public String retrieveAttributes(final String userId) throws UserAccountNotFoundException,
+        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
         return business.retrieveAttributes(userId);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param userId
-     *            id of user
-     * @param name
-     *            name of attribute
-     * @return String xml with user-attribute
-     * @throws UserAccountNotFoundException
-     *             e
-     * @throws UserAttributeNotFoundException
-     *             e
-     * @throws UserAttributeNotFoundException
-     *             e
-     * @throws MissingMethodParameterException
-     *             Thrown if no user id or no task parameters are provided.
-     * @throws AuthenticationException
-     *             Thrown if the authentication fails due to an invalid provided
-     *             eSciDocUserHandle.
-     * @throws AuthorizationException
-     *             Thrown if the authorization fails.
-     * @throws SystemException
-     *             e
-     * @see UserAccountHandlerInterface
-     *      #retrieveAttribute(java.lang.String, java.lang.String)
      *
+     * @param userId id of user
+     * @param name   name of attribute
+     * @return String xml with user-attribute
+     * @throws UserAccountNotFoundException   e
+     * @throws UserAttributeNotFoundException e
+     * @throws UserAttributeNotFoundException e
+     * @throws MissingMethodParameterException
+     *                                        Thrown if no user id or no task parameters are provided.
+     * @throws AuthenticationException        Thrown if the authentication fails due to an invalid provided
+     *                                        eSciDocUserHandle.
+     * @throws AuthorizationException         Thrown if the authorization fails.
+     * @throws SystemException                e
+     * @see UserAccountHandlerInterface #retrieveAttribute(java.lang.String, java.lang.String)
      */
     @Override
-    public String retrieveNamedAttributes(final String userId, final String name)
-        throws UserAccountNotFoundException, UserAttributeNotFoundException,
-        MissingMethodParameterException, AuthenticationException,
+    public String retrieveNamedAttributes(final String userId, final String name) throws UserAccountNotFoundException,
+        UserAttributeNotFoundException, MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException {
         return business.retrieveNamedAttributes(userId, name);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param userId
-     *            id of user
-     * @param attributeId
-     *            id of attribute
-     * @return String xml with user-attribute
-     * @throws UserAccountNotFoundException
-     *             e
-     * @throws UserAttributeNotFoundException
-     *             e
-     * @throws MissingMethodParameterException
-     *             Thrown if no user id or no task parameters are provided.
-     * @throws AuthenticationException
-     *             Thrown if the authentication fails due to an invalid provided
-     *             eSciDocUserHandle.
-     * @throws AuthorizationException
-     *             Thrown if the authorization fails.
-     * @throws SystemException
-     *             e
-     * @see UserAccountHandlerInterface
-     *      #retrieveAttribute(java.lang.String, java.lang.String)
      *
+     * @param userId      id of user
+     * @param attributeId id of attribute
+     * @return String xml with user-attribute
+     * @throws UserAccountNotFoundException   e
+     * @throws UserAttributeNotFoundException e
+     * @throws MissingMethodParameterException
+     *                                        Thrown if no user id or no task parameters are provided.
+     * @throws AuthenticationException        Thrown if the authentication fails due to an invalid provided
+     *                                        eSciDocUserHandle.
+     * @throws AuthorizationException         Thrown if the authorization fails.
+     * @throws SystemException                e
+     * @see UserAccountHandlerInterface #retrieveAttribute(java.lang.String, java.lang.String)
      */
     @Override
-    public String retrieveAttribute(
-        final String userId, final String attributeId)
-        throws UserAccountNotFoundException, UserAttributeNotFoundException,
-        MissingMethodParameterException, AuthenticationException,
+    public String retrieveAttribute(final String userId, final String attributeId) throws UserAccountNotFoundException,
+        UserAttributeNotFoundException, MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException {
         return business.retrieveAttribute(userId, attributeId);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param userId
-     *            id of user
-     * @param attributeId
-     *            name of attribute
-     * @param attributeXml
-     *            xml with attribute
+     *
+     * @param userId       id of user
+     * @param attributeId  name of attribute
+     * @param attributeXml xml with attribute
      * @return String xml with updated attribute
-     * @throws UserAccountNotFoundException
-     *             e
-     * @throws UserAttributeNotFoundException
-     *             e
-     * @throws XmlCorruptedException
-     *             If
-     * @throws XmlSchemaValidationException
-     *             If
+     * @throws UserAccountNotFoundException   e
+     * @throws UserAttributeNotFoundException e
+     * @throws XmlCorruptedException          If
+     * @throws XmlSchemaValidationException   If
      * @throws ReadonlyElementViolationException
-     *             e
-     * @throws OptimisticLockingException
-     *             e
-     * @throws AuthenticationException
-     *             e
-     * @throws AuthorizationException
-     *             e
+     *                                        e
+     * @throws OptimisticLockingException     e
+     * @throws AuthenticationException        e
+     * @throws AuthorizationException         e
      * @throws MissingMethodParameterException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see UserAccountHandlerInterface
-     *      #updateAttribute(java.lang.String, java.lang.String)
+     *                                        e
+     * @throws SystemException                e
+     * @see UserAccountHandlerInterface #updateAttribute(java.lang.String, java.lang.String)
      */
     @Override
-    public String updateAttribute(
-        final String userId, final String attributeId, final String attributeXml)
-        throws UserAccountNotFoundException, OptimisticLockingException,
-        UserAttributeNotFoundException, ReadonlyElementViolationException,
-        XmlCorruptedException, XmlSchemaValidationException,
-        MissingMethodParameterException, AuthenticationException,
-        AuthorizationException, SystemException {
+    public String updateAttribute(final String userId, final String attributeId, final String attributeXml)
+        throws UserAccountNotFoundException, OptimisticLockingException, UserAttributeNotFoundException,
+        ReadonlyElementViolationException, XmlCorruptedException, XmlSchemaValidationException,
+        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
         return business.updateAttribute(userId, attributeId, attributeXml);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param userId
-     *            The userId.
-     * @param attributeId
-     *            The attributeId.
-     * @throws UserAccountNotFoundException
-     *             e
-     * @throws UserAttributeNotFoundException
-     *             e
+     *
+     * @param userId      The userId.
+     * @param attributeId The attributeId.
+     * @throws UserAccountNotFoundException   e
+     * @throws UserAttributeNotFoundException e
      * @throws ReadonlyElementViolationException
-     *             e
-     * @throws AuthenticationException
-     *             e
-     * @throws AuthorizationException
-     *             e
+     *                                        e
+     * @throws AuthenticationException        e
+     * @throws AuthorizationException         e
      * @throws MissingMethodParameterException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see UserAccountHandlerInterface
-     *      #deleteAttribute(java.lang.String, java.lang.String)
+     *                                        e
+     * @throws SystemException                e
+     * @see UserAccountHandlerInterface #deleteAttribute(java.lang.String, java.lang.String)
      */
     @Override
-    public void deleteAttribute(final String userId, final String attributeId)
-        throws UserAccountNotFoundException, UserAttributeNotFoundException,
-        ReadonlyElementViolationException, MissingMethodParameterException,
+    public void deleteAttribute(final String userId, final String attributeId) throws UserAccountNotFoundException,
+        UserAttributeNotFoundException, ReadonlyElementViolationException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException {
         business.deleteAttribute(userId, attributeId);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param parameters
-     *            parameter map
-     * 
+     *
+     * @param parameters parameter map
      * @return filter sub query with permission rules
-     * 
-     * @throws SystemException
-     *             e
-     * @throws InvalidSearchQueryException
-     *             e
-     * @throws AuthenticationException
-     *             e
-     * @throws AuthorizationException
-     *             e
+     * @throws SystemException             e
+     * @throws InvalidSearchQueryException e
+     * @throws AuthenticationException     e
+     * @throws AuthorizationException      e
      */
     @Override
-    public String retrievePermissionFilterQuery(
-        final Map<String, String[]> parameters) throws SystemException,
-        InvalidSearchQueryException, AuthenticationException,
-        AuthorizationException {
+    public String retrievePermissionFilterQuery(final Map<String, String[]> parameters) throws SystemException,
+        InvalidSearchQueryException, AuthenticationException, AuthorizationException {
         return business.retrievePermissionFilterQuery(parameters);
     }
 }

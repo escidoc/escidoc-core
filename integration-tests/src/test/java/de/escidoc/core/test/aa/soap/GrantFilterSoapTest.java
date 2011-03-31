@@ -35,18 +35,16 @@ import org.junit.runners.JUnit4;
 
 /**
  * Testsuite for GrantFilter with SOAP transport.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 @RunWith(JUnit4.class)
 public class GrantFilterSoapTest extends GrantFilterAbstractTest {
 
     /**
      * Constructor.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     public GrantFilterSoapTest() throws Exception {
         super(Constants.TRANSPORT_SOAP);

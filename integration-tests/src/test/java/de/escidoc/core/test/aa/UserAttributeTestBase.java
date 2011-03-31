@@ -44,45 +44,38 @@ import static org.junit.Assert.fail;
 
 /**
  * Base Class for UserAttributeTests.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 public class UserAttributeTestBase extends UserAccountTestBase {
-    
+
     private UserAccountClient client = null;
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      * @throws Exception e
      */
-    public UserAttributeTestBase(
-            final int transport) throws Exception {
+    public UserAttributeTestBase(final int transport) throws Exception {
         super(transport);
         client = (UserAccountClient) getClient();
     }
 
     /**
      * Test creating a user attribute.
-     * 
-     * @param userId
-     *            The id of the UserAccount.
-     * @param xml
-     *            The xml representation of the attribute.
+     *
+     * @param userId The id of the UserAccount.
+     * @param xml    The xml representation of the attribute.
      * @return The xml representation of the created attribute.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    protected String createAttribute(final String userId, final String xml)
-        throws Exception {
+    protected String createAttribute(final String userId, final String xml) throws Exception {
         Object result = client.createAttribute(userId, xml);
         String xmlResult = null;
         if (result instanceof HttpResponse) {
             HttpResponse httpRes = (HttpResponse) result;
             xmlResult = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
             assertHttpStatusOfMethod("", httpRes);
-            
+
         }
         else if (result instanceof String) {
             xmlResult = (String) result;
@@ -92,15 +85,12 @@ public class UserAttributeTestBase extends UserAccountTestBase {
 
     /**
      * Test retrieving user attributes.
-     * 
-     * @param userId
-     *            The id of the UserAccount.
+     *
+     * @param userId The id of the UserAccount.
      * @return The xml representation of the user attributes.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    protected String retrieveAttributes(final String userId)
-        throws Exception {
+    protected String retrieveAttributes(final String userId) throws Exception {
 
         Object result = client.retrieveAttributes(userId);
         String xmlResult = null;
@@ -108,7 +98,7 @@ public class UserAttributeTestBase extends UserAccountTestBase {
             HttpResponse method = (HttpResponse) result;
             xmlResult = EntityUtils.toString(method.getEntity(), HTTP.UTF_8);
             assertHttpStatusOfMethod("", method);
-          
+
         }
         else if (result instanceof String) {
             xmlResult = (String) result;
@@ -118,18 +108,13 @@ public class UserAttributeTestBase extends UserAccountTestBase {
 
     /**
      * Test retrieving user attributes with given name.
-     * 
-     * @param userId
-     *            The id of the UserAccount.
-     * @param name
-     *            The name of the UserAttribute.
+     *
+     * @param userId The id of the UserAccount.
+     * @param name   The name of the UserAttribute.
      * @return The xml representation of the user attributes.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    protected String retrieveNamedAttributes(
-            final String userId, final String name)
-        throws Exception {
+    protected String retrieveNamedAttributes(final String userId, final String name) throws Exception {
 
         Object result = client.retrieveNamedAttributes(userId, name);
         String xmlResult = null;
@@ -137,7 +122,7 @@ public class UserAttributeTestBase extends UserAccountTestBase {
             HttpResponse method = (HttpResponse) result;
             xmlResult = EntityUtils.toString(method.getEntity(), HTTP.UTF_8);
             assertHttpStatusOfMethod("", method);
-           
+
         }
         else if (result instanceof String) {
             xmlResult = (String) result;
@@ -147,18 +132,13 @@ public class UserAttributeTestBase extends UserAccountTestBase {
 
     /**
      * Test retrieving user attribute.
-     * 
-     * @param userId
-     *            The id of the UserAccount.
-     * @param attributeId
-     *            The id of the UserAttributet.
+     *
+     * @param userId      The id of the UserAccount.
+     * @param attributeId The id of the UserAttributet.
      * @return The xml representation of the user attribute.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    protected String retrieveAttribute(
-            final String userId, final String attributeId)
-        throws Exception {
+    protected String retrieveAttribute(final String userId, final String attributeId) throws Exception {
 
         Object result = client.retrieveAttribute(userId, attributeId);
         String xmlResult = null;
@@ -166,7 +146,7 @@ public class UserAttributeTestBase extends UserAccountTestBase {
             HttpResponse method = (HttpResponse) result;
             xmlResult = EntityUtils.toString(method.getEntity(), HTTP.UTF_8);
             assertHttpStatusOfMethod("", method);
-          
+
         }
         else if (result instanceof String) {
             xmlResult = (String) result;
@@ -176,107 +156,80 @@ public class UserAttributeTestBase extends UserAccountTestBase {
 
     /**
      * Test updating single user attribute.
-     * 
-     * @param userId
-     *            The id of the UserAccount.
-     * @param attributeId
-     *            The name of the attribute to update.
-     * @param xml
-     *            The xml representation of the attribute.
+     *
+     * @param userId      The id of the UserAccount.
+     * @param attributeId The name of the attribute to update.
+     * @param xml         The xml representation of the attribute.
      * @return The xml representation of the updated attribute.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    protected String updateAttribute(
-        final String userId, final String attributeId, final String xml)
-        throws Exception {
+    protected String updateAttribute(final String userId, final String attributeId, final String xml) throws Exception {
         Object result = client.updateAttribute(userId, attributeId, xml);
         String xmlResult = null;
         if (result instanceof HttpResponse) {
             HttpResponse method = (HttpResponse) result;
             xmlResult = EntityUtils.toString(method.getEntity(), HTTP.UTF_8);
             assertHttpStatusOfMethod("", method);
-         
+
         }
         else if (result instanceof String) {
             xmlResult = (String) result;
         }
         return xmlResult;
     }
-    
+
     /**
      * Test deleting single user attribute.
-     * 
-     * @param userId
-     *            The id of the UserAccount.
-     * @param attributeId
-     *            The id of the attribute to delete.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param userId      The id of the UserAccount.
+     * @param attributeId The id of the attribute to delete.
+     * @throws Exception If anything fails.
      */
-    protected void deleteAttribute(
-        final String userId, final String attributeId)
-        throws Exception {
+    protected void deleteAttribute(final String userId, final String attributeId) throws Exception {
         client.deleteAttribute(userId, attributeId);
     }
-    
+
     /**
      * Assert that the user attribute has all required elements.<br/>
      *
-     * @param userId userId
-     * @param toBeAssertedXml
-     *            The created/updated user attribute.
-     * @param originalXml
-     *            The template used to create/update the user attribute. If this
-     *            parameter is <code>null</code>, no check with the original
-     *            data is performed.
-     *
+     * @param userId          userId
+     * @param toBeAssertedXml The created/updated user attribute.
+     * @param originalXml     The template used to create/update the user attribute. If this parameter is
+     *                        <code>null</code>, no check with the original data is performed.
      * @return Returns the document representing the provided xml data.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    public Document assertUserAttribute(final String userId,
-        final String toBeAssertedXml, final String originalXml) throws Exception {
+    public Document assertUserAttribute(final String userId, final String toBeAssertedXml, final String originalXml)
+        throws Exception {
 
         assertXmlValidUserAttribute(toBeAssertedXml);
-        Document toBeAssertedDocument =
-            EscidocRestSoapTestBase.getDocument(toBeAssertedXml);
-        assertRootElement("Invalid root element. ", toBeAssertedDocument,
-            XPATH_ATTRIBUTE, Constants.USER_ACCOUNT_BASE_URI + "/" + userId
-            + "/resources/attributes/attribute", null);
+        Document toBeAssertedDocument = EscidocRestSoapTestBase.getDocument(toBeAssertedXml);
+        assertRootElement("Invalid root element. ", toBeAssertedDocument, XPATH_ATTRIBUTE,
+            Constants.USER_ACCOUNT_BASE_URI + "/" + userId + "/resources/attributes/attribute", null);
 
         if (originalXml != null) {
-            final Document originalDocument =
-                EscidocRestSoapTestBase.getDocument(originalXml);
+            final Document originalDocument = EscidocRestSoapTestBase.getDocument(originalXml);
 
             // name
-            assertXmlEquals("Name mismatch, ", originalDocument,
-                toBeAssertedDocument, XPATH_USER_ACCOUNT_NAME);
+            assertXmlEquals("Name mismatch, ", originalDocument, toBeAssertedDocument, XPATH_USER_ACCOUNT_NAME);
 
             // internal
-            assertXmlEquals("Internal flag mismatch, ", originalDocument,
-                toBeAssertedDocument, XPATH_USER_ACCOUNT_NAME);
+            assertXmlEquals("Internal flag mismatch, ", originalDocument, toBeAssertedDocument, XPATH_USER_ACCOUNT_NAME);
         }
         return toBeAssertedDocument;
     }
 
     /**
-     * Check if xml is valid and contains all attributes 
-     * that are in given attributeList and only these attributes.
-     * 
+     * Check if xml is valid and contains all attributes that are in given attributeList and only these attributes.
+     *
      * @param attributesXml xml with user-attributes
-     * @param userId userId
+     * @param userId        userId
      * @param attributeList list of expected user-attributes
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     //CHECKSTYLE:OFF
     protected void assertValidUserAttributes(
-                    final String attributesXml, 
-                    final String userId,
-                    Collection<String> attributeList)
-        throws Exception {
+        final String attributesXml, final String userId, Collection<String> attributeList) throws Exception {
         //CHECKSTYLE:ON
 
         assertXmlValidAttributes(attributesXml);
@@ -285,77 +238,52 @@ public class UserAttributeTestBase extends UserAccountTestBase {
         Document attributesXmlDocument = getDocument(attributesXml);
 
         if (getTransport() == Constants.TRANSPORT_REST) {
-            selectSingleNodeAsserted(attributesXmlDocument,
-                "/attributes/@base");
-            selectSingleNodeAsserted(attributesXmlDocument,
-                "/attributes[@href = '" + href + "']");
+            selectSingleNodeAsserted(attributesXmlDocument, "/attributes/@base");
+            selectSingleNodeAsserted(attributesXmlDocument, "/attributes[@href = '" + href + "']");
         }
         int count = attributeList.size();
         if (count > 0) {
-            selectSingleNodeAsserted(attributesXmlDocument,
-                "/attributes/attribute[" + count + "]");
+            selectSingleNodeAsserted(attributesXmlDocument, "/attributes/attribute[" + count + "]");
         }
 
         // check if every entry from given collection is in the document
-        NodeList attributeElements =
-            selectNodeList(attributesXmlDocument,
-                "/attributes/attribute");
+        NodeList attributeElements = selectNodeList(attributesXmlDocument, "/attributes/attribute");
         int elementCount = attributeElements.getLength();
         // iterate elements of the xml document
         for (int i = 0; i < elementCount; i++) {
             // check if key value pair is in given map
-            String attributeName =
-                attributeElements.item(i).getAttributes().getNamedItem(
-                    "name").getNodeValue();
-            String attributeValue =
-                attributeElements.item(i).getTextContent();
-            String isInternal =
-                attributeElements.item(i).getAttributes().getNamedItem(
-                    "internal").getNodeValue();
-            if (!attributeList.contains(
-                attributeName + attributeValue + isInternal)) {
-                fail("Unexpected attribute found. [" 
-                    + attributeName + attributeValue + isInternal
-                    + "]");
+            String attributeName = attributeElements.item(i).getAttributes().getNamedItem("name").getNodeValue();
+            String attributeValue = attributeElements.item(i).getTextContent();
+            String isInternal = attributeElements.item(i).getAttributes().getNamedItem("internal").getNodeValue();
+            if (!attributeList.contains(attributeName + attributeValue + isInternal)) {
+                fail("Unexpected attribute found. [" + attributeName + attributeValue + isInternal + "]");
             }
-            attributeList.remove(
-                attributeName + attributeValue + isInternal);
+            attributeList.remove(attributeName + attributeValue + isInternal);
         }
         // all entries should be removed from hashes(-out-of-map), now
         if (!attributeList.isEmpty()) {
-            fail("Expected attributes not found. [" + attributeList.toString()
-                + "]");
+            fail("Expected attributes not found. [" + attributeList.toString() + "]");
         }
     }
 
     /**
-     * Retrieve attributes for given user.
-     * Make Collection with concatenated name-value-internal values 
-     * from list of user-attributes.
-     * 
+     * Retrieve attributes for given user. Make Collection with concatenated name-value-internal values from list of
+     * user-attributes.
+     *
      * @param userId userId
-     * @return Collection with concatenated attributes 
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * @return Collection with concatenated attributes
+     * @throws Exception If anything fails.
      */
-    protected Collection<String> getCollectionFromAttributes(final String userId)
-        throws Exception {
-        NodeList list =
-            selectNodeList(getDocument(retrieveAttributes(userId)),
-                "/attributes/attribute");
+    protected Collection<String> getCollectionFromAttributes(final String userId) throws Exception {
+        NodeList list = selectNodeList(getDocument(retrieveAttributes(userId)), "/attributes/attribute");
         Collection<String> col = new ArrayList<String>();
 
         int elementCount = list.getLength();
         // iterate elements of the xml document
         for (int i = 0; i < elementCount; i++) {
-            String attributeName =
-                list
-                    .item(i).getAttributes().getNamedItem("name")
-                    .getNodeValue();
+            String attributeName = list.item(i).getAttributes().getNamedItem("name").getNodeValue();
             String attributeValue = list.item(i).getTextContent();
-            String isInternal = list.item(i).getAttributes()
-                    .getNamedItem("internal").getNodeValue();
+            String isInternal = list.item(i).getAttributes().getNamedItem("internal").getNodeValue();
             col.add(attributeName + attributeValue + isInternal);
         }
 
@@ -363,34 +291,24 @@ public class UserAttributeTestBase extends UserAccountTestBase {
     }
 
     /**
-     * Retrieve attributeIds for given user.
-     * Make Collection with attributeIds 
-     * from list of user-attributes.
-     * 
-     * @param userId userId
+     * Retrieve attributeIds for given user. Make Collection with attributeIds from list of user-attributes.
+     *
+     * @param userId        userId
      * @param attributeName attributeName to filter
-     * @return Collection with attributeIds 
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * @return Collection with attributeIds
+     * @throws Exception If anything fails.
      */
-    protected Collection<String> getCollectionFromAttributesIds(
-                                                final String userId,
-                                                final String attributeName)
+    protected Collection<String> getCollectionFromAttributesIds(final String userId, final String attributeName)
         throws Exception {
-        NodeList list =
-            selectNodeList(getDocument(retrieveAttributes(userId)),
-                "/attributes/attribute");
+        NodeList list = selectNodeList(getDocument(retrieveAttributes(userId)), "/attributes/attribute");
         Collection<String> col = new ArrayList<String>();
 
         int elementCount = list.getLength();
         // iterate elements of the xml document
         for (int i = 0; i < elementCount; i++) {
-            if (attributeName == null || list
-                    .item(i).getAttributes().getNamedItem("name")
-                    .getNodeValue().equals(attributeName)) {
-                String attributeId = getObjidValue(
-                    getTransport(), list.item(i), null);
+            if (attributeName == null
+                || list.item(i).getAttributes().getNamedItem("name").getNodeValue().equals(attributeName)) {
+                String attributeId = getObjidValue(getTransport(), list.item(i), null);
                 col.add(attributeId);
             }
         }

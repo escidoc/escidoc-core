@@ -39,16 +39,14 @@ import java.util.Map;
 
 /**
  * A bean method.
- * 
- * @author Michael Schneider
  *
+ * @author Michael Schneider
  */
 public class BeanMethod {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BeanMethod.class);
 
-    private static final Map<String, Object> RESOURCE_POOL =
-        Collections.synchronizedMap(new HashMap<String, Object>());
+    private static final Map<String, Object> RESOURCE_POOL = Collections.synchronizedMap(new HashMap<String, Object>());
 
     private final String beanId;
 
@@ -58,17 +56,12 @@ public class BeanMethod {
 
     /**
      * Create a bean method.
-     * 
-     * @param beanId
-     *            The id of the bean to invoke.
-     * @param method
-     *            The name of the bean method.
-     * @param parameters
-     *            The array containing the parameters.
      *
+     * @param beanId     The id of the bean to invoke.
+     * @param method     The name of the bean method.
+     * @param parameters The array containing the parameters.
      */
-    public BeanMethod(final String beanId, final String method,
-        final Object[] parameters) {
+    public BeanMethod(final String beanId, final String method, final Object[] parameters) {
 
         this.beanId = beanId;
         this.method = method;
@@ -77,49 +70,32 @@ public class BeanMethod {
 
     /**
      * Invoke the method on the given resource. Protocol will be REST.
-     * 
-     * @param username
-     *            The username.
-     * @param password
-     *            The password.
-     * @return The return value of the method invoction.
-     * @throws InvocationTargetException
-     *             If the method throws a declared exception.
-     * @throws MethodNotFoundException
-     *             If the invoked method does not exist.
-     * @throws WebserverSystemException
-     *             If the invocation of the method causes an error.
      *
+     * @param username The username.
+     * @param password The password.
+     * @return The return value of the method invoction.
+     * @throws InvocationTargetException If the method throws a declared exception.
+     * @throws MethodNotFoundException   If the invoked method does not exist.
+     * @throws WebserverSystemException  If the invocation of the method causes an error.
      */
-    public Object invoke(final String username, final String password)
-        throws InvocationTargetException, MethodNotFoundException,
-        WebserverSystemException {
+    public Object invoke(final String username, final String password) throws InvocationTargetException,
+        MethodNotFoundException, WebserverSystemException {
         return invokeWithProtocol(password, true);
     }
 
     /**
-     * Invoke the method on the given resource with a given protocol. protocol
-     * is the 3rd parameter (restAccess). If set to true it means REST-Access If
-     * set to false it means SOAP-Access
-     * 
-     * @param eSciDocUserHandle
-     *            The eSciDoc userHandle.
-     * @param restAccess
-     *            The restAccess.
-     * 
-     * @return The return value of the method invocation.
-     * @throws InvocationTargetException
-     *             If the method throws a declared exception.
-     * @throws MethodNotFoundException
-     *             If the invoked method does not exist.
-     * @throws WebserverSystemException
-     *             If the invocation of the method causes an error.
+     * Invoke the method on the given resource with a given protocol. protocol is the 3rd parameter (restAccess). If set
+     * to true it means REST-Access If set to false it means SOAP-Access
      *
+     * @param eSciDocUserHandle The eSciDoc userHandle.
+     * @param restAccess        The restAccess.
+     * @return The return value of the method invocation.
+     * @throws InvocationTargetException If the method throws a declared exception.
+     * @throws MethodNotFoundException   If the invoked method does not exist.
+     * @throws WebserverSystemException  If the invocation of the method causes an error.
      */
-    public Object invokeWithProtocol(
-        final String eSciDocUserHandle, final boolean restAccess)
-        throws InvocationTargetException, MethodNotFoundException,
-        WebserverSystemException {
+    public Object invokeWithProtocol(final String eSciDocUserHandle, final boolean restAccess)
+        throws InvocationTargetException, MethodNotFoundException, WebserverSystemException {
 
         final Object result;
         try {
@@ -143,10 +119,8 @@ public class BeanMethod {
                             parameterTypes[i] = Map.class;
                         }
                         else {
-                            throw new InvocationTargetException(
-                                new SystemException("Unsupported parameter type [" +
-                                        this.parameters[i].getClass().getName()
-                                        + ']'));
+                            throw new InvocationTargetException(new SystemException("Unsupported parameter type ["
+                                + this.parameters[i].getClass().getName() + ']'));
                         }
                     }
                     else {
@@ -154,36 +128,35 @@ public class BeanMethod {
                     }
                 }
             }
-            final Method execute =
-                getBean().getClass().getMethod(getMethod(), parameterTypes);
+            final Method execute = getBean().getClass().getMethod(getMethod(), parameterTypes);
             result = execute.invoke(getBean(), getParameters());
         }
         catch (final SecurityException e) {
-            throw new WebserverSystemException("Cannot execute method '" + this.method + "' on resource "
-                    + getBeanId(), e);
+            throw new WebserverSystemException(
+                "Cannot execute method '" + this.method + "' on resource " + getBeanId(), e);
         }
         catch (final IllegalArgumentException e) {
-            throw new WebserverSystemException("Cannot execute method '" + this.method + "' on resource "
-                    + getBeanId(), e);
+            throw new WebserverSystemException(
+                "Cannot execute method '" + this.method + "' on resource " + getBeanId(), e);
         }
         catch (final NoSuchMethodException e) {
-            throw new MethodNotFoundException("Cannot execute method '" + this.method + "' on resource "
-                    + getBeanId(), e);
+            throw new MethodNotFoundException("Cannot execute method '" + this.method + "' on resource " + getBeanId(),
+                e);
         }
         catch (final IllegalAccessException e) {
-            throw new WebserverSystemException("Cannot execute method '" + this.method + "' on resource "
-                    + getBeanId(), e);
+            throw new WebserverSystemException(
+                "Cannot execute method '" + this.method + "' on resource " + getBeanId(), e);
         }
         catch (final MissingMethodParameterException e) {
-            throw new WebserverSystemException("Cannot execute method '" + this.method + "' on resource "
-                    + getBeanId(), e);
+            throw new WebserverSystemException(
+                "Cannot execute method '" + this.method + "' on resource " + getBeanId(), e);
         }
         return result;
     }
 
     /**
      * Get a String representation of the resource method.
-     * 
+     *
      * @return The String representation of the resource method.
      */
     @Override
@@ -194,11 +167,9 @@ public class BeanMethod {
 
     /**
      * Get a bean for this bean method.
-     * 
-     * @return The bean instance.
-     * @throws WebserverSystemException
-     *             If the bean cannot be instantiated.
      *
+     * @return The bean instance.
+     * @throws WebserverSystemException If the bean cannot be instantiated.
      */
     private Object getBean() throws WebserverSystemException {
 
@@ -208,7 +179,9 @@ public class BeanMethod {
                 LOGGER.debug(StringUtility.format("Create Bean", getBeanId()));
             }
 
-            result = "service.StagingFileHandlerBean".equals(getBeanId()) ? BeanLocator.getBean(BeanLocator.ST_FACTORY_ID, getBeanId()) : BeanLocator.getBean(BeanLocator.COMMON_FACTORY_ID, getBeanId());
+            result =
+                "service.StagingFileHandlerBean".equals(getBeanId()) ? BeanLocator.getBean(BeanLocator.ST_FACTORY_ID,
+                    getBeanId()) : BeanLocator.getBean(BeanLocator.COMMON_FACTORY_ID, getBeanId());
             RESOURCE_POOL.put(getBeanId(), result);
         }
         return result;
@@ -216,16 +189,13 @@ public class BeanMethod {
 
     /**
      * @return Returns the method name.
-     *
      */
     public String getMethod() {
         return this.method;
     }
 
     /**
-     * @param method
-     *            The method name to set.
-     *
+     * @param method The method name to set.
      */
     public void setMethod(final String method) {
         this.method = method;
@@ -233,16 +203,13 @@ public class BeanMethod {
 
     /**
      * @return Returns the parameters.
-     *
      */
     public Object[] getParameters() {
         return this.parameters;
     }
 
     /**
-     * @param parameters
-     *            The parameters to set.
-     *
+     * @param parameters The parameters to set.
      */
     public void setParameters(final Object[] parameters) {
         this.parameters = parameters;
@@ -250,7 +217,6 @@ public class BeanMethod {
 
     /**
      * @return Returns the bean id.
-     *
      */
     public String getBeanId() {
         return this.beanId;

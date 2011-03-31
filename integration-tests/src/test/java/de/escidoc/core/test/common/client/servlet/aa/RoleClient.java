@@ -38,41 +38,32 @@ import javax.xml.rpc.ServiceException;
 import java.util.Map;
 
 /**
- * Offers access methods to the escidoc REST and soap interface of the role
- * resource.
- * 
+ * Offers access methods to the escidoc REST and soap interface of the role resource.
+ *
  * @author Torsten Tetteroo
- * 
  */
-public class RoleClient extends ClientBase
-    implements ResourceHandlerClientInterface {
+public class RoleClient extends ClientBase implements ResourceHandlerClientInterface {
 
     private RoleHandler soapClient = null;
 
     /**
-     * 
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public RoleClient(final int transport) {
         super(transport);
     }
 
     /**
-     * 
      * @return Returns the soapClient.
-     * @throws ServiceException
-     *             If the client creation fails.
+     * @throws ServiceException If the client creation fails.
      */
     @Override
     public RoleHandler getSoapClient() throws ServiceException {
 
         if (soapClient == null) {
-            RoleHandlerServiceLocator serviceLocator =
-                new RoleHandlerServiceLocator(getEngineConfig());
-            serviceLocator
-                .setRoleHandlerServiceEndpointAddress(checkSoapAddress(serviceLocator
-                    .getRoleHandlerServiceAddress()));
+            RoleHandlerServiceLocator serviceLocator = new RoleHandlerServiceLocator(getEngineConfig());
+            serviceLocator.setRoleHandlerServiceEndpointAddress(checkSoapAddress(serviceLocator
+                .getRoleHandlerServiceAddress()));
             soapClient = serviceLocator.getRoleHandlerService();
         }
         return soapClient;
@@ -80,107 +71,81 @@ public class RoleClient extends ClientBase
 
     /**
      * Create a role.
-     * 
-     * @param roleXml
-     *            The xml representation of a role
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param roleXml The xml representation of a role
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     @Override
     public Object create(final Object roleXml) throws Exception {
 
-        return callEsciDoc("Role.create", METHOD_CREATE,
-            Constants.HTTP_METHOD_PUT, Constants.ROLE_BASE_URI,
+        return callEsciDoc("Role.create", METHOD_CREATE, Constants.HTTP_METHOD_PUT, Constants.ROLE_BASE_URI,
             new String[] {}, changeToString(roleXml));
     }
 
     /**
      * Delete a role.
-     * 
-     * @param id
-     *            The role id.
+     *
+     * @param id The role id.
      * @return The HttpMethod after the service call (REST) or null (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     * @throws Exception If the service call fails.
      */
     @Override
     public Object delete(final String id) throws Exception {
-        return callEsciDoc("Role.delete", METHOD_DELETE,
-            Constants.HTTP_METHOD_DELETE, Constants.ROLE_BASE_URI,
+        return callEsciDoc("Role.delete", METHOD_DELETE, Constants.HTTP_METHOD_DELETE, Constants.ROLE_BASE_URI,
             new String[] { id });
     }
 
     /**
      * Retrieve the xml representation of a role.
-     * 
-     * @param id
-     *            The role id.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param id The role id.
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     @Override
     public Object retrieve(final String id) throws Exception {
-        return callEsciDoc("Role.retrieve", METHOD_RETRIEVE,
-            Constants.HTTP_METHOD_GET, Constants.ROLE_BASE_URI,
+        return callEsciDoc("Role.retrieve", METHOD_RETRIEVE, Constants.HTTP_METHOD_GET, Constants.ROLE_BASE_URI,
             new String[] { id });
     }
 
     /**
      * Retrieve the xml representation of the resources of a role.
-     * 
-     * @param id
-     *            The role id.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param id The role id.
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     public Object retrieveResources(final String id) throws Exception {
-        return callEsciDoc("Role.retrieveResources", METHOD_RETRIEVE_RESOURCES,
-            Constants.HTTP_METHOD_GET, Constants.ROLE_BASE_URI, new String[] {
-                id, "resources" });
+        return callEsciDoc("Role.retrieveResources", METHOD_RETRIEVE_RESOURCES, Constants.HTTP_METHOD_GET,
+            Constants.ROLE_BASE_URI, new String[] { id, "resources" });
     }
 
     /**
      * Update a role.
-     * 
-     * @param id
-     *            The role id.
-     * @param roleXml
-     *            The xml representation of the role
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param id      The role id.
+     * @param roleXml The xml representation of the role
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     @Override
-    public Object update(final String id, final Object roleXml)
-        throws Exception {
+    public Object update(final String id, final Object roleXml) throws Exception {
 
-        return callEsciDoc("Role.update", METHOD_UPDATE,
-            Constants.HTTP_METHOD_PUT, Constants.ROLE_BASE_URI,
+        return callEsciDoc("Role.update", METHOD_UPDATE, Constants.HTTP_METHOD_PUT, Constants.ROLE_BASE_URI,
             new String[] { id }, changeToString(roleXml));
     }
 
     /**
      * Retrieve role list.
-     * 
-     * @param filter
-     *            The filter param.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param filter The filter param.
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     public Object retrieveRoles(final Map<String, String[]> filter) throws Exception {
 
-        return callEsciDoc("Role.retrieveRoles", METHOD_RETRIEVE_ROLES,
-            Constants.HTTP_METHOD_GET, 
-            Constants.ROLES_BASE_URI,
-            new String[] {}, filter);
+        return callEsciDoc("Role.retrieveRoles", METHOD_RETRIEVE_ROLES, Constants.HTTP_METHOD_GET,
+            Constants.ROLES_BASE_URI, new String[] {}, filter);
     }
 }

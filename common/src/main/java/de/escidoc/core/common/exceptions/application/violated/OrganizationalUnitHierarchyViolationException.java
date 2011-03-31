@@ -21,16 +21,13 @@
 package de.escidoc.core.common.exceptions.application.violated;
 
 /**
- * The OuHierarchyViolationException is used to indicate that a hierarchy of
- * organizational units is violated. returned httpStatusCode is 409. Status code
- * (409) indicating that the request could not be completed due to a conflict
- * with the current state of the resource.
- * 
- * @author Michael Hoppe (FIZ Karlsruhe)
+ * The OuHierarchyViolationException is used to indicate that a hierarchy of organizational units is violated. returned
+ * httpStatusCode is 409. Status code (409) indicating that the request could not be completed due to a conflict with
+ * the current state of the resource.
  *
+ * @author Michael Hoppe (FIZ Karlsruhe)
  */
-public class OrganizationalUnitHierarchyViolationException
-    extends RuleViolationException {
+public class OrganizationalUnitHierarchyViolationException extends RuleViolationException {
 
     /**
      * The serial version uid.
@@ -39,13 +36,10 @@ public class OrganizationalUnitHierarchyViolationException
 
     public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_VIOLATED;
 
-    public static final String HTTP_STATUS_MESSAGE =
-        "Hierarchy of organizational units is violated.";
+    public static final String HTTP_STATUS_MESSAGE = "Hierarchy of organizational units is violated.";
 
     /**
      * Default constructor.
-     * 
-     *
      */
     public OrganizationalUnitHierarchyViolationException() {
         super(HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -53,9 +47,8 @@ public class OrganizationalUnitHierarchyViolationException
 
     /**
      * Constructor used to map an initial exception.
-     * 
-     * @param error
-     *            Throwable
+     *
+     * @param error Throwable
      */
     public OrganizationalUnitHierarchyViolationException(final Throwable error) {
         super(error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -63,27 +56,21 @@ public class OrganizationalUnitHierarchyViolationException
 
     /**
      * Constructs a new exception with the specified detail message.
-     * 
-     * @param message -
-     *            the detail message.
      *
+     * @param message - the detail message.
      */
     public OrganizationalUnitHierarchyViolationException(final String message) {
         super(message, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 
     /**
-     * Constructor used to create a new Exception with the specified detail
-     * message and a mapping to an initial exception.
-     * 
-     * @param message -
-     *            the detail message.
-     * @param error
-     *            Throwable
+     * Constructor used to create a new Exception with the specified detail message and a mapping to an initial
+     * exception.
      *
+     * @param message - the detail message.
+     * @param error   Throwable
      */
-    public OrganizationalUnitHierarchyViolationException(final String message,
-        final Throwable error) {
+    public OrganizationalUnitHierarchyViolationException(final String message, final Throwable error) {
         super(message, error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 }

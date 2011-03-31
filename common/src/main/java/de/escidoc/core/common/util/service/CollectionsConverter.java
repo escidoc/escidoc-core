@@ -31,31 +31,24 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 /**
- * Class used to convert <br/> - objects that implement interface List (e.g.
- * Vector, ArrayList) into typed arrays (e.g. String []) <br/> - objects that
- * implement interface Map (e.g. HashMap, Hashtable) into arrays of type
- * KeyValuePair
- * 
+ * Class used to convert <br/> - objects that implement interface List (e.g. Vector, ArrayList) into typed arrays (e.g.
+ * String []) <br/> - objects that implement interface Map (e.g. HashMap, Hashtable) into arrays of type KeyValuePair
+ *
  * @author Roland Werner (Accenture)
- * 
  */
 public final class CollectionsConverter {
 
     /**
-     * Private Constructor, in order to prevent instantiation of this utility
-     * class.
-     * 
+     * Private Constructor, in order to prevent instantiation of this utility class.
      */
     private CollectionsConverter() {
 
     }
 
     /**
-     * Generates an array of type KeyValuePair from the provided object of type
-     * Map.
-     * 
-     * @param map
-     *            The Map object to convert.
+     * Generates an array of type KeyValuePair from the provided object of type Map.
+     *
+     * @param map The Map object to convert.
      * @return Array of type KeyValuePair, generated from the Map.
      */
     public static KeyValuePair[] convertMapToKeyValuePairs(final Map map) {
@@ -74,9 +67,7 @@ public final class CollectionsConverter {
             // generate a new object of type KeyValuePair, set the values
             // from the Map.Entry and put the object at the next free place
             // in the keyValuePair array
-            keyValuePair[count] =
-                    new KeyValuePair((String) entry.getKey(), (String) entry
-                            .getValue());
+            keyValuePair[count] = new KeyValuePair((String) entry.getKey(), (String) entry.getValue());
             count++;
         }
 
@@ -84,37 +75,30 @@ public final class CollectionsConverter {
     }
 
     /**
-     * Iterates over the objects of type KeyValuePair provided in keyValuePairs
-     * and puts them as key-value-pairs into a new created object of the
-     * provided type (has to be a type that implements Map).
-     * 
-     * @param keyValuePairs
-     *            The array of KeyValuePairs to put into the Map.
-     * @param objectClass
-     *            The concrete object type that should be created to fill with
-     *            the array.
+     * Iterates over the objects of type KeyValuePair provided in keyValuePairs and puts them as key-value-pairs into a
+     * new created object of the provided type (has to be a type that implements Map).
+     *
+     * @param keyValuePairs The array of KeyValuePairs to put into the Map.
+     * @param objectClass   The concrete object type that should be created to fill with the array.
      * @return The new created type filled with the values from the array.
      */
-    public static Map convertKeyValuePairsToMap(
-        final KeyValuePair[] keyValuePairs, final Class objectClass) {
+    public static Map convertKeyValuePairsToMap(final KeyValuePair[] keyValuePairs, final Class objectClass) {
         // Generate new object of provided type
         final Map map;
         try {
             map = (Map) objectClass.getConstructor().newInstance();
         }
         catch (final IllegalAccessException e) {
-            throw new RuntimeException("Cannot access constructor of class "
-                + objectClass.getName(), e);
+            throw new RuntimeException("Cannot access constructor of class " + objectClass.getName(), e);
         }
         catch (final InstantiationException e) {
-            throw new RuntimeException("Cannot instantiate class "
-                + objectClass.getName(), e);
-        } catch(NoSuchMethodException e) {
-            throw new RuntimeException("Cannot instantiate class "
-                + objectClass.getName(), e);
-        } catch(InvocationTargetException e) {
-            throw new RuntimeException("Cannot instantiate class "
-                + objectClass.getName(), e);
+            throw new RuntimeException("Cannot instantiate class " + objectClass.getName(), e);
+        }
+        catch (NoSuchMethodException e) {
+            throw new RuntimeException("Cannot instantiate class " + objectClass.getName(), e);
+        }
+        catch (InvocationTargetException e) {
+            throw new RuntimeException("Cannot instantiate class " + objectClass.getName(), e);
         }
 
         // iterate over the KeyValuePair array
@@ -128,15 +112,12 @@ public final class CollectionsConverter {
 
     /**
      * Converts the provided List into an array of the provided type.
-     * 
-     * @param list
-     *            The List to convert.
-     * @param objectClass
-     *            The class type to create the array for.
+     *
+     * @param list        The List to convert.
+     * @param objectClass The class type to create the array for.
      * @return The new create array.
      */
-    public static Object[] convertListToArray(
-        final Collection list, final Class objectClass) {
+    public static Object[] convertListToArray(final Collection list, final Class objectClass) {
         final int length = list.size();
         Object[] array = (Object[]) Array.newInstance(objectClass, length);
         array = list.toArray(array);
@@ -144,52 +125,38 @@ public final class CollectionsConverter {
     }
 
     /**
-     * Converts the provided array into an object of the provided type, which
-     * has to implement List (e.g. Vector).
-     * 
-     * @param array
-     *            The array to convert.
-     * @param objectClass
-     *            The type of object to generate. Has to implement List.
-     * @return The converted object or <code>null</code> if no array has been
-     *         provided.
+     * Converts the provided array into an object of the provided type, which has to implement List (e.g. Vector).
+     *
+     * @param array       The array to convert.
+     * @param objectClass The type of object to generate. Has to implement List.
+     * @return The converted object or <code>null</code> if no array has been provided.
      */
-    public static List convertArrayToList(
-        final Object[] array, final Class objectClass) {
+    public static List convertArrayToList(final Object[] array, final Class objectClass) {
 
         return (List) convertArrayToCollection(array, objectClass);
     }
 
     /**
-     * Converts the provided array into an object of the provided type, which
-     * has to implement Set (e.g. HashSet).
-     * 
-     * @param array
-     *            The array to convert.
-     * @param objectClass
-     *            The type of object to generate. Has to implement Set.
-     * @return The converted object or <code>null</code> if no array has been
-     *         provided.
+     * Converts the provided array into an object of the provided type, which has to implement Set (e.g. HashSet).
+     *
+     * @param array       The array to convert.
+     * @param objectClass The type of object to generate. Has to implement Set.
+     * @return The converted object or <code>null</code> if no array has been provided.
      */
-    public static Set convertArrayToSet(
-        final Object[] array, final Class objectClass) {
+    public static Set convertArrayToSet(final Object[] array, final Class objectClass) {
 
         return (Set) convertArrayToCollection(array, objectClass);
     }
 
     /**
-     * Converts the provided array into an object of the provided type, which
-     * has to implement Collection (e.g. HashSet).
-     * 
-     * @param array
-     *            The array to convert.
-     * @param objectClass
-     *            The type of object to generate. Has to implement Collection.
-     * @return The converted object or <code>null</code> if no array has been
-     *         provided.
+     * Converts the provided array into an object of the provided type, which has to implement Collection (e.g.
+     * HashSet).
+     *
+     * @param array       The array to convert.
+     * @param objectClass The type of object to generate. Has to implement Collection.
+     * @return The converted object or <code>null</code> if no array has been provided.
      */
-    public static Collection convertArrayToCollection(
-        final Object[] array, final Class objectClass) {
+    public static Collection convertArrayToCollection(final Object[] array, final Class objectClass) {
 
         if (array == null) {
             return null;
@@ -208,21 +175,18 @@ public final class CollectionsConverter {
             collection = (Collection) constructor.newInstance(params);
         }
         catch (final NoSuchMethodException e) {
-            throw new RuntimeException("Cannot find constructor of class "
-                + objectClass.getName()
+            throw new RuntimeException("Cannot find constructor of class " + objectClass.getName()
                 + " which accepts a Collection as argument.", e);
         }
         catch (final InvocationTargetException e) {
-            throw new RuntimeException("Cannot execute constructor of class "
-                + objectClass.getName() + " because it throws an Exception.", e);
+            throw new RuntimeException("Cannot execute constructor of class " + objectClass.getName()
+                + " because it throws an Exception.", e);
         }
         catch (final IllegalAccessException e) {
-            throw new RuntimeException("Cannot access constructor of class "
-                + objectClass.getName(), e);
+            throw new RuntimeException("Cannot access constructor of class " + objectClass.getName(), e);
         }
         catch (final InstantiationException e) {
-            throw new RuntimeException("Cannot instantiate class "
-                + objectClass.getName(), e);
+            throw new RuntimeException("Cannot instantiate class " + objectClass.getName(), e);
         }
 
         return collection;

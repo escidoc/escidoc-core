@@ -39,7 +39,7 @@ import de.escidoc.core.om.service.interfaces.SemanticStoreHandlerInterface;
 
 /**
  * A semantic store handler.
- * 
+ *
  * @author Rozita Friedman
  */
 public class SemanticStoreHandler implements SemanticStoreHandlerInterface {
@@ -48,9 +48,8 @@ public class SemanticStoreHandler implements SemanticStoreHandlerInterface {
 
     /**
      * Injects the context handler.
-     * 
-     * @param semanticStoreHandler
-     *            The semantic store handler bean to inject.
+     *
+     * @param semanticStoreHandler The semantic store handler bean to inject.
      */
     public void setSemanticStoreHandler(
         final de.escidoc.core.om.business.interfaces.SemanticStoreHandlerInterface semanticStoreHandler) {
@@ -58,30 +57,22 @@ public class SemanticStoreHandler implements SemanticStoreHandlerInterface {
         this.handler = semanticStoreHandler;
     }
 
-
-
     /**
-     * Retrieves a result of provided triple store query in a provided output
-     * format.
-     * 
+     * Retrieves a result of provided triple store query in a provided output format.
+     *
      * @return Returns XML representation of the query result.
-     * @throws SystemException
-     *             TODO
+     * @throws SystemException         TODO
      * @throws InvalidTripleStoreQueryException
-     *             TODO
+     *                                 TODO
      * @throws InvalidTripleStoreOutputFormatException
-     *             TODO
-     * @throws AuthenticationException
-     *             Thrown in case of a failed authentication.
-     * @throws AuthorizationException
-     *             Thrown in case of a failed authorization.
+     *                                 TODO
+     * @throws AuthenticationException Thrown in case of a failed authentication.
+     * @throws AuthorizationException  Thrown in case of a failed authorization.
      */
     @Override
-    public String spo(final String taskParam) throws SystemException,
-        InvalidTripleStoreQueryException,
-        InvalidTripleStoreOutputFormatException, InvalidXmlException,
-        MissingElementValueException, AuthenticationException,
-        AuthorizationException {
+    public String spo(final String taskParam) throws SystemException, InvalidTripleStoreQueryException,
+        InvalidTripleStoreOutputFormatException, InvalidXmlException, MissingElementValueException,
+        AuthenticationException, AuthorizationException {
 
         return handler.spo(taskParam);
     }

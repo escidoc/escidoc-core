@@ -33,15 +33,13 @@ import de.escidoc.core.test.om.OmTestBase;
 
 /**
  * Test the implementation of the deviation interface.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 public class DeviationTestBase extends OmTestBase {
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public DeviationTestBase(final int transport) {
         super(transport);
@@ -58,10 +56,9 @@ public class DeviationTestBase extends OmTestBase {
 
     /**
      * Test fedora.describe via deviation-handler.
-     * 
+     *
      * @return describe-XML
-     * @throws Exception
-     *             Thrown if delete fails.
+     * @throws Exception Thrown if delete fails.
      */
     public String getDescribe() throws Exception {
         return getDeviationClient().describeFedora();
@@ -69,12 +66,10 @@ public class DeviationTestBase extends OmTestBase {
 
     /**
      * Test fedora.export via deviation-handler.
-     * 
-     * @param id
-     *            the String containing the resource-id
+     *
+     * @param id the String containing the resource-id
      * @return XML representation of result
-     * @throws Exception
-     *             Thrown if ingest fails.
+     * @throws Exception Thrown if ingest fails.
      */
     public String export(final String id) throws Exception {
         return getDeviationClient().export(id);
@@ -83,17 +78,13 @@ public class DeviationTestBase extends OmTestBase {
 
     /**
      * Test fedora.getDatastreamDissimination via deviation-handler.
-     * 
-     * @param id
-     *            Objid of Item.
-     * @param componentId
-     *            the id of the component.
+     *
+     * @param id          Objid of Item.
+     * @param componentId the id of the component.
      * @return binary object as String
-     * @throws Exception
-     *             Thrown if delete fails.
+     * @throws Exception Thrown if delete fails.
      */
-    public String getDatastreamDissimination(
-            final String id, final String componentId) throws Exception {
+    public String getDatastreamDissimination(final String id, final String componentId) throws Exception {
         return getDeviationClient().getDatastreamDissimination(id, componentId);
     }
 

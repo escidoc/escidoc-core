@@ -40,9 +40,8 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * Testsuite for the UserAccount with SOAP transport.
- * 
+ *
  * @author Torsten Tetteroo
- * 
  */
 @RunWith(JUnit4.class)
 public class UserAccountSoapTest extends UserAccountTest {
@@ -58,76 +57,46 @@ public class UserAccountSoapTest extends UserAccountTest {
 
     /**
      * Test successful creation of user account with set read-only values.
-     * 
-     * @test.name Create User Account - Read Only Values - SOAP
-     * @test.id AA_CUA-10-soap
-     * @test.input: Valid user account XML representation for creating a new
-     *              user account is provided. Read only values are specified
-     *              within the data.
-     * @test.expected: User account is returned with additional data like xlink
-     *                 attributes and last-modification-date attributes,
-     *                 creation-date, creator.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testAACua10_soap() throws Exception {
 
-        Document createdDocument = createSuccessfully(
-                "escidoc_useraccount_for_create_soap_read_only.xml");
+        Document createdDocument = createSuccessfully("escidoc_useraccount_for_create_soap_read_only.xml");
 
-        assertEquals(
-            "Creation date and last modification date are different. ",
-            assertCreationDateExists("", createdDocument),
-            getLastModificationDateValue(createdDocument));
+        assertEquals("Creation date and last modification date are different. ", assertCreationDateExists("",
+            createdDocument), getLastModificationDateValue(createdDocument));
 
         final String objid = getObjidValue(createdDocument);
         Document retrievedDocument = retrieveSuccessfully(objid);
-        assertXmlEquals("Retrieved document not the same like the created one",
-            createdDocument, retrievedDocument);
+        assertXmlEquals("Retrieved document not the same like the created one", createdDocument, retrievedDocument);
     }
 
     /**
      * Test successful update of user account with changed read-only values.
-     * 
-     * @test.name Update User Account - Read Only Values - SOAP
-     * @test.id AA_UUA-7-soap
-     * @test.input: Valid user account XML representation for updating an
-     *              existing user account is provided. Changed read only values
-     *              are specified within the data.
-     * @test.expected: User account is returned with updated data like xlink
-     *                 attributes and last-modification-date attributes.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testAAUua7_soap() throws Exception {
 
-        Document createdDocument =
-            createSuccessfully("escidoc_useraccount_for_create.xml");
+        Document createdDocument = createSuccessfully("escidoc_useraccount_for_create.xml");
         final String id = getObjidValue(createdDocument);
         final String createdXml = toString(createdDocument, false);
 
         // root attributes
         final Document toBeUpdatedDocument =
-            (Document) substitute(createdDocument, XPATH_USER_ACCOUNT_OBJID,
-                "some:id");
+            (Document) substitute(createdDocument, XPATH_USER_ACCOUNT_OBJID, "some:id");
 
         // creation-date
-        substitute(toBeUpdatedDocument, XPATH_USER_ACCOUNT_CREATION_DATE,
-            getNowAsTimestamp());
+        substitute(toBeUpdatedDocument, XPATH_USER_ACCOUNT_CREATION_DATE, getNowAsTimestamp());
 
         // created-by
-        substitute(toBeUpdatedDocument, XPATH_USER_ACCOUNT_CREATED_BY_OBJID,
-            "some:id");
+        substitute(toBeUpdatedDocument, XPATH_USER_ACCOUNT_CREATED_BY_OBJID, "some:id");
 
         // modified-by
-        substitute(toBeUpdatedDocument, XPATH_USER_ACCOUNT_MODIFIED_BY_OBJID,
-            "some:id");
+        substitute(toBeUpdatedDocument, XPATH_USER_ACCOUNT_MODIFIED_BY_OBJID, "some:id");
 
         // active
         substitute(toBeUpdatedDocument, XPATH_USER_ACCOUNT_ACTIVE, "false");
@@ -140,45 +109,29 @@ public class UserAccountSoapTest extends UserAccountTest {
             updatedXml = update(id, toBeUpdatedXml);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Updating with changed read only values failed. ", e);
+            EscidocRestSoapTestBase.failException("Updating with changed read only values failed. ", e);
         }
         final Document updatedDocument =
-            assertUserAccount(updatedXml, createdXml, startTimestamp,
-                beforeUpdateTimestamp, true);
+            assertUserAccount(updatedXml, createdXml, startTimestamp, beforeUpdateTimestamp, true);
 
         final Document retrievedDocument = retrieveSuccessfully(id);
-        assertXmlEquals("Retrieved document not the same like the created one",
-            updatedDocument, retrievedDocument);
+        assertXmlEquals("Retrieved document not the same like the created one", updatedDocument, retrievedDocument);
     }
 
     /**
      * Test successful update of user account without read-only values.
-     * 
-     * @test.name Update User Account - No Read Only Values - SOAP
-     * @test.id AA_UUA-10-soap
-     * @test.input: Valid user account XML representation for updating an
-     *              existing user account is provided. Changed read only values
-     *              are specified within the data.
-     * @test.expected: User account is returned with updated data like xlink
-     *                 attributes and last-modification-date attributes.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testAAUua10_soap() throws Exception {
 
-        Document createdDocument =
-            createSuccessfully("escidoc_useraccount_for_create.xml");
+        Document createdDocument = createSuccessfully("escidoc_useraccount_for_create.xml");
         final String id = getObjidValue(createdDocument);
         final String createdXml = toString(createdDocument, false);
 
         // root attributes
-        final Document toBeUpdatedDocument =
-            (Document) deleteAttribute(createdDocument,
-                XPATH_USER_ACCOUNT_OBJID);
+        final Document toBeUpdatedDocument = (Document) deleteAttribute(createdDocument, XPATH_USER_ACCOUNT_OBJID);
 
         // creation-date
         deleteNodes(toBeUpdatedDocument, XPATH_USER_ACCOUNT_CREATION_DATE);
@@ -200,45 +153,26 @@ public class UserAccountSoapTest extends UserAccountTest {
             updatedXml = update(id, toBeUpdatedXml);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Updating with changed read only values failed. ", e);
+            EscidocRestSoapTestBase.failException("Updating with changed read only values failed. ", e);
         }
         final Document updatedDocument =
-            assertUserAccount(updatedXml, createdXml, startTimestamp,
-                beforeUpdateTimestamp, true);
+            assertUserAccount(updatedXml, createdXml, startTimestamp, beforeUpdateTimestamp, true);
 
         final Document retrievedDocument = retrieveSuccessfully(id);
-        assertXmlEquals("Retrieved document not the same like the created one",
-            updatedDocument, retrievedDocument);
+        assertXmlEquals("Retrieved document not the same like the created one", updatedDocument, retrievedDocument);
     }
 
     /**
-     * Test declining updating an UserAccount without providing modified-by
-     * objid.
-     * 
-     * @test.name Update UserAccount - Missing Objid Attribute of Modified-by -
-     *            SOAP
-     * @test.id AA_UUA-11-4-soap
-     * @test.input:
-     *          <ul>
-     *          <li>id of an existing role</li>
-     *          <li>UserAccount XML representation without objid attribute in
-     *          modified-by element.</li>
-     *          </ul>
-     * @test.expected: XmlSchemaValidationException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test declining updating an UserAccount without providing modified-by objid.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testAAUua11_4_soap() throws Exception {
 
-        Document toBeUpdatedDocument =
-            createSuccessfully("escidoc_useraccount_for_create.xml");
+        Document toBeUpdatedDocument = createSuccessfully("escidoc_useraccount_for_create.xml");
         final String createdXml = toString(toBeUpdatedDocument, false);
-        deleteAttribute(toBeUpdatedDocument, XPATH_USER_ACCOUNT_MODIFIED_BY,
-            NAME_OBJID);
+        deleteAttribute(toBeUpdatedDocument, XPATH_USER_ACCOUNT_MODIFIED_BY, NAME_OBJID);
         final String id = getObjidValue(toBeUpdatedDocument);
 
         final String toBeUpdatedXml = toString(toBeUpdatedDocument, false);
@@ -249,16 +183,13 @@ public class UserAccountSoapTest extends UserAccountTest {
             updatedXml = update(id, toBeUpdatedXml);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Updating with changed read only values failed. ", e);
+            EscidocRestSoapTestBase.failException("Updating with changed read only values failed. ", e);
         }
         final Document updatedDocument =
-            assertUserAccount(updatedXml, createdXml, startTimestamp,
-                beforeUpdateTimestamp, true);
+            assertUserAccount(updatedXml, createdXml, startTimestamp, beforeUpdateTimestamp, true);
 
         Document retrievedDocument = retrieveSuccessfully(id);
-        assertXmlEquals("Retrieved document not the same like the created one",
-            updatedDocument, retrievedDocument);
+        assertXmlEquals("Retrieved document not the same like the created one", updatedDocument, retrievedDocument);
 
     }
 

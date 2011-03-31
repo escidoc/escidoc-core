@@ -39,44 +39,40 @@ import java.util.List;
 
 /**
  * Implementation of staging area clean up.
- * 
+ *
  * @author Torsten Tetteroo
  */
 public class StagingCleaner {
 
-    private static final Logger LOGGER =
-        LoggerFactory.getLogger(StagingCleaner.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(StagingCleaner.class);
 
     /**
-     * Offset added to staging files' expire time stamp before removing them to
-     * avoid removing of currently transmitted files.
+     * Offset added to staging files' expire time stamp before removing them to avoid removing of currently transmitted
+     * files.
      */
     private static final long EXPIRY_OFFSET = 500000L;
 
-    /** The staging file data access object used in this cleaner. */
+    /**
+     * The staging file data access object used in this cleaner.
+     */
     private StagingFileDao stagingFileDao;
 
     /**
      * Setting the stagingFileDao.
-     * 
-     * @param stagingSessionFileDao
-     *            The stagingFileDao to set.
+     *
+     * @param stagingSessionFileDao The stagingFileDao to set.
      */
-    public final void setStagingSessionFactory(
-        final StagingFileDao stagingSessionFileDao) {
+    public final void setStagingSessionFactory(final StagingFileDao stagingSessionFileDao) {
 
         this.stagingFileDao = stagingSessionFileDao;
     }
 
     /**
-     * Cleans up the staging area, i.e. removes each file in the file system
-     * associated to an expired staging file object and each expired staging
-     * file whose associated file does not exist or could be removed.
-     * 
-     *
+     * Cleans up the staging area, i.e. removes each file in the file system associated to an expired staging file
+     * object and each expired staging file whose associated file does not exist or could be removed.
      */
     public void cleanUp() {
-        if(LOGGER.isDebugEnabled()) {
+        if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Cleaning up the staging file area.");
         }
         final List<StagingFile> expiredStagingFiles;
@@ -92,28 +88,29 @@ public class StagingCleaner {
             // To avoid removing of a file that is currently transmitted to
             // a client, a offset is added to the expire time stamp.
             // TODO: this should be removed by locking mechanism.
-            if (stagingFile.getExpiryTs() + EXPIRY_OFFSET < System
-                    .currentTimeMillis()) {
+            if (stagingFile.getExpiryTs() + EXPIRY_OFFSET < System.currentTimeMillis()) {
 
                 try {
                     if (stagingFile.hasFile()) {
                         stagingFile.clear();
                     }
-                } catch (final IOException e) {
-                    if(LOGGER.isWarnEnabled()) {
-                        LOGGER.warn(StringUtility.format("Removing file failed", stagingFile.getReference(),
-                            e.getClass().getName()));
+                }
+                catch (final IOException e) {
+                    if (LOGGER.isWarnEnabled()) {
+                        LOGGER.warn(StringUtility.format("Removing file failed", stagingFile.getReference(), e
+                            .getClass().getName()));
                     }
-                    if(LOGGER.isDebugEnabled()) {
-                        LOGGER.debug(StringUtility.format("Removing file failed", stagingFile.getReference(),
-                            e.getClass().getName()), e);
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug(StringUtility.format("Removing file failed", stagingFile.getReference(), e
+                            .getClass().getName()), e);
                     }
                 }
                 try {
                     if (!stagingFile.hasFile()) {
                         stagingFileDao.delete(stagingFile);
                     }
-                } catch (final SqlDatabaseSystemException e) {
+                }
+                catch (final SqlDatabaseSystemException e) {
                     LOGGER.error("Error on deleting staging file.", e);
                 }
             }

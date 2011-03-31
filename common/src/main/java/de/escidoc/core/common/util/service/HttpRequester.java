@@ -46,10 +46,8 @@ import java.security.cert.X509Certificate;
 
 /**
  * @author Michael Hoppe
- * 
+ *         <p/>
  *         Class for requesting http-requests.
- * 
- * 
  */
 public class HttpRequester {
 
@@ -67,10 +65,8 @@ public class HttpRequester {
 
     /**
      * Default-Constructor.
-     * 
-     * @param domain
-     *            The domain to send requests to.
-     * @binding
+     *
+     * @param domain The domain to send requests to.
      */
     public HttpRequester(final String domain) {
         this.domain = domain;
@@ -78,13 +74,9 @@ public class HttpRequester {
 
     /**
      * Constructor with security-Handle for HTTP-Basic-Authentication.
-     * 
-     * @param domain
-     *            The domain to send requests to.
-     * @param securityHandle
-     *            The escidoc security handle.
-     * 
-     * @binding
+     *
+     * @param domain         The domain to send requests to.
+     * @param securityHandle The escidoc security handle.
      */
     public HttpRequester(final String domain, final String securityHandle) {
         this.securityHandle = securityHandle;
@@ -93,10 +85,8 @@ public class HttpRequester {
 
     /**
      * Sets the followRedirects-Flag of the URLConnection.
-     * 
-     * @param flag
-     *            boolean flag
-     * 
+     *
+     * @param flag boolean flag
      */
     public void setFollowRedirects(final boolean flag) {
         HttpURLConnection.setFollowRedirects(flag);
@@ -105,33 +95,24 @@ public class HttpRequester {
 
     /**
      * Sends a GET-request to given URI and returns result as String.
-     * 
-     * @param resource
-     *            String resource
+     *
+     * @param resource String resource
      * @return String response
-     * @throws Exception
-     *             e
-     * 
+     * @throws Exception e
      */
     public String doGet(final String resource) throws Exception {
         return request(resource, "GET", null);
     }
 
     /**
-     * Sends a PUT-request with the given body to given URI and returns result
-     * as String.
-     * 
-     * @param resource
-     *            String resource
-     * @param body
-     *            String body
+     * Sends a PUT-request with the given body to given URI and returns result as String.
+     *
+     * @param resource String resource
+     * @param body     String body
      * @return String response
-     * @throws Exception
-     *             e
-     * 
+     * @throws Exception e
      */
-    public String doPut(final String resource, final String body)
-        throws Exception {
+    public String doPut(final String resource, final String body) throws Exception {
         if (body == null || body.length() == 0) {
             throw new Exception("body may not be null");
         }
@@ -139,20 +120,14 @@ public class HttpRequester {
     }
 
     /**
-     * Sends a POST-request with the given body to given URI and returns result
-     * as String.
-     * 
-     * @param resource
-     *            String resource
-     * @param body
-     *            String body
+     * Sends a POST-request with the given body to given URI and returns result as String.
+     *
+     * @param resource String resource
+     * @param body     String body
      * @return String response
-     * @throws Exception
-     *             e
-     * 
+     * @throws Exception e
      */
-    public String doPost(final String resource, final String body)
-        throws Exception {
+    public String doPost(final String resource, final String body) throws Exception {
         if (body == null || body.length() == 0) {
             throw new Exception("body may not be null");
         }
@@ -161,59 +136,41 @@ public class HttpRequester {
 
     /**
      * Sends a DELETE-request to given URI and returns result as String.
-     * 
-     * @param resource
-     *            String resource
+     *
+     * @param resource String resource
      * @return String response
-     * @throws Exception
-     *             e
-     * 
+     * @throws Exception e
      */
     public String doDelete(final String resource) throws Exception {
         return request(resource, "DELETE", null);
     }
 
     /**
-     * Sends request with given method and given body to given URI and returns
-     * result as String.
-     * 
-     * @param resource
-     *            String resource
-     * @param method
-     *            String method
-     * @param body
-     *            String body
+     * Sends request with given method and given body to given URI and returns result as String.
+     *
+     * @param resource String resource
+     * @param method   String method
+     * @param body     String body
      * @return String response
-     * @throws Exception
-     *             e
-     * 
+     * @throws Exception e
      */
-    private String request(
-        final String resource, final String method, final String body)
-        throws Exception {
+    private String request(final String resource, final String method, final String body) throws Exception {
         return SSL ? requestSsl(resource, method, body) : requestNoSsl(resource, method, body);
     }
 
     /**
-     * Sends request with given method and given body to given URI and returns
-     * result as String.
-     * 
-     * @param resource
-     *            String resource
-     * @param method
-     *            String method
-     * @param body
-     *            String body
+     * Sends request with given method and given body to given URI and returns result as String.
+     *
+     * @param resource String resource
+     * @param method   String method
+     * @param body     String body
      * @return String response
-     * @throws Exception
-     *             e
-     * 
+     * @throws Exception e
      */
     // False positive: Private method is never called
     @edu.umd.cs.findbugs.annotations.SuppressWarnings
     private String requestSsl( // Ignore FindBugs
-        final String resource, final String method, final String body)
-        throws Exception {
+        final String resource, final String method, final String body) throws Exception {
         final String response;
 
         // Open Connection to given resource
@@ -227,12 +184,10 @@ public class HttpRequester {
 
         // Set Basic-Authentication Header
         if (this.securityHandle != null && securityHandle.length() != 0) {
-            final String encoding =
-                UserHandleCookieUtil.createEncodedUserHandle(this.securityHandle);
+            final String encoding = UserHandleCookieUtil.createEncodedUserHandle(this.securityHandle);
             con.setRequestProperty("Authorization", "Basic " + encoding);
             // Set Cookie
-            con.setRequestProperty("Cookie", EscidocServlet.COOKIE_LOGIN + '='
-                + this.securityHandle);
+            con.setRequestProperty("Cookie", EscidocServlet.COOKIE_LOGIN + '=' + this.securityHandle);
         }
         else if (getCookie() != null) {
             con.setRequestProperty("Cookie", getCookie());
@@ -243,14 +198,14 @@ public class HttpRequester {
         con.setReadTimeout(this.timeout);
 
         // If PUT or POST, write given body in Output-Stream
-        if (("PUT".equalsIgnoreCase(method) || "POST".equalsIgnoreCase(method))
-            && body != null) {
+        if (("PUT".equalsIgnoreCase(method) || "POST".equalsIgnoreCase(method)) && body != null) {
             con.setDoOutput(true);
             final OutputStream out = con.getOutputStream();
             try {
                 out.write(body.getBytes(XmlUtility.CHARACTER_ENCODING));
                 out.flush();
-            } finally {
+            }
+            finally {
                 IOUtils.closeStream(out);
             }
         }
@@ -262,30 +217,23 @@ public class HttpRequester {
         // Read response
         try {
             response = IOUtils.readStringFromStream(is);
-        } finally {
+        }
+        finally {
             IOUtils.closeStream(is);
         }
         return response;
     }
 
     /**
-     * Sends request with given method and given body to given URI and returns
-     * result as String.
-     * 
-     * @param resource
-     *            String resource
-     * @param method
-     *            String method
-     * @param body
-     *            String body
+     * Sends request with given method and given body to given URI and returns result as String.
+     *
+     * @param resource String resource
+     * @param method   String method
+     * @param body     String body
      * @return String response
-     * @throws Exception
-     *             e
-     * 
+     * @throws Exception e
      */
-    private String requestNoSsl(
-        final String resource, final String method, final String body)
-        throws Exception {
+    private String requestNoSsl(final String resource, final String method, final String body) throws Exception {
         HttpURLConnection connection = null;
         InputStream is = null;
         OutputStream out = null;
@@ -298,13 +246,10 @@ public class HttpRequester {
 
             // Set Basic-Authentication Header
             if (this.securityHandle != null && securityHandle.length() != 0) {
-                final String encoding =
-                    UserHandleCookieUtil
-                        .createEncodedUserHandle(this.securityHandle);
+                final String encoding = UserHandleCookieUtil.createEncodedUserHandle(this.securityHandle);
                 connection.setRequestProperty("Authorization", "Basic " + encoding);
                 // Set Cookie
-                connection.setRequestProperty("Cookie", EscidocServlet.COOKIE_LOGIN
-                    + '=' + this.securityHandle);
+                connection.setRequestProperty("Cookie", EscidocServlet.COOKIE_LOGIN + '=' + this.securityHandle);
             }
             else if (getCookie() != null) {
                 connection.setRequestProperty("Cookie", getCookie());
@@ -321,7 +266,8 @@ public class HttpRequester {
                 try {
                     out.write(body.getBytes(XmlUtility.CHARACTER_ENCODING));
                     out.flush();
-                } finally {
+                }
+                finally {
                     IOUtils.closeStream(out);
                 }
             }
@@ -333,19 +279,22 @@ public class HttpRequester {
             // Read response
             try {
                 response = IOUtils.readStringFromStream(is);
-            } finally {
+            }
+            finally {
                 IOUtils.closeStream(is);
             }
-        } finally {
+        }
+        finally {
             IOUtils.closeStream(out);
             IOUtils.closeStream(is);
             try {
                 connection.disconnect();
-            } catch (final Exception e) {
-                if(LOGGER.isWarnEnabled()) {
+            }
+            catch (final Exception e) {
+                if (LOGGER.isWarnEnabled()) {
                     LOGGER.warn("Error on disconnecting connection.");
                 }
-                if(LOGGER.isDebugEnabled()) {
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Error on disconnecting connection.", e);
                 }
             }
@@ -355,17 +304,15 @@ public class HttpRequester {
 
     /**
      * @author Michael Hoppe
-     * 
+     *         <p/>
      *         Overwrite X509TrustManager.
-     * 
-     * 
      */
     static class RelaxedX509TrustManager implements X509TrustManager {
+
         /**
          * Gets accepted Issuers.
-         * 
+         *
          * @return X509Certificate[] response
-         * 
          */
         @Override
         public X509Certificate[] getAcceptedIssuers() {
@@ -374,32 +321,22 @@ public class HttpRequester {
 
         /**
          * Checks Client trusted.
-         * 
-         * @param chain
-         *            X509Certificate[]
-         * @param authType
-         *            String
-         * 
+         *
+         * @param chain    X509Certificate[]
+         * @param authType String
          */
         @Override
-        public void checkClientTrusted(
-            final X509Certificate[] chain,
-            final String authType) {
+        public void checkClientTrusted(final X509Certificate[] chain, final String authType) {
         }
 
         /**
          * Checks Server trusted.
-         * 
-         * @param chain
-         *            X509Certificate[]
-         * @param authType
-         *            String
-         * 
+         *
+         * @param chain    X509Certificate[]
+         * @param authType String
          */
         @Override
-        public void checkServerTrusted(
-            final X509Certificate[] chain,
-            final String authType) {
+        public void checkServerTrusted(final X509Certificate[] chain, final String authType) {
         }
     }
 
@@ -411,16 +348,14 @@ public class HttpRequester {
     }
 
     /**
-     * @param cookie
-     *            the cookie to set
+     * @param cookie the cookie to set
      */
     public void setCookie(final String cookie) {
         this.cookie = cookie;
     }
 
     /**
-     * @param timeout
-     *            the timeout to set
+     * @param timeout the timeout to set
      */
     public void setTimeout(final int timeout) {
         this.timeout = timeout;

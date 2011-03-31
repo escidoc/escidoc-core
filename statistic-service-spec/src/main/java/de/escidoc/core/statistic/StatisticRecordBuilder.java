@@ -22,7 +22,7 @@ public abstract class StatisticRecordBuilder {
     /**
      * Create a new {@link StatisticRecord} with the given {@link String} parameter.
      *
-     * @param name the name of the parameter
+     * @param name  the name of the parameter
      * @param value the {@link String} value of the parameter
      * @return a the current StatisticRecordBuilder instance.
      */
@@ -31,7 +31,7 @@ public abstract class StatisticRecordBuilder {
     /**
      * Create a new {@link StatisticRecord} with the given {@link BigDecimal} parameter.
      *
-     * @param name the name of the parameter
+     * @param name  the name of the parameter
      * @param value the {@link BigDecimal} value of the parameter
      * @return a the current StatisticRecordBuilder instance.
      */
@@ -40,7 +40,7 @@ public abstract class StatisticRecordBuilder {
     /**
      * Create a new {@link StatisticRecord} with the given {@link DateTime} parameter.
      *
-     * @param name the name of the parameter
+     * @param name  the name of the parameter
      * @param value the {@link DateTime} value of the parameter
      * @return a the current StatisticRecordBuilder} instance.
      */
@@ -49,7 +49,7 @@ public abstract class StatisticRecordBuilder {
     /**
      * Create a new {@link StatisticRecord} with the given boolean parameter.
      *
-     * @param name the name of the parameter
+     * @param name  the name of the parameter
      * @param value the boolean value of the parameter
      * @return a the current StatisticRecordBuilder instance.
      */

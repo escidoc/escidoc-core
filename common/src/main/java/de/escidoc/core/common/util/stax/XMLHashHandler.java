@@ -19,7 +19,7 @@
  */
 
 /**
- * 
+ *
  */
 package de.escidoc.core.common.util.stax;
 
@@ -38,7 +38,6 @@ import java.util.regex.Pattern;
 
 /**
  * @author Frank Schwichtenberg
- * 
  */
 public class XMLHashHandler extends DefaultHandler {
 
@@ -49,8 +48,7 @@ public class XMLHashHandler extends DefaultHandler {
     private static final Pattern SPLIT_PATTERN = Pattern.compile(":");
 
     @Override
-    public void characters(final char[] ch, final int start, final int length)
-        throws SAXException {
+    public void characters(final char[] ch, final int start, final int length) throws SAXException {
         final StringBuilder cb = new StringBuilder();
 
         for (int i = 0; i < length; i++) {
@@ -76,8 +74,7 @@ public class XMLHashHandler extends DefaultHandler {
     }
 
     @Override
-    public void startElement(
-        final String uri, final String localName, final String qName, final Attributes attributes)
+    public void startElement(final String uri, final String localName, final String qName, final Attributes attributes)
         throws SAXException {
 
         final String fqName = createFqName(uri, localName, qName);
@@ -88,8 +85,7 @@ public class XMLHashHandler extends DefaultHandler {
         final SortedMap<String, String> atts = new TreeMap<String, String>();
         for (int i = 0; i < length; i++) {
             final String curQName = attributes.getQName(i);
-            final String attName =
-                    '{' + attributes.getURI(i) + '}' + attributes.getLocalName(i);
+            final String attName = '{' + attributes.getURI(i) + '}' + attributes.getLocalName(i);
             if (!"xmlns:xml".equalsIgnoreCase(curQName)) {
                 atts.put(attName, attributes.getValue(i));
             }
@@ -106,9 +102,7 @@ public class XMLHashHandler extends DefaultHandler {
     }
 
     @Override
-    public void endElement(
-        final String uri, final String localName, final String qName)
-        throws SAXException {
+    public void endElement(final String uri, final String localName, final String qName) throws SAXException {
         string.append('#');
         string.append(createFqName(uri, localName, qName));
     }
@@ -133,10 +127,7 @@ public class XMLHashHandler extends DefaultHandler {
 
     /**
      * Create full qualified name.
-     * 
-     * @param uri
-     * @param localName
-     * @param qName
+     *
      * @return full qualified name
      */
     private static String createFqName(final String uri, final String localName, final String qName) {

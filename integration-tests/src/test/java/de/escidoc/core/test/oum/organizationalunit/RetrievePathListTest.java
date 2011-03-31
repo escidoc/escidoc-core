@@ -47,8 +47,7 @@ import static org.junit.Assert.fail;
 public class RetrievePathListTest extends OrganizationalUnitTestBase {
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public RetrievePathListTest(final int transport) {
         super(transport);
@@ -56,48 +55,29 @@ public class RetrievePathListTest extends OrganizationalUnitTestBase {
 
     /**
      * Test retrieving a pathlist of an existing organizational unit.
-     * 
-     * @test.name Retrieve Path List - Child
-     * @test.id OUM_RPL-1
-     * @test.input
-     *          <ul>
-     *          <li>Id of a top level organizational unit</li>
-     *          </ul>
-     * @test.expected: Xml representation of a path list that contains one path
-     *                 that contains the reference to the organizational unit
-     *                 itself.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumRpl1() throws Exception {
 
         // create hierarchy
-        final Document parentOu1Document =
-            getDocument(createSuccessfully("escidoc_ou_create.xml"));
+        final Document parentOu1Document = getDocument(createSuccessfully("escidoc_ou_create.xml"));
         final String parentOuId1 = getObjidValue(parentOu1Document);
-        final String parentOuId2 =
-            getObjidValue(getDocument(createSuccessfully("escidoc_ou_create.xml")));
+        final String parentOuId2 = getObjidValue(getDocument(createSuccessfully("escidoc_ou_create.xml")));
         String[] parents = new String[] { parentOuId1, parentOuId2 };
         final String parentOuId3 =
-            getObjidValue(getDocument(createSuccessfullyChild(
-                "escidoc_ou_create.xml", parents)));
+            getObjidValue(getDocument(createSuccessfullyChild("escidoc_ou_create.xml", parents)));
 
         parents = new String[] { parentOuId3 };
 
         final String parentOuId4 =
-            getObjidValue(getDocument(createSuccessfullyChild(
-                "escidoc_ou_create.xml", parents)));
+            getObjidValue(getDocument(createSuccessfullyChild("escidoc_ou_create.xml", parents)));
         final String parentOuId5 =
-            getObjidValue(getDocument(createSuccessfullyChild(
-                "escidoc_ou_create.xml", parents)));
+            getObjidValue(getDocument(createSuccessfullyChild("escidoc_ou_create.xml", parents)));
 
         parents = new String[] { parentOuId4, parentOuId5 };
-        final String childOuId1 =
-            getObjidValue(getDocument(createSuccessfullyChild(
-                "escidoc_ou_create.xml", parents)));
+        final String childOuId1 = getObjidValue(getDocument(createSuccessfullyChild("escidoc_ou_create.xml", parents)));
 
         Vector<String> path1 = new Vector<String>();
         path1.add(childOuId1);
@@ -140,35 +120,27 @@ public class RetrievePathListTest extends OrganizationalUnitTestBase {
         Document pathListDocument = getDocument(pathListXml);
 
         // organizational-unit-path-list (root element)
-        assertXlinkElement("Asserting organizational-unit-path-list failed.",
-            pathListDocument, "/organizational-unit-path-list",
-            Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/" + childOuId1
+        assertXlinkElement("Asserting organizational-unit-path-list failed.", pathListDocument,
+            "/organizational-unit-path-list", Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/" + childOuId1
                 + "/resources/path-list");
 
         final NodeList pathesNodeList =
-            selectNodeList(pathListDocument,
-                "/organizational-unit-path-list/organizational-unit-path");
-        assertEquals("wrong number of paths retrieved!", 4, pathesNodeList
-            .getLength());
+            selectNodeList(pathListDocument, "/organizational-unit-path-list/organizational-unit-path");
+        assertEquals("wrong number of paths retrieved!", 4, pathesNodeList.getLength());
 
         for (int i = 0; i < pathesNodeList.getLength(); i++) {
             final Node pathNode = pathesNodeList.item(i);
             final String xpathOuRef =
-                "/organizational-unit-path-list/organizational-unit-path["
-                    + (i + 1) + "]/organizational-unit-ref";
-            final NodeList ouRefNodes =
-                selectNodeList(pathListDocument, xpathOuRef);
-            assertEquals("wrong number of ou refs retrieved, [" + xpathOuRef
-                + "]", 4, ouRefNodes.getLength());
+                "/organizational-unit-path-list/organizational-unit-path[" + (i + 1) + "]/organizational-unit-ref";
+            final NodeList ouRefNodes = selectNodeList(pathListDocument, xpathOuRef);
+            assertEquals("wrong number of ou refs retrieved, [" + xpathOuRef + "]", 4, ouRefNodes.getLength());
 
             boolean foundMatch = true;
             for (int j = 0; j < expectedPathes.size(); j++) {
                 final Vector expectedPath = expectedPathes.get(j);
                 foundMatch = true;
                 for (int l = 0; l < expectedPath.size(); l++) {
-                    final String toBeAssertedId =
-                        getObjidValue(pathNode, xpathOuRef + "[" + (l + 1)
-                            + "]");
+                    final String toBeAssertedId = getObjidValue(pathNode, xpathOuRef + "[" + (l + 1) + "]");
                     if (!expectedPath.get(l).equals(toBeAssertedId)) {
                         foundMatch = false;
                         break;
@@ -187,20 +159,8 @@ public class RetrievePathListTest extends OrganizationalUnitTestBase {
 
     /**
      * Test retrieving a pathlist of an existing top-level organizational unit.
-     * 
-     * @test.name Retrieve Path List - Top Level
-     * @test.id OUM_RPL-1-2
-     * @test.input
-     *          <ul>
-     *          <li>Id of a top level organizational unit</li>
-     *          </ul>
-     * @test.expected: Xml representation of a path list that contains one path
-     *                 that contains the reference to the organizational unit
-     *                 itself.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumRpl1_2() throws Exception {
@@ -215,51 +175,33 @@ public class RetrievePathListTest extends OrganizationalUnitTestBase {
             pathList = retrievePathList(objid);
         }
         catch (final Exception e) {
-            failException(
-                "Retrieving path list of existing to level OU failed.", e);
+            failException("Retrieving path list of existing to level OU failed.", e);
         }
         assertXmlValidOrganizationalUnitPathList(pathList);
         Document pathListDocument = getDocument(pathList);
 
-        assertXlinkElement("Asserting organizational-unit-path-list failed.",
-            pathListDocument, "/organizational-unit-path-list",
-            Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/" + objid
+        assertXlinkElement("Asserting organizational-unit-path-list failed.", pathListDocument,
+            "/organizational-unit-path-list", Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/" + objid
                 + "/resources/path-list");
-        assertXmlExists("Missing organizational-unit-path element",
-            pathListDocument,
+        assertXmlExists("Missing organizational-unit-path element", pathListDocument,
             "/organizational-unit-path-list/organizational-unit-path");
-        assertXmlNotExists("Unexpected 2nd organizational-unit-path element",
-            pathListDocument, "/organizational-unit-path-list/*[2]");
+        assertXmlNotExists("Unexpected 2nd organizational-unit-path element", pathListDocument,
+            "/organizational-unit-path-list/*[2]");
 
         String expectedTitle = getTitleValue(createdDocument);
-        assertReferencingElement(
-            "Asserting path-list element failed.",
-            objid,
-            expectedTitle,
-            pathListDocument,
+        assertReferencingElement("Asserting path-list element failed.", objid, expectedTitle, pathListDocument,
             "/organizational-unit-path-list/organizational-unit-path/organizational-unit-ref",
             Constants.ORGANIZATIONAL_UNIT_BASE_URI);
 
-        assertXmlNotExists("Path list contains more than one element.",
-            pathListDocument,
+        assertXmlNotExists("Path list contains more than one element.", pathListDocument,
             "/organizational-unit-path-list/organizational-unit-path/*[2]");
 
     }
 
     /**
      * Tests declining retrieving a pathlist with providing an unknown id.
-     * 
-     * @test.name Retrieve Path List - Unknown Id
-     * @test.id OUM_RPL-2
-     * @test.input
-     *          <ul>
-     *          <li>Unknown id</li>
-     *          </ul>
-     * @test.expected: OrganizationalUnitNotFoundException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumRpl2() throws Exception {
@@ -269,31 +211,19 @@ public class RetrievePathListTest extends OrganizationalUnitTestBase {
         try {
             retrievePathList(UNKNOWN_ID);
 
-            failMissingException("Retrieving path list of an OU"
-                + " with unknown id has not been declined.", ec);
+            failMissingException("Retrieving path list of an OU" + " with unknown id has not been declined.", ec);
         }
         catch (final Exception e) {
-            assertExceptionType("Retrieving path list of an OU"
-                + " with unknown id has not been declined, correctly.", ec, e);
+            assertExceptionType("Retrieving path list of an OU" + " with unknown id has not been declined, correctly.",
+                ec, e);
         }
 
     }
 
     /**
-     * Tests declining retrieving a pathlist with providing the id of a resource
-     * of another type.
-     * 
-     * @test.name Retrieve Path List - Id of Another Resource Type
-     * @test.id OUM_RPL-2-2
-     * @test.input
-     *          <ul>
-     *          <li>Id of a resource of another type</li>
-     *          </ul>
-     * @test.expected: OrganizationalUnitNotFoundException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Tests declining retrieving a pathlist with providing the id of a resource of another type.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumRpl2_2() throws Exception {
@@ -303,13 +233,11 @@ public class RetrievePathListTest extends OrganizationalUnitTestBase {
         try {
             retrievePathList(CONTEXT_ID);
 
-            failMissingException("Retrieving path list of an OU"
-                + " with id of resource of another resource type"
+            failMissingException("Retrieving path list of an OU" + " with id of resource of another resource type"
                 + " has not been declined.", ec);
         }
         catch (final Exception e) {
-            assertExceptionType("Retrieving path list of an OU"
-                + " with id of resource of another resource type"
+            assertExceptionType("Retrieving path list of an OU" + " with id of resource of another resource type"
                 + " has not been declined, correctly.", ec, e);
         }
 
@@ -317,18 +245,8 @@ public class RetrievePathListTest extends OrganizationalUnitTestBase {
 
     /**
      * Tests declining retrieving a pathlist without providing an id.
-     * 
-     * @test.name Retrieve Path List - Missing id
-     * @test.id OUM_RPL-3
-     * @test.input
-     *          <ul>
-     *          <li>No id is provided</li>
-     *          </ul>
-     * @test.expected: MissingMethodParameterException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumRpl3() throws Exception {
@@ -338,12 +256,11 @@ public class RetrievePathListTest extends OrganizationalUnitTestBase {
         try {
             retrievePathList(null);
 
-            failMissingException("Retrieving path list of an OU"
-                + " without id" + " has not been declined.", ec);
+            failMissingException("Retrieving path list of an OU" + " without id" + " has not been declined.", ec);
         }
         catch (final Exception e) {
-            assertExceptionType("Retrieving path list of an OU" + " without id"
-                + " has not been declined, correctly.", ec, e);
+            assertExceptionType("Retrieving path list of an OU" + " without id" + " has not been declined, correctly.",
+                ec, e);
         }
 
     }

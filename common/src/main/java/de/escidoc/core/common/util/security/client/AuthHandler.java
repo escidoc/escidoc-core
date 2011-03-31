@@ -30,9 +30,8 @@ import java.util.Iterator;
 
 /**
  * An default handler for the Axis framework.
- * 
+ *
  * @author Bernhard Kraus (Accenture)
- * 
  */
 public class AuthHandler extends BasicHandler {
 
@@ -40,16 +39,14 @@ public class AuthHandler extends BasicHandler {
      * The serial version uid.
      */
     private static final long serialVersionUID = -4770170546756445073L;
-    
+
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthHandler.class);
 
     /**
      * The invoke method of the handler.
-     * 
-     * @param ctx
-     *            The context of the message
-     * @throws AxisFault
-     *             the exception
+     *
+     * @param ctx The context of the message
+     * @throws AxisFault the exception
      */
     @Override
     public void invoke(final MessageContext ctx) throws AxisFault {

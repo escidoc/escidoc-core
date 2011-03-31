@@ -45,17 +45,15 @@ import java.sql.SQLException;
 
 /**
  * Get some interesting information about the eSciDoc framework.
- * 
+ *
  * @author Andr&eacute; Schenk
- * 
  */
 public class FrameworkInfo extends JdbcDaoSupport {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FrameworkInfo.class);
 
     /**
-     * Version of the eSciDocCore database which is currently needed to run the
-     * framework.
+     * Version of the eSciDocCore database which is currently needed to run the framework.
      */
     private static final Version DB_VERSION = new Version(1, 3, 0);
 
@@ -87,67 +85,61 @@ public class FrameworkInfo extends JdbcDaoSupport {
     /**
      * Database query to get the latest version.
      */
-    private static final String QUERY_LATEST_VERSION = "SELECT * FROM "
-        + TABLE_NAME + " WHERE " + COLUMN_DATE + "=(SELECT MAX(" + COLUMN_DATE
-        + ") FROM " + TABLE_NAME + ')';
+    private static final String QUERY_LATEST_VERSION =
+        "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_DATE + "=(SELECT MAX(" + COLUMN_DATE + ") FROM "
+            + TABLE_NAME + ')';
 
     /**
      * XML file with the finger print of the "escidoc-core" database.
      */
-    private static final String FINGERPRINT_FILE = "/META-INF/db/fingerprints/"
-        + DB_VERSION.toString() + ".xml";
+    private static final String FINGERPRINT_FILE = "/META-INF/db/fingerprints/" + DB_VERSION.toString() + ".xml";
 
     /**
-     * Check if the currently installed eSciDocCore database matches the needed
-     * database version.
-     * 
-     * @throws SystemException
-     *             Thrown if the eSciDocCore database has the wrong version
+     * Check if the currently installed eSciDocCore database matches the needed database version.
+     *
+     * @throws SystemException Thrown if the eSciDocCore database has the wrong version
      */
     public void checkDbVersion() throws SystemException {
         final Version currentDbVersion = getVersion();
 
         if (!DB_VERSION.equals(currentDbVersion)) {
-            throw new SystemException("database version differs (needed: "
-                + DB_VERSION + ", installed: " + currentDbVersion + ')');
+            throw new SystemException("database version differs (needed: " + DB_VERSION + ", installed: "
+                + currentDbVersion + ')');
         }
     }
 
     /**
      * Get the current database version from the database.
-     * 
+     *
      * @return current database version
      */
     public Version getVersion() {
         Version result;
 
         try {
-            result =
-                (Version) getJdbcTemplate().query(QUERY_LATEST_VERSION,
-                    new ResultSetExtractor<Object>() {
-                        @Override
-                        public Object extractData(final ResultSet rs)
-                            throws SQLException {
-                            Version result = null;
+            result = (Version) getJdbcTemplate().query(QUERY_LATEST_VERSION, new ResultSetExtractor<Object>() {
+                @Override
+                public Object extractData(final ResultSet rs) throws SQLException {
+                    Version result = null;
 
-                            if (rs.next()) {
-                                result =
-                                    new Version(rs.getInt(COLUMN_MAJOR_NUMBER),
-                                        rs.getInt(COLUMN_MINOR_NUMBER), rs
-                                            .getInt(COLUMN_REVISION_NUMBER));
-                            }
-                            return result;
-                        }
-                    });
+                    if (rs.next()) {
+                        result =
+                            new Version(rs.getInt(COLUMN_MAJOR_NUMBER), rs.getInt(COLUMN_MINOR_NUMBER), rs
+                                .getInt(COLUMN_REVISION_NUMBER));
+                    }
+                    return result;
+                }
+            });
             if (result == null) {
                 // version table is empty
                 result = new Version(1, 0, 0);
             }
-        } catch (final DataAccessException e) {
-            if(LOGGER.isWarnEnabled()) {
+        }
+        catch (final DataAccessException e) {
+            if (LOGGER.isWarnEnabled()) {
                 LOGGER.debug("Error on getting database version.");
             }
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on getting database version.", e);
             }
             // version table doesn't exist
@@ -157,15 +149,11 @@ public class FrameworkInfo extends JdbcDaoSupport {
     }
 
     /**
-     * Compare the current database structure with the structure stored in an
-     * XML file.
-     * 
+     * Compare the current database structure with the structure stored in an XML file.
+     *
      * @return true if both structures are equal
-     * @throws IOException
-     *             Thrown if the XML file could not be read
-     * @throws SQLException
-     *             Thrown if the structure of the database could not be
-     *             determined
+     * @throws IOException  Thrown if the XML file could not be read
+     * @throws SQLException Thrown if the structure of the database could not be determined
      */
     public boolean isConsistent() throws IOException, SQLException {
         boolean result = false;
@@ -174,9 +162,10 @@ public class FrameworkInfo extends JdbcDaoSupport {
             connection = getConnection();
             final Fingerprint currentFingerprint = new Fingerprint(connection);
             final Fingerprint storedFingerprint =
-                    Fingerprint.readObject(getClass().getResourceAsStream(FINGERPRINT_FILE));
+                Fingerprint.readObject(getClass().getResourceAsStream(FINGERPRINT_FILE));
             result = storedFingerprint.equals(currentFingerprint);
-        } finally {
+        }
+        finally {
             IOUtils.closeConnection(connection);
         }
         return result;

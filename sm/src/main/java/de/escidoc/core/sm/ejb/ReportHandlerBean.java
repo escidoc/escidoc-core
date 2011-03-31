@@ -30,15 +30,19 @@ import java.rmi.RemoteException;
 public class ReportHandlerBean implements SessionBean {
 
     ReportHandlerInterface service;
+
     SessionContext sessionCtx;
+
     private static final Logger LOGGER = LoggerFactory.getLogger(ReportHandlerBean.class);
 
     public void ejbCreate() throws CreateException {
         try {
             final BeanFactoryLocator beanFactoryLocator = SingletonBeanFactoryLocator.getInstance();
-            final BeanFactory factory = beanFactoryLocator.useBeanFactory("ReportHandler.spring.ejb.context").getFactory();
+            final BeanFactory factory =
+                beanFactoryLocator.useBeanFactory("ReportHandler.spring.ejb.context").getFactory();
             this.service = (ReportHandlerInterface) factory.getBean("service.ReportHandler");
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             LOGGER.error("ejbCreate(): Exception ReportHandlerComponent: " + e);
             throw new CreateException(e.getMessage());
         }
@@ -59,37 +63,26 @@ public class ReportHandlerBean implements SessionBean {
 
     }
 
-    public String retrieve(final String xml,
-                                     final SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            XmlCorruptedException,
-            XmlSchemaValidationException,
-            ReportDefinitionNotFoundException,
-            MissingMethodParameterException,
-            InvalidSqlException,
-            SystemException {
+    public String retrieve(final String xml, final SecurityContext securityContext) throws AuthenticationException,
+        AuthorizationException, XmlCorruptedException, XmlSchemaValidationException, ReportDefinitionNotFoundException,
+        MissingMethodParameterException, InvalidSqlException, SystemException {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.retrieve(xml);
     }
 
     public String retrieve(final String xml, final String authHandle, final Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            XmlCorruptedException,
-            XmlSchemaValidationException,
-            ReportDefinitionNotFoundException,
-            MissingMethodParameterException,
-            InvalidSqlException,
-            SystemException {
+        throws AuthenticationException, AuthorizationException, XmlCorruptedException, XmlSchemaValidationException,
+        ReportDefinitionNotFoundException, MissingMethodParameterException, InvalidSqlException, SystemException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.retrieve(xml);

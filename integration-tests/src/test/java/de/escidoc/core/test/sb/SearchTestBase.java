@@ -60,9 +60,8 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * Base class for search tests.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 public class SearchTestBase extends SbTestBase {
 
@@ -83,8 +82,7 @@ public class SearchTestBase extends SbTestBase {
     protected GrantHelper grant = null;
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public SearchTestBase(final int transport) {
         super(transport);
@@ -93,8 +91,7 @@ public class SearchTestBase extends SbTestBase {
     /**
      * Wait until the indexer has (hopefully :) run the next time.
      *
-     * @throws InterruptedException
-     *             If sleep fails.
+     * @throws InterruptedException If sleep fails.
      */
     protected void waitForIndexer() throws InterruptedException {
 
@@ -103,87 +100,59 @@ public class SearchTestBase extends SbTestBase {
 
     /**
      * Wait until the given id exists in the given index.
-     * 
-     * @param id
-     *            resource id
-     * @param indexName
-     *            name of the index
-     * 
-     * @throws Exception
-     *             Thrown if the connection to the indexer failed.
+     *
+     * @param id        resource id
+     * @param indexName name of the index
+     * @throws Exception Thrown if the connection to the indexer failed.
      */
-    protected void waitForIndexerToAppear(
-        final String id, final String indexName) throws Exception {
+    protected void waitForIndexerToAppear(final String id, final String indexName) throws Exception {
         waitForIndexer(id, indexName, true, MAX_TIME_TO_WAIT_FOR_INDEXER);
     }
 
     /**
      * Wait until the given id doesn't exist in the given index.
-     * 
-     * @param id
-     *            resource id
-     * @param indexName
-     *            name of the index
-     * 
-     * @throws Exception
-     *             Thrown if the connection to the indexer failed.
+     *
+     * @param id        resource id
+     * @param indexName name of the index
+     * @throws Exception Thrown if the connection to the indexer failed.
      */
-    protected void waitForIndexerToDisappear(
-        final String id, final String indexName) throws Exception {
+    protected void waitForIndexerToDisappear(final String id, final String indexName) throws Exception {
         waitForIndexer(id, indexName, false, MAX_TIME_TO_WAIT_FOR_INDEXER);
     }
 
     /**
      * Wait until the given id exists in the given index.
-     * 
-     * @param id
-     *            resource id
-     * @param indexName
-     *            name of the index
-     * @param checkExists
-     *            true for existence check, false for nonexistence
-     * @param maxTimeToWait
-     *            maximum time to wait in milliseconds
-     * 
-     * @throws Exception
-     *             Thrown if the connection to the indexer failed.
+     *
+     * @param id            resource id
+     * @param indexName     name of the index
+     * @param checkExists   true for existence check, false for nonexistence
+     * @param maxTimeToWait maximum time to wait in milliseconds
+     * @throws Exception Thrown if the connection to the indexer failed.
      */
     private void waitForIndexer(
-        final String id, 
-        final String indexName, 
-        final boolean checkExists, 
-        final long maxTimeToWait)
-        throws Exception {
+        final String id, final String indexName, final boolean checkExists, final long maxTimeToWait) throws Exception {
         long time = System.currentTimeMillis();
         String query = "PID=" + id + " or distinction.rootPid=" + id;
         String httpUrl =
-            HttpHelper
-                .createUrl(
-                    de.escidoc.core.test.common.client.servlet.Constants.PROTOCOL,
-                    de.escidoc.core.test.common.client.servlet.Constants.HOST_PORT,
-                    de.escidoc.core.test.common.client.servlet.Constants.SEARCH_BASE_URI
-                        + "/" + indexName + "?query=" 
-                        + URLEncoder.encode(query, DEFAULT_CHARSET));
+            HttpHelper.createUrl(de.escidoc.core.test.common.client.servlet.Constants.PROTOCOL,
+                de.escidoc.core.test.common.client.servlet.Constants.HOST_PORT,
+                de.escidoc.core.test.common.client.servlet.Constants.SEARCH_BASE_URI + "/" + indexName + "?query="
+                    + URLEncoder.encode(query, DEFAULT_CHARSET));
 
         for (;;) {
             HttpResponse httpRes =
-                HttpHelper
-                    .executeHttpRequest(
-                        de.escidoc.core.test.common.client.servlet.Constants.HTTP_METHOD_GET,
-                        httpUrl, null, null, null);
+                HttpHelper.executeHttpRequest(de.escidoc.core.test.common.client.servlet.Constants.HTTP_METHOD_GET,
+                    httpUrl, null, null, null);
 
             if (httpRes.getStatusLine().getStatusCode() == HttpURLConnection.HTTP_OK) {
-                Pattern numberOfRecordsPattern =
-                    Pattern.compile("numberOfRecords>(.*?)<");
-                Matcher m =
-                    numberOfRecordsPattern.matcher(EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8));
+                Pattern numberOfRecordsPattern = Pattern.compile("numberOfRecords>(.*?)<");
+                Matcher m = numberOfRecordsPattern.matcher(EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8));
 
                 if (m.find()) {
                     if (checkExists && (Integer.parseInt(m.group(1)) > 0)) {
                         break;
                     }
-                    else if (!checkExists
-                        && (Integer.parseInt(m.group(1)) == 0)) {
+                    else if (!checkExists && (Integer.parseInt(m.group(1)) == 0)) {
                         break;
                     }
                 }
@@ -197,18 +166,13 @@ public class SearchTestBase extends SbTestBase {
 
     /**
      * Test retrieving an search result from the framework.
-     * 
-     * @param parameters
-     *            The http-parameters as hashMap.
-     * @param database
-     *            database where search is executed.
+     *
+     * @param parameters The http-parameters as hashMap.
+     * @param database   database where search is executed.
      * @return The retrieved search-result.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    protected String search(
-        final HashMap<String, String> parameters, final String database)
-        throws Exception {
+    protected String search(final HashMap<String, String> parameters, final String database) throws Exception {
 
         Object result = getSearchClient().search(parameters, database);
         String xmlResult = null;
@@ -216,28 +180,22 @@ public class SearchTestBase extends SbTestBase {
             HttpResponse httpRes = (HttpResponse) result;
             assertHttpStatusOfMethod("", httpRes);
             xmlResult = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
-         }
+        }
         else if (result instanceof SearchRetrieveResponseType) {
-            xmlResult =
-                makeSearchResponseXml((SearchRetrieveResponseType) result);
+            xmlResult = makeSearchResponseXml((SearchRetrieveResponseType) result);
         }
         return xmlResult;
     }
 
     /**
      * Test retrieving an explain plan from the framework.
-     * 
-     * @param parameters
-     *            The http-parameters as hashMap.
-     * @param database
-     *            database where explain is executed.
+     *
+     * @param parameters The http-parameters as hashMap.
+     * @param database   database where explain is executed.
      * @return The retrieved explain plan.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    protected String explain(
-        final HashMap<String, String> parameters, final String database)
-        throws Exception {
+    protected String explain(final HashMap<String, String> parameters, final String database) throws Exception {
 
         Object result = getSearchClient().explain(parameters, database);
         String xmlResult = null;
@@ -245,12 +203,10 @@ public class SearchTestBase extends SbTestBase {
             HttpResponse httpRes = (HttpResponse) result;
             assertHttpStatusOfMethod("", httpRes);
             xmlResult = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
-           
+
         }
         else if (result instanceof ExplainResponseType) {
-            xmlResult =
-                ((ExplainResponseType) result)
-                    .getRecord().getRecordData().get_any()[0].getAsString();
+            xmlResult = ((ExplainResponseType) result).getRecord().getRecordData().get_any()[0].getAsString();
             xmlResult = xmlResult.replaceAll("&gt;", ">");
             xmlResult = xmlResult.replaceAll("&lt;", "<");
         }
@@ -259,17 +215,13 @@ public class SearchTestBase extends SbTestBase {
 
     /**
      * Test retrieving an scan response from the framework.
-     * 
-     * @param parameters
-     *            The http-parameters as hashMap.
-     * @param database
-     *            database where explain is executed.
+     *
+     * @param parameters The http-parameters as hashMap.
+     * @param database   database where explain is executed.
      * @return The retrieved explain plan.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    protected String scan(final HashMap parameters, final String database)
-        throws Exception {
+    protected String scan(final HashMap parameters, final String database) throws Exception {
 
         Object result = getSearchClient().scan(parameters, database);
         String xmlResult = null;
@@ -277,7 +229,7 @@ public class SearchTestBase extends SbTestBase {
             HttpResponse httpRes = (HttpResponse) result;
             assertHttpStatusOfMethod("", httpRes);
             xmlResult = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
-                   }
+        }
         else if (result instanceof ScanResponseType) {
             xmlResult = makeScanResponseXml((ScanResponseType) result);
         }
@@ -286,24 +238,18 @@ public class SearchTestBase extends SbTestBase {
 
     /**
      * Converts SOAP-return object to xml.
-     * 
-     * @param result
-     *            The SOAP response object.
+     *
+     * @param result The SOAP response object.
      * @return The xml-representation of the soap object.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    protected String makeSearchResponseXml(
-        final SearchRetrieveResponseType result) throws Exception {
+    protected String makeSearchResponseXml(final SearchRetrieveResponseType result) throws Exception {
         StringBuffer soapXmlResult = new StringBuffer("");
-        soapXmlResult.append("<searchRetrieveResponse  ").append(
-            "xmlns=\"http://www.loc.gov/zing/srw/\">");
-        soapXmlResult.append("<version>").append(result.getVersion()).append(
-            "</version>");
+        soapXmlResult.append("<searchRetrieveResponse  ").append("xmlns=\"http://www.loc.gov/zing/srw/\">");
+        soapXmlResult.append("<version>").append(result.getVersion()).append("</version>");
         // get number of records////////////////////////////////////////////
         if (result.getNumberOfRecords() != null) {
-            soapXmlResult.append("<numberOfRecords>").append(
-                (result).getNumberOfRecords().toString()).append(
+            soapXmlResult.append("<numberOfRecords>").append((result).getNumberOfRecords().toString()).append(
                 "</numberOfRecords>");
         }
         // /////////////////////////////////////////////////////////////////
@@ -312,24 +258,18 @@ public class SearchTestBase extends SbTestBase {
         RecordsType recordsType = result.getRecords();
         RecordType[] records = null;
         if (recordsType != null) {
-        	records = recordsType.getRecord();
+            records = recordsType.getRecord();
         }
         if (records != null) {
             soapXmlResult.append("<records>");
             for (int i = 0; i < records.length; i++) {
                 soapXmlResult.append("<record>");
                 RecordType record = records[i];
-                soapXmlResult.append("<recordSchema>").append(
-                    record.getRecordSchema()).append("</recordSchema>");
-                soapXmlResult.append("<recordPacking>").append(
-                    record.getRecordPacking()).append("</recordPacking>");
-                String recordData =
-                    decodeCharacters(record.getRecordData().get_any()[0]
-                        .getAsString());
-                soapXmlResult.append("<recordData>").append(recordData).append(
-                    "</recordData>");
-                soapXmlResult.append("<recordPosition>").append(
-                    record.getRecordPosition()).append("</recordPosition>");
+                soapXmlResult.append("<recordSchema>").append(record.getRecordSchema()).append("</recordSchema>");
+                soapXmlResult.append("<recordPacking>").append(record.getRecordPacking()).append("</recordPacking>");
+                String recordData = decodeCharacters(record.getRecordData().get_any()[0].getAsString());
+                soapXmlResult.append("<recordData>").append(recordData).append("</recordData>");
+                soapXmlResult.append("<recordPosition>").append(record.getRecordPosition()).append("</recordPosition>");
                 soapXmlResult.append("</record>");
             }
             soapXmlResult.append("</records>");
@@ -337,74 +277,56 @@ public class SearchTestBase extends SbTestBase {
         // /////////////////////////////////////////////////////////////////
         // get nextRecordPosition////////////////////////////////////////////
         if (result.getNextRecordPosition() != null) {
-            soapXmlResult.append("<nextRecordPosition>").append(
-                result.getNextRecordPosition().toString()).append(
+            soapXmlResult.append("<nextRecordPosition>").append(result.getNextRecordPosition().toString()).append(
                 "</nextRecordPosition>");
         }
         // /////////////////////////////////////////////////////////////////
         // get echoed searchRetrieveRequest/////////////////////////////////
         if (result.getEchoedSearchRetrieveRequest() != null) {
-            EchoedSearchRetrieveRequestType echoedSearchRequest =
-                result.getEchoedSearchRetrieveRequest();
+            EchoedSearchRetrieveRequestType echoedSearchRequest = result.getEchoedSearchRetrieveRequest();
             soapXmlResult.append("<echoedSearchRetrieveRequest>");
             if (echoedSearchRequest.getVersion() != null) {
-                soapXmlResult.append("<version>").append(
-                    echoedSearchRequest.getVersion()).append("</version>");
+                soapXmlResult.append("<version>").append(echoedSearchRequest.getVersion()).append("</version>");
             }
             if (echoedSearchRequest.getQuery() != null) {
-                soapXmlResult.append("<query>").append(
-                    encodeCharacters(echoedSearchRequest.getQuery())).append(
+                soapXmlResult.append("<query>").append(encodeCharacters(echoedSearchRequest.getQuery())).append(
                     "</query>");
             }
             if (echoedSearchRequest.getXQuery() != null) {
-                SearchClauseType searchClause =
-                    echoedSearchRequest.getXQuery().getSearchClause();
+                SearchClauseType searchClause = echoedSearchRequest.getXQuery().getSearchClause();
                 if (searchClause == null) {
-                    searchClause =
-                        echoedSearchRequest
-                            .getXQuery().getTriple().getLeftOperand()
-                            .getSearchClause();
+                    searchClause = echoedSearchRequest.getXQuery().getTriple().getLeftOperand().getSearchClause();
                 }
                 if (searchClause == null) {
                     searchClause =
                         echoedSearchRequest
-                            .getXQuery().getTriple().getLeftOperand()
-                            .getTriple().getLeftOperand().getSearchClause();
+                            .getXQuery().getTriple().getLeftOperand().getTriple().getLeftOperand().getSearchClause();
                 }
                 soapXmlResult.append("<xQuery><ns3:searchClause  ").append(
                     "xmlns:ns3=\"http://www.loc.gov/zing/cql/xcql/\">");
                 if (searchClause.getIndex() != null) {
-                    soapXmlResult.append("<ns3:index>").append(
-                        searchClause.getIndex()).append("</ns3:index>");
+                    soapXmlResult.append("<ns3:index>").append(searchClause.getIndex()).append("</ns3:index>");
                 }
-                if (searchClause.getRelation() != null
-                    && searchClause.getRelation().getValue() != null) {
-                    soapXmlResult.append("<ns3:relation><ns3:value>")
-                    .append(encodeCharacters(
-                                    searchClause.getRelation().getValue()))
-                            .append(
-                        "</ns3:value></ns3:relation>");
+                if (searchClause.getRelation() != null && searchClause.getRelation().getValue() != null) {
+                    soapXmlResult.append("<ns3:relation><ns3:value>").append(
+                        encodeCharacters(searchClause.getRelation().getValue())).append("</ns3:value></ns3:relation>");
                 }
                 if (searchClause.getTerm() != null) {
-                    soapXmlResult.append("<ns3:term>").append(
-                        encodeCharacters(searchClause.getTerm())).append(
+                    soapXmlResult.append("<ns3:term>").append(encodeCharacters(searchClause.getTerm())).append(
                         "</ns3:term>");
                 }
                 soapXmlResult.append("</ns3:searchClause></xQuery>");
             }
             if (echoedSearchRequest.getMaximumRecords() != null) {
-                soapXmlResult.append("<maximumRecords>").append(
-                    echoedSearchRequest.getMaximumRecords()).append(
+                soapXmlResult.append("<maximumRecords>").append(echoedSearchRequest.getMaximumRecords()).append(
                     "</maximumRecords>");
             }
             if (echoedSearchRequest.getRecordPacking() != null) {
-                soapXmlResult.append("<recordPacking>").append(
-                    echoedSearchRequest.getRecordPacking()).append(
+                soapXmlResult.append("<recordPacking>").append(echoedSearchRequest.getRecordPacking()).append(
                     "</recordPacking>");
             }
             if (echoedSearchRequest.getRecordSchema() != null) {
-                soapXmlResult.append("<recordSchema>").append(
-                    echoedSearchRequest.getRecordSchema()).append(
+                soapXmlResult.append("<recordSchema>").append(echoedSearchRequest.getRecordSchema()).append(
                     "</recordSchema>");
             }
             soapXmlResult.append("</echoedSearchRetrieveRequest>");
@@ -414,18 +336,15 @@ public class SearchTestBase extends SbTestBase {
         DiagnosticsType diagnosticsType = result.getDiagnostics();
         DiagnosticType[] diagnostics = null;
         if (diagnosticsType != null) {
-        	diagnostics = diagnosticsType.getDiagnostic();
+            diagnostics = diagnosticsType.getDiagnostic();
         }
         if (diagnostics != null) {
             soapXmlResult.append("<diagnostics>");
             for (int i = 0; i < diagnostics.length; i++) {
-                soapXmlResult
-                    .append("<ns4:diagnostic xmlns:ns4=\"http://www.loc.gov/zing/srw/diagnostic/\">");
+                soapXmlResult.append("<ns4:diagnostic xmlns:ns4=\"http://www.loc.gov/zing/srw/diagnostic/\">");
                 DiagnosticType diagnostic = diagnostics[i];
-                soapXmlResult.append("<ns4:uri>").append(
-                    diagnostic.getUri().getPath()).append("</ns4:uri>");
-                soapXmlResult.append("<ns4:details>").append(
-                    diagnostic.getDetails()).append("</ns4:details>");
+                soapXmlResult.append("<ns4:uri>").append(diagnostic.getUri().getPath()).append("</ns4:uri>");
+                soapXmlResult.append("<ns4:details>").append(diagnostic.getDetails()).append("</ns4:details>");
                 soapXmlResult.append("</ns4:diagnostic>");
             }
             soapXmlResult.append("</diagnostics>");
@@ -437,19 +356,14 @@ public class SearchTestBase extends SbTestBase {
 
     /**
      * Converts SOAP-return object to xml.
-     * 
-     * @param result
-     *            The SOAP response object.
+     *
+     * @param result The SOAP response object.
      * @return The xml-representation of the soap object.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    protected String makeScanResponseXml(final ScanResponseType result)
-        throws Exception {
+    protected String makeScanResponseXml(final ScanResponseType result) throws Exception {
         StringBuffer soapXmlResult =
-            new StringBuffer(
-                "<scanResponse xmlns=\"http://www.loc.gov/zing/srw/\">")
-                .append("<version>1.1</version>");
+            new StringBuffer("<scanResponse xmlns=\"http://www.loc.gov/zing/srw/\">").append("<version>1.1</version>");
 
         // Get terms//////////////////////////////////////////////////
         TermsType termsType = result.getTerms();
@@ -458,52 +372,38 @@ public class SearchTestBase extends SbTestBase {
             terms = termsType.getTerm();
         }
         if (terms != null) {
-            soapXmlResult
-                .append("<terms xmlns:ns1=\"http://www.loc.gov/zing/srw/\">");
+            soapXmlResult.append("<terms xmlns:ns1=\"http://www.loc.gov/zing/srw/\">");
             for (int i = 0; i < terms.length; i++) {
                 soapXmlResult.append("<term>");
                 TermType term = terms[i];
-                soapXmlResult.append("<value>").append(term.getValue()).append(
-                    "</value>");
-                soapXmlResult.append("<numberOfRecords>").append(
-                    term.getNumberOfRecords()).append("</numberOfRecords>");
+                soapXmlResult.append("<value>").append(term.getValue()).append("</value>");
+                soapXmlResult
+                    .append("<numberOfRecords>").append(term.getNumberOfRecords()).append("</numberOfRecords>");
                 soapXmlResult.append("</term>");
             }
             soapXmlResult.append("</terms>");
         }
         // /////////////////////////////////////////////////////////////////
         // get Echoed Scan Request/////////////////////////////////////////////
-        EchoedScanRequestType echoedScanRequest =
-            (result).getEchoedScanRequest();
+        EchoedScanRequestType echoedScanRequest = (result).getEchoedScanRequest();
         if (echoedScanRequest != null) {
-            soapXmlResult
-                .append(
-                    "<echoedScanRequest xmlns:ns2=\"http://www.loc.gov/zing/srw/\">")
-                .append("<version>1.1</version>");
-            soapXmlResult.append("<scanClause>").append(
-                echoedScanRequest.getScanClause()).append("</scanClause>");
+            soapXmlResult.append("<echoedScanRequest xmlns:ns2=\"http://www.loc.gov/zing/srw/\">").append(
+                "<version>1.1</version>");
+            soapXmlResult.append("<scanClause>").append(echoedScanRequest.getScanClause()).append("</scanClause>");
             SearchClauseType xScanClause = echoedScanRequest.getXScanClause();
             if (xScanClause != null) {
                 soapXmlResult.append("<xScanClause>");
                 if (xScanClause.getIndex() != null) {
-                    soapXmlResult
-                        .append("<ns3:index xmlns:ns3=\"http://www.loc.gov/zing/cql/xcql/\">");
-                    soapXmlResult.append(xScanClause.getIndex()).append(
-                        "</ns3:index>");
+                    soapXmlResult.append("<ns3:index xmlns:ns3=\"http://www.loc.gov/zing/cql/xcql/\">");
+                    soapXmlResult.append(xScanClause.getIndex()).append("</ns3:index>");
                 }
-                if (xScanClause.getRelation() != null
-                    && xScanClause.getRelation().getValue() != null) {
-                    soapXmlResult
-                        .append("<ns4:relation xmlns:ns4=\"http://www.loc.gov/zing/cql/xcql/\"><ns4:value>");
-                    soapXmlResult
-                        .append(xScanClause.getRelation().getValue()).append(
-                            "</ns4:value></ns4:relation>");
+                if (xScanClause.getRelation() != null && xScanClause.getRelation().getValue() != null) {
+                    soapXmlResult.append("<ns4:relation xmlns:ns4=\"http://www.loc.gov/zing/cql/xcql/\"><ns4:value>");
+                    soapXmlResult.append(xScanClause.getRelation().getValue()).append("</ns4:value></ns4:relation>");
                 }
                 if (xScanClause.getTerm() != null) {
-                    soapXmlResult
-                        .append("<ns5:term xmlns:ns5=\"http://www.loc.gov/zing/cql/xcql/\">");
-                    soapXmlResult.append(xScanClause.getTerm()).append(
-                        "</ns5:term>");
+                    soapXmlResult.append("<ns5:term xmlns:ns5=\"http://www.loc.gov/zing/cql/xcql/\">");
+                    soapXmlResult.append(xScanClause.getTerm()).append("</ns5:term>");
                 }
                 soapXmlResult.append("</xScanClause>");
             }
@@ -518,13 +418,10 @@ public class SearchTestBase extends SbTestBase {
         if (diagnostics != null) {
             soapXmlResult.append("<diagnostics>");
             for (int i = 0; i < diagnostics.length; i++) {
-                soapXmlResult
-                    .append("<ns4:diagnostic xmlns:ns4=\"http://www.loc.gov/zing/srw/diagnostic/\">");
+                soapXmlResult.append("<ns4:diagnostic xmlns:ns4=\"http://www.loc.gov/zing/srw/diagnostic/\">");
                 DiagnosticType diagnostic = diagnostics[i];
-                soapXmlResult.append("<ns4:uri>").append(
-                    diagnostic.getUri().getPath()).append("</ns4:uri>");
-                soapXmlResult.append("<ns4:details>").append(
-                    diagnostic.getDetails()).append("</ns4:details>");
+                soapXmlResult.append("<ns4:uri>").append(diagnostic.getUri().getPath()).append("</ns4:uri>");
+                soapXmlResult.append("<ns4:details>").append(diagnostic.getDetails()).append("</ns4:details>");
                 soapXmlResult.append("</ns4:diagnostic>");
             }
             soapXmlResult.append("</diagnostics>");
@@ -538,11 +435,9 @@ public class SearchTestBase extends SbTestBase {
 
     /**
      * extract id out of item-xml.
-     * 
-     * @param xml
-     *            String xml
+     *
+     * @param xml String xml
      * @return String id
-     * 
      */
     protected String getId(final String xml) {
         String id = null;
@@ -564,46 +459,37 @@ public class SearchTestBase extends SbTestBase {
 
     /**
      * get last-modification-date from xml String.
-     * 
-     * @param xml
-     *            String xml
+     *
+     * @param xml String xml
      * @return String last-modification-date
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     protected String getLastModificationDate(final String xml) throws Exception {
 
-        return getLastModificationDateValue(EscidocRestSoapTestBase
-            .getDocument(xml));
+        return getLastModificationDateValue(EscidocRestSoapTestBase.getDocument(xml));
     }
 
     /**
      * get creation-date from xml String.
-     * 
-     * @param xml
-     *            String xml
+     *
+     * @param xml String xml
      * @return String creation-date
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     protected String getCreationDate(final String xml) throws Exception {
 
-        return getCreationDateValue(EscidocRestSoapTestBase
-            .getDocument(xml));
+        return getCreationDateValue(EscidocRestSoapTestBase.getDocument(xml));
     }
 
     /**
      * get number of hits from xml String.
-     * 
-     * @param searchResult
-     *            String searchResult
+     *
+     * @param searchResult String searchResult
      * @return String number of hits
-     * 
      */
     protected String getNumberOfHits(final String searchResult) {
         String numberOfHits = null;
-        Pattern dateAttributePattern =
-            Pattern.compile("numberOfRecords>(.*?)<");
+        Pattern dateAttributePattern = Pattern.compile("numberOfRecords>(.*?)<");
         Matcher m = dateAttributePattern.matcher(searchResult);
         if (m.find()) {
             numberOfHits = m.group(1);
@@ -613,27 +499,21 @@ public class SearchTestBase extends SbTestBase {
 
     /**
      * get number of scan hits from xml String.
-     * 
-     * @param scanResult
-     *            String scanResult
+     *
+     * @param scanResult String scanResult
      * @return String number of hits
-     * 
      */
-    protected String getNumberOfScanHits(final String scanResult) 
-                                        throws Exception {
+    protected String getNumberOfScanHits(final String scanResult) throws Exception {
         Document scanResultDoc = getDocument(scanResult);
-        NodeList nodes =
-            selectNodeList(scanResultDoc, "/scanResponse/terms/term");
+        NodeList nodes = selectNodeList(scanResultDoc, "/scanResponse/terms/term");
         return Integer.toString(nodes.getLength());
     }
 
     /**
      * get first record from xml String.
-     * 
-     * @param searchResult
-     *            String searchResult
+     *
+     * @param searchResult String searchResult
      * @return String first record
-     * 
      */
     protected String getFirstRecord(final String searchResult) {
         String firstRecord = null;
@@ -647,16 +527,13 @@ public class SearchTestBase extends SbTestBase {
 
     /**
      * get first record from xml String.
-     * 
-     * @param searchResult
-     *            String searchResult
+     *
+     * @param searchResult String searchResult
      * @return String first record
-     * 
      */
     protected String getNextRecordPosition(final String searchResult) {
         String nextRecordPosition = null;
-        Pattern dateAttributePattern =
-            Pattern.compile("nextRecordPosition>(.*?)<");
+        Pattern dateAttributePattern = Pattern.compile("nextRecordPosition>(.*?)<");
         Matcher m = dateAttributePattern.matcher(searchResult);
         if (m.find()) {
             nextRecordPosition = m.group(1);
@@ -666,11 +543,9 @@ public class SearchTestBase extends SbTestBase {
 
     /**
      * get name of the database from explain plan.
-     * 
-     * @param explainPlan
-     *            String explainPlan
+     *
+     * @param explainPlan String explainPlan
      * @return String number of hits
-     * 
      */
     protected String getDatabase(final String explainPlan) {
         String database = null;
@@ -684,11 +559,9 @@ public class SearchTestBase extends SbTestBase {
 
     /**
      * get number of index-fields from explain plan.
-     * 
-     * @param explainPlan
-     *            String explainPlan
+     *
+     * @param explainPlan String explainPlan
      * @return String number of index-fields
-     * 
      */
     protected int getIndexFieldCount(final String explainPlan) {
         if (explainPlan == null) {
@@ -700,28 +573,23 @@ public class SearchTestBase extends SbTestBase {
 
     /**
      * get number of sort-fields from explain plan.
-     * 
-     * @param explainPlan
-     *            String explainPlan
+     *
+     * @param explainPlan String explainPlan
      * @return String number of sort-fields
-     * 
      */
     protected int getSortFieldCount(final String explainPlan) {
         if (explainPlan == null) {
             return 0;
         }
-        int sortFieldCount =
-            explainPlan.split("<[^\\/>]*?sortKeyword>").length - 1;
+        int sortFieldCount = explainPlan.split("<[^\\/>]*?sortKeyword>").length - 1;
         return sortFieldCount;
     }
 
     /**
      * get diagnostic details from xml String.
-     * 
-     * @param searchResult
-     *            String searchResult
+     *
+     * @param searchResult String searchResult
      * @return String diagnostic details
-     * 
      */
     protected String getDiagnostics(final String searchResult) {
         String details = null;
@@ -738,11 +606,9 @@ public class SearchTestBase extends SbTestBase {
 
     /**
      * check if highlighting-element is there.
-     * 
-     * @param searchResult
-     *            String searchResult
+     *
+     * @param searchResult String searchResult
      * @return boolean
-     * 
      */
     protected boolean checkHighlighting(final String searchResult) {
         if (searchResult.matches("(?s).*highlight.*")) {
@@ -752,136 +618,96 @@ public class SearchTestBase extends SbTestBase {
     }
 
     /**
-     * check if public-status, version-number and latest-version-numer are as
-     * expected.
-     * 
-     * @param xml
-     *            String searchResult
-     * @param versionCheckMap
-     *            HashMap with objectIds + expected version info.
-     * @throws Exception
-     *             e
-     * 
+     * check if public-status, version-number and latest-version-numer are as expected.
+     *
+     * @param xml             String searchResult
+     * @param versionCheckMap HashMap with objectIds + expected version info.
+     * @throws Exception e
      */
-    protected void checkVersions(
-        final String xml,
-        final Map<String, HashMap<String, String>> versionCheckMap)
+    protected void checkVersions(final String xml, final Map<String, HashMap<String, String>> versionCheckMap)
         throws Exception {
         Document doc = getDocument(xml);
         Pattern objIdPattern = Pattern.compile("\\$\\{objId\\}");
         Matcher objIdMatcher = objIdPattern.matcher("");
         Pattern objTypePattern = Pattern.compile("\\$\\{objType\\}");
         Matcher objTypeMatcher = objTypePattern.matcher("");
-        String publicStatusXpath =
-            "//${objType}[@href=\"${objId}" + "\"]/properties/public-status";
-        String versionNumberXpath =
-            "//${objType}[@href=\"${objId}" + "\"]/properties/version/number";
-        String latestVersionNumberXpath =
-            "//${objType}[@href=\"${objId}"
-                + "\"]/properties/latest-version/number";
+        String publicStatusXpath = "//${objType}[@href=\"${objId}" + "\"]/properties/public-status";
+        String versionNumberXpath = "//${objType}[@href=\"${objId}" + "\"]/properties/version/number";
+        String latestVersionNumberXpath = "//${objType}[@href=\"${objId}" + "\"]/properties/latest-version/number";
 
         for (String key : versionCheckMap.keySet()) {
             objIdMatcher.reset(publicStatusXpath);
             String replacedPublicStatusXpath = objIdMatcher.replaceFirst(key);
             objTypeMatcher.reset(replacedPublicStatusXpath);
-            replacedPublicStatusXpath =
-                objTypeMatcher.replaceFirst(versionCheckMap.get(key).get(
-                    "objectType"));
+            replacedPublicStatusXpath = objTypeMatcher.replaceFirst(versionCheckMap.get(key).get("objectType"));
 
             objIdMatcher.reset(versionNumberXpath);
             String replacedVersionNumberXpath = objIdMatcher.replaceFirst(key);
             objTypeMatcher.reset(replacedVersionNumberXpath);
-            replacedVersionNumberXpath =
-                objTypeMatcher.replaceFirst(versionCheckMap.get(key).get(
-                    "objectType"));
+            replacedVersionNumberXpath = objTypeMatcher.replaceFirst(versionCheckMap.get(key).get("objectType"));
 
             objIdMatcher.reset(latestVersionNumberXpath);
-            String replacedLatestVersionNumberXpath =
-                objIdMatcher.replaceFirst(key);
+            String replacedLatestVersionNumberXpath = objIdMatcher.replaceFirst(key);
             objTypeMatcher.reset(replacedLatestVersionNumberXpath);
-            replacedLatestVersionNumberXpath =
-                objTypeMatcher.replaceFirst(versionCheckMap.get(key).get(
-                    "objectType"));
+            replacedLatestVersionNumberXpath = objTypeMatcher.replaceFirst(versionCheckMap.get(key).get("objectType"));
 
-            Node publicStatus =
-                selectSingleNode(doc, replacedPublicStatusXpath);
-            Node versionNumber =
-                selectSingleNode(doc, replacedVersionNumberXpath);
-            Node latestVersionNumber =
-                selectSingleNode(doc, replacedLatestVersionNumberXpath);
-            assertEquals("Public-Status not as expected", versionCheckMap.get(
-                key).get("expectedPublicStatus"), publicStatus.getTextContent());
-            assertEquals("Version-Number not as expected", versionCheckMap.get(
-                key).get("expectedVersionNumber"), versionNumber
-                .getTextContent());
-            assertEquals("Latest-Version-Number not as expected",
-                versionCheckMap.get(key).get("expectedLatestVersionNumber"),
-                latestVersionNumber.getTextContent());
+            Node publicStatus = selectSingleNode(doc, replacedPublicStatusXpath);
+            Node versionNumber = selectSingleNode(doc, replacedVersionNumberXpath);
+            Node latestVersionNumber = selectSingleNode(doc, replacedLatestVersionNumberXpath);
+            assertEquals("Public-Status not as expected", versionCheckMap.get(key).get("expectedPublicStatus"),
+                publicStatus.getTextContent());
+            assertEquals("Version-Number not as expected", versionCheckMap.get(key).get("expectedVersionNumber"),
+                versionNumber.getTextContent());
+            assertEquals("Latest-Version-Number not as expected", versionCheckMap.get(key).get(
+                "expectedLatestVersionNumber"), latestVersionNumber.getTextContent());
         }
     }
 
     /**
-     * Create a Param structure for PID assignments. The last-modification-date
-     * is retrieved from the by id selected object.
-     * 
-     * @param itemId
-     *            itemId
-     * @throws Exception
-     *             Thrown if anything fails.
+     * Create a Param structure for PID assignments. The last-modification-date is retrieved from the by id selected
+     * object.
+     *
+     * @param itemId itemId
      * @return param XML snippet.
+     * @throws Exception Thrown if anything fails.
      */
-    protected final String getItemPidParam(final String itemId)
-        throws Exception {
+    protected final String getItemPidParam(final String itemId) throws Exception {
         String xml = item.retrieve(itemId);
         String lastModDate = getLastModificationDate(xml);
         String url =
-            HttpHelper
-                .createUrl(
-                    de.escidoc.core.test.common.client.servlet.Constants.PROTOCOL,
-                    de.escidoc.core.test.common.client.servlet.Constants.HOST_PORT,
-                    de.escidoc.core.test.common.client.servlet.Constants.ITEM_BASE_URI)
+            HttpHelper.createUrl(de.escidoc.core.test.common.client.servlet.Constants.PROTOCOL,
+                de.escidoc.core.test.common.client.servlet.Constants.HOST_PORT,
+                de.escidoc.core.test.common.client.servlet.Constants.ITEM_BASE_URI)
                 + itemId;
-        String param =
-            "<param last-modification-date=\"" + lastModDate + "\"><url>" + url
-                + "</url></param>";
+        String param = "<param last-modification-date=\"" + lastModDate + "\"><url>" + url + "</url></param>";
         return (param);
     }
 
     /**
-     * Create a Param structure for PID assignments. The last-modification-date
-     * is retrieved from the by id selected object.
-     * 
-     * @param containerId
-     *            containerId
-     * @throws Exception
-     *             Thrown if anything fails.
+     * Create a Param structure for PID assignments. The last-modification-date is retrieved from the by id selected
+     * object.
+     *
+     * @param containerId containerId
      * @return param XML snippet.
+     * @throws Exception Thrown if anything fails.
      */
-    protected final String getContainerPidParam(final String containerId)
-        throws Exception {
+    protected final String getContainerPidParam(final String containerId) throws Exception {
         String xml = container.retrieve(containerId);
         String lastModDate = getLastModificationDate(xml);
         String url =
-            HttpHelper
-                .createUrl(
-                    de.escidoc.core.test.common.client.servlet.Constants.PROTOCOL,
-                    de.escidoc.core.test.common.client.servlet.Constants.HOST_PORT,
-                    de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI)
+            HttpHelper.createUrl(de.escidoc.core.test.common.client.servlet.Constants.PROTOCOL,
+                de.escidoc.core.test.common.client.servlet.Constants.HOST_PORT,
+                de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI)
                 + containerId;
-        String param =
-            "<param last-modification-date=\"" + lastModDate + "\"><url>" + url
-                + "</url></param>";
+        String param = "<param last-modification-date=\"" + lastModDate + "\"><url>" + url + "</url></param>";
         return (param);
     }
 
     /**
      * Replaces special Characters..
-     * 
+     *
+     * @param text String text to replace
      * @return String Replaced String
-     * @param text
-     *            String text to replace
-     * 
-     * @sb
      */
     private String decodeCharacters(String text) {
         text = text.replaceAll("&lt;", "<");
@@ -894,12 +720,9 @@ public class SearchTestBase extends SbTestBase {
 
     /**
      * Replaces special Characters..
-     * 
+     *
+     * @param text String text to replace
      * @return String Replaced String
-     * @param text
-     *            String text to replace
-     * 
-     * @sb
      */
     private String encodeCharacters(String text) {
         text = text.replaceAll("<", "&lt;");

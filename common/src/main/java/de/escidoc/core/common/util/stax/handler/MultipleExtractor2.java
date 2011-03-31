@@ -50,8 +50,7 @@ public class MultipleExtractor2 extends DefaultHandler {
 
     private Map<String, Map> components;
 
-    private final Map<String, Object> outputStreams =
-        new HashMap<String, Object>();
+    private final Map<String, Object> outputStreams = new HashMap<String, Object>();
 
     private String componentId;
 
@@ -66,13 +65,10 @@ public class MultipleExtractor2 extends DefaultHandler {
     private List<String> pids;
 
     /**
-     * @param namespaceMap
-     *            Map from namespace to prefix.
-     * @param extractPathes
-     * @param parser
+     * @param namespaceMap Map from namespace to prefix.
      */
-    public MultipleExtractor2(final Map<String, String> namespaceMap,
-        final Map<String, String> extractPathes, final StaxParser parser) {
+    public MultipleExtractor2(final Map<String, String> namespaceMap, final Map<String, String> extractPathes,
+        final StaxParser parser) {
 
         // FIXME: as parameter
         this.namespaceMap = namespaceMap;
@@ -81,14 +77,12 @@ public class MultipleExtractor2 extends DefaultHandler {
         this.paths = extractPathes;
     }
 
-    public MultipleExtractor2(final Map<String, String> extractPathes,
-        final StaxParser parser) {
+    public MultipleExtractor2(final Map<String, String> extractPathes, final StaxParser parser) {
 
         this(null, extractPathes, parser);
     }
 
-    public MultipleExtractor2(final String extractPath,
-        final String extractAtt, final StaxParser parser) {
+    public MultipleExtractor2(final String extractPath, final String extractAtt, final StaxParser parser) {
 
         this.parser = parser;
         this.paths = new HashMap<String, String>();
@@ -106,8 +100,7 @@ public class MultipleExtractor2 extends DefaultHandler {
     }
 
     @Override
-    public StartElement startElement(final StartElement element)
-        throws XMLStreamException {
+    public StartElement startElement(final StartElement element) throws XMLStreamException {
         final String elementName = element.getLocalName();
         if ("component".equals(elementName)) {
             this.inComponent = true;
@@ -127,12 +120,11 @@ public class MultipleExtractor2 extends DefaultHandler {
             }
         }
 
-        if (! this.inside) {
+        if (!this.inside) {
             final String currentPath = parser.getCurPath();
             if (paths.containsKey(currentPath)) {
                 if (this.insideLevel != 0) {
-                    throw new XMLStreamException("insideLevel != 0: "
-                        + this.insideLevel);
+                    throw new XMLStreamException("insideLevel != 0: " + this.insideLevel);
                 }
 
                 this.inside = true;
@@ -148,7 +140,8 @@ public class MultipleExtractor2 extends DefaultHandler {
                     final Map<String, Object> component;
                     if (components.containsKey(this.componentId)) {
                         component = (HashMap) components.get(this.componentId);
-                    } else {
+                    }
+                    else {
                         component = new HashMap<String, Object>();
                         components.put(this.componentId, component);
                     }
@@ -157,8 +150,7 @@ public class MultipleExtractor2 extends DefaultHandler {
                         component.put(elementName, out);
                     }
                     else {
-                        final String attributeValue =
-                            getAttributeValue(element, null, attributeName);
+                        final String attributeValue = getAttributeValue(element, null, attributeName);
                         if ("md-record".equals(elementName)) {
                             Map<String, OutputStream> mdRecords = components.get(this.components);
                             if (mdRecords == null) {
@@ -177,8 +169,7 @@ public class MultipleExtractor2 extends DefaultHandler {
                         outputStreams.put(elementName, out);
                     }
                     else {
-                        final String attributeValue =
-                            getAttributeValue(element, null, attributeName);
+                        final String attributeValue = getAttributeValue(element, null, attributeName);
                         if ("md-record".equals(elementName)) {
                             if (this.metadata == null) {
                                 this.metadata = new HashMap<String, OutputStream>();
@@ -208,8 +199,7 @@ public class MultipleExtractor2 extends DefaultHandler {
                 }
             }
 
-            if (!("md-record".equals(elementName) && paths.containsKey(parser
-                .getCurPath()))) {
+            if (!("md-record".equals(elementName) && paths.containsKey(parser.getCurPath()))) {
                 writer.writeStartElement(element.getNamespace(), elementName);
             }
             final int attCount = element.getAttributeCount();
@@ -220,10 +210,8 @@ public class MultipleExtractor2 extends DefaultHandler {
                     // Prefix is not null. (FRS)
                     writer.setPrefix(curAtt.getPrefix(), namespace);
                 }
-                if (!("md-record".equals(elementName) && paths
-                    .containsKey(parser.getCurPath()))) {
-                    writer.writeAttribute(namespace, curAtt.getLocalName(),
-                        curAtt.getValue());
+                if (!("md-record".equals(elementName) && paths.containsKey(parser.getCurPath()))) {
+                    writer.writeAttribute(namespace, curAtt.getLocalName(), curAtt.getValue());
                 }
             }
             this.insideLevel++;
@@ -248,8 +236,7 @@ public class MultipleExtractor2 extends DefaultHandler {
         }
         if (this.inside) {
             this.insideLevel--;
-            if (this.insideLevel > 0
-                || this.insideLevel == 0 && !"md-record".equals(theName)) {
+            if (this.insideLevel > 0 || this.insideLevel == 0 && !"md-record".equals(theName)) {
                 writer.writeEndElement();
             }
 
@@ -264,8 +251,7 @@ public class MultipleExtractor2 extends DefaultHandler {
     }
 
     @Override
-    public String characters(final String data, final StartElement element)
-        throws XMLStreamException {
+    public String characters(final String data, final StartElement element) throws XMLStreamException {
 
         if (this.inside) {
             writer.writeCharacters(data);
@@ -274,24 +260,20 @@ public class MultipleExtractor2 extends DefaultHandler {
     }
 
     /**
-     * Creates a new initialized writer.<br/>
-     * The writer's prefixes are initialized to the values of the prefixMap.
-     * 
-     * @param out
+     * Creates a new initialized writer.<br/> The writer's prefixes are initialized to the values of the prefixMap.
+     *
      * @return Returns the initialized <code>XmlStreamWriter</code>X instance.
-     * @throws XMLStreamException
      */
-    private XMLStreamWriter newInitializedWriter(final ByteArrayOutputStream out)
-        throws XMLStreamException {
+    private XMLStreamWriter newInitializedWriter(final ByteArrayOutputStream out) throws XMLStreamException {
 
-        final XMLStreamWriter writer =
-            XmlUtility.createXmlStreamWriterNamespaceRepairing(out);
+        final XMLStreamWriter writer = XmlUtility.createXmlStreamWriterNamespaceRepairing(out);
         if (this.namespaceMap != null && !namespaceMap.isEmpty()) {
             for (final Entry<String, String> stringStringEntry : namespaceMap.entrySet()) {
                 final String prefix = stringStringEntry.getValue();
                 if (prefix != null) {
                     writer.setPrefix(prefix, stringStringEntry.getKey());
-                } else {
+                }
+                else {
                     writer.setDefaultNamespace(stringStringEntry.getKey());
                 }
             }

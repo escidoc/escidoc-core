@@ -35,47 +35,35 @@ import java.util.Map;
 
 /**
  * Interface of a context foxml renderer.
- * 
+ *
  * @author André Schenk
  */
 public interface ContextFoXmlRendererInterface {
 
     /**
      * Gets the foxml representation of a context.
-     * 
-     * @param values The values of the context.
      *
+     * @param values The values of the context.
      * @return Returns the foxml representation of the context.
      * @throws SystemException Thrown in case of an internal error.
-     *
      */
     String render(final Map<String, Object> values) throws SystemException;
 
     /**
-     * Gets the foxml representation of the <code>RELS-EXT</code> datastream
-     * of a context.
-     * 
+     * Gets the foxml representation of the <code>RELS-EXT</code> datastream of a context.
+     *
      * @param values The values of the context to render.
-     *
-     * @return Returns the foxml representation of the <code>RELS-EXT</code>
-     *         datastream of a context.
+     * @return Returns the foxml representation of the <code>RELS-EXT</code> datastream of a context.
      * @throws WebserverSystemException Thrown in case of an internal error.
-     *
      */
-    String renderRelsExt(final Map<String, Object> values)
-        throws WebserverSystemException;
-    
+    String renderRelsExt(final Map<String, Object> values) throws WebserverSystemException;
+
     /**
-     * Gets the foxml representation of the <code>DC</code> datastream
-     * of a context.
-     * 
+     * Gets the foxml representation of the <code>DC</code> datastream of a context.
+     *
      * @param values The values of the context to render.
-     *
-     * @return Returns the foxml representation of the <code>DC</code>
-     *         datastream of a context.
+     * @return Returns the foxml representation of the <code>DC</code> datastream of a context.
      * @throws WebserverSystemException Thrown in case of an internal error.
-     *
      */
-    String renderDc(final Map<String, Object> values)
-        throws WebserverSystemException;
+    String renderDc(final Map<String, Object> values) throws WebserverSystemException;
 }

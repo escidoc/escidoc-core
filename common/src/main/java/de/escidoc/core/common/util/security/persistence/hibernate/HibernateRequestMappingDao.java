@@ -33,55 +33,39 @@ import java.util.List;
 
 /**
  * Implementation of a request mapping data access objects using hibernate.
- * 
+ *
  * @author Torsten Tetteroo
  */
-public class HibernateRequestMappingDao extends HibernateDaoSupport
-    implements RequestMappingDaoInterface {
+public class HibernateRequestMappingDao extends HibernateDaoSupport implements RequestMappingDaoInterface {
 
     /**
-     * Wrapper of setSessionFactory to enable bean stuff generation for this
-     * bean.
-     * 
-     * @param requestMappingSessionFactory
-     *            The sessionFactory to set.
+     * Wrapper of setSessionFactory to enable bean stuff generation for this bean.
+     *
+     * @param requestMappingSessionFactory The sessionFactory to set.
      */
-    public final void setRequestMappingSessionFactory(
-        final SessionFactory requestMappingSessionFactory) {
+    public final void setRequestMappingSessionFactory(final SessionFactory requestMappingSessionFactory) {
 
         setSessionFactory(requestMappingSessionFactory);
     }
 
-
-
     /**
      * See Interface for functional description.
-     * 
-     * The database tables used are <code>method_mappings</code> and
-     * <code>invocation_mappings</code>.
-     * 
-     * 
-     * @param className
-     * @param methodName
-     * @return
-     * @see RequestMappingDaoInterface#retrieveMethodMappings(String)
-     * 
+     * <p/>
+     * The database tables used are <code>method_mappings</code> and <code>invocation_mappings</code>.
      *
+     * @see RequestMappingDaoInterface#retrieveMethodMappings(String)
      */
     @Override
     @SuppressWarnings("unchecked")
-    public List<MethodMapping> retrieveMethodMappings(
-        final String className, final String methodName) {
+    public List<MethodMapping> retrieveMethodMappings(final String className, final String methodName) {
 
         if (methodName == null) {
             return null;
         }
 
         final DetachedCriteria criteria =
-            DetachedCriteria.forClass(MethodMapping.class).add(
-                Restrictions.eq("className", className)).add(
-                Restrictions.eq("methodName", methodName)).addOrder(
-                Order.desc("execBefore"));
+            DetachedCriteria.forClass(MethodMapping.class).add(Restrictions.eq("className", className)).add(
+                Restrictions.eq("methodName", methodName)).addOrder(Order.desc("execBefore"));
         final List<MethodMapping> methodMappings = getHibernateTemplate().findByCriteria(criteria);
 
         // initialize the invocation mappings (as they are always needed but
@@ -89,11 +73,9 @@ public class HibernateRequestMappingDao extends HibernateDaoSupport
         // does not store this option in the properties file.
         for (final MethodMapping methodMapping : methodMappings) {
             getSession().lock(methodMapping, LockMode.NONE);
-            getHibernateTemplate().initialize(
-                methodMapping.getInvocationMappings());
+            getHibernateTemplate().initialize(methodMapping.getInvocationMappings());
         }
         return methodMappings;
     }
-
 
 }

@@ -35,13 +35,12 @@ import de.escidoc.core.sm.business.vo.database.DatabaseConventionChecker;
 import java.util.Collection;
 
 /**
- * Holds all values needed to execute an sql-statement or to delete/update
- * records in a database-table.
- * 
- * @author Michael Hoppe
+ * Holds all values needed to execute an sql-statement or to delete/update records in a database-table.
  *
+ * @author Michael Hoppe
  */
 public class DatabaseSelectVo {
+
     // selectType also can be 'UPDATE' or 'DELETE'
     private String selectType = Constants.DATABASE_SELECT_TYPE_SELECT;
 
@@ -61,11 +60,9 @@ public class DatabaseSelectVo {
     }
 
     /**
-     * @param additionalWhereGroupVos
-     *            the additionalWhereGroupVos to set
+     * @param additionalWhereGroupVos the additionalWhereGroupVos to set
      */
-    public void setAdditionalWhereGroupVos(
-        final Collection<AdditionalWhereGroupVo> additionalWhereGroupVos) {
+    public void setAdditionalWhereGroupVos(final Collection<AdditionalWhereGroupVo> additionalWhereGroupVos) {
         this.additionalWhereGroupVos = additionalWhereGroupVos;
     }
 
@@ -77,8 +74,7 @@ public class DatabaseSelectVo {
     }
 
     /**
-     * @param rootWhereGroupVo
-     *            the rootWhereGroupVo to set
+     * @param rootWhereGroupVo the rootWhereGroupVo to set
      */
     public void setRootWhereGroupVo(final RootWhereGroupVo rootWhereGroupVo) {
         this.rootWhereGroupVo = rootWhereGroupVo;
@@ -92,8 +88,7 @@ public class DatabaseSelectVo {
     }
 
     /**
-     * @param selectFieldVos
-     *            the selectFieldVos to set
+     * @param selectFieldVos the selectFieldVos to set
      */
     public void setSelectFieldVos(final Collection<SelectFieldVo> selectFieldVos) {
         this.selectFieldVos = selectFieldVos;
@@ -101,7 +96,7 @@ public class DatabaseSelectVo {
 
     /**
      * can be select, update or delete.
-     * 
+     *
      * @return the selectType
      */
     public String getSelectType() {
@@ -110,14 +105,11 @@ public class DatabaseSelectVo {
 
     /**
      * can be select, update or delete.
-     * 
-     * @param selectType
-     *            the selectType to set
-     * @throws SqlDatabaseSystemException
-     *             e
+     *
+     * @param selectType the selectType to set
+     * @throws SqlDatabaseSystemException e
      */
-    public void setSelectType(final String selectType)
-        throws SqlDatabaseSystemException {
+    public void setSelectType(final String selectType) throws SqlDatabaseSystemException {
         if (selectType == null || !selectType.equals(Constants.DATABASE_SELECT_TYPE_SELECT)
             && !selectType.equals(Constants.DATABASE_SELECT_TYPE_UPDATE)
             && !selectType.equals(Constants.DATABASE_SELECT_TYPE_DELETE)) {
@@ -134,12 +126,10 @@ public class DatabaseSelectVo {
     }
 
     /**
-     * @param tableNames
-     *            the tableNames to set
+     * @param tableNames the tableNames to set
      * @throws SqlDatabaseSystemException databaseException
      */
-    public void setTableNames(final Collection<String> tableNames) 
-                                    throws SqlDatabaseSystemException {
+    public void setTableNames(final Collection<String> tableNames) throws SqlDatabaseSystemException {
         for (final String tableName : tableNames) {
             DatabaseConventionChecker.checkName(tableName);
         }

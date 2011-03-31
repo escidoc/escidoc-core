@@ -59,14 +59,13 @@ import java.util.Vector;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Test the retrieve of binary content. These class tests especially the
- * transformation of images with digilib.
- * 
+ * Test the retrieve of binary content. These class tests especially the transformation of images with digilib.
+ *
  * @author Steffen Wagner
- * 
  */
 @RunWith(value = Parameterized.class)
-@Ignore // DigiLib Tests sollen laut Matthias bis auf weiteres deaktiviert werden.
+@Ignore
+// DigiLib Tests sollen laut Matthias bis auf weiteres deaktiviert werden.
 public class ItemRetrieveContentTest extends ContentTestBase {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ItemRetrieveContentTest.class);
@@ -76,8 +75,7 @@ public class ItemRetrieveContentTest extends ContentTestBase {
     private static final String TRANSFORM_SERVICE_DIGILIB = "digilib";
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ItemRetrieveContentTest(final int transport) {
         super(transport);
@@ -85,9 +83,8 @@ public class ItemRetrieveContentTest extends ContentTestBase {
 
     /**
      * Test retrieving the binary content of an Item.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOmRtrEscidocCnt1() throws Exception {
@@ -95,8 +92,7 @@ public class ItemRetrieveContentTest extends ContentTestBase {
         String componentId = "escidoc:ex6";
         String contentType = "image/jpeg";
 
-        File temp =
-            retrieveContentFromFramework(itemId, componentId, contentType);
+        File temp = retrieveContentFromFramework(itemId, componentId, contentType);
 
         // check file size -----------------------------------------------------
         ImageProperties imProp = new ImageProperties(temp);
@@ -107,10 +103,8 @@ public class ItemRetrieveContentTest extends ContentTestBase {
 
         // Asserts -------------------------------------------------------------
         ImageProperties imPropRef = new ImageProperties(tempRef);
-        assertEquals("Width of images not differ ", imProp.getImageWidth(),
-            imPropRef.getImageWidth());
-        assertEquals("Height of images not differ ", imProp.getImageHeight(),
-            imPropRef.getImageHeight());
+        assertEquals("Width of images not differ ", imProp.getImageWidth(), imPropRef.getImageWidth());
+        assertEquals("Height of images not differ ", imProp.getImageHeight(), imPropRef.getImageHeight());
 
         removeSilent(temp);
         removeSilent(tempRef);
@@ -118,9 +112,8 @@ public class ItemRetrieveContentTest extends ContentTestBase {
 
     /**
      * Test retrieving the binary content of an item (multiple times).
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOmRtrEscidocCnt2() throws Exception {
@@ -132,9 +125,8 @@ public class ItemRetrieveContentTest extends ContentTestBase {
 
     /**
      * Test retrieving the binary content of an Item.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOmRtrEscidocCnt3() throws Exception {
@@ -143,9 +135,7 @@ public class ItemRetrieveContentTest extends ContentTestBase {
         // HashMap<String, File> itemComponent = new HashMap<String, File>();
 
         // add content (multiple images) to item
-        HashMap<URL, File> stagingContent =
-            uploadDirAsContent("/src/java" + TEMPLATE_ITEM_PATH + "/content/",
-                5);
+        HashMap<URL, File> stagingContent = uploadDirAsContent("/src/java" + TEMPLATE_ITEM_PATH + "/content/", 5);
 
         Iterator<URL> it = stagingContent.keySet().iterator();
         while (it.hasNext()) {
@@ -165,12 +155,11 @@ public class ItemRetrieveContentTest extends ContentTestBase {
 
         // create Item
         String xmlData =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
-                + "/" + getTransport(false), "escidoc_item_create_content.xml");
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                "escidoc_item_create_content.xml");
         Document itemDoc = EscidocRestSoapTestBase.getDocument(xmlData);
 
-        Document newItem =
-            (Document) substitute(itemDoc, "/item/components", "######");
+        Document newItem = (Document) substitute(itemDoc, "/item/components", "######");
         xmlData = toString(newItem, false);
         xmlData = xmlData.replace("######", components);
         String itemXml = create(xmlData);
@@ -189,9 +178,8 @@ public class ItemRetrieveContentTest extends ContentTestBase {
         while (compIt.hasNext()) {
             String compo = compIt.next();
             page +=
-                "<img src=\"http://localhost:8080/ir/item/" + itemId
-                    + "/components/component/" + compo + "/content\" alt=\""
-                    + compo + "\" border=\"1\" />\n";
+                "<img src=\"http://localhost:8080/ir/item/" + itemId + "/components/component/" + compo
+                    + "/content\" alt=\"" + compo + "\" border=\"1\" />\n";
         }
         page += "</body>\n";
 
@@ -206,8 +194,7 @@ public class ItemRetrieveContentTest extends ContentTestBase {
         while (compIt.hasNext()) {
             String componentId = compIt.next();
             // Retrieve content in random order
-            File temp =
-                retrieveContentFromFramework(itemId, componentId, contentType);
+            File temp = retrieveContentFromFramework(itemId, componentId, contentType);
             //
             // // check file size
             // -----------------------------------------------------
@@ -235,24 +222,20 @@ public class ItemRetrieveContentTest extends ContentTestBase {
 
     /**
      * Test retrieving the transformed binary content of an Item.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOmRtrEscidocDigilibCnt3() throws Exception {
 
-        String transformParams =
-            "ws=1.0&wy=0.8&wh=1.8&ww=0.3&wx=0.1&dw=600&dh=300";
+        String transformParams = "ws=1.0&wy=0.8&wh=1.8&ww=0.3&wx=0.1&dw=600&dh=300";
         String itemId = "escidoc:ex5";
         String componentId = "escidoc:ex6";
 
         String tempFileName = "testBinaryData.img";
         String tempRefFileName = "testBinaryData-ref.img";
 
-        BinaryContent ins =
-            retrieveBinaryContent(itemId, componentId, "digilib", "?"
-                + transformParams);
+        BinaryContent ins = retrieveBinaryContent(itemId, componentId, "digilib", "?" + transformParams);
 
         assertEquals("image/jpeg", ins.getMimeType());
 
@@ -272,16 +255,12 @@ public class ItemRetrieveContentTest extends ContentTestBase {
 
         // compare it with direct request from Repository ----------------------
         String fedoraUrl =
-        	PropertiesProvider.getInstance()
-        	    .getProperty(PropertiesProvider.FEDORA_URL)
-                + "/get/" + componentId + "/content";
+            PropertiesProvider.getInstance().getProperty(PropertiesProvider.FEDORA_URL) + "/get/" + componentId
+                + "/content";
 
         String auth =
-        	PropertiesProvider.getInstance()
-        	    .getProperty(PropertiesProvider.FEDORA_USER)
-                + ":"
-                + PropertiesProvider.getInstance()
-                    .getProperty(PropertiesProvider.FEDORA_PASSWORD);
+            PropertiesProvider.getInstance().getProperty(PropertiesProvider.FEDORA_USER) + ":"
+                + PropertiesProvider.getInstance().getProperty(PropertiesProvider.FEDORA_PASSWORD);
 
         URL url = new URL(fedoraUrl);
 
@@ -301,10 +280,8 @@ public class ItemRetrieveContentTest extends ContentTestBase {
         ImageProperties imPropRef = new ImageProperties(tempRef);
 
         // Asserts -------------------------------------------------------------
-        assertNotEquals("Width of images not differ ", imProp.getImageWidth(),
-            imPropRef.getImageWidth());
-        assertNotEquals("Height of images not differ ",
-            imProp.getImageHeight(), imPropRef.getImageHeight());
+        assertNotEquals("Width of images not differ ", imProp.getImageWidth(), imPropRef.getImageWidth());
+        assertNotEquals("Height of images not differ ", imProp.getImageHeight(), imPropRef.getImageHeight());
 
         // cleanup -------------------------------------------------------------
         if (temp.exists() && !temp.delete()) {
@@ -324,11 +301,9 @@ public class ItemRetrieveContentTest extends ContentTestBase {
     }
 
     /**
-     * Test retrieving the transformed binary content of an item (multiple
-     * times).
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test retrieving the transformed binary content of an item (multiple times).
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOmRtrEscidocDigilibCnt4() throws Exception {
@@ -339,17 +314,14 @@ public class ItemRetrieveContentTest extends ContentTestBase {
     }
 
     /**
-     * Test the retrive of transformed binary content from the eSciDoc framework
-     * through another client implementation.
-     * 
-     * @throws Exception
-     *             Thrown if anythings failed.
+     * Test the retrive of transformed binary content from the eSciDoc framework through another client implementation.
+     *
+     * @throws Exception Thrown if anythings failed.
      */
     @Test
     public void testOmRtrCntJakarta01() throws Exception {
 
-        String transformParams =
-            "ws=1.0&wy=0.8&wh=1.8&ww=0.3&wx=0.1&dw=600&dh=300";
+        String transformParams = "ws=1.0&wy=0.8&wh=1.8&ww=0.3&wx=0.1&dw=600&dh=300";
         String itemId = "escidoc:ex5";
         String componentId = "escidoc:ex6";
 
@@ -360,30 +332,25 @@ public class ItemRetrieveContentTest extends ContentTestBase {
         // retrieveBinaryContent(itemId, componentId, "digilib", "?"
         // + transformParams);
         String href =
-            "http://" + PropertiesProvider.getInstance()
-                    .getProperty("server.name") + ":"
-                + PropertiesProvider.getInstance()
-                    .getProperty("server.port") + "/" + itemId
-                + "/components/component" + componentId + "/content/digilib?"
-                + transformParams;
+            "http://" + PropertiesProvider.getInstance().getProperty("server.name") + ":"
+                + PropertiesProvider.getInstance().getProperty("server.port") + "/" + itemId + "/components/component"
+                + componentId + "/content/digilib?" + transformParams;
 
         DefaultHttpClient httpClient = new DefaultHttpClient();
         HttpGet get = new HttpGet(href);
-        get.setHeader("Cookie", "escidocCookie="
-            + PWCallback.DEFAULT_HANDLE);
+        get.setHeader("Cookie", "escidocCookie=" + PWCallback.DEFAULT_HANDLE);
         HttpResponse httpRes = httpClient.execute(get);
 
         assertEquals("image/jpeg", get.getFirstHeader("Content-type"));
 
         // write out file
         File temp = File.createTempFile(tempFileName, "tmp");
-        ByteArrayOutputStream barray =
-            readBinaryContent(httpRes.getEntity().getContent());
+        ByteArrayOutputStream barray = readBinaryContent(httpRes.getEntity().getContent());
         FileOutputStream fos = new FileOutputStream(temp);
         fos.write(barray.toByteArray());
         fos.flush();
         fos.close();
-      
+
         // check file size -----------------------------------------------------
         ImageProperties imProp = new ImageProperties(temp);
         assertEquals("Image width ", 295, imProp.getImageWidth());
@@ -391,16 +358,12 @@ public class ItemRetrieveContentTest extends ContentTestBase {
 
         // compare it with direct request from Repository ----------------------
         String fedoraUrl =
-        	PropertiesProvider.getInstance()
-        	    .getProperty(PropertiesProvider.FEDORA_URL)
-                + "/get/" + componentId + "/content";
+            PropertiesProvider.getInstance().getProperty(PropertiesProvider.FEDORA_URL) + "/get/" + componentId
+                + "/content";
 
         String auth =
-        	PropertiesProvider.getInstance()
-        	    .getProperty(PropertiesProvider.FEDORA_USER)
-                + ":"
-                + PropertiesProvider.getInstance()
-                    .getProperty(PropertiesProvider.FEDORA_PASSWORD);
+            PropertiesProvider.getInstance().getProperty(PropertiesProvider.FEDORA_USER) + ":"
+                + PropertiesProvider.getInstance().getProperty(PropertiesProvider.FEDORA_PASSWORD);
 
         URL url = new URL(fedoraUrl);
 
@@ -420,10 +383,8 @@ public class ItemRetrieveContentTest extends ContentTestBase {
         ImageProperties imPropRef = new ImageProperties(tempRef);
 
         // Asserts -------------------------------------------------------------
-        assertNotEquals("Width of images not differ ", imProp.getImageWidth(),
-            imPropRef.getImageWidth());
-        assertNotEquals("Height of images not differ ",
-            imProp.getImageHeight(), imPropRef.getImageHeight());
+        assertNotEquals("Width of images not differ ", imProp.getImageWidth(), imPropRef.getImageWidth());
+        assertNotEquals("Height of images not differ ", imProp.getImageHeight(), imPropRef.getImageHeight());
 
         // cleanup -------------------------------------------------------------
         if (temp.exists() && !temp.delete()) {
@@ -444,23 +405,19 @@ public class ItemRetrieveContentTest extends ContentTestBase {
 
     /**
      * Test retrieving content from digilib.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testDigilibRtrCnt1() throws Exception {
 
-        String transformParams =
-            "ws=1.0&wy=0.8&wh=1.8&ww=0.3&wx=0.1&dw=600&dh=300";
+        String transformParams = "ws=1.0&wy=0.8&wh=1.8&ww=0.3&wx=0.1&dw=600&dh=300";
         String componentId = "escidoc:ex6";
 
         String tempFileName = "testBinaryData.img";
 
         // ---------------------------------------------------------------------
-        URL url =
-            getDigilibUrl(componentId, null, TRANSFORM_SERVICE_DIGILIB,
-                transformParams);
+        URL url = getDigilibUrl(componentId, null, TRANSFORM_SERVICE_DIGILIB, transformParams);
 
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
@@ -468,8 +425,7 @@ public class ItemRetrieveContentTest extends ContentTestBase {
 
         if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
             String responseMessage =
-                "Retrieving content from transformation service failed. "
-                    + conn.getResponseMessage();
+                "Retrieving content from transformation service failed. " + conn.getResponseMessage();
             LOGGER.info(responseMessage);
             throw new Exception(responseMessage);
         }
@@ -504,9 +460,8 @@ public class ItemRetrieveContentTest extends ContentTestBase {
 
     /**
      * Test retrieving content from digilib (multiple times).
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testDigilibRtrCnt2() throws Exception {
@@ -518,9 +473,8 @@ public class ItemRetrieveContentTest extends ContentTestBase {
 
     /**
      * Test retrieving content from digilib.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testFedoraRtrCnt1() throws Exception {
@@ -535,15 +489,13 @@ public class ItemRetrieveContentTest extends ContentTestBase {
         HttpURLConnection conn = (HttpURLConnection) fedoraUrl.openConnection();
         conn.setRequestMethod("GET");
         conn.setDoInput(true);
-        conn.setRequestProperty("Authorization",
-            userNamePasswordBase64(userinfo));
+        conn.setRequestProperty("Authorization", userNamePasswordBase64(userinfo));
         conn.setUseCaches(false);
         conn.connect();
 
         if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
             String responseMessage =
-                "Retrieving content from transformation service failed. "
-                    + conn.getResponseMessage();
+                "Retrieving content from transformation service failed. " + conn.getResponseMessage();
             LOGGER.info(responseMessage);
             throw new Exception(responseMessage);
         }
@@ -579,9 +531,8 @@ public class ItemRetrieveContentTest extends ContentTestBase {
 
     /**
      * Test retrieving the binary content from Fedora (multiple times).
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testFedoraRtrCnt2() throws Exception {

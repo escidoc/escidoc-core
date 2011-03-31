@@ -34,9 +34,9 @@ import org.springframework.jmx.export.annotation.ManagedOperation;
 import org.springframework.jmx.export.annotation.ManagedResource;
 
 /**
- * IndexingErrorProcessor. Reads the messages that were written into the
- * IndexingError Logfile and sends them via email to the sb.administrator.email
- * 
+ * IndexingErrorProcessor. Reads the messages that were written into the IndexingError Logfile and sends them via email
+ * to the sb.administrator.email
+ *
  * @author Michael Hoppe, Torsten Tetteroo
  */
 @ManagedResource(objectName = "eSciDocCore:name=IndexingErrorProcessorService", description = "Reads the messages that were written into the IndexingError Logfile and sends them via email to the sb.administrator.email.", log = true, logFile = "jmx.log", currencyTimeLimit = 15)
@@ -46,8 +46,6 @@ public class SpringIndexingErrorProcessorService {
 
     /**
      * Process indexing error queue by calling processor.
-     * 
-     * @sb
      */
     @ManagedOperation(description = "Process indexing error queue.")
     public void execute() {
@@ -57,9 +55,8 @@ public class SpringIndexingErrorProcessorService {
 
     /**
      * Injects the {@link ErrorQueueProcessor} to use.
-     * 
-     * @param processor
-     *            The {@link ErrorQueueProcessor}.
+     *
+     * @param processor The {@link ErrorQueueProcessor}.
      */
     public void setProcessor(final ErrorQueueProcessor processor) {
         this.processor = processor;

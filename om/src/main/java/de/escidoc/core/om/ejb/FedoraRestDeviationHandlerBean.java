@@ -25,16 +25,19 @@ import java.util.Map;
 public class FedoraRestDeviationHandlerBean implements SessionBean {
 
     FedoraRestDeviationHandlerInterface service;
+
     SessionContext sessionCtx;
+
     private static final Logger LOGGER = LoggerFactory.getLogger(FedoraRestDeviationHandlerBean.class);
 
     public void ejbCreate() throws CreateException {
         try {
             final BeanFactoryLocator beanFactoryLocator = SingletonBeanFactoryLocator.getInstance();
             final BeanFactory factory =
-                    beanFactoryLocator.useBeanFactory("FedoraRestDeviationHandler.spring.ejb.context").getFactory();
+                beanFactoryLocator.useBeanFactory("FedoraRestDeviationHandler.spring.ejb.context").getFactory();
             this.service = (FedoraRestDeviationHandlerInterface) factory.getBean("service.FedoraRestDeviationHandler");
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             LOGGER.error("ejbCreate(): Exception FedoraRestDeviationHandlerComponent: " + e);
             throw new CreateException(e.getMessage());
         }
@@ -55,116 +58,115 @@ public class FedoraRestDeviationHandlerBean implements SessionBean {
 
     }
 
-    public EscidocBinaryContent getDatastreamDissemination(final String pid,
-                                                                                                  final String dsID,
-                                                                                                  final Map parameters,
-                                                                                                  final SecurityContext securityContext)
-            throws Exception {
+    public EscidocBinaryContent getDatastreamDissemination(
+        final String pid, final String dsID, final Map parameters, final SecurityContext securityContext)
+        throws Exception {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.getDatastreamDissemination(pid, dsID, parameters);
     }
 
-    public EscidocBinaryContent getDatastreamDissemination(final String pid,
-                                                                                                  final String dsID,
-                                                                                                  final Map parameters,
-                                                                                                  final String authHandle,
-                                                                                                  final Boolean restAccess)
-            throws Exception {
+    public EscidocBinaryContent getDatastreamDissemination(
+        final String pid, final String dsID, final Map parameters, final String authHandle, final Boolean restAccess)
+        throws Exception {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.getDatastreamDissemination(pid, dsID, parameters);
     }
 
-    public String export(final String pid, final Map parameters,
-                                   final SecurityContext securityContext)
-            throws Exception {
+    public String export(final String pid, final Map parameters, final SecurityContext securityContext)
+        throws Exception {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.export(pid, parameters);
     }
 
-    public String export(final String pid, final Map parameters, final String authHandle,
-                                   final Boolean restAccess) throws Exception {
+    public String export(final String pid, final Map parameters, final String authHandle, final Boolean restAccess)
+        throws Exception {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.export(pid, parameters);
     }
 
-    public void cache(final String pid, final String xml,
-                      final SecurityContext securityContext) throws Exception {
+    public void cache(final String pid, final String xml, final SecurityContext securityContext) throws Exception {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         service.cache(pid, xml);
     }
 
-    public void cache(final String pid, final String xml, final String authHandle,
-                      final Boolean restAccess) throws Exception {
+    public void cache(final String pid, final String xml, final String authHandle, final Boolean restAccess)
+        throws Exception {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         service.cache(pid, xml);
     }
 
-    public void removeFromCache(final String pid,
-                                final SecurityContext securityContext)
-            throws Exception {
+    public void removeFromCache(final String pid, final SecurityContext securityContext) throws Exception {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         service.removeFromCache(pid);
     }
 
-    public void removeFromCache(final String pid, final String authHandle, final Boolean restAccess)
-            throws Exception {
+    public void removeFromCache(final String pid, final String authHandle, final Boolean restAccess) throws Exception {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         service.removeFromCache(pid);
     }
 
-    public void replaceInCache(final String pid, final String xml,
-                               final SecurityContext securityContext)
-            throws Exception {
+    public void replaceInCache(final String pid, final String xml, final SecurityContext securityContext)
+        throws Exception {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         service.replaceInCache(pid, xml);
     }
 
-    public void replaceInCache(final String pid, final String xml, final String authHandle,
-                               final Boolean restAccess) throws Exception {
+    public void replaceInCache(final String pid, final String xml, final String authHandle, final Boolean restAccess)
+        throws Exception {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         service.replaceInCache(pid, xml);

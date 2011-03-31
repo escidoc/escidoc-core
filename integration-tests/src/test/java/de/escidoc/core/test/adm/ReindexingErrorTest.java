@@ -35,21 +35,17 @@ import org.junit.runners.Parameterized;
 
 /**
  * Test suite for the reindex method of the admin tool.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 @RunWith(value = Parameterized.class)
 public class ReindexingErrorTest extends AdminToolTestBase {
 
     /**
      * The constructor.
-     * 
-     * @param transport
-     *            The transport identifier.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param transport The transport identifier.
+     * @throws Exception If anything fails.
      */
     public ReindexingErrorTest(final int transport) throws Exception {
         super(transport);
@@ -57,9 +53,8 @@ public class ReindexingErrorTest extends AdminToolTestBase {
 
     /**
      * Test reindexing with error.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testReindexingError() throws Exception {
@@ -67,5 +62,5 @@ public class ReindexingErrorTest extends AdminToolTestBase {
             reindex(false, "errorTest");
         }
     }
-    
+
 }

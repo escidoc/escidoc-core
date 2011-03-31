@@ -43,10 +43,13 @@ import java.net.URL;
 public class HttpClientBuilderImpl extends HttpClientBuilder {
 
     private static final int MAX_TOTAL_CONNECTIONS = 90;
+
     private static final int MAX_CONNECTIONS_PER_HOST = 30;
 
     private DefaultHttpClient httpClient;
+
     private int maxTotalConnections = MAX_TOTAL_CONNECTIONS;
+
     private int maxConnectionsPerHost = MAX_CONNECTIONS_PER_HOST;
 
     public HttpClientBuilderImpl() {
@@ -72,11 +75,13 @@ public class HttpClientBuilderImpl extends HttpClientBuilder {
     }
 
     @Override
-    public HttpClientBuilder withUsernamePasswordCredentials(final String urlString, final String username, final String password) {
+    public HttpClientBuilder withUsernamePasswordCredentials(
+        final String urlString, final String username, final String password) {
         final URL url;
         try {
             url = new URL(urlString);
-        } catch (final MalformedURLException e) {
+        }
+        catch (final MalformedURLException e) {
             throw new IllegalArgumentException("Invalid url '" + urlString + "'.", e);
         }
         final AuthScope authScope = new AuthScope(url.getHost(), AuthScope.ANY_PORT, AuthScope.ANY_REALM);
@@ -93,7 +98,8 @@ public class HttpClientBuilderImpl extends HttpClientBuilder {
         final Scheme httpSchema = new Scheme("http", PlainSocketFactory.getSocketFactory(), 80);
         final SchemeRegistry schemaRegistry = new SchemeRegistry();
         schemaRegistry.register(httpSchema);
-        final ClientConnectionManager clientConnectionManager = new ThreadSafeClientConnManager(httpParams, schemaRegistry);
+        final ClientConnectionManager clientConnectionManager =
+            new ThreadSafeClientConnManager(httpParams, schemaRegistry);
         this.httpClient = new DefaultHttpClient(clientConnectionManager, httpParams);
         // don't wait for auth request
         this.httpClient.addRequestInterceptor(new PreemtiveAuthHttpRequestInterceptor(), 0);

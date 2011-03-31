@@ -36,30 +36,26 @@ import java.util.regex.Pattern;
 
 /**
  * Object that holds Shibboleth-Userdata.
- * 
- * @author Michael Hoppe
  *
+ * @author Michael Hoppe
  */
 public class ShibbolethUser {
 
-    private final Map<String, List<String>> stringAttributes =
-        new HashMap<String, List<String>>();
+    private final Map<String, List<String>> stringAttributes = new HashMap<String, List<String>>();
 
-    public static final Pattern DISPOSABLE_HEADER_PATTERN = 
+    public static final Pattern DISPOSABLE_HEADER_PATTERN =
         Pattern.compile("host|user-agent|accept|accept-.*|Keep-Alive"
-                + "|connection|referer|cookie|Shib-.*|REMOTE_USER");
-    
+            + "|connection|referer|cookie|Shib-.*|REMOTE_USER");
+
     private String loginName;
 
     private String name;
 
     /**
      * Adds an attribute to the HashMap of stringAttributes.
-     * 
-     * @param attName name of attribute
-     * @param value value of attribute
-     * 
      *
+     * @param attName name of attribute
+     * @param value   value of attribute
      */
     public void addStringAttribute(final String attName, final String value) {
         if (stringAttributes.get(attName) == null) {
@@ -74,10 +70,10 @@ public class ShibbolethUser {
     public Map<String, List<String>> getStringAttributes() {
         return this.stringAttributes;
     }
-    
+
     /**
      * Returns the value of the attribute with the given name.
-     * 
+     *
      * @param attName name of the attribute.
      * @return one attribute with given name
      */
@@ -112,5 +108,5 @@ public class ShibbolethUser {
     public void setName(final String name) {
         this.name = name;
     }
-    
+
 }

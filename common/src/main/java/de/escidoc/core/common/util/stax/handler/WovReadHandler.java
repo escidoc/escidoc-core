@@ -38,12 +38,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Read all (currently used) values from the Whole Object Versioning data
- * stream.
- * 
- * FIXME replace the key-names in the propertiesValueMap (versionData) to
- * constants from TripleStoreUtility to get a constant value mapping.
- * 
+ * Read all (currently used) values from the Whole Object Versioning data stream.
+ * <p/>
+ * FIXME replace the key-names in the propertiesValueMap (versionData) to constants from TripleStoreUtility to get a
+ * constant value mapping.
  */
 public class WovReadHandler extends DefaultHandler {
 
@@ -62,8 +60,8 @@ public class WovReadHandler extends DefaultHandler {
     private boolean isParsed;
 
     /**
-     * Values of the certain version. If the certain version is the latest
-     * version, the are all latest version values set also.
+     * Values of the certain version. If the certain version is the latest version, the are all latest version values
+     * set also.
      */
     private final Map<String, String> versionData = new HashMap<String, String>();
 
@@ -75,16 +73,12 @@ public class WovReadHandler extends DefaultHandler {
 
     /**
      * WOV Read Handler.
-     * 
-     * @param parser
-     *            Parser.
-     * @param versionNumber
-     *            The number of the object version.
-     * @throws WebserverSystemException
-     *             Thrown in case of internal error.
+     *
+     * @param parser        Parser.
+     * @param versionNumber The number of the object version.
+     * @throws WebserverSystemException Thrown in case of internal error.
      */
-    public WovReadHandler(final StaxParser parser, final String versionNumber)
-        throws WebserverSystemException {
+    public WovReadHandler(final StaxParser parser, final String versionNumber) throws WebserverSystemException {
 
         this.parser = parser;
         this.versionId = versionNumber;
@@ -92,21 +86,18 @@ public class WovReadHandler extends DefaultHandler {
 
     /**
      * WOV Read Handler.
-     * 
-     * @param parser
-     *            Parser.
-     * @throws WebserverSystemException
-     *             Thrown in case of internal error.
+     *
+     * @param parser Parser.
+     * @throws WebserverSystemException Thrown in case of internal error.
      */
-    public WovReadHandler(final StaxParser parser)
-        throws WebserverSystemException {
+    public WovReadHandler(final StaxParser parser) throws WebserverSystemException {
 
         this.parser = parser;
     }
 
     /**
      * Get version data.
-     * 
+     *
      * @return version data
      */
     public Map<String, String> getVersionData() {
@@ -114,9 +105,8 @@ public class WovReadHandler extends DefaultHandler {
     }
 
     @Override
-    public StartElement startElement(final StartElement element)
-        throws IntegritySystemException {
-        if (! this.isParsed) {
+    public StartElement startElement(final StartElement element) throws IntegritySystemException {
+        if (!this.isParsed) {
             if (ELEMENT_PATH.equals(parser.getCurPath())) {
                 this.inside = true;
                 this.insideLevel++;
@@ -127,12 +117,10 @@ public class WovReadHandler extends DefaultHandler {
                         this.inCertainVersion = true;
                         try {
                             final String versionCreatedDate = element.getAttribute(null, "timestamp").getValue();
-                            versionData.put(
-                                PropertyMapKeys.CURRENT_VERSION_VERSION_DATE, versionCreatedDate);
+                            versionData.put(PropertyMapKeys.CURRENT_VERSION_VERSION_DATE, versionCreatedDate);
                         }
                         catch (final NoSuchAttributeException e) {
-                            throw new IntegritySystemException(
-                                "Version entry has no timestamp.", e);
+                            throw new IntegritySystemException("Version entry has no timestamp.", e);
                         }
                     }
                     else {
@@ -162,7 +150,7 @@ public class WovReadHandler extends DefaultHandler {
 
     @Override
     public EndElement endElement(final EndElement element) {
-        if (! this.isParsed && this.inside) {
+        if (!this.isParsed && this.inside) {
             this.insideLevel--;
 
             if (this.insideLevel == 0) {
@@ -184,10 +172,10 @@ public class WovReadHandler extends DefaultHandler {
     }
 
     @Override
-    public String characters(final String s, final StartElement element)
-        throws IntegritySystemException, XmlParserSystemException {
+    public String characters(final String s, final StartElement element) throws IntegritySystemException,
+        XmlParserSystemException {
 
-        if (! this.isParsed) {
+        if (!this.isParsed) {
             final String theName = element.getLocalName();
             if (this.certainVersionIsLatestVersion || this.inLatestVersion) {
                 setLatestVersionValues(theName, s, element);
@@ -202,18 +190,12 @@ public class WovReadHandler extends DefaultHandler {
     }
 
     /**
-     * 
-     * @param theName
-     *            The element name
-     * @param s
-     *            The element value
-     * @param element
-     *            The element
-     * @throws IntegritySystemException
-     *             Thrown if required values are missed.
+     * @param theName The element name
+     * @param s       The element value
+     * @param element The element
+     * @throws IntegritySystemException Thrown if required values are missed.
      */
-    private void setLatestVersionValues(
-        final String theName, final String s, final StartElement element)
+    private void setLatestVersionValues(final String theName, final String s, final StartElement element)
         throws IntegritySystemException {
 
         if (theName.equals(Elements.ELEMENT_WOV_EVENT_DATE)) {
@@ -229,56 +211,43 @@ public class WovReadHandler extends DefaultHandler {
             versionData.put(PropertyMapKeys.LATEST_VERSION_VERSION_STATUS, s);
         }
         else if (theName.equals(Elements.ELEMENT_WOV_VERSION_COMMENT)) {
-            versionData.put(PropertyMapKeys.LATEST_VERSION_COMMENT, XmlUtility
-                .escapeForbiddenXmlCharacters(s));
+            versionData.put(PropertyMapKeys.LATEST_VERSION_COMMENT, XmlUtility.escapeForbiddenXmlCharacters(s));
         }
         else if (theName.equals(Elements.ELEMENT_WOV_VERSION_PID)) {
             versionData.put(PropertyMapKeys.LATEST_VERSION_PID, s);
         }
         else if (this.curEventDate != null
-            && this.curEventDate.equals(versionData
-                .get(PropertyMapKeys.LATEST_VERSION_DATE))) {
+            && this.curEventDate.equals(versionData.get(PropertyMapKeys.LATEST_VERSION_DATE))) {
             // found user in event related to version by timestamp
             // retrievable are
             // TODO
             if (theName.equals(Elements.ELEMENT_WOV_EVENT_USER_ID)) {
-                versionData.put(PropertyMapKeys.LATEST_VERSION_MODIFIED_BY_ID,
-                    s);
+                versionData.put(PropertyMapKeys.LATEST_VERSION_MODIFIED_BY_ID, s);
             }
             else if (theName.equals(Elements.ELEMENT_WOV_EVENT_USER)) {
                 try {
-                    versionData.put(
-                        PropertyMapKeys.LATEST_VERSION_MODIFIED_BY_TITLE,
-                        element.getAttribute(Constants.XLINK_NS_URI,
-                            Elements.ATTRIBUTE_XLINK_TITLE).getValue());
-                    versionData.put(
-                        PropertyMapKeys.LATEST_VERSION_MODIFIED_BY_HREF,
-                        element.getAttribute(Constants.XLINK_NS_URI,
-                            Elements.ATTRIBUTE_XLINK_HREF).getValue());
+                    versionData.put(PropertyMapKeys.LATEST_VERSION_MODIFIED_BY_TITLE, element.getAttribute(
+                        Constants.XLINK_NS_URI, Elements.ATTRIBUTE_XLINK_TITLE).getValue());
+                    versionData.put(PropertyMapKeys.LATEST_VERSION_MODIFIED_BY_HREF, element.getAttribute(
+                        Constants.XLINK_NS_URI, Elements.ATTRIBUTE_XLINK_HREF).getValue());
                 }
                 catch (final NoSuchAttributeException e) {
-                    throw new IntegritySystemException(
-                        "Missing xlink attribute in version history event user.", e);
+                    throw new IntegritySystemException("Missing xlink attribute in version history event user.", e);
                 }
             }
         }
     }
 
     /**
-     * Set the values to the version properties map. The current version key
-     * elements are used to be consistent with the TripleStore!
-     * 
-     * @param theName
-     *            The element name
-     * @param s
-     *            The element value
-     * @param element
-     *            The element
-     * @throws IntegritySystemException
-     *             Thrown if required values are missed.
+     * Set the values to the version properties map. The current version key elements are used to be consistent with the
+     * TripleStore!
+     *
+     * @param theName The element name
+     * @param s       The element value
+     * @param element The element
+     * @throws IntegritySystemException Thrown if required values are missed.
      */
-    private void setCurrentVersionValues(
-        final String theName, final String s, final StartElement element)
+    private void setCurrentVersionValues(final String theName, final String s, final StartElement element)
         throws IntegritySystemException {
 
         if (theName.equals(Elements.ELEMENT_WOV_EVENT_DATE)) {
@@ -294,36 +263,29 @@ public class WovReadHandler extends DefaultHandler {
             versionData.put(PropertyMapKeys.CURRENT_VERSION_STATUS, s);
         }
         else if (theName.equals(Elements.ELEMENT_WOV_VERSION_COMMENT)) {
-            versionData.put(PropertyMapKeys.CURRENT_VERSION_VERSION_COMMENT,
-                XmlUtility.escapeForbiddenXmlCharacters(s));
+            versionData
+                .put(PropertyMapKeys.CURRENT_VERSION_VERSION_COMMENT, XmlUtility.escapeForbiddenXmlCharacters(s));
         }
         else if (theName.equals(Elements.ELEMENT_WOV_VERSION_PID)) {
             versionData.put(PropertyMapKeys.CURRENT_VERSION_PID, s);
         }
         else if (this.curEventDate != null
-            && this.curEventDate.equals(versionData
-                .get(PropertyMapKeys.CURRENT_VERSION_VERSION_DATE))) {
+            && this.curEventDate.equals(versionData.get(PropertyMapKeys.CURRENT_VERSION_VERSION_DATE))) {
             // found user in event related to version by timestamp
             // retrievable are
             // TODO
             if (theName.equals(Elements.ELEMENT_WOV_EVENT_USER_ID)) {
-                versionData.put(PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_ID,
-                    s);
+                versionData.put(PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_ID, s);
             }
             else if (theName.equals(Elements.ELEMENT_WOV_EVENT_USER)) {
                 try {
-                    versionData.put(
-                        PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_TITLE,
-                        element.getAttribute(Constants.XLINK_NS_URI,
-                            Elements.ATTRIBUTE_XLINK_TITLE).getValue());
-                    versionData.put(
-                        PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_HREF,
-                        element.getAttribute(Constants.XLINK_NS_URI,
-                            Elements.ATTRIBUTE_XLINK_HREF).getValue());
+                    versionData.put(PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_TITLE, element.getAttribute(
+                        Constants.XLINK_NS_URI, Elements.ATTRIBUTE_XLINK_TITLE).getValue());
+                    versionData.put(PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_HREF, element.getAttribute(
+                        Constants.XLINK_NS_URI, Elements.ATTRIBUTE_XLINK_HREF).getValue());
                 }
                 catch (final NoSuchAttributeException e) {
-                    throw new IntegritySystemException(
-                        "Missing xlink attribute in version history event user.", e);
+                    throw new IntegritySystemException("Missing xlink attribute in version history event user.", e);
                 }
             }
         }
@@ -331,15 +293,12 @@ public class WovReadHandler extends DefaultHandler {
 
     /**
      * Get the objid from element node.
-     * 
-     * @param element
-     *            Element
+     *
+     * @param element Element
      * @return objid
-     * @throws IntegritySystemException
-     *             Thrown if href attribute is missing.
+     * @throws IntegritySystemException Thrown if href attribute is missing.
      */
-    private static String getObjId(final StartElement element)
-        throws IntegritySystemException {
+    private static String getObjId(final StartElement element) throws IntegritySystemException {
         final Attribute objectId;
         try {
             objectId = element.getAttribute(Constants.XLINK_URI, "href");

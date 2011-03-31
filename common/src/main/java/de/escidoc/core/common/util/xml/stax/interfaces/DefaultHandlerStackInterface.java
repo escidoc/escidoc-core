@@ -21,5 +21,6 @@
 package de.escidoc.core.common.util.xml.stax.interfaces;
 
 public interface DefaultHandlerStackInterface {
+
     String getCurPath();
 }

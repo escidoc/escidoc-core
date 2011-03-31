@@ -29,26 +29,23 @@ import java.util.Set;
 
 /**
  * Parses a SRW Scan Response and extracts all Terms.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 public class SrwScanResponseHandler extends DefaultHandler {
 
     private final StaxParser parser;
 
     private final Set<String> terms = new HashSet<String>();
-    
+
     private String lastTerm = "";
-    
-    private static final String TERM_VALUE_PATH = 
-                        "/scanResponse/terms/term/value";
-    
+
+    private static final String TERM_VALUE_PATH = "/scanResponse/terms/term/value";
+
     private int noOfDocumentTerms;
-    
+
     /**
      * Constructor
-     * @param parser
      */
     public SrwScanResponseHandler(final StaxParser parser) {
         this.parser = parser;
@@ -57,31 +54,25 @@ public class SrwScanResponseHandler extends DefaultHandler {
 
     /**
      * Handle the character section of an element.
-     * 
-     * @param s
-     *            The contents of the character section.
-     * @param element
-     *            The element.
+     *
+     * @param s       The contents of the character section.
+     * @param element The element.
      * @return The character section.
-     * @throws Exception
-     *             e
+     * @throws Exception e
      */
     @Override
-    public String characters(
-            final String s,
-            final StartElement element)
-            throws Exception {
+    public String characters(final String s, final StartElement element) throws Exception {
         if (TERM_VALUE_PATH.equals(parser.getCurPath())) {
             terms.add(s.replaceAll("(.*?:.*?):.*", "$1"));
             this.noOfDocumentTerms++;
             this.lastTerm = s;
-        } 
+        }
         return s;
     }
 
     /**
      * Get terms-Set.
-     * 
+     *
      * @return terms set.
      */
     public Set<String> getTerms() {
@@ -90,7 +81,6 @@ public class SrwScanResponseHandler extends DefaultHandler {
 
     /**
      * Reset number of Terms in last document.
-     * 
      */
     public void resetNoOfDocumentTerms() {
         this.noOfDocumentTerms = 0;
@@ -98,7 +88,7 @@ public class SrwScanResponseHandler extends DefaultHandler {
 
     /**
      * Get number of Terms in last document.
-     * 
+     *
      * @return number of Terms in last document.
      */
     public int getNoOfDocumentTerms() {
@@ -107,7 +97,7 @@ public class SrwScanResponseHandler extends DefaultHandler {
 
     /**
      * Get lastTerm.
-     * 
+     *
      * @return last term parsed.
      */
     public String getLastTerm() {

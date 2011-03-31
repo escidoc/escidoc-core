@@ -34,10 +34,6 @@ public class FedoraResourceIdentifierDao implements ResourceIdentifierDao {
 
     /**
      * See Interface for functional description.
-     * 
-     * @param noOfPids
-     * @return
-     * @throws SystemException
      */
     @Override
     public String[] getNextPids(final int noOfPids) throws SystemException {
@@ -47,7 +43,7 @@ public class FedoraResourceIdentifierDao implements ResourceIdentifierDao {
 
     /**
      * Gets the {@link FedoraUtility}.
-     * 
+     *
      * @return FedoraUtility Returns the {@link FedoraUtility} object.
      */
     protected FedoraUtility getFedoraUtility() {
@@ -57,9 +53,8 @@ public class FedoraResourceIdentifierDao implements ResourceIdentifierDao {
 
     /**
      * Injects the {@link FedoraUtility}.
-     * 
-     * @param fedoraUtility
-     *            The {@link FedoraUtility} to set
+     *
+     * @param fedoraUtility The {@link FedoraUtility} to set
      */
     public void setFedoraUtility(final FedoraUtility fedoraUtility) {
 

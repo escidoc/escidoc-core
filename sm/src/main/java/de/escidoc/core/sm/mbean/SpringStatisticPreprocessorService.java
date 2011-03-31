@@ -42,17 +42,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * StatisticPreprocessor. Preprocesses the raw statistic data into
- * aggregation-tables. Gets externally triggered, e.g. by a quartz job.
+ * StatisticPreprocessor. Preprocesses the raw statistic data into aggregation-tables. Gets externally triggered, e.g.
+ * by a quartz job.
  *
  * @author Michael Hoppe, Torsten Tetteroo
- * 
  */
 @ManagedResource(objectName = "eSciDocCore:name=StatisticPreprocessorService", description = "Preprocesses the raw statistic data into aggregation-tables.", log = true, logFile = "jmx.log", currencyTimeLimit = 15)
 public class SpringStatisticPreprocessorService {
 
-    private static final Logger LOGGER =
-        LoggerFactory.getLogger(SpringStatisticPreprocessorService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SpringStatisticPreprocessorService.class);
+
     private StatisticPreprocessor preprocessor;
 
     private static final int HOURS_PER_DAY = 24;
@@ -64,22 +63,19 @@ public class SpringStatisticPreprocessorService {
     private static final int MILLISECONDS_PER_SECOND = 1000;
 
     private static final int MILLISECONDS_PER_DAY =
-        HOURS_PER_DAY * MINUTES_PER_HOUR * SECONDS_PER_MINUTE
-            * MILLISECONDS_PER_SECOND;
+        HOURS_PER_DAY * MINUTES_PER_HOUR * SECONDS_PER_MINUTE * MILLISECONDS_PER_SECOND;
 
     private ErrorMessageHandler errorMessageHandler;
 
     /**
      * Preprocess statistic data by calling preprocessor.
-     * 
+     *
      * @throws Exception e
      */
     @ManagedOperation(description = "Preprocess statistic data.")
     public void execute() throws Exception {
-        final long lastExecutionTime =
-            StatisticPreprocessorServiceTimer.getInstance().getLastExecutionTime();
-        if (lastExecutionTime > 0L
-            && System.currentTimeMillis() - lastExecutionTime < 1000L) {
+        final long lastExecutionTime = StatisticPreprocessorServiceTimer.getInstance().getLastExecutionTime();
+        if (lastExecutionTime > 0L && System.currentTimeMillis() - lastExecutionTime < 1000L) {
             return;
         }
         try {
@@ -88,22 +84,20 @@ public class SpringStatisticPreprocessorService {
             final long time = System.currentTimeMillis() - (long) MILLISECONDS_PER_DAY;
             final Date date = new Date(time);
             preprocessor.execute(date);
-        } catch (final Exception e) {
+        }
+        catch (final Exception e) {
             final Map<String, String> parameters = new HashMap<String, String>();
             parameters.put("message", "preprocessing of statistic-data failed");
-            errorMessageHandler.putErrorMessage(parameters, e,
-                        Constants.STATISTIC_PREPROCESSING_ERROR_LOGFILE);
+            errorMessageHandler.putErrorMessage(parameters, e, Constants.STATISTIC_PREPROCESSING_ERROR_LOGFILE);
             throw e;
         }
     }
 
     /**
      * Preprocess statistic data by calling preprocessor with specific date.
-     * 
-     * @param millies
-     *            day to preprocess
+     *
+     * @param millies day to preprocess
      * @throws Exception e
-     * 
      */
     @ManagedOperation(description = "Preprocess statistic data with date.")
     @ManagedOperationParameter(name = "millies", description = "Day to preprocess in millies.")
@@ -111,20 +105,19 @@ public class SpringStatisticPreprocessorService {
         try {
             final Date date = new Date(millies);
             preprocessor.execute(date);
-        } catch (final Exception e) {
+        }
+        catch (final Exception e) {
             final Map<String, String> parameters = new HashMap<String, String>();
             parameters.put("message", "preprocessing of statistic-data failed");
-            errorMessageHandler.putErrorMessage(parameters, e,
-                        Constants.STATISTIC_PREPROCESSING_ERROR_LOGFILE);
+            errorMessageHandler.putErrorMessage(parameters, e, Constants.STATISTIC_PREPROCESSING_ERROR_LOGFILE);
             throw e;
         }
     }
 
     /**
      * Injects the {@link StatisticPreprocessor} to use.
-     * 
-     * @param preprocessor
-     *            The {@link StatisticPreprocessor}.
+     *
+     * @param preprocessor The {@link StatisticPreprocessor}.
      */
     public void setPreprocessor(final StatisticPreprocessor preprocessor) {
         this.preprocessor = preprocessor;
@@ -132,12 +125,10 @@ public class SpringStatisticPreprocessorService {
 
     /**
      * Setting the errorMessageHandler.
-     * 
-     * @param errorMessageHandler
-     *            The ErrorMessageHandler to set.
+     *
+     * @param errorMessageHandler The ErrorMessageHandler to set.
      */
-    public final void setErrorMessageHandler(
-        final ErrorMessageHandler errorMessageHandler) {
+    public final void setErrorMessageHandler(final ErrorMessageHandler errorMessageHandler) {
         this.errorMessageHandler = errorMessageHandler;
     }
 

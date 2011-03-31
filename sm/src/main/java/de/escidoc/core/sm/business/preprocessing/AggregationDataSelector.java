@@ -56,69 +56,53 @@ import java.util.List;
  * @author Michael Hoppe
  */
 public class AggregationDataSelector {
-    
+
     private DirectDatabaseAccessorInterface dbAccessor;
 
     private SmScopesDaoInterface scopesDao;
-    
-    public List getDataForAggregation(
-            final AggregationDefinition aggregationDefinition, final Date date)
-            throws ScopeNotFoundException, SqlDatabaseSystemException,
-            StatisticPreprocessingSystemException, XmlParserSystemException {
-        if (aggregationDefinition
-                .getAggregationStatisticDataSelectors() != null) {
+
+    public List getDataForAggregation(final AggregationDefinition aggregationDefinition, final Date date)
+        throws ScopeNotFoundException, SqlDatabaseSystemException, StatisticPreprocessingSystemException,
+        XmlParserSystemException {
+        if (aggregationDefinition.getAggregationStatisticDataSelectors() != null) {
             AggregationStatisticDataSelector selector = null;
-            for (final AggregationStatisticDataSelector aggregationStatisticDataSelector
-                    : aggregationDefinition
-                    .getAggregationStatisticDataSelectors()) {
-                if ("statistic-table".equals(aggregationStatisticDataSelector
-                        .getSelectorType())) {
+            for (final AggregationStatisticDataSelector aggregationStatisticDataSelector : aggregationDefinition
+                .getAggregationStatisticDataSelectors()) {
+                if ("statistic-table".equals(aggregationStatisticDataSelector.getSelectorType())) {
                     selector = aggregationStatisticDataSelector;
                 }
             }
-            return selector != null ? dbAccessor
-                    .executeSql(generateStatisticTableSelectVo(
-                            selector,
-                            aggregationDefinition.getScope().getId(),
-                            date)) : null;
-        } else {
+            return selector != null ? dbAccessor.executeSql(generateStatisticTableSelectVo(selector,
+                aggregationDefinition.getScope().getId(), date)) : null;
+        }
+        else {
             return null;
         }
 
     }
 
     /**
-     * Generates DatabaseSelectVo for DirectDatabaseAccessor. Selects
-     * statistic-records from statistic-table, matching scopeId, date and xpath.
-     * 
-     * @param aggregationStatisticDataSelector
-     * @param scopeId
-     *            scopeId
-     * @param date
-     *            date
+     * Generates DatabaseSelectVo for DirectDatabaseAccessor. Selects statistic-records from statistic-table, matching
+     * scopeId, date and xpath.
+     *
+     * @param scopeId scopeId
+     * @param date    date
      * @return DatabaseSelectVo Returns DatabaseSelectVo with recordInfo.
-     * @throws SqlDatabaseSystemException
-     *             e
-     * @throws XmlParserSystemException
-     *             e
+     * @throws SqlDatabaseSystemException e
+     * @throws XmlParserSystemException   e
      * @throws StatisticPreprocessingSystemException
-     *             e
-     * @throws ScopeNotFoundException
-     *             e
-     * 
-     * 
+     *                                    e
+     * @throws ScopeNotFoundException     e
      */
     private DatabaseSelectVo generateStatisticTableSelectVo(
-        final AggregationStatisticDataSelector aggregationStatisticDataSelector, 
-        final String scopeId, final Date date)
-                throws StatisticPreprocessingSystemException, XmlParserSystemException, 
-                ScopeNotFoundException, SqlDatabaseSystemException {
+        final AggregationStatisticDataSelector aggregationStatisticDataSelector, final String scopeId, final Date date)
+        throws StatisticPreprocessingSystemException, XmlParserSystemException, ScopeNotFoundException,
+        SqlDatabaseSystemException {
         String xpath = null;
         if (aggregationStatisticDataSelector.getSelectorType() != null
-                && "statistic-table".equals(aggregationStatisticDataSelector.getSelectorType())
+            && "statistic-table".equals(aggregationStatisticDataSelector.getSelectorType())
             && aggregationStatisticDataSelector.getXpath() != null) {
-            xpath = 
-                aggregationStatisticDataSelector.getXpath();
+            xpath = aggregationStatisticDataSelector.getXpath();
         }
         final DatabaseSelectVo databaseSelectVo = new DatabaseSelectVo();
         databaseSelectVo.setSelectType(Constants.DATABASE_SELECT_TYPE_SELECT);
@@ -131,32 +115,26 @@ public class AggregationDataSelector {
         selectFieldVo.setFieldName(Constants.STATISTIC_DATA_XML_FIELD_NAME);
         selectFieldVos.add(selectFieldVo);
         final SelectFieldVo selectFieldVo1 = new SelectFieldVo();
-        selectFieldVo1.setFieldName(
-        		Constants.STATISTIC_DATA_TIMESTAMP_FIELD_NAME);
+        selectFieldVo1.setFieldName(Constants.STATISTIC_DATA_TIMESTAMP_FIELD_NAME);
         selectFieldVos.add(selectFieldVo1);
         databaseSelectVo.setSelectFieldVos(selectFieldVos);
 
         final RootWhereGroupVo rootWhereGroupVo = new RootWhereGroupVo();
         final RootWhereFieldVo rootWhereFieldVo = new RootWhereFieldVo();
-        final Collection<AdditionalWhereFieldVo> additionalWhereFieldVos =
-            new ArrayList<AdditionalWhereFieldVo>();
+        final Collection<AdditionalWhereFieldVo> additionalWhereFieldVos = new ArrayList<AdditionalWhereFieldVo>();
 
-        rootWhereFieldVo.setFieldName(
-        		Constants.STATISTIC_DATA_TIMESTAMP_FIELD_NAME);
-        rootWhereFieldVo
-            .setFieldType(Constants.DATABASE_FIELD_TYPE_DAYDATE);
+        rootWhereFieldVo.setFieldName(Constants.STATISTIC_DATA_TIMESTAMP_FIELD_NAME);
+        rootWhereFieldVo.setFieldType(Constants.DATABASE_FIELD_TYPE_DAYDATE);
         rootWhereFieldVo.setOperator(Constants.DATABASE_OPERATOR_EQUALS);
         rootWhereFieldVo.setFieldValue(new SimpleDateFormat("yyyy-MM-dd").format(date));
         rootWhereGroupVo.setRootWhereFieldVo(rootWhereFieldVo);
-
 
         //get Scope to decide if scope-type is admin
         final Scope scope = scopesDao.retrieve(scopeId);
 
         //only restrict to scope_id if Scope is no admin-scope
         if (!scope.getScopeType().equals(Constants.SCOPE_TYPE_ADMIN)) {
-            final AdditionalWhereFieldVo additionalWhereFieldVo =
-                new AdditionalWhereFieldVo();
+            final AdditionalWhereFieldVo additionalWhereFieldVo = new AdditionalWhereFieldVo();
             additionalWhereFieldVo.setAlliance(Constants.DATABASE_ALLIANCE_AND);
             additionalWhereFieldVo.setFieldName("scope_id");
             additionalWhereFieldVo.setFieldType(Constants.DATABASE_FIELD_TYPE_TEXT);
@@ -166,13 +144,10 @@ public class AggregationDataSelector {
         }
 
         if (xpath != null && xpath.length() != 0) {
-            final AdditionalWhereFieldVo xpathWhereFieldVo =
-                new AdditionalWhereFieldVo();
+            final AdditionalWhereFieldVo xpathWhereFieldVo = new AdditionalWhereFieldVo();
             xpathWhereFieldVo.setAlliance(Constants.DATABASE_ALLIANCE_AND);
-            xpathWhereFieldVo
-                .setFieldType(Constants.DATABASE_FIELD_TYPE_FREE_SQL);
-            xpathWhereFieldVo.setFieldValue(
-                handleXpathQuery(xpath.replaceAll("\\s+", " "), 
+            xpathWhereFieldVo.setFieldType(Constants.DATABASE_FIELD_TYPE_FREE_SQL);
+            xpathWhereFieldVo.setFieldValue(handleXpathQuery(xpath.replaceAll("\\s+", " "),
                 Constants.STATISTIC_DATA_XML_FIELD_NAME));
             additionalWhereFieldVos.add(xpathWhereFieldVo);
         }
@@ -184,40 +159,30 @@ public class AggregationDataSelector {
     }
 
     /**
-     * Generates String (for db-query) out of xpath-element for extraction of
-     * raw data.
-     * 
-     * @param inputXpathQuery
-     *            The xpathQuery.
-     * @param field
-     *            The field.
+     * Generates String (for db-query) out of xpath-element for extraction of raw data.
+     *
+     * @param inputXpathQuery The xpathQuery.
+     * @param field           The field.
      * @return String with xpathQuery
      * @throws StatisticPreprocessingSystemException
-     *             e
-     * 
+     *          e
      */
-    private String handleXpathQuery(
-        final String inputXpathQuery, final String field)
+    private String handleXpathQuery(final String inputXpathQuery, final String field)
         throws StatisticPreprocessingSystemException {
         try {
             final StringBuilder dbXpathQuery = new StringBuilder(" (");
             final String xpathQuery = inputXpathQuery.replaceAll("\\s+", " ");
             // Split at and/ors and save and/ors in array
             final String operatorHelper =
-                xpathQuery.replaceAll(
-                    ".*?(( and )|( AND )|( And )|( or )|( OR )|( Or )).*?",
-                    "$1\\|");
+                xpathQuery.replaceAll(".*?(( and )|( AND )|( And )|( or )|( OR )|( Or )).*?", "$1\\|");
             final String[] operators = operatorHelper.split("\\|");
-            final String[] xpathQueryParts =
-                xpathQuery
-                    .split("( and )|( AND )|( And )|( or )|( OR )|( Or )");
+            final String[] xpathQueryParts = xpathQuery.split("( and )|( AND )|( And )|( or )|( OR )|( Or )");
 
             // iterate over xpath-query-parts
             // (eg //parameter[@name>\"type\"]/* > \u2018page-request\u2019)
             for (int i = 0; i < xpathQueryParts.length; i++) {
                 if (i > 0) {
-                    dbXpathQuery.append(' ').append(operators[i - 1]).append(
-                            ' ');
+                    dbXpathQuery.append(' ').append(operators[i - 1]).append(' ');
                 }
 
                 // save opening and closing brackets
@@ -228,37 +193,23 @@ public class AggregationDataSelector {
                     xpathQueryPart = xpathQueryPart.substring(1);
                     openingBracketSaver.append('(');
                 }
-                while (xpathQueryPart.lastIndexOf(')') == xpathQueryPart
-                    .length() - 1) {
-                    xpathQueryPart =
-                        xpathQueryPart
-                            .substring(0, xpathQueryPart.length() - 2);
+                while (xpathQueryPart.lastIndexOf(')') == xpathQueryPart.length() - 1) {
+                    xpathQueryPart = xpathQueryPart.substring(0, xpathQueryPart.length() - 2);
                     closingBracketSaver.append(')');
                 }
 
                 // split xpath-query part at operator (<,> or =)
-                final String xpathExpression =
-                    xpathQueryPart.replaceAll("(\\[.*?\\].*?)(=|>|<)",
-                        "$1\\|$2\\|");
-                final String[] xpathExpressionParts =
-                    xpathExpression.split("\\|.*?\\|");
+                final String xpathExpression = xpathQueryPart.replaceAll("(\\[.*?\\].*?)(=|>|<)", "$1\\|$2\\|");
+                final String[] xpathExpressionParts = xpathExpression.split("\\|.*?\\|");
                 dbXpathQuery.append(openingBracketSaver);
                 if (xpathExpressionParts.length > 1) {
-                    final String operator =
-                        xpathExpression.replaceAll(".*?\\|(.*?)\\|.*", "$1");
-                    final String left =
-                        dbAccessor.getXpathString(xpathExpressionParts[0],
-                            field);
-                    final String right =
-                        xpathExpressionParts[1].replaceAll("['\"]", "").trim();
-                    dbXpathQuery
-                        .append(left).append(' ').append(operator).append(" '")
-                        .append(right).append('\'');
+                    final String operator = xpathExpression.replaceAll(".*?\\|(.*?)\\|.*", "$1");
+                    final String left = dbAccessor.getXpathString(xpathExpressionParts[0], field);
+                    final String right = xpathExpressionParts[1].replaceAll("['\"]", "").trim();
+                    dbXpathQuery.append(left).append(' ').append(operator).append(" '").append(right).append('\'');
                 }
                 else {
-                    final String left =
-                        dbAccessor.getXpathBoolean(xpathExpressionParts[0],
-                            field);
+                    final String left = dbAccessor.getXpathBoolean(xpathExpressionParts[0], field);
                     dbXpathQuery.append(left);
                 }
                 dbXpathQuery.append(closingBracketSaver);
@@ -267,17 +218,14 @@ public class AggregationDataSelector {
             return dbXpathQuery.toString();
         }
         catch (final Exception e) {
-            throw new StatisticPreprocessingSystemException(
-                "Cannot handle xpath-query for statistic-table", e);
+            throw new StatisticPreprocessingSystemException("Cannot handle xpath-query for statistic-table", e);
         }
     }
 
     /**
      * Setter for the scopesDao.
-     * 
-     * @param scopesDao
-     *            The data access object.
-     * 
+     *
+     * @param scopesDao The data access object.
      */
     public void setScopesDao(final SmScopesDaoInterface scopesDao) {
         this.scopesDao = scopesDao;
@@ -285,12 +233,10 @@ public class AggregationDataSelector {
 
     /**
      * Setting the directDatabaseAccessor.
-     * 
-     * @param dbAccessorIn
-     *            The directDatabaseAccessor to set.
+     *
+     * @param dbAccessorIn The directDatabaseAccessor to set.
      */
-    public final void setDirectDatabaseAccessor(
-        final DirectDatabaseAccessorInterface dbAccessorIn) {
+    public final void setDirectDatabaseAccessor(final DirectDatabaseAccessorInterface dbAccessorIn) {
         this.dbAccessor = dbAccessorIn;
     }
 

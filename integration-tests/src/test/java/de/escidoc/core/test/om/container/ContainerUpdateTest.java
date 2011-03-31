@@ -67,9 +67,8 @@ import static org.junit.Assert.fail;
 
 /**
  * Test the mock implementation of the container resource.
- * 
+ *
  * @author Michael Schneider
- * 
  */
 @RunWith(value = Parameterized.class)
 public class ContainerUpdateTest extends ContainerTestBase {
@@ -82,12 +81,10 @@ public class ContainerUpdateTest extends ContainerTestBase {
 
     private String theItemId;
 
-    public static final String XPATH_TRIPLE_STORE_DC_CREATOR =
-        "/RDF/Description/creator";
+    public static final String XPATH_TRIPLE_STORE_DC_CREATOR = "/RDF/Description/creator";
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ContainerUpdateTest(final int transport) {
         super(transport);
@@ -95,17 +92,14 @@ public class ContainerUpdateTest extends ContainerTestBase {
 
     /**
      * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Before
     public void setUp() throws Exception {
 
-        this.theItemId =
-            createItemFromTemplate("escidoc_item_198_for_create.xml");
-        String xmlData =
-            getContainerTemplate("create_container_v1.1-forItem.xml");
+        this.theItemId = createItemFromTemplate("escidoc_item_198_for_create.xml");
+        String xmlData = getContainerTemplate("create_container_v1.1-forItem.xml");
         String replaced = xmlData.replaceAll("##ITEMID##", theItemId);
 
         theContainerXml = create(replaced);
@@ -116,11 +110,8 @@ public class ContainerUpdateTest extends ContainerTestBase {
     @Test
     public void testUpdateCts() throws Exception {
 
-        Document newContainer =
-            EscidocRestSoapTestBase.getDocument(theContainerXml);
-        Node cts =
-            selectSingleNode(newContainer,
-                "/container/properties/content-model-specific");
+        Document newContainer = EscidocRestSoapTestBase.getDocument(theContainerXml);
+        Node cts = selectSingleNode(newContainer, "/container/properties/content-model-specific");
         cts.appendChild(newContainer.createElement("nischt"));
         String newContainerXml = toString(newContainer, false);
         String xml = update(theContainerId, newContainerXml);
@@ -134,12 +125,9 @@ public class ContainerUpdateTest extends ContainerTestBase {
         String xml = theContainerXml;
         Document containerDoc = getDocument(xml);
         String lmdRetrieve1 = getLastModificationDateValue(containerDoc);
-        String itemToAddID =
-            createItemFromTemplate("escidoc_item_198_for_create.xml");
+        String itemToAddID = createItemFromTemplate("escidoc_item_198_for_create.xml");
 
-        String taskParam =
-            "<param last-modification-date=\"" + getTheLastModificationDate()
-                + "\" ";
+        String taskParam = "<param last-modification-date=\"" + getTheLastModificationDate() + "\" ";
         taskParam += ">";
 
         // taskParam += "<member XLINK_NS_DECL_ESCIDOC
@@ -154,20 +142,17 @@ public class ContainerUpdateTest extends ContainerTestBase {
 
         // check if item with id theItemId is member of theContainer
         String containerXml = retrieve(theContainerId);
-        Document containerDocAfterAddMember =
-            EscidocRestSoapTestBase.getDocument(containerXml);
+        Document containerDocAfterAddMember = EscidocRestSoapTestBase.getDocument(containerXml);
         Node addedMember = null;
         if (Constants.TRANSPORT_REST == getTransport()) {
             addedMember =
-                selectSingleNodeAsserted(containerDocAfterAddMember,
-                    "/container/struct-map/item[@href = '" + "/ir/item/"
-                        + itemToAddID + "']");
+                selectSingleNodeAsserted(containerDocAfterAddMember, "/container/struct-map/item[@href = '"
+                    + "/ir/item/" + itemToAddID + "']");
         }
         else {
             addedMember =
-                selectSingleNodeAsserted(containerDocAfterAddMember,
-                    "/container/struct-map/item[@objid = '" + itemToAddID
-                        + "']");
+                selectSingleNodeAsserted(containerDocAfterAddMember, "/container/struct-map/item[@objid = '"
+                    + itemToAddID + "']");
         }
         assertNotNull(addedMember);
 
@@ -177,67 +162,48 @@ public class ContainerUpdateTest extends ContainerTestBase {
 
         assertDateBeforeAfter(lmdRetrieve1, lmdMethod);
 
-        String lmdRetrieve2 =
-            getLastModificationDateValue(containerDocAfterAddMember);
+        String lmdRetrieve2 = getLastModificationDateValue(containerDocAfterAddMember);
 
         assertEquals("Last modification date of retrieve does not match the"
-            + " last modification date of the latest task oriented method",
-            lmdMethod, lmdRetrieve2);
+            + " last modification date of the latest task oriented method", lmdMethod, lmdRetrieve2);
     }
 
     /**
      * Successfully removing of container members.
-     * 
-     * @throws Exception
      */
     @Test
     public void testRemoveMember() throws Exception {
 
-        String xmlData =
-            getContainerTemplate("create_container_WithoutMembers_v1.1.xml");
+        String xmlData = getContainerTemplate("create_container_WithoutMembers_v1.1.xml");
         String createdContainerXml = create(xmlData);
         String subContainerId = getObjidValue(createdContainerXml);
         // System.out.println("SubcontainerId " + subContainerId);
-        String taskParam =
-            "<param last-modification-date=\"" + getTheLastModificationDate()
-                + "\" ";
+        String taskParam = "<param last-modification-date=\"" + getTheLastModificationDate() + "\" ";
         taskParam += ">";
         taskParam += "<id>" + subContainerId + "</id>";
         taskParam += "</param>";
         String resultXml = addMembers(theContainerId, taskParam);
         Document resultDoc = getDocument(resultXml);
         String lmdMethod1 = getLastModificationDateValue(resultDoc);
-        taskParam =
-            "<param last-modification-date=\"" + getTheLastModificationDate()
-                + "\" ";
+        taskParam = "<param last-modification-date=\"" + getTheLastModificationDate() + "\" ";
         taskParam += ">";
         taskParam += "<id>" + subContainerId + "</id>";
         taskParam += "<id>" + theItemId + "</id>";
         taskParam += "</param>";
-        String resultXmlAfterRemoveMembers =
-            removeMembers(theContainerId, taskParam);
+        String resultXmlAfterRemoveMembers = removeMembers(theContainerId, taskParam);
         assertXmlValidResult(resultXml);
-        Document resultDocAfterRemoveMembers =
-            getDocument(resultXmlAfterRemoveMembers);
-        String lmdMethod2 =
-            getLastModificationDateValue(resultDocAfterRemoveMembers);
+        Document resultDocAfterRemoveMembers = getDocument(resultXmlAfterRemoveMembers);
+        String lmdMethod2 = getLastModificationDateValue(resultDocAfterRemoveMembers);
         assertDateBeforeAfter(lmdMethod1, lmdMethod2);
 
         String containerXmlAfterRemoveMembers = retrieve(theContainerId);
-        Document containerDocAfterRemoveMembers =
-            getDocument(containerXmlAfterRemoveMembers);
-        String lmdRetrieve2 =
-            getLastModificationDateValue(containerDocAfterRemoveMembers);
+        Document containerDocAfterRemoveMembers = getDocument(containerXmlAfterRemoveMembers);
+        String lmdRetrieve2 = getLastModificationDateValue(containerDocAfterRemoveMembers);
 
         assertEquals("Last modification date of retrieve does not match the"
-            + " last modification date of the latest task oriented method",
-            lmdMethod2, lmdRetrieve2);
-        NodeList itemMembers =
-            selectNodeList(containerDocAfterRemoveMembers,
-                "/container/struct-map/item");
-        NodeList containerMembers =
-            selectNodeList(containerDocAfterRemoveMembers,
-                "/container/struct-map/container");
+            + " last modification date of the latest task oriented method", lmdMethod2, lmdRetrieve2);
+        NodeList itemMembers = selectNodeList(containerDocAfterRemoveMembers, "/container/struct-map/item");
+        NodeList containerMembers = selectNodeList(containerDocAfterRemoveMembers, "/container/struct-map/container");
 
         assertEquals(itemMembers.getLength(), 0);
         assertEquals(containerMembers.getLength(), 0);
@@ -245,15 +211,14 @@ public class ContainerUpdateTest extends ContainerTestBase {
     }
 
     /**
-     * 
+     *
      * @throws Exception
      */
     @Test
     public void testIgnoreRemovingOfmemberWithWrongId() throws Exception {
         String container = retrieve(theContainerId);
         String containerWithoutMembers =
-            getTemplateAsString(TEMPLATE_CONTAINER_PATH + "/"
-                + getTransport(false),
+            getTemplateAsString(TEMPLATE_CONTAINER_PATH + "/" + getTransport(false),
                 "create_container_WithoutMembers_v1.1.xml");
 
         String createdContainerWithouMembers = create(containerWithoutMembers);
@@ -275,12 +240,9 @@ public class ContainerUpdateTest extends ContainerTestBase {
     @Test
     public void testAddALLMembers() throws Exception {
         for (int i = 0; i < 600; i++) {
-            String itemToAddID =
-                createItemFromTemplate("escidoc_item_198_for_create.xml");
+            String itemToAddID = createItemFromTemplate("escidoc_item_198_for_create.xml");
 
-            String taskParam =
-                "<param last-modification-date=\""
-                    + getTheLastModificationDate() + "\" ";
+            String taskParam = "<param last-modification-date=\"" + getTheLastModificationDate() + "\" ";
             taskParam += ">";
 
             // taskParam += "<member XLINK_NS_DECL_ESCIDOC
@@ -342,20 +304,16 @@ public class ContainerUpdateTest extends ContainerTestBase {
 
         // check if item with memberItemId is a member of theContainer
         String containerXml = retrieve(theContainerId);
-        Document containerDoc =
-            EscidocRestSoapTestBase.getDocument(containerXml);
+        Document containerDoc = EscidocRestSoapTestBase.getDocument(containerXml);
         Node addedMember = null;
         if (Constants.TRANSPORT_REST == getTransport()) {
             addedMember =
-                selectSingleNodeAsserted(containerDoc,
-                    "/container/struct-map/item[@href = '" + "/ir/item/"
-                        + memberItemId + "']");
+                selectSingleNodeAsserted(containerDoc, "/container/struct-map/item[@href = '" + "/ir/item/"
+                    + memberItemId + "']");
         }
         else {
             addedMember =
-                selectSingleNodeAsserted(containerDoc,
-                    "/container/struct-map/item[@objid = '" + memberItemId
-                        + "']");
+                selectSingleNodeAsserted(containerDoc, "/container/struct-map/item[@objid = '" + memberItemId + "']");
         }
 
     }
@@ -365,8 +323,7 @@ public class ContainerUpdateTest extends ContainerTestBase {
 
         String xmlData = getItemTemplate("escidoc_item_198_for_create.xml");
         xmlData =
-            xmlData.replaceFirst(
-                "xmlns:escidocItem=\"http://www.escidoc.de/schemas/item/0.10",
+            xmlData.replaceFirst("xmlns:escidocItem=\"http://www.escidoc.de/schemas/item/0.10",
                 "xmlns:escidocItem=\"http://www.escidoc.de/schemas/item/0.8");
 
         try {
@@ -375,8 +332,7 @@ public class ContainerUpdateTest extends ContainerTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = XmlSchemaValidationException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
 
     }
@@ -384,8 +340,7 @@ public class ContainerUpdateTest extends ContainerTestBase {
     @Test
     public void testCreateContainer() throws Exception {
 
-        String xmlData =
-            getContainerTemplate("create_container_WithoutMembers_v1.1.xml");
+        String xmlData = getContainerTemplate("create_container_WithoutMembers_v1.1.xml");
         String container = createContainer(theContainerId, xmlData);
 
         assertXmlValidContainer(container);
@@ -394,20 +349,17 @@ public class ContainerUpdateTest extends ContainerTestBase {
 
         // check if item with memberItemId is a member of theContainer
         String containerXml = retrieve(theContainerId);
-        Document containerDoc =
-            EscidocRestSoapTestBase.getDocument(containerXml);
+        Document containerDoc = EscidocRestSoapTestBase.getDocument(containerXml);
         Node addedMember = null;
         if (Constants.TRANSPORT_REST == getTransport()) {
             addedMember =
-                selectSingleNodeAsserted(containerDoc,
-                    "/container/struct-map/container[@href = '"
-                        + "/ir/container/" + memberContainerId + "']");
+                selectSingleNodeAsserted(containerDoc, "/container/struct-map/container[@href = '" + "/ir/container/"
+                    + memberContainerId + "']");
         }
         else {
             addedMember =
-                selectSingleNodeAsserted(containerDoc,
-                    "/container/struct-map/container[@objid = '"
-                        + memberContainerId + "']");
+                selectSingleNodeAsserted(containerDoc, "/container/struct-map/container[@objid = '" + memberContainerId
+                    + "']");
         }
 
     }
@@ -423,8 +375,7 @@ public class ContainerUpdateTest extends ContainerTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
 
     }
@@ -432,8 +383,7 @@ public class ContainerUpdateTest extends ContainerTestBase {
     @Test
     public void testCreateContainerWithoutContainerId() throws Exception {
 
-        String xmlData =
-            getContainerTemplate("create_container_WithoutMembers_v1.1.xml");
+        String xmlData = getContainerTemplate("create_container_WithoutMembers_v1.1.xml");
 
         try {
             createContainer(null, xmlData);
@@ -441,8 +391,7 @@ public class ContainerUpdateTest extends ContainerTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
 
     }
@@ -455,8 +404,7 @@ public class ContainerUpdateTest extends ContainerTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
 
     }
@@ -469,26 +417,21 @@ public class ContainerUpdateTest extends ContainerTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
 
     }
 
     /**
-     * Test update of all NOT-read-only properties. Disabled because there are
-     * only read-only properties. TODO Decide what to do with name and
-     * description.
-     * 
-     * @throws Exception
+     * Test update of all NOT-read-only properties. Disabled because there are only read-only properties. TODO Decide
+     * what to do with name and description.
      */
     @Ignore("Disabled because there are only read-only properties")
     @Test
     public void testUpdateProperties() throws Exception {
         // name description content-type-specific
 
-        Document containerDoc =
-            EscidocRestSoapTestBase.getDocument(theContainerXml);
+        Document containerDoc = EscidocRestSoapTestBase.getDocument(theContainerXml);
 
         String basePath = "/container/properties/";
         String testStringValue = "testing";
@@ -497,27 +440,21 @@ public class ContainerUpdateTest extends ContainerTestBase {
         Node testContainer;
 
         // name
-        testContainer =
-            substitute(containerDoc, basePath + "name", testStringValue);
+        testContainer = substitute(containerDoc, basePath + "name", testStringValue);
 
         // description
-        testContainer =
-            substitute(containerDoc, basePath + "description", testStringValue);
+        testContainer = substitute(containerDoc, basePath + "description", testStringValue);
 
         // content-type-specific in testUpdateCts
 
         String testContainerXml = toString(testContainer, true);
         update(theContainerId, testContainerXml);
 
-        Document updatedContainer =
-            EscidocRestSoapTestBase.getDocument(retrieve(theContainerId));
+        Document updatedContainer = EscidocRestSoapTestBase.getDocument(retrieve(theContainerId));
 
-        assertEquals(testStringValue,
-            selectSingleNode(updatedContainer, basePath + "name/text()")
-                .getNodeValue());
-        assertEquals(testStringValue,
-            selectSingleNode(updatedContainer, basePath + "description/text()")
-                .getNodeValue());
+        assertEquals(testStringValue, selectSingleNode(updatedContainer, basePath + "name/text()").getNodeValue());
+        assertEquals(testStringValue, selectSingleNode(updatedContainer, basePath + "description/text()")
+            .getNodeValue());
     }
 
     @Ignore("test update read-only properties")
@@ -575,39 +512,33 @@ public class ContainerUpdateTest extends ContainerTestBase {
         // }
 
         testContainer =
-            substitute(EscidocRestSoapTestBase.getDocument(theContainerXml),
-                basePath + "name", testStringValue);
+            substitute(EscidocRestSoapTestBase.getDocument(theContainerXml), basePath + "name", testStringValue);
         try {
             update(theContainerId, toString(testContainer, true));
             fail("No exception after update name.");
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ee.getName()
-                + " expected.", ee, e);
+            EscidocRestSoapTestBase.assertExceptionType(ee.getName() + " expected.", ee, e);
         }
 
         testContainer =
-            substitute(EscidocRestSoapTestBase.getDocument(theContainerXml),
-                basePath + "description", testStringValue);
+            substitute(EscidocRestSoapTestBase.getDocument(theContainerXml), basePath + "description", testStringValue);
         try {
             update(theContainerId, toString(testContainer, true));
             fail("No exception after update description.");
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ee.getName()
-                + " expected.", ee, e);
+            EscidocRestSoapTestBase.assertExceptionType(ee.getName() + " expected.", ee, e);
         }
 
         testContainer =
-            substitute(EscidocRestSoapTestBase.getDocument(theContainerXml),
-                basePath + "creation-date", testDateValue);
+            substitute(EscidocRestSoapTestBase.getDocument(theContainerXml), basePath + "creation-date", testDateValue);
         try {
             update(theContainerId, toString(testContainer, true));
             fail("No exception after update creation-date.");
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ee.getName()
-                + " expected.", ee, e);
+            EscidocRestSoapTestBase.assertExceptionType(ee.getName() + " expected.", ee, e);
         }
 
         // context (xlink:href" xlink:type xlink:title)
@@ -615,30 +546,26 @@ public class ContainerUpdateTest extends ContainerTestBase {
 
         // status
         testContainer =
-            substitute(EscidocRestSoapTestBase.getDocument(theContainerXml),
-                basePath + "status", "withdrawn");
+            substitute(EscidocRestSoapTestBase.getDocument(theContainerXml), basePath + "status", "withdrawn");
         try {
             update(theContainerId, toString(testContainer, true));
             fail("No exception after update status.");
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ee.getName()
-                + " expected.", ee, e);
+            EscidocRestSoapTestBase.assertExceptionType(ee.getName() + " expected.", ee, e);
         }
 
         // creator (xlink:href xlink:title xlink:type)
 
         // lock-status
         testContainer =
-            substitute(EscidocRestSoapTestBase.getDocument(theContainerXml),
-                basePath + "lock-status", "locked");
+            substitute(EscidocRestSoapTestBase.getDocument(theContainerXml), basePath + "lock-status", "locked");
         try {
             update(theContainerId, toString(testContainer, true));
             fail("No exception after update lock-status.");
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ee.getName()
-                + " expected.", ee, e);
+            EscidocRestSoapTestBase.assertExceptionType(ee.getName() + " expected.", ee, e);
         }
 
         // lock-owner // TODO test with locked item
@@ -648,43 +575,37 @@ public class ContainerUpdateTest extends ContainerTestBase {
         String basePathCV = basePath + "/current-version/";
         // number
         testContainer =
-            substitute(EscidocRestSoapTestBase.getDocument(theContainerXml),
-                basePathCV + "number", testIntegerValue);
+            substitute(EscidocRestSoapTestBase.getDocument(theContainerXml), basePathCV + "number", testIntegerValue);
         try {
             update(theContainerId, toString(testContainer, true));
             fail("No exception after update number.");
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ee.getName()
-                + " expected.", ee, e);
+            EscidocRestSoapTestBase.assertExceptionType(ee.getName() + " expected.", ee, e);
         }
 
         // date
         testContainer =
-            substitute(EscidocRestSoapTestBase.getDocument(theContainerXml),
-                basePathCV + "date", testDateValue);
+            substitute(EscidocRestSoapTestBase.getDocument(theContainerXml), basePathCV + "date", testDateValue);
         try {
             update(theContainerId, toString(testContainer, true));
             fail("No exception after update date.");
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ee.getName()
-                + " expected.", ee, e);
+            EscidocRestSoapTestBase.assertExceptionType(ee.getName() + " expected.", ee, e);
         }
 
         // version-status
         testContainer =
 
-            substitute(EscidocRestSoapTestBase.getDocument(theContainerXml),
-                basePathCV + "status", "withdrawn");
+        substitute(EscidocRestSoapTestBase.getDocument(theContainerXml), basePathCV + "status", "withdrawn");
 
         try {
             update(theContainerId, toString(testContainer, true));
             fail("No exception after update status.");
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ee.getName()
-                + " expected.", ee, e);
+            EscidocRestSoapTestBase.assertExceptionType(ee.getName() + " expected.", ee, e);
         }
 
         // valid-status
@@ -704,28 +625,24 @@ public class ContainerUpdateTest extends ContainerTestBase {
         // number
         String basePathLV = basePath + "/latest-version/";
         testContainer =
-            substitute(EscidocRestSoapTestBase.getDocument(theContainerXml),
-                basePathLV + "number", testIntegerValue);
+            substitute(EscidocRestSoapTestBase.getDocument(theContainerXml), basePathLV + "number", testIntegerValue);
         try {
             update(theContainerId, toString(testContainer, true));
             fail("No exception after update number.");
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ee.getName()
-                + " expected.", ee, e);
+            EscidocRestSoapTestBase.assertExceptionType(ee.getName() + " expected.", ee, e);
         }
 
         // date
         testContainer =
-            substitute(EscidocRestSoapTestBase.getDocument(theContainerXml),
-                basePathLV + "date", testDateValue);
+            substitute(EscidocRestSoapTestBase.getDocument(theContainerXml), basePathLV + "date", testDateValue);
         try {
             update(theContainerId, toString(testContainer, true));
             fail("No exception after update date.");
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ee.getName()
-                + " expected.", ee, e);
+            EscidocRestSoapTestBase.assertExceptionType(ee.getName() + " expected.", ee, e);
         }
 
         // latest-revision (number date pid xlink:href xlink:title xlink:type)
@@ -733,13 +650,11 @@ public class ContainerUpdateTest extends ContainerTestBase {
     }
 
     private String getTheLastModificationDate() throws Exception {
-        Document item =
-            EscidocRestSoapTestBase.getDocument(retrieve(theContainerId));
+        Document item = EscidocRestSoapTestBase.getDocument(retrieve(theContainerId));
 
         // get last-modification-date
         NamedNodeMap atts = item.getDocumentElement().getAttributes();
-        Node lastModificationDateNode =
-            atts.getNamedItem("last-modification-date");
+        Node lastModificationDateNode = atts.getNamedItem("last-modification-date");
         String lastModificationDate = lastModificationDateNode.getNodeValue();
 
         return lastModificationDate;
@@ -751,73 +666,50 @@ public class ContainerUpdateTest extends ContainerTestBase {
 
     /**
      * Update container with Version status "pending".
-     * 
-     * @test.name Update container with Version status "pending".
-     * @test.id OM_UCO_1_1
-     * @test.input Existing Container ID, correct XML representation of the
-     *             container.
-     * @test.expected XML Container as described in the xml-Schema
-     *                "http://www.escidoc.de/schemas/container/0.1" <li>the
-     *                version status is "pending"</li>
-     * 
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOM_UCO_1_1() throws Exception {
 
         String xml = retrieve(theContainerId);
-        Document toBeUpdatedDocument =
-            EscidocRestSoapTestBase.getDocument(xml);
-        assertXmlEquals("Unexpected status. ", toBeUpdatedDocument,
-            XPATH_CONTAINER_STATUS, STATE_PENDING);
-        assertXmlEquals("Unexpected current version status",
-            toBeUpdatedDocument, XPATH_CONTAINER_CURRENT_VERSION_STATUS,
-            STATE_PENDING);
+        Document toBeUpdatedDocument = EscidocRestSoapTestBase.getDocument(xml);
+        assertXmlEquals("Unexpected status. ", toBeUpdatedDocument, XPATH_CONTAINER_STATUS, STATE_PENDING);
+        assertXmlEquals("Unexpected current version status", toBeUpdatedDocument,
+            XPATH_CONTAINER_CURRENT_VERSION_STATUS, STATE_PENDING);
 
         // change something
-        Node n =
-            selectSingleNode(toBeUpdatedDocument,
-                XPATH_CONTAINER_PROPERTIES_CMS);
+        Node n = selectSingleNode(toBeUpdatedDocument, XPATH_CONTAINER_PROPERTIES_CMS);
         final String nameNischt = "nischt";
         n.appendChild(toBeUpdatedDocument.createElement(nameNischt));
 
         String newContainerXml = toString(toBeUpdatedDocument, false);
-        String beforeTimestamp =
-            getLastModificationDateValue(toBeUpdatedDocument);
+        String beforeTimestamp = getLastModificationDateValue(toBeUpdatedDocument);
         xml = update(theContainerId, newContainerXml);
         assertXmlValidContainer(xml);
         Document updatedDocument = EscidocRestSoapTestBase.getDocument(xml);
         // check last-modification-date, status, valid xml
-        assertDateBeforeAfter(beforeTimestamp,
-            getLastModificationDateValue(updatedDocument));
+        assertDateBeforeAfter(beforeTimestamp, getLastModificationDateValue(updatedDocument));
 
-        assertXmlEquals("Unexpected status. ", updatedDocument,
-            XPATH_CONTAINER_STATUS, STATE_PENDING);
-        assertXmlEquals("Unexpected current version status", updatedDocument,
-            XPATH_CONTAINER_CURRENT_VERSION_STATUS, STATE_PENDING);
+        assertXmlEquals("Unexpected status. ", updatedDocument, XPATH_CONTAINER_STATUS, STATE_PENDING);
+        assertXmlEquals("Unexpected current version status", updatedDocument, XPATH_CONTAINER_CURRENT_VERSION_STATUS,
+            STATE_PENDING);
 
         // check if added element exists
-        assertXmlExists("Updated element not found", updatedDocument,
-            XPATH_CONTAINER_PROPERTIES_CMS + "/" + nameNischt);
+        assertXmlExists("Updated element not found", updatedDocument, XPATH_CONTAINER_PROPERTIES_CMS + "/" + nameNischt);
     }
 
     /**
-     * Successfully test updating a container with a values containing entities
-     * referencen.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Successfully test updating a container with a values containing entities referencen.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOmUCO_1_6() throws Exception {
         try {
             String xml = retrieve(theContainerId);
             assertXmlValidContainer(xml);
-            Document toBeUpdatedDocument =
-                EscidocRestSoapTestBase.getDocument(xml);
+            Document toBeUpdatedDocument = EscidocRestSoapTestBase.getDocument(xml);
 
             String id = getObjidValue(toBeUpdatedDocument);
             String updateTile = "' > < &";
@@ -826,12 +718,9 @@ public class ContainerUpdateTest extends ContainerTestBase {
             // "container/admin-descriptor/properties/description", updateTile);
 
             Node updateContentModelSpec =
-                substitute(toBeUpdatedDocument,
-                    "container/properties/content-model-specific/xxx",
-                    updateTile);
+                substitute(toBeUpdatedDocument, "container/properties/content-model-specific/xxx", updateTile);
 
-            String updated =
-                update(id, toString(updateContentModelSpec, false));
+            String updated = update(id, toString(updateContentModelSpec, false));
             assertXmlValidContainer(updated);
             Document updatedDoc = EscidocRestSoapTestBase.getDocument(updated);
 
@@ -840,15 +729,12 @@ public class ContainerUpdateTest extends ContainerTestBase {
             // .getTextContent();
 
             String contentTypeSpecValue =
-                selectSingleNode(updatedDoc,
-                    "container/properties/content-model-specific/xxx")
-                    .getTextContent();
+                selectSingleNode(updatedDoc, "container/properties/content-model-specific/xxx").getTextContent();
 
             // assertEquals("Titles are not equal", admindescrDescriptionValue,
             // updateTile);
 
-            assertEquals("Cmses are not equal", contentTypeSpecValue,
-                updateTile);
+            assertEquals("Cmses are not equal", contentTypeSpecValue, updateTile);
 
         }
         catch (final Exception e) {
@@ -859,39 +745,21 @@ public class ContainerUpdateTest extends ContainerTestBase {
 
     /**
      * Update container with Version status "submitted".
-     * 
-     * @test.name Update container with Version status "submitted".
-     * @test.id OM_UCO_1_2
-     * @test.input Existing Container ID, correct XML representation of the
-     *             container.
-     * @test.expected XML Container as described in the xml-Schema
-     *                "http://www.escidoc.de/schemas/container/0.1" <li>the
-     *                version status is "submitted"</li>
-     * 
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOM_UCO_1_2() throws Exception {
-        submit(
-            theContainerId,
-            "<param last-modification-date=\""
-                + getLastModificationDateValue(EscidocRestSoapTestBase
-                    .getDocument(theContainerXml)) + "\"/>");
+        submit(theContainerId, "<param last-modification-date=\""
+            + getLastModificationDateValue(EscidocRestSoapTestBase.getDocument(theContainerXml)) + "\"/>");
 
         String testStatus = "submitted";
         String xml = retrieve(theContainerId);
         Document newContainer = EscidocRestSoapTestBase.getDocument(xml);
-        selectSingleNodeAsserted(newContainer,
-            "/container/properties/version/status[text() = '" + testStatus
-                + "']");
+        selectSingleNodeAsserted(newContainer, "/container/properties/version/status[text() = '" + testStatus + "']");
 
         // change something
-        Node n =
-            selectSingleNode(newContainer,
-                "/container/properties/content-model-specific");
+        Node n = selectSingleNode(newContainer, "/container/properties/content-model-specific");
         n.appendChild(newContainer.createElement("nischt"));
 
         String newContainerXml = toString(newContainer, false);
@@ -904,31 +772,13 @@ public class ContainerUpdateTest extends ContainerTestBase {
 
         // check last-modification-date, status, valid xml
         assertDateBeforeAfter(beforeTimestamp, afterTimestamp);
-        selectSingleNodeAsserted(newContainer,
-            "/container/properties/version/status[text() = '" + testStatus
-                + "']");
+        selectSingleNodeAsserted(newContainer, "/container/properties/version/status[text() = '" + testStatus + "']");
     }
 
     /**
      * Tests successfully updating 'escidoc' metadata record of an item.
-     * 
-     * @test.name Update Escidoc Internal Metadata Stream of Item
-     * @test.id OM_UCI_1
-     * @test.input Escidoc Internal Metadata XML
-     * @test.expected XML Item as described in the xml-Schema
-     *                "http://www.escidoc.de/schemas/item/0.X" <li>Timestamp is
-     *                updated to current time</li> Old:<br>
-     *                (Check via "Retrieve Content Item by ID" if timestamp of
-     *                last modification was updated and updated internal
-     *                metadata is in retrievedcontent item<br>
-     *                Check via "Retrieve Metadata Record of Content Item" if
-     *                the new Metadata record was saved as a new version of
-     *                metadata record.)
-     * 
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testUpdateEscidocMdRecord() throws Exception {
@@ -940,11 +790,8 @@ public class ContainerUpdateTest extends ContainerTestBase {
         String newName = "new name";
         String newTitle = "new Title";
         String mdXPath =
-            "/container/md-records/md-record[@name='" + mdRecordName
-                + "']/publication/creator/person/family-name";
-        String mdTitlePath =
-            "/container/md-records/md-record[@name='" + mdRecordName
-                + "']/publication/title";
+            "/container/md-records/md-record[@name='" + mdRecordName + "']/publication/creator/person/family-name";
+        String mdTitlePath = "/container/md-records/md-record[@name='" + mdRecordName + "']/publication/title";
 
         String lastModificationDateXPath = "/container/@last-modification-date";
 
@@ -952,130 +799,82 @@ public class ContainerUpdateTest extends ContainerTestBase {
         // mdRecordName);
         String mdRecordXml = retrieve(theContainerId);
         String oldCreatorName =
-            selectSingleNode(EscidocRestSoapTestBase.getDocument(mdRecordXml),
-                mdXPath).getTextContent();
+            selectSingleNode(EscidocRestSoapTestBase.getDocument(mdRecordXml), mdXPath).getTextContent();
         TripleStoreTestBase tripleStore = new TripleStoreTestBase();
         String result =
-            tripleStore
-                .requestMPT("<info:fedora/" + theContainerId + "> "
-                    + "<http://purl.org/dc/elements/1.1/creator>" + " *",
-                    "RDF/XML");
+            tripleStore.requestMPT("<info:fedora/" + theContainerId + "> "
+                + "<http://purl.org/dc/elements/1.1/creator>" + " *", "RDF/XML");
         String oldCreatorDcName =
-            selectSingleNode(EscidocRestSoapTestBase.getDocument(result),
-                XPATH_TRIPLE_STORE_DC_CREATOR).getTextContent();
+            selectSingleNode(EscidocRestSoapTestBase.getDocument(result), XPATH_TRIPLE_STORE_DC_CREATOR)
+                .getTextContent();
         String oldTitle =
-            selectSingleNode(
-                EscidocRestSoapTestBase.getDocument(theContainerXml),
-                "/container/properties/name").getTextContent();
-        assertTrue(oldCreatorName + " is not contained in DC 'creator' ",
-            oldCreatorDcName.endsWith(oldCreatorName));
+            selectSingleNode(EscidocRestSoapTestBase.getDocument(theContainerXml), "/container/properties/name")
+                .getTextContent();
+        assertTrue(oldCreatorName + " is not contained in DC 'creator' ", oldCreatorDcName.endsWith(oldCreatorName));
         Document newMdRecord =
-            (Document) substitute(
-                EscidocRestSoapTestBase.getDocument(mdRecordXml), mdXPath,
-                newName);
+            (Document) substitute(EscidocRestSoapTestBase.getDocument(mdRecordXml), mdXPath, newName);
         newMdRecord = (Document) substitute(newMdRecord, mdTitlePath, newTitle);
-        Node oldModDateNode =
-            selectSingleNode(newMdRecord, lastModificationDateXPath);
+        Node oldModDateNode = selectSingleNode(newMdRecord, lastModificationDateXPath);
 
         // String xml = updateMetadataRecord(theItemId, mdRecordName,
         // toString(
         // newMdRecord, false));
-        final String updatedXml =
-            update(theContainerId, toString(newMdRecord, false));
-        Document updateDocument =
-            EscidocRestSoapTestBase.getDocument(updatedXml);
-        Node newModDateNode =
-            selectSingleNode(updateDocument, lastModificationDateXPath);
+        final String updatedXml = update(theContainerId, toString(newMdRecord, false));
+        Document updateDocument = EscidocRestSoapTestBase.getDocument(updatedXml);
+        Node newModDateNode = selectSingleNode(updateDocument, lastModificationDateXPath);
 
-        assertDateBeforeAfter(oldModDateNode.getNodeValue(),
-            newModDateNode.getNodeValue());
+        assertDateBeforeAfter(oldModDateNode.getNodeValue(), newModDateNode.getNodeValue());
 
         assertXmlValidContainer(updatedXml);
         result =
-            tripleStore
-                .requestMPT("<info:fedora/" + theContainerId + "> "
-                    + "<http://purl.org/dc/elements/1.1/creator>" + " *",
-                    "RDF/XML");
+            tripleStore.requestMPT("<info:fedora/" + theContainerId + "> "
+                + "<http://purl.org/dc/elements/1.1/creator>" + " *", "RDF/XML");
         String newCreatorDcName =
-            selectSingleNode(EscidocRestSoapTestBase.getDocument(result),
-                XPATH_TRIPLE_STORE_DC_CREATOR).getTextContent();
-        assertTrue(newName + " is not contained in DC 'creator' ",
-            newCreatorDcName.endsWith(newName));
-        String title =
-            selectSingleNode(updateDocument, "/container/properties/name")
+            selectSingleNode(EscidocRestSoapTestBase.getDocument(result), XPATH_TRIPLE_STORE_DC_CREATOR)
                 .getTextContent();
+        assertTrue(newName + " is not contained in DC 'creator' ", newCreatorDcName.endsWith(newName));
+        String title = selectSingleNode(updateDocument, "/container/properties/name").getTextContent();
         assertTrue("title was not updated", title.equals(newTitle));
         String firstContainerVersion = retrieve(theContainerId + ":1");
         String firstVersionTitle =
-            selectSingleNode(getDocument(firstContainerVersion),
-                "/container/properties/name").getTextContent();
+            selectSingleNode(getDocument(firstContainerVersion), "/container/properties/name").getTextContent();
         assertTrue("title is wrong", firstVersionTitle.equals(oldTitle));
 
     }
 
     /**
      * Update container with Version status "released".
-     * 
-     * @test.name Update container with Version status "released".
-     * @test.id OM_UCO_1_3
-     * @test.input Existing Container ID, correct XML representation of the
-     *             container.
-     * @test.expected Since update on released object is not allowed:
-     *                InvalidStatusException expected. (Fail in first release.
-     *                (XML Container as described in the xml-Schema
-     *                "http://www.escidoc.de/schemas/container/0.1" <li>the
-     *                version status is "released"</li>))
-     * 
-     * @test.status Implemented, no update if released in first release
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOM_UCO_1_3() throws Exception {
-        submit(
-            theContainerId,
-            "<param last-modification-date=\""
-                + getLastModificationDateValue(EscidocRestSoapTestBase
-                    .getDocument(theContainerXml)) + "\"/>");
+        submit(theContainerId, "<param last-modification-date=\""
+            + getLastModificationDateValue(EscidocRestSoapTestBase.getDocument(theContainerXml)) + "\"/>");
 
         String pidParam;
-        if (getContainerClient().getPidConfig(
-            "cmm.Container.objectPid.setPidBeforeRelease", "true")
-            && !getContainerClient().getPidConfig(
-                "cmm.Container.objectPid.releaseWithoutPid", "false")) {
-            pidParam =
-                getPidParam(this.theContainerId, "http://somewhere"
-                    + this.theContainerId);
+        if (getContainerClient().getPidConfig("cmm.Container.objectPid.setPidBeforeRelease", "true")
+            && !getContainerClient().getPidConfig("cmm.Container.objectPid.releaseWithoutPid", "false")) {
+            pidParam = getPidParam(this.theContainerId, "http://somewhere" + this.theContainerId);
             assignObjectPid(this.theContainerId, pidParam);
         }
-        if (getContainerClient().getPidConfig(
-            "cmm.Container.versionPid.setPidBeforeRelease", "true")
-            && !getContainerClient().getPidConfig(
-                "cmm.Container.versionPid.releaseWithoutPid", "false")) {
+        if (getContainerClient().getPidConfig("cmm.Container.versionPid.setPidBeforeRelease", "true")
+            && !getContainerClient().getPidConfig("cmm.Container.versionPid.releaseWithoutPid", "false")) {
             String latestVersion = getLatestVersionObjidValue(theContainerXml);
-            pidParam =
-                getPidParam(latestVersion, "http://somewhere" + latestVersion);
+            pidParam = getPidParam(latestVersion, "http://somewhere" + latestVersion);
             assignVersionPid(latestVersion, pidParam);
         }
 
-        release(
-            theContainerId,
-            "<param last-modification-date=\""
-                + getLastModificationDateValue(EscidocRestSoapTestBase
-                    .getDocument(retrieve(theContainerId))) + "\"/>");
+        release(theContainerId, "<param last-modification-date=\""
+            + getLastModificationDateValue(EscidocRestSoapTestBase.getDocument(retrieve(theContainerId))) + "\"/>");
 
         String testStatus = "released";
         String xml = retrieve(theContainerId);
         Document newContainer = EscidocRestSoapTestBase.getDocument(xml);
-        selectSingleNodeAsserted(newContainer,
-            "/container/properties/version/status[text() = '" + testStatus
-                + "']");
+        selectSingleNodeAsserted(newContainer, "/container/properties/version/status[text() = '" + testStatus + "']");
 
         // change something
-        Node n =
-            selectSingleNode(newContainer,
-                "/container/properties/content-model-specific");
+        Node n = selectSingleNode(newContainer, "/container/properties/content-model-specific");
         n.appendChild(newContainer.createElement("nischt"));
 
         String newContainerXml = toString(newContainer, false);
@@ -1089,28 +888,14 @@ public class ContainerUpdateTest extends ContainerTestBase {
 
         // check last-modification-date, status, valid xml
         assertDateBeforeAfter(beforeTimestamp, afterTimestamp);
-        selectSingleNodeAsserted(newContainer,
-            "/container/properties/version/status[text() = '" + testStatus
-                + "']");
+        selectSingleNodeAsserted(newContainer, "/container/properties/version/status[text() = '" + testStatus + "']");
         assertXmlValidContainer(xml);
     }
 
     /**
      * Update container with Version status "pending" using lax mode.
-     * 
-     * @test.name Update container with Version status "pending" - Lax Mode.
-     * @test.id OM_UCO_1_5
-     * @test.input Existing Container ID, correct XML representation of the
-     *             container, all Lax attributes of md-records and md-record
-     *             elements are not provided within the XML data.
-     * @test.expected XML Container as described in the xml-Schema
-     *                "http://www.escidoc.de/schemas/container/0.1" <li>the
-     *                version status is "pending"</li>
-     * 
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Ignore("Update container with Version status pending using lax mode")
     @Test
@@ -1118,15 +903,11 @@ public class ContainerUpdateTest extends ContainerTestBase {
 
         final String createdXml = retrieve(theContainerId);
         assertNotNull("No data from retrieve", createdXml);
-        final Document toBeUpdatedDocument =
-            EscidocRestSoapTestBase.getDocument(createdXml);
-        final String createdLastModificationDate =
-            getLastModificationDateValue(toBeUpdatedDocument);
+        final Document toBeUpdatedDocument = EscidocRestSoapTestBase.getDocument(createdXml);
+        final String createdLastModificationDate = getLastModificationDateValue(toBeUpdatedDocument);
 
         // change something
-        Node n =
-            selectSingleNode(toBeUpdatedDocument,
-                XPATH_CONTAINER_PROPERTIES_CMS);
+        Node n = selectSingleNode(toBeUpdatedDocument, XPATH_CONTAINER_PROPERTIES_CMS);
         final String nameNischt = "nischt";
         n.appendChild(toBeUpdatedDocument.createElement(nameNischt));
 
@@ -1147,39 +928,25 @@ public class ContainerUpdateTest extends ContainerTestBase {
             updatedXml = update(theContainerId, toBeUpdatedXml);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Updating pending container failed. ", e);
+            EscidocRestSoapTestBase.failException("Updating pending container failed. ", e);
         }
         assertNotNull("No data from update", updatedXml);
         assertXmlValidContainer(updatedXml);
-        Document updatedDocument =
-            EscidocRestSoapTestBase.getDocument(updatedXml);
+        Document updatedDocument = EscidocRestSoapTestBase.getDocument(updatedXml);
         // check last-modification-date, status, valid xml
-        assertDateBeforeAfter(createdLastModificationDate,
-            getLastModificationDateValue(updatedDocument));
-        assertXmlEquals("Unexpected status. ", updatedDocument,
-            XPATH_CONTAINER_STATUS, STATE_PENDING);
-        assertXmlEquals("Unexpected current version status", updatedDocument,
-            XPATH_CONTAINER_CURRENT_VERSION_STATUS, STATE_PENDING);
+        assertDateBeforeAfter(createdLastModificationDate, getLastModificationDateValue(updatedDocument));
+        assertXmlEquals("Unexpected status. ", updatedDocument, XPATH_CONTAINER_STATUS, STATE_PENDING);
+        assertXmlEquals("Unexpected current version status", updatedDocument, XPATH_CONTAINER_CURRENT_VERSION_STATUS,
+            STATE_PENDING);
 
         // check if added element exists
-        assertXmlExists("Updated element not found", updatedDocument,
-            XPATH_CONTAINER_PROPERTIES_CMS + "/" + nameNischt);
+        assertXmlExists("Updated element not found", updatedDocument, XPATH_CONTAINER_PROPERTIES_CMS + "/" + nameNischt);
     }
 
     /**
      * Update non existing container.
-     * 
-     * @test.name Update non existing container.
-     * @test.id OM_UCO_2
-     * @test.input Non existing Container ID, correct XML representation of the
-     *             container.
-     * @test.expected Error message with reason(s) for failure.
-     * 
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOM_UCO_2() throws Exception {
@@ -1189,42 +956,26 @@ public class ContainerUpdateTest extends ContainerTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = ContainerNotFoundException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
     }
 
     /**
      * Update with incorrect xml-representation of the container.
-     * 
-     * @test.name Update with incorrect xml-representation of the container.
-     * @test.id OM_UCO_3_1
-     * @test.input Existing Container ID, incorrect XML representation of the
-     *             container. <li>Input does not adhere to the allowed Values
-     *             definded in the Admin Descriptor.</li>
-     * @test.expected Error message with reason(s) for failure.
-     * 
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     // commented out because there is no check of read-only elements
     // and attributes
     @Ignore("commented out because there is no check of read-only elements and attributes")
     @Test
     public void testOM_UCO_3_1() throws Exception {
-        Document container =
-            EscidocRestSoapTestBase.getDocument(theContainerXml);
+        Document container = EscidocRestSoapTestBase.getDocument(theContainerXml);
         if (Constants.TRANSPORT_REST == getTransport()) {
-            container =
-                (Document) substitute(container,
-                    "/container/admin-descriptor/@href", "nothing");
+            container = (Document) substitute(container, "/container/admin-descriptor/@href", "nothing");
         }
         else {
-            container =
-                (Document) substitute(container,
-                    "/container/admin-descriptor/@objid", "nothing");
+            container = (Document) substitute(container, "/container/admin-descriptor/@objid", "nothing");
         }
 
         try {
@@ -1236,36 +987,23 @@ public class ContainerUpdateTest extends ContainerTestBase {
             // if(getTransport() == Constants.TRANSPORT_SOAP){
             // ec = InvalidStatusException.class;
             // }
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
     }
 
     /**
      * Update with incorrect xml-representation of the container.
-     * 
-     * @test.name Update with incorrect xml-representation of the container.
-     * @test.id OM_UCO_3_2
-     * @test.input Existing Container ID, incorrect XML representation of the
-     *             container. <li>Referenced context ID does not exist.</li>
-     * @test.expected Error message with reason(s) for failure.
-     * 
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     // Commented out, because business logic does not check read-only properties
     @Ignore("Commented out because business logic does not check read-only properties")
     @Test
     public void testOM_UCO_3_2() throws Exception {
-        Document container =
-            EscidocRestSoapTestBase.getDocument(theContainerXml);
+        Document container = EscidocRestSoapTestBase.getDocument(theContainerXml);
 
         container =
-            (Document) substitute(container,
-                "/container/properties/context/@href",
-                "/ir/context/escidoc:nonexist1");
+            (Document) substitute(container, "/container/properties/context/@href", "/ir/context/escidoc:nonexist1");
 
         try {
             update(theContainerId, toString(container, true));
@@ -1273,25 +1011,15 @@ public class ContainerUpdateTest extends ContainerTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = ReadonlyAttributeViolationException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
 
     }
 
     /**
      * Update with incorrect xml-representation of the container.
-     * 
-     * @test.name Update with incorrect xml-representation of the container.
-     * @test.id OM_UCO_3_3
-     * @test.input Existing Container ID, incorrect XML representation of the
-     *             container. <li>Referenced object in toc does not exist.</li>
-     * @test.expected Error message with reason(s) for failure.
-     * 
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Ignore("Update with incorrect xml-representation of the container")
     @Test
@@ -1301,17 +1029,8 @@ public class ContainerUpdateTest extends ContainerTestBase {
 
     /**
      * Update with incorrect xml-representation of the container.
-     * 
-     * @test.name Update with incorrect xml-representation of the container.
-     * @test.id OM_UCO_3_4
-     * @test.input Existing Container ID, incorrect XML representation of the
-     *             container. <li>Read only properties are changed.</li>
-     * @test.expected Error message with reason(s) for failure.
-     * 
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     // Commented out, because business logic does not check read-only properties
     @Ignore("Commented out because business logic does not check read-only properties")
@@ -1322,17 +1041,8 @@ public class ContainerUpdateTest extends ContainerTestBase {
 
     /**
      * Update without container ID.
-     * 
-     * @test.name Update without container ID.
-     * @test.id OM_UCO_4_1
-     * @test.input Container ID not provided, correct XML representation of the
-     *             container.
-     * @test.expected Error message with reason(s) for failure.
-     * 
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOM_UCO_4_1() throws Exception {
@@ -1342,23 +1052,14 @@ public class ContainerUpdateTest extends ContainerTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
     }
 
     /**
      * Update without xml representation.
-     * 
-     * @test.name Update without xml representation.
-     * @test.id OM_UCO_4_2
-     * @test.input Container ID, no XML representation of the container.
-     * @test.expected Error message with reason(s) for failure.
-     * 
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOM_UCO_4_2() throws Exception {
@@ -1368,8 +1069,7 @@ public class ContainerUpdateTest extends ContainerTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
     }
 
@@ -1391,29 +1091,14 @@ public class ContainerUpdateTest extends ContainerTestBase {
 
     /**
      * Optimistic Locking Test.
-     * 
-     * @test.name Optimistic Locking Test
-     * @test.id OM_UCO_5_2
-     * @test.input Container ID, XML representation of the container where
-     *             last-modification-date timestamp of the XML Container is
-     *             older then the Lastmodification Timestamp in the System. (
-     *             Update not allowed!).
-     * @test.expected Error message with reason(s) for failure.
-     * 
-     * @test.status Not Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOM_UCO_5_2() throws Exception {
-        Document container =
-            EscidocRestSoapTestBase.getDocument(theContainerXml);
+        Document container = EscidocRestSoapTestBase.getDocument(theContainerXml);
 
-        container =
-            (Document) substitute(container,
-                "/container/@last-modification-date",
-                "1970-01-01T01:00:00.000Z");
+        container = (Document) substitute(container, "/container/@last-modification-date", "1970-01-01T01:00:00.000Z");
 
         try {
             update(theContainerId, toString(container, true));
@@ -1421,66 +1106,39 @@ public class ContainerUpdateTest extends ContainerTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = OptimisticLockingException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
     }
 
     /**
      * Revision status is "withdrawn".
-     * 
-     * @test.name Revision status is "withdrawn".
-     * @test.id OM_UCO_6
-     * @test.input Container ID, XML representation of the container, revision
-     *             status is withdrawn.
-     * 
-     * @test.expected Error message with reason(s) for failure.
-     * 
-     * @test.status Not Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOM_UCO_6() throws Exception {
-        submit(
-            theContainerId,
-            "<param last-modification-date=\""
-                + getLastModificationDateValue(EscidocRestSoapTestBase
-                    .getDocument(theContainerXml)) + "\"/>");
+        submit(theContainerId, "<param last-modification-date=\""
+            + getLastModificationDateValue(EscidocRestSoapTestBase.getDocument(theContainerXml)) + "\"/>");
 
         // FIXME replace this code through releaseWithPid();
         String pidParam;
-        if (getContainerClient().getPidConfig(
-            "cmm.Container.objectPid.setPidBeforeRelease", "true")
-            && !getContainerClient().getPidConfig(
-                "cmm.Container.objectPid.releaseWithoutPid", "false")) {
-            pidParam =
-                getPidParam(this.theContainerId, "http://somewhere"
-                    + this.theContainerId);
+        if (getContainerClient().getPidConfig("cmm.Container.objectPid.setPidBeforeRelease", "true")
+            && !getContainerClient().getPidConfig("cmm.Container.objectPid.releaseWithoutPid", "false")) {
+            pidParam = getPidParam(this.theContainerId, "http://somewhere" + this.theContainerId);
             assignObjectPid(this.theContainerId, pidParam);
         }
-        if (getContainerClient().getPidConfig(
-            "cmm.Container.versionPid.setPidBeforeRelease", "true")
-            && !getContainerClient().getPidConfig(
-                "cmm.Container.versionPid.releaseWithoutPid", "false")) {
+        if (getContainerClient().getPidConfig("cmm.Container.versionPid.setPidBeforeRelease", "true")
+            && !getContainerClient().getPidConfig("cmm.Container.versionPid.releaseWithoutPid", "false")) {
             String latestVersion = getLatestVersionObjidValue(theContainerXml);
-            pidParam =
-                getPidParam(latestVersion, "http://somewhere" + latestVersion);
+            pidParam = getPidParam(latestVersion, "http://somewhere" + latestVersion);
             assignVersionPid(latestVersion, pidParam);
         }
 
-        release(
-            theContainerId,
-            "<param last-modification-date=\""
-                + getLastModificationDateValue(EscidocRestSoapTestBase
-                    .getDocument(retrieve(theContainerId))) + "\"/>");
-        withdraw(
-            theContainerId,
-            "<param last-modification-date=\""
-                + getLastModificationDateValue(EscidocRestSoapTestBase
-                    .getDocument(retrieve(theContainerId)))
-                + "\"><withdraw-comment>Example withdraw comment.</withdraw-comment></param>");
+        release(theContainerId, "<param last-modification-date=\""
+            + getLastModificationDateValue(EscidocRestSoapTestBase.getDocument(retrieve(theContainerId))) + "\"/>");
+        withdraw(theContainerId, "<param last-modification-date=\""
+            + getLastModificationDateValue(EscidocRestSoapTestBase.getDocument(retrieve(theContainerId)))
+            + "\"><withdraw-comment>Example withdraw comment.</withdraw-comment></param>");
 
         try {
             // remove try-catch if update of released containers is allowed
@@ -1490,36 +1148,31 @@ public class ContainerUpdateTest extends ContainerTestBase {
         catch (final Exception e) {
             Class<?> ec = InvalidStatusException.class;
             // Class<?> ec = ContainerNotFoundException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
     }
 
     /**
-     * Test successfully updating container with two existiing relations. No new
-     * relations will be added while update, one existing relation will be
-     * deleted while update.
+     * Test successfully updating container with two existiing relations. No new relations will be added while update,
+     * one existing relation will be deleted while update.
      */
     @Test
     public void testDeleteRelation() throws Exception {
 
-        String container =
-            getContainerTemplate("create_container_WithoutMembers_v1.1.xml");
+        String container = getContainerTemplate("create_container_WithoutMembers_v1.1.xml");
         assertXmlValidContainer(container);
 
         String theContainerXml1 = create(container);
         assertXmlValidContainer(theContainerXml);
 
-        Document document1 =
-            EscidocRestSoapTestBase.getDocument(theContainerXml1);
+        Document document1 = EscidocRestSoapTestBase.getDocument(theContainerXml1);
         String containerId1 = getObjidValue(document1);
 
         String theContainerXml2 = create(container);
 
         assertXmlValidContainer(theContainerXml2);
 
-        Document document2 =
-            EscidocRestSoapTestBase.getDocument(theContainerXml2);
+        Document document2 = EscidocRestSoapTestBase.getDocument(theContainerXml2);
         String containerId2 = getObjidValue(document2);
 
         String href1 = "/ir/container/" + containerId1;
@@ -1527,74 +1180,58 @@ public class ContainerUpdateTest extends ContainerTestBase {
         String containerForCreateWithRelationsXml =
             getContainerTemplate("create_container_WithoutMembers_v1.1_WithRelations.xml");
         containerForCreateWithRelationsXml =
-            containerForCreateWithRelationsXml.replaceAll("##CONTAINER_ID1##",
-                containerId1);
+            containerForCreateWithRelationsXml.replaceAll("##CONTAINER_ID1##", containerId1);
         containerForCreateWithRelationsXml =
-            containerForCreateWithRelationsXml.replaceAll("##CONTAINER_ID2##",
-                containerId2);
+            containerForCreateWithRelationsXml.replaceAll("##CONTAINER_ID2##", containerId2);
         containerForCreateWithRelationsXml =
-            containerForCreateWithRelationsXml.replaceAll(
-                "##CONTAINER_HREF1##", href1);
+            containerForCreateWithRelationsXml.replaceAll("##CONTAINER_HREF1##", href1);
         containerForCreateWithRelationsXml =
-            containerForCreateWithRelationsXml.replaceAll(
-                "##CONTAINER_HREF2##", href2);
+            containerForCreateWithRelationsXml.replaceAll("##CONTAINER_HREF2##", href2);
 
         String xml = create(containerForCreateWithRelationsXml);
         Document container3 = EscidocRestSoapTestBase.getDocument(xml);
         String createdContainerId3 = getObjidValue(container3);
-        NodeList relations =
-            selectNodeList(container3, "/container/relations/relation");
+        NodeList relations = selectNodeList(container3, "/container/relations/relation");
 
-        Node xmlcontainerWithoutFirstRelation =
-            deleteElement(container3, "/container/relations/relation[1]");
-        String updatedXml =
-            update(createdContainerId3,
-                toString(xmlcontainerWithoutFirstRelation, true));
+        Node xmlcontainerWithoutFirstRelation = deleteElement(container3, "/container/relations/relation[1]");
+        String updatedXml = update(createdContainerId3, toString(xmlcontainerWithoutFirstRelation, true));
         assertXmlValidContainer(updatedXml);
-        Node updatedcontainer =
-            EscidocRestSoapTestBase.getDocument(updatedXml);
+        Node updatedcontainer = EscidocRestSoapTestBase.getDocument(updatedXml);
 
-        NodeList relationsAfterUpdate =
-            selectNodeList(updatedcontainer, "/container/relations/relation");
+        NodeList relationsAfterUpdate = selectNodeList(updatedcontainer, "/container/relations/relation");
         assertXmlValidContainer(xml);
-        assertEquals("Number of relations is wrong ", relations.getLength(),
-            relationsAfterUpdate.getLength() + 1);
+        assertEquals("Number of relations is wrong ", relations.getLength(), relationsAfterUpdate.getLength() + 1);
 
     }
 
     /**
-     * Test successfully updating container with two existing relations. One new
-     * relation will be added while update, one existing relation will be
-     * deleted while update.
+     * Test successfully updating container with two existing relations. One new relation will be added while update,
+     * one existing relation will be deleted while update.
      */
     @Test
     public void testRelationsUpdate() throws Exception {
 
-        String container0 =
-            getContainerTemplate("create_container_WithoutMembers_v1.1.xml");
+        String container0 = getContainerTemplate("create_container_WithoutMembers_v1.1.xml");
 
         assertXmlValidContainer(container0);
         String theContainerXml1 = create(container0);
         assertXmlValidContainer(theContainerXml1);
 
-        Document document1 =
-            EscidocRestSoapTestBase.getDocument(theContainerXml1);
+        Document document1 = EscidocRestSoapTestBase.getDocument(theContainerXml1);
         String createdContainerId1 = getObjidValue(document1);
 
         String theContainerXml2 = create(container0);
 
         assertXmlValidContainer(theContainerXml2);
 
-        Document document2 =
-            EscidocRestSoapTestBase.getDocument(theContainerXml2);
+        Document document2 = EscidocRestSoapTestBase.getDocument(theContainerXml2);
         String createdContainerId2 = getObjidValue(document2);
 
         String theContainerXml3 = create(container0);
 
         assertXmlValidContainer(theContainerXml3);
 
-        Document document3 =
-            EscidocRestSoapTestBase.getDocument(theContainerXml3);
+        Document document3 = EscidocRestSoapTestBase.getDocument(theContainerXml3);
         String createdContainerIdToAdd = getObjidValue(document3);
         String hrefToAdd = "/ir/container/" + createdContainerIdToAdd;
         String href1 = "/ir/container/" + createdContainerId1;
@@ -1604,24 +1241,17 @@ public class ContainerUpdateTest extends ContainerTestBase {
             getContainerTemplate("create_container_WithoutMembers_v1.1_WithRelations.xml");
 
         containerForCreateWithRelationsXml =
-            containerForCreateWithRelationsXml.replaceAll("##CONTAINER_ID1##",
-                createdContainerId1);
+            containerForCreateWithRelationsXml.replaceAll("##CONTAINER_ID1##", createdContainerId1);
         containerForCreateWithRelationsXml =
-            containerForCreateWithRelationsXml.replaceAll("##CONTAINER_ID2##",
-                createdContainerId2);
+            containerForCreateWithRelationsXml.replaceAll("##CONTAINER_ID2##", createdContainerId2);
         containerForCreateWithRelationsXml =
-            containerForCreateWithRelationsXml.replaceAll(
-                "##CONTAINER_HREF1##", href1);
+            containerForCreateWithRelationsXml.replaceAll("##CONTAINER_HREF1##", href1);
         containerForCreateWithRelationsXml =
-            containerForCreateWithRelationsXml.replaceAll(
-                "##CONTAINER_HREF2##", href2);
+            containerForCreateWithRelationsXml.replaceAll("##CONTAINER_HREF2##", href2);
         Document containerForCreateWithRelations =
-            EscidocRestSoapTestBase
-                .getDocument(containerForCreateWithRelationsXml);
+            EscidocRestSoapTestBase.getDocument(containerForCreateWithRelationsXml);
 
-        NodeList relations =
-            selectNodeList(containerForCreateWithRelations,
-                "/container/relations/relation");
+        NodeList relations = selectNodeList(containerForCreateWithRelations, "/container/relations/relation");
 
         String xml = create(containerForCreateWithRelationsXml);
         Document container = EscidocRestSoapTestBase.getDocument(xml);
@@ -1630,73 +1260,53 @@ public class ContainerUpdateTest extends ContainerTestBase {
 
         if (Constants.TRANSPORT_REST == getTransport()) {
             targetRelationToLeave =
-                selectSingleNode(container,
-                    "/container/relations/relation[2]/@href").getTextContent();
+                selectSingleNode(container, "/container/relations/relation[2]/@href").getTextContent();
         }
         else {
             targetRelationToLeave =
-                selectSingleNode(container,
-                    "/container/relations/relation[2]/@objid").getTextContent();
+                selectSingleNode(container, "/container/relations/relation[2]/@objid").getTextContent();
         }
 
         String targetToAdd = null;
         String targetRelationToRemove = null;
         if (Constants.TRANSPORT_REST == getTransport()) {
-            Node targetHref =
-                selectSingleNode(container,
-                    "/container/relations/relation[1]/@href");
+            Node targetHref = selectSingleNode(container, "/container/relations/relation[1]/@href");
             targetRelationToRemove = targetHref.getTextContent();
             targetHref.setNodeValue(hrefToAdd);
             targetToAdd = hrefToAdd;
 
         }
         else {
-            Node targetObjectId =
-                selectSingleNode(container,
-                    "/container/relations/relation[1]/@objid");
+            Node targetObjectId = selectSingleNode(container, "/container/relations/relation[1]/@objid");
 
             targetObjectId.setNodeValue(createdContainerIdToAdd);
             targetToAdd = createdContainerIdToAdd;
         }
-        String updatedXml =
-            update(createdContainerId3, toString(container, true));
+        String updatedXml = update(createdContainerId3, toString(container, true));
         assertXmlValidContainer(updatedXml);
-        Document updatedcontainer =
-            EscidocRestSoapTestBase.getDocument(updatedXml);
+        Document updatedcontainer = EscidocRestSoapTestBase.getDocument(updatedXml);
 
-        NodeList relationsAfterUpdate =
-            selectNodeList(updatedcontainer, "/container/relations/relation");
+        NodeList relationsAfterUpdate = selectNodeList(updatedcontainer, "/container/relations/relation");
         String targetNew1 = null;
         String targetNew2 = null;
         if (Constants.TRANSPORT_REST == getTransport()) {
-            targetNew1 =
-                selectSingleNode(updatedcontainer,
-                    "/container/relations/relation[1]/@href").getTextContent();
+            targetNew1 = selectSingleNode(updatedcontainer, "/container/relations/relation[1]/@href").getTextContent();
 
-            targetNew2 =
-                selectSingleNode(updatedcontainer,
-                    "/container/relations/relation[2]/@href").getTextContent();
+            targetNew2 = selectSingleNode(updatedcontainer, "/container/relations/relation[2]/@href").getTextContent();
         }
         else {
-            targetNew1 =
-                selectSingleNode(updatedcontainer,
-                    "/container/relations/relation[1]/@objid").getTextContent();
-            targetNew2 =
-                selectSingleNode(updatedcontainer,
-                    "/container/relations/relation[2]/@objid").getTextContent();
+            targetNew1 = selectSingleNode(updatedcontainer, "/container/relations/relation[1]/@objid").getTextContent();
+            targetNew2 = selectSingleNode(updatedcontainer, "/container/relations/relation[2]/@objid").getTextContent();
         }
         assertXmlValidContainer(xml);
-        assertEquals("Number of relations is wrong ", relations.getLength(),
-            relationsAfterUpdate.getLength());
+        assertEquals("Number of relations is wrong ", relations.getLength(), relationsAfterUpdate.getLength());
 
         if (targetNew2.equals(targetRelationToLeave)) {
 
-            assertEquals("Relation target Id is wrong ", targetNew1,
-                targetToAdd);
+            assertEquals("Relation target Id is wrong ", targetNew1, targetToAdd);
         }
         else {
-            assertEquals("Relation target Id is wrong ", targetNew1,
-                targetRelationToLeave);
+            assertEquals("Relation target Id is wrong ", targetNew1, targetRelationToLeave);
 
         }
 
@@ -1704,57 +1314,41 @@ public class ContainerUpdateTest extends ContainerTestBase {
         xml = retrieve(createdContainerId3);
         updatedcontainer = getDocument(xml);
 
-        relationsAfterUpdate =
-            selectNodeList(updatedcontainer, "/container/relations/relation");
+        relationsAfterUpdate = selectNodeList(updatedcontainer, "/container/relations/relation");
 
         // href/objid of relations after update
         targetNew1 = null;
         targetNew2 = null;
         if (getTransport() == Constants.TRANSPORT_REST) {
-            targetNew1 =
-                selectSingleNode(updatedcontainer,
-                    "/container/relations/relation[1]/@href").getTextContent();
-            targetNew2 =
-                selectSingleNode(updatedcontainer,
-                    "/container/relations/relation[2]/@href").getTextContent();
+            targetNew1 = selectSingleNode(updatedcontainer, "/container/relations/relation[1]/@href").getTextContent();
+            targetNew2 = selectSingleNode(updatedcontainer, "/container/relations/relation[2]/@href").getTextContent();
         }
         else {
-            targetNew1 =
-                selectSingleNode(updatedcontainer,
-                    "/container/relations/relation[1]/@objid").getTextContent();
-            targetNew2 =
-                selectSingleNode(updatedcontainer,
-                    "/container/relations/relation[2]/@objid").getTextContent();
+            targetNew1 = selectSingleNode(updatedcontainer, "/container/relations/relation[1]/@objid").getTextContent();
+            targetNew2 = selectSingleNode(updatedcontainer, "/container/relations/relation[2]/@objid").getTextContent();
         }
 
         assertXmlValidContainer(xml);
         // assert number of relations
-        assertEquals("Number of relations is wrong ", relations.getLength(),
-            relationsAfterUpdate.getLength());
+        assertEquals("Number of relations is wrong ", relations.getLength(), relationsAfterUpdate.getLength());
 
         // assert ???
         if (targetNew2.equals(targetRelationToLeave)) {
-            assertEquals("Relation target Id is wrong ", targetNew1,
-                targetToAdd);
+            assertEquals("Relation target Id is wrong ", targetNew1, targetToAdd);
         }
         else {
-            assertEquals("Relation target Id is wrong ", targetNew1,
-                targetRelationToLeave);
+            assertEquals("Relation target Id is wrong ", targetNew1, targetRelationToLeave);
         }
 
         // assert first relation is no longer there
         Node removedNode =
-            selectSingleNode(updatedcontainer,
-                "/container/relations/relation[@* = '" + targetRelationToRemove
-                    + "']");
+            selectSingleNode(updatedcontainer, "/container/relations/relation[@* = '" + targetRelationToRemove + "']");
         assertNull(removedNode);
         // assert third relation is there
-        selectSingleNodeAsserted(updatedcontainer,
-            "/container/relations/relation[@* = '" + targetToAdd + "']");
+        selectSingleNodeAsserted(updatedcontainer, "/container/relations/relation[@* = '" + targetToAdd + "']");
         // assert second relation is still there
-        selectSingleNodeAsserted(updatedcontainer,
-            "/container/relations/relation[@* = '" + targetRelationToLeave
-                + "']");
+        selectSingleNodeAsserted(updatedcontainer, "/container/relations/relation[@* = '" + targetRelationToLeave
+            + "']");
 
     }
 
@@ -1763,19 +1357,16 @@ public class ContainerUpdateTest extends ContainerTestBase {
      */
     @Test
     public void testRelationsRemoveUpdate() throws Exception {
-        String containerTargetTemplate =
-            getContainerTemplate("create_container_WithoutMembers_v1.1.xml");
+        String containerTargetTemplate = getContainerTemplate("create_container_WithoutMembers_v1.1.xml");
 
         String containerXml1 = create(containerTargetTemplate);
         assertXmlValidContainer(containerXml1);
-        Document document1 =
-            EscidocRestSoapTestBase.getDocument(containerXml1);
+        Document document1 = EscidocRestSoapTestBase.getDocument(containerXml1);
         String containerId1 = getObjidValue(document1);
 
         String containerXml2 = create(containerTargetTemplate);
         assertXmlValidContainer(containerXml2);
-        Document document2 =
-            EscidocRestSoapTestBase.getDocument(containerXml2);
+        Document document2 = EscidocRestSoapTestBase.getDocument(containerXml2);
         String containerId2 = getObjidValue(document2);
 
         String containerHref1 = "/ir/container/" + containerId1;
@@ -1785,20 +1376,15 @@ public class ContainerUpdateTest extends ContainerTestBase {
             getContainerTemplate("create_container_WithoutMembers_v1.1_WithRelations.xml");
 
         containerForCreateWithRelationsXml =
-            containerForCreateWithRelationsXml.replaceAll("##CONTAINER_ID1##",
-                containerId1);
+            containerForCreateWithRelationsXml.replaceAll("##CONTAINER_ID1##", containerId1);
         containerForCreateWithRelationsXml =
-            containerForCreateWithRelationsXml.replaceAll("##CONTAINER_ID2##",
-                containerId2);
+            containerForCreateWithRelationsXml.replaceAll("##CONTAINER_ID2##", containerId2);
         containerForCreateWithRelationsXml =
-            containerForCreateWithRelationsXml.replaceAll(
-                "##CONTAINER_HREF1##", containerHref1);
+            containerForCreateWithRelationsXml.replaceAll("##CONTAINER_HREF1##", containerHref1);
         containerForCreateWithRelationsXml =
-            containerForCreateWithRelationsXml.replaceAll(
-                "##CONTAINER_HREF2##", containerHref2);
+            containerForCreateWithRelationsXml.replaceAll("##CONTAINER_HREF2##", containerHref2);
         Document containerForCreateWithRelations =
-            EscidocRestSoapTestBase
-                .getDocument(containerForCreateWithRelationsXml);
+            EscidocRestSoapTestBase.getDocument(containerForCreateWithRelationsXml);
 
         // create container with two relations
         String xml = create(containerForCreateWithRelationsXml);
@@ -1807,55 +1393,43 @@ public class ContainerUpdateTest extends ContainerTestBase {
 
         // check for two relations
         selectSingleNodeAsserted(container, "/container/relations/relation[2]");
-        selectSingleNodeAsserted(getDocument(retrieve(containerId)),
-            "/container/relations/relation[2]");
+        selectSingleNodeAsserted(getDocument(retrieve(containerId)), "/container/relations/relation[2]");
 
         // remove relations and update
-        Node containerWithoutRelations =
-            deleteElement(container, "/container/relations");
-        String containerWithoutRelationsXml =
-            toString(containerWithoutRelations, false);
+        Node containerWithoutRelations = deleteElement(container, "/container/relations");
+        String containerWithoutRelationsXml = toString(containerWithoutRelations, false);
         xml = update(containerId, containerWithoutRelationsXml);
         Document updatedContainer = getDocument(xml);
 
         // check for no relation
-        Node relation =
-            selectSingleNode(updatedContainer,
-                "/container/relations/relation[1]");
+        Node relation = selectSingleNode(updatedContainer, "/container/relations/relation[1]");
         assertNull("Found unexpected relation after update.", relation);
         relation =
-            selectSingleNode(
-                getDocument(retrieve(getObjidValue(updatedContainer))),
-                "/container/relations/relation[1]");
-        assertNull("Found unexpected relation in retrieve after update.",
-            relation);
+            selectSingleNode(getDocument(retrieve(getObjidValue(updatedContainer))), "/container/relations/relation[1]");
+        assertNull("Found unexpected relation in retrieve after update.", relation);
 
     }
 
     /**
-     * Test declining updating of an container with a new relation, which has a
-     * non existing predicate.
+     * Test declining updating of an container with a new relation, which has a non existing predicate.
      */
     @Test
     public void testRelationsUpdateWithWrongPredicate() throws Exception {
 
-        String container =
-            getContainerTemplate("create_container_WithoutMembers_v1.1.xml");
+        String container = getContainerTemplate("create_container_WithoutMembers_v1.1.xml");
 
         assertXmlValidContainer(container);
         String theContainerXml1 = create(container);
         assertXmlValidContainer(theContainerXml);
 
-        Document document1 =
-            EscidocRestSoapTestBase.getDocument(theContainerXml1);
+        Document document1 = EscidocRestSoapTestBase.getDocument(theContainerXml1);
         String createdContainerId1 = getObjidValue(document1);
 
         String theContainerXml2 = create(container);
 
         assertXmlValidContainer(theContainerXml2);
 
-        Document document2 =
-            EscidocRestSoapTestBase.getDocument(theContainerXml2);
+        Document document2 = EscidocRestSoapTestBase.getDocument(theContainerXml2);
         String createdContainerId2 = getObjidValue(document2);
 
         String href1 = "/ir/container/" + createdContainerId1;
@@ -1864,65 +1438,53 @@ public class ContainerUpdateTest extends ContainerTestBase {
             getContainerTemplate("create_container_WithoutMembers_v1.1_WithRelations.xml");
 
         containerForCreateWithRelationsXml =
-            containerForCreateWithRelationsXml.replaceAll("##CONTAINER_ID1##",
-                createdContainerId1);
+            containerForCreateWithRelationsXml.replaceAll("##CONTAINER_ID1##", createdContainerId1);
         containerForCreateWithRelationsXml =
-            containerForCreateWithRelationsXml.replaceAll("##CONTAINER_ID2##",
-                createdContainerId2);
+            containerForCreateWithRelationsXml.replaceAll("##CONTAINER_ID2##", createdContainerId2);
         containerForCreateWithRelationsXml =
-            containerForCreateWithRelationsXml.replaceAll(
-                "##CONTAINER_HREF1##", href1);
+            containerForCreateWithRelationsXml.replaceAll("##CONTAINER_HREF1##", href1);
         containerForCreateWithRelationsXml =
-            containerForCreateWithRelationsXml.replaceAll(
-                "##CONTAINER_HREF2##", href2);
+            containerForCreateWithRelationsXml.replaceAll("##CONTAINER_HREF2##", href2);
 
         String xml = create(containerForCreateWithRelationsXml);
         Document container3 = EscidocRestSoapTestBase.getDocument(xml);
         String createdContainerId3 = getObjidValue(container3);
-        Node predicate =
-            selectSingleNode(container3,
-                "/container/relations/relation[1]/@predicate");
+        Node predicate = selectSingleNode(container3, "/container/relations/relation[1]/@predicate");
 
         predicate.setNodeValue("bla");
 
         try {
             update(createdContainerId3, toString(container3, true));
-            fail("No exception occured on added an relation with non existing predicate "
-                + "to the container");
+            fail("No exception occured on added an relation with non existing predicate " + "to the container");
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                "RelationPredicateNotFoundException.",
+            EscidocRestSoapTestBase.assertExceptionType("RelationPredicateNotFoundException.",
                 RelationPredicateNotFoundException.class, e);
         }
 
     }
 
     /**
-     * Test declining updating of an container with a new relation, which has a
-     * non existing target.
+     * Test declining updating of an container with a new relation, which has a non existing target.
      */
     @Test
     public void testRelationsUpdateWithWrongTarget() throws Exception {
 
-        String container =
-            getContainerTemplate("create_container_WithoutMembers_v1.1.xml");
+        String container = getContainerTemplate("create_container_WithoutMembers_v1.1.xml");
 
         assertXmlValidContainer(container);
         String theContainerXml1 = create(container);
 
         assertXmlValidContainer(theContainerXml);
 
-        Document document1 =
-            EscidocRestSoapTestBase.getDocument(theContainerXml1);
+        Document document1 = EscidocRestSoapTestBase.getDocument(theContainerXml1);
         String createdContainerId1 = getObjidValue(document1);
 
         String theContainerXml2 = create(container);
 
         assertXmlValidContainer(theContainerXml2);
 
-        Document document2 =
-            EscidocRestSoapTestBase.getDocument(theContainerXml2);
+        Document document2 = EscidocRestSoapTestBase.getDocument(theContainerXml2);
         String createdContainerId2 = getObjidValue(document2);
 
         String href1 = "/ir/container/" + createdContainerId1;
@@ -1931,61 +1493,48 @@ public class ContainerUpdateTest extends ContainerTestBase {
         String containerForCreateWithRelationsXml =
             getContainerTemplate("create_container_WithoutMembers_v1.1_WithRelations.xml");
         containerForCreateWithRelationsXml =
-            containerForCreateWithRelationsXml.replaceAll("##CONTAINER_ID1##",
-                createdContainerId1);
+            containerForCreateWithRelationsXml.replaceAll("##CONTAINER_ID1##", createdContainerId1);
         containerForCreateWithRelationsXml =
-            containerForCreateWithRelationsXml.replaceAll("##CONTAINER_ID2##",
-                createdContainerId2);
+            containerForCreateWithRelationsXml.replaceAll("##CONTAINER_ID2##", createdContainerId2);
         containerForCreateWithRelationsXml =
-            containerForCreateWithRelationsXml.replaceAll(
-                "##CONTAINER_HREF1##", href1);
+            containerForCreateWithRelationsXml.replaceAll("##CONTAINER_HREF1##", href1);
         containerForCreateWithRelationsXml =
-            containerForCreateWithRelationsXml.replaceAll(
-                "##CONTAINER_HREF2##", href2);
+            containerForCreateWithRelationsXml.replaceAll("##CONTAINER_HREF2##", href2);
 
         String xml = create(containerForCreateWithRelationsXml);
 
         Document container3 = EscidocRestSoapTestBase.getDocument(xml);
         String createdContainerId3 = getObjidValue(container3);
         if (Constants.TRANSPORT_REST == getTransport()) {
-            Node targetId =
-                selectSingleNode(container3,
-                    "/container/relations/relation[1]/@href");
+            Node targetId = selectSingleNode(container3, "/container/relations/relation[1]/@href");
             targetId.setNodeValue("bla");
         }
         else {
-            Node targetHref =
-                selectSingleNode(container3,
-                    "/container/relations/relation[1]/@objid");
+            Node targetHref = selectSingleNode(container3, "/container/relations/relation[1]/@objid");
             targetHref.setNodeValue("bla");
         }
 
         try {
             update(createdContainerId3, toString(container3, true));
-            fail("No exception occured on added an relation with non "
-                + "existing target to the container");
+            fail("No exception occured on added an relation with non " + "existing target to the container");
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                "ReferencedResourceNotFoundException.",
+            EscidocRestSoapTestBase.assertExceptionType("ReferencedResourceNotFoundException.",
                 ReferencedResourceNotFoundException.class, e);
         }
     }
 
     // The test is commented out because it is obsolete (rest/soap distinction)
+
     /**
-     * Test declining updating of an item which relation id attributes are not
-     * equal
+     * Test declining updating of an item which relation id attributes are not equal
      */
     @Ignore("update item which relation id attributes are not equal - commented out because it is obsolete (rest/soap distinction)")
     @Test
-    public void testRelationsUpdateWithUnequalIdsAttributes()
-        throws Exception {
+    public void testRelationsUpdateWithUnequalIdsAttributes() throws Exception {
 
-        String createdContainerId1 =
-            createContainerFromTemplate("create_container_WithoutMembers_v1.1.xml");
-        String createdContainerId2 =
-            createContainerFromTemplate("create_container_WithoutMembers_v1.1.xml");
+        String createdContainerId1 = createContainerFromTemplate("create_container_WithoutMembers_v1.1.xml");
+        String createdContainerId2 = createContainerFromTemplate("create_container_WithoutMembers_v1.1.xml");
 
         String href1 = "/ir/container/" + createdContainerId1;
         String href2 = "/ir/container/" + createdContainerId2;
@@ -1994,17 +1543,13 @@ public class ContainerUpdateTest extends ContainerTestBase {
             getContainerTemplate("create_container_WithoutMembers_v1.1_WithRelations.xml");
 
         containerForCreateWithRelationsXml =
-            containerForCreateWithRelationsXml.replaceAll("##CONTAINER_ID1##",
-                createdContainerId1);
+            containerForCreateWithRelationsXml.replaceAll("##CONTAINER_ID1##", createdContainerId1);
         containerForCreateWithRelationsXml =
-            containerForCreateWithRelationsXml.replaceAll("##CONTAINER_ID2##",
-                createdContainerId2);
+            containerForCreateWithRelationsXml.replaceAll("##CONTAINER_ID2##", createdContainerId2);
         containerForCreateWithRelationsXml =
-            containerForCreateWithRelationsXml.replaceAll(
-                "##CONTAINER_HREF1##", href1);
+            containerForCreateWithRelationsXml.replaceAll("##CONTAINER_HREF1##", href1);
         containerForCreateWithRelationsXml =
-            containerForCreateWithRelationsXml.replaceAll(
-                "##CONTAINER_HREF2##", href2);
+            containerForCreateWithRelationsXml.replaceAll("##CONTAINER_HREF2##", href2);
 
         String xml = create(containerForCreateWithRelationsXml);
         String createdContainerId3 = null;
@@ -2013,25 +1558,20 @@ public class ContainerUpdateTest extends ContainerTestBase {
             createdContainerId3 = m3.group(1);
         }
         Document container = EscidocRestSoapTestBase.getDocument(xml);
-        Node targetId =
-            selectSingleNode(container,
-                "/container/relations/relation[1]/@objid");
+        Node targetId = selectSingleNode(container, "/container/relations/relation[1]/@objid");
         targetId.setNodeValue("bla");
 
         try {
             update(createdContainerId3, toString(container, true));
-            fail("No exception occured on added an relation with unequal ids attributes "
-                + "to the container");
+            fail("No exception occured on added an relation with unequal ids attributes " + "to the container");
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                "InvalidContentException.", InvalidContentException.class, e);
+            EscidocRestSoapTestBase.assertExceptionType("InvalidContentException.", InvalidContentException.class, e);
         }
     }
 
     /**
-     * Test successfully deleting of one optional md-record from a container
-     * while update.
+     * Test successfully deleting of one optional md-record from a container while update.
      */
     @Test
     public void testDeleteMdrecordWhileUpdate() throws Exception {
@@ -2039,55 +1579,40 @@ public class ContainerUpdateTest extends ContainerTestBase {
             EscidocRestSoapTestBase
                 .getDocument(getContainerTemplate("create_container_2_Md_Records_WithoutMembers_v1.1.xml"));
 
-        NodeList mdrecords =
-            selectNodeList(xmlContainer, "/container/md-records/md-record");
+        NodeList mdrecords = selectNodeList(xmlContainer, "/container/md-records/md-record");
 
         assertXmlValidContainer(toString(xmlContainer, false));
 
         final String createdXml = create(toString(xmlContainer, false));
 
         assertXmlValidContainer(createdXml);
-        Document createdDocument =
-            EscidocRestSoapTestBase.getDocument(createdXml);
+        Document createdDocument = EscidocRestSoapTestBase.getDocument(createdXml);
         String createdContainerId = getObjidValue(createdDocument);
-        NodeList mdrecordsAfterCreate =
-            selectNodeList(createdDocument, "/container/md-records/md-record");
+        NodeList mdrecordsAfterCreate = selectNodeList(createdDocument, "/container/md-records/md-record");
         assertEquals(mdrecords.getLength(), mdrecordsAfterCreate.getLength());
         Node containerWithOneMdRecord =
-            deleteElement(createdDocument,
-                "/container/md-records/md-record[@name = 'name1']");
-        String containerWithOneMdRecordXml =
-            toString(containerWithOneMdRecord, true);
+            deleteElement(createdDocument, "/container/md-records/md-record[@name = 'name1']");
+        String containerWithOneMdRecordXml = toString(containerWithOneMdRecord, true);
 
-        String updatedContainerWith1MdRecord =
-            update(createdContainerId, containerWithOneMdRecordXml);
-        Document udatedDocument =
-            EscidocRestSoapTestBase.getDocument(updatedContainerWith1MdRecord);
-        NodeList mdrecordsAfterUpdate =
-            selectNodeList(udatedDocument, "/container/md-records/md-record");
-        assertEquals(mdrecordsAfterUpdate.getLength() + 1,
-            mdrecordsAfterCreate.getLength());
+        String updatedContainerWith1MdRecord = update(createdContainerId, containerWithOneMdRecordXml);
+        Document udatedDocument = EscidocRestSoapTestBase.getDocument(updatedContainerWith1MdRecord);
+        NodeList mdrecordsAfterUpdate = selectNodeList(udatedDocument, "/container/md-records/md-record");
+        assertEquals(mdrecordsAfterUpdate.getLength() + 1, mdrecordsAfterCreate.getLength());
 
     }
 
     /**
-     * Test declining deleting of EscidocInternal meta data set from a container
-     * while update.
+     * Test declining deleting of EscidocInternal meta data set from a container while update.
      */
     @Test
     public void testDeleteEscidocInternalMdSetWhileUpdate() throws Exception {
-        Document containerDocument =
-            EscidocRestSoapTestBase.getDocument(theContainerXml);
+        Document containerDocument = EscidocRestSoapTestBase.getDocument(theContainerXml);
         Node containerWithoutEscidocMdRecord =
-            substitute(containerDocument,
-                "/container/md-records/md-record[@name = 'escidoc']/@name",
-                "bla");
-        String containerWithoutEscidocMdRecordXml =
-            toString(containerWithoutEscidocMdRecord, true);
+            substitute(containerDocument, "/container/md-records/md-record[@name = 'escidoc']/@name", "bla");
+        String containerWithoutEscidocMdRecordXml = toString(containerWithoutEscidocMdRecord, true);
         Class<?> ec = MissingMdRecordException.class;
         try {
-            String xml =
-                update(theContainerId, containerWithoutEscidocMdRecordXml);
+            String xml = update(theContainerId, containerWithoutEscidocMdRecordXml);
             EscidocRestSoapTestBase.failMissingException(ec);
         }
         catch (final Exception e) {
@@ -2097,13 +1622,10 @@ public class ContainerUpdateTest extends ContainerTestBase {
     }
 
     /**
-     * Test successfully updating a container. The first update deletes one
-     * optional md-record, the second update add the md-record with the same
-     * value of the attribute 'name' again.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     * 
+     * Test successfully updating a container. The first update deletes one optional md-record, the second update add
+     * the md-record with the same value of the attribute 'name' again.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testAddExistingMdrecordWhileUpdate() throws Exception {
@@ -2112,8 +1634,7 @@ public class ContainerUpdateTest extends ContainerTestBase {
             EscidocRestSoapTestBase
                 .getDocument(getContainerTemplate("create_container_2_Md_Records_WithoutMembers_v1.1.xml"));
 
-        NodeList mdrecords =
-            selectNodeList(xmlContainer, "/container/md-records/md-record");
+        NodeList mdrecords = selectNodeList(xmlContainer, "/container/md-records/md-record");
         // Node containerWithoutAdminDescriptor =
         // deleteElement(xmlContainer, "/container/admin-descriptor");
         // String containerWithoutAdminDescriptorXml =
@@ -2123,65 +1644,46 @@ public class ContainerUpdateTest extends ContainerTestBase {
         final String createdXml = create(toString(xmlContainer, false));
 
         assertXmlValidContainer(createdXml);
-        Document createdDocument =
-            EscidocRestSoapTestBase.getDocument(createdXml);
+        Document createdDocument = EscidocRestSoapTestBase.getDocument(createdXml);
         String createdContainerId = getObjidValue(createdDocument);
-        NodeList mdrecordsAfterCreate =
-            selectNodeList(createdDocument, "/container/md-records/md-record");
+        NodeList mdrecordsAfterCreate = selectNodeList(createdDocument, "/container/md-records/md-record");
         assertEquals(mdrecords.getLength(), mdrecordsAfterCreate.getLength());
         Node containerWithOneMdRecord =
-            deleteElement(createdDocument,
-                "/container/md-records/md-record[@name = 'name1']");
-        String containerWithOneMdRecordXml =
-            toString(containerWithOneMdRecord, true);
+            deleteElement(createdDocument, "/container/md-records/md-record[@name = 'name1']");
+        String containerWithOneMdRecordXml = toString(containerWithOneMdRecord, true);
 
-        String updatedContainerWith1MdRecord =
-            update(createdContainerId, containerWithOneMdRecordXml);
-        Document updatedDocument =
-            EscidocRestSoapTestBase.getDocument(updatedContainerWith1MdRecord);
-        NodeList mdrecordsAfterUpdate =
-            selectNodeList(updatedDocument, "/container/md-records/md-record");
-        assertEquals(mdrecordsAfterUpdate.getLength() + 1,
-            mdrecordsAfterCreate.getLength());
+        String updatedContainerWith1MdRecord = update(createdContainerId, containerWithOneMdRecordXml);
+        Document updatedDocument = EscidocRestSoapTestBase.getDocument(updatedContainerWith1MdRecord);
+        NodeList mdrecordsAfterUpdate = selectNodeList(updatedDocument, "/container/md-records/md-record");
+        assertEquals(mdrecordsAfterUpdate.getLength() + 1, mdrecordsAfterCreate.getLength());
 
         Element mdRecord =
-            updatedDocument.createElementNS(
-                "http://www.escidoc.de/schemas/metadatarecords/0.3",
+            updatedDocument.createElementNS("http://www.escidoc.de/schemas/metadatarecords/0.3",
                 "escidocMetadataRecords:md-record");
         mdRecord.setAttribute("name", "name1");
         mdRecord.setAttribute("schema", "bla");
         Element mdRecordContent = updatedDocument.createElement("bla");
         mdRecord.appendChild(mdRecordContent);
-        selectSingleNode(updatedDocument, "/container/md-records").appendChild(
-            mdRecord);
+        selectSingleNode(updatedDocument, "/container/md-records").appendChild(mdRecord);
         String containerWith2MdRecordXml = toString(updatedDocument, true);
-        String dobleUpdated =
-            update(createdContainerId, containerWith2MdRecordXml);
-        Document doubleUpdatedDocument =
-            EscidocRestSoapTestBase.getDocument(dobleUpdated);
-        NodeList mdrecordsAfterSecondUpdate =
-            selectNodeList(doubleUpdatedDocument,
-                "/container/md-records/md-record");
-        assertEquals(mdrecordsAfterUpdate.getLength() + 1,
-            mdrecordsAfterSecondUpdate.getLength());
+        String dobleUpdated = update(createdContainerId, containerWith2MdRecordXml);
+        Document doubleUpdatedDocument = EscidocRestSoapTestBase.getDocument(dobleUpdated);
+        NodeList mdrecordsAfterSecondUpdate = selectNodeList(doubleUpdatedDocument, "/container/md-records/md-record");
+        assertEquals(mdrecordsAfterUpdate.getLength() + 1, mdrecordsAfterSecondUpdate.getLength());
 
     }
 
     /**
      * Test successfully adding of a new optional md-record to a container.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     * 
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testAddNewMdrecordWhileUpdate() throws Exception {
         Document xmlContainer =
-            EscidocRestSoapTestBase
-                .getDocument(getContainerTemplate("create_container_WithoutMembers_v1.1.xml"));
+            EscidocRestSoapTestBase.getDocument(getContainerTemplate("create_container_WithoutMembers_v1.1.xml"));
 
-        NodeList mdrecords =
-            selectNodeList(xmlContainer, "/container/md-records/md-record");
+        NodeList mdrecords = selectNodeList(xmlContainer, "/container/md-records/md-record");
         // Node containerWithoutAdminDescriptor =
         // deleteElement(xmlContainer, "/container/admin-descriptor");
         // String containerWithoutAdminDescriptorXml =
@@ -2191,71 +1693,56 @@ public class ContainerUpdateTest extends ContainerTestBase {
         final String createdXml = create(toString(xmlContainer, false));
 
         assertXmlValidContainer(createdXml);
-        Document createdDocument =
-            EscidocRestSoapTestBase.getDocument(createdXml);
+        Document createdDocument = EscidocRestSoapTestBase.getDocument(createdXml);
         String createdContainerId = getObjidValue(createdDocument);
-        NodeList mdrecordsAfterCreate =
-            selectNodeList(createdDocument, "/container/md-records/md-record");
+        NodeList mdrecordsAfterCreate = selectNodeList(createdDocument, "/container/md-records/md-record");
         assertEquals(mdrecords.getLength(), mdrecordsAfterCreate.getLength());
 
         Element mdRecord =
-            createdDocument.createElementNS(
-                "http://www.escidoc.de/schemas/metadatarecords/0.3",
+            createdDocument.createElementNS("http://www.escidoc.de/schemas/metadatarecords/0.3",
                 "escidocMetadataRecords:md-record");
         mdRecord.setAttribute("name", "name1");
         mdRecord.setAttribute("schema", "bla");
         Element mdRecordContent = createdDocument.createElement("bla");
         mdRecord.appendChild(mdRecordContent);
-        selectSingleNode(createdDocument, "/container/md-records").appendChild(
-            mdRecord);
+        selectSingleNode(createdDocument, "/container/md-records").appendChild(mdRecord);
         String containerWith2MdRecordXml = toString(createdDocument, true);
         String updated = update(createdContainerId, containerWith2MdRecordXml);
-        Document updatedDocument =
-            EscidocRestSoapTestBase.getDocument(updated);
-        NodeList mdrecordsAfterUpdate =
-            selectNodeList(updatedDocument, "/container/md-records/md-record");
-        assertEquals(mdrecordsAfterUpdate.getLength() - 1,
-            mdrecordsAfterCreate.getLength());
+        Document updatedDocument = EscidocRestSoapTestBase.getDocument(updated);
+        NodeList mdrecordsAfterUpdate = selectNodeList(updatedDocument, "/container/md-records/md-record");
+        assertEquals(mdrecordsAfterUpdate.getLength() - 1, mdrecordsAfterCreate.getLength());
 
         // INFR-1013: test if the first version is still readable
         retrieve(createdContainerId + ":1");
     }
 
     /**
-     * Test if the right excpetion is thrown if an Item within a Container with
-     * wrong Context is to create.
-     * 
+     * Test if the right excpetion is thrown if an Item within a Container with wrong Context is to create.
+     * <p/>
      * See also Bug #579
-     * 
-     * @throws Exception
-     *             If the framework throws no Exception or the wrong Exception.
+     *
+     * @throws Exception If the framework throws no Exception or the wrong Exception.
      */
     @Test
     public void testCreateItemWithDifferentContext() throws Exception {
 
         // prepare Item -------------------------------------------------------
         String tempItemXml = getItemTemplate("escidoc_item_198_for_create.xml");
-        Document tempItemDoc =
-            EscidocRestSoapTestBase.getDocument(tempItemXml);
+        Document tempItemDoc = EscidocRestSoapTestBase.getDocument(tempItemXml);
 
         if (Constants.TRANSPORT_REST == getTransport()) {
             tempItemDoc =
-                (Document) substitute(tempItemDoc,
-                    "//properties/context/@href",
-                    "/ir/context/escidoc:persistent10");
+                (Document) substitute(tempItemDoc, "//properties/context/@href", "/ir/context/escidoc:persistent10");
         }
         else {
-            tempItemDoc =
-                (Document) substitute(tempItemDoc,
-                    "//properties/context/@objid", "escidoc:persistent10");
+            tempItemDoc = (Document) substitute(tempItemDoc, "//properties/context/@objid", "escidoc:persistent10");
         }
         String itemXml = toString(tempItemDoc, false);
 
         // check prerequists: --------------------------------------------------
         // Check that the ContextId of the Item differs from the ContextId of
         // the Container.
-        Document containerDoc =
-            EscidocRestSoapTestBase.getDocument(theContainerXml);
+        Document containerDoc = EscidocRestSoapTestBase.getDocument(theContainerXml);
 
         Document itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
 
@@ -2265,31 +1752,22 @@ public class ContainerUpdateTest extends ContainerTestBase {
         String itemContextId = null;
 
         if (Constants.TRANSPORT_REST == getTransport()) {
-            contextNode =
-                XPathAPI.selectSingleNode(containerDoc,
-                    "//properties/context/@href");
+            contextNode = XPathAPI.selectSingleNode(containerDoc, "//properties/context/@href");
             containerContextId = getObjidFromHref(contextNode.getNodeValue());
 
-            itemNode =
-                XPathAPI
-                    .selectSingleNode(itemDoc, "//properties/context/@href");
+            itemNode = XPathAPI.selectSingleNode(itemDoc, "//properties/context/@href");
             itemContextId = getObjidFromHref(itemNode.getNodeValue());
 
         }
         else {
-            contextNode =
-                XPathAPI.selectSingleNode(containerDoc,
-                    "//properties/context/@objid");
+            contextNode = XPathAPI.selectSingleNode(containerDoc, "//properties/context/@objid");
             containerContextId = contextNode.getNodeValue();
 
-            itemNode =
-                XPathAPI.selectSingleNode(itemDoc,
-                    "//properties/context/@objid");
+            itemNode = XPathAPI.selectSingleNode(itemDoc, "//properties/context/@objid");
             itemContextId = itemNode.getNodeValue();
         }
 
-        assertNotEquals("Context Id has to differ for test",
-            containerContextId, itemContextId);
+        assertNotEquals("Context Id has to differ for test", containerContextId, itemContextId);
 
         // now try to create an Item
         Class<?> ec = InvalidContextException.class;
@@ -2304,42 +1782,30 @@ public class ContainerUpdateTest extends ContainerTestBase {
     }
 
     /**
-     * Test succesfully update metadata by just changing the namespace but NOT
-     * the prefix bound to that namespace.
-     * 
-     * @throws Exception
+     * Test succesfully update metadata by just changing the namespace but NOT the prefix bound to that namespace.
      */
     @Test
     public void testUpdateMdRecordNamespace() throws Exception {
 
         Document resourceDoc = getDocument(this.theContainerXml);
         String versionNumber =
-            selectSingleNodeAsserted(resourceDoc,
-                "/container/properties/version/number/text()").getNodeValue();
-        String modDate =
-            selectSingleNodeAsserted(resourceDoc,
-                "/container/@last-modification-date").getNodeValue();
+            selectSingleNodeAsserted(resourceDoc, "/container/properties/version/number/text()").getNodeValue();
+        String modDate = selectSingleNodeAsserted(resourceDoc, "/container/@last-modification-date").getNodeValue();
 
         String resourceDocString = toString(resourceDoc, false);
         resourceDocString =
-            resourceDocString.replace(
-                "xmlns=\"http://escidoc.mpg.de/metadataprofile/schema/0.1/\"",
+            resourceDocString.replace("xmlns=\"http://escidoc.mpg.de/metadataprofile/schema/0.1/\"",
                 "xmlns=\"http://just.for.test/namespace\"");
 
         String updatedResource = update(this.theContainerId, resourceDocString);
 
         // version number should be changed
-        assertNotEquals(
-            "version number should be changed updating md-record namespace",
-            versionNumber,
-            selectSingleNode(getDocument(updatedResource),
-                "/container/properties/version/number/text()").getNodeValue());
+        assertNotEquals("version number should be changed updating md-record namespace", versionNumber,
+            selectSingleNode(getDocument(updatedResource), "/container/properties/version/number/text()")
+                .getNodeValue());
         // last modification timestamp must be changed
-        assertNotEquals(
-            "last modification date should be changed updating md-record namespace",
-            modDate,
-            selectSingleNode(getDocument(updatedResource),
-                "/container/@last-modification-date").getNodeValue());
+        assertNotEquals("last modification date should be changed updating md-record namespace", modDate,
+            selectSingleNode(getDocument(updatedResource), "/container/@last-modification-date").getNodeValue());
 
     }
 

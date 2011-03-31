@@ -25,7 +25,6 @@ import java.util.List;
 
 /**
  * @author Frank Schwichtenberg, FIZ Karlsruhe
- * 
  */
 public class MySQLDDLGenerator extends BasicDDLGenerator {
 
@@ -39,12 +38,9 @@ public class MySQLDDLGenerator extends BasicDDLGenerator {
 
         final List<String> cmds = new ArrayList<String>();
 
-        cmds.add("CREATE TABLE `" + table + "` (\n"
-            + " `pKey` bigint(20) unsigned NOT NULL auto_increment,\n"
-            + " `p` text NOT NULL,\n" + " PRIMARY KEY (`pKey`) "
-            + ") ENGINE=MyISAM DEFAULT CHARSET=ascii ");
-        cmds.add("CREATE INDEX `" + table + "_p` " + " on `" + table
-            + "` (p(" + INDEX_PREFIX_LENGTH + "))");
+        cmds.add("CREATE TABLE `" + table + "` (\n" + " `pKey` bigint(20) unsigned NOT NULL auto_increment,\n"
+            + " `p` text NOT NULL,\n" + " PRIMARY KEY (`pKey`) " + ") ENGINE=MyISAM DEFAULT CHARSET=ascii ");
+        cmds.add("CREATE INDEX `" + table + "_p` " + " on `" + table + "` (p(" + INDEX_PREFIX_LENGTH + "))");
         addSelectGrants(cmds, table);
 
         return cmds;
@@ -60,12 +56,10 @@ public class MySQLDDLGenerator extends BasicDDLGenerator {
 
         final List<String> cmds = new ArrayList<String>();
 
-        cmds.add("CREATE TABLE " + table + " (\n" + "  s text NOT NULL,\n"
-            + "  o text NOT NULL\n" + ") ENGINE=MyISAM DEFAULT CHARSET=ascii ");
-        cmds.add("CREATE INDEX `" + table + "_s` " + " on `" + table
-            + "` (s(" + INDEX_PREFIX_LENGTH + "))");
-        cmds.add("CREATE INDEX `" + table + "_o` " + " on `" + table
-            + "` (o(" + INDEX_PREFIX_LENGTH + "))");
+        cmds.add("CREATE TABLE " + table + " (\n" + "  s text NOT NULL,\n" + "  o text NOT NULL\n"
+            + ") ENGINE=MyISAM DEFAULT CHARSET=ascii ");
+        cmds.add("CREATE INDEX `" + table + "_s` " + " on `" + table + "` (s(" + INDEX_PREFIX_LENGTH + "))");
+        cmds.add("CREATE INDEX `" + table + "_o` " + " on `" + table + "` (o(" + INDEX_PREFIX_LENGTH + "))");
         addSelectGrants(cmds, table);
 
         return cmds;

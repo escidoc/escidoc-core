@@ -38,11 +38,9 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 /**
- * Test creates and releases items in order to fill a Escidoc repository and 
- * to test a Escidoc OAI-Provider.
- * 
+ * Test creates and releases items in order to fill a Escidoc repository and to test a Escidoc OAI-Provider.
+ *
  * @author Rozita Friedman
- * 
  */
 @RunWith(value = Parameterized.class)
 public class ItemReleaseOaiTest extends ItemTestBase {
@@ -52,8 +50,7 @@ public class ItemReleaseOaiTest extends ItemTestBase {
     private String theItemId;
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ItemReleaseOaiTest(final int transport) {
         super(transport);
@@ -61,26 +58,24 @@ public class ItemReleaseOaiTest extends ItemTestBase {
 
     /**
      * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Before
     public void setUp() throws Exception {
         // create an item and save the id
         String xmlData =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH  + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
                 "escidoc_item_198_for_create_withoutComponents_2Md-Records.xml");
-        theItemXml = create(xmlData);                                        
+        theItemXml = create(xmlData);
         theItemId = getObjidValue(theItemXml);
-        
+
     }
 
     /**
      * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Override
     @After
@@ -92,72 +87,64 @@ public class ItemReleaseOaiTest extends ItemTestBase {
         // TODO purge object from Fedora
     }
 
-    
-    private String getTheLastModificationParam(boolean includeWithdrawComment)
-        throws Exception {
+    private String getTheLastModificationParam(boolean includeWithdrawComment) throws Exception {
         return getTheLastModificationParam(includeWithdrawComment, theItemId);
     }
 
     /**
-     * 
+     *
      * @throws Exception
      */
     // This test runs endless and without possibility to control it from outside.
     @Ignore("What should be test with this while-true test?")
     @Test
     public void testReleaseItem() throws Exception {
-        while(true) {
-        for (int i = 0; i <20; i++) {
-        try { 
-        setUp();
-        String param = getTheLastModificationParam(false);
-        submit(theItemId, param);
-        String pidParam;
-        if (getItemClient().getPidConfig(
-            "cmm.Item.objectPid.setPidBeforeRelease", "true")
-            && !getItemClient().getPidConfig(
-                "cmm.Item.objectPid.releaseWithoutPid", "false")) {
-            pidParam =
-                getPidParam(this.theItemId, "http://somewhere" + this.theItemId);
-            assignObjectPid(this.theItemId, pidParam);
-        }
-        if (getItemClient().getPidConfig(
-            "cmm.Item.versionPid.setPidBeforeRelease", "true")
-            && !getItemClient().getPidConfig(
-                "cmm.Item.versionPid.releaseWithoutPid", "false")) {
-            String latestVersion = getLatestVersionObjidValue(theItemXml);
-            pidParam =
-                getPidParam(latestVersion, "http://somewhere" + latestVersion);
-            assignVersionPid(latestVersion, pidParam);
+        while (true) {
+            for (int i = 0; i < 20; i++) {
+                try {
+                    setUp();
+                    String param = getTheLastModificationParam(false);
+                    submit(theItemId, param);
+                    String pidParam;
+                    if (getItemClient().getPidConfig("cmm.Item.objectPid.setPidBeforeRelease", "true")
+                        && !getItemClient().getPidConfig("cmm.Item.objectPid.releaseWithoutPid", "false")) {
+                        pidParam = getPidParam(this.theItemId, "http://somewhere" + this.theItemId);
+                        assignObjectPid(this.theItemId, pidParam);
+                    }
+                    if (getItemClient().getPidConfig("cmm.Item.versionPid.setPidBeforeRelease", "true")
+                        && !getItemClient().getPidConfig("cmm.Item.versionPid.releaseWithoutPid", "false")) {
+                        String latestVersion = getLatestVersionObjidValue(theItemXml);
+                        pidParam = getPidParam(latestVersion, "http://somewhere" + latestVersion);
+                        assignVersionPid(latestVersion, pidParam);
+                    }
+
+                    param = getTheLastModificationParam(false);
+                    release(theItemId, param);
+                    System.out.println("i  ++" + i + " item id  " + theItemId);
+                }
+                catch (Exception e) {
+
+                }
+
+                //        String xml = retrieve(theItemId);
+                //        assertXmlExists("Properties status released", xml, XPATH_ITEM_STATUS
+                //            + "[text() = 'released']");
+                //        assertXmlExists("current-version status released", xml,
+                //            XPATH_ITEM_CURRENT_VERSION_STATUS + "[text() = 'released']");
+                //        assertXmlExists("Released item latest-release", xml,
+                //            "/item/properties/latest-release");
+                //        // has PID
+                //        // assertXMLExist("Released item version pid", xml,
+                //        // "/item/properties/latest-release/pid/text()");
+                //        assertXmlValidItem(xml);
+
+                // TODO include floating PID in properties of released items
+                // assertXMLExist("Released item floating pid", xml,
+                // "/item/properties/pid/text()");
+
+            }
+            Thread.sleep(360000);
         }
 
-        param = getTheLastModificationParam(false);
-        release(theItemId, param);
-        System.out.println("i  ++"  + i + " item id  " + theItemId);
-        } catch(Exception e) {
-            
-        }
-        
-
-//        String xml = retrieve(theItemId);
-//        assertXmlExists("Properties status released", xml, XPATH_ITEM_STATUS
-//            + "[text() = 'released']");
-//        assertXmlExists("current-version status released", xml,
-//            XPATH_ITEM_CURRENT_VERSION_STATUS + "[text() = 'released']");
-//        assertXmlExists("Released item latest-release", xml,
-//            "/item/properties/latest-release");
-//        // has PID
-//        // assertXMLExist("Released item version pid", xml,
-//        // "/item/properties/latest-release/pid/text()");
-//        assertXmlValidItem(xml);
-
-        // TODO include floating PID in properties of released items
-        // assertXMLExist("Released item floating pid", xml,
-        // "/item/properties/pid/text()");
-        
-    }
-        Thread.sleep(360000);  
-    }
-       
     }
 }

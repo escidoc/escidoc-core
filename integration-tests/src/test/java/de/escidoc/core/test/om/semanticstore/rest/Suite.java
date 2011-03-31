@@ -33,22 +33,21 @@ import junit.framework.TestSuite;
 
 /**
  * The semanticstore test suite (REST).
- * 
+ *
  * @author Michael Schneider
- * 
  */
 public class Suite {
 
     /**
      * Creates the test suite.
-     * 
+     *
      * @return Returns the created <code>TestSuite</code> object.
      */
     public static Test suite() {
 
         TestSuite testSuite = new TestSuite(Suite.class);
-//        testSuite.addTest(de.escidoc.core.test.om.semanticstore.spo.rest.Suite
-//            .suite());
+        //        testSuite.addTest(de.escidoc.core.test.om.semanticstore.spo.rest.Suite
+        //            .suite());
 
         return testSuite;
     }

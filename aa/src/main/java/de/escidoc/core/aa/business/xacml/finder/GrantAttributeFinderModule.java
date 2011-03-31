@@ -52,38 +52,27 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Implementation of an XACML attribute finder module that is responsible for
- * the attributes related to an grant.<br>
- * This finder module supports XACML resource attributes.<br>
- * The attribute values are fetched from the xml representation of the grant.<br>
- * 
- * Supported Attributes:<br>
- * -info:escidoc/names:aa:1.0:resource:user-account:grant:created-by<br>
- * the id of the user who created the grant, single value attribute
- * -info:escidoc/names:aa:1.0:resource:user-account:grant:assigned-on<br>
- *  the id of the object the grant is assigned on (scope of the grant), single value attribute
- * -info:escidoc/names:aa:1.0:resource:user-account:grant:assigned-on:created-by<br>
- * the id of the user who created the object the grant is assigned on, single value attribute
- * -info:escidoc/names:aa:1.0:resource:user-account:grant:assigned-on:context<br>
- * the context-id of the object the grant is assigned on, single value attribute
- * -info:escidoc/names:aa:1.0:resource:user-account:grant:role<br>
- * the role-id of the grant, single value attribute
- * -info:escidoc/names:aa:1.0:resource:user-group:grant:created-by<br>
- * the id of the user who created the group-grant, single value attribute
- * -info:escidoc/names:aa:1.0:resource:user-group:grant:assigned-on<br>
- * the id of the object the group-grant is assigned on, single value attribute
- * -info:escidoc/names:aa:1.0:resource:user-group:grant:assigned-on:created-by<br>
+ * Implementation of an XACML attribute finder module that is responsible for the attributes related to an grant.<br>
+ * This finder module supports XACML resource attributes.<br> The attribute values are fetched from the xml
+ * representation of the grant.<br>
+ * <p/>
+ * Supported Attributes:<br> -info:escidoc/names:aa:1.0:resource:user-account:grant:created-by<br> the id of the user
+ * who created the grant, single value attribute -info:escidoc/names:aa:1.0:resource:user-account:grant:assigned-on<br>
+ * the id of the object the grant is assigned on (scope of the grant), single value attribute
+ * -info:escidoc/names:aa:1.0:resource:user-account:grant:assigned-on:created-by<br> the id of the user who created the
+ * object the grant is assigned on, single value attribute -info:escidoc/names:aa:1.0:resource:user-account:grant:assigned-on:context<br>
+ * the context-id of the object the grant is assigned on, single value attribute -info:escidoc/names:aa:1.0:resource:user-account:grant:role<br>
+ * the role-id of the grant, single value attribute -info:escidoc/names:aa:1.0:resource:user-group:grant:created-by<br>
+ * the id of the user who created the group-grant, single value attribute -info:escidoc/names:aa:1.0:resource:user-group:grant:assigned-on<br>
+ * the id of the object the group-grant is assigned on, single value attribute -info:escidoc/names:aa:1.0:resource:user-group:grant:assigned-on:created-by<br>
  * the id of the user who created the object the group-grant is assigned on, single value attribute
- * -info:escidoc/names:aa:1.0:resource:user-group:grant:assigned-on:context<br>
- * the context-id of the object the group-grant is assigned on, single value attribute
- * -info:escidoc/names:aa:1.0:resource:user-group:grant:role<br>
- * the role-id of the grant, single value attribute
- * 
- * assigned-on:created-by only resolves if grant is assigned to a component,
- * container, item or context.<br>
- * 
- * assigned-on:context only resolves if grant is assigned to a component,
- * container or item.
+ * -info:escidoc/names:aa:1.0:resource:user-group:grant:assigned-on:context<br> the context-id of the object the
+ * group-grant is assigned on, single value attribute -info:escidoc/names:aa:1.0:resource:user-group:grant:role<br> the
+ * role-id of the grant, single value attribute
+ * <p/>
+ * assigned-on:created-by only resolves if grant is assigned to a component, container, item or context.<br>
+ * <p/>
+ * assigned-on:context only resolves if grant is assigned to a component, container or item.
  *
  * @author Michael Hoppe
  */
@@ -95,17 +84,14 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
 
     private static final String ATTR_ROLE = "role";
 
-    private static final String RESOLVABLE_GRANT_ATTRS =
-        ATTR_ASSIGNED_ON + '|' + ATTR_CREATED_BY + '|' + ATTR_ROLE;
+    private static final String RESOLVABLE_GRANT_ATTRS = ATTR_ASSIGNED_ON + '|' + ATTR_CREATED_BY + '|' + ATTR_ROLE;
 
     private static final Pattern PATTERN_GRANT_ATTRIBUTE_PREFIX =
-        Pattern.compile(AttributeIds.USER_ACCOUNT_GRANT_ATTR_PREFIX + '|'
-            + AttributeIds.USER_GROUP_GRANT_ATTR_PREFIX);
+        Pattern.compile(AttributeIds.USER_ACCOUNT_GRANT_ATTR_PREFIX + '|' + AttributeIds.USER_GROUP_GRANT_ATTR_PREFIX);
 
     private static final Pattern PATTERN_PARSE_GRANT_ATTRIBUTE_ID =
-        Pattern.compile("((" + AttributeIds.USER_ACCOUNT_GRANT_ATTR_PREFIX
-            + '|' + AttributeIds.USER_GROUP_GRANT_ATTR_PREFIX + ")("
-            + RESOLVABLE_GRANT_ATTRS + "))(-new){0,1}(:(.*)){0,1}");
+        Pattern.compile("((" + AttributeIds.USER_ACCOUNT_GRANT_ATTR_PREFIX + '|'
+            + AttributeIds.USER_GROUP_GRANT_ATTR_PREFIX + ")(" + RESOLVABLE_GRANT_ATTRS + "))(-new){0,1}(:(.*)){0,1}");
 
     private UserAccountDaoInterface userAccountDao;
 
@@ -113,27 +99,13 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
 
     private TripleStoreUtility tsu;
 
-
-
     /**
      * See Interface for functional description.
-     * 
-     * @param attributeIdValue
-     * @param ctx
-     * @param resourceId
-     * @param resourceObjid
-     * @param resourceVersionNumber
-     * @param designatorType
-     * @return
-     * @throws EscidocException
-     *
      */
     @Override
     protected boolean assertAttribute(
-        final String attributeIdValue, final EvaluationCtx ctx,
-        final String resourceId, final String resourceObjid,
-        final String resourceVersionNumber, final int designatorType)
-        throws EscidocException {
+        final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
+        final String resourceVersionNumber, final int designatorType) throws EscidocException {
 
         // make sure this is an Resource attribute
         if (designatorType != AttributeDesignator.RESOURCE_TARGET) {
@@ -147,27 +119,16 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
 
     /**
      * See Interface for functional description.
-     * 
-     * @param attributeIdValue
-     * @param ctx
-     * @param resourceId
-     * @param resourceObjid
-     * @param resourceVersionNumber
-     * @return
-     * @throws EscidocException
-     *
      */
     @Override
     protected Object[] resolveLocalPart(
-        final String attributeIdValue, final EvaluationCtx ctx,
-        final String resourceId, final String resourceObjid,
+        final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
         final String resourceVersionNumber) throws EscidocException {
 
         final EvaluationResult result;
         final String resolvedAttributeIdValue;
 
-        final Matcher grantAttributeMatcher =
-            PATTERN_PARSE_GRANT_ATTRIBUTE_ID.matcher(attributeIdValue);
+        final Matcher grantAttributeMatcher = PATTERN_PARSE_GRANT_ATTRIBUTE_ID.matcher(attributeIdValue);
         if (grantAttributeMatcher.find()) {
             // -new attribute is not resolvable
             if (grantAttributeMatcher.group(4) != null) {
@@ -179,19 +140,13 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
 
             final Object[] returnArr;
             if (ATTR_ASSIGNED_ON.equals(attributeId)) {
-                returnArr =
-                    resolveAssignedOnAttribute(ctx, attributeIdValue,
-                        resolvableAttribute, tail);
+                returnArr = resolveAssignedOnAttribute(ctx, attributeIdValue, resolvableAttribute, tail);
             }
             else if (ATTR_CREATED_BY.equals(attributeId)) {
-                returnArr =
-                    resolveCreatedByAttribute(ctx, attributeIdValue,
-                        resolvableAttribute, tail);
+                returnArr = resolveCreatedByAttribute(ctx, attributeIdValue, resolvableAttribute, tail);
             }
             else if (ATTR_ROLE.equals(attributeId)) {
-                returnArr =
-                    resolveRoleAttribute(ctx, attributeIdValue,
-                        resolvableAttribute, tail);
+                returnArr = resolveRoleAttribute(ctx, attributeIdValue, resolvableAttribute, tail);
             }
             else {
                 return null;
@@ -208,42 +163,30 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
     }
 
     /**
-     * resolve attribute assigned-on. check if tail is present and resolvable
-     * (dependent on variable SUPPORTED_ASSIGNED_ON_OBJECT_ATTRIBUTES). if tail
-     * is not resolvable, mark whole attribute as unresolvable.
-     * 
-     * @param ctx
-     *            EvaluationContext
-     * @param attributeIdValue
-     *            whole attribute
-     * @param resolvableAttribute
-     *            resolvable part of attribute
-     * @param tail
-     *            tail after resolvable part
-     * @return Object[] result
-     * @throws EscidocException
-     *             e
+     * resolve attribute assigned-on. check if tail is present and resolvable (dependent on variable
+     * SUPPORTED_ASSIGNED_ON_OBJECT_ATTRIBUTES). if tail is not resolvable, mark whole attribute as unresolvable.
      *
+     * @param ctx                 EvaluationContext
+     * @param attributeIdValue    whole attribute
+     * @param resolvableAttribute resolvable part of attribute
+     * @param tail                tail after resolvable part
+     * @return Object[] result
+     * @throws EscidocException e
      */
     private Object[] resolveAssignedOnAttribute(
-        final EvaluationCtx ctx, final String attributeIdValue,
-        final String resolvableAttribute, final String tail)
+        final EvaluationCtx ctx, final String attributeIdValue, final String resolvableAttribute, final String tail)
         throws EscidocException {
         EvaluationResult result;
         final String userOrGroupId =
-            FinderModuleHelper.retrieveSingleResourceAttribute(ctx,
-                Constants.URI_RESOURCE_ID, true);
+            FinderModuleHelper.retrieveSingleResourceAttribute(ctx, Constants.URI_RESOURCE_ID, true);
         final String grantId =
-            FinderModuleHelper.retrieveSingleResourceAttribute(ctx,
-                Constants.URI_SUBRESOURCE_ID, true);
+            FinderModuleHelper.retrieveSingleResourceAttribute(ctx, Constants.URI_SUBRESOURCE_ID, true);
         String assignedOnObjectId;
         if (grantId == null || grantId.length() == 0) {
             // if no grantId is present
             // fetch grant-attribute from invocation-mapping
             try {
-                assignedOnObjectId =
-                    fetchSingleResourceAttribute(ctx, resolvableAttribute
-                        + "-new");
+                assignedOnObjectId = fetchSingleResourceAttribute(ctx, resolvableAttribute + "-new");
             }
             catch (final Exception e) {
                 // not assigned to an object
@@ -256,8 +199,9 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
         }
         else {
             final RoleGrant grant;
-            grant = resolvableAttribute.matches(".*" + XmlUtility.NAME_USER_ACCOUNT
-                    + ".*") ? getUserAccountGrant(ctx, userOrGroupId, grantId) : getUserGroupGrant(ctx, grantId);
+            grant =
+                resolvableAttribute.matches(".*" + XmlUtility.NAME_USER_ACCOUNT + ".*") ? getUserAccountGrant(ctx,
+                    userOrGroupId, grantId) : getUserGroupGrant(ctx, grantId);
             assertGrant(grantId, grant);
             assignedOnObjectId = grant.getObjectId();
         }
@@ -273,111 +217,87 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
         // check if tailing attribute is resolvable for assigned object-type
         if (tail != null) {
             final String objectType = fetchObjectType(ctx, assignedOnObjectId);
-            if (objectType.equals(XmlUtility.NAME_COMPONENT)
-                && tail.equals(XmlUtility.NAME_CONTEXT)) {
+            if (objectType.equals(XmlUtility.NAME_COMPONENT) && tail.equals(XmlUtility.NAME_CONTEXT)) {
                 // if we have to resolve the context of a component,
                 // we first have to get the itemId and resolve context for
                 // the itemId
                 final List<String> itemIds =
-                    FinderModuleHelper.retrieveFromTripleStore(true, tsu
-                        .getRetrieveWhereClause(true,
-                            TripleStoreUtility.PROP_COMPONENT,
-                            assignedOnObjectId, null, null, null),
-                        assignedOnObjectId, TripleStoreUtility.PROP_COMPONENT, this.tsu);
+                    FinderModuleHelper.retrieveFromTripleStore(true, tsu.getRetrieveWhereClause(true,
+                        TripleStoreUtility.PROP_COMPONENT, assignedOnObjectId, null, null, null), assignedOnObjectId,
+                        TripleStoreUtility.PROP_COMPONENT, this.tsu);
                 if (itemIds == null || itemIds.isEmpty() || itemIds.size() != 1) {
                     result =
-                        CustomEvaluationResultBuilder
-                            .createResourceNotFoundResult(new ItemNotFoundException(
-                                "item for component " + assignedOnObjectId
-                                    + " not found"));
-                } else {
+                        CustomEvaluationResultBuilder.createResourceNotFoundResult(new ItemNotFoundException(
+                            "item for component " + assignedOnObjectId + " not found"));
+                }
+                else {
                     assignedOnObjectId = itemIds.get(0);
                 }
             }
         }
-        result =
-            CustomEvaluationResultBuilder
-                .createSingleStringValueResult(assignedOnObjectId);
+        result = CustomEvaluationResultBuilder.createSingleStringValueResult(assignedOnObjectId);
         return new Object[] { result, resolvableAttribute };
     }
 
     /**
      * resolve attribute created-by.
-     * 
-     * @param ctx
-     *            EvaluationContext
-     * @param attributeIdValue
-     *            whole attribute
-     * @param resolvableAttribute
-     *            resolvable part of attribute
-     * @param tail
-     *            tail after resolvable part
-     * @return Object[] result
-     * @throws EscidocException
-     *             e
      *
+     * @param ctx                 EvaluationContext
+     * @param attributeIdValue    whole attribute
+     * @param resolvableAttribute resolvable part of attribute
+     * @param tail                tail after resolvable part
+     * @return Object[] result
+     * @throws EscidocException e
      */
     private Object[] resolveCreatedByAttribute(
-        final EvaluationCtx ctx, final String attributeIdValue,
-        final String resolvableAttribute, final String tail)
+        final EvaluationCtx ctx, final String attributeIdValue, final String resolvableAttribute, final String tail)
         throws EscidocException {
         final String userOrGroupId =
-            FinderModuleHelper.retrieveSingleResourceAttribute(ctx,
-                Constants.URI_RESOURCE_ID, true);
+            FinderModuleHelper.retrieveSingleResourceAttribute(ctx, Constants.URI_RESOURCE_ID, true);
         final String grantId =
-            FinderModuleHelper.retrieveSingleResourceAttribute(ctx,
-                Constants.URI_SUBRESOURCE_ID, true);
+            FinderModuleHelper.retrieveSingleResourceAttribute(ctx, Constants.URI_SUBRESOURCE_ID, true);
         if (grantId == null || grantId.length() == 0) {
             throw new GrantNotFoundException("no grantId found");
         }
         final RoleGrant grant;
-        grant = resolvableAttribute.matches(".*" + XmlUtility.NAME_USER_ACCOUNT
-                + ".*") ? userAccountDao.retrieveGrant(userOrGroupId, grantId) : userGroupDao.retrieveGrant(grantId);
+        grant =
+            resolvableAttribute.matches(".*" + XmlUtility.NAME_USER_ACCOUNT + ".*") ? userAccountDao.retrieveGrant(
+                userOrGroupId, grantId) : userGroupDao.retrieveGrant(grantId);
         assertGrant(grantId, grant);
         final String createdBy = grant.getCreatorId();
 
-        final EvaluationResult result = CustomEvaluationResultBuilder
-                .createSingleStringValueResult(createdBy);
+        final EvaluationResult result = CustomEvaluationResultBuilder.createSingleStringValueResult(createdBy);
         return new Object[] { result, resolvableAttribute };
     }
 
     /**
      * resolve attribute role.
-     * 
-     * @param ctx
-     *            EvaluationContext
-     * @param attributeIdValue
-     *            whole attribute
-     * @param resolvableAttribute
-     *            resolvable part of attribute
-     * @param tail
-     *            tail after resolvable part
-     * @return Object[] result
-     * @throws EscidocException
-     *             e
      *
+     * @param ctx                 EvaluationContext
+     * @param attributeIdValue    whole attribute
+     * @param resolvableAttribute resolvable part of attribute
+     * @param tail                tail after resolvable part
+     * @return Object[] result
+     * @throws EscidocException e
      */
     private Object[] resolveRoleAttribute(
-        final EvaluationCtx ctx, final String attributeIdValue,
-        final String resolvableAttribute, final String tail)
+        final EvaluationCtx ctx, final String attributeIdValue, final String resolvableAttribute, final String tail)
         throws EscidocException {
         final String userOrGroupId =
-            FinderModuleHelper.retrieveSingleResourceAttribute(ctx,
-                Constants.URI_RESOURCE_ID, true);
+            FinderModuleHelper.retrieveSingleResourceAttribute(ctx, Constants.URI_RESOURCE_ID, true);
         final String grantId =
-            FinderModuleHelper.retrieveSingleResourceAttribute(ctx,
-                Constants.URI_SUBRESOURCE_ID, true);
+            FinderModuleHelper.retrieveSingleResourceAttribute(ctx, Constants.URI_SUBRESOURCE_ID, true);
         final String roleId;
         if (grantId == null || grantId.length() == 0) {
             // if no grantId is present
             // fetch grant-attribute from invocation-mapping
-            roleId =
-                fetchSingleResourceAttribute(ctx, resolvableAttribute + "-new");
+            roleId = fetchSingleResourceAttribute(ctx, resolvableAttribute + "-new");
         }
         else {
             final RoleGrant grant;
-            grant = resolvableAttribute.matches(".*" + XmlUtility.NAME_USER_ACCOUNT
-                    + ".*") ? getUserAccountGrant(ctx, userOrGroupId, grantId) : getUserGroupGrant(ctx, grantId);
+            grant =
+                resolvableAttribute.matches(".*" + XmlUtility.NAME_USER_ACCOUNT + ".*") ? getUserAccountGrant(ctx,
+                    userOrGroupId, grantId) : getUserGroupGrant(ctx, grantId);
             assertGrant(grantId, grant);
             roleId = grant.getRoleId();
         }
@@ -388,35 +308,24 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
 
     /**
      * Retrieve user-group grant from the system.
-     * 
-     * @param ctx
-     *            The evaluation context, which will be used as key for the
-     *            cache.
-     * @param grantId
-     *            The grant id.
-     * @return Returns the <code>RoleGrant</code> identified by the provided id.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
-     * @throws GrantNotFoundException
-     *             Thrown if no grant with provided id exists.
      *
+     * @param ctx     The evaluation context, which will be used as key for the cache.
+     * @param grantId The grant id.
+     * @return Returns the <code>RoleGrant</code> identified by the provided id.
+     * @throws WebserverSystemException Thrown in case of an internal error.
+     * @throws GrantNotFoundException   Thrown if no grant with provided id exists.
      */
-    private RoleGrant getUserGroupGrant(
-        final EvaluationCtx ctx, final String grantId)
-        throws WebserverSystemException, GrantNotFoundException {
-        final StringBuffer key =
-            StringUtility.concatenateWithColon(XmlUtility.NAME_ID, grantId);
-        RoleGrant grant =
-            (RoleGrant) RequestAttributesCache.get(ctx, key.toString());
+    private RoleGrant getUserGroupGrant(final EvaluationCtx ctx, final String grantId) throws WebserverSystemException,
+        GrantNotFoundException {
+        final StringBuffer key = StringUtility.concatenateWithColon(XmlUtility.NAME_ID, grantId);
+        RoleGrant grant = (RoleGrant) RequestAttributesCache.get(ctx, key.toString());
         if (grant == null) {
             try {
                 grant = userGroupDao.retrieveGrant(grantId);
             }
             catch (final Exception e) {
-                throw new WebserverSystemException(StringUtility
-                    .format(
-                        "Exception during retrieval of the grant", e
-                            .getMessage()), e);
+                throw new WebserverSystemException(StringUtility.format("Exception during retrieval of the grant", e
+                    .getMessage()), e);
             }
         }
         assertGrant(grantId, grant);
@@ -427,37 +336,25 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
 
     /**
      * Retrieve user-account grant from the system.
-     * 
-     * @param ctx
-     *            The evaluation context, which will be used as key for the
-     *            cache.
-     * @param userId
-     *            The user id.
-     * @param grantId
-     *            The grant id.
-     * @return Returns the <code>RoleGrant</code> identified by the provided id.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
-     * @throws GrantNotFoundException
-     *             Thrown if no grant with provided id exists.
      *
+     * @param ctx     The evaluation context, which will be used as key for the cache.
+     * @param userId  The user id.
+     * @param grantId The grant id.
+     * @return Returns the <code>RoleGrant</code> identified by the provided id.
+     * @throws WebserverSystemException Thrown in case of an internal error.
+     * @throws GrantNotFoundException   Thrown if no grant with provided id exists.
      */
-    private RoleGrant getUserAccountGrant(
-        final EvaluationCtx ctx, final String userId, final String grantId)
+    private RoleGrant getUserAccountGrant(final EvaluationCtx ctx, final String userId, final String grantId)
         throws WebserverSystemException, GrantNotFoundException {
-        final StringBuffer key =
-            StringUtility.concatenateWithColon(XmlUtility.NAME_ID, grantId);
-        RoleGrant grant =
-            (RoleGrant) RequestAttributesCache.get(ctx, key.toString());
+        final StringBuffer key = StringUtility.concatenateWithColon(XmlUtility.NAME_ID, grantId);
+        RoleGrant grant = (RoleGrant) RequestAttributesCache.get(ctx, key.toString());
         if (grant == null) {
             try {
                 grant = userAccountDao.retrieveGrant(userId, grantId);
             }
             catch (final Exception e) {
-                throw new WebserverSystemException(StringUtility
-                    .format(
-                        "Exception during retrieval of the grant", e
-                            .getMessage()), e);
+                throw new WebserverSystemException(StringUtility.format("Exception during retrieval of the grant", e
+                    .getMessage()), e);
             }
         }
         assertGrant(grantId, grant);
@@ -468,33 +365,22 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
 
     /**
      * Asserts that the grant is provided, i.e. it is not <code>null</code>.
-     * 
-     * @param grantId
-     *            The grant id for which the grant should be provided (should
-     *            exist).
-     * @param roleGrant
-     *            The role grant to assert.
-     * @throws GrantNotFoundException
-     *             Thrown if assertion fails.
      *
+     * @param grantId   The grant id for which the grant should be provided (should exist).
+     * @param roleGrant The role grant to assert.
+     * @throws GrantNotFoundException Thrown if assertion fails.
      */
-    private static void assertGrant(final String grantId, final RoleGrant roleGrant)
-        throws GrantNotFoundException {
+    private static void assertGrant(final String grantId, final RoleGrant roleGrant) throws GrantNotFoundException {
 
         if (roleGrant == null) {
-            throw new GrantNotFoundException(StringUtility
-                    .format(
-                            "Grant with provided id does not exist", grantId));
+            throw new GrantNotFoundException(StringUtility.format("Grant with provided id does not exist", grantId));
         }
     }
 
-
-
     /**
      * Injects the user account data access object if "called" via Spring.
-     * 
-     * @param userAccountDao
-     *            The user account dao.
+     *
+     * @param userAccountDao The user account dao.
      */
     public void setUserAccountDao(final UserAccountDaoInterface userAccountDao) {
         this.userAccountDao = userAccountDao;
@@ -502,9 +388,8 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
 
     /**
      * Injects the user group data access object if "called" via Spring.
-     * 
-     * @param userGroupDao
-     *            The user group dao.
+     *
+     * @param userGroupDao The user group dao.
      */
     public void setUserGroupDao(final UserGroupDaoInterface userGroupDao) {
         this.userGroupDao = userGroupDao;
@@ -512,9 +397,8 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
 
     /**
      * Injects the triple store utility bean.
-     * 
-     * @param tsu
-     *            The {@link TripleStoreUtility}.
+     *
+     * @param tsu The {@link TripleStoreUtility}.
      */
     public void setTsu(final TripleStoreUtility tsu) {
         this.tsu = tsu;

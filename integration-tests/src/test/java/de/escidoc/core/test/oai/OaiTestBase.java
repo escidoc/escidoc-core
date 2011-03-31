@@ -33,25 +33,21 @@ import de.escidoc.core.test.common.client.servlet.oai.SetDefinitionClient;
 
 /**
  * Base class for tests of the mock implementation of the OM resources.
- * 
+ *
  * @author Rozita Friedman
- * 
  */
 public class OaiTestBase extends EscidocRestSoapTestBase {
 
-    
     private SetDefinitionClient setDefinitionClient = null;
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public OaiTestBase(final int transport) {
         super(transport);
         this.setDefinitionClient = new SetDefinitionClient(transport);
     }
 
-   
     /**
      * @return Returns the setDefinitionClient.
      */

@@ -38,9 +38,8 @@ import java.net.URL;
 
 /**
  * Abstract base class for handlers.
- * 
- * @author Torsten Tetteroo
  *
+ * @author Torsten Tetteroo
  */
 public abstract class HandlerBase {
 
@@ -52,44 +51,36 @@ public abstract class HandlerBase {
 
     private Utility utility;
 
-    protected String transformSearchResponse2relations(final String searchResponse)
-        throws SystemException {
+    protected String transformSearchResponse2relations(final String searchResponse) throws SystemException {
 
         try {
             final TransformerFactory tf = TransformerFactory.newInstance();
 
             final URL xsltUrl =
-                new URL(EscidocConfiguration.getInstance().get(
-                    EscidocConfiguration.ESCIDOC_CORE_SELFURL)
+                new URL(EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_SELFURL)
                     + "/xsl/searchResponse2relations.xsl");
-            final HttpURLConnection conn =
-                (HttpURLConnection) xsltUrl.openConnection();
-            final Transformer t =
-                tf.newTransformer(new StreamSource(conn.getInputStream()));
-            t.setParameter("XSLT", EscidocConfiguration.getInstance().get(
-                EscidocConfiguration.ESCIDOC_CORE_XSLT_STD));
+            final HttpURLConnection conn = (HttpURLConnection) xsltUrl.openConnection();
+            final Transformer t = tf.newTransformer(new StreamSource(conn.getInputStream()));
+            t.setParameter("XSLT", EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_XSLT_STD));
 
             // searchResponse is already a String; so, no effort to stream
             final StringWriter sw = new StringWriter();
-            t.transform(new StreamSource(new ByteArrayInputStream(
-                searchResponse.getBytes(XmlUtility.CHARACTER_ENCODING))),
-                new StreamResult(sw));
+            t.transform(new StreamSource(new ByteArrayInputStream(searchResponse
+                .getBytes(XmlUtility.CHARACTER_ENCODING))), new StreamResult(sw));
             return sw.toString();
 
         }
         catch (final IOException e) {
-            throw new SystemException(
-                "Convertion of search response to relations failed.", e);
+            throw new SystemException("Convertion of search response to relations failed.", e);
         }
         catch (final TransformerException e) {
-            throw new SystemException(
-                "Convertion of search response to relations failed.", e);
+            throw new SystemException("Convertion of search response to relations failed.", e);
         }
     }
 
     /**
      * Gets the {@link FedoraUtility}.
-     * 
+     *
      * @return FedoraUtility Returns the {@link FedoraUtility} object.
      */
     protected FedoraUtility getFedoraUtility() {
@@ -99,9 +90,8 @@ public abstract class HandlerBase {
 
     /**
      * Injects the {@link FedoraUtility}.
-     * 
-     * @param fedoraUtility
-     *            The {@link FedoraUtility} to set
+     *
+     * @param fedoraUtility The {@link FedoraUtility} to set
      */
     public void setFedoraUtility(final FedoraUtility fedoraUtility) {
 
@@ -110,7 +100,7 @@ public abstract class HandlerBase {
 
     /**
      * Gets the {@link TripleStoreUtility}.
-     * 
+     *
      * @return TripleStoreUtility Returns the {@link TripleStoreUtility} object.
      */
     protected TripleStoreUtility getTripleStoreUtility() {
@@ -120,21 +110,18 @@ public abstract class HandlerBase {
 
     /**
      * Injects the {@link TripleStoreUtility}.
-     * 
-     * @param tripleStoreUtility
-     *            The {@link TripleStoreUtility} to set
+     *
+     * @param tripleStoreUtility The {@link TripleStoreUtility} to set
      */
-    public void setTripleStoreUtility(
-        final TripleStoreUtility tripleStoreUtility) {
+    public void setTripleStoreUtility(final TripleStoreUtility tripleStoreUtility) {
 
         this.tripleStoreUtility = tripleStoreUtility;
     }
 
     /**
      * Gets the {@link EscidocIdProvider}.
-     * 
-     * @return Returns the {@link EscidocIdProvider} object.
      *
+     * @return Returns the {@link EscidocIdProvider} object.
      */
     protected EscidocIdProvider getIdProvider() {
 
@@ -143,10 +130,8 @@ public abstract class HandlerBase {
 
     /**
      * Injects the {@link EscidocIdProvider}.
-     * 
-     * @param idProvider
-     *            The {@link EscidocIdProvider} to set.
      *
+     * @param idProvider The {@link EscidocIdProvider} to set.
      */
     public void setIdProvider(final EscidocIdProvider idProvider) {
 

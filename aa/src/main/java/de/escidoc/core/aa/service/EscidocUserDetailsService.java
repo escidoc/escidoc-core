@@ -43,34 +43,26 @@ import org.springframework.security.userdetails.UsernameNotFoundException;
 
 /**
  * Implementation of an Acegi UserDetailsService.
- * 
+ *
  * @author Torsten Tetteroo
  * @see UserDetailsService
  */
-public class EscidocUserDetailsService
-    implements EscidocUserDetailsServiceInterface {
+public class EscidocUserDetailsService implements EscidocUserDetailsServiceInterface {
 
     /**
      * The logger.
      */
-    private static final Logger LOGGER =
-        LoggerFactory.getLogger(EscidocUserDetailsService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(EscidocUserDetailsService.class);
 
     private static final String FAILED_TO_AUTHENTICATE_USER_BY_HANDLE =
         "Failed to authenticate user with provided information";
 
     private UserAccountHandlerInterface userAccountHandler;
 
-
-
     /**
      * See Interface for functional description.
-     * 
-     * @param identifier
-     * @return
-     * @see org.acegisecurity.userdetails.UserDetailsService
-     *      #loadUserByUsername(java.lang.String)
      *
+     * @see org.acegisecurity.userdetails.UserDetailsService #loadUserByUsername(java.lang.String)
      */
     @Override
     public UserDetails loadUserByUsername(final String identifier) {
@@ -81,28 +73,32 @@ public class EscidocUserDetailsService
             // They will not be further intercepted.
             wasExternalBefore = UserContext.runAsInternalUser();
 
-            final UserDetails retrievedUserDetails =
-                getUserAccountHandler().retrieveUserDetails(identifier);
+            final UserDetails retrievedUserDetails = getUserAccountHandler().retrieveUserDetails(identifier);
 
             LOGGER.debug(retrievedUserDetails.toString());
 
             return retrievedUserDetails;
-        } catch (final UserAccountNotFoundException e) {
-            throw new UsernameNotFoundException(StringUtility.format(
-                    FAILED_TO_AUTHENTICATE_USER_BY_HANDLE, identifier), e);
-        } catch (final WebserverSystemException e) {
+        }
+        catch (final UserAccountNotFoundException e) {
+            throw new UsernameNotFoundException(
+                StringUtility.format(FAILED_TO_AUTHENTICATE_USER_BY_HANDLE, identifier), e);
+        }
+        catch (final WebserverSystemException e) {
             throw new ObjectRetrievalFailureException(e.getMessage(), e);
-        } catch (final Exception e) {
+        }
+        catch (final Exception e) {
             throw new ObjectRetrievalFailureException(e.getMessage(), new WebserverSystemException(e));
-        } finally {
+        }
+        finally {
             if (wasExternalBefore) {
                 try {
                     UserContext.runAsExternalUser();
-                } catch (final WebserverSystemException e) {
-                    if(LOGGER.isWarnEnabled()) {
+                }
+                catch (final WebserverSystemException e) {
+                    if (LOGGER.isWarnEnabled()) {
                         LOGGER.warn("Error on changing user context.");
                     }
-                    if(LOGGER.isDebugEnabled()) {
+                    if (LOGGER.isDebugEnabled()) {
                         LOGGER.debug("Error on changing user context.", e);
                     }
                 }
@@ -110,13 +106,10 @@ public class EscidocUserDetailsService
         }
     }
 
-
-
     /**
      * Gets the user account handler.
-     * 
-     * @return Returns the {@link UserAccountHandlerInterface}.
      *
+     * @return Returns the {@link UserAccountHandlerInterface}.
      */
     private UserAccountHandlerInterface getUserAccountHandler() {
 
@@ -125,13 +118,10 @@ public class EscidocUserDetailsService
 
     /**
      * Injects the user account handler EJB.
-     * 
-     * @param userAccountHandler
-     *            The {@link UserAccountHandlerInterface} implementation to be
-     *            injected.
+     *
+     * @param userAccountHandler The {@link UserAccountHandlerInterface} implementation to be injected.
      */
-    public void setUserAccountHandler(
-        final UserAccountHandlerInterface userAccountHandler) {
+    public void setUserAccountHandler(final UserAccountHandlerInterface userAccountHandler) {
 
         this.userAccountHandler = userAccountHandler;
     }

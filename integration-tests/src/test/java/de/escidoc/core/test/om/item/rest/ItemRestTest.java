@@ -39,38 +39,23 @@ import org.w3c.dom.Document;
 
 /**
  * Item tests with REST transport.
- * 
+ *
  * @author Michael Schneider
- * 
  */
 public class ItemRestTest extends ItemTestBase implements ItemXpathsProvider {
 
     /**
      * Constructor.
-     * 
      */
     public ItemRestTest() {
         super(Constants.TRANSPORT_REST);
     }
 
     /**
-     * Test declining creation of Item with providing reference to context with
-     * invalid href (substring context not in href).
-     * 
-     * @test.name Create Item - Context referenced with invalid href.
-     * @test.id OM_Ci_13_1_rest
-     * @test.input Item XML representation
-     * @test.inputDescription:
-     *             <ul>
-     *             <li>context referenced with an href that specifies another
-     *             resource type</li>
-     *             </ul>
-     * @test.expected: ContextNotFoundException
-     * 
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test declining creation of Item with providing reference to context with invalid href (substring context not in
+     * href).
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOMCi13_1_rest() throws Exception {
@@ -78,49 +63,30 @@ public class ItemRestTest extends ItemTestBase implements ItemXpathsProvider {
         final Class<?> ec = ContextNotFoundException.class;
 
         Document toBeCreatedDocument =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
-                + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                "escidoc_item_198_for_create.xml");
 
-        String href =
-            selectSingleNodeAsserted(toBeCreatedDocument,
-                XPATH_ITEM_CONTEXT_XLINK_HREF).getTextContent();
-        href =
-            href.replaceFirst(Constants.CONTEXT_BASE_URI,
-                Constants.ORGANIZATIONAL_UNIT_BASE_URI);
+        String href = selectSingleNodeAsserted(toBeCreatedDocument, XPATH_ITEM_CONTEXT_XLINK_HREF).getTextContent();
+        href = href.replaceFirst(Constants.CONTEXT_BASE_URI, Constants.ORGANIZATIONAL_UNIT_BASE_URI);
         substitute(toBeCreatedDocument, XPATH_ITEM_CONTEXT_XLINK_HREF, href);
 
         String toBeCreatedXml = toString(toBeCreatedDocument, true);
 
         try {
             create(toBeCreatedXml);
-            EscidocRestSoapTestBase.failMissingException(
-                "Creating item with invalid object href not declined. ", ec);
+            EscidocRestSoapTestBase.failMissingException("Creating item with invalid object href not declined. ", ec);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                "Creating item with invalid object href not declined,"
-                    + " properly. ", ec, e);
+            EscidocRestSoapTestBase.assertExceptionType("Creating item with invalid object href not declined,"
+                + " properly. ", ec, e);
         }
     }
 
     /**
-     * Test declining creation of Item with providing reference to content-model
-     * with invalid href (substring content-model not in href).
-     * 
-     * @test.name Create Item - content-model referenced with invalid href.
-     * @test.id OM_Ci_13_2_rest
-     * @test.input Item XML representation
-     * @test.inputDescription:
-     *             <ul>
-     *             <li>content-model referenced with an href that specifies
-     *             another resource type</li>
-     *             </ul>
-     * @test.expected: ContentModelNotFoundException
-     * 
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test declining creation of Item with providing reference to content-model with invalid href (substring
+     * content-model not in href).
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOMCi13_2_rest() throws Exception {
@@ -128,29 +94,23 @@ public class ItemRestTest extends ItemTestBase implements ItemXpathsProvider {
         final Class ec = ContentModelNotFoundException.class;
 
         Document toBeCreatedDocument =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
-                + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                "escidoc_item_198_for_create.xml");
 
         String href =
-            selectSingleNodeAsserted(toBeCreatedDocument,
-                XPATH_ITEM_CONTENT_TYPE_XLINK_HREF).getTextContent();
-        href =
-            href.replaceFirst(Constants.CONTENT_MODEL_BASE_URI,
-                Constants.ORGANIZATIONAL_UNIT_BASE_URI);
-        substitute(toBeCreatedDocument, XPATH_ITEM_CONTENT_TYPE_XLINK_HREF,
-            href);
+            selectSingleNodeAsserted(toBeCreatedDocument, XPATH_ITEM_CONTENT_TYPE_XLINK_HREF).getTextContent();
+        href = href.replaceFirst(Constants.CONTENT_MODEL_BASE_URI, Constants.ORGANIZATIONAL_UNIT_BASE_URI);
+        substitute(toBeCreatedDocument, XPATH_ITEM_CONTENT_TYPE_XLINK_HREF, href);
 
         String toBeCreatedXml = toString(toBeCreatedDocument, true);
 
         try {
             create(toBeCreatedXml);
-            EscidocRestSoapTestBase.failMissingException(
-                "Creating item with invalid object href not declined. ", ec);
+            EscidocRestSoapTestBase.failMissingException("Creating item with invalid object href not declined. ", ec);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                "Creating item with invalid object href not declined,"
-                    + " properly. ", ec, e);
+            EscidocRestSoapTestBase.assertExceptionType("Creating item with invalid object href not declined,"
+                + " properly. ", ec, e);
         }
     }
 }

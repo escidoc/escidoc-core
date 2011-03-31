@@ -36,27 +36,20 @@ import java.util.Comparator;
 
 /**
  * Sorts AggregationTableField-Objects according to their listIndex.
- * 
- * @author Michael Hoppe
  *
+ * @author Michael Hoppe
  */
-public class AggregationTableFieldComparator 
-        implements Comparator<AggregationTableField>,Serializable {
+public class AggregationTableFieldComparator implements Comparator<AggregationTableField>, Serializable {
 
     /**
      * compares listIndex.
-     * 
+     *
      * @param a1 AggregationTableField1
      * @param a2 AggregationTableField2
      * @return Returns compare result.
-     * 
-     *
      */
     @Override
-    public int compare(
-            final AggregationTableField a1, 
-            final AggregationTableField a2) {
-        return Integer.toString(a1.getListIndex())
-                .compareTo(Integer.toString(a2.getListIndex()));
+    public int compare(final AggregationTableField a1, final AggregationTableField a2) {
+        return Integer.toString(a1.getListIndex()).compareTo(Integer.toString(a2.getListIndex()));
     }
 }

@@ -32,91 +32,71 @@ import de.escidoc.core.test.om.contentRelation.ContentRelationTestBase;
 
 /**
  * Call the Content-Relation-Service.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 public class ContentRelationHelper extends ContentRelationTestBase {
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ContentRelationHelper(final int transport) {
         super(transport);
     }
 
     /**
-     * @param xml
-     *            The Content-Relation as xml.
+     * @param xml The Content-Relation as xml.
      * @return String Content-Relation-xml
-     * @exception Exception
-     *                e
+     * @throws Exception e
      */
     public String create(final String xml) throws Exception {
         return super.create(xml);
     }
 
     /**
-     * @param id
-     *            The Content-Relation-id.
+     * @param id The Content-Relation-id.
      * @return String Content-Relation-xml
-     * @exception Exception
-     *                e
+     * @throws Exception e
      */
     public String retrieve(final String id) throws Exception {
         return super.retrieve(id);
     }
 
     /**
-     * @param id
-     *            The Content-Relation-id.
-     * @exception Exception
-     *                e
+     * @param id The Content-Relation-id.
+     * @throws Exception e
      */
     public void delete(final String id) throws Exception {
         super.delete(id);
     }
 
     /**
-     * @param id
-     *            The Content-Relation-id.
-     * @param lastModDate
-     *            The last-modification-date.
+     * @param id          The Content-Relation-id.
+     * @param lastModDate The last-modification-date.
      * @return XML result structure with at least last-modification-date
-     * @exception Exception
-     *                e
+     * @throws Exception e
      */
-    public String submit(final String id, final String lastModDate)
-        throws Exception {
+    public String submit(final String id, final String lastModDate) throws Exception {
         return super.submit(id, lastModDate);
     }
 
     /**
-     * @param id
-     *            The Content-Relation-id.
-     * @param lastModDate
-     *            The last-modification-date.
+     * @param id          The Content-Relation-id.
+     * @param lastModDate The last-modification-date.
      * @return XML result structure with at least last-modification-date
-     * @exception Exception
-     *                e
+     * @throws Exception e
      */
-    public String release(final String id, final String lastModDate)
-        throws Exception {
+    public String release(final String id, final String lastModDate) throws Exception {
         return super.release(id, lastModDate);
     }
 
     /**
-     * @param id
-     *            The Content-Relation-id.
-     * @param lastModDate
-     *            The last-modification-date.
+     * @param id          The Content-Relation-id.
+     * @param lastModDate The last-modification-date.
      * @return XML result structure with at least last-modification-date
-     * @exception Exception
-     *                e
+     * @throws Exception e
      */
-    public String revise(final String id, final String lastModDate)
-        throws Exception {
+    public String revise(final String id, final String lastModDate) throws Exception {
         return super.revise(id, lastModDate);
     }
 

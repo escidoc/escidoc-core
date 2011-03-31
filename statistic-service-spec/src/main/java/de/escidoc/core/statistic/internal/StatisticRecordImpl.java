@@ -12,20 +12,17 @@ import javax.xml.bind.annotation.XmlType;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  * Default implementation of {@link StatisticRecord}.
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name="statistic-record",
-        propOrder = {"scope",
-                "parameter"
-})
-@XmlRootElement(name="statistic-record")
+@XmlType(name = "statistic-record", propOrder = { "scope", "parameter" })
+@XmlRootElement(name = "statistic-record")
 public class StatisticRecordImpl implements StatisticRecord {
 
     @XmlElement(required = true)
     private LinkRequiredImpl scope;
+
     private final List<ParameterImpl> parameter = new ArrayList<ParameterImpl>();
 
     @Override
@@ -58,10 +55,6 @@ public class StatisticRecordImpl implements StatisticRecord {
 
     @Override
     public String toString() {
-        return "StatisticRecordImpl{" +
-                "scope=" + this.scope +
-                ", parameter=" + this.parameter +
-                '}';
+        return "StatisticRecordImpl{" + "scope=" + this.scope + ", parameter=" + this.parameter + '}';
     }
 }
-

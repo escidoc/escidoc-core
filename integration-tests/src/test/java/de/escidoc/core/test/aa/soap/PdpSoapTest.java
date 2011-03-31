@@ -35,18 +35,16 @@ import org.junit.runners.JUnit4;
 
 /**
  * Test suite for the policy decision point using the SOAP interface.
- * 
+ *
  * @author Torsten Tetteroo
- * 
  */
 @RunWith(JUnit4.class)
 public class PdpSoapTest extends PdpAbstractTest {
 
     /**
      * Constructor.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     public PdpSoapTest() throws Exception {
 

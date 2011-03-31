@@ -38,21 +38,17 @@ import static org.junit.Assert.fail;
 
 /**
  * Test suite for the DeleteObjects method of the admin tool.
- * 
+ *
  * @author André Schenk
- * 
  */
 @RunWith(value = Parameterized.class)
 public class DeleteObjectsTest extends AdminToolTestBase {
 
     /**
      * The constructor.
-     * 
-     * @param transport
-     *            The transport identifier.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param transport The transport identifier.
+     * @throws Exception If anything fails.
      */
     public DeleteObjectsTest(final int transport) throws Exception {
         super(transport);
@@ -60,22 +56,19 @@ public class DeleteObjectsTest extends AdminToolTestBase {
 
     /**
      * Delete a list of objects from Fedora and search index.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test(timeout = 30000)
     public void testDeleteObjects() throws Exception {
         // create item
         String xml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
-                + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                "escidoc_item_198_for_create.xml");
         String itemId = getObjidValue(createItem(xml));
 
         // delete item
-        xml =
-            "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + "<param><id>"
-                + itemId + "</id></param>";
+        xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + "<param><id>" + itemId + "</id></param>";
         System.out.println(deleteObjects(xml));
 
         // wait until process has finished
@@ -97,8 +90,7 @@ public class DeleteObjectsTest extends AdminToolTestBase {
             fail("item with id " + itemId + " still exists");
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                ItemNotFoundException.class, e);
+            EscidocRestSoapTestBase.assertExceptionType(ItemNotFoundException.class, e);
         }
     }
 }

@@ -26,104 +26,73 @@ import java.util.Map;
 
 /**
  * ReportDefinition renderer implementation using the velocity template engine.
- * 
- * @author Michael Hoppe
  *
+ * @author Michael Hoppe
  */
-public final class ReportDefinitionXmlProvider 
-                    extends InfrastructureXmlProvider {
+public final class ReportDefinitionXmlProvider extends InfrastructureXmlProvider {
 
-    private static final String REPORT_DEFINITION_RESOURCE_NAME = 
-        "report-definition";
+    private static final String REPORT_DEFINITION_RESOURCE_NAME = "report-definition";
 
-    private static final String REPORT_DEFINITIONS_RESOURCE_NAME =
-        "report-definition-list";
+    private static final String REPORT_DEFINITIONS_RESOURCE_NAME = "report-definition-list";
 
-    private static final String REPORT_DEFINITIONS_SRW_RESOURCE_NAME =
-        "report-definition-srw-list";
+    private static final String REPORT_DEFINITIONS_SRW_RESOURCE_NAME = "report-definition-srw-list";
 
-    private static final String REPORT_DEFINITION_PATH = 
-        "/report-definition";
+    private static final String REPORT_DEFINITION_PATH = "/report-definition";
 
     private static final ReportDefinitionXmlProvider PROVIDER = new ReportDefinitionXmlProvider();
 
     /**
      * Private constructor to prevent initialization.
-     * 
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
      *
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     private ReportDefinitionXmlProvider() {
     }
 
     /**
      * Gets the ReportDefinition xml provider.
-     * 
-     * @return Returns the <code>ReportDefinitionXmlProvider</code> object.
-     * @throws WebserverSystemException
-     *             Thrown if the instance cannot be created due to an internal
-     *             error.
      *
+     * @return Returns the <code>ReportDefinitionXmlProvider</code> object.
+     * @throws WebserverSystemException Thrown if the instance cannot be created due to an internal error.
      */
-    public static ReportDefinitionXmlProvider getInstance()
-        throws WebserverSystemException {
+    public static ReportDefinitionXmlProvider getInstance() throws WebserverSystemException {
         return PROVIDER;
     }
 
     /**
      * Gets the ReportDefinition xml.
-     * 
+     *
      * @param values rendering values
      * @return String rendered xml
-     * @throws WebserverSystemException
-     *             Thrown if the instance cannot be created due to an internal
-     *             error.
-     *
+     * @throws WebserverSystemException Thrown if the instance cannot be created due to an internal error.
      */
-    public String getReportDefinitionXml(
-            final Map values)
-        throws WebserverSystemException {
+    public String getReportDefinitionXml(final Map values) throws WebserverSystemException {
 
-        return getXml(
-                REPORT_DEFINITION_RESOURCE_NAME, 
-                REPORT_DEFINITION_PATH, values);
+        return getXml(REPORT_DEFINITION_RESOURCE_NAME, REPORT_DEFINITION_PATH, values);
     }
 
     /**
      * Gets the ReportDefinitions xml.
-     * 
+     *
      * @param values rendering values
      * @return String rendered xml
-     * @throws WebserverSystemException
-     *             Thrown if the instance cannot be created due to an internal
-     *             error.
-     *
+     * @throws WebserverSystemException Thrown if the instance cannot be created due to an internal error.
      */
-    public String getReportDefinitionsXml(final Map values)
-        throws WebserverSystemException {
+    public String getReportDefinitionsXml(final Map values) throws WebserverSystemException {
 
-        return getXml(
-                REPORT_DEFINITIONS_RESOURCE_NAME, 
-                REPORT_DEFINITION_PATH, values);
+        return getXml(REPORT_DEFINITIONS_RESOURCE_NAME, REPORT_DEFINITION_PATH, values);
     }
 
     /**
      * Gets the ReportDefinitions xml in srw-schema.
-     * 
+     *
      * @param values rendering values
      * @return String rendered xml
-     * @throws WebserverSystemException
-     *             Thrown if the instance cannot be created due to an internal
-     *             error.
-     *
+     * @throws WebserverSystemException Thrown if the instance cannot be created due to an internal error.
      */
-    public String getReportDefinitionsSrwXml(final Map values)
-            throws WebserverSystemException {
+    public String getReportDefinitionsSrwXml(final Map values) throws WebserverSystemException {
 
-        return getXml(
-                REPORT_DEFINITIONS_SRW_RESOURCE_NAME,
-                REPORT_DEFINITION_PATH, values);
+        return getXml(REPORT_DEFINITIONS_SRW_RESOURCE_NAME, REPORT_DEFINITION_PATH, values);
     }
-    
+
 }

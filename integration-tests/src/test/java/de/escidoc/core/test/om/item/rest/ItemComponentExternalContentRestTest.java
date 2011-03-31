@@ -41,54 +41,43 @@ import static org.junit.Assert.fail;
 
 /**
  * Item tests with REST transport.
- * 
+ *
  * @author Michael Schneider
- * 
  */
-public class ItemComponentExternalContentRestTest extends ItemTestBase
-    implements ItemXpathsProvider {
+public class ItemComponentExternalContentRestTest extends ItemTestBase implements ItemXpathsProvider {
 
     /**
      * Constructor.
-     * 
      */
     public ItemComponentExternalContentRestTest() {
         super(Constants.TRANSPORT_REST);
     }
 
     /**
-     * Test successfully creating an item with a component containing a binary
-     * content,referenced by an URL, and the attribute 'storage' set to
-     * 'external-url'. The retrieve of the content is successful.
-     * 
-     * @throws Exception
+     * Test successfully creating an item with a component containing a binary content,referenced by an URL, and the
+     * attribute 'storage' set to 'external-url'. The retrieve of the content is successful.
      */
     @Test
-    public void testCreateItemWithExternalBinaryContentAndExternalExternalUrl()
-        throws Exception {
+    public void testCreateItemWithExternalBinaryContentAndExternalExternalUrl() throws Exception {
         try {
             String[] ids = createItemWithExternalBinaryContent("external-url");
 
-            this.getItemClient().getHttpClient().getParams()
-                .setParameter("http.protocol.handle-redirects", Boolean.TRUE);
+            this.getItemClient().getHttpClient().getParams().setParameter("http.protocol.handle-redirects",
+                Boolean.TRUE);
             retrieveContent(ids[0], ids[1]);
         }
         finally {
-            this.getItemClient().getHttpClient().getParams()
-                .setParameter("http.protocol.handle-redirects", Boolean.FALSE);
+            this.getItemClient().getHttpClient().getParams().setParameter("http.protocol.handle-redirects",
+                Boolean.FALSE);
         }
     }
 
     /**
-     * Test successfully creating an item with a component containing a binary
-     * content,referenced by an URL, and the attribute 'storage' set to
-     * 'external-managed'. The retrieve of the content is successful.
-     * 
-     * @throws Exception
+     * Test successfully creating an item with a component containing a binary content,referenced by an URL, and the
+     * attribute 'storage' set to 'external-managed'. The retrieve of the content is successful.
      */
     @Test
-    public void testCreateItemWithExternalBinaryContentAndExternalManaged()
-        throws Exception {
+    public void testCreateItemWithExternalBinaryContentAndExternalManaged() throws Exception {
 
         String[] ids = createItemWithExternalBinaryContent("external-managed");
 
@@ -96,52 +85,39 @@ public class ItemComponentExternalContentRestTest extends ItemTestBase
     }
 
     /**
-     * Test declining retrieve a component content of a component containing the
-     * attribute 'storage' set to 'external-managed' and a wrong URL.
-     * 
-     * @throws Exception
+     * Test declining retrieve a component content of a component containing the attribute 'storage' set to
+     * 'external-managed' and a wrong URL.
      */
     @Test
-    public void testRetrieveItemWithStorageExternalUrlAndWrongUrl()
-        throws Exception {
+    public void testRetrieveItemWithStorageExternalUrlAndWrongUrl() throws Exception {
         Document item =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
-                + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                "escidoc_item_198_for_create.xml");
         String storageBeforeCreate = "external-managed";
         Document newItem =
-            (Document) substitute(item,
-                "/item/components/component[2]/content/@storage",
-                storageBeforeCreate);
+            (Document) substitute(item, "/item/components/component[2]/content/@storage", storageBeforeCreate);
         Document newItem2 =
-            (Document) substitute(newItem,
-                "/item/components/component[2]/content/@href",
-                "http://www.bla.invalid");
-        Node itemWithoutSecondComponent =
-            deleteElement(newItem2, "/item/components/component[1]");
+            (Document) substitute(newItem, "/item/components/component[2]/content/@href", "http://www.bla.invalid");
+        Node itemWithoutSecondComponent = deleteElement(newItem2, "/item/components/component[1]");
         String xmlData = toString(itemWithoutSecondComponent, false);
 
         String theItemXml = create(xmlData);
-        String theItemId =
-            getObjidValue(EscidocRestSoapTestBase.getDocument(theItemXml));
+        String theItemId = getObjidValue(EscidocRestSoapTestBase.getDocument(theItemXml));
 
         assertXmlValidItem(xmlData);
         Document createdItem = getDocument(theItemXml);
         String componentId;
-        String componentHrefValue =
-            selectSingleNode(createdItem, "/item/components/component/@href")
-                .getNodeValue();
+        String componentHrefValue = selectSingleNode(createdItem, "/item/components/component/@href").getNodeValue();
 
         componentId = getObjidFromHref(componentHrefValue);
         try {
             retrieveContent(theItemId, componentId);
             fail("No exception occurred on retrieve content of a component with "
-                + "the attribute 'storage' set to 'external-managed and a wrong url "
-                + "/ir/item/" + theItemId 
+                + "the attribute 'storage' set to 'external-managed and a wrong url " + "/ir/item/" + theItemId
                 + "/components/component/" + componentId + "/content");
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                "WebserverSystemException", WebserverSystemException.class, e);
+            EscidocRestSoapTestBase.assertExceptionType("WebserverSystemException", WebserverSystemException.class, e);
         }
     }
 }

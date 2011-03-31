@@ -34,13 +34,13 @@ import de.escidoc.core.sm.business.Constants;
 import java.util.Collection;
 
 /**
- * Holds all values needed to represent a group of additional where-clauses
- * (enclosed by brackets in the resulting sql-statement).
- * 
- * @author Michael Hoppe
+ * Holds all values needed to represent a group of additional where-clauses (enclosed by brackets in the resulting
+ * sql-statement).
  *
+ * @author Michael Hoppe
  */
 public class AdditionalWhereGroupVo {
+
     // alliance also can be 'or'
     private String alliance = Constants.DATABASE_ALLIANCE_AND;
 
@@ -56,17 +56,15 @@ public class AdditionalWhereGroupVo {
     }
 
     /**
-     * @param additionalWhereFieldVos
-     *            the additionalWhereFieldVos to set
+     * @param additionalWhereFieldVos the additionalWhereFieldVos to set
      */
-    public void setAdditionalWhereFieldVos(
-        final Collection<AdditionalWhereFieldVo> additionalWhereFieldVos) {
+    public void setAdditionalWhereFieldVos(final Collection<AdditionalWhereFieldVo> additionalWhereFieldVos) {
         this.additionalWhereFieldVos = additionalWhereFieldVos;
     }
 
     /**
      * can be 'and' or 'or'.
-     * 
+     *
      * @return the alliance
      */
     public String getAlliance() {
@@ -75,15 +73,11 @@ public class AdditionalWhereGroupVo {
 
     /**
      * can be 'and' or 'or'.
-     * 
-     * @param alliance
-     *            the alliance to set
-     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
+     *
+     * @param alliance the alliance to set
      */
-    public void setAlliance(final String alliance) 
-                        throws SqlDatabaseSystemException {
-        if (alliance == null 
-        		|| !alliance.equalsIgnoreCase(Constants.DATABASE_ALLIANCE_AND)
+    public void setAlliance(final String alliance) throws SqlDatabaseSystemException {
+        if (alliance == null || !alliance.equalsIgnoreCase(Constants.DATABASE_ALLIANCE_AND)
             && !alliance.equalsIgnoreCase(Constants.DATABASE_ALLIANCE_OR)) {
             throw new SqlDatabaseSystemException("wrong alliance given");
         }
@@ -98,8 +92,7 @@ public class AdditionalWhereGroupVo {
     }
 
     /**
-     * @param rootWhereFieldVo
-     *            the rootWhereFieldVo to set
+     * @param rootWhereFieldVo the rootWhereFieldVo to set
      */
     public void setRootWhereFieldVo(final RootWhereFieldVo rootWhereFieldVo) {
         this.rootWhereFieldVo = rootWhereFieldVo;

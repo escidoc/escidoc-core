@@ -21,7 +21,7 @@
 package de.escidoc.core.common.business.fedora.resources.cmm;
 
 public class DsTypeModel {
-    
+
     private String name;
 
     private boolean hasSchema;

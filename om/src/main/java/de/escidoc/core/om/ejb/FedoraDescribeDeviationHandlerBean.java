@@ -24,17 +24,20 @@ import java.util.Map;
 public class FedoraDescribeDeviationHandlerBean implements SessionBean {
 
     FedoraDescribeDeviationHandlerInterface service;
+
     SessionContext sessionCtx;
+
     private static final Logger LOGGER = LoggerFactory.getLogger(FedoraDescribeDeviationHandlerBean.class);
 
     public void ejbCreate() throws CreateException {
         try {
             final BeanFactoryLocator beanFactoryLocator = SingletonBeanFactoryLocator.getInstance();
             final BeanFactory factory =
-                    beanFactoryLocator.useBeanFactory("FedoraDescribeDeviationHandler.spring.ejb.context").getFactory();
+                beanFactoryLocator.useBeanFactory("FedoraDescribeDeviationHandler.spring.ejb.context").getFactory();
             this.service =
-                    (FedoraDescribeDeviationHandlerInterface) factory.getBean("service.FedoraDescribeDeviationHandler");
-        } catch(Exception e) {
+                (FedoraDescribeDeviationHandlerInterface) factory.getBean("service.FedoraDescribeDeviationHandler");
+        }
+        catch (Exception e) {
             LOGGER.error("ejbCreate(): Exception FedoraDescribeDeviationHandlerComponent: " + e);
             throw new CreateException(e.getMessage());
         }
@@ -55,23 +58,23 @@ public class FedoraDescribeDeviationHandlerBean implements SessionBean {
 
     }
 
-    public String getFedoraDescription(final Map parameters,
-                                                 final SecurityContext securityContext)
-            throws Exception {
+    public String getFedoraDescription(final Map parameters, final SecurityContext securityContext) throws Exception {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.getFedoraDescription(parameters);
     }
 
-    public String getFedoraDescription(final Map parameters, final String authHandle,
-                                                 final Boolean restAccess) throws Exception {
+    public String getFedoraDescription(final Map parameters, final String authHandle, final Boolean restAccess)
+        throws Exception {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.getFedoraDescription(parameters);

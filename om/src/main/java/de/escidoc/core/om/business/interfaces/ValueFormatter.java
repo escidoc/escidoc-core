@@ -31,13 +31,10 @@ package de.escidoc.core.om.business.interfaces;
 import java.util.Map;
 
 /**
- * This interface provides a simple way to format values within eSciDoc.
- * Different formatters can implement this interface and thereby adhere
- * to a common structure and remove the formatting code to an external
- * collaborator.
+ * This interface provides a simple way to format values within eSciDoc. Different formatters can implement this
+ * interface and thereby adhere to a common structure and remove the formatting code to an external collaborator.
  *
  * @author Kai Strnad
- *
  */
 public interface ValueFormatter {
 
@@ -46,8 +43,7 @@ public interface ValueFormatter {
      *
      * @param input the input value.
      * @return the formatted value.
-     * @param values
      */
-    String format(Map<String,String> values);
+    String format(Map<String, String> values);
 
 }

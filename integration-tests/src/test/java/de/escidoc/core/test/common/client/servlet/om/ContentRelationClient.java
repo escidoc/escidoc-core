@@ -38,297 +38,220 @@ import javax.xml.rpc.ServiceException;
 import java.util.Map;
 
 /**
- * Offers access methods to the escidoc interfaces of the content relation
- * resource.
- * 
+ * Offers access methods to the escidoc interfaces of the content relation resource.
+ *
  * @author Steffen Wagner
- * 
  */
-public class ContentRelationClient extends ClientBase
-    implements ContentRelationHandlerClientInterface {
+public class ContentRelationClient extends ClientBase implements ContentRelationHandlerClientInterface {
 
     private ContentRelationHandler soapClient = null;
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ContentRelationClient(final int transport) {
         super(transport);
     }
 
     /**
-     * Retrieve the xml representation of all virtual resources of the content
-     * relation.
-     * 
-     * @param id
-     *            The id of the content relation.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     * Retrieve the xml representation of all virtual resources of the content relation.
+     *
+     * @param id The id of the content relation.
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     public Object retrieveResources(final String id) throws Exception {
 
-        return callEsciDoc("ContentRelation.retrieveResources",
-            METHOD_RETRIEVE_RESOURCES, Constants.HTTP_METHOD_GET,
-            Constants.CONTENT_RELATION_BASE_URI, new String[] { id,
-                Constants.SUB_RESOURCES });
+        return callEsciDoc("ContentRelation.retrieveResources", METHOD_RETRIEVE_RESOURCES, Constants.HTTP_METHOD_GET,
+            Constants.CONTENT_RELATION_BASE_URI, new String[] { id, Constants.SUB_RESOURCES });
     }
 
     /**
      * Retrieve the xml representation of a content relation.
-     * 
-     * @param id
-     *            The id of the content relation.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param id The id of the content relation.
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     @Override
     public Object retrieve(final String id) throws Exception {
 
-        return callEsciDoc("ContentRelation.retrieve", METHOD_RETRIEVE,
-            Constants.HTTP_METHOD_GET, Constants.CONTENT_RELATION_BASE_URI,
-            new String[] { id });
+        return callEsciDoc("ContentRelation.retrieve", METHOD_RETRIEVE, Constants.HTTP_METHOD_GET,
+            Constants.CONTENT_RELATION_BASE_URI, new String[] { id });
     }
 
     /**
      * Retrieve content relations.
-     * 
-     * @param filter
-     *            The filter param.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param filter The filter param.
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
-    public Object retrieveContentRelations(final Map<String, String[]> filter)
-        throws Exception {
+    public Object retrieveContentRelations(final Map<String, String[]> filter) throws Exception {
 
-        return callEsciDoc("ContentRelation.retrieveContentRelations",
-            METHOD_RETRIEVE_CONTENT_RELATIONS, Constants.HTTP_METHOD_GET,
-            Constants.CONTENT_RELATIONS_BASE_URI, new String[] {}, filter);
+        return callEsciDoc("ContentRelation.retrieveContentRelations", METHOD_RETRIEVE_CONTENT_RELATIONS,
+            Constants.HTTP_METHOD_GET, Constants.CONTENT_RELATIONS_BASE_URI, new String[] {}, filter);
     }
 
     /**
      * Retrieve the xml representation of the properties of a resource.
-     * 
-     * @param id
-     *            The resource id.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param id The resource id.
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     public Object retrieveProperties(final String id) throws Exception {
 
-        return callEsciDoc("ContentRelation.retrieveProperties",
-            METHOD_RETRIEVE_PROPERTIES, Constants.HTTP_METHOD_GET,
-            Constants.CONTENT_RELATION_BASE_URI, new String[] { id,
-                Constants.SUB_PROPERTIES });
+        return callEsciDoc("ContentRelation.retrieveProperties", METHOD_RETRIEVE_PROPERTIES, Constants.HTTP_METHOD_GET,
+            Constants.CONTENT_RELATION_BASE_URI, new String[] { id, Constants.SUB_PROPERTIES });
     }
 
     /**
      * Create a content relation in the escidoc framework.
-     * 
-     * @param contentRelationXml
-     *            The xml representation of the content relation.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param contentRelationXml The xml representation of the content relation.
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     @Override
     public Object create(final Object contentRelationXml) throws Exception {
 
-        return callEsciDoc("ContentRelation.create", METHOD_CREATE,
-            Constants.HTTP_METHOD_PUT, Constants.CONTENT_RELATION_BASE_URI,
-            new String[] {}, changeToString(contentRelationXml));
+        return callEsciDoc("ContentRelation.create", METHOD_CREATE, Constants.HTTP_METHOD_PUT,
+            Constants.CONTENT_RELATION_BASE_URI, new String[] {}, changeToString(contentRelationXml));
     }
 
     /**
      * Update a content relation in the escidoc framework.
-     * 
-     * @param id
-     *            The id of the content relation.
-     * @param contentRelationXml
-     *            The xml representation of the content relation.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param id                 The id of the content relation.
+     * @param contentRelationXml The xml representation of the content relation.
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     @Override
-    public Object update(final String id, final Object contentRelationXml)
-        throws Exception {
+    public Object update(final String id, final Object contentRelationXml) throws Exception {
 
-        return callEsciDoc("ContentRelation.update", METHOD_UPDATE,
-            Constants.HTTP_METHOD_PUT, Constants.CONTENT_RELATION_BASE_URI,
-            new String[] { id }, changeToString(contentRelationXml));
+        return callEsciDoc("ContentRelation.update", METHOD_UPDATE, Constants.HTTP_METHOD_PUT,
+            Constants.CONTENT_RELATION_BASE_URI, new String[] { id }, changeToString(contentRelationXml));
     }
 
     /**
      * Delete a content relation from the escidoc framework.
-     * 
-     * @param id
-     *            The id of the content relation.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param id The id of the content relation.
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     @Override
     public Object delete(final String id) throws Exception {
 
-        return callEsciDoc("ContentRelation.delete", METHOD_DELETE,
-            Constants.HTTP_METHOD_DELETE, Constants.CONTENT_RELATION_BASE_URI,
-            new String[] { id });
+        return callEsciDoc("ContentRelation.delete", METHOD_DELETE, Constants.HTTP_METHOD_DELETE,
+            Constants.CONTENT_RELATION_BASE_URI, new String[] { id });
     }
 
     /**
      * Submit a content relation.
-     * 
-     * @param id
-     *            The id of the content relation.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param id The id of the content relation.
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     public Object submit(final String id, final String param) throws Exception {
-        return callEsciDoc("ContentRelation.submit", METHOD_SUBMIT,
-            Constants.HTTP_METHOD_POST, Constants.CONTENT_RELATION_BASE_URI,
-            new String[] { id, Constants.SUB_SUBMIT }, param);
+        return callEsciDoc("ContentRelation.submit", METHOD_SUBMIT, Constants.HTTP_METHOD_POST,
+            Constants.CONTENT_RELATION_BASE_URI, new String[] { id, Constants.SUB_SUBMIT }, param);
 
     }
 
     /**
      * Release a content relation.
-     * 
-     * @param id
-     *            The id of the content relation.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param id The id of the content relation.
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     public Object release(final String id, final String param) throws Exception {
-        return callEsciDoc("ContentRelation.release", METHOD_RELEASE,
-            Constants.HTTP_METHOD_POST, Constants.CONTENT_RELATION_BASE_URI,
-            new String[] { id, Constants.SUB_RELEASE }, param);
+        return callEsciDoc("ContentRelation.release", METHOD_RELEASE, Constants.HTTP_METHOD_POST,
+            Constants.CONTENT_RELATION_BASE_URI, new String[] { id, Constants.SUB_RELEASE }, param);
 
     }
 
     /**
      * Revise a content relation.
-     * 
-     * @param id
-     *            The id of the content relation.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param id The id of the content relation.
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     public Object revise(final String id, final String param) throws Exception {
-        return callEsciDoc("ContentRelation.revise", METHOD_REVISE,
-            Constants.HTTP_METHOD_POST, Constants.CONTENT_RELATION_BASE_URI,
-            new String[] { id, Constants.SUB_REVISE }, param);
+        return callEsciDoc("ContentRelation.revise", METHOD_REVISE, Constants.HTTP_METHOD_POST,
+            Constants.CONTENT_RELATION_BASE_URI, new String[] { id, Constants.SUB_REVISE }, param);
 
     }
 
     /**
      * Lock a Content Relation for other user access.
-     * 
-     * @param id
-     *            The id of the content relation.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param id The id of the content relation.
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     public Object lock(final String id, final String param) throws Exception {
-        return callEsciDoc("ContentRelation.lock", METHOD_LOCK,
-            Constants.HTTP_METHOD_POST, Constants.CONTENT_RELATION_BASE_URI,
-            new String[] { id, Constants.SUB_LOCK }, param);
+        return callEsciDoc("ContentRelation.lock", METHOD_LOCK, Constants.HTTP_METHOD_POST,
+            Constants.CONTENT_RELATION_BASE_URI, new String[] { id, Constants.SUB_LOCK }, param);
     }
 
     /**
      * Unlock a Content Relation for other user access.
-     * 
-     * @param id
-     *            The id of the content relation.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param id The id of the content relation.
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     public Object unlock(final String id, final String param) throws Exception {
-        return callEsciDoc("ContentRelation.unlock", METHOD_UNLOCK,
-            Constants.HTTP_METHOD_POST, Constants.CONTENT_RELATION_BASE_URI,
-            new String[] { id, Constants.SUB_UNLOCK }, param);
+        return callEsciDoc("ContentRelation.unlock", METHOD_UNLOCK, Constants.HTTP_METHOD_POST,
+            Constants.CONTENT_RELATION_BASE_URI, new String[] { id, Constants.SUB_UNLOCK }, param);
     }
-
-    
 
     /**
      * Assign persistent identifier to a Content-relation object.
-     * 
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
 
-    public Object assignObjectPid(final String id, final String param)
-        throws Exception {
-        return callEsciDoc("ContentRelation.assignObjectPid",
-            METHOD_ASSIGN_OBJECT_PID, Constants.HTTP_METHOD_POST,
-            Constants.CONTENT_RELATION_BASE_URI, new String[] { id,
-                Constants.SUB_ASSIGN_OBJECT_PID }, param);
+    public Object assignObjectPid(final String id, final String param) throws Exception {
+        return callEsciDoc("ContentRelation.assignObjectPid", METHOD_ASSIGN_OBJECT_PID, Constants.HTTP_METHOD_POST,
+            Constants.CONTENT_RELATION_BASE_URI, new String[] { id, Constants.SUB_ASSIGN_OBJECT_PID }, param);
     }
 
     /**
      * Get escidoc XML representation of ContentRelations md-records.
-     * 
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     public Object retrieveMdRecords(final String id) throws Exception {
-        return callEsciDoc("ContentRelation.retrieveMdRecords",
-            METHOD_RETRIEVE_MD_RECORDS, Constants.HTTP_METHOD_GET,
-            Constants.CONTENT_RELATION_BASE_URI, new String[] { id,
-                Constants.SUB_MD_RECORDS });
+        return callEsciDoc("ContentRelation.retrieveMdRecords", METHOD_RETRIEVE_MD_RECORDS, Constants.HTTP_METHOD_GET,
+            Constants.CONTENT_RELATION_BASE_URI, new String[] { id, Constants.SUB_MD_RECORDS });
     }
 
     /**
-     * Get escidoc XML representation of ContentRelations md-record with a
-     * provided id.
-     * 
-     * @param id
-     *            objid of ContentRelation resource
-     * @param name
-     *            name of a md-record * @return The HttpMethod after the service
-     *            call (REST) or the result object (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     * Get escidoc XML representation of ContentRelations md-record with a provided id.
+     *
+     * @param id   objid of ContentRelation resource
+     * @param name name of a md-record * @return The HttpMethod after the service call (REST) or the result object
+     *             (SOAP).
+     * @throws Exception If the service call fails.
      */
 
-    public Object retrieveMdRecord(final String id, final String name)
-        throws Exception {
-        return callEsciDoc("ContentRelation.retrieveMdRecord",
-            METHOD_RETRIEVE_MD_RECORD, Constants.HTTP_METHOD_GET,
-            Constants.CONTENT_RELATION_BASE_URI, new String[] { id,
-                Constants.SUB_MD_RECORD, name });
+    public Object retrieveMdRecord(final String id, final String name) throws Exception {
+        return callEsciDoc("ContentRelation.retrieveMdRecord", METHOD_RETRIEVE_MD_RECORD, Constants.HTTP_METHOD_GET,
+            Constants.CONTENT_RELATION_BASE_URI, new String[] { id, Constants.SUB_MD_RECORD, name });
     }
 
     /**
      * @return Returns the soapClient.
-     * @throws ServiceException
-     *             If service instantiation fails.
+     * @throws ServiceException If service instantiation fails.
      */
     @Override
     public ContentRelationHandler getSoapClient() throws ServiceException {
@@ -336,9 +259,7 @@ public class ContentRelationClient extends ClientBase
         if (soapClient == null) {
             ContentRelationHandlerServiceLocator serviceLocator =
                 new ContentRelationHandlerServiceLocator(getEngineConfig());
-            String ep =
-                checkSoapAddress(serviceLocator
-                    .getContentRelationHandlerServiceAddress());
+            String ep = checkSoapAddress(serviceLocator.getContentRelationHandlerServiceAddress());
             serviceLocator.setContentRelationHandlerServiceEndpointAddress(ep);
             soapClient = serviceLocator.getContentRelationHandlerService();
         }

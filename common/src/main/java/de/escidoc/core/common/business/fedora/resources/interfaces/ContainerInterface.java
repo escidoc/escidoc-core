@@ -32,97 +32,67 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import java.util.Map;
 
 /**
- * Interface for Fedora Container Object which consist of datastreams managed in
- * Fedora Digital Repository System.
- * 
+ * Interface for Fedora Container Object which consist of datastreams managed in Fedora Digital Repository System.
  */
 public interface ContainerInterface extends VersionableResource {
 
     /**
-     * Sets the RELS-EXT datastream and saves it in fedora. If the datastream is
-     * already set and unchanged, nothing will be done.
-     * 
-     * @param ds
-     *            A Datastream representing the Fedora RELS-EXT datastream.
-     * @throws LockingException
-     * @throws StreamNotFoundException
-     *             If there is no RELS-EXT datastream of a fedora object with
-     *             <code>id</code>. This is probably an error cause a fedora
-     *             object have to have this datastream.
-     * @throws FedoraSystemException
-     * @throws TripleStoreSystemException
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
+     * Sets the RELS-EXT datastream and saves it in fedora. If the datastream is already set and unchanged, nothing will
+     * be done.
+     *
+     * @param ds A Datastream representing the Fedora RELS-EXT datastream.
+     * @throws StreamNotFoundException  If there is no RELS-EXT datastream of a fedora object with <code>id</code>. This
+     *                                  is probably an error cause a fedora object have to have this datastream.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     @Override
-    void setRelsExt(Datastream ds) throws StreamNotFoundException,
-        LockingException, FedoraSystemException, WebserverSystemException,
-        TripleStoreSystemException;
+    void setRelsExt(Datastream ds) throws StreamNotFoundException, LockingException, FedoraSystemException,
+        WebserverSystemException, TripleStoreSystemException;
 
     /**
      * Get metadata records of the Container.
-     * 
+     *
      * @return A Map containing the metadata datastreams of this resource.
-     * @throws FedoraSystemException
-     *             Thrown if Fedora reports an error
-     * @throws IntegritySystemException
-     * @throws WebserverSystemException 
-     *              If an internal error occurs.
+     * @throws FedoraSystemException    Thrown if Fedora reports an error
+     * @throws WebserverSystemException If an internal error occurs.
      */
-    Map<String, Datastream> getMdRecords() throws FedoraSystemException,
-        IntegritySystemException, WebserverSystemException;
+    Map<String, Datastream> getMdRecords() throws FedoraSystemException, IntegritySystemException,
+        WebserverSystemException;
 
     /**
-     * 
-     * @param mdRecords
-     *            A Map containing the metadata datastreams of this resource.
-     * @throws LockingException
-     *             If the container is locked.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     * @param mdRecords A Map containing the metadata datastreams of this resource.
+     * @throws LockingException If the container is locked.
+     * @throws SystemException  Thrown in case of an internal error.
      */
-    void setMdRecords(final Map<String, Datastream> mdRecords)
-        throws LockingException, SystemException;
+    void setMdRecords(final Map<String, Datastream> mdRecords) throws LockingException, SystemException;
 
     /**
-     * 
-     * @param name
-     *            The name of a matadata datastream.
+     * @param name The name of a matadata datastream.
      * @return A metadata datastreams of this resource.
-     * @throws StreamNotFoundException
-     *             Thrown if datastream with provided name not exists.
-     * @throws FedoraSystemException
-     *             Thrown if access to Fedora failed.
+     * @throws StreamNotFoundException Thrown if datastream with provided name not exists.
+     * @throws FedoraSystemException   Thrown if access to Fedora failed.
      */
-    Datastream getMdRecord(String name) throws StreamNotFoundException,
-        FedoraSystemException;
+    Datastream getMdRecord(String name) throws StreamNotFoundException, FedoraSystemException;
 
     /**
-     * 
-     * @param name
-     *            The name of a matadata datastream.
-     * @param ds
-     *            A metadata datastreams of this resource.
-     * @throws LockingException
-     *             If the container is locked.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     * @param name The name of a matadata datastream.
+     * @param ds   A metadata datastreams of this resource.
+     * @throws LockingException If the container is locked.
+     * @throws SystemException  Thrown in case of an internal error.
      */
-    void setMdRecord(final String name, final Datastream ds)
-        throws LockingException, SystemException;
+    void setMdRecord(final String name, final Datastream ds) throws LockingException, SystemException;
 
     /**
      * Get members of Container.
-     * 
+     *
      * @return members
      */
     Datastream getMembers();
 
     /**
      * Set Container members.
-     * 
-     * @param ds
-     *            Members datastream.
+     *
+     * @param ds Members datastream.
      */
     void setMembers(Datastream ds);
 

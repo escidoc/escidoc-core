@@ -54,8 +54,8 @@ import java.util.Map;
 import java.util.Properties;
 
 /**
- * Administration tool that rebuilds the search index, rebuilds the resource
- * cache and deletes objects physically from the repository.
+ * Administration tool that rebuilds the search index, rebuilds the resource cache and deletes objects physically from
+ * the repository.
  *
  * @author André Schenk
  */
@@ -78,37 +78,28 @@ public class AdminHandler {
     private TripleStoreUtility tripleStoreUtility;
 
     /**
-     * Delete a list of objects given by their object id's from Fedora. In case
-     * of items this method will also delete all depending components of the
-     * given items. The deletion runs synchronously and returns some useful
-     * information for the user, e.g. the total number of objects deleted.
-     * 
-     * @param taskParam
-     *            list of object id's to be deleted boolean value to signal if
-     *            the search index and the resource cache have to be kept in
-     *            sync. If this value is set to false then the re-indexing and
-     *            re-caching should be run manually afterwards.
-     * 
+     * Delete a list of objects given by their object id's from Fedora. In case of items this method will also delete
+     * all depending components of the given items. The deletion runs synchronously and returns some useful information
+     * for the user, e.g. the total number of objects deleted.
+     *
+     * @param taskParam list of object id's to be deleted boolean value to signal if the search index and the resource
+     *                  cache have to be kept in sync. If this value is set to false then the re-indexing and re-caching
+     *                  should be run manually afterwards.
      * @return total number of objects deleted, ...
-     * @throws InvalidXmlException
-     *             thrown if the taskParam has an invalid structure
-     * @throws SystemException
-     *             thrown in case of an internal error
+     * @throws InvalidXmlException thrown if the taskParam has an invalid structure
+     * @throws SystemException     thrown in case of an internal error
      */
-    public String deleteObjects(final String taskParam)
-        throws InvalidXmlException, SystemException {
+    public String deleteObjects(final String taskParam) throws InvalidXmlException, SystemException {
         final StringBuilder result = new StringBuilder();
         final PurgeStatus purgeStatus = PurgeStatus.getInstance();
 
         if (purgeStatus.startMethod()) {
-            final TaskParamHandler taskParameter =
-                XmlUtility.parseTaskParam(taskParam, false);
+            final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(taskParam, false);
 
             try {
                 for (final String id : taskParameter.getIds()) {
                     final PurgeRequest purgeRequest =
-                        PurgeRequestBuilder
-                            .createPurgeRequest().withResourceId(id).build();
+                        PurgeRequestBuilder.createPurgeRequest().withResourceId(id).build();
                     this.purgeService.purge(purgeRequest);
                     if (taskParameter.getKeepInSync()) {
                         // synchronize search index
@@ -117,11 +108,13 @@ public class AdminHandler {
                     purgeStatus.inc();
                 }
                 result.append("<message>\n");
-                result.append("scheduling ").append(taskParameter.getIds().size()).append(" objects(s) for deletion from Fedora\n");
+                result.append("scheduling ").append(taskParameter.getIds().size()).append(
+                    " objects(s) for deletion from Fedora\n");
                 result.append("</message>\n");
                 if (taskParameter.getKeepInSync()) {
                     result.append("<message>\n");
-                    result.append("scheduling ").append(taskParameter.getIds().size()).append(" object(s) for deletion from search index\n");
+                    result.append("scheduling ").append(taskParameter.getIds().size()).append(
+                        " object(s) for deletion from search index\n");
                     result.append("</message>\n");
                 }
             }
@@ -142,10 +135,9 @@ public class AdminHandler {
 
     /**
      * Get the current status of the running/finished purging process.
-     * 
+     *
      * @return current status (how many objects are still in the queue)
-     * @throws SystemException
-     *             thrown in case of an internal error
+     * @throws SystemException thrown in case of an internal error
      */
     public String getPurgeStatus() throws SystemException {
         return getUtility().prepareReturnXml(PurgeStatus.getInstance().toString());
@@ -153,26 +145,22 @@ public class AdminHandler {
 
     /**
      * Get the current status of the running/finished reindexing process.
-     * 
+     *
      * @return current status (how many objects are still in the queue)
-     * @throws SystemException
-     *             thrown in case of an internal error
+     * @throws SystemException thrown in case of an internal error
      */
     public String getReindexStatus() throws SystemException {
         return getUtility().prepareReturnXml(reindexer.getStatus());
     }
 
     /**
-     * decrease the type of the current status of the running reindexing process
-     * by 1.
-     * 
-     * @param objectType
-     *            object-type to decrease
+     * decrease the type of the current status of the running reindexing process by 1.
+     *
+     * @param objectType object-type to decrease
      */
     public void decreaseReindexStatus(final String objectType) {
         if (objectType != null) {
-            ReindexStatus.getInstance().dec(
-                ResourceType.getResourceTypeFromUri(objectType));
+            ReindexStatus.getInstance().dec(ResourceType.getResourceTypeFromUri(objectType));
         }
     }
 
@@ -187,40 +175,30 @@ public class AdminHandler {
     }
 
     /**
-     * Reinitialize the search index. The initialization runs synchronously and
-     * returns some useful information for the user, e.g. the total number of
-     * objects found.
-     * 
-     * @param clearIndex
-     *            clear the index before adding objects to it
-     * @param indexNamePrefix
-     *            name of the index (may be null for "all indexes")
-     * 
+     * Reinitialize the search index. The initialization runs synchronously and returns some useful information for the
+     * user, e.g. the total number of objects found.
+     *
+     * @param clearIndex      clear the index before adding objects to it
+     * @param indexNamePrefix name of the index (may be null for "all indexes")
      * @return total number of objects found, ...
-     * @throws SystemException
-     *             Thrown if a framework internal error occurs.
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a SQL query
+     * @throws SystemException             Thrown if a framework internal error occurs.
+     * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
      */
-    public String reindex(final boolean clearIndex, final String indexNamePrefix)
-        throws SystemException, InvalidSearchQueryException {
+    public String reindex(final boolean clearIndex, final String indexNamePrefix) throws SystemException,
+        InvalidSearchQueryException {
         return getUtility().prepareReturnXml(reindexer.reindex(clearIndex, indexNamePrefix));
     }
 
     /**
      * Provides a xml structure containing the index-configuration.
-     * 
+     *
      * @return xml structure with index configuration
-     * @throws WebserverSystemException
-     *             if anything goes wrong.
-     * @throws TripleStoreSystemException
-     *             if anything goes wrong.
-     * @throws EncodingSystemException
-     *             if anything goes wrong.
+     * @throws WebserverSystemException   if anything goes wrong.
+     * @throws TripleStoreSystemException if anything goes wrong.
+     * @throws EncodingSystemException    if anything goes wrong.
      */
-    public String getIndexConfiguration() throws WebserverSystemException,
-        TripleStoreSystemException, EncodingSystemException {
+    public String getIndexConfiguration() throws WebserverSystemException, TripleStoreSystemException,
+        EncodingSystemException {
 
         final Map<String, Map<String, Map<String, Object>>> indexConfiguration =
             indexingHandler.getObjectTypeParameters();
@@ -228,23 +206,18 @@ public class AdminHandler {
     }
 
     /**
-     * Provides a xml structure containing public configuration properties of
-     * escidoc-core framework and the earliest creation date of Escidoc
-     * repository objects.
-     * 
+     * Provides a xml structure containing public configuration properties of escidoc-core framework and the earliest
+     * creation date of Escidoc repository objects.
+     *
      * @return xml structure with escidoc configuration properties
-     * @throws WebserverSystemException
-     *             if anything go wrong.
-     * @throws TripleStoreSystemException
-     *             if anything go wrong.
-     * @throws EncodingSystemException
-     *             if anything go wrong.
+     * @throws WebserverSystemException   if anything go wrong.
+     * @throws TripleStoreSystemException if anything go wrong.
+     * @throws EncodingSystemException    if anything go wrong.
      */
-    public String getRepositoryInfo() throws WebserverSystemException,
-        TripleStoreSystemException, EncodingSystemException {
+    public String getRepositoryInfo() throws WebserverSystemException, TripleStoreSystemException,
+        EncodingSystemException {
 
-        final String earliestCreationDate =
-            tripleStoreUtility.getEarliestCreationDate();
+        final String earliestCreationDate = tripleStoreUtility.getEarliestCreationDate();
         final EscidocConfiguration config;
         try {
             config = EscidocConfiguration.getInstance();
@@ -262,30 +235,24 @@ public class AdminHandler {
             properties.setProperty(EscidocConfiguration.BUILD_NUMBER, buildNr);
         }
         if (gsearchUrl != null) {
-            properties
-                .setProperty(EscidocConfiguration.GSEARCH_URL, gsearchUrl);
+            properties.setProperty(EscidocConfiguration.GSEARCH_URL, gsearchUrl);
         }
         final String baseUrl = config.get(EscidocConfiguration.ESCIDOC_CORE_BASEURL);
         if (baseUrl != null) {
-            properties.setProperty(EscidocConfiguration.ESCIDOC_CORE_BASEURL,
-                baseUrl);
+            properties.setProperty(EscidocConfiguration.ESCIDOC_CORE_BASEURL, baseUrl);
         }
         final String name = config.get(EscidocConfiguration.ESCIDOC_REPOSITORY_NAME);
         if (name != null) {
-            properties.setProperty(
-                EscidocConfiguration.ESCIDOC_REPOSITORY_NAME, name);
+            properties.setProperty(EscidocConfiguration.ESCIDOC_REPOSITORY_NAME, name);
         }
         final String email = config.get(EscidocConfiguration.ADMIN_EMAIL);
         if (email != null) {
             properties.setProperty(EscidocConfiguration.ADMIN_EMAIL, email);
         }
-        properties.setProperty("escidoc-core.earliest-date",
-            earliestCreationDate);
-        properties.setProperty("escidoc-core.database.version", frameworkInfo
-            .getVersion().toString());
+        properties.setProperty("escidoc-core.earliest-date", earliestCreationDate);
+        properties.setProperty("escidoc-core.database.version", frameworkInfo.getVersion().toString());
         try {
-            properties.setProperty("escidoc-core.database.consistent",
-                String.valueOf(frameworkInfo.isConsistent()));
+            properties.setProperty("escidoc-core.database.consistent", String.valueOf(frameworkInfo.isConsistent()));
         }
         catch (final Exception e) {
             throw new WebserverSystemException(e);
@@ -294,14 +261,9 @@ public class AdminHandler {
         // add namespace of important schemas
         properties.putAll(schemaNamespaces());
 
-        final String checksumAlgorithm =
-            config
-                .get(EscidocConfiguration.ESCIDOC_CORE_OM_CONTENT_CHECKSUM_ALGORITHM);
+        final String checksumAlgorithm = config.get(EscidocConfiguration.ESCIDOC_CORE_OM_CONTENT_CHECKSUM_ALGORITHM);
         if (checksumAlgorithm != null) {
-            properties
-                .setProperty(
-                    EscidocConfiguration.ESCIDOC_CORE_OM_CONTENT_CHECKSUM_ALGORITHM,
-                    checksumAlgorithm);
+            properties.setProperty(EscidocConfiguration.ESCIDOC_CORE_OM_CONTENT_CHECKSUM_ALGORITHM, checksumAlgorithm);
         }
 
         final ByteArrayOutputStream os = new ByteArrayOutputStream();
@@ -323,9 +285,8 @@ public class AdminHandler {
 
     /**
      * Namespace of (important) schemas.
-     * 
-     * @return Properties with name and Namespace URI of important eSciDoc
-     *         schemas
+     *
+     * @return Properties with name and Namespace URI of important eSciDoc schemas
      */
     private static Map schemaNamespaces() {
 
@@ -333,8 +294,7 @@ public class AdminHandler {
 
         p.setProperty("item", Constants.ITEM_NAMESPACE_URI);
         p.setProperty("container", Constants.CONTAINER_NAMESPACE_URI);
-        p.setProperty("organizational-unit",
-            Constants.ORGANIZATIONAL_UNIT_NAMESPACE_URI);
+        p.setProperty("organizational-unit", Constants.ORGANIZATIONAL_UNIT_NAMESPACE_URI);
         p.setProperty("context", Constants.CONTEXT_NAMESPACE_URI);
         p.setProperty("user-account", Constants.USER_ACCOUNT_NS_URI);
 
@@ -343,31 +303,22 @@ public class AdminHandler {
 
     /**
      * Loads an set of examples objects into the framework.
-     * 
-     * @param type
-     *            Specifies the type of example set which is to load.
-     * 
+     *
+     * @param type Specifies the type of example set which is to load.
      * @return some useful information
-     * @throws SystemException
-     *             Thrown if a framework internal error occurs.
-     * @throws InvalidSearchQueryException
-     *             thrown if a given search query could not be translated into a
-     *             SQL query
+     * @throws SystemException             Thrown if a framework internal error occurs.
+     * @throws InvalidSearchQueryException thrown if a given search query could not be translated into a SQL query
      */
-    public String loadExamples(final String type)
-        throws InvalidSearchQueryException, SystemException {
+    public String loadExamples(final String type) throws InvalidSearchQueryException, SystemException {
         final StringBuilder result = new StringBuilder();
 
         // select example package
         if (!"common".equals(type)) {
-            throw new SystemException("Example set '" + type
-                + "' not supported.");
+            throw new SystemException("Example set '" + type + "' not supported.");
         }
 
         try {
-            String selfUrl =
-                EscidocConfiguration.getInstance().get(
-                    EscidocConfiguration.ESCIDOC_CORE_SELFURL);
+            String selfUrl = EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_SELFURL);
 
             if (!selfUrl.endsWith("/")) {
                 selfUrl += "/";
@@ -383,9 +334,8 @@ public class AdminHandler {
 
     /**
      * Ingest the Examples object.
-     * 
-     * @param examples
-     *            Examples object to be ingested
+     *
+     * @param examples Examples object to be ingested
      */
     public void setExamples(final Examples examples) {
         this.examples = examples;
@@ -393,9 +343,8 @@ public class AdminHandler {
 
     /**
      * Ingest the FrameworkInfo object.
-     * 
-     * @param frameworkInfo
-     *            FrameworkInfo object to be ingested
+     *
+     * @param frameworkInfo FrameworkInfo object to be ingested
      */
     public void setFrameworkInfo(final FrameworkInfo frameworkInfo) {
         this.frameworkInfo = frameworkInfo;
@@ -403,9 +352,8 @@ public class AdminHandler {
 
     /**
      * Ingest the reindexer object.
-     * 
-     * @param reindexer
-     *            reindexer object to be ingested
+     *
+     * @param reindexer reindexer object to be ingested
      */
     public void setReindexer(final Reindexer reindexer) {
         this.reindexer = reindexer;
@@ -413,9 +361,8 @@ public class AdminHandler {
 
     /**
      * Setting the indexingHandler.
-     * 
-     * @param indexingHandler
-     *            The indexingHandler to set.
+     *
+     * @param indexingHandler The indexingHandler to set.
      */
     public final void setIndexingHandler(final IndexingHandler indexingHandler) {
         this.indexingHandler = indexingHandler;
@@ -423,9 +370,8 @@ public class AdminHandler {
 
     /**
      * Injects the renderer.
-     * 
-     * @param renderer
-     *            The renderer to inject.
+     *
+     * @param renderer The renderer to inject.
      */
     public void setRenderer(final AdminRendererInterface renderer) {
         this.renderer = renderer;
@@ -433,9 +379,8 @@ public class AdminHandler {
 
     /**
      * Sets the {@link PurgeService}.
-     * 
-     * @param purgeService
-     *            the {@link PurgeService}
+     *
+     * @param purgeService the {@link PurgeService}
      */
     public void setPurgeService(final PurgeService purgeService) {
         this.purgeService = purgeService;
@@ -444,11 +389,9 @@ public class AdminHandler {
     /**
      * Injects the TripleStore utility.
      *
-     * @param tripleStoreUtility
-     *            TripleStoreUtility from Spring
+     * @param tripleStoreUtility TripleStoreUtility from Spring
      */
-    public void setTripleStoreUtility(
-        final TripleStoreUtility tripleStoreUtility) {
+    public void setTripleStoreUtility(final TripleStoreUtility tripleStoreUtility) {
         this.tripleStoreUtility = tripleStoreUtility;
     }
 }

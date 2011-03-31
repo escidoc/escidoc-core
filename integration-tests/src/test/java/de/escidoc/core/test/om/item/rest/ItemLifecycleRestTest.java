@@ -41,77 +41,58 @@ import static org.junit.Assert.fail;
 
 /**
  * Item tests with REST transport.
- * 
+ *
  * @author Michael Schneider
- * 
  */
 public class ItemLifecycleRestTest extends ItemTestBase {
 
     /**
      * Constructor.
-     * 
      */
     public ItemLifecycleRestTest() {
         super(Constants.TRANSPORT_REST);
     }
 
     /**
-     * Test declining retrieving of released item with component visibility
-     * "private".
-     * 
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test declining retrieving of released item with component visibility "private".
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOMRContentVisibilityPrivate() throws Exception {
         PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         Document item =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
-                + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
-        Node itemChanged =
-            substitute(item,
-                "/item/components/component/properties/visibility", "private");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                "escidoc_item_198_for_create.xml");
+        Node itemChanged = substitute(item, "/item/components/component/properties/visibility", "private");
         String itemXml = toString(itemChanged, false);
         String cretaedItem = create(itemXml);
         Document itemDocument = getDocument(cretaedItem);
         String componentId = null;
         if (getTransport(true).equals("REST")) {
             componentId =
-                selectSingleNode(
-                    itemDocument,
-                    "/item/components/component"
-                        + "[properties/visibility='private']/@href")
+                selectSingleNode(itemDocument, "/item/components/component" + "[properties/visibility='private']/@href")
                     .getNodeValue();
             componentId = getIdFromHrefValue(componentId);
         }
         else {
             componentId =
-                selectSingleNode(
-                    itemDocument,
-                    "/item/components/component"
-                        + "[properties/visibility='private']/@objid")
-                    .getNodeValue();
+                selectSingleNode(itemDocument,
+                    "/item/components/component" + "[properties/visibility='private']/@objid").getNodeValue();
         }
         String itemId = getObjidValue(cretaedItem);
         String param = getTheLastModificationParam(false, itemId);
         submit(itemId, param);
         String pidParam;
-        if (getItemClient().getPidConfig(
-            "cmm.Item.objectPid.setPidBeforeRelease", "true")
-            && !getItemClient().getPidConfig(
-                "cmm.Item.objectPid.releaseWithoutPid", "false")) {
+        if (getItemClient().getPidConfig("cmm.Item.objectPid.setPidBeforeRelease", "true")
+            && !getItemClient().getPidConfig("cmm.Item.objectPid.releaseWithoutPid", "false")) {
             pidParam = getPidParam(itemId, "http://somewhere" + itemId);
             assignObjectPid(itemId, pidParam);
         }
-        if (getItemClient().getPidConfig(
-            "cmm.Item.versionPid.setPidBeforeRelease", "true")
-            && !getItemClient().getPidConfig(
-                "cmm.Item.versionPid.releaseWithoutPid", "false")) {
+        if (getItemClient().getPidConfig("cmm.Item.versionPid.setPidBeforeRelease", "true")
+            && !getItemClient().getPidConfig("cmm.Item.versionPid.releaseWithoutPid", "false")) {
             String latestVersion = getLatestVersionObjidValue(cretaedItem);
-            pidParam =
-                getPidParam(latestVersion, "http://somewhere" + latestVersion);
+            pidParam = getPidParam(latestVersion, "http://somewhere" + latestVersion);
             assignVersionPid(latestVersion, pidParam);
         }
 
@@ -123,12 +104,10 @@ public class ItemLifecycleRestTest extends ItemTestBase {
         PWCallback.setHandle("");
         try {
             retrieveContent(itemId, componentId);
-            fail("No AuthorizationException retrieving "
-                + "item with component visibility 'private'.");
+            fail("No AuthorizationException retrieving " + "item with component visibility 'private'.");
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                AuthorizationException.class, e);
+            EscidocRestSoapTestBase.assertExceptionType(AuthorizationException.class, e);
         }
 
     }

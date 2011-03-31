@@ -26,23 +26,17 @@ import org.apache.axis.deployment.wsdd.WSDDProvider;
 import org.apache.axis.deployment.wsdd.WSDDService;
 
 /**
- * WSDDProvider providing the EscidocEjbProvider.<br>
- * This implementation extends org.apache.axis.deployment.wsdd.WSDDProvider. The
- * name of the provider is <code>EscidocEJB</code>
- * 
- * @author Torsten Tetteroo
+ * WSDDProvider providing the EscidocEjbProvider.<br> This implementation extends org.apache.axis.deployment.wsdd.WSDDProvider.
+ * The name of the provider is <code>EscidocEJB</code>
  *
+ * @author Torsten Tetteroo
  */
 public class EscidocEJBWsddProvider extends WSDDProvider {
 
     private static final String NAME = "EscidocEJB";
 
-
-
     /**
      * See Interface for functional description.
-     * 
-     * @return
      */
     @Override
     public String getName() {
@@ -52,19 +46,12 @@ public class EscidocEJBWsddProvider extends WSDDProvider {
 
     /**
      * See Interface for functional description.
-     * 
-     * @param wsddservice
-     * @param engineconfiguration
-     * @return
-     * @throws Exception
      */
     @Override
-    public Handler newProviderInstance(
-        final WSDDService wsddservice,
-        final EngineConfiguration engineconfiguration) throws Exception {
+    public Handler newProviderInstance(final WSDDService wsddservice, final EngineConfiguration engineconfiguration)
+        throws Exception {
 
         return new EscidocEjbProvider();
     }
-
 
 }

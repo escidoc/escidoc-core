@@ -61,20 +61,16 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * To use is as implementation of the abstract class TripleStoreUtility register
- * this as spring.bean id="business.TripleStoreUtility".
- * 
+ * To use is as implementation of the abstract class TripleStoreUtility register this as spring.bean
+ * id="business.TripleStoreUtility".
+ * <p/>
  * spring.bean id="business.TripleStoreUtility"
- * 
- * @author Frank Schwichtenberg
- * 
  *
- * 
+ * @author Frank Schwichtenberg
  */
 public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
 
-    private static final Pattern PATTERN_WHITESPACE_DOT =
-        Pattern.compile("\\s\\.");
+    private static final Pattern PATTERN_WHITESPACE_DOT = Pattern.compile("\\s\\.");
 
     private static final Pattern PATTERN_WHITESPACES = Pattern.compile("\\s+");
 
@@ -82,21 +78,18 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
 
     /**
      * Constructor.
-     * 
-     * @throws TripleStoreSystemException
-     *             A configuration parameter could not be read.
+     *
+     * @throws TripleStoreSystemException A configuration parameter could not be read.
      */
     public SpoItqlTripleStoreUtility() throws TripleStoreSystemException {
 
         final String fedoraUrl;
         try {
-            fedoraUrl =
-                EscidocConfiguration.getInstance().get(
-                    EscidocConfiguration.FEDORA_URL);
+            fedoraUrl = EscidocConfiguration.getInstance().get(EscidocConfiguration.FEDORA_URL);
         }
         catch (final Exception e) {
             throw new TripleStoreSystemException("Failed to retrieve configuration parameter "
-                    + EscidocConfiguration.FEDORA_URL, e);
+                + EscidocConfiguration.FEDORA_URL, e);
         }
         this.fedoraRdfXmlUrl = fedoraUrl + HTTP_QUERY_BASE_ITQL_RDF_XML;
         this.fedoraItqlNtriplesUrl = fedoraUrl + HTTP_QUERY_BASE_ITQL_NTRIPLES;
@@ -104,8 +97,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         this.fedoraSpoNtriplesUrl = fedoraUrl + HTTP_QUERY_BASE_SPO_NTRIPLES;
 
         // Initialize select clause
-        final StringBuilder retrieveSelectClauseBuf =
-                new StringBuilder("select ");
+        final StringBuilder retrieveSelectClauseBuf = new StringBuilder("select ");
         retrieveSelectClauseBuf.append(SELECT_VAR);
         retrieveSelectClauseBuf.append(" from <#ri> where ");
         this.retrieveSelectClause = retrieveSelectClauseBuf.toString();
@@ -113,36 +105,28 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
 
     /**
      * Injects the data source.
-     *
-     * @param driverManagerDataSource
-     * @param myDataSource
      */
     public void setMyDataSource(final DataSource myDataSource) {
         setDataSource(myDataSource);
     }
 
     private static final String HTTP_QUERY_BASE_SPO_NTRIPLES =
-        "/risearch?" + "type=triples&" + "flush=false&" + "lang=spo&"
-            + "format=ntriples&" + "limit=0&" + "distinct=off&" + "stream=off&"
-            + "query=";
+        "/risearch?" + "type=triples&" + "flush=false&" + "lang=spo&" + "format=ntriples&" + "limit=0&"
+            + "distinct=off&" + "stream=off&" + "query=";
 
     private static final String HTTP_QUERY_BASE_ITQL_NTRIPLES =
-        "/risearch?" + "type=triples&" + "flush=false&" + "lang=itql&"
-            + "format=ntriples&" + "limit=0&" + "distinct=off&" + "stream=off&"
-            + "query=";
+        "/risearch?" + "type=triples&" + "flush=false&" + "lang=itql&" + "format=ntriples&" + "limit=0&"
+            + "distinct=off&" + "stream=off&" + "query=";
 
     private static final String HTTP_QUERY_BASE_ITQL_RDF_XML =
-        "/risearch?" + "type=triples&" + "flush=false&" + "lang=itql&"
-            + "format=RDF/XML&" + "limit=0&" + "distinct=on&" + "stream=off&"
-            + "query=";
+        "/risearch?" + "type=triples&" + "flush=false&" + "lang=itql&" + "format=RDF/XML&" + "limit=0&"
+            + "distinct=on&" + "stream=off&" + "query=";
 
     private static final String HTTP_QUERY_BASE_ITQL_CSV =
-        "/risearch?" + "type=tuples&" + "flush=false&" + "lang=itql&"
-            + "format=CSV&" + "limit=0&" + "distinct=on&" + "stream=off&"
-            + "query=";
+        "/risearch?" + "type=tuples&" + "flush=false&" + "lang=itql&" + "format=CSV&" + "limit=0&" + "distinct=on&"
+            + "stream=off&" + "query=";
 
-    private static final Logger LOGGER =
-        LoggerFactory.getLogger(SpoItqlTripleStoreUtility.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SpoItqlTripleStoreUtility.class);
 
     private final String fedoraRdfXmlUrl;
 
@@ -154,29 +138,23 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
 
     /**
      * Enumeration of formats used in requestItql.
-     * 
      */
     private enum Format {
         RDF_XML, N_TRIPLES, CSV
     }
 
-    private String requestItqlNTriples(
-        final String itqlQuery, final String template)
-        throws TripleStoreSystemException, InvalidTripleStoreQueryException,
-        InvalidTripleStoreOutputFormatException {
+    private String requestItqlNTriples(final String itqlQuery, final String template)
+        throws TripleStoreSystemException, InvalidTripleStoreQueryException, InvalidTripleStoreOutputFormatException {
         return requestITQL(itqlQuery, template, Format.N_TRIPLES);
     }
 
     @Override
-    protected String executeQueryEarliestCreationDate()
-        throws TripleStoreSystemException {
+    protected String executeQueryEarliestCreationDate() throws TripleStoreSystemException {
         throw new TripleStoreSystemException("not implemented");
     }
 
-    private String requestITQL(
-        final String itqlQuery, final String template, final Format format)
-        throws TripleStoreSystemException, InvalidTripleStoreQueryException,
-        InvalidTripleStoreOutputFormatException {
+    private String requestITQL(final String itqlQuery, final String template, final Format format)
+        throws TripleStoreSystemException, InvalidTripleStoreQueryException, InvalidTripleStoreOutputFormatException {
         final String result;
 
         try {
@@ -186,18 +164,16 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
                 queryAddress = new StringBuffer(this.fedoraRdfXmlUrl);
             }
             else {
-                queryAddress = format == Format.N_TRIPLES ? new StringBuffer(this.fedoraItqlNtriplesUrl) :
-                        format == Format.CSV ? new StringBuffer(this.fedoraItqlCsvUrl) :
-                                new StringBuffer(this.fedoraItqlNtriplesUrl);
+                queryAddress =
+                    format == Format.N_TRIPLES ? new StringBuffer(this.fedoraItqlNtriplesUrl) : format == Format.CSV ? new StringBuffer(
+                        this.fedoraItqlCsvUrl) : new StringBuffer(this.fedoraItqlNtriplesUrl);
             }
 
-            queryAddress.append(URLEncoder.encode(itqlQuery,
-                XmlUtility.CHARACTER_ENCODING));
+            queryAddress.append(URLEncoder.encode(itqlQuery, XmlUtility.CHARACTER_ENCODING));
 
             if (template != null) {
                 queryAddress.append("&template=");
-                queryAddress.append(URLEncoder.encode(template,
-                    XmlUtility.CHARACTER_ENCODING));
+                queryAddress.append(URLEncoder.encode(template, XmlUtility.CHARACTER_ENCODING));
             }
 
             result = doRequest(queryAddress.toString());
@@ -209,15 +185,12 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         return result;
     }
 
-    private String requestSPO(final String spoQuery)
-        throws InvalidTripleStoreQueryException,
+    private String requestSPO(final String spoQuery) throws InvalidTripleStoreQueryException,
         InvalidTripleStoreOutputFormatException, TripleStoreSystemException {
 
         final String queryAddress;
         try {
-            queryAddress = this.fedoraSpoNtriplesUrl
-                    + URLEncoder
-                        .encode(spoQuery, XmlUtility.CHARACTER_ENCODING);
+            queryAddress = this.fedoraSpoNtriplesUrl + URLEncoder.encode(spoQuery, XmlUtility.CHARACTER_ENCODING);
         }
         catch (final UnsupportedEncodingException e) {
             throw new TripleStoreSystemException(e);
@@ -225,9 +198,8 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         return doRequest(queryAddress);
     }
 
-    private static String doRequest(final String address)
-        throws TripleStoreSystemException, InvalidTripleStoreQueryException,
-        InvalidTripleStoreOutputFormatException {
+    private static String doRequest(final String address) throws TripleStoreSystemException,
+        InvalidTripleStoreQueryException, InvalidTripleStoreOutputFormatException {
         String result;
         try {
             final URL url = new URL(address);
@@ -248,74 +220,54 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         }
 
         if (result != null && result.startsWith("<html")) {
-            final Pattern p =
-                Pattern.compile(TripleStoreConnector.QUERY_ERROR);
+            final Pattern p = Pattern.compile(TripleStoreConnector.QUERY_ERROR);
             final Matcher m = p.matcher(result);
 
-            final Pattern p1 =
-                Pattern.compile(TripleStoreConnector.PARSE_ERROR);
+            final Pattern p1 = Pattern.compile(TripleStoreConnector.PARSE_ERROR);
             final Matcher m1 = p1.matcher(result);
 
-            final Pattern p2 =
-                Pattern.compile(TripleStoreConnector.FORMAT_ERROR);
+            final Pattern p2 = Pattern.compile(TripleStoreConnector.FORMAT_ERROR);
             final Matcher m2 = p2.matcher(result);
             if (m.find()) {
                 LOGGER.error(result);
-                result =
-                    XmlUtility.CDATA_START + result + XmlUtility.CDATA_END;
+                result = XmlUtility.CDATA_START + result + XmlUtility.CDATA_END;
                 if (m1.find()) {
                     throw new InvalidTripleStoreQueryException(result);
                 }
                 else if (m2.find()) {
-                    throw new InvalidTripleStoreOutputFormatException(
-                        result);
+                    throw new InvalidTripleStoreOutputFormatException(result);
                 }
             }
             else {
-                result =
-                    XmlUtility.CDATA_START + result + XmlUtility.CDATA_END;
-                throw new TripleStoreSystemException(
-                    "Request to triplestore failed." + result);
+                result = XmlUtility.CDATA_START + result + XmlUtility.CDATA_END;
+                throw new TripleStoreSystemException("Request to triplestore failed." + result);
             }
         }
 
         return result;
     }
 
-
-
     /**
      * See Interface for functional description.
-     * 
-     * @param id
-     * @param targetIsSubject
-     * @param predicate
-     * @return
-     * @throws TripleStoreSystemException
-     * @see TripleStoreUtility
-     *      #executeQueryId(java.lang.String, boolean, java.lang.String)
      *
+     * @see TripleStoreUtility #executeQueryId(java.lang.String, boolean, java.lang.String)
      */
     @Override
-    public List<String> executeQueryId(
-        final String id, final boolean targetIsSubject, final String predicate)
+    public List<String> executeQueryId(final String id, final boolean targetIsSubject, final String predicate)
         throws TripleStoreSystemException {
         return executeQuery(false, id, targetIsSubject, predicate);
     }
 
-
-
     protected List<String> executeQuery(
-        final boolean queryByLiteral, final String idOrLiteral,
-        final boolean targetIsSubject, final String predicate)
+        final boolean queryByLiteral, final String idOrLiteral, final boolean targetIsSubject, final String predicate)
         throws TripleStoreSystemException {
 
         final List<String> result = new ArrayList<String>();
 
         final String source;
-        source = queryByLiteral ? '\"'
-                + idOrLiteral.replaceAll("\\\\", "\\\\\\\\").replaceAll(
-                "\"", "\\\\\"") + '\"' : "<info:fedora/" + idOrLiteral + '>';
+        source =
+            queryByLiteral ? '\"' + idOrLiteral.replaceAll("\\\\", "\\\\\\\\").replaceAll("\"", "\\\\\"") + '\"' : "<info:fedora/"
+                + idOrLiteral + '>';
 
         try {
 
@@ -331,7 +283,8 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
                     if (tripleParts.length > 0 && tripleParts[0].length() > 0) {
                         entry = tripleParts[0];
                     }
-                } else {
+                }
+                else {
                     if (tripleParts.length > 2) {
                         entry = tripleParts[2];
                     }
@@ -340,7 +293,8 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
                 if (entry != null) {
                     if (entry.startsWith("<info")) {
                         entry = XmlUtility.getIdFromURI(entry);
-                    } else if (entry.startsWith("\"")) {
+                    }
+                    else if (entry.startsWith("\"")) {
                         final int pos = entry.lastIndexOf('"');
 
                         if (pos > 1) {
@@ -350,9 +304,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
                         }
                     }
                     // TODO search for unescape method NOT in MPTStore API
-                    result.add(XmlUtility
-                            .escapeForbiddenXmlCharacters(NTriplesUtil
-                                    .unescapeLiteralValue(entry)));
+                    result.add(XmlUtility.escapeForbiddenXmlCharacters(NTriplesUtil.unescapeLiteralValue(entry)));
                 }
             }
         }
@@ -363,53 +315,34 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
             throw new TripleStoreSystemException(e);
         }
         catch (final ParseException e) {
-            throw new TripleStoreSystemException(
-                "While unescaping literal value: ", e);
+            throw new TripleStoreSystemException("While unescaping literal value: ", e);
         }
 
         return result;
     }
 
-
-
     /**
      * See Interface for functional description.
-     * 
-     * @param literal
-     * @param targetIsSubject
-     * @param predicate
-     * @return
-     * @throws TripleStoreSystemException
-     * @see TripleStoreUtility
-     *      #executeQueryLiteral(java.lang.String, boolean, java.lang.String)
      *
+     * @see TripleStoreUtility #executeQueryLiteral(java.lang.String, boolean, java.lang.String)
      */
     @Override
     protected List<String> executeQueryLiteral(
-        final String literal, final boolean targetIsSubject,
-        final String predicate) throws TripleStoreSystemException {
+        final String literal, final boolean targetIsSubject, final String predicate) throws TripleStoreSystemException {
         return executeQuery(true, literal, targetIsSubject, predicate);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param pid
-     * @param property
-     * @param namespaceUri
-     * @return
-     * @throws TripleStoreSystemException
-     * @see TripleStoreUtility
-     *      #getRelation(java.lang.String, java.lang.String, java.lang.String)
      *
+     * @see TripleStoreUtility #getRelation(java.lang.String, java.lang.String, java.lang.String)
      */
     @Override
-    public String getRelation(
-        final String pid, final String fullqualifiedPropertyName)
+    public String getRelation(final String pid, final String fullqualifiedPropertyName)
         throws TripleStoreSystemException {
         String result = null;
         final List<String> resultList = executeQueryId(pid, false, fullqualifiedPropertyName);
-        if(resultList != null && !resultList.isEmpty()) {
+        if (resultList != null && !resultList.isEmpty()) {
             result = resultList.get(0);
         }
         return result;
@@ -417,28 +350,18 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
 
     /**
      * See Interface for functional description.
-     * 
-     * @param pid
-     * @param properties
-     * @param namespaceUri
-     * @return
-     * @throws TripleStoreSystemException
-     * @see TripleStoreUtility
-     *      #getProperties(java.lang.String, java.util.Collection,
-     *      java.lang.String)
      *
+     * @see TripleStoreUtility #getProperties(java.lang.String, java.util.Collection, java.lang.String)
      */
     @Override
-    public Map<String, String> getProperties(
-        final String pid, final Collection<String> fullqualifiedNamedProperties)
+    public Map<String, String> getProperties(final String pid, final Collection<String> fullqualifiedNamedProperties)
         throws TripleStoreSystemException {
 
         final StringBuilder query = new StringBuilder("select $p $v from <#ri> ");
         final String template = "<info:fedora/" + pid + "> $p $v";
 
         String propertyName;
-        final Iterator<String> propertiesIterator =
-            fullqualifiedNamedProperties.iterator();
+        final Iterator<String> propertiesIterator = fullqualifiedNamedProperties.iterator();
         // first part has "where" then "or"
         if (propertiesIterator.hasNext()) {
             propertyName = propertiesIterator.next();
@@ -488,18 +411,18 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
                 if (entry != null) {
                     if (entry.startsWith("<info")) {
                         entry = XmlUtility.getIdFromURI(entry);
-                    } else if (entry.startsWith("\"")) {
+                    }
+                    else if (entry.startsWith("\"")) {
                         entry = entry.substring(1, entry.lastIndexOf('"'));
                         // remove every escaping backslash;
                         try {
                             entry = NTriplesUtil.unescapeLiteralValue(entry);
-                        } catch (final ParseException e) {
-                            throw new TripleStoreSystemException(
-                                    "While unescaping literal value: ", e);
+                        }
+                        catch (final ParseException e) {
+                            throw new TripleStoreSystemException("While unescaping literal value: ", e);
                         }
                     }
-                    result.put(propertyName, XmlUtility
-                            .escapeForbiddenXmlCharacters(entry));
+                    result.put(propertyName, XmlUtility.escapeForbiddenXmlCharacters(entry));
 
                 }
             }
@@ -510,17 +433,13 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
 
     /**
      * Retrieves values from the triple store using the provided query.
-     * 
-     * @param query
-     *            The query to execute.
-     * @return Returns the result list of the query.
-     * @throws TripleStoreSystemException
-     *             Thrown in case of an internal triple store error.
      *
+     * @param query The query to execute.
+     * @return Returns the result list of the query.
+     * @throws TripleStoreSystemException Thrown in case of an internal triple store error.
      */
     @Override
-    public List<String> retrieve(final String query)
-        throws TripleStoreSystemException {
+    public List<String> retrieve(final String query) throws TripleStoreSystemException {
 
         final String response;
         try {
@@ -553,46 +472,29 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
 
     /**
      * Builds the starting clause of a query to the triple store.
-     * 
-     * @param targetIsSubject
-     *            Flag indicating that the target to search for is the subject (
-     *            <code>true</code>) or the object (<code>false</code>) of the
-     *            specified predicate.
-     * @param predicateId
-     *            The predicate id. If this equals to the id predicate (see
-     *            de.escidoc.core.common.business.Constants.DC_IDENTIFIER_URI),
-     *            the provided value of the parameter
-     *            <code>targetIsSubject</code> is ignored and it is assumed it
-     *            has been set to <code>true</code>.
-     * @param expectedValue
-     *            The value that must be matched by the specified predicate. If
-     *            <code>targetIsSubject</code> is <code>true</code>, the object
-     *            of the predicate must match the value. Otherwise the subject
-     *            must match the value.<br/>
-     *            In case of the id attribute, the expected value is ignored and
-     *            $s is used for creating $s &lt;predicate&gt; $s clause part.
-     * @param targetResourceType
-     *            The object type of the target of the query. If this is
-     *            <code>null</code>, no restriction for expected resource type
-     *            is added.
-     * @param contentModelTitleId
-     *            The id of the predicate pointing to the title of the content
-     *            model. If this is <code>null</code>, targets of any content
-     *            model are searched.
-     * @param contentModelTitle
-     *            The content model title that the subject must match. This must
-     *            not be <code>null</code>, if contentModelTitleId is not
-     *            <code>null</code>.
-     * 
-     * 
-     * @return Returns the where clause searching for the specified subjects.
      *
+     * @param targetIsSubject     Flag indicating that the target to search for is the subject ( <code>true</code>) or
+     *                            the object (<code>false</code>) of the specified predicate.
+     * @param predicateId         The predicate id. If this equals to the id predicate (see de.escidoc.core.common.business.Constants.DC_IDENTIFIER_URI),
+     *                            the provided value of the parameter <code>targetIsSubject</code> is ignored and it is
+     *                            assumed it has been set to <code>true</code>.
+     * @param expectedValue       The value that must be matched by the specified predicate. If
+     *                            <code>targetIsSubject</code> is <code>true</code>, the object of the predicate must
+     *                            match the value. Otherwise the subject must match the value.<br/> In case of the id
+     *                            attribute, the expected value is ignored and $s is used for creating $s
+     *                            &lt;predicate&gt; $s clause part.
+     * @param targetResourceType  The object type of the target of the query. If this is <code>null</code>, no
+     *                            restriction for expected resource type is added.
+     * @param contentModelTitleId The id of the predicate pointing to the title of the content model. If this is
+     *                            <code>null</code>, targets of any content model are searched.
+     * @param contentModelTitle   The content model title that the subject must match. This must not be
+     *                            <code>null</code>, if contentModelTitleId is not <code>null</code>.
+     * @return Returns the where clause searching for the specified subjects.
      */
     @Override
     public StringBuffer getRetrieveWhereClause(
-        final boolean targetIsSubject, final String predicateId,
-        final String expectedValue, final String targetResourceType,
-        final String contentModelTitleId, final String contentModelTitle) {
+        final boolean targetIsSubject, final String predicateId, final String expectedValue,
+        final String targetResourceType, final String contentModelTitleId, final String contentModelTitle) {
 
         final StringBuffer whereClause = new StringBuffer("(");
         boolean isFirst = true;
@@ -677,23 +579,16 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
     }
 
     /**
-     * Builds the starting clause of a query to the triple store to retrieve
-     * objects.
-     * 
-     * @param targetIsSubject
-     *            targetIsSubject
-     * @return Returns the starting clause "select $s from <#ri> where " in a
-     *         {@link StringBuffer}
+     * Builds the starting clause of a query to the triple store to retrieve objects.
      *
+     * @param targetIsSubject targetIsSubject
+     * @return Returns the starting clause "select $s from <#ri> where " in a {@link StringBuffer}
      */
     @Override
-    public StringBuffer getRetrieveSelectClause(
-        final boolean targetIsSubject, final String predicateId) {
+    public StringBuffer getRetrieveSelectClause(final boolean targetIsSubject, final String predicateId) {
 
         return new StringBuffer(this.retrieveSelectClause);
     }
-
-
 
     private static String getQueryPartProperties(final Map<String, String> filters) {
         if (filters.isEmpty()) {
@@ -714,7 +609,8 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
                     id = Utility.getId(val);
                 }
                 object = "<info:fedora/" + id + '>';
-            } else {
+            }
+            else {
                 object = '\'' + val + '\'';
             }
 
@@ -723,24 +619,14 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         return queryPart.toString();
     }
 
-
-
     /**
      * See Interface for functional description.
-     * 
-     * @param objectType
-     * @param filterXml
-     * @return
-     * @throws InvalidContentException
-     * @throws TripleStoreSystemException
-     * @see TripleStoreUtility#getObjectList(String,
-     *      String)
+     *
+     * @see TripleStoreUtility#getObjectList(String, String)
      */
     @Override
-    public String getObjectList(
-        final String objectType, final Map filterMap, final String whereClause)
-        throws InvalidContentException, TripleStoreSystemException,
-        MissingMethodParameterException {
+    public String getObjectList(final String objectType, final Map filterMap, final String whereClause)
+        throws InvalidContentException, TripleStoreSystemException, MissingMethodParameterException {
 
         final Map filters = (Map) filterMap.get("filter");
         boolean ordered = false;
@@ -759,13 +645,12 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         // restrict to object-type
         if ("member".equalsIgnoreCase(objectType)) {
             if (filters != null && filters.containsKey(PROP_OBJECT_TYPE)) {
-                itqlQuery.append("$s <" + PROP_OBJECT_TYPE + "> <").append(filters.remove(PROP_OBJECT_TYPE)).append("> ");
+                itqlQuery.append("$s <" + PROP_OBJECT_TYPE + "> <").append(filters.remove(PROP_OBJECT_TYPE)).append(
+                    "> ");
             }
             else {
-                itqlQuery.append("($s <" + PROP_OBJECT_TYPE
-                    + "> <http://escidoc.de/core/01/resources/Item> "
-                    + "or $s <" + PROP_OBJECT_TYPE
-                    + "> <http://escidoc.de/core/01/resources/Container>) ");
+                itqlQuery.append("($s <" + PROP_OBJECT_TYPE + "> <http://escidoc.de/core/01/resources/Item> "
+                    + "or $s <" + PROP_OBJECT_TYPE + "> <http://escidoc.de/core/01/resources/Container>) ");
             }
         }
         else {
@@ -773,23 +658,19 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         }
 
         if (filters != null) {
-            itqlQuery.append(getQueryPartId((Set) filters
-                .remove(Constants.DC_IDENTIFIER_URI)));
+            itqlQuery.append(getQueryPartId((Set) filters.remove(Constants.DC_IDENTIFIER_URI)));
 
             if (whereClause.length() > 0) {
                 itqlQuery.append(" and ").append(whereClause);
             }
 
-            final String topLevelOus =
-                (String) filters.remove("top-level-organizational-units");
+            final String topLevelOus = (String) filters.remove("top-level-organizational-units");
 
             itqlQuery.append(getQueryPartProperties(filters));
 
             if (topLevelOus != null) {
                 // shouldn't have a parent
-                itqlQuery.append("minus $s <"
-                    + Constants.STRUCTURAL_RELATIONS_NS_URI
-                    + "parent> $parent ");
+                itqlQuery.append("minus $s <" + Constants.STRUCTURAL_RELATIONS_NS_URI + "parent> $parent ");
             }
         }
 
@@ -826,8 +707,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         final String rdfObjectList;
         try {
             final String template = "$s $p $o";
-            rdfObjectList =
-                requestITQL(itqlQuery.toString(), template, Format.RDF_XML);
+            rdfObjectList = requestITQL(itqlQuery.toString(), template, Format.RDF_XML);
         }
         catch (final Exception e) {
             throw new TripleStoreSystemException(e);
@@ -835,8 +715,6 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
 
         return rdfObjectList;
     }
-
-
 
     private static String getQueryPartId(final Set<String> ids) {
         if (ids == null || ids.isEmpty()) {
@@ -859,8 +737,8 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
 
     @Override
     public List<String> executeQueryForList(
-        final Collection<String> ids, final boolean targetIsSubject,
-        final String predicate) throws TripleStoreSystemException {
+        final Collection<String> ids, final boolean targetIsSubject, final String predicate)
+        throws TripleStoreSystemException {
         // not implemented
         return new LinkedList<String>();
     }
@@ -886,8 +764,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
      * Pattern used to convert the object type retrieved from the triple store.
      */
     private static final Pattern PATTERN_CONVERT_TRIPLESTORE_OBJECT_TYPE =
-        Pattern.compile('(' + Constants.RESOURCES_NS_URI
-            + "){0,1}([A-Z])([^A-Z]*)");
+        Pattern.compile('(' + Constants.RESOURCES_NS_URI + "){0,1}([A-Z])([^A-Z]*)");
 
     private static final int GROUP_NUMBER_TAILING_CHARACTERS = 3;
 
@@ -897,19 +774,15 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
 
     /**
      * @deprecated is not longer needed
-     * @param objectType
-     * @return
      */
     @Deprecated
     private static String getObjectsToFind(final CharSequence objectType) {
-        final Matcher matcher =
-            PATTERN_CONVERT_TRIPLESTORE_OBJECT_TYPE.matcher(objectType);
+        final Matcher matcher = PATTERN_CONVERT_TRIPLESTORE_OBJECT_TYPE.matcher(objectType);
         final StringBuilder result = new StringBuilder();
         if (matcher.find()) {
             boolean hasNext;
             do {
-                result.append(matcher
-                    .group(GROUP_NUMBER_FIRST_CHARACTER).toLowerCase());
+                result.append(matcher.group(GROUP_NUMBER_FIRST_CHARACTER).toLowerCase());
                 result.append(matcher.group(GROUP_NUMBER_TAILING_CHARACTERS));
                 hasNext = matcher.find(matcher.end());
                 if (hasNext) {
@@ -923,7 +796,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
     }
 
     /**
-     * 
+     *
      * @param objectType
      * @param filterXML
      * @param additionalQueryPart
@@ -935,10 +808,8 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
      */
     @Override
     public List<String> evaluate(
-        final String objectType, final Map filterMap,
-        final String additionalQueryPart, final String whereClause)
-        throws TripleStoreSystemException, XmlParserSystemException,
-        MissingMethodParameterException {
+        final String objectType, final Map filterMap, final String additionalQueryPart, final String whereClause)
+        throws TripleStoreSystemException, XmlParserSystemException, MissingMethodParameterException {
 
         final List<String> result = new ArrayList<String>();
         final StringBuffer query = getRetrieveSelectClause(false, null);
@@ -950,10 +821,8 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
                 query.append("$s <" + PROP_OBJECT_TYPE + "> <").append(filter.remove(PROP_OBJECT_TYPE)).append("> ");
             }
             else {
-                query.append("($s <" + PROP_OBJECT_TYPE
-                    + "> <http://escidoc.de/core/01/resources/Item> "
-                    + "or $s <" + PROP_OBJECT_TYPE
-                    + "> <http://escidoc.de/core/01/resources/Container>) ");
+                query.append("($s <" + PROP_OBJECT_TYPE + "> <http://escidoc.de/core/01/resources/Item> " + "or $s <"
+                    + PROP_OBJECT_TYPE + "> <http://escidoc.de/core/01/resources/Container>) ");
             }
         }
         else {
@@ -970,8 +839,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
 
         if (filter != null) {
             // given IDs
-            query.append(getQueryPartId((Set) filter
-                .remove(Constants.DC_IDENTIFIER_URI)));
+            query.append(getQueryPartId((Set) filter.remove(Constants.DC_IDENTIFIER_URI)));
 
             // // TODO remove mapping of old filter names
             // // ##########################
@@ -1014,8 +882,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
             final String userCriteria = (String) filter.remove("user");
             if (userCriteria == null) {
                 if (roleCriteria != null) {
-                    throw new MissingMethodParameterException(
-                        "If role criteria is used, user id must be specified");
+                    throw new MissingMethodParameterException("If role criteria is used, user id must be specified");
                 }
             }
             else {
@@ -1028,8 +895,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
                 }
             }
 
-            topLevelOus =
-                (String) filter.remove("top-level-organizational-units");
+            topLevelOus = (String) filter.remove("top-level-organizational-units");
 
             // generic
             query.append(getQueryPartProperties(filter));
@@ -1037,8 +903,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
 
         if (topLevelOus != null) {
             // shouldn't have a parent
-            query.append("minus $s <" + Constants.STRUCTURAL_RELATIONS_NS_URI
-                + "parent> $parent ");
+            query.append("minus $s <" + Constants.STRUCTURAL_RELATIONS_NS_URI + "parent> $parent ");
         }
 
         final String response;
@@ -1059,7 +924,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
     }
 
     /**
-     * 
+     *
      * @param containerId
      * @param filterParam
      * @return
@@ -1068,75 +933,60 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
      * @throws XmlParserSystemException
      */
     @Override
-    public List<String> getContainerMemberList(
-        final String containerId, final Map filterMap, final String whereClause)
-        throws MissingMethodParameterException, TripleStoreSystemException,
-        XmlParserSystemException {
+    public List<String> getContainerMemberList(final String containerId, final Map filterMap, final String whereClause)
+        throws MissingMethodParameterException, TripleStoreSystemException, XmlParserSystemException {
         // TODO check functionality
-        return evaluate("member", filterMap, "and $parent <"
-                + Constants.STRUCTURAL_RELATIONS_NS_URI + "member> $s "
-                + "and $parent <" + PROP_OBJECT_TYPE
-                + "> <http://escidoc.de/core/01/resources/Container> "
-                + "and $parent <http://purl.org/dc/elements/1.1/identifier> '"
-                + containerId + "' ", whereClause);
+        return evaluate("member", filterMap, "and $parent <" + Constants.STRUCTURAL_RELATIONS_NS_URI + "member> $s "
+            + "and $parent <" + PROP_OBJECT_TYPE + "> <http://escidoc.de/core/01/resources/Container> "
+            + "and $parent <http://purl.org/dc/elements/1.1/identifier> '" + containerId + "' ", whereClause);
     }
 
     /**
-     * 
+     *
      */
     @Override
-    public List<String> getContextMemberList(
-        final String contextId, final Map filterMap, final String whereClause)
-        throws TripleStoreSystemException, XmlParserSystemException,
-        MissingMethodParameterException {
+    public List<String> getContextMemberList(final String contextId, final Map filterMap, final String whereClause)
+        throws TripleStoreSystemException, XmlParserSystemException, MissingMethodParameterException {
         // TODO check functionality
-        return evaluate("member", filterMap, "and ($s <"
-                + Constants.STRUCTURAL_RELATIONS_NS_URI
-                + "context> <info:fedora/" + contextId + ">) ", whereClause);
+        return evaluate("member", filterMap, "and ($s <" + Constants.STRUCTURAL_RELATIONS_NS_URI
+            + "context> <info:fedora/" + contextId + ">) ", whereClause);
     }
 
     /**
-     * 
+     *
      */
     @Override
-    public List<String> getMemberList(final String id, final String whereClause)
-        throws TripleStoreSystemException {
+    public List<String> getMemberList(final String id, final String whereClause) throws TripleStoreSystemException {
         // TODO check functionality
         final List<String> result;
         try {
             result =
-                evaluate("member", new HashMap(), " and <info:fedora/" + id
-                    + "> <" + Constants.STRUCTURAL_RELATIONS_NS_URI
-                    + "member> $s ", whereClause);
+                evaluate("member", new HashMap(), " and <info:fedora/" + id + "> <"
+                    + Constants.STRUCTURAL_RELATIONS_NS_URI + "member> $s ", whereClause);
         }
         catch (final MissingMethodParameterException e) {
             // no filter no MissingMethodParameterException
             throw new TripleStoreSystemException(
-                "Unexpected exception: should not occure if evaluate is called without filter param.",
-                e);
+                "Unexpected exception: should not occure if evaluate is called without filter param.", e);
         }
         catch (final XmlParserSystemException e) {
             // no filter no XmlParserSystemException
             throw new TripleStoreSystemException(
-                "Unexpected exception: should not occure if evaluate is called without filter param.",
-                e);
+                "Unexpected exception: should not occure if evaluate is called without filter param.", e);
         }
         return result;
     }
 
     /**
-     * 
+     *
      */
     @Override
-    public String getObjectRefs(
-        final String objectType, final Map filterMap, final String whereClause)
+    public String getObjectRefs(final String objectType, final Map filterMap, final String whereClause)
         throws SystemException, MissingMethodParameterException {
 
-        final List<String> list =
-            evaluate(objectType, filterMap, null, whereClause);
+        final List<String> list = evaluate(objectType, filterMap, null, whereClause);
         final String resourcesName = getObjectsToFind(objectType);
-        final String resourceName =
-            resourcesName.substring(0, resourcesName.length() - 1);
+        final String resourceName = resourcesName.substring(0, resourcesName.length() - 1);
 
         String absoluteLocalPathFirstPart = "ir";
         if (resourceName.equals(Elements.ELEMENT_CONTENT_MODEL)) {
@@ -1148,19 +998,14 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         if ("item".equals(resourceName)) {
             schemaVersion = "0.4";
         }
-        final String namespaceUri =
-            "http://www.escidoc.de/schemas/" + resourceName + "reflist/"
-                + schemaVersion;
+        final String namespaceUri = "http://www.escidoc.de/schemas/" + resourceName + "reflist/" + schemaVersion;
         final String rootElementName = resourceName + "-ref-list";
         final String listElementName = resourceName + "-ref";
 
-        final String prefixedRootElement =
-            namespacePrefix + ':' + rootElementName;
-        final String prefixedListElement =
-            namespacePrefix + ':' + listElementName;
+        final String prefixedRootElement = namespacePrefix + ':' + rootElementName;
+        final String prefixedListElement = namespacePrefix + ':' + listElementName;
 
-        final String namespaceDecl =
-            " xmlns:" + namespacePrefix + "=\"" + namespaceUri + "\" ";
+        final String namespaceDecl = " xmlns:" + namespacePrefix + "=\"" + namespaceUri + "\" ";
 
         final StringBuilder sb = new StringBuilder();
 
@@ -1171,8 +1016,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         if (UserContext.isRestAccess()) {
             sb.append(" xlink:title=\"list of ");
             sb.append(resourceName);
-            sb
-                .append(" references\" xlink:type=\"simple\" xmlns:xlink=\"http://www.w3.org/1999/xlink\"");
+            sb.append(" references\" xlink:type=\"simple\" xmlns:xlink=\"http://www.w3.org/1999/xlink\"");
             sb.append(" xml:base=\"");
             sb.append(XmlUtility.getEscidocBaseUrl()).append('\"');
         }
@@ -1189,7 +1033,8 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
                 sb.append('/');
                 sb.append(id);
                 sb.append("\" xlink:type=\"simple\"");
-            } else {
+            }
+            else {
                 sb.append(" objid=\"");
                 sb.append(id);
                 sb.append('\"');
@@ -1209,180 +1054,108 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
     }
 
     private static String getObjectListSubQuery() {
-        final StringBuilder sb =
-                new StringBuilder("select $s $p $o from <#ri> where $s $p $o ");
+        final StringBuilder sb = new StringBuilder("select $s $p $o from <#ri> where $s $p $o ");
         sb.append("and (");
         // add conditional or-clause for each possible property
-        sb
-            .append("    ($s $p $o and $s <http://purl.org/dc/elements/1.1/identifier> $o)");
-        sb
-            .append(" or ($s $p $o and $s <http://purl.org/dc/elements/1.1/title> $o)");
-        sb
-            .append(" or ($s $p $o and $s <http://purl.org/dc/elements/1.1/relation> $o)");
-        sb
-            .append(" or ($s $p $o and $s <http://purl.org/dc/elements/1.1/contributor> $o)");
-        sb
-            .append(" or ($s $p $o and $s <http://purl.org/dc/elements/1.1/coverage> $o)");
-        sb
-            .append(" or ($s $p $o and $s <http://purl.org/dc/elements/1.1/date> $o)");
-        sb
-            .append(" or ($s $p $o and $s <http://purl.org/dc/elements/1.1/creator> $o)");
-        sb
-            .append(" or ($s $p $o and $s <http://purl.org/dc/elements/1.1/description> $o)");
-        sb
-            .append(" or ($s $p $o and $s <http://purl.org/dc/elements/1.1/format> $o)");
-        sb
-            .append(" or ($s $p $o and $s <http://purl.org/dc/elements/1.1/language> $o)");
-        sb
-            .append(" or ($s $p $o and $s <http://purl.org/dc/elements/1.1/rights> $o)");
-        sb
-            .append(" or ($s $p $o and $s <http://purl.org/dc/elements/1.1/publisher> $o)");
-        sb
-            .append(" or ($s $p $o and $s <http://purl.org/dc/elements/1.1/source> $o)");
-        sb
-            .append(" or ($s $p $o and $s <http://purl.org/dc/elements/1.1/subject> $o)");
-        sb
-            .append(" or ($s $p $o and $s <http://purl.org/dc/elements/1.1/type> $o)");
-        sb
-            .append(" or ($s $p $o and $s <http://escidoc.de/core/01/properties/public-status> $o)");
-        sb
-            .append(" or ($s $p $o and $s <http://escidoc.de/core/01/properties/created-by-title> $o)");
-        sb
-            .append(" or ($s $p $o and $s <http://escidoc.de/core/01/properties/context-title> $o)");
-        sb
-            .append(" or ($s $p $o and $s <http://escidoc.de/core/01/properties/public-status> $o)");
-        sb
-            .append(" or ($s $p $o and $s <http://escidoc.de/core/01/properties/active> $o)");
-        sb
-            .append(" or ($s $p $o and $s <http://escidoc.de/core/01/properties/content-model-title> $o)");
-        sb
-            .append(" or ($s $p $o and $s <http://escidoc.de/core/01/properties/creation-date> $o)");
-        sb
-            .append(" or ($s $p $o and $s <http://escidoc.de/core/01/properties/email> $o)");
-        sb
-            .append(" or ($s $p $o and $s <http://escidoc.de/core/01/properties/grant-remark> $o)");
-        sb
-            .append(" or ($s $p $o and $s <http://escidoc.de/core/01/properties/has-children> $o)");
-        sb
-            .append(" or ($s $p $o and $s <http://escidoc.de/core/01/properties/login-name> $o)");
-        sb
-            .append(" or ($s $p $o and $s <http://escidoc.de/core/01/properties/modified-by-title> $o)");
-        sb
-            .append(" or ($s $p $o and $s <http://escidoc.de/core/01/properties/pid> $o)");
-        sb
-            .append(" or ($s $p $o and $s <http://escidoc.de/core/01/properties/revocation-date> $o)");
-        sb
-            .append(" or ($s $p $o and $s <http://escidoc.de/core/01/properties/revocation-remark> $o)");
-        sb
-            .append(" or ($s $p $o and $s <http://escidoc.de/core/01/properties/type> $o)");
-        sb
-            .append(" or ($s $p $o and $s <http://escidoc.de/core/01/properties/version/date> $o )");
-        sb
-            .append(" or ($s $p $o and $s <http://escidoc.de/core/01/properties/version/status> $o)");
-        sb
-            .append(" or ($s $p $o and $s <http://escidoc.de/core/01/properties/version/pid> $o)");
-        sb
-            .append(" or ($s $p $o and $s <http://escidoc.de/core/01/properties/version/number> $o)");
-        sb
-            .append(" or ($s $p $o and $s <http://escidoc.de/core/01/properties/version/comment> $o)");
-        sb
-            .append(" or ($s $p $o and $s <http://escidoc.de/core/01/properties/release/number> $o)");
-        sb
-            .append(" or ($s $p $o and $s <http://escidoc.de/core/01/properties/release/date> $o)");
-        sb
-            .append(" or ($s $p $o and $s <http://escidoc.de/core/01/properties/release/pid> $o)");
-        sb
-            .append(" or ($s $p $o and $s <http://escidoc.de/core/01/structural-relations/affiliation> $o)");
-        sb
-            .append(" or ($s $p $o and $s <http://escidoc.de/core/01/structural-relations/assigned-on> $o)");
-        sb
-            .append(" or ($s $p $o and $s <http://escidoc.de/core/01/structural-relations/child> $o)");
-        sb
-            .append(" or ($s $p $o and $s <http://escidoc.de/core/01/structural-relations/container> $o)");
-        sb
-            .append(" or ($s $p $o and $s <http://escidoc.de/core/01/structural-relations/content-model> $o)");
-        sb
-            .append(" or ($s $p $o and $s <http://escidoc.de/core/01/structural-relations/context> $o)");
-        sb
-            .append(" or ($s $p $o and $s <http://escidoc.de/core/01/structural-relations/created-by> $o)");
-        sb
-            .append(" or ($s $p $o and $s <http://escidoc.de/core/01/structural-relations/item> $o)");
-        sb
-            .append(" or ($s $p $o and $s <http://escidoc.de/core/01/structural-relations/lock-owner> $o)");
-        sb
-            .append(" or ($s $p $o and $s <http://escidoc.de/core/01/structural-relations/member> $o)");
-        sb
-            .append(" or ($s $p $o and $s <http://escidoc.de/core/01/structural-relations/modified-by> $o)");
-        sb
-            .append(" or ($s $p $o and $s <http://escidoc.de/core/01/structural-relations/organizational-unit> $o)");
-        sb
-            .append(" or ($s $p $o and $s <http://escidoc.de/core/01/structural-relations/parent> $o)");
-        sb
-            .append(" or ($s $p $o and $s <http://escidoc.de/core/01/structural-relations/person> $o)");
-        sb
-            .append(" or ($s $p $o and $s <http://escidoc.de/core/01/structural-relations/revoked-by> $o)");
-        sb
-            .append(" or ($s $p $o and $s <http://escidoc.de/core/01/structural-relations/role> $o)");
-        sb
-            .append(" or ($s $p $o and $s <http://escidoc.de/core/01/structural-relations/component> $o)");
-        sb
-            .append(" or ($s $p $o and $s <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> $o)");
+        sb.append("    ($s $p $o and $s <http://purl.org/dc/elements/1.1/identifier> $o)");
+        sb.append(" or ($s $p $o and $s <http://purl.org/dc/elements/1.1/title> $o)");
+        sb.append(" or ($s $p $o and $s <http://purl.org/dc/elements/1.1/relation> $o)");
+        sb.append(" or ($s $p $o and $s <http://purl.org/dc/elements/1.1/contributor> $o)");
+        sb.append(" or ($s $p $o and $s <http://purl.org/dc/elements/1.1/coverage> $o)");
+        sb.append(" or ($s $p $o and $s <http://purl.org/dc/elements/1.1/date> $o)");
+        sb.append(" or ($s $p $o and $s <http://purl.org/dc/elements/1.1/creator> $o)");
+        sb.append(" or ($s $p $o and $s <http://purl.org/dc/elements/1.1/description> $o)");
+        sb.append(" or ($s $p $o and $s <http://purl.org/dc/elements/1.1/format> $o)");
+        sb.append(" or ($s $p $o and $s <http://purl.org/dc/elements/1.1/language> $o)");
+        sb.append(" or ($s $p $o and $s <http://purl.org/dc/elements/1.1/rights> $o)");
+        sb.append(" or ($s $p $o and $s <http://purl.org/dc/elements/1.1/publisher> $o)");
+        sb.append(" or ($s $p $o and $s <http://purl.org/dc/elements/1.1/source> $o)");
+        sb.append(" or ($s $p $o and $s <http://purl.org/dc/elements/1.1/subject> $o)");
+        sb.append(" or ($s $p $o and $s <http://purl.org/dc/elements/1.1/type> $o)");
+        sb.append(" or ($s $p $o and $s <http://escidoc.de/core/01/properties/public-status> $o)");
+        sb.append(" or ($s $p $o and $s <http://escidoc.de/core/01/properties/created-by-title> $o)");
+        sb.append(" or ($s $p $o and $s <http://escidoc.de/core/01/properties/context-title> $o)");
+        sb.append(" or ($s $p $o and $s <http://escidoc.de/core/01/properties/public-status> $o)");
+        sb.append(" or ($s $p $o and $s <http://escidoc.de/core/01/properties/active> $o)");
+        sb.append(" or ($s $p $o and $s <http://escidoc.de/core/01/properties/content-model-title> $o)");
+        sb.append(" or ($s $p $o and $s <http://escidoc.de/core/01/properties/creation-date> $o)");
+        sb.append(" or ($s $p $o and $s <http://escidoc.de/core/01/properties/email> $o)");
+        sb.append(" or ($s $p $o and $s <http://escidoc.de/core/01/properties/grant-remark> $o)");
+        sb.append(" or ($s $p $o and $s <http://escidoc.de/core/01/properties/has-children> $o)");
+        sb.append(" or ($s $p $o and $s <http://escidoc.de/core/01/properties/login-name> $o)");
+        sb.append(" or ($s $p $o and $s <http://escidoc.de/core/01/properties/modified-by-title> $o)");
+        sb.append(" or ($s $p $o and $s <http://escidoc.de/core/01/properties/pid> $o)");
+        sb.append(" or ($s $p $o and $s <http://escidoc.de/core/01/properties/revocation-date> $o)");
+        sb.append(" or ($s $p $o and $s <http://escidoc.de/core/01/properties/revocation-remark> $o)");
+        sb.append(" or ($s $p $o and $s <http://escidoc.de/core/01/properties/type> $o)");
+        sb.append(" or ($s $p $o and $s <http://escidoc.de/core/01/properties/version/date> $o )");
+        sb.append(" or ($s $p $o and $s <http://escidoc.de/core/01/properties/version/status> $o)");
+        sb.append(" or ($s $p $o and $s <http://escidoc.de/core/01/properties/version/pid> $o)");
+        sb.append(" or ($s $p $o and $s <http://escidoc.de/core/01/properties/version/number> $o)");
+        sb.append(" or ($s $p $o and $s <http://escidoc.de/core/01/properties/version/comment> $o)");
+        sb.append(" or ($s $p $o and $s <http://escidoc.de/core/01/properties/release/number> $o)");
+        sb.append(" or ($s $p $o and $s <http://escidoc.de/core/01/properties/release/date> $o)");
+        sb.append(" or ($s $p $o and $s <http://escidoc.de/core/01/properties/release/pid> $o)");
+        sb.append(" or ($s $p $o and $s <http://escidoc.de/core/01/structural-relations/affiliation> $o)");
+        sb.append(" or ($s $p $o and $s <http://escidoc.de/core/01/structural-relations/assigned-on> $o)");
+        sb.append(" or ($s $p $o and $s <http://escidoc.de/core/01/structural-relations/child> $o)");
+        sb.append(" or ($s $p $o and $s <http://escidoc.de/core/01/structural-relations/container> $o)");
+        sb.append(" or ($s $p $o and $s <http://escidoc.de/core/01/structural-relations/content-model> $o)");
+        sb.append(" or ($s $p $o and $s <http://escidoc.de/core/01/structural-relations/context> $o)");
+        sb.append(" or ($s $p $o and $s <http://escidoc.de/core/01/structural-relations/created-by> $o)");
+        sb.append(" or ($s $p $o and $s <http://escidoc.de/core/01/structural-relations/item> $o)");
+        sb.append(" or ($s $p $o and $s <http://escidoc.de/core/01/structural-relations/lock-owner> $o)");
+        sb.append(" or ($s $p $o and $s <http://escidoc.de/core/01/structural-relations/member> $o)");
+        sb.append(" or ($s $p $o and $s <http://escidoc.de/core/01/structural-relations/modified-by> $o)");
+        sb.append(" or ($s $p $o and $s <http://escidoc.de/core/01/structural-relations/organizational-unit> $o)");
+        sb.append(" or ($s $p $o and $s <http://escidoc.de/core/01/structural-relations/parent> $o)");
+        sb.append(" or ($s $p $o and $s <http://escidoc.de/core/01/structural-relations/person> $o)");
+        sb.append(" or ($s $p $o and $s <http://escidoc.de/core/01/structural-relations/revoked-by> $o)");
+        sb.append(" or ($s $p $o and $s <http://escidoc.de/core/01/structural-relations/role> $o)");
+        sb.append(" or ($s $p $o and $s <http://escidoc.de/core/01/structural-relations/component> $o)");
+        sb.append(" or ($s $p $o and $s <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> $o)");
         sb.append(')');
         return sb.toString();
     }
 
     /**
      * Get the context id of the context with the given name.
-     * 
-     * @param name
-     *            context name
-     * 
+     *
+     * @param name context name
      * @return context id or null, if no such context exists
-     * @throws TripleStoreSystemException
-     *             If access to the triple store fails.
+     * @throws TripleStoreSystemException If access to the triple store fails.
      */
     @Override
-    public String getContextForName(final String name)
-        throws TripleStoreSystemException {
-        throw new UnsupportedOperationException(
-            "Not implemented for SpoItqlTripleStore");
+    public String getContextForName(final String name) throws TripleStoreSystemException {
+        throw new UnsupportedOperationException("Not implemented for SpoItqlTripleStore");
     }
 
     @Override
     public boolean exists(final String pid) throws TripleStoreSystemException {
-        throw new UnsupportedOperationException(
-            "Not implemented for SpoItqlTripleStore");
+        throw new UnsupportedOperationException("Not implemented for SpoItqlTripleStore");
     }
 
     /**
      * Get all child containers of the given container.
-     * 
-     * @param id
-     *            container id
+     *
+     * @param id container id
      * @return id list of all child containers
-     * @throws TripleStoreSystemException
-     *             If access to the triple store fails.
+     * @throws TripleStoreSystemException If access to the triple store fails.
      */
     @Override
-    public List<String> getAllChildContainers(final String id)
-        throws TripleStoreSystemException {
-        throw new UnsupportedOperationException(
-        "Not implemented for SpoItqlTripleStore");
+    public List<String> getAllChildContainers(final String id) throws TripleStoreSystemException {
+        throw new UnsupportedOperationException("Not implemented for SpoItqlTripleStore");
     }
 
     /**
      * Get all child OUs of the given organizational unit.
-     * 
-     * @param id
-     *            OU id
+     *
+     * @param id OU id
      * @return id list of all child OUs
-     * @throws TripleStoreSystemException
-     *             If access to the triple store fails.
+     * @throws TripleStoreSystemException If access to the triple store fails.
      */
     @Override
-    public List<String> getAllChildOUs(final String id)
-        throws TripleStoreSystemException {
-        throw new UnsupportedOperationException(
-        "Not implemented for SpoItqlTripleStore");
+    public List<String> getAllChildOUs(final String id) throws TripleStoreSystemException {
+        throw new UnsupportedOperationException("Not implemented for SpoItqlTripleStore");
     }
 }

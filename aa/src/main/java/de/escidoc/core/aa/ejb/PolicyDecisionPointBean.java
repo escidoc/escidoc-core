@@ -30,16 +30,19 @@ import java.util.List;
 public class PolicyDecisionPointBean implements SessionBean {
 
     PolicyDecisionPointInterface service;
+
     SessionContext sessionCtx;
+
     private static final Logger LOGGER = LoggerFactory.getLogger(PolicyDecisionPointBean.class);
 
     public void ejbCreate() throws CreateException {
         try {
             final BeanFactoryLocator beanFactoryLocator = SingletonBeanFactoryLocator.getInstance();
             final BeanFactory factory =
-                    beanFactoryLocator.useBeanFactory("PolicyDecisionPoint.spring.ejb.context").getFactory();
+                beanFactoryLocator.useBeanFactory("PolicyDecisionPoint.spring.ejb.context").getFactory();
             this.service = (PolicyDecisionPointInterface) factory.getBean("service.PolicyDecisionPoint");
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             LOGGER.error("ejbCreate(): Exception PolicyDecisionPointComponent: " + e);
             throw new CreateException(e.getMessage());
         }
@@ -60,152 +63,125 @@ public class PolicyDecisionPointBean implements SessionBean {
 
     }
 
-    public String evaluate(final String requestsXml,
-                                     final SecurityContext securityContext)
-            throws ResourceNotFoundException,
-            XmlCorruptedException,
-            XmlSchemaValidationException,
-            MissingMethodParameterException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException {
+    public String evaluate(final String requestsXml, final SecurityContext securityContext)
+        throws ResourceNotFoundException, XmlCorruptedException, XmlSchemaValidationException,
+        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.evaluate(requestsXml);
     }
 
-    public String evaluate(final String requestsXml, final String authHandle,
-                                     final Boolean restAccess)
-            throws ResourceNotFoundException,
-            XmlCorruptedException,
-            XmlSchemaValidationException,
-            MissingMethodParameterException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException {
+    public String evaluate(final String requestsXml, final String authHandle, final Boolean restAccess)
+        throws ResourceNotFoundException, XmlCorruptedException, XmlSchemaValidationException,
+        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.evaluate(requestsXml);
     }
 
-    public boolean[] evaluateRequestList(final List requests,
-                                         final SecurityContext securityContext)
-            throws ResourceNotFoundException,
-            MissingMethodParameterException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException {
+    public boolean[] evaluateRequestList(final List requests, final SecurityContext securityContext)
+        throws ResourceNotFoundException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.evaluateRequestList(requests);
     }
 
-    public boolean[] evaluateRequestList(final List requests, final String authHandle,
-                                         final Boolean restAccess)
-            throws ResourceNotFoundException,
-            MissingMethodParameterException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException {
+    public boolean[] evaluateRequestList(final List requests, final String authHandle, final Boolean restAccess)
+        throws ResourceNotFoundException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.evaluateRequestList(requests);
     }
 
-    public List evaluateRetrieve(final String resourceName, final List ids,
-                                           final SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            ResourceNotFoundException,
-            SystemException {
+    public List evaluateRetrieve(final String resourceName, final List ids, final SecurityContext securityContext)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        ResourceNotFoundException, SystemException {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.evaluateRetrieve(resourceName, ids);
     }
 
-    public List evaluateRetrieve(final String resourceName, final List ids,
-                                           final String authHandle, final Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            ResourceNotFoundException,
-            SystemException {
+    public List evaluateRetrieve(
+        final String resourceName, final List ids, final String authHandle, final Boolean restAccess)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        ResourceNotFoundException, SystemException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.evaluateRetrieve(resourceName, ids);
     }
 
-    public List evaluateMethodForList(final String resourceName, final String methodName,
-                                                final List argumentList,
-                                                final SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            ResourceNotFoundException,
-            SystemException {
+    public List evaluateMethodForList(
+        final String resourceName, final String methodName, final List argumentList,
+        final SecurityContext securityContext) throws AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, ResourceNotFoundException, SystemException {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.evaluateMethodForList(resourceName, methodName, argumentList);
     }
 
-    public List evaluateMethodForList(final String resourceName, final String methodName,
-                                                final List argumentList, final String authHandle,
-                                                final Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            ResourceNotFoundException,
-            SystemException {
+    public List evaluateMethodForList(
+        final String resourceName, final String methodName, final List argumentList, final String authHandle,
+        final Boolean restAccess) throws AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, ResourceNotFoundException, SystemException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.evaluateMethodForList(resourceName, methodName, argumentList);
     }
 
-    public void touch(final SecurityContext securityContext)
-            throws SystemException {
+    public void touch(final SecurityContext securityContext) throws SystemException {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         service.touch();
     }
 
-    public void touch(final String authHandle, final Boolean restAccess)
-            throws SystemException {
+    public void touch(final String authHandle, final Boolean restAccess) throws SystemException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         service.touch();

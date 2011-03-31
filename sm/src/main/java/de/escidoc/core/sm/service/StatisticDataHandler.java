@@ -36,7 +36,7 @@ import de.escidoc.core.sm.service.interfaces.StatisticDataHandlerInterface;
 
 /**
  * A statistic data resource handler.
- * 
+ *
  * @author Michael Hoppe
  */
 public class StatisticDataHandler implements StatisticDataHandlerInterface {
@@ -45,9 +45,8 @@ public class StatisticDataHandler implements StatisticDataHandlerInterface {
 
     /**
      * Injects the StatisticData handler.
-     * 
-     * @param statisticDataHandler
-     *            The StatisticData handler bean to inject.
+     *
+     * @param statisticDataHandler The StatisticData handler bean to inject.
      */
     public void setStatisticDataHandler(
         final de.escidoc.core.sm.business.interfaces.StatisticDataHandlerInterface statisticDataHandler) {
@@ -57,28 +56,18 @@ public class StatisticDataHandler implements StatisticDataHandlerInterface {
 
     /**
      * See Interface for functional description.
-     * 
-     * @see de.escidoc.core.sm.service.interfaces .StatisticDataHandlerInterface
-     *      #create(java.lang.String)
-     * 
-     * @param xmlData
-     *            statistic data as xml in statistic-data schema.
-     * 
-     * @throws AuthenticationException
-     *             Thrown in case of failed authentication.
-     * @throws AuthorizationException
-     *             Thrown in case of failed authorization.
-     * @throws MissingMethodParameterException
-     *             ex
-     * @throws SystemException
-     *             ex
-     * 
      *
+     * @param xmlData statistic data as xml in statistic-data schema.
+     * @throws AuthenticationException Thrown in case of failed authentication.
+     * @throws AuthorizationException  Thrown in case of failed authorization.
+     * @throws MissingMethodParameterException
+     *                                 ex
+     * @throws SystemException         ex
+     * @see de.escidoc.core.sm.service.interfaces .StatisticDataHandlerInterface #create(java.lang.String)
      */
     @Override
-    public void create(final String xmlData) throws AuthenticationException,
-        AuthorizationException, MissingMethodParameterException,
-        SystemException {
+    public void create(final String xmlData) throws AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, SystemException {
         handler.create(xmlData);
     }
 

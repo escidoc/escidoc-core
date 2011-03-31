@@ -45,16 +45,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 /**
- * The method mapper.<br>
- * This mapper provides the resource handler's method that has to be invoked for
- * a specific (sub-) resource URI.<br>
- * All (sub-) resource URIs have the form:<br>
- * /&lt;repositoryname&gt;/&lt;resourcename&gt;/...<br>
- * and &lt;repositoryname&gt; and &lt;resourcename&gt; are simple names, not
- * paths.
- * 
- * @author Michael Schneider
+ * The method mapper.<br> This mapper provides the resource handler's method that has to be invoked for a specific
+ * (sub-) resource URI.<br> All (sub-) resource URIs have the form:<br> /&lt;repositoryname&gt;/&lt;resourcename&gt;/...<br>
+ * and &lt;repositoryname&gt; and &lt;resourcename&gt; are simple names, not paths.
  *
+ * @author Michael Schneider
  */
 public class MethodMapper extends XMLBase implements MapperInterface {
 
@@ -64,8 +59,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
 
     private Map descriptors;
 
-    private Map<String, Collection> definitions =
-        new HashMap<String, Collection>();
+    private Map<String, Collection> definitions = new HashMap<String, Collection>();
 
     private Map<String, Resource> resources;
 
@@ -73,29 +67,20 @@ public class MethodMapper extends XMLBase implements MapperInterface {
 
     /**
      * Default constructor.
-     * 
-     *
      */
     public MethodMapper() {
     }
 
     /**
      * Constructor for method mapper.
-     * 
-     * @param descriptor
-     *            Descriptor filename.
-     * @throws ParserConfigurationException
-     *             If anything fails.
-     * @throws SAXException
-     *             If anything fails.
-     * @throws IOException
-     *             If anything fails.
-     * @throws TransformerException
-     *             Thrown if an xml transformation fails.
      *
+     * @param descriptor Descriptor filename.
+     * @throws ParserConfigurationException If anything fails.
+     * @throws SAXException                 If anything fails.
+     * @throws IOException                  If anything fails.
+     * @throws TransformerException         Thrown if an xml transformation fails.
      */
-    public MethodMapper(final String descriptor)
-        throws ParserConfigurationException, SAXException, IOException,
+    public MethodMapper(final String descriptor) throws ParserConfigurationException, SAXException, IOException,
         TransformerException {
 
         final Collection<String> paths = new ArrayList<String>();
@@ -105,54 +90,38 @@ public class MethodMapper extends XMLBase implements MapperInterface {
 
     /**
      * Constructor for method mapper.
-     * 
-     * @param descriptors
-     *            Descriptor filenames.
-     * @throws ParserConfigurationException
-     *             If anything fails.
-     * @throws SAXException
-     *             If anything fails.
-     * @throws IOException
-     *             If anything fails.
-     * @throws TransformerException
-     *             Thrown if an xml transformation fails.
      *
+     * @param descriptors Descriptor filenames.
+     * @throws ParserConfigurationException If anything fails.
+     * @throws SAXException                 If anything fails.
+     * @throws IOException                  If anything fails.
+     * @throws TransformerException         Thrown if an xml transformation fails.
      */
-    public MethodMapper(final Collection<String> descriptors)
-        throws ParserConfigurationException, SAXException, IOException,
-        TransformerException {
+    public MethodMapper(final Collection<String> descriptors) throws ParserConfigurationException, SAXException,
+        IOException, TransformerException {
 
         setDescriptorFilenames(descriptors);
     }
 
     /**
-     * Sets the names of the descriptor files and initializes this method
-     * mapper.
-     * 
-     * @param descriptorFilenames
-     *            The <code>Collection</code> containing the paths to the
-     *            descriptors.
-     * @throws ParserConfigurationException
-     *             If anything fails.
-     * @throws SAXException
-     *             If anything fails.
-     * @throws IOException
-     *             If anything fails.
-     * @throws TransformerException
-     *             Thrown if an xml transformation fails.
+     * Sets the names of the descriptor files and initializes this method mapper.
      *
+     * @param descriptorFilenames The <code>Collection</code> containing the paths to the descriptors.
+     * @throws ParserConfigurationException If anything fails.
+     * @throws SAXException                 If anything fails.
+     * @throws IOException                  If anything fails.
+     * @throws TransformerException         Thrown if an xml transformation fails.
      */
-    public final void setDescriptorFilenames(
-            final Iterable<String> descriptorFilenames)
-        throws ParserConfigurationException, SAXException, IOException,
-        TransformerException {
+    public final void setDescriptorFilenames(final Iterable<String> descriptorFilenames)
+        throws ParserConfigurationException, SAXException, IOException, TransformerException {
 
         this.descriptorFilenames = new ArrayList<String>();
         for (String descriptor : descriptorFilenames) {
             descriptor = descriptor.trim();
             if (descriptor.startsWith("/")) {
                 this.descriptorFilenames.add(descriptor);
-            } else {
+            }
+            else {
                 this.descriptorFilenames.add('/' + descriptor);
             }
         }
@@ -161,19 +130,13 @@ public class MethodMapper extends XMLBase implements MapperInterface {
 
     /**
      * Initialize the data structures.
-     * 
-     * @throws ParserConfigurationException
-     *             If anything fails.
-     * @throws SAXException
-     *             If anything fails.
-     * @throws IOException
-     *             If anything fails.
-     * @throws TransformerException
-     *             Thrown if an xml transformation fails.
      *
+     * @throws ParserConfigurationException If anything fails.
+     * @throws SAXException                 If anything fails.
+     * @throws IOException                  If anything fails.
+     * @throws TransformerException         Thrown if an xml transformation fails.
      */
-    private void init() throws ParserConfigurationException, SAXException,
-        IOException, TransformerException {
+    private void init() throws ParserConfigurationException, SAXException, IOException, TransformerException {
 
         final Iterator<String> iter = this.descriptorFilenames.iterator();
         this.methodMappings = new ArrayList<Document>();
@@ -184,27 +147,24 @@ public class MethodMapper extends XMLBase implements MapperInterface {
                 this.methodMappings.add(document);
             }
         }
-        putDefinitions(DEFINITION_VAR_ELEMENT,
-            initDefinitions(DEFINITION_VAR_ELEMENT));
+        putDefinitions(DEFINITION_VAR_ELEMENT, initDefinitions(DEFINITION_VAR_ELEMENT));
         setResources(initResources());
 
         // Debug output
         final Iterator<Node> defIter = getDefinitions(DEFINITION_VAR_ELEMENT).iterator();
-        if(LOGGER.isDebugEnabled()) {
+        if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Definitions (Variables):");
         }
-        if(LOGGER.isDebugEnabled()) {
+        if (LOGGER.isDebugEnabled()) {
             while (defIter.hasNext()) {
                 final Node next = defIter.next();
                 LOGGER.debug("Node: " + next.getNodeName() + " name='"
-                        + getAttributeValue(next, DEFINITION_VAR_NAME_ATTR)
-                        + "', regexp='"
-                        + getAttributeValue(next, DEFINITION_VAR_REGEXP_ATTR)
-                        + '\'');
+                    + getAttributeValue(next, DEFINITION_VAR_NAME_ATTR) + "', regexp='"
+                    + getAttributeValue(next, DEFINITION_VAR_REGEXP_ATTR) + '\'');
             }
         }
         final Iterator<String> resIter = getResources().keySet().iterator();
-        if(LOGGER.isDebugEnabled()) {
+        if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Resources:");
             while (resIter.hasNext()) {
                 LOGGER.debug(getResources().get(resIter.next()).toString());
@@ -214,20 +174,14 @@ public class MethodMapper extends XMLBase implements MapperInterface {
 
     /**
      * Initialize the definitions from mappings descriptor.
-     * 
-     * @param type
-     *            The type of definitions.
-     * @return The collection of definitions.
-     * @throws TransformerException
-     *             Thrown if an xml transformation fails.
      *
+     * @param type The type of definitions.
+     * @return The collection of definitions.
+     * @throws TransformerException Thrown if an xml transformation fails.
      */
-    private Collection<Node> initDefinitions(final String type)
-        throws TransformerException {
+    private Collection<Node> initDefinitions(final String type) throws TransformerException {
         final Collection<Node> result = new ArrayList<Node>();
-        final String xPath =
-            appendToXpath(appendToXpath(XPATH_DELIMITER + ROOT_ELEMENT,
-                DEFINITION_ELEMENT), type);
+        final String xPath = appendToXpath(appendToXpath(XPATH_DELIMITER + ROOT_ELEMENT, DEFINITION_ELEMENT), type);
         for (final Document methodMapping : this.methodMappings) {
             final NodeList methodDefinitions = parse(xPath, methodMapping);
             final int noOfDefinitions = methodDefinitions.getLength();
@@ -241,24 +195,20 @@ public class MethodMapper extends XMLBase implements MapperInterface {
 
     /**
      * Initialize the resources.
-     * 
-     * @return The map of resources.
-     * @throws TransformerException
-     *             Thrown if an xml transformation fails.
      *
+     * @return The map of resources.
+     * @throws TransformerException Thrown if an xml transformation fails.
      */
     private Map<String, Resource> initResources() throws TransformerException {
         final Map<String, Resource> result = new HashMap<String, Resource>();
 
-        final String xPath =
-            appendToXpath(XPATH_DELIMITER + ROOT_ELEMENT, RESOURCE_ELEMENT);
+        final String xPath = appendToXpath(XPATH_DELIMITER + ROOT_ELEMENT, RESOURCE_ELEMENT);
         for (final Document methodMapping : this.methodMappings) {
             final NodeList resourcesNodes = parse(xPath, methodMapping);
             final int noOfResources = resourcesNodes.getLength();
             for (int i = 0; i < noOfResources; ++i) {
                 final Node resource = resourcesNodes.item(i);
-                result.put(getAttributeValue(resource, RESOURCE_URI_ATTR),
-                    new Resource(resource, getDefinitions()));
+                result.put(getAttributeValue(resource, RESOURCE_URI_ATTR), new Resource(resource, getDefinitions()));
             }
         }
 
@@ -266,54 +216,37 @@ public class MethodMapper extends XMLBase implements MapperInterface {
     }
 
     /**
-     * Retrieve the matching resource method from the HTTP method and the
-     * request uri.
-     * 
-     * @param request
-     *            The HTTP request.
-     * @return The resource method.
-     * @throws MethodNotFoundException
-     *             If no matching method is found.
-     * @throws EncodingSystemException
-     *             e
+     * Retrieve the matching resource method from the HTTP method and the request uri.
      *
+     * @param request The HTTP request.
+     * @return The resource method.
+     * @throws MethodNotFoundException If no matching method is found.
+     * @throws EncodingSystemException e
      */
     @Override
-    public BeanMethod getMethod(final HttpServletRequest request)
-        throws MethodNotFoundException, EncodingSystemException {
+    public BeanMethod getMethod(final HttpServletRequest request) throws MethodNotFoundException,
+        EncodingSystemException {
 
-        return getMethod(request.getRequestURI(), request.getQueryString(),
-                "GET".equals(request.getMethod()) ? request.getParameterMap()
-                : null, request.getMethod(), Resource.getRequestBody(request));
+        return getMethod(request.getRequestURI(), request.getQueryString(), "GET".equals(request.getMethod()) ? request
+            .getParameterMap() : null, request.getMethod(), Resource.getRequestBody(request));
     }
 
     /**
-     * Retrieve the matching resource method from the provided URI, HTTP method
-     * and the request body.
-     * 
-     * @param uri
-     *            The request URI.
-     * @param query
-     *            The request Query.
-     * @param parameters
-     *            The request parameters.
-     * @param httpMethod
-     *            The http method.
-     * @param body
-     *            The body of the request, if any.
-     * @return The resource method.
-     * @throws MethodNotFoundException
-     *             If no matching method is found.
-     * @throws EncodingSystemException
-     *             e
+     * Retrieve the matching resource method from the provided URI, HTTP method and the request body.
      *
+     * @param uri        The request URI.
+     * @param query      The request Query.
+     * @param parameters The request parameters.
+     * @param httpMethod The http method.
+     * @param body       The body of the request, if any.
+     * @return The resource method.
+     * @throws MethodNotFoundException If no matching method is found.
+     * @throws EncodingSystemException e
      */
     @Override
     public BeanMethod getMethod(
-        final String uri, final String query,
-        final Map<String, String[]> parameters, final String httpMethod,
-        final Object body) throws MethodNotFoundException,
-        EncodingSystemException {
+        final String uri, final String query, final Map<String, String[]> parameters, final String httpMethod,
+        final Object body) throws MethodNotFoundException, EncodingSystemException {
         String decodedUri = null;
         try {
             decodedUri = URLDecoder.decode(uri, XmlUtility.CHARACTER_ENCODING);
@@ -323,23 +256,19 @@ public class MethodMapper extends XMLBase implements MapperInterface {
         }
         final Resource resource = getResource(decodedUri);
         if (resource != null) {
-            return resource.getMethod(decodedUri, query, parameters,
-                httpMethod, body);
+            return resource.getMethod(decodedUri, query, parameters, httpMethod, body);
         }
         else {
-            throw new MethodNotFoundException(
-                "Could not identify resource matching uri '" + uri + "'.");
+            throw new MethodNotFoundException("Could not identify resource matching uri '" + uri + "'.");
         }
 
     }
 
     /**
      * Get the resource corresponding to the request uri.
-     * 
-     * @param requestUri
-     *            The request uri.
-     * @return The resource name.
      *
+     * @param requestUri The request uri.
+     * @return The resource name.
      */
     public Resource getResource(final String requestUri) {
 
@@ -360,7 +289,6 @@ public class MethodMapper extends XMLBase implements MapperInterface {
 
     /**
      * @return Returns the descriptors.
-     *
      */
     public Map getDescriptors() {
 
@@ -368,9 +296,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
     }
 
     /**
-     * @param descriptors
-     *            The descriptors to set.
-     *
+     * @param descriptors The descriptors to set.
      */
     public void setDescriptors(final Map descriptors) {
 
@@ -379,11 +305,9 @@ public class MethodMapper extends XMLBase implements MapperInterface {
 
     /**
      * Get the definitons for the specified type.
-     * 
-     * @param type
-     *            The type.
-     * @return The definitions.
      *
+     * @param type The type.
+     * @return The definitions.
      */
     public Collection getDefinitions(final String type) {
 
@@ -392,15 +316,11 @@ public class MethodMapper extends XMLBase implements MapperInterface {
 
     /**
      * Add definitons for the specified type.
-     * 
-     * @param type
-     *            The type.
-     * @param newDefinitions
-     *            The collection of definitions.
      *
+     * @param type           The type.
+     * @param newDefinitions The collection of definitions.
      */
-    public void putDefinitions(
-        final String type, final Collection<Node> newDefinitions) {
+    public void putDefinitions(final String type, final Collection<Node> newDefinitions) {
 
         if (this.definitions == null) {
             this.definitions = new HashMap<String, Collection>();
@@ -410,16 +330,13 @@ public class MethodMapper extends XMLBase implements MapperInterface {
 
     /**
      * @return Returns the definitions.
-     *
      */
     public Map<String, Collection> getDefinitions() {
         return this.definitions;
     }
 
     /**
-     * @param definitions
-     *            The definitions to set.
-     *
+     * @param definitions The definitions to set.
      */
     public void setDefinitions(final Map<String, Collection> definitions) {
 
@@ -428,16 +345,13 @@ public class MethodMapper extends XMLBase implements MapperInterface {
 
     /**
      * @return Returns the resources.
-     *
      */
     public Map<String, Resource> getResources() {
         return this.resources;
     }
 
     /**
-     * @param resources
-     *            The resources to set.
-     *
+     * @param resources The resources to set.
      */
     public void setResources(final Map<String, Resource> resources) {
         this.resources = resources;

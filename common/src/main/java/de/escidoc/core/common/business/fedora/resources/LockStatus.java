@@ -24,9 +24,8 @@ import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusExcept
 
 /**
  * All status types of lock (resource lock).
- * 
+ *
  * @author Steffen Wagner
- * 
  */
 public enum LockStatus {
 
@@ -35,15 +34,13 @@ public enum LockStatus {
     private String status = "unlocked";
 
     /**
-     * 
+     *
      */
     LockStatus() {
     }
 
     /**
-     * 
-     * @param status
-     *            Type of lock status as String.
+     * @param status Type of lock status as String.
      */
     LockStatus(final String status) {
 
@@ -52,7 +49,7 @@ public enum LockStatus {
 
     /**
      * Get name of status.
-     * 
+     *
      * @return status as String.
      */
     @Override
@@ -63,15 +60,12 @@ public enum LockStatus {
 
     /**
      * Convert status from String to Enum type.
-     * 
-     * @param status
-     *            lock status as String.
+     *
+     * @param status lock status as String.
      * @return LockStatus
-     * @throws InvalidStatusException
-     *             Thrown if unknown or invalid status was set.
+     * @throws InvalidStatusException Thrown if unknown or invalid status was set.
      */
-    public static LockStatus getStatusType(final String status)
-        throws InvalidStatusException {
+    public static LockStatus getStatusType(final String status) throws InvalidStatusException {
 
         if (status != null) {
             if (status.equals(LockStatus.LOCKED.toString())) {

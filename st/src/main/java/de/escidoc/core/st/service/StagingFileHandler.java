@@ -38,7 +38,7 @@ import de.escidoc.core.st.service.interfaces.StagingFileHandlerInterface;
 
 /**
  * A StagingFile handler.
- * 
+ *
  * @author Torsten Tetteroo
  */
 public class StagingFileHandler implements StagingFileHandlerInterface {
@@ -47,9 +47,8 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
 
     /**
      * Injects the staging file handler.
-     * 
-     * @param stagingFileHandler
-     *            The item handler bean to inject.
+     *
+     * @param stagingFileHandler The item handler bean to inject.
      */
     public void setStagingFileHandler(
         final de.escidoc.core.st.business.interfaces.StagingFileHandlerInterface stagingFileHandler) {
@@ -57,21 +56,16 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
         this.handler = stagingFileHandler;
     }
 
-
-
     @Override
-    public String create(final EscidocBinaryContent binaryContent)
-        throws MissingMethodParameterException, AuthenticationException,
-        AuthorizationException, SystemException {
+    public String create(final EscidocBinaryContent binaryContent) throws MissingMethodParameterException,
+        AuthenticationException, AuthorizationException, SystemException {
 
         return handler.create(binaryContent);
     }
 
     @Override
-    public EscidocBinaryContent retrieve(final String stagingFileId)
-        throws StagingFileNotFoundException, AuthenticationException,
-        AuthorizationException, MissingMethodParameterException,
-        SystemException {
+    public EscidocBinaryContent retrieve(final String stagingFileId) throws StagingFileNotFoundException,
+        AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException {
 
         return handler.retrieve(stagingFileId);
     }

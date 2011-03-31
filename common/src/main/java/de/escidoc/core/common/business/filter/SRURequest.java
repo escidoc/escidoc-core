@@ -56,15 +56,15 @@ import java.util.Map.Entry;
 
 /**
  * Abstract super class for all types of SRU requests.
- * 
+ *
  * @author André Schenk
  */
 public class SRURequest {
+
     /**
      * Logging goes there.
      */
-    private static final Logger LOGGER = LoggerFactory
-        .getLogger(SRURequest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SRURequest.class);
 
     // map from resource type to the corresponding admin index
     private static final Map<ResourceType, String> ADMIN_INDEXES =
@@ -73,8 +73,7 @@ public class SRURequest {
     static {
         ADMIN_INDEXES.put(ResourceType.CONTAINER, "item_container_admin");
         ADMIN_INDEXES.put(ResourceType.CONTENT_MODEL, "content_model_admin");
-        ADMIN_INDEXES.put(ResourceType.CONTENT_RELATION,
-            "content_relation_admin");
+        ADMIN_INDEXES.put(ResourceType.CONTENT_RELATION, "content_relation_admin");
         ADMIN_INDEXES.put(ResourceType.CONTEXT, "context_admin");
         ADMIN_INDEXES.put(ResourceType.ITEM, "item_container_admin");
         ADMIN_INDEXES.put(ResourceType.OU, "ou_admin");
@@ -83,38 +82,27 @@ public class SRURequest {
     private ConnectionUtility connectionUtility;
 
     /**
-     * Send an explain request to the SRW servlet and write the response to the
-     * given writer. The given resource type determines the SRW index to use.
-     * 
-     * @param output
-     *            writer to which the SRW response is written
-     * @param resourceType
-     *            resource type for which "explain" will be called
-     * 
-     * @throws WebserverSystemException
-     *             Thrown if the connection to the SRW servlet failed.
+     * Send an explain request to the SRW servlet and write the response to the given writer. The given resource type
+     * determines the SRW index to use.
+     *
+     * @param output       writer to which the SRW response is written
+     * @param resourceType resource type for which "explain" will be called
+     * @throws WebserverSystemException Thrown if the connection to the SRW servlet failed.
      */
-    public final void explain(
-        final Writer output, final ResourceType resourceType)
-        throws WebserverSystemException {
+    public final void explain(final Writer output, final ResourceType resourceType) throws WebserverSystemException {
         try {
             final String url =
-                EscidocConfiguration.getInstance().get(
-                    EscidocConfiguration.SRW_URL)
-                    + "/search/"
-                    + ADMIN_INDEXES.get(resourceType)
-                    + "?operation=explain&version=1.1";
-            final HttpResponse response =
-                connectionUtility.getRequestURL(new URL(url), null);
+                EscidocConfiguration.getInstance().get(EscidocConfiguration.SRW_URL) + "/search/"
+                    + ADMIN_INDEXES.get(resourceType) + "?operation=explain&version=1.1";
+            final HttpResponse response = connectionUtility.getRequestURL(new URL(url), null);
 
             if (response != null) {
                 final HttpEntity entity = response.getEntity();
                 BufferedReader input = null;
                 try {
                     input =
-                        new BufferedReader(new InputStreamReader(
-                            entity.getContent(), getCharset(entity
-                                .getContentType().getValue())));
+                        new BufferedReader(new InputStreamReader(entity.getContent(), getCharset(entity
+                            .getContentType().getValue())));
                     String line;
                     while ((line = input.readLine()) != null) {
                         output.write(line);
@@ -133,9 +121,8 @@ public class SRURequest {
 
     /**
      * Extract the charset information from the given content type header.
-     * 
-     * @param contentType
-     *            content type header
+     *
+     * @param contentType content type header
      * @return charset information
      */
     private static String getCharset(final String contentType) {
@@ -160,66 +147,42 @@ public class SRURequest {
     }
 
     /**
-     * Send a searchRetrieve request to the SRW servlet and write the response
-     * to the given writer. The given resource type determines the SRW index to
-     * use.
-     * 
-     * @param output
-     *            Writer to which the SRW response is written.
-     * @param resourceTypes
-     *            Resource types to be expected in the SRW response.
-     * @param parameters
-     *            SRU request parameters
-     * 
-     * @throws WebserverSystemException
-     *             Thrown if the connection to the SRW servlet failed.
+     * Send a searchRetrieve request to the SRW servlet and write the response to the given writer. The given resource
+     * type determines the SRW index to use.
+     *
+     * @param output        Writer to which the SRW response is written.
+     * @param resourceTypes Resource types to be expected in the SRW response.
+     * @param parameters    SRU request parameters
+     * @throws WebserverSystemException Thrown if the connection to the SRW servlet failed.
      */
     public final void searchRetrieve(
-        final Writer output, final ResourceType[] resourceTypes,
-        final SRURequestParameters parameters) throws WebserverSystemException {
-        searchRetrieve(output, resourceTypes, parameters.getQuery(),
-            parameters.getMaximumRecords(), parameters.getStartRecord(),
-            parameters.getExtraData(), parameters.getRecordPacking());
+        final Writer output, final ResourceType[] resourceTypes, final SRURequestParameters parameters)
+        throws WebserverSystemException {
+        searchRetrieve(output, resourceTypes, parameters.getQuery(), parameters.getMaximumRecords(), parameters
+            .getStartRecord(), parameters.getExtraData(), parameters.getRecordPacking());
     }
 
     /**
-     * Send a searchRetrieve request to the SRW servlet and write the response
-     * to the given writer. The given resource type determines the SRW index to
-     * use.
-     * 
-     * @param output
-     *            Writer to which the SRW response is written.
-     * @param resourceTypes
-     *            Resource types to be expected in the SRW response.
-     * @param query
-     *            Contains a query expressed in CQL to be processed by the
-     *            server.
-     * @param limit
-     *            The number of records requested to be returned. The value must
-     *            be 0 or greater. Default value if not supplied is determined
-     *            by the server. The server MAY return less than this number of
-     *            records, for example if there are fewer matching records than
-     *            requested, but MUST NOT return more than this number of
-     *            records.
-     * @param offset
-     *            The position within the sequence of matched records of the
-     *            first record to be returned. The first position in the
-     *            sequence is 1. The value supplied MUST be greater than 0.
-     * @param extraData
-     *            map with additional parameters like user id, role id
-     * @param recordPacking
-     *            A string to determine how the record should be escaped in the
-     *            response. Defined values are 'string' and 'xml'. The default
-     *            is 'xml'.
-     * 
-     * @throws WebserverSystemException
-     *             Thrown if the connection to the SRW servlet failed.
+     * Send a searchRetrieve request to the SRW servlet and write the response to the given writer. The given resource
+     * type determines the SRW index to use.
+     *
+     * @param output        Writer to which the SRW response is written.
+     * @param resourceTypes Resource types to be expected in the SRW response.
+     * @param query         Contains a query expressed in CQL to be processed by the server.
+     * @param limit         The number of records requested to be returned. The value must be 0 or greater. Default
+     *                      value if not supplied is determined by the server. The server MAY return less than this
+     *                      number of records, for example if there are fewer matching records than requested, but MUST
+     *                      NOT return more than this number of records.
+     * @param offset        The position within the sequence of matched records of the first record to be returned. The
+     *                      first position in the sequence is 1. The value supplied MUST be greater than 0.
+     * @param extraData     map with additional parameters like user id, role id
+     * @param recordPacking A string to determine how the record should be escaped in the response. Defined values are
+     *                      'string' and 'xml'. The default is 'xml'.
+     * @throws WebserverSystemException Thrown if the connection to the SRW servlet failed.
      */
     public final void searchRetrieve(
-        final Writer output, final ResourceType[] resourceTypes,
-        final String query, final int limit, final int offset,
-        final Map<String, String> extraData, final RecordPacking recordPacking)
-        throws WebserverSystemException {
+        final Writer output, final ResourceType[] resourceTypes, final String query, final int limit, final int offset,
+        final Map<String, String> extraData, final RecordPacking recordPacking) throws WebserverSystemException {
         try {
             final StringBuilder resourceTypeQuery = new StringBuilder();
 
@@ -246,27 +209,16 @@ public class SRURequest {
             }
 
             String url =
-                EscidocConfiguration.getInstance().get(
-                    EscidocConfiguration.SRW_URL)
-                    + "/search/"
-                    + ADMIN_INDEXES.get(resourceTypes[0])
-                    + '?'
-                    + Constants.SRU_PARAMETER_OPERATION
-                    + "=searchRetrieve&"
-                    + Constants.SRU_PARAMETER_VERSION
-                    + "=1.1&"
-                    + Constants.SRU_PARAMETER_QUERY
-                    + '='
-                    + URLEncoder.encode(internalQuery.toString(),
-                        XmlUtility.CHARACTER_ENCODING);
+                EscidocConfiguration.getInstance().get(EscidocConfiguration.SRW_URL) + "/search/"
+                    + ADMIN_INDEXES.get(resourceTypes[0]) + '?' + Constants.SRU_PARAMETER_OPERATION
+                    + "=searchRetrieve&" + Constants.SRU_PARAMETER_VERSION + "=1.1&" + Constants.SRU_PARAMETER_QUERY
+                    + '=' + URLEncoder.encode(internalQuery.toString(), XmlUtility.CHARACTER_ENCODING);
 
             if (limit != LuceneRequestParameters.DEFAULT_MAXIMUM_RECORDS) {
-                url +=
-                    '&' + Constants.SRU_PARAMETER_MAXIMUM_RECORDS + '=' + limit;
+                url += '&' + Constants.SRU_PARAMETER_MAXIMUM_RECORDS + '=' + limit;
             }
             if (offset != LuceneRequestParameters.DEFAULT_START_RECORD) {
-                url +=
-                    '&' + Constants.SRU_PARAMETER_START_RECORD + '=' + offset;
+                url += '&' + Constants.SRU_PARAMETER_START_RECORD + '=' + offset;
             }
             if (extraData != null) {
                 final StringBuilder urlBuffer = new StringBuilder(url);
@@ -279,31 +231,23 @@ public class SRURequest {
                 url = urlBuffer.toString();
             }
             if (recordPacking != null) {
-                url +=
-                    '&' + Constants.SRU_PARAMETER_RECORD_PACKING + '='
-                        + recordPacking.getType();
+                url += '&' + Constants.SRU_PARAMETER_RECORD_PACKING + '=' + recordPacking.getType();
             }
             if (!UserContext.isRestAccess()) {
-                url +=
-                    '&' + Constants.SRU_PARAMETER_RECORD_SCHEMA
-                        + "=eSciDocSoap";
+                url += '&' + Constants.SRU_PARAMETER_RECORD_SCHEMA + "=eSciDocSoap";
             }
             LOGGER.info("SRW URL: " + url);
 
-            final Cookie cookie =
-                new BasicClientCookie(EscidocServlet.COOKIE_LOGIN,
-                    UserContext.getHandle());
-            final HttpResponse response =
-                connectionUtility.getRequestURL(new URL(url), cookie);
+            final Cookie cookie = new BasicClientCookie(EscidocServlet.COOKIE_LOGIN, UserContext.getHandle());
+            final HttpResponse response = connectionUtility.getRequestURL(new URL(url), cookie);
 
             if (response != null) {
                 final HttpEntity entity = response.getEntity();
                 BufferedReader input = null;
                 try {
                     input =
-                        new BufferedReader(new InputStreamReader(
-                            entity.getContent(), getCharset(entity
-                                .getContentType().getValue())));
+                        new BufferedReader(new InputStreamReader(entity.getContent(), getCharset(entity
+                            .getContentType().getValue())));
                     String line;
                     while ((line = input.readLine()) != null) {
                         output.write(line);
@@ -322,9 +266,8 @@ public class SRURequest {
 
     /**
      * Set the connection utility.
-     * 
-     * @param connectionUtility
-     *            ConnectionUtility.
+     *
+     * @param connectionUtility ConnectionUtility.
      */
     public void setConnectionUtility(final ConnectionUtility connectionUtility) {
         this.connectionUtility = connectionUtility;

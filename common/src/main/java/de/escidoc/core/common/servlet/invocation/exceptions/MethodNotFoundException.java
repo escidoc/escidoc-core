@@ -25,11 +25,9 @@ import de.escidoc.core.common.exceptions.EscidocException;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * The MethodNotFoundException is used to indicate that no matching method could
- * be found to a REST call.
- * 
- * @author Michael Schneider
+ * The MethodNotFoundException is used to indicate that no matching method could be found to a REST call.
  *
+ * @author Michael Schneider
  */
 public class MethodNotFoundException extends EscidocException {
 
@@ -38,15 +36,12 @@ public class MethodNotFoundException extends EscidocException {
      */
     private static final long serialVersionUID = 5817273235900174225L;
 
-    private static final int HTTP_STATUS_CODE =
-        HttpServletResponse.SC_NOT_FOUND;
+    private static final int HTTP_STATUS_CODE = HttpServletResponse.SC_NOT_FOUND;
 
     private static final String HTTP_STATUS_MESSAGE = "Method Not Found";
 
     /**
      * Default constructor.
-     * 
-     *
      */
     public MethodNotFoundException() {
         super(HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -54,10 +49,8 @@ public class MethodNotFoundException extends EscidocException {
 
     /**
      * Constructor used to map an initial exception.
-     * 
-     * @param error
-     *            Throwable
      *
+     * @param error Throwable
      */
     public MethodNotFoundException(final Throwable error) {
         super(error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -65,24 +58,19 @@ public class MethodNotFoundException extends EscidocException {
 
     /**
      * Constructs a new exception with the specified detail message.
-     * 
-     * @param message
-     *            the detail message.
      *
+     * @param message the detail message.
      */
     public MethodNotFoundException(final String message) {
         super(message, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 
     /**
-     * Constructor used to create a new Exception with the specified detail
-     * message and a mapping to an initial exception.
-     * 
-     * @param message
-     *            the detail message.
-     * @param error
-     *            Throwable
+     * Constructor used to create a new Exception with the specified detail message and a mapping to an initial
+     * exception.
      *
+     * @param message the detail message.
+     * @param error   Throwable
      */
     public MethodNotFoundException(final String message, final Throwable error) {
         super(message, error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);

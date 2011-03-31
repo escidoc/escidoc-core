@@ -42,8 +42,7 @@ import javax.xml.stream.events.XMLEvent;
 
 public class RDFRegisteredOntologyFilter implements EventFilter {
 
-    private static final Logger LOGGER =
-        LoggerFactory.getLogger(RDFRegisteredOntologyFilter.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RDFRegisteredOntologyFilter.class);
 
     private boolean inFilteredEvent;
 
@@ -57,8 +56,7 @@ public class RDFRegisteredOntologyFilter implements EventFilter {
         }
         else if (event instanceof EndElement) {
             final EndElement element = event.asEndElement();
-            if (this.workaroundForItemList
-                && "RDF".equalsIgnoreCase(element.getName().getLocalPart())) {
+            if (this.workaroundForItemList && "RDF".equalsIgnoreCase(element.getName().getLocalPart())) {
                 return false;
             }
         }
@@ -75,8 +73,7 @@ public class RDFRegisteredOntologyFilter implements EventFilter {
 
     public boolean accept(final StartElement element) {
         try {
-            if (this.workaroundForItemList
-                && "RDF".equalsIgnoreCase(element.getName().getLocalPart())) {
+            if (this.workaroundForItemList && "RDF".equalsIgnoreCase(element.getName().getLocalPart())) {
                 return false;
             }
             if ("RDF".equalsIgnoreCase(element.getName().getLocalPart())
@@ -86,15 +83,14 @@ public class RDFRegisteredOntologyFilter implements EventFilter {
             else {
                 final QName name = element.getName();
                 final String predicate = name.getNamespaceURI() + name.getLocalPart();
-                if (OntologyUtility.checkPredicate(predicate) ||
-                        this.workaroundForItemList && predicate.startsWith(Constants.DC_NS_URI) ||
-                        this.workaroundForItemList
-                        && ("created-by-title".equals(name.getLocalPart())
-                        || "context-title".equals(name.getLocalPart())
+                if (OntologyUtility.checkPredicate(predicate)
+                    || this.workaroundForItemList
+                    && predicate.startsWith(Constants.DC_NS_URI)
+                    || this.workaroundForItemList
+                    && ("created-by-title".equals(name.getLocalPart()) || "context-title".equals(name.getLocalPart())
                         || "latest-version.date".equals(name.getLocalPart())
                         || "latest-version.status".equals(name.getLocalPart())
-                        || "public-status".equals(name.getLocalPart()) || "hasComponent".equals(name
-                        .getLocalPart()))) {
+                        || "public-status".equals(name.getLocalPart()) || "hasComponent".equals(name.getLocalPart()))) {
                     return true;
                 }
                 // workaround for item list is to allow dc and some specials
@@ -111,8 +107,7 @@ public class RDFRegisteredOntologyFilter implements EventFilter {
     }
 
     /**
-     * @param workaroundForItemList
-     *            the workaroundForItemList to set
+     * @param workaroundForItemList the workaroundForItemList to set
      */
     public void setWorkaroundForItemList(final boolean workaroundForItemList) {
         this.workaroundForItemList = workaroundForItemList;

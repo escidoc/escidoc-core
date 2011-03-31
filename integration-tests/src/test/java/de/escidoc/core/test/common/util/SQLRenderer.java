@@ -41,9 +41,8 @@ import java.util.TreeMap;
 
 /**
  * Render for SQL databases.
- * 
+ *
  * @author Steffen Wagner
- * 
  */
 public class SQLRenderer implements MeasurementRenderer {
 
@@ -61,26 +60,17 @@ public class SQLRenderer implements MeasurementRenderer {
 
     /**
      * SQL Renderer.
-     * 
-     * @param dbClassName
-     *            Name of DB driver class.
-     * @param dbURL
-     *            URL of DB.
-     * @param dbUserName
-     *            DB user name.
-     * @param dbPassword
-     *            DB password.
-     * @param environmentInfos
-     *            Information about Test Environment.
-     * @throws ClassNotFoundException
-     *             Thrown if driver class could not be found.
-     * @throws SQLException
-     *             Thrown if Connection to DB failed.
+     *
+     * @param dbClassName      Name of DB driver class.
+     * @param dbURL            URL of DB.
+     * @param dbUserName       DB user name.
+     * @param dbPassword       DB password.
+     * @param environmentInfos Information about Test Environment.
+     * @throws ClassNotFoundException Thrown if driver class could not be found.
+     * @throws SQLException           Thrown if Connection to DB failed.
      */
-    public SQLRenderer(final String dbClassName, final String dbURL,
-        final String dbUserName, final String dbPassword,
-        final Environment environmentInfos) throws ClassNotFoundException,
-        SQLException {
+    public SQLRenderer(final String dbClassName, final String dbURL, final String dbUserName, final String dbPassword,
+        final Environment environmentInfos) throws ClassNotFoundException, SQLException {
 
         this.dbClassName = dbClassName;
         this.dbURL = dbURL;
@@ -93,9 +83,8 @@ public class SQLRenderer implements MeasurementRenderer {
 
     /**
      * The render method.
-     * 
-     * @param points
-     *            The measurement points from the measurement framework.
+     *
+     * @param points The measurement points from the measurement framework.
      */
     public void render(final Map points) {
 
@@ -109,10 +98,8 @@ public class SQLRenderer implements MeasurementRenderer {
             String sqlStatement = null;
             try {
                 sqlStatement =
-                    "INSERT INTO measurements "
-                        + "(hostname, java_version, cpus, mem, fw_series, fw_build, "
-                        + "runs, methodname, m_parameter, min, max, average, "
-                        + "total_time) " + "VALUES('"
+                    "INSERT INTO measurements " + "(hostname, java_version, cpus, mem, fw_series, fw_build, "
+                        + "runs, methodname, m_parameter, min, max, average, " + "total_time) " + "VALUES('"
                         + this.testEnvironment.getHostname()
                         + "', '"
                         + this.testEnvironment.getJavaVersion()
@@ -134,10 +121,7 @@ public class SQLRenderer implements MeasurementRenderer {
                         + point.getMin()
                         + "', '"
                         + point.getMax()
-                        + "', '"
-                        + point.getAverage()
-                        + "', '"
-                        + point.getTotal() + "');";
+                        + "', '" + point.getAverage() + "', '" + point.getTotal() + "');";
 
                 statement = conn.createStatement();
                 int result = statement.executeUpdate(sqlStatement);
@@ -156,18 +140,14 @@ public class SQLRenderer implements MeasurementRenderer {
 
     /**
      * Init DB connection.
-     * 
-     * @throws ClassNotFoundException
-     *             Thrown if database class could not be found.
-     * @throws SQLException
-     *             Thrown if DB Connection init faild.
+     *
+     * @throws ClassNotFoundException Thrown if database class could not be found.
+     * @throws SQLException           Thrown if DB Connection init faild.
      */
     private void initDBConnection() throws ClassNotFoundException, SQLException {
 
         Class.forName(this.dbClassName);
-        this.conn =
-            DriverManager.getConnection(this.dbURL, this.dbUserName,
-                this.dbPassword);
+        this.conn = DriverManager.getConnection(this.dbURL, this.dbUserName, this.dbPassword);
 
     }
 

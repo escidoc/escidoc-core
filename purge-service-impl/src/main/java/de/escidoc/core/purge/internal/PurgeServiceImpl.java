@@ -33,22 +33,21 @@ public class PurgeServiceImpl implements InitializingBean {
                     UserContext.setUserContext("");
                     UserContext.runAsInternalUser();
                 }
-            } catch (final Exception e) {
-                if(LOGGER.isWarnEnabled()) {
+            }
+            catch (final Exception e) {
+                if (LOGGER.isWarnEnabled()) {
                     LOGGER.warn("Error on setting user context.");
                 }
-                if(LOGGER.isDebugEnabled()) {
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Error on setting user context.", e);
                 }
                 UserContext.setUserContext("");
                 UserContext.runAsInternalUser();
             }
-            for (final String componentId : this.tripleStoreUtility
-                .getComponents(purgeRequest.getResourceId())) {
+            for (final String componentId : this.tripleStoreUtility.getComponents(purgeRequest.getResourceId())) {
                 this.fedoraUtility.deleteObject(componentId, false);
             }
-            this.fedoraUtility
-                .deleteObject(purgeRequest.getResourceId(), false);
+            this.fedoraUtility.deleteObject(purgeRequest.getResourceId(), false);
             // synchronize triple store
             this.fedoraUtility.sync();
 
@@ -68,8 +67,7 @@ public class PurgeServiceImpl implements InitializingBean {
             // kann somit rekursive Abhängigkeiten nicht auflösen. BeanLocator
             // muss entfernt werden!
             this.fedoraUtility =
-                (FedoraUtility) BeanLocator.getBean(
-                    BeanLocator.COMMON_FACTORY_ID,
+                (FedoraUtility) BeanLocator.getBean(BeanLocator.COMMON_FACTORY_ID,
                     "escidoc.core.business.FedoraUtility");
             this.tripleStoreUtility = BeanLocator.locateTripleStoreUtility();
         }

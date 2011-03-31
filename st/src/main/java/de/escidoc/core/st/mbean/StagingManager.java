@@ -37,11 +37,9 @@ import org.springframework.jmx.export.annotation.ManagedResource;
 import java.io.IOException;
 
 /**
- * Managed bean for the staging file area. This should be exposed (as a mbean)
- * to a JMX server.
+ * Managed bean for the staging file area. This should be exposed (as a mbean) to a JMX server.
  *
  * @author Torsten Tetteroo
- * 
  */
 @ManagedResource(objectName = "eSciDocCore:name=StagingManager", description = "Manager of the staging file area.", log = true, logFile = "jmx.log", currencyTimeLimit = 15)
 public class StagingManager {
@@ -49,10 +47,7 @@ public class StagingManager {
     private StagingCleaner stagingCleaner;
 
     /**
-     * Cleans up the staging file area.<br>
-     * This delegates to {@link StagingCleaner}.cleanUp.
-     * 
-     *
+     * Cleans up the staging file area.<br> This delegates to {@link StagingCleaner}.cleanUp.
      */
     @ManagedOperation(description = "Clean up the staging file area.")
     public void cleanUp() {
@@ -62,24 +57,20 @@ public class StagingManager {
 
     /**
      * Exposes the clean up period.
-     * 
-     * @return Returns the clean up period taken from the
-     *         {@link EscidocConfiguration}.
-     * @throws IOException
-     *             Thrown if configuration properties are not available.
+     *
+     * @return Returns the clean up period taken from the {@link EscidocConfiguration}.
+     * @throws IOException Thrown if configuration properties are not available.
      */
     @ManagedAttribute(description = "The clean up period in milli seconds.", persistPeriod = 300)
     public long getCleanUpPeriod() throws IOException {
 
-        return EscidocConfiguration.getInstance().getAsLong(
-            "escidoc-core.st.cleanup.period");
+        return EscidocConfiguration.getInstance().getAsLong("escidoc-core.st.cleanup.period");
     }
 
     /**
      * Injects the {@link StagingCleaner}.
-     * 
-     * @param stagingCleaner
-     *            The {@link StagingCleaner} object to use.
+     *
+     * @param stagingCleaner The {@link StagingCleaner} object to use.
      */
     public void setStagingCleaner(final StagingCleaner stagingCleaner) {
         this.stagingCleaner = stagingCleaner;

@@ -82,15 +82,13 @@ import java.util.Map;
  * Business layer implementation of a handler that manages eSciDoc roles.
  *
  * @author Torsten Tetteroo
- * 
  */
 public class RoleHandler implements RoleHandlerInterface {
 
     /**
      * The logger.
      */
-    private static final Logger LOGGER = LoggerFactory.getLogger(
-        RoleHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RoleHandler.class);
 
     private static final String ERROR_ROLE_NOT_FOUND = "Role not found";
 
@@ -111,31 +109,21 @@ public class RoleHandler implements RoleHandlerInterface {
 
     private XacmlParser xacmlParser;
 
-
-
     /**
      * See Interface for functional description.
-     * 
-     * @param xmlData
-     * @return
-     * @throws XmlCorruptedException
-     * @throws UniqueConstraintViolationException
-     * @throws SystemException
-     * @see de.escidoc.core.aa.service.interfaces.RoleHandlerInterface#create(String)
      *
+     * @see de.escidoc.core.aa.service.interfaces.RoleHandlerInterface#create(String)
      */
     @Override
-    public String create(final String xmlData) throws XmlCorruptedException,
-        UniqueConstraintViolationException, SystemException {
+    public String create(final String xmlData) throws XmlCorruptedException, UniqueConstraintViolationException,
+        SystemException {
 
         final EscidocRole role = new EscidocRole();
-        final ByteArrayInputStream in =
-            XmlUtility.convertToByteArrayInputStream(xmlData);
+        final ByteArrayInputStream in = XmlUtility.convertToByteArrayInputStream(xmlData);
 
         final StaxParser sp = new StaxParser(XmlUtility.NAME_ROLE);
 
-        final RolePropertiesStaxHandler propertiesHandler =
-            new RolePropertiesStaxHandler(role, this.roleDao);
+        final RolePropertiesStaxHandler propertiesHandler = new RolePropertiesStaxHandler(role, this.roleDao);
         sp.addHandler(propertiesHandler);
         final ScopeStaxHandler scopeHandler = new ScopeStaxHandler(role);
         sp.addHandler(scopeHandler);
@@ -155,9 +143,7 @@ public class RoleHandler implements RoleHandlerInterface {
             throw e;
         }
         catch (final Exception e) {
-            final String msg =
-                "Unexpected exception in " + getClass().getName() + ".create: "
-                    + e.getClass().getName();
+            final String msg = "Unexpected exception in " + getClass().getName() + ".create: " + e.getClass().getName();
             throw new WebserverSystemException(msg, e);
         }
 
@@ -168,8 +154,7 @@ public class RoleHandler implements RoleHandlerInterface {
             role.setId(null);
         }
         catch (final Exception e) {
-            throw new XmlCorruptedException(
-                "XACML-Parser couldnt parse policy", e);
+            throw new XmlCorruptedException("XACML-Parser couldnt parse policy", e);
         }
 
         setModificationValues(role);
@@ -185,23 +170,15 @@ public class RoleHandler implements RoleHandlerInterface {
 
     /**
      * See Interface for functional description.
-     * 
-     * @param id
-     * @throws RoleNotFoundException
-     * @throws RoleInUseViolationException
-     * @throws SystemException
-     * @see de.escidoc.core.aa.service.interfaces.RoleHandlerInterface
-     *      #delete(java.lang.String)
      *
+     * @see de.escidoc.core.aa.service.interfaces.RoleHandlerInterface #delete(java.lang.String)
      */
     @Override
-    public void delete(final String id) throws RoleNotFoundException,
-        RoleInUseViolationException, SystemException {
+    public void delete(final String id) throws RoleNotFoundException, RoleInUseViolationException, SystemException {
 
         final EscidocRole role = fetchRole(id);
         if (FORBIDDEN_ROLE_NAME.equals(role.getRoleName())) {
-            throw new RoleNotFoundException(StringUtility.format(
-                ERROR_ROLE_NOT_FOUND, id));
+            throw new RoleNotFoundException(StringUtility.format(ERROR_ROLE_NOT_FOUND, id));
         }
 
         final List<RoleGrant> grants = userAccountDao.retrieveGrantsByRole(role);
@@ -220,65 +197,38 @@ public class RoleHandler implements RoleHandlerInterface {
 
     /**
      * See Interface for functional description.
-     * 
-     * @param id
-     * @return
-     * @throws RoleNotFoundException
-     * @throws SystemException
-     * @see de.escidoc.core.aa.service.interfaces.RoleHandlerInterface
-     *      #retrieve(java.lang.String)
      *
+     * @see de.escidoc.core.aa.service.interfaces.RoleHandlerInterface #retrieve(java.lang.String)
      */
     @Override
-    public String retrieve(final String id) throws RoleNotFoundException,
-        SystemException {
+    public String retrieve(final String id) throws RoleNotFoundException, SystemException {
 
         return renderer.render(fetchRole(id));
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param id
-     * @return
-     * @throws RoleNotFoundException
-     * @throws SystemException
-     * @see de.escidoc.core.aa.service.interfaces.RoleHandlerInterface
-     *      #retrieveResources(java.lang.String)
      *
+     * @see de.escidoc.core.aa.service.interfaces.RoleHandlerInterface #retrieveResources(java.lang.String)
      */
     @Override
-    public String retrieveResources(final String id)
-        throws RoleNotFoundException, SystemException {
+    public String retrieveResources(final String id) throws RoleNotFoundException, SystemException {
 
         return renderer.renderResources(fetchRole(id));
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param id
-     * @param xmlData
-     * @return
-     * @throws RoleNotFoundException
-     * @throws XmlCorruptedException
-     * @throws MissingAttributeValueException
-     * @throws UniqueConstraintViolationException
-     * @throws OptimisticLockingException
-     * @throws SystemException
-     * @see de.escidoc.core.aa.service.interfaces.RoleHandlerInterface#update(String,
-     *      String)
+     *
+     * @see de.escidoc.core.aa.service.interfaces.RoleHandlerInterface#update(String, String)
      */
     @Override
-    public String update(final String id, final String xmlData)
-        throws RoleNotFoundException, XmlCorruptedException,
-        MissingAttributeValueException, UniqueConstraintViolationException,
-        OptimisticLockingException, SystemException {
+    public String update(final String id, final String xmlData) throws RoleNotFoundException, XmlCorruptedException,
+        MissingAttributeValueException, UniqueConstraintViolationException, OptimisticLockingException, SystemException {
 
         // Check XACML Policy
         EscidocRole role = new EscidocRole();
-        ByteArrayInputStream in =
-            XmlUtility.convertToByteArrayInputStream(xmlData);
+        ByteArrayInputStream in = XmlUtility.convertToByteArrayInputStream(xmlData);
 
         StaxParser sp = new StaxParser(XmlUtility.NAME_ROLE);
 
@@ -292,9 +242,7 @@ public class RoleHandler implements RoleHandlerInterface {
             throw new XmlCorruptedException(e);
         }
         catch (final Exception e) {
-            final String msg =
-                "Unexpected exception in " + getClass().getName() + ".update: "
-                    + e.getClass().getName();
+            final String msg = "Unexpected exception in " + getClass().getName() + ".update: " + e.getClass().getName();
             throw new WebserverSystemException(msg, e);
         }
         // check if policy is parseable by XACML-Parser
@@ -304,15 +252,13 @@ public class RoleHandler implements RoleHandlerInterface {
             CustomPolicyBuilder.buildXacmlRolePolicySet(role);
         }
         catch (final Exception e) {
-            throw new XmlCorruptedException(
-                "XACML-Parser couldnt parse policy", e);
+            throw new XmlCorruptedException("XACML-Parser couldnt parse policy", e);
         }
 
         role = fetchRole(id);
         if (FORBIDDEN_ROLE_NAME.equals(role.getRoleName())) {
 
-            throw new RoleNotFoundException(StringUtility.format(
-                ERROR_ROLE_NOT_FOUND, id));
+            throw new RoleNotFoundException(StringUtility.format(ERROR_ROLE_NOT_FOUND, id));
         }
         in = XmlUtility.convertToByteArrayInputStream(xmlData);
 
@@ -321,8 +267,7 @@ public class RoleHandler implements RoleHandlerInterface {
         final OptimisticLockingStaxHandler optimisticLockingHandler =
             new OptimisticLockingStaxHandler(role.getLastModificationDate());
         sp.addHandler(optimisticLockingHandler);
-        final RolePropertiesStaxHandler propertiesHandler =
-            new RolePropertiesStaxHandler(role, this.roleDao);
+        final RolePropertiesStaxHandler propertiesHandler = new RolePropertiesStaxHandler(role, this.roleDao);
         sp.addHandler(propertiesHandler);
         final ScopeStaxHandler scopeHandler = new ScopeStaxHandler(role);
         sp.addHandler(scopeHandler);
@@ -348,8 +293,7 @@ public class RoleHandler implements RoleHandlerInterface {
             throw e;
         }
         catch (final Exception e) {
-            final String msg = "Unexpected exception in " +
-                    getClass().getName() + ".update: "+ e.getClass().getName();
+            final String msg = "Unexpected exception in " + getClass().getName() + ".update: " + e.getClass().getName();
             throw new WebserverSystemException(msg, e);
         }
 
@@ -368,18 +312,11 @@ public class RoleHandler implements RoleHandlerInterface {
 
     /**
      * See Interface for functional description.
-     * 
-     * @param filter
-     * @return
-     * @throws InvalidSearchQueryException
-     * @throws SqlDatabaseSystemException
-     * @throws SystemException
-     * @see de.escidoc.core.aa.service.interfaces.RoleHandlerInterface
-     *      #retrieveRoles(java.util.Map)
+     *
+     * @see de.escidoc.core.aa.service.interfaces.RoleHandlerInterface #retrieveRoles(java.util.Map)
      */
     @Override
-    public String retrieveRoles(final Map<String, String[]> filter)
-        throws InvalidSearchQueryException, SystemException {
+    public String retrieveRoles(final Map<String, String[]> filter) throws InvalidSearchQueryException, SystemException {
         final SRURequestParameters parameters = new DbRequestParameters(filter);
         final String query = parameters.getQuery();
         final int limit = parameters.getMaximumRecords();
@@ -390,20 +327,16 @@ public class RoleHandler implements RoleHandlerInterface {
         if (explain) {
             final Map<String, Object> values = new HashMap<String, Object>();
 
-            values.put("PROPERTY_NAMES",
-                new RoleFilter(null).getPropertyNames());
+            values.put("PROPERTY_NAMES", new RoleFilter(null).getPropertyNames());
             result = ExplainXmlProvider.getInstance().getExplainRoleXml(values);
         }
         else if (limit == 0) {
-            result =
-                renderer.renderRoles(new ArrayList<EscidocRole>(0),
-                    parameters.getRecordPacking());
+            result = renderer.renderRoles(new ArrayList<EscidocRole>(0), parameters.getRecordPacking());
         }
         else {
             final int needed = offset + limit;
             int currentOffset = 0;
-            final List<EscidocRole> permittedObjects =
-                new ArrayList<EscidocRole>();
+            final List<EscidocRole> permittedObjects = new ArrayList<EscidocRole>();
             final int size = permittedObjects.size();
             while (size <= needed) {
 
@@ -412,24 +345,21 @@ public class RoleHandler implements RoleHandlerInterface {
                     break;
                 }
                 Iterator<EscidocRole> objectIter = tmpObjects.iterator();
-                final List<String> ids =
-                    new ArrayList<String>(tmpObjects.size());
+                final List<String> ids = new ArrayList<String>(tmpObjects.size());
                 while (objectIter.hasNext()) {
                     final EscidocRole object = objectIter.next();
                     ids.add(object.getId());
                 }
 
                 try {
-                    final List<String> tmpPermitted =
-                        pdp.evaluateRetrieve("role", ids);
+                    final List<String> tmpPermitted = pdp.evaluateRetrieve("role", ids);
                     final int numberPermitted = tmpPermitted.size();
                     if (numberPermitted == 0) {
                         break;
                     }
                     else {
                         int permittedIndex = 0;
-                        String currentPermittedId =
-                            tmpPermitted.get(permittedIndex);
+                        String currentPermittedId = tmpPermitted.get(permittedIndex);
                         objectIter = tmpObjects.iterator();
                         while (objectIter.hasNext()) {
                             final EscidocRole object = objectIter.next();
@@ -437,8 +367,7 @@ public class RoleHandler implements RoleHandlerInterface {
                                 permittedObjects.add(object);
                                 ++permittedIndex;
                                 if (permittedIndex < numberPermitted) {
-                                    currentPermittedId =
-                                        tmpPermitted.get(permittedIndex);
+                                    currentPermittedId = tmpPermitted.get(permittedIndex);
                                 }
                                 else {
                                     break;
@@ -448,12 +377,10 @@ public class RoleHandler implements RoleHandlerInterface {
                     }
                 }
                 catch (final MissingMethodParameterException e) {
-                    throw new SystemException("Unexpected exception "
-                        + "during evaluating access rights.", e);
+                    throw new SystemException("Unexpected exception " + "during evaluating access rights.", e);
                 }
                 catch (final ResourceNotFoundException e) {
-                    throw new SystemException("Unexpected exception "
-                        + "during evaluating access rights.", e);
+                    throw new SystemException("Unexpected exception " + "during evaluating access rights.", e);
                 }
                 currentOffset += needed;
             }
@@ -469,28 +396,21 @@ public class RoleHandler implements RoleHandlerInterface {
             else {
                 offsetObjects = new ArrayList<EscidocRole>(0);
             }
-            result =
-                renderer.renderRoles(offsetObjects,
-                    parameters.getRecordPacking());
+            result = renderer.renderRoles(offsetObjects, parameters.getRecordPacking());
 
         }
         return result;
     }
 
     /**
-     * Sets the creation date and the created-by user in the provided
-     * <code>EscidocRole</code> object.<br/>
-     * The values are set to the last modification date and modified-by values
-     * of the provided role.<br/>
-     * Before calling this method, the last modified values must be set.
-     * 
-     * @param role
-     *            The <code>EscidocRole</code> object to modify.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     * Sets the creation date and the created-by user in the provided <code>EscidocRole</code> object.<br/> The values
+     * are set to the last modification date and modified-by values of the provided role.<br/> Before calling this
+     * method, the last modified values must be set.
+     *
+     * @param role The <code>EscidocRole</code> object to modify.
+     * @throws SystemException Thrown in case of an internal error.
      */
-    private static void setCreationValues(final EscidocRole role)
-        throws SystemException {
+    private static void setCreationValues(final EscidocRole role) throws SystemException {
 
         // initialize creation-date value
         role.setCreationDate(role.getLastModificationDate());
@@ -500,19 +420,14 @@ public class RoleHandler implements RoleHandlerInterface {
     }
 
     /**
-     * Sets the last modification date and the modified-by user in the provided
-     * <code>EscidocRole</code> object.<br/>
-     * The last modification date is set to the current time, and the
-     * modified-by id and title to the values of the user account of the
-     * current, authenticated user.
-     * 
-     * @param role
-     *            The <code>EscidocRole</code> object to modify.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     * Sets the last modification date and the modified-by user in the provided <code>EscidocRole</code> object.<br/>
+     * The last modification date is set to the current time, and the modified-by id and title to the values of the user
+     * account of the current, authenticated user.
+     *
+     * @param role The <code>EscidocRole</code> object to modify.
+     * @throws SystemException Thrown in case of an internal error.
      */
-    private void setModificationValues(final EscidocRole role)
-        throws SystemException {
+    private void setModificationValues(final EscidocRole role) throws SystemException {
 
         // initialized last-modification-date value
         role.setLastModificationDate(new Date(System.currentTimeMillis()));
@@ -520,46 +435,34 @@ public class RoleHandler implements RoleHandlerInterface {
         // initialize modified-by values
         final String userAccountId = UserContext.getId();
         if (userAccountId == null) {
-            throw new WebserverSystemException(
-                "System fault: Current user not set!");
+            throw new WebserverSystemException("System fault: Current user not set!");
         }
-        role.setUserAccountByModifiedById(userAccountDao
-            .retrieveUserAccountById(userAccountId));
+        role.setUserAccountByModifiedById(userAccountDao.retrieveUserAccountById(userAccountId));
     }
 
     /**
      * Fetches the role identified by the provided id.
-     * 
-     * @param id
-     *            The id of the role.
-     * @return Returns the fetched <code>EscidocRoleObject</code>.
-     * @throws SystemException
-     *             Thrown in case of an internal database error.
-     * @throws RoleNotFoundException
-     *             Thrown if a role with the provided id does not exist.
      *
+     * @param id The id of the role.
+     * @return Returns the fetched <code>EscidocRoleObject</code>.
+     * @throws SystemException       Thrown in case of an internal database error.
+     * @throws RoleNotFoundException Thrown if a role with the provided id does not exist.
      */
-    private EscidocRole fetchRole(final String id) throws SystemException,
-        RoleNotFoundException {
+    private EscidocRole fetchRole(final String id) throws SystemException, RoleNotFoundException {
 
         final EscidocRole role = roleDao.retrieveRole(id);
         if (role == null) {
-            throw new RoleNotFoundException(StringUtility.format(
-                ERROR_ROLE_NOT_FOUND, id));
+            throw new RoleNotFoundException(StringUtility.format(ERROR_ROLE_NOT_FOUND, id));
         }
         return role;
     }
 
     /**
      * Get the {@link XacmlParser}.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @return
      */
     private XacmlParser getXacmlParser() throws WebserverSystemException {
         if (this.xacmlParser == null) {
-            this.xacmlParser =
-                (XacmlParser) BeanLocator.getBean(BeanLocator.AA_FACTORY_ID,
-                    "convert.XacmlParser");
+            this.xacmlParser = (XacmlParser) BeanLocator.getBean(BeanLocator.AA_FACTORY_ID, "convert.XacmlParser");
         }
         return this.xacmlParser;
     }
@@ -567,19 +470,16 @@ public class RoleHandler implements RoleHandlerInterface {
     /**
      * Injects the access rights object.
      *
-     * @param accessRights
-     *            access rights from Spring
+     * @param accessRights access rights from Spring
      */
     public void setAccessRights(final AccessRights accessRights) {
         this.accessRights = accessRights;
     }
 
     /**
-     * Injects the data access object to access {@link UserAccount} objects from
-     * the database.
-     * 
-     * @param userAccountDao
-     *            The dao to set.
+     * Injects the data access object to access {@link UserAccount} objects from the database.
+     *
+     * @param userAccountDao The dao to set.
      */
     public void setUserAccountDao(final UserAccountDaoInterface userAccountDao) {
 
@@ -587,11 +487,9 @@ public class RoleHandler implements RoleHandlerInterface {
     }
 
     /**
-     * Injects the data access object to access {@link EscidocRole} objects from
-     * the database.
-     * 
-     * @param roleDao
-     *            The dao to set.
+     * Injects the data access object to access {@link EscidocRole} objects from the database.
+     *
+     * @param roleDao The dao to set.
      */
     public void setRoleDao(final EscidocRoleDaoInterface roleDao) {
 
@@ -600,9 +498,8 @@ public class RoleHandler implements RoleHandlerInterface {
 
     /**
      * Injects the policy decision point bean.
-     * 
-     * @param pdp
-     *            The {@link PolicyDecisionPoint}.
+     *
+     * @param pdp The {@link PolicyDecisionPoint}.
      */
     public void setPdp(final PolicyDecisionPointInterface pdp) {
 
@@ -612,8 +509,7 @@ public class RoleHandler implements RoleHandlerInterface {
     /**
      * Injects the renderer.
      *
-     * @param renderer
-     *            The renderer to inject.
+     * @param renderer The renderer to inject.
      */
     public void setRenderer(final RoleRendererInterface renderer) {
 
@@ -622,17 +518,12 @@ public class RoleHandler implements RoleHandlerInterface {
 
     /**
      * Update the given role in the resource cache.
-     * 
-     * @param role
-     *            role id
-     * 
-     * @throws SqlDatabaseSystemException
-     *             Thrown in case of an internal database error.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
+     *
+     * @param role role id
+     * @throws SqlDatabaseSystemException Thrown in case of an internal database error.
+     * @throws WebserverSystemException   Thrown in case of an internal error.
      */
-    private void updateRole(final EscidocRole role)
-        throws SqlDatabaseSystemException, WebserverSystemException {
+    private void updateRole(final EscidocRole role) throws SqlDatabaseSystemException, WebserverSystemException {
         getXacmlParser().parse(role);
         for (final ResourceType resourceType : ResourceType.values()) {
             // ensure the role is written to database
@@ -641,10 +532,9 @@ public class RoleHandler implements RoleHandlerInterface {
             final String scopeRules = xacmlParser.getScopeRules(resourceType);
             final String policyRules = xacmlParser.getPolicyRules(resourceType);
 
-            LOGGER.info("create access right (" + role.getId() + ','
-                + resourceType + ',' + scopeRules + ',' + policyRules + ')');
-            accessRights.putAccessRight(resourceType, role.getId(), scopeRules,
-                policyRules);
+            LOGGER.info("create access right (" + role.getId() + ',' + resourceType + ',' + scopeRules + ','
+                + policyRules + ')');
+            accessRights.putAccessRight(resourceType, role.getId(), scopeRules, policyRules);
         }
     }
 }

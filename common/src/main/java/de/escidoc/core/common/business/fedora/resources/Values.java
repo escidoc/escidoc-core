@@ -27,21 +27,18 @@ import java.util.Map;
 
 /**
  * Abstract super class to get the sub queries for filtering.
- * 
+ *
  * @author Andr&eacute; Schenk
  */
 public abstract class Values {
-    public static final String FUNCTION_AND =
-        "urn:oasis:names:tc:xacml:1.0:function:and";
 
-    public static final String FUNCTION_OR =
-        "urn:oasis:names:tc:xacml:1.0:function:or";
+    public static final String FUNCTION_AND = "urn:oasis:names:tc:xacml:1.0:function:and";
 
-    public static final String FUNCTION_STRING_CONTAINS =
-        "info:escidoc/names:aa:1.0:function:string-contains";
+    public static final String FUNCTION_OR = "urn:oasis:names:tc:xacml:1.0:function:or";
 
-    public static final String FUNCTION_STRING_EQUAL =
-        "urn:oasis:names:tc:xacml:1.0:function:string-equal";
+    public static final String FUNCTION_STRING_CONTAINS = "info:escidoc/names:aa:1.0:function:string-contains";
+
+    public static final String FUNCTION_STRING_EQUAL = "urn:oasis:names:tc:xacml:1.0:function:string-equal";
 
     public static final String FUNCTION_STRING_ONE_AND_ONLY =
         "urn:oasis:names:tc:xacml:1.0:function:string-one-and-only";
@@ -51,49 +48,39 @@ public abstract class Values {
     /**
      * This map contains all functions which can be mapped.
      */
-    protected static final Map<String, String> FUNCTION_MAP =
-        new HashMap<String, String>();
+    protected static final Map<String, String> FUNCTION_MAP = new HashMap<String, String>();
 
     /**
      * This map contains all operands which can be mapped.
      */
-    protected static final Map<String, String> OPERAND_MAP =
-        new HashMap<String, String>();
+    protected static final Map<String, String> OPERAND_MAP = new HashMap<String, String>();
 
     /**
      * This set contains scopes which are ignored by this parser.
      */
-    protected static final Collection<String> IGNORED_SCOPES =
-        new HashSet<String>();
+    protected static final Collection<String> IGNORED_SCOPES = new HashSet<String>();
 
     /**
      * This map contains all scopes which can be mapped.
      */
-    protected static final Map<String, String> SCOPE_MAP =
-        new HashMap<String, String>();
+    protected static final Map<String, String> SCOPE_MAP = new HashMap<String, String>();
 
     static {
         // There are no components in the DB cache.
         IGNORED_SCOPES.add("info:escidoc/names:aa:1.0:resource:component-id");
         IGNORED_SCOPES.add("info:escidoc/names:aa:1.0:resource:component:item");
-        IGNORED_SCOPES
-            .add("info:escidoc/names:aa:1.0:resource:component:item:container");
-        IGNORED_SCOPES
-            .add("info:escidoc/names:aa:1.0:resource:component:item:context");
-        IGNORED_SCOPES
-            .add("info:escidoc/names:aa:1.0:resource:component:item:hierarchical-containers");
+        IGNORED_SCOPES.add("info:escidoc/names:aa:1.0:resource:component:item:container");
+        IGNORED_SCOPES.add("info:escidoc/names:aa:1.0:resource:component:item:context");
+        IGNORED_SCOPES.add("info:escidoc/names:aa:1.0:resource:component:item:hierarchical-containers");
 
         // This is a rule from the "author" role which seems to be obsolete.
-        IGNORED_SCOPES
-            .add("info:escidoc/names:aa:1.0:resource:container.collection:id");
+        IGNORED_SCOPES.add("info:escidoc/names:aa:1.0:resource:container.collection:id");
     }
 
     /**
      * Get the filter operation for the given function name.
-     * 
-     * @param name
-     *            function name (AND, OR, ...)
-     * 
+     *
+     * @param name function name (AND, OR, ...)
      * @return corresponding filter operation name
      */
     public String getFunction(final String name) {
@@ -102,9 +89,8 @@ public abstract class Values {
 
     /**
      * Check if the given scope is in the list of scopes which can be ignored.
-     * 
-     * @param name
-     *            scope name
+     *
+     * @param name scope name
      * @return whether or not the given scope may be ignored for filters
      */
     public boolean ignoreScope(final String name) {
@@ -113,10 +99,8 @@ public abstract class Values {
 
     /**
      * Get the entry from the operand list with the given name.
-     * 
-     * @param name
-     *            operand name
-     * 
+     *
+     * @param name operand name
      * @return operand usable in filter query
      */
     public String getOperand(final String name) {
@@ -125,10 +109,8 @@ public abstract class Values {
 
     /**
      * Get the entry from the scope list with the given name.
-     * 
-     * @param name
-     *            scope name
-     * 
+     *
+     * @param name scope name
      * @return sub query representing the given scope usable in filter query
      */
     public String getScope(final String name) {
@@ -137,95 +119,69 @@ public abstract class Values {
 
     /**
      * Escape a string.
-     * 
-     * @param s
-     *            string
-     * 
+     *
+     * @param s string
      * @return the escaped string
      */
     public abstract String escape(final String s);
 
     /**
      * Combine the given operands with AND.
-     * 
-     * @param operand1
-     *            first operand
-     * @param operand2
-     *            second operand
-     * 
+     *
+     * @param operand1 first operand
+     * @param operand2 second operand
      * @return AND conjunction of the given operands
      */
-    public abstract String getAndCondition(
-        final String operand1, final String operand2);
+    public abstract String getAndCondition(final String operand1, final String operand2);
 
     /**
      * Get a CONTAINS statement with the given operand.
-     * 
-     * @param operand
-     *            operand
-     * 
+     *
+     * @param operand operand
      * @return CONTAINS statement with the given operand
      */
     public abstract String getContainsCondition(final String operand);
 
     /**
      * Combine the given operands with =.
-     * 
-     * @param operand1
-     *            first operand
-     * @param operand2
-     *            second operand
-     * 
+     *
+     * @param operand1 first operand
+     * @param operand2 second operand
      * @return EQUALS conjunction of the given operands
      */
-    public abstract String getEqualCondition(
-        final String operand1, final String operand2);
+    public abstract String getEqualCondition(final String operand1, final String operand2);
 
     /**
      * Get a condition of the form key=operand1 and value=operand2.
-     * 
-     * @param operand1
-     *            first operand
-     * @param operand2
-     *            second operand
-     * 
+     *
+     * @param operand1 first operand
+     * @param operand2 second operand
      * @return key/value statement of the given operands
      */
-    public abstract String getKeyValueCondition(
-        final String operand1, final String operand2);
+    public abstract String getKeyValueCondition(final String operand1, final String operand2);
 
     /**
-     * Get a statement which does not affect another statement when combining it
-     * with AND (evaluates to TRUE).
-     * 
-     * @param resourceType
-     *            resource type
-     * 
+     * Get a statement which does not affect another statement when combining it with AND (evaluates to TRUE).
+     *
+     * @param resourceType resource type
      * @return neutral element for AND
      */
     public abstract String getNeutralAndElement(final ResourceType resourceType);
 
     /**
-     * Get a statement which does not affect another statement when combining it
-     * with OR (evaluates to FALSE).
-     * 
-     * @param resourceType
-     *            resource type
-     * 
+     * Get a statement which does not affect another statement when combining it with OR (evaluates to FALSE).
+     *
+     * @param resourceType resource type
      * @return neutral element for OR
      */
     public abstract String getNeutralOrElement(final ResourceType resourceType);
 
     /**
      * Combine the given operands with OR.
-     * 
-     * @param operand1
-     *            first operand
-     * @param operand2
-     *            second operand
-     * 
+     *
+     * @param operand1 first operand
+     * @param operand2 second operand
      * @return OR conjunction of the given operands
      */
-    public abstract String getOrCondition(
-        final String operand1, final String operand2);
+    public abstract String getOrCondition(final String operand1, final String operand2);
 }

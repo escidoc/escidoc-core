@@ -40,19 +40,16 @@ import java.io.OutputStream;
 
 /**
  * This class represents a file in the staging area.
- * 
- * @author Torsten Tetteroo
  *
+ * @author Torsten Tetteroo
  */
 public class StagingFile extends de.escidoc.core.st.business.persistence.StagingFile {
 
     /**
      * Checks if this staging file has an associated file in the file system.
-     * 
-     * @return Returns <code>true</code> if an existing file in the file system
-     *         has been associated to this staging file, <code>false</code> if
-     *         there does not exist an associated file.
      *
+     * @return Returns <code>true</code> if an existing file in the file system has been associated to this staging
+     *         file, <code>false</code> if there does not exist an associated file.
      */
     public boolean hasFile() {
 
@@ -63,12 +60,10 @@ public class StagingFile extends de.escidoc.core.st.business.persistence.Staging
     }
 
     /**
-     * Checks if this file has an associated file in the file system that is
-     * readable.
-     * 
-     * @return Returns <code>true</code> if an existing, readable file in the
-     *         file system has been associated to this staging file.
+     * Checks if this file has an associated file in the file system that is readable.
      *
+     * @return Returns <code>true</code> if an existing, readable file in the file system has been associated to this
+     *         staging file.
      */
     public boolean canRead() {
 
@@ -80,12 +75,9 @@ public class StagingFile extends de.escidoc.core.st.business.persistence.Staging
 
     /**
      * Checks if this file has a reference set and this file would be writeable.
-     * 
-     * @return Returns <code>true</code> if a reference to a file in the file
-     *         system has been set and the file system's file would be
-     *         writeable.
-     * 
      *
+     * @return Returns <code>true</code> if a reference to a file in the file system has been set and the file system's
+     *         file would be writeable.
      */
     public boolean canWrite() {
 
@@ -97,9 +89,8 @@ public class StagingFile extends de.escidoc.core.st.business.persistence.Staging
 
     /**
      * Checks if this staging file has been expired.
-     * 
-     * @return Returns <code>true</code> if this staging file has been expired.
      *
+     * @return Returns <code>true</code> if this staging file has been expired.
      */
     public boolean isExpired() {
 
@@ -108,11 +99,9 @@ public class StagingFile extends de.escidoc.core.st.business.persistence.Staging
 
     /**
      * Gets the file referenced by this staging file.
-     * 
-     * @return The file referenced by this staging file.
-     * @throws IOException
-     *             If file cannot be retrieved.
      *
+     * @return The file referenced by this staging file.
+     * @throws IOException If file cannot be retrieved.
      */
     private File getFile() throws IOException {
 
@@ -123,14 +112,11 @@ public class StagingFile extends de.escidoc.core.st.business.persistence.Staging
     }
 
     /**
-     * Creates the file referenced by this staging file.<br>
-     * If the destination directory does not exists, it will be created.<br>
-     * If the file does exist, it will be overridden.
-     * 
-     * @return The file referenced by this staging file.
-     * @throws IOException
-     *             If file cannot be retrieved.
+     * Creates the file referenced by this staging file.<br> If the destination directory does not exists, it will be
+     * created.<br> If the file does exist, it will be overridden.
      *
+     * @return The file referenced by this staging file.
+     * @throws IOException If file cannot be retrieved.
      */
     public File createFile() throws IOException {
 
@@ -147,12 +133,9 @@ public class StagingFile extends de.escidoc.core.st.business.persistence.Staging
 
     /**
      * Gets a input stream from this staging file.
-     * 
-     * @return Returns an input stream to access the file associated to this
-     *         staging file.
-     * @throws IOException
-     *             If file input stream cannot be retrieved.
      *
+     * @return Returns an input stream to access the file associated to this staging file.
+     * @throws IOException If file input stream cannot be retrieved.
      */
     public FileInputStream getFileInputStream() throws IOException {
 
@@ -166,12 +149,9 @@ public class StagingFile extends de.escidoc.core.st.business.persistence.Staging
 
     /**
      * Writes file content to given output stream.
-     * 
-     * @param outputStream
-     *            The stream to which the file content shall be written.
-     * @throws IOException
-     *             If operation fails.
      *
+     * @param outputStream The stream to which the file content shall be written.
+     * @throws IOException If operation fails.
      */
     public void write(final OutputStream outputStream) throws IOException {
 
@@ -181,7 +161,7 @@ public class StagingFile extends de.escidoc.core.st.business.persistence.Staging
         InputStream inputStream = null;
         try {
             inputStream = getFileInputStream();
-            IOUtils.copyAndCloseInput(inputStream,  outputStream);
+            IOUtils.copyAndCloseInput(inputStream, outputStream);
         }
         finally {
             IOUtils.closeStream(outputStream);
@@ -189,19 +169,14 @@ public class StagingFile extends de.escidoc.core.st.business.persistence.Staging
     }
 
     /**
-     * Reads file content from given output stream and stores it as File in the
-     * file system using the reference value of this staging file.<br>
-     * If the referenced destination directory does not exists, it will be
-     * created.<br>
-     * If the referenced destination file exists, it will be overridden.
-     * 
-     * @param inputStream
-     *            The input stream to read the content from.
-     * @return Returns <code>true</code> if bytes have been found in the
-     *         inputStream and have been read in to the StagingFile.
-     * @throws IOException
-     *             If operation fails.
+     * Reads file content from given output stream and stores it as File in the file system using the reference value of
+     * this staging file.<br> If the referenced destination directory does not exists, it will be created.<br> If the
+     * referenced destination file exists, it will be overridden.
      *
+     * @param inputStream The input stream to read the content from.
+     * @return Returns <code>true</code> if bytes have been found in the inputStream and have been read in to the
+     *         StagingFile.
+     * @throws IOException If operation fails.
      */
     public void read(final InputStream inputStream) throws IOException {
 
@@ -211,7 +186,7 @@ public class StagingFile extends de.escidoc.core.st.business.persistence.Staging
         OutputStream outputStream = null;
         try {
             outputStream = new FileOutputStream(createFile());
-            IOUtils.copyAndCloseInput(inputStream,  outputStream);
+            IOUtils.copyAndCloseInput(inputStream, outputStream);
         }
         finally {
             if (outputStream != null) {
@@ -221,14 +196,10 @@ public class StagingFile extends de.escidoc.core.st.business.persistence.Staging
     }
 
     /**
-     * Removes the associated file from the file system and sets the internal
-     * file reference to <code>null</code>.<br>
-     * If this staging file does not have an associated staging file, nothing is
-     * done.
-     * 
-     * @throws IOException
-     *             If clear fails.
+     * Removes the associated file from the file system and sets the internal file reference to <code>null</code>.<br>
+     * If this staging file does not have an associated staging file, nothing is done.
      *
+     * @throws IOException If clear fails.
      */
     public void clear() throws IOException {
 

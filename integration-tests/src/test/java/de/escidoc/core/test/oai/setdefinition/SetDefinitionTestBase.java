@@ -39,15 +39,13 @@ import java.util.Map;
 
 /**
  * Base class for tests of the mock implementation of the OM resources.
- * 
+ *
  * @author Rozita Friedman
- * 
  */
 public class SetDefinitionTestBase extends OaiTestBase {
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public SetDefinitionTestBase(final int transport) {
         super(transport);
@@ -55,19 +53,15 @@ public class SetDefinitionTestBase extends OaiTestBase {
 
     /**
      * Successfully creates an UserGroup.
-     * 
-     * @param templateName
-     *            The name of the template.
+     *
+     * @param templateName The name of the template.
      * @return Returns the UserGroup document.
-     * @throws Exception
-     *             If anything fails
+     * @throws Exception If anything fails
      */
-    public Document createSuccessfully(final String templateName)
-        throws Exception {
+    public Document createSuccessfully(final String templateName) throws Exception {
 
         final Document toBeCreatedDocument =
-            getTemplateAsFixedSetDefinitionDocument(
-                TEMPLATE_SET_DEFINITION_PATH, templateName);
+            getTemplateAsFixedSetDefinitionDocument(TEMPLATE_SET_DEFINITION_PATH, templateName);
         insertUniqueSetSpecification(toBeCreatedDocument);
 
         final String toBeCreatedXml = toString(toBeCreatedDocument, false);
@@ -85,45 +79,34 @@ public class SetDefinitionTestBase extends OaiTestBase {
     }
 
     /**
-     * Retrieve a Template as a Document and fixes the "link" attributes in case
-     * of SOAP.<br>
-     * The used parser is NOT namespace aware!
-     * 
-     * @param path
-     *            The Path of the Template.
-     * @param templateName
-     *            The name of the template.
+     * Retrieve a Template as a Document and fixes the "link" attributes in case of SOAP.<br> The used parser is NOT
+     * namespace aware!
+     *
+     * @param path         The Path of the Template.
+     * @param templateName The name of the template.
      * @return The String representation of the Template.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    public Document getTemplateAsFixedSetDefinitionDocument(
-        final String path, final String templateName) throws Exception {
+    public Document getTemplateAsFixedSetDefinitionDocument(final String path, final String templateName)
+        throws Exception {
 
         // return fixLinkAttributes(EscidocRestSoapTestBase
         // .getTemplateAsDocument(path, templateName),
         // XPATH_USER_GROUP_SELECTORS);
-        return EscidocRestSoapTestBase.getTemplateAsDocument(path,
-            templateName);
+        return EscidocRestSoapTestBase.getTemplateAsDocument(path, templateName);
     }
 
     /**
-     * Inserts a unique label into the provided document by adding the current
-     * timestamp to the contained label.
-     * 
-     * @param document
-     *            The document.
+     * Inserts a unique label into the provided document by adding the current timestamp to the contained label.
+     *
+     * @param document The document.
      * @return The inserted login name.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
-    protected String insertUniqueSetSpecification(final Document document)
-        throws Exception {
+    protected String insertUniqueSetSpecification(final Document document) throws Exception {
 
-        assertXmlExists("No specification found in template data. ", document,
-            "/set-definition/specification");
-        final Node specNode =
-            selectSingleNode(document, "/set-definition/specification");
+        assertXmlExists("No specification found in template data. ", document, "/set-definition/specification");
+        final Node specNode = selectSingleNode(document, "/set-definition/specification");
         String specification = specNode.getTextContent().trim();
         specification += System.currentTimeMillis();
 
@@ -143,16 +126,12 @@ public class SetDefinitionTestBase extends OaiTestBase {
 
     /**
      * Retrieve set definitions.
-     * 
-     * @param filter
-     *            The filter query.
-     * 
+     *
+     * @param filter The filter query.
      * @return a list of set definitions as SRW response.
-     * @throws Exception
-     *             Thrown if an internal error occurred.
+     * @throws Exception Thrown if an internal error occurred.
      */
-    public String retrieveSetDefinitions(final Map<String, String[]> filter)
-        throws Exception {
+    public String retrieveSetDefinitions(final Map<String, String[]> filter) throws Exception {
         Object result = getSetDefinitionClient().retrieveSetDefinitions(filter);
 
         if (result instanceof HttpResponse) {

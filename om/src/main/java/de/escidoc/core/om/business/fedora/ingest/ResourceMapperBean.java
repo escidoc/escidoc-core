@@ -34,11 +34,10 @@ import de.escidoc.core.common.business.interfaces.IngestableResource;
 import de.escidoc.core.om.business.interfaces.IngestValidator;
 
 /**
- * This bean encapsulates resources necessary for the mapping of Resource Types,
- * their respective handlers and validators.
- * 
+ * This bean encapsulates resources necessary for the mapping of Resource Types, their respective handlers and
+ * validators.
+ *
  * @author Kai Strnad
- * 
  */
 public class ResourceMapperBean {
 
@@ -50,13 +49,9 @@ public class ResourceMapperBean {
 
     /**
      * Constructor for the ResourceMapperBean.
-     * 
-     * @param resourceType
-     * @param resource
-     * @param validator
      */
-    public ResourceMapperBean(final ResourceType resourceType,
-        final IngestableResource resource, final IngestValidator validator) {
+    public ResourceMapperBean(final ResourceType resourceType, final IngestableResource resource,
+        final IngestValidator validator) {
         this.resourceType = resourceType;
         this.resource = resource;
         this.validator = validator;
@@ -71,7 +66,7 @@ public class ResourceMapperBean {
 
     /**
      * Getter for the IngestValidator.
-     * 
+     *
      * @return the validator
      */
     public IngestValidator getValidator() {
@@ -80,8 +75,6 @@ public class ResourceMapperBean {
 
     /**
      * Setter for the IngestValidator.
-     * 
-     * @param validator
      */
     public void setValidator(final IngestValidator validator) {
         this.validator = validator;
@@ -89,7 +82,7 @@ public class ResourceMapperBean {
 
     /**
      * Getter for the ResourceType.
-     * 
+     *
      * @return ResourceType
      */
     public ResourceType getResourceType() {
@@ -98,8 +91,6 @@ public class ResourceMapperBean {
 
     /**
      * Setter for the ResourceType.
-     * 
-     * @param resourceType
      */
     public void setResourceType(final ResourceType resourceType) {
         this.resourceType = resourceType;
@@ -107,7 +98,7 @@ public class ResourceMapperBean {
 
     /**
      * Getter for the concrete instance ingesting the resource.
-     * 
+     *
      * @return the instance.
      */
     public IngestableResource getResource() {
@@ -116,8 +107,6 @@ public class ResourceMapperBean {
 
     /**
      * Setter for the concrete instance ingesting the resource.
-     * 
-     * @param resource
      */
     public void setResource(final IngestableResource resource) {
         this.resource = resource;

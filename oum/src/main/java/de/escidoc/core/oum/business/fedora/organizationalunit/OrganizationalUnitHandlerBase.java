@@ -71,11 +71,9 @@ import java.util.Map;
 import java.util.Stack;
 
 /**
- * This class contains common methods for all handler classes of an
- * organizational unit.
- * 
+ * This class contains common methods for all handler classes of an organizational unit.
+ *
  * @author Michael Schneider
- * 
  */
 public class OrganizationalUnitHandlerBase extends HandlerBase {
 
@@ -95,17 +93,13 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
 
     /**
      * Binds an organizational unit object to this handler.
-     * 
-     * @param id
-     *            The id of the organizational unit which should be bound to
-     *            this Handler.
+     *
+     * @param id The id of the organizational unit which should be bound to this Handler.
      * @throws OrganizationalUnitNotFoundException
-     *             If no organizational unit with the given id exists.
-     * @throws SystemException
-     *             If anything unexpected goes wrong.
+     *                         If no organizational unit with the given id exists.
+     * @throws SystemException If anything unexpected goes wrong.
      */
-    protected void setOrganizationalUnit(final String id)
-        throws OrganizationalUnitNotFoundException, SystemException {
+    protected void setOrganizationalUnit(final String id) throws OrganizationalUnitNotFoundException, SystemException {
 
         if (id != null) {
             try {
@@ -121,7 +115,6 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
     }
 
     /**
-     * 
      * @return Get the current organizational unit resource.
      */
     protected OrganizationalUnit getOrganizationalUnit() {
@@ -140,34 +133,25 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
     }
 
     /**
-     * Check the name. It may neither be empty nor null. Additionally it must be
-     * unique within its scope.
-     * 
-     * @param id
-     *            If a create is executed, id is null. In case of an update the
-     *            organizational unit already exists and has an id.
-     * @param name
-     *            The name.
-     * @param parents
-     *            The list of parents.
-     * @throws MissingElementValueException
-     *             It the name is empty or null.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     * Check the name. It may neither be empty nor null. Additionally it must be unique within its scope.
+     *
+     * @param id      If a create is executed, id is null. In case of an update the organizational unit already exists
+     *                and has an id.
+     * @param name    The name.
+     * @param parents The list of parents.
+     * @throws MissingElementValueException It the name is empty or null.
+     * @throws SystemException              Thrown in case of an internal error.
      */
-    protected void checkName(
-        final String id, final String name, final List<String> parents)
+    protected void checkName(final String id, final String name, final List<String> parents)
         throws MissingElementValueException, SystemException {
 
         if ("".equals(name) || name == null) {
-            throw new MissingElementValueException(
-                "Name of organizational unit must be set!");
+            throw new MissingElementValueException("Name of organizational unit must be set!");
         }
     }
 
     /**
      * Initialize the pathes queue.
-     * 
      */
     protected void initPathes() {
         this.pathes = new Stack<List<String>>();
@@ -181,22 +165,19 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
     }
 
     /**
-     * Expands the given path with its parents. If there are no parents the
-     * given path is the only result.
-     * 
-     * @param path
-     *            The path to expand.
-     * @throws SystemException
-     *             If the access to the triplestore fails.
+     * Expands the given path with its parents. If there are no parents the given path is the only result.
+     *
+     * @param path The path to expand.
+     * @throws SystemException If the access to the triplestore fails.
      */
     protected void expandPaths(final List<String> path) throws SystemException {
 
-        final List<String> organizationalUnitIds =
-            getTripleStoreUtility().getParents(path.get(path.size() - 1));
+        final List<String> organizationalUnitIds = getTripleStoreUtility().getParents(path.get(path.size() - 1));
         if (organizationalUnitIds != null) {
             if (organizationalUnitIds.isEmpty()) {
                 getPathes().push(new ArrayList<String>(path));
-            } else {
+            }
+            else {
                 for (final String parent : organizationalUnitIds) {
                     final List<String> newPath = new ArrayList<String>(path);
                     newPath.add(parent);
@@ -208,31 +189,21 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
     }
 
     /**
-     * Parse the organizational unit xml for create purposes with the stax
-     * parser.
-     * 
-     * @param xml
-     *            The xml to parse.
-     * @param parser
-     *            The stax parser.
-     * @throws MissingAttributeValueException
-     *             If a mandatory attribute was not set.
-     * @throws MissingElementValueException
-     *             If a mandatory element was not set.
+     * Parse the organizational unit xml for create purposes with the stax parser.
+     *
+     * @param xml    The xml to parse.
+     * @param parser The stax parser.
+     * @throws MissingAttributeValueException If a mandatory attribute was not set.
+     * @throws MissingElementValueException   If a mandatory element was not set.
      * @throws OrganizationalUnitNotFoundException
-     *             If the organizational unit does not exist.
-     * @throws XmlCorruptedException
-     *             Thrown if the schema validation of the provided data failed.
-     * @throws SystemException
-     *             If anything fails.
-     * @throws MissingMdRecordException
-     *             If the required md-record is missing
+     *                                        If the organizational unit does not exist.
+     * @throws XmlCorruptedException          Thrown if the schema validation of the provided data failed.
+     * @throws SystemException                If anything fails.
+     * @throws MissingMdRecordException       If the required md-record is missing
      */
-    protected void parseIncomingXmlForCreate(
-        final String xml, final StaxParser parser)
-        throws MissingAttributeValueException, MissingElementValueException,
-        OrganizationalUnitNotFoundException, XmlCorruptedException,
-        SystemException, MissingMdRecordException {
+    protected void parseIncomingXmlForCreate(final String xml, final StaxParser parser)
+        throws MissingAttributeValueException, MissingElementValueException, OrganizationalUnitNotFoundException,
+        XmlCorruptedException, SystemException, MissingMdRecordException {
 
         try {
             parser.parse(XmlUtility.convertToByteArrayInputStream(xml));
@@ -289,26 +260,18 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
     }
 
     /**
-     * Parse the organizational unit xml for update purposes with the stax
-     * parser.
-     * 
-     * @param xml
-     *            The xml to parse.
-     * @param parser
-     *            The stax parser.
-     * @throws InvalidXmlException
-     *             If xml is invalid.
-     * @throws OptimisticLockingException
-     *             If the organizational unit was changed in the meantime.
+     * Parse the organizational unit xml for update purposes with the stax parser.
+     *
+     * @param xml    The xml to parse.
+     * @param parser The stax parser.
+     * @throws InvalidXmlException        If xml is invalid.
+     * @throws OptimisticLockingException If the organizational unit was changed in the meantime.
      * @throws OrganizationalUnitNotFoundException
-     *             If the organizational unit does not exist.
-     * @throws SystemException
-     *             If anything fails.
+     *                                    If the organizational unit does not exist.
+     * @throws SystemException            If anything fails.
      */
-    protected void parseIncomingXmlForUpdate(
-        final String xml, final StaxParser parser) throws InvalidXmlException,
-        OptimisticLockingException, OrganizationalUnitNotFoundException,
-        SystemException {
+    protected void parseIncomingXmlForUpdate(final String xml, final StaxParser parser) throws InvalidXmlException,
+        OptimisticLockingException, OrganizationalUnitNotFoundException, SystemException {
 
         try {
             parser.parse(XmlUtility.convertToByteArrayInputStream(xml));
@@ -371,38 +334,26 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
     }
 
     /**
-     * Creates and initlizes a
-     * {@link MultipleExtractor2} that
-     * uses the provided {@link StaxParser}.<br/>
-     * The created <code>MultipleExtractor2</code> extracts the pathes
-     * {@link OrganizationalUnitHandlerBase.OU_ORGANIZATION_DETAILS_PATH}.<br/>
-     * It is initilized with the prefixes for
-     * {@link Constants.ORGANIZATIONAL_UNIT_NAMESPACE_URI} and
-     * {@link Constants.XLINK_NS_URI}.
-     * 
-     * @param sp
-     *            The {@link StaxParser} to
-     *            use.
-     * @param mdRecordPath
-     *            The xpath to organization-details element.
-     * @return Returns the created
-     *         {@link MultipleExtractor2}
-     *         .
+     * Creates and initlizes a {@link MultipleExtractor2} that uses the provided {@link StaxParser}.<br/> The created
+     * <code>MultipleExtractor2</code> extracts the pathes {@link OrganizationalUnitHandlerBase.OU_ORGANIZATION_DETAILS_PATH}.<br/>
+     * It is initilized with the prefixes for {@link Constants.ORGANIZATIONAL_UNIT_NAMESPACE_URI} and {@link
+     * Constants.XLINK_NS_URI}.
+     *
+     * @param sp           The {@link StaxParser} to use.
+     * @param mdRecordPath The xpath to organization-details element.
+     * @return Returns the created {@link MultipleExtractor2} .
      */
-    protected MultipleExtractor2 createMultipleExtractor(
-        final StaxParser sp, final String mdRecordPath) {
+    protected MultipleExtractor2 createMultipleExtractor(final StaxParser sp, final String mdRecordPath) {
 
         final HashMap<String, String> extractPathes = new HashMap<String, String>();
         extractPathes.put(mdRecordPath, "name");
         final Map<String, String> namespaceMap = new HashMap<String, String>(2);
-        namespaceMap.put(Constants.ORGANIZATIONAL_UNIT_NAMESPACE_URI,
-            Constants.ORGANIZATIONAL_UNIT_PREFIX);
+        namespaceMap.put(Constants.ORGANIZATIONAL_UNIT_NAMESPACE_URI, Constants.ORGANIZATIONAL_UNIT_PREFIX);
         namespaceMap.put(Constants.XLINK_NS_URI, Constants.XLINK_NS_PREFIX);
         return new MultipleExtractor2(namespaceMap, extractPathes, sp);
     }
 
     /**
-     * 
      * @return The foxml renderer.
      */
     public OrganizationalUnitFoXmlRendererInterface getFoxmlRenderer() {

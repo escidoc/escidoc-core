@@ -32,77 +32,61 @@ import de.escidoc.core.test.om.context.ContextTestBase;
 
 /**
  * Call the Context-Service.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 public class ContextHelper extends ContextTestBase {
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ContextHelper(final int transport) {
         super(transport);
     }
 
     /**
-     * @param xml
-     *            The item as xml.
+     * @param xml The item as xml.
      * @return String item-xml
-     * @exception Exception
-     *                e
+     * @throws Exception e
      */
     public String create(final String xml) throws Exception {
         return super.create(xml);
     }
 
     /**
-     * @param id
-     *            The item-id.
+     * @param id The item-id.
      * @return String item-xml
-     * @exception Exception
-     *                e
+     * @throws Exception e
      */
     public String retrieve(final String id) throws Exception {
         return super.retrieve(id);
     }
 
     /**
-     * @param id
-     *            The item-id.
-     * @exception Exception
-     *                e
+     * @param id The item-id.
+     * @throws Exception e
      */
     public void delete(final String id) throws Exception {
         super.delete(id);
     }
 
     /**
-     * @param id
-     *            The context-id.
-     * @param lastModDate
-     *            The last-modification-date.
+     * @param id          The context-id.
+     * @param lastModDate The last-modification-date.
      * @return XML result structure with at least last-modification-date
-     * @exception Exception
-     *                e
+     * @throws Exception e
      */
-    public String open(final String id, final String lastModDate)
-        throws Exception {
+    public String open(final String id, final String lastModDate) throws Exception {
         return super.open(id, lastModDate);
     }
 
     /**
-     * @param id
-     *            The context-id.
-     * @param lastModDate
-     *            The last-modification-date.
+     * @param id          The context-id.
+     * @param lastModDate The last-modification-date.
      * @return XML result structure with at least last-modification-date
-     * @exception Exception
-     *                e
+     * @throws Exception e
      */
-    public String close(final String id, final String lastModDate)
-        throws Exception {
+    public String close(final String id, final String lastModDate) throws Exception {
         return super.close(id, lastModDate);
     }
 

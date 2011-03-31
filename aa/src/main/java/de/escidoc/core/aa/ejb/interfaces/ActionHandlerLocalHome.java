@@ -9,6 +9,7 @@ import javax.ejb.EJBLocalHome;
 public interface ActionHandlerLocalHome extends EJBLocalHome {
 
     String COMP_NAME = "java:comp/env/ejb/ActionHandlerLocal";
+
     String JNDI_NAME = "ejb/ActionHandlerLocal";
 
     ActionHandlerLocal create() throws CreateException;

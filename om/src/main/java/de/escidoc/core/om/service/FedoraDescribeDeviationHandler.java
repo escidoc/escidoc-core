@@ -34,23 +34,20 @@ import java.util.Map;
 
 /**
  * An describe resource handler.
- * 
- * Security note: This handler should not be intercepted for authorization, as
- * it does not provide security relevant information and can be public
- * accessible.
+ * <p/>
+ * Security note: This handler should not be intercepted for authorization, as it does not provide security relevant
+ * information and can be public accessible.
  *
  * @author Michael Hoppe
  */
-public class FedoraDescribeDeviationHandler
-    implements FedoraDescribeDeviationHandlerInterface {
+public class FedoraDescribeDeviationHandler implements FedoraDescribeDeviationHandlerInterface {
 
     private de.escidoc.core.om.business.interfaces.FedoraDescribeDeviationHandlerInterface handler;
 
     /**
      * Injects the FedoraDescribeDeviation handler.
-     * 
-     * @param fedoraDescribeDeviationHandler
-     *            The FedoraDescribeDeviation handler bean to inject.
+     *
+     * @param fedoraDescribeDeviationHandler The FedoraDescribeDeviation handler bean to inject.
      */
     public void setFedoraDescribeDeviationHandler(
         final de.escidoc.core.om.business.interfaces.FedoraDescribeDeviationHandlerInterface fedoraDescribeDeviationHandler) {
@@ -59,19 +56,13 @@ public class FedoraDescribeDeviationHandler
     }
 
     /**
-     * @see de.escidoc.core.om.service.interfaces
-     *      .FedoraDescribeDeviationHandlerInterface #getFedoraDescription( Map)
-     * @param parameters
-     *            request parameters.
-     * 
+     * @param parameters request parameters.
      * @return String response
-     * @throws Exception
-     *             ex
-     * 
+     * @throws Exception ex
+     * @see de.escidoc.core.om.service.interfaces .FedoraDescribeDeviationHandlerInterface #getFedoraDescription( Map)
      */
     @Override
-    public String getFedoraDescription(
-        final Map<String, String[]> parameters) throws Exception {
+    public String getFedoraDescription(final Map<String, String[]> parameters) throws Exception {
         return handler.getFedoraDescription(parameters);
     }
 

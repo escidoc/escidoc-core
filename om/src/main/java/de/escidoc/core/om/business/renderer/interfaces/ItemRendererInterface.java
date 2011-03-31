@@ -42,110 +42,69 @@ import java.util.List;
 
 /**
  * Interface of an item renderer.
- * 
- * @author Michael Schneider
  *
+ * @author Michael Schneider
  */
 public interface ItemRendererInterface {
 
     /**
      * Gets the representation of an item.
-     * 
+     *
      * @return Returns the XML representation of the item.
-     * @throws ItemNotFoundException
-     *             Thrown if Item could not be found.
-     * @throws ComponentNotFoundException
-     *             Thrown if Component of Item could not be found.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
-     * @throws ComponentNotFoundException
-     *             Thrown if a Component of the Item could not be found.
+     * @throws ItemNotFoundException      Thrown if Item could not be found.
+     * @throws ComponentNotFoundException Thrown if Component of Item could not be found.
+     * @throws SystemException            Thrown in case of an internal error.
+     * @throws ComponentNotFoundException Thrown if a Component of the Item could not be found.
      */
-    String render() throws SystemException, ItemNotFoundException,
-        ComponentNotFoundException;
+    String render() throws SystemException, ItemNotFoundException, ComponentNotFoundException;
 
     /**
-     * Gets the representation of the sub resource <code>properties</code> of an
-     * item.
-     * 
-     * @return Returns the XML representation of the sub resource
-     *         <code>properties</code> of an item.
-     * @throws ItemNotFoundException
-     *             Thrown if Item could not be found.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
-     * @throws SystemException
-     * @throws TripleStoreSystemException
+     * Gets the representation of the sub resource <code>properties</code> of an item.
+     *
+     * @return Returns the XML representation of the sub resource <code>properties</code> of an item.
+     * @throws ItemNotFoundException    Thrown if Item could not be found.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    String renderProperties() throws ItemNotFoundException,
-        WebserverSystemException, TripleStoreSystemException, SystemException;
+    String renderProperties() throws ItemNotFoundException, WebserverSystemException, TripleStoreSystemException,
+        SystemException;
 
-    String renderMdRecords(boolean isRoot) throws WebserverSystemException,
-        EncodingSystemException, FedoraSystemException,
-        IntegritySystemException, TripleStoreSystemException;
+    String renderMdRecords(boolean isRoot) throws WebserverSystemException, EncodingSystemException,
+        FedoraSystemException, IntegritySystemException, TripleStoreSystemException;
 
     /**
-     * 
-     * @param name
-     * @param isOrigin
-     * @param isRoot
      * @return XML representation of md-record
-     * @throws WebserverSystemException
-     * @throws IntegritySystemException
-     * @throws EncodingSystemException
-     * @throws MdRecordNotFoundException
-     * @throws TripleStoreSystemException
      */
-    String renderMdRecord(String name, boolean isOrigin, boolean isRoot)
-        throws WebserverSystemException, IntegritySystemException,
-        EncodingSystemException, MdRecordNotFoundException,
-        TripleStoreSystemException;
+    String renderMdRecord(String name, boolean isOrigin, boolean isRoot) throws WebserverSystemException,
+        IntegritySystemException, EncodingSystemException, MdRecordNotFoundException, TripleStoreSystemException;
 
     /**
-     * 
-     * @param isRoot
      * @return XML representation of Components list.
-     * 
-     * @throws WebserverSystemException
-     * @throws TripleStoreSystemException
-     * @throws SystemException
-     * @throws ComponentNotFoundException
-     *             Thrown if Component of Item could not be found.
+     * @throws ComponentNotFoundException Thrown if Component of Item could not be found.
      */
-    String renderComponents(final boolean isRoot)
-        throws WebserverSystemException, TripleStoreSystemException,
+    String renderComponents(final boolean isRoot) throws WebserverSystemException, TripleStoreSystemException,
         SystemException, ComponentNotFoundException;
 
-    String renderComponent(final String componentId, final boolean isRoot)
-        throws WebserverSystemException, TripleStoreSystemException,
-        SystemException, ComponentNotFoundException;
+    String renderComponent(final String componentId, final boolean isRoot) throws WebserverSystemException,
+        TripleStoreSystemException, SystemException, ComponentNotFoundException;
 
     String renderRelations() throws WebserverSystemException, SystemException;
 
     /**
-     * Gets the representation of the sub resource <code>resources</code> of an
-     * item.
-     * 
-     * @return Returns the XML representation of the sub resource
-     *         <code>resources</code> of an item.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
+     * Gets the representation of the sub resource <code>resources</code> of an item.
+     *
+     * @return Returns the XML representation of the sub resource <code>resources</code> of an item.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     String renderResources() throws WebserverSystemException;
 
     /**
      * Gets the representation of the virtual resource <code>items</code>.
-     * 
-     * @param items
-     *            The list of items.
-     * @return Returns the XML representation of the virtual sub resource
-     *         <code>items</code> of an item.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
-     * @throws ComponentNotFoundException
-     *             Thrown if Component of Item could not be found.
+     *
+     * @param items The list of items.
+     * @return Returns the XML representation of the virtual sub resource <code>items</code> of an item.
+     * @throws SystemException            Thrown in case of an internal error.
+     * @throws ComponentNotFoundException Thrown if Component of Item could not be found.
      */
-    String renderItems(final List<String> items) throws SystemException,
-        ComponentNotFoundException;
+    String renderItems(final List<String> items) throws SystemException, ComponentNotFoundException;
 
 }

@@ -32,29 +32,22 @@ import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import java.lang.reflect.Constructor;
 
 /**
- * Stax handler that manages a link element that refers to another eSciDoc
- * resource object.<br>
- * In case of a REST access, a link consists of the xlink attributes referencing
- * the resource object. The xlink:type attribute is "simple". In common, the
- * xlink:href consists of a base uri (e.g. /ir/item/) followed by an id (e.g.
- * escidoc:12345). The expected base uri can be specified during creation of the
- * {@link LinkStaxHandler} instance. This value will be used to validate the
- * provided href.<br>
- * In case of a SOAP access, a link consists of the objid referencing the
+ * Stax handler that manages a link element that refers to another eSciDoc resource object.<br> In case of a REST
+ * access, a link consists of the xlink attributes referencing the resource object. The xlink:type attribute is
+ * "simple". In common, the xlink:href consists of a base uri (e.g. /ir/item/) followed by an id (e.g. escidoc:12345).
+ * The expected base uri can be specified during creation of the {@link LinkStaxHandler} instance. This value will be
+ * used to validate the provided href.<br> In case of a SOAP access, a link consists of the objid referencing the
  * resource object.
- * 
- * @author Torsten Tetteroo
  *
+ * @author Torsten Tetteroo
  */
 public class LinkStaxHandler extends DefaultHandler {
 
     /**
-     * Error message in case of base uri mismatch of href provided in REST
-     * request.
+     * Error message in case of base uri mismatch of href provided in REST request.
      */
     private static final String MSG_WRONG_BASE_URI =
-            "Reference does not point to a resource of the expected type," +
-            " base uri mismatch";
+        "Reference does not point to a resource of the expected type," + " base uri mismatch";
 
     private String href;
 
@@ -70,67 +63,43 @@ public class LinkStaxHandler extends DefaultHandler {
 
     /**
      * The constructor.
-     * 
-     * @param elementPath
-     *            The path to the link element that shall be handled by this
-     *            handler.
      *
+     * @param elementPath The path to the link element that shall be handled by this handler.
      */
     public LinkStaxHandler(final String elementPath) {
 
         this.elementPath = elementPath;
-        this.parentPath =
-            elementPath.substring(0, elementPath.lastIndexOf('/'));
+        this.parentPath = elementPath.substring(0, elementPath.lastIndexOf('/'));
         this.hrefBaseUri = null;
     }
 
     /**
-     * Constructs a LinkStaxHandler that checks the base uri of the
-     * link.
-     * 
-     * @param elementPath
-     *            The path to the link element that shall be handled by this
-     *            handler.
-     * @param hrefBaseUri
-     *            The base uri of the href pointing to the object that is
-     *            referenced by the link that shall be parsed by this handler.
-     *            In case of REST, this value is used to check the provided
-     *            href. In case of SOAP it is ignored.
-     * @param exceptionClass
-     *            The type of the exception to throw if href base uri is not
-     *            matched in case of REST. This parameter must not be
-     *            <code>null</code> and must be an instance of
-     *            {@link EscidocException}, but this is not checked!.
+     * Constructs a LinkStaxHandler that checks the base uri of the link.
      *
+     * @param elementPath    The path to the link element that shall be handled by this handler.
+     * @param hrefBaseUri    The base uri of the href pointing to the object that is referenced by the link that shall
+     *                       be parsed by this handler. In case of REST, this value is used to check the provided href.
+     *                       In case of SOAP it is ignored.
+     * @param exceptionClass The type of the exception to throw if href base uri is not matched in case of REST. This
+     *                       parameter must not be <code>null</code> and must be an instance of {@link
+     *                       EscidocException}, but this is not checked!.
      */
-    public LinkStaxHandler(final String elementPath, final String hrefBaseUri,
-        final Class exceptionClass) {
+    public LinkStaxHandler(final String elementPath, final String hrefBaseUri, final Class exceptionClass) {
 
         this(elementPath);
         this.hrefBaseUri = hrefBaseUri;
         this.exceptionClass = exceptionClass;
     }
 
-
-
     /**
-     * See Interface for functional description.<br>
-     * If the current element is the link element, the xlink attributes and the
-     * objid attribute is fetched and stored. After that,
-     * <code>startLinkElement is called.</code>
-     * 
-     * @param element
-     * @return
-     * @throws EscidocException
-     *             Thrown exceptions depend on sub class implementations.
-     * @see DefaultHandler
-     *      #startElement
-     *      (de.escidoc.core.common.util.xml.stax.events.StartElement)
+     * See Interface for functional description.<br> If the current element is the link element, the xlink attributes
+     * and the objid attribute is fetched and stored. After that, <code>startLinkElement is called.</code>
      *
+     * @throws EscidocException Thrown exceptions depend on sub class implementations.
+     * @see DefaultHandler #startElement (de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
-    public StartElement startElement(final StartElement element)
-        throws EscidocException {
+    public StartElement startElement(final StartElement element) throws EscidocException {
 
         final String currentPath = element.getPath();
         if (isNotReady() && currentPath.equals(this.elementPath)) {
@@ -138,8 +107,7 @@ public class LinkStaxHandler extends DefaultHandler {
             this.objid = null;
 
             if (UserContext.isRestAccess()) {
-                final int index =
-                    element.indexOfAttribute(Constants.XLINK_NS_URI, "href");
+                final int index = element.indexOfAttribute(Constants.XLINK_NS_URI, "href");
                 if (index != -1) {
                     this.href = element.getAttribute(index).getValue();
                     this.objid = XmlUtility.getIdFromURI(this.href);
@@ -150,21 +118,18 @@ public class LinkStaxHandler extends DefaultHandler {
                         final String expectedHref = this.hrefBaseUri + this.objid;
                         if (!expectedHref.equals(this.href)) {
                             final String errorMsg =
-                                StringUtility.format(
-                                        MSG_WRONG_BASE_URI, this.hrefBaseUri, this.href,
-                                        element.getLocationString());
+                                StringUtility.format(MSG_WRONG_BASE_URI, this.hrefBaseUri, this.href, element
+                                    .getLocationString());
                             try {
-                                final Constructor constructor = exceptionClass
-                                        .getConstructor(new Class[]{String.class});
-                                throw (EscidocException) constructor
-                                    .newInstance(errorMsg);
+                                final Constructor constructor =
+                                    exceptionClass.getConstructor(new Class[] { String.class });
+                                throw (EscidocException) constructor.newInstance(errorMsg);
                             }
                             catch (final EscidocException e) {
                                 throw e;
                             }
                             catch (final Exception e) {
-                                throw new SystemException(
-                                    "Initializing exception failed.", e);
+                                throw new SystemException("Initializing exception failed.", e);
                             }
                         }
                     }
@@ -187,25 +152,16 @@ public class LinkStaxHandler extends DefaultHandler {
     }
 
     /**
-     * See Interface for functional description.<br>
-     * If the current element is the parent element of the link element, it is
-     * checked if the link element, if it is defined as mandatoy, has been
-     * provided in the XML data. After that, <code>endParentElement</code> and
-     * <code>checkReady</code> are called.<br>
-     * If the current element is the link element, <code>endLinkElement</code>
-     * is called.
-     * 
-     * @param element
-     * @return
-     * @throws EscidocException
-     *             Thrown exceptions depend on sub class implementation.
-     * @see DefaultHandler
-     *      #endElement(de.escidoc.core.common.util.xml.stax.events.EndElement)
+     * See Interface for functional description.<br> If the current element is the parent element of the link element,
+     * it is checked if the link element, if it is defined as mandatoy, has been provided in the XML data. After that,
+     * <code>endParentElement</code> and <code>checkReady</code> are called.<br> If the current element is the link
+     * element, <code>endLinkElement</code> is called.
      *
+     * @throws EscidocException Thrown exceptions depend on sub class implementation.
+     * @see DefaultHandler #endElement(de.escidoc.core.common.util.xml.stax.events.EndElement)
      */
     @Override
-    public EndElement endElement(final EndElement element)
-        throws EscidocException {
+    public EndElement endElement(final EndElement element) throws EscidocException {
 
         if (isNotReady()) {
             if (element.getPath().equals(this.parentPath)) {
@@ -221,70 +177,48 @@ public class LinkStaxHandler extends DefaultHandler {
         return element;
     }
 
-
-
     /**
      * Processes the end of the parent element.<br>
-     * 
-     * Sub classes may override this method, but they should call
-     * <code>return super.endParentElement(element)</code> and keep in mind
-     * that this could change the ready flag.
-     * 
-     * @param parentElement
-     *            The parent element of the link element.
-     * @throws EscidocException
-     *             Thrown exceptions depend on sub class implementation.
+     * <p/>
+     * Sub classes may override this method, but they should call <code>return super.endParentElement(element)</code>
+     * and keep in mind that this could change the ready flag.
      *
+     * @param parentElement The parent element of the link element.
+     * @throws EscidocException Thrown exceptions depend on sub class implementation.
      */
-    protected void endParentElement(final EndElement parentElement)
-        throws EscidocException {
+    protected void endParentElement(final EndElement parentElement) throws EscidocException {
     }
 
     /**
-     * Processes the start of a link element.<br>
-     * This can be used by sub classes to perform additional operations on the
-     * start element by overriding this default implementation.
-     * 
-     * @param linkElement
-     *            The link element.
-     * @throws EscidocException
-     *             Thrown exceptions depend on sub class implementation.
+     * Processes the start of a link element.<br> This can be used by sub classes to perform additional operations on
+     * the start element by overriding this default implementation.
      *
+     * @param linkElement The link element.
+     * @throws EscidocException Thrown exceptions depend on sub class implementation.
      */
-    protected void startLinkElement(final StartElement linkElement)
-        throws EscidocException {
+    protected void startLinkElement(final StartElement linkElement) throws EscidocException {
     }
 
     /**
-     * Processes the end of a link element.<br>
-     * This can be used by sub classes to perform additional operations on the
-     * end element by overriding this default implementation that just returns
-     * the provided element.
-     * 
-     * @param linkElement
-     *            The link element to process.
+     * Processes the end of a link element.<br> This can be used by sub classes to perform additional operations on the
+     * end element by overriding this default implementation that just returns the provided element.
+     *
+     * @param linkElement The link element to process.
      * @return Returns the provided link element.
-     * @throws EscidocException
-     *             Thrown exceptions depend on sub class implementation.
-     *
+     * @throws EscidocException Thrown exceptions depend on sub class implementation.
      */
-    protected EndElement endLinkElement(final EndElement linkElement)
-        throws EscidocException {
+    protected EndElement endLinkElement(final EndElement linkElement) throws EscidocException {
 
         return linkElement;
     }
 
     /**
-     * Checks if this stax handler is ready. If this is true,
-     * <code>setReady</code> is called to prevent further processing of this
-     * handler. This method is called as the last operation of endElement after
-     * processing the parent element.<br>
-     * This default operation allways calls <code>setReady</code>. Sub
-     * classes may override this to define the end of processing by their own.
-     * 
-     * @param endElement
-     *            The currently processed <code>EndElement</code>.
+     * Checks if this stax handler is ready. If this is true, <code>setReady</code> is called to prevent further
+     * processing of this handler. This method is called as the last operation of endElement after processing the parent
+     * element.<br> This default operation allways calls <code>setReady</code>. Sub classes may override this to define
+     * the end of processing by their own.
      *
+     * @param endElement The currently processed <code>EndElement</code>.
      */
     protected void checkReady(final EndElement endElement) {
 
@@ -293,7 +227,6 @@ public class LinkStaxHandler extends DefaultHandler {
 
     /**
      * @return the href
-     *
      */
     public String getHref() {
         return this.href;
@@ -301,7 +234,6 @@ public class LinkStaxHandler extends DefaultHandler {
 
     /**
      * @return the objid
-     *
      */
     public String getObjid() {
         return this.objid;

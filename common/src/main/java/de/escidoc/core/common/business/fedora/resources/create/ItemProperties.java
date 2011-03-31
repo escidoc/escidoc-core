@@ -23,13 +23,11 @@ package de.escidoc.core.common.business.fedora.resources.create;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 
 /**
- * Properties of an object (resource). The properties are subdivided into
- * object, current version and latest version properties. (Current version means
- * the version which is currently retrieved and NOT the newest existing version
- * of the resource.)
- * 
+ * Properties of an object (resource). The properties are subdivided into object, current version and latest version
+ * properties. (Current version means the version which is currently retrieved and NOT the newest existing version of
+ * the resource.)
+ *
  * @author Steffen Wagner
- * 
  */
 public class ItemProperties {
 
@@ -44,9 +42,7 @@ public class ItemProperties {
     private String contentModelSpecific;
 
     /**
-     * @throws WebserverSystemException
-     *             Thrown by VersionProperties if obtaining user context failed.
-     * 
+     * @throws WebserverSystemException Thrown by VersionProperties if obtaining user context failed.
      */
     public ItemProperties() throws WebserverSystemException {
 
@@ -56,8 +52,7 @@ public class ItemProperties {
     }
 
     /**
-     * @param currentVersion
-     *            the currentVersion to set
+     * @param currentVersion the currentVersion to set
      */
     public void setCurrentVersion(final VersionProperties currentVersion) {
         this.currentVersion = currentVersion;
@@ -71,8 +66,7 @@ public class ItemProperties {
     }
 
     /**
-     * @param latestVersion
-     *            the latestVersion to set
+     * @param latestVersion the latestVersion to set
      */
     public void setLatestVersion(final VersionProperties latestVersion) {
         this.latestVersion = latestVersion;
@@ -86,11 +80,9 @@ public class ItemProperties {
     }
 
     /**
-     * @param latestReleasedVersion
-     *            the latestReleasedVersion to set
+     * @param latestReleasedVersion the latestReleasedVersion to set
      */
-    public void setLatestReleasedVersion(
-        final VersionProperties latestReleasedVersion) {
+    public void setLatestReleasedVersion(final VersionProperties latestReleasedVersion) {
         this.latestReleasedVersion = latestReleasedVersion;
     }
 
@@ -102,8 +94,7 @@ public class ItemProperties {
     }
 
     /**
-     * @param objectProperties
-     *            the objectProperties to set
+     * @param objectProperties the objectProperties to set
      */
     public void setObjectProperties(final ObjectProperties objectProperties) {
         this.objectProperties = objectProperties;
@@ -117,8 +108,7 @@ public class ItemProperties {
     }
 
     /**
-     * @param contentModelSpecific
-     *            the contentModelSpecific to set
+     * @param contentModelSpecific the contentModelSpecific to set
      */
     public void setContentModelSpecific(final String contentModelSpecific) {
         this.contentModelSpecific = contentModelSpecific;

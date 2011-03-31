@@ -32,65 +32,51 @@ import java.util.regex.Pattern;
 
 /**
  * Helper class to change the base-url of imported schemas.
- * 
- * @author Michael Hoppe
  *
+ * @author Michael Hoppe
  */
 public class SchemaBaseResourceResolver implements LSResourceResolver {
 
     /**
-     * Pattern used to detect base-url of schema-location
-     * in imported schemas.
+     * Pattern used to detect base-url of schema-location in imported schemas.
      */
-    private static final Pattern PATTERN_SCHEMA_LOCATION_BASE =
-        Pattern.compile(Constants.SCHEMA_LOCATION_BASE);
+    private static final Pattern PATTERN_SCHEMA_LOCATION_BASE = Pattern.compile(Constants.SCHEMA_LOCATION_BASE);
 
     /**
      * Replaces base-part of system-id.
-     * 
-     * @param type String
+     *
+     * @param type         String
      * @param namespaceURI String1
-     * @param publicId String2
-     * @param systemId String3
-     * @param baseURI String4
+     * @param publicId     String2
+     * @param systemId     String3
+     * @param baseURI      String4
      * @return LSInput LSInput.
-     * 
      */
     @Override
-    public LSInput resolveResource(final String type,
-            final String namespaceURI, final String publicId,
-            final String systemId, final String baseURI) {
+    public LSInput resolveResource(
+        final String type, final String namespaceURI, final String publicId, final String systemId, final String baseURI) {
         if (systemId != null) {
-            final Matcher schemaLocationMatcher =
-                    PATTERN_SCHEMA_LOCATION_BASE.matcher(systemId);
+            final Matcher schemaLocationMatcher = PATTERN_SCHEMA_LOCATION_BASE.matcher(systemId);
             try {
                 // FIXME Use XmlUtility.getSchemaBaseUrl() ?
                 if (schemaLocationMatcher.find()
-                        && EscidocConfiguration.getInstance().get(
-                        EscidocConfiguration
-                        .ESCIDOC_CORE_SELFURL) != null
-                        && EscidocConfiguration.getInstance().get(
-                                EscidocConfiguration
-                                .ESCIDOC_CORE_XSD_PATH) != null) {
-                    final String systemIdLocal = schemaLocationMatcher
-                            .replaceAll(
-                            EscidocConfiguration.getInstance()
-                            .get(EscidocConfiguration
-                            .ESCIDOC_CORE_SELFURL) 
-                            +  EscidocConfiguration.getInstance()
-                            .get(EscidocConfiguration
-                                    .ESCIDOC_CORE_XSD_PATH));
-                    return new DOMInputImpl(
-                            publicId,
-                            systemIdLocal,
-                            baseURI);
-                } else {
+                    && EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_SELFURL) != null
+                    && EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_XSD_PATH) != null) {
+                    final String systemIdLocal =
+                        schemaLocationMatcher.replaceAll(EscidocConfiguration.getInstance().get(
+                            EscidocConfiguration.ESCIDOC_CORE_SELFURL)
+                            + EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_XSD_PATH));
+                    return new DOMInputImpl(publicId, systemIdLocal, baseURI);
+                }
+                else {
                     return null;
                 }
-            } catch (final IOException e) {
+            }
+            catch (final IOException e) {
                 throw new RuntimeException(e);
             }
-        } else {
+        }
+        else {
             return null;
         }
     }

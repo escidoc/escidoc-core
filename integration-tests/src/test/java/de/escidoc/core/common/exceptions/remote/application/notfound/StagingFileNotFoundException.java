@@ -7,26 +7,31 @@
 
 package de.escidoc.core.common.exceptions.remote.application.notfound;
 
-public class StagingFileNotFoundException  extends de.escidoc.core.common.exceptions.remote.application.notfound.ResourceNotFoundException  implements java.io.Serializable {
+public class StagingFileNotFoundException
+    extends de.escidoc.core.common.exceptions.remote.application.notfound.ResourceNotFoundException
+    implements java.io.Serializable {
+
     public StagingFileNotFoundException() {
     }
 
-    public StagingFileNotFoundException(
-           int httpStatusCode,
-           java.lang.String httpStatusLine,
-           java.lang.String httpStatusMsg) {
-        super(
-            httpStatusCode,
-            httpStatusLine,
-            httpStatusMsg);
+    public StagingFileNotFoundException(int httpStatusCode, java.lang.String httpStatusLine,
+        java.lang.String httpStatusMsg) {
+        super(httpStatusCode, httpStatusLine, httpStatusMsg);
     }
 
     private java.lang.Object __equalsCalc = null;
+
     public synchronized boolean equals(java.lang.Object obj) {
-        if (!(obj instanceof StagingFileNotFoundException)) return false;
+        if (!(obj instanceof StagingFileNotFoundException)) {
+            return false;
+        }
         StagingFileNotFoundException other = (StagingFileNotFoundException) obj;
-        if (obj == null) return false;
-        if (this == obj) return true;
+        if (obj == null) {
+            return false;
+        }
+        if (this == obj) {
+            return true;
+        }
         if (__equalsCalc != null) {
             return (__equalsCalc == obj);
         }
@@ -38,6 +43,7 @@ public class StagingFileNotFoundException  extends de.escidoc.core.common.except
     }
 
     private boolean __hashCodeCalc = false;
+
     public synchronized int hashCode() {
         if (__hashCodeCalc) {
             return 0;
@@ -53,7 +59,8 @@ public class StagingFileNotFoundException  extends de.escidoc.core.common.except
         new org.apache.axis.description.TypeDesc(StagingFileNotFoundException.class, true);
 
     static {
-        typeDesc.setXmlType(new javax.xml.namespace.QName("http://notfound.application.exceptions.common.core.escidoc.de", "StagingFileNotFoundException"));
+        typeDesc.setXmlType(new javax.xml.namespace.QName(
+            "http://notfound.application.exceptions.common.core.escidoc.de", "StagingFileNotFoundException"));
     }
 
     /**
@@ -67,31 +74,23 @@ public class StagingFileNotFoundException  extends de.escidoc.core.common.except
      * Get Custom Serializer
      */
     public static org.apache.axis.encoding.Serializer getSerializer(
-           java.lang.String mechType, 
-           java.lang.Class _javaType,  
-           javax.xml.namespace.QName _xmlType) {
-        return 
-          new  org.apache.axis.encoding.ser.BeanSerializer(
-            _javaType, _xmlType, typeDesc);
+        java.lang.String mechType, java.lang.Class _javaType, javax.xml.namespace.QName _xmlType) {
+        return new org.apache.axis.encoding.ser.BeanSerializer(_javaType, _xmlType, typeDesc);
     }
 
     /**
      * Get Custom Deserializer
      */
     public static org.apache.axis.encoding.Deserializer getDeserializer(
-           java.lang.String mechType, 
-           java.lang.Class _javaType,  
-           javax.xml.namespace.QName _xmlType) {
-        return 
-          new  org.apache.axis.encoding.ser.BeanDeserializer(
-            _javaType, _xmlType, typeDesc);
+        java.lang.String mechType, java.lang.Class _javaType, javax.xml.namespace.QName _xmlType) {
+        return new org.apache.axis.encoding.ser.BeanDeserializer(_javaType, _xmlType, typeDesc);
     }
-
 
     /**
      * Writes the exception data to the faultDetails
      */
-    public void writeDetails(javax.xml.namespace.QName qname, org.apache.axis.encoding.SerializationContext context) throws java.io.IOException {
+    public void writeDetails(javax.xml.namespace.QName qname, org.apache.axis.encoding.SerializationContext context)
+        throws java.io.IOException {
         context.serialize(qname, null, this);
     }
 }

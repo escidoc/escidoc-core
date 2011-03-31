@@ -40,32 +40,27 @@ import static org.junit.Assert.assertNotSame;
 
 /**
  * Test handling of meta data within Item/Components.
- * 
+ *
  * @author Steffen Wagner
- * 
  */
 @RunWith(value = Parameterized.class)
 public class ItemMetadataTest extends ItemTestBase {
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ItemMetadataTest(final int transport) {
         super(transport);
     }
 
     /**
-     * Test if no internal mapping happens if md-record with name DC is
-     * delivered from user/solution.
-     * 
-     * A DC meta set is usually created by XSLT mapping and stored within Fedora
-     * DC datastream. This test checks if the collision between user/solution
-     * provided DC and potentioally automatically mapped DC is well solved. (The
-     * mapping should not happen if DC is delivered).
-     * 
-     * @throws Exception
-     *             Thrown if self defined DC is retrievable.
+     * Test if no internal mapping happens if md-record with name DC is delivered from user/solution.
+     * <p/>
+     * A DC meta set is usually created by XSLT mapping and stored within Fedora DC datastream. This test checks if the
+     * collision between user/solution provided DC and potentioally automatically mapped DC is well solved. (The mapping
+     * should not happen if DC is delivered).
+     *
+     * @throws Exception Thrown if self defined DC is retrievable.
      */
     @Test
     public void testCreateMd01() throws Exception {
@@ -83,22 +78,20 @@ public class ItemMetadataTest extends ItemTestBase {
         Node mdRecords = selectSingleNode(curItem, "/item/md-records");
         if (mdRecords == null) {
             // add first components element
-            selectSingleNode(curItem, "/item").appendChild(
-                curItem.createElement("escidocMdRecords:md-records"));
+            selectSingleNode(curItem, "/item").appendChild(curItem.createElement("escidocMdRecords:md-records"));
             mdRecords = selectSingleNode(curItem, "/item/md-records");
         }
 
         // add md-record with name dc
         Document mdRecordDC =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
-                + "/" + getTransport(false), "md-record.xml");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                "md-record.xml");
         Node newMdRecord = selectSingleNode(mdRecordDC, "/md-record");
 
         Node importedNde = curItem.importNode(newMdRecord, true);
         // mdRecords.appendChild(curItem.adoptNode(newMdRecord));
 
-        substitute(curItem, "/item/md-records/md-record[@name='escidoc']",
-            importedNde);
+        substitute(curItem, "/item/md-records/md-record[@name='escidoc']", importedNde);
 
         curItem.normalize();
 
@@ -120,34 +113,27 @@ public class ItemMetadataTest extends ItemTestBase {
         Document newDC = EscidocRestSoapTestBase.getDocument(dcXML);
 
         assertXmlExists("DC mapping failed: missing or wrong dc:title", newDC,
-            "/dc/title[text() = 'Quasiparticle calculations for "
-                + "point defects at semiconductor surfaces']");
+            "/dc/title[text() = 'Quasiparticle calculations for " + "point defects at semiconductor surfaces']");
 
-        assertXmlExists("DC mapping failed: missing or wrong dc:creator",
-            newDC, "/dc/creator[text() = 'Arno Schindlmayr']");
-        assertXmlExists("DC mapping failed: missing or wrong dc:subject",
-            newDC, "/dc/subject[text() = 'Physics ; Astronomy']");
-        assertXmlExists("DC mapping failed: missing or wrong dc:date", newDC,
-            "/dc/date[text() = '2006-11-13']");
-        assertXmlExists("DC mapping failed: missing or wrong dc:identifier",
-            newDC, "/dc/identifier[text() = '" + objid + "']");
+        assertXmlExists("DC mapping failed: missing or wrong dc:creator", newDC,
+            "/dc/creator[text() = 'Arno Schindlmayr']");
+        assertXmlExists("DC mapping failed: missing or wrong dc:subject", newDC,
+            "/dc/subject[text() = 'Physics ; Astronomy']");
+        assertXmlExists("DC mapping failed: missing or wrong dc:date", newDC, "/dc/date[text() = '2006-11-13']");
+        assertXmlExists("DC mapping failed: missing or wrong dc:identifier", newDC, "/dc/identifier[text() = '" + objid
+            + "']");
         assertXmlExists("DC mapping failed: missing or wrong dc:source", newDC,
             "/dc/source[text() = 'Theory of Defects in Semiconductors']");
-        assertXmlExists("DC mapping failed: missing or wrong dc:language",
-            newDC, "/dc/language[text() = 'en']");
+        assertXmlExists("DC mapping failed: missing or wrong dc:language", newDC, "/dc/language[text() = 'en']");
     }
 
     /**
-     * Checks if the framework is able to map the md-record with name 'escidoc'
-     * to 'DC'.
-     * 
-     * @param templateName
-     *            Name of template.
-     * @throws Exception
-     *             Thrown if DC record is missing.
+     * Checks if the framework is able to map the md-record with name 'escidoc' to 'DC'.
+     *
+     * @param templateName Name of template.
+     * @throws Exception Thrown if DC record is missing.
      */
-    private void checkIfDCMappingHappens(final String templateName)
-        throws Exception {
+    private void checkIfDCMappingHappens(final String templateName) throws Exception {
         String itemXml = getExampleTemplate(templateName);
 
         // add explicid datastream with name DC to Item

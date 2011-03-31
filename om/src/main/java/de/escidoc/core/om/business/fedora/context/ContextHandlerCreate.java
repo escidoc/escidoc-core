@@ -72,9 +72,8 @@ import java.util.Map.Entry;
 
 /**
  * Handler to create Context objects.
- * 
+ *
  * @author Steffen Wagner
- * 
  */
 public class ContextHandlerCreate extends ContextHandlerRetrieve {
 
@@ -82,54 +81,41 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
 
     private static final String XPATH_RESOURCES = "/context/resources";
 
-    private static final String XPATH_ADMIN_DESCRIPTORS =
-        "/context/admin-descriptors/admin-descriptor";
+    private static final String XPATH_ADMIN_DESCRIPTORS = "/context/admin-descriptors/admin-descriptor";
 
     /**
      * Create new Context.
-     * 
-     * @param xmlData
-     *            New Context data in XML representation.
+     *
+     * @param xmlData New Context data in XML representation.
      * @return id of created context
-     * @throws ContextNameNotUniqueException
-     *             Thrown if Context name is not unique.
-     * @throws ContentModelNotFoundException
-     *             Thrown if content type could not be found.
+     * @throws ContextNameNotUniqueException  Thrown if Context name is not unique.
+     * @throws ContentModelNotFoundException  Thrown if content type could not be found.
      * @throws ReadonlyElementViolationException
-     *             Thrown if read-only elements are set.
-     * @throws MissingAttributeValueException
-     *             Thrown if attributes are missing.
-     * @throws MissingElementValueException
-     *             Thrown if elements are missing.
+     *                                        Thrown if read-only elements are set.
+     * @throws MissingAttributeValueException Thrown if attributes are missing.
+     * @throws MissingElementValueException   Thrown if elements are missing.
      * @throws ReadonlyAttributeViolationException
-     *             Thrown if read-only attributes are set.
-     * @throws InvalidContentException
-     *             Thrown if content is invalid.
+     *                                        Thrown if read-only attributes are set.
+     * @throws InvalidContentException        Thrown if content is invalid.
      * @throws OrganizationalUnitNotFoundException
-     *             Thrown if related organizational unit(s) could not be found.
-     * @throws SystemException
-     *             Thrown if anything else fails.
-     * @throws InvalidStatusException
-     *             Thrown if an organizational unit is in an invalid status.
+     *                                        Thrown if related organizational unit(s) could not be found.
+     * @throws SystemException                Thrown if anything else fails.
+     * @throws InvalidStatusException         Thrown if an organizational unit is in an invalid status.
      */
-    public String createContext(final String xmlData)
-        throws ContextNameNotUniqueException, ContentModelNotFoundException,
-        ReadonlyElementViolationException, MissingAttributeValueException,
-        MissingElementValueException, ReadonlyAttributeViolationException,
-        InvalidContentException, OrganizationalUnitNotFoundException,
-        SystemException, InvalidStatusException {
+    public String createContext(final String xmlData) throws ContextNameNotUniqueException,
+        ContentModelNotFoundException, ReadonlyElementViolationException, MissingAttributeValueException,
+        MissingElementValueException, ReadonlyAttributeViolationException, InvalidContentException,
+        OrganizationalUnitNotFoundException, SystemException, InvalidStatusException {
 
         final String contextId = getIdProvider().getNextPid();
         final String createComment = "Object " + contextId + " created.";
 
         final StaxParser sp = new StaxParser();
 
-        final ContextPropertiesHandler propertiesHandler =
-            new ContextPropertiesHandler(sp);
+        final ContextPropertiesHandler propertiesHandler = new ContextPropertiesHandler(sp);
         sp.addHandler(propertiesHandler);
 
-        final HashMap<String, String> extractPathes =
-            new HashMap<String, String>();
+        final HashMap<String, String> extractPathes = new HashMap<String, String>();
         extractPathes.put(XPATH_PROPERTIES, null);
         extractPathes.put(XPATH_RESOURCES, null);
         extractPathes.put(XPATH_ADMIN_DESCRIPTORS, Elements.ATTRIBUTE_NAME);
@@ -181,8 +167,7 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
         }
 
         // get properties hashmap
-        final Map<String, Object> properties =
-            propertiesHandler.getPropertiesMap();
+        final Map<String, Object> properties = propertiesHandler.getPropertiesMap();
 
         // check that at least one OU is given
         if (propertiesHandler.getOrganizationalUnits().isEmpty()) {
@@ -190,17 +175,12 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
         }
 
         // set status created
-        properties.put(Elements.ELEMENT_PUBLIC_STATUS,
-            Constants.STATUS_CONTEXT_CREATED);
+        properties.put(Elements.ELEMENT_PUBLIC_STATUS, Constants.STATUS_CONTEXT_CREATED);
         properties.put(Elements.ELEMENT_PUBLIC_STATUS_COMMENT, createComment);
-        properties.put(Elements.ELEMENT_CREATED_BY, getUtility()
-            .getCurrentUserId());
-        properties.put(Elements.ELEMENT_CREATED_BY_TITLE, getUtility()
-            .getCurrentUserRealName());
-        properties.put(Elements.ELEMENT_MODIFIED_BY, getUtility()
-            .getCurrentUserId());
-        properties.put(Elements.ELEMENT_MODIFIED_BY_TITLE, getUtility()
-            .getCurrentUserRealName());
+        properties.put(Elements.ELEMENT_CREATED_BY, getUtility().getCurrentUserId());
+        properties.put(Elements.ELEMENT_CREATED_BY_TITLE, getUtility().getCurrentUserRealName());
+        properties.put(Elements.ELEMENT_MODIFIED_BY, getUtility().getCurrentUserId());
+        properties.put(Elements.ELEMENT_MODIFIED_BY_TITLE, getUtility().getCurrentUserRealName());
 
         // name must be unique
         final String name = (String) properties.remove(Elements.ELEMENT_NAME);
@@ -212,21 +192,18 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
         // in later version could the dc:title be used for object title
         // properties.put(TripleStoreUtility.PROP_TITLE, properties
         // .get(TripleStoreUtility.PROP_NAME));
-        final Map<String, String> dcProperties =
-            new HashMap<String, String>();
-        final String description =
-            (String) properties.remove(Elements.ELEMENT_DESCRIPTION);
+        final Map<String, String> dcProperties = new HashMap<String, String>();
+        final String description = (String) properties.remove(Elements.ELEMENT_DESCRIPTION);
         if (description != null && description.length() > 0) {
             dcProperties.put(Elements.ELEMENT_DESCRIPTION, description);
         }
         dcProperties.put(Elements.ELEMENT_DC_TITLE, name);
 
-        final Map<String, String> propertiesAsReferences =
-            new HashMap<String, String>();
-        propertiesAsReferences.put(Elements.ELEMENT_MODIFIED_BY,
-            (String) properties.remove(Elements.ELEMENT_MODIFIED_BY));
-        propertiesAsReferences.put(Elements.ELEMENT_CREATED_BY,
-            (String) properties.remove(Elements.ELEMENT_CREATED_BY));
+        final Map<String, String> propertiesAsReferences = new HashMap<String, String>();
+        propertiesAsReferences.put(Elements.ELEMENT_MODIFIED_BY, (String) properties
+            .remove(Elements.ELEMENT_MODIFIED_BY));
+        propertiesAsReferences
+            .put(Elements.ELEMENT_CREATED_BY, (String) properties.remove(Elements.ELEMENT_CREATED_BY));
 
         // get modified data streams
         final Map<String, Object> streams = me.getOutputStreams();
@@ -234,8 +211,7 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
         streams.remove("resources");
 
         final String contextFoxml =
-            buildContextFoxml(contextId, properties, dcProperties,
-                propertiesAsReferences, streams);
+            buildContextFoxml(contextId, properties, dcProperties, propertiesAsReferences, streams);
         getFedoraUtility().storeObjectInFedora(contextFoxml, true);
 
         return contextId;
@@ -244,28 +220,19 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
     private ContextFoXmlRendererInterface foxmlRenderer;
 
     /**
-     * The method builds foxml for fedora object, which will represent a
-     * Context.
-     * 
-     * @param id
-     *            Id of that context object.
-     * @param properties
-     *            Rels-ext of that context object.
-     * @param dcProperties
-     *            DC
-     * @param propertiesAsReferences
-     *            All properties with reference name space.
-     * @param dataStreams
-     *            Data streams of that context object
+     * The method builds foxml for fedora object, which will represent a Context.
+     *
+     * @param id                     Id of that context object.
+     * @param properties             Rels-ext of that context object.
+     * @param dcProperties           DC
+     * @param propertiesAsReferences All properties with reference name space.
+     * @param dataStreams            Data streams of that context object
      * @return foxml String
-     * @throws SystemException
-     *             Thrown if the FOXML rendering failed.
+     * @throws SystemException Thrown if the FOXML rendering failed.
      */
     protected String buildContextFoxml(
-        final String id, final Map<String, Object> properties,
-        final Map<String, String> dcProperties,
-        final Map<String, String> propertiesAsReferences,
-        final Map<String, Object> dataStreams) throws SystemException {
+        final String id, final Map<String, Object> properties, final Map<String, String> dcProperties,
+        final Map<String, String> propertiesAsReferences, final Map<String, Object> dataStreams) throws SystemException {
         final Map<String, Object> values = new HashMap<String, Object>();
 
         values.put("id", id);
@@ -278,8 +245,10 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
             adminDescriptor.put("name", stringObjectEntry.getKey());
             adminDescriptor.put("id", stringObjectEntry.getKey());
             try {
-                adminDescriptor.put("ds", ((ByteArrayOutputStream) stringObjectEntry.getValue()).toString(XmlUtility.CHARACTER_ENCODING));
-            } catch (final UnsupportedEncodingException e) {
+                adminDescriptor.put("ds", ((ByteArrayOutputStream) stringObjectEntry.getValue())
+                    .toString(XmlUtility.CHARACTER_ENCODING));
+            }
+            catch (final UnsupportedEncodingException e) {
                 throw new SystemException(e);
             }
             adminDescriptors.add(adminDescriptor);
@@ -289,44 +258,33 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
             values.put("adminDescriptors", adminDescriptors);
         }
 
-        values.put("organizational-units",
-            properties.remove("organizational-units"));
+        values.put("organizational-units", properties.remove("organizational-units"));
 
         values.put("properties", properties);
         values.put("dcProperties", dcProperties);
         values.put("propertiesAsReferences", propertiesAsReferences);
 
         values.put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER, Utility.getBuildNumber());
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX,
-            Constants.PROPERTIES_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX,
-            Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS,
-            Constants.PROPERTIES_NS_URI);
-        values.put(XmlTemplateProvider.VAR_STRUCT_RELATIONS_NAMESPACE,
-            Constants.STRUCTURAL_RELATIONS_NS_URI);
+        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX, Constants.PROPERTIES_NS_PREFIX);
+        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
+        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS, Constants.PROPERTIES_NS_URI);
+        values.put(XmlTemplateProvider.VAR_STRUCT_RELATIONS_NAMESPACE, Constants.STRUCTURAL_RELATIONS_NS_URI);
         values.put("resourcesOntologiesNamespace", Constants.RESOURCES_NS_URI);
-        values.put("contentRelationsNamespacePrefix",
-            Constants.CONTENT_RELATIONS_NS_PREFIX_IN_RELSEXT);
+        values.put("contentRelationsNamespacePrefix", Constants.CONTENT_RELATIONS_NS_PREFIX_IN_RELSEXT);
         values.put("latestVersionUserTitle", Utility.getCurrentUser()[1]);
 
         return getFoxmlRenderer().render(values);
     }
 
     /**
-     * The method build RELS-EXT datastream for fedora object, which will
-     * represent context from provided properties.
-     * 
-     * @param properties
-     *            HashMap with item properties
-     * @param contextId
-     *            context id
+     * The method build RELS-EXT datastream for fedora object, which will represent context from provided properties.
+     *
+     * @param properties HashMap with item properties
+     * @param contextId  context id
      * @return String RELS-EXT
-     * @throws SystemException
-     *             Thrown if the FOXML rendering failed.
+     * @throws SystemException Thrown if the FOXML rendering failed.
      */
-    protected String buildContextRelsExt(
-        final String contextId, final Map<String, Object> properties)
+    protected String buildContextRelsExt(final String contextId, final Map<String, Object> properties)
         throws SystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
@@ -337,7 +295,6 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
     }
 
     /**
-     * 
      * @return The foxml renderer.
      */
     public ContextFoXmlRendererInterface getFoxmlRenderer() {

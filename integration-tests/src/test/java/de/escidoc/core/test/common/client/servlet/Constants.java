@@ -30,11 +30,11 @@ package de.escidoc.core.test.common.client.servlet;
 
 /**
  * Some constants.
- * 
+ *
  * @author Michael Schneider
- * 
  */
 public class Constants {
+
     public static final int TRANSPORT_REST = 0;
 
     public static final int TRANSPORT_SOAP = 1;
@@ -56,11 +56,9 @@ public class Constants {
      */
     public static String DEFAULT_USER_PASSWORD = "PubManR2";
 
-    public static final String SCHEMA_LOCATION_BASE =
-        "http://www.escidoc.org/schemas";
+    public static final String SCHEMA_LOCATION_BASE = "http://www.escidoc.org/schemas";
 
-    public static final String SCHEMA_LOCATION_REPLACEMENT =
-        "http://" + HOST_PORT + "/xsd";
+    public static final String SCHEMA_LOCATION_REPLACEMENT = "http://" + HOST_PORT + "/xsd";
 
     public static final String ESCIDOC_BASE_URI = "/";
 
@@ -92,31 +90,23 @@ public class Constants {
 
     public static final String SPO = "/spo";
 
-    public static final String CONTEXT_BASE_URI =
-        ESCIDOC_BASE_URI + INSTITUTIONAL_REPOSITORY_URI + "/context";
+    public static final String CONTEXT_BASE_URI = ESCIDOC_BASE_URI + INSTITUTIONAL_REPOSITORY_URI + "/context";
 
-    public static final String CONTEXTS_BASE_URI =
-        ESCIDOC_BASE_URI + INSTITUTIONAL_REPOSITORY_URI + "/contexts";
+    public static final String CONTEXTS_BASE_URI = ESCIDOC_BASE_URI + INSTITUTIONAL_REPOSITORY_URI + "/contexts";
 
-    public static final String CONTAINER_BASE_URI =
-        ESCIDOC_BASE_URI + INSTITUTIONAL_REPOSITORY_URI + "/container";
+    public static final String CONTAINER_BASE_URI = ESCIDOC_BASE_URI + INSTITUTIONAL_REPOSITORY_URI + "/container";
 
-    public static final String XML_SCHEMA_BASE_URI =
-        ESCIDOC_BASE_URI + INSTITUTIONAL_REPOSITORY_URI + "/xml-schema";
+    public static final String XML_SCHEMA_BASE_URI = ESCIDOC_BASE_URI + INSTITUTIONAL_REPOSITORY_URI + "/xml-schema";
 
-    public static final String CONTAINERS_BASE_URI =
-        ESCIDOC_BASE_URI + INSTITUTIONAL_REPOSITORY_URI + "/containers";
+    public static final String CONTAINERS_BASE_URI = ESCIDOC_BASE_URI + INSTITUTIONAL_REPOSITORY_URI + "/containers";
 
     public static final String JHOVE_BASE_URI = ESCIDOC_BASE_URI + "tme/jhove";
 
-    public static final String ITEM_BASE_URI =
-        ESCIDOC_BASE_URI + INSTITUTIONAL_REPOSITORY_URI + "/item";
+    public static final String ITEM_BASE_URI = ESCIDOC_BASE_URI + INSTITUTIONAL_REPOSITORY_URI + "/item";
 
-    public static final String INGEST_BASE_URI =
-        ESCIDOC_BASE_URI + INSTITUTIONAL_REPOSITORY_URI + "/ingest";
+    public static final String INGEST_BASE_URI = ESCIDOC_BASE_URI + INSTITUTIONAL_REPOSITORY_URI + "/ingest";
 
-    public static final String TOC_BASE_URI =
-        ESCIDOC_BASE_URI + INSTITUTIONAL_REPOSITORY_URI + "/toc";
+    public static final String TOC_BASE_URI = ESCIDOC_BASE_URI + INSTITUTIONAL_REPOSITORY_URI + "/toc";
 
     public static final String CONTENT_RELATION_BASE_URI =
         ESCIDOC_BASE_URI + INSTITUTIONAL_REPOSITORY_URI + "/content-relation";
@@ -124,32 +114,25 @@ public class Constants {
     public static final String CONTENT_RELATIONS_BASE_URI =
         ESCIDOC_BASE_URI + INSTITUTIONAL_REPOSITORY_URI + "/content-relations";
 
-    public static final String ITEMS_BASE_URI =
-        ESCIDOC_BASE_URI + INSTITUTIONAL_REPOSITORY_URI + "/items";
+    public static final String ITEMS_BASE_URI = ESCIDOC_BASE_URI + INSTITUTIONAL_REPOSITORY_URI + "/items";
 
-    public static final String SET_DEFINITIONS_BASE_URI =
-        ESCIDOC_BASE_URI + OAI_URI + "/set-definitions";
+    public static final String SET_DEFINITIONS_BASE_URI = ESCIDOC_BASE_URI + OAI_URI + "/set-definitions";
 
     public static final String SEMANTIC_STORE_BASE_URI =
         ESCIDOC_BASE_URI + INSTITUTIONAL_REPOSITORY_URI + "/semantic-store";
 
-    public static final String SET_DEFINITION_BASE_URI =
-        ESCIDOC_BASE_URI + OAI_URI + "/set-definition";
+    public static final String SET_DEFINITION_BASE_URI = ESCIDOC_BASE_URI + OAI_URI + "/set-definition";
 
-    public static final String REPOSITORY_INFO_BASE_URI =
-        ESCIDOC_BASE_URI + ADMIN_URI + "/admin/get-repository-info";
+    public static final String REPOSITORY_INFO_BASE_URI = ESCIDOC_BASE_URI + ADMIN_URI + "/admin/get-repository-info";
 
     public static final String INDEX_CONFIGURATION_BASE_URI =
         ESCIDOC_BASE_URI + ADMIN_URI + "/admin/get-index-configuration";
 
-    public static final String DELETE_OBJECTS_BASE_URI =
-        ESCIDOC_BASE_URI + ADMIN_URI + "/admin/deleteobjects";
+    public static final String DELETE_OBJECTS_BASE_URI = ESCIDOC_BASE_URI + ADMIN_URI + "/admin/deleteobjects";
 
-    public static final String LOAD_EXAMPLES_BASE_URI =
-        ESCIDOC_BASE_URI + ADMIN_URI + "/admin/load-examples";
+    public static final String LOAD_EXAMPLES_BASE_URI = ESCIDOC_BASE_URI + ADMIN_URI + "/admin/load-examples";
 
-    public static final String REINDEX_BASE_URI =
-        ESCIDOC_BASE_URI + ADMIN_URI + "/admin/reindex";
+    public static final String REINDEX_BASE_URI = ESCIDOC_BASE_URI + ADMIN_URI + "/admin/reindex";
 
     @Deprecated
     public static String ADMINDESCRIPTOR_BASE_URI =
@@ -161,20 +144,15 @@ public class Constants {
     public static final String LICENSE_TYPES_BASE_URI =
         ESCIDOC_BASE_URI + INSTITUTIONAL_REPOSITORY_URI + "/license-types";
 
-    public static final String MD_SCHEMA_BASE_URI =
-        ESCIDOC_BASE_URI + "mm/mdschema";
+    public static final String MD_SCHEMA_BASE_URI = ESCIDOC_BASE_URI + "mm/mdschema";
 
-    public static final String ORGANIZATIONAL_UNIT_BASE_URI =
-        ESCIDOC_BASE_URI + "oum/organizational-unit";
+    public static final String ORGANIZATIONAL_UNIT_BASE_URI = ESCIDOC_BASE_URI + "oum/organizational-unit";
 
-    public static final String ORGANIZATIONAL_UNITS_BASE_URI =
-        ESCIDOC_BASE_URI + "oum/organizational-units";
+    public static final String ORGANIZATIONAL_UNITS_BASE_URI = ESCIDOC_BASE_URI + "oum/organizational-units";
 
-    public static final String CONTENT_MODEL_BASE_URI =
-        ESCIDOC_BASE_URI + "cmm/content-model";
+    public static final String CONTENT_MODEL_BASE_URI = ESCIDOC_BASE_URI + "cmm/content-model";
 
-    public static final String CONTENT_MODELS_BASE_URI =
-        ESCIDOC_BASE_URI + "cmm/content-models";
+    public static final String CONTENT_MODELS_BASE_URI = ESCIDOC_BASE_URI + "cmm/content-models";
 
     public static final String PDP_BASE_URI = ESCIDOC_BASE_URI + "aa/pdp";
 
@@ -182,34 +160,25 @@ public class Constants {
 
     public static final String ROLES_BASE_URI = ESCIDOC_BASE_URI + "aa/roles";
 
-    public static final String STAGING_FILE_BASE_URI =
-        ESCIDOC_BASE_URI + "st/staging-file";
+    public static final String STAGING_FILE_BASE_URI = ESCIDOC_BASE_URI + "st/staging-file";
 
-    public static final String USER_ACCOUNT_BASE_URI =
-        ESCIDOC_BASE_URI + "aa/user-account";
+    public static final String USER_ACCOUNT_BASE_URI = ESCIDOC_BASE_URI + "aa/user-account";
 
-    public static final String USER_ACCOUNTS_BASE_URI =
-        ESCIDOC_BASE_URI + "aa/user-accounts";
+    public static final String USER_ACCOUNTS_BASE_URI = ESCIDOC_BASE_URI + "aa/user-accounts";
 
     public static final String GRANTS_BASE_URI = ESCIDOC_BASE_URI + "aa/grants";
 
-    public static final String USER_GROUP_BASE_URI =
-        ESCIDOC_BASE_URI + "aa/user-group";
+    public static final String USER_GROUP_BASE_URI = ESCIDOC_BASE_URI + "aa/user-group";
 
-    public static final String USER_GROUPS_BASE_URI =
-        ESCIDOC_BASE_URI + "aa/user-groups";
+    public static final String USER_GROUPS_BASE_URI = ESCIDOC_BASE_URI + "aa/user-groups";
 
-    public static final String USER_MANAGEMENT_WRAPPER_BASE_URI =
-        ESCIDOC_BASE_URI + "aa";
+    public static final String USER_MANAGEMENT_WRAPPER_BASE_URI = ESCIDOC_BASE_URI + "aa";
 
-    public static final String SEARCH_BASE_URI =
-        ESCIDOC_BASE_URI + "srw/search";
+    public static final String SEARCH_BASE_URI = ESCIDOC_BASE_URI + "srw/search";
 
-    public static final String FEDORAGSEARCH_BASE_URI =
-        ESCIDOC_BASE_URI + FEDORAGSEARCH_URI;
+    public static final String FEDORAGSEARCH_BASE_URI = ESCIDOC_BASE_URI + FEDORAGSEARCH_URI;
 
-    public static final String STATISTIC_DATA_BASE_URI =
-        ESCIDOC_BASE_URI + STATISTIC_URI + "/statistic-data";
+    public static final String STATISTIC_DATA_BASE_URI = ESCIDOC_BASE_URI + STATISTIC_URI + "/statistic-data";
 
     public static final String STATISTIC_AGGREGATION_DEFINITION_BASE_URI =
         ESCIDOC_BASE_URI + STATISTIC_URI + "/aggregation-definition";
@@ -223,20 +192,15 @@ public class Constants {
     public static final String STATISTIC_REPORT_DEFINITIONS_BASE_URI =
         ESCIDOC_BASE_URI + STATISTIC_URI + "/report-definitions";
 
-    public static final String STATISTIC_REPORT_BASE_URI =
-        ESCIDOC_BASE_URI + STATISTIC_URI + "/report";
+    public static final String STATISTIC_REPORT_BASE_URI = ESCIDOC_BASE_URI + STATISTIC_URI + "/report";
 
-    public static final String STATISTIC_SCOPE_BASE_URI =
-        ESCIDOC_BASE_URI + STATISTIC_URI + "/scope";
+    public static final String STATISTIC_SCOPE_BASE_URI = ESCIDOC_BASE_URI + STATISTIC_URI + "/scope";
 
-    public static final String STATISTIC_SCOPES_BASE_URI =
-        ESCIDOC_BASE_URI + STATISTIC_URI + "/scopes";
+    public static final String STATISTIC_SCOPES_BASE_URI = ESCIDOC_BASE_URI + STATISTIC_URI + "/scopes";
 
-    public static final String STATISTIC_PREPROCESSING_BASE_URI =
-        ESCIDOC_BASE_URI + STATISTIC_URI + "/preprocessing";
+    public static final String STATISTIC_PREPROCESSING_BASE_URI = ESCIDOC_BASE_URI + STATISTIC_URI + "/preprocessing";
 
-    public static final String UNSECURED_ACTIONS_BASE_URI =
-        ESCIDOC_BASE_URI + "aa/unsecured-actions";
+    public static final String UNSECURED_ACTIONS_BASE_URI = ESCIDOC_BASE_URI + "aa/unsecured-actions";
 
     // *****************************************************************
     // * Sub Resource names
@@ -244,13 +208,11 @@ public class Constants {
 
     public static final String SUB_ADMINDESCRIPTORS = "admin-descriptors";
 
-    public static final String SUB_ADMINDESCRIPTOR =
-        SUB_ADMINDESCRIPTORS + "/" + "admin-descriptor";
+    public static final String SUB_ADMINDESCRIPTOR = SUB_ADMINDESCRIPTORS + "/" + "admin-descriptor";
 
     public static final String SUB_COMPONENTS = "components";
 
-    public static final String SUB_COMPONENT =
-        SUB_COMPONENTS + "/" + "component";
+    public static final String SUB_COMPONENT = SUB_COMPONENTS + "/" + "component";
 
     public static final String SUB_CONTAINERS = "containers";
 
@@ -260,14 +222,11 @@ public class Constants {
 
     public static final String SUB_GENRE = "genre";
 
-    public static final String SUB_ITEMS =
-        Constants.SUB_RESOURCES + "/" + "items";
+    public static final String SUB_ITEMS = Constants.SUB_RESOURCES + "/" + "items";
 
-    public static final String SUB_CONTEXT_MEMBERS =
-        Constants.SUB_RESOURCES + "/" + "members/filter";
+    public static final String SUB_CONTEXT_MEMBERS = Constants.SUB_RESOURCES + "/" + "members/filter";
 
-    public static final String SUB_CONTEXT_MEMBER_REFS =
-        Constants.SUB_RESOURCES + "/" + "members/filter/refs";
+    public static final String SUB_CONTEXT_MEMBER_REFS = Constants.SUB_RESOURCES + "/" + "members/filter/refs";
 
     public static final String SUB_CONTEXT_OPEN = "open";
 
@@ -275,11 +234,9 @@ public class Constants {
 
     public static final String SUB_CONTENT_STREAMS = "content-streams";
 
-    public static final String SUB_CONTENT_STREAM =
-        SUB_CONTENT_STREAMS + "/content-stream";
+    public static final String SUB_CONTENT_STREAM = SUB_CONTENT_STREAMS + "/content-stream";
 
-    public static final String SUB_MD_RECORD =
-        SUB_MD_RECORDS + "/" + "md-record";
+    public static final String SUB_MD_RECORD = SUB_MD_RECORDS + "/" + "md-record";
 
     public static final String SUB_PROPERTIES = "properties";
 
@@ -303,14 +260,11 @@ public class Constants {
 
     public static final String SUB_TOC_VIEW = SUB_RESOURCES + "/" + "toc-view";
 
-    public static final String SUB_CHILD_OBJECTS =
-        SUB_RESOURCES + "/" + "child-objects";
+    public static final String SUB_CHILD_OBJECTS = SUB_RESOURCES + "/" + "child-objects";
 
-    public static final String SUB_PARENT_OBJECTS =
-        SUB_RESOURCES + "/" + "parent-objects";
+    public static final String SUB_PARENT_OBJECTS = SUB_RESOURCES + "/" + "parent-objects";
 
-    public static final String SUB_VERSION_HISTORY =
-        SUB_RESOURCES + "/" + "version-history";
+    public static final String SUB_VERSION_HISTORY = SUB_RESOURCES + "/" + "version-history";
 
     public static final String SUB_SUBMIT = "submit";
 
@@ -318,11 +272,9 @@ public class Constants {
 
     public static final String SUB_CONTENT_RELATIONS = "content-relations";
 
-    public static final String SUB_ADD_CONTENT_RELATIONS =
-        SUB_CONTENT_RELATIONS + "/add";
+    public static final String SUB_ADD_CONTENT_RELATIONS = SUB_CONTENT_RELATIONS + "/add";
 
-    public static final String SUB_REMOVE_CONTENT_RELATIONS =
-        SUB_CONTENT_RELATIONS + "/remove";
+    public static final String SUB_REMOVE_CONTENT_RELATIONS = SUB_CONTENT_RELATIONS + "/remove";
 
     public static final String SUB_CLOSE = "close";
 
@@ -363,11 +315,9 @@ public class Constants {
 
     public static final String SUB_CREATE_CONTAINER = "create-container";
 
-    public static final String SUB_PATH_LIST =
-        SUB_RESOURCES + "/" + "path-list";
+    public static final String SUB_PATH_LIST = SUB_RESOURCES + "/" + "path-list";
 
-    public static final String SUB_SUCCESSORS =
-        SUB_RESOURCES + "/" + "successors";
+    public static final String SUB_SUCCESSORS = SUB_RESOURCES + "/" + "successors";
 
     // *****************************************************************
     // * Sub Resource ingest
@@ -405,8 +355,7 @@ public class Constants {
 
     public static final String POST_BODY_CONSTRAINT = "method";
 
-    public static final String POST_BODY_LAST_MODIFICATION_DATE =
-        "last-modification-date";
+    public static final String POST_BODY_LAST_MODIFICATION_DATE = "last-modification-date";
 
     public static final String POST_BODY_LIST_DELIMITER = ",";
 
@@ -439,11 +388,10 @@ public class Constants {
     public static final String CDATA_START = "<![CDATA[";
 
     public static final String CDATA_END = "]]>";
-    
+
     // *****************************************************************
     // * Fedora specific constants
     // *
-   public static final String FOXML_FORMAT = 
-               "info:fedora/fedora-system:FOXML-1.1";
+    public static final String FOXML_FORMAT = "info:fedora/fedora-system:FOXML-1.1";
 
 }

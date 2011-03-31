@@ -25,9 +25,8 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 
 /**
  * Properties of the object.
- * 
+ *
  * @author Steffen Wagner
- * 
  */
 public class ObjectProperties {
 
@@ -57,9 +56,8 @@ public class ObjectProperties {
 
     /**
      * Set status of object.
-     * 
-     * @param status
-     *            the status to set
+     *
+     * @param status the status to set
      */
     public void setStatus(final StatusType status) {
         this.status = status;
@@ -67,7 +65,7 @@ public class ObjectProperties {
 
     /**
      * Get Status of object.
-     * 
+     *
      * @return the status
      */
     public StatusType getStatus() {
@@ -75,8 +73,7 @@ public class ObjectProperties {
     }
 
     /**
-     * @param statusComment
-     *            the statusComment to set
+     * @param statusComment the statusComment to set
      */
     public void setStatusComment(final String statusComment) {
         this.statusComment = statusComment;
@@ -90,8 +87,7 @@ public class ObjectProperties {
     }
 
     /**
-     * @param pid
-     *            the pid to set
+     * @param pid the pid to set
      */
     public void setPid(final String pid) {
         this.pid = pid;
@@ -105,8 +101,7 @@ public class ObjectProperties {
     }
 
     /**
-     * @param contextId
-     *            the contextId to set
+     * @param contextId the contextId to set
      */
     public void setContextId(final String contextId) {
         this.contextId = contextId;
@@ -120,22 +115,19 @@ public class ObjectProperties {
     }
 
     /**
-     * @param contentModelId
-     *            the contentModelId to set
+     * @param contentModelId the contentModelId to set
      */
     public void setContentModelId(final String contentModelId) {
         this.contentModelId = contentModelId;
     }
 
     /**
-     * @param origin
-     *            the objid of origin
+     * @param origin the objid of origin
      */
     public void setOrigin(final String origin) {
         this.origin = origin;
         this.originObjectId = XmlUtility.getObjidWithoutVersion(this.origin);
-        this.originVersionId =
-            XmlUtility.getVersionNumberFromObjid(this.origin);
+        this.originVersionId = XmlUtility.getVersionNumberFromObjid(this.origin);
     }
 
     /**
@@ -167,8 +159,7 @@ public class ObjectProperties {
     }
 
     /**
-     * @param title
-     *            the title to set
+     * @param title the title to set
      */
     public void setTitle(final String title) {
         this.title = title;
@@ -182,8 +173,7 @@ public class ObjectProperties {
     }
 
     /**
-     * @param description
-     *            the description to set
+     * @param description the description to set
      */
     public void setDescription(final String description) {
         this.description = description;
@@ -197,8 +187,7 @@ public class ObjectProperties {
     }
 
     /**
-     * @param conextTitle
-     *            the conextTitle to set
+     * @param conextTitle the conextTitle to set
      */
     public void setContextTitle(final String conextTitle) {
         this.contextTitle = conextTitle;
@@ -212,8 +201,7 @@ public class ObjectProperties {
     }
 
     /**
-     * @param contentModelTitle
-     *            the contentModelTitle to set
+     * @param contentModelTitle the contentModelTitle to set
      */
     public void setContentModelTitle(final String contentModelTitle) {
         this.contentModelTitle = contentModelTitle;

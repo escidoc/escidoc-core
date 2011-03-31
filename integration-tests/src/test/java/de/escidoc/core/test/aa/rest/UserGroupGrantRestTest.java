@@ -30,22 +30,18 @@ package de.escidoc.core.test.aa.rest;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-
-
 /**
  * Testsuite for the UserGroup's Grants with REST transport.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 @RunWith(JUnit4.class)
 public class UserGroupGrantRestTest extends GrantRestAbstractTest {
 
     /**
      * Constructor.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     public UserGroupGrantRestTest() throws Exception {
         super(USER_GROUP_HANDLER_CODE);

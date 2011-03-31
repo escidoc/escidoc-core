@@ -44,9 +44,8 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * Test the implementation of the content relation resource.
- * 
+ *
  * @author André Schenk
- * 
  */
 @RunWith(value = Parameterized.class)
 public class ContentRelationFilterTest extends ContentRelationTestBase {
@@ -55,99 +54,79 @@ public class ContentRelationFilterTest extends ContentRelationTestBase {
         XPATH_SRW_RESPONSE_RECORD + "/recordData/search-result-record/" + NAME_CONTENT_RELATION;
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ContentRelationFilterTest(final int transport) {
         super(transport);
     }
 
     /**
-     * Test successfully retrieving a filtered content relation list filtering
-     * by created-by.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test successfully retrieving a filtered content relation list filtering by created-by.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testFilterCreatedBy() throws Exception {
         String xml = createContentRelation();
         String relationId = getObjidValue(xml);
         String createdBy =
-            getObjidValue(EscidocRestSoapTestBase.getDocument(xml),
-                "/content-relation/properties/created-by");
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+            getObjidValue(EscidocRestSoapTestBase.getDocument(xml), "/content-relation/properties/created-by");
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_IDENTIFIER + "\"=" + relationId + " and " + "\""
-            + FILTER_CREATED_BY + "\"=" + createdBy });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_IDENTIFIER + "\"=" + relationId + " and "
+            + "\"" + FILTER_CREATED_BY + "\"=" + createdBy });
 
         String result = retrieveContentRelations(filterParams);
 
         assertXmlValidSrwResponse(result);
 
         NodeList relations =
-            selectNodeList(EscidocRestSoapTestBase.getDocument(result),
-                XPATH_SRW_RELATION_LIST_RELATION);
+            selectNodeList(EscidocRestSoapTestBase.getDocument(result), XPATH_SRW_RELATION_LIST_RELATION);
 
-        assertTrue(
-            "Wrong number of content relations matched filter criteria, "
-                + "expected 1, but was " + relations.getLength(), relations
-                .getLength() == 1);
-        assertEquals("Wrong content relation matched filter criteria.",
-            relationId, getObjidValue(relations.item(0), "/"));
+        assertTrue("Wrong number of content relations matched filter criteria, " + "expected 1, but was "
+            + relations.getLength(), relations.getLength() == 1);
+        assertEquals("Wrong content relation matched filter criteria.", relationId, getObjidValue(relations.item(0),
+            "/"));
     }
 
     /**
-     * Test successfully retrieving a filtered content relation list filtering
-     * by created-by with an unknown user. Expected is an empty content relation
-     * list.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test successfully retrieving a filtered content relation list filtering by created-by with an unknown user.
+     * Expected is an empty content relation list.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testFilterCreatedByUnknownCreator() throws Exception {
         String xml = createContentRelation();
         String relationId = getObjidValue(xml);
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_IDENTIFIER + "\"=" + relationId + " and " + "\""
-            + FILTER_CREATED_BY + "\"=escidoc:unknwonUser" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_IDENTIFIER + "\"=" + relationId + " and "
+            + "\"" + FILTER_CREATED_BY + "\"=escidoc:unknwonUser" });
 
         String result = retrieveContentRelations(filterParams);
 
         assertXmlValidSrwResponse(result);
 
         NodeList relations =
-            selectNodeList(EscidocRestSoapTestBase.getDocument(result),
-                XPATH_SRW_RELATION_LIST_RELATION);
+            selectNodeList(EscidocRestSoapTestBase.getDocument(result), XPATH_SRW_RELATION_LIST_RELATION);
 
-        assertTrue(
-            "Wrong number of content relations matched filter criteria, "
-                + "expected 0, but was " + relations.getLength(), relations
-                .getLength() == 0);
+        assertTrue("Wrong number of content relations matched filter criteria, " + "expected 0, but was "
+            + relations.getLength(), relations.getLength() == 0);
     }
 
     /**
-     * Test successfully retrieving a filtered content relation list filtering
-     * by content relation id.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test successfully retrieving a filtered content relation list filtering by content relation id.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testFilterId() throws Exception {
         String xml = createContentRelation();
         String relationId = getObjidValue(xml);
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_IDENTIFIER + "\"=" + relationId });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_IDENTIFIER + "\"=" + relationId });
 
         String result = retrieveContentRelations(filterParams);
 
@@ -157,19 +136,14 @@ public class ContentRelationFilterTest extends ContentRelationTestBase {
         NodeList nl;
 
         if (getTransport() == Constants.TRANSPORT_SOAP) {
-            selectSingleNodeAsserted(resultDoc,
-                XPATH_SRW_RELATION_LIST_RELATION + "[@objid = '" + relationId
-                    + "']");
+            selectSingleNodeAsserted(resultDoc, XPATH_SRW_RELATION_LIST_RELATION + "[@objid = '" + relationId + "']");
         }
         else {
-            selectSingleNodeAsserted(resultDoc,
-                XPATH_SRW_RELATION_LIST_RELATION + "[@href = '"
-                    + Constants.CONTENT_RELATION_BASE_URI + "/" + relationId
-                    + "']");
+            selectSingleNodeAsserted(resultDoc, XPATH_SRW_RELATION_LIST_RELATION + "[@href = '"
+                + Constants.CONTENT_RELATION_BASE_URI + "/" + relationId + "']");
         }
         nl = selectNodeList(resultDoc, XPATH_SRW_RELATION_LIST_RELATION);
-        assertEquals("Only one content relation should be retrieved.", nl
-            .getLength(), 1);
+        assertEquals("Only one content relation should be retrieved.", nl.getLength(), 1);
 
         // delete the content relation
         delete(relationId);
@@ -177,19 +151,12 @@ public class ContentRelationFilterTest extends ContentRelationTestBase {
 
     /**
      * Test successfully retrieving an explain response.
-     * 
-     * @test.name testExplainretrieveContentRelations
-     * @test.id testExplainretrieveContentRelations
-     * @test.input
-     * @test.expected: valid explain response.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testExplainRetrieveContentRelations() throws Exception {
-        final Map<String, String[]> filterParams =
-            new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_EXPLAIN, new String[] { "" });
 
@@ -206,10 +173,9 @@ public class ContentRelationFilterTest extends ContentRelationTestBase {
 
     /**
      * Create a content relation.
-     * 
+     *
      * @return content relation XML
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     private String createContentRelation() throws Exception {
         return create(getExampleTemplate("content-relation-01.xml"));

@@ -29,12 +29,9 @@
 package de.escidoc.core.aa.business.persistence;
 
 /**
- * Class encapsulating the information stored about the scope definition of an
- * {@link EscidocRole}.
- * 
+ * Class encapsulating the information stored about the scope definition of an {@link EscidocRole}.
  *
  * @author Torsten Tetteroo
- * 
  */
 public class ScopeDef extends ScopeDefBase implements Comparable<ScopeDef> {
 
@@ -43,8 +40,6 @@ public class ScopeDef extends ScopeDefBase implements Comparable<ScopeDef> {
      */
     private static final long serialVersionUID = 1L;
 
-
-
     /**
      * @see ScopeDefBase()
      */
@@ -52,20 +47,14 @@ public class ScopeDef extends ScopeDefBase implements Comparable<ScopeDef> {
     }
 
     /**
-     * @param objectType
-     * @param attributeId
-     * @param attributeObjectType
-     * @param escidocRole
-     * @see ScopeDefBase(String, String,
-     *      EscidocRole)
+     * @see ScopeDefBase(String, String, EscidocRole)
      */
-    public ScopeDef(final String objectType, final String attributeId,
-        final String attributeObjectType, final EscidocRole escidocRole) {
+    public ScopeDef(final String objectType, final String attributeId, final String attributeObjectType,
+        final EscidocRole escidocRole) {
         super(objectType, attributeId, attributeObjectType, escidocRole);
     }
 
     /**
-     * @param objectType
      * @see ScopeDefBase(String)
      */
     public ScopeDef(final String objectType) {
@@ -74,10 +63,6 @@ public class ScopeDef extends ScopeDefBase implements Comparable<ScopeDef> {
 
     /**
      * See Interface for functional description.
-     * 
-     * @param o
-     * @return
-     *
      */
     @Override
     public int compareTo(final ScopeDef o) {
@@ -97,18 +82,15 @@ public class ScopeDef extends ScopeDefBase implements Comparable<ScopeDef> {
                 return 1;
             }
             else {
-                return ownId.length() == oId.length() ? ownId.compareTo(oId) : ownId.length() > oId.length() ? 1 : - 1;
+                return ownId.length() == oId.length() ? ownId.compareTo(oId) : ownId.length() > oId.length() ? 1 : -1;
             }
         }
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param obj
-     * @return
-     * @see Object#equals(Object)
      *
+     * @see Object#equals(Object)
      */
     @Override
     public boolean equals(final Object obj) {
@@ -122,17 +104,13 @@ public class ScopeDef extends ScopeDefBase implements Comparable<ScopeDef> {
 
     /**
      * See Interface for functional description.
-     * 
-     * @return
-     * @see Object#hashCode()
      *
+     * @see Object#hashCode()
      */
     @Override
     public int hashCode() {
 
         return getId().hashCode();
     }
-
-
 
 }

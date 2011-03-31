@@ -45,10 +45,8 @@ import java.util.List;
 
 /**
  * Creating Struct Maps.
- * 
- * @author Frank Schwichtenberg
- * 
  *
+ * @author Frank Schwichtenberg
  */
 public class StructMapCreateHandler extends DefaultHandler {
 
@@ -60,23 +58,19 @@ public class StructMapCreateHandler extends DefaultHandler {
 
     /**
      * Struct Map Handler.
-     * 
-     * @param structMapPath
-     *            XPath of struct-map
-     * @param parser
-     *            StAX parser.
+     *
+     * @param structMapPath XPath of struct-map
+     * @param parser        StAX parser.
      */
-    public StructMapCreateHandler(final String structMapPath,
-        final StaxParser parser) {
+    public StructMapCreateHandler(final String structMapPath, final StaxParser parser) {
         this.structMapPath = structMapPath;
         this.parser = parser;
     }
 
     /**
      * Struct Map Handler.
-     * 
-     * @param parser
-     *            StAX parser.
+     *
+     * @param parser StAX parser.
      */
     public StructMapCreateHandler(final StaxParser parser) {
         this.structMapPath = "/container/struct-map";
@@ -85,36 +79,26 @@ public class StructMapCreateHandler extends DefaultHandler {
 
     /**
      * StAX startElement.
-     * 
-     * @param element
-     *            StAX startElement
+     *
+     * @param element StAX startElement
      * @return StartElement
-     * 
-     * @throws InvalidContentException
-     *             Thrown if content has invalid values.
-     * @throws TripleStoreSystemException
-     *             Thrown if request of TripleStore failed.
-     * @throws WebserverSystemException
-     *             Thrown in case of internal error.
-     * @throws MissingAttributeValueException
-     *             Thrown if objid was not given as parameter.
+     * @throws InvalidContentException        Thrown if content has invalid values.
+     * @throws TripleStoreSystemException     Thrown if request of TripleStore failed.
+     * @throws WebserverSystemException       Thrown in case of internal error.
+     * @throws MissingAttributeValueException Thrown if objid was not given as parameter.
      */
     @Override
-    public StartElement startElement(final StartElement element)
-        throws InvalidContentException, TripleStoreSystemException,
-        WebserverSystemException, MissingAttributeValueException {
+    public StartElement startElement(final StartElement element) throws InvalidContentException,
+        TripleStoreSystemException, WebserverSystemException, MissingAttributeValueException {
         final String curPath = parser.getCurPath();
 
         if (curPath.startsWith(this.structMapPath)) {
             if (curPath.equals(this.structMapPath + "/item")) {
-                final String itemId =
-                    checkRefElement(element, Constants.ITEM_OBJECT_TYPE, "item");
+                final String itemId = checkRefElement(element, Constants.ITEM_OBJECT_TYPE, "item");
                 entries.add(itemId);
             }
             else if (curPath.equals(this.structMapPath + "/container")) {
-                final String containerId =
-                    checkRefElement(element, Constants.CONTAINER_OBJECT_TYPE,
-                        "container");
+                final String containerId = checkRefElement(element, Constants.CONTAINER_OBJECT_TYPE, "container");
                 entries.add(containerId);
             }
 
@@ -125,28 +109,18 @@ public class StructMapCreateHandler extends DefaultHandler {
 
     /**
      * Check if entries of struct-map are valid references.
-     * 
-     * @param element
-     *            StAX start element.
-     * @param objectType
-     *            Type of resource (Item, Container, etc.)
-     * @param elementName
-     *            Name of element.
+     *
+     * @param element     StAX start element.
+     * @param objectType  Type of resource (Item, Container, etc.)
+     * @param elementName Name of element.
      * @return entry id
-     * 
-     * @throws InvalidContentException
-     *             Thrown if content has invalid values.
-     * @throws TripleStoreSystemException
-     *             Thrown if request of TripleStore failed.
-     * @throws WebserverSystemException
-     *             Thrown in case of internal error.
-     * @throws MissingAttributeValueException
-     *             Thrown if objid was not given as parameter.
+     * @throws InvalidContentException        Thrown if content has invalid values.
+     * @throws TripleStoreSystemException     Thrown if request of TripleStore failed.
+     * @throws WebserverSystemException       Thrown in case of internal error.
+     * @throws MissingAttributeValueException Thrown if objid was not given as parameter.
      */
-    private String checkRefElement(
-        final StartElement element, final String objectType,
-        final String elementName) throws InvalidContentException,
-        TripleStoreSystemException, WebserverSystemException,
+    private String checkRefElement(final StartElement element, final String objectType, final String elementName)
+        throws InvalidContentException, TripleStoreSystemException, WebserverSystemException,
         MissingAttributeValueException {
         String entryId = null;
         final int indexOfObjId = element.indexOfAttribute(null, "objid");
@@ -155,7 +129,7 @@ public class StructMapCreateHandler extends DefaultHandler {
             entryId = element.getAttribute(indexOfObjId).getValue();
             if (entryId.length() == 0) {
                 throw new MissingAttributeValueException("Value of attribute 'objid' of the element '"
-                        + parser.getCurPath() + "' is missing.");
+                    + parser.getCurPath() + "' is missing.");
             }
         }
         else if (indexOfHref != -1) {
@@ -163,30 +137,27 @@ public class StructMapCreateHandler extends DefaultHandler {
             final String xlinkHrefValue = xlinkHref.getValue();
             if (xlinkHrefValue.length() == 0) {
                 throw new MissingAttributeValueException("Value of attribute 'objid' of the element '"
-                        + parser.getCurPath() + "' is missing.");
+                    + parser.getCurPath() + "' is missing.");
             }
             final String xlinkPrefix = xlinkHref.getPrefix();
             entryId = Utility.getId(xlinkHrefValue);
             if (!xlinkHrefValue.equals("/ir/" + elementName + '/' + entryId)) {
                 throw new InvalidContentException("The value of attribute " + element.getLocalName() + '.'
-                        + xlinkPrefix + ":href has to look like: ir/"
-                        + elementName + '/' + entryId);
+                    + xlinkPrefix + ":href has to look like: ir/" + elementName + '/' + entryId);
             }
         }
         if (!TripleStoreUtility.getInstance().exists(entryId)) {
             throw new InvalidContentException("Referenced object in struct-map does not exist.");
         }
-        if (!objectType.equals(TripleStoreUtility.getInstance().getObjectType(
-            entryId))) {
-            throw new InvalidContentException(
-                "Referenced object in struct-map is no " + elementName + '.');
+        if (!objectType.equals(TripleStoreUtility.getInstance().getObjectType(entryId))) {
+            throw new InvalidContentException("Referenced object in struct-map is no " + elementName + '.');
         }
         return entryId;
     }
 
     /**
      * Get struct-map entries.
-     * 
+     *
      * @return struct-map entries.
      */
     public List<String> getEntries() {

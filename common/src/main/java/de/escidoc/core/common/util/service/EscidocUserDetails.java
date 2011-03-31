@@ -24,12 +24,10 @@ import org.springframework.security.GrantedAuthority;
 import org.springframework.security.userdetails.UserDetails;
 
 /**
- * Class encapsulating the information about the user stored in the user
- * context.<br>
- * This class implements <code>UserDetails</code> and is serializable.
- * 
- * @author Torsten Tetteroo
+ * Class encapsulating the information about the user stored in the user context.<br> This class implements
+ * <code>UserDetails</code> and is serializable.
  *
+ * @author Torsten Tetteroo
  */
 public class EscidocUserDetails implements UserDetails {
 
@@ -38,17 +36,20 @@ public class EscidocUserDetails implements UserDetails {
      */
     private static final long serialVersionUID = 1L;
 
-    /** The id of the user. */
+    /**
+     * The id of the user.
+     */
     private String id;
 
-    /** The real name of the user, as stored in the UserAccount. */
+    /**
+     * The real name of the user, as stored in the UserAccount.
+     */
     private String realName;
 
     /**
      * Gets the id.
-     * 
-     * @return Returns the id of the user.
      *
+     * @return Returns the id of the user.
      */
     public String getId() {
 
@@ -56,12 +57,9 @@ public class EscidocUserDetails implements UserDetails {
     }
 
     /**
-     * Sets the id of the user.<br>
-     * This resets the signature and the principal has to be resigned.
-     * 
-     * @param id
-     *            The id of the user.
+     * Sets the id of the user.<br> This resets the signature and the principal has to be resigned.
      *
+     * @param id The id of the user.
      */
     public void setId(final String id) {
 
@@ -70,9 +68,8 @@ public class EscidocUserDetails implements UserDetails {
 
     /**
      * Gets the real name of the user.
-     * 
-     * @return Returns the real name of the user as stored in the UserAccount.
      *
+     * @return Returns the real name of the user as stored in the UserAccount.
      */
     public String getRealName() {
 
@@ -80,12 +77,9 @@ public class EscidocUserDetails implements UserDetails {
     }
 
     /**
-     * Sets the real name of the user.<br>
-     * This resets the signature and the principal has to be resigned.
-     * 
-     * @param realName
-     *            The real name of the user as stored in the UserAccount.
+     * Sets the real name of the user.<br> This resets the signature and the principal has to be resigned.
      *
+     * @param realName The real name of the user as stored in the UserAccount.
      */
     public void setRealName(final String realName) {
 
@@ -94,22 +88,16 @@ public class EscidocUserDetails implements UserDetails {
 
     /**
      * Signs the principal using the provided key.
-     * 
-     * @param key
-     *            The key. This must not be <code>null</code>. If it is
-     *            <code>null</code>, nothing is done.
      *
+     * @param key The key. This must not be <code>null</code>. If it is <code>null</code>, nothing is done.
      */
     public void sign(final String key) {
     }
 
     /**
-     * See Interface for functional description.<br>
-     * This implementation returns <code>null</code>!
-     * 
-     * @return
-     * @see org.acegisecurity.userdetails.UserDetails#getAuthorities()
+     * See Interface for functional description.<br> This implementation returns <code>null</code>!
      *
+     * @see org.acegisecurity.userdetails.UserDetails#getAuthorities()
      */
     @Override
     public GrantedAuthority[] getAuthorities() {
@@ -118,12 +106,9 @@ public class EscidocUserDetails implements UserDetails {
     }
 
     /**
-     * See Interface for functional description.<br>
-     * This implementation returns <code>null</code>!
-     * 
-     * @return
-     * @see org.acegisecurity.userdetails.UserDetails#getPassword()
+     * See Interface for functional description.<br> This implementation returns <code>null</code>!
      *
+     * @see org.acegisecurity.userdetails.UserDetails#getPassword()
      */
     @Override
     public String getPassword() {
@@ -132,12 +117,10 @@ public class EscidocUserDetails implements UserDetails {
     }
 
     /**
-     * See Interface for functional description.<br/> This delegates to
-     * <code>getRealName()</code>
-     * 
+     * See Interface for functional description.<br/> This delegates to <code>getRealName()</code>
+     *
      * @return Returns the realName of the user account.
      * @see org.acegisecurity.userdetails.UserDetails#getUsername()
-     *
      */
     @Override
     public String getUsername() {
@@ -146,12 +129,9 @@ public class EscidocUserDetails implements UserDetails {
     }
 
     /**
-     * See Interface for functional description.<br>
-     * This implementation returns <code>false</code>!
-     * 
-     * @return
-     * @see org.acegisecurity.userdetails.UserDetails#isAccountNonExpired()
+     * See Interface for functional description.<br> This implementation returns <code>false</code>!
      *
+     * @see org.acegisecurity.userdetails.UserDetails#isAccountNonExpired()
      */
     @Override
     public boolean isAccountNonExpired() {
@@ -160,12 +140,9 @@ public class EscidocUserDetails implements UserDetails {
     }
 
     /**
-     * See Interface for functional description.<br>
-     * This implementation returns <code>false</code>!
-     * 
-     * @return
-     * @see org.acegisecurity.userdetails.UserDetails#isAccountNonLocked()
+     * See Interface for functional description.<br> This implementation returns <code>false</code>!
      *
+     * @see org.acegisecurity.userdetails.UserDetails#isAccountNonLocked()
      */
     @Override
     public boolean isAccountNonLocked() {
@@ -174,12 +151,9 @@ public class EscidocUserDetails implements UserDetails {
     }
 
     /**
-     * See Interface for functional description.<br>
-     * This implementation returns <code>false</code>!
-     * 
-     * @return
-     * @see org.acegisecurity.userdetails.UserDetails#isCredentialsNonExpired()
+     * See Interface for functional description.<br> This implementation returns <code>false</code>!
      *
+     * @see org.acegisecurity.userdetails.UserDetails#isCredentialsNonExpired()
      */
     @Override
     public boolean isCredentialsNonExpired() {
@@ -188,12 +162,9 @@ public class EscidocUserDetails implements UserDetails {
     }
 
     /**
-     * See Interface for functional description.<br>
-     * This implementation returns <code>false</code>!
-     * 
-     * @return
-     * @see org.acegisecurity.userdetails.UserDetails#isEnabled()
+     * See Interface for functional description.<br> This implementation returns <code>false</code>!
      *
+     * @see org.acegisecurity.userdetails.UserDetails#isEnabled()
      */
     @Override
     public boolean isEnabled() {

@@ -51,11 +51,10 @@ import java.util.TreeSet;
 
 /**
  * ReportDefinition renderer implementation using the velocity template engine.
- * 
+ *
  * @author Michael Hoppe
  */
-public final class VelocityXmlReportDefinitionRenderer
-    implements ReportDefinitionRendererInterface {
+public final class VelocityXmlReportDefinitionRenderer implements ReportDefinitionRendererInterface {
 
     /**
      * Private constructor to prevent initialization.
@@ -63,21 +62,13 @@ public final class VelocityXmlReportDefinitionRenderer
     private VelocityXmlReportDefinitionRenderer() {
     }
 
-
-
     /**
      * See Interface for functional description.
-     * 
-     * @param reportDefinition
-     * @return
-     * @throws SystemException
-     * @see de.escidoc.core.sm.business.renderer.interfaces.
-     *      ReportDefinitionRendererInterface#render(Map)
      *
+     * @see de.escidoc.core.sm.business.renderer.interfaces. ReportDefinitionRendererInterface#render(Map)
      */
     @Override
-    public String render(final ReportDefinition reportDefinition)
-        throws SystemException {
+    public String render(final ReportDefinition reportDefinition) throws SystemException {
         final Map<String, Object> values = new HashMap<String, Object>();
         values.put("isRootReportDefinition", XmlTemplateProvider.TRUE);
         addReportDefinitionNamespaceValues(values);
@@ -86,82 +77,58 @@ public final class VelocityXmlReportDefinitionRenderer
     }
 
     /**
-     * Adds the values of the {@link ReportDefinition} to the provided
-     * {@link Map}.
-     * 
-     * @param reportDefinition
-     *            The {@link ReportDefinition}.
-     * @param values
-     *            The {@link Map} to add the values to.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     * Adds the values of the {@link ReportDefinition} to the provided {@link Map}.
+     *
+     * @param reportDefinition The {@link ReportDefinition}.
+     * @param values           The {@link Map} to add the values to.
+     * @throws SystemException Thrown in case of an internal error.
      */
-    private static void addReportDefinitionValues(final ReportDefinition reportDefinition,
-                                                  final Map<String, Object> values) throws SystemException {
-        DateTime createDateTime =
-            new DateTime(reportDefinition.getCreationDate());
+    private static void addReportDefinitionValues(
+        final ReportDefinition reportDefinition, final Map<String, Object> values) throws SystemException {
+        DateTime createDateTime = new DateTime(reportDefinition.getCreationDate());
         createDateTime = createDateTime.withZone(DateTimeZone.UTC);
         final String create = createDateTime.toString(Constants.TIMESTAMP_FORMAT);
-        DateTime lmdDateTime =
-            new DateTime(reportDefinition.getLastModificationDate());
+        DateTime lmdDateTime = new DateTime(reportDefinition.getLastModificationDate());
         lmdDateTime = lmdDateTime.withZone(DateTimeZone.UTC);
         final String lmd = lmdDateTime.toString(Constants.TIMESTAMP_FORMAT);
 
         values.put("reportDefinitionCreationDate", create);
-        values.put("reportDefinitionCreatedById",
-            reportDefinition.getCreatorId());
-        values.put("reportDefinitionCreatedByTitle",
-            "user " + reportDefinition.getCreatorId());
-        values.put("reportDefinitionCreatedByHref",
-            XmlUtility.getUserAccountHref(reportDefinition.getCreatorId()));
+        values.put("reportDefinitionCreatedById", reportDefinition.getCreatorId());
+        values.put("reportDefinitionCreatedByTitle", "user " + reportDefinition.getCreatorId());
+        values.put("reportDefinitionCreatedByHref", XmlUtility.getUserAccountHref(reportDefinition.getCreatorId()));
         values.put("reportDefinitionLastModificationDate", lmd);
-        values.put("reportDefinitionModifiedById",
-            reportDefinition.getModifiedById());
-        values.put("reportDefinitionModifiedByTitle", "user "
-            + reportDefinition.getModifiedById());
-        values.put("reportDefinitionModifiedByHref",
-            XmlUtility.getUserAccountHref(reportDefinition.getModifiedById()));
+        values.put("reportDefinitionModifiedById", reportDefinition.getModifiedById());
+        values.put("reportDefinitionModifiedByTitle", "user " + reportDefinition.getModifiedById());
+        values.put("reportDefinitionModifiedByHref", XmlUtility.getUserAccountHref(reportDefinition.getModifiedById()));
         values.put("reportDefinitionId", reportDefinition.getId());
         values.put("reportDefinitionName", reportDefinition.getName());
-        values.put("reportDefinitionHref",
-            XmlUtility.getReportDefinitionHref(reportDefinition.getId()));
-        values.put("reportDefinitionScopeId", reportDefinition
-            .getScope().getId());
-        values.put("reportDefinitionScopeTitle", reportDefinition
-            .getScope().getName());
-        values.put("reportDefinitionScopeHref",
-            XmlUtility.getScopeHref(reportDefinition.getScope().getId()));
+        values.put("reportDefinitionHref", XmlUtility.getReportDefinitionHref(reportDefinition.getId()));
+        values.put("reportDefinitionScopeId", reportDefinition.getScope().getId());
+        values.put("reportDefinitionScopeTitle", reportDefinition.getScope().getName());
+        values.put("reportDefinitionScopeHref", XmlUtility.getScopeHref(reportDefinition.getScope().getId()));
         values.put("reportDefinitionSql", reportDefinition.getSql());
-        addReportDefinitionRoleValues(
-            reportDefinition.getReportDefinitionRoles(), values);
+        addReportDefinitionRoleValues(reportDefinition.getReportDefinitionRoles(), values);
     }
 
     /**
-     * Adds the values of the {@link ReportDefinitionRole} to the provided
-     * {@link Map}.
-     * 
-     * @param reportDefinitionRoles
-     *            set of reportDefinitionRoles.
-     * @param values
-     *            The {@link Map} to add the values to.
+     * Adds the values of the {@link ReportDefinitionRole} to the provided {@link Map}.
+     *
+     * @param reportDefinitionRoles set of reportDefinitionRoles.
+     * @param values                The {@link Map} to add the values to.
      */
     private static void addReportDefinitionRoleValues(
-        final Collection<ReportDefinitionRole> reportDefinitionRoles,
-        final Map<String, Object> values) {
+        final Collection<ReportDefinitionRole> reportDefinitionRoles, final Map<String, Object> values) {
         if (reportDefinitionRoles != null && !reportDefinitionRoles.isEmpty()) {
             final Collection<HashMap<String, String>> reportDefinitionRolesVm =
                 new ArrayList<HashMap<String, String>>();
             final Collection<ReportDefinitionRole> sortedReportDefinitionRoles =
-                new TreeSet<ReportDefinitionRole>(
-                    new ReportDefinitionRoleComparator());
+                new TreeSet<ReportDefinitionRole>(new ReportDefinitionRoleComparator());
             sortedReportDefinitionRoles.addAll(reportDefinitionRoles);
             for (final ReportDefinitionRole reportDefinitionRole : sortedReportDefinitionRoles) {
                 final HashMap<String, String> roleMap = new HashMap<String, String>();
                 roleMap.put("id", reportDefinitionRole.getRoleId());
-                roleMap
-                    .put("title", "role " + reportDefinitionRole.getRoleId());
-                roleMap.put("href",
-                    XmlUtility.getRoleHref(reportDefinitionRole.getRoleId()));
+                roleMap.put("title", "role " + reportDefinitionRole.getRoleId());
+                roleMap.put("href", XmlUtility.getRoleHref(reportDefinitionRole.getRoleId()));
 
                 reportDefinitionRolesVm.add(roleMap);
             }
@@ -171,24 +138,15 @@ public final class VelocityXmlReportDefinitionRenderer
 
     /**
      * See Interface for functional description.
-     * 
-     * @param reportDefinitions
-     * @param recordPacking
-     *            A string to determine how the record should be escaped in the
-     *            response. Defined values are 'string' and 'xml'. The default
-     *            is 'xml'.
-     * 
-     * @return
-     * @throws WebserverSystemException
-     * @see de.escidoc.core.aa.business.renderer.interfaces.
-     *      ReportDefinitionRendererInterface
-     *      #renderReportDefinitions(de.escidoc.core.sm.business.ReportDefinition)
      *
+     * @param recordPacking A string to determine how the record should be escaped in the response. Defined values are
+     *                      'string' and 'xml'. The default is 'xml'.
+     * @see de.escidoc.core.aa.business.renderer.interfaces. ReportDefinitionRendererInterface
+     *      #renderReportDefinitions(de.escidoc.core.sm.business.ReportDefinition)
      */
     @Override
     public String renderReportDefinitions(
-        final Collection<ReportDefinition> reportDefinitions,
-        final RecordPacking recordPacking) throws SystemException {
+        final Collection<ReportDefinition> reportDefinitions, final RecordPacking recordPacking) throws SystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
 
@@ -200,14 +158,11 @@ public final class VelocityXmlReportDefinitionRenderer
 
         final List<Map<String, Object>> reportDefinitionsValues;
         if (reportDefinitions != null) {
-            reportDefinitionsValues =
-                new ArrayList<Map<String, Object>>(reportDefinitions.size());
+            reportDefinitionsValues = new ArrayList<Map<String, Object>>(reportDefinitions.size());
             for (final ReportDefinition reportDefinition : reportDefinitions) {
-                final Map<String, Object> reportDefinitionValues =
-                    new HashMap<String, Object>();
+                final Map<String, Object> reportDefinitionValues = new HashMap<String, Object>();
                 addReportDefinitionNamespaceValues(reportDefinitionValues);
-                addReportDefinitionValues(reportDefinition,
-                    reportDefinitionValues);
+                addReportDefinitionValues(reportDefinition, reportDefinitionValues);
                 reportDefinitionsValues.add(reportDefinitionValues);
             }
         }
@@ -215,81 +170,56 @@ public final class VelocityXmlReportDefinitionRenderer
             reportDefinitionsValues = new ArrayList<Map<String, Object>>();
         }
         values.put("reportDefinitions", reportDefinitionsValues);
-        return getReportDefinitionXmlProvider().getReportDefinitionsSrwXml(
-            values);
+        return getReportDefinitionXmlProvider().getReportDefinitionsSrwXml(values);
     }
-
-
 
     /**
      * Adds the report definition name space values.
-     * 
-     * @param values
-     *            The {@link Map} to that the values shall be added.
-     * @throws SystemException
-     *             e
      *
+     * @param values The {@link Map} to that the values shall be added.
+     * @throws SystemException e
      */
     private static void addReportDefinitionNamespaceValues(final Map<String, Object> values) throws SystemException {
         addEscidocBaseUrl(values);
-        values.put("reportDefinitionNamespacePrefix",
-            Constants.REPORT_DEFINITION_NS_PREFIX);
-        values.put("reportDefinitionNamespace",
-            Constants.REPORT_DEFINITION_NS_URI);
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX,
-            Constants.PROPERTIES_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS,
-            Constants.PROPERTIES_NS_URI);
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX,
-            Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS,
-            Constants.STRUCTURAL_RELATIONS_NS_URI);
+        values.put("reportDefinitionNamespacePrefix", Constants.REPORT_DEFINITION_NS_PREFIX);
+        values.put("reportDefinitionNamespace", Constants.REPORT_DEFINITION_NS_URI);
+        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX, Constants.PROPERTIES_NS_PREFIX);
+        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS, Constants.PROPERTIES_NS_URI);
+        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
+        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
     }
 
     /**
      * Adds the report definition list name space values.
-     * 
-     * @param values
-     *            The {@link Map} to that the values shall be added.
-     * @throws SystemException
-     *             e
      *
+     * @param values The {@link Map} to that the values shall be added.
+     * @throws SystemException e
      */
     private static void addReportDefinitionListNamespaceValues(final Map<String, Object> values) throws SystemException {
         addEscidocBaseUrl(values);
         values.put("searchResultNamespace", Constants.SEARCH_RESULT_NS_URI);
-        values.put("reportDefinitionListNamespacePrefix",
-            Constants.REPORT_DEFINITION_LIST_NS_PREFIX);
-        values.put("reportDefinitionListNamespace",
-            Constants.REPORT_DEFINITION_LIST_NS_URI);
+        values.put("reportDefinitionListNamespacePrefix", Constants.REPORT_DEFINITION_LIST_NS_PREFIX);
+        values.put("reportDefinitionListNamespace", Constants.REPORT_DEFINITION_LIST_NS_URI);
     }
 
     /**
      * Adds the escidoc base URL to the provided map.
-     * 
-     * @param values
-     *            The map to add values to.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
      *
+     * @param values The map to add values to.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private static void addEscidocBaseUrl(final Map<String, Object> values)
-        throws WebserverSystemException {
+    private static void addEscidocBaseUrl(final Map<String, Object> values) throws WebserverSystemException {
 
-        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL,
-            XmlUtility.getEscidocBaseUrl());
+        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, XmlUtility.getEscidocBaseUrl());
     }
 
     /**
      * Gets the <code>ReportDefinitionXmlProvider</code> object.
-     * 
-     * @return Returns the <code>ReportDefinitionXmlProvider</code> object.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
      *
+     * @return Returns the <code>ReportDefinitionXmlProvider</code> object.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private static ReportDefinitionXmlProvider getReportDefinitionXmlProvider()
-        throws WebserverSystemException {
+    private static ReportDefinitionXmlProvider getReportDefinitionXmlProvider() throws WebserverSystemException {
 
         return ReportDefinitionXmlProvider.getInstance();
     }

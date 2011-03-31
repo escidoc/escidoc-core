@@ -75,11 +75,9 @@ import java.util.Stack;
 
 /**
  * Parser with Handler Chain.
- * 
- * @see DefaultHandler
- * 
+ *
  * @author Frank Schwichtenberg
- * 
+ * @see DefaultHandler
  */
 public class StaxParser implements DefaultHandlerStackInterface {
 
@@ -105,18 +103,15 @@ public class StaxParser implements DefaultHandlerStackInterface {
 
     /**
      * The constructor.
-     * 
      */
     public StaxParser() {
     }
 
     /**
      * The constructor.
-     * 
-     * @param rootElementName
-     *            The expected name of the root element. If the parsed document
-     *            does not contain a root element of the same name, an exception
-     *            is thrown.
+     *
+     * @param rootElementName The expected name of the root element. If the parsed document does not contain a root
+     *                        element of the same name, an exception is thrown.
      */
     public StaxParser(final String rootElementName) {
         this.checkRootElementName = true;
@@ -124,11 +119,10 @@ public class StaxParser implements DefaultHandlerStackInterface {
     }
 
     /**
-     * Returns the path to the element which is processed right now. The path
-     * consists of the local name of the elements seperated by '/'. There is no
-     * '/' at the end of the path. So a handler does not need to implement some
-     * code to get the position in the document.
-     * 
+     * Returns the path to the element which is processed right now. The path consists of the local name of the elements
+     * seperated by '/'. There is no '/' at the end of the path. So a handler does not need to implement some code to
+     * get the position in the document.
+     *
      * @return The path to the current element consisting of local names.
      */
     @Override
@@ -137,14 +131,12 @@ public class StaxParser implements DefaultHandlerStackInterface {
     }
 
     /**
-     * Returns the XML Base valid for the element which is processed right now.
-     * If no XML Base is found till the current position in the document the
-     * return value is <code>null</code>.
-     * 
+     * Returns the XML Base valid for the element which is processed right now. If no XML Base is found till the current
+     * position in the document the return value is <code>null</code>.
+     *
      * @return The XML Base valid for the element which is processed right now.
-     * 
-     *         FIXME Return to previous XML Base if not (only) defined in root
-     *         element.
+     *         <p/>
+     *         FIXME Return to previous XML Base if not (only) defined in root element.
      */
     public String getXmlBase() {
         return this.xmlBase;
@@ -152,11 +144,9 @@ public class StaxParser implements DefaultHandlerStackInterface {
 
     /**
      * Sets the list of handlers.
-     * 
-     * @param hc
-     *            A {@link List List} of DefaultHandler
-     *            implementations. Same as call <code>clearHandlerChain()</code>
-     *            and add every single Handler in list order.
+     *
+     * @param hc A {@link List List} of DefaultHandler implementations. Same as call <code>clearHandlerChain()</code>
+     *           and add every single Handler in list order.
      */
     public void setHandlerChain(final List<DefaultHandler> hc) {
         this.handlerChain = hc;
@@ -171,156 +161,102 @@ public class StaxParser implements DefaultHandlerStackInterface {
 
     /**
      * Parse.
-     * 
-     * @param in
-     *            XML
-     * @throws XMLStreamException
-     *             If parsing failed.
-     * @throws ContentModelNotFoundException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws ContextNotFoundException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws LockingException
-     *             eSciDoc specific; thrown by some Handlers.
+     *
+     * @param in XML
+     * @throws XMLStreamException             If parsing failed.
+     * @throws ContentModelNotFoundException  eSciDoc specific; thrown by some Handlers.
+     * @throws ContextNotFoundException       eSciDoc specific; thrown by some Handlers.
+     * @throws LockingException               eSciDoc specific; thrown by some Handlers.
      * @throws ReadonlyElementViolationException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws InvalidXmlException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws OptimisticLockingException
-     *             Thrown in case of an internal error.
-     * @throws PidAlreadyAssignedException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws XmlParserSystemException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws EncodingSystemException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws WebserverSystemException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws TripleStoreSystemException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws MissingContentException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws MissingAttributeValueException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws MissingElementValueException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws MissingMdRecordException
-     *             eSciDoc specific; thrown by some Handlers.
+     *                                        eSciDoc specific; thrown by some Handlers.
+     * @throws InvalidXmlException            eSciDoc specific; thrown by some Handlers.
+     * @throws OptimisticLockingException     Thrown in case of an internal error.
+     * @throws PidAlreadyAssignedException    eSciDoc specific; thrown by some Handlers.
+     * @throws XmlParserSystemException       eSciDoc specific; thrown by some Handlers.
+     * @throws EncodingSystemException        eSciDoc specific; thrown by some Handlers.
+     * @throws WebserverSystemException       eSciDoc specific; thrown by some Handlers.
+     * @throws TripleStoreSystemException     eSciDoc specific; thrown by some Handlers.
+     * @throws MissingContentException        eSciDoc specific; thrown by some Handlers.
+     * @throws MissingAttributeValueException eSciDoc specific; thrown by some Handlers.
+     * @throws MissingElementValueException   eSciDoc specific; thrown by some Handlers.
+     * @throws MissingMdRecordException       eSciDoc specific; thrown by some Handlers.
      * @throws ReadonlyAttributeViolationException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws InvalidContentException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws AlreadyExistsException
-     *             eSciDoc specific; thrown by some Handlers.
+     *                                        eSciDoc specific; thrown by some Handlers.
+     * @throws InvalidContentException        eSciDoc specific; thrown by some Handlers.
+     * @throws AlreadyExistsException         eSciDoc specific; thrown by some Handlers.
      * @throws ReferencedResourceNotFoundException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws InvalidStatusException
-     *             Thrown if an organizational unit is in an invalid status.
+     *                                        eSciDoc specific; thrown by some Handlers.
+     * @throws InvalidStatusException         Thrown if an organizational unit is in an invalid status.
      * @throws RelationPredicateNotFoundException
-     *             eSciDoc specific; thrown by some Handlers.
+     *                                        eSciDoc specific; thrown by some Handlers.
      * @throws OrganizationalUnitNotFoundException
-     *             eSciDoc specific; thrown by some Handlers.
+     *                                        eSciDoc specific; thrown by some Handlers.
      * @throws ContentRelationNotFoundException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws IntegritySystemException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws TmeException
-     *             eSciDoc specific; thrown by some Handlers.
+     *                                        eSciDoc specific; thrown by some Handlers.
+     * @throws IntegritySystemException       eSciDoc specific; thrown by some Handlers.
+     * @throws TmeException                   eSciDoc specific; thrown by some Handlers.
      */
-    public void parse(final byte[] in) throws XMLStreamException,
-        ContentModelNotFoundException, ContextNotFoundException,
-        MissingContentException, LockingException,
-        ReadonlyElementViolationException, MissingAttributeValueException,
-        MissingElementValueException, ReadonlyAttributeViolationException,
-        InvalidXmlException, InvalidContentException,
-        OptimisticLockingException, AlreadyExistsException,
-        ReferencedResourceNotFoundException, InvalidStatusException,
-        RelationPredicateNotFoundException,
-        OrganizationalUnitNotFoundException, ContentRelationNotFoundException,
-        PidAlreadyAssignedException, TripleStoreSystemException,
-        WebserverSystemException, EncodingSystemException,
-        XmlParserSystemException, IntegritySystemException,
-        MissingMdRecordException, TmeException {
+    public void parse(final byte[] in) throws XMLStreamException, ContentModelNotFoundException,
+        ContextNotFoundException, MissingContentException, LockingException, ReadonlyElementViolationException,
+        MissingAttributeValueException, MissingElementValueException, ReadonlyAttributeViolationException,
+        InvalidXmlException, InvalidContentException, OptimisticLockingException, AlreadyExistsException,
+        ReferencedResourceNotFoundException, InvalidStatusException, RelationPredicateNotFoundException,
+        OrganizationalUnitNotFoundException, ContentRelationNotFoundException, PidAlreadyAssignedException,
+        TripleStoreSystemException, WebserverSystemException, EncodingSystemException, XmlParserSystemException,
+        IntegritySystemException, MissingMdRecordException, TmeException {
 
         parseStream(new ByteArrayInputStream(in));
     }
 
     /**
      * Parse.
-     * 
-     * @param in
-     *            XML
-     * @throws XMLStreamException
-     *             If parsing failed.
-     * @throws ContentModelNotFoundException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws ContextNotFoundException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws LockingException
-     *             eSciDoc specific; thrown by some Handlers.
+     *
+     * @param in XML
+     * @throws XMLStreamException             If parsing failed.
+     * @throws ContentModelNotFoundException  eSciDoc specific; thrown by some Handlers.
+     * @throws ContextNotFoundException       eSciDoc specific; thrown by some Handlers.
+     * @throws LockingException               eSciDoc specific; thrown by some Handlers.
      * @throws ReadonlyElementViolationException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws OptimisticLockingException
-     *             Thrown in case of an internal error.
-     * @throws PidAlreadyAssignedException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws XmlParserSystemException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws EncodingSystemException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws WebserverSystemException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws TripleStoreSystemException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws MissingContentException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws MissingAttributeValueException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws MissingElementValueException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws MissingMdRecordException
-     *             eSciDoc specific; thrown by some Handlers.
+     *                                        eSciDoc specific; thrown by some Handlers.
+     * @throws OptimisticLockingException     Thrown in case of an internal error.
+     * @throws PidAlreadyAssignedException    eSciDoc specific; thrown by some Handlers.
+     * @throws XmlParserSystemException       eSciDoc specific; thrown by some Handlers.
+     * @throws EncodingSystemException        eSciDoc specific; thrown by some Handlers.
+     * @throws WebserverSystemException       eSciDoc specific; thrown by some Handlers.
+     * @throws TripleStoreSystemException     eSciDoc specific; thrown by some Handlers.
+     * @throws MissingContentException        eSciDoc specific; thrown by some Handlers.
+     * @throws MissingAttributeValueException eSciDoc specific; thrown by some Handlers.
+     * @throws MissingElementValueException   eSciDoc specific; thrown by some Handlers.
+     * @throws MissingMdRecordException       eSciDoc specific; thrown by some Handlers.
      * @throws ReadonlyAttributeViolationException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws InvalidContentException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws AlreadyExistsException
-     *             eSciDoc specific; thrown by some Handlers.
+     *                                        eSciDoc specific; thrown by some Handlers.
+     * @throws InvalidContentException        eSciDoc specific; thrown by some Handlers.
+     * @throws AlreadyExistsException         eSciDoc specific; thrown by some Handlers.
      * @throws ReferencedResourceNotFoundException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws InvalidStatusException
-     *             Thrown if an organizational unit is in an invalid status.
+     *                                        eSciDoc specific; thrown by some Handlers.
+     * @throws InvalidStatusException         Thrown if an organizational unit is in an invalid status.
      * @throws RelationPredicateNotFoundException
-     *             eSciDoc specific; thrown by some Handlers.
+     *                                        eSciDoc specific; thrown by some Handlers.
      * @throws OrganizationalUnitNotFoundException
-     *             eSciDoc specific; thrown by some Handlers.
+     *                                        eSciDoc specific; thrown by some Handlers.
      * @throws ContentRelationNotFoundException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws IntegritySystemException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws TmeException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws XmlCorruptedException
-     *             eSciDoc specific; thrown by some Handlers.
+     *                                        eSciDoc specific; thrown by some Handlers.
+     * @throws IntegritySystemException       eSciDoc specific; thrown by some Handlers.
+     * @throws TmeException                   eSciDoc specific; thrown by some Handlers.
+     * @throws XmlCorruptedException          eSciDoc specific; thrown by some Handlers.
      */
-    public void parse(final InputStream in) throws XMLStreamException,
-        ContentModelNotFoundException, ContextNotFoundException,
-        MissingContentException, LockingException,
-        ReadonlyElementViolationException, MissingAttributeValueException,
-        MissingElementValueException, ReadonlyAttributeViolationException,
-        InvalidContentException, OptimisticLockingException,
-        AlreadyExistsException, ReferencedResourceNotFoundException,
-        InvalidStatusException, RelationPredicateNotFoundException,
-        OrganizationalUnitNotFoundException, ContentRelationNotFoundException,
-        PidAlreadyAssignedException, TripleStoreSystemException,
-        WebserverSystemException, EncodingSystemException,
-        XmlParserSystemException, IntegritySystemException,
-        MissingMdRecordException, TmeException, XmlCorruptedException {
+    public void parse(final InputStream in) throws XMLStreamException, ContentModelNotFoundException,
+        ContextNotFoundException, MissingContentException, LockingException, ReadonlyElementViolationException,
+        MissingAttributeValueException, MissingElementValueException, ReadonlyAttributeViolationException,
+        InvalidContentException, OptimisticLockingException, AlreadyExistsException,
+        ReferencedResourceNotFoundException, InvalidStatusException, RelationPredicateNotFoundException,
+        OrganizationalUnitNotFoundException, ContentRelationNotFoundException, PidAlreadyAssignedException,
+        TripleStoreSystemException, WebserverSystemException, EncodingSystemException, XmlParserSystemException,
+        IntegritySystemException, MissingMdRecordException, TmeException, XmlCorruptedException {
 
         if (this.handlerChain == null || handlerChain.isEmpty()) {
-            throw new XMLStreamException(
-                "Parser has no handlers. Try StaxParser sp.addHandler"
-                    + "(new DefaultHandler());");
+            throw new XMLStreamException("Parser has no handlers. Try StaxParser sp.addHandler"
+                + "(new DefaultHandler());");
         }
 
         parseStream(in);
@@ -328,83 +264,54 @@ public class StaxParser implements DefaultHandlerStackInterface {
 
     /**
      * Parse.
-     * 
-     * @param xml
-     *            The to parse XML as String.
-     * @throws EncodingSystemException
-     *             Thrown if character encoding is not supported.
-     * @throws XMLStreamException
-     *             If parsing failed.
-     * @throws ContentModelNotFoundException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws ContextNotFoundException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws LockingException
-     *             eSciDoc specific; thrown by some Handlers.
+     *
+     * @param xml The to parse XML as String.
+     * @throws EncodingSystemException        Thrown if character encoding is not supported.
+     * @throws XMLStreamException             If parsing failed.
+     * @throws ContentModelNotFoundException  eSciDoc specific; thrown by some Handlers.
+     * @throws ContextNotFoundException       eSciDoc specific; thrown by some Handlers.
+     * @throws LockingException               eSciDoc specific; thrown by some Handlers.
      * @throws ReadonlyElementViolationException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws OptimisticLockingException
-     *             Thrown in case of an internal error.
-     * @throws PidAlreadyAssignedException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws XmlParserSystemException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws EncodingSystemException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws WebserverSystemException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws TripleStoreSystemException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws MissingContentException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws MissingAttributeValueException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws MissingElementValueException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws MissingMdRecordException
-     *             eSciDoc specific; thrown by some Handlers.
+     *                                        eSciDoc specific; thrown by some Handlers.
+     * @throws OptimisticLockingException     Thrown in case of an internal error.
+     * @throws PidAlreadyAssignedException    eSciDoc specific; thrown by some Handlers.
+     * @throws XmlParserSystemException       eSciDoc specific; thrown by some Handlers.
+     * @throws EncodingSystemException        eSciDoc specific; thrown by some Handlers.
+     * @throws WebserverSystemException       eSciDoc specific; thrown by some Handlers.
+     * @throws TripleStoreSystemException     eSciDoc specific; thrown by some Handlers.
+     * @throws MissingContentException        eSciDoc specific; thrown by some Handlers.
+     * @throws MissingAttributeValueException eSciDoc specific; thrown by some Handlers.
+     * @throws MissingElementValueException   eSciDoc specific; thrown by some Handlers.
+     * @throws MissingMdRecordException       eSciDoc specific; thrown by some Handlers.
      * @throws ReadonlyAttributeViolationException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws InvalidContentException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws AlreadyExistsException
-     *             eSciDoc specific; thrown by some Handlers.
+     *                                        eSciDoc specific; thrown by some Handlers.
+     * @throws InvalidContentException        eSciDoc specific; thrown by some Handlers.
+     * @throws AlreadyExistsException         eSciDoc specific; thrown by some Handlers.
      * @throws ReferencedResourceNotFoundException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws InvalidStatusException
-     *             Thrown if an organizational unit is in an invalid status.
+     *                                        eSciDoc specific; thrown by some Handlers.
+     * @throws InvalidStatusException         Thrown if an organizational unit is in an invalid status.
      * @throws RelationPredicateNotFoundException
-     *             eSciDoc specific; thrown by some Handlers.
+     *                                        eSciDoc specific; thrown by some Handlers.
      * @throws OrganizationalUnitNotFoundException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws TmeException
-     *             eSciDoc specific; thrown by some Handlers.
+     *                                        eSciDoc specific; thrown by some Handlers.
+     * @throws TmeException                   eSciDoc specific; thrown by some Handlers.
      * @throws ContentRelationNotFoundException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws IntegritySystemException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws XmlCorruptedException
-     *             eSciDoc specific; thrown by some Handlers.
+     *                                        eSciDoc specific; thrown by some Handlers.
+     * @throws IntegritySystemException       eSciDoc specific; thrown by some Handlers.
+     * @throws XmlCorruptedException          eSciDoc specific; thrown by some Handlers.
      */
-    public void parse(final String xml) throws EncodingSystemException,
-        ReadonlyElementViolationException, ReadonlyAttributeViolationException,
-        ContentModelNotFoundException, ContextNotFoundException,
-        MissingContentException, LockingException,
-        MissingAttributeValueException, MissingElementValueException,
-        InvalidContentException, OptimisticLockingException,
-        AlreadyExistsException, ReferencedResourceNotFoundException,
-        InvalidStatusException, RelationPredicateNotFoundException,
-        OrganizationalUnitNotFoundException, ContentRelationNotFoundException,
-        PidAlreadyAssignedException, MissingMdRecordException,
-        TripleStoreSystemException, WebserverSystemException,
-        XmlParserSystemException, IntegritySystemException, TmeException,
-        XMLStreamException, XmlCorruptedException {
+    public void parse(final String xml) throws EncodingSystemException, ReadonlyElementViolationException,
+        ReadonlyAttributeViolationException, ContentModelNotFoundException, ContextNotFoundException,
+        MissingContentException, LockingException, MissingAttributeValueException, MissingElementValueException,
+        InvalidContentException, OptimisticLockingException, AlreadyExistsException,
+        ReferencedResourceNotFoundException, InvalidStatusException, RelationPredicateNotFoundException,
+        OrganizationalUnitNotFoundException, ContentRelationNotFoundException, PidAlreadyAssignedException,
+        MissingMdRecordException, TripleStoreSystemException, WebserverSystemException, XmlParserSystemException,
+        IntegritySystemException, TmeException, XMLStreamException, XmlCorruptedException {
 
         final ByteArrayInputStream in;
         try {
-            in =
-                new ByteArrayInputStream(
-                    xml.getBytes(XmlUtility.CHARACTER_ENCODING));
+            in = new ByteArrayInputStream(xml.getBytes(XmlUtility.CHARACTER_ENCODING));
         }
         catch (final UnsupportedEncodingException e) {
             throw new EncodingSystemException(e);
@@ -415,78 +322,51 @@ public class StaxParser implements DefaultHandlerStackInterface {
 
     /**
      * Parse with {@link XMLStreamReader XMLStreamReader}.
-     * 
-     * @param in
-     *            XML
-     * @throws XMLStreamException
-     *             If parsing failed.
-     * @throws ContentModelNotFoundException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws ContextNotFoundException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws LockingException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws InvalidContentException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws InvalidStatusException
-     *             Thrown if an organizational unit is in an invalid status.
-     * @throws OptimisticLockingException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws PidAlreadyAssignedException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws WebserverSystemException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws TripleStoreSystemException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws XmlParserSystemException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws EncodingSystemException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws MissingContentException
-     *             eSciDoc specific; thrown by some Handlers.
+     *
+     * @param in XML
+     * @throws XMLStreamException             If parsing failed.
+     * @throws ContentModelNotFoundException  eSciDoc specific; thrown by some Handlers.
+     * @throws ContextNotFoundException       eSciDoc specific; thrown by some Handlers.
+     * @throws LockingException               eSciDoc specific; thrown by some Handlers.
+     * @throws InvalidContentException        eSciDoc specific; thrown by some Handlers.
+     * @throws InvalidStatusException         Thrown if an organizational unit is in an invalid status.
+     * @throws OptimisticLockingException     eSciDoc specific; thrown by some Handlers.
+     * @throws PidAlreadyAssignedException    eSciDoc specific; thrown by some Handlers.
+     * @throws WebserverSystemException       eSciDoc specific; thrown by some Handlers.
+     * @throws TripleStoreSystemException     eSciDoc specific; thrown by some Handlers.
+     * @throws XmlParserSystemException       eSciDoc specific; thrown by some Handlers.
+     * @throws EncodingSystemException        eSciDoc specific; thrown by some Handlers.
+     * @throws MissingContentException        eSciDoc specific; thrown by some Handlers.
      * @throws ReadonlyElementViolationException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws MissingAttributeValueException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws MissingElementValueException
-     *             eSciDoc specific; thrown by some Handlers.
+     *                                        eSciDoc specific; thrown by some Handlers.
+     * @throws MissingAttributeValueException eSciDoc specific; thrown by some Handlers.
+     * @throws MissingElementValueException   eSciDoc specific; thrown by some Handlers.
      * @throws ReadonlyAttributeViolationException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws AlreadyExistsException
-     *             eSciDoc specific; thrown by some Handlers.
+     *                                        eSciDoc specific; thrown by some Handlers.
+     * @throws AlreadyExistsException         eSciDoc specific; thrown by some Handlers.
      * @throws ReferencedResourceNotFoundException
-     *             eSciDoc specific; thrown by some Handlers.
+     *                                        eSciDoc specific; thrown by some Handlers.
      * @throws RelationPredicateNotFoundException
-     *             eSciDoc specific; thrown by some Handlers.
+     *                                        eSciDoc specific; thrown by some Handlers.
      * @throws OrganizationalUnitNotFoundException
-     *             eSciDoc specific; thrown by some Handlers.
+     *                                        eSciDoc specific; thrown by some Handlers.
      * @throws ContentRelationNotFoundException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws IntegritySystemException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws MissingMdRecordException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws TmeException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws XmlCorruptedException
-     *             eSciDoc specific; thrown by some Handlers.
+     *                                        eSciDoc specific; thrown by some Handlers.
+     * @throws IntegritySystemException       eSciDoc specific; thrown by some Handlers.
+     * @throws MissingMdRecordException       eSciDoc specific; thrown by some Handlers.
+     * @throws TmeException                   eSciDoc specific; thrown by some Handlers.
+     * @throws XmlCorruptedException          eSciDoc specific; thrown by some Handlers.
      */
-    protected void parseStream(final InputStream in) throws XMLStreamException,
-        ContentModelNotFoundException, ContextNotFoundException,
-        MissingContentException, LockingException,
-        ReadonlyElementViolationException, MissingAttributeValueException,
-        MissingElementValueException, ReadonlyAttributeViolationException,
-        InvalidContentException, OptimisticLockingException,
-        AlreadyExistsException, ReferencedResourceNotFoundException,
-        RelationPredicateNotFoundException, InvalidStatusException,
-        OrganizationalUnitNotFoundException, ContentRelationNotFoundException,
-        PidAlreadyAssignedException, TripleStoreSystemException,
-        WebserverSystemException, EncodingSystemException,
-        XmlParserSystemException, IntegritySystemException,
-        MissingMdRecordException, TmeException, XmlCorruptedException {
+    protected void parseStream(final InputStream in) throws XMLStreamException, ContentModelNotFoundException,
+        ContextNotFoundException, MissingContentException, LockingException, ReadonlyElementViolationException,
+        MissingAttributeValueException, MissingElementValueException, ReadonlyAttributeViolationException,
+        InvalidContentException, OptimisticLockingException, AlreadyExistsException,
+        ReferencedResourceNotFoundException, RelationPredicateNotFoundException, InvalidStatusException,
+        OrganizationalUnitNotFoundException, ContentRelationNotFoundException, PidAlreadyAssignedException,
+        TripleStoreSystemException, WebserverSystemException, EncodingSystemException, XmlParserSystemException,
+        IntegritySystemException, MissingMdRecordException, TmeException, XmlCorruptedException {
 
-        final XMLStreamReader parser =
-            factory.createXMLStreamReader(in, XmlUtility.CHARACTER_ENCODING);
+        final XMLStreamReader parser = factory.createXMLStreamReader(in, XmlUtility.CHARACTER_ENCODING);
         while (parser.hasNext()) {
             final int event = parser.next();
             switch (event) {
@@ -506,30 +386,25 @@ public class StaxParser implements DefaultHandlerStackInterface {
 
                 case XMLStreamConstants.START_ELEMENT:
                     // bug?
-                    if (! this.started) {
+                    if (!this.started) {
                         init();
                     }
 
                     startElements.peek().setHasChild(true);
                     final StartElement startElement =
-                        new StartElement(parser.getLocalName(),
-                            parser.getNamespaceURI(), parser.getPrefix(),
-                            parser.getNamespaceContext());
+                        new StartElement(parser.getLocalName(), parser.getNamespaceURI(), parser.getPrefix(), parser
+                            .getNamespaceContext());
                     final int xmlBaseIndex =
-                        startElement.indexOfAttribute(
-                            "http://www.w3.org/XML/1998/namespace", "base");
+                        startElement.indexOfAttribute("http://www.w3.org/XML/1998/namespace", "base");
                     if (xmlBaseIndex > -1) {
-                        this.xmlBase =
-                            startElement.getAttribute(xmlBaseIndex).getValue();
+                        this.xmlBase = startElement.getAttribute(xmlBaseIndex).getValue();
                     }
                     // add attributes
                     final int attCount = parser.getAttributeCount();
                     for (int i = 0; i < attCount; i++) {
                         final Attribute attribute =
-                            new Attribute(parser.getAttributeLocalName(i),
-                                parser.getAttributeNamespace(i),
-                                parser.getAttributePrefix(i),
-                                parser.getAttributeValue(i));
+                            new Attribute(parser.getAttributeLocalName(i), parser.getAttributeNamespace(i), parser
+                                .getAttributePrefix(i), parser.getAttributeValue(i));
                         startElement.addAttribute(attribute);
                     }
 
@@ -561,8 +436,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
                         handle("");
                     }
                     final EndElement endElement =
-                        new EndElement(parser.getLocalName(),
-                            parser.getNamespaceURI(), parser.getPrefix());
+                        new EndElement(parser.getLocalName(), parser.getNamespaceURI(), parser.getPrefix());
                     handle(endElement);
                     startElements.pop();
                     curPath.setLength(curPath.lastIndexOf("/"));
@@ -576,64 +450,43 @@ public class StaxParser implements DefaultHandlerStackInterface {
 
     /**
      * Parse with {@link XMLEventReader XMLEventReader}.
-     * 
-     * @param in
-     *            XML
-     * @throws XMLStreamException
-     *             If parsing failed.
-     * @throws ContentModelNotFoundException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws ContextNotFoundException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws LockingException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws InvalidXmlException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws InvalidContentException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws InvalidStatusException
-     *             Thrown if an organizational unit is in an invalid status.
-     * @throws OptimisticLockingException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
-     * @throws PidAlreadyAssignedException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws MissingContentException
-     *             eSciDoc specific; thrown by some Handlers.
+     *
+     * @param in XML
+     * @throws XMLStreamException             If parsing failed.
+     * @throws ContentModelNotFoundException  eSciDoc specific; thrown by some Handlers.
+     * @throws ContextNotFoundException       eSciDoc specific; thrown by some Handlers.
+     * @throws LockingException               eSciDoc specific; thrown by some Handlers.
+     * @throws InvalidXmlException            eSciDoc specific; thrown by some Handlers.
+     * @throws InvalidContentException        eSciDoc specific; thrown by some Handlers.
+     * @throws InvalidStatusException         Thrown if an organizational unit is in an invalid status.
+     * @throws OptimisticLockingException     eSciDoc specific; thrown by some Handlers.
+     * @throws SystemException                Thrown in case of an internal error.
+     * @throws PidAlreadyAssignedException    eSciDoc specific; thrown by some Handlers.
+     * @throws MissingContentException        eSciDoc specific; thrown by some Handlers.
      * @throws ReadonlyElementViolationException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws MissingAttributeValueException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws MissingElementValueException
-     *             eSciDoc specific; thrown by some Handlers.
+     *                                        eSciDoc specific; thrown by some Handlers.
+     * @throws MissingAttributeValueException eSciDoc specific; thrown by some Handlers.
+     * @throws MissingElementValueException   eSciDoc specific; thrown by some Handlers.
      * @throws ReadonlyAttributeViolationException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws AlreadyExistsException
-     *             eSciDoc specific; thrown by some Handlers.
+     *                                        eSciDoc specific; thrown by some Handlers.
+     * @throws AlreadyExistsException         eSciDoc specific; thrown by some Handlers.
      * @throws ReferencedResourceNotFoundException
-     *             eSciDoc specific; thrown by some Handlers.
+     *                                        eSciDoc specific; thrown by some Handlers.
      * @throws RelationPredicateNotFoundException
-     *             eSciDoc specific; thrown by some Handlers.
+     *                                        eSciDoc specific; thrown by some Handlers.
      * @throws OrganizationalUnitNotFoundException
-     *             eSciDoc specific; thrown by some Handlers.
+     *                                        eSciDoc specific; thrown by some Handlers.
      * @throws ContentRelationNotFoundException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws MissingMdRecordException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws TmeException
-     *             eSciDoc specific; thrown by some Handlers.
+     *                                        eSciDoc specific; thrown by some Handlers.
+     * @throws MissingMdRecordException       eSciDoc specific; thrown by some Handlers.
+     * @throws TmeException                   eSciDoc specific; thrown by some Handlers.
      */
-    protected void parseEvents(final InputStream in) throws XMLStreamException,
-        ContentModelNotFoundException, ContextNotFoundException,
-        MissingContentException, LockingException,
-        ReadonlyElementViolationException, MissingAttributeValueException,
-        MissingElementValueException, ReadonlyAttributeViolationException,
-        InvalidXmlException, InvalidContentException,
-        OptimisticLockingException, AlreadyExistsException,
-        ReferencedResourceNotFoundException, InvalidStatusException,
-        RelationPredicateNotFoundException, SystemException,
-        OrganizationalUnitNotFoundException, ContentRelationNotFoundException,
+    protected void parseEvents(final InputStream in) throws XMLStreamException, ContentModelNotFoundException,
+        ContextNotFoundException, MissingContentException, LockingException, ReadonlyElementViolationException,
+        MissingAttributeValueException, MissingElementValueException, ReadonlyAttributeViolationException,
+        InvalidXmlException, InvalidContentException, OptimisticLockingException, AlreadyExistsException,
+        ReferencedResourceNotFoundException, InvalidStatusException, RelationPredicateNotFoundException,
+        SystemException, OrganizationalUnitNotFoundException, ContentRelationNotFoundException,
         PidAlreadyAssignedException, MissingMdRecordException, TmeException {
 
         final XMLEventReader parser = factory.createXMLEventReader(in);
@@ -659,26 +512,21 @@ public class StaxParser implements DefaultHandlerStackInterface {
 
                 case XMLStreamConstants.START_ELEMENT:
                     // bug?
-                    if (! this.started) {
+                    if (!this.started) {
                         init();
                     }
                     startElements.peek().setHasChild(true);
-                    final javax.xml.stream.events.StartElement se =
-                        event.asStartElement();
+                    final javax.xml.stream.events.StartElement se = event.asStartElement();
                     final StartElement startElement =
-                        new StartElement(se.getName().getLocalPart(), se
-                            .getName().getNamespaceURI(), se
+                        new StartElement(se.getName().getLocalPart(), se.getName().getNamespaceURI(), se
                             .getName().getPrefix(), se.getNamespaceContext());
                     // add attributes
-                    final Iterator<javax.xml.stream.events.Attribute> attIt =
-                        se.getAttributes();
+                    final Iterator<javax.xml.stream.events.Attribute> attIt = se.getAttributes();
                     while (attIt.hasNext()) {
                         final javax.xml.stream.events.Attribute a = attIt.next();
                         final QName name = a.getName();
                         final Attribute attribute =
-                            new Attribute(name.getLocalPart(),
-                                name.getNamespaceURI(), name.getPrefix(),
-                                a.getValue());
+                            new Attribute(name.getLocalPart(), name.getNamespaceURI(), name.getPrefix(), a.getValue());
                         startElement.addAttribute(attribute);
                     }
                     startElements.push(startElement);
@@ -696,8 +544,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
                     break;
 
                 case XMLStreamConstants.CDATA:
-                    final String cdata =
-                        "<![CDATA[" + event.asCharacters().getData() + "]]>";
+                    final String cdata = "<![CDATA[" + event.asCharacters().getData() + "]]>";
                     // FIXME this length is always != 0
                     if (cdata.length() != 0) {
                         startElements.peek().setHasCharacters(true);
@@ -706,11 +553,9 @@ public class StaxParser implements DefaultHandlerStackInterface {
                     break;
 
                 case XMLStreamConstants.END_ELEMENT:
-                    final javax.xml.stream.events.EndElement ee =
-                        event.asEndElement();
+                    final javax.xml.stream.events.EndElement ee = event.asEndElement();
                     final EndElement endElement =
-                        new EndElement(ee.getName().getLocalPart(), ee
-                            .getName().getNamespaceURI(), ee
+                        new EndElement(ee.getName().getLocalPart(), ee.getName().getNamespaceURI(), ee
                             .getName().getPrefix());
                     startElements.pop();
                     curPath.setLength(curPath.lastIndexOf("/"));
@@ -734,9 +579,8 @@ public class StaxParser implements DefaultHandlerStackInterface {
 
     /**
      * Adds a Handler at the end of the handler chain.
-     * 
-     * @param dh
-     *            A DefaultHandler implementation.
+     *
+     * @param dh A DefaultHandler implementation.
      */
     public void addHandler(final DefaultHandler dh) {
         handlerChain.add(dh);
@@ -744,30 +588,25 @@ public class StaxParser implements DefaultHandlerStackInterface {
 
     /**
      * Adds all Handlers at the end of the handler chain.
-     * 
-     * @param c
-     *            A Collection of DefaultHandler implementations.
+     *
+     * @param c A Collection of DefaultHandler implementations.
      */
     public void addHandler(final Collection<DefaultHandler> c) {
         handlerChain.addAll(c);
     }
 
     /**
-     * Inserts the specified Handler at the specified position in the handler
-     * chain. Shifts the element currently at that position (if any) and any
-     * subsequent elements to the right (adds one to their indices).
-     * 
-     * @param index
-     *            Position of new Handler in handler chain.
-     * @param dh
-     *            A DefaultHandler implementations.
+     * Inserts the specified Handler at the specified position in the handler chain. Shifts the element currently at
+     * that position (if any) and any subsequent elements to the right (adds one to their indices).
+     *
+     * @param index Position of new Handler in handler chain.
+     * @param dh    A DefaultHandler implementations.
      */
     public void addHandler(final int index, final DefaultHandler dh) {
         handlerChain.add(index, dh);
     }
 
     /**
-     * 
      * @return handler chain.
      */
     public List<DefaultHandler> getHandlerChain() {
@@ -776,73 +615,49 @@ public class StaxParser implements DefaultHandlerStackInterface {
 
     /**
      * Calls startElement() for every Handler in the handler chain.
-     * 
-     * @param startElement
-     *            {@link de.escidoc.core.om.business.stax.events.StartElement
-     *            StartElement}
-     * @throws XMLStreamException
-     *             If parsing failed.
-     * @throws ContentModelNotFoundException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws ContextNotFoundException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws LockingException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws MissingContentException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws InvalidContentException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws OptimisticLockingException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws TripleStoreSystemException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws WebserverSystemException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws EncodingSystemException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws XmlParserSystemException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws MissingAttributeValueException
-     *             eSciDoc specific; thrown by some Handlers.
+     *
+     * @param startElement {@link de.escidoc.core.om.business.stax.events.StartElement StartElement}
+     * @throws XMLStreamException             If parsing failed.
+     * @throws ContentModelNotFoundException  eSciDoc specific; thrown by some Handlers.
+     * @throws ContextNotFoundException       eSciDoc specific; thrown by some Handlers.
+     * @throws LockingException               eSciDoc specific; thrown by some Handlers.
+     * @throws MissingContentException        eSciDoc specific; thrown by some Handlers.
+     * @throws InvalidContentException        eSciDoc specific; thrown by some Handlers.
+     * @throws OptimisticLockingException     eSciDoc specific; thrown by some Handlers.
+     * @throws TripleStoreSystemException     eSciDoc specific; thrown by some Handlers.
+     * @throws WebserverSystemException       eSciDoc specific; thrown by some Handlers.
+     * @throws EncodingSystemException        eSciDoc specific; thrown by some Handlers.
+     * @throws XmlParserSystemException       eSciDoc specific; thrown by some Handlers.
+     * @throws MissingAttributeValueException eSciDoc specific; thrown by some Handlers.
      * @throws ReadonlyAttributeViolationException
-     *             eSciDoc specific; thrown by some Handlers.
+     *                                        eSciDoc specific; thrown by some Handlers.
      * @throws ReadonlyElementViolationException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws AlreadyExistsException
-     *             eSciDoc specific; thrown by some Handlers.
+     *                                        eSciDoc specific; thrown by some Handlers.
+     * @throws AlreadyExistsException         eSciDoc specific; thrown by some Handlers.
      * @throws ReferencedResourceNotFoundException
-     *             eSciDoc specific; thrown by some Handlers.
+     *                                        eSciDoc specific; thrown by some Handlers.
      * @throws RelationPredicateNotFoundException
-     *             eSciDoc specific; thrown by some Handlers.
+     *                                        eSciDoc specific; thrown by some Handlers.
      * @throws OrganizationalUnitNotFoundException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws IntegritySystemException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws TmeException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws XmlCorruptedException
-     *             eSciDoc specific; thrown by some Handlers.
+     *                                        eSciDoc specific; thrown by some Handlers.
+     * @throws IntegritySystemException       eSciDoc specific; thrown by some Handlers.
+     * @throws TmeException                   eSciDoc specific; thrown by some Handlers.
+     * @throws XmlCorruptedException          eSciDoc specific; thrown by some Handlers.
      */
-    protected void handle(final StartElement startElement)
-        throws XMLStreamException, ContentModelNotFoundException,
-        ContextNotFoundException, LockingException,
-        MissingAttributeValueException, ReadonlyAttributeViolationException,
-        ReadonlyElementViolationException, MissingContentException,
-        InvalidContentException, OptimisticLockingException,
-        AlreadyExistsException, ReferencedResourceNotFoundException,
-        RelationPredicateNotFoundException,
-        OrganizationalUnitNotFoundException, TripleStoreSystemException,
-        WebserverSystemException, EncodingSystemException,
-        XmlParserSystemException, IntegritySystemException, TmeException,
-        XmlCorruptedException {
+    protected void handle(final StartElement startElement) throws XMLStreamException, ContentModelNotFoundException,
+        ContextNotFoundException, LockingException, MissingAttributeValueException,
+        ReadonlyAttributeViolationException, ReadonlyElementViolationException, MissingContentException,
+        InvalidContentException, OptimisticLockingException, AlreadyExistsException,
+        ReferencedResourceNotFoundException, RelationPredicateNotFoundException, OrganizationalUnitNotFoundException,
+        TripleStoreSystemException, WebserverSystemException, EncodingSystemException, XmlParserSystemException,
+        IntegritySystemException, TmeException, XmlCorruptedException {
 
         StartElement element = startElement;
-        if (this.checkRootElementName && ! this.rootChecked) {
+        if (this.checkRootElementName && !this.rootChecked) {
             final String localName = element.getLocalName();
             if (!expectedName.equals(localName)) {
-                throw new XmlCorruptedException(
-                    "Unexpected root element, expected " + this.expectedName
-                        + "but was " + localName + '.');
+                throw new XmlCorruptedException("Unexpected root element, expected " + this.expectedName + "but was "
+                    + localName + '.');
             }
             this.rootChecked = true;
         }
@@ -850,52 +665,72 @@ public class StaxParser implements DefaultHandlerStackInterface {
             if (handler != null) {
                 try {
                     element = handler.startElement(element);
-                } catch (final NoSuchAttributeException ex) {
+                }
+                catch (final NoSuchAttributeException ex) {
                     throw new ReadonlyAttributeViolationException(ex);
-                } catch (final ContentModelNotFoundException ctnf) {
+                }
+                catch (final ContentModelNotFoundException ctnf) {
                     throw ctnf;
-                } catch (final ContextNotFoundException cnf) {
+                }
+                catch (final ContextNotFoundException cnf) {
                     throw cnf;
-                } catch (final IntegritySystemException e) {
+                }
+                catch (final IntegritySystemException e) {
                     throw e;
-                } catch (final XMLStreamException xse) {
+                }
+                catch (final XMLStreamException xse) {
                     throw xse;
-                } catch (final InvalidContentException ice) {
+                }
+                catch (final InvalidContentException ice) {
                     throw ice;
-                } catch (final LockingException le) {
+                }
+                catch (final LockingException le) {
                     throw le;
-                } catch (final OptimisticLockingException ole) {
+                }
+                catch (final OptimisticLockingException ole) {
                     throw ole;
-                } catch (final ReadonlyAttributeViolationException rae) {
+                }
+                catch (final ReadonlyAttributeViolationException rae) {
                     throw rae;
-                } catch (final MissingAttributeValueException mae) {
+                }
+                catch (final MissingAttributeValueException mae) {
                     throw mae;
-                } catch (final ReadonlyElementViolationException rae) {
+                }
+                catch (final ReadonlyElementViolationException rae) {
                     throw rae;
-                } catch (final TripleStoreSystemException ex) {
+                }
+                catch (final TripleStoreSystemException ex) {
                     throw ex;
-                } catch (final MissingContentException ex) {
+                }
+                catch (final MissingContentException ex) {
                     throw ex;
-                } catch (final XmlCorruptedException ex) {
+                }
+                catch (final XmlCorruptedException ex) {
                     throw ex;
-                } catch (final WebserverSystemException ex) {
+                }
+                catch (final WebserverSystemException ex) {
                     throw ex;
-                } catch (final XmlParserSystemException ex) {
+                }
+                catch (final XmlParserSystemException ex) {
                     throw ex;
-                } catch (final EncodingSystemException ex) {
+                }
+                catch (final EncodingSystemException ex) {
                     throw ex;
-                } catch (final ReferencedResourceNotFoundException ex) {
+                }
+                catch (final ReferencedResourceNotFoundException ex) {
                     throw ex;
-                } catch (final RelationPredicateNotFoundException ex) {
+                }
+                catch (final RelationPredicateNotFoundException ex) {
                     throw ex;
-                } catch (final OrganizationalUnitNotFoundException ex) {
+                }
+                catch (final OrganizationalUnitNotFoundException ex) {
                     throw ex;
-                } catch (final TmeException ex) {
+                }
+                catch (final TmeException ex) {
                     throw ex;
-                } catch (final Exception ex) {
-                    throw new WebserverSystemException(
-                            "Should not be reached. StaxParser.handle(StartElement)",
-                            ex);
+                }
+                catch (final Exception ex) {
+                    throw new WebserverSystemException("Should not be reached. StaxParser.handle(StartElement)", ex);
                 }
             }
         }
@@ -903,85 +738,85 @@ public class StaxParser implements DefaultHandlerStackInterface {
 
     /**
      * Calls endElement() for every Handler in the handler chain.
-     * 
-     * @param endElement
-     *            The
-     *            <code>{@link de.escidoc.core.om.business.stax.events.EndElement EndElement}</code>
-     * @throws ContextNotFoundException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws ContentModelNotFoundException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws MissingAttributeValueException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws TripleStoreSystemException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws WebserverSystemException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws MissingContentException
-     *             eSciDoc specific; thrown by some Handlers.
+     *
+     * @param endElement The <code>{@link de.escidoc.core.om.business.stax.events.EndElement EndElement}</code>
+     * @throws ContextNotFoundException       eSciDoc specific; thrown by some Handlers.
+     * @throws ContentModelNotFoundException  eSciDoc specific; thrown by some Handlers.
+     * @throws MissingAttributeValueException eSciDoc specific; thrown by some Handlers.
+     * @throws TripleStoreSystemException     eSciDoc specific; thrown by some Handlers.
+     * @throws WebserverSystemException       eSciDoc specific; thrown by some Handlers.
+     * @throws MissingContentException        eSciDoc specific; thrown by some Handlers.
      * @throws ReadonlyElementViolationException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws AlreadyExistsException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws InvalidContentException
-     *             eSciDoc specific; thrown by some Handlers.
+     *                                        eSciDoc specific; thrown by some Handlers.
+     * @throws AlreadyExistsException         eSciDoc specific; thrown by some Handlers.
+     * @throws InvalidContentException        eSciDoc specific; thrown by some Handlers.
      * @throws ReferencedResourceNotFoundException
-     *             eSciDoc specific; thrown by some Handlers.
+     *                                        eSciDoc specific; thrown by some Handlers.
      * @throws RelationPredicateNotFoundException
-     *             eSciDoc specific; thrown by some Handlers.
+     *                                        eSciDoc specific; thrown by some Handlers.
      * @throws ContentRelationNotFoundException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws MissingMdRecordException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws TmeException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws XmlCorruptedException
-     *             eSciDoc specific; thrown by some Handlers.
+     *                                        eSciDoc specific; thrown by some Handlers.
+     * @throws MissingMdRecordException       eSciDoc specific; thrown by some Handlers.
+     * @throws TmeException                   eSciDoc specific; thrown by some Handlers.
+     * @throws XmlCorruptedException          eSciDoc specific; thrown by some Handlers.
      */
-    protected void handle(final EndElement endElement)
-        throws MissingContentException, ReadonlyElementViolationException,
-        AlreadyExistsException, ReferencedResourceNotFoundException,
-        RelationPredicateNotFoundException, ContentRelationNotFoundException,
-        ContextNotFoundException, ContentModelNotFoundException,
-        MissingAttributeValueException, TripleStoreSystemException,
-        WebserverSystemException, MissingMdRecordException, TmeException,
-        InvalidContentException, XmlCorruptedException {
+    protected void handle(final EndElement endElement) throws MissingContentException,
+        ReadonlyElementViolationException, AlreadyExistsException, ReferencedResourceNotFoundException,
+        RelationPredicateNotFoundException, ContentRelationNotFoundException, ContextNotFoundException,
+        ContentModelNotFoundException, MissingAttributeValueException, TripleStoreSystemException,
+        WebserverSystemException, MissingMdRecordException, TmeException, InvalidContentException,
+        XmlCorruptedException {
 
         EndElement element = endElement;
         for (final DefaultHandler handler : this.handlerChain) {
             if (handler != null) {
                 try {
                     element = handler.endElement(element);
-                } catch (final MissingContentException mce) {
+                }
+                catch (final MissingContentException mce) {
                     throw mce;
 
-                } catch (final MissingAttributeValueException mave) {
+                }
+                catch (final MissingAttributeValueException mave) {
                     throw mave;
-                } catch (final ReadonlyElementViolationException ex) {
+                }
+                catch (final ReadonlyElementViolationException ex) {
                     throw ex;
-                } catch (final AlreadyExistsException ex) {
+                }
+                catch (final AlreadyExistsException ex) {
                     throw ex;
-                } catch (final ReferencedResourceNotFoundException ex) {
+                }
+                catch (final ReferencedResourceNotFoundException ex) {
                     throw ex;
-                } catch (final RelationPredicateNotFoundException ex) {
+                }
+                catch (final RelationPredicateNotFoundException ex) {
                     throw ex;
-                } catch (final ContentRelationNotFoundException ex) {
+                }
+                catch (final ContentRelationNotFoundException ex) {
                     throw ex;
-                } catch (final XmlCorruptedException ex) {
+                }
+                catch (final XmlCorruptedException ex) {
                     throw ex;
-                } catch (final TripleStoreSystemException ex) {
+                }
+                catch (final TripleStoreSystemException ex) {
                     throw ex;
-                } catch (final ContextNotFoundException ex) {
+                }
+                catch (final ContextNotFoundException ex) {
                     throw ex;
-                } catch (final ContentModelNotFoundException ex) {
+                }
+                catch (final ContentModelNotFoundException ex) {
                     throw ex;
-                } catch (final MissingMdRecordException ex) {
+                }
+                catch (final MissingMdRecordException ex) {
                     throw ex;
-                } catch (final TmeException ex) {
+                }
+                catch (final TmeException ex) {
                     throw ex;
-                } catch (final InvalidContentException ex) {
+                }
+                catch (final InvalidContentException ex) {
                     throw ex;
-                } catch (final Exception ex) {
+                }
+                catch (final Exception ex) {
                     throw new WebserverSystemException("Unexpected exception in handle().", ex);
                 }
             }
@@ -990,48 +825,35 @@ public class StaxParser implements DefaultHandlerStackInterface {
 
     /**
      * Calls characters() for every Handler in the handler chain.
-     * 
-     * @param characters
-     *            Characters
-     * @throws XMLStreamException
-     *             If parsing failed.
+     *
+     * @param characters Characters
+     * @throws XMLStreamException           If parsing failed.
      * @throws ReadonlyAttributeViolationException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws XmlParserSystemException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws TripleStoreSystemException
-     *             eSciDoc specific; thrown by some Handlers.
+     *                                      eSciDoc specific; thrown by some Handlers.
+     * @throws XmlParserSystemException     eSciDoc specific; thrown by some Handlers.
+     * @throws TripleStoreSystemException   eSciDoc specific; thrown by some Handlers.
      * @throws ReadonlyElementViolationException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws MissingElementValueException
-     *             eSciDoc specific; thrown by some Handlers.
+     *                                      eSciDoc specific; thrown by some Handlers.
+     * @throws MissingElementValueException eSciDoc specific; thrown by some Handlers.
      * @throws ReferencedResourceNotFoundException
-     *             eSciDoc specific; thrown by some Handlers.
+     *                                      eSciDoc specific; thrown by some Handlers.
      * @throws RelationPredicateNotFoundException
-     *             eSciDoc specific; thrown by some Handlers.
+     *                                      eSciDoc specific; thrown by some Handlers.
      * @throws ReadonlyAttributeViolationException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws InvalidContentException
-     *             eSciDoc specific; thrown by some Handlers.
+     *                                      eSciDoc specific; thrown by some Handlers.
+     * @throws InvalidContentException      eSciDoc specific; thrown by some Handlers.
      * @throws OrganizationalUnitNotFoundException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws PidAlreadyAssignedException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws IntegritySystemException
-     *             eSciDoc specific; thrown by some Handlers.
-     * @throws InvalidStatusException
-     *             Thrown if an organizational unit is in an invalid status.
-     * @throws TmeException
-     *             eSciDoc specific; thrown by some Handlers.
+     *                                      eSciDoc specific; thrown by some Handlers.
+     * @throws PidAlreadyAssignedException  eSciDoc specific; thrown by some Handlers.
+     * @throws IntegritySystemException     eSciDoc specific; thrown by some Handlers.
+     * @throws InvalidStatusException       Thrown if an organizational unit is in an invalid status.
+     * @throws TmeException                 eSciDoc specific; thrown by some Handlers.
      */
-    protected void handle(final String characters) throws XMLStreamException,
-        ReadonlyElementViolationException, MissingElementValueException,
-        ReferencedResourceNotFoundException,
-        RelationPredicateNotFoundException,
-        ReadonlyAttributeViolationException, InvalidContentException,
-        OrganizationalUnitNotFoundException, PidAlreadyAssignedException,
-        XmlParserSystemException, TripleStoreSystemException,
-        IntegritySystemException, InvalidStatusException, TmeException {
+    protected void handle(final String characters) throws XMLStreamException, ReadonlyElementViolationException,
+        MissingElementValueException, ReferencedResourceNotFoundException, RelationPredicateNotFoundException,
+        ReadonlyAttributeViolationException, InvalidContentException, OrganizationalUnitNotFoundException,
+        PidAlreadyAssignedException, XmlParserSystemException, TripleStoreSystemException, IntegritySystemException,
+        InvalidStatusException, TmeException {
 
         String chars = characters;
         for (final DefaultHandler handler : this.handlerChain) {
@@ -1039,31 +861,44 @@ public class StaxParser implements DefaultHandlerStackInterface {
                 final StartElement e = startElements.peek();
                 try {
                     chars = handler.characters(chars, e);
-                } catch (final ReadonlyAttributeViolationException ex) {
+                }
+                catch (final ReadonlyAttributeViolationException ex) {
                     throw ex;
-                } catch (final ReadonlyElementViolationException ex) {
+                }
+                catch (final ReadonlyElementViolationException ex) {
                     throw ex;
-                } catch (final TripleStoreSystemException ex) {
+                }
+                catch (final TripleStoreSystemException ex) {
                     throw ex;
-                } catch (final MissingElementValueException ex) {
+                }
+                catch (final MissingElementValueException ex) {
                     throw ex;
-                } catch (final ReferencedResourceNotFoundException ex) {
+                }
+                catch (final ReferencedResourceNotFoundException ex) {
                     throw ex;
-                } catch (final RelationPredicateNotFoundException ex) {
+                }
+                catch (final RelationPredicateNotFoundException ex) {
                     throw ex;
-                } catch (final InvalidContentException ex) {
+                }
+                catch (final InvalidContentException ex) {
                     throw ex;
-                } catch (final InvalidStatusException ex) {
+                }
+                catch (final InvalidStatusException ex) {
                     throw ex;
-                } catch (final OrganizationalUnitNotFoundException ex) {
+                }
+                catch (final OrganizationalUnitNotFoundException ex) {
                     throw ex;
-                } catch (final IntegritySystemException ex) {
+                }
+                catch (final IntegritySystemException ex) {
                     throw ex;
-                } catch (final PidAlreadyAssignedException ex) {
+                }
+                catch (final PidAlreadyAssignedException ex) {
                     throw ex;
-                } catch (final TmeException ex) {
+                }
+                catch (final TmeException ex) {
                     throw ex;
-                } catch (final Exception ex) {
+                }
+                catch (final Exception ex) {
                     XmlUtility.handleUnexpectedStaxParserException("", ex);
                 }
             }

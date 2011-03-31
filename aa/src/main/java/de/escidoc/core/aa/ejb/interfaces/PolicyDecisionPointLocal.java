@@ -17,72 +17,41 @@ import java.util.List;
  */
 public interface PolicyDecisionPointLocal extends EJBLocalObject {
 
-    String evaluate(String requestsXml, SecurityContext securityContext)
-            throws ResourceNotFoundException,
-            XmlCorruptedException,
-            XmlSchemaValidationException,
-            MissingMethodParameterException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException;
+    String evaluate(String requestsXml, SecurityContext securityContext) throws ResourceNotFoundException,
+        XmlCorruptedException, XmlSchemaValidationException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException;
 
-    String evaluate(String requestsXml, String authHandle, Boolean restAccess)
-            throws ResourceNotFoundException,
-            XmlCorruptedException,
-            XmlSchemaValidationException,
-            MissingMethodParameterException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException;
+    String evaluate(String requestsXml, String authHandle, Boolean restAccess) throws ResourceNotFoundException,
+        XmlCorruptedException, XmlSchemaValidationException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException;
 
-    boolean[] evaluateRequestList(List requests, SecurityContext securityContext)
-            throws ResourceNotFoundException,
-            MissingMethodParameterException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException;
+    boolean[] evaluateRequestList(List requests, SecurityContext securityContext) throws ResourceNotFoundException,
+        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
 
     boolean[] evaluateRequestList(List requests, String authHandle, Boolean restAccess)
-            throws ResourceNotFoundException,
-            MissingMethodParameterException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException;
+        throws ResourceNotFoundException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException;
 
     List evaluateRetrieve(String resourceName, List ids, SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            ResourceNotFoundException,
-            SystemException;
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        ResourceNotFoundException, SystemException;
 
     List evaluateRetrieve(String resourceName, List ids, String authHandle, Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            ResourceNotFoundException,
-            SystemException;
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        ResourceNotFoundException, SystemException;
 
-    List evaluateMethodForList(String resourceName, String methodName, List argumentList,
-                               SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            ResourceNotFoundException,
-            SystemException;
+    List evaluateMethodForList(
+        String resourceName, String methodName, List argumentList, SecurityContext securityContext)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        ResourceNotFoundException, SystemException;
 
-    List evaluateMethodForList(String resourceName, String methodName, List argumentList, String authHandle,
-                               Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            ResourceNotFoundException,
-            SystemException;
+    List evaluateMethodForList(
+        String resourceName, String methodName, List argumentList, String authHandle, Boolean restAccess)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        ResourceNotFoundException, SystemException;
 
-    void touch(SecurityContext securityContext)
-            throws SystemException;
+    void touch(SecurityContext securityContext) throws SystemException;
 
-    void touch(String authHandle, Boolean restAccess)
-            throws SystemException;
+    void touch(String authHandle, Boolean restAccess) throws SystemException;
 
 }

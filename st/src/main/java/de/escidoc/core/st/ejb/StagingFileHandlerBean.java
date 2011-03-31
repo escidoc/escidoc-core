@@ -28,16 +28,19 @@ import java.rmi.RemoteException;
 public class StagingFileHandlerBean implements SessionBean {
 
     StagingFileHandlerInterface service;
+
     SessionContext sessionCtx;
+
     private static final Logger LOGGER = LoggerFactory.getLogger(StagingFileHandlerBean.class);
 
     public void ejbCreate() throws CreateException {
         try {
             final BeanFactoryLocator beanFactoryLocator = SingletonBeanFactoryLocator.getInstance();
             final BeanFactory factory =
-                    beanFactoryLocator.useBeanFactory("StagingFileHandler.spring.ejb.context").getFactory();
+                beanFactoryLocator.useBeanFactory("StagingFileHandler.spring.ejb.context").getFactory();
             this.service = (StagingFileHandlerInterface) factory.getBean("service.StagingFileHandler");
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             LOGGER.error("ejbCreate(): Exception StagingFileHandlerComponent: " + e);
             throw new CreateException(e.getMessage());
         }
@@ -58,60 +61,49 @@ public class StagingFileHandlerBean implements SessionBean {
 
     }
 
-    public String create(final EscidocBinaryContent binaryContent,
-                                   final SecurityContext securityContext)
-            throws MissingMethodParameterException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException {
+    public String create(final EscidocBinaryContent binaryContent, final SecurityContext securityContext)
+        throws MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.create(binaryContent);
     }
 
-    public String create(final EscidocBinaryContent binaryContent,
-                                   final String authHandle, final Boolean restAccess)
-            throws MissingMethodParameterException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException {
+    public String create(final EscidocBinaryContent binaryContent, final String authHandle, final Boolean restAccess)
+        throws MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.create(binaryContent);
     }
 
-    public EscidocBinaryContent retrieve(final String stagingFileId,
-                                                                                final SecurityContext securityContext)
-            throws StagingFileNotFoundException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            SystemException {
+    public EscidocBinaryContent retrieve(final String stagingFileId, final SecurityContext securityContext)
+        throws StagingFileNotFoundException, AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, SystemException {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.retrieve(stagingFileId);
     }
 
     public EscidocBinaryContent retrieve(final String stagingFileId, final String authHandle, final Boolean restAccess)
-            throws StagingFileNotFoundException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            SystemException {
+        throws StagingFileNotFoundException, AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, SystemException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.retrieve(stagingFileId);

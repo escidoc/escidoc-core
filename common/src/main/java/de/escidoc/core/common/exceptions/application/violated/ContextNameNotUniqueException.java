@@ -21,11 +21,9 @@
 package de.escidoc.core.common.exceptions.application.violated;
 
 /**
- * The ContextNameNotFoundException is used to indicate that the context name is
- * not unique.
- * 
- * @author Jens Kristen (FIZ Karlsruhe)
+ * The ContextNameNotFoundException is used to indicate that the context name is not unique.
  *
+ * @author Jens Kristen (FIZ Karlsruhe)
  */
 public class ContextNameNotUniqueException extends RuleViolationException {
 
@@ -36,13 +34,10 @@ public class ContextNameNotUniqueException extends RuleViolationException {
 
     public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_VIOLATED;
 
-    public static final String HTTP_STATUS_MESSAGE =
-        "Context name is not unique.";
+    public static final String HTTP_STATUS_MESSAGE = "Context name is not unique.";
 
     /**
      * Default constructor.
-     * 
-     *
      */
     public ContextNameNotUniqueException() {
         super(HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -50,9 +45,8 @@ public class ContextNameNotUniqueException extends RuleViolationException {
 
     /**
      * Constructor used to map an initial exception.
-     * 
-     * @param error
-     *            Throwable
+     *
+     * @param error Throwable
      */
     public ContextNameNotUniqueException(final Throwable error) {
         super(error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -60,27 +54,21 @@ public class ContextNameNotUniqueException extends RuleViolationException {
 
     /**
      * Constructs a new exception with the specified detail message.
-     * 
-     * @param message -
-     *            the detail message.
      *
+     * @param message - the detail message.
      */
     public ContextNameNotUniqueException(final String message) {
         super(message, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 
     /**
-     * Constructor used to create a new Exception with the specified detail
-     * message and a mapping to an initial exception.
-     * 
-     * @param message -
-     *            the detail message.
-     * @param error
-     *            Throwable
+     * Constructor used to create a new Exception with the specified detail message and a mapping to an initial
+     * exception.
      *
+     * @param message - the detail message.
+     * @param error   Throwable
      */
-    public ContextNameNotUniqueException(final String message,
-        final Throwable error) {
+    public ContextNameNotUniqueException(final String message, final Throwable error) {
         super(message, error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 }

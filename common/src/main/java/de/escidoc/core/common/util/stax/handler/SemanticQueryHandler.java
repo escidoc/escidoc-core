@@ -38,16 +38,14 @@ public class SemanticQueryHandler extends DefaultHandler {
     private String format;
 
     @Override
-    public String characters(final String data, final StartElement element)
-        throws MissingElementValueException {
+    public String characters(final String data, final StartElement element) throws MissingElementValueException {
 
         if ("query".equals(element.getLocalName())) {
             if (data == null || data.length() == 0) {
                 throw new MissingElementValueException("The value of the element " + element.getLocalName()
-                        + " is missing.");
+                    + " is missing.");
             }
-            this.query =
-                XmlUtility.unescapeForbiddenXmlCharacters(data.trim(), false);
+            this.query = XmlUtility.unescapeForbiddenXmlCharacters(data.trim(), false);
             // extract predicate
             final String[] queryParts = query.split("\\ +");
             this.subject = queryParts[0].trim();
@@ -57,7 +55,7 @@ public class SemanticQueryHandler extends DefaultHandler {
         else if ("format".equals(element.getLocalName())) {
             if (data == null || data.length() == 0) {
                 throw new MissingElementValueException("The value of the element " + element.getLocalName()
-                        + " is missing.");
+                    + " is missing.");
             }
             this.format = data;
 
@@ -67,7 +65,6 @@ public class SemanticQueryHandler extends DefaultHandler {
     }
 
     /**
-     * 
      * @return the format of triple store request
      */
     public String getFormat() {
@@ -75,7 +72,6 @@ public class SemanticQueryHandler extends DefaultHandler {
     }
 
     /**
-     * 
      * @return the query
      */
     public String getQuery() {

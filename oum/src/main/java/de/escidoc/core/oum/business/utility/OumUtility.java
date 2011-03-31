@@ -38,9 +38,8 @@ import java.util.Stack;
 
 /**
  * Methods to check if there are cycles in an ous parent list..
- * 
+ *
  * @author Michael Schneider
- * 
  */
 public class OumUtility {
 
@@ -56,29 +55,21 @@ public class OumUtility {
 
     /**
      * Detect cycles in the parent ou hierarchy.
-     * 
-     * @param organizationalUnitId
-     *            The id of the child organizational unit.
-     * @param parentIds
-     *            The list of ids of the parents of the child organizational
-     *            unit.
+     *
+     * @param organizationalUnitId The id of the child organizational unit.
+     * @param parentIds            The list of ids of the parents of the child organizational unit.
      * @throws OrganizationalUnitHierarchyViolationException
-     *             If there are cycles in the parent ou hierarchy.
-     * @throws SystemException
-     *             If triplestore query fails.
+     *                         If there are cycles in the parent ou hierarchy.
+     * @throws SystemException If triplestore query fails.
      */
-    public void detectCycles(
-        final String organizationalUnitId, final Collection<String> parentIds)
+    public void detectCycles(final String organizationalUnitId, final Collection<String> parentIds)
         throws OrganizationalUnitHierarchyViolationException, SystemException {
         if (!parentIds.isEmpty()) {
             for (final String id : parentIds) {
                 if (id.equals(organizationalUnitId)) {
-                    throw new OrganizationalUnitHierarchyViolationException(
-                            "Ou with id "
-                                    + id
-                                    + " cannot be referenced as a parent of ou with id "
-                                    + organizationalUnitId
-                                    + " because it is one of its subnodes");
+                    throw new OrganizationalUnitHierarchyViolationException("Ou with id " + id
+                        + " cannot be referenced as a parent of ou with id " + organizationalUnitId
+                        + " because it is one of its subnodes");
                 }
             }
             this.closed.add(organizationalUnitId);
@@ -87,11 +78,9 @@ public class OumUtility {
                 final String toClosedId = this.open.pop();
                 for (final String id : parentIds) {
                     if (id.equals(toClosedId)) {
-                        throw new OrganizationalUnitHierarchyViolationException(
-                                "Ou with id " + id
-                                        + " cannot be referenced as a parent of "
-                                        + "ou with id " + organizationalUnitId
-                                        + " because it is one of its subnodes");
+                        throw new OrganizationalUnitHierarchyViolationException("Ou with id " + id
+                            + " cannot be referenced as a parent of " + "ou with id " + organizationalUnitId
+                            + " because it is one of its subnodes");
                     }
                 }
                 this.closed.add(toClosedId);
@@ -103,16 +92,13 @@ public class OumUtility {
 
     /**
      * Write the ids of the given ou's children to the global stack.
-     * 
-     * @param currentOuId
-     *            The parent ou.
-     * @throws SystemException
-     *             If triplestore query fails.
+     *
+     * @param currentOuId The parent ou.
+     * @throws SystemException If triplestore query fails.
      */
     private void expand(final String currentOuId) throws SystemException {
 
-        final Collection<String> children =
-            TripleStoreUtility.getInstance().getChildren(currentOuId);
+        final Collection<String> children = TripleStoreUtility.getInstance().getChildren(currentOuId);
         if (children != null) {
             for (final String childId : children) {
                 if (!this.closed.contains(childId)) {

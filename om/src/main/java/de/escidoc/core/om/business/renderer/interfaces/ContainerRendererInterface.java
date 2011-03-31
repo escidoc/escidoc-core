@@ -38,124 +38,82 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 
 /**
  * Interface of an container renderer.
- * 
- * @author Rozita Friedman
  *
+ * @author Rozita Friedman
  */
 public interface ContainerRendererInterface {
 
     /**
      * Gets the representation of an organizational unit.
-     * 
-     * @param container
-     *            The Container.
+     *
+     * @param container The Container.
      * @return Returns the XML representation of the organizational unit.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     * @throws SystemException Thrown in case of an internal error.
      */
     String render(final Container container) throws SystemException;
 
     /**
-     * Gets the representation of the sub resource <code>properties</code> of an
-     * organizational unit.
-     * 
-     * @param container
-     *            The Container to render.
-     * @return Returns the XML representation of the sub resource
-     *         <code>properties</code> of an organizational unit.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     * Gets the representation of the sub resource <code>properties</code> of an organizational unit.
+     *
+     * @param container The Container to render.
+     * @return Returns the XML representation of the sub resource <code>properties</code> of an organizational unit.
+     * @throws SystemException Thrown in case of an internal error.
      */
     String renderProperties(final Container container) throws SystemException;
 
     /**
-     * Gets the representation of the sub resource <code>resources</code> of an
-     * organizational unit.
-     * 
-     * @param container
-     *            The Container to render.
-     * @return Returns the XML representation of the sub resource
-     *         <code>resources</code> of an organizational unit.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
+     * Gets the representation of the sub resource <code>resources</code> of an organizational unit.
+     *
+     * @param container The Container to render.
+     * @return Returns the XML representation of the sub resource <code>resources</code> of an organizational unit.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    String renderResources(final Container container)
-        throws WebserverSystemException;
+    String renderResources(final Container container) throws WebserverSystemException;
 
     /**
-     * Gets the representation of the sub resource
-     * <code>organization-details</code> of an organizational unit.
-     * 
-     * @param container
-     *            The Container to render.
-     * @return Returns the XML representation of the sub resource
-     *         <code>data</code> of an organizational unit.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
-     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
-     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
-     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
+     * Gets the representation of the sub resource <code>organization-details</code> of an organizational unit.
+     *
+     * @param container The Container to render.
+     * @return Returns the XML representation of the sub resource <code>data</code> of an organizational unit.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    String renderMetadataRecords(final Container container)
-        throws EncodingSystemException, FedoraSystemException,
+    String renderMetadataRecords(final Container container) throws EncodingSystemException, FedoraSystemException,
         WebserverSystemException, IntegritySystemException;
 
     /**
-     * Gets the representation of the sub resource
-     * <code>organization-details</code> of an organizational unit.
-     * 
-     * @param container
-     *            The Container to render.
-     * @param mdRecord
-     * @param isRootMdRecord
-     * @return Returns the XML representation of the sub resource
-     *         <code>data</code> of an organizational unit.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
-     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
-     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
+     * Gets the representation of the sub resource <code>organization-details</code> of an organizational unit.
+     *
+     * @param container The Container to render.
+     * @return Returns the XML representation of the sub resource <code>data</code> of an organizational unit.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    String renderMetadataRecord(
-        final Container container, final Datastream mdRecord,
-        final boolean isRootMdRecord) throws EncodingSystemException,
-        FedoraSystemException, WebserverSystemException;
+    String renderMetadataRecord(final Container container, final Datastream mdRecord, final boolean isRootMdRecord)
+        throws EncodingSystemException, FedoraSystemException, WebserverSystemException;
 
     /**
-     * Gets the representation of the sub resource <code>ou-parents</code> of an
-     * organizational unit.
-     * 
-     * @param container
-     *            The Container to render.
-     * @return Returns the XML representation of the sub resource
-     *         <code>ou-parents</code> of an organizational unit.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     * Gets the representation of the sub resource <code>ou-parents</code> of an organizational unit.
+     *
+     * @param container The Container to render.
+     * @return Returns the XML representation of the sub resource <code>ou-parents</code> of an organizational unit.
+     * @throws SystemException Thrown in case of an internal error.
      */
     String renderRelations(final Container container) throws SystemException;
 
     /**
-     * Gets the representation of the virtual resource <code>parents</code> of
-     * an container.
-     * 
-     * @param containerId
-     *            The Container ID to render.
-     * @return Returns the XML representation of the virtual resource
-     *         <code>parents</code> of an Container.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     * Gets the representation of the virtual resource <code>parents</code> of an container.
+     *
+     * @param containerId The Container ID to render.
+     * @return Returns the XML representation of the virtual resource <code>parents</code> of an Container.
+     * @throws SystemException Thrown in case of an internal error.
      */
     String renderParents(final String containerId) throws SystemException;
 
     /**
-     * Gets the representation of the virtual sub resource
-     * <code>struct-map</code> of an Container.
-     * 
-     * @param container
-     *            The Container handler.
-     * @return Returns the XML representation of the virtual sub resource
-     *         <code>struct-map</code> of an Container.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     * Gets the representation of the virtual sub resource <code>struct-map</code> of an Container.
+     *
+     * @param container The Container handler.
+     * @return Returns the XML representation of the virtual sub resource <code>struct-map</code> of an Container.
+     * @throws SystemException Thrown in case of an internal error.
      */
     String renderStructMap(final Container container) throws SystemException;
 }

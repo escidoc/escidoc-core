@@ -39,9 +39,8 @@ import java.util.List;
 
 /**
  * Handle the parameters for a task oriented method.
- * 
+ *
  * @author Michael Schneider
- * 
  */
 public class TaskParamHandler extends DefaultHandler {
 
@@ -75,15 +74,13 @@ public class TaskParamHandler extends DefaultHandler {
 
     private static final String PARAM_PASSWORD_PATH = PARAM_PATH + "/password";
 
-    private static final String PARAM_OBJECTTYPE_PATH = 
-                                    PARAM_PATH + "/object-type";
+    private static final String PARAM_OBJECTTYPE_PATH = PARAM_PATH + "/object-type";
 
     private static final String PARAM_PID_PATH = PARAM_PATH + "/pid";
 
     private static final String PARAM_SYNC_PATH = PARAM_PATH + "/sync";
 
-    private static final String LAST_MODIFICATION_DATE_ATT =
-        "last-modification-date";
+    private static final String LAST_MODIFICATION_DATE_ATT = "last-modification-date";
 
     // private static final String WITHDRAW_COMMENT_ATT = "withdraw-comment";
 
@@ -91,9 +88,8 @@ public class TaskParamHandler extends DefaultHandler {
 
     /**
      * Instantiate a TaskParamHandler.
-     * 
-     * @param parser
-     *            The parser.
+     *
+     * @param parser The parser.
      */
     public TaskParamHandler(final StaxParser parser) {
 
@@ -102,17 +98,13 @@ public class TaskParamHandler extends DefaultHandler {
 
     /**
      * Handle the start of an element.
-     * 
-     * @param element
-     *            The element.
-     * @return The element.
-     * @throws InvalidXmlException
-     *             Thrown if the XML has an invalid structure.
      *
+     * @param element The element.
+     * @return The element.
+     * @throws InvalidXmlException Thrown if the XML has an invalid structure.
      */
     @Override
-    public StartElement startElement(final StartElement element)
-        throws InvalidXmlException {
+    public StartElement startElement(final StartElement element) throws InvalidXmlException {
 
         final String currentPath = parser.getCurPath();
 
@@ -120,11 +112,12 @@ public class TaskParamHandler extends DefaultHandler {
             try {
                 final Attribute date = element.getAttribute(null, LAST_MODIFICATION_DATE_ATT);
                 this.lastModificationDate = date.getValue();
-            } catch (final NoSuchAttributeException e1) {
-                if(LOGGER.isWarnEnabled()) {
+            }
+            catch (final NoSuchAttributeException e1) {
+                if (LOGGER.isWarnEnabled()) {
                     LOGGER.warn("Error on parsing last modification attribute.");
                 }
-                if(LOGGER.isDebugEnabled()) {
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Error on parsing last modification attribute.", e1);
                 }
             }
@@ -140,24 +133,21 @@ public class TaskParamHandler extends DefaultHandler {
                 }
             }
             catch (final Exception e) {
-                throw new XmlCorruptedException(
-                    "Task param: last-modification-date '"
-                        + this.lastModificationDate + "' is no valid timestamp!", e);
+                throw new XmlCorruptedException("Task param: last-modification-date '" + this.lastModificationDate
+                    + "' is no valid timestamp!", e);
             }
-        } else if (!currentPath.startsWith(PARAM_PATH)) {
-            throw new XmlCorruptedException("Task param has wrong root element '"
-                + currentPath + "'!");
+        }
+        else if (!currentPath.startsWith(PARAM_PATH)) {
+            throw new XmlCorruptedException("Task param has wrong root element '" + currentPath + "'!");
         }
         return element;
     }
 
     /**
      * Handle the end of an element.
-     * 
-     * @param element
-     *            The element.
-     * @return The element.
      *
+     * @param element The element.
+     * @return The element.
      */
     @Override
     public EndElement endElement(final EndElement element) {
@@ -167,31 +157,25 @@ public class TaskParamHandler extends DefaultHandler {
 
     /**
      * See Interface for functional description.
-     * 
-     * @param data
-     *            The data.
-     * @param element
-     *            The element.
+     *
+     * @param data    The data.
+     * @param element The element.
      * @return The character set of the element.
      */
     @Override
     public String characters(final String data, final StartElement element) {
         final String curPath = parser.getCurPath();
 
-        if (curPath.equals(PARAM_PATH + '/'
-            + Elements.ELEMENT_PARAM_WITHDRAW_COMMENT)) {
+        if (curPath.equals(PARAM_PATH + '/' + Elements.ELEMENT_PARAM_WITHDRAW_COMMENT)) {
             this.withdrawComment = data;
         }
-        else if (curPath.equals(PARAM_PATH + '/'
-            + Elements.ELEMENT_PARAM_REVOKATION_REMARK)) {
+        else if (curPath.equals(PARAM_PATH + '/' + Elements.ELEMENT_PARAM_REVOKATION_REMARK)) {
             this.revokationRemark = data;
         }
-        else if (curPath.equals(PARAM_PATH + '/'
-            + Elements.ELEMENT_PARAM_COMMENT)) {
+        else if (curPath.equals(PARAM_PATH + '/' + Elements.ELEMENT_PARAM_COMMENT)) {
             this.comment = data;
         }
-        else if (curPath.equals(PARAM_PATH + '/'
-            + Elements.ELEMENT_PARAM_FORMAT)) {
+        else if (curPath.equals(PARAM_PATH + '/' + Elements.ELEMENT_PARAM_FORMAT)) {
             this.format = data;
         }
         else if (curPath.equals(PARAM_PASSWORD_PATH)) {
@@ -213,7 +197,6 @@ public class TaskParamHandler extends DefaultHandler {
     }
 
     /**
-     * 
      * @return The keep in sync value used for AdminHandler.deleteObjects()
      */
     public boolean getKeepInSync() {
@@ -221,7 +204,6 @@ public class TaskParamHandler extends DefaultHandler {
     }
 
     /**
-     * 
      * @return The latest modification date.
      */
     public String getLastModificationDate() {
@@ -230,7 +212,7 @@ public class TaskParamHandler extends DefaultHandler {
 
     /**
      * Get the withdraw comment.
-     * 
+     *
      * @return withdraw comment
      */
     public String getWithdrawComment() {
@@ -239,7 +221,7 @@ public class TaskParamHandler extends DefaultHandler {
 
     /**
      * Get the comment.
-     * 
+     *
      * @return comment.
      */
     public String getComment() {
@@ -254,7 +236,6 @@ public class TaskParamHandler extends DefaultHandler {
     }
 
     /**
-     * 
      * @return the id list
      */
     public Collection<String> getIds() {
@@ -263,12 +244,10 @@ public class TaskParamHandler extends DefaultHandler {
 
     /**
      * Set the last-modification-date.
-     * 
-     * @param checkLastModificationDate
-     *            the checkLastModificationDate to set
+     *
+     * @param checkLastModificationDate the checkLastModificationDate to set
      */
-    public void setCheckLastModificationDate(
-        final boolean checkLastModificationDate) {
+    public void setCheckLastModificationDate(final boolean checkLastModificationDate) {
         this.checkLastModificationDate = checkLastModificationDate;
     }
 
@@ -288,7 +267,7 @@ public class TaskParamHandler extends DefaultHandler {
 
     /**
      * Get the Pid.
-     * 
+     *
      * @return Value of pid element or null if not provided.
      */
     public String getPid() {

@@ -44,11 +44,11 @@ public class SetDefinitionCreateHandler extends DefaultHandler {
     private static final String PROPERTIES_PATH = "/set-definition/properties";
 
     private static final String ROOT_PATH = "/set-definition";
-    
+
     private boolean inProperties;
 
     private boolean inRoot;
-  
+
     private final StaxParser parser;
 
     private final Map<String, String> setDefinitionProperties = new HashMap<String, String>();
@@ -63,7 +63,8 @@ public class SetDefinitionCreateHandler extends DefaultHandler {
         final String currenrPath = parser.getCurPath();
         if (PROPERTIES_PATH.equals(currenrPath)) {
             this.inProperties = true;
-        } else if (ROOT_PATH.equals(currenrPath)) {
+        }
+        else if (ROOT_PATH.equals(currenrPath)) {
             this.inRoot = true;
         }
         return element;
@@ -74,15 +75,15 @@ public class SetDefinitionCreateHandler extends DefaultHandler {
         final String currenrPath = parser.getCurPath();
         if (PROPERTIES_PATH.equals(currenrPath)) {
             this.inProperties = false;
-        } else if (ROOT_PATH.equals(currenrPath)) {
-            this.inRoot = false;
-        }  
-        return element;
         }
+        else if (ROOT_PATH.equals(currenrPath)) {
+            this.inRoot = false;
+        }
+        return element;
+    }
 
     @Override
-    public String characters(final String s, final StartElement element)
-        throws InvalidXmlException {
+    public String characters(final String s, final StartElement element) throws InvalidXmlException {
 
         final String theName = element.getLocalName();
         if (this.inProperties) {
@@ -91,14 +92,11 @@ public class SetDefinitionCreateHandler extends DefaultHandler {
                     setDefinitionProperties.put(Elements.ELEMENT_NAME, s);
                 }
                 else {
-                    throw new XmlCorruptedException("the value of element "
-                        + theName + " is missing");
+                    throw new XmlCorruptedException("the value of element " + theName + " is missing");
                 }
             }
-            else if (theName.equals(Elements.ELEMENT_DESCRIPTION)
-                && s != null) {
-                setDefinitionProperties
-                    .put(Elements.ELEMENT_DESCRIPTION, s);
+            else if (theName.equals(Elements.ELEMENT_DESCRIPTION) && s != null) {
+                setDefinitionProperties.put(Elements.ELEMENT_DESCRIPTION, s);
             }
         }
         else if (this.inRoot) {
@@ -107,8 +105,7 @@ public class SetDefinitionCreateHandler extends DefaultHandler {
                     setDefinitionProperties.put("query", s);
                 }
                 else {
-                    throw new XmlCorruptedException("the value of element "
-                        + theName + " is missing");
+                    throw new XmlCorruptedException("the value of element " + theName + " is missing");
                 }
             }
             else if ("specification".equals(theName)) {
@@ -116,8 +113,7 @@ public class SetDefinitionCreateHandler extends DefaultHandler {
                     setDefinitionProperties.put("specification", s);
                 }
                 else {
-                    throw new XmlCorruptedException("the value of element "
-                        + theName + " is missing");
+                    throw new XmlCorruptedException("the value of element " + theName + " is missing");
                 }
 
             }
@@ -125,9 +121,9 @@ public class SetDefinitionCreateHandler extends DefaultHandler {
 
         return s;
     }
-    
+
     public Map<String, String> getSetProperties() {
         return this.setDefinitionProperties;
     }
-  
+
 }

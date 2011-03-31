@@ -43,85 +43,49 @@ import de.escidoc.core.common.exceptions.system.SystemException;
  */
 public class ActionHandler implements ActionHandlerInterface {
 
-
-
     private ActionHandlerInterface business;
 
     /**
      * See Interface for functional description.
-     * 
-     * @param contextId
-     * @param actions
-     * @return
-     * @throws ContextNotFoundException
-     * @throws XmlCorruptedException
-     * @throws XmlSchemaValidationException
-     * @throws AuthenticationException
-     * @throws AuthorizationException
-     * @throws SystemException
-     *
      */
     @Override
-    public String createUnsecuredActions(
-        final String contextId, final String actions)
-        throws ContextNotFoundException, 
-        XmlCorruptedException, XmlSchemaValidationException,
-        AuthenticationException, AuthorizationException, SystemException {
+    public String createUnsecuredActions(final String contextId, final String actions) throws ContextNotFoundException,
+        XmlCorruptedException, XmlSchemaValidationException, AuthenticationException, AuthorizationException,
+        SystemException {
 
         return business.createUnsecuredActions(contextId, actions);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param contextId
-     * @throws ContextNotFoundException
-     * @throws AuthenticationException
-     * @throws AuthorizationException
-     * @throws SystemException
-     * @see ActionHandlerInterface
-     *      #deleteUnsecuredActions(java.lang.String)
      *
+     * @see ActionHandlerInterface #deleteUnsecuredActions(java.lang.String)
      */
     @Override
-    public void deleteUnsecuredActions(final String contextId)
-        throws ContextNotFoundException, AuthenticationException,
-        AuthorizationException, SystemException {
+    public void deleteUnsecuredActions(final String contextId) throws ContextNotFoundException,
+        AuthenticationException, AuthorizationException, SystemException {
 
         business.deleteUnsecuredActions(contextId);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param contextId
-     * @return
-     * @throws ContextNotFoundException
-     * @throws AuthenticationException
-     * @throws AuthorizationException
-     * @throws SystemException
-     * @see ActionHandlerInterface
-     *      #retrieveUnsecuredActions(java.lang.String)
      *
+     * @see ActionHandlerInterface #retrieveUnsecuredActions(java.lang.String)
      */
     @Override
-    public String retrieveUnsecuredActions(final String contextId)
-        throws ContextNotFoundException, AuthenticationException,
-        AuthorizationException, SystemException {
+    public String retrieveUnsecuredActions(final String contextId) throws ContextNotFoundException,
+        AuthenticationException, AuthorizationException, SystemException {
 
         return business.retrieveUnsecuredActions(contextId);
     }
 
-
-
     /**
      * Injects the business object.
-     * 
-     * @param business
-     *            The business layer bean
+     *
+     * @param business The business layer bean
      */
-    public void setBusiness(
-        final ActionHandlerInterface business) {
+    public void setBusiness(final ActionHandlerInterface business) {
 
         this.business = business;
     }

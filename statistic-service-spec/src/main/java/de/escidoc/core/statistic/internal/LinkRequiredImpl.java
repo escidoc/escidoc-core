@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * Default implementation of {@link LinkRequired}.
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "linkRequired", namespace="http://www.escidoc.de/schemas/commontypes/0.3")
+@XmlType(name = "linkRequired", namespace = "http://www.escidoc.de/schemas/commontypes/0.3")
 public class LinkRequiredImpl implements LinkRequired {
 
     @XmlAttribute(required = true)
@@ -43,8 +43,7 @@ public class LinkRequiredImpl implements LinkRequired {
     @Override
     public String toString() {
         return "LinkRequiredImpl{" + // NON-NLS
-                "objid='" + this.objid + '\'' +  // NON-NLS
-                '}'; // NON-NLS
+            "objid='" + this.objid + '\'' + // NON-NLS
+            '}'; // NON-NLS
     }
 }
-

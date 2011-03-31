@@ -48,51 +48,41 @@ import java.util.List;
 
 /**
  * StAX handler for predecessor relation of Organizational Unit.
- * 
+ *
  * @author Steffen Wagner
- * 
  */
 public class OrganizationalUnitPredecessorsHandler extends HandlerBase {
 
     private final List<Predecessor> predecessors = new ArrayList<Predecessor>();
 
     private static final String XPATH_PREDECESSOR =
-            '/' + XmlUtility.NAME_ORGANIZATIONAL_UNIT + '/'
-            + XmlUtility.NAME_PREDECESSORS + '/' + XmlUtility.NAME_PREDECESSOR;
+        '/' + XmlUtility.NAME_ORGANIZATIONAL_UNIT + '/' + XmlUtility.NAME_PREDECESSORS + '/'
+            + XmlUtility.NAME_PREDECESSOR;
 
     /**
-     * 
-     * @param parser
-     *            The StAX parser.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
+     * @param parser The StAX parser.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    public OrganizationalUnitPredecessorsHandler(final StaxParser parser)
-        throws WebserverSystemException {
+    public OrganizationalUnitPredecessorsHandler(final StaxParser parser) throws WebserverSystemException {
 
         super(parser);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param element
-     *            StAX Parser StartElement
+     *
+     * @param element StAX Parser StartElement
      * @return StAX Parser StartElement
-     * @throws SystemException
-     *             Thrown if getting instance Utility failed.
-     * @throws MissingAttributeValueException
-     *             Thrown if OU predecessor reference is not set (neither over
-     *             href nor objid)
+     * @throws SystemException                Thrown if getting instance Utility failed.
+     * @throws MissingAttributeValueException Thrown if OU predecessor reference is not set (neither over href nor
+     *                                        objid)
      * @throws OrganizationalUnitNotFoundException
-     *             Thrown if the referenced Organizational Units does not exist.
-     * @throws InvalidContentException
-     *             Thrown if value of Attribute is invalid (e.g. type).
+     *                                        Thrown if the referenced Organizational Units does not exist.
+     * @throws InvalidContentException        Thrown if value of Attribute is invalid (e.g. type).
      */
     @Override
-    public StartElement startElement(final StartElement element)
-        throws SystemException, MissingAttributeValueException,
-        OrganizationalUnitNotFoundException, InvalidContentException {
+    public StartElement startElement(final StartElement element) throws SystemException,
+        MissingAttributeValueException, OrganizationalUnitNotFoundException, InvalidContentException {
 
         final String curPath = getParser().getCurPath();
 
@@ -102,35 +92,26 @@ public class OrganizationalUnitPredecessorsHandler extends HandlerBase {
             try {
                 objid =
                     XmlUtility.getIdFromURI(element
-                        .getAttribute(Constants.XLINK_URI,
-                            Elements.ATTRIBUTE_XLINK_HREF).getValue());
+                        .getAttribute(Constants.XLINK_URI, Elements.ATTRIBUTE_XLINK_HREF).getValue());
             }
             catch (final NoSuchAttributeException e) {
                 try {
-                    objid =
-                        element.getAttribute(null,
-                            Elements.ATTRIBUTE_XLINK_OBJID).getValue();
+                    objid = element.getAttribute(null, Elements.ATTRIBUTE_XLINK_OBJID).getValue();
                 }
                 catch (final NoSuchAttributeException e1) {
-                    throw new MissingAttributeValueException(
-                        "Predecessor attribute '"
-                            + Elements.ATTRIBUTE_XLINK_HREF + "' or '"
-                            + Elements.ATTRIBUTE_XLINK_OBJID
-                            + "' has to be set! ", e1);
+                    throw new MissingAttributeValueException("Predecessor attribute '" + Elements.ATTRIBUTE_XLINK_HREF
+                        + "' or '" + Elements.ATTRIBUTE_XLINK_OBJID + "' has to be set! ", e1);
                 }
             }
 
             final String type;
             try {
                 type =
-                    XmlUtility.getIdFromURI(element.getAttribute(null,
-                        Elements.PREDECESSOR_ATTRIBUTE_FORM).getValue());
+                    XmlUtility.getIdFromURI(element.getAttribute(null, Elements.PREDECESSOR_ATTRIBUTE_FORM).getValue());
             }
             catch (final NoSuchAttributeException e) {
-                throw new MissingAttributeValueException(
-                    "Predecessor attribute '"
-                        + Elements.PREDECESSOR_ATTRIBUTE_FORM
-                        + "' has to be set! ", e);
+                throw new MissingAttributeValueException("Predecessor attribute '"
+                    + Elements.PREDECESSOR_ATTRIBUTE_FORM + "' has to be set! ", e);
             }
 
             Utility.getInstance().checkIsOrganizationalUnit(objid);
@@ -144,7 +125,7 @@ public class OrganizationalUnitPredecessorsHandler extends HandlerBase {
 
     /**
      * Get list of predecessors of OU.
-     * 
+     *
      * @return list of predecessors
      */
     public List<Predecessor> getPredecessors() {
@@ -153,15 +134,12 @@ public class OrganizationalUnitPredecessorsHandler extends HandlerBase {
 
     /**
      * Get PredecessorType from String.
-     * 
-     * @param predecessorForm
-     *            PredecessorType
+     *
+     * @param predecessorForm PredecessorType
      * @return PredecessorForm
-     * @throws InvalidContentException
-     *             Thrown if PredecessorType is not supported.
+     * @throws InvalidContentException Thrown if PredecessorType is not supported.
      */
-    private static PredecessorForm getPredecessorForm(final String predecessorForm)
-        throws InvalidContentException {
+    private static PredecessorForm getPredecessorForm(final String predecessorForm) throws InvalidContentException {
 
         if (predecessorForm.equals(PredecessorForm.SPLITTING.getLabel())) {
             return PredecessorForm.SPLITTING;
@@ -178,8 +156,7 @@ public class OrganizationalUnitPredecessorsHandler extends HandlerBase {
         else if (predecessorForm.equals(PredecessorForm.REPLACEMENT.getLabel())) {
             return PredecessorForm.REPLACEMENT;
         }
-        throw new InvalidContentException("Unsupported type '"
-            + predecessorForm + "' for predecessors.");
+        throw new InvalidContentException("Unsupported type '" + predecessorForm + "' for predecessors.");
     }
 
 }

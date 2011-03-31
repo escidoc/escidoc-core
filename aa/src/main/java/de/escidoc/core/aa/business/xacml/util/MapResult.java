@@ -34,12 +34,9 @@ import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
- * Class encapsulating the mapping from aa attribute id to the identified
- * used in the triple store.
- * 
+ * Class encapsulating the mapping from aa attribute id to the identified used in the triple store.
  *
  * @author Torsten Tetteroo
- * 
  */
 public class MapResult {
 
@@ -61,12 +58,9 @@ public class MapResult {
 
     /**
      * The constructor.
-     * 
-     * @param cacheId
-     *            The id used in the triple store
-     * @param inverse
-     *            The flag indicating if inverse lookup is needed to resolve
-     *            the value of the needed attribute.
+     *
+     * @param cacheId The id used in the triple store
+     * @param inverse The flag indicating if inverse lookup is needed to resolve the value of the needed attribute.
      */
     public MapResult(final String cacheId, final boolean inverse) {
 
@@ -76,24 +70,16 @@ public class MapResult {
 
     /**
      * The constructor.
-     * 
-     * @param cacheId
-     *            The id used in the triple store
-     * @param inverse
-     *            The flag indicating if inverse lookup is needed to resolve
-     *            the value of the needed attribute.
-     * @param hierarchical
-     *            The flag indicating resolving hierarchies is needed to resolve
-     *            the value of the needed attribute.
-     * @param includeHierarchyBase
-     *            The flag indicating if base of hierarchy should also
-     *            be included in result.
+     *
+     * @param cacheId              The id used in the triple store
+     * @param inverse              The flag indicating if inverse lookup is needed to resolve the value of the needed
+     *                             attribute.
+     * @param hierarchical         The flag indicating resolving hierarchies is needed to resolve the value of the
+     *                             needed attribute.
+     * @param includeHierarchyBase The flag indicating if base of hierarchy should also be included in result.
      */
-    public MapResult(
-            final String cacheId, 
-            final boolean inverse, 
-            final boolean hierarchical,
-            final boolean includeHierarchyBase) {
+    public MapResult(final String cacheId, final boolean inverse, final boolean hierarchical,
+        final boolean includeHierarchyBase) {
 
         this.cacheId = cacheId;
         this.inverse = inverse;
@@ -151,20 +137,15 @@ public class MapResult {
     }
 
     /**
-     * @return Returns <code>true</code> if further attribute resolving is
-     *         needed.
+     * @return Returns <code>true</code> if further attribute resolving is needed.
      */
     public boolean hasNext() {
 
         return this.nextAttributeId != null;
     }
 
-
-
     /**
      * See Interface for functional description.
-     * 
-     * @return
      */
     @Override
     public String toString() {
@@ -174,35 +155,28 @@ public class MapResult {
         toStringBuilder.append("cacheId", getCacheId());
         toStringBuilder.append("resolvableId", getresolvableAttributeId());
         toStringBuilder.append("nextAttributeId", getNextAttributeId());
-        toStringBuilder
-            .append("contentTypeId", getContentTypePredicateId());
+        toStringBuilder.append("contentTypeId", getContentTypePredicateId());
         toStringBuilder.append("contentTypeTitle", getContentTypeTitle());
 
         return toStringBuilder.toString();
     }
 
-
-
     /**
-     * @param contentTypePredicateId
-     *            the contentTypePredicateId to set
+     * @param contentTypePredicateId the contentTypePredicateId to set
      */
-    public void setContentTypePredicateId(
-        final String contentTypePredicateId) {
+    public void setContentTypePredicateId(final String contentTypePredicateId) {
         this.contentTypePredicateId = contentTypePredicateId;
     }
 
     /**
-     * @param contentTypeTitle
-     *            the contentTypeTitle to set
+     * @param contentTypeTitle the contentTypeTitle to set
      */
     public void setContentTypeTitle(final String contentTypeTitle) {
         this.contentTypeTitle = contentTypeTitle;
     }
 
     /**
-     * @param nextAttributeId
-     *            the nextAttributeId to set
+     * @param nextAttributeId the nextAttributeId to set
      */
     public void setNextAttributeId(final String nextAttributeId) {
         this.nextAttributeId = nextAttributeId;
@@ -217,29 +191,23 @@ public class MapResult {
 
     /**
      * Sets the attribute id that is resolvable by this MapResult.
-     * 
-     * @param resolvableAttributeId
-     *            The resolvable attribute id.
+     *
+     * @param resolvableAttributeId The resolvable attribute id.
      */
     public void setResolvableAttributeId(final String resolvableAttributeId) {
         this.resolvableAttributeId = resolvableAttributeId;
     }
 
     /**
-     * Gets the where clause to resolve the current part of the path
-     * expression.
-     * 
-     * @param objectId
-     *            The id of the resource (without version information!) for
-     *            that the current part shall be resolved.
-     * @param tsu
-     *            The {@link TripleStoreUtility} to use.
+     * Gets the where clause to resolve the current part of the path expression.
+     *
+     * @param objectId The id of the resource (without version information!) for that the current part shall be
+     *                 resolved.
+     * @param tsu      The {@link TripleStoreUtility} to use.
      * @return Returns the where clause.
      * @throws TripleStoreSystemException e
      */
-    public StringBuffer getResolveCurrentWhereClause(
-            final String objectId,
-            final TripleStoreUtility tsu)
+    public StringBuffer getResolveCurrentWhereClause(final String objectId, final TripleStoreUtility tsu)
         throws TripleStoreSystemException {
 
         // Currently three attributes exist, that needs 'inverse' lookup:
@@ -248,32 +216,25 @@ public class MapResult {
         // identifier need inverse lookup to get the correct dc identifier.
         // Therefore, these attributes have to be handled in a special
         // way.
-        return isInverse() ? tsu.getRetrieveWhereClause(true, getCacheId(), objectId,
-                null, getContentTypePredicateId(), getContentTypeTitle()) : tsu.getRetrieveWhereClause(false, getCacheId(),
-                objectId, null, null, null);
+        return isInverse() ? tsu.getRetrieveWhereClause(true, getCacheId(), objectId, null,
+            getContentTypePredicateId(), getContentTypeTitle()) : tsu.getRetrieveWhereClause(false, getCacheId(),
+            objectId, null, null, null);
     }
 
     /**
-     * Gets the where clause to inverse resolve the current part of the path
-     * expression.
-     * 
-     * @param objectId
-     *            The id of the resource (without the version information!)
-     *            for that the current part shall be resolved.
-     * @param resourceType
-     *            This parameter allows filtering the object list for a
-     *            specified resource type. This parameter may be
-     *            <code>null</code>.
-     * @param tsu
-     *            The {@link TripleStoreUtility} to use.
+     * Gets the where clause to inverse resolve the current part of the path expression.
+     *
+     * @param objectId     The id of the resource (without the version information!) for that the current part shall be
+     *                     resolved.
+     * @param resourceType This parameter allows filtering the object list for a specified resource type. This parameter
+     *                     may be <code>null</code>.
+     * @param tsu          The {@link TripleStoreUtility} to use.
      * @return Returns the where clause.
      * @throws TripleStoreSystemException e
      */
     public StringBuffer getResolveCurrentInverseWhereClause(
-                                        final String objectId, 
-                                        final String resourceType, 
-                                        final TripleStoreUtility tsu)
-                                    throws TripleStoreSystemException {
+        final String objectId, final String resourceType, final TripleStoreUtility tsu)
+        throws TripleStoreSystemException {
 
         // Currently three attributes exist, that needs 'inverse' lookup:
         // item:container and container:container and are stored as a
@@ -285,10 +246,8 @@ public class MapResult {
         // we perform an inverse lookup here, therefore, the
         // inverse flag of the map result must be switched
         // (inverse -> forward, forward -> inverse)
-        return isInverse() ? tsu.getRetrieveWhereClause(false, getCacheId(),
-                objectId, null, null, null) : tsu.getRetrieveWhereClause(true, getCacheId(), objectId,
-                resourceType, getContentTypePredicateId(),
+        return isInverse() ? tsu.getRetrieveWhereClause(false, getCacheId(), objectId, null, null, null) : tsu
+            .getRetrieveWhereClause(true, getCacheId(), objectId, resourceType, getContentTypePredicateId(),
                 getContentTypeTitle());
     }
 }
-

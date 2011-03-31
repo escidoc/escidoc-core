@@ -33,102 +33,70 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import java.util.Map;
 
 /**
- * Interface for Fedora Content Relation Object which consist of datastreams
- * managed in Fedora Digital Repository System.
- * 
+ * Interface for Fedora Content Relation Object which consist of datastreams managed in Fedora Digital Repository
+ * System.
+ *
  * @author Steffen Wagner
- * 
  */
 public interface ContentRelationInterface extends FedoraResource {
 
     /**
-     * Sets the RELS-EXT datastream and saves it in fedora. If the datastream is
-     * already set and unchanged, nothing will be done.
-     * 
-     * @param ds
-     *            A Datastream representing the Fedora RELS-EXT datastream.
-     * @throws StreamNotFoundException
-     *             If there is no RELS-EXT datastream of a fedora object with
-     *             <code>id</code>. This is probably an error cause a fedora
-     *             object have to have this datastream.
-     * @throws LockingException
-     *             Thrown if resource is locked.
-     * @throws FedoraSystemException
-     *             Thrown if retrieving datastream from Fedora failed.
-     * @throws TripleStoreSystemException
-     *             Thrown if requesting TripleStore failed.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
+     * Sets the RELS-EXT datastream and saves it in fedora. If the datastream is already set and unchanged, nothing will
+     * be done.
+     *
+     * @param ds A Datastream representing the Fedora RELS-EXT datastream.
+     * @throws StreamNotFoundException    If there is no RELS-EXT datastream of a fedora object with <code>id</code>.
+     *                                    This is probably an error cause a fedora object have to have this datastream.
+     * @throws LockingException           Thrown if resource is locked.
+     * @throws FedoraSystemException      Thrown if retrieving datastream from Fedora failed.
+     * @throws TripleStoreSystemException Thrown if requesting TripleStore failed.
+     * @throws WebserverSystemException   Thrown in case of an internal error.
      */
     @Override
-    void setRelsExt(Datastream ds) throws StreamNotFoundException,
-        LockingException, FedoraSystemException, WebserverSystemException,
-        TripleStoreSystemException;
+    void setRelsExt(Datastream ds) throws StreamNotFoundException, LockingException, FedoraSystemException,
+        WebserverSystemException, TripleStoreSystemException;
 
     /**
-     * Gets all metadata datastreams of the item. The keys are the names of the
-     * datastreams which are unique in item context. Metadata datastreams
-     * <code>alternateId</code> is "metadata".
-     * 
-     * @see Datastream
-     * 
+     * Gets all metadata datastreams of the item. The keys are the names of the datastreams which are unique in item
+     * context. Metadata datastreams <code>alternateId</code> is "metadata".
+     *
      * @return A Map containing the metadata datastreams of this resource.
-     * @throws FedoraSystemException
-     *             If Fedora reports an error.
-     * @throws IntegritySystemException
-     *             If data integrity of Fedora Repository is violated
+     * @throws FedoraSystemException    If Fedora reports an error.
+     * @throws IntegritySystemException If data integrity of Fedora Repository is violated
+     * @see Datastream
      */
-    Map<String, Datastream> getMdRecords() throws FedoraSystemException,
-        IntegritySystemException;
+    Map<String, Datastream> getMdRecords() throws FedoraSystemException, IntegritySystemException;
 
     /**
      * Sets all metadata datastreams of the item. For each datastream in the map
-     * 
-     * @link{this.setMdRecord() is called. Metadata datastreams which are not
-     *                          the map but saved in Fedora will be deleted from
-     *                          Fedora Digital Repository.
-     * 
-     * @param mdRecords
-     *            A Map containing the metadata datastreams of this resource.
-     * @throws LockingException
-     *             Thrown if resource is locked.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     *
+     * @param mdRecords A Map containing the metadata datastreams of this resource.
+     * @throws LockingException Thrown if resource is locked.
+     * @throws SystemException  Thrown in case of an internal error.
      */
-    void setMdRecords(final Map<String, Datastream> mdRecords)
-        throws LockingException, SystemException;
+    void setMdRecords(final Map<String, Datastream> mdRecords) throws LockingException, SystemException;
 
     /**
      * Gets the metadata datastream specified by <code>name</code> of the item.
-     * 
-     * @param name
-     *            The name of a matadata datastream.
+     *
+     * @param name The name of a matadata datastream.
      * @return A metadata datastreams of this resource.
-     * @throws StreamNotFoundException
-     *             If there is no metadata datastream with given name of a
-     *             fedora object with <code>id</code>.
-     * @throws FedoraSystemException
-     *             If Fedora reports an error.
-     * @throws MdRecordNotFoundException
-     *             If there exist no metadata record with the given name.
+     * @throws StreamNotFoundException   If there is no metadata datastream with given name of a fedora object with
+     *                                   <code>id</code>.
+     * @throws FedoraSystemException     If Fedora reports an error.
+     * @throws MdRecordNotFoundException If there exist no metadata record with the given name.
      */
-    Datastream getMdRecord(String name) throws StreamNotFoundException,
-        FedoraSystemException, MdRecordNotFoundException;
+    Datastream getMdRecord(String name) throws StreamNotFoundException, FedoraSystemException,
+        MdRecordNotFoundException;
 
     /**
-     * Sets the metadata datastream specified by <code>name</code> and saves it
-     * in fedora. If the datastream is already set and unchanged, nothing will
-     * be done.
-     * 
-     * @param name
-     *            The name of a matadata datastream.
-     * @param ds
-     *            A metadata datastreams of this resource.
-     * @throws LockingException
-     *             Thrown if resource is locked.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
+     * Sets the metadata datastream specified by <code>name</code> and saves it in fedora. If the datastream is already
+     * set and unchanged, nothing will be done.
+     *
+     * @param name The name of a matadata datastream.
+     * @param ds   A metadata datastreams of this resource.
+     * @throws LockingException Thrown if resource is locked.
+     * @throws SystemException  Thrown in case of an internal error.
      */
-    void setMdRecord(final String name, final Datastream ds)
-        throws LockingException, SystemException;
+    void setMdRecord(final String name, final Datastream ds) throws LockingException, SystemException;
 }

@@ -28,26 +28,25 @@
  */
 package de.escidoc.core.sm.business;
 
-
 /**
  * Constants.
- * 
+ *
  * @author Michael Hoppe
  */
 public final class Constants {
-    
+
     /**
      * Private Constructor.
      */
-    private Constants() { }
+    private Constants() {
+    }
 
     /**
      * Database-Constants.
      */
     public static final String SM_SCHEMA_NAME = "sm";
 
-    public static final String AGGREGATION_DEFINITIONS_TABLE_NAME =
-        "aggregation_definitions";
+    public static final String AGGREGATION_DEFINITIONS_TABLE_NAME = "aggregation_definitions";
 
     public static final String STATISTIC_DATA_TABLE_NAME = "statistic_data";
 
@@ -65,14 +64,11 @@ public final class Constants {
 
     public static final String DATABASE_FIELD_TYPE_DAYDATE = "daydate";
 
-    public static final String DATABASE_FIELD_TYPE_XPATH_BOOLEAN =
-        "xpath-boolean";
+    public static final String DATABASE_FIELD_TYPE_XPATH_BOOLEAN = "xpath-boolean";
 
-    public static final String DATABASE_FIELD_TYPE_XPATH_STRING =
-        "xpath-string";
+    public static final String DATABASE_FIELD_TYPE_XPATH_STRING = "xpath-string";
 
-    public static final String DATABASE_FIELD_TYPE_XPATH_NUMERIC =
-        "xpath-numeric";
+    public static final String DATABASE_FIELD_TYPE_XPATH_NUMERIC = "xpath-numeric";
 
     public static final String DATABASE_FIELD_TYPE_FREE_SQL = "free-sql";
 
@@ -95,22 +91,18 @@ public final class Constants {
     /**
      * Aggregation-Definition selector types.
      */
-    public static final String AGGREGATION_DEFINITION_TABLE_SELECTOR_TYPE =
-        "statistic-table";
+    public static final String AGGREGATION_DEFINITION_TABLE_SELECTOR_TYPE = "statistic-table";
 
-    public static final String AGGREGATION_DEFINITION_EXTERNAL_SELECTOR_TYPE =
-        "external";
+    public static final String AGGREGATION_DEFINITION_EXTERNAL_SELECTOR_TYPE = "external";
 
     /**
      * Aggregation-Definition Element names + types.
      */
-    public static final String AGGREGATION_DEFINITION_ROOT_ELEMENT_NAME =
-        "aggregation-definition";
+    public static final String AGGREGATION_DEFINITION_ROOT_ELEMENT_NAME = "aggregation-definition";
 
     public static final String COUNT_CUMULATION_FIELD = "count-cumulation";
 
-    public static final String DIFFERENCE_CUMULATION_FIELD =
-        "difference-cumulation";
+    public static final String DIFFERENCE_CUMULATION_FIELD = "difference-cumulation";
 
     public static final String INFO_FIELD = "info";
 
@@ -141,8 +133,7 @@ public final class Constants {
     /**
      * Report-Definition Element names.
      */
-    public static final String REPORT_DEFINITION_ROOT_ELEMENT_NAME =
-        "report-definition";
+    public static final String REPORT_DEFINITION_ROOT_ELEMENT_NAME = "report-definition";
 
     /**
      * Scope Element names.
@@ -170,23 +161,18 @@ public final class Constants {
     public static final String AGGREGATION_DEFINITION_CONTEXT_PATH =
         "de.escidoc.core.sm.bindings.aggregationdefinition";
 
-    public static final String REPORT_PARAMETERS_CONTEXT_PATH =
-        "de.escidoc.core.sm.bindings.reportparameters";
+    public static final String REPORT_PARAMETERS_CONTEXT_PATH = "de.escidoc.core.sm.bindings.reportparameters";
 
-    public static final String REPORT_DEFINITION_CONTEXT_PATH =
-        "de.escidoc.core.sm.bindings.reportdefinition";
+    public static final String REPORT_DEFINITION_CONTEXT_PATH = "de.escidoc.core.sm.bindings.reportdefinition";
 
-    public static final String SCOPE_CONTEXT_PATH =
-        "de.escidoc.core.sm.bindings.scope";
+    public static final String SCOPE_CONTEXT_PATH = "de.escidoc.core.sm.bindings.scope";
 
     /**
      * Hibernate Constants.
      */
-    public static final String AGGREGATION_DEFINITION_HIBERNATE_TABLE_NAME =
-        "AggregationDefinition";
+    public static final String AGGREGATION_DEFINITION_HIBERNATE_TABLE_NAME = "AggregationDefinition";
 
-    public static final String REPORT_DEFINITION_HIBERNATE_TABLE_NAME =
-        "ReportDefinition";
+    public static final String REPORT_DEFINITION_HIBERNATE_TABLE_NAME = "ReportDefinition";
 
     public static final String SCOPE_HIBERNATE_TABLE_NAME = "Scope";
 

@@ -36,47 +36,33 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 
 /**
  * Interface of an StatisticData handler of the business layer.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 public interface StatisticDataHandlerInterface {
 
     /**
      * Validates xmlData and puts it in message-queue.
-     * 
-     * @param xmlData
-     *            Statistic Data as xml in statistic-data schema.
-     * 
+     *
+     * @param xmlData Statistic Data as xml in statistic-data schema.
      * @throws MissingMethodParameterException
-     *             ex
-     * @throws SystemException
-     *             ex
-     * 
+     *                         ex
+     * @throws SystemException ex
      */
-    void create(String xmlData) throws MissingMethodParameterException,
-        SystemException;
+    void create(String xmlData) throws MissingMethodParameterException, SystemException;
 
     /**
      * Creates new Statistic Data with given xmlData.
-     * 
-     * @param xmlData
-     *            Statistic Data as xml in statistic-data schema.
-     * 
-     * @throws ScopeNotFoundException
-     *             ex
-     * @throws XmlSchemaValidationException
-     *             ex
-     * @throws XmlCorruptedException
-     *             ex
+     *
+     * @param xmlData Statistic Data as xml in statistic-data schema.
+     * @throws ScopeNotFoundException       ex
+     * @throws XmlSchemaValidationException ex
+     * @throws XmlCorruptedException        ex
      * @throws MissingMethodParameterException
-     *             ex
-     * @throws SystemException
-     *             ex
-     * 
+     *                                      ex
+     * @throws SystemException              ex
      */
-    void insertStatisticData(String xmlData)
-        throws ScopeNotFoundException, XmlSchemaValidationException,
+    void insertStatisticData(String xmlData) throws ScopeNotFoundException, XmlSchemaValidationException,
         XmlCorruptedException, SystemException, MissingMethodParameterException;
 
 }

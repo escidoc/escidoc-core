@@ -39,9 +39,8 @@ import static org.junit.Assert.fail;
 
 /**
  * Test the implementation of the Preprocessing resource.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 @RunWith(value = Parameterized.class)
 public class PreprocessingTest extends PreprocessingTestBase {
@@ -49,8 +48,7 @@ public class PreprocessingTest extends PreprocessingTestBase {
     private static int methodCounter = 0;
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public PreprocessingTest(final int transport) {
         super(transport);
@@ -58,9 +56,8 @@ public class PreprocessingTest extends PreprocessingTestBase {
 
     /**
      * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Before
     public void initialize() throws Exception {
@@ -68,9 +65,8 @@ public class PreprocessingTest extends PreprocessingTestBase {
 
     /**
      * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @After
     public void deinitialize() throws Exception {
@@ -79,15 +75,13 @@ public class PreprocessingTest extends PreprocessingTestBase {
 
     /**
      * test preprocessing.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSMPRE1() throws Exception {
         String xml =
-            EscidocRestSoapTestBase.getTemplateAsString(
-                    TEMPLATE_PREPROCESSING_INFO_PATH,
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_PREPROCESSING_INFO_PATH,
                 "escidoc_preprocessing_information1.xml");
         try {
             preprocess("escidoc:aggdef2", xml);

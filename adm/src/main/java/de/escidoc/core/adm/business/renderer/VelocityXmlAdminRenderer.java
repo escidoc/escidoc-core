@@ -44,7 +44,7 @@ import java.util.Set;
 
 /**
  * Admin renderer implementation using the velocity template engine.
- * 
+ *
  * @author Michael Hoppe
  */
 public class VelocityXmlAdminRenderer implements AdminRendererInterface {
@@ -52,15 +52,10 @@ public class VelocityXmlAdminRenderer implements AdminRendererInterface {
     /**
      * See Interface for functional description.
      *
-     * @return
-     * @throws WebserverSystemException
-     * @see AdminRendererInterface
-     *      #renderIndexConfiguration(HashMap<String, HashMap<String, 
-            HashMap<String, Object>>>)
+     * @see AdminRendererInterface #renderIndexConfiguration(HashMap<String, HashMap<String, HashMap<String, Object>>>)
      */
     @Override
-    public String renderIndexConfiguration(final Map<String, Map<String,
-            Map<String, Object>>> indexConfiguration)
+    public String renderIndexConfiguration(final Map<String, Map<String, Map<String, Object>>> indexConfiguration)
         throws WebserverSystemException {
         final Map<String, Object> values = new HashMap<String, Object>();
         addCommonValues(values);
@@ -70,50 +65,34 @@ public class VelocityXmlAdminRenderer implements AdminRendererInterface {
 
     /**
      * Adds the common values to the provided map.
-     * 
-     * @param values
-     *            The map to add values to.
-     * 
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
+     *
+     * @param values The map to add values to.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private static void addCommonValues(final Map<String, Object> values)
-        throws WebserverSystemException {
+    private static void addCommonValues(final Map<String, Object> values) throws WebserverSystemException {
 
-        values.put("indexConfigurationNamespacePrefix", 
-                Constants.INDEX_CONFIGURATION_NS_PREFIX);
-        values.put("indexConfigurationNamespace", 
-                Constants.INDEX_CONFIGURATION_NS_URI);
-        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, XmlUtility
-                .getEscidocBaseUrl());
+        values.put("indexConfigurationNamespacePrefix", Constants.INDEX_CONFIGURATION_NS_PREFIX);
+        values.put("indexConfigurationNamespace", Constants.INDEX_CONFIGURATION_NS_URI);
+        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, XmlUtility.getEscidocBaseUrl());
     }
 
     /**
-     * Adds the values of the indexConfiguration 
-     * that shall be rendered to the provided
-     * {@link Map}.
-     * 
-     * @param indexConfiguration
-     * @param values
-     * @throws WebserverSystemException
+     * Adds the values of the indexConfiguration that shall be rendered to the provided {@link Map}.
      */
     @SuppressWarnings("unchecked")
     private static void addIndexConfigurationValues(
-            final Map<String, Map<String, Map<String, Object>>> indexConfiguration, final Map<String, Object> values)
+        final Map<String, Map<String, Map<String, Object>>> indexConfiguration, final Map<String, Object> values)
         throws WebserverSystemException {
-        final Collection<HashMap<String, Object>> resourcesVm =
-            new ArrayList<HashMap<String, Object>>();
+        final Collection<HashMap<String, Object>> resourcesVm = new ArrayList<HashMap<String, Object>>();
         if (indexConfiguration != null && !indexConfiguration.isEmpty()) {
             final Set<Entry<String, Map<String, Map<String, Object>>>> indexConfigurationEntrySet =
-                    indexConfiguration.entrySet();
+                indexConfiguration.entrySet();
             for (final Entry<String, Map<String, Map<String, Object>>> entry : indexConfigurationEntrySet) {
-                final HashMap<String, Object> resourceVm =
-                                    new HashMap<String, Object>();
+                final HashMap<String, Object> resourceVm = new HashMap<String, Object>();
                 resourceVm.put("resourceName", entry.getKey());
                 final Map<String, Map<String, Object>> indexMap = entry.getValue();
                 if (indexMap != null && !indexMap.isEmpty()) {
-                    final Collection<HashMap<String, Object>> indexesVm =
-                                new ArrayList<HashMap<String, Object>>();
+                    final Collection<HashMap<String, Object>> indexesVm = new ArrayList<HashMap<String, Object>>();
                     final Set<Entry<String, Map<String, Object>>> indexMapEntrySet = indexMap.entrySet();
                     for (final Entry<String, Map<String, Object>> indexMapEntry : indexMapEntrySet) {
                         final HashMap<String, Object> indexVm = new HashMap<String, Object>();
@@ -125,18 +104,18 @@ public class VelocityXmlAdminRenderer implements AdminRendererInterface {
                                 if ("prerequisites".equals(indexParamName)) {
                                     final HashMap<String, String> prerequisitesMap =
                                         (HashMap<String, String>) mapEntry.getValue();
-                                    if (prerequisitesMap != null  && !prerequisitesMap.isEmpty()) {
+                                    if (prerequisitesMap != null && !prerequisitesMap.isEmpty()) {
                                         final Map<String, String> prerequisitesVm = new HashMap<String, String>();
-                                        final Set<Entry<String, String>>prerequisitesMapEntrySet =
-                                                prerequisitesMap.entrySet();
-                                        for (final Entry<String, String> prerequisitesMapEntry :
-                                                prerequisitesMapEntrySet) {
-                                            prerequisitesVm.put(
-                                                    prerequisitesMapEntry.getKey(), prerequisitesMapEntry.getValue());
+                                        final Set<Entry<String, String>> prerequisitesMapEntrySet =
+                                            prerequisitesMap.entrySet();
+                                        for (final Entry<String, String> prerequisitesMapEntry : prerequisitesMapEntrySet) {
+                                            prerequisitesVm.put(prerequisitesMapEntry.getKey(), prerequisitesMapEntry
+                                                .getValue());
                                         }
                                         indexVm.put("prerequisites", prerequisitesVm);
                                     }
-                                } else {
+                                }
+                                else {
                                     indexVm.put(indexParamName, indexParamsMap.get(indexParamName));
                                 }
                             }
@@ -153,13 +132,11 @@ public class VelocityXmlAdminRenderer implements AdminRendererInterface {
 
     /**
      * Gets the {@link AdminXmlProvider} object.
-     * 
+     *
      * @return Returns the {@link AdminXmlProvider} object.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private static AdminXmlProvider getAdminXmlProvider()
-        throws WebserverSystemException {
+    private static AdminXmlProvider getAdminXmlProvider() throws WebserverSystemException {
 
         return AdminXmlProvider.getInstance();
     }

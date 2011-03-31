@@ -36,40 +36,32 @@ import de.escidoc.core.test.common.client.servlet.Constants;
 import javax.xml.rpc.ServiceException;
 
 /**
- * Offers access methods to the escidoc REST and soap interface of the policy
- * decision point.
- * 
+ * Offers access methods to the escidoc REST and soap interface of the policy decision point.
+ *
  * @author Torsten Tetteroo
- * 
  */
 public class PolicyDecisionPointClient extends ClientBase {
 
     private PolicyDecisionPoint soapClient = null;
 
     /**
-     * 
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public PolicyDecisionPointClient(final int transport) {
         super(transport);
     }
 
     /**
-     * 
      * @return Returns the soapClient.
-     * @throws ServiceException
-     *             If the client creation fails.
+     * @throws ServiceException If the client creation fails.
      */
     @Override
     public PolicyDecisionPoint getSoapClient() throws ServiceException {
 
         if (soapClient == null) {
-            PolicyDecisionPointServiceLocator serviceLocator =
-                new PolicyDecisionPointServiceLocator(getEngineConfig());
-            serviceLocator
-                .setPolicyDecisionPointServiceEndpointAddress(checkSoapAddress(serviceLocator
-                    .getPolicyDecisionPointServiceAddress()));
+            PolicyDecisionPointServiceLocator serviceLocator = new PolicyDecisionPointServiceLocator(getEngineConfig());
+            serviceLocator.setPolicyDecisionPointServiceEndpointAddress(checkSoapAddress(serviceLocator
+                .getPolicyDecisionPointServiceAddress()));
             soapClient = serviceLocator.getPolicyDecisionPointService();
         }
         return soapClient;
@@ -77,18 +69,14 @@ public class PolicyDecisionPointClient extends ClientBase {
 
     /**
      * Evaluates the provided authorization requests.
-     * 
-     * @param requestsXml
-     *            The xml representation of a list of authorization requests.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param requestsXml The xml representation of a list of authorization requests.
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     public Object evaluate(final String requestsXml) throws Exception {
 
-        return callEsciDoc("Pdp.evaluate", METHOD_EVALUATE,
-            Constants.HTTP_METHOD_PUT, Constants.PDP_BASE_URI, new String[] {},
-            changeToString(requestsXml));
+        return callEsciDoc("Pdp.evaluate", METHOD_EVALUATE, Constants.HTTP_METHOD_PUT, Constants.PDP_BASE_URI,
+            new String[] {}, changeToString(requestsXml));
     }
 }

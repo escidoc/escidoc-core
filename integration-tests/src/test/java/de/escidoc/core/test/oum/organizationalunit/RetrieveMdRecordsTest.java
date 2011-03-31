@@ -39,29 +39,16 @@ import org.w3c.dom.Document;
 public class RetrieveMdRecordsTest extends OrganizationalUnitTestBase {
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public RetrieveMdRecordsTest(final int transport) {
         super(transport);
     }
 
     /**
-     * Test retrieving the properties of an organizational unit. The
-     * organizational unit has no external-id.
-     * 
-     * @test.name Retrieve Organization Details of Organizational Unit - Success
-     * @test.id OUM_RP-1-1
-     * @test.input
-     *          <ul>
-     *          <li>Id of existing organizational unit.</li>
-     *          </ul>
-     * @test.expected: XML representation of the list of properties of the
-     *                 organizational unit.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test retrieving the properties of an organizational unit. The organizational unit has no external-id.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumROd1_1() throws Exception {
@@ -70,30 +57,29 @@ public class RetrieveMdRecordsTest extends OrganizationalUnitTestBase {
         String id = getObjidValue(xml);
         String organizationDetails = retrieveMdRecords(id);
         assertXmlValidOrganizationalUnit(organizationDetails);
-        assertEscidocMdRecord(id, getDocument(organizationDetails),
-            selectSingleNode(xml, XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS),
-            startTimestamp);
+        assertEscidocMdRecord(id, getDocument(organizationDetails), selectSingleNode(xml,
+            XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS), startTimestamp);
 
     }
 
-//    /**
-//     * Test retrieving the properties of an organizational unit. The
-//     * organizational unit contains an external-id.
-//     * 
-//     * @test.name Retrieve Organization Details of Organizational Unit - Success
-//     * @test.id OUM_RP-1-2
-//     * @test.input
-//     *          <ul>
-//     *          <li>Id of existing organizational unit.</li>
-//     *          </ul>
-//     * @test.expected: XML representation of the list of properties of the
-//     *                 organizational unit.
-//     * @test.status Revoked - no more requirements for external id handling at
-//     *              the moment
-//     * 
-//     * @throws Exception
-//     *             If anything fails.
-//     */
+    //    /**
+    //     * Test retrieving the properties of an organizational unit. The
+    //     * organizational unit contains an external-id.
+    //     *
+    //     * @test.name Retrieve Organization Details of Organizational Unit - Success
+    //     * @test.id OUM_RP-1-2
+    //     * @test.input
+    //     *          <ul>
+    //     *          <li>Id of existing organizational unit.</li>
+    //     *          </ul>
+    //     * @test.expected: XML representation of the list of properties of the
+    //     *                 organizational unit.
+    //     * @test.status Revoked - no more requirements for external id handling at
+    //     *              the moment
+    //     *
+    //     * @throws Exception
+    //     *             If anything fails.
+    //     */
     // public void testOumROd1_2() throws Exception {
     //
     // Document xml =
@@ -106,22 +92,11 @@ public class RetrieveMdRecordsTest extends OrganizationalUnitTestBase {
     // XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS), startTimestamp);
     //
     // }
+
     /**
-     * Test declining retrieving organization-details of organizational unit
-     * with providing unknown id.
-     * 
-     * @test.name Retrieve Organization Details of Organizational Unit - Unknown
-     *            Id
-     * @test.id OUM_RP-2
-     * @test.input
-     *          <ul>
-     *          <li>Unknown id</li>
-     *          </ul>
-     * @test.expected: OrganizationalUnitNotFoundException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test declining retrieving organization-details of organizational unit with providing unknown id.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumROd2() throws Exception {
@@ -137,21 +112,10 @@ public class RetrieveMdRecordsTest extends OrganizationalUnitTestBase {
     }
 
     /**
-     * Test declining retrieving organization-details of organizational unit
-     * with providing id of existing resource of another resource type.
-     * 
-     * @test.name Retrieve Organization Details of Organizational Unit - Id of
-     *            Another Resource Type
-     * @test.id OUM_RP-2-2
-     * @test.input
-     *          <ul>
-     *          <li>Id of a resource of another type</li>
-     *          </ul>
-     * @test.expected: OrganizationalUnitNotFoundException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test declining retrieving organization-details of organizational unit with providing id of existing resource of
+     * another resource type.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumROd2_2() throws Exception {
@@ -167,21 +131,9 @@ public class RetrieveMdRecordsTest extends OrganizationalUnitTestBase {
     }
 
     /**
-     * Test declining retrieving organization-details of organizational unit
-     * without providing id.
-     * 
-     * @test.name Retrieve Organization Details of Organizational Unit - Missing
-     *            Id
-     * @test.id OUM_RP-3-1
-     * @test.input
-     *          <ul>
-     *          <li>No id is provided</li>
-     *          </ul>
-     * @test.expected: OrganizationalUnitNotFoundException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test declining retrieving organization-details of organizational unit without providing id.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumROd3_1() throws Exception {
@@ -197,21 +149,9 @@ public class RetrieveMdRecordsTest extends OrganizationalUnitTestBase {
     }
 
     /**
-     * Test declining retrieving of organization-details of organizational unit
-     * without providing id.
-     * 
-     * @test.name Retrieve Organization Details of Organizational Unit - Missing
-     *            Id
-     * @test.id OUM_RP-3-2
-     * @test.input
-     *          <ul>
-     *          <li>No id is provided</li>
-     *          </ul>
-     * @test.expected: OrganizationalUnitNotFoundException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test declining retrieving of organization-details of organizational unit without providing id.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testOumROd3_2() throws Exception {

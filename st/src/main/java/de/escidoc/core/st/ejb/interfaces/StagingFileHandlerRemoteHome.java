@@ -10,9 +10,9 @@ import java.rmi.RemoteException;
 public interface StagingFileHandlerRemoteHome extends EJBHome {
 
     String COMP_NAME = "java:comp/env/ejb/StagingFileHandler";
+
     String JNDI_NAME = "ejb/StagingFileHandler";
 
-    StagingFileHandlerRemote create()
-            throws CreateException, RemoteException;
+    StagingFileHandlerRemote create() throws CreateException, RemoteException;
 
 }

@@ -26,8 +26,6 @@ import java.util.List;
 
 /**
  * StartElementWithChildElements.
- * 
- * 
  */
 public class StartElementWithChildElements extends StartElementWithText {
 
@@ -65,24 +63,16 @@ public class StartElementWithChildElements extends StartElementWithText {
 
     /**
      * StartElementWithChildElements.
-     * 
-     * @param localName
-     *            The localName (node).
-     * @param namespace
-     *            The namespace.
-     * @param prefix
-     *            The prefix.
-     * @param children
-     *            The childrens
-     * @param elementText
-     *            The element text
-     * @param nscontext
-     *            TODO
+     *
+     * @param localName   The localName (node).
+     * @param namespace   The namespace.
+     * @param prefix      The prefix.
+     * @param children    The childrens
+     * @param elementText The element text
+     * @param nscontext   TODO
      */
-    public StartElementWithChildElements(final String localName,
-        final String namespace, final String prefix,
-        final List<StartElementWithText> children, final String elementText,
-        final NamespaceContext nscontext) {
+    public StartElementWithChildElements(final String localName, final String namespace, final String prefix,
+        final List<StartElementWithText> children, final String elementText, final NamespaceContext nscontext) {
 
         super(localName, namespace, prefix, elementText, nscontext);
         this.children = children;
@@ -90,25 +80,17 @@ public class StartElementWithChildElements extends StartElementWithText {
 
     /**
      * StartElementWithChildElements.
-     * 
-     * @param localName
-     *            The localName (node).
-     * @param namespace
-     *            The namespace.
-     * @param prefix
-     *            The prefix.
-     * @param children
-     *            The childrens
-     * @param elementText
-     *            The element text
-     * @param nscontext
-     *            TODO
-     * @param position
+     *
+     * @param localName   The localName (node).
+     * @param namespace   The namespace.
+     * @param prefix      The prefix.
+     * @param children    The childrens
+     * @param elementText The element text
+     * @param nscontext   TODO
      */
-    public StartElementWithChildElements(final String localName,
-        final String namespace, final String prefix,
-        final List<StartElementWithText> children, final String elementText,
-        final NamespaceContext nscontext, final int position) {
+    public StartElementWithChildElements(final String localName, final String namespace, final String prefix,
+        final List<StartElementWithText> children, final String elementText, final NamespaceContext nscontext,
+        final int position) {
 
         super(localName, namespace, prefix, elementText, nscontext);
         this.children = children;
@@ -118,9 +100,8 @@ public class StartElementWithChildElements extends StartElementWithText {
 
     /**
      * Set children elements.
-     * 
-     * @param childs
-     *            Vector of child elements.
+     *
+     * @param childs Vector of child elements.
      */
     public void setChildrenElements(final List<StartElementWithText> childs) {
         this.children = childs;
@@ -128,9 +109,8 @@ public class StartElementWithChildElements extends StartElementWithText {
 
     /**
      * Add a child element.
-     * 
-     * @param child
-     *            A new child element.
+     *
+     * @param child A new child element.
      */
     public void addChildElement(final StartElementWithText child) {
         if (this.children == null) {
@@ -141,7 +121,7 @@ public class StartElementWithChildElements extends StartElementWithText {
 
     /**
      * Get all child elements.
-     * 
+     *
      * @return all child elements
      */
     public List<StartElementWithText> getChildrenElements() {

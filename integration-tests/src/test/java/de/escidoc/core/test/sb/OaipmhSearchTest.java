@@ -50,9 +50,8 @@ import static org.junit.Assert.fail;
 
 /**
  * Test the implementation of the search resource.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 @RunWith(value = Parameterized.class)
 public class OaipmhSearchTest extends SearchTestBase {
@@ -70,8 +69,7 @@ public class OaipmhSearchTest extends SearchTestBase {
     private static String startTime = "";
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public OaipmhSearchTest(final int transport) {
         super(transport);
@@ -81,9 +79,8 @@ public class OaipmhSearchTest extends SearchTestBase {
 
     /**
      * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Before
     public void initialize() throws Exception {
@@ -94,9 +91,8 @@ public class OaipmhSearchTest extends SearchTestBase {
 
     /**
      * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @After
     public void deinitialize() throws Exception {
@@ -109,57 +105,37 @@ public class OaipmhSearchTest extends SearchTestBase {
 
     /**
      * insert item(s) into system for the tests.
-     * 
-     * @test.name prepare
-     * @test.id PREPARE
-     * @test.input
-     * @test.inputDescription
-     * @test.expected
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     private void prepare() throws Exception {
         LOGGER.info("starting OAIPMHSearchTest at "
-                + new DateTime(System.currentTimeMillis() 
-                + (60 * 60 * 1000), DateTimeZone.UTC).toString());
+            + new DateTime(System.currentTimeMillis() + (60 * 60 * 1000), DateTimeZone.UTC).toString());
         // create empty indices/////////////////////////////////////////////////
         String urlParameters =
-            "?operation=updateIndex" + "&action=createEmpty"
-                + "&repositoryName=escidocrepository" + "&INDEX_NAME=";
+            "?operation=updateIndex" + "&action=createEmpty" + "&repositoryName=escidocrepository" + "&INDEX_NAME=";
         String httpUrl =
-            HttpHelper
-                .createUrl(
-                    de.escidoc.core.test.common.client.servlet.Constants.PROTOCOL,
-                    de.escidoc.core.test.common.client.servlet.Constants.HOST_PORT,
-                    de.escidoc.core.test.common.client.servlet.Constants.FEDORAGSEARCH_BASE_URI
-                        + urlParameters);
-        HttpHelper
-            .executeHttpRequest(
-                de.escidoc.core.test.common.client.servlet.Constants.HTTP_METHOD_GET,
-                httpUrl, null, null, null);
+            HttpHelper.createUrl(de.escidoc.core.test.common.client.servlet.Constants.PROTOCOL,
+                de.escidoc.core.test.common.client.servlet.Constants.HOST_PORT,
+                de.escidoc.core.test.common.client.servlet.Constants.FEDORAGSEARCH_BASE_URI + urlParameters);
+        HttpHelper.executeHttpRequest(de.escidoc.core.test.common.client.servlet.Constants.HTTP_METHOD_GET, httpUrl,
+            null, null, null);
         // /////////////////////////////////////////////////////////////////////
 
-        startTime =
-            new DateTime(System.currentTimeMillis(), DateTimeZone.UTC)
-                .toString();
+        startTime = new DateTime(System.currentTimeMillis(), DateTimeZone.UTC).toString();
         // Create Container/////////////////////////////////////////////////////
         try {
             containerIds = new String[Constants.NUM_OAIPMH_CONTAINERS];
             for (int i = 0; i < Constants.NUM_OAIPMH_CONTAINERS; i++) {
                 String xmlData =
-                    EscidocRestSoapTestBase.getTemplateAsString(
-                        TEMPLATE_CONTAINER_SEARCH_PATH, 
-                        "escidoc_search_container" + i
-                            + "_" + getTransport(false) + ".xml");
+                    EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_CONTAINER_SEARCH_PATH,
+                        "escidoc_search_container" + i + "_" + getTransport(false) + ".xml");
                 String xml = container.create(xmlData);
                 String lastModDate = getLastModificationDate(xml);
                 containerIds[i] = getId(xml);
 
                 // submit container
-                container.submit(containerIds[i],
-                    "<param last-modification-date=\"" + lastModDate + "\" />");
+                container.submit(containerIds[i], "<param last-modification-date=\"" + lastModDate + "\" />");
 
                 // assign pids
                 String pidParam = getContainerPidParam(containerIds[i]);
@@ -170,8 +146,7 @@ public class OaipmhSearchTest extends SearchTestBase {
                 // release container
                 xml = container.retrieve(containerIds[i]);
                 lastModDate = getLastModificationDate(xml);
-                container.release(containerIds[i],
-                    "<param last-modification-date=\"" + lastModDate + "\" />");
+                container.release(containerIds[i], "<param last-modification-date=\"" + lastModDate + "\" />");
 
             }
             Thread.sleep(30000);
@@ -186,16 +161,14 @@ public class OaipmhSearchTest extends SearchTestBase {
             for (int i = 0; i < Constants.NUM_OAIPMH_ITEMS; i++) {
                 // Create Item submit and release it //////////////////////////
                 String xmlData =
-                    EscidocRestSoapTestBase.getTemplateAsString(
-                        TEMPLATE_ITEM_SEARCH_PATH, "escidoc_search_item" + i + "_"
-                            + getTransport(false) + ".xml");
+                    EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_SEARCH_PATH, "escidoc_search_item" + i
+                        + "_" + getTransport(false) + ".xml");
                 String xml = container.createItem(containerIds[0], xmlData);
                 String lastModDate = getLastModificationDate(xml);
                 itemIds[i] = getId(xml);
 
                 // submit item
-                item.submit(itemIds[i], "<param last-modification-date=\""
-                    + lastModDate + "\" />");
+                item.submit(itemIds[i], "<param last-modification-date=\"" + lastModDate + "\" />");
 
                 // assignPids
                 Document itemDoc = EscidocRestSoapTestBase.getDocument(xml);
@@ -217,8 +190,7 @@ public class OaipmhSearchTest extends SearchTestBase {
                 // release item
                 xml = item.retrieve(itemIds[i]);
                 lastModDate = getLastModificationDate(xml);
-                item.release(itemIds[i], "<param last-modification-date=\""
-                    + lastModDate + "\" />");
+                item.release(itemIds[i], "<param last-modification-date=\"" + lastModDate + "\" />");
 
                 Thread.sleep(10000);
 
@@ -240,22 +212,19 @@ public class OaipmhSearchTest extends SearchTestBase {
             String xml = container.retrieve(containerIds[0]);
             String lastModDate = getLastModificationDate(xml);
             // submit container
-            container.submit(containerIds[0],
-                "<param last-modification-date=\"" + lastModDate + "\" />");
+            container.submit(containerIds[0], "<param last-modification-date=\"" + lastModDate + "\" />");
 
             String version =
-                selectSingleNode(EscidocRestSoapTestBase.getDocument(xml),
-                    "/container/properties/version/number").getTextContent();
+                selectSingleNode(EscidocRestSoapTestBase.getDocument(xml), "/container/properties/version/number")
+                    .getTextContent();
             // assign pids
             String pidParam = getContainerPidParam(containerIds[0]);
-            container.assignVersionPid(containerIds[0] + ":" + version,
-                pidParam);
+            container.assignVersionPid(containerIds[0] + ":" + version, pidParam);
 
             // release container
             xml = container.retrieve(containerIds[0]);
             lastModDate = getLastModificationDate(xml);
-            container.release(containerIds[0],
-                "<param last-modification-date=\"" + lastModDate + "\" />");
+            container.release(containerIds[0], "<param last-modification-date=\"" + lastModDate + "\" />");
 
             Thread.sleep(10000);
 
@@ -267,24 +236,14 @@ public class OaipmhSearchTest extends SearchTestBase {
         catch (final Exception e) {
             LOGGER.error("", e);
         }
-        waitForIndexerToAppear(
-                itemIds[Constants.NUM_OAIPMH_ITEMS - 1], INDEX_NAME);
+        waitForIndexerToAppear(itemIds[Constants.NUM_OAIPMH_ITEMS - 1], INDEX_NAME);
         Thread.sleep(60000);
     }
 
     /**
      * explain operation without parameters for existing database xyz.
-     * 
-     * @test.name explain (1)
-     * @test.id SB_OAIPMH_EX-1
-     * @test.input
-     * @test.inputDescription
-     * @test.expected explain plan for the corresponding database according
-     *                ZeeRex Schema
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBOAIPMHEX1() throws Exception {
@@ -292,26 +251,14 @@ public class OaipmhSearchTest extends SearchTestBase {
         String response = explain(parameters, INDEX_NAME);
         assertXmlValidExplainPlan(response);
         assertEquals("srw/search/" + INDEX_NAME, getDatabase(response));
-        assertEquals(Constants.OAIPMH_INDEX_FIELD_COUNT,
-            getIndexFieldCount(response));
-        assertEquals(Constants.OAIPMH_SORT_FIELD_COUNT,
-            getSortFieldCount(response));
+        assertEquals(Constants.OAIPMH_INDEX_FIELD_COUNT, getIndexFieldCount(response));
+        assertEquals(Constants.OAIPMH_SORT_FIELD_COUNT, getSortFieldCount(response));
     }
 
     /**
-     * explain operation where operation=explain for existing database xyz is
-     * explicitly given.
-     * 
-     * @test.name explain (2)
-     * @test.id SB_OAIPMH_EX-2
-     * @test.input existing database
-     * @test.inputDescription database has to exist
-     * @test.expected explain plan for the corresponding database according
-     *                ZeeRex Schema
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * explain operation where operation=explain for existing database xyz is explicitly given.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBOAIPMHEX2() throws Exception {
@@ -320,24 +267,14 @@ public class OaipmhSearchTest extends SearchTestBase {
         String response = explain(parameters, INDEX_NAME);
         assertXmlValidExplainPlan(response);
         assertEquals("srw/search/" + INDEX_NAME, getDatabase(response));
-        assertEquals(Constants.OAIPMH_INDEX_FIELD_COUNT,
-            getIndexFieldCount(response));
-        assertEquals(Constants.OAIPMH_SORT_FIELD_COUNT,
-            getSortFieldCount(response));
+        assertEquals(Constants.OAIPMH_INDEX_FIELD_COUNT, getIndexFieldCount(response));
+        assertEquals(Constants.OAIPMH_SORT_FIELD_COUNT, getSortFieldCount(response));
     }
 
     /**
      * explain operation with operation=explain for a not existing database zzz.
-     * 
-     * @test.name explain (2)
-     * @test.id SB_OAIPMH_EX-2
-     * @test.input existing database
-     * @test.inputDescription database has to exist
-     * @test.expected error message describing the reason for failure
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBOAIPMHEX3() throws Exception {
@@ -355,20 +292,8 @@ public class OaipmhSearchTest extends SearchTestBase {
 
     /**
      * Test searching for a single term.
-     * 
-     * @test.name Single Term Search
-     * @test.id SB_OAIPMH_SR-1
-     * @test.input mandatory request parameters: - any single term query -
-     *             existing database
-     * @test.inputDescription execute single term query on given database
-     * @test.expected List of search records according to eSciDoc Default Schema
-     *                for search results first record to be returned ist at the
-     *                1st position in the sequence of matched records. only
-     *                released objects are found.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBOAIPMHSR1() throws Exception {
@@ -384,17 +309,8 @@ public class OaipmhSearchTest extends SearchTestBase {
 
     /**
      * Database not existing.
-     * 
-     * @test.name Database not existing
-     * @test.id SB_OAIPMH_SR-2
-     * @test.input mandatory request parameters - any single term query -
-     *             non-existing database --- no additional request parameters
-     * @test.inputDescription input contains wrong database
-     * @test.expected error message describing the reason for failure
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBOAIPMHSR2() throws Exception {
@@ -412,23 +328,8 @@ public class OaipmhSearchTest extends SearchTestBase {
 
     /**
      * Request parameter startRecord \u2013 (1).
-     * 
-     * @test.name Request parameter startRecord \u2013 (1)
-     * @test.id SB_OAIPMH_SR-6
-     * @test.input mandatory request parameters: - any single term query which
-     *             results in more hits than are shown on one page by default -
-     *             existing database --- additional request parameter: -
-     *             startRecord = one digit greater than the number of hits that
-     *             are shown on one page by default
-     * @test.inputDescription
-     * @test.expected List of search records according to eSciDoc Default Schema
-     *                for search results the 1st record to be returned ist at
-     *                the corresponding position in the sequence of matched
-     *                records only released objects are found
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBOAIPMHSR6() throws Exception {
@@ -443,19 +344,8 @@ public class OaipmhSearchTest extends SearchTestBase {
 
     /**
      * Request parameter startrecord \u2013 (2).
-     * 
-     * @test.name Request parameter startrecord \u2013 (2)
-     * @test.id SB_OAIPMH_SR-7
-     * @test.input mandatory request parameters: - any single term query which
-     *             results in more hits than are shown on one page by default -
-     *             existing database --- additional request parameter: -
-     *             startRecord = 0
-     * @test.inputDescription
-     * @test.expected error message describing the reason for failure
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBOAIPMHSR7() throws Exception {
@@ -475,24 +365,8 @@ public class OaipmhSearchTest extends SearchTestBase {
 
     /**
      * Request parameter maximumRecords \u2013 (1).
-     * 
-     * @test.name Request parameter maximumRecords \u2013 (1)
-     * @test.id SB_OAIPMH_SR-8
-     * @test.input mandatory request parameters: - any single term query which
-     *             results in many hits - existing database --- additional
-     *             request parameter: - maximumRecords = any value greater than
-     *             0
-     * @test.inputDescription
-     * @test.expected List of search records according to eSciDoc Default Schema
-     *                for search results first record to be returned ist at the
-     *                1st position in the sequence of matched records Number of
-     *                records to be returned may be equal or less than the value
-     *                of the parameter maximumRecords only released objects are
-     *                found
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBOAIPMHSR8() throws Exception {
@@ -508,18 +382,8 @@ public class OaipmhSearchTest extends SearchTestBase {
 
     /**
      * Request parameter maximumRecords \u2013 (2).
-     * 
-     * @test.name Request parameter maximumRecords \u2013 (2)
-     * @test.id SB_OAIPMH_SR-9
-     * @test.input --- mandatory request parameters: - any single term query
-     *             which results in many hits - existing database --- additional
-     *             request parameter: - maximumRecords = 0
-     * @test.inputDescription
-     * @test.expected
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBOAIPMHSR9() throws Exception {
@@ -531,9 +395,7 @@ public class OaipmhSearchTest extends SearchTestBase {
         try {
             response = search(parameters, INDEX_NAME);
             assertXmlValidSearchResult(response);
-            assertEquals(
-                    "1/java.lang.IllegalArgumentException: nDocs must be &gt; 0", 
-                    getDiagnostics(response));
+            assertEquals("1/java.lang.IllegalArgumentException: nDocs must be &gt; 0", getDiagnostics(response));
         }
         catch (final Exception e) {
         }
@@ -541,18 +403,8 @@ public class OaipmhSearchTest extends SearchTestBase {
 
     /**
      * Request parameter maximumRecords \u2013 (3).
-     * 
-     * @test.name Request parameter maximumRecords \u2013 (3)
-     * @test.id SB_OAIPMH_SR-10
-     * @test.input mandatory request parameters: - any single term query which
-     *             results in many hits - existing database --- additional
-     *             request parameter: - maximumRecords = any negative value
-     * @test.inputDescription
-     * @test.expected error message describing the reason for failure
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBOAIPMHSR10() throws Exception {
@@ -571,19 +423,8 @@ public class OaipmhSearchTest extends SearchTestBase {
 
     /**
      * Request parameter recordPacking \u2013 (1).
-     * 
-     * @test.name Request parameter recordPacking \u2013 (1)
-     * @test.id SB_OAIPMH_SR-11
-     * @test.input mandatory request parameters: - any single term query which
-     *             results in some hits - existing database --- additional
-     *             request parameter: - RecordPacking = xml
-     * @test.inputDescription
-     * @test.expected List of search records (xml) according to eSciDoc Default
-     *                Schema for search results
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBOAIPMHSR11() throws Exception {
@@ -598,18 +439,8 @@ public class OaipmhSearchTest extends SearchTestBase {
 
     /**
      * Request parameter recordPacking \u2013 (2).
-     * 
-     * @test.name Request parameter recordPacking \u2013 (2)
-     * @test.id SB_OAIPMH_SR-12
-     * @test.input mandatory request parameters: - any single term query which
-     *             results in some hits - existing database --- additional
-     *             request parameter: - RecordPacking = string
-     * @test.inputDescription
-     * @test.expected List of search records (string)
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBOAIPMHSR12() throws Exception {
@@ -623,19 +454,8 @@ public class OaipmhSearchTest extends SearchTestBase {
 
     /**
      * Request parameter recordPacking \u2013 (3).
-     * 
-     * @test.name Request parameter recordPacking \u2013 (3)
-     * @test.id SB_OAIPMH_SR-13
-     * @test.input mandatory request parameters: - any single term query which
-     *             results in some hits - existing database --- additional
-     *             request parameter: - RecordPacking = any invalid value, e.g.
-     *             invalid
-     * @test.inputDescription
-     * @test.expected error message describing the reason for failure
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBOAIPMHSR13() throws Exception {
@@ -650,20 +470,8 @@ public class OaipmhSearchTest extends SearchTestBase {
 
     /**
      * Request parameter recordSchema \u2013 (1).
-     * 
-     * @test.name Request parameter recordSchema \u2013 (1)
-     * @test.id SB_OAIPMH_SR-14
-     * @test.input mandatory request parameters: - any single term query which
-     *             results in some hits - existing database --- additional
-     *             request parameter: - valid RecordSchema shall explicitly be
-     *             named
-     * @test.inputDescription
-     * @test.expected List of search records according to the explicitly named
-     *                eSciDoc Schema for search results
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBOAIPMHSR14() throws Exception {
@@ -678,18 +486,8 @@ public class OaipmhSearchTest extends SearchTestBase {
 
     /**
      * Request parameter recordSchema \u2013 (2).
-     * 
-     * @test.name Request parameter recordSchema \u2013 (2)
-     * @test.id SB_OAIPMH_SR-15
-     * @test.input mandatory request parameters: - any single term query which
-     *             results in some hits - existing database --- additional
-     *             request parameter: - invalid RecordSchema
-     * @test.inputDescription
-     * @test.expected error message describing the reason for failure
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBOAIPMHSR15() throws Exception {
@@ -704,20 +502,8 @@ public class OaipmhSearchTest extends SearchTestBase {
 
     /**
      * Request parameter sortKeys \u2013 (1).
-     * 
-     * @test.name Request parameter sortKeys \u2013 (1)
-     * @test.id SB_OAIPMH_SR-16
-     * @test.input mandatory request parameters: - any single term query which
-     *             results in some hits - existing database --- additional
-     *             request parameter: - a single valid sortkey
-     * @test.inputDescription
-     * @test.expected List of search records according to eSciDoc Default Schema
-     *                for search results search results are sorted by
-     *                corresponding sortkey
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBOAIPMHSR16() throws Exception {
@@ -741,20 +527,8 @@ public class OaipmhSearchTest extends SearchTestBase {
 
     /**
      * Request parameter sortKeys \u2013 (2).
-     * 
-     * @test.name Request parameter sortKeys \u2013 (2)
-     * @test.id SB_OAIPMH_SR-17
-     * @test.input mandatory request parameters: - any single term query which
-     *             results in some hits - existing database --- additional
-     *             request parameter: - two valid sortkeys
-     * @test.inputDescription
-     * @test.expected List of search records according to eSciDoc Default Schema
-     *                for search results search results are sorted by
-     *                corresponding sortkeys
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBOAIPMHSR17() throws Exception {
@@ -778,18 +552,8 @@ public class OaipmhSearchTest extends SearchTestBase {
 
     /**
      * Request parameter sortKeys \u2013 (3).
-     * 
-     * @test.name Request parameter sortKeys \u2013 (3)
-     * @test.id SB_OAIPMH_SR-18
-     * @test.input mandatory request parameters: - any single term query which
-     *             results in some hits - existing database --- additional
-     *             request parameter: - invalid sortkey
-     * @test.inputDescription
-     * @test.expected error message describing the reason for failure
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBOAIPMHSR18() throws Exception {
@@ -804,26 +568,15 @@ public class OaipmhSearchTest extends SearchTestBase {
 
     /**
      * : Request parameter stylesheet \u2013 (1).
-     * 
-     * @test.name : Request parameter stylesheet \u2013 (1)
-     * @test.id SB_OAIPMH_SR-21
-     * @test.input mandatory request parameters: - any single term query which
-     *             results in some hits - existing database --- additional
-     *             request parameter: - existent styleSheet
-     * @test.inputDescription
-     * @test.expected
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBOAIPMHSR21() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.md-record-identifier="
             + "\"escidoc@http://escidoc.mpg.de/metadataprofile/schema/0.1/\"");
-        parameters.put(FILTER_PARAMETER_STYLESHEET,
-            "http://escidev5:8080/srw/searchRetrieveResponse.xsl");
+        parameters.put(FILTER_PARAMETER_STYLESHEET, "http://escidev5:8080/srw/searchRetrieveResponse.xsl");
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
         assertEquals("3", getNumberOfHits(response));
@@ -831,18 +584,8 @@ public class OaipmhSearchTest extends SearchTestBase {
 
     /**
      * Request parameter stylesheet \u2013 (2).
-     * 
-     * @test.name Request parameter stylesheet \u2013 (2)
-     * @test.id SB_OAIPMH_SR-22
-     * @test.input mandatory request parameters: - any single term query which
-     *             results in some hits - existing database --- additional
-     *             request parameter: - nonexistent styleSheet
-     * @test.inputDescription
-     * @test.expected error message describing the reason for failure
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBOAIPMHSR22() throws Exception {
@@ -857,25 +600,13 @@ public class OaipmhSearchTest extends SearchTestBase {
 
     /**
      * Boolean Operator AND.
-     * 
-     * @test.name Boolean Operator AND
-     * @test.id SB_OAIPMH_SR-23
-     * @test.input --- mandatory request parameters: - query where two terms are
-     *             connected by Boolean AND - existing database --- no
-     *             additional request parameters
-     * @test.inputDescription
-     * @test.expected List of search records according to eSciDoc Default Schema
-     *                for search results Both search terms have to match
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBOAIPMHSR23() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
-        parameters.put(FILTER_PARAMETER_QUERY, "escidoc.publication.title all "
-            + "\"motor getriebe\"");
+        parameters.put(FILTER_PARAMETER_QUERY, "escidoc.publication.title all " + "\"motor getriebe\"");
         String response = search(parameters, INDEX_NAME);
         assertEquals("1", getNumberOfHits(response));
         parameters = new HashMap<String, String>();
@@ -888,25 +619,13 @@ public class OaipmhSearchTest extends SearchTestBase {
 
     /**
      * Boolean Operator OR .
-     * 
-     * @test.name Boolean Operator OR
-     * @test.id SB_OAIPMH_SR-24
-     * @test.input mandatory request parameters: - query where two terms are
-     *             connected by Boolean OR - existing database --- no additional
-     *             request parameters
-     * @test.inputDescription
-     * @test.expected List of search records according to eSciDoc Default Schema
-     *                for search results Only one search term needs to match
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBOAIPMHSR24() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
-        parameters.put(FILTER_PARAMETER_QUERY, "escidoc.publication.title any "
-            + "\"motor kalibrierung\"");
+        parameters.put(FILTER_PARAMETER_QUERY, "escidoc.publication.title any " + "\"motor kalibrierung\"");
         String response = search(parameters, INDEX_NAME);
         assertEquals("2", getNumberOfHits(response));
         parameters = new HashMap<String, String>();
@@ -919,19 +638,8 @@ public class OaipmhSearchTest extends SearchTestBase {
 
     /**
      * Use of * as Wildcard (1).
-     * 
-     * @test.name Use of * as Wildcard (1)
-     * @test.id SB_OAIPMH_SR-25
-     * @test.input mandatory request parameters: - single term query where start
-     *             of term is masked by * - existing database --- no additional
-     *             request parameters
-     * @test.inputDescription
-     * @test.expected List of search records according to eSciDoc Default Schema
-     *                for search results
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBOAIPMHSR25() throws Exception {
@@ -940,19 +648,8 @@ public class OaipmhSearchTest extends SearchTestBase {
 
     /**
      * Use of * as Wildcard (2).
-     * 
-     * @test.name Use of * as Wildcard (2)
-     * @test.id SB_OAIPMH_SR-26
-     * @test.input mandatory request parameters: - single term query where
-     *             wildcard * is used in the middle of the term - existing
-     *             database --- no additional request parameters
-     * @test.inputDescription
-     * @test.expected List of search records according to eSciDoc Default Schema
-     *                for search results
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBOAIPMHSR26() throws Exception {
@@ -965,19 +662,8 @@ public class OaipmhSearchTest extends SearchTestBase {
 
     /**
      * Use of * as Wildcard (3).
-     * 
-     * @test.name Use of * as Wildcard (3)
-     * @test.id SB_OAIPMH_SR-27
-     * @test.input mandatory request parameters: - single term query where end
-     *             of term is masked by * - existing database --- no additional
-     *             request parameters
-     * @test.inputDescription
-     * @test.expected List of search records according to eSciDoc Default Schema
-     *                for search results
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBOAIPMHSR27() throws Exception {
@@ -990,19 +676,8 @@ public class OaipmhSearchTest extends SearchTestBase {
 
     /**
      * Use of ? as Wildcard (1).
-     * 
-     * @test.name Use of ? as Wildcard (1)
-     * @test.id SB_OAIPMH_SR-28
-     * @test.input mandatory request parameters: - single term query where start
-     *             of term is masked by ? - existing database --- no additional
-     *             request parameters
-     * @test.inputDescription
-     * @test.expected List of search records according to eSciDoc Default Schema
-     *                for search results
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBOAIPMHSR28() throws Exception {
@@ -1011,19 +686,8 @@ public class OaipmhSearchTest extends SearchTestBase {
 
     /**
      * Use of ? as Wildcard (2).
-     * 
-     * @test.name Use of ? as Wildcard (2)
-     * @test.id SB_OAIPMH_SR-29
-     * @test.input mandatory request parameters: - single term query where
-     *             wildcard ? is used in the middle of the term - existing
-     *             database --- no additional request parameters
-     * @test.inputDescription
-     * @test.expected List of search records according to eSciDoc Default Schema
-     *                for search results
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBOAIPMHSR29() throws Exception {
@@ -1036,19 +700,8 @@ public class OaipmhSearchTest extends SearchTestBase {
 
     /**
      * Use of ? as Wildcard (3) .
-     * 
-     * @test.name Use of ? as Wildcard (3)
-     * @test.id SB_OAIPMH_SR-30
-     * @test.input mandatory request parameters: - single term query where end
-     *             of term is masked by ? - existing database --- no additional
-     *             request parameters
-     * @test.inputDescription
-     * @test.expected List of search records according to eSciDoc Default Schema
-     *                for search results
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBOAIPMHSR30() throws Exception {
@@ -1061,19 +714,8 @@ public class OaipmhSearchTest extends SearchTestBase {
 
     /**
      * Fuzzy Search.
-     * 
-     * @test.name Fuzzy Search
-     * @test.id SB_OAIPMH_SR-31
-     * @test.input mandatory request parameters: - single term query where
-     *             relation modifier fuzzy is provided - existing database ---
-     *             no additional request parameters
-     * @test.inputDescription
-     * @test.expected List of search records according to eSciDoc Default Schema
-     *                for search results
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBOAIPMHSR31() throws Exception {
@@ -1086,24 +728,14 @@ public class OaipmhSearchTest extends SearchTestBase {
 
     /**
      * : Umlaut as request-parameter .
-     * 
-     * @test.name : Umlaut as request-parameter \u2013 (1)
-     * @test.id SB_OAIPMH_SR-32
-     * @test.input mandatory request parameters: - any single term query which
-     *             contains umlaut and results in some hits - existing database
-     * @test.inputDescription
-     * @test.expected
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBOAIPMHSR32() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, new String(
-            "escidoc.publication.creator.person.complete-name=patentanw\u00e4lte"
-                .getBytes(ClientBase.DEFAULT_CHARSET),
+            "escidoc.publication.creator.person.complete-name=patentanw\u00e4lte".getBytes(ClientBase.DEFAULT_CHARSET),
             ClientBase.DEFAULT_CHARSET));
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
@@ -1112,26 +744,15 @@ public class OaipmhSearchTest extends SearchTestBase {
 
     /**
      * : UTF-8 characters as request-parameter .
-     * 
-     * @test.name : UTF-8 characters as request-parameter \u2013 (1)
-     * @test.id SB_OAIPMH_SR-34
-     * @test.input mandatory request parameters: - any single term query which
-     *             contains Special sign and results in some hits - existing
-     *             database
-     * @test.inputDescription
-     * @test.expected
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBOAIPMHSR34() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, new String(
             ("escidoc.publication.source.title=\u5161\u4e5f\u5305\u56e0\u6c98"
-                + "\u6c13\u4fb7\u67f5\u82d7\u5b6b\u5b6b\u8ca1")
-                .getBytes(ClientBase.DEFAULT_CHARSET),
+                + "\u6c13\u4fb7\u67f5\u82d7\u5b6b\u5b6b\u8ca1").getBytes(ClientBase.DEFAULT_CHARSET),
             ClientBase.DEFAULT_CHARSET));
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
@@ -1140,230 +761,133 @@ public class OaipmhSearchTest extends SearchTestBase {
 
     /**
      * : Availability of userdefined indexes for items.
-     * 
-     * @test.name : search in userdefined indexes, restrict to items
-     * @test.id SB_OAIPMH_SR-35
-     * @test.input mandatory request parameters: - any single term query which
-     *             searches an any.. index and results in some hits - existing
-     *             database
-     * @test.inputDescription
-     * @test.expected
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBOAIPMHSR35() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
-        for (String indexLabel : Constants.OAIPMH_ITEM_INDEX_USERDEFINED_SEARCHES
-            .keySet()) {
-            HashMap<String, String> info =
-                Constants.OAIPMH_ITEM_INDEX_USERDEFINED_SEARCHES
-                    .get(indexLabel);
+        for (String indexLabel : Constants.OAIPMH_ITEM_INDEX_USERDEFINED_SEARCHES.keySet()) {
+            HashMap<String, String> info = Constants.OAIPMH_ITEM_INDEX_USERDEFINED_SEARCHES.get(indexLabel);
             String searchString = info.get("searchString");
             String expectedHits = info.get("expectedHits");
-            parameters.put(FILTER_PARAMETER_QUERY, searchString
-                + " and escidoc.objecttype=item");
+            parameters.put(FILTER_PARAMETER_QUERY, searchString + " and escidoc.objecttype=item");
             String response = search(parameters, INDEX_NAME);
             assertXmlValidSearchResult(response);
-            assertEquals("expected " + expectedHits + " for " + indexLabel
-                + " but was " + getNumberOfHits(response), expectedHits,
-                getNumberOfHits(response));
+            assertEquals("expected " + expectedHits + " for " + indexLabel + " but was " + getNumberOfHits(response),
+                expectedHits, getNumberOfHits(response));
         }
     }
 
     /**
      * : Availability of userdefined indexes for container.
-     * 
-     * @test.name : search in userdefined indexes, restrict to container
-     * @test.id SB_OAIPMH_SR-36
-     * @test.input mandatory request parameters: - any single term query which
-     *             searches an any.. index and results in some hits - existing
-     *             database
-     * @test.inputDescription
-     * @test.expected
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBOAIPMHSR36() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
-        for (String indexLabel
-            : Constants.OAIPMH_CONTAINER_INDEX_USERDEFINED_SEARCHES.keySet()) {
-            HashMap<String, String> info =
-                Constants.OAIPMH_CONTAINER_INDEX_USERDEFINED_SEARCHES
-                    .get(indexLabel);
+        for (String indexLabel : Constants.OAIPMH_CONTAINER_INDEX_USERDEFINED_SEARCHES.keySet()) {
+            HashMap<String, String> info = Constants.OAIPMH_CONTAINER_INDEX_USERDEFINED_SEARCHES.get(indexLabel);
             String searchString = info.get("searchString");
             String expectedHits = info.get("expectedHits");
-            parameters.put(FILTER_PARAMETER_QUERY, searchString
-                + " and escidoc.objecttype=container");
+            parameters.put(FILTER_PARAMETER_QUERY, searchString + " and escidoc.objecttype=container");
             String response = search(parameters, INDEX_NAME);
             assertXmlValidSearchResult(response);
-            assertEquals("expected " + expectedHits + " for " + indexLabel
-                + " but was " + getNumberOfHits(response), expectedHits,
-                getNumberOfHits(response));
+            assertEquals("expected " + expectedHits + " for " + indexLabel + " but was " + getNumberOfHits(response),
+                expectedHits, getNumberOfHits(response));
         }
     }
 
     /**
      * : Availability of properties indexes for item.
-     * 
-     * @test.name : search in property indexes, restrict to item
-     * @test.id SB_OAIPMH_SR-37
-     * @test.input mandatory request parameters: - any single term query which
-     *             searches an properties index and results in some hits -
-     *             existing database
-     * @test.inputDescription
-     * @test.expected
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBOAIPMHSR37() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
-        for (String indexLabel : Constants.OAIPMH_ITEM_INDEX_PROPERTIES_SEARCHES
-            .keySet()) {
-            HashMap<String, String> info =
-                Constants.OAIPMH_ITEM_INDEX_PROPERTIES_SEARCHES.get(indexLabel);
+        for (String indexLabel : Constants.OAIPMH_ITEM_INDEX_PROPERTIES_SEARCHES.keySet()) {
+            HashMap<String, String> info = Constants.OAIPMH_ITEM_INDEX_PROPERTIES_SEARCHES.get(indexLabel);
             String searchString = info.get("searchString");
             String expectedHits = info.get("expectedHits");
-            parameters.put(FILTER_PARAMETER_QUERY, searchString
-                + " and escidoc.objecttype=item");
+            parameters.put(FILTER_PARAMETER_QUERY, searchString + " and escidoc.objecttype=item");
             String response = search(parameters, INDEX_NAME);
             assertXmlValidSearchResult(response);
-            assertEquals("expected " + expectedHits + " for " + indexLabel
-                + " but was " + getNumberOfHits(response), expectedHits,
-                getNumberOfHits(response));
+            assertEquals("expected " + expectedHits + " for " + indexLabel + " but was " + getNumberOfHits(response),
+                expectedHits, getNumberOfHits(response));
         }
     }
 
     /**
      * : Availability of properties indexes for container.
-     * 
-     * @test.name : search in property indexes, restrict to container
-     * @test.id SB_OAIPMH_SR-38
-     * @test.input mandatory request parameters: - any single term query which
-     *             searches an properties index and results in some hits -
-     *             existing database
-     * @test.inputDescription
-     * @test.expected
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBOAIPMHSR38() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
-        for (String indexLabel
-            : Constants.OAIPMH_CONTAINER_INDEX_PROPERTIES_SEARCHES.keySet()) {
-            HashMap<String, String> info =
-                Constants.OAIPMH_CONTAINER_INDEX_PROPERTIES_SEARCHES
-                    .get(indexLabel);
+        for (String indexLabel : Constants.OAIPMH_CONTAINER_INDEX_PROPERTIES_SEARCHES.keySet()) {
+            HashMap<String, String> info = Constants.OAIPMH_CONTAINER_INDEX_PROPERTIES_SEARCHES.get(indexLabel);
             String searchString = info.get("searchString");
             String expectedHits = info.get("expectedHits");
-            parameters.put(FILTER_PARAMETER_QUERY, searchString
-                + " and escidoc.objecttype=container");
+            parameters.put(FILTER_PARAMETER_QUERY, searchString + " and escidoc.objecttype=container");
             String response = search(parameters, INDEX_NAME);
             assertXmlValidSearchResult(response);
-            assertEquals("expected " + expectedHits + " for " + indexLabel
-                + " but was " + getNumberOfHits(response), expectedHits,
-                getNumberOfHits(response));
+            assertEquals("expected " + expectedHits + " for " + indexLabel + " but was " + getNumberOfHits(response),
+                expectedHits, getNumberOfHits(response));
         }
     }
 
     /**
      * : Availability of metadata indexes for item.
-     * 
-     * @test.name : search in metadata indexes, restrict to item
-     * @test.id SB_OAIPMH_SR-39
-     * @test.input mandatory request parameters: - any single term query which
-     *             searches an properties index and results in some hits -
-     *             existing database
-     * @test.inputDescription
-     * @test.expected
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBOAIPMHSR39() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
-        for (String indexLabel : Constants.OAIPMH_ITEM_INDEX_METADATA_SEARCHES
-            .keySet()) {
-            HashMap<String, String> info =
-                Constants.OAIPMH_ITEM_INDEX_METADATA_SEARCHES.get(indexLabel);
+        for (String indexLabel : Constants.OAIPMH_ITEM_INDEX_METADATA_SEARCHES.keySet()) {
+            HashMap<String, String> info = Constants.OAIPMH_ITEM_INDEX_METADATA_SEARCHES.get(indexLabel);
             String searchString = info.get("searchString");
             String expectedHits = info.get("expectedHits");
-            parameters.put(FILTER_PARAMETER_QUERY, searchString
-                + " and escidoc.objecttype=item");
+            parameters.put(FILTER_PARAMETER_QUERY, searchString + " and escidoc.objecttype=item");
             String response = search(parameters, INDEX_NAME);
             assertXmlValidSearchResult(response);
-            assertEquals("expected " + expectedHits + " for " + indexLabel
-                + " but was " + getNumberOfHits(response), expectedHits,
-                getNumberOfHits(response));
+            assertEquals("expected " + expectedHits + " for " + indexLabel + " but was " + getNumberOfHits(response),
+                expectedHits, getNumberOfHits(response));
         }
     }
 
     /**
      * : Availability of metadata indexes for container.
-     * 
-     * @test.name : search in metadata indexes, restrict to container
-     * @test.id SB_OAIPMH_SR-40
-     * @test.input mandatory request parameters: - any single term query which
-     *             searches an properties index and results in some hits -
-     *             existing database
-     * @test.inputDescription
-     * @test.expected
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBOAIPMHSR40() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
-        for (String indexLabel : Constants.OAIPMH_CONTAINER_INDEX_METADATA_SEARCHES
-            .keySet()) {
-            HashMap<String, String> info =
-                Constants.OAIPMH_CONTAINER_INDEX_METADATA_SEARCHES
-                    .get(indexLabel);
+        for (String indexLabel : Constants.OAIPMH_CONTAINER_INDEX_METADATA_SEARCHES.keySet()) {
+            HashMap<String, String> info = Constants.OAIPMH_CONTAINER_INDEX_METADATA_SEARCHES.get(indexLabel);
             String searchString = info.get("searchString");
             String expectedHits = info.get("expectedHits");
-            parameters.put(FILTER_PARAMETER_QUERY, searchString
-                + " and escidoc.objecttype=container");
+            parameters.put(FILTER_PARAMETER_QUERY, searchString + " and escidoc.objecttype=container");
             String response = search(parameters, INDEX_NAME);
             assertXmlValidSearchResult(response);
-            assertEquals("expected " + expectedHits + " for " + indexLabel
-                + " but was " + getNumberOfHits(response), expectedHits,
-                getNumberOfHits(response));
+            assertEquals("expected " + expectedHits + " for " + indexLabel + " but was " + getNumberOfHits(response),
+                expectedHits, getNumberOfHits(response));
         }
     }
 
     /**
      * : Test searching for dates.
-     * 
-     * @test.name : check search result for correct dates
-     * @test.id SB_SR-56
-     * @test.input mandatory request parameters: - any single date term query
-     *             which results in all hits - existing database
-     * @test.inputDescription
-     * @test.expected
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBOAIPMHSR41() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
-        parameters.put(FILTER_PARAMETER_QUERY, "escidoc.latest-release.date>\"" 
-                                                + startTime + "\"");
+        parameters.put(FILTER_PARAMETER_QUERY, "escidoc.latest-release.date>\"" + startTime + "\"");
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
         assertEquals("3", getNumberOfHits(response));
@@ -1371,53 +895,39 @@ public class OaipmhSearchTest extends SearchTestBase {
 
     /**
      * : Check deleted-element in search result for all ids.
-     * 
-     * @test.name : Check deleted-element in search result for all ids
-     * @test.id SB_OAIPMH_SR-41
-     * @test.input mandatory request parameters: - any single term query which
-     *             searches for a particular objectid - existing database
-     * @test.inputDescription
-     * @test.expected
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testSBOAIPMHSR42() throws Exception {
         for (int i = 0; i < itemIds.length; i++) {
             if (itemIds[i] != null && !itemIds[i].equals("")) {
-                HashMap<String, String> parameters =
-                    new HashMap<String, String>();
+                HashMap<String, String> parameters = new HashMap<String, String>();
                 parameters.put(FILTER_PARAMETER_QUERY, "escidoc.objid=" + itemIds[i]);
                 String response = search(parameters, INDEX_NAME);
                 assertXmlValidSearchResult(response);
                 assertEquals("1", getNumberOfHits(response));
-                assertElementEquals("element has not the expected value",
-                    getDocument(response), "//*[local-name()='deleted']",
-                    "false");
+                assertElementEquals("element has not the expected value", getDocument(response),
+                    "//*[local-name()='deleted']", "false");
             }
         }
         for (int i = 0; i < containerIds.length; i++) {
             if (containerIds[i] != null && !containerIds[i].equals("")) {
-                HashMap<String, String> parameters =
-                    new HashMap<String, String>();
+                HashMap<String, String> parameters = new HashMap<String, String>();
                 parameters.put(FILTER_PARAMETER_QUERY, "escidoc.objid=" + containerIds[i]);
                 String response = search(parameters, INDEX_NAME);
                 assertXmlValidSearchResult(response);
                 assertEquals("1", getNumberOfHits(response));
-                assertElementEquals("element has not the expected value",
-                    getDocument(response), "//*[local-name()='deleted']",
-                    "false");
+                assertElementEquals("element has not the expected value", getDocument(response),
+                    "//*[local-name()='deleted']", "false");
             }
         }
     }
 
     /**
      * withdraw items to update index.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     private void deprepare() throws Exception {
         // Withdraw
@@ -1427,11 +937,8 @@ public class OaipmhSearchTest extends SearchTestBase {
                 if (itemIds[i] != null && !itemIds[i].equals("")) {
                     String xml = item.retrieve(itemIds[i]);
                     String lastModDate = getLastModificationDate(xml);
-                    item.withdraw(itemIds[i],
-                        "<param last-modification-date=\"" + lastModDate
-                            + "\">" + "<withdraw-comment>"
-                            + "This is a withdraw comment."
-                            + "</withdraw-comment>" + "</param>");
+                    item.withdraw(itemIds[i], "<param last-modification-date=\"" + lastModDate + "\">"
+                        + "<withdraw-comment>" + "This is a withdraw comment." + "</withdraw-comment>" + "</param>");
                     // ////////////////////////////////////////////////////////
 
                 }
@@ -1441,14 +948,12 @@ public class OaipmhSearchTest extends SearchTestBase {
                 if (itemIds[i] != null && !itemIds[i].equals("")) {
                     // Do search. Must be 1
                     // results///////////////////////////////////////////
-                    HashMap<String, String> parameters =
-                        new HashMap<String, String>();
+                    HashMap<String, String> parameters = new HashMap<String, String>();
                     parameters.put(FILTER_PARAMETER_QUERY, "escidoc.objid=" + itemIds[i]);
                     String response = search(parameters, INDEX_NAME);
                     assertEquals("1", getNumberOfHits(response));
-                    assertElementEquals("element has not the expected value",
-                        getDocument(response), "//*[local-name()='deleted']",
-                        "true");
+                    assertElementEquals("element has not the expected value", getDocument(response),
+                        "//*[local-name()='deleted']", "true");
                     // ////////////////////////////////////////////////////////
                 }
             }
@@ -1460,11 +965,8 @@ public class OaipmhSearchTest extends SearchTestBase {
                 if (containerIds[i] != null && !containerIds[i].equals("")) {
                     String xml = container.retrieve(containerIds[i]);
                     String lastModDate = getLastModificationDate(xml);
-                    container.withdraw(containerIds[i],
-                        "<param last-modification-date=\"" + lastModDate
-                            + "\">" + "<withdraw-comment>"
-                            + "This is a withdraw comment."
-                            + "</withdraw-comment>" + "</param>");
+                    container.withdraw(containerIds[i], "<param last-modification-date=\"" + lastModDate + "\">"
+                        + "<withdraw-comment>" + "This is a withdraw comment." + "</withdraw-comment>" + "</param>");
                     // ////////////////////////////////////////////////////////
 
                 }
@@ -1474,14 +976,12 @@ public class OaipmhSearchTest extends SearchTestBase {
                 if (containerIds[i] != null && !containerIds[i].equals("")) {
                     // Do search. Must be 1
                     // results///////////////////////////////////////////
-                    HashMap<String, String> parameters =
-                        new HashMap<String, String>();
+                    HashMap<String, String> parameters = new HashMap<String, String>();
                     parameters.put(FILTER_PARAMETER_QUERY, "escidoc.objid=" + containerIds[i]);
                     String response = search(parameters, INDEX_NAME);
                     assertEquals("1", getNumberOfHits(response));
-                    assertElementEquals("element has not the expected value",
-                        getDocument(response), "//*[local-name()='deleted']",
-                        "true");
+                    assertElementEquals("element has not the expected value", getDocument(response),
+                        "//*[local-name()='deleted']", "true");
                     // ////////////////////////////////////////////////////////
                 }
             }

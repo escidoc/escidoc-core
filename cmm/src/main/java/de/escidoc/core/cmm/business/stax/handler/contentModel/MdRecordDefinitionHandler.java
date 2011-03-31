@@ -47,22 +47,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Handler to extract md-record definitions from content-model xml by
- * StaxParser.
- * 
- * @author Frank Schwichtenberg
- * 
+ * Handler to extract md-record definitions from content-model xml by StaxParser.
  *
+ * @author Frank Schwichtenberg
  */
 public class MdRecordDefinitionHandler extends DefaultHandler {
 
-    private static final Logger LOGGER =
-        LoggerFactory.getLogger(MdRecordDefinitionHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MdRecordDefinitionHandler.class);
 
     private final StaxParser parser;
 
-    private String metadataXPath =
-        "/content-model/md-record-definitions/md-record-definition";
+    private String metadataXPath = "/content-model/md-record-definitions/md-record-definition";
 
     private final List<MdRecordDefinitionCreate> mdRecordDefinitions;
 
@@ -74,11 +69,9 @@ public class MdRecordDefinitionHandler extends DefaultHandler {
 
     /**
      * Instantiate a MdRecordDefinitionHandler.
-     * 
-     * @param parser
-     *            The parser.
-     * @param xpath
-     *            Metadata Records XPath (e.g. /item/md-records).
+     *
+     * @param parser The parser.
+     * @param xpath  Metadata Records XPath (e.g. /item/md-records).
      */
     public MdRecordDefinitionHandler(final StaxParser parser, final String xpath) {
 
@@ -89,57 +82,42 @@ public class MdRecordDefinitionHandler extends DefaultHandler {
 
     /**
      * Handle the start of an element.
-     * 
-     * @param element
-     *            The element.
-     * @throws MissingAttributeValueException
-     *             If a required element is not set.
-     * @throws InvalidContentException
-     *             If the parsed XML contains not allowed parts.
-     * @throws WebserverSystemException
-     *             If the eSciDoc configuration file can not be read. FIXME
-     *             should probably not be thrown so late.
-     * @return The element.
-     * @throws MissingAttributeValueException
-     * @throws InvalidContentException
-     * @throws WebserverSystemException
      *
-     * 
-     * 
+     * @param element The element.
+     * @return The element.
+     * @throws MissingAttributeValueException If a required element is not set.
+     * @throws InvalidContentException        If the parsed XML contains not allowed parts.
+     * @throws WebserverSystemException       If the eSciDoc configuration file can not be read. FIXME should probably
+     *                                        not be thrown so late.
      */
     @Override
-    public StartElement startElement(final StartElement element)
-        throws MissingAttributeValueException, InvalidContentException,
-        WebserverSystemException {
+    public StartElement startElement(final StartElement element) throws MissingAttributeValueException,
+        InvalidContentException, WebserverSystemException {
 
         final String currentPath = parser.getCurPath();
         if (currentPath.equals(this.metadataXPath)) {
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Parser reached " + this.metadataXPath);
             }
             this.curMdRecordDefinition = new MdRecordDefinitionCreate();
 
             try {
-                curMdRecordDefinition.setName(element.getAttributeValue(null,
-                    "name"));
+                curMdRecordDefinition.setName(element.getAttributeValue(null, "name"));
             }
             catch (final NoSuchAttributeException e) {
-                throw new InvalidContentException(
-                    "Attribute name required for md-record-definition.", e);
+                throw new InvalidContentException("Attribute name required for md-record-definition.", e);
             }
         }
         else if (currentPath.equals(this.metadataXPath + "/schema")) {
 
             try {
-                curMdRecordDefinition.setSchemaHref(element.getAttributeValue(
-                    Constants.XLINK_NS_URI, "href"));
+                curMdRecordDefinition.setSchemaHref(element.getAttributeValue(Constants.XLINK_NS_URI, "href"));
             }
             catch (final MalformedURLException e) {
                 throw new InvalidContentException(e);
             }
             catch (final IOException e) {
-                throw new WebserverSystemException(
-                    "Configuration could not be read.", e);
+                throw new WebserverSystemException("Configuration could not be read.", e);
             }
             catch (final NoSuchAttributeException e) {
                 throw new InvalidContentException("No href for schema element.", e);

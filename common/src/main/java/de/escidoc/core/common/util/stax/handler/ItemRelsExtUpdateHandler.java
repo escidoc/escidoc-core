@@ -50,8 +50,7 @@ public class ItemRelsExtUpdateHandler extends DefaultHandler {
 
     private String path = "/RDF/Description/";
 
-    private final Map<String, Integer> elementPosition =
-        new HashMap<String, Integer>();
+    private final Map<String, Integer> elementPosition = new HashMap<String, Integer>();
 
     public ItemRelsExtUpdateHandler(final StaxParser parser) {
         this.parser = parser;
@@ -60,29 +59,22 @@ public class ItemRelsExtUpdateHandler extends DefaultHandler {
 
     /**
      * RelsExt Update Handler.
-     * 
-     * @param props
-     *            Elements to Update.
-     * @param parser
-     *            StAX Parser.
+     *
+     * @param props  Elements to Update.
+     * @param parser StAX Parser.
      */
-    public ItemRelsExtUpdateHandler(
-        final Map<String, ? extends StartElementWithText> props,
-        final StaxParser parser) {
+    public ItemRelsExtUpdateHandler(final Map<String, ? extends StartElementWithText> props, final StaxParser parser) {
         this.parser = parser;
         this.props = new TreeMap<String, StartElementWithText>(props);
     }
 
     /**
      * RelsExt Update Handler.
-     * 
-     * @param elementName
-     * @param element
-     * @param parser
-     *            StAX Parser.
+     *
+     * @param parser StAX Parser.
      */
-    public ItemRelsExtUpdateHandler(final String elementName,
-        final StartElementWithChildElements element, final StaxParser parser) {
+    public ItemRelsExtUpdateHandler(final String elementName, final StartElementWithChildElements element,
+        final StaxParser parser) {
         this.parser = parser;
         this.props = new TreeMap<String, StartElementWithText>();
         this.props.put(elementName, element);
@@ -99,15 +91,13 @@ public class ItemRelsExtUpdateHandler extends DefaultHandler {
             final String theKey = element.getLocalName();
             final String curElementNamespace = element.getNamespace();
             if (curPath.endsWith(this.path + theKey)
-                && (props.containsKey(theKey) || props
-                    .containsKey(curElementNamespace + theKey))) {
+                && (props.containsKey(theKey) || props.containsKey(curElementNamespace + theKey))) {
 
                 // update property in an attribute and remove the used value
                 StartElementWithText replacementElement = props.get(theKey);
                 // quick fix
                 if (replacementElement == null) {
-                    replacementElement =
-                        props.get(curElementNamespace + theKey);
+                    replacementElement = props.get(curElementNamespace + theKey);
                 }
 
                 // process the position value
@@ -115,44 +105,34 @@ public class ItemRelsExtUpdateHandler extends DefaultHandler {
                 if (replacementElement.getPosition() != 0) {
 
                     // not in the map
-                    if (this.elementPosition.get(replacementElement
-                        .getNamespace()
-                        + replacementElement.getLocalName()) == null) {
-                        this.elementPosition.put(replacementElement
-                            .getNamespace()
-                            + replacementElement.getLocalName(), count);
+                    if (this.elementPosition.get(replacementElement.getNamespace() + replacementElement.getLocalName()) == null) {
+                        this.elementPosition.put(replacementElement.getNamespace() + replacementElement.getLocalName(),
+                            count);
                     }
                     else { // already in the map - update count
                         count =
-                            this.elementPosition.get(replacementElement
-                                .getNamespace()
+                            this.elementPosition.get(replacementElement.getNamespace()
                                 + replacementElement.getLocalName());
 
-                        ++ count;
-                        this.elementPosition.put(replacementElement
-                            .getNamespace()
-                            + replacementElement.getLocalName(), count);
+                        ++count;
+                        this.elementPosition.put(replacementElement.getNamespace() + replacementElement.getLocalName(),
+                            count);
                     }
                 }
 
-                if (replacementElement.getPosition() == 0
-                    || count == replacementElement.getPosition()) {
+                if (replacementElement.getPosition() == 0 || count == replacementElement.getPosition()) {
 
                     if (replacementElement.getAttributeCount() > 0) {
-                        final Attribute replacementAttribute =
-                            replacementElement.getAttribute(0);
+                        final Attribute replacementAttribute = replacementElement.getAttribute(0);
                         final String replacementAttributeValue = replacementAttribute.getValue();
                         int indexOfAttributeToReplace = 0;
                         boolean attributeMatch = false;
                         Attribute attributeToReplace = null;
                         for (int i = 0; i <= element.getAttributeCount(); i++) {
                             final Attribute attribute = element.getAttribute(i);
-                            if (attribute.getLocalName().equals(
-                                replacementAttribute.getLocalName())
-                                && attribute.getNamespace().equals(
-                                    replacementAttribute.getNamespace())
-                                && attribute.getPrefix().equals(
-                                    replacementAttribute.getPrefix())) {
+                            if (attribute.getLocalName().equals(replacementAttribute.getLocalName())
+                                && attribute.getNamespace().equals(replacementAttribute.getNamespace())
+                                && attribute.getPrefix().equals(replacementAttribute.getPrefix())) {
                                 attributeMatch = true;
                                 attributeToReplace = attribute;
                                 indexOfAttributeToReplace = i;
@@ -160,14 +140,10 @@ public class ItemRelsExtUpdateHandler extends DefaultHandler {
                             }
 
                         }
-                        if (attributeMatch
-                            && compareNS(curElementNamespace,
-                                replacementElement.getNamespace())) {
+                        if (attributeMatch && compareNS(curElementNamespace, replacementElement.getNamespace())) {
 
-                            attributeToReplace
-                                .setValue(replacementAttributeValue);
-                            element.setAttribute(indexOfAttributeToReplace,
-                                attributeToReplace);
+                            attributeToReplace.setValue(replacementAttributeValue);
+                            element.setAttribute(indexOfAttributeToReplace, attributeToReplace);
                             props.remove(theKey);
 
                         }
@@ -187,32 +163,26 @@ public class ItemRelsExtUpdateHandler extends DefaultHandler {
             final String theKey = element.getLocalName();
 
             if (curPath.endsWith(this.path + theKey)
-                && (props.containsKey(theKey) || props.containsKey(element
-                    .getNamespace()
-                    + theKey))) {
+                && (props.containsKey(theKey) || props.containsKey(element.getNamespace() + theKey))) {
 
                 // update property and remove the used value
                 StartElementWithText replacementElement = props.get(theKey);
                 // quick fix
                 if (replacementElement == null) {
-                    replacementElement =
-                        props.get(element.getNamespace() + theKey);
+                    replacementElement = props.get(element.getNamespace() + theKey);
                 }
 
-                if (compareNS(element.getNamespace(), replacementElement
-                    .getNamespace())) {
+                if (compareNS(element.getNamespace(), replacementElement.getNamespace())) {
 
                     // check position count
                     int count = 0;
                     if (replacementElement.getPosition() != 0) {
                         count =
-                            this.elementPosition.get(replacementElement
-                                .getNamespace()
+                            this.elementPosition.get(replacementElement.getNamespace()
                                 + replacementElement.getLocalName());
                     }
 
-                    if (replacementElement.getPosition() == 0
-                        || count == replacementElement.getPosition()) {
+                    if (replacementElement.getPosition() == 0 || count == replacementElement.getPosition()) {
                         // element is equal to current element
                         newData = replacementElement.getElementText();
                         props.remove(theKey);
@@ -228,9 +198,8 @@ public class ItemRelsExtUpdateHandler extends DefaultHandler {
     }
 
     /**
+     * @param path XPath
      * @deprecated
-     * @param path
-     *            XPath
      */
     @Deprecated
     public void setPath(final String path) {
@@ -239,30 +208,24 @@ public class ItemRelsExtUpdateHandler extends DefaultHandler {
 
     /**
      * Compares Namespaces with the former build in mechanism.
-     * 
-     * @param ns1
-     *            Namespace 1.
-     * @param curElementNamespace
-     * @param ns2
-     *            Namespace 2.
+     *
+     * @param ns1 Namespace 1.
+     * @param ns2 Namespace 2.
      * @return true if both Namespaces are equal, false otherwise.
      */
     private static boolean compareNS(final String curElementNamespace, final String ns2) {
         String replacementElementNamespace = ns2;
 
         // namespaces must not be null for testing
-        if (curElementNamespace == null
-            && replacementElementNamespace == null) {
+        if (curElementNamespace == null && replacementElementNamespace == null) {
             return true;
         }
 
-        if (curElementNamespace == null
-            || replacementElementNamespace == null) {
+        if (curElementNamespace == null || replacementElementNamespace == null) {
             return false;
         }
 
-        if (curElementNamespace.endsWith("/")
-            && !replacementElementNamespace.endsWith("/")) {
+        if (curElementNamespace.endsWith("/") && !replacementElementNamespace.endsWith("/")) {
             replacementElementNamespace += "/";
         }
         return curElementNamespace.equals(replacementElementNamespace);

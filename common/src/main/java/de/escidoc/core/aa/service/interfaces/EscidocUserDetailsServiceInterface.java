@@ -25,20 +25,16 @@ import org.springframework.security.userdetails.UserDetailsService;
 
 /**
  * Interface to EscidocUserDetailsService.
- * 
+ *
  * @author Steffen Wagner
- * 
  */
 public interface EscidocUserDetailsServiceInterface extends UserDetailsService {
 
     /**
      * Fill UserDetails Object for user with given identifier.
-     * 
-     * @param identifier
-     *            The identifier of the user. Can be User ID, Login ID or Handle.
+     *
+     * @param identifier The identifier of the user. Can be User ID, Login ID or Handle.
      * @return UserDetails Object.
-     *             
-     * @escidoc_core.visible false
      */
     @Override
     UserDetails loadUserByUsername(final String identifier);

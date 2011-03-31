@@ -38,18 +38,16 @@ import org.junit.runners.JUnit4;
 
 /**
  * Test suite for the Default Policies using the REST interface.
- * 
+ *
  * @author Torsten Tetteroo
- * 
  */
 @RunWith(JUnit4.class)
 public class DefaultPoliciesRestTest extends DefaultPoliciesAbstractTest {
 
     /**
      * Constructor.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     public DefaultPoliciesRestTest() throws Exception {
 
@@ -60,157 +58,114 @@ public class DefaultPoliciesRestTest extends DefaultPoliciesAbstractTest {
 
     /**
      * Test declining retrieving a content of an item in state pending.
-     * 
-     * @test.name Retrieve Content of Pending Item - No version number
-     * @test.id AA_RetrieveContentOfItemPendingDecline-rest
-     * @test.input:
-     *          <ul>
-     *          <li>Id of existing item, no version number.</li>
-     *          <li>Id of existing component of the item.</li>
-     *          </ul>
-     * @test.expected: AuthorizationException
-     * @test.status Implemented
-     * @test.issue http://www.escidoc-project.de/issueManagement/show_bug.cgi?id=475
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveContentOfItemPendingDecline() throws Exception {
 
-        doTestRetrieveContent(HANDLE, PWCallback.DEFAULT_HANDLE,
-            STATUS_PENDING, false, false, null, VISIBILITY_PUBLIC,
+        doTestRetrieveContent(HANDLE, PWCallback.DEFAULT_HANDLE, STATUS_PENDING, false, false, null, VISIBILITY_PUBLIC,
             AuthorizationException.class);
 
-        doTestRetrieveContent(HANDLE, PWCallback.DEFAULT_HANDLE,
-            STATUS_PENDING, false, false, "1", VISIBILITY_PUBLIC,
+        doTestRetrieveContent(HANDLE, PWCallback.DEFAULT_HANDLE, STATUS_PENDING, false, false, "1", VISIBILITY_PUBLIC,
             AuthorizationException.class);
     }
 
     /**
      * Test declining retrieving a content of an item in state submitted.
-     * 
-     * @test.name Retrieve Content of Submitted Item - No version number
-     * @test.id AA_RetrieveContentOfItemSubmittedDecline-rest
-     * @test.input:
-     *          <ul>
-     *          <li>Id of existing item, no version number.</li>
-     *          <li>Id of existing component of the item.</li>
-     *          </ul>
-     * @test.expected: AuthorizationException
-     * @test.status Implemented
-     * @test.issue http://www.escidoc-project.de/issueManagement/show_bug.cgi?id=475
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveContentOfItemSubmittedDecline() throws Exception {
 
-        doTestRetrieveContent(HANDLE, PWCallback.DEFAULT_HANDLE,
-            STATUS_SUBMITTED, true, true, null, VISIBILITY_PUBLIC,
+        doTestRetrieveContent(HANDLE, PWCallback.DEFAULT_HANDLE, STATUS_SUBMITTED, true, true, null, VISIBILITY_PUBLIC,
             AuthorizationException.class);
 
-        doTestRetrieveContent(HANDLE, PWCallback.DEFAULT_HANDLE,
-            STATUS_SUBMITTED, true, true, "2", VISIBILITY_PUBLIC,
+        doTestRetrieveContent(HANDLE, PWCallback.DEFAULT_HANDLE, STATUS_SUBMITTED, true, true, "2", VISIBILITY_PUBLIC,
             AuthorizationException.class);
 
-        doTestRetrieveContent(HANDLE, PWCallback.DEFAULT_HANDLE,
-            STATUS_SUBMITTED, false, false, null, VISIBILITY_PUBLIC,
-            AuthorizationException.class);
+        doTestRetrieveContent(HANDLE, PWCallback.DEFAULT_HANDLE, STATUS_SUBMITTED, false, false, null,
+            VISIBILITY_PUBLIC, AuthorizationException.class);
 
-        doTestRetrieveContent(HANDLE, PWCallback.DEFAULT_HANDLE,
-            STATUS_SUBMITTED, false, false, "1", VISIBILITY_PUBLIC,
-            AuthorizationException.class);
+        doTestRetrieveContent(HANDLE, PWCallback.DEFAULT_HANDLE, STATUS_SUBMITTED, false, false, "1",
+            VISIBILITY_PUBLIC, AuthorizationException.class);
     }
 
     /**
      * Test successfully retrieving a content of an item in state released.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveContentOfItemReleased() throws Exception {
 
-        doTestRetrieveContent(HANDLE, PWCallback.DEFAULT_HANDLE,
-            STATUS_RELEASED, true, true, null, VISIBILITY_PUBLIC, null);
+        doTestRetrieveContent(HANDLE, PWCallback.DEFAULT_HANDLE, STATUS_RELEASED, true, true, null, VISIBILITY_PUBLIC,
+            null);
 
-        doTestRetrieveContent(HANDLE, PWCallback.DEFAULT_HANDLE,
-            STATUS_RELEASED, true, true, "4", VISIBILITY_PUBLIC, null);
+        doTestRetrieveContent(HANDLE, PWCallback.DEFAULT_HANDLE, STATUS_RELEASED, true, true, "4", VISIBILITY_PUBLIC,
+            null);
 
-        doTestRetrieveContent(HANDLE, PWCallback.DEFAULT_HANDLE,
-            STATUS_RELEASED, false, false, null, VISIBILITY_PUBLIC, null);
+        doTestRetrieveContent(HANDLE, PWCallback.DEFAULT_HANDLE, STATUS_RELEASED, false, false, null,
+            VISIBILITY_PUBLIC, null);
 
-        doTestRetrieveContent(HANDLE, PWCallback.DEFAULT_HANDLE,
-            STATUS_RELEASED, false, false, "1", VISIBILITY_PUBLIC, null);
+        doTestRetrieveContent(HANDLE, PWCallback.DEFAULT_HANDLE, STATUS_RELEASED, false, false, "1", VISIBILITY_PUBLIC,
+            null);
     }
 
     /**
      * Test declining retrieving a content of an item in state withdrawn.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveContentOfItemWithdrawnDecline() throws Exception {
 
-        doTestRetrieveContent(HANDLE, PWCallback.DEFAULT_HANDLE,
-            STATUS_WITHDRAWN, false, false, null, VISIBILITY_PUBLIC,
-            AuthorizationException.class);
+        doTestRetrieveContent(HANDLE, PWCallback.DEFAULT_HANDLE, STATUS_WITHDRAWN, false, false, null,
+            VISIBILITY_PUBLIC, AuthorizationException.class);
 
-        doTestRetrieveContent(HANDLE, PWCallback.DEFAULT_HANDLE,
-            STATUS_WITHDRAWN, false, false, "1", VISIBILITY_PUBLIC,
-            AuthorizationException.class);
+        doTestRetrieveContent(HANDLE, PWCallback.DEFAULT_HANDLE, STATUS_WITHDRAWN, false, false, "1",
+            VISIBILITY_PUBLIC, AuthorizationException.class);
     }
 
     /**
-     * Test retrieving content of an item in state pending after release
-     * (retrieve successfully last released version).
-     * 
-     * @throws Exception
-     *             If anything fails.
+     * Test retrieving content of an item in state pending after release (retrieve successfully last released version).
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveContentOfReleasedItemUpdated() throws Exception {
-        doTestRetrieveContent(HANDLE, PWCallback.DEFAULT_HANDLE,
-                STATUS_RELEASED_UPDATED, true, false, 
-                null, VISIBILITY_PUBLIC, null);
+        doTestRetrieveContent(HANDLE, PWCallback.DEFAULT_HANDLE, STATUS_RELEASED_UPDATED, true, false, null,
+            VISIBILITY_PUBLIC, null);
     }
 
     /**
      * Test declining retrieving a private content of an item in state released.
-     * 
-     * @test.issue http://www.escidoc-project.de/issueManagement/show_bug.cgi?id=500
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrievePrivateContentOfItemDecline() throws Exception {
 
-        doTestRetrieveContent(HANDLE, PWCallback.DEFAULT_HANDLE,
-            STATUS_RELEASED, false, false, null, VISIBILITY_PRIVATE,
-            AuthorizationException.class);
+        doTestRetrieveContent(HANDLE, PWCallback.DEFAULT_HANDLE, STATUS_RELEASED, false, false, null,
+            VISIBILITY_PRIVATE, AuthorizationException.class);
 
-        doTestRetrieveContent(HANDLE, PWCallback.DEFAULT_HANDLE,
-            STATUS_RELEASED, false, false, "1", VISIBILITY_PRIVATE,
-            AuthorizationException.class);
+        doTestRetrieveContent(HANDLE, PWCallback.DEFAULT_HANDLE, STATUS_RELEASED, false, false, "1",
+            VISIBILITY_PRIVATE, AuthorizationException.class);
     }
 
     /**
      * Test declining retrieving a audience content of an item in state released.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveAudienceContentOfItemDecline() throws Exception {
 
-        doTestRetrieveContent(HANDLE, PWCallback.DEFAULT_HANDLE,
-            STATUS_RELEASED, false, false, null, VISIBILITY_AUDIENCE,
-            AuthorizationException.class);
+        doTestRetrieveContent(HANDLE, PWCallback.DEFAULT_HANDLE, STATUS_RELEASED, false, false, null,
+            VISIBILITY_AUDIENCE, AuthorizationException.class);
 
-        doTestRetrieveContent(HANDLE, PWCallback.DEFAULT_HANDLE,
-            STATUS_RELEASED, false, false, "1", VISIBILITY_AUDIENCE,
-            AuthorizationException.class);
+        doTestRetrieveContent(HANDLE, PWCallback.DEFAULT_HANDLE, STATUS_RELEASED, false, false, "1",
+            VISIBILITY_AUDIENCE, AuthorizationException.class);
     }
 }

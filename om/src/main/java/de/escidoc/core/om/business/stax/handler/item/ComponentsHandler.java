@@ -49,22 +49,18 @@ import java.util.List;
 
 /**
  * Handle Item XML to obtain Components.
- * 
- * This handler obtains all (required) values of each Component of an Item and
- * handle is within Component objects.
- * 
+ * <p/>
+ * This handler obtains all (required) values of each Component of an Item and handle is within Component objects.
+ *
  * @author Steffen Wagner
- * 
  */
 public class ComponentsHandler extends DefaultHandler {
 
-    private static final Logger LOGGER =
-        LoggerFactory.getLogger(ComponentsHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ComponentsHandler.class);
 
     private static final String XPATH_COMPONENTS = "/item/components";
 
-    private static final String XPATH_COMPONENT =
-        XPATH_COMPONENTS + "/component";
+    private static final String XPATH_COMPONENT = XPATH_COMPONENTS + "/component";
 
     private final StaxParser parser;
 
@@ -78,10 +74,8 @@ public class ComponentsHandler extends DefaultHandler {
 
     /**
      * ComponentsHandler.
-     * 
-     * @param parser
-     *            StAX parser
-     * @param item
+     *
+     * @param parser StAX parser
      */
     public ComponentsHandler(final StaxParser parser, final ItemCreate item) {
         this.parser = parser;
@@ -90,19 +84,13 @@ public class ComponentsHandler extends DefaultHandler {
 
     /**
      * Parser hits an XML start element.
-     * 
-     * @param element
-     *            StAX StartElement.
+     *
+     * @param element StAX StartElement.
      * @return StAX StartElement
-     * @throws MissingAttributeValueException
-     * @throws XMLStreamException
-     * @throws WebserverSystemException
-     * @throws IOException
      */
     @Override
-    public StartElement startElement(final StartElement element)
-        throws InvalidContentException, MissingAttributeValueException,
-        XMLStreamException, WebserverSystemException, IOException {
+    public StartElement startElement(final StartElement element) throws InvalidContentException,
+        MissingAttributeValueException, XMLStreamException, WebserverSystemException, IOException {
 
         if (this.parsingComponent) {
             this.componentHandler.startElement(element);
@@ -111,7 +99,7 @@ public class ComponentsHandler extends DefaultHandler {
             final String currentPath = parser.getCurPath();
 
             if (XPATH_COMPONENT.equals(currentPath)) {
-                if(LOGGER.isDebugEnabled()) {
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Parsing " + XPATH_COMPONENT);
                 }
                 // creating a new Component shows that the parser is within a
@@ -127,21 +115,17 @@ public class ComponentsHandler extends DefaultHandler {
 
     /**
      * Parser hits an XML end element.
-     * 
-     * @param element
-     *            StAX EndElement
+     *
+     * @param element StAX EndElement
      * @return StAX EndElement
-     * @throws MissingContentException
-     * @throws XMLStreamException
      */
     @Override
-    public EndElement endElement(final EndElement element)
-        throws MissingContentException, WebserverSystemException {
+    public EndElement endElement(final EndElement element) throws MissingContentException, WebserverSystemException {
 
         final String currentPath = parser.getCurPath();
 
         if (XPATH_COMPONENT.equals(currentPath)) {
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Reached end of " + XPATH_COMPONENT);
             }
             // parser leaves the XML component element
@@ -157,18 +141,13 @@ public class ComponentsHandler extends DefaultHandler {
     }
 
     /**
-     * @param s
-     *            Character of StAX character element
-     * @param element
-     *            StAX StartElement
+     * @param s       Character of StAX character element
+     * @param element StAX StartElement
      * @return Character of StAX character element
-     * @throws XMLStreamException
-     * 
      */
     @Override
-    public String characters(final String s, final StartElement element)
-        throws InvalidContentException, MissingElementValueException,
-        WebserverSystemException, XMLStreamException {
+    public String characters(final String s, final StartElement element) throws InvalidContentException,
+        MissingElementValueException, WebserverSystemException, XMLStreamException {
 
         if (this.parsingComponent) {
             this.componentHandler.characters(s, element);
@@ -179,7 +158,7 @@ public class ComponentsHandler extends DefaultHandler {
 
     /**
      * Get all Components of the ComponentHandler.
-     * 
+     *
      * @return Vector with all Components.
      */
     public List<ComponentCreate> getComponents() {

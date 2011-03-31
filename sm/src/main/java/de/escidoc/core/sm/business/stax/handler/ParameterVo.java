@@ -34,15 +34,17 @@ import org.joda.time.ReadableDateTime;
 
 /**
  * Holds parameter data.
- * 
- * @author Michael Hoppe
  *
+ * @author Michael Hoppe
  */
 public class ParameterVo {
 
     private String name;
+
     private String stringValue;
+
     private Double decimalValue;
+
     private DateTime dateValue;
 
     /**
@@ -51,42 +53,49 @@ public class ParameterVo {
     public String getName() {
         return this.name;
     }
+
     /**
      * @param name the name to set
      */
     public void setName(final String name) {
         this.name = name;
     }
+
     /**
      * @return the stringValue
      */
     public String getStringValue() {
         return this.stringValue;
     }
+
     /**
      * @param stringValue the stringValue to set
      */
     public void setStringValue(final String stringValue) {
         this.stringValue = stringValue;
     }
+
     /**
      * @return the decimalValue
      */
     public Double getDecimalValue() {
         return this.decimalValue;
     }
+
     /**
      * @param decimalValue the decimalValue to set
      */
     public void setDecimalValue(final Double decimalValue) {
         this.decimalValue = decimalValue;
     }
+
     /**
      * @return the dateValue
      */
     public ReadableDateTime getDateValue() {
         return this.dateValue;
     }
+
     /**
      * @param dateValue the dateValue to set
      */

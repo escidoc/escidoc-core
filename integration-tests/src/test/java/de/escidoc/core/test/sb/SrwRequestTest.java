@@ -42,7 +42,6 @@ import java.net.URL;
 
 /**
  * @author Rozita Friedman
- * 
  */
 public class SrwRequestTest {
 
@@ -52,8 +51,7 @@ public class SrwRequestTest {
 
     protected ExplainPort explainService;
 
-    private final String location =
-        "http://localhost:8080/srw/search/escidoc_all";
+    private final String location = "http://localhost:8080/srw/search/escidoc_all";
 
     // private String location =
     // "http://beta-tc.fiz-karlsruhe.de/srw/search/tc";
@@ -68,38 +66,32 @@ public class SrwRequestTest {
 
     /**
      * The method tests the Sb service SRW-Search by using http-request.
-     * 
-     * @throws Exception
-     *             any exception
+     *
+     * @throws Exception any exception
      */
     @Ignore("test the Sb service SRW-Search by using http-request")
     @Test
     public void testSearchByRest() throws Exception {
         for (int i = 0; i < 1; i++) {
             HttpRequester requester = new HttpRequester(location);
-            String response =
-                requester
-                    .doGet("?query=escidoc.objid%3Descidoc:345&recordPacking=string");
+            String response = requester.doGet("?query=escidoc.objid%3Descidoc:345&recordPacking=string");
 
         }
     }
 
     /**
      * The method tests the SRW-Search by using http-request.
-     * 
-     * @throws Exception
-     *             any exception
+     *
+     * @throws Exception any exception
      */
     @Ignore("test the SRW-Search by using http-request")
     @Test
     public void notestSearchBySoapRequest() throws Exception {
         String soapPost =
             "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
-                + "<SOAP:Envelope xmlns:SOAP=\"http://schemas.xmlsoap.org/soap/envelope/\">"
-                + "<SOAP:Body>"
+                + "<SOAP:Envelope xmlns:SOAP=\"http://schemas.xmlsoap.org/soap/envelope/\">" + "<SOAP:Body>"
                 + "<ExplainSOAP:ExplainOperation xmlns:ExplainSOAP=\"http://www.LOGGER.gov/zing/srw/\">"
-                + "</ExplainSOAP:ExplainOperation>" + "</SOAP:Body>"
-                + "</SOAP:Envelope>";
+                + "</ExplainSOAP:ExplainOperation>" + "</SOAP:Body>" + "</SOAP:Envelope>";
         HttpRequester requester = new HttpRequester(location, "mih:11311");
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug(requester.doPost("", soapPost));
@@ -108,9 +100,8 @@ public class SrwRequestTest {
 
     /**
      * The method tests the Sb service SRW-Search by using SOAP.
-     * 
-     * @throws Exception
-     *             any exception
+     *
+     * @throws Exception any exception
      */
     @Test
     public void testSearchBySoap() throws Exception {

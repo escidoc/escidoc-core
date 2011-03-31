@@ -46,8 +46,7 @@ public class RelsExtRefListExtractor extends DefaultHandler {
     }
 
     @Override
-    public StartElement startElement(final StartElement element)
-        throws InvalidContentException {
+    public StartElement startElement(final StartElement element) throws InvalidContentException {
         // {"http://www.w3.org/1999/02/22-rdf-syntax-ns#"}resource="info:fedora/escidoc:12108"
         final String ns = element.getNamespace();
         final String ln = element.getLocalName();
@@ -55,16 +54,12 @@ public class RelsExtRefListExtractor extends DefaultHandler {
         if (predicates.contains(curPredicate)) {
             final String resource;
             try {
-                resource =
-                    element.getAttribute(
-                        "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-                        "resource").getValue();
+                resource = element.getAttribute("http://www.w3.org/1999/02/22-rdf-syntax-ns#", "resource").getValue();
             }
             catch (final NoSuchAttributeException e) {
                 throw new InvalidContentException(e);
             }
-            entries.get(curPredicate).add(
-                resource.substring(resource.indexOf('/') + 1));
+            entries.get(curPredicate).add(resource.substring(resource.indexOf('/') + 1));
         }
 
         return element;

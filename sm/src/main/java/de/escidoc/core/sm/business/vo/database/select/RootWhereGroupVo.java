@@ -31,13 +31,13 @@ package de.escidoc.core.sm.business.vo.database.select;
 import java.util.Collection;
 
 /**
- * Holds all values needed to represent a group of root where-clauses (enclosed
- * by brackets in the resulting sql-statement).
- * 
- * @author Michael Hoppe
+ * Holds all values needed to represent a group of root where-clauses (enclosed by brackets in the resulting
+ * sql-statement).
  *
+ * @author Michael Hoppe
  */
 public class RootWhereGroupVo {
+
     private RootWhereFieldVo rootWhereFieldVo;
 
     private Collection<AdditionalWhereFieldVo> additionalWhereFieldVos;
@@ -50,11 +50,9 @@ public class RootWhereGroupVo {
     }
 
     /**
-     * @param additionalWhereFieldVos
-     *            the additionalWhereFieldVos to set
+     * @param additionalWhereFieldVos the additionalWhereFieldVos to set
      */
-    public void setAdditionalWhereFieldVos(
-        final Collection<AdditionalWhereFieldVo> additionalWhereFieldVos) {
+    public void setAdditionalWhereFieldVos(final Collection<AdditionalWhereFieldVo> additionalWhereFieldVos) {
         this.additionalWhereFieldVos = additionalWhereFieldVos;
     }
 
@@ -66,8 +64,7 @@ public class RootWhereGroupVo {
     }
 
     /**
-     * @param rootWhereFieldVo
-     *            the rootWhereFieldVo to set
+     * @param rootWhereFieldVo the rootWhereFieldVo to set
      */
     public void setRootWhereFieldVo(final RootWhereFieldVo rootWhereFieldVo) {
         this.rootWhereFieldVo = rootWhereFieldVo;

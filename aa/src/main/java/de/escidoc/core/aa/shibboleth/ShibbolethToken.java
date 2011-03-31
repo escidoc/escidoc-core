@@ -40,13 +40,10 @@ public class ShibbolethToken extends AbstractAuthenticationToken {
 
     private final ShibbolethUser user;
 
-    public ShibbolethToken(final ShibbolethUser user,
-        final GrantedAuthority[] arg0) {
+    public ShibbolethToken(final ShibbolethUser user, final GrantedAuthority[] arg0) {
         super(arg0);
         this.user = user;
     }
-
-
 
     @Override
     public GrantedAuthority[] getAuthorities() {
@@ -55,9 +52,7 @@ public class ShibbolethToken extends AbstractAuthenticationToken {
     }
 
     /**
-     * @return Returns <code>null</code> as the user credentials are unknown
-     *         to the shibboleth service provider.
-     *
+     * @return Returns <code>null</code> as the user credentials are unknown to the shibboleth service provider.
      */
     @Override
     public Object getCredentials() {
@@ -67,10 +62,8 @@ public class ShibbolethToken extends AbstractAuthenticationToken {
 
     /**
      * See Interface for functional description.
-     * 
-     * @return
-     * @see AbstractAuthenticationToken#getPrincipal()
      *
+     * @see AbstractAuthenticationToken#getPrincipal()
      */
     @Override
     public Object getPrincipal() {
@@ -80,16 +73,11 @@ public class ShibbolethToken extends AbstractAuthenticationToken {
 
     /**
      * See Interface for functional description.
-     * 
-     * @return
-     *
      */
     @Override
     public String getName() {
 
         return user.getName();
     }
-
-
 
 }

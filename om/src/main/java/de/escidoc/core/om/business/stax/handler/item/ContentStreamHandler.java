@@ -51,14 +51,12 @@ import java.util.Map;
 
 /**
  * @author Frank Schwichtenberg
- * 
  */
 public class ContentStreamHandler extends WriteHandler {
 
     private boolean inContentStreams;
 
-    private final Map<String, Map<String, Object>> contentStreams =
-        new HashMap<String, Map<String, Object>>();
+    private final Map<String, Map<String, Object>> contentStreams = new HashMap<String, Map<String, Object>>();
 
     private String contentStreamName;
 
@@ -82,12 +80,11 @@ public class ContentStreamHandler extends WriteHandler {
      * de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
-    public String characters(final String data, final StartElement element)
-        throws XMLStreamException {
+    public String characters(final String data, final StartElement element) throws XMLStreamException {
         if (this.inContentStreams
             && this.contentStreamName != null
-                && getWriter() != null
-                && "text/xml".equals(contentStreams.get(this.contentStreamName).get(
+            && getWriter() != null
+            && "text/xml".equals(contentStreams.get(this.contentStreamName).get(
                 Elements.ATTRIBUTE_CONTENT_STREAM_MIME_TYPE))) {
             getWriter().writeCharacters(data);
         }
@@ -102,8 +99,7 @@ public class ContentStreamHandler extends WriteHandler {
      * (de.escidoc.core.common.util.xml.stax.events.EndElement)
      */
     @Override
-    public EndElement endElement(final EndElement element)
-        throws InvalidXmlException, XMLStreamException {
+    public EndElement endElement(final EndElement element) throws InvalidXmlException, XMLStreamException {
 
         // in respect to WriteHandler
         this.decreaseDeepLevel();
@@ -133,28 +129,21 @@ public class ContentStreamHandler extends WriteHandler {
                         this.wrote = false;
                     }
                     else {
-                        contentStreams.get(this.contentStreamName).remove(
-                            Elements.ELEMENT_CONTENT);
+                        contentStreams.get(this.contentStreamName).remove(Elements.ELEMENT_CONTENT);
                     }
                 }
                 // check if we got an href or content
-                if (!contentStreams.get(this.contentStreamName).containsKey(
-                    Elements.ATTRIBUTE_XLINK_HREF)
-                    && contentStreams
-                        .get(this.contentStreamName)
-                        .get(Elements.ATTRIBUTE_STORAGE)
-                        .equals(
-                            de.escidoc.core.common.business.fedora.Constants.STORAGE_INTERNAL_MANAGED)) {
+                if (!contentStreams.get(this.contentStreamName).containsKey(Elements.ATTRIBUTE_XLINK_HREF)
+                    && contentStreams.get(this.contentStreamName).get(Elements.ATTRIBUTE_STORAGE).equals(
+                        de.escidoc.core.common.business.fedora.Constants.STORAGE_INTERNAL_MANAGED)) {
                     // internal-managed content-stream must have either href
                     // or content
                     final ByteArrayOutputStream baos =
                         (ByteArrayOutputStream) contentStreams
-                            .get(this.contentStreamName).get(
-                                Elements.ELEMENT_CONTENT);
+                            .get(this.contentStreamName).get(Elements.ELEMENT_CONTENT);
                     if (baos.size() < 1) {
-                        throw new XmlCorruptedException(
-                            "Internal managed content stream has "
-                                + "neither href nor XML content.");
+                        throw new XmlCorruptedException("Internal managed content stream has "
+                            + "neither href nor XML content.");
                     }
                 }
                 this.contentStreamName = null;
@@ -177,8 +166,7 @@ public class ContentStreamHandler extends WriteHandler {
      * @throws FedoraSystemException If FedoraUtility can not connect to Fedora.
      */
     @Override
-    public StartElement startElement(final StartElement element)
-        throws InvalidXmlException, InvalidContentException,
+    public StartElement startElement(final StartElement element) throws InvalidXmlException, InvalidContentException,
         XMLStreamException, FedoraSystemException {
 
         // in respect to WriteHandler
@@ -192,68 +180,50 @@ public class ContentStreamHandler extends WriteHandler {
                 // begin of content-stream, create a new map for its values
                 try {
                     // name
-                    this.contentStreamName =
-                        element
-                            .getAttributeValue(null, Elements.ATTRIBUTE_NAME);
+                    this.contentStreamName = element.getAttributeValue(null, Elements.ATTRIBUTE_NAME);
 
                     // content stream name must be unique within one XML
                     // representation
                     if (contentStreams.containsKey(this.contentStreamName)) {
-                        throw new XmlCorruptedException(
-                            "Found more than one content stream with name '"
-                                + this.contentStreamName + "'.");
+                        throw new XmlCorruptedException("Found more than one content stream with name '"
+                            + this.contentStreamName + "'.");
                     }
                     // create map for this content stream
-                    contentStreams.put(this.contentStreamName,
-                        new HashMap<String, Object>());
+                    contentStreams.put(this.contentStreamName, new HashMap<String, Object>());
 
                     // mime-type
-                    if (element.hasAttribute(null,
-                        Elements.ATTRIBUTE_CONTENT_STREAM_MIME_TYPE)) {
-                        contentStreams.get(this.contentStreamName).put(
-                            Elements.ATTRIBUTE_CONTENT_STREAM_MIME_TYPE,
-                            element.getAttributeValue(null,
-                                Elements.ATTRIBUTE_CONTENT_STREAM_MIME_TYPE));
+                    if (element.hasAttribute(null, Elements.ATTRIBUTE_CONTENT_STREAM_MIME_TYPE)) {
+                        contentStreams.get(this.contentStreamName).put(Elements.ATTRIBUTE_CONTENT_STREAM_MIME_TYPE,
+                            element.getAttributeValue(null, Elements.ATTRIBUTE_CONTENT_STREAM_MIME_TYPE));
                     }
 
                     // xlink:title
-                    if (element.hasAttribute(Constants.XLINK_NS_URI,
-                        Elements.ATTRIBUTE_XLINK_TITLE)) {
-                        contentStreams.get(this.contentStreamName).put(
-                            Elements.ATTRIBUTE_XLINK_TITLE,
-                            element.getAttributeValue(Constants.XLINK_NS_URI,
-                                Elements.ATTRIBUTE_XLINK_TITLE));
+                    if (element.hasAttribute(Constants.XLINK_NS_URI, Elements.ATTRIBUTE_XLINK_TITLE)) {
+                        contentStreams.get(this.contentStreamName).put(Elements.ATTRIBUTE_XLINK_TITLE,
+                            element.getAttributeValue(Constants.XLINK_NS_URI, Elements.ATTRIBUTE_XLINK_TITLE));
                     }
 
                     // xlink:href
-                    if (element.hasAttribute(Constants.XLINK_NS_URI,
-                        Elements.ATTRIBUTE_XLINK_HREF)) {
-                        contentStreams.get(this.contentStreamName).put(
-                            Elements.ATTRIBUTE_XLINK_HREF,
-                            element.getAttributeValue(Constants.XLINK_NS_URI,
-                                Elements.ATTRIBUTE_XLINK_HREF));
+                    if (element.hasAttribute(Constants.XLINK_NS_URI, Elements.ATTRIBUTE_XLINK_HREF)) {
+                        contentStreams.get(this.contentStreamName).put(Elements.ATTRIBUTE_XLINK_HREF,
+                            element.getAttributeValue(Constants.XLINK_NS_URI, Elements.ATTRIBUTE_XLINK_HREF));
                     }
 
                     // storage
                     final String storage;
-                    storage = element.hasAttribute(null, Elements.ATTRIBUTE_STORAGE) ? element.getAttributeValue(null,
+                    storage =
+                        element.hasAttribute(null, Elements.ATTRIBUTE_STORAGE) ? element.getAttributeValue(null,
                             Elements.ATTRIBUTE_STORAGE) : de.escidoc.core.common.business.fedora.Constants.STORAGE_INTERNAL_MANAGED;
-                    contentStreams.get(this.contentStreamName).put(
-                        Elements.ATTRIBUTE_STORAGE, storage);
+                    contentStreams.get(this.contentStreamName).put(Elements.ATTRIBUTE_STORAGE, storage);
 
                     String curControlGroup = null;
                     if (this.item != null) {
-                        curControlGroup =
-                            item
-                                .getContentStream(this.contentStreamName)
-                                .getControlGroup();
+                        curControlGroup = item.getContentStream(this.contentStreamName).getControlGroup();
                     }
 
-                    if (storage
-                        .equals(de.escidoc.core.common.business.fedora.Constants.STORAGE_INTERNAL_MANAGED)) {
-                        if ("text/xml".equals(contentStreams
-                                .get(this.contentStreamName).get(
-                                        Elements.ATTRIBUTE_CONTENT_STREAM_MIME_TYPE))) {
+                    if (storage.equals(de.escidoc.core.common.business.fedora.Constants.STORAGE_INTERNAL_MANAGED)) {
+                        if ("text/xml".equals(contentStreams.get(this.contentStreamName).get(
+                            Elements.ATTRIBUTE_CONTENT_STREAM_MIME_TYPE))) {
 
                             // check if control group is changed
                             if (curControlGroup != null
@@ -264,10 +234,8 @@ public class ContentStreamHandler extends WriteHandler {
                             }
 
                             // prepare XML writing
-                            final ByteArrayOutputStream out =
-                                new ByteArrayOutputStream();
-                            contentStreams.get(this.contentStreamName).put(
-                                Elements.ELEMENT_CONTENT, out);
+                            final ByteArrayOutputStream out = new ByteArrayOutputStream();
+                            contentStreams.get(this.contentStreamName).put(Elements.ELEMENT_CONTENT, out);
                             this.setWriter(XmlUtility.createXmlStreamWriter(out));
                             this.setNsuris(new HashMap());
                         }
@@ -276,44 +244,33 @@ public class ContentStreamHandler extends WriteHandler {
                             throw new UnsupportedOperationException(
                                 "Inline base64 content in ContentStreams needs to be implemented.");
                         }
-                        else if (!contentStreams
-                            .get(this.contentStreamName).containsKey(
-                                Elements.ATTRIBUTE_XLINK_HREF)) {
-                            throw new XmlCorruptedException(
-                                "Internal managed content stream has "
-                                    + "neither href nor XML content.");
+                        else if (!contentStreams.get(this.contentStreamName).containsKey(Elements.ATTRIBUTE_XLINK_HREF)) {
+                            throw new XmlCorruptedException("Internal managed content stream has "
+                                + "neither href nor XML content.");
                         }
                     }
-                    else if (storage
-                        .equals(de.escidoc.core.common.business.fedora.Constants.STORAGE_EXTERNAL_MANAGED)) {
-                        if (!contentStreams.get(this.contentStreamName).containsKey(
-                            Elements.ATTRIBUTE_XLINK_HREF)) {
-                            throw new XmlCorruptedException(
-                                "Content stream with storage set to '"
-                                    + de.escidoc.core.common.business.fedora.Constants.STORAGE_EXTERNAL_MANAGED
-                                    + "' " + "needs href.");
+                    else if (storage.equals(de.escidoc.core.common.business.fedora.Constants.STORAGE_EXTERNAL_MANAGED)) {
+                        if (!contentStreams.get(this.contentStreamName).containsKey(Elements.ATTRIBUTE_XLINK_HREF)) {
+                            throw new XmlCorruptedException("Content stream with storage set to '"
+                                + de.escidoc.core.common.business.fedora.Constants.STORAGE_EXTERNAL_MANAGED + "' "
+                                + "needs href.");
                         }
                         // check if control group is changed
-                        if (curControlGroup != null
-                            && !"E".equals(curControlGroup)) {
+                        if (curControlGroup != null && !"E".equals(curControlGroup)) {
                             throw new InvalidContentException(
                                 "The value of storage can not be changed in existing content stream '"
                                     + this.contentStreamName + "'.");
                         }
 
                     }
-                    else if (storage
-                        .equals(de.escidoc.core.common.business.fedora.Constants.STORAGE_EXTERNAL_URL)) {
-                        if (!contentStreams.get(this.contentStreamName).containsKey(
-                            Elements.ATTRIBUTE_XLINK_HREF)) {
-                            throw new XmlCorruptedException(
-                                "Content stream with storage set to '"
-                                    + de.escidoc.core.common.business.fedora.Constants.STORAGE_EXTERNAL_URL
-                                    + "' " + "needs href.");
+                    else if (storage.equals(de.escidoc.core.common.business.fedora.Constants.STORAGE_EXTERNAL_URL)) {
+                        if (!contentStreams.get(this.contentStreamName).containsKey(Elements.ATTRIBUTE_XLINK_HREF)) {
+                            throw new XmlCorruptedException("Content stream with storage set to '"
+                                + de.escidoc.core.common.business.fedora.Constants.STORAGE_EXTERNAL_URL + "' "
+                                + "needs href.");
                         }
                         // check if control group is changed
-                        if (curControlGroup != null
-                            && !"R".equals(curControlGroup)) {
+                        if (curControlGroup != null && !"R".equals(curControlGroup)) {
                             throw new InvalidContentException(
                                 "The value of storage can not be changed in existing content stream '"
                                     + this.contentStreamName + "'.");
@@ -332,9 +289,8 @@ public class ContentStreamHandler extends WriteHandler {
                 final int c = element.getAttributeCount();
                 for (int i = 0; i < c; i++) {
                     final Attribute att = element.getAttribute(i);
-                    writeAttribute(att.getNamespace(), element.getLocalName(),
-                        att.getLocalName(), att.getValue(), att.getPrefix(),
-                        element.getNamespaceContext());
+                    writeAttribute(att.getNamespace(), element.getLocalName(), att.getLocalName(), att.getValue(), att
+                        .getPrefix(), element.getNamespaceContext());
                 }
             }
         }

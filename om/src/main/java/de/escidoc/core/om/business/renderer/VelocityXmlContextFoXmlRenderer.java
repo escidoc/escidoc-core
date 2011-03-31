@@ -37,19 +37,13 @@ import java.util.Map;
 
 /**
  * Renderer that uses Velocity to create a context foxml.
- * 
+ *
  * @author André Schenk
  */
-public class VelocityXmlContextFoXmlRenderer
-    implements ContextFoXmlRendererInterface {
-
+public class VelocityXmlContextFoXmlRenderer implements ContextFoXmlRendererInterface {
 
     /**
      * See Interface for functional description.
-     * 
-     * @param datastreams
-     * @return
-     * @throws SystemException
      */
     @Override
     public String render(final Map<String, Object> values) throws SystemException {
@@ -59,32 +53,23 @@ public class VelocityXmlContextFoXmlRenderer
 
     /**
      * See Interface for functional description.
-     * 
-     * @param values
-     * @return
-     * @throws WebserverSystemException
+     *
      * @see de.escidoc.core.oum.business.renderer.interfaces.ContextFoXmlRendererInterface#renderRelsExt(Map)
      */
     @Override
-    public String renderRelsExt(final Map<String, Object> values)
-    throws WebserverSystemException {
-        
+    public String renderRelsExt(final Map<String, Object> values) throws WebserverSystemException {
+
         return ContextFoXmlProvider.getInstance().getRelsExt(values);
     }
-    
+
     /**
      * See Interface for functional description.
-     * 
-     * @param values
-     * @return
-     * @throws WebserverSystemException
+     *
      * @see de.escidoc.core.oum.business.renderer.interfaces.ContextFoXmlRendererInterface#renderRelsExt(Map)
      */
     @Override
-    public String renderDc(final Map<String, Object> values)
-    throws WebserverSystemException {
+    public String renderDc(final Map<String, Object> values) throws WebserverSystemException {
         return ContextFoXmlProvider.getInstance().getDc(values);
     }
-    
 
 }

@@ -47,16 +47,14 @@ import java.util.regex.Pattern;
 
 /**
  * This Handler is invoked to obtain attributes of md-records of Components.
- * 
- * Attention: It seems that this handler obtains also values for metadata of new
- * Components (without objid), but these values are dropped later. Even if the
- * parser runs through all component/md-records are new Components handled in a
+ * <p/>
+ * Attention: It seems that this handler obtains also values for metadata of new Components (without objid), but these
+ * values are dropped later. Even if the parser runs through all component/md-records are new Components handled in a
  * separate process.
- * 
+ * <p/>
  * FIXME: convoluted Maps are not a valid data structure.
- * 
+ *
  * @author ??
- * 
  */
 public class ComponentMdRecordsUpdateHandler extends DefaultHandler {
 
@@ -70,61 +68,49 @@ public class ComponentMdRecordsUpdateHandler extends DefaultHandler {
 
     private String escidocMdRecordNameSpace;
 
-    private final Map<String, String> escidocMdNamespacesMap =
-        new HashMap<String, String>();
+    private final Map<String, String> escidocMdNamespacesMap = new HashMap<String, String>();
 
     private boolean isInside;
 
     private boolean isRootMetadataElement;
 
-    private static final Pattern PATTERN_OBJID_IN_HREF =
-        Pattern.compile(".*\\/([^\"\\/]*)");
+    private static final Pattern PATTERN_OBJID_IN_HREF = Pattern.compile(".*\\/([^\"\\/]*)");
 
     private Map<String, Map<String, String>> componentMdRecords;
 
     private final Map<String, Map<String, Map<String, String>>> metadataAttributes =
         new HashMap<String, Map<String, Map<String, String>>>();
 
-    private static final Logger LOGGER =
-        LoggerFactory.getLogger(ComponentMetadataHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ComponentMetadataHandler.class);
 
     /**
      * ComponentMdRecordsUpdateHandler.
-     * 
-     * @param componentPath
-     *            XPath to Components.
-     * @param parser
-     *            StAX parser.
+     *
+     * @param componentPath XPath to Components.
+     * @param parser        StAX parser.
      */
-    public ComponentMdRecordsUpdateHandler(final String componentPath,
-        final StaxParser parser) {
+    public ComponentMdRecordsUpdateHandler(final String componentPath, final StaxParser parser) {
 
         this.componentPath = componentPath;
         this.parser = parser;
     }
 
     @Override
-    public StartElement startElement(final StartElement element)
-        throws MissingAttributeValueException {
+    public StartElement startElement(final StartElement element) throws MissingAttributeValueException {
         final String curPath = parser.getCurPath();
         final String theName = element.getLocalName();
         if (curPath.startsWith(this.componentPath) || componentPath.length() == 0) {
 
             if (curPath.equals(this.componentPath)) {
 
-                final int indexOfObjid =
-                    element.indexOfAttribute(null,
-                        Elements.ATTRIBUTE_XLINK_OBJID);
+                final int indexOfObjid = element.indexOfAttribute(null, Elements.ATTRIBUTE_XLINK_OBJID);
                 if (indexOfObjid != -1) {
-                    final String value =
-                        element.getAttribute(indexOfObjid).getValue();
+                    final String value = element.getAttribute(indexOfObjid).getValue();
                     if (value != null && value.length() > 0) {
                         this.componentId = value;
                     }
                 }
-                final int indexOfHref =
-                    element.indexOfAttribute(Constants.XLINK_URI,
-                        Elements.ATTRIBUTE_XLINK_HREF);
+                final int indexOfHref = element.indexOfAttribute(Constants.XLINK_URI, Elements.ATTRIBUTE_XLINK_HREF);
                 if (indexOfHref != -1) {
                     final String value = element.getAttribute(indexOfHref).getValue();
                     if (value != null && value.length() > 0) {
@@ -136,35 +122,33 @@ public class ComponentMdRecordsUpdateHandler extends DefaultHandler {
                     }
                 }
             }
-            else if (this.isInside && ! this.isRootMetadataElement) {
+            else if (this.isInside && !this.isRootMetadataElement) {
                 this.isRootMetadataElement = true;
                 if (this.name.equals(Elements.MANDATORY_MD_RECORD_NAME)) {
                     this.escidocMdRecordNameSpace = element.getNamespace();
-                    this.escidocMdNamespacesMap.put(this.componentId,
-                        this.escidocMdRecordNameSpace);
+                    this.escidocMdNamespacesMap.put(this.componentId, this.escidocMdRecordNameSpace);
                 }
             }
             else if (curPath.equals(this.componentPath + "/md-records")) {
-                this.componentMdRecords = this.metadataAttributes.containsKey(this.componentId) ? this.metadataAttributes.get(
-                        this.componentId) : new HashMap<String, Map<String, String>>();
+                this.componentMdRecords =
+                    this.metadataAttributes.containsKey(this.componentId) ? this.metadataAttributes
+                        .get(this.componentId) : new HashMap<String, Map<String, String>>();
             }
             else if (curPath.equals(this.componentPath + "/md-records/md-record")) {
 
                 try {
                     this.name = element.getAttribute(null, "name").getValue();
                     if (name.length() == 0) {
-                        throw new MissingAttributeValueException(
-                            "The value of the"
-                                + " \"name\" atribute of the element "
-                                + theName + " is missing");
+                        throw new MissingAttributeValueException("The value of the"
+                            + " \"name\" atribute of the element " + theName + " is missing");
 
                     }
                 }
                 catch (final NoSuchAttributeException e) {
-                    if(LOGGER.isWarnEnabled()) {
+                    if (LOGGER.isWarnEnabled()) {
                         LOGGER.warn("Error accessing attribute.");
                     }
-                    if(LOGGER.isDebugEnabled()) {
+                    if (LOGGER.isDebugEnabled()) {
                         LOGGER.debug("Error accessing attribute.", e);
                     }
                 }
@@ -203,8 +187,7 @@ public class ComponentMdRecordsUpdateHandler extends DefaultHandler {
                 componentMdRecords.put(this.name, md);
                 // keep in mind, that new components are ignored at this point.
                 if (this.componentId != null) {
-                    metadataAttributes.put(this.componentId,
-                        this.componentMdRecords);
+                    metadataAttributes.put(this.componentId, this.componentMdRecords);
                 }
             }
         }
@@ -213,9 +196,8 @@ public class ComponentMdRecordsUpdateHandler extends DefaultHandler {
 
     /**
      * Handle XMl end element.
-     * 
-     * @param element
-     *            The element.
+     *
+     * @param element The element.
      * @return The element.
      */
     @Override
@@ -235,7 +217,7 @@ public class ComponentMdRecordsUpdateHandler extends DefaultHandler {
 
     /**
      * Get Attributes of md-record element.
-     * 
+     *
      * @return Attributes of md-record element.
      */
     public Map<String, Map<String, Map<String, String>>> getMetadataAttributes() {

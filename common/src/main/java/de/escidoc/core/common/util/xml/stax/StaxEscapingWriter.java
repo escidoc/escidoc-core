@@ -26,12 +26,10 @@ import java.io.IOException;
 import java.io.Writer;
 
 /**
- * <code>Writer</code> implementation that is used to escape special XML
- * characters.<br/> For escaping, the method escapeForbiddenXmlCharacters of
- * {@link XmlUtility} is used.
- * 
+ * <code>Writer</code> implementation that is used to escape special XML characters.<br/> For escaping, the method
+ * escapeForbiddenXmlCharacters of {@link XmlUtility} is used.
+ *
  * @author Torsten Tetteroo
- * 
  */
 public class StaxEscapingWriter extends Writer {
 
@@ -39,25 +37,18 @@ public class StaxEscapingWriter extends Writer {
 
     /**
      * Constructs a <code>StaxEscapingWriter</code>.
-     * 
-     * @param writer
-     *            The <code>Writer</code> used for output.
-     * @param attributeWriter
-     *            A Flag indicating if this writer is used for writing
-     *            attributes (<code>true</code>) or if it is used for
-     *            writing text content (<code>false)</code>).
+     *
+     * @param writer          The <code>Writer</code> used for output.
+     * @param attributeWriter A Flag indicating if this writer is used for writing attributes (<code>true</code>) or if
+     *                        it is used for writing text content (<code>false)</code>).
      */
     public StaxEscapingWriter(final Writer writer, final boolean attributeWriter) {
 
         this.writer = writer;
     }
 
-
-
     /**
      * See Interface for functional description.
-     * 
-     * @throws IOException
      */
     @Override
     public void close() throws IOException {
@@ -67,8 +58,6 @@ public class StaxEscapingWriter extends Writer {
 
     /**
      * See Interface for functional description.
-     * 
-     * @throws IOException
      */
     @Override
     public void flush() throws IOException {
@@ -78,19 +67,11 @@ public class StaxEscapingWriter extends Writer {
 
     /**
      * See Interface for functional description.
-     * 
-     * @param cbuf
-     * @param off
-     * @param len
-     * @throws IOException
      */
     @Override
     public void write(final char[] cbuf, final int off, final int len) throws IOException {
 
-        writer.write(XmlUtility.escapeForbiddenXmlCharacters(new String(cbuf,
-            off, len)));
+        writer.write(XmlUtility.escapeForbiddenXmlCharacters(new String(cbuf, off, len)));
     }
-
-
 
 }

@@ -21,16 +21,13 @@
 package de.escidoc.core.common.exceptions.application.notfound;
 
 /**
- * The ReferencedResourceNotFoundException is used to indicate that the
- * referenced resource requested in the service-call is null or does not exist
- * in the System. returned httpStatusCode is 404. Status code (404) indicating
+ * The ReferencedResourceNotFoundException is used to indicate that the referenced resource requested in the
+ * service-call is null or does not exist in the System. returned httpStatusCode is 404. Status code (404) indicating
  * that the requested resource is not available.
- * 
- * @author Michael Hoppe (FIZ Karlsruhe)
  *
+ * @author Michael Hoppe (FIZ Karlsruhe)
  */
-public class ReferencedResourceNotFoundException
-    extends ResourceNotFoundException {
+public class ReferencedResourceNotFoundException extends ResourceNotFoundException {
 
     /**
      * The serial version uid.
@@ -39,13 +36,10 @@ public class ReferencedResourceNotFoundException
 
     public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_NOT_FOUND;
 
-    public static final String HTTP_STATUS_MESSAGE =
-        "Referenced Resource was not found.";
+    public static final String HTTP_STATUS_MESSAGE = "Referenced Resource was not found.";
 
     /**
      * Default constructor.
-     * 
-     *
      */
     public ReferencedResourceNotFoundException() {
         super(HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -53,9 +47,8 @@ public class ReferencedResourceNotFoundException
 
     /**
      * Constructor used to map an initial exception.
-     * 
-     * @param error
-     *            Throwable
+     *
+     * @param error Throwable
      */
     public ReferencedResourceNotFoundException(final Throwable error) {
         super(error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -63,27 +56,21 @@ public class ReferencedResourceNotFoundException
 
     /**
      * Constructs a new exception with the specified detail message.
-     * 
-     * @param message -
-     *            the detail message.
      *
+     * @param message - the detail message.
      */
     public ReferencedResourceNotFoundException(final String message) {
         super(message, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 
     /**
-     * Constructor used to create a new Exception with the specified detail
-     * message and a mapping to an initial exception.
-     * 
-     * @param message -
-     *            the detail message.
-     * @param error
-     *            Throwable
+     * Constructor used to create a new Exception with the specified detail message and a mapping to an initial
+     * exception.
      *
+     * @param message - the detail message.
+     * @param error   Throwable
      */
-    public ReferencedResourceNotFoundException(final String message,
-        final Throwable error) {
+    public ReferencedResourceNotFoundException(final String message, final Throwable error) {
         super(message, error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 }

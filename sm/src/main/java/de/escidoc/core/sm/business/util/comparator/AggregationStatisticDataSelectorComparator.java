@@ -36,27 +36,21 @@ import java.util.Comparator;
 
 /**
  * Sorts AggregationStatisticDataSelector-Objects according to their listIndex.
- * 
- * @author Michael Hoppe
  *
+ * @author Michael Hoppe
  */
-public class AggregationStatisticDataSelectorComparator 
-        implements Comparator<AggregationStatisticDataSelector>,Serializable {
+public class AggregationStatisticDataSelectorComparator
+    implements Comparator<AggregationStatisticDataSelector>, Serializable {
 
     /**
      * compares listIndex.
-     * 
+     *
      * @param a1 AggregationStatisticDataSelector1
      * @param a2 AggregationStatisticDataSelector2
      * @return Returns compare result.
-     * 
-     *
      */
     @Override
-    public int compare(
-            final AggregationStatisticDataSelector a1, 
-            final AggregationStatisticDataSelector a2) {
-        return Integer.toString(a1.getListIndex())
-                .compareTo(Integer.toString(a2.getListIndex()));
+    public int compare(final AggregationStatisticDataSelector a1, final AggregationStatisticDataSelector a2) {
+        return Integer.toString(a1.getListIndex()).compareTo(Integer.toString(a2.getListIndex()));
     }
 }

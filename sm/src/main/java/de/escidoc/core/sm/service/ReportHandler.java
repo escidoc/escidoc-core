@@ -40,7 +40,7 @@ import de.escidoc.core.sm.service.interfaces.ReportHandlerInterface;
 
 /**
  * An statistic Report resource handler.
- * 
+ *
  * @author Michael Hoppe
  */
 public class ReportHandler implements ReportHandlerInterface {
@@ -49,50 +49,35 @@ public class ReportHandler implements ReportHandlerInterface {
 
     /**
      * Injects the Report handler.
-     * 
-     * @param reportHandler
-     *            The Report handler bean to inject.
+     *
+     * @param reportHandler The Report handler bean to inject.
      */
-    public void setReportHandler(
-        final de.escidoc.core.sm.business.interfaces.ReportHandlerInterface reportHandler) {
+    public void setReportHandler(final de.escidoc.core.sm.business.interfaces.ReportHandlerInterface reportHandler) {
 
         this.handler = reportHandler;
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @see de.escidoc.core.sm.service.interfaces.ReportHandlerInterface
-     *      #retrieve(java.lang.String)
-     * 
-     * @param xml
-     *            xml with parameters (report-parameters.xsd).
-     * @return Returns the XML representation of the resource.
-     * 
-     * @throws AuthenticationException
-     *             Thrown in case of failed authentication.
-     * @throws AuthorizationException
-     *             Thrown in case of failed authorization.
-     * @throws XmlCorruptedException
-     *             Thrown in case of provided invalid xml.
-     * @throws XmlSchemaValidationException
-     *             Thrown in case of provided xml not schema conform.
-     * @throws ReportDefinitionNotFoundException
-     *             e.
-     * @throws MissingMethodParameterException
-     *             e.
-     * @throws InvalidSqlException
-     *             e.
-     * @throws SystemException
-     *             e.
-     * 
      *
+     * @param xml xml with parameters (report-parameters.xsd).
+     * @return Returns the XML representation of the resource.
+     * @throws AuthenticationException      Thrown in case of failed authentication.
+     * @throws AuthorizationException       Thrown in case of failed authorization.
+     * @throws XmlCorruptedException        Thrown in case of provided invalid xml.
+     * @throws XmlSchemaValidationException Thrown in case of provided xml not schema conform.
+     * @throws ReportDefinitionNotFoundException
+     *                                      e.
+     * @throws MissingMethodParameterException
+     *                                      e.
+     * @throws InvalidSqlException          e.
+     * @throws SystemException              e.
+     * @see de.escidoc.core.sm.service.interfaces.ReportHandlerInterface #retrieve(java.lang.String)
      */
     @Override
-    public String retrieve(final String xml) throws AuthenticationException,
-        AuthorizationException, XmlCorruptedException, XmlSchemaValidationException,
-        ReportDefinitionNotFoundException, MissingMethodParameterException,
-        InvalidSqlException, SystemException {
+    public String retrieve(final String xml) throws AuthenticationException, AuthorizationException,
+        XmlCorruptedException, XmlSchemaValidationException, ReportDefinitionNotFoundException,
+        MissingMethodParameterException, InvalidSqlException, SystemException {
         return handler.retrieve(xml);
     }
 

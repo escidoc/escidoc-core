@@ -34,10 +34,9 @@ import org.springframework.jmx.export.annotation.ManagedOperation;
 import org.springframework.jmx.export.annotation.ManagedResource;
 
 /**
- * StatisticPreprocessingErrorProcessor. Reads the messages that were
- * written into the StatisticPreprocessingError Logfile and sends them via email to
- * the sm.administrator.email
- * 
+ * StatisticPreprocessingErrorProcessor. Reads the messages that were written into the StatisticPreprocessingError
+ * Logfile and sends them via email to the sm.administrator.email
+ *
  * @author Michael Hoppe, Torsten Tetteroo
  */
 @ManagedResource(objectName = "eSciDocCore:name=StatisticPreprocessingErrorProcessorService", description = "Reads the messages that were written into the StatisticPreprocessingError Logfile and sends them via email to the sm.administrator.email.", log = true, logFile = "jmx.log", currencyTimeLimit = 15)
@@ -56,9 +55,8 @@ public class SpringStatisticPreprocessingErrorProcessorService {
 
     /**
      * Injects the {@link ErrorQueueProcessor} to use.
-     * 
-     * @param processor
-     *            The {@link ErrorQueueProcessor}.
+     *
+     * @param processor The {@link ErrorQueueProcessor}.
      */
     public void setProcessor(final ErrorQueueProcessor processor) {
         this.processor = processor;

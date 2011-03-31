@@ -42,29 +42,28 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Implementation of a XACML (target) function that checks 
- * if at least one Attribute is contained in both Bags.<br>
- * The first parameter has to be a StringAttribute that contains a space
- * separated list of strings. The second parameter has to be a StringAttribute
- * whose value shall be check for existing in the list. <br>
- * The function returns true, if the value of the second parameter is found in
- * the value of the first parameter.
- * 
- * @author Michael Hoppe
+ * Implementation of a XACML (target) function that checks if at least one Attribute is contained in both Bags.<br> The
+ * first parameter has to be a StringAttribute that contains a space separated list of strings. The second parameter has
+ * to be a StringAttribute whose value shall be check for existing in the list. <br> The function returns true, if the
+ * value of the second parameter is found in the value of the first parameter.
  *
- * 
+ * @author Michael Hoppe
  */
 public class XacmlFunctionOneAttributeInBothLists extends FunctionBase {
 
-    /** The name of this function. */
-    public static final String NAME =
-        AttributeIds.FUNCTION_PREFIX + "one-attribute-in-both-lists";
+    /**
+     * The name of this function.
+     */
+    public static final String NAME = AttributeIds.FUNCTION_PREFIX + "one-attribute-in-both-lists";
 
-    /** The parameter types. */
-    private static final String[] PARAMS =
-        { StringAttribute.identifier, StringAttribute.identifier };
+    /**
+     * The parameter types.
+     */
+    private static final String[] PARAMS = { StringAttribute.identifier, StringAttribute.identifier };
 
-    /** The definitions of bag or non-bag parameters. */
+    /**
+     * The definitions of bag or non-bag parameters.
+     */
     private static final boolean[] BAG_PARAMS = { true, true };
 
     /**
@@ -75,36 +74,26 @@ public class XacmlFunctionOneAttributeInBothLists extends FunctionBase {
         super(NAME, 0, PARAMS, BAG_PARAMS, BooleanAttribute.identifier, false);
     }
 
-
-
     /**
      * See Interface for functional description.
-     * 
-     * @param inputs
-     * @param context
-     * @return
-     * @see Function#evaluate(List,
-     *      EvaluationCtx)
+     *
+     * @see Function#evaluate(List, EvaluationCtx)
      */
     @Override
-    public EvaluationResult evaluate(
-        final List inputs, final EvaluationCtx context) {
+    public EvaluationResult evaluate(final List inputs, final EvaluationCtx context) {
 
         final AttributeValue[] argValues = new AttributeValue[inputs.size()];
         final EvaluationResult result = evalArgs(inputs, context, argValues);
         if (result != null) {
             return result;
         }
-        
-        if (!(argValues[0] instanceof BagAttribute) 
-                || !(argValues[1] instanceof BagAttribute)) {
+
+        if (!(argValues[0] instanceof BagAttribute) || !(argValues[1] instanceof BagAttribute)) {
             return EvaluationResult.getInstance(false);
         }
-        
-        if (argValues[0] != null 
-                && !((BagAttribute) argValues[0]).isEmpty()) {
-            for (Iterator<StringAttribute> iterator = 
-                ((BagAttribute) argValues[0]).iterator(); iterator.hasNext();) {
+
+        if (argValues[0] != null && !((BagAttribute) argValues[0]).isEmpty()) {
+            for (Iterator<StringAttribute> iterator = ((BagAttribute) argValues[0]).iterator(); iterator.hasNext();) {
                 if (((BagAttribute) argValues[1]).contains(iterator.next())) {
                     return EvaluationResult.getInstance(true);
                 }

@@ -34,11 +34,8 @@ import java.util.Map;
 
 /**
  * @author Michael Hoppe
- * 
- * Singleton for caching aggregationDefinitionIds.
- * used to write aggregation-tables synchronized.
- * 
- *
+ *         <p/>
+ *         Singleton for caching aggregationDefinitionIds. used to write aggregation-tables synchronized.
  */
 public final class AggregationIdMapper {
 
@@ -48,38 +45,28 @@ public final class AggregationIdMapper {
 
     /**
      * private Constructor for Singleton.
-     * 
-     *
      */
     private AggregationIdMapper() {
     }
 
     /**
      * Only initialize Object once. Check for old objects in cache.
-     * 
-     * @return AggregationIdMapper AggregationIdMapper
-     * 
      *
+     * @return AggregationIdMapper AggregationIdMapper
      */
     public static AggregationIdMapper getInstance() {
         return instance;
     }
 
     /**
-     * get aggregationDefinitionId entry from hashmap.
-     * This is done to synchronize access to the aggregation-tables.
-     * 
-     * @param aggregationDefinitionId
-     *            id of the aggregation definition
-     * @return String entry
-     * 
+     * get aggregationDefinitionId entry from hashmap. This is done to synchronize access to the aggregation-tables.
      *
+     * @param aggregationDefinitionId id of the aggregation definition
+     * @return String entry
      */
-    public synchronized String getAggregationIdEntry(
-                        final String aggregationDefinitionId) {
+    public synchronized String getAggregationIdEntry(final String aggregationDefinitionId) {
         if (!aggregationIdMap.containsKey(aggregationDefinitionId)) {
-            aggregationIdMap.put(
-                    aggregationDefinitionId, aggregationDefinitionId);
+            aggregationIdMap.put(aggregationDefinitionId, aggregationDefinitionId);
         }
         return aggregationIdMap.get(aggregationDefinitionId);
     }

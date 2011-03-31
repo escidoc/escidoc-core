@@ -43,7 +43,6 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 
  * Implementation for the service layer for Aa component.
  *
  * @author Rozita Friedman
@@ -53,8 +52,7 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
     /**
      * The logger.
      */
-    private static final Logger LOGGER =
-        LoggerFactory.getLogger(PolicyDecisionPoint.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PolicyDecisionPoint.class);
 
     private de.escidoc.core.aa.business.interfaces.PolicyDecisionPointInterface business;
 
@@ -64,72 +62,47 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
     public PolicyDecisionPoint() {
     }
 
-
-
     /**
      * See Interface for functional description.
-     * 
-     * @param requestsXml
-     * @return
-     * @throws ResourceNotFoundException
-     * @throws XmlCorruptedException
-     * @throws XmlSchemaValidationException
-     * @throws MissingMethodParameterException
-     * @throws AuthenticationException
-     * @throws AuthorizationException
-     * @throws SystemException
-     * @see PolicyDecisionPointInterface
-     *      #evaluate(java.lang.String)
      *
+     * @see PolicyDecisionPointInterface #evaluate(java.lang.String)
      */
     @Override
-    public String evaluate(final String requestsXml)
-        throws ResourceNotFoundException, XmlCorruptedException, 
-        XmlSchemaValidationException,
-        MissingMethodParameterException, AuthenticationException,
-        AuthorizationException, SystemException {
+    public String evaluate(final String requestsXml) throws ResourceNotFoundException, XmlCorruptedException,
+        XmlSchemaValidationException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
+        SystemException {
 
         return business.evaluate(requestsXml);
     }
 
     @Override
-    public boolean[] evaluateRequestList(
-        final List<Map<String, String>> requests)
-        throws ResourceNotFoundException,
-        MissingMethodParameterException, AuthenticationException,
-        AuthorizationException, SystemException {
+    public boolean[] evaluateRequestList(final List<Map<String, String>> requests) throws ResourceNotFoundException,
+        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
 
         return business.evaluateRequestList(requests);
     }
 
     @Override
-    public List<String> evaluateRetrieve(
-        final String resourceName, final List<String> ids)
-        throws AuthenticationException, AuthorizationException,
-        MissingMethodParameterException, ResourceNotFoundException,
-        SystemException {
+    public List<String> evaluateRetrieve(final String resourceName, final List<String> ids)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        ResourceNotFoundException, SystemException {
 
         return business.evaluateRetrieve(resourceName, ids);
     }
 
     @Override
     public List<Object[]> evaluateMethodForList(
-        final String resourceName, final String methodName,
-        final List<Object[]> argumentList) throws AuthenticationException,
-        AuthorizationException, MissingMethodParameterException,
+        final String resourceName, final String methodName, final List<Object[]> argumentList)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
         ResourceNotFoundException, SystemException {
 
-        return business.evaluateMethodForList(resourceName, methodName,
-            argumentList);
+        return business.evaluateMethodForList(resourceName, methodName, argumentList);
     }
-
-
 
     /**
      * Setter for the business object.
      *
-     * @param business
-     *            object
+     * @param business object
      */
     public void setBusiness(final de.escidoc.core.aa.business.interfaces.PolicyDecisionPointInterface business) {
         this.business = business;

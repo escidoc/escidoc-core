@@ -38,16 +38,14 @@ import org.junit.runners.Parameterized;
 
 /**
  * Test the implementation of the item resource threaded.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 @RunWith(value = Parameterized.class)
 public class ItemThreadTest extends SearchTestBase {
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public ItemThreadTest(final int transport) {
         super(transport);
@@ -55,9 +53,8 @@ public class ItemThreadTest extends SearchTestBase {
 
     /**
      * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Before
     public void initialize() throws Exception {
@@ -65,9 +62,8 @@ public class ItemThreadTest extends SearchTestBase {
 
     /**
      * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @After
     public void deinitialize() throws Exception {
@@ -75,9 +71,8 @@ public class ItemThreadTest extends SearchTestBase {
 
     /**
      * Test the search.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Ignore("Test the search")
     @Test
@@ -101,15 +96,13 @@ public class ItemThreadTest extends SearchTestBase {
 
     /**
      * Test the search.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testServlet() throws Exception {
         HttpRequester requester =
-            new HttpRequester(Constants.PROTOCOL + "://"
-                + Constants.HOST_PORT + "/fedoradeviation/describe", "mih:mih");
+            new HttpRequester(Constants.PROTOCOL + "://" + Constants.HOST_PORT + "/fedoradeviation/describe", "mih:mih");
         String response = requester.doGet("");
     }
 

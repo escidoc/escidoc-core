@@ -20,17 +20,12 @@
 
 package de.escidoc.core.common.exceptions.system;
 
-
 /**
- * The IntegritySystemException is used to indicate 
- * that a framework data integrity violation has occured
- * during the interaction between framework services.
- * returned httpStatusCode is 500.
- * Status code (500) indicating an error inside 
+ * The IntegritySystemException is used to indicate that a framework data integrity violation has occured during the
+ * interaction between framework services. returned httpStatusCode is 500. Status code (500) indicating an error inside
  * the HTTP server which prevented it from fulfilling the request.
- * 
- * @author Michael Hoppe (FIZ Karlsruhe)
  *
+ * @author Michael Hoppe (FIZ Karlsruhe)
  */
 public class IntegritySystemException extends SystemException {
 
@@ -39,47 +34,44 @@ public class IntegritySystemException extends SystemException {
      */
     private static final long serialVersionUID = 8224972446376183091L;
 
-    public static final int HTTP_STATUS_CODE = 
-        ESCIDOC_HTTP_SC_INTERNAL_SERVER_ERROR;
+    public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_INTERNAL_SERVER_ERROR;
 
-    public static final String HTTP_STATUS_MESSAGE = 
-        "Internal Integrity Error";
-    
+    public static final String HTTP_STATUS_MESSAGE = "Internal Integrity Error";
+
     /**
      * Default constructor.
-     *
      */
     public IntegritySystemException() {
         super(HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
+
     /**
      * Constructor used to map an initial exception.
-     * @param error Throwable
      *
+     * @param error Throwable
      */
     public IntegritySystemException(final Throwable error) {
         super(error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
+
     /**
      * Constructs a new exception with the specified detail message.
-     * @param message - the detail message. 
      *
+     * @param message - the detail message.
      */
     public IntegritySystemException(final String message) {
         super(message, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
+
     /**
-     * Constructor used to create a new Exception
-     * with the specified detail message 
-     * and a mapping to an initial exception.
-     * @param message - the detail message. 
-     * @param error Throwable
+     * Constructor used to create a new Exception with the specified detail message and a mapping to an initial
+     * exception.
      *
+     * @param message - the detail message.
+     * @param error   Throwable
      */
-    public IntegritySystemException(final String message,
-                                   final Throwable error) {
+    public IntegritySystemException(final String message, final Throwable error) {
         super(message, error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
-   
 
 }

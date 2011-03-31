@@ -25,9 +25,8 @@ import de.escidoc.core.common.util.service.UserContext;
 
 /**
  * Properties for Component.
- * 
+ *
  * @author Steffen Wagner
- * 
  */
 public class ComponentProperties {
 
@@ -45,9 +44,8 @@ public class ComponentProperties {
 
     /**
      * Component Properties POJO for create.
-     * 
-     * @throws WebserverSystemException
-     *             Thrown if obtaining user context failed.
+     *
+     * @throws WebserverSystemException Thrown if obtaining user context failed.
      */
     public ComponentProperties() throws WebserverSystemException {
 
@@ -57,8 +55,7 @@ public class ComponentProperties {
     }
 
     /**
-     * @param contentCatagory
-     *            the contentCatagory to set
+     * @param contentCatagory the contentCatagory to set
      */
     public void setContentCatagory(final String contentCatagory) {
         this.contentCatagory = contentCatagory;
@@ -72,8 +69,7 @@ public class ComponentProperties {
     }
 
     /**
-     * @param createdById
-     *            the createdById to set
+     * @param createdById the createdById to set
      */
     public final void setCreatedById(final String createdById) {
         this.createdById = createdById;
@@ -87,8 +83,7 @@ public class ComponentProperties {
     }
 
     /**
-     * @param createdByName
-     *            the createdByName to set
+     * @param createdByName the createdByName to set
      */
     public final void setCreatedByName(final String createdByName) {
         this.createdByName = createdByName;
@@ -102,8 +97,7 @@ public class ComponentProperties {
     }
 
     /**
-     * @param visibility
-     *            the visibility to set
+     * @param visibility the visibility to set
      */
     public void setVisibility(final String visibility) {
         this.visibility = visibility;
@@ -117,8 +111,7 @@ public class ComponentProperties {
     }
 
     /**
-     * @param validStatus
-     *            the validStatus to set
+     * @param validStatus the validStatus to set
      */
     public void setValidStatus(final String validStatus) {
         this.validStatus = validStatus;
@@ -132,8 +125,7 @@ public class ComponentProperties {
     }
 
     /**
-     * @param mimeType
-     *            the mimeType to set
+     * @param mimeType the mimeType to set
      */
     public void setMimeType(final String mimeType) {
         this.mimeType = mimeType;

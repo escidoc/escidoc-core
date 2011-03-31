@@ -44,15 +44,11 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 /**
- * Axis provider implementation that extends
- * {@link RPCProvider} to lookup a spring bean
- * that shall be exposed as a web service. Besides the creation of the service
- * object, the security parameters from webservice security are used to
- * initialize the spring-security (acegisecurity) security context for the
- * service call.<br>
- * 
- * @author Torsten Tetteroo
+ * Axis provider implementation that extends {@link RPCProvider} to lookup a spring bean that shall be exposed as a web
+ * service. Besides the creation of the service object, the security parameters from webservice security are used to
+ * initialize the spring-security (acegisecurity) security context for the service call.<br>
  *
+ * @author Torsten Tetteroo
  */
 public class EscidocSpringProvider extends RPCProvider {
 
@@ -64,31 +60,19 @@ public class EscidocSpringProvider extends RPCProvider {
     /**
      * The logger.
      */
-    private static final Logger LOGGER =
-        LoggerFactory.getLogger(EscidocSpringProvider.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(EscidocSpringProvider.class);
 
-    protected static final String MISSING_MANDATORY_PARAMETER =
-        "Missing mandatory parameter in deployment descriptor";
+    protected static final String MISSING_MANDATORY_PARAMETER = "Missing mandatory parameter in deployment descriptor";
 
     protected static final String OPTION_SPRING_BEAN = "springBean";
 
-
-
     /**
-     * See Interface for functional description.<br>
-     * Realizes spring bean lookup and security context initialization.
-     * 
-     * @param messageContext
-     * @param className
-     * @return
-     * @throws Exception
-     * @see EJBProvider#makeNewServiceObject(
-     *      MessageContext, String)
+     * See Interface for functional description.<br> Realizes spring bean lookup and security context initialization.
+     *
+     * @see EJBProvider#makeNewServiceObject(MessageContext, String)
      */
     @Override
-    protected Object makeNewServiceObject(
-        final MessageContext messageContext, final String className)
-        throws Exception {
+    protected Object makeNewServiceObject(final MessageContext messageContext, final String className) throws Exception {
         final Object springBean = lookupSpringBean(messageContext.getService());
         // initialize user context from webservice security data
         try {
@@ -101,10 +85,10 @@ public class EscidocSpringProvider extends RPCProvider {
             }
         }
         catch (final Exception ex) {
-            if(LOGGER.isWarnEnabled()) {
+            if (LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Setting user context failed.");
             }
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Setting user context failed.", ex);
             }
         }
@@ -114,23 +98,15 @@ public class EscidocSpringProvider extends RPCProvider {
 
     /**
      * See Interface for functional description.
-     * 
-     * @param className
-     * @param service
-     * @param messageContext
-     * @return
-     * @throws AxisFault
-     * @see JavaProvider
-     *      #getServiceClass(java.lang.String,
-     *      org.apache.axis.handlers.soap.SOAPService,
-     *      org.apache.axis.MessageContext)
      *
+     * @see JavaProvider #getServiceClass(java.lang.String, org.apache.axis.handlers.soap.SOAPService,
+     *      org.apache.axis.MessageContext)
      */
     @Override
-    protected Class getServiceClass(final String className, final SOAPService service,
-                                    final MessageContext messageContext) throws AxisFault {
+    protected Class getServiceClass(
+        final String className, final SOAPService service, final MessageContext messageContext) throws AxisFault {
         try {
-            return BeanLocator.getBeanType(BeanLocator.COMMON_FACTORY_ID,getSpringBeanId(service));
+            return BeanLocator.getBeanType(BeanLocator.COMMON_FACTORY_ID, getSpringBeanId(service));
         }
         catch (final WebserverSystemException e) {
             throw new AxisFault(StringUtility.format("Spring bean type lookup failed", getSpringBeanId(service)), e);
@@ -139,11 +115,8 @@ public class EscidocSpringProvider extends RPCProvider {
 
     /**
      * See Interface for functional description.
-     * 
-     * @return
-     * @see JavaProvider
-     *      #getServiceClassNameOptionName()
      *
+     * @see JavaProvider #getServiceClassNameOptionName()
      */
     @Override
     protected String getServiceClassNameOptionName() {
@@ -151,22 +124,17 @@ public class EscidocSpringProvider extends RPCProvider {
         return OPTION_SPRING_BEAN;
     }
 
-
-
     /**
-     * Method that fetches the user credentials from the axis message context
-     * and returns them as a array of {username, password}.
-     * 
-     * @param messageContext
-     *            The axis message context
-     * @return user name and password as {@link String} array {username,
-     *         password}
+     * Method that fetches the user credentials from the axis message context and returns them as a array of {username,
+     * password}.
+     *
+     * @param messageContext The axis message context
+     * @return user name and password as {@link String} array {username, password}
      */
     private static String getHandle(final MessageContext messageContext) {
 
         // get the result Vector from the property
-        final List results = (List) messageContext
-                .getProperty(WSHandlerConstants.RECV_RESULTS);
+        final List results = (List) messageContext.getProperty(WSHandlerConstants.RECV_RESULTS);
         String eSciDocUserHandle = null;
         if (results == null) {
             // If username/password are sent as
@@ -175,13 +143,11 @@ public class EscidocSpringProvider extends RPCProvider {
             // are set in messageContext-attributes
             // so get username and password
             // from messageContext-attributes
-            if (messageContext.getUsername() != null
-                && messageContext.getPassword() != null) {
+            if (messageContext.getUsername() != null && messageContext.getPassword() != null) {
                 eSciDocUserHandle = messageContext.getPassword();
             }
             else {
-                LOGGER
-                    .info("No security results!! Setting empty username and password");
+                LOGGER.info("No security results!! Setting empty username and password");
                 eSciDocUserHandle = "";
             }
         }
@@ -191,15 +157,13 @@ public class EscidocSpringProvider extends RPCProvider {
                 // Needs to be a Vector. Handed over from WSHandlerResult.getResults()
                 final List hResults = hResult.getResults();
                 for (final Object hResult1 : hResults) {
-                    final WSSecurityEngineResult eResult =
-                            (WSSecurityEngineResult) hResult1;
+                    final WSSecurityEngineResult eResult = (WSSecurityEngineResult) hResult1;
                     // Note: an encryption action does not have an associated
                     // principal
                     // only Signature and UsernameToken actions return a
                     // principal
                     if (eResult.getAction() != WSConstants.ENCR) {
-                        final WSUsernameTokenPrincipal principal =
-                                (WSUsernameTokenPrincipal) eResult.getPrincipal();
+                        final WSUsernameTokenPrincipal principal = (WSUsernameTokenPrincipal) eResult.getPrincipal();
                         eSciDocUserHandle = principal.getPassword();
                     }
                 }
@@ -209,44 +173,34 @@ public class EscidocSpringProvider extends RPCProvider {
     }
 
     /**
-     * Looks up the spring bean identified by parameter
-     * {@link OPTION_SPRING_BEAN}.
-     * 
-     * @param service
-     *            The {@link Handler} used to get the springBean option from.
-     * @return The identified spring bean. This will not be <code>null</code>.
-     *         If a bean cannot be found, an {@link AxisFault} is thrown.
-     * @throws AxisFault
-     *             Thrown if bean lookup fails.
+     * Looks up the spring bean identified by parameter {@link OPTION_SPRING_BEAN}.
      *
+     * @param service The {@link Handler} used to get the springBean option from.
+     * @return The identified spring bean. This will not be <code>null</code>. If a bean cannot be found, an {@link
+     *         AxisFault} is thrown.
+     * @throws AxisFault Thrown if bean lookup fails.
      */
     private Object lookupSpringBean(final Handler service) throws AxisFault {
 
         final String springBeanId = getSpringBeanId(service);
         final Object springBean;
         try {
-            springBean =
-                BeanLocator
-                    .getBean(BeanLocator.COMMON_FACTORY_ID, springBeanId);
+            springBean = BeanLocator.getBean(BeanLocator.COMMON_FACTORY_ID, springBeanId);
         }
         catch (final WebserverSystemException e) {
-            throw new AxisFault(StringUtility.format(
-                "Spring bean lookup failed", springBeanId), e);
+            throw new AxisFault(StringUtility.format("Spring bean lookup failed", springBeanId), e);
         }
         return springBean;
     }
 
     /**
      * Gets the spring id from the service handler.
-     * 
-     * @param service
-     *            The service handler.
-     * @return Returns the spring id. This will not be <code>null</code>. If
-     *         a bean id cannot be found, an {@link AxisFault} is thrown.
-     * @throws AxisFault
-     *             Thrown if the parameter {@link OPTION_SPRING_BEAN} is not
-     *             found and no spring bean id could be returned.
      *
+     * @param service The service handler.
+     * @return Returns the spring id. This will not be <code>null</code>. If a bean id cannot be found, an {@link
+     *         AxisFault} is thrown.
+     * @throws AxisFault Thrown if the parameter {@link OPTION_SPRING_BEAN} is not found and no spring bean id could be
+     *                   returned.
      */
     private String getSpringBeanId(final Handler service) throws AxisFault {
 
@@ -258,8 +212,7 @@ public class EscidocSpringProvider extends RPCProvider {
             springBeanId = (String) getOption(OPTION_SPRING_BEAN);
         }
         if (springBeanId == null) {
-            throw new AxisFault(StringUtility.format(
-                MISSING_MANDATORY_PARAMETER, OPTION_SPRING_BEAN));
+            throw new AxisFault(StringUtility.format(MISSING_MANDATORY_PARAMETER, OPTION_SPRING_BEAN));
         }
 
         return springBeanId;

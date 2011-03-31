@@ -44,75 +44,61 @@ import java.util.Collection;
 
 /**
  * Test suite for the role CollaboratorModifierUpdateAnyMembers a using the REST interface.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 @RunWith(Parameterized.class)
-public class CollaboratorModifierUpdateAnyMembersRestTest 
-            extends CollaboratorModifierUpdateAnyMembersAbstractTest {
+public class CollaboratorModifierUpdateAnyMembersRestTest extends CollaboratorModifierUpdateAnyMembersAbstractTest {
 
     /**
      * Initializes test-class with data.
-     * 
+     *
      * @return Collection with data.
-     * 
      */
     @Parameters
     public static Collection<Object[]> data() {
-        return Arrays.asList(new Object[][]{
-                {USER_ACCOUNT_HANDLER_CODE, 
-                    PWCallback.ID_PREFIX + PWCallback.TEST_HANDLE},
-                {USER_GROUP_HANDLER_CODE, USER_GROUP_WITH_GROUP_LIST_ID},
-                {USER_GROUP_HANDLER_CODE, USER_GROUP_WITH_USER_LIST_ID},
-                {USER_GROUP_HANDLER_CODE, USER_GROUP_WITH_OU_LIST_ID},
-                {USER_GROUP_HANDLER_CODE, USER_GROUP_WITH_EXTERNAL_SELECTOR}
-        });
+        return Arrays.asList(new Object[][] {
+            { USER_ACCOUNT_HANDLER_CODE, PWCallback.ID_PREFIX + PWCallback.TEST_HANDLE },
+            { USER_GROUP_HANDLER_CODE, USER_GROUP_WITH_GROUP_LIST_ID },
+            { USER_GROUP_HANDLER_CODE, USER_GROUP_WITH_USER_LIST_ID },
+            { USER_GROUP_HANDLER_CODE, USER_GROUP_WITH_OU_LIST_ID },
+            { USER_GROUP_HANDLER_CODE, USER_GROUP_WITH_EXTERNAL_SELECTOR } });
     }
 
     /**
      * Constructor.
-     * 
-     * @param handlerCode handlerCode 
-     *      of UserAccountHandler or UserGroupHandler
-     * @param userOrGroupId
-     *            userOrGroupId for grantCreation.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param handlerCode   handlerCode of UserAccountHandler or UserGroupHandler
+     * @param userOrGroupId userOrGroupId for grantCreation.
+     * @throws Exception If anything fails.
      */
-    public CollaboratorModifierUpdateAnyMembersRestTest(final int handlerCode,
-            final String userOrGroupId) throws Exception {
+    public CollaboratorModifierUpdateAnyMembersRestTest(final int handlerCode, final String userOrGroupId)
+        throws Exception {
 
         super(Constants.TRANSPORT_REST, handlerCode, userOrGroupId);
     }
 
     /**
      * Test collaborator with scope on container.
-     * 
-     * @test.name Collaborator - Scope on Container
-     * @test.id AA-Collaborator-ScopeOnContainer
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveContentWithContainerScope() throws Exception {
 
         //create grant collaborator for user USER_ID and scope of container
-        doTestCreateGrant(null, grantCreationUserOrGroupId, 
-            containerHref2, 
+        doTestCreateGrant(null, grantCreationUserOrGroupId, containerHref2,
             ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS, null);
-                
+
         //test declining retrieving content
         try {
             PWCallback.setHandle(HANDLE);
-            ((ItemClient) getClient(ITEM_HANDLER_CODE)).retrieveContent(
-                    itemId, privateComponentId);
-        } catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "retrieving content of object failed. ", e);
-        } finally {
+            ((ItemClient) getClient(ITEM_HANDLER_CODE)).retrieveContent(itemId, privateComponentId);
+        }
+        catch (final Exception e) {
+            EscidocRestSoapTestBase.failException("retrieving content of object failed. ", e);
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
 
@@ -120,32 +106,25 @@ public class CollaboratorModifierUpdateAnyMembersRestTest
 
     /**
      * Test collaborator with scope on parent container.
-     * 
-     * @test.name Collaborator - Scope on Parent Container
-     * @test.id AA-Collaborator-ScopeOnParentContainer
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
-    public void testRetrieveContentWithParentContainerScope() 
-                                                    throws Exception {
+    public void testRetrieveContentWithParentContainerScope() throws Exception {
 
         //create grant collaborator for user USER_ID and scope of container
-        doTestCreateGrant(null, grantCreationUserOrGroupId, 
-            containerHref, 
+        doTestCreateGrant(null, grantCreationUserOrGroupId, containerHref,
             ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS, null);
-                
+
         //test declining retrieving content
         try {
             PWCallback.setHandle(HANDLE);
-            ((ItemClient) getClient(ITEM_HANDLER_CODE)).retrieveContent(
-                    itemId, privateComponentId);
-        } catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "retrieving content of object failed. ", e);
-        } finally {
+            ((ItemClient) getClient(ITEM_HANDLER_CODE)).retrieveContent(itemId, privateComponentId);
+        }
+        catch (final Exception e) {
+            EscidocRestSoapTestBase.failException("retrieving content of object failed. ", e);
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
 
@@ -153,33 +132,26 @@ public class CollaboratorModifierUpdateAnyMembersRestTest
 
     /**
      * Test collaborator with no scope.
-     * 
-     * @test.name Collaborator - No Scope
-     * @test.id AA-Collaborator-NoContext
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testRetrieveContentWithNoScope() throws Exception {
 
         //create grant collaborator for user USER_ID and scope null
-        doTestCreateGrant(null, grantCreationUserOrGroupId, 
-            null, 
-            ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS, null);
-                
+        doTestCreateGrant(null, grantCreationUserOrGroupId, null, ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS,
+            null);
+
         //test declining retrieving content
         try {
             PWCallback.setHandle(HANDLE);
-            ((ItemClient) getClient(ITEM_HANDLER_CODE)).retrieveContent(
-                    itemId, privateComponentId);
-            EscidocRestSoapTestBase
-                .failMissingException(AuthorizationException.class);
-        } catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                    AuthorizationException.class, e);
-        } finally {
+            ((ItemClient) getClient(ITEM_HANDLER_CODE)).retrieveContent(itemId, privateComponentId);
+            EscidocRestSoapTestBase.failMissingException(AuthorizationException.class);
+        }
+        catch (final Exception e) {
+            EscidocRestSoapTestBase.assertExceptionType(AuthorizationException.class, e);
+        }
+        finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
 

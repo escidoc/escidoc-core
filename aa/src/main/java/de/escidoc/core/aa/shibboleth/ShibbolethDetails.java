@@ -30,10 +30,8 @@ package de.escidoc.core.aa.shibboleth;
 
 /**
  * Class encapsulating the details of a shibboleth session.
- * 
- * @author Torsten Tetteroo
  *
- * 
+ * @author Torsten Tetteroo
  */
 public class ShibbolethDetails {
 
@@ -41,22 +39,17 @@ public class ShibbolethDetails {
 
     public static final String SHIB_ASSERTION_COUNT = "Shib-Assertion-Count";
 
-    public static final String SHIB_AUTHENTICATION_METHOD =
-        "Shib-Authentication-Method";
+    public static final String SHIB_AUTHENTICATION_METHOD = "Shib-Authentication-Method";
 
-    public static final String SHIB_AUTHENTICATION_INSTANT =
-        "Shib-Authentication-Instant";
+    public static final String SHIB_AUTHENTICATION_INSTANT = "Shib-Authentication-Instant";
 
-    public static final String SHIB_AUTHNCONTEXT_CLASS =
-        "Shib-AuthnContext-Class";
+    public static final String SHIB_AUTHNCONTEXT_CLASS = "Shib-AuthnContext-Class";
 
-    public static final String SHIB_AUTHNCONTEXT_DECL =
-        "Shib-AuthnContext-Decl";
+    public static final String SHIB_AUTHNCONTEXT_DECL = "Shib-AuthnContext-Decl";
 
     public static final String SHIB_SESSION_ID = "Shib-Session-ID";
 
-    public static final String SHIB_IDENTITY_PROVIDER =
-        "Shib-Identity-Provider";
+    public static final String SHIB_IDENTITY_PROVIDER = "Shib-Identity-Provider";
 
     private final String shibApplicationId;
 
@@ -76,31 +69,20 @@ public class ShibbolethDetails {
 
     /**
      * Constructs a ShibbolethDetails object.
-     * 
-     * @param shibApplicationId
-     *            TODO
-     * @param shibAssertionCount
-     *            The value of the request header "Shib-Assertion-Count"
-     * @param shibAuthenticationMethod
-     *            The value of the request header "Shib-Authentication-Method"
-     * @param shibAuthenticationInstant
-     *            The value of the request header "Shib-Authentication-Instant"
-     * @param shibAuthnContextClass
-     *            The value of the request header "Shib-AuthnContext-Class"
-     * @param shibAuthContextDecl
-     *            The value of the request header "Shib-AuthnContext-Decl"
-     * @param shibIdentityProvider
-     *            The value of the request header "Shib-Identity-Provider"
-     * @param shibSessionId
-     *            The value of the request header "Shib-Session-ID"
-     * 
      *
+     * @param shibApplicationId         TODO
+     * @param shibAssertionCount        The value of the request header "Shib-Assertion-Count"
+     * @param shibAuthenticationMethod  The value of the request header "Shib-Authentication-Method"
+     * @param shibAuthenticationInstant The value of the request header "Shib-Authentication-Instant"
+     * @param shibAuthnContextClass     The value of the request header "Shib-AuthnContext-Class"
+     * @param shibAuthContextDecl       The value of the request header "Shib-AuthnContext-Decl"
+     * @param shibIdentityProvider      The value of the request header "Shib-Identity-Provider"
+     * @param shibSessionId             The value of the request header "Shib-Session-ID"
      */
-    public ShibbolethDetails(final String shibApplicationId,
-        final String shibAssertionCount, final String shibAuthenticationMethod,
-        final String shibAuthenticationInstant,
-        final String shibAuthnContextClass, final String shibAuthContextDecl,
-        final String shibIdentityProvider, final String shibSessionId) {
+    public ShibbolethDetails(final String shibApplicationId, final String shibAssertionCount,
+        final String shibAuthenticationMethod, final String shibAuthenticationInstant,
+        final String shibAuthnContextClass, final String shibAuthContextDecl, final String shibIdentityProvider,
+        final String shibSessionId) {
 
         this.shibApplicationId = shibApplicationId;
         this.shibAssertionCount = shibAssertionCount;
@@ -114,7 +96,6 @@ public class ShibbolethDetails {
 
     /**
      * @return Returns the value of the request header "Shib_Application_ID".
-     *
      */
     public String getShibApplicationId() {
         return this.shibApplicationId;
@@ -122,34 +103,27 @@ public class ShibbolethDetails {
 
     /**
      * @return Returns the value of the request header "Shib-Assertion-Count".
-     *
      */
     public String getShibAssertionCount() {
         return this.shibAssertionCount;
     }
 
     /**
-     * @return Returns the value of the request header
-     *         "Shib-Authentication-Method".
-     *
+     * @return Returns the value of the request header "Shib-Authentication-Method".
      */
     public String getShibAuthenticationMethod() {
         return this.shibAuthenticationMethod;
     }
 
     /**
-     * @return Returns the value of the request header
-     *         "Shib-Authentication-Instant".
-     *
+     * @return Returns the value of the request header "Shib-Authentication-Instant".
      */
     public String getShibAuthenticationInstant() {
         return this.shibAuthenticationInstant;
     }
 
     /**
-     * @return Returns the value of the request header
-     *         "Shib-AuthnContext-Class".
-     *
+     * @return Returns the value of the request header "Shib-AuthnContext-Class".
      */
     public String getShibAuthnContextClass() {
         return this.shibAuthnContextClass;
@@ -157,7 +131,6 @@ public class ShibbolethDetails {
 
     /**
      * @return Returns the value of the request header "Shib-AuthnContext-Decl".
-     *
      */
     public String getShibAuthContextDecl() {
         return this.shibAuthContextDecl;
@@ -165,7 +138,6 @@ public class ShibbolethDetails {
 
     /**
      * @return Returns the value of the request header "Shib-Identity-Provider".
-     *
      */
     public String getShibIdentityProvider() {
         return this.shibIdentityProvider;
@@ -173,7 +145,6 @@ public class ShibbolethDetails {
 
     /**
      * @return Returns the value of the request header "Shib-Session-ID".
-     *
      */
     public String getShibSessionId() {
         return this.shibSessionId;

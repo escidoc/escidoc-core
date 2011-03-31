@@ -29,90 +29,55 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 
 /**
  * Interface of a handler managing eSciDoc actions.
- * 
+ *
  * @author Torsten Tetteroo
  */
 public interface ActionHandlerInterface {
 
     /**
-     * Defines which actions shall not be secured by the role based
-     * authorization for a specified context.
-     * 
-     * @param contextId
-     *            The Context ID within the actions shall be unsecured,
-     *            i.e. shall be available to the public.
-     * @param actions
-     *            The list of actions that shall be unsecured within the
-     *            context.
+     * Defines which actions shall not be secured by the role based authorization for a specified context.
+     *
+     * @param contextId The Context ID within the actions shall be unsecured, i.e. shall be available to the public.
+     * @param actions   The list of actions that shall be unsecured within the context.
      * @return Returns the list of unsecured actions.
-     * @throws ContextNotFoundException
-     *             Thrown if a context with the provided id does not exist.
-     * @throws XmlCorruptedException
-     *             Thrown if the provided list of actions is not valid Xml.
-     * @throws XmlSchemaValidationException
-     *             Thrown if the provided list of actions is not valid Xml.
-     * @throws AuthenticationException
-     *             Thrown if the authentication fails due to an invalid provided
-     *             eSciDocUserHandle.
-     * @throws AuthorizationException
-     *             Thrown if the authorization fails.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
-     *             
-     * @escidoc_core.visible false
+     * @throws ContextNotFoundException     Thrown if a context with the provided id does not exist.
+     * @throws XmlCorruptedException        Thrown if the provided list of actions is not valid Xml.
+     * @throws XmlSchemaValidationException Thrown if the provided list of actions is not valid Xml.
+     * @throws AuthenticationException      Thrown if the authentication fails due to an invalid provided
+     *                                      eSciDocUserHandle.
+     * @throws AuthorizationException       Thrown if the authorization fails.
+     * @throws SystemException              Thrown in case of an internal error.
      */
-    String createUnsecuredActions(String contextId, String actions)
-        throws ContextNotFoundException, 
-        XmlCorruptedException, XmlSchemaValidationException,
-        AuthenticationException, AuthorizationException, SystemException;
+    String createUnsecuredActions(String contextId, String actions) throws ContextNotFoundException,
+        XmlCorruptedException, XmlSchemaValidationException, AuthenticationException, AuthorizationException,
+        SystemException;
 
     /**
-     * Retrieves the list of actions that are not secured by the role based
-     * authorization for the specified context.
-     * 
-     * @param contextId
-     *            The Context ID for that the list of unsecured actions
-     *            shall be returned.
+     * Retrieves the list of actions that are not secured by the role based authorization for the specified context.
+     *
+     * @param contextId The Context ID for that the list of unsecured actions shall be returned.
      * @return Returns the list of unsecured actions.
-     * @throws ContextNotFoundException
-     *             Thrown if a context with the provided id does not exist.
-     * @throws AuthenticationException
-     *             Thrown if the authentication fails due to an invalid provided
-     *             eSciDocUserHandle.
-     * @throws AuthorizationException
-     *             Thrown if the authorization fails.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
-     *             
-     * @escidoc_core.visible false
+     * @throws ContextNotFoundException Thrown if a context with the provided id does not exist.
+     * @throws AuthenticationException  Thrown if the authentication fails due to an invalid provided
+     *                                  eSciDocUserHandle.
+     * @throws AuthorizationException   Thrown if the authorization fails.
+     * @throws SystemException          Thrown in case of an internal error.
      */
-    String retrieveUnsecuredActions(String contextId)
-        throws ContextNotFoundException, AuthenticationException,
+    String retrieveUnsecuredActions(String contextId) throws ContextNotFoundException, AuthenticationException,
         AuthorizationException, SystemException;
 
     /**
-     * Deletes the list of actions that shall not be secured by the role based
-     * authorization. <br>
-     * After calling this method, all methods will be secured within the
-     * context..
-     * 
-     * @param contextId
-     *            The Context ID for that all actions shall be secured by
-     *            role based authorization.
-     * @throws ContextNotFoundException
-     *             Thrown if a context with the provided id does not exist.
-     * @throws AuthenticationException
-     *             Thrown if the authentication fails due to an invalid provided
-     *             eSciDocUserHandle.
-     * @throws AuthorizationException
-     *             Thrown if the authorization fails.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
-     *             
-     * @escidoc_core.visible false
+     * Deletes the list of actions that shall not be secured by the role based authorization. <br> After calling this
+     * method, all methods will be secured within the context..
+     *
+     * @param contextId The Context ID for that all actions shall be secured by role based authorization.
+     * @throws ContextNotFoundException Thrown if a context with the provided id does not exist.
+     * @throws AuthenticationException  Thrown if the authentication fails due to an invalid provided
+     *                                  eSciDocUserHandle.
+     * @throws AuthorizationException   Thrown if the authorization fails.
+     * @throws SystemException          Thrown in case of an internal error.
      */
-    void deleteUnsecuredActions(String contextId)
-        throws ContextNotFoundException, AuthenticationException,
+    void deleteUnsecuredActions(String contextId) throws ContextNotFoundException, AuthenticationException,
         AuthorizationException, SystemException;
 
 }

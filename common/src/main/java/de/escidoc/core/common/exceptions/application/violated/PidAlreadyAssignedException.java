@@ -21,15 +21,13 @@
 package de.escidoc.core.common.exceptions.application.violated;
 
 /**
- * The PidAlreadyAssignedException is used to indicate that the pid cannot be
- * assigned to the object because it already is assigned.
- * 
- * returned httpStatusCode is 409. Status code (409) indicates that the request
- * could not be completed due to a conflict with the current state of the
- * resource.
- * 
- * @author Michael Schneider
+ * The PidAlreadyAssignedException is used to indicate that the pid cannot be assigned to the object because it already
+ * is assigned.
+ * <p/>
+ * returned httpStatusCode is 409. Status code (409) indicates that the request could not be completed due to a conflict
+ * with the current state of the resource.
  *
+ * @author Michael Schneider
  */
 public class PidAlreadyAssignedException extends RuleViolationException {
 
@@ -40,13 +38,10 @@ public class PidAlreadyAssignedException extends RuleViolationException {
 
     public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_VIOLATED;
 
-    public static final String HTTP_STATUS_MESSAGE =
-        "Pid is already assigned.";
+    public static final String HTTP_STATUS_MESSAGE = "Pid is already assigned.";
 
     /**
      * Default constructor.
-     * 
-     *
      */
     public PidAlreadyAssignedException() {
         super(HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -54,9 +49,8 @@ public class PidAlreadyAssignedException extends RuleViolationException {
 
     /**
      * Constructor used to map an initial exception.
-     * 
-     * @param error
-     *            Throwable
+     *
+     * @param error Throwable
      */
     public PidAlreadyAssignedException(final Throwable error) {
         super(error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -64,27 +58,21 @@ public class PidAlreadyAssignedException extends RuleViolationException {
 
     /**
      * Constructs a new exception with the specified detail message.
-     * 
-     * @param message -
-     *            the detail message.
      *
+     * @param message - the detail message.
      */
     public PidAlreadyAssignedException(final String message) {
         super(message, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 
     /**
-     * Constructor used to create a new Exception with the specified detail
-     * message and a mapping to an initial exception.
-     * 
-     * @param message -
-     *            the detail message.
-     * @param error
-     *            Throwable
+     * Constructor used to create a new Exception with the specified detail message and a mapping to an initial
+     * exception.
      *
+     * @param message - the detail message.
+     * @param error   Throwable
      */
-    public PidAlreadyAssignedException(final String message,
-        final Throwable error) {
+    public PidAlreadyAssignedException(final String message, final Throwable error) {
         super(message, error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 }

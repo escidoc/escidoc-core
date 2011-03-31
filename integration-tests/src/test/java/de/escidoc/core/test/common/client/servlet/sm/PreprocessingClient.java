@@ -36,20 +36,16 @@ import de.escidoc.core.test.common.client.servlet.Constants;
 import javax.xml.rpc.ServiceException;
 
 /**
- * Offers access methods to the escidoc REST and SOAP interface of the Statistic
- * Preprocessing resource.
- * 
+ * Offers access methods to the escidoc REST and SOAP interface of the Statistic Preprocessing resource.
+ *
  * @author Michael Hoppe
- * 
  */
 public class PreprocessingClient extends ClientBase {
 
     private PreprocessingHandler soapClient = null;
 
     /**
-     * 
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public PreprocessingClient(final int transport) {
         super(transport);
@@ -58,30 +54,22 @@ public class PreprocessingClient extends ClientBase {
 
     /**
      * Preprocess data in the escidoc framework.
-     * 
-     * @param id
-     *            aggregationDefinitionId.
-     * @param preprocessingInformationXml
-     *            The xml representation of the preprocessing-information.
-     * @return The HttpMethod after the service call(REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param id                          aggregationDefinitionId.
+     * @param preprocessingInformationXml The xml representation of the preprocessing-information.
+     * @return The HttpMethod after the service call(REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
-    public Object preprocess(final String id, 
-            final Object preprocessingInformationXml) throws Exception {
+    public Object preprocess(final String id, final Object preprocessingInformationXml) throws Exception {
 
-        return callEsciDoc("Preprocessing.preprocess", 
-                METHOD_PREPROCESS_STATISTICS,
-            Constants.HTTP_METHOD_POST, Constants.STATISTIC_PREPROCESSING_BASE_URI,
-            new String[] {id}, changeToString(preprocessingInformationXml));
+        return callEsciDoc("Preprocessing.preprocess", METHOD_PREPROCESS_STATISTICS, Constants.HTTP_METHOD_POST,
+            Constants.STATISTIC_PREPROCESSING_BASE_URI, new String[] { id },
+            changeToString(preprocessingInformationXml));
     }
 
     /**
-     * 
      * @return Returns the soapClient.
-     * @throws ServiceException
-     *             If service instantiation fails.
+     * @throws ServiceException If service instantiation fails.
      */
     @Override
     public PreprocessingHandler getSoapClient() throws ServiceException {
@@ -89,10 +77,8 @@ public class PreprocessingClient extends ClientBase {
         if (soapClient == null) {
             PreprocessingHandlerServiceLocator serviceLocator =
                 new PreprocessingHandlerServiceLocator(getEngineConfig());
-            serviceLocator
-                .setPreprocessingHandlerServiceEndpointAddress(
-                        checkSoapAddress(serviceLocator
-                    .getPreprocessingHandlerServiceAddress()));
+            serviceLocator.setPreprocessingHandlerServiceEndpointAddress(checkSoapAddress(serviceLocator
+                .getPreprocessingHandlerServiceAddress()));
             soapClient = serviceLocator.getPreprocessingHandlerService();
         }
         return soapClient;

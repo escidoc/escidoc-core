@@ -36,19 +36,16 @@ import de.escidoc.core.tme.JhoveHandlerServiceLocator;
 import javax.xml.rpc.ServiceException;
 
 /**
- * Offers access methods to the escidoc REST interface of the container
- * resource.
- * 
+ * Offers access methods to the escidoc REST interface of the container resource.
+ *
  * @author Michael Schneider
- * 
  */
 public class JhoveClient extends ClientBase {
 
     private JhoveHandler soapClient = null;
 
     /**
-     * @param transport
-     *            The transport identifier.
+     * @param transport The transport identifier.
      */
     public JhoveClient(final int transport) {
         super(transport);
@@ -56,35 +53,28 @@ public class JhoveClient extends ClientBase {
 
     /**
      * Retrieve the Containers of a Container.
-     * 
-     * @param param
-     *            TODO
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
+     *
+     * @param param TODO
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
      */
     public Object identify(final String param) throws Exception {
 
-        return callEsciDoc("Jhove.extract", METHOD_EXTRACT,
-            Constants.HTTP_METHOD_POST, Constants.JHOVE_BASE_URI,
+        return callEsciDoc("Jhove.extract", METHOD_EXTRACT, Constants.HTTP_METHOD_POST, Constants.JHOVE_BASE_URI,
             new String[] {}, param);
     }
 
     /**
      * @return Returns the soapClient.
-     * @throws ServiceException
-     *             If service instantiation fails.
+     * @throws ServiceException If service instantiation fails.
      */
     @Override
     public JhoveHandler getSoapClient() throws ServiceException {
 
         if (soapClient == null) {
-            JhoveHandlerServiceLocator serviceLocator =
-                new JhoveHandlerServiceLocator(getEngineConfig());
-            serviceLocator
-                .setJhoveHandlerServiceEndpointAddress(checkSoapAddress(serviceLocator
-                    .getJhoveHandlerServiceAddress()));
+            JhoveHandlerServiceLocator serviceLocator = new JhoveHandlerServiceLocator(getEngineConfig());
+            serviceLocator.setJhoveHandlerServiceEndpointAddress(checkSoapAddress(serviceLocator
+                .getJhoveHandlerServiceAddress()));
             soapClient = serviceLocator.getJhoveHandlerService();
         }
         return soapClient;

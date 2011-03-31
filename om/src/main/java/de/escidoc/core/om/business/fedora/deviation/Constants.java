@@ -30,7 +30,7 @@ package de.escidoc.core.om.business.fedora.deviation;
 
 /**
  * Constants.
- * 
+ *
  * @author Michael Hoppe
  */
 public final class Constants {
@@ -42,6 +42,7 @@ public final class Constants {
     }
 
     public static final boolean USE_SOAP_REQUEST_PROTOCOL = false;
+
     public static final boolean USE_REST_REQUEST_PROTOCOL = true;
 
 }

@@ -44,11 +44,9 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import java.util.Collection;
 
 /**
- * Abstract stax handler that handles the attributes that have to be fetched
- * from a resource Xml representation.<br>
- * 
+ * Abstract stax handler that handles the attributes that have to be fetched from a resource Xml representation.<br>
+ *
  * @author Torsten Tetteroo
- * 
  */
 public class AbstractResourceAttributeStaxHandler extends DefaultHandler {
 
@@ -63,29 +61,21 @@ public class AbstractResourceAttributeStaxHandler extends DefaultHandler {
     private final String urnVersionStatus;
 
     private boolean statusFound;
-    
+
     private boolean inMetadata;
-    
+
     /**
      * The constructor.
-     * 
-     * @param ctx
-     *            The <code>EvaluationCtx</code> for that the item xml
-     *            representation shall be parsed. Found attributes are cached
-     *            using this context as part of the key.
-     * @param resourceId
-     *            The id of the item resource. Used as part of the cache key.
-     * @param urnModifiedBy
-     *            The urn of the modified-by attribute.
-     * @param urnStatus
-     *            The urn of the status attribute.
-     * @param urnVersionStatus
-     *            The urn of the version-status attribute.
      *
+     * @param ctx              The <code>EvaluationCtx</code> for that the item xml representation shall be parsed.
+     *                         Found attributes are cached using this context as part of the key.
+     * @param resourceId       The id of the item resource. Used as part of the cache key.
+     * @param urnModifiedBy    The urn of the modified-by attribute.
+     * @param urnStatus        The urn of the status attribute.
+     * @param urnVersionStatus The urn of the version-status attribute.
      */
-    public AbstractResourceAttributeStaxHandler(final EvaluationCtx ctx,
-        final String resourceId, final String urnModifiedBy,
-        final String urnStatus, final String urnVersionStatus) {
+    public AbstractResourceAttributeStaxHandler(final EvaluationCtx ctx, final String resourceId,
+        final String urnModifiedBy, final String urnStatus, final String urnVersionStatus) {
 
         this.ctx = ctx;
         this.resourceId = resourceId;
@@ -94,23 +84,14 @@ public class AbstractResourceAttributeStaxHandler extends DefaultHandler {
         this.urnVersionStatus = urnVersionStatus;
     }
 
-
-
     /**
      * See Interface for functional description.
-     * 
-     * @param element
-     * @return
-     * @throws Exception
-     * @see DefaultHandler
-     *      #startElement
-     *      (de.escidoc.core.common.util.xml.stax.events.StartElement)
      *
+     * @see DefaultHandler #startElement (de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
-    public StartElement startElement(final StartElement element)
-        throws Exception {
-        
+    public StartElement startElement(final StartElement element) throws Exception {
+
         //Only parse elements that are not in metadata-section
         if (XmlUtility.NAME_MDRECORDS.equals(element.getLocalName())) {
             setInMetadata(true);
@@ -119,8 +100,7 @@ public class AbstractResourceAttributeStaxHandler extends DefaultHandler {
         if (isNotReady() && !isInMetadata()) {
             final String localName = element.getLocalName();
             if (XmlUtility.NAME_MODIFIED_BY.equals(localName)) {
-                cacheAttribute(this.urnModifiedBy, XmlUtility
-                    .getIdFromStartElement(element));
+                cacheAttribute(this.urnModifiedBy, XmlUtility.getIdFromStartElement(element));
             }
         }
 
@@ -128,17 +108,12 @@ public class AbstractResourceAttributeStaxHandler extends DefaultHandler {
     }
 
     /**
-     * This method handles an end element.<br>
-     * Check if this element is the mdrecords end element.
-     * 
-     * @param element
-     *            The {@link StartElementStartElement} to handle.
-     * @return Returns an end element that shall be handled by further handlers
-     *         in the chain, or <code>null</code> to stop the chain.
-     * @throws Exception
-     *             Thrown if anything fails. This depends on the implementation
-     *             of the concrete class.
+     * This method handles an end element.<br> Check if this element is the mdrecords end element.
      *
+     * @param element The {@link StartElementStartElement} to handle.
+     * @return Returns an end element that shall be handled by further handlers in the chain, or <code>null</code> to
+     *         stop the chain.
+     * @throws Exception Thrown if anything fails. This depends on the implementation of the concrete class.
      */
     @Override
     public EndElement endElement(final EndElement element) throws Exception {
@@ -147,29 +122,21 @@ public class AbstractResourceAttributeStaxHandler extends DefaultHandler {
         if (XmlUtility.NAME_MDRECORDS.equals(element.getLocalName())) {
             setInMetadata(false);
         }
-        
+
         return element;
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param data
-     * @param element
-     * @return
-     * @throws Exception
-     * @see DefaultHandler
-     *      #characters(java.lang.String,
-     *      de.escidoc.core.common.util.xml.stax.events.StartElement)
      *
+     * @see DefaultHandler #characters(java.lang.String, de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
-    public String characters(final String data, final StartElement element)
-        throws Exception {
+    public String characters(final String data, final StartElement element) throws Exception {
 
         if (isNotReady() && !isInMetadata()) {
             final String localName = element.getLocalName();
-            if (! this.statusFound && XmlUtility.NAME_PUBLIC_STATUS.equals(localName)) {
+            if (!this.statusFound && XmlUtility.NAME_PUBLIC_STATUS.equals(localName)) {
                 cacheAttribute(this.urnStatus, data);
                 // in an item representation, status is contained in item
                 // properties and in the component properties. We have to mark
@@ -185,92 +152,61 @@ public class AbstractResourceAttributeStaxHandler extends DefaultHandler {
         return data;
     }
 
-
-
     /**
-     * Creates and caches the result for the provided attribute values using the
-     * evaluation context, the resource id and the provided attribute id as the
-     * cache key.
-     * 
-     * @param attributeId
-     *            The attribute id.
-     * @param attributeValues
-     *            The attribute values.
+     * Creates and caches the result for the provided attribute values using the evaluation context, the resource id and
+     * the provided attribute id as the cache key.
      *
+     * @param attributeId     The attribute id.
+     * @param attributeValues The attribute values.
      */
-    protected void cacheAttribute(
-        final String attributeId,
-        final Collection<StringAttribute> attributeValues) {
+    protected void cacheAttribute(final String attributeId, final Collection<StringAttribute> attributeValues) {
 
         cacheAttribute(this.ctx, this.resourceId, attributeId, attributeValues);
     }
 
     /**
-     * Creates and caches the result for the provided attribute value using the
-     * evaluation context, the resource id and the provided attribute id as the
-     * cache key.
-     * 
-     * @param attributeId
-     *            The attribute id.
-     * @param attributeValue
-     *            The attribute value.
+     * Creates and caches the result for the provided attribute value using the evaluation context, the resource id and
+     * the provided attribute id as the cache key.
      *
+     * @param attributeId    The attribute id.
+     * @param attributeValue The attribute value.
      */
-    protected void cacheAttribute(
-        final String attributeId, final String attributeValue) {
+    protected void cacheAttribute(final String attributeId, final String attributeValue) {
 
         cacheAttribute(this.ctx, this.resourceId, attributeId, attributeValue);
     }
 
     /**
-     * Creates and caches the result for the provided attribute values using the
-     * evaluation context, the resource id and the provided attribute id as the
-     * cache key.
-     * 
-     * @param ctx
-     *            The <code>EvaluationCtx</code> object used as part of the
-     *            key for caching.
-     * @param resourceId
-     *            The resource id used as part of the key for caching.
-     * @param attributeId
-     *            The attribute id used as part of the key for caching.
-     * @param attributeValues
-     *            The attribute values.
+     * Creates and caches the result for the provided attribute values using the evaluation context, the resource id and
+     * the provided attribute id as the cache key.
      *
+     * @param ctx             The <code>EvaluationCtx</code> object used as part of the key for caching.
+     * @param resourceId      The resource id used as part of the key for caching.
+     * @param attributeId     The attribute id used as part of the key for caching.
+     * @param attributeValues The attribute values.
      */
     protected static void cacheAttribute(
-        final EvaluationCtx ctx, final String resourceId,
-        final String attributeId,
+        final EvaluationCtx ctx, final String resourceId, final String attributeId,
         final Collection<StringAttribute> attributeValues) {
 
-        final String cacheKey =
-            StringUtility.concatenateWithColonToString(resourceId, attributeId);
-        RequestAttributesCache.put(ctx, cacheKey, new EvaluationResult(
-            new BagAttribute(Constants.URI_XMLSCHEMA_STRING, attributeValues)));
+        final String cacheKey = StringUtility.concatenateWithColonToString(resourceId, attributeId);
+        RequestAttributesCache.put(ctx, cacheKey, new EvaluationResult(new BagAttribute(Constants.URI_XMLSCHEMA_STRING,
+            attributeValues)));
     }
 
     /**
-     * Creates and caches the result for the provided attribute value using the
-     * evaluation context, the resource id and the provided attribute id as the
-     * cache key.
-     * 
-     * @param ctx
-     *            The <code>EvaluationCtx</code> object used as part of the
-     *            key for caching.
-     * @param resourceId
-     *            The resource id used as part of the key for caching.
-     * @param attributeId
-     *            The attribute id used as part of the key for caching.
-     * @param attributeValue
-     *            The attribute value.
+     * Creates and caches the result for the provided attribute value using the evaluation context, the resource id and
+     * the provided attribute id as the cache key.
      *
+     * @param ctx            The <code>EvaluationCtx</code> object used as part of the key for caching.
+     * @param resourceId     The resource id used as part of the key for caching.
+     * @param attributeId    The attribute id used as part of the key for caching.
+     * @param attributeValue The attribute value.
      */
     protected static void cacheAttribute(
-        final EvaluationCtx ctx, final String resourceId,
-        final String attributeId, final String attributeValue) {
+        final EvaluationCtx ctx, final String resourceId, final String attributeId, final String attributeValue) {
 
-        final String cacheKey =
-            StringUtility.concatenateWithColonToString(resourceId, attributeId);
+        final String cacheKey = StringUtility.concatenateWithColonToString(resourceId, attributeId);
         RequestAttributesCache.put(ctx, cacheKey, CustomEvaluationResultBuilder
             .createSingleStringValueResult(attributeValue));
     }

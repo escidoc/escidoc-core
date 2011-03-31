@@ -44,7 +44,7 @@ public class SetDefinitionUpdateHandler extends DefaultHandler {
     private static final String PROPERTIES_PATH = "/set-definition/properties";
 
     private boolean inProperties;
-  
+
     private final StaxParser parser;
 
     private final Map<String, String> setDefinitionProperties = new HashMap<String, String>();
@@ -59,7 +59,7 @@ public class SetDefinitionUpdateHandler extends DefaultHandler {
         final String currenrPath = parser.getCurPath();
         if (PROPERTIES_PATH.equals(currenrPath)) {
             this.inProperties = true;
-        } 
+        }
         return element;
     }
 
@@ -68,13 +68,12 @@ public class SetDefinitionUpdateHandler extends DefaultHandler {
         final String currenrPath = parser.getCurPath();
         if (PROPERTIES_PATH.equals(currenrPath)) {
             this.inProperties = false;
-        } 
-        return element;
         }
+        return element;
+    }
 
     @Override
-    public String characters(final String s, final StartElement element)
-        throws InvalidXmlException {
+    public String characters(final String s, final StartElement element) throws InvalidXmlException {
 
         final String theName = element.getLocalName();
         if (this.inProperties) {
@@ -83,21 +82,18 @@ public class SetDefinitionUpdateHandler extends DefaultHandler {
                     setDefinitionProperties.put(Elements.ELEMENT_NAME, s);
                 }
                 else {
-                    throw new XmlCorruptedException("the value of element "
-                        + theName + " is missing");
+                    throw new XmlCorruptedException("the value of element " + theName + " is missing");
                 }
             }
-            else if (theName.equals(Elements.ELEMENT_DESCRIPTION)
-                && s != null) {
-                setDefinitionProperties
-                    .put(Elements.ELEMENT_DESCRIPTION, s);
+            else if (theName.equals(Elements.ELEMENT_DESCRIPTION) && s != null) {
+                setDefinitionProperties.put(Elements.ELEMENT_DESCRIPTION, s);
             }
         }
         return s;
     }
-    
+
     public Map<String, String> getSetProperties() {
         return this.setDefinitionProperties;
     }
-  
+
 }

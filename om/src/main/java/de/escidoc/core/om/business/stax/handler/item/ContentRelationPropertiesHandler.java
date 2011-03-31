@@ -42,40 +42,31 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Handle and obtain values from Content Relation Properties section.
- * 
  */
 public class ContentRelationPropertiesHandler extends DefaultHandler {
 
-    private static final Logger LOGGER =
-        LoggerFactory.getLogger(ContentRelationPropertiesHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ContentRelationPropertiesHandler.class);
 
     private final StaxParser parser;
 
     private final ContentRelationProperties properties;
 
-    private static final String XPATH_CONTENT_RELATION =
-            '/' + Elements.ELEMENT_CONTENT_RELATION;
+    private static final String XPATH_CONTENT_RELATION = '/' + Elements.ELEMENT_CONTENT_RELATION;
 
     private static final String XPATH_CONTENT_RELATION_PROPERTIES =
         XPATH_CONTENT_RELATION + '/' + Elements.ELEMENT_PROPERTIES;
 
-    private static final String XPATH_DESCRIPTION =
-        XPATH_CONTENT_RELATION_PROPERTIES + "/description";
+    private static final String XPATH_DESCRIPTION = XPATH_CONTENT_RELATION_PROPERTIES + "/description";
 
     private boolean parsingDescription;
 
     private String tmpDescription;
 
-
     /**
-     * 
-     * @param parser
-     *            StAX Parser
-     * @throws WebserverSystemException
-     *             Thrown if setting ContentRelationProperties failed.
+     * @param parser StAX Parser
+     * @throws WebserverSystemException Thrown if setting ContentRelationProperties failed.
      */
-    public ContentRelationPropertiesHandler(final StaxParser parser)
-        throws WebserverSystemException {
+    public ContentRelationPropertiesHandler(final StaxParser parser) throws WebserverSystemException {
 
         this.parser = parser;
         this.properties = new ContentRelationProperties();
@@ -83,7 +74,7 @@ public class ContentRelationPropertiesHandler extends DefaultHandler {
 
     /**
      * Get ContentRelationProperties.
-     * 
+     *
      * @return ContentRelationProperties.
      */
     public ContentRelationProperties getProperties() {
@@ -92,8 +83,7 @@ public class ContentRelationPropertiesHandler extends DefaultHandler {
     }
 
     /**
-     * @param element
-     *            StartElement
+     * @param element StartElement
      * @return StartElement
      */
     @Override
@@ -109,8 +99,7 @@ public class ContentRelationPropertiesHandler extends DefaultHandler {
     }
 
     /**
-     * @param element
-     *            EndElement
+     * @param element EndElement
      * @return EndElement
      */
     @Override
@@ -118,13 +107,12 @@ public class ContentRelationPropertiesHandler extends DefaultHandler {
 
         final String currentPath = parser.getCurPath();
         if (XPATH_DESCRIPTION.equals(currentPath)) {
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Parser reached end of " + XPATH_DESCRIPTION);
             }
             // parser leaves the XML description element
             this.parsingDescription = false;
-            this.properties.setDescription(
-                this.tmpDescription);
+            this.properties.setDescription(this.tmpDescription);
         }
 
         return element;
@@ -132,27 +120,20 @@ public class ContentRelationPropertiesHandler extends DefaultHandler {
 
     /**
      * Parser hits an XML character element.
-     * 
-     * @param s
-     *            XML character element.
-     * @param element
-     *            StAX StartElement
+     *
+     * @param s       XML character element.
+     * @param element StAX StartElement
      * @return XML character element.
-     * 
-     * @throws InvalidStatusException
-     *             Thrown if value of status is invalid text.
+     * @throws InvalidStatusException Thrown if value of status is invalid text.
      */
     @Override
-    public String characters(final String s, final StartElement element)
-        throws InvalidStatusException {
+    public String characters(final String s, final StartElement element) throws InvalidStatusException {
 
         final String curPath = parser.getCurPath();
-        if (curPath.equals(XPATH_CONTENT_RELATION_PROPERTIES + '/'
-            + Elements.ELEMENT_PID)) {
+        if (curPath.equals(XPATH_CONTENT_RELATION_PROPERTIES + '/' + Elements.ELEMENT_PID)) {
             this.properties.setPid(s);
         }
-        else if (curPath.equals(XPATH_CONTENT_RELATION_PROPERTIES + '/'
-            + Elements.ELEMENT_PUBLIC_STATUS)) {
+        else if (curPath.equals(XPATH_CONTENT_RELATION_PROPERTIES + '/' + Elements.ELEMENT_PUBLIC_STATUS)) {
             this.properties.setStatus(StatusType.getStatusType(s));
         }
         else if (this.parsingDescription) {

@@ -21,17 +21,14 @@
 package de.escidoc.core.common.exceptions.application.violated;
 
 /**
- * The OrganizationalUnitHasChildrenException is used to indicate that the
- * organizational unit has children.
- * 
- * Status code (409) indicating that the request could not be completed due to a
- * conflict with the current state of the resource.
- * 
- * @author Michael Schneider
+ * The OrganizationalUnitHasChildrenException is used to indicate that the organizational unit has children.
+ * <p/>
+ * Status code (409) indicating that the request could not be completed due to a conflict with the current state of the
+ * resource.
  *
+ * @author Michael Schneider
  */
-public class OrganizationalUnitHasChildrenException
-    extends RuleViolationException {
+public class OrganizationalUnitHasChildrenException extends RuleViolationException {
 
     /**
      * The serial version uid.
@@ -40,13 +37,10 @@ public class OrganizationalUnitHasChildrenException
 
     public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_VIOLATED;
 
-    public static final String HTTP_STATUS_MESSAGE =
-        "Organizational Unit has children.";
+    public static final String HTTP_STATUS_MESSAGE = "Organizational Unit has children.";
 
     /**
      * Default constructor.
-     * 
-     *
      */
     public OrganizationalUnitHasChildrenException() {
         super(HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -54,9 +48,8 @@ public class OrganizationalUnitHasChildrenException
 
     /**
      * Constructor used to map an initial exception.
-     * 
-     * @param error
-     *            Throwable
+     *
+     * @param error Throwable
      */
     public OrganizationalUnitHasChildrenException(final Throwable error) {
         super(error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -64,27 +57,21 @@ public class OrganizationalUnitHasChildrenException
 
     /**
      * Constructs a new exception with the specified detail message.
-     * 
-     * @param message -
-     *            the detail message.
      *
+     * @param message - the detail message.
      */
     public OrganizationalUnitHasChildrenException(final String message) {
         super(message, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 
     /**
-     * Constructor used to create a new Exception with the specified detail
-     * message and a mapping to an initial exception.
-     * 
-     * @param message -
-     *            the detail message.
-     * @param error
-     *            Throwable
+     * Constructor used to create a new Exception with the specified detail message and a mapping to an initial
+     * exception.
      *
+     * @param message - the detail message.
+     * @param error   Throwable
      */
-    public OrganizationalUnitHasChildrenException(final String message,
-        final Throwable error) {
+    public OrganizationalUnitHasChildrenException(final String message, final Throwable error) {
         super(message, error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 }

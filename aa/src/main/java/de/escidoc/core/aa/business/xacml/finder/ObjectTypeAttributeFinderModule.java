@@ -47,108 +47,91 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Attribute finder module implementation that resolves the object type of the
- * resource addressed by the resource-id.<br>
- * If no resource-id is set, it is tried to resolve the attribute
- * object-type-new. If this fails, an exception is thrown.
- * 
- * Supported Attributes:<br>
- * -info:escidoc/names:aa:1.0:resource:object-type<br>
- *  the object-type of the resource, single value attribute
- * 
+ * Attribute finder module implementation that resolves the object type of the resource addressed by the
+ * resource-id.<br> If no resource-id is set, it is tried to resolve the attribute object-type-new. If this fails, an
+ * exception is thrown.
+ * <p/>
+ * Supported Attributes:<br> -info:escidoc/names:aa:1.0:resource:object-type<br> the object-type of the resource, single
+ * value attribute
+ *
  * @author Torsten Tetteroo
  */
-public class ObjectTypeAttributeFinderModule
-    extends AbstractAttributeFinderModule {
+public class ObjectTypeAttributeFinderModule extends AbstractAttributeFinderModule {
 
-    private static final Logger LOGGER =
-        LoggerFactory.getLogger(ObjectTypeAttributeFinderModule.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ObjectTypeAttributeFinderModule.class);
 
     private ObjectAttributeResolver objectAttributeResolver;
 
     /**
      * See Interface for functional description.
-     * 
-     * @param attributeIdValue attributeIdValue
-     * @param ctx ctx
-     * @param resourceId resourceId
-     * @param resourceObjid resourceObjid
+     *
+     * @param attributeIdValue      attributeIdValue
+     * @param ctx                   ctx
+     * @param resourceId            resourceId
+     * @param resourceObjid         resourceObjid
      * @param resourceVersionNumber resourceVersionNumber
-     * @param designatorType designatorType
+     * @param designatorType        designatorType
      * @return boolean
      * @throws EscidocException e
-     *
      */
     @Override
     protected boolean assertAttribute(
-        final String attributeIdValue, final EvaluationCtx ctx,
-        final String resourceId, final String resourceObjid,
-        final String resourceVersionNumber, final int designatorType)
-        throws EscidocException {
+        final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
+        final String resourceVersionNumber, final int designatorType) throws EscidocException {
 
-        return super.assertAttribute(attributeIdValue, ctx, resourceId,
-            resourceObjid, resourceVersionNumber, designatorType)
+        return super.assertAttribute(attributeIdValue, ctx, resourceId, resourceObjid, resourceVersionNumber,
+            designatorType)
             && AttributeIds.URN_OBJECT_TYPE.equals(attributeIdValue);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param attributeIdValue attributeIdValue
-     * @param ctx ctx
-     * @param resourceId resourceId
-     * @param resourceObjid resourceObjid
+     *
+     * @param attributeIdValue      attributeIdValue
+     * @param ctx                   ctx
+     * @param resourceId            resourceId
+     * @param resourceObjid         resourceObjid
      * @param resourceVersionNumber resourceVersionNumber
      * @return Object[]
      * @throws EscidocException e
-     *
      */
     @Override
     protected Object[] resolveLocalPart(
-        final String attributeIdValue, final EvaluationCtx ctx,
-        final String resourceId, final String resourceObjid,
+        final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
         final String resourceVersionNumber) throws EscidocException {
 
-        return FinderModuleHelper.isNewResourceId(resourceId) ? resolveObjectTypeNew(attributeIdValue, ctx) : resolveObjectType(attributeIdValue, resourceId,
-                resourceObjid);
+        return FinderModuleHelper.isNewResourceId(resourceId) ? resolveObjectTypeNew(attributeIdValue, ctx) : resolveObjectType(
+            attributeIdValue, resourceId, resourceObjid);
     }
 
     /**
      * Resolves the object type in the case of an existing resource.
-     * 
-     * @param attributeIdValue
-     *            The attribute id. This is used for caching.
-     * @param resourceId
-     *            The id of the resource.
-     * @param resourceObjid
-     *            The objid of the resource.
-     * @return Returns an object array containing the {@link EvaluationResult}
-     *         and the attribute id value.
-     * @throws SystemException e
-     * @throws MissingMethodParameterException e
-     * @throws AuthenticationException e
-     * @throws AuthorizationException e
+     *
+     * @param attributeIdValue The attribute id. This is used for caching.
+     * @param resourceId       The id of the resource.
+     * @param resourceObjid    The objid of the resource.
+     * @return Returns an object array containing the {@link EvaluationResult} and the attribute id value.
+     * @throws SystemException           e
+     * @throws MissingMethodParameterException
+     *                                   e
+     * @throws AuthenticationException   e
+     * @throws AuthorizationException    e
      * @throws ResourceNotFoundException e
      */
     private Object[] resolveObjectType(
-        final String attributeIdValue, final String resourceId,
-        final String resourceObjid) throws SystemException,
-        MissingMethodParameterException, AuthenticationException,
-        AuthorizationException, ResourceNotFoundException {
+        final String attributeIdValue, final String resourceId, final String resourceObjid) throws SystemException,
+        MissingMethodParameterException, AuthenticationException, AuthorizationException, ResourceNotFoundException {
 
         EvaluationResult result = null;
-        final String objectType =
-            objectAttributeResolver.resolveObjectType(resourceObjid);
+        final String objectType = objectAttributeResolver.resolveObjectType(resourceObjid);
         if (objectType != null) {
-            result = CustomEvaluationResultBuilder
-                .createSingleStringValueResult(objectType);
+            result = CustomEvaluationResultBuilder.createSingleStringValueResult(objectType);
         }
 
         // if no object-type could be determined, throw a resource not found
         // exception.
         if (result == null) {
-            final String msg = StringUtility
-                    .format("Resource not found", resourceId);
+            final String msg = StringUtility.format("Resource not found", resourceId);
             LOGGER.debug(msg);
             throw new ResourceNotFoundException(msg);
         }
@@ -157,39 +140,31 @@ public class ObjectTypeAttributeFinderModule
     }
 
     /**
-     * Resolves the object-type-new attribute which is used as the value of
-     * object-type in the case of a new resource that shall be created and no
-     * object-type can exists.
-     * 
-     * @param attributeIdValue
-     *            The attribute id. Used for caching
-     * @param ctx
-     *            The current evaluation context. Used for caching
-     * @return Returns an object array containing the {@link EvaluationResult}
-     *         and the attribute id.
+     * Resolves the object-type-new attribute which is used as the value of object-type in the case of a new resource
+     * that shall be created and no object-type can exists.
+     *
+     * @param attributeIdValue The attribute id. Used for caching
+     * @param ctx              The current evaluation context. Used for caching
+     * @return Returns an object array containing the {@link EvaluationResult} and the attribute id.
      * @throws ResourceNotFoundException e
      */
-    private Object[] resolveObjectTypeNew(
-        final String attributeIdValue, final EvaluationCtx ctx)
+    private Object[] resolveObjectTypeNew(final String attributeIdValue, final EvaluationCtx ctx)
         throws ResourceNotFoundException {
 
-        EvaluationResult result =
-            (EvaluationResult) RequestAttributesCache.get(ctx,
-                AttributeIds.URN_OBJECT_TYPE_NEW);
+        EvaluationResult result = (EvaluationResult) RequestAttributesCache.get(ctx, AttributeIds.URN_OBJECT_TYPE_NEW);
         if (result != null) {
             return new Object[] { result, attributeIdValue };
         }
 
         final String objectType;
         try {
-            objectType =
-                fetchSingleResourceAttribute(ctx,
-                    AttributeIds.URN_OBJECT_TYPE_NEW);
-        } catch (final WebserverSystemException e) {
-            if(LOGGER.isWarnEnabled()) {
+            objectType = fetchSingleResourceAttribute(ctx, AttributeIds.URN_OBJECT_TYPE_NEW);
+        }
+        catch (final WebserverSystemException e) {
+            if (LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on fetching resource attribute.");
             }
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on fetching resource attribute.", e);
             }
             // This can happen due to an internal error or because the
@@ -198,22 +173,17 @@ public class ObjectTypeAttributeFinderModule
             // nor object-type-new exist
             return null;
         }
-        result =
-            CustomEvaluationResultBuilder
-                .createSingleStringValueResult(objectType);
-        RequestAttributesCache.put(ctx, AttributeIds.URN_OBJECT_TYPE_NEW,
-            result);
+        result = CustomEvaluationResultBuilder.createSingleStringValueResult(objectType);
+        RequestAttributesCache.put(ctx, AttributeIds.URN_OBJECT_TYPE_NEW, result);
         return new Object[] { result, attributeIdValue };
     }
 
     /**
      * Injects the object attribute resolver.
-     * 
-     * @param objectAttributeResolver
-     *            The objectAttributeResolver.
+     *
+     * @param objectAttributeResolver The objectAttributeResolver.
      */
-    public void setObjectAttributeResolver(
-            final ObjectAttributeResolver objectAttributeResolver) {
+    public void setObjectAttributeResolver(final ObjectAttributeResolver objectAttributeResolver) {
         this.objectAttributeResolver = objectAttributeResolver;
     }
 

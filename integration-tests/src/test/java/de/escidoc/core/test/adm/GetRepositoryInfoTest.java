@@ -43,21 +43,17 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * Test suite for the GetRepositoryInfo method of the admin tool.
- * 
+ *
  * @author André Schenk
- * 
  */
 @RunWith(value = Parameterized.class)
 public class GetRepositoryInfoTest extends AdminToolTestBase {
 
     /**
      * The constructor.
-     * 
-     * @param transport
-     *            The transport identifier.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param transport The transport identifier.
+     * @throws Exception If anything fails.
      */
     public GetRepositoryInfoTest(final int transport) throws Exception {
         super(transport);
@@ -65,15 +61,13 @@ public class GetRepositoryInfoTest extends AdminToolTestBase {
 
     /**
      * Get some information about the repository.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testGetRepositoryInfo() throws Exception {
         // remove style sheet from XML
-        BufferedReader reader =
-            new BufferedReader(new StringReader(getRepositoryInfo()));
+        BufferedReader reader = new BufferedReader(new StringReader(getRepositoryInfo()));
         StringBuffer output = new StringBuffer();
         String line = null;
 
@@ -85,36 +79,30 @@ public class GetRepositoryInfoTest extends AdminToolTestBase {
 
         Properties repositoryInfo = new Properties();
 
-        repositoryInfo.loadFromXML(new ByteArrayInputStream(output
-            .toString().getBytes()));
+        repositoryInfo.loadFromXML(new ByteArrayInputStream(output.toString().getBytes()));
 
         // Check Property escidoc-core.build that comes from
         // internal configuration file escidoc-core.constant.properties
-        assertNotNull("Property " + PropertiesProvider.ESCIDOC_VERSION
-            + " is null",
-            repositoryInfo.getProperty(PropertiesProvider.ESCIDOC_VERSION));
+        assertNotNull("Property " + PropertiesProvider.ESCIDOC_VERSION + " is null", repositoryInfo
+            .getProperty(PropertiesProvider.ESCIDOC_VERSION));
 
         // Check Property escidoc-core.repository-name that comes from
         // external configuration file escidoc-core.properties
-        assertNotNull("Property escidoc-core.repository-name is null",
-            repositoryInfo.getProperty("escidoc-core.repository-name"));
+        assertNotNull("Property escidoc-core.repository-name is null", repositoryInfo
+            .getProperty("escidoc-core.repository-name"));
 
-        assertTrue(
-            "current database structure differs from the internally stored structure",
-            Boolean.valueOf(repositoryInfo
-                .getProperty("escidoc-core.database.consistent")));
+        assertTrue("current database structure differs from the internally stored structure", Boolean
+            .valueOf(repositoryInfo.getProperty("escidoc-core.database.consistent")));
     }
 
     /**
      * Get some information about the repository.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Test
     public void testGetIndexConfiguration() throws Exception {
-        BufferedReader reader =
-            new BufferedReader(new StringReader(getIndexConfiguration()));
+        BufferedReader reader = new BufferedReader(new StringReader(getIndexConfiguration()));
         StringBuffer output = new StringBuffer();
         String line = null;
 

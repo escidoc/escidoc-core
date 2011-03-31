@@ -55,12 +55,11 @@ import java.net.URL;
 
 /**
  * @author Michael Hoppe
- * 
+ *         <p/>
  *         Class for requesting http-requests.
- * 
- * 
  */
 public class HttpRequester {
+
     private static final int TIMEOUT = 60000;
 
     private static final boolean SSL = false;
@@ -71,10 +70,8 @@ public class HttpRequester {
 
     /**
      * Default-Constructor.
-     * 
-     * @param domain
-     *            HTTP Domain
-     * @binding
+     *
+     * @param domain HTTP Domain
      */
     public HttpRequester(final String domain) {
         this.domain = domain;
@@ -82,13 +79,9 @@ public class HttpRequester {
 
     /**
      * Constructor with security-Handle for HTTP-Basic-Authentication.
-     * 
-     * @param domain
-     *            HTTP domain
-     * @param securityHandle
-     *            String securityHandle
-     * 
-     * @binding
+     *
+     * @param domain         HTTP domain
+     * @param securityHandle String securityHandle
      */
     public HttpRequester(final String domain, final String securityHandle) {
         this.securityHandle = securityHandle;
@@ -97,33 +90,24 @@ public class HttpRequester {
 
     /**
      * Sends a GET-request to given URI and returns result as String.
-     * 
-     * @param resource
-     *            String resource
+     *
+     * @param resource String resource
      * @return String response
-     * @throws Exception
-     *             e
-     * 
+     * @throws Exception e
      */
     public String doGet(final String resource) throws Exception {
         return request(resource, "GET", null);
     }
 
     /**
-     * Sends a PUT-request with the given body to given URI and returns result
-     * as String.
-     * 
-     * @param resource
-     *            String resource
-     * @param body
-     *            String body
+     * Sends a PUT-request with the given body to given URI and returns result as String.
+     *
+     * @param resource String resource
+     * @param body     String body
      * @return String response
-     * @throws Exception
-     *             e
-     * 
+     * @throws Exception e
      */
-    public String doPut(final String resource, final String body)
-        throws Exception {
+    public String doPut(final String resource, final String body) throws Exception {
         if (body == null || body.equals("")) {
             throw new Exception("body may not be null");
         }
@@ -131,20 +115,14 @@ public class HttpRequester {
     }
 
     /**
-     * Sends a POST-request with the given body to given URI and returns result
-     * as String.
-     * 
-     * @param resource
-     *            String resource
-     * @param body
-     *            String body
+     * Sends a POST-request with the given body to given URI and returns result as String.
+     *
+     * @param resource String resource
+     * @param body     String body
      * @return String response
-     * @throws Exception
-     *             e
-     * 
+     * @throws Exception e
      */
-    public String doPost(final String resource, final String body)
-        throws Exception {
+    public String doPost(final String resource, final String body) throws Exception {
         if (body == null || body.equals("")) {
             throw new Exception("body may not be null");
         }
@@ -153,36 +131,25 @@ public class HttpRequester {
 
     /**
      * Sends a DELETE-request to given URI and returns result as String.
-     * 
-     * @param resource
-     *            String resource
+     *
+     * @param resource String resource
      * @return String response
-     * @throws Exception
-     *             e
-     * 
+     * @throws Exception e
      */
     public String doDelete(final String resource) throws Exception {
         return request(resource, "DELETE", null);
     }
 
     /**
-     * Sends request with given method and given body to given URI and returns
-     * result as String.
-     * 
-     * @param resource
-     *            String resource
-     * @param method
-     *            String method
-     * @param body
-     *            String body
+     * Sends request with given method and given body to given URI and returns result as String.
+     *
+     * @param resource String resource
+     * @param method   String method
+     * @param body     String body
      * @return String response
-     * @throws Exception
-     *             e
-     * 
+     * @throws Exception e
      */
-    private String request(
-        final String resource, final String method, final String body)
-        throws Exception {
+    private String request(final String resource, final String method, final String body) throws Exception {
         if (SSL) {
             return requestSsl(resource, method, body);
         }
@@ -192,23 +159,15 @@ public class HttpRequester {
     }
 
     /**
-     * Sends request with given method and given body to given URI and returns
-     * result as String.
-     * 
-     * @param resource
-     *            String resource
-     * @param method
-     *            String method
-     * @param body
-     *            String body
+     * Sends request with given method and given body to given URI and returns result as String.
+     *
+     * @param resource String resource
+     * @param method   String method
+     * @param body     String body
      * @return String response
-     * @throws Exception
-     *             e
-     * 
+     * @throws Exception e
      */
-    private String requestSsl(
-        final String resource, final String method, final String body)
-        throws Exception {
+    private String requestSsl(final String resource, final String method, final String body) throws Exception {
         URL url;
         InputStream is = null;
         StringBuffer response = new StringBuffer();
@@ -224,9 +183,7 @@ public class HttpRequester {
 
         // Set Basic-Authentication Header
         if (securityHandle != null && !securityHandle.equals("")) {
-            String encoding =
-                Base64.encode(securityHandle
-                    .getBytes(ClientBase.DEFAULT_CHARSET));
+            String encoding = Base64.encode(securityHandle.getBytes(ClientBase.DEFAULT_CHARSET));
             con.setRequestProperty("Authorization", "Basic " + encoding);
         }
 
@@ -235,8 +192,7 @@ public class HttpRequester {
         con.setReadTimeout(TIMEOUT);
 
         // If PUT or POST, write given body in Output-Stream
-        if ((method.equalsIgnoreCase("PUT") || method.equalsIgnoreCase("POST"))
-            && body != null) {
+        if ((method.equalsIgnoreCase("PUT") || method.equalsIgnoreCase("POST")) && body != null) {
             con.setDoOutput(true);
             OutputStream out = con.getOutputStream();
             out.write(body.getBytes(ClientBase.DEFAULT_CHARSET));
@@ -258,23 +214,15 @@ public class HttpRequester {
     }
 
     /**
-     * Sends request with given method and given body to given URI and returns
-     * result as String.
-     * 
-     * @param resource
-     *            String resource
-     * @param method
-     *            String method
-     * @param body
-     *            String body
+     * Sends request with given method and given body to given URI and returns result as String.
+     *
+     * @param resource String resource
+     * @param method   String method
+     * @param body     String body
      * @return String response
-     * @throws Exception
-     *             e
-     * 
+     * @throws Exception e
      */
-    private String requestNoSsl(
-        final String resource, final String method, final String body)
-        throws Exception {
+    private String requestNoSsl(final String resource, final String method, final String body) throws Exception {
         URL url;
         InputStream is = null;
         StringBuffer response = new StringBuffer();
@@ -285,9 +233,7 @@ public class HttpRequester {
 
         // Set Basic-Authentication Header
         if (securityHandle != null && !securityHandle.equals("")) {
-            String encoding =
-                Base64.encode(securityHandle
-                    .getBytes(ClientBase.DEFAULT_CHARSET));
+            String encoding = Base64.encode(securityHandle.getBytes(ClientBase.DEFAULT_CHARSET));
             con.setRequestProperty("Authorization", "Basic " + encoding);
         }
 
@@ -296,8 +242,7 @@ public class HttpRequester {
         con.setReadTimeout(TIMEOUT);
 
         // If PUT or POST, write given body in Output-Stream
-        if ((method.equalsIgnoreCase("PUT") || method.equalsIgnoreCase("POST"))
-            && body != null) {
+        if ((method.equalsIgnoreCase("PUT") || method.equalsIgnoreCase("POST")) && body != null) {
             con.setDoOutput(true);
             OutputStream out = con.getOutputStream();
             out.write(body.getBytes(ClientBase.DEFAULT_CHARSET));
@@ -320,17 +265,15 @@ public class HttpRequester {
 
     /**
      * @author Michael Hoppe
-     * 
+     *         <p/>
      *         Overwrite X509TrustManager.
-     * 
-     * 
      */
     class RelaxedX509TrustManager implements X509TrustManager {
+
         /**
          * Gets accepted Issuers.
-         * 
+         *
          * @return X509Certificate[] response
-         * 
          */
         public java.security.cert.X509Certificate[] getAcceptedIssuers() {
             return null;
@@ -338,30 +281,20 @@ public class HttpRequester {
 
         /**
          * Checks Client trusted.
-         * 
-         * @param chain
-         *            X509Certificate[]
-         * @param authType
-         *            String
-         * 
+         *
+         * @param chain    X509Certificate[]
+         * @param authType String
          */
-        public void checkClientTrusted(
-            final java.security.cert.X509Certificate[] chain,
-            final String authType) {
+        public void checkClientTrusted(final java.security.cert.X509Certificate[] chain, final String authType) {
         }
 
         /**
          * Checks Server trusted.
-         * 
-         * @param chain
-         *            X509Certificate[]
-         * @param authType
-         *            String
-         * 
+         *
+         * @param chain    X509Certificate[]
+         * @param authType String
          */
-        public void checkServerTrusted(
-            final java.security.cert.X509Certificate[] chain,
-            final String authType) {
+        public void checkServerTrusted(final java.security.cert.X509Certificate[] chain, final String authType) {
         }
     }
 

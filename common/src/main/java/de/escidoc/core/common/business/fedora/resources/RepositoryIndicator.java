@@ -24,9 +24,8 @@ import java.io.Serializable;
 
 /**
  * Indicates the relation to the repository.
- * 
+ *
  * @author Steffen Wagner
- * 
  */
 public class RepositoryIndicator implements Serializable {
 
@@ -45,9 +44,8 @@ public class RepositoryIndicator implements Serializable {
 
     /**
      * Indicate if resource has changed in comparing to repository.
-     * 
-     * @param resourceChanged
-     *            set true if resource has changed, false if not.
+     *
+     * @param resourceChanged set true if resource has changed, false if not.
      */
     public void setResourceChanged(final boolean resourceChanged) {
         this.repositorySynchron = !resourceChanged;
@@ -55,19 +53,17 @@ public class RepositoryIndicator implements Serializable {
 
     /**
      * Indicate if resource has changed in comparing to repository.
-     * 
+     *
      * @return true if resource has changed, false if not.
      */
     public boolean isResourceChanged() {
-        return ! this.repositorySynchron;
+        return !this.repositorySynchron;
     }
 
     /**
-     * Indicate that the resource is marked as deleted and has to remove from
-     * the repository.
-     * 
-     * @param resourceToDelete
-     *            Set true if the resource is to delete from the repository
+     * Indicate that the resource is marked as deleted and has to remove from the repository.
+     *
+     * @param resourceToDelete Set true if the resource is to delete from the repository
      */
     public void setResourceToDelete(final boolean resourceToDelete) {
         this.resourceToDeleted = resourceToDelete;
@@ -75,7 +71,7 @@ public class RepositoryIndicator implements Serializable {
 
     /**
      * Indicates that the resource is to delete from the repository.
-     * 
+     *
      * @return true if the resource is to delete from the repository
      */
     public boolean isResourceToDelete() {
@@ -84,10 +80,8 @@ public class RepositoryIndicator implements Serializable {
 
     /**
      * Indicates that the resource is new and not stored in repository.
-     * 
-     * @param resourceIsNew
-     *            Set true if the resource is new and not synchron with the
-     *            repository
+     *
+     * @param resourceIsNew Set true if the resource is new and not synchron with the repository
      */
     public void setResourceIsNew(final boolean resourceIsNew) {
         this.resourceIsNew = resourceIsNew;
@@ -95,9 +89,8 @@ public class RepositoryIndicator implements Serializable {
 
     /**
      * Indicates that the resource in new and not stored in the repository.
-     * 
-     * @return true if resource is new and not stored in the repository, false
-     *         otherwise
+     *
+     * @return true if resource is new and not stored in the repository, false otherwise
      */
     public boolean isResourceIsNew() {
         return this.resourceIsNew;
@@ -105,20 +98,17 @@ public class RepositoryIndicator implements Serializable {
 
     /**
      * Indicates that the status of resource is marked as deleted.
-     * 
-     * @param statusDeleted
-     *            set true if resource is marked as deleted.
+     *
+     * @param statusDeleted set true if resource is marked as deleted.
      */
     public void setStatusDeleted(final boolean statusDeleted) {
         this.statusDeleted = statusDeleted;
     }
 
     /**
-     * Indicates that the status of the resource is marked as deleted within
-     * repository.
-     * 
-     * @return true if resource is marked as deleted in repository, false
-     *         otherwise.
+     * Indicates that the status of the resource is marked as deleted within repository.
+     *
+     * @return true if resource is marked as deleted in repository, false otherwise.
      */
     public boolean isStatusDeleted() {
         return this.statusDeleted;

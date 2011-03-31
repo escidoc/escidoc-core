@@ -48,20 +48,16 @@ import java.util.Map;
 
 /**
  * Handler to extract resource definitions from content model xml by StaxParser.
- * 
- * @author Frank Schwichtenberg
- * 
  *
+ * @author Frank Schwichtenberg
  */
 public class ResourceDefinitionHandler extends DefaultHandler {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(
-        ResourceDefinitionHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ResourceDefinitionHandler.class);
 
     private final StaxParser parser;
 
-    private String resourceDefinitionPath =
-        "/content-model/resource-definitions/resource-definition";
+    private String resourceDefinitionPath = "/content-model/resource-definitions/resource-definition";
 
     private Map<String, ResourceDefinitionCreate> resourceDefinitions;
 
@@ -69,7 +65,7 @@ public class ResourceDefinitionHandler extends DefaultHandler {
 
     /**
      * Returns the resource definitions extracted by this content handler.
-     * 
+     *
      * @return The resource definitions.
      */
     public Map<String, ResourceDefinitionCreate> getResourceDefinitions() {
@@ -78,70 +74,56 @@ public class ResourceDefinitionHandler extends DefaultHandler {
 
     /**
      * Instantiate a MdRecordDefinitionHandler.
-     * 
-     * @param parser
-     *            The parser.
-     * @param path
-     *            Element path to resource definitions (e.g.
-     *            /content-model/resource-definitions).
+     *
+     * @param parser The parser.
+     * @param path   Element path to resource definitions (e.g. /content-model/resource-definitions).
      */
     public ResourceDefinitionHandler(final StaxParser parser, final String path) {
 
         this.parser = parser;
         this.resourceDefinitionPath = path + "/resource-definition";
-        this.resourceDefinitions =
-            new HashMap<String, ResourceDefinitionCreate>();
+        this.resourceDefinitions = new HashMap<String, ResourceDefinitionCreate>();
     }
 
     /**
      * Handle the start of an element.
-     * 
-     * @param element
-     *            The element.
+     *
+     * @param element The element.
      * @return The element.
-     * @throws MissingAttributeValueException
-     *             If a required element is not set.
-     * @throws InvalidContentException
-     *             If invalid content is found.
-     * @throws WebserverSystemException
-     *             If an error occurs.
+     * @throws MissingAttributeValueException If a required element is not set.
+     * @throws InvalidContentException        If invalid content is found.
+     * @throws WebserverSystemException       If an error occurs.
      */
     @Override
-    public StartElement startElement(final StartElement element)
-        throws MissingAttributeValueException, InvalidContentException,
-        WebserverSystemException {
+    public StartElement startElement(final StartElement element) throws MissingAttributeValueException,
+        InvalidContentException, WebserverSystemException {
 
         final String currentPath = parser.getCurPath();
         if (currentPath.equals(this.resourceDefinitionPath)) {
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Parser reached " + this.resourceDefinitionPath);
             }
             this.resourceDefinition = new ResourceDefinitionCreate();
             try {
-                this.resourceDefinition.setName(element.getAttributeValue(null,
-                    "name"));
+                this.resourceDefinition.setName(element.getAttributeValue(null, "name"));
             }
             catch (final NoSuchAttributeException e) {
-                throw new InvalidContentException(
-                    "Name required in resource definition.", e);
+                throw new InvalidContentException("Name required in resource definition.", e);
             }
         }
         else if (currentPath.equals(this.resourceDefinitionPath + "/xslt")) {
             try {
-                this.resourceDefinition.setXsltHref(element.getAttributeValue(
-                    Constants.XLINK_NS_URI, "href"));
+                this.resourceDefinition.setXsltHref(element.getAttributeValue(Constants.XLINK_NS_URI, "href"));
             }
             catch (final NoSuchAttributeException e) {
                 // TODO allow inline XSLT?
-                throw new InvalidContentException(
-                    "The element 'xslt' must have the attribute 'href'.", e);
+                throw new InvalidContentException("The element 'xslt' must have the attribute 'href'.", e);
             }
             catch (final MalformedURLException e) {
                 throw new InvalidContentException(e);
             }
             catch (final IOException e) {
-                throw new WebserverSystemException(
-                    "Configuration could not be read.", e);
+                throw new WebserverSystemException("Configuration could not be read.", e);
             }
         }
 
@@ -149,11 +131,6 @@ public class ResourceDefinitionHandler extends DefaultHandler {
     }
 
     /**
-     * 
-     * 
-     * @param data
-     * @param element
-     * 
      * @return The character data for further processing.
      */
     @Override
@@ -167,10 +144,6 @@ public class ResourceDefinitionHandler extends DefaultHandler {
     }
 
     /**
-     * 
-     * 
-     * @param element
-     * 
      * @return The element for further processing.
      */
     @Override
@@ -179,11 +152,9 @@ public class ResourceDefinitionHandler extends DefaultHandler {
         final String currentPath = parser.getCurPath();
         if (currentPath.equals(this.resourceDefinitionPath)) {
             if (this.resourceDefinitions == null) {
-                this.resourceDefinitions =
-                    new HashMap<String, ResourceDefinitionCreate>();
+                this.resourceDefinitions = new HashMap<String, ResourceDefinitionCreate>();
             }
-            this.resourceDefinitions.put(this.resourceDefinition.getName(),
-                this.resourceDefinition);
+            this.resourceDefinitions.put(this.resourceDefinition.getName(), this.resourceDefinition);
         }
 
         return element;

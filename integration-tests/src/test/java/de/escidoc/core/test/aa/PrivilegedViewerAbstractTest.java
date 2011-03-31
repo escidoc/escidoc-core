@@ -39,9 +39,8 @@ import java.util.HashMap;
 
 /**
  * Test suite for the role PrivilegedViewer.
- * 
+ *
  * @author Michael Hoppe
- * 
  */
 public class PrivilegedViewerAbstractTest extends GrantTestBase {
 
@@ -52,39 +51,31 @@ public class PrivilegedViewerAbstractTest extends GrantTestBase {
     private static final String PASSWORD = PWCallback.PASSWORD;
 
     protected static String grantCreationUserOrGroupId = null;
-    
+
     private static int methodCounter = 0;
-    
+
     protected static final String ALLOWED_CONTEXT = CONTEXT_ID;
 
     protected static final String DISALLOWED_CONTEXT = CONTEXT_ID1;
 
     /**
      * The constructor.
-     * 
-     * @param transport
-     *            The transport identifier.
-     * @param handlerCode
-     *            handlerCode of either UserAccountHandler or UserGroupHandler.
-     * @param userOrGroupId
-     *            userOrGroupId for grantCreation.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param transport     The transport identifier.
+     * @param handlerCode   handlerCode of either UserAccountHandler or UserGroupHandler.
+     * @param userOrGroupId userOrGroupId for grantCreation.
+     * @throws Exception If anything fails.
      */
-    public PrivilegedViewerAbstractTest(
-            final int transport, 
-            final int handlerCode,
-            final String userOrGroupId) throws Exception {
+    public PrivilegedViewerAbstractTest(final int transport, final int handlerCode, final String userOrGroupId)
+        throws Exception {
         super(transport, handlerCode);
         grantCreationUserOrGroupId = userOrGroupId;
     }
 
     /**
      * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @Before
     public void initialize() throws Exception {
@@ -93,17 +84,15 @@ public class PrivilegedViewerAbstractTest extends GrantTestBase {
             revokeAllGrants(grantCreationUserOrGroupId);
             //create grant privileged viewer for user grantCreationUserOrGroupId 
             //with scope on default-context
-            doTestCreateGrant(null, grantCreationUserOrGroupId, 
-                Constants.CONTEXT_BASE_URI + "/" 
-                + CONTEXT_ID, ROLE_HREF_PRIVILEGED_VIEWER, null);
+            doTestCreateGrant(null, grantCreationUserOrGroupId, Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID,
+                ROLE_HREF_PRIVILEGED_VIEWER, null);
         }
     }
 
     /**
      * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @throws Exception If anything fails.
      */
     @After
     public void deinitialize() throws Exception {
@@ -116,36 +105,21 @@ public class PrivilegedViewerAbstractTest extends GrantTestBase {
 
     /**
      * insert data into system for the tests.
-     * 
-     * @test.name prepare
-     * @test.id PREPARE
-     * @test.input
-     * @test.inputDescription
-     * @test.expected
-     * @test.status Implemented
-     * 
-     * @param status the status the item has to have.
+     *
+     * @param status    the status the item has to have.
      * @param contextId the contextId the item has to have.
-     * @return HashMap with itemId and componentIds 
-     * @throws Exception
-     *             If anything fails.
+     * @return HashMap with itemId and componentIds
+     * @throws Exception If anything fails.
      */
-    protected HashMap<String, String> prepare(
-                final String status, final String contextId) throws Exception {
+    protected HashMap<String, String> prepare(final String status, final String contextId) throws Exception {
         HashMap<String, String> createdIds = new HashMap<String, String>();
-        String itemXml = prepareItem(
-                PWCallback.DEFAULT_HANDLE, status, 
-                    contextId, false, false);
-        Document document =
-            EscidocRestSoapTestBase.getDocument(itemXml);
+        String itemXml = prepareItem(PWCallback.DEFAULT_HANDLE, status, contextId, false, false);
+        Document document = EscidocRestSoapTestBase.getDocument(itemXml);
         createdIds.put("itemId", getObjidValue(document));
-        createdIds.put("publicComponentId", 
-                extractComponentId(document, VISIBILITY_PUBLIC));
-        createdIds.put(
-                "privateComponentId", 
-                extractComponentId(document, VISIBILITY_PRIVATE));
+        createdIds.put("publicComponentId", extractComponentId(document, VISIBILITY_PUBLIC));
+        createdIds.put("privateComponentId", extractComponentId(document, VISIBILITY_PRIVATE));
         return createdIds;
-        
+
     }
 
 }

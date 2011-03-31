@@ -23,13 +23,11 @@ package de.escidoc.core.common.exceptions.application.invalid;
 import de.escidoc.core.common.exceptions.application.ApplicationException;
 
 /**
- * Main-Class for Exceptions that are caused by parameters, that are invalid in
- * the given context. returned httpStatusCode is 412. Status code (412)
- * indicating that the precondition given in one or more of the request-header
+ * Main-Class for Exceptions that are caused by parameters, that are invalid in the given context. returned
+ * httpStatusCode is 412. Status code (412) indicating that the precondition given in one or more of the request-header
  * fields evaluated to false when it was tested on the server.
- * 
+ *
  * @author Michael Hoppe (FIZ Karlsruhe)
- * 
  */
 public class ValidationException extends ApplicationException {
 
@@ -44,22 +42,17 @@ public class ValidationException extends ApplicationException {
 
     /**
      * Default constructor.
-     * 
-     *
      */
     public ValidationException() {
         super(HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 
     /**
-     * Constructor used to create a new Exception with the specified detail
-     * message and a mapping to an initial exception.
-     * 
-     * @param message -
-     *            the detail message.
-     * @param cause
-     *            Throwable
+     * Constructor used to create a new Exception with the specified detail message and a mapping to an initial
+     * exception.
      *
+     * @param message - the detail message.
+     * @param cause   Throwable
      */
     public ValidationException(final String message, final Throwable cause) {
         super(message, cause, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -67,10 +60,8 @@ public class ValidationException extends ApplicationException {
 
     /**
      * Constructs a new exception with the specified detail message.
-     * 
-     * @param message -
-     *            the detail message.
      *
+     * @param message - the detail message.
      */
     public ValidationException(final String message) {
         super(message, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -78,10 +69,8 @@ public class ValidationException extends ApplicationException {
 
     /**
      * Constructor used to map an initial exception.
-     * 
-     * @param cause
-     *            Throwable
      *
+     * @param cause Throwable
      */
     public ValidationException(final Throwable cause) {
         super(cause, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -89,66 +78,47 @@ public class ValidationException extends ApplicationException {
 
     /**
      * Default constructor.
-     * 
-     * @param httpStatusCode
-     *            the http status code
-     * @param httpStatusMsg
-     *            the http status message
      *
+     * @param httpStatusCode the http status code
+     * @param httpStatusMsg  the http status message
      */
-    public ValidationException(final int httpStatusCode,
-        final String httpStatusMsg) {
+    public ValidationException(final int httpStatusCode, final String httpStatusMsg) {
         super(httpStatusCode, httpStatusMsg);
     }
 
     /**
-     * Constructor used to create a new Exception with the specified detail
-     * message and a mapping to an initial exception.
-     * 
-     * @param message
-     *            the detail message.
-     * @param cause
-     *            Throwable
-     * @param httpStatusCode
-     *            the http status code
-     * @param httpStatusMsg
-     *            the http status message
+     * Constructor used to create a new Exception with the specified detail message and a mapping to an initial
+     * exception.
      *
+     * @param message        the detail message.
+     * @param cause          Throwable
+     * @param httpStatusCode the http status code
+     * @param httpStatusMsg  the http status message
      */
-    public ValidationException(final String message, final Throwable cause,
-        final int httpStatusCode, final String httpStatusMsg) {
+    public ValidationException(final String message, final Throwable cause, final int httpStatusCode,
+        final String httpStatusMsg) {
         super(message, cause, httpStatusCode, httpStatusMsg);
     }
 
     /**
      * Constructs a new exception with the specified detail message.
-     * 
-     * @param message
-     *            the detail message.
-     * @param httpStatusCode
-     *            the http status code
-     * @param httpStatusMsg
-     *            the http status message
      *
+     * @param message        the detail message.
+     * @param httpStatusCode the http status code
+     * @param httpStatusMsg  the http status message
      */
-    public ValidationException(final String message, final int httpStatusCode,
-        final String httpStatusMsg) {
+    public ValidationException(final String message, final int httpStatusCode, final String httpStatusMsg) {
         super(message, httpStatusCode, httpStatusMsg);
     }
 
     /**
      * Constructor used to map an initial exception.
-     * 
-     * @param cause
-     *            Throwable
-     * @param httpStatusCode
-     *            the http status code
-     * @param httpStatusMsg
-     *            the http status message
      *
+     * @param cause          Throwable
+     * @param httpStatusCode the http status code
+     * @param httpStatusMsg  the http status message
      */
-    public ValidationException(final Throwable cause, final int httpStatusCode,
-        final String httpStatusMsg) {
+    public ValidationException(final Throwable cause, final int httpStatusCode, final String httpStatusMsg) {
         super(cause, httpStatusCode, httpStatusMsg);
     }
 

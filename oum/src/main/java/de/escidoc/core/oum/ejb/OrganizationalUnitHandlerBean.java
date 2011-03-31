@@ -43,16 +43,19 @@ import java.util.Map;
 public class OrganizationalUnitHandlerBean implements SessionBean {
 
     OrganizationalUnitHandlerInterface service;
+
     SessionContext sessionCtx;
+
     private static final Logger LOGGER = LoggerFactory.getLogger(OrganizationalUnitHandlerBean.class);
 
     public void ejbCreate() throws CreateException {
         try {
             final BeanFactoryLocator beanFactoryLocator = SingletonBeanFactoryLocator.getInstance();
             final BeanFactory factory =
-                    beanFactoryLocator.useBeanFactory("OrganizationalUnitHandler.spring.ejb.context").getFactory();
+                beanFactoryLocator.useBeanFactory("OrganizationalUnitHandler.spring.ejb.context").getFactory();
             this.service = (OrganizationalUnitHandlerInterface) factory.getBean("service.OrganizationalUnitHandler");
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             LOGGER.error("ejbCreate(): Exception OrganizationalUnitHandlerComponent: " + e);
             throw new CreateException(e.getMessage());
         }
@@ -73,687 +76,517 @@ public class OrganizationalUnitHandlerBean implements SessionBean {
 
     }
 
-    public String ingest(final String xmlData,
-                                   final SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            SystemException,
-            MissingAttributeValueException,
-            MissingElementValueException,
-            OrganizationalUnitNotFoundException,
-            InvalidXmlException,
-            InvalidStatusException,
-            EscidocException {
+    public String ingest(final String xmlData, final SecurityContext securityContext) throws AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, SystemException, MissingAttributeValueException,
+        MissingElementValueException, OrganizationalUnitNotFoundException, InvalidXmlException, InvalidStatusException,
+        EscidocException {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.ingest(xmlData);
     }
 
     public String ingest(final String xmlData, final String authHandle, final Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            SystemException,
-            MissingAttributeValueException,
-            MissingElementValueException,
-            OrganizationalUnitNotFoundException,
-            InvalidXmlException,
-            InvalidStatusException,
-            EscidocException {
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException,
+        MissingAttributeValueException, MissingElementValueException, OrganizationalUnitNotFoundException,
+        InvalidXmlException, InvalidStatusException, EscidocException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.ingest(xmlData);
     }
 
-    public String create(final String xml,
-                                   final SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            SystemException,
-            MissingAttributeValueException,
-            MissingElementValueException,
-            OrganizationalUnitNotFoundException,
-            InvalidStatusException,
-            XmlCorruptedException,
-            XmlSchemaValidationException,
-            MissingMdRecordException {
+    public String create(final String xml, final SecurityContext securityContext) throws AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, SystemException, MissingAttributeValueException,
+        MissingElementValueException, OrganizationalUnitNotFoundException, InvalidStatusException,
+        XmlCorruptedException, XmlSchemaValidationException, MissingMdRecordException {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.create(xml);
     }
 
     public String create(final String xml, final String authHandle, final Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            SystemException,
-            MissingAttributeValueException,
-            MissingElementValueException,
-            OrganizationalUnitNotFoundException,
-            InvalidStatusException,
-            XmlCorruptedException,
-            XmlSchemaValidationException,
-            MissingMdRecordException {
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException,
+        MissingAttributeValueException, MissingElementValueException, OrganizationalUnitNotFoundException,
+        InvalidStatusException, XmlCorruptedException, XmlSchemaValidationException, MissingMdRecordException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.create(xml);
     }
 
-    public void delete(final String id, final SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            OrganizationalUnitNotFoundException,
-            InvalidStatusException,
-            OrganizationalUnitHasChildrenException,
-            SystemException {
+    public void delete(final String id, final SecurityContext securityContext) throws AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException,
+        InvalidStatusException, OrganizationalUnitHasChildrenException, SystemException {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         service.delete(id);
     }
 
     public void delete(final String id, final String authHandle, final Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            OrganizationalUnitNotFoundException,
-            InvalidStatusException,
-            OrganizationalUnitHasChildrenException,
-            SystemException {
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        OrganizationalUnitNotFoundException, InvalidStatusException, OrganizationalUnitHasChildrenException,
+        SystemException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         service.delete(id);
     }
 
-    public String update(final String id, final String user,
-                                   final SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            OrganizationalUnitNotFoundException,
-            SystemException,
-            OptimisticLockingException,
-            OrganizationalUnitHierarchyViolationException,
-            InvalidXmlException,
-            MissingElementValueException,
-            InvalidStatusException {
+    public String update(final String id, final String user, final SecurityContext securityContext)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        OrganizationalUnitNotFoundException, SystemException, OptimisticLockingException,
+        OrganizationalUnitHierarchyViolationException, InvalidXmlException, MissingElementValueException,
+        InvalidStatusException {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.update(id, user);
     }
 
-    public String update(final String id, final String user, final String authHandle,
-                                   final Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            OrganizationalUnitNotFoundException,
-            SystemException,
-            OptimisticLockingException,
-            OrganizationalUnitHierarchyViolationException,
-            InvalidXmlException,
-            MissingElementValueException,
-            InvalidStatusException {
+    public String update(final String id, final String user, final String authHandle, final Boolean restAccess)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        OrganizationalUnitNotFoundException, SystemException, OptimisticLockingException,
+        OrganizationalUnitHierarchyViolationException, InvalidXmlException, MissingElementValueException,
+        InvalidStatusException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.update(id, user);
     }
 
-    public String updateMdRecords(final String id, final String xml,
-                                            final SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            InvalidXmlException,
-            InvalidStatusException,
-            MissingMethodParameterException,
-            OptimisticLockingException,
-            OrganizationalUnitNotFoundException,
-            MissingElementValueException,
-            SystemException {
+    public String updateMdRecords(final String id, final String xml, final SecurityContext securityContext)
+        throws AuthenticationException, AuthorizationException, InvalidXmlException, InvalidStatusException,
+        MissingMethodParameterException, OptimisticLockingException, OrganizationalUnitNotFoundException,
+        MissingElementValueException, SystemException {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.updateMdRecords(id, xml);
     }
 
-    public String updateMdRecords(final String id, final String xml, final String authHandle,
-                                            final Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            InvalidXmlException,
-            InvalidStatusException,
-            MissingMethodParameterException,
-            OptimisticLockingException,
-            OrganizationalUnitNotFoundException,
-            MissingElementValueException,
-            SystemException {
+    public String updateMdRecords(final String id, final String xml, final String authHandle, final Boolean restAccess)
+        throws AuthenticationException, AuthorizationException, InvalidXmlException, InvalidStatusException,
+        MissingMethodParameterException, OptimisticLockingException, OrganizationalUnitNotFoundException,
+        MissingElementValueException, SystemException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.updateMdRecords(id, xml);
     }
 
-    public String updateParents(final String id, final String xml,
-                                          final SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            InvalidXmlException,
-            MissingMethodParameterException,
-            OptimisticLockingException,
-            OrganizationalUnitHierarchyViolationException,
-            OrganizationalUnitNotFoundException,
-            MissingElementValueException,
-            SystemException,
-            InvalidStatusException {
+    public String updateParents(final String id, final String xml, final SecurityContext securityContext)
+        throws AuthenticationException, AuthorizationException, InvalidXmlException, MissingMethodParameterException,
+        OptimisticLockingException, OrganizationalUnitHierarchyViolationException, OrganizationalUnitNotFoundException,
+        MissingElementValueException, SystemException, InvalidStatusException {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.updateParents(id, xml);
     }
 
-    public String updateParents(final String id, final String xml, final String authHandle,
-                                          final Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            InvalidXmlException,
-            MissingMethodParameterException,
-            OptimisticLockingException,
-            OrganizationalUnitHierarchyViolationException,
-            OrganizationalUnitNotFoundException,
-            MissingElementValueException,
-            SystemException,
-            InvalidStatusException {
+    public String updateParents(final String id, final String xml, final String authHandle, final Boolean restAccess)
+        throws AuthenticationException, AuthorizationException, InvalidXmlException, MissingMethodParameterException,
+        OptimisticLockingException, OrganizationalUnitHierarchyViolationException, OrganizationalUnitNotFoundException,
+        MissingElementValueException, SystemException, InvalidStatusException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.updateParents(id, xml);
     }
 
-    public String retrieve(final String id,
-                                     final SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            OrganizationalUnitNotFoundException,
-            SystemException {
+    public String retrieve(final String id, final SecurityContext securityContext) throws AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.retrieve(id);
     }
 
     public String retrieve(final String id, final String authHandle, final Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            OrganizationalUnitNotFoundException,
-            SystemException {
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        OrganizationalUnitNotFoundException, SystemException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.retrieve(id);
     }
 
-    public String retrieveProperties(final String id,
-                                               final SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            OrganizationalUnitNotFoundException,
-            SystemException {
+    public String retrieveProperties(final String id, final SecurityContext securityContext)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        OrganizationalUnitNotFoundException, SystemException {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.retrieveProperties(id);
     }
 
-    public String retrieveProperties(final String id, final String authHandle,
-                                               final Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            OrganizationalUnitNotFoundException,
-            SystemException {
+    public String retrieveProperties(final String id, final String authHandle, final Boolean restAccess)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        OrganizationalUnitNotFoundException, SystemException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.retrieveProperties(id);
     }
 
-    public EscidocBinaryContent retrieveResource(final String id,
-                                                                                        final String resourceName,
-                                                                                        final SecurityContext securityContext)
-            throws OrganizationalUnitNotFoundException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            OperationNotFoundException,
-            SystemException {
+    public EscidocBinaryContent retrieveResource(
+        final String id, final String resourceName, final SecurityContext securityContext)
+        throws OrganizationalUnitNotFoundException, AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, OperationNotFoundException, SystemException {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.retrieveResource(id, resourceName);
     }
 
-    public EscidocBinaryContent retrieveResource(final String id,
-                                                                                        final String resourceName,
-                                                                                        final String authHandle,
-                                                                                        final Boolean restAccess)
-            throws OrganizationalUnitNotFoundException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            OperationNotFoundException,
-            SystemException {
+    public EscidocBinaryContent retrieveResource(
+        final String id, final String resourceName, final String authHandle, final Boolean restAccess)
+        throws OrganizationalUnitNotFoundException, AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, OperationNotFoundException, SystemException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.retrieveResource(id, resourceName);
     }
 
-    public String retrieveResources(final String ouId,
-                                              final SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            OrganizationalUnitNotFoundException,
-            SystemException {
+    public String retrieveResources(final String ouId, final SecurityContext securityContext)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        OrganizationalUnitNotFoundException, SystemException {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.retrieveResources(ouId);
     }
 
-    public String retrieveResources(final String ouId, final String authHandle,
-                                              final Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            OrganizationalUnitNotFoundException,
-            SystemException {
+    public String retrieveResources(final String ouId, final String authHandle, final Boolean restAccess)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        OrganizationalUnitNotFoundException, SystemException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.retrieveResources(ouId);
     }
 
-    public String retrieveMdRecords(final String id,
-                                              final SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            OrganizationalUnitNotFoundException,
-            SystemException {
+    public String retrieveMdRecords(final String id, final SecurityContext securityContext)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        OrganizationalUnitNotFoundException, SystemException {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.retrieveMdRecords(id);
     }
 
-    public String retrieveMdRecords(final String id, final String authHandle,
-                                              final Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            OrganizationalUnitNotFoundException,
-            SystemException {
+    public String retrieveMdRecords(final String id, final String authHandle, final Boolean restAccess)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        OrganizationalUnitNotFoundException, SystemException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.retrieveMdRecords(id);
     }
 
-    public String retrieveMdRecord(final String id, final String name,
-                                             final SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            MdRecordNotFoundException,
-            MissingMethodParameterException,
-            OrganizationalUnitNotFoundException,
-            SystemException {
+    public String retrieveMdRecord(final String id, final String name, final SecurityContext securityContext)
+        throws AuthenticationException, AuthorizationException, MdRecordNotFoundException,
+        MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.retrieveMdRecord(id, name);
     }
 
-    public String retrieveMdRecord(final String id, final String name, final String authHandle,
-                                             final Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            MdRecordNotFoundException,
-            MissingMethodParameterException,
-            OrganizationalUnitNotFoundException,
-            SystemException {
+    public String retrieveMdRecord(final String id, final String name, final String authHandle, final Boolean restAccess)
+        throws AuthenticationException, AuthorizationException, MdRecordNotFoundException,
+        MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.retrieveMdRecord(id, name);
     }
 
-    public String retrieveParents(final String id,
-                                            final SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            OrganizationalUnitNotFoundException,
-            SystemException {
+    public String retrieveParents(final String id, final SecurityContext securityContext)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        OrganizationalUnitNotFoundException, SystemException {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.retrieveParents(id);
     }
 
-    public String retrieveParents(final String id, final String authHandle,
-                                            final Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            OrganizationalUnitNotFoundException,
-            SystemException {
+    public String retrieveParents(final String id, final String authHandle, final Boolean restAccess)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        OrganizationalUnitNotFoundException, SystemException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.retrieveParents(id);
     }
 
-    public String retrieveParentObjects(final String ouId,
-                                                  final SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            OrganizationalUnitNotFoundException,
-            SystemException {
+    public String retrieveParentObjects(final String ouId, final SecurityContext securityContext)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        OrganizationalUnitNotFoundException, SystemException {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.retrieveParentObjects(ouId);
     }
 
-    public String retrieveParentObjects(final String ouId, final String authHandle,
-                                                  final Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            OrganizationalUnitNotFoundException,
-            SystemException {
+    public String retrieveParentObjects(final String ouId, final String authHandle, final Boolean restAccess)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        OrganizationalUnitNotFoundException, SystemException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.retrieveParentObjects(ouId);
     }
 
-    public String retrieveSuccessors(final String id,
-                                               final SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            OrganizationalUnitNotFoundException,
-            SystemException {
+    public String retrieveSuccessors(final String id, final SecurityContext securityContext)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        OrganizationalUnitNotFoundException, SystemException {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.retrieveSuccessors(id);
     }
 
-    public String retrieveSuccessors(final String id, final String authHandle,
-                                               final Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            OrganizationalUnitNotFoundException,
-            SystemException {
+    public String retrieveSuccessors(final String id, final String authHandle, final Boolean restAccess)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        OrganizationalUnitNotFoundException, SystemException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.retrieveSuccessors(id);
     }
 
-    public String retrieveChildObjects(final String ouId,
-                                                 final SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            OrganizationalUnitNotFoundException,
-            SystemException {
+    public String retrieveChildObjects(final String ouId, final SecurityContext securityContext)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        OrganizationalUnitNotFoundException, SystemException {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.retrieveChildObjects(ouId);
     }
 
-    public String retrieveChildObjects(final String ouId, final String authHandle,
-                                                 final Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            OrganizationalUnitNotFoundException,
-            SystemException {
+    public String retrieveChildObjects(final String ouId, final String authHandle, final Boolean restAccess)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        OrganizationalUnitNotFoundException, SystemException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.retrieveChildObjects(ouId);
     }
 
-    public String retrievePathList(final String ouId,
-                                             final SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            OrganizationalUnitNotFoundException,
-            SystemException,
-            MissingMethodParameterException {
+    public String retrievePathList(final String ouId, final SecurityContext securityContext)
+        throws AuthenticationException, AuthorizationException, OrganizationalUnitNotFoundException, SystemException,
+        MissingMethodParameterException {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.retrievePathList(ouId);
     }
 
-    public String retrievePathList(final String ouId, final String authHandle,
-                                             final Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            OrganizationalUnitNotFoundException,
-            SystemException,
-            MissingMethodParameterException {
+    public String retrievePathList(final String ouId, final String authHandle, final Boolean restAccess)
+        throws AuthenticationException, AuthorizationException, OrganizationalUnitNotFoundException, SystemException,
+        MissingMethodParameterException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.retrievePathList(ouId);
     }
 
-    public String retrieveOrganizationalUnits(final Map filter,
-                                                        final SecurityContext securityContext)
-            throws MissingMethodParameterException,
-            SystemException,
-            InvalidSearchQueryException,
-            InvalidXmlException {
+    public String retrieveOrganizationalUnits(final Map filter, final SecurityContext securityContext)
+        throws MissingMethodParameterException, SystemException, InvalidSearchQueryException, InvalidXmlException {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.retrieveOrganizationalUnits(filter);
     }
 
-    public String retrieveOrganizationalUnits(final Map filter, final String authHandle,
-                                                        final Boolean restAccess)
-            throws MissingMethodParameterException,
-            SystemException,
-            InvalidSearchQueryException,
-            InvalidXmlException {
+    public String retrieveOrganizationalUnits(final Map filter, final String authHandle, final Boolean restAccess)
+        throws MissingMethodParameterException, SystemException, InvalidSearchQueryException, InvalidXmlException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.retrieveOrganizationalUnits(filter);
     }
 
-    public String close(final String id, final String taskParam,
-                                  final SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            OrganizationalUnitNotFoundException,
-            InvalidStatusException,
-            SystemException,
-            OptimisticLockingException,
-            InvalidXmlException {
+    public String close(final String id, final String taskParam, final SecurityContext securityContext)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        OrganizationalUnitNotFoundException, InvalidStatusException, SystemException, OptimisticLockingException,
+        InvalidXmlException {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.close(id, taskParam);
     }
 
-    public String close(final String id, final String taskParam, final String authHandle,
-                                  final Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            OrganizationalUnitNotFoundException,
-            InvalidStatusException,
-            SystemException,
-            OptimisticLockingException,
-            InvalidXmlException {
+    public String close(final String id, final String taskParam, final String authHandle, final Boolean restAccess)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        OrganizationalUnitNotFoundException, InvalidStatusException, SystemException, OptimisticLockingException,
+        InvalidXmlException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.close(id, taskParam);
     }
 
-    public String open(final String id, final String taskParam,
-                                 final SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            OrganizationalUnitNotFoundException,
-            InvalidStatusException,
-            SystemException,
-            OptimisticLockingException,
-            InvalidXmlException {
+    public String open(final String id, final String taskParam, final SecurityContext securityContext)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        OrganizationalUnitNotFoundException, InvalidStatusException, SystemException, OptimisticLockingException,
+        InvalidXmlException {
         try {
             UserContext.setUserContext(securityContext);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.open(id, taskParam);
     }
 
-    public String open(final String id, final String taskParam, final String authHandle,
-                                 final Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            OrganizationalUnitNotFoundException,
-            InvalidStatusException,
-            SystemException,
-            OptimisticLockingException,
-            InvalidXmlException {
+    public String open(final String id, final String taskParam, final String authHandle, final Boolean restAccess)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        OrganizationalUnitNotFoundException, InvalidStatusException, SystemException, OptimisticLockingException,
+        InvalidXmlException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new SystemException("Initialization of security context failed.", e);
         }
         return service.open(id, taskParam);
