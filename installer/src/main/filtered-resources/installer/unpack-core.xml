@@ -92,7 +92,7 @@
   </target>
 
   <target name="admintool" depends="init" description="Installs Admin Tool">
-    <move file="${install.dir}/tools/${admintool.war}" tofile="${install.dir}/jboss/server/default/deploy/AdminTool.war"/>
+    <move file="${install.dir}/tools/AdminTool-${admin-tool.version}.war" tofile="${install.dir}/jboss/server/default/deploy/AdminTool.war"/>
   </target>
 
   <target name="escidoc-core" depends="init" description="Installs eSciDoc Core Services">
