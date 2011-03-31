@@ -772,6 +772,34 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <escidoc-core.version>trunk-SNAPSHOT</escidoc-core.version>
+
+    <escidoc.url>http://localhost:8080</escidoc.url>
+    <escidoc.jboss.zip.name>jboss-4.2.3.GA.escidoc-core-11</escidoc.jboss.zip.name>
+    <fedora.database>fedora3</fedora.database>
+    <fedora.database.user>fedoraAdmin</fedora.database.user>
+    <fedora.database.password>fedoraAdmin</fedora.database.password>
+    <fedora.admin.user>fedoraAdmin</fedora.admin.user>
+    <fedora.admin.password>fedoraAdmin</fedora.admin.password>
+    <fedora.host>localhost:8080</fedora.host>
+    <triplestore.database>riTriples</triplestore.database>
+    <escidoc.database>escidoc-core</escidoc.database>
+    <escidoc.database.user>escidoc</escidoc.database.user>
+    <escidoc.database.password>escidoc</escidoc.database.password>
+
+    <escidoc.oracle.url>escidev5:1521</escidoc.oracle.url>
+    <escidoc.oracle.database>oraesci01</escidoc.oracle.database>
+    <escidoc.oracle.database.user>escidoc</escidoc.oracle.database.user>
+    <escidoc.oracle.database.password>escidoc</escidoc.oracle.database.password>
+    <escidoc.oracle.database.admin.user>oraesci_adm</escidoc.oracle.database.admin.user>
+    <escidoc.oracle.database.admin.password>oraesciadm</escidoc.oracle.database.admin.password>
+    <escidoc.oracle.default.tablespace>escidoc</escidoc.oracle.default.tablespace>
+    <escidoc.oracle.temp.tablespace>TEMP</escidoc.oracle.temp.tablespace>
+    <!-- escidoc.oracle.url>localhost:1521</escidoc.oracle.url> <escidoc.oracle.database>XE</escidoc.oracle.database> 
+    	<escidoc.oracle.database.user>escidoc</escidoc.oracle.database.user> <escidoc.oracle.database.password>escidoc</escidoc.oracle.database.password> 
+	<escidoc.oracle.database.admin.user>HR</escidoc.oracle.database.admin.user> 
+	<escidoc.oracle.database.admin.password>oracle</escidoc.oracle.database.admin.password> 
+	<escidoc.oracle.default.tablespace>USERS</escidoc.oracle.default.tablespace> 
+	<escidoc.oracle.temp.tablespace>TEMP</escidoc.oracle.temp.tablespace -->
   </properties>
 
   <dependencies>
