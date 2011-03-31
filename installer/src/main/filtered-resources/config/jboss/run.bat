@@ -3,7 +3,7 @@ rem -------------------------------------------------------------------------
 rem JBoss Bootstrap Script for Win32
 rem -------------------------------------------------------------------------
 
-rem $Id: run.bat 63249 2007-05-30 13:20:25Z dimitris@jboss.org $
+rem $Id: run.bat 73584 2008-05-22 12:09:26Z dimitris@jboss.org $
 
 @if not "%ECHO%" == ""  echo %ECHO%
 @if "%OS%" == "Windows_NT"  setlocal
@@ -13,30 +13,16 @@ if "%OS%" == "Windows_NT" set DIRNAME=%~dp0%
 set PROGNAME=run.bat
 if "%OS%" == "Windows_NT" set PROGNAME=%~nx0%
 
-set JAVA_HOME=${JDKPath}
-set FEDORA_HOME=${INSTALL_PATH}\fedora
-
 pushd %DIRNAME%..
 set JBOSS_HOME=%CD%
 popd
 
+set JAVA_HOME=${JDKPath}
+set FEDORA_HOME=${INSTALL_PATH}\fedora
+
 REM Add bin/native to the PATH if present
 if exist "%JBOSS_HOME%\bin\native" set PATH=%JBOSS_HOME%\bin\native;%PATH%
 if exist "%JBOSS_HOME%\bin\native" set JAVA_OPTS=%JAVA_OPTS% -Djava.library.path="%PATH%"
-
-rem Read all command line arguments
-
-REM
-REM The %ARGS% env variable commented out in favor of using %* to include
-REM all args in java command line. See bug #840239. [jpl]
-REM
-REM set ARGS=
-REM :loop
-REM if [%1] == [] goto endloop
-REM         set ARGS=%ARGS% %1
-REM         shift
-REM         goto loop
-REM :endloop
 
 rem Find run.jar, or we can't continue
 
@@ -83,11 +69,11 @@ rem Setup JBoss specific properties
 set JAVA_OPTS=%JAVA_OPTS% -Dprogram.name=%PROGNAME%
 
 rem Add -server to the JVM options, if supported
-"%JAVA%" -version 2>&1 | findstr /I hotspot > nul
+"%JAVA%" -server -version 2>&1 | findstr /I hotspot > nul
 if not errorlevel == 1 (set JAVA_OPTS=%JAVA_OPTS% -server)
 
 rem JVM memory allocation pool parameters. Modify as appropriate.
-set JAVA_OPTS=%JAVA_OPTS%  -Xms512m -Xmx512m -XX:MaxPermSize=700m
+set JAVA_OPTS=%JAVA_OPTS% -Xms512m -Xmx512m -XX:MaxPermSize=700m
 
 rem With Sun JVMs reduce the RMI GCs to once per hour
 set JAVA_OPTS=%JAVA_OPTS% -Dsun.rmi.dgc.client.gcInterval=3600000 -Dsun.rmi.dgc.server.gcInterval=3600000
@@ -114,7 +100,11 @@ echo ===========================================================================
 echo.
 
 :RESTART
-"%JAVA%" %JAVA_OPTS% "-Djava.endorsed.dirs=%JBOSS_ENDORSED_DIRS%" -classpath "%JBOSS_CLASSPATH%" org.jboss.Main %*
+"%JAVA%" %JAVA_OPTS% ^
+   -Djava.endorsed.dirs="%JBOSS_ENDORSED_DIRS%" ^
+   -classpath "%JBOSS_CLASSPATH%" ^
+   org.jboss.Main %*
+
 if ERRORLEVEL 10 goto RESTART
 
 :END

@@ -144,10 +144,6 @@
     </resources>
 
     <variables>
-      <!-- from installer.properties -->
-      <variable name="admintool.war" value="@{admintool.download.name}" />
-      <variable name="fedora.war" value="@{fedora.installer.dir}/install/fedora.war" />
-      
       <!-- Short Installer uses PostgreSQL and form-based authentication as defaults -->
       <variable name="ShortInstaller" value="yes" />
 
@@ -371,7 +367,6 @@
         
         <pack name="Install Scripts" parent="eSciDoc" required="yes">
             <description>Necessary installation scripts and configuration files</description>
-
             <!-- Ant scripts, need to be in the first pack under "eSciDoc" to be availble for "afterpack" actions -->
             <file src="installer/unpack-core.xml" targetdir="$INSTALL_PATH/install.tmp" />
             <parsable targetfile="$INSTALL_PATH/install.tmp/unpack-core.xml" />
@@ -381,7 +376,7 @@
         </pack>
         
         <pack name="JBoss Application Server" parent="eSciDoc" required="yes">
-            <description>JBoss Application Server 4.2.3 GA</description>
+            <description>JBoss Application Server ${jboss.version}</description>
             <file src="packages/jboss/jboss-${jboss.version}.zip" targetdir="$INSTALL_PATH/install.tmp" />
             <file src="${basedir}/../assembly/target/escidoc-core-${project.version}-jboss-patch.zip" targetdir="$INSTALL_PATH/install.tmp" />
             <file src="lib/postgresql-${jdbc.postgresql.version}.jar" targetdir="$INSTALL_PATH/install.tmp" />
@@ -400,10 +395,10 @@
             <description>Fedora Commons ${fcrepo.version}</description>
             <file src="../fedora-fedora.zip" targetdir="$INSTALL_PATH/install.tmp" />
             <file src="../fedora/install/fedora.war" targetdir="$INSTALL_PATH/install.tmp" />
-<!--             Configuration files -->
-<!--            file src="fedora/mpt-mysql.jar" targetdir="$INSTALL_PATH/fedora/WEB-INF/lib" / -->
-<!--             file src="fedora/RISearchServlet.class" targetdir="$INSTALL_PATH/fedora/WEB-INF/classes/fedora/server/access" / -->
+            <!-- Configuration files -->
+            <!--file src="fedora/mpt-mysql.jar" targetdir="$INSTALL_PATH/fedora/WEB-INF/lib" / -->
             <file src="../fedora/web.xml" targetdir="$INSTALL_PATH/install.tmp/WEB-INF" />
+            <!-- file src="fedora/RISearchServlet.class" targetdir="$INSTALL_PATH/fedora/WEB-INF/classes/fedora/server/access" / -->
             <parsable targetfile="$INSTALL_PATH/install.tmp/WEB-INF/web.xml" />
             <file src="../fedora/fedora-users.xml" targetdir="$INSTALL_PATH/install.tmp" />
             <parsable targetfile="$INSTALL_PATH/install.tmp/fedora-users.xml" />
@@ -444,17 +439,21 @@
             <description>Persistent Identifier Service, defaulting to use Handle(tm) System </description>
             <file src="tools/escidoc-pid-manager-release.zip" targetdir="$INSTALL_PATH/tools" />
         </pack-->
-        
-<!--        <pack name="Admin Tool" parent="Additional Services and Tools" required="no">-->
-<!--            <description>Administration Client for the eSciDoc Infrastructure</description>-->
-<!--            <file src="@{tools.packages.dir}/${admintool.war}" targetdir="$INSTALL_PATH/tools" />-->
-<!--        </pack>-->
-        
-<!--        <pack name="Migration Tool" parent="Additional Services and Tools" required="yes" condition="upgradeEscidoc">-->
-<!--            <description>Migration Tool for the eSciDoc Infrastructure</description>-->
-<!--            <file src="@{tools.packages.dir}/escidoc-core-admin-${EscidocVersion}.zip" targetdir="$INSTALL_PATH/tools" />-->
-<!--        </pack>-->
-        
+
+<!--
+        <pack name="Admin Tool" parent="Additional Services and Tools" required="no">
+            <description>Administration Client for the eSciDoc Infrastructure</description>
+            <file src="@{tools.packages.dir}/${admintool.war}" targetdir="$INSTALL_PATH/tools" />
+        </pack>
+-->
+
+<!--
+        <pack name="Migration Tool" parent="Additional Services and Tools" required="yes" condition="upgradeEscidoc">
+            <description>Migration Tool for the eSciDoc Infrastructure</description>
+            <file src="@{tools.packages.dir}/escidoc-core-admin-${EscidocVersion}.zip" targetdir="$INSTALL_PATH/tools" />
+        </pack>
+-->
+
         <!--pack name="Documentation" required="no">
           <description>eSciDoc Infrastructure Docomentation</description>
         </pack>
@@ -526,8 +525,10 @@
     <jar src="lib/ant-${ant.version}.jar" stage="install" />
     <jar src="lib/ant-nodeps-${ant-nodeps.version}.jar" stage="install" />
     <jar src="lib/ant-launcher-${ant-launcher.version}.jar" stage="install" />
-<!--    <jar src="@{build.dir}/installer-tools.jar" stage="install" /> -->
-    <!-- <jar src="@{jdbc.driver.mysql}" stage="install" /> -->
     <jar src="lib/postgresql-${jdbc.postgresql.version}.jar" stage="install" />
     <jar src="escidoc-validators.jar" stage="install" />
+
+    <native type="3rdparty" name="COIOSHelper.dll" stage="both">
+        <os family="windows"/>
+    </native>
 </installation>

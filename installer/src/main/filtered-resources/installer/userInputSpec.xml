@@ -10,7 +10,7 @@
         <description align="left" txt="Would you like to install a new eSciDoc Infrastructure or rather upgrade an existing one?" />
         <spec>
           <choice txt="Install new eSciDoc infrastructure" value="install" set="true" />
-          <choice txt="Upgrade existing eSciDoc infrastructure" value="upgrade" />
+          <choice txt="Upgrade existing eSciDoc infrastructure (currently unsupported)" value="upgrade" />
         </spec>
       </field>
       <field type="divider" align="bottom" />

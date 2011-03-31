@@ -30,86 +30,98 @@ import com.izforge.izpack.installer.AutomatedInstallData;
 import com.izforge.izpack.installer.DataValidator;
 import com.izforge.izpack.installer.DataValidator.Status;
 
+import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
  * Check if a database exists and return an error if it does.
- * 
+ *
  * @author SCHE
  */
 public class JDBCValidator implements DataValidator {
 
-	private final StringBuilder errorMessage = new StringBuilder();
+private final StringBuilder errorMessage = new StringBuilder();
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.izforge.izpack.installer.DataValidator#getDefaultAnswer ()
-	 */
-	@Override
-	public boolean getDefaultAnswer() {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    /*
+     * (non-Javadoc)
+     * @see
+     * com.izforge.izpack.installer.DataValidator#getDefaultAnswer
+     * ()
+     */
+    @Override
+    public boolean getDefaultAnswer() {
+        // TODO Auto-generated method stub
+        return false;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.izforge.izpack.installer.DataValidator#getErrorMessageId ()
-	 */
-	@Override
-	public String getErrorMessageId() {
-		return errorMessage.toString();
-	}
+    /*
+     * (non-Javadoc)
+     * @see
+     * com.izforge.izpack.installer.DataValidator#getErrorMessageId
+     * ()
+     */
+    @Override
+    public String getErrorMessageId() {
+        return errorMessage.toString();
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.izforge.izpack.installer.DataValidator#getWarningMessageId ()
-	 */
-	@Override
-	public String getWarningMessageId() {
-		return "";
-	}
+    /*
+     * (non-Javadoc)
+     * @see
+     * com.izforge.izpack.installer.DataValidator#getWarningMessageId
+     * ()
+     */
+    @Override
+    public String getWarningMessageId() {
+        return "";
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.izforge.izpack.installer.DataValidator#validateData
-	 * (com.izforge.izpack.installer.AutomatedInstallData)
-	 */
-	@Override
-	public Status validateData(AutomatedInstallData data) {
-		Status status = Status.ERROR;
+    /*
+     * (non-Javadoc)
+     * @see
+     * com.izforge.izpack.installer.DataValidator#validateData
+     * (com.izforge.izpack.installer.AutomatedInstallData)
+     */
+    @Override
+     public Status validateData(AutomatedInstallData data) {
+         Status status = Status.ERROR;
+         boolean skipValidation = Boolean.valueOf(data.getVariable("SYSTEM_skip_validation"));
 
-		// installation variables
-		String userName = data.getVariable("DatabaseUsername");
-		String password = data.getVariable("DatabasePassword");
-		String dbName = data.getVariable("DatasourceEscidoc");
-		String url = data.getVariable("DatabaseURL") + dbName;
+         if (skipValidation) {
+             status = Status.OK;
+         }
+         else {
+             String userName = data.getVariable("DatabaseUsername");
+             String password = data.getVariable("DatabasePassword");
+             String dbName = data.getVariable("DatasourceEscidoc");
+             String url = data.getVariable("DatabaseURL") + dbName;
 
-		buildErrorMessage(dbName);
-		try {
-			DriverManager.getConnection(url, userName, password);
-		} catch (SQLException e) {
-			// FIXME: Is there a better check for the existance of a database?
-			System.err.println(e.getMessage());
-			status = Status.OK;
-		}
-		return status;
-	}
+             buildErrorMessage(dbName);
+             try {
+                 Connection conn = DriverManager.getConnection(url, userName, password);
 
-	private void buildErrorMessage(String message) {
-		clearErrorMessage();
-		errorMessage.append("The Database \"");
-		errorMessage.append(message);
-		errorMessage.append("\" already exists.");
-	}
+                 conn.close();
+             }
+             catch (SQLException e) {
+                 // FIXME: Is there a better check for the existance of a database?
+                 System.err.println(e.getMessage());
+                 status = Status.OK;
+             }
+         }
+         return status;
+     }
 
-	private void clearErrorMessage() {
-		if (!errorMessage.toString().isEmpty()) {
-			errorMessage.delete(0, errorMessage.length());
-		}
-	}
+    private void buildErrorMessage(String message) {
+        clearErrorMessage();
+        errorMessage.append("The Database \"");
+        errorMessage.append(message);
+        errorMessage.append("\" already exists.");
+    }
+
+    private void clearErrorMessage() {
+        if (!errorMessage.toString().isEmpty()) {
+            errorMessage.delete(0, errorMessage.length());
+        }
+    }
 }
