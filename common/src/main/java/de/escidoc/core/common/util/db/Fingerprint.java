@@ -448,7 +448,10 @@ public class Fingerprint implements Comparable<Object> {
      *            schema list
      */
     public final void setSchemas(final Schema[] schemas) {
-        this.schemas = schemas;
+        if (schemas != null) {
+            this.schemas = new Schema[schemas.length];
+            System.arraycopy(schemas, 0, this.schemas, 0, this.schemas.length);
+        }
     }
 
     /**
