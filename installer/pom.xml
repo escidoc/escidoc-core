@@ -392,6 +392,14 @@
 									<outputDirectory>${staging.dir}/packages/jboss</outputDirectory>
 								</artifactItem>
 
+								<artifactItem>
+									<groupId>de.escidoc.admintool</groupId>
+									<artifactId>AdminTool</artifactId>
+									<type>war</type>
+									<version>${admin-tool.version}</version>
+									<overWrite>false</overWrite>
+									<outputDirectory>${staging.dir}/packages/admin-tool</outputDirectory>
+								</artifactItem>
 							</artifactItems>
 							<!-- other configurations here -->
 						</configuration>

@@ -440,12 +440,10 @@
             <file src="tools/escidoc-pid-manager-release.zip" targetdir="$INSTALL_PATH/tools" />
         </pack-->
 
-<!--
         <pack name="Admin Tool" parent="Additional Services and Tools" required="no">
             <description>Administration Client for the eSciDoc Infrastructure</description>
-            <file src="@{tools.packages.dir}/${admintool.war}" targetdir="$INSTALL_PATH/tools" />
+            <file src="packages/admin-tool/AdminTool-${admin-tool.version}.war" targetdir="$INSTALL_PATH/tools" />
         </pack>
--->
 
 <!--
         <pack name="Migration Tool" parent="Additional Services and Tools" required="yes" condition="upgradeEscidoc">
