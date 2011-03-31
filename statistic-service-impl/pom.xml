@@ -12,6 +12,30 @@
     <artifactId>statistic-service-impl</artifactId>
     <name>eSciDoc Core - Statistic Service Impl.</name>
 
+    <build>
+		<plugins>
+            <plugin>
+                <groupId>com.googlecode.maven-java-formatter-plugin</groupId>
+                <artifactId>maven-java-formatter-plugin</artifactId>
+                <configuration>
+                    <compilerSource>1.6</compilerSource>
+                    <compilerCompliance>1.6</compilerCompliance>
+                    <compilerTargetPlatform>1.6</compilerTargetPlatform>
+                    <lineEnding>CRLF</lineEnding>
+                    <configFile>${project.parent.basedir}/etc/eSciDoc_codestyle.xml</configFile>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>process-sources</phase>
+                        <goals>
+                            <goal>format</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+		</plugins>
+    </build>
+
     <dependencies>
         <dependency>
 			<groupId>eSciDocCore</groupId>
