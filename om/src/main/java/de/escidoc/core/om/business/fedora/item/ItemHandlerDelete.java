@@ -106,7 +106,7 @@ public class ItemHandlerDelete extends ItemHandlerCreate {
                 }
                 else {
                     throw new SystemException("An error occured removing member entries for item " + getItem().getId()
-                        + ". Container can not be deleted.", cause);
+                        + ". Container can not be deleted.", cause); // Ignore FindBugs
                 }
             }
             catch (final Exception e) {

@@ -523,7 +523,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
                 }
                 else {
                     throw new SystemException("An error occured removing member entries for container "
-                        + getItem().getId() + ". Container can not be deleted.", cause);
+                        + getItem().getId() + ". Container can not be deleted.", cause); // Ignore FindBugs
                 }
             }
             catch (final Exception e) {

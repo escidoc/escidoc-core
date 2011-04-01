@@ -47,7 +47,7 @@ public class AggregationDefinitionHandlerBean implements SessionBean {
         }
         catch (Exception e) {
             LOGGER.error("ejbCreate(): Exception AggregationDefinitionHandlerComponent: " + e);
-            throw new CreateException(e.getMessage());
+            throw new CreateException(e.getMessage()); // Ignore FindBugs
         }
     }
 

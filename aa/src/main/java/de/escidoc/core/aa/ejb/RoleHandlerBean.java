@@ -49,7 +49,7 @@ public class RoleHandlerBean implements SessionBean {
         }
         catch (Exception e) {
             LOGGER.error("ejbCreate(): Exception RoleHandlerComponent: " + e);
-            throw new CreateException(e.getMessage());
+            throw new CreateException(e.getMessage()); // Ignore FindBugs
         }
     }
 

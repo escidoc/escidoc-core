@@ -72,7 +72,7 @@ public class ContainerHandlerBean implements SessionBean {
         }
         catch (Exception e) {
             LOGGER.error("ejbCreate(): Exception ContainerHandlerComponent: " + e);
-            throw new CreateException(e.getMessage());
+            throw new CreateException(e.getMessage()); // Ignore FindBugs
         }
     }
 

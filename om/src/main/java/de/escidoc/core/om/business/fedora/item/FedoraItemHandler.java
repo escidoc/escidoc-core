@@ -2093,6 +2093,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
                 setOriginItem(origin);
             }
             catch (final ItemNotFoundException e) {
+                // Ignore FindBugs
                 throw new InvalidContentException("The referenced Item '" + origin + "' does not exist.");
             }
 

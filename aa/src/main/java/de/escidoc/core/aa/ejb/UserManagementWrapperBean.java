@@ -38,7 +38,7 @@ public class UserManagementWrapperBean implements SessionBean {
         }
         catch (Exception e) {
             LOGGER.error("ejbCreate(): Exception UserManagementWrapperComponent: " + e);
-            throw new CreateException(e.getMessage());
+            throw new CreateException(e.getMessage()); // Ignore FindBugs
         }
     }
 

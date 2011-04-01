@@ -351,7 +351,7 @@ public class ContainerHandlerBase extends HandlerBase {
             pid = xpath.evaluate(xpathPid, xmlDom);
         }
         catch (final Exception e) {
-            throw new InvalidStatusException("Error on checking version.");
+            throw new InvalidStatusException("Error on checking version.", e);
         }
 
         // FIXME pid structure check ?

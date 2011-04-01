@@ -359,8 +359,13 @@ public class FedoraUtility implements InitializingBean {
                 return apia.getDatastreamDissemination(pid, dataStreamId, timestamp);
             }
             catch (final RemoteException e1) {
-                throw new FedoraSystemException("Retrieve datastream (pid='" + pid + "', dataStreamId='" + dataStreamId
-                    + "', timestamp='" + timestamp + "') ", e1);
+                final String message = "Error on retrieve datastream (pid='" + pid + "', dataStreamId='" + dataStreamId
+                    + "', timestamp='" + timestamp + "') ";
+                LOGGER.warn(message);
+                if(LOGGER.isDebugEnabled()) {
+                    LOGGER.debug(message, e1);
+                }
+                throw new FedoraSystemException(message, e);
             }
         }
         finally {
@@ -585,7 +590,7 @@ public class FedoraUtility implements InitializingBean {
                 }
                 catch (final Exception e1) {
                     preventWrongLogging(e1, foxml);
-                    throw new FedoraSystemException("Ingest to Fedora failed. ", e1);
+                    throw new FedoraSystemException("Ingest to Fedora failed. ", e);
                 }
             }
 
@@ -648,7 +653,13 @@ public class FedoraUtility implements InitializingBean {
                 datastreams = apim.getDatastreams(pid, timestamp, null);
             }
             catch (final RemoteException e1) {
-                throw new FedoraSystemException(e.toString(), e1);
+                final String message = "Error on retrieve datastream (pid='" + pid + "', timestamp='" + timestamp
+                        + "') ";
+                LOGGER.warn(message);
+                if(LOGGER.isDebugEnabled()) {
+                    LOGGER.debug(message, e1);
+                }
+                throw new FedoraSystemException(message, e);
             }
         }
         finally {
@@ -1018,7 +1029,6 @@ public class FedoraUtility implements InitializingBean {
         }
         catch (final RemoteException e) {
             // Workaround
-            LOGGER.warn("APIA getLastModificationDate(..) " + e);
             invalidateApiaObject(apia);
             apia = borrowApia();
 
@@ -1026,7 +1036,12 @@ public class FedoraUtility implements InitializingBean {
                 op = apia.getObjectProfile(pid, null);
             }
             catch (final RemoteException e1) {
-                throw new FedoraSystemException(e.toString(), e1);
+                final String message = "Error on retrieve object profile (pid='" + pid + "') ";
+                LOGGER.warn(message);
+                if(LOGGER.isDebugEnabled()) {
+                    LOGGER.debug(message, e1);
+                }
+                throw new FedoraSystemException(message, e);
             }
 
             throw new FedoraSystemException(e);

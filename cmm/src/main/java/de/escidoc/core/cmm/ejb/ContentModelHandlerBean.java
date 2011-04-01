@@ -56,7 +56,7 @@ public class ContentModelHandlerBean implements SessionBean {
         }
         catch (Exception e) {
             LOGGER.error("ejbCreate(): Exception ContentModelHandlerComponent: " + e);
-            throw new CreateException(e.getMessage());
+            throw new CreateException(e.getMessage()); // Ignore FindBugs
         }
     }
 

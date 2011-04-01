@@ -77,7 +77,7 @@ public class HibernateStagingFileDao extends HibernateDaoSupport implements Stag
         }
         catch (final HibernateException e) {
             //noinspection ThrowableResultOfMethodCallIgnored
-            throw new SqlDatabaseSystemException(convertHibernateAccessException(e));
+            throw new SqlDatabaseSystemException(convertHibernateAccessException(e)); // Ignore FindBugs
         }
         catch (final IllegalStateException e) {
             throw new SqlDatabaseSystemException(e);

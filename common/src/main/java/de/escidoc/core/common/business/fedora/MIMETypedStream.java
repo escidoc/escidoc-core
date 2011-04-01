@@ -127,7 +127,7 @@ public class MIMETypedStream implements Serializable {
             return Class.forName(x0);
         }
         catch (final ClassNotFoundException e) {
-            throw new NoClassDefFoundError(e.toString());
+            throw new NoClassDefFoundError(e.toString()); // Ignore FindBugs
         }
     }
 

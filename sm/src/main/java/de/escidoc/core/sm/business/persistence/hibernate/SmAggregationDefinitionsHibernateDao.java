@@ -135,7 +135,7 @@ public class SmAggregationDefinitionsHibernateDao extends AbstractHibernateDao
             }
             catch (final HibernateException e) {
                 //noinspection ThrowableResultOfMethodCallIgnored
-                throw new SqlDatabaseSystemException(convertHibernateAccessException(e));
+                throw new SqlDatabaseSystemException(convertHibernateAccessException(e)); // Ignore FindBugs
             }
         }
         if (result == null) {

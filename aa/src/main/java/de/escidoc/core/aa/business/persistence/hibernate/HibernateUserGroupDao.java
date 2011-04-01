@@ -118,7 +118,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao implements UserG
         }
         catch (final HibernateException e) {
             //noinspection ThrowableResultOfMethodCallIgnored,ThrowableResultOfMethodCallIgnored
-            throw new SqlDatabaseSystemException(convertHibernateAccessException(e));
+            throw new SqlDatabaseSystemException(convertHibernateAccessException(e)); // Ignore FindBugs
         }
         catch (final IllegalStateException e) {
             throw new SqlDatabaseSystemException(e);
@@ -164,7 +164,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao implements UserG
             }
             catch (final HibernateException e) {
                 //noinspection ThrowableResultOfMethodCallIgnored
-                throw new SqlDatabaseSystemException(convertHibernateAccessException(e));
+                throw new SqlDatabaseSystemException(convertHibernateAccessException(e)); // Ignore FindBugs
             }
         }
         return result;
@@ -191,7 +191,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao implements UserG
             }
             catch (final HibernateException e) {
                 //noinspection ThrowableResultOfMethodCallIgnored
-                throw new SqlDatabaseSystemException(convertHibernateAccessException(e));
+                throw new SqlDatabaseSystemException(convertHibernateAccessException(e)); // Ignore FindBugs
             }
         }
         return result;
@@ -274,7 +274,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao implements UserG
             }
             catch (final HibernateException e) {
                 //noinspection ThrowableResultOfMethodCallIgnored
-                throw new SqlDatabaseSystemException(convertHibernateAccessException(e));
+                throw new SqlDatabaseSystemException(convertHibernateAccessException(e)); // Ignore FindBugs
             }
         }
         return result;
@@ -524,7 +524,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao implements UserG
             }
             catch (final HibernateException e) {
                 //noinspection ThrowableResultOfMethodCallIgnored
-                throw new SqlDatabaseSystemException(convertHibernateAccessException(e));
+                throw new SqlDatabaseSystemException(convertHibernateAccessException(e)); // Ignore FindBugs
             }
         }
         return result;

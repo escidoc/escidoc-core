@@ -111,7 +111,7 @@ public class HibernateSetDefinitionDao extends AbstractHibernateDao implements S
         }
         catch (final HibernateException e) {
             //noinspection ThrowableResultOfMethodCallIgnored,ThrowableResultOfMethodCallIgnored
-            throw new SqlDatabaseSystemException(convertHibernateAccessException(e));
+            throw new SqlDatabaseSystemException(convertHibernateAccessException(e)); // Ignore FindBugs
         }
         catch (final IllegalStateException e) {
             throw new SqlDatabaseSystemException(e);
@@ -140,7 +140,7 @@ public class HibernateSetDefinitionDao extends AbstractHibernateDao implements S
             }
             catch (final HibernateException e) {
                 //noinspection ThrowableResultOfMethodCallIgnored,ThrowableResultOfMethodCallIgnored
-                throw new SqlDatabaseSystemException(convertHibernateAccessException(e));
+                throw new SqlDatabaseSystemException(convertHibernateAccessException(e)); // Ignore FindBugs
             }
         }
         return result;

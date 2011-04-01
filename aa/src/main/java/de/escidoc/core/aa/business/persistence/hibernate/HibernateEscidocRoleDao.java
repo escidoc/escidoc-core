@@ -117,7 +117,7 @@ public class HibernateEscidocRoleDao extends AbstractHibernateDao implements Esc
             }
             catch (final HibernateException e) {
                 //noinspection ThrowableResultOfMethodCallIgnored
-                throw new SqlDatabaseSystemException(convertHibernateAccessException(e));
+                throw new SqlDatabaseSystemException(convertHibernateAccessException(e)); // Ignore FindBugs
             }
         }
         return result;
@@ -157,7 +157,7 @@ public class HibernateEscidocRoleDao extends AbstractHibernateDao implements Esc
             }
             catch (final HibernateException e) {
                 //noinspection ThrowableResultOfMethodCallIgnored
-                throw new SqlDatabaseSystemException(convertHibernateAccessException(e));
+                throw new SqlDatabaseSystemException(convertHibernateAccessException(e)); // Ignore FindBugs
             }
             catch (final IllegalStateException e) {
                 throw new SqlDatabaseSystemException(e);

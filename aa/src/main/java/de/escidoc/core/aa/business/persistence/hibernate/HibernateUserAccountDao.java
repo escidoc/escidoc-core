@@ -164,7 +164,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao implements Use
             }
             catch (final HibernateException e) {
                 //noinspection ThrowableResultOfMethodCallIgnored
-                throw new SqlDatabaseSystemException(convertHibernateAccessException(e));
+                throw new SqlDatabaseSystemException(convertHibernateAccessException(e)); // Ignore FindBugs
             }
         }
         return result;
@@ -195,7 +195,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao implements Use
             }
             catch (final HibernateException e) {
                 //noinspection ThrowableResultOfMethodCallIgnored
-                throw new SqlDatabaseSystemException(convertHibernateAccessException(e));
+                throw new SqlDatabaseSystemException(convertHibernateAccessException(e)); // Ignore FindBugs
             }
         }
         return result;
@@ -229,7 +229,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao implements Use
             }
             catch (final HibernateException e) {
                 //noinspection ThrowableResultOfMethodCallIgnored
-                throw new SqlDatabaseSystemException(convertHibernateAccessException(e));
+                throw new SqlDatabaseSystemException(convertHibernateAccessException(e)); // Ignore FindBugs
             }
         }
         return result;
@@ -254,7 +254,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao implements Use
             }
             catch (final HibernateException e) {
                 //noinspection ThrowableResultOfMethodCallIgnored
-                throw new SqlDatabaseSystemException(convertHibernateAccessException(e));
+                throw new SqlDatabaseSystemException(convertHibernateAccessException(e)); // Ignore FindBugs
             }
         }
         return result;
@@ -278,7 +278,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao implements Use
         }
         catch (final HibernateException e) {
             //noinspection ThrowableResultOfMethodCallIgnored
-            throw new SqlDatabaseSystemException(convertHibernateAccessException(e));
+            throw new SqlDatabaseSystemException(convertHibernateAccessException(e)); // Ignore FindBugs
         }
     }
 
@@ -300,7 +300,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao implements Use
         }
         catch (final HibernateException e) {
             //noinspection ThrowableResultOfMethodCallIgnored
-            throw new SqlDatabaseSystemException(convertHibernateAccessException(e));
+            throw new SqlDatabaseSystemException(convertHibernateAccessException(e)); // Ignore FindBugs
         }
     }
 
@@ -549,7 +549,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao implements Use
             }
             catch (final HibernateException e) {
                 //noinspection ThrowableResultOfMethodCallIgnored
-                throw new SqlDatabaseSystemException(convertHibernateAccessException(e));
+                throw new SqlDatabaseSystemException(convertHibernateAccessException(e)); // Ignore FindBugs
             }
         }
         return result;
@@ -579,7 +579,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao implements Use
             }
             catch (final HibernateException e) {
                 //noinspection ThrowableResultOfMethodCallIgnored
-                throw new SqlDatabaseSystemException(convertHibernateAccessException(e));
+                throw new SqlDatabaseSystemException(convertHibernateAccessException(e)); // Ignore FindBugs
             }
         }
         return result;
@@ -796,7 +796,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao implements Use
             }
             catch (final HibernateException e) {
                 //noinspection ThrowableResultOfMethodCallIgnored
-                throw new SqlDatabaseSystemException(convertHibernateAccessException(e));
+                throw new SqlDatabaseSystemException(convertHibernateAccessException(e)); // Ignore FindBugs
             }
         }
         return result;
@@ -945,7 +945,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao implements Use
         }
         catch (final HibernateException e) {
             //noinspection ThrowableResultOfMethodCallIgnored
-            throw new SqlDatabaseSystemException(convertHibernateAccessException(e));
+            throw new SqlDatabaseSystemException(convertHibernateAccessException(e)); // Ignore FindBugs
         }
         return result;
     }
@@ -1000,7 +1000,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao implements Use
             }
             catch (final HibernateException e) {
                 //noinspection ThrowableResultOfMethodCallIgnored
-                throw new SqlDatabaseSystemException(convertHibernateAccessException(e));
+                throw new SqlDatabaseSystemException(convertHibernateAccessException(e)); // Ignore FindBugs
             }
         }
 
