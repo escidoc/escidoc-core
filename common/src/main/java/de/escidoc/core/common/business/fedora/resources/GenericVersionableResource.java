@@ -960,6 +960,8 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @param newStatus                   The version status of the resource.
      * @param comment                     The event comment.
      * @return The new event entry
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     protected String createEventXml(
         final String latestModificationTimestamp, final String newStatus, final String comment)
@@ -1053,8 +1055,8 @@ public class GenericVersionableResource extends GenericResourcePid {
      */
     private static Collection<String> expandPropertiesNames(final Collection<String> propertiesNames) {
 
-        final Collection<String> newPropertiesNames;
-        newPropertiesNames = propertiesNames != null ? propertiesNames : new ArrayList<String>();
+        final Collection<String> newPropertiesNames =
+            propertiesNames != null ? propertiesNames : new ArrayList<String>();
 
         // latest version ------------------------------------------------------
         newPropertiesNames.add(TripleStoreUtility.PROP_LATEST_VERSION_DATE);
@@ -1079,8 +1081,8 @@ public class GenericVersionableResource extends GenericResourcePid {
      */
     private static Map<String, String> expandPropertiesNamesMapping(final Map<String, String> propertiesNamesMap) {
 
-        final Map<String, String> newPropertiesNamesMap;
-        newPropertiesNamesMap = propertiesNamesMap != null ? propertiesNamesMap : new HashMap<String, String>();
+        final Map<String, String> newPropertiesNamesMap =
+            propertiesNamesMap != null ? propertiesNamesMap : new HashMap<String, String>();
 
         newPropertiesNamesMap.put(TripleStoreUtility.PROP_LATEST_VERSION_DATE, PropertyMapKeys.LATEST_VERSION_DATE);
         newPropertiesNamesMap.put(TripleStoreUtility.PROP_LATEST_VERSION_NUMBER, PropertyMapKeys.LATEST_VERSION_NUMBER);
@@ -1141,8 +1143,7 @@ public class GenericVersionableResource extends GenericResourcePid {
                             // FIXME:schauen, ob alle andere properties fuer
                             // current und latest haben
                             // consistente namen
-                            final String currentVersionKey;
-                            currentVersionKey =
+                            final String currentVersionKey =
                                 targetKey.equals(PropertyMapKeys.LATEST_VERSION_VERSION_STATUS) ? PropertyMapKeys.CURRENT_VERSION_STATUS : targetKey
                                     .equals(PropertyMapKeys.LATEST_VERSION_DATE) ? PropertyMapKeys.CURRENT_VERSION_VERSION_DATE : targetKey
                                     .replace("LATEST_", "CURRENT_");

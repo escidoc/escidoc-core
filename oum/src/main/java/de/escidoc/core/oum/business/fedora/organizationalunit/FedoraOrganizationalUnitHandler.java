@@ -515,6 +515,8 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
     }
 
     /**
+     * @param parentsBeforeUpdate
+     * @param updatedParents
      * @throws OrganizationalUnitNotFoundException
      *                         e
      * @throws SystemException e

@@ -60,16 +60,6 @@ public final class IOUtils {
         }
     }
 
-    public static int copyAndCloseInput(final InputStream input, final OutputStream output, final int bufferSize)
-        throws IOException {
-        try {
-            return copy(input, output, bufferSize);
-        }
-        finally {
-            closeStream(input);
-        }
-    }
-
     public static int copy(final InputStream input, final OutputStream output, int bufferSize) throws IOException {
         int avail = input.available();
         if (avail > 262144) {
@@ -79,8 +69,7 @@ public final class IOUtils {
             bufferSize = avail;
         }
         final byte[] buffer = new byte[bufferSize];
-        int n;
-        n = input.read(buffer);
+        int n = input.read(buffer);
         int total = 0;
         while (n != -1) {
             output.write(buffer, 0, n);
@@ -121,10 +110,6 @@ public final class IOUtils {
                 + "\") returns invalid name.", e);
 
         }
-    }
-
-    public static String newStringFromBytes(final byte[] bytes) {
-        return newStringFromBytes(bytes, UTF8_CHARSET.name());
     }
 
     public static String newStringFromBytes(

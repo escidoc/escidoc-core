@@ -122,6 +122,7 @@ public final class UserAccountXmlProvider extends InfrastructureXmlProvider {
     /**
      * Gets xml for given user-attribute.
      *
+     * @param values
      * @return String xml.
      * @throws WebserverSystemException Thrown if the instance cannot be created due to an internal error.
      */
@@ -133,6 +134,7 @@ public final class UserAccountXmlProvider extends InfrastructureXmlProvider {
     /**
      * Gets xml for given user-attributes.
      *
+     * @param values
      * @return String xml.
      * @throws WebserverSystemException Thrown if the instance cannot be created due to an internal error.
      */

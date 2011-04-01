@@ -272,8 +272,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      */
     public Resource getResource(final String requestUri) {
 
-        final String uri;
-        uri = requestUri.endsWith("/") ? requestUri : requestUri + '/';
+        final String uri = requestUri.endsWith("/") ? requestUri : requestUri + '/';
         Resource result = null;
         // FIXME: Remove this iteration. All base-URIs are like
         // /<ir, um, oum, ...>/<resourcename>

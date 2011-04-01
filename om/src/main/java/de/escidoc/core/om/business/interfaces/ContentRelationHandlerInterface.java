@@ -116,6 +116,17 @@ public interface ContentRelationHandlerInterface extends IngestableResource {
 
     /**
      * Submit a resource with a provided id.
+     * @param id
+     * @param param
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException
+     * @throws de.escidoc.core.common.exceptions.application.violated.LockingException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ContentRelationNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException
+     * @throws de.escidoc.core.common.exceptions.system.SystemException
+     * @throws de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
+     * @return
      */
     String submit(final String id, final String param) throws ContentRelationNotFoundException, LockingException,
         InvalidStatusException, MissingMethodParameterException, SystemException, OptimisticLockingException,
@@ -123,6 +134,17 @@ public interface ContentRelationHandlerInterface extends IngestableResource {
 
     /**
      * Release a resource with a provided id.
+     * @param id
+     * @param param
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException
+     * @throws de.escidoc.core.common.exceptions.application.violated.LockingException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ContentRelationNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException
+     * @throws de.escidoc.core.common.exceptions.system.SystemException
+     * @throws de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
+     * @return
      */
     String release(final String id, final String param) throws ContentRelationNotFoundException, LockingException,
         InvalidStatusException, MissingMethodParameterException, SystemException, OptimisticLockingException,
@@ -130,6 +152,17 @@ public interface ContentRelationHandlerInterface extends IngestableResource {
 
     /**
      * Revise a resource with a provided id.
+     * @param id
+     * @param param
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException
+     * @throws de.escidoc.core.common.exceptions.application.violated.LockingException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ContentRelationNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
+     * @throws de.escidoc.core.common.exceptions.system.SystemException
+     * @throws de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
+     * @return
      */
     String revise(final String id, final String param) throws ContentRelationNotFoundException, LockingException,
         InvalidStatusException, MissingMethodParameterException, SystemException, OptimisticLockingException,
@@ -137,6 +170,17 @@ public interface ContentRelationHandlerInterface extends IngestableResource {
 
     /**
      * Lock a Content Relation for other user access.
+     * @param id
+     * @param param
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException
+     * @throws de.escidoc.core.common.exceptions.application.violated.LockingException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ContentRelationNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException
+     * @throws de.escidoc.core.common.exceptions.system.SystemException
+     * @throws de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
+     * @return
      */
     String lock(final String id, final String param) throws ContentRelationNotFoundException, LockingException,
         InvalidContentException, MissingMethodParameterException, SystemException, OptimisticLockingException,
@@ -145,7 +189,17 @@ public interface ContentRelationHandlerInterface extends IngestableResource {
     /**
      * Unlock a Content Relation.
      *
+     * @param id
+     * @param param
      * @throws InvalidStatusException Thrown if resource is not locked.
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException
+     * @throws de.escidoc.core.common.exceptions.application.violated.LockingException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ContentRelationNotFoundException
+     * @throws de.escidoc.core.common.exceptions.system.SystemException
+     * @throws de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
+     * @return
      */
     String unlock(final String id, final String param) throws ContentRelationNotFoundException, LockingException,
         MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidXmlException,

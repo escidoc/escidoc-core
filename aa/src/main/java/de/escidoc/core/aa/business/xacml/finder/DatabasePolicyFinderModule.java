@@ -411,8 +411,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
     private static PolicyFinderResult createProcessingError(final String msg, final Exception e) {
 
         LOGGER.error(msg, e);
-        final Exception ex;
-        ex = e instanceof EscidocException ? e : new WebserverSystemException(e);
+        final Exception ex = e instanceof EscidocException ? e : new WebserverSystemException(e);
         return new PolicyFinderResult(CustomStatusBuilder.createErrorStatus(Status.STATUS_PROCESSING_ERROR, ex));
     }
 

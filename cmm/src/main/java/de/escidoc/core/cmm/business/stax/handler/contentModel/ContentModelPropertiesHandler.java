@@ -29,7 +29,6 @@
 package de.escidoc.core.cmm.business.stax.handler.contentModel;
 
 import de.escidoc.core.common.business.fedora.resources.create.ContentModelProperties;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.stax.StaxParser;
@@ -37,9 +36,6 @@ import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
-
-import javax.xml.stream.XMLStreamException;
-import java.io.UnsupportedEncodingException;
 
 /**
  * Handler to extract property values from content model properties.
@@ -59,6 +55,7 @@ public class ContentModelPropertiesHandler extends DefaultHandler {
 
     /**
      * @param parser StAX Parser
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     public ContentModelPropertiesHandler(final StaxParser parser) throws WebserverSystemException {
         this.parser = parser;

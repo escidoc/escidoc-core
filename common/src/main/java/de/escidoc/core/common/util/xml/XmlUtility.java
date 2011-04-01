@@ -1476,8 +1476,7 @@ public final class XmlUtility {
     public static String getIdFromStartElement(final StartElement element) throws MissingAttributeValueException {
 
         try {
-            final String objid;
-            objid =
+            final String objid =
                 element.indexOfAttribute(null, NAME_OBJID) == -1 ? getIdFromURI(element.getAttributeValue(
                     Constants.XLINK_NS_URI, NAME_HREF)) : element.getAttributeValue(null, NAME_OBJID);
             return objid;
@@ -2412,8 +2411,7 @@ public final class XmlUtility {
      */
     public static void handleUnexpectedStaxParserException(final String message, final Exception e)
         throws XmlParserSystemException {
-        final String text;
-        text = message != null ? message + e.getMessage() : e.getMessage();
+        final String text = message != null ? message + e.getMessage() : e.getMessage();
         throw new XmlParserSystemException(text, e);
     }
 

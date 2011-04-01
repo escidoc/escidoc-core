@@ -87,6 +87,7 @@ public class StartElementWithChildElements extends StartElementWithText {
      * @param children    The childrens
      * @param elementText The element text
      * @param nscontext   TODO
+     * @param position
      */
     public StartElementWithChildElements(final String localName, final String namespace, final String prefix,
         final List<StartElementWithText> children, final String elementText, final NamespaceContext nscontext,

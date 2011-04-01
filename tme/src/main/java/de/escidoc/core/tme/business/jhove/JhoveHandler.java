@@ -88,10 +88,9 @@ public class JhoveHandler extends TmeHandlerBase implements JhoveHandlerInterfac
      * @throws IOException Thrown if the configuration file could not be loaded or copied.
      */
     public JhoveHandler() throws IOException {
-        InputStream inputStream = null;
         OutputStream outputStream = null;
         try {
-            inputStream = getClass().getClassLoader().getResourceAsStream(CONFIG_FILE);
+            InputStream inputStream = getClass().getClassLoader().getResourceAsStream(CONFIG_FILE);
             if (inputStream == null) {
                 throw new FileNotFoundException(CONFIG_FILE + " not found!");
             }

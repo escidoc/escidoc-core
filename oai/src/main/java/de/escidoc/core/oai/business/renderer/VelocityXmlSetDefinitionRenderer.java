@@ -57,7 +57,7 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer imp
     /**
      * See Interface for functional description.
      *
-     * @see SetDefinitionRendererInterface#render(Map)
+     * @see SetDefinitionRendererInterface#render(SetDefinition)
      */
     @Override
     public String render(final SetDefinition setDefinition) throws SystemException {

@@ -129,6 +129,8 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
      * @return Returns the {@link URL} to the addressed style sheet. If no style sheet can be identified for the
      *         provided key, the default one identified by constant <code>XSL_MAPPING_UNKNOWN_TO_DC</code> is returned.
      * @throws IOException Thrown if retrieving values from eSciDoc properties (configuration) failed.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
      */
     private InputStream mapKeyToXslt(final String key) throws WebserverSystemException, FedoraSystemException,
         IOException {
@@ -137,8 +139,7 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
         final String nsUri = keyParts[0];
         final String contentModelId = keyParts[1];
 
-        InputStream xslt;
-        xslt =
+        InputStream xslt =
             nsUri != null && nsUri.startsWith(NS_BASE_METADATAPROFILE_SCHEMA_ESCIDOC_MPG_DE) ? new URL(
                 EscidocConfiguration.getInstance().appendToSelfURL(XSL_MAPPING_MPDL_TO_DC)).openStream() : new URL(
                 this.defaultXsltUrl).openStream();

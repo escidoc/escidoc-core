@@ -40,7 +40,7 @@ public class MultipleExtractor2 extends DefaultHandler {
 
     private boolean inside;
 
-    private Map<String, String> paths;
+    private final Map<String, String> paths;
 
     private XMLStreamWriter writer;
 
@@ -66,6 +66,8 @@ public class MultipleExtractor2 extends DefaultHandler {
 
     /**
      * @param namespaceMap Map from namespace to prefix.
+     * @param extractPathes
+     * @param parser
      */
     public MultipleExtractor2(final Map<String, String> namespaceMap, final Map<String, String> extractPathes,
         final StaxParser parser) {
@@ -262,7 +264,9 @@ public class MultipleExtractor2 extends DefaultHandler {
     /**
      * Creates a new initialized writer.<br/> The writer's prefixes are initialized to the values of the prefixMap.
      *
+     * @param out
      * @return Returns the initialized <code>XmlStreamWriter</code>X instance.
+     * @throws javax.xml.stream.XMLStreamException
      */
     private XMLStreamWriter newInitializedWriter(final ByteArrayOutputStream out) throws XMLStreamException {
 

@@ -313,8 +313,7 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
 
         for (final ResponseCtx responseCtx : responseCtxs) {
             final Result result = extractSingleResultWithoutObligations(responseCtx);
-            final String decision;
-            decision = result.getDecision() == Result.DECISION_PERMIT ? "permit" : "deny";
+            final String decision = result.getDecision() == Result.DECISION_PERMIT ? "permit" : "deny";
 
             buf.append("<result decision=\"");
             buf.append(decision);
@@ -508,6 +507,7 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
      *
      * @param status The XACML status to encode.
      * @return Returns the encoded status.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private static String encode(final Status status) throws WebserverSystemException {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();

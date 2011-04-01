@@ -64,6 +64,7 @@ public interface ItemRendererInterface {
      * @return Returns the XML representation of the sub resource <code>properties</code> of an item.
      * @throws ItemNotFoundException    Thrown if Item could not be found.
      * @throws WebserverSystemException Thrown in case of an internal error.
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     String renderProperties() throws ItemNotFoundException, WebserverSystemException, TripleStoreSystemException,
         SystemException;
@@ -72,14 +73,26 @@ public interface ItemRendererInterface {
         FedoraSystemException, IntegritySystemException, TripleStoreSystemException;
 
     /**
+     * @param name
+     * @param isOrigin
+     * @param isRoot
      * @return XML representation of md-record
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.MdRecordNotFoundException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     String renderMdRecord(String name, boolean isOrigin, boolean isRoot) throws WebserverSystemException,
         IntegritySystemException, EncodingSystemException, MdRecordNotFoundException, TripleStoreSystemException;
 
     /**
+     * @param isRoot
      * @return XML representation of Components list.
      * @throws ComponentNotFoundException Thrown if Component of Item could not be found.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.SystemException
      */
     String renderComponents(final boolean isRoot) throws WebserverSystemException, TripleStoreSystemException,
         SystemException, ComponentNotFoundException;

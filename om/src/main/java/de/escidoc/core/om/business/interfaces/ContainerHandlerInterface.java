@@ -90,6 +90,11 @@ public interface ContainerHandlerInterface extends IngestableResource {
      * @throws InvalidStatusException        Thrown if an organizational unit is in an invalid status.
      * @throws XmlCorruptedException         Thrown if provided data is corrupted.
      * @throws XmlSchemaValidationException  Thrown if the schema validation of the provided data fails.
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingMdRecordException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingElementValueException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException
      */
     String create(final String xmlData) throws ContextNotFoundException, ContentModelNotFoundException,
         InvalidContentException, MissingMethodParameterException, XmlCorruptedException,
@@ -105,6 +110,7 @@ public interface ContainerHandlerInterface extends IngestableResource {
      * @throws LockingException           Thrown if container is locked.
      * @throws SystemException            Thrown if a framework internal error occurs.
      * @throws AuthorizationException     If further calls fail because of insufficient access rights.
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException
      */
     void delete(final String id) throws ContainerNotFoundException, LockingException, InvalidStatusException,
         SystemException, AuthorizationException;
@@ -135,6 +141,13 @@ public interface ContainerHandlerInterface extends IngestableResource {
      *                                    Thrown if a method parameter is missing
      * @throws SystemException            Thrown if a framework internal error occurs.
      * @throws ReadonlyVersionException   TODO
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingMdRecordException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException
+     * @throws de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException
      */
     String update(final String id, final String xmlData) throws ContainerNotFoundException, LockingException,
         InvalidContentException, MissingMethodParameterException, InvalidXmlException, OptimisticLockingException,
@@ -178,23 +191,50 @@ public interface ContainerHandlerInterface extends IngestableResource {
         SystemException;
 
     /**
+     * @param id
+     * @param taskParam
      * @return last-modification-date within XML (result.xsd)
      * @throws SystemException Thrown if a framework internal error occurs.
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.violated.LockingException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContextException
+     * @throws de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
      */
     String addTocs(final String id, final String taskParam) throws ContainerNotFoundException, LockingException,
         InvalidContentException, OptimisticLockingException, SystemException, InvalidContextException,
         MissingAttributeValueException;
 
     /**
+     * @param id
+     * @param taskParam
      * @return last-modification-date within XML (result.xsd)
      * @throws SystemException Thrown if a framework internal error occurs.
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.violated.LockingException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContextException
+     * @throws de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
      */
     String addMembers(final String id, final String taskParam) throws ContainerNotFoundException, LockingException,
         InvalidContentException, OptimisticLockingException, SystemException, InvalidContextException,
         MissingAttributeValueException;
 
     /**
+     * @param id
+     * @param taskParam
      * @throws SystemException Thrown if a framework internal error occurs.
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.violated.LockingException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ItemNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidItemStatusException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContextStatusException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
+     * @return
      */
     String removeMembers(final String id, final String taskParam) throws ContextNotFoundException, LockingException,
         XmlSchemaValidationException, ItemNotFoundException, InvalidContextStatusException, InvalidItemStatusException,
@@ -251,17 +291,25 @@ public interface ContainerHandlerInterface extends IngestableResource {
         MdRecordNotFoundException, SystemException;
 
     /**
+     * @param id
+     * @param mdRecordId
      * @throws MissingMethodParameterException
      *                         Thrown if a method parameter is missing
      * @throws SystemException Thrown if a framework internal error occurs.
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.MdRecordNotFoundException
+     * @return
      */
     String retrieveMdRecordContent(final String id, final String mdRecordId) throws ContainerNotFoundException,
         MdRecordNotFoundException, MissingMethodParameterException, SystemException;
 
     /**
+     * @param id
      * @throws MissingMethodParameterException
      *                         Thrown if a method parameter is missing
      * @throws SystemException Thrown if a framework internal error occurs.
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException
+     * @return
      */
     String retrieveDcRecordContent(final String id) throws ContainerNotFoundException, MissingMethodParameterException,
         SystemException;
@@ -283,6 +331,7 @@ public interface ContainerHandlerInterface extends IngestableResource {
      * @throws SystemException              Thrown if a framework internal error occurs.
      * @throws InvalidXmlException          TODO
      * @throws ReadonlyVersionException     TODO
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException
      */
     String updateMetadataRecord(final String id, final String mdRecordId, final String xmlData)
         throws ContainerNotFoundException, LockingException, XmlSchemaValidationException, XmlSchemaNotFoundException,
@@ -346,6 +395,7 @@ public interface ContainerHandlerInterface extends IngestableResource {
      *
      * @param id           The id of the container.
      * @param resourceName The name of the resource.
+     * @param parameters
      * @return The content of the resource.
      * @throws ContainerNotFoundException Thrown if an item with the specified id cannot be found.
      * @throws AuthenticationException    Thrown if the authentication fails due to an invalid provided
@@ -354,26 +404,36 @@ public interface ContainerHandlerInterface extends IngestableResource {
      * @throws MissingMethodParameterException
      *                                    If no data is provided.
      * @throws SystemException            If an error occurs.
+     * @throws de.escidoc.core.common.exceptions.application.notfound.OperationNotFoundException
      */
     EscidocBinaryContent retrieveResource(
         final String id, final String resourceName, final Map<String, String[]> parameters) throws SystemException,
         ContainerNotFoundException, OperationNotFoundException;
 
     /**
+     * @param id
      * @throws MissingMethodParameterException
      *                         Thrown if a method parameter is missing
      * @throws SystemException Thrown if a framework internal error occurs.
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException
+     * @return
      */
     String retrieveRelations(final String id) throws ContainerNotFoundException, MissingMethodParameterException,
         SystemException;
 
     /**
+     * @param id
      * @throws SystemException Thrown if a framework internal error occurs.
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException
+     * @return
      */
     String retrieveVersionHistory(final String id) throws ContainerNotFoundException, SystemException;
 
     /**
+     * @param id
      * @throws SystemException Thrown if a framework internal error occurs.
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException
+     * @return
      */
     String retrieveParents(final String id) throws ContainerNotFoundException, SystemException;
 
@@ -536,6 +596,8 @@ public interface ContainerHandlerInterface extends IngestableResource {
      * @throws SystemException            Thrown if a framework internal error occurs.
      * @throws ReadonlyVersionException   TODO
      * @throws InvalidXmlException        TODO
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException
+     * @throws de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException
      */
     String release(final String id, final String taskParam) throws ContainerNotFoundException, LockingException,
         MissingMethodParameterException, InvalidStatusException, SystemException, OptimisticLockingException,
@@ -555,6 +617,8 @@ public interface ContainerHandlerInterface extends IngestableResource {
      * @throws SystemException            Thrown if a framework internal error occurs.
      * @throws ReadonlyVersionException   TODO
      * @throws InvalidXmlException        TODO
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException
+     * @throws de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException
      */
     String submit(final String id, final String taskParam) throws ContainerNotFoundException, LockingException,
         MissingMethodParameterException, InvalidStatusException, SystemException, OptimisticLockingException,
@@ -564,11 +628,17 @@ public interface ContainerHandlerInterface extends IngestableResource {
      * Set an Container in revision.
      *
      * @param id The id of the Container.
+     * @param param
      * @return last-modification-date within XML (result.xsd)
      * @throws MissingMethodParameterException
      *                               Thrown if a method parameter is missing
      * @throws SystemException       Thrown if a framework internal error occurs.
      * @throws XmlCorruptedException TODO
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.violated.LockingException
+     * @throws de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException
+     * @throws de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException
      */
     String revise(final String id, final String param) throws ContainerNotFoundException, LockingException,
         MissingMethodParameterException, InvalidStatusException, SystemException, OptimisticLockingException,
@@ -590,6 +660,7 @@ public interface ContainerHandlerInterface extends IngestableResource {
      * @throws AlreadyWithdrawnException  TODO
      * @throws ReadonlyVersionException   TODO
      * @throws InvalidXmlException        TODO
+     * @throws de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException
      */
     String withdraw(final String id, final String taskParam) throws ContainerNotFoundException, LockingException,
         MissingMethodParameterException, InvalidStatusException, SystemException, OptimisticLockingException,
@@ -608,6 +679,8 @@ public interface ContainerHandlerInterface extends IngestableResource {
      *                                    Thrown if a method parameter is missing
      * @throws SystemException            Thrown if a framework internal error occurs.
      * @throws InvalidXmlException        TODO
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException
+     * @throws de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException
      */
     String lock(final String id, final String taskParam) throws ContainerNotFoundException, LockingException,
         MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidStatusException,
@@ -625,23 +698,52 @@ public interface ContainerHandlerInterface extends IngestableResource {
      *                                    Thrown if a method parameter is missing
      * @throws SystemException            Thrown if a framework internal error occurs.
      * @throws InvalidXmlException        TODO
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException
+     * @throws de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException
      */
     String unlock(final String id, final String taskParam) throws ContainerNotFoundException, LockingException,
         MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidStatusException,
         InvalidXmlException;
 
     /**
+     * @param containerId
+     * @param taskParam
      * @return The XML representation of the Container.
      * @throws MissingMethodParameterException
      *          Thrown if a method parameter is missing
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.violated.LockingException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
      */
     String moveToContext(final String containerId, final String taskParam) throws ContainerNotFoundException,
         ContextNotFoundException, InvalidContentException, LockingException, MissingMethodParameterException;
 
     /**
+     * @param containerId
+     * @param xmlData
      * @throws MissingMethodParameterException
      *                         Thrown if a method parameter is missing
      * @throws SystemException Thrown if a framework internal error occurs.
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingMdRecordException
+     * @throws de.escidoc.core.common.exceptions.application.violated.ReadonlyAttributeViolationException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingContentException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.FileNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
+     * @throws de.escidoc.core.common.exceptions.application.violated.LockingException
+     * @throws de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingElementValueException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContextException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException
+     * @throws de.escidoc.core.common.exceptions.application.security.AuthorizationException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException
+     * @return
      */
     String createItem(final String containerId, final String xmlData) throws ContainerNotFoundException,
         MissingContentException, ContextNotFoundException, ContentModelNotFoundException,
@@ -652,9 +754,27 @@ public interface ContainerHandlerInterface extends IngestableResource {
         SystemException, InvalidStatusException, AuthorizationException;
 
     /**
+     * @param containerId
+     * @param xmlData
      * @throws MissingMethodParameterException
      *                         Thrown if a method parameter is missing
      * @throws SystemException Thrown if a framework internal error occurs.
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingMdRecordException
+     * @throws de.escidoc.core.common.exceptions.application.security.AuthenticationException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
+     * @throws de.escidoc.core.common.exceptions.application.violated.LockingException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingElementValueException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContextException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException
+     * @throws de.escidoc.core.common.exceptions.application.security.AuthorizationException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException
+     * @return
      */
     String createContainer(final String containerId, final String xmlData) throws MissingMethodParameterException,
         ContainerNotFoundException, LockingException, ContextNotFoundException, ContentModelNotFoundException,
@@ -666,8 +786,21 @@ public interface ContainerHandlerInterface extends IngestableResource {
     // ContainerNotFoundException;
 
     /**
+     * @param id
+     * @param param
      * @return last-modification-date within XML (result.xsd)
      * @throws SystemException Thrown if a framework internal error occurs.
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.violated.LockingException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingElementValueException
+     * @throws de.escidoc.core.common.exceptions.application.violated.AlreadyExistsException
+     * @throws de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException
+     * @throws de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
      */
     String addContentRelations(final String id, final String param) throws SystemException, ContainerNotFoundException,
         OptimisticLockingException, ReferencedResourceNotFoundException, RelationPredicateNotFoundException,
@@ -675,8 +808,18 @@ public interface ContainerHandlerInterface extends IngestableResource {
         LockingException, ReadonlyVersionException, InvalidContentException;
 
     /**
+     * @param id
+     * @param param
      * @return last-modification-date within XML (result.xsd)
      * @throws SystemException Thrown if a framework internal error occurs.
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.violated.LockingException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ContentRelationNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingElementValueException
+     * @throws de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException
+     * @throws de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException
      */
     String removeContentRelations(final String id, final String param) throws SystemException,
         ContainerNotFoundException, OptimisticLockingException, InvalidStatusException, MissingElementValueException,

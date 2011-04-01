@@ -34,7 +34,6 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.xml.stream.XMLStreamException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,6 +75,7 @@ public class ContentStreamsHandler extends DefaultHandler {
      * ContentStreamsHandler.
      *
      * @param parser StAX Parser.
+     * @param xpathContentStreams
      */
     public ContentStreamsHandler(final StaxParser parser, final String xpathContentStreams) {
         this.xpathContentStreams = xpathContentStreams;

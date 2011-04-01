@@ -29,6 +29,7 @@ public final class StatisticPreprocessorServiceTimer {
 
     /**
      * Get lastExecutionTime.
+     * @return
      */
     public long getLastExecutionTime() {
         final long newLastExecutionTime = System.currentTimeMillis();

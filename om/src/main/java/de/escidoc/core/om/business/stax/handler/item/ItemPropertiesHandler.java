@@ -221,6 +221,9 @@ public class ItemPropertiesHandler extends DefaultHandler {
 
     /**
      * @param element StAX StartElement
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException
      */
     private void handleContextElement(final StartElement element) throws MissingAttributeValueException,
         WebserverSystemException, ContextNotFoundException {
@@ -261,6 +264,9 @@ public class ItemPropertiesHandler extends DefaultHandler {
 
     /**
      * @param element StAX StartElement
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException
      */
     private void handleContentModel(final StartElement element) throws MissingAttributeValueException,
         WebserverSystemException, ContentModelNotFoundException {
@@ -306,6 +312,9 @@ public class ItemPropertiesHandler extends DefaultHandler {
 
     /**
      * @param element StAX StartElement
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
      */
     private void handleOrigin(final StartElement element) throws MissingAttributeValueException,
         WebserverSystemException, InvalidContentException {

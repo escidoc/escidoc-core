@@ -209,6 +209,7 @@ public final class IndexerResourceCache {
      * delete resource with given identifier.
      *
      * @param identifier identifier
+     * @param resource
      * @throws SystemException e
      */
     public void replaceResource(final String identifier, final Object resource) throws SystemException {
@@ -300,11 +301,11 @@ public final class IndexerResourceCache {
             final HttpResponse httpResponse = connectionUtility.getRequestURL(new URL(identifier));
 
             if (httpResponse != null) {
-                final String mimeType;
 
                 // TODO testen ob header mitgeschickt wird
                 final Header ctype = httpResponse.getFirstHeader("Content-Type");
-                mimeType = ctype != null ? ctype.getValue() : FoXmlProvider.MIME_TYPE_APPLICATION_OCTET_STREAM;
+                final String mimeType =
+                    ctype != null ? ctype.getValue() : FoXmlProvider.MIME_TYPE_APPLICATION_OCTET_STREAM;
 
                 out = new ByteArrayOutputStream();
                 in = httpResponse.getEntity().getContent();

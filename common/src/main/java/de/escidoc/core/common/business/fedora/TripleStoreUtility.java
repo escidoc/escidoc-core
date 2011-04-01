@@ -492,7 +492,9 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
     }
 
     /**
+     * @param id
      * @throws TripleStoreSystemException If access to the triple store fails.
+     * @return
      */
     public String getItemForComponent(final String id) throws TripleStoreSystemException {
 
@@ -577,7 +579,10 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
     }
 
     /**
+     * @param parentId
+     * @param memberId
      * @throws TripleStoreSystemException If access to the triple store fails.
+     * @return
      */
     public boolean isMemberOf(final String parentId, final String memberId) throws TripleStoreSystemException {
 
@@ -595,7 +600,10 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
     }
 
     /**
+     * @param ouId
+     * @param parentId
      * @throws TripleStoreSystemException If access to the triple store fails.
+     * @return
      */
     public boolean isParentOfOu(final String ouId, final String parentId) throws TripleStoreSystemException {
 
@@ -613,7 +621,9 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
 
     /**
      * @param pid Objid/PID of the object.
+     * @param fullqualifiedNamedProperties
      * @throws TripleStoreSystemException If access to the triple store fails.
+     * @return
      */
     public abstract Map<String, String> getProperties(String pid, Collection<String> fullqualifiedNamedProperties)
         throws TripleStoreSystemException;
@@ -622,6 +632,8 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
      * Returns the value of a property entry in RELS-EXT by adding a slash ('/') to the namespace. In order to retrieve
      * an entry without an additional slash at the end of the namespace use <code>TripleStoreUtility.getRelation</code>.
      *
+     * @param pid
+     * @param fullQualifiedNameProperty
      * @return value of property
      * @throws TripleStoreSystemException If access to the triple store fails.
      */
@@ -648,7 +660,10 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
      * Returns the value of a relation entry in RELS-EXT. In contrast to getProperty the namespace is used as it is.
      * (Without an additional '/')
      *
+     * @param pid
+     * @param fullQualifiedPropertyName
      * @throws TripleStoreSystemException If access to the triple store fails.
+     * @return
      */
     public abstract String getRelation(final String pid, final String fullQualifiedPropertyName)
         throws TripleStoreSystemException;
@@ -688,7 +703,10 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
     }
 
     /**
+     * @param pid
+     * @param fullPropertyElementName
      * @throws TripleStoreSystemException If access to the triple store fails.
+     * @return
      */
     // Result is used as a vector in Context.getOrganizationalUnitHrefs()
     public List<String> getPropertiesElementsVector(final String pid, final String fullPropertyElementName)
@@ -709,8 +727,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
         final String pid, final String fullPropertyElementName, final boolean targetIsSubject)
         throws TripleStoreSystemException {
 
-        final List<String> result;
-        result =
+        final List<String> result =
             targetIsSubject ? new ArrayList<String>(executeQueryId(pid, targetIsSubject, fullPropertyElementName)) : getPropertiesElementsVector(
                 pid, fullPropertyElementName);
         return result;
@@ -789,6 +806,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
      * @param contentModelTitle   The content model title that the subject must match. This must not be
      *                            <code>null</code>, if contentModelTitleId is not <code>null</code>.
      * @return Returns the where clause searching for the specified subjects.
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     public abstract StringBuffer getRetrieveWhereClause(
         boolean targetIsSubject, final String predicateId, final String expectedValue, final String targetResourceType,

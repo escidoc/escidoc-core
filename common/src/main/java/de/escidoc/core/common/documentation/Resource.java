@@ -99,9 +99,9 @@ public class Resource extends XMLBase {
 
     private static final String SERVICE_POSTFIX = "Service";
 
-    private List<Node> resources;
+    private final List<Node> resources;
 
-    private String name;
+    private final String name;
 
     private boolean includeErrors;
 
@@ -274,7 +274,7 @@ public class Resource extends XMLBase {
                 for (int i = 0; i < invokes.getLength(); ++i) {
                     boolean visible = VISIBILTY_DEFAULT;
                     final Node value = getChild(invokes.item(i), DOCUMENTATION_ELEMENT);
-                    if (checkVisibility && value != null
+                    if (this.checkVisibility && value != null
                         && getAttributeValue(value, DOCUMENTATION_VISIBLE_ATTR) != null) {
                         if ("false".equalsIgnoreCase(getAttributeValue(value, DOCUMENTATION_VISIBLE_ATTR))) {
                             visible = false;
@@ -292,7 +292,6 @@ public class Resource extends XMLBase {
                     }
                     if (visible) {
                         String title = DEFAULT_TEXT;
-                        String description = DEFAULT_TEXT;
                         Node child = getChild(invokes.item(i), DOCUMENTATION_ELEMENT + XPATH_DELIMITER + TITLE_ELEMENT);
                         if (child != null) {
                             title = child.getTextContent();
@@ -302,6 +301,7 @@ public class Resource extends XMLBase {
                         }
                         child =
                             getChild(invokes.item(i), DOCUMENTATION_ELEMENT + XPATH_DELIMITER + DESCRIPTION_ELEMENT);
+                        String description = DEFAULT_TEXT;
                         if (child != null) {
                             description = child.getTextContent();
                             if (description == null) {
@@ -354,13 +354,13 @@ public class Resource extends XMLBase {
             result +=
                 getMethodTableStart(title + " via REST", getMethodTableRow2Cols("HTTP Request", httpMethod + ' '
                     + prepareUriParameter(uri)));
-            int paramNo = 1;
             result += getMethodTableRow2Cols(" ", " ");
             boolean printedParam = false;
-            String c1 = "";
+            int paramNo = 1;
             String attributeValue = getAttributeValue(invoke, INVOKE_PARAM_ATTR + paramNo);
             if (attributeValue != null) {
                 String parameter = "";
+                String c1 = "";
                 while (attributeValue != null) {
                     final String c2 = prepareParameter(attributeValue);
                     String c3 = DEFAULT_TEXT;
@@ -452,14 +452,13 @@ public class Resource extends XMLBase {
 
         final StringBuilder res = new StringBuilder(result);
 
-        final StringBuffer c1;
         try {
             final Class[] exceptionTypes = getExceptions(getAttributeValue(invoke, INVOKE_METHOD_ATTR), paramNo - 1);
             if (exceptionTypes != null && exceptionTypes.length > 0) {
-                c1 = new StringBuffer();
+                final StringBuffer c1 = new StringBuffer();
                 final StringBuilder c2 = new StringBuilder();
-                String msg;
                 for (int i = 0; i < exceptionTypes.length; ++i) {
+                    String msg;
                     try {
                         final Method statusLine = exceptionTypes[i].getMethod("getHttpStatusLine", new Class[0]);
                         msg =
@@ -513,7 +512,6 @@ public class Resource extends XMLBase {
      * @return The docbook documentation.
      */
     private String createSoapDocumentation(final Node invoke, final String title) {
-        String result = "";
 
         String method =
             this.name + HANDLER_POSTFIX + SERVICE_POSTFIX + '.' + getAttributeValue(invoke, INVOKE_METHOD_ATTR) + " ( ";
@@ -575,6 +573,7 @@ public class Resource extends XMLBase {
 
             }
         }
+        String result = "";
         result += getMethodTableStart(title + " via Soap", getMethodTableRow2Cols("Method Signature", method));
         result += getMethodTableRow2Cols(" ", " ");
         result += paramDocumentation;

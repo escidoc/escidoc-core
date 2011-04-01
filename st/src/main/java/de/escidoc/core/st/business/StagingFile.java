@@ -158,9 +158,8 @@ public class StagingFile extends de.escidoc.core.st.business.persistence.Staging
         if (outputStream == null) {
             throw new IOException();
         }
-        InputStream inputStream = null;
         try {
-            inputStream = getFileInputStream();
+            InputStream inputStream = getFileInputStream();
             IOUtils.copyAndCloseInput(inputStream, outputStream);
         }
         finally {

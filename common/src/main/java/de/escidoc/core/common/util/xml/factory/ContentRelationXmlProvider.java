@@ -120,6 +120,9 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
      * @param cr ContentRelation
      * @return XML representation of md-records.
      * @throws SystemException If anything fails.
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     public String getContentRelationMdRecords(final ContentRelationCreate cr) throws SystemException,
         EncodingSystemException, FedoraSystemException, IntegritySystemException {
@@ -135,6 +138,8 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
      * @param mr meta date record
      * @return XML representation of md-record.
      * @throws SystemException If anything fails.
+     * @throws de.escidoc.core.common.exceptions.application.notfound.MdRecordNotFoundException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
      */
     public String getContentRelationMdRecord(final ContentRelationCreate cr, final MdRecordCreate mr)
         throws MdRecordNotFoundException, FedoraSystemException, SystemException {
@@ -188,6 +193,7 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
     /**
      * Get XML representation of ContentRelation (virtual-)resources.
      *
+     * @param cr
      * @return XML representation of resources.
      * @throws WebserverSystemException If anything fails.
      */
@@ -381,6 +387,11 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
      * @param commonValues Common render values.
      * @param isRoot       Set true is md-record is to render with XML root element
      * @return XMl representation of md-record.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.MdRecordNotFoundException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     public String renderMdRecord(
         final ContentRelationCreate cr, final MdRecordCreate mdRecord, final Map<String, String> commonValues,
@@ -417,7 +428,15 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
     }
 
     /**
+     * @param cr
+     * @param commonValues
+     * @param isRoot
      * @return XML representation off //md-records
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     public String renderMdRecords(
         final ContentRelationCreate cr, final Map<String, String> commonValues, final boolean isRoot)

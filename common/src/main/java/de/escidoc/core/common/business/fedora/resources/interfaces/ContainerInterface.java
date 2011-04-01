@@ -55,6 +55,7 @@ public interface ContainerInterface extends VersionableResource {
      * @return A Map containing the metadata datastreams of this resource.
      * @throws FedoraSystemException    Thrown if Fedora reports an error
      * @throws WebserverSystemException If an internal error occurs.
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     Map<String, Datastream> getMdRecords() throws FedoraSystemException, IntegritySystemException,
         WebserverSystemException;

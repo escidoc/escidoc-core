@@ -107,6 +107,7 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
      *
      * @param object The object to save or update.
      * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
+     * @return
      */
     protected String saveOrUpdate(final Object object) throws SqlDatabaseSystemException {
 
@@ -202,6 +203,8 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
     /**
      * merges 2 sets into 1
      *
+     * @param s1
+     * @param s2
      * @return Set merged set
      */
     protected Set<String> mergeSets(final Set<String> s1, final Set<String> s2) {

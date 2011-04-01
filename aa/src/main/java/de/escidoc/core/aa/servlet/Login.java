@@ -566,6 +566,7 @@ public class Login extends HttpServlet {
      * @param userHandle The eScidoc user handle.
      * @return Returns the redirectUrl containing the eScidoc user handle as a parameter.
      * @throws MissingParameterException Thrown if the target parameter is not found.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private String createRedirectUrl(final HttpServletRequest request, final String userHandle)
         throws MissingParameterException, WebserverSystemException {
@@ -580,6 +581,7 @@ public class Login extends HttpServlet {
      * @param userHandle  The eScidoc user handle.
      * @return Returns the redirectUrl containing the eScidoc user handle as a parameter. This is <code>null</code> if
      *         no redirect Url has been provided.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private static String createRedirectUrl(final String redirectUrl, final String userHandle)
         throws WebserverSystemException {
@@ -588,8 +590,7 @@ public class Login extends HttpServlet {
             return null;
         }
         else {
-            final char delimiter;
-            delimiter = redirectUrl.indexOf('?') == -1 ? '?' : '&';
+            final char delimiter = redirectUrl.indexOf('?') == -1 ? '?' : '&';
             return redirectUrl + delimiter + AUTHENTICATION + '='
                 + UserHandleCookieUtil.createEncodedUserHandle(userHandle);
         }

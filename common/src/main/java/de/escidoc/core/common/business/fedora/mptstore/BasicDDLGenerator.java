@@ -55,6 +55,8 @@ public class BasicDDLGenerator extends PostgresDDLGenerator {
 
     /**
      * Copied from superclass.
+     * @param cmds
+     * @param table
      */
     protected void addSelectGrants(final Collection<String> cmds, final String table) {
         for (final String name : this.users) {
@@ -67,6 +69,8 @@ public class BasicDDLGenerator extends PostgresDDLGenerator {
 
     /**
      * Copied from superclass.
+     * @param name
+     * @return
      */
     protected static String[] splitProperty(final String name) {
         final String val = System.getProperty(name);

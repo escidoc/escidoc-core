@@ -105,6 +105,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
 
     /**
      * Injects the data source.
+     * @param myDataSource
      */
     public void setMyDataSource(final DataSource myDataSource) {
         setDataSource(myDataSource);
@@ -264,16 +265,15 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
 
         final List<String> result = new ArrayList<String>();
 
-        final String source;
-        source =
+        final String source =
             queryByLiteral ? '\"' + idOrLiteral.replaceAll("\\\\", "\\\\\\\\").replaceAll("\"", "\\\\\"") + '\"' : "<info:fedora/"
                 + idOrLiteral + '>';
 
         try {
 
             // get the triples in n-triples
-            final String spoQuery;
-            spoQuery = targetIsSubject ? "* <" + predicate + ">  " + source : source + " <" + predicate + "> *";
+            final String spoQuery =
+                targetIsSubject ? "* <" + predicate + ">  " + source : source + " <" + predicate + "> *";
             final String response = requestSPO(spoQuery);
             final String[] triples = response.split("\\s\\.");
             for (final String triple : triples) {
@@ -773,7 +773,9 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
     private final String retrieveSelectClause;
 
     /**
+     * @param objectType
      * @deprecated is not longer needed
+     * @return
      */
     @Deprecated
     private static String getObjectsToFind(final CharSequence objectType) {

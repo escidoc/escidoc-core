@@ -109,6 +109,7 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport implements Dire
      *
      * @param xmldate date in xml-format
      * @return String date in database-specific format
+     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
      */
     private static String convertDate(final String xmldate) throws SqlDatabaseSystemException {
         try {
@@ -345,8 +346,7 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport implements Dire
         if (executionSql.matches("(?i).* (where|order by|group by) .*")) {
             condition = true;
         }
-        final String fromClause;
-        fromClause =
+        final String fromClause =
             condition ? executionSql.replaceFirst("(?i).*?from(.*?)(where|order by|group by).*", "$1") : executionSql
                 .replaceFirst("(?i).*?from(.*)", "$1");
         final String[] tables = SPLIT_PATTERN.split(fromClause);
@@ -567,8 +567,7 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport implements Dire
             else {
                 whereClause.append(longFieldName).append(operator).append(' ');
             }
-            final String value;
-            value = "sysdate".equalsIgnoreCase(fieldValue) ? SYSDATE : convertDate(fieldValue);
+            final String value = "sysdate".equalsIgnoreCase(fieldValue) ? SYSDATE : convertDate(fieldValue);
             whereClause.append(value).append(' ');
         }
         else if (fieldType.equalsIgnoreCase(Constants.DATABASE_FIELD_TYPE_NUMERIC)) {

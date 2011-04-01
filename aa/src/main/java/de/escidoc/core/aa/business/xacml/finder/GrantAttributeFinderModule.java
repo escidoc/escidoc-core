@@ -198,8 +198,7 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
             }
         }
         else {
-            final RoleGrant grant;
-            grant =
+            final RoleGrant grant =
                 resolvableAttribute.matches(".*" + XmlUtility.NAME_USER_ACCOUNT + ".*") ? getUserAccountGrant(ctx,
                     userOrGroupId, grantId) : getUserGroupGrant(ctx, grantId);
             assertGrant(grantId, grant);
@@ -259,8 +258,7 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
         if (grantId == null || grantId.length() == 0) {
             throw new GrantNotFoundException("no grantId found");
         }
-        final RoleGrant grant;
-        grant =
+        final RoleGrant grant =
             resolvableAttribute.matches(".*" + XmlUtility.NAME_USER_ACCOUNT + ".*") ? userAccountDao.retrieveGrant(
                 userOrGroupId, grantId) : userGroupDao.retrieveGrant(grantId);
         assertGrant(grantId, grant);
@@ -294,8 +292,7 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
             roleId = fetchSingleResourceAttribute(ctx, resolvableAttribute + "-new");
         }
         else {
-            final RoleGrant grant;
-            grant =
+            final RoleGrant grant =
                 resolvableAttribute.matches(".*" + XmlUtility.NAME_USER_ACCOUNT + ".*") ? getUserAccountGrant(ctx,
                     userOrGroupId, grantId) : getUserGroupGrant(ctx, grantId);
             assertGrant(grantId, grant);

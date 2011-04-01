@@ -50,6 +50,15 @@ public class VelocityXmlContainerFoXmlRenderer implements ContainerFoXmlRenderer
 
     /**
      * Add some values to different maps.
+     * @param values
+     * @param properties
+     * @param members
+     * @param containerId
+     * @param lastModificationDate
+     * @param contentRelations
+     * @param comment
+     * @param propertiesAsReferences
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private static void addRelsExtValues(
         final Map<String, Object> values, final Map<String, String> properties, final Collection<String> members,

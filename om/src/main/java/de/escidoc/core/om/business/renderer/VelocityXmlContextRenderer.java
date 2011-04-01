@@ -445,7 +445,10 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * Add the values to render the member list.
      *
      * @param context The Context.
+     * @param values
+     * @param memberList
      * @throws AuthorizationException Thrown if access to origin Item is restricted.
+     * @throws de.escidoc.core.common.exceptions.system.SystemException
      */
     private void addMemberListValues(
         final Context context, final Map<String, Object> values, final Iterable<String> memberList)

@@ -77,8 +77,10 @@ public class XmlValidationInterceptor implements Ordered {
      *
      * @param xml             The xml data to validate.
      * @param resolvingMethod The name of the resolving method used to identify the schema location.
+     * @param root
      * @throws InvalidXmlException      Thrown in case of failed xml schema validation.
      * @throws WebserverSystemException Thrown in case of an internal error.
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
      */
     private void validate(final String xml, final String resolvingMethod, final String root)
         throws InvalidXmlException, WebserverSystemException, XmlParserSystemException {

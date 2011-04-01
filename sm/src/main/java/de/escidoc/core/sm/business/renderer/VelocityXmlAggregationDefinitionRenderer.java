@@ -229,8 +229,7 @@ public final class VelocityXmlAggregationDefinitionRenderer implements Aggregati
         addAggregationDefinitionNamespaceValues(values);
         addAggregationDefinitionListNamespaceValues(values);
 
-        final List<Map<String, Object>> aggregationDefinitionsValues;
-        aggregationDefinitionsValues =
+        final List<Map<String, Object>> aggregationDefinitionsValues =
             aggregationDefinitions != null ? new ArrayList<Map<String, Object>>(aggregationDefinitions.size()) : new ArrayList();
         if (aggregationDefinitions != null) {
             for (final AggregationDefinition aggregationDefinition : aggregationDefinitions) {

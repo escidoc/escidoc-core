@@ -198,8 +198,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
         catch (final UnsupportedEncodingException e) {
             throw new EncodingSystemException(e.getMessage(), e);
         }
-        final Map<String, ByteArrayOutputStream> mdRecords;
-        mdRecords =
+        final Map<String, ByteArrayOutputStream> mdRecords =
             streams.get("md-records") == null ? new HashMap<String, ByteArrayOutputStream>() : (Map<String, ByteArrayOutputStream>) streams
                 .get("md-records");
 

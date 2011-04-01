@@ -50,8 +50,6 @@ import de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionExc
 import de.escidoc.core.common.exceptions.application.violated.ResourceInUseException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 
-import javax.xml.stream.XMLStreamException;
-import java.net.MalformedURLException;
 import java.util.Map;
 
 /**

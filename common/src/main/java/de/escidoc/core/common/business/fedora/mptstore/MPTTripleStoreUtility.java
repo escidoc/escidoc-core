@@ -71,6 +71,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
 
     /**
      * Injects the data source.
+     * @param myDataSource
      */
     public void setMyDataSource(final DataSource myDataSource) {
         setDataSource(myDataSource);

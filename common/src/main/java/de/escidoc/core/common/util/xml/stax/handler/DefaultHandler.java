@@ -106,6 +106,7 @@ public abstract class DefaultHandler {
      * @param startElement  The {@link StartElement} that does not contain the expected attribute.
      * @param namespaceUri  The namespace of the expected attribute.
      * @param attributeName The name of the expected attribute
+     * @param e
      * @return Returns a {@link SystemException} as this situation can occur due to internal errors, only.
      */
     protected SystemException createMandatoryAttributeNotFoundException(

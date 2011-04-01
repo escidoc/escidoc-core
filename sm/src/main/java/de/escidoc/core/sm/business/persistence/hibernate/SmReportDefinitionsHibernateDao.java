@@ -153,9 +153,8 @@ public class SmReportDefinitionsHibernateDao extends AbstractHibernateDao implem
         throws InvalidSearchQueryException, SqlDatabaseSystemException {
 
         if (scopeIds != null && !scopeIds.isEmpty()) {
-            final DetachedCriteria detachedCriteria;
 
-            detachedCriteria =
+            final DetachedCriteria detachedCriteria =
                 criteria != null && criteria.length() > 0 ? new ReportDefinitionFilter(criteria).toSql() : DetachedCriteria
                     .forClass(ReportDefinition.class, "r");
             detachedCriteria.add(Restrictions.in("scope.id", scopeIds));

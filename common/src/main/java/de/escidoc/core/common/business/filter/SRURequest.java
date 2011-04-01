@@ -196,7 +196,7 @@ public class SRURequest {
 
             final StringBuilder internalQuery = new StringBuilder();
 
-            if ((query != null) && (query.length() > 0)) {
+            if (query != null && query.length() > 0) {
                 if (resourceTypeQuery.length() > 0) {
                     internalQuery.append('(');
                     internalQuery.append(resourceTypeQuery);

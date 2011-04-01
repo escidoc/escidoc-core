@@ -175,9 +175,8 @@ public class SmScopesHibernateDao extends AbstractHibernateDao implements SmScop
         throws InvalidSearchQueryException, SqlDatabaseSystemException {
 
         if (scopeIds != null && !scopeIds.isEmpty()) {
-            final DetachedCriteria detachedCriteria;
 
-            detachedCriteria =
+            final DetachedCriteria detachedCriteria =
                 criteria != null && criteria.length() > 0 ? new ScopeFilter(criteria).toSql() : DetachedCriteria
                     .forClass(Scope.class, "s");
             detachedCriteria.add(Restrictions.in("id", scopeIds));

@@ -185,8 +185,8 @@ public class GenericResourcePid extends GenericResource {
      */
     private static Collection<String> expandPropertiesNames(final Collection<String> propertiesNames) {
 
-        final Collection<String> newPropertiesNames;
-        newPropertiesNames = propertiesNames != null ? propertiesNames : new ArrayList<String>();
+        final Collection<String> newPropertiesNames =
+            propertiesNames != null ? propertiesNames : new ArrayList<String>();
 
         newPropertiesNames.add(TripleStoreUtility.PROP_OBJECT_PID);
 
@@ -253,8 +253,8 @@ public class GenericResourcePid extends GenericResource {
      */
     private static Map<String, String> expandPropertiesNamesMapping(final Map<String, String> propertiesNamesMap) {
 
-        final Map<String, String> newPropertiesNamesMap;
-        newPropertiesNamesMap = propertiesNamesMap != null ? propertiesNamesMap : new HashMap<String, String>();
+        final Map<String, String> newPropertiesNamesMap =
+            propertiesNamesMap != null ? propertiesNamesMap : new HashMap<String, String>();
 
         newPropertiesNamesMap.put(TripleStoreUtility.PROP_OBJECT_PID, PropertyMapKeys.OBJECT_PID);
 

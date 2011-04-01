@@ -71,6 +71,8 @@ public class ItemRelsExtUpdateHandler extends DefaultHandler {
     /**
      * RelsExt Update Handler.
      *
+     * @param elementName
+     * @param element
      * @param parser StAX Parser.
      */
     public ItemRelsExtUpdateHandler(final String elementName, final StartElementWithChildElements element,
@@ -210,6 +212,7 @@ public class ItemRelsExtUpdateHandler extends DefaultHandler {
      * Compares Namespaces with the former build in mechanism.
      *
      * @param ns1 Namespace 1.
+     * @param curElementNamespace
      * @param ns2 Namespace 2.
      * @return true if both Namespaces are equal, false otherwise.
      */

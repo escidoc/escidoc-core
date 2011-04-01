@@ -101,6 +101,11 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      * @param id The id of an item managed in Fedora.
      * @throws StreamNotFoundException  Thrown if data streams of Item object was not found.
      * @throws IntegritySystemException Thrown if there is an integrity error with the addressed object.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
      */
     public Item(final String id) throws StreamNotFoundException, TripleStoreSystemException, WebserverSystemException,
         XmlParserSystemException, IntegritySystemException, ResourceNotFoundException, FedoraSystemException {
@@ -134,6 +139,10 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      * Add a Component to the Item.
      *
      * @param c The new Component. (The Component has not to be (but could) persist, this is done with with the Item.)
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     public void addComponent(final Component c) throws FedoraSystemException, WebserverSystemException,
         IntegritySystemException, EncodingSystemException {
@@ -148,6 +157,10 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      *
      * @param componentId This has to be a persistent Component. This Component has already to exists within the
      *                    repository!
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     public void addComponent(final String componentId) throws FedoraSystemException, WebserverSystemException,
         IntegritySystemException, EncodingSystemException {
@@ -160,6 +173,10 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      * Delete a Component from the Item.
      *
      * @param componentId The id of the Component which is to delete from the Item.
+     * @throws de.escidoc.core.common.exceptions.application.violated.LockingException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException
+     * @throws de.escidoc.core.common.exceptions.system.SystemException
      */
     public void deleteComponent(final String componentId) throws LockingException, ComponentNotFoundException,
         InvalidStatusException, SystemException {
@@ -171,6 +188,15 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      * Delete a Component from the Item.
      *
      * @param c The Component which is to delete from the Item.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.application.violated.LockingException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     public void deleteComponent(final FedoraResource c) throws LockingException, ComponentNotFoundException,
         InvalidStatusException, WebserverSystemException, TripleStoreSystemException, FedoraSystemException,
@@ -187,6 +213,10 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      *
      * @param componentId The id of the component.
      * @return Component.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.SystemException
      */
     public Component getComponent(final String componentId) throws ComponentNotFoundException,
         WebserverSystemException, FedoraSystemException, SystemException {
@@ -216,6 +246,10 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
     /**
      * @return A map which contains unique 'content-category' entries associated with a component object. May be used
      *         for other identifications which are possibly unique in item scope.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.SystemException
      */
     public Map<String, Component> getComponentsByLocalName() throws ComponentNotFoundException,
         WebserverSystemException, FedoraSystemException, SystemException {
@@ -229,6 +263,10 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      *
      * @param componentName The name of the Component.
      * @return Component
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.SystemException
      */
     public Component getComponentByLocalName(final String componentName) throws ComponentNotFoundException,
         WebserverSystemException, FedoraSystemException, SystemException {
@@ -261,6 +299,9 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      * Get the IDs of Components.
      *
      * @return Component IDs
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     public Collection<String> getComponentIds() throws XmlParserSystemException, TripleStoreSystemException,
         WebserverSystemException {
@@ -704,8 +745,8 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      */
     private static Collection<String> expandPropertiesNames(final Collection<String> propertiesNames) {
 
-        final Collection<String> newPropertiesNames;
-        newPropertiesNames = propertiesNames != null ? propertiesNames : new ArrayList<String>();
+        final Collection<String> newPropertiesNames =
+            propertiesNames != null ? propertiesNames : new ArrayList<String>();
 
         newPropertiesNames.add(TripleStoreUtility.PROP_CONTENT_MODEL_TITLE);
         newPropertiesNames.add(TripleStoreUtility.PROP_CONTENT_CATEGORY);
@@ -724,8 +765,8 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      */
     private static Map<String, String> expandPropertiesNamesMapping(final Map<String, String> propertiesMapping) {
 
-        final Map<String, String> newPropertiesNames;
-        newPropertiesNames = propertiesMapping != null ? propertiesMapping : new HashMap<String, String>();
+        final Map<String, String> newPropertiesNames =
+            propertiesMapping != null ? propertiesMapping : new HashMap<String, String>();
 
         newPropertiesNames.put(TripleStoreUtility.PROP_LATEST_VERSION_PID, PropertyMapKeys.LATEST_VERSION_PID);
         newPropertiesNames.put(TripleStoreUtility.PROP_CONTENT_CATEGORY,

@@ -40,6 +40,7 @@ public interface IngestHandlerInterface {
     /**
      * @param xmlData the string that contains the resource
      * @throws EscidocException Thrown if anything fails.
+     * @return
      */
     String ingest(String xmlData) throws EscidocException;
 

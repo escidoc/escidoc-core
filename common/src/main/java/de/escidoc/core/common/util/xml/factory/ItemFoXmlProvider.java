@@ -93,6 +93,7 @@ public final class ItemFoXmlProvider extends InfrastructureFoXmlProvider {
      *
      * @param values Map with values for template.
      * @return FOXML part for Content.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     public String getContentFoXml(final Map values) throws WebserverSystemException {
 
@@ -134,6 +135,9 @@ public final class ItemFoXmlProvider extends InfrastructureFoXmlProvider {
 
     /**
      * Render (an initial) WOV.
+     * @param values
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @return
      */
     public String getWov(final Map<String, ?> values) throws WebserverSystemException {
 

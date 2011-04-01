@@ -264,6 +264,17 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
      * @throws RelationPredicateNotFoundException
      *          cf. Interface
      * @see ContainerHandlerInterface#create(String)
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingMdRecordException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingElementValueException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
+     * @throws de.escidoc.core.common.exceptions.system.SystemException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
      */
     private String doCreate(final String xmlData, final boolean isCreate) throws SystemException,
         ContentModelNotFoundException, ContextNotFoundException, MissingAttributeValueException,

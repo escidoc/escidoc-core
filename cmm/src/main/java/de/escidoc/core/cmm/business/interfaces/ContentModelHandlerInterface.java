@@ -45,9 +45,6 @@ import de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionExc
 import de.escidoc.core.common.exceptions.application.violated.ResourceInUseException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 
-import javax.xml.stream.XMLStreamException;
-import java.net.MalformedURLException;
-
 /**
  * Interface of a business handler of the content type resource.
  *
@@ -61,6 +58,9 @@ public interface ContentModelHandlerInterface extends IngestableResource {
      * @param xmlData The xml representation of the content model.
      * @return The xml representation of the created content model.
      * @throws SystemException If an internal error occured.
+     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
      */
     String create(String xmlData) throws SystemException, InvalidContentException, MissingAttributeValueException,
         XmlCorruptedException;
@@ -71,6 +71,9 @@ public interface ContentModelHandlerInterface extends IngestableResource {
      * @param id The id of the content model.
      * @throws ContentModelNotFoundException If the specified content model was not found.
      * @throws SystemException               If an internal error occured.
+     * @throws de.escidoc.core.common.exceptions.application.violated.LockingException
+     * @throws de.escidoc.core.common.exceptions.application.violated.ResourceInUseException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException
      */
     void delete(String id) throws ContentModelNotFoundException, SystemException, LockingException,
         InvalidStatusException, ResourceInUseException;
@@ -151,6 +154,9 @@ public interface ContentModelHandlerInterface extends IngestableResource {
      * @throws InvalidXmlException           If the schema validation fails.
      * @throws OptimisticLockingException    If the content model was chaged in the meantime.
      * @throws SystemException               If an internal error occured.
+     * @throws de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
      */
     String update(String id, String xmlData) throws ContentModelNotFoundException, InvalidXmlException,
         OptimisticLockingException, SystemException, ReadonlyVersionException, MissingAttributeValueException,

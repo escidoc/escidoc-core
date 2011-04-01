@@ -445,8 +445,10 @@ public class HibernateUserGroupDao extends AbstractHibernateDao implements UserG
     /**
      * See Interface for functional description.
      *
+     * @param userId
      * @return List
      * @see UserGroupDaoInterface #retrieveGrantsByUserId(String)
+     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
      */
     public List<RoleGrant> retrieveGrantsByUserId(final String userId) throws SqlDatabaseSystemException {
 

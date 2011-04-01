@@ -128,6 +128,9 @@ public class XMLHashHandler extends DefaultHandler {
     /**
      * Create full qualified name.
      *
+     * @param uri
+     * @param localName
+     * @param qName
      * @return full qualified name
      */
     private static String createFqName(final String uri, final String localName, final String qName) {

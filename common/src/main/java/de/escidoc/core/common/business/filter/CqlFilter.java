@@ -202,9 +202,8 @@ public abstract class CqlFilter {
      * @return the given Hibernate query or "TRUE"
      */
     private static Criterion getAndRestriction(final Criterion criterion) {
-        final Criterion result;
 
-        result = criterion != null ? criterion : Restrictions.sqlRestriction("TRUE");
+        final Criterion result = criterion != null ? criterion : Restrictions.sqlRestriction("TRUE");
         return result;
     }
 
@@ -233,9 +232,8 @@ public abstract class CqlFilter {
      * @return the given Hibernate query or "FALSE"
      */
     private static Criterion getOrRestriction(final Criterion criterion) {
-        final Criterion result;
 
-        result = criterion != null ? criterion : Restrictions.sqlRestriction("FALSE");
+        final Criterion result = criterion != null ? criterion : Restrictions.sqlRestriction("FALSE");
         return result;
     }
 

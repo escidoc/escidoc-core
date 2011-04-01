@@ -46,6 +46,7 @@ public class SrwScanResponseHandler extends DefaultHandler {
 
     /**
      * Constructor
+     * @param parser
      */
     public SrwScanResponseHandler(final StaxParser parser) {
         this.parser = parser;

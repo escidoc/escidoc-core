@@ -34,7 +34,6 @@ import de.escidoc.core.common.business.fedora.resources.create.ComponentCreate;
 import de.escidoc.core.common.business.fedora.resources.create.ItemCreate;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
-import de.escidoc.core.common.exceptions.application.missing.MissingContentException;
 import de.escidoc.core.common.exceptions.application.missing.MissingElementValueException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.stax.StaxParser;
@@ -84,6 +83,7 @@ public class ComponentHandler extends DefaultHandler {
      * ComponentHandler.
      *
      * @param parser StAX parser.
+     * @param item
      */
     public ComponentHandler(final StaxParser parser, final ItemCreate item) {
         this.parser = parser;

@@ -88,6 +88,7 @@ public class ContentModelCreate extends GenericResourceCreate {
 
     /**
      * Set metadata record definitions.
+     * @param mdRecordDefinitions
      */
     public void setMdRecordDefinitions(final List<MdRecordDefinitionCreate> mdRecordDefinitions) {
 
@@ -96,6 +97,7 @@ public class ContentModelCreate extends GenericResourceCreate {
 
     /**
      * Set resource definitions.
+     * @param resourceDefinitions
      */
     public void setResourceDefinitions(final Map<String, ResourceDefinitionCreate> resourceDefinitions) {
 
@@ -147,6 +149,8 @@ public class ContentModelCreate extends GenericResourceCreate {
      * Persist whole ContentModel to Repository.
      *
      * @param forceSync Set true to force synchronous sync of TripleStore.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
      */
     public void persist(final boolean forceSync) throws WebserverSystemException, FedoraSystemException {
 
@@ -170,10 +174,9 @@ public class ContentModelCreate extends GenericResourceCreate {
             // create service definitions and deployments
             if (this.resourceDefinitions != null) {
                 for (final ResourceDefinitionCreate resourceDefinitionCreate : this.resourceDefinitions.values()) {
-                    final ResourceDefinitionCreate rdc = resourceDefinitionCreate;
-                    final String sdefFoxml = getSDefFoXML(rdc);
+                    final String sdefFoxml = getSDefFoXML(resourceDefinitionCreate);
                     FedoraUtility.getInstance().storeObjectInFedora(sdefFoxml, false);
-                    final String sdepFoxml = getSDepFoXML(rdc);
+                    final String sdepFoxml = getSDepFoXML(resourceDefinitionCreate);
                     FedoraUtility.getInstance().storeObjectInFedora(sdepFoxml, false);
                 }
             }
@@ -279,6 +282,7 @@ public class ContentModelCreate extends GenericResourceCreate {
      * @return FoXML representation of ContentModel.
      * @throws SystemException              Thrown if rendering of ContentModel or sub-elements failed.
      * @throws UnsupportedEncodingException Thrown if conversion to default character set failed.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private String getMinimalFoXML() throws WebserverSystemException {
 
@@ -317,6 +321,7 @@ public class ContentModelCreate extends GenericResourceCreate {
      * @return FoXML representation of service definition.
      * @throws SystemException              Thrown if rendering of ContentModel or sub-elements failed.
      * @throws UnsupportedEncodingException Thrown if conversion to default character set failed.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private String getSDefFoXML(final ResourceDefinitionCreate resourceDefinition) throws WebserverSystemException {
         final Map<String, Object> valueMap = new HashMap<String, Object>();
@@ -331,6 +336,7 @@ public class ContentModelCreate extends GenericResourceCreate {
      * @return FoXML representation of service deployment.
      * @throws SystemException              Thrown if rendering of ContentModel or sub-elements failed.
      * @throws UnsupportedEncodingException Thrown if conversion to default character set failed.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private String getSDepFoXML(final ResourceDefinitionCreate resourceDefinition) throws WebserverSystemException {
         final Map<String, Object> valueMap = new HashMap<String, Object>();
@@ -376,6 +382,7 @@ public class ContentModelCreate extends GenericResourceCreate {
      *
      * @return HashMap with template values.
      * @throws SystemException Thrown if obtaining values from framework configuration or TripleStore failed.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private Map<String, String> preparePropertiesValueMap() throws WebserverSystemException {
 

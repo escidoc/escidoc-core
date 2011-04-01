@@ -407,6 +407,7 @@ public class ContainerHandlerBase extends HandlerBase {
 
     /**
      * @return the renderer
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     public ContainerRendererInterface getRenderer() throws WebserverSystemException {
         if (this.renderer == null) {

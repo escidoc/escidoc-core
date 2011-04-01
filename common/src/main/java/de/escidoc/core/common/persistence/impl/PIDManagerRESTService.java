@@ -252,6 +252,11 @@ public class PIDManagerRESTService implements PIDSystem {
      * @param systemID Objid of resource.
      * @param param    XML parameter from assignPID user interface.
      * @return XML data structure for PID Manager enriched with objid.
+     * @throws javax.xml.parsers.ParserConfigurationException
+     * @throws org.xml.sax.SAXException
+     * @throws java.io.IOException
+     * @throws javax.xml.transform.TransformerFactoryConfigurationError
+     * @throws javax.xml.transform.TransformerException
      */
     private static String preparePidManagerDatastructure(final String systemID, final String param)
         throws ParserConfigurationException, SAXException, IOException, TransformerFactoryConfigurationError,
@@ -289,6 +294,9 @@ public class PIDManagerRESTService implements PIDSystem {
      *
      * @param in InputStream from PIDManager.
      * @return PID
+     * @throws javax.xml.parsers.ParserConfigurationException
+     * @throws org.xml.sax.SAXException
+     * @throws java.io.IOException
      */
     private static String obtainPidResult(final InputStream in) throws ParserConfigurationException, SAXException,
         IOException {

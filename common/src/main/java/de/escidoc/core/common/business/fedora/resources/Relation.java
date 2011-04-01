@@ -45,6 +45,7 @@ public class Relation extends GenericVersionableResource implements VersionableR
      * @throws TripleStoreSystemException Thrown if TripleStore access failed.
      * @throws IntegritySystemException   Thrown if there is an integrity error with the addressed object.
      * @throws WebserverSystemException   Thrown in case of an internal error.
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException
      */
     public Relation(final String id) throws TripleStoreSystemException, WebserverSystemException,
         IntegritySystemException, ResourceNotFoundException {

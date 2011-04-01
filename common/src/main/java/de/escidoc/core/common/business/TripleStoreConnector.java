@@ -88,7 +88,12 @@ public class TripleStoreConnector {
     private String fedoraPassword;
 
     /**
+     * @param spoQuery
+     * @param outputFormat
      * @throws TripleStoreSystemException TODO move to TriplestoreUtility implementation
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidTripleStoreOutputFormatException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidTripleStoreQueryException
+     * @return
      */
     public String requestMPT(final String spoQuery, final String outputFormat) throws TripleStoreSystemException,
         InvalidTripleStoreOutputFormatException, InvalidTripleStoreQueryException {

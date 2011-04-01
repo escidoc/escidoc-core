@@ -46,6 +46,13 @@ public interface ContainerFoXmlRendererInterface {
      * Gets the foxml representation of a container.
      *
      * @param values The values of the container.
+     * @param properties
+     * @param members
+     * @param containerId
+     * @param lastModificationDate
+     * @param contentRelations
+     * @param comment
+     * @param propertiesAsReferences
      * @return Returns the foxml representation of the container.
      * @throws SystemException Thrown in case of an internal error.
      */
@@ -57,6 +64,13 @@ public interface ContainerFoXmlRendererInterface {
     /**
      * Render RELS-EXT.
      *
+     * @param properties
+     * @param members
+     * @param containerId
+     * @param lastModificationDate
+     * @param contentRelations
+     * @param comment
+     * @param propertiesAsReferences
      * @return XML representation of RELS-EXT.
      * @throws WebserverSystemException Thrown in case of internal failure.
      */

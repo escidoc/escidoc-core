@@ -146,7 +146,7 @@ public class Fingerprint implements Comparable<Object> {
      */
     @Override
     public boolean equals(Object anObject) {
-        return (anObject != null) && (compareTo(anObject) == 0);
+        return anObject != null && compareTo(anObject) == 0;
     }
 
     /**

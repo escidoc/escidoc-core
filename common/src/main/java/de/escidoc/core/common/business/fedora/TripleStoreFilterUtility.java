@@ -49,7 +49,13 @@ public interface TripleStoreFilterUtility {
      * <p/>
      * TODO more than one id-filter (name="items" and name="containers")
      *
+     * @param objectType
+     * @param filterMap
+     * @param additionalQueryPart
+     * @param whereClause
      * @throws SystemException Thrown in case of an internal error that prevents the filtering using user id and role.
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException
+     * @return
      */
     List<String> evaluate(
         final String objectType, final Map<String, Object> filterMap, final String additionalQueryPart,
@@ -78,6 +84,8 @@ public interface TripleStoreFilterUtility {
     /**
      * Reload possibly needed values. Generalization of setUpTableManager which is called after sync of
      * MPT-TripleStore.
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @return
      */
     Object reinitialize() throws TripleStoreSystemException;
 

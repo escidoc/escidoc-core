@@ -22,7 +22,6 @@ package de.escidoc.core.common.util.configuration;
 
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -228,6 +227,7 @@ public final class EscidocConfiguration {
     /**
      * Private Constructor, in order to prevent instantiation of this utility class. read the Properties and fill it in
      * properties attribute.
+     * @throws de.escidoc.core.common.exceptions.EscidocException
      */
     private EscidocConfiguration() throws EscidocException {
         System.setProperty("java.awt.headless", "true");
@@ -279,7 +279,7 @@ public final class EscidocConfiguration {
      */
     public boolean getAsBoolean(final String name) {
         Boolean result = false;
-        String prop = ((String) this.properties.get(name));
+        String prop = (String) this.properties.get(name);
         if (prop != null) {
             prop = prop.toLowerCase();
             if (prop != null && (TRUE.equals(prop) || ONE.equals(prop))) {

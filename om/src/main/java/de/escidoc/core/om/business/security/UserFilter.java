@@ -50,7 +50,10 @@ public class UserFilter {
     /**
      * Get the list of the member (structural relation) of the Container.
      *
+     * @param container
      * @return List of Container member (if <code>filter != null</code> filtered)
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException
+     * @throws de.escidoc.core.common.exceptions.system.SystemException
      */
     public List<String> getMemberRefList(final Container container) throws MissingMethodParameterException,
         SystemException {

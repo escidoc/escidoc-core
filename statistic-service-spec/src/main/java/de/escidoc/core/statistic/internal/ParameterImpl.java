@@ -46,6 +46,7 @@ public class ParameterImpl implements Parameter {
      * Instantiate a new {@link Parameter} instance using the given name and date value.
      *
      * @param name the name of the parameter
+     * @param value
      */
     public ParameterImpl(final String name, final ReadableInstant value) {
         this.name = name;
@@ -63,6 +64,7 @@ public class ParameterImpl implements Parameter {
      * Instantiate a new {@link Parameter} instance using the given name and string value.
      *
      * @param name the name of the parameter
+     * @param value
      */
     public ParameterImpl(final String name, final String value) {
         this.name = name;
@@ -73,6 +75,7 @@ public class ParameterImpl implements Parameter {
      * Instantiate a new {@link Parameter} instance using the given name and decimal value.
      *
      * @param name the name of the parameter
+     * @param value
      */
     public ParameterImpl(final String name, final BigDecimal value) {
         this.name = name;
@@ -83,6 +86,7 @@ public class ParameterImpl implements Parameter {
      * Instantiate a new {@link Parameter} instance using the given name and boolean value.
      *
      * @param name the name of the parameter
+     * @param value
      */
     public ParameterImpl(final String name, final boolean value) {
         this.name = name;

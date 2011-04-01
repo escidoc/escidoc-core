@@ -67,21 +67,18 @@ public class ShibbolethAuthenticationFilter extends SpringSecurityFilter {
             final String uidAttribute =
                 EscidocConfiguration.getInstance().get(
                     EscidocConfiguration.ESCIDOC_CORE_AA_PERSISTENT_ID_ATTRIBUTE_NAME);
-            final String origin;
 
             // get origin
-            origin =
+            final String origin =
                 StringUtils.isNotEmpty(details.getShibIdentityProvider()) ? details.getShibIdentityProvider() : shibSessionId;
 
             // get name
-            final String name;
-            name =
+            final String name =
                 StringUtils.isNotEmpty(cnAttribute) && StringUtils.isNotEmpty(request.getHeader(cnAttribute)) ? request
                     .getHeader(cnAttribute) : shibSessionId;
 
             // get loginname
-            final String loginname;
-            loginname =
+            final String loginname =
                 StringUtils.isNotEmpty(uidAttribute) && StringUtils.isNotEmpty(request.getHeader(uidAttribute)) ? request
                     .getHeader(uidAttribute).replaceAll("\\s", "") : name.replaceAll("\\s", "_") + '@' + origin;
 

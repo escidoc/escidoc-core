@@ -357,6 +357,11 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
      * @param isOrigin     set true if Item is origin Item, false otherwise
      * @param isRoot       Set true is md-record is to render with XML root element
      * @return XMl representation of md-record.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.MdRecordNotFoundException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     public String renderMdRecord(
         final String name, final Map<String, String> commonValues, final boolean isOrigin, final boolean isRoot)
@@ -428,8 +433,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
 
     @Deprecated
     public String retrieveMdRecord(final String name, final boolean isOrigin) throws MdRecordNotFoundException {
-        final Datastream mdRecord;
-        mdRecord = isOrigin ? getOriginItem().getMdRecord(name) : getItem().getMdRecord(name);
+        final Datastream mdRecord = isOrigin ? getOriginItem().getMdRecord(name) : getItem().getMdRecord(name);
         if (mdRecord.isDeleted()) {
             throw new MdRecordNotFoundException("Metadata record with name " + name + " not found in item "
                 + getItem().getId() + '.');
@@ -710,6 +714,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
     /**
      * Gets the representation of the virtual resource <code>parents</code> of an item/container.
      *
+     * @param itemId
      * @return Returns the XML representation of the virtual resource <code>parents</code> of an container.
      * @throws SystemException Thrown in case of an internal error.
      */
@@ -730,6 +735,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
      * Adds the parents values to the provided map.
      *
      * @param values The map to add values to.
+     * @param itemId
      * @throws SystemException Thrown in case of an internal error.
      */
     private void addParentsValues(final Map<String, Object> values, final String itemId) throws SystemException {
@@ -811,6 +817,13 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
      *
      * @param item The Item.
      * @return Map with properties values (for velocity template)
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ItemNotFoundException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     public Map<String, String> getPropertiesValues(final Item item) throws TripleStoreSystemException,
         WebserverSystemException, IntegritySystemException, XmlParserSystemException, EncodingSystemException,
@@ -975,6 +988,8 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
      * Get the content type specific properties.
      *
      * @return The content type specific properties.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     protected String getContentTypeSpecificPropertiesXml() throws EncodingSystemException, WebserverSystemException {
 

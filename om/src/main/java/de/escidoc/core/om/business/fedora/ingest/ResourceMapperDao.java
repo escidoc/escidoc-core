@@ -56,6 +56,7 @@ public class ResourceMapperDao {
 
     /**
      * Set the resourceMappers (see spring-beans.xml for configuration).
+     * @param resourceMappers
      */
     public void setResourceMappers(final List<ResourceMapperBean> resourceMappers) {
         this.resourceMappers = resourceMappers;
@@ -64,7 +65,9 @@ public class ResourceMapperDao {
     /**
      * Returns the IngestableResource upon the first match.
      *
+     * @param xmlData
      * @return the IngestableResource responsible for the given resource.
+     * @throws de.escidoc.core.common.exceptions.EscidocException
      */
     public ResourceMapperBean getIngestableForResource(final String xmlData) throws EscidocException {
         final StringBuilder exceptions = new StringBuilder();

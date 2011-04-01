@@ -356,8 +356,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao implements Use
         // organizational units
         final String organizationalUnit1 = (String) clonedCriterias.remove(Constants.FILTER_ORGANIZATIONAL_UNIT);
         final String organizationalUnit2 = (String) clonedCriterias.remove(Constants.FILTER_PATH_ORGANIZATIONAL_UNIT);
-        final String organizationalUnit;
-        organizationalUnit = organizationalUnit1 != null ? organizationalUnit1 : organizationalUnit2;
+        final String organizationalUnit = organizationalUnit1 != null ? organizationalUnit1 : organizationalUnit2;
         if (organizationalUnit != null) {
 
             final String ouAttributeName;

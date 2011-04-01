@@ -291,6 +291,8 @@ public class ItemHandlerPid extends ItemHandlerContent {
      * Check if the Item has fulfilled all pre-conditions in relation to PID for the release process.
      *
      * @return true if all pre-conditions are fulfilled otherwise false.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     private boolean releasableContentPid() throws WebserverSystemException, TripleStoreSystemException {
         boolean result;

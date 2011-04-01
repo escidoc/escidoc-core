@@ -328,6 +328,7 @@ public final class FinderModuleHelper {
      * @param whereClause     The where clause to "select" the values that shall be returned. This clause should be
      *                        created by using one of the appropriate methods provided by this class.
      * @param objectId        The id of the resource object for that the values hall be retrieved.
+     * @param predicateId
      * @param tsu             The {@link TripleStoreUtility} to use.
      * @return Returns the specified attribute of the specified resource.<br> This is a list of string values and may be
      *         empty.

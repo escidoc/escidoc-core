@@ -60,6 +60,8 @@ public class ComponentPropertiesHandler2 extends DefaultHandler {
     /**
      * StAX Handler for Component Properties. Extracts all required values from from Component Properties XML Section by
      * handle Events from StAX-Parser. The values are stored within a internal HashMap.
+     * @param parser
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     public ComponentPropertiesHandler2(final StaxParser parser) throws WebserverSystemException {
         this.parser = parser;

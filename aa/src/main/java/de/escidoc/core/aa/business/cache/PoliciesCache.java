@@ -364,8 +364,8 @@ public final class PoliciesCache {
         if (userId == null) {
             return;
         }
-        final Element element;
-        element = userGroups == null ? new Element(userId, new HashSet<String>()) : new Element(userId, userGroups);
+        final Element element =
+            userGroups == null ? new Element(userId, new HashSet<String>()) : new Element(userId, userGroups);
         getUserGroupsCache().put(element);
     }
 
@@ -400,6 +400,7 @@ public final class PoliciesCache {
      * @param roleId        The role ID to use as key for {@link LRUMap}. This must not be <code>null</code>. If
      *                      <code>null</code> is provided, nothing is done.
      * @param resourceId    The resource ID to use as key for {@link LRUMap}. This may be <code>null</code>.
+     * @return
      */
     public static EvaluationResult getRoleIsGrantedEvaluationResult(
         final String userOrGroupId, final String roleId, final String resourceId) {

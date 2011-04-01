@@ -65,7 +65,7 @@ public final class VelocityXmlReportDefinitionRenderer implements ReportDefiniti
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.sm.business.renderer.interfaces. ReportDefinitionRendererInterface#render(Map)
+     * @see de.escidoc.core.sm.business.renderer.interfaces.ReportDefinitionRendererInterface#render(Map)
      */
     @Override
     public String render(final ReportDefinition reportDefinition) throws SystemException {
@@ -141,7 +141,7 @@ public final class VelocityXmlReportDefinitionRenderer implements ReportDefiniti
      *
      * @param recordPacking A string to determine how the record should be escaped in the response. Defined values are
      *                      'string' and 'xml'. The default is 'xml'.
-     * @see de.escidoc.core.aa.business.renderer.interfaces. ReportDefinitionRendererInterface
+     * @see de.escidoc.core.aa.business.renderer.interfaces.ReportDefinitionRendererInterface
      *      #renderReportDefinitions(de.escidoc.core.sm.business.ReportDefinition)
      */
     @Override

@@ -63,6 +63,8 @@ public class EscidocBinaryContent {
 
     /**
      * @return the content
+     * @throws NullPointerException
+     * @throws java.io.IOException
      */
     public InputStream getContent() throws IOException, NullPointerException {
         if (this.getMethod == null) {

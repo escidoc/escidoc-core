@@ -31,11 +31,13 @@ public @interface Validate {
 
     /**
      * Depicts the position of the parameter to validate. Set to 0 for the 1st parameter, to 1 for the 2nd and so on.
+     * @return
      */
     int param();
 
     /**
      * The name of the method returning the expected schema location. Must be a static method in class XmlUtility.
+     * @return
      */
     String resolver();
 

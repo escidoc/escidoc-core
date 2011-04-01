@@ -76,6 +76,8 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
 
     /**
      * Must be the <b>last</b> handler in the handler chain!
+     * @param path
+     * @param parser
      */
     public AddNewSubTreesToDatastream(final String path, final StaxParser parser) {
         this.parser = parser;
@@ -85,6 +87,10 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
 
     /**
      * Must be the last handler in the handler chain.
+     * @param path
+     * @param parser
+     * @param subtreesToInsert
+     * @param pointerElement
      */
     public AddNewSubTreesToDatastream(final String path, final StaxParser parser,
         final List<StartElementWithChildElements> subtreesToInsert, final StartElement pointerElement) {
@@ -371,6 +377,8 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
      * Compares all attributes of pointerElement with attributes of element. StartElement element must have all
      * attributes of pointerElement with equal value.
      *
+     * @param pointerElement
+     * @param element
      * @return true - If all attributes of pointerElement exist in element and there values are equal. Other attibutes
      *         (of element) are not compared. false - otherwise
      */

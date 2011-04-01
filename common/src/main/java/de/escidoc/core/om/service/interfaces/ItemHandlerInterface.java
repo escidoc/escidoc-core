@@ -645,6 +645,7 @@ public interface ItemHandlerInterface {
      *                                        If the ID or data is not provided.
      * @throws SystemException                If an error occurs.
      * @throws InvalidStatusException         Thrown in case of an invalid status.
+     * @throws de.escidoc.core.common.exceptions.application.notfound.XmlSchemaNotFoundException
      */
     @Deprecated
     @Validate(param = 1, resolver = "getItemSchemaLocation")
@@ -909,6 +910,7 @@ public interface ItemHandlerInterface {
      *
      * @param id           The id of the Item.
      * @param resourceName The name of the resource.
+     * @param parameters
      * @return The content of the resource.
      * @throws ItemNotFoundException      Thrown if an Item with the specified id cannot be found.
      * @throws AuthenticationException    Thrown if the authentication fails due to an invalid provided
@@ -1921,6 +1923,20 @@ public interface ItemHandlerInterface {
      * @throws MissingMethodParameterException
      *                                    If no data is provided.
      * @throws SystemException            If an error occurs.
+     * @throws de.escidoc.core.common.exceptions.application.security.AuthenticationException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ItemNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.violated.ReadonlyViolationException
+     * @throws de.escidoc.core.common.exceptions.application.violated.AlreadyExistsException
+     * @throws de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
+     * @throws de.escidoc.core.common.exceptions.application.violated.LockingException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingElementValueException
+     * @throws de.escidoc.core.common.exceptions.application.security.AuthorizationException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException
      */
     @Validate(param = 1, resolver = "getUpdateRelationsSchemaLocation")
     String addContentRelations(final String id, final String taskParameter) throws SystemException,
@@ -2007,6 +2023,19 @@ public interface ItemHandlerInterface {
      * @throws MissingMethodParameterException
      *                                    If no data is provided.
      * @throws SystemException            If an error occurs.
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ContentRelationNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ItemNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.violated.ReadonlyViolationException
+     * @throws de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException
+     * @throws de.escidoc.core.common.exceptions.application.security.AuthenticationException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
+     * @throws de.escidoc.core.common.exceptions.application.violated.LockingException
+     * @throws de.escidoc.core.common.exceptions.application.violated.AlreadyDeletedException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingElementValueException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException
+     * @throws de.escidoc.core.common.exceptions.application.security.AuthorizationException
+     * @throws de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException
      */
     @Validate(param = 1, resolver = "getUpdateRelationsSchemaLocation")
     String removeContentRelations(final String id, final String param) throws SystemException, ItemNotFoundException,

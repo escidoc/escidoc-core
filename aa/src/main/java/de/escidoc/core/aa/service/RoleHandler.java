@@ -30,7 +30,6 @@ package de.escidoc.core.aa.service;
 
 import de.escidoc.core.aa.service.interfaces.RoleHandlerInterface;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;

@@ -545,6 +545,8 @@ public class GenericResource implements FedoraResource {
      *
      * @param prop Name of property.
      * @return Value of property.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     public String getProperty(final String prop) throws TripleStoreSystemException, WebserverSystemException {
 
@@ -935,8 +937,8 @@ public class GenericResource implements FedoraResource {
      */
     private static Collection<String> expandPropertiesNames(final Collection<String> propertiesNames) {
 
-        final Collection<String> newPropertiesNames;
-        newPropertiesNames = propertiesNames != null ? propertiesNames : new ArrayList<String>();
+        final Collection<String> newPropertiesNames =
+            propertiesNames != null ? propertiesNames : new ArrayList<String>();
 
         newPropertiesNames.add(TripleStoreUtility.PROP_DC_TITLE);
         // FIXME only container has description
@@ -971,8 +973,8 @@ public class GenericResource implements FedoraResource {
      */
     private static Map<String, String> expandPropertiesNamesMapping(final Map<String, String> propertiesNamesMap) {
 
-        final Map<String, String> newPropertiesNamesMap;
-        newPropertiesNamesMap = propertiesNamesMap != null ? propertiesNamesMap : new HashMap<String, String>();
+        final Map<String, String> newPropertiesNamesMap =
+            propertiesNamesMap != null ? propertiesNamesMap : new HashMap<String, String>();
 
         newPropertiesNamesMap.put(TripleStoreUtility.PROP_DC_TITLE, PropertyMapKeys.LATEST_VERSION_TITLE);
         newPropertiesNamesMap.put(TripleStoreUtility.PROP_DC_DESCRIPTION, PropertyMapKeys.LATEST_VERSION_DESCRIPTION);
@@ -1025,6 +1027,8 @@ public class GenericResource implements FedoraResource {
      * @param resourceType Required resource type.
      * @return true if resource is from provided type.
      * @throws IntegritySystemException Thrown if object type could not retrieved
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     public boolean checkResourceType(final ResourceType resourceType) throws IntegritySystemException,
         TripleStoreSystemException, WebserverSystemException {

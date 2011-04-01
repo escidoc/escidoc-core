@@ -373,12 +373,12 @@ public class Reindexer {
                 input = new BufferedReader(new InputStreamReader(fedoraUtility.query(listQuery)));
                 final ReindexStatus reindexStatus = ReindexStatus.getInstance();
                 final String objectType = type.getUri();
-                String line;
                 Set<String> indexedPids = new HashSet<String>();
                 if (!clearIndex) {
                     indexedPids = indexingHandler.getPids(objectType, indexName);
                 }
 
+                String line;
                 while ((line = input.readLine()) != null) {
                     final String subject = getSubject(line);
 

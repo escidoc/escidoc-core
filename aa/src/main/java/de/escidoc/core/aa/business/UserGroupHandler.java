@@ -872,6 +872,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * @param userGroupId       id of the user group, the member should be added to
      * @param memberCandidateId id of the member candidate user group
      * @return true if the user group hierarchy will not be violated false if the user group hierarchy will be violated
+     * @throws de.escidoc.core.common.exceptions.system.SystemException
      */
     private boolean isCycleFree(final String userGroupId, final String memberCandidateId) throws SystemException {
         if (userGroupId != null && userGroupId.equals(memberCandidateId)) {
@@ -1010,6 +1011,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
     /**
      * Retrieves a list of userGroupIds by querying for userId-selector.
      *
+     * @param userIds
      * @param activeOnly if true, only return active groups
      * @return HashSet userGroupIds
      * @throws UserAccountNotFoundException e
@@ -1074,6 +1076,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
     /**
      * Retrieves a list of userGroupIds by querying for groupId-selector.
      *
+     * @param userGroupIds
      * @param activeOnly if true, only retrun active groups.
      * @return HashSet userGroupIds
      * @throws SqlDatabaseSystemException e

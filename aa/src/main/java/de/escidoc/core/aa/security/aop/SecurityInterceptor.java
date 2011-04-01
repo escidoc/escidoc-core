@@ -136,6 +136,7 @@ public class SecurityInterceptor implements Ordered {
      *
      * @param joinPoint The current {@link JoinPoint}.
      * @throws Throwable Thrown in case of an error.
+     * @return
      */
     //    @Around("call(public !static * de.escidoc.core.*.service.interfaces.*.*(..))"
     //        + " && within(de.escidoc.core.*.ejb.*Bean)")

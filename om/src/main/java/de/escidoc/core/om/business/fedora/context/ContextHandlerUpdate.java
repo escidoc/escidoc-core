@@ -675,6 +675,9 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
      *
      * @param changedValues Map of all changed values.
      * @return a Map with elements to update
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.application.violated.ContextNameNotUniqueException
      */
     private Map<String, StartElementWithText> updateDcProperties(final Map<String, String> changedValues)
         throws TripleStoreSystemException, ContextNameNotUniqueException, WebserverSystemException {

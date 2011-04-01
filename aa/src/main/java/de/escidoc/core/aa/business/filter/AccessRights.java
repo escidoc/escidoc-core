@@ -223,9 +223,9 @@ public class AccessRights {
         final List<String> accessRights = new LinkedList<String>();
 
         synchronized (this.rightsMap) {
-            if ((roleId != null) && (roleId.length() > 0)) {
+            if (roleId != null && roleId.length() > 0) {
                 // add rules for the given role
-                if ((!groupIds.isEmpty() && (userGroupGrants != null) && userGroupGrants.containsKey(roleId))
+                if (!groupIds.isEmpty() && userGroupGrants != null && userGroupGrants.containsKey(roleId)
                     || userGrants.containsKey(roleId)) {
                     final String roleQuery =
                         getRoleQuery(type, roleId, userId, groupIds, userGrants, userGroupGrants, containerGrants,
@@ -239,7 +239,7 @@ public class AccessRights {
             else {
                 // add rules for all roles
                 for (final Entry<String, Rules> role : this.rightsMap[type.ordinal()].entrySet()) {
-                    if ((!groupIds.isEmpty() && (userGroupGrants != null) && userGroupGrants.containsKey(role.getKey()))
+                    if (!groupIds.isEmpty() && userGroupGrants != null && userGroupGrants.containsKey(role.getKey())
                         || userGrants.containsKey(role.getKey())) {
                         final String roleQuery =
                             getRoleQuery(type, role.getKey(), userId, groupIds, userGrants, userGroupGrants,
@@ -264,12 +264,12 @@ public class AccessRights {
     public String appendAccessRights(final List<String> accessRights) {
         final StringBuilder result = new StringBuilder();
 
-        if ((accessRights != null) && (!accessRights.isEmpty())) {
+        if (accessRights != null && !accessRights.isEmpty()) {
             result.append('(');
             for (int index = 0; index < accessRights.size(); index++) {
                 String accessRight = accessRights.get(index);
 
-                if ((accessRight == null) || (accessRight.length() == 0)) {
+                if (accessRight == null || accessRight.length() == 0) {
                     accessRight = values.getNeutralOrElement(null);
                 }
                 if (index > 0) {
@@ -430,7 +430,7 @@ public class AccessRights {
         final Set<String> result = new HashSet<String>();
         if (userGrants != null) {
             for (final Entry<String, Map<String, List<RoleGrant>>> entry : userGrants.entrySet()) {
-                if ((roleId == null) || (roleId.equals(entry.getKey()))) {
+                if (roleId == null || roleId.equals(entry.getKey())) {
                     for (final String scopeId : entry.getValue().keySet()) {
                         if (scopeId.length() != 0) {
                             result.add(scopeId);
@@ -441,7 +441,7 @@ public class AccessRights {
         }
         if (groupGrants != null) {
             for (final Entry<String, Map<String, List<RoleGrant>>> entry : groupGrants.entrySet()) {
-                if ((roleId == null) || (roleId.equals(entry.getKey()))) {
+                if (roleId == null || roleId.equals(entry.getKey())) {
                     for (final String scopeId : entry.getValue().keySet()) {
                         if (scopeId.length() != 0) {
                             result.add(scopeId);
@@ -468,7 +468,7 @@ public class AccessRights {
         final Set<String> result = new HashSet<String>();
         if (userGrants != null) {
             for (final Entry<String, Map<String, List<RoleGrant>>> entry : userGrants.entrySet()) {
-                if ((roleId == null) || (roleId.equals(entry.getKey()))) {
+                if (roleId == null || roleId.equals(entry.getKey())) {
                     for (final Entry<String, List<RoleGrant>> subentry : entry.getValue().entrySet()) {
                         if (subentry.getKey().length() != 0) {
                             final List<RoleGrant> grants = subentry.getValue();
@@ -490,7 +490,7 @@ public class AccessRights {
         }
         if (groupGrants != null) {
             for (final Entry<String, Map<String, List<RoleGrant>>> entry : groupGrants.entrySet()) {
-                if ((roleId == null) || (roleId.equals(entry.getKey()))) {
+                if (roleId == null || roleId.equals(entry.getKey())) {
                     for (final Entry<String, List<RoleGrant>> subentry : entry.getValue().entrySet()) {
                         if (subentry.getKey().length() != 0) {
                             final List<RoleGrant> grants = subentry.getValue();

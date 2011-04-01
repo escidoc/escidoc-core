@@ -178,9 +178,8 @@ public class SmAggregationDefinitionsHibernateDao extends AbstractHibernateDao
         final Collection<AggregationDefinition> result = new ArrayList<AggregationDefinition>();
 
         if (scopeIds != null && !scopeIds.isEmpty()) {
-            final DetachedCriteria detachedCriteria;
 
-            detachedCriteria =
+            final DetachedCriteria detachedCriteria =
                 criteria != null && criteria.length() > 0 ? new AggregationDefinitionFilter(criteria).toSql() : DetachedCriteria
                     .forClass(AggregationDefinition.class, "a");
             detachedCriteria.add(Restrictions.in("scope.id", scopeIds));

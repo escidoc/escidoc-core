@@ -121,8 +121,7 @@ public class XacmlFunctionRoleInList extends FunctionBase {
     private static Collection<String> getRoleNames(final PolicyTreeElement policy, final Collection<String> roleNames) {
         if (policy != null) {
             try {
-                final PolicyTreeElement policyReference = policy;
-                roleNames.add(policyReference.getId().getPath().toLowerCase());
+                roleNames.add(policy.getId().getPath().toLowerCase());
             }
             catch (final Exception e) {
                 if (policy.getChildren() != null) {
@@ -150,6 +149,7 @@ public class XacmlFunctionRoleInList extends FunctionBase {
      * </pre>
      *
      * @return String userId
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private static String getUserId() throws WebserverSystemException {
         return UserContext.getId();

@@ -293,8 +293,8 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
      */
     private static Map<String, String> expandPropertiesNamesMapping(final Map<String, String> propertiesMapping) {
 
-        final Map<String, String> newPropertiesNames;
-        newPropertiesNames = propertiesMapping != null ? propertiesMapping : new HashMap<String, String>();
+        final Map<String, String> newPropertiesNames =
+            propertiesMapping != null ? propertiesMapping : new HashMap<String, String>();
         newPropertiesNames.put(TripleStoreUtility.PROP_CONTENT_CATEGORY,
             PropertyMapKeys.LATEST_VERSION_CONTENT_CATEGORY);
         newPropertiesNames.put(TripleStoreUtility.PROP_DESCRIPTION, PropertyMapKeys.LATEST_VERSION_DESCRIPTION);

@@ -369,6 +369,9 @@ public class Utility {
      * @param id The id of the object.
      * @throws SystemException               Thrown in case of an internal error.
      * @throws ContentModelNotFoundException If the content model does not exist or if the object is no content model.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     public void checkIsContentModel(final String id) throws ContentModelNotFoundException, TripleStoreSystemException,
         WebserverSystemException, IntegritySystemException {
@@ -838,8 +841,13 @@ public class Utility {
      * Create a new entry for the version-history (WOV).
      *
      * @param resource The versionable resource.
+     * @param resBaseData
+     * @param currentVersionProperties
+     * @param newVersionNumberInt
      * @param comment  The version comment.
      * @return WOV entry for new version
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     private String createVersionXml(
         final FedoraResource resource, final Map<String, String> resBaseData,
@@ -892,6 +900,7 @@ public class Utility {
      * @param resourceBaseUrl          The resource base URL
      * @param currentUserName          The name of the current user.
      * @param currentUserId            The id of the current user.
+     * @param latestModificationTimestamp
      * @param newStatus                New version-status
      * @param comment                  The version comment.
      * @param currentVersionProperties map with properties of current version
@@ -1066,6 +1075,7 @@ public class Utility {
      * @param relsExtBytes      - optional parameter: byte [] with content of RELS-EXT datastream. If no relsExtBytes
      *                          provided (relsExtBytes is set to null), the method retrieves the RELS-EXT from Fedora
      * @param resource          The resource which RELS-EXT is to alter.
+     * @param updateProperties
      * @return byte [] RELS-EXT datastream content
      * @throws IntegritySystemException If the integrity of the repository is violated.
      * @throws XmlParserSystemException If parsing of xml data fails.

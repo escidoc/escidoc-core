@@ -100,8 +100,7 @@ public class ResourceDefinitionCreate {
     }
 
     public void setXsltHref(final String xsltHref) throws MalformedURLException, IOException {
-        final URL url;
-        url =
+        final URL url =
             xsltHref.startsWith("/") ? new URL(EscidocConfiguration.getInstance().get(
                 EscidocConfiguration.ESCIDOC_CORE_BASEURL)
                 + xsltHref) : new URL(xsltHref);

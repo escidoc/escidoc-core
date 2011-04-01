@@ -74,6 +74,7 @@ public class FedoraIngestFacade implements IngestFacade {
 
     /**
      * Setter for the ResourceMapperDao
+     * @param resourceMapperDao
      */
     public void setResourceMapperDao(final ResourceMapperDao resourceMapperDao) {
         this.resourceMapperDao = resourceMapperDao;

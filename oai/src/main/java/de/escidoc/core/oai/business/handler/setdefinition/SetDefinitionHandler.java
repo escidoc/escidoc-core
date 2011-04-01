@@ -94,6 +94,7 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
      * are set with the values of modification date and modifying user of the provided set definition.<br/>
      *
      * @param setDefinition definition The <code>SetDefinition</code> object to modify.
+     * @param setProperties
      * @throws SystemException Thrown in case of an internal error.
      * @throws UniqueConstraintViolationException
      *                         The specification of the given set definition has already been used.
@@ -125,6 +126,7 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
      * @param setDefinition The <code>SetDefinition</code> object to modify.
      * @param setProperties map which contains all properties of the set definition
      * @throws SystemException Thrown in case of an internal error.
+     * @return
      */
     private static boolean setModificationValues(
         final SetDefinition setDefinition, final Map<String, String> setProperties) throws SystemException {

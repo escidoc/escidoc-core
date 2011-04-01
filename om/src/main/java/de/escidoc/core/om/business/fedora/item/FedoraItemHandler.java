@@ -1673,6 +1673,24 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      *
      * @param xml the String containing the item xml
      * @return ItemCreate
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingMdRecordException
+     * @throws de.escidoc.core.common.exceptions.application.violated.ReadonlyAttributeViolationException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingContentException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingElementValueException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     private static ItemCreate parseItem(final String xml) throws WebserverSystemException, XmlParserSystemException,
         ReadonlyElementViolationException, ReadonlyAttributeViolationException, ContentModelNotFoundException,
@@ -1819,6 +1837,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      *
      * @param mdMap           A HashMap which contains the metadata datastreams as ByteArrayOutputStream.
      * @param mdAttributesMap A HashMap which contains the metadata attributes.
+     * @param escidocMdRecordnsUri
      * @throws SystemException Thrown in case of an internal error.
      */
     private void setMetadataRecords(final Map mdMap, final Map mdAttributesMap, final String escidocMdRecordnsUri)

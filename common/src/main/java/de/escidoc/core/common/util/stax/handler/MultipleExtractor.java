@@ -422,8 +422,7 @@ public class MultipleExtractor extends WriteHandler {
                             }
                             else {
                                 if (outputStreams.containsKey(attributeValue)) {
-                                    final String message;
-                                    message =
+                                    final String message =
                                         "/context/admin-descriptors/admin-descriptor".equals(currentPath) ? "An admin-descriptor with the name '"
                                             + attributeValue
                                             + "' occurs multiple times in the "

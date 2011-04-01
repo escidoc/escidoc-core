@@ -29,6 +29,7 @@ public final class IndexOptimizerServiceTimer {
 
     /**
      * Get lastExecutionTime.
+     * @return
      */
     public long getLastExecutionTime() {
         final long newLastExecutionTime = System.currentTimeMillis();

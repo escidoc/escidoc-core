@@ -171,7 +171,6 @@ public class HttpRequester {
     @edu.umd.cs.findbugs.annotations.SuppressWarnings
     private String requestSsl( // Ignore FindBugs
         final String resource, final String method, final String body) throws Exception {
-        final String response;
 
         // Open Connection to given resource
         final URL url = new URL(this.domain + resource);
@@ -215,6 +214,7 @@ public class HttpRequester {
         setCookie(con.getHeaderField("Set-cookie"));
 
         // Read response
+        final String response;
         try {
             response = IOUtils.readStringFromStream(is);
         }

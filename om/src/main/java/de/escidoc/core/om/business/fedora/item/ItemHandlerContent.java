@@ -92,8 +92,16 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
 
     /**
      * @param id objid of Item
+     * @param componentId
      * @return EscidocBinaryContent
      * @see ItemHandlerInterface#retrieveContent(String, String)
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ItemNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException
+     * @throws de.escidoc.core.common.exceptions.application.security.AuthorizationException
+     * @throws de.escidoc.core.common.exceptions.system.SystemException
      */
     public EscidocBinaryContent retrieveContent(final String id, final String componentId)
         throws ItemNotFoundException, ComponentNotFoundException, MissingMethodParameterException, SystemException,
@@ -174,6 +182,12 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
      * @param transformer The name of the transformation (service).
      * @param param       The transformation parameter as HTTP GET String.
      * @return EscidocBinaryContent of the transformed content.
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ItemNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException
+     * @throws de.escidoc.core.common.exceptions.application.security.AuthorizationException
+     * @throws de.escidoc.core.common.exceptions.system.SystemException
      */
     public EscidocBinaryContent retrieveContent(
         final String id, final String componentId, final String transformer, final String param)
@@ -228,6 +242,12 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
      * @param transformer   The name of the transformation service.
      * @param clientService The client name of the transformation service.
      * @return A HTTP/HTML redirect to the client service.
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ItemNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException
+     * @throws de.escidoc.core.common.exceptions.application.security.AuthorizationException
+     * @throws de.escidoc.core.common.exceptions.system.SystemException
      */
     public EscidocServiceRedirectInterface redirectContentService(
         final String id, final String componentId, final String transformer, final String clientService)

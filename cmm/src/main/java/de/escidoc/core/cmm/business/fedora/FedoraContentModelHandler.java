@@ -95,7 +95,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -601,6 +600,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
      * @return FoXML representation of service definition.
      * @throws SystemException              Thrown if rendering of ContentModel or sub-elements failed.
      * @throws UnsupportedEncodingException Thrown if conversion to default character set failed.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private String getSDefFoXML(final ResourceDefinitionCreate resourceDefinition) throws WebserverSystemException {
         final Map<String, Object> valueMap = new HashMap<String, Object>();
@@ -615,6 +615,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
      * @return FoXML representation of service deployment.
      * @throws SystemException              Thrown if rendering of ContentModel or sub-elements failed.
      * @throws UnsupportedEncodingException Thrown if conversion to default character set failed.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private String getSDepFoXML(final ResourceDefinitionCreate resourceDefinition) throws WebserverSystemException {
         final Map<String, Object> valueMap = new HashMap<String, Object>();
@@ -637,6 +638,10 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
     /**
      * Creates Datastream objects from the values in <code>contentStreamMap</code> and calls Item.setContentStreams with
      * a HashMap which contains the metadata datastreams as Datastream objects.
+     * @param contentStreams
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     private void setContentStreams(final Iterable<ContentStreamCreate> contentStreams) throws WebserverSystemException,
         IntegritySystemException, FedoraSystemException {
@@ -694,6 +699,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
      *
      * @param item The item which is to validate.
      * @throws InvalidStatusException Thrown if Item has invalid status.
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
      */
     private void validate(final ContentModelCreate item) throws InvalidContentException {
 
@@ -740,11 +746,13 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
     }
 
     /**
+     * @param xml
      * @throws WebserverSystemException       If an error occurs.
      * @throws InvalidContentException        If invalid content is found.
      * @throws MissingAttributeValueException If a required attribute can not be found.
      * @throws XmlParserSystemException       If an unexpected error occurs while parsing.
      * @throws XmlCorruptedException          Thrown if the schema validation of the provided data failed.
+     * @return
      */
     private static ContentModelCreate parseContentModel(final String xml) throws WebserverSystemException,
         InvalidContentException, MissingAttributeValueException, XmlParserSystemException, XmlCorruptedException {

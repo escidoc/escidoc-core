@@ -661,8 +661,8 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
      */
     private static Collection<String> expandPropertiesNames(final Collection<String> propertiesNames) {
 
-        final Collection<String> newPropertiesNames;
-        newPropertiesNames = propertiesNames != null ? propertiesNames : new ArrayList<String>();
+        final Collection<String> newPropertiesNames =
+            propertiesNames != null ? propertiesNames : new ArrayList<String>();
 
         newPropertiesNames.add(TripleStoreUtility.PROP_LATEST_VERSION_PID);
         newPropertiesNames.add(TripleStoreUtility.PROP_LATEST_RELEASE_PID);
@@ -679,8 +679,8 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
      */
     private static Map<String, String> expandPropertiesNamesMapping(final Map<String, String> propertiesNamesMap) {
 
-        final Map<String, String> newPropertiesNamesMap;
-        newPropertiesNamesMap = propertiesNamesMap != null ? propertiesNamesMap : new HashMap<String, String>();
+        final Map<String, String> newPropertiesNamesMap =
+            propertiesNamesMap != null ? propertiesNamesMap : new HashMap<String, String>();
 
         newPropertiesNamesMap.put(TripleStoreUtility.PROP_LATEST_VERSION_PID, PropertyMapKeys.LATEST_VERSION_PID);
         // FIXME release is a methd of Item/Container so this is to move higher
@@ -692,6 +692,10 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
 
     /**
      * @return Vector with HashMaps of relations.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     public List<Map<String, String>> getRelations() throws FedoraSystemException, IntegritySystemException,
         XmlParserSystemException, WebserverSystemException {

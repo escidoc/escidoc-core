@@ -84,7 +84,7 @@ public class Table implements Comparable<Object> {
      * @return true if this object is the same as the obj argument; false otherwise.
      */
     public boolean equals(final Object obj) {
-        return (obj != null) && name.equals(((Table) obj).getName());
+        return obj != null && name.equals(((Table) obj).getName());
     }
 
     /**

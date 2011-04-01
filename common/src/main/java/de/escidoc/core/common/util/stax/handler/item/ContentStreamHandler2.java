@@ -25,7 +25,6 @@ import de.escidoc.core.common.business.fedora.resources.create.BinaryContent;
 import de.escidoc.core.common.business.fedora.resources.create.ContentStreamCreate;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
-import de.escidoc.core.common.exceptions.application.missing.MissingContentException;
 import de.escidoc.core.common.exceptions.application.missing.MissingElementValueException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.stax.StaxParser;
@@ -37,7 +36,6 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.xml.stream.XMLStreamException;
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Iterator;

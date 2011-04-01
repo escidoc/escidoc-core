@@ -139,8 +139,7 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
                 return EvaluationResult.getInstance(true);
             }
             // Get the userOrGroupid from the policyId
-            final String userOrGroupId;
-            userOrGroupId =
+            final String userOrGroupId =
                 parts.length > 2 ? parts[parts.length - 1] : FinderModuleHelper.retrieveSingleSubjectAttribute(ctx,
                     Constants.URI_SUBJECT_ID, true);
 
@@ -341,6 +340,7 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
      *                      <code>null</code>.
      * @param roleIsGranted Flag indicating if the role has been granted to the user (optional: for the provided
      *                      resource).
+     * @return
      */
     private static EvaluationResult createCachedResult(
         final String userId, final String roleId, final String resourceId, final boolean roleIsGranted) {
@@ -354,6 +354,7 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
 
     /**
      * Gets the data access object bean used to access role data from the database.<br>
+     * @return
      */
     private EscidocRoleDaoInterface getRoleDao() {
 

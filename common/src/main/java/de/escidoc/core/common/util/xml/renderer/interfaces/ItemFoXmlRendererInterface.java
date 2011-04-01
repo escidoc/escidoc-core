@@ -37,6 +37,13 @@ public interface ItemFoXmlRendererInterface {
      * Gets the foxml representation of an item.
      *
      * @param values The values of the item.
+     * @param itemId
+     * @param lastModificationDate
+     * @param components
+     * @param properties
+     * @param contentRelations
+     * @param propertiesAsReferences
+     * @param propertiesVersion
      * @return Returns the foxml representation of the item.
      * @throws SystemException Thrown in case of an internal error.
      */
@@ -58,6 +65,13 @@ public interface ItemFoXmlRendererInterface {
     /**
      * Render RELS-EXT of an Item.
      *
+     * @param id
+     * @param lastModificationDate
+     * @param components
+     * @param properties
+     * @param contentRelations
+     * @param propertiesAsReferences
+     * @param propertiesVersion
      * @return RELS-EXT XML representation of Item
      * @throws WebserverSystemException Thrown in case of internal error.
      */

@@ -55,8 +55,7 @@ public class SmXmlUtility {
             if (workSql.matches("(?i).* (where|order by|group by) .*")) {
                 condition = true;
             }
-            final String fromClause;
-            fromClause =
+            final String fromClause =
                 condition ? workSql.replaceFirst("(?i).*?from(.*?)(where|order by|group by).*", "$1") : workSql
                     .replaceFirst("(?i).*?from(.*)", "$1");
             final String[] tables = fromClause.split(",");

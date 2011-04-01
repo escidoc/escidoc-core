@@ -491,6 +491,7 @@ public class IndexingHandler implements ResourceListener {
      * @param domObject  Dom-Object that holds resource-xml.
      * @return int action to take (delete, update, nothing)
      * @throws Exception e
+     * @throws de.escidoc.core.common.exceptions.system.SystemException
      */
     private int checkPrerequisites(
         String xml, final Map<String, Object> parameters, final String resource, Document domObject)
@@ -631,6 +632,7 @@ public class IndexingHandler implements ResourceListener {
     /**
      * Return all PIDs contained in given index.
      *
+     * @param objectType
      * @param indexName name of the index
      * @return List of PIDs
      * @throws SystemException Thrown if a framework internal error occurs.
@@ -827,6 +829,7 @@ public class IndexingHandler implements ResourceListener {
      * @param xml xml
      * @return Document xml as dom-Document
      * @throws Exception e
+     * @throws de.escidoc.core.common.exceptions.system.SystemException
      */
     private Document getXmlAsDocument(final String xml) throws SystemException {
         try {

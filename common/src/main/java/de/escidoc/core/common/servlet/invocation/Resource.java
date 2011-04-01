@@ -199,6 +199,7 @@ public class Resource extends XMLBase {
      *
      * @param uri       The uri
      * @param query     The request Query.
+     * @param parameters
      * @param body      The http request body
      * @param uriRegexp The uri regexp defining the uri format.
      * @param invoke    The invocation definition.

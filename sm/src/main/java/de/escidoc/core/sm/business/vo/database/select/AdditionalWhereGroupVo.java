@@ -75,6 +75,7 @@ public class AdditionalWhereGroupVo {
      * can be 'and' or 'or'.
      *
      * @param alliance the alliance to set
+     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
      */
     public void setAlliance(final String alliance) throws SqlDatabaseSystemException {
         if (alliance == null || !alliance.equalsIgnoreCase(Constants.DATABASE_ALLIANCE_AND)

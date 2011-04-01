@@ -735,8 +735,8 @@ public class Container extends GenericVersionableResourcePid implements Containe
      */
     private static Collection<String> expandPropertiesNames(final Collection<String> propertiesNames) {
 
-        final Collection<String> newPropertiesNames;
-        newPropertiesNames = propertiesNames != null ? propertiesNames : new ArrayList<String>();
+        final Collection<String> newPropertiesNames =
+            propertiesNames != null ? propertiesNames : new ArrayList<String>();
 
         newPropertiesNames.add(TripleStoreUtility.PROP_CONTENT_MODEL_TITLE);
         newPropertiesNames.add(TripleStoreUtility.PROP_CONTENT_CATEGORY);
@@ -755,8 +755,8 @@ public class Container extends GenericVersionableResourcePid implements Containe
      */
     private static Map<String, String> expandPropertiesNamesMapping(final Map<String, String> propertiesMapping) {
 
-        final Map<String, String> newPropertiesNames;
-        newPropertiesNames = propertiesMapping != null ? propertiesMapping : new HashMap<String, String>();
+        final Map<String, String> newPropertiesNames =
+            propertiesMapping != null ? propertiesMapping : new HashMap<String, String>();
 
         newPropertiesNames.put(TripleStoreUtility.PROP_LATEST_VERSION_PID, PropertyMapKeys.LATEST_VERSION_PID);
         newPropertiesNames.put(TripleStoreUtility.PROP_CONTENT_CATEGORY,

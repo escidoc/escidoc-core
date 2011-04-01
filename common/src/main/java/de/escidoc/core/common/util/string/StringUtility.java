@@ -48,6 +48,7 @@ public final class StringUtility {
      * @param template a non-null string containing 0 or more {@code %s} placeholders.
      * @param args     the arguments to be substituted into the message template. Arguments are converted to strings
      *                 using {@link String#valueOf(Object)}. Arguments can be null.
+     * @return
      */
     public static String format(final String template, final Object... args) { // visible for testing
         // start substituting the arguments into the '%s' placeholders
@@ -95,7 +96,10 @@ public final class StringUtility {
     }
 
     /**
+     * @param firstPart
+     * @param secondPart
      * @see StringUtility#concatenateWithColon(String, Object)
+     * @return
      */
     public static String concatenateWithColonToString(final String firstPart, final Object secondPart) {
         return concatenateWithColon(firstPart, secondPart).toString();

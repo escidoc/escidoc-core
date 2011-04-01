@@ -345,8 +345,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport implements Di
         if (executionSql.matches("(?i).* (where|order by|group by) .*")) {
             condition = true;
         }
-        final String fromClause;
-        fromClause =
+        final String fromClause =
             condition ? executionSql.replaceFirst("(?i).*?from(.*?)(where|order by|group by).*", "$1") : executionSql
                 .replaceFirst("(?i).*?from(.*)", "$1");
         final String[] tables = SPLIT_PATTERN.split(fromClause);
@@ -571,8 +570,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport implements Di
             else {
                 whereClause.append(longFieldName).append(operator).append(' ');
             }
-            final String value;
-            value = "sysdate".equalsIgnoreCase(fieldValue) ? SYSDATE : convertDate(fieldValue);
+            final String value = "sysdate".equalsIgnoreCase(fieldValue) ? SYSDATE : convertDate(fieldValue);
             whereClause.append(value).append(' ');
         }
         else if (fieldType.equalsIgnoreCase(Constants.DATABASE_FIELD_TYPE_NUMERIC)) {
@@ -897,6 +895,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport implements Di
 
     /**
      * Wrapper of setDataSource to enable bean stuff generation for this handler.
+     * @param myDataSource
      */
     public void setMyDataSource(final DataSource myDataSource) {
         setDataSource(myDataSource);

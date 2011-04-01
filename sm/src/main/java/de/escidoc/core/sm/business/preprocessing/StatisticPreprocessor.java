@@ -98,8 +98,7 @@ public class StatisticPreprocessor {
         if (LOGGER.isInfoEnabled()) {
             LOGGER.info("Preprocessing Statistics for Date " + inputDate);
         }
-        final Date date;
-        date = inputDate != null ? inputDate : new Date();
+        final Date date = inputDate != null ? inputDate : new Date();
         if (LOGGER.isInfoEnabled()) {
             LOGGER.info("ComputedDate: " + date);
         }
@@ -187,8 +186,7 @@ public class StatisticPreprocessor {
         if (aggregationDefinition == null) {
             throw new StatisticPreprocessingSystemException("aggregationDefinition may not be null");
         }
-        final Date date;
-        date = inputDate != null ? inputDate : new Date();
+        final Date date = inputDate != null ? inputDate : new Date();
         try {
             // dont process statistic-data for this date and
             // aggregation-definition

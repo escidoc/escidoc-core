@@ -78,6 +78,9 @@ public class VelocityXmlAdminRenderer implements AdminRendererInterface {
 
     /**
      * Adds the values of the indexConfiguration that shall be rendered to the provided {@link Map}.
+     * @param indexConfiguration
+     * @param values
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     @SuppressWarnings("unchecked")
     private static void addIndexConfigurationValues(

@@ -54,7 +54,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
 
     private boolean rootChecked;
 
-    private String expectedName;
+    private final String expectedName;
 
     private List handlerChain = new ArrayList();
 
@@ -293,6 +293,8 @@ public class StaxParser implements DefaultHandlerStackInterface {
     /**
      * Inserts the specified Handler at the specified position in the handler chain. Shifts the element currently at
      * that position (if any) and any subsequent elements to the right (adds one to their indices).
+     * @param index
+     * @param dh
      */
     public void addHandler(final int index, final DefaultHandler dh) {
         handlerChain.add(index, dh);

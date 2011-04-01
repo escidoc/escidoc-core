@@ -61,6 +61,9 @@ public final class OntologyUtility {
      *
      * @param predicateUriReference The predicate with uri reference
      * @return true if predicate is defined within ontologie, false otherwise.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     public static boolean checkPredicate(final String predicateUriReference) throws WebserverSystemException,
         EncodingSystemException, XmlParserSystemException {

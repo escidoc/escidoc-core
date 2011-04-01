@@ -91,8 +91,7 @@ public class MdRecordDefinitionCreate {
      *                               thrown so late.
      */
     public void setSchemaHref(final String schemaHref) throws MalformedURLException, IOException {
-        final URL url;
-        url =
+        final URL url =
             schemaHref.startsWith("/") ? new URL(EscidocConfiguration.getInstance().get(
                 EscidocConfiguration.ESCIDOC_CORE_BASEURL)
                 + schemaHref) : new URL(schemaHref);

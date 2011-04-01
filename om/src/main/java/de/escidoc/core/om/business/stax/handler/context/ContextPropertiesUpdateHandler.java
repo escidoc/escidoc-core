@@ -205,9 +205,8 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
      * @throws SystemException In case of TripeStore access error.
      */
     private boolean checkValueChanged(final String key, final String value) throws SystemException {
-        final String repositoryValue;
 
-        repositoryValue =
+        final String repositoryValue =
             key.equals(Elements.ELEMENT_DESCRIPTION) ? TripleStoreUtility.getInstance().getPropertiesElements(
                 this.contextId, Constants.DC_NS_URI + key) : key.equals(Elements.ELEMENT_NAME) ? TripleStoreUtility
                 .getInstance().getTitle(this.contextId) : TripleStoreUtility.getInstance().getPropertiesElements(

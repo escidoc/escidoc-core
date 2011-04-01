@@ -66,7 +66,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer impleme
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.aa.business.renderer.interfaces. UserGroupRendererInterface#render(Map)
+     * @see de.escidoc.core.aa.business.renderer.interfaces.UserGroupRendererInterface#render(Map)
      */
     @Override
     public String render(final UserGroup userGroup) throws SystemException {
@@ -122,7 +122,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer impleme
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.aa.business.renderer.interfaces. UserGroupRendererInterface#renderCurrentGrants
+     * @see de.escidoc.core.aa.business.renderer.interfaces.UserGroupRendererInterface#renderCurrentGrants
      *      (de.escidoc.core.aa.business.UserGroup, java.util.List)
      */
     @Override
@@ -154,7 +154,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer impleme
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.aa.business.renderer.interfaces. UserGroupRendererInterface#renderGrant
+     * @see de.escidoc.core.aa.business.renderer.interfaces.UserGroupRendererInterface#renderGrant
      *      (de.escidoc.core.aa.business.persistence.RoleGrant)
      */
     @Override
@@ -224,7 +224,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer impleme
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.aa.business.renderer.interfaces. UserGroupRendererInterface
+     * @see de.escidoc.core.aa.business.renderer.interfaces.UserGroupRendererInterface
      *      #renderResources(de.escidoc.core.aa.business.UserGroup)
      */
     @Override
@@ -247,7 +247,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer impleme
      *
      * @param recordPacking A string to determine how the record should be escaped in the response. Defined values are
      *                      'string' and 'xml'. The default is 'xml'.
-     * @see de.escidoc.core.aa.business.renderer.interfaces. UserGroupRendererInterface
+     * @see de.escidoc.core.aa.business.renderer.interfaces.UserGroupRendererInterface
      *      #renderUserGroups(de.escidoc.core.aa.business.UserGroup)
      */
     @Override

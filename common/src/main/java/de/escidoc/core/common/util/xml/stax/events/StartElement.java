@@ -139,10 +139,7 @@ public class StartElement extends AbstractElement {
      */
     public boolean hasAttribute(final String namespaceUri, final String localName) {
 
-        if (indexOfAttribute(namespaceUri, localName) == -1) {
-            return false;
-        }
-        return true;
+        return indexOfAttribute(namespaceUri, localName) != -1;
     }
 
     public String getAttributeValue(final String namespaceUri, final String localName) throws NoSuchAttributeException {

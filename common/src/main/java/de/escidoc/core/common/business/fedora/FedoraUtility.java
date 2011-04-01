@@ -803,6 +803,7 @@ public class FedoraUtility implements InitializingBean {
      * @param altIDs Alt IDs
      * @param label  Label
      * @param stream byte[] information dataset
+     * @param syncTripleStore
      * @return Fedora Identifier of added Datastream.
      * @throws FedoraSystemException    Thrown if add of datastream failed during Fedora communication.
      * @throws WebserverSystemException Thrown in case of an internal error.
@@ -1275,6 +1276,7 @@ public class FedoraUtility implements InitializingBean {
      * Returns a HttpClient object configured with credentials to access Fedora URLs.
      *
      * @return A HttpClient object configured with credentials to access Fedora URLs.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     DefaultHttpClient getHttpClient() throws WebserverSystemException {
         try {

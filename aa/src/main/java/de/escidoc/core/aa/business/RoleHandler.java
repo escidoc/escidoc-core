@@ -459,6 +459,8 @@ public class RoleHandler implements RoleHandlerInterface {
 
     /**
      * Get the {@link XacmlParser}.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @return
      */
     private XacmlParser getXacmlParser() throws WebserverSystemException {
         if (this.xacmlParser == null) {

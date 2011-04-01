@@ -177,6 +177,14 @@ public class ItemCreate extends GenericResourceCreate {
 
     /**
      * Persist whole Item to Repository and force TripleStore sync.
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingMdRecordException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.FileNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException
+     * @throws de.escidoc.core.common.exceptions.system.SystemException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
      */
     public void persist() throws SystemException, InvalidStatusException, MissingMdRecordException,
         FileNotFoundException, InvalidContentException, ReferencedResourceNotFoundException,
@@ -190,6 +198,8 @@ public class ItemCreate extends GenericResourceCreate {
      *
      * @param forceSync Set true to force synchronous sync of TripleStore.
      * @throws SystemException Thrown if an unexpected error occurs
+     * @throws de.escidoc.core.common.exceptions.application.notfound.FileNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
      */
     public void persist(final boolean forceSync) throws SystemException, FileNotFoundException, InvalidContentException {
 
@@ -530,6 +540,9 @@ public class ItemCreate extends GenericResourceCreate {
 
     /**
      * Persist all Components of the Item.
+     * @throws de.escidoc.core.common.exceptions.application.notfound.FileNotFoundException
+     * @throws de.escidoc.core.common.exceptions.system.SystemException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
      */
     private void persistComponents() throws SystemException, FileNotFoundException, InvalidContentException {
 

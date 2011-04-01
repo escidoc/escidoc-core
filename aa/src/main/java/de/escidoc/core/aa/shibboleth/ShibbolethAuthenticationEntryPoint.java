@@ -59,8 +59,7 @@ public class ShibbolethAuthenticationEntryPoint implements AuthenticationEntryPo
             target.append('?');
             target.append(queryString);
         }
-        final String redirectUrl;
-        redirectUrl =
+        final String redirectUrl =
             httpRequest.getHeader(ShibbolethDetails.SHIB_SESSION_ID) == null ? target.toString() : this.serviceProviderBaseUrl
                 + this.sessionInitiatorPath
                 + "?target="

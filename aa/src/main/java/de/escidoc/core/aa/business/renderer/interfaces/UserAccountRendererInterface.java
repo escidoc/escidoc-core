@@ -58,6 +58,9 @@ public interface UserAccountRendererInterface {
      * Gets a list of grants (from filterfunction retrieveGrants.
      *
      * @param grants        A list of grants.
+     * @param numberOfHits
+     * @param offset
+     * @param limit
      * @param recordPacking A string to determine how the record should be escaped in the response. Defined values are
      *                      'string' and 'xml'. The default is 'xml'.
      * @return Returns the XML representation of the grants.
@@ -101,6 +104,7 @@ public interface UserAccountRendererInterface {
     /**
      * Gets the representation of the provided <code>UserPreference</code> object.
      *
+     * @param userAccount
      * @param preference The {@link UserPreference} to render.
      * @return Returns the XML representation of the provided <code>RoleGrant</code> object.
      * @throws SystemException Thrown in case of an internal error.

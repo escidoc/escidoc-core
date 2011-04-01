@@ -504,8 +504,8 @@ public class Context extends GenericResource implements ContextInterface {
      */
     private static Collection<String> expandPropertiesNames(final Collection<String> propertiesNames) {
 
-        final Collection<String> newPropertiesNames;
-        newPropertiesNames = propertiesNames != null ? propertiesNames : new ArrayList<String>();
+        final Collection<String> newPropertiesNames =
+            propertiesNames != null ? propertiesNames : new ArrayList<String>();
 
         newPropertiesNames.add(TripleStoreUtility.PROP_CONTEXT_TYPE);
         newPropertiesNames.add(Constants.DC_NS_URI + "description");
@@ -523,8 +523,8 @@ public class Context extends GenericResource implements ContextInterface {
      * @return The key mapping.
      */
     private static Map<String, String> expandPropertiesNamesMapping(final Map<String, String> propertiesMapping) {
-        final Map<String, String> newPropertiesNames;
-        newPropertiesNames = propertiesMapping != null ? propertiesMapping : new HashMap<String, String>();
+        final Map<String, String> newPropertiesNames =
+            propertiesMapping != null ? propertiesMapping : new HashMap<String, String>();
         newPropertiesNames.put(Constants.DC_NS_URI + "description", PropertyMapKeys.LATEST_VERSION_DESCRIPTION);
         newPropertiesNames.put(TripleStoreUtility.PROP_CONTEXT_TYPE, PropertyMapKeys.CONTEXT_TYPE);
         return newPropertiesNames;

@@ -43,7 +43,10 @@ public interface IngestValidator {
     /**
      * Check if the given resource is valid assuming the given resource type.
      *
+     * @param xmlData
+     * @param resourceType
      * @return if the resource is valid.
+     * @throws de.escidoc.core.common.exceptions.EscidocException
      */
     boolean isResourceValid(String xmlData, ResourceType resourceType) throws EscidocException;
 
