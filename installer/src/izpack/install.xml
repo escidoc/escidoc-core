@@ -295,26 +295,17 @@
         <condition type="ref" refid="installEscidoc" />
         <condition type="ref" refid="databaseIsMySQL" />
       </condition>
-      <condition type="and" id="authMethodIsFormBased">
-        <condition type="ref" refid="installEscidoc" />
-        <condition type="variable">
-          <name>AuthenticationMethod</name>
-          <value>form-based</value>
-        </condition>
+      <condition type="variable" id="authMethodIsFormBased">
+        <name>AuthenticationMethod</name>
+        <value>form-based</value>
       </condition>
-      <condition type="and" id="authMethodIsLDAP">
-        <condition type="ref" refid="installEscidoc" />
-        <condition type="variable">
-          <name>AuthenticationMethod</name>
-          <value>ldap</value>
-        </condition>
+      <condition type="variable" id="authMethodIsLDAP">
+        <name>AuthenticationMethod</name>
+        <value>ldap</value>
       </condition>
-      <condition type="and" id="authMethodIsShibboleth">
-        <condition type="ref" refid="installEscidoc" />
-        <condition type="variable">
-          <name>AuthenticationMethod</name>
-          <value>shibboleth</value>
-        </condition>
+      <condition type="variable" id="authMethodIsShibboleth">
+        <name>AuthenticationMethod</name>
+        <value>shibboleth</value>
       </condition>
     </conditions>
     <!-- 
@@ -342,9 +333,9 @@
         <panel classname="JDKPathPanel" id="CommonJDKPath" />
         <panel classname="TargetPanel" id="EscidocTarget" />
         <panel classname="TreePacksPanel" id="EscidocPacks" />
-        <panel classname="UserInputPanel" id="UserInputPanel.10" condition="authMethodIsFormBased" />
+        <panel classname="UserInputPanel" id="UserInputPanel.10" condition="authMethodIsFormBased+installEscidoc" />
         <panel classname="UserInputPanel" id="UserInputPanel.11" condition="authMethodIsFormBased" />
-        <panel classname="UserInputPanel" id="UserInputPanel.12" condition="authMethodIsFormBased" />
+        <panel classname="UserInputPanel" id="UserInputPanel.12" condition="authMethodIsFormBased+installEscidoc" />
         <!-- panel classname="DataCheckPanel" id="Debug" / -->
         <panel classname="InstallPanel" id="EscidocInstall" />
         <panel classname="UserInputPanel" id="UserInputPanel.13" condition="upgradeEscidoc" />
@@ -508,7 +499,7 @@
             <depends packname="Database Creation" />
         </pack>
         
-        <pack name="Roles and Users Creation" id="db.roles" parent="Configuration and Initialization" required="yes" condition="authMethodIsFormBased">
+        <pack name="Roles and Users Creation" id="db.roles" parent="Configuration and Initialization" required="yes" condition="authMethodIsFormBased+installEscidoc">
             <description>Creates basic user accounts and necessary roles</description>
             <depends packname="Database Creation" />
             <depends packname="Database Initialization" />
