@@ -34,26 +34,6 @@
 
 ">
 
-<!--
-  ~ CDDL HEADER START
-  ~
-  ~ The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
-  ~ only (the "License"). You may not use this file except in compliance with the License.
-  ~
-  ~ You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License
-  ~ for the specific language governing permissions and limitations under the License.
-  ~
-  ~ When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
-  ~ license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
-  ~ brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
-  ~
-  ~ CDDL HEADER END
-  ~
-  ~ Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
-  ~ and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
-  ~ terms.
-  -->
-
 <!ELEMENT title (#PCDATA|inlinemediaobject|remark|superscript|subscript|xref|link|olink|anchor|biblioref|alt|annotation|indexterm|abbrev|acronym|date|emphasis|footnote|footnoteref|foreignphrase|phrase|quote|wordasword|firstterm|glossterm|coref|trademark|productnumber|productname|database|application|hardware|citation|citerefentry|citetitle|citebiblioid|author|person|personname|org|orgname|editor|jobtitle|replaceable|package|parameter|termdef|nonterminal|systemitem|option|optional|property|inlineequation|tag|markup|token|symbol|literal|code|constant|email|uri|guiicon|guibutton|guimenuitem|guimenu|guisubmenu|guilabel|menuchoice|mousebutton|keycombo|keycap|keycode|keysym|shortcut|accel|prompt|envar|filename|command|computeroutput|userinput|function|varname|returnvalue|type|classname|exceptionname|interfacename|methodname|modifier|initializer|ooclass|ooexception|oointerface|errorcode|errortext|errorname|errortype)*>
 
 <!ATTLIST title
