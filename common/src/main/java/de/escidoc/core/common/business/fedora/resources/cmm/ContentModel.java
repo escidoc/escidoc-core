@@ -432,7 +432,8 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
 
         try {
             final Datastream ds =
-                new Datastream("DS-COMPOSITE-MODEL", getId(), xml.getBytes(XmlUtility.CHARACTER_ENCODING), "text/xml");
+                new Datastream("DS-COMPOSITE-MODEL", getId(), xml.getBytes(XmlUtility.CHARACTER_ENCODING),
+                    Datastream.MIME_TYPE_TEXT_XML);
             setDsCompositeModel(ds);
         }
         catch (final UnsupportedEncodingException e) {

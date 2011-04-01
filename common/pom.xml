@@ -24,7 +24,7 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>eSciDocCore</groupId>
+	<groupId>org.escidoc.core</groupId>
 	<artifactId>common</artifactId>
 	<packaging>ejb</packaging>
 	<name>eSciDoc Core - Common</name>
@@ -33,7 +33,7 @@
 
 	<parent>
 		<artifactId>eSciDocCore</artifactId>
-		<groupId>eSciDocCore</groupId>
+		<groupId>org.escidoc.core</groupId>
 		<version>trunk-SNAPSHOT</version>
 	</parent>
 
@@ -249,11 +249,11 @@
 		</dependency>
 
 		<dependency>
-			<groupId>eSciDocCore</groupId>
+			<groupId>org.escidoc.core</groupId>
 			<artifactId>index-service-spec</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>eSciDocCore</groupId>
+			<groupId>org.escidoc.core</groupId>
 			<artifactId>statistic-service-spec</artifactId>
 		</dependency>
 
@@ -468,7 +468,7 @@
 			<artifactId>wstx-asl</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>eSciDocCore</groupId>
+			<groupId>org.escidoc.core</groupId>
 			<artifactId>http-client</artifactId>
 		</dependency>
 		<!-- TODO: Remove as soon as all external libraries (Fedora) migration 

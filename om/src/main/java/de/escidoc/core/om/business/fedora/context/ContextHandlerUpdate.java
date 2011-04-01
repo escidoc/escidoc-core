@@ -718,7 +718,8 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
         try {
             final Datastream oldDs = getContext().getDc();
             final Datastream newDs =
-                new Datastream("DC", getContext().getId(), xml.getBytes(XmlUtility.CHARACTER_ENCODING), "text/xml");
+                new Datastream("DC", getContext().getId(), xml.getBytes(XmlUtility.CHARACTER_ENCODING),
+                    Datastream.MIME_TYPE_TEXT_XML);
             if (!oldDs.equals(newDs)) {
                 // TODO check if update is allowed
                 getContext().setDc(newDs);
@@ -753,10 +754,10 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
                 final Datastream oldDs = adminDescriptors.get(name);
                 final Datastream newDs =
                     new Datastream(name, getContext().getId(),
-                        ((ByteArrayOutputStream) entry.getValue()).toByteArray(), "text/xml");
+                        ((ByteArrayOutputStream) entry.getValue()).toByteArray(), Datastream.MIME_TYPE_TEXT_XML);
                 newDs.addAlternateId(de.escidoc.core.common.business.fedora.Constants.ADMIN_DESCRIPTOR_ALT_ID);
 
-                if (oldDs.equals(newDs) && "text/xml".equals(oldDs.getMimeType())) {
+                if (oldDs.equals(newDs) && Datastream.MIME_TYPE_TEXT_XML.equals(oldDs.getMimeType())) {
                     if (LOGGER.isDebugEnabled()) {
                         LOGGER.debug("Datastreams identical; updated of Context " + getContext().getId()
                             + " with admin-descriptor " + name + " skipped.");

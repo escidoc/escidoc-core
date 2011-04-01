@@ -88,8 +88,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * An utility class for Fedora requests.<br /> This class uses pools for the fedora interfaces.
- *
+ * An utility class for Fedora requests.<br />
+ * This class uses pools for the fedora interfaces.
+ * 
  * @author Rozita Friedman
  */
 @ManagedResource(objectName = "eSciDocCore:name=FedoraUtility", description = "The utility class to access the fedora repository.", log = true, logFile = "jmx.log", currencyTimeLimit = 15)
@@ -147,7 +148,7 @@ public class FedoraUtility implements InitializingBean {
 
     /**
      * Gets the FoXML version.
-     *
+     * 
      * @return The version of FOXML
      */
     @ManagedAttribute(description = "The FoXML version.")
@@ -158,7 +159,7 @@ public class FedoraUtility implements InitializingBean {
 
     /**
      * Gets the URL to the Fedora repository.
-     *
+     * 
      * @return Returns the URL to the Fedora repository.
      */
     @ManagedAttribute(description = "The URL to the fedora repository.")
@@ -169,7 +170,7 @@ public class FedoraUtility implements InitializingBean {
 
     /**
      * Gets the number of active apia connections.
-     *
+     * 
      * @return Returns the number of active apia connections.
      */
     @ManagedAttribute(description = "The number of active apia connections.")
@@ -180,7 +181,7 @@ public class FedoraUtility implements InitializingBean {
 
     /**
      * Gets the number of idle apia connections.
-     *
+     * 
      * @return Returns the number of idle apia connections.
      */
     @ManagedAttribute(description = "The number of idle apia connections.")
@@ -200,7 +201,7 @@ public class FedoraUtility implements InitializingBean {
 
     /**
      * Gets the number of active apim connections.
-     *
+     * 
      * @return Returns the number of active apim connections.
      */
     @ManagedAttribute(description = "The number of active apim connections.")
@@ -211,7 +212,7 @@ public class FedoraUtility implements InitializingBean {
 
     /**
      * Gets the number of idle apim connections.
-     *
+     * 
      * @return Returns the number of idle apim connections.
      */
     @ManagedAttribute(description = "The number of idle apim connections.")
@@ -231,7 +232,7 @@ public class FedoraUtility implements InitializingBean {
 
     /**
      * Gets the number of active fedora clients.
-     *
+     * 
      * @return Returns the number of active fedora clients.
      */
     @ManagedAttribute(description = "The number of active fedora clients.")
@@ -242,7 +243,7 @@ public class FedoraUtility implements InitializingBean {
 
     /**
      * Gets the number of idle fedora clients.
-     *
+     * 
      * @return Returns the number of idle fedora clients.
      */
     @ManagedAttribute(description = "The number of idle fedora clients.")
@@ -262,10 +263,12 @@ public class FedoraUtility implements InitializingBean {
 
     /**
      * The method returns the foxml of the Fedora object with provided id via Fedora APIM-Webservice export().
-     *
-     * @param pid Fedora object pid.
+     * 
+     * @param pid
+     *            Fedora object pid.
      * @return content of the fedora object foxml as byte []
-     * @throws FedoraSystemException Thrown if retrieving FOXML of object failed.
+     * @throws FedoraSystemException
+     *             Thrown if retrieving FOXML of object failed.
      */
     public byte[] getObjectFoxml(final String pid) throws FedoraSystemException {
 
@@ -283,10 +286,12 @@ public class FedoraUtility implements InitializingBean {
 
     /**
      * Get next object IDs from Fedora (Fedora use the name PID for there identifier).
-     *
-     * @param noOfPids Number of IDs which are to request.
+     * 
+     * @param noOfPids
+     *            Number of IDs which are to request.
      * @return Array with object IDs.
-     * @throws FedoraSystemException Thrown if collection values from Fedora failed.
+     * @throws FedoraSystemException
+     *             Thrown if collection values from Fedora failed.
      */
     public String[] getNextPID(final int noOfPids) throws FedoraSystemException {
 
@@ -308,12 +313,16 @@ public class FedoraUtility implements InitializingBean {
 
     /**
      * The method sets the data stream status to a provided value.
-     *
-     * @param pid     The Fedora object id.
-     * @param dsName  The name of the datastream
-     * @param dsState The status of the datastream.
+     * 
+     * @param pid
+     *            The Fedora object id.
+     * @param dsName
+     *            The name of the datastream
+     * @param dsState
+     *            The status of the datastream.
      * @return Timestamp of the datastream.
-     * @throws FedoraSystemException Thrown if set datastream at Fedora failed.
+     * @throws FedoraSystemException
+     *             Thrown if set datastream at Fedora failed.
      */
     public String setDatastreamState(final String pid, final String dsName, final String dsState)
         throws FedoraSystemException {
@@ -335,12 +344,16 @@ public class FedoraUtility implements InitializingBean {
     /**
      * The method fetches the {@link MIMETypedStream} of the datastream with provided data stream id from Fedora-object
      * with provided pid via Fedora APIA-Webservice getDatastreamDissemination().
-     *
-     * @param dataStreamId The id of the datastream.
-     * @param pid          The Fedora object id.
-     * @param timestamp    Timestamp related to datastream version to retrieve. May be null.
+     * 
+     * @param dataStreamId
+     *            The id of the datastream.
+     * @param pid
+     *            The Fedora object id.
+     * @param timestamp
+     *            Timestamp related to datastream version to retrieve. May be null.
      * @return Returns the {@link MIMETypedStream} representing the addressed datastream.
-     * @throws FedoraSystemException Thrown in case of Fedora exceptions.
+     * @throws FedoraSystemException
+     *             Thrown in case of Fedora exceptions.
      */
     public MIMETypedStream getDatastreamWithMimeType(final String dataStreamId, final String pid, final String timestamp)
         throws FedoraSystemException {
@@ -377,15 +390,22 @@ public class FedoraUtility implements InitializingBean {
     /**
      * The method modifies the named xml datastream of the Object with the given Pid. New Datastream-content is the
      * given byte[] datastream
-     *
-     * @param pid             id of the Object
-     * @param datastreamName  datastreamName
-     * @param datastreamLabel datastreamLabel
-     * @param datastream      datastream
-     * @param syncTripleStore whether the triples should be flushed
+     * 
+     * @param pid
+     *            id of the Object
+     * @param datastreamName
+     *            datastreamName
+     * @param datastreamLabel
+     *            datastreamLabel
+     * @param datastream
+     *            datastream
+     * @param syncTripleStore
+     *            whether the triples should be flushed
      * @return The timestamp of the modified datastream.
-     * @throws FedoraSystemException    Thrown if Fedora access failed.
-     * @throws WebserverSystemException Thrown in case of an internal error.
+     * @throws FedoraSystemException
+     *             Thrown if Fedora access failed.
+     * @throws WebserverSystemException
+     *             Thrown in case of an internal error.
      */
     public String modifyDatastream(
         final String pid, final String datastreamName, final String datastreamLabel, final byte[] datastream,
@@ -395,8 +415,9 @@ public class FedoraUtility implements InitializingBean {
         final FedoraAPIM apim = borrowApim();
         try {
             timestamp =
-                apim.modifyDatastreamByValue(pid, datastreamName, new String[0], datastreamLabel, "text/xml", null,
-                    datastream, null, null, null, true);
+                apim.modifyDatastreamByValue(pid, datastreamName, new String[0], datastreamLabel,
+                    de.escidoc.core.common.business.fedora.datastream.Datastream.MIME_TYPE_TEXT_XML, null, datastream,
+                    null, null, null, true);
         }
         catch (final Exception e) {
             preventWrongLogging(e, datastream);
@@ -414,17 +435,26 @@ public class FedoraUtility implements InitializingBean {
     /**
      * The method modifies the named datastream of the Object with the given Pid. New Datastream-content is the given
      * byte[] datastream
-     *
-     * @param pid             id of the Object
-     * @param datastreamName  datastreamName
-     * @param datastreamLabel datastreamLabel
-     * @param mimeType        mimeType
-     * @param altIDs          Vector with alternate Ids.
-     * @param url             url
-     * @param syncTripleStore whether the triples should be flushed
+     * 
+     * @param pid
+     *            id of the Object
+     * @param datastreamName
+     *            datastreamName
+     * @param datastreamLabel
+     *            datastreamLabel
+     * @param mimeType
+     *            mimeType
+     * @param altIDs
+     *            Vector with alternate Ids.
+     * @param url
+     *            url
+     * @param syncTripleStore
+     *            whether the triples should be flushed
      * @return The timestamp of the modified datastream.
-     * @throws FedoraSystemException    Thrown if request to Fedora failed.
-     * @throws WebserverSystemException Thrown in case of an internal error.
+     * @throws FedoraSystemException
+     *             Thrown if request to Fedora failed.
+     * @throws WebserverSystemException
+     *             Thrown in case of an internal error.
      */
     public String modifyDatastream(
         final String pid, final String datastreamName, final String datastreamLabel, final String mimeType,
@@ -453,17 +483,26 @@ public class FedoraUtility implements InitializingBean {
     /**
      * The method modifies the named xml datastream of the Object with the given Pid. New Datastream-content is the
      * given byte[] datastream
-     *
-     * @param pid             id of the Object
-     * @param datastreamName  datastreamName
-     * @param datastreamLabel datastreamLabel
-     * @param mimeType        The MIME Type of the datastream.
-     * @param alternateIDs    String array of alternateIDs of the datastream
-     * @param datastream      datastream
-     * @param syncTripleStore whether the triples should be flushed
+     * 
+     * @param pid
+     *            id of the Object
+     * @param datastreamName
+     *            datastreamName
+     * @param datastreamLabel
+     *            datastreamLabel
+     * @param mimeType
+     *            The MIME Type of the datastream.
+     * @param alternateIDs
+     *            String array of alternateIDs of the datastream
+     * @param datastream
+     *            datastream
+     * @param syncTripleStore
+     *            whether the triples should be flushed
      * @return The new timestamp of the modified datastream.
-     * @throws FedoraSystemException    Thrown if request to Fedora failed.
-     * @throws WebserverSystemException Thrown in case of an internal error.
+     * @throws FedoraSystemException
+     *             Thrown if request to Fedora failed.
+     * @throws WebserverSystemException
+     *             Thrown in case of an internal error.
      */
     public String modifyDatastream(
         final String pid, final String datastreamName, final String datastreamLabel, final String mimeType,
@@ -491,12 +530,17 @@ public class FedoraUtility implements InitializingBean {
 
     /**
      * Purge all versions of datastreams between timestamps.
-     *
-     * @param pid            Fedora pid
-     * @param datastreamName Fedora datastream name
-     * @param startDT        Start timestamp. Use null for newest.
-     * @param endDT          End timestamp. Use null for oldest.
-     * @throws FedoraSystemException Thrown if purging failed by Fedora
+     * 
+     * @param pid
+     *            Fedora pid
+     * @param datastreamName
+     *            Fedora datastream name
+     * @param startDT
+     *            Start timestamp. Use null for newest.
+     * @param endDT
+     *            End timestamp. Use null for oldest.
+     * @throws FedoraSystemException
+     *             Thrown if purging failed by Fedora
      */
     public void purgeDatastream(final String pid, final String datastreamName, final String startDT, final String endDT)
         throws FedoraSystemException {
@@ -516,32 +560,44 @@ public class FedoraUtility implements InitializingBean {
     /**
      * The method modifies the named xml datastream of the Object with the given Pid. New Datastream-content is the
      * given byte[] datastream
-     *
-     * @param pid             id of the Object
-     * @param datastreamName  datastreamName
-     * @param datastreamLabel datastreamLabel
-     * @param alternateIDs    String array of alternateIDs of the datastream
-     * @param datastream      datastream
-     * @param syncTripleStore whether the triples should be flushed
+     * 
+     * @param pid
+     *            id of the Object
+     * @param datastreamName
+     *            datastreamName
+     * @param datastreamLabel
+     *            datastreamLabel
+     * @param alternateIDs
+     *            String array of alternateIDs of the datastream
+     * @param datastream
+     *            datastream
+     * @param syncTripleStore
+     *            whether the triples should be flushed
      * @return The timestamp of the modified datastream.
-     * @throws FedoraSystemException    Thrown if request to Fedora failed.
-     * @throws WebserverSystemException Thrown in case of an internal error.
+     * @throws FedoraSystemException
+     *             Thrown if request to Fedora failed.
+     * @throws WebserverSystemException
+     *             Thrown in case of an internal error.
      */
     public String modifyDatastream(
         final String pid, final String datastreamName, final String datastreamLabel, final String[] alternateIDs,
         final byte[] datastream, final boolean syncTripleStore) throws FedoraSystemException, WebserverSystemException {
 
-        return modifyDatastream(pid, datastreamName, datastreamLabel, "text/xml", alternateIDs, datastream,
+        return modifyDatastream(pid, datastreamName, datastreamLabel,
+            de.escidoc.core.common.business.fedora.datastream.Datastream.MIME_TYPE_TEXT_XML, alternateIDs, datastream,
             syncTripleStore);
     }
 
     /**
      * Get the names of data streams selected by alternateId. Only the first value of the altIds is compared.
-     *
-     * @param pid   The id of the Fedora object.
-     * @param altId The alternate ID filter.
+     * 
+     * @param pid
+     *            The id of the Fedora object.
+     * @param altId
+     *            The alternate ID filter.
      * @return Vector of data stream names where the first altId is equal.
-     * @throws FedoraSystemException Thrown if instantiation of Fedora connection fail.
+     * @throws FedoraSystemException
+     *             Thrown if instantiation of Fedora connection fail.
      */
     public Collection<String> getDatastreamNamesByAltId(final String pid, final String altId)
         throws FedoraSystemException {
@@ -560,12 +616,16 @@ public class FedoraUtility implements InitializingBean {
 
     /**
      * Store an object.
-     *
-     * @param foxml           The foxml representation of the object.
-     * @param syncTripleStore whether the triples should be flushed
+     * 
+     * @param foxml
+     *            The foxml representation of the object.
+     * @param syncTripleStore
+     *            whether the triples should be flushed
      * @return The fedora pid of the stored object.
-     * @throws WebserverSystemException Thrown if synchronization of Fedora fails.
-     * @throws FedoraSystemException    Thrown in case of a Fedora error.
+     * @throws WebserverSystemException
+     *             Thrown if synchronization of Fedora fails.
+     * @throws FedoraSystemException
+     *             Thrown in case of a Fedora error.
      */
     public String storeObjectInFedora(final String foxml, final boolean syncTripleStore) throws FedoraSystemException,
         WebserverSystemException {
@@ -609,10 +669,12 @@ public class FedoraUtility implements InitializingBean {
 
     /**
      * The method retrieves metadata for all datastreams of the fedora object with provided id as Array.
-     *
-     * @param pid provided id
+     * 
+     * @param pid
+     *            provided id
      * @return Fedora information set about all datastreams of the requested object.
-     * @throws FedoraSystemException Thrown if request to Fedora failed.
+     * @throws FedoraSystemException
+     *             Thrown if request to Fedora failed.
      */
     Datastream[] getDatastreamsInformation(final String pid) throws FedoraSystemException {
         return getDatastreamsInformation(pid, null);
@@ -620,11 +682,14 @@ public class FedoraUtility implements InitializingBean {
 
     /**
      * The method retrieves metadata for all datastreams of the fedora object with provided id as Array.
-     *
-     * @param pid       provided id
-     * @param timestamp Timestamp related to datastream version to retrieve. May be null.
+     * 
+     * @param pid
+     *            provided id
+     * @param timestamp
+     *            Timestamp related to datastream version to retrieve. May be null.
      * @return metadata of datastreams.
-     * @throws FedoraSystemException Thrown if Fedora request failed.
+     * @throws FedoraSystemException
+     *             Thrown if Fedora request failed.
      */
     public Datastream[] getDatastreamsInformation(final String pid, final String timestamp)
         throws FedoraSystemException {
@@ -672,12 +737,16 @@ public class FedoraUtility implements InitializingBean {
     /**
      * The method retrieves metadata for the datastream with a provided name of the fedora object with provided id as
      * Array.
-     *
-     * @param pid       provided object id
-     * @param name      provided data stream name
-     * @param timestamp Timestamp related to datastream version to retrieve. May be null.
+     * 
+     * @param pid
+     *            provided object id
+     * @param name
+     *            provided data stream name
+     * @param timestamp
+     *            Timestamp related to datastream version to retrieve. May be null.
      * @return datastream information
-     * @throws FedoraSystemException Thrown if request to Fedora failed.
+     * @throws FedoraSystemException
+     *             Thrown if request to Fedora failed.
      */
     public Datastream getDatastreamInformation(final String pid, final String name, final String timestamp)
         throws FedoraSystemException {
@@ -716,11 +785,14 @@ public class FedoraUtility implements InitializingBean {
 
     /**
      * The method retrieves history of a datastream.
-     *
-     * @param pid  Fedora object id
-     * @param dsID ID of the datastream
+     * 
+     * @param pid
+     *            Fedora object id
+     * @param dsID
+     *            ID of the datastream
      * @return history of datastream.
-     * @throws FedoraSystemException Thrown if Fedora request failed.
+     * @throws FedoraSystemException
+     *             Thrown if Fedora request failed.
      */
     public Datastream[] getDatastreamHistory(final String pid, final String dsID) throws FedoraSystemException {
         Datastream[] datastreams = null;
@@ -743,15 +815,18 @@ public class FedoraUtility implements InitializingBean {
         WebserverSystemException {
         final String tempURI;
         try {
-            tempURI = Utility.getInstance().upload(stream, pid + name, "text/xml");
+            tempURI =
+                Utility.getInstance().upload(stream, pid + name,
+                    de.escidoc.core.common.business.fedora.datastream.Datastream.MIME_TYPE_TEXT_XML);
         }
         catch (final FileSystemException e) {
             throw new WebserverSystemException("Error while uploading of content of datastream '" + name
                 + "' of the fedora object with id '" + pid + "' to the staging area. ", e);
         }
         final String datastreamID =
-            addDatastream(pid, name, altIDs, label, versionable, "text/xml", null, tempURI, controlGroup, "A",
-                "created");
+            addDatastream(pid, name, altIDs, label, versionable,
+                de.escidoc.core.common.business.fedora.datastream.Datastream.MIME_TYPE_TEXT_XML, null, tempURI,
+                controlGroup, "A", "created");
 
         if (syncTripleStore) {
             sync();
@@ -761,18 +836,26 @@ public class FedoraUtility implements InitializingBean {
 
     /**
      * Add datastream to Fedora object.
-     *
-     * @param pid             Fedora object id.
-     * @param name            Datastream ID
-     * @param altIDs          Alt IDs
-     * @param label           Label
-     * @param versionable     Set true if Fedora has to keep old version. Set false if update overrides existing
-     *                        versions.
-     * @param stream          byte[] information dataset
-     * @param syncTripleStore whether the triples should be flushed
+     * 
+     * @param pid
+     *            Fedora object id.
+     * @param name
+     *            Datastream ID
+     * @param altIDs
+     *            Alt IDs
+     * @param label
+     *            Label
+     * @param versionable
+     *            Set true if Fedora has to keep old version. Set false if update overrides existing versions.
+     * @param stream
+     *            byte[] information dataset
+     * @param syncTripleStore
+     *            whether the triples should be flushed
      * @return Fedora Identifier of added Datastream.
-     * @throws FedoraSystemException    Thrown if request to Fedora failed.
-     * @throws WebserverSystemException Thrown in case of an internal error.
+     * @throws FedoraSystemException
+     *             Thrown if request to Fedora failed.
+     * @throws WebserverSystemException
+     *             Thrown in case of an internal error.
      */
     public String addDatastream(
         final String pid, final String name, final String[] altIDs, final String label, final boolean versionable,
@@ -780,14 +863,18 @@ public class FedoraUtility implements InitializingBean {
 
         final String tempURI;
         try {
-            tempURI = Utility.getInstance().upload(stream, pid + name, "text/xml");
+            tempURI =
+                Utility.getInstance().upload(stream, pid + name,
+                    de.escidoc.core.common.business.fedora.datastream.Datastream.MIME_TYPE_TEXT_XML);
         }
         catch (final FileSystemException e) {
             throw new WebserverSystemException("Error while uploading of content of datastream '" + name
                 + "' of the fedora object with id '" + pid + "' to the staging area. ", e);
         }
         final String datastreamID =
-            addDatastream(pid, name, altIDs, label, versionable, "text/xml", null, tempURI, "X", "A", "created");
+            addDatastream(pid, name, altIDs, label, versionable,
+                de.escidoc.core.common.business.fedora.datastream.Datastream.MIME_TYPE_TEXT_XML, null, tempURI, "X",
+                "A", "created");
 
         if (syncTripleStore) {
             sync();
@@ -797,16 +884,23 @@ public class FedoraUtility implements InitializingBean {
 
     /**
      * Add datastream to Fedora object. Datastream is versionated by default.
-     *
-     * @param pid    Fedora object id.
-     * @param name   Datastream ID
-     * @param altIDs Alt IDs
-     * @param label  Label
-     * @param stream byte[] information dataset
+     * 
+     * @param pid
+     *            Fedora object id.
+     * @param name
+     *            Datastream ID
+     * @param altIDs
+     *            Alt IDs
+     * @param label
+     *            Label
+     * @param stream
+     *            byte[] information dataset
      * @param syncTripleStore
      * @return Fedora Identifier of added Datastream.
-     * @throws FedoraSystemException    Thrown if add of datastream failed during Fedora communication.
-     * @throws WebserverSystemException Thrown in case of an internal error.
+     * @throws FedoraSystemException
+     *             Thrown if add of datastream failed during Fedora communication.
+     * @throws WebserverSystemException
+     *             Thrown in case of an internal error.
      */
     @Deprecated
     // use addDatastream method where versionable is set explicitly
@@ -819,18 +913,28 @@ public class FedoraUtility implements InitializingBean {
 
     /**
      * Add datastream to Fedora object.
-     *
-     * @param pid             Fedora object id.
-     * @param name            Datastream ID
-     * @param altIDs          Alt IDs
-     * @param label           Label
-     * @param url             URL of binary data.
-     * @param mimeType        MIME Type
-     * @param controlGroup    Defines the datastream storage type. (See Fedora ControlGroups)
-     * @param syncTripleStore whether the triples should be flushed
+     * 
+     * @param pid
+     *            Fedora object id.
+     * @param name
+     *            Datastream ID
+     * @param altIDs
+     *            Alt IDs
+     * @param label
+     *            Label
+     * @param url
+     *            URL of binary data.
+     * @param mimeType
+     *            MIME Type
+     * @param controlGroup
+     *            Defines the datastream storage type. (See Fedora ControlGroups)
+     * @param syncTripleStore
+     *            whether the triples should be flushed
      * @return Fedora Identifier of added Datastream.
-     * @throws FedoraSystemException    Thrown if adding datastream to Fedora failed.
-     * @throws WebserverSystemException Thrown if syncing TripleStore failed.
+     * @throws FedoraSystemException
+     *             Thrown if adding datastream to Fedora failed.
+     * @throws WebserverSystemException
+     *             Thrown if syncing TripleStore failed.
      */
     public String addDatastream(
         final String pid, final String name, final String[] altIDs, final String label, final String url,
@@ -848,20 +952,32 @@ public class FedoraUtility implements InitializingBean {
 
     /**
      * Add datastream to the object.
-     *
-     * @param pid          The Fedora object Id or PID.
-     * @param dsID         The id of the datastream.
-     * @param altIDs       The alternate IDs.
-     * @param dsLabel      The label of the datastream.
-     * @param versionable  Set true if datastream is verionable. False if not.
-     * @param mimeType     The MIME type of the datastream.
-     * @param formatURI    TODO
-     * @param dsLocation   TODO
-     * @param controlGroup The Fedora Control Group Type.
-     * @param dsState      TODO
-     * @param logMessage   The Log Message.
+     * 
+     * @param pid
+     *            The Fedora object Id or PID.
+     * @param dsID
+     *            The id of the datastream.
+     * @param altIDs
+     *            The alternate IDs.
+     * @param dsLabel
+     *            The label of the datastream.
+     * @param versionable
+     *            Set true if datastream is verionable. False if not.
+     * @param mimeType
+     *            The MIME type of the datastream.
+     * @param formatURI
+     *            TODO
+     * @param dsLocation
+     *            TODO
+     * @param controlGroup
+     *            The Fedora Control Group Type.
+     * @param dsState
+     *            TODO
+     * @param logMessage
+     *            The Log Message.
      * @return Id of datastream.
-     * @throws FedoraSystemException Thrown in case of Fedora exceptions.
+     * @throws FedoraSystemException
+     *             Thrown in case of Fedora exceptions.
      */
     private String addDatastream(
         final String pid, final String dsID, final String[] altIDs, final String dsLabel, final boolean versionable,
@@ -884,12 +1000,16 @@ public class FedoraUtility implements InitializingBean {
     /**
      * Touch the object in Fedora. The object is only modified to new version with 'touched' comment. No further update
      * is done. As last process is the TripleStore synced.
-     *
-     * @param pid             Fedora object id.
-     * @param syncTripleStore Set true if the TripleStore is to sync after object modifiing. Set false otherwise.
+     * 
+     * @param pid
+     *            Fedora object id.
+     * @param syncTripleStore
+     *            Set true if the TripleStore is to sync after object modifiing. Set false otherwise.
      * @return modified timestamp of the Fedora Objects
-     * @throws FedoraSystemException    Thrown if modifiyObject in Fedora fails.
-     * @throws WebserverSystemException Thrown if sync TripleStore failed.
+     * @throws FedoraSystemException
+     *             Thrown if modifiyObject in Fedora fails.
+     * @throws WebserverSystemException
+     *             Thrown if sync TripleStore failed.
      */
     public String touchObject(final String pid, final boolean syncTripleStore) throws FedoraSystemException,
         WebserverSystemException {
@@ -913,11 +1033,15 @@ public class FedoraUtility implements InitializingBean {
 
     /**
      * Delete the Object with the given pid.
-     *
-     * @param pid             id of the Object
-     * @param syncTripleStore whether the triples should be flushed
-     * @throws FedoraSystemException    Thrown if Fedora request failed.
-     * @throws WebserverSystemException Thrown in case of an internal error.
+     * 
+     * @param pid
+     *            id of the Object
+     * @param syncTripleStore
+     *            whether the triples should be flushed
+     * @throws FedoraSystemException
+     *             Thrown if Fedora request failed.
+     * @throws WebserverSystemException
+     *             Thrown in case of an internal error.
      */
     public void deleteObject(final String pid, final boolean syncTripleStore) throws FedoraSystemException,
         WebserverSystemException {
@@ -940,15 +1064,16 @@ public class FedoraUtility implements InitializingBean {
 
     /**
      * Call the method callSync. In case of failure make 4 attempts more.
-     *
-     * @throws FedoraSystemException    Thrown if TripleStore synchronization failed.
-     * @throws WebserverSystemException Thrown if TripleStore initialization failed.
+     * 
+     * @throws FedoraSystemException
+     *             Thrown if TripleStore synchronization failed.
+     * @throws WebserverSystemException
+     *             Thrown if TripleStore initialization failed.
      */
     public void sync() throws FedoraSystemException, WebserverSystemException {
         /*
-         * TODO The call to Fedora sync is handled multiple time to get a
-         * successful result. A single request should help, but the return value
-         * of the sync method is not always HTTP.200.
+         * TODO The call to Fedora sync is handled multiple time to get a successful result. A single request should
+         * help, but the return value of the sync method is not always HTTP.200.
          */
         int i = 0;
         while (i < SYNC_RETRIES) {
@@ -992,11 +1117,15 @@ public class FedoraUtility implements InitializingBean {
     /**
      * Send a risearch request to fedora repository with flag flush set to true. Call reinialize() in order to reset a
      * Table Manager for the Triple Store.
-     *
-     * @throws TripleStoreSystemException Thrown resetting of a Table Manager failed.
-     * @throws FedoraSystemException      Thrown if TripleStore synchronization failed.
-     * @throws WebserverSystemException   Thrown if TripleStore initialization failed.
-     * @throws IOException                Thrown from FedoraClient
+     * 
+     * @throws TripleStoreSystemException
+     *             Thrown resetting of a Table Manager failed.
+     * @throws FedoraSystemException
+     *             Thrown if TripleStore synchronization failed.
+     * @throws WebserverSystemException
+     *             Thrown if TripleStore initialization failed.
+     * @throws IOException
+     *             Thrown from FedoraClient
      */
     private void callSync() throws FedoraSystemException, IOException, TripleStoreSystemException,
         WebserverSystemException {
@@ -1016,10 +1145,12 @@ public class FedoraUtility implements InitializingBean {
 
     /**
      * Get the last-modification-date for the Fedora object.
-     *
-     * @param pid Fedora objectId.
+     * 
+     * @param pid
+     *            Fedora objectId.
      * @return last-modification-date
-     * @throws FedoraSystemException Thrown if connection to and retrieving data from Fedora fails.
+     * @throws FedoraSystemException
+     *             Thrown if connection to and retrieving data from Fedora fails.
      */
     public String getLastModificationDate(final String pid) throws FedoraSystemException {
 
@@ -1057,11 +1188,14 @@ public class FedoraUtility implements InitializingBean {
 
     /**
      * Send a GET request to Fedora.
-     *
-     * @param queryString query string
+     * 
+     * @param queryString
+     *            query string
      * @return response from Fedora as input stream
-     * @throws FedoraSystemException Thrown in case of an internal error.
-     * @throws IOException           Thrown if the GET request to Fedora failed.
+     * @throws FedoraSystemException
+     *             Thrown in case of an internal error.
+     * @throws IOException
+     *             Thrown if the GET request to Fedora failed.
      */
     public HttpInputStream query(final String queryString) throws FedoraSystemException, IOException {
         HttpInputStream result = null;
@@ -1082,9 +1216,10 @@ public class FedoraUtility implements InitializingBean {
 
     /**
      * Borrows a {@link FedoraClient} from the pool.
-     *
+     * 
      * @return Returns a {@link FedoraClient}.
-     * @throws FedoraSystemException Thrown in case of an internal error.
+     * @throws FedoraSystemException
+     *             Thrown in case of an internal error.
      */
     private FedoraClient borrowFedoraClient() throws FedoraSystemException {
         try {
@@ -1097,9 +1232,11 @@ public class FedoraUtility implements InitializingBean {
 
     /**
      * Returns a {@link FedoraClient} to the pool.
-     *
-     * @param fedoraClient The {@link FedoraClient} to be returned to the pool.
-     * @throws FedoraSystemException Thrown in case of an internal error.
+     * 
+     * @param fedoraClient
+     *            The {@link FedoraClient} to be returned to the pool.
+     * @throws FedoraSystemException
+     *             Thrown in case of an internal error.
      */
     private void returnFedoraClient(final FedoraClient fedoraClient) throws FedoraSystemException {
         try {
@@ -1112,9 +1249,10 @@ public class FedoraUtility implements InitializingBean {
 
     /**
      * Borrows a {@link FedoraAPIA} from the pool.
-     *
+     * 
      * @return Returns a {@link FedoraAPIA}.
-     * @throws FedoraSystemException Thrown in case of an internal error.
+     * @throws FedoraSystemException
+     *             Thrown in case of an internal error.
      */
     private FedoraAPIA borrowApia() throws FedoraSystemException {
         try {
@@ -1127,9 +1265,11 @@ public class FedoraUtility implements InitializingBean {
 
     /**
      * Returns a {@link FedoraAPIA} to the pool.
-     *
-     * @param fedoraApia The {@link FedoraAPIA} to be returned to the pool.
-     * @throws FedoraSystemException Thrown in case of an internal error.
+     * 
+     * @param fedoraApia
+     *            The {@link FedoraAPIA} to be returned to the pool.
+     * @throws FedoraSystemException
+     *             Thrown in case of an internal error.
      */
     private void returnApia(final FedoraAPIA fedoraApia) throws FedoraSystemException {
         try {
@@ -1142,9 +1282,10 @@ public class FedoraUtility implements InitializingBean {
 
     /**
      * Borrows a {@link FedoraAPIM} from the pool.
-     *
+     * 
      * @return Returns a {@link FedoraAPIM}.
-     * @throws FedoraSystemException Thrown in case of an internal error.
+     * @throws FedoraSystemException
+     *             Thrown in case of an internal error.
      */
     private FedoraAPIM borrowApim() throws FedoraSystemException {
         try {
@@ -1157,9 +1298,11 @@ public class FedoraUtility implements InitializingBean {
 
     /**
      * Returns a {@link FedoraAPIM} to the pool.
-     *
-     * @param fedoraApim The {@link FedoraAPIM} to be returned to the pool.
-     * @throws FedoraSystemException Thrown in case of an internal error.
+     * 
+     * @param fedoraApim
+     *            The {@link FedoraAPIM} to be returned to the pool.
+     * @throws FedoraSystemException
+     *             Thrown in case of an internal error.
      */
     private void returnApim(final FedoraAPIM fedoraApim) throws FedoraSystemException {
         try {
@@ -1172,9 +1315,11 @@ public class FedoraUtility implements InitializingBean {
 
     /**
      * Invalidate a {@link FedoraAPIA} to the pool.
-     *
-     * @param fedoraApia The {@link FedoraAPIA} to be returned to the pool.
-     * @throws FedoraSystemException Thrown in case of an internal error.
+     * 
+     * @param fedoraApia
+     *            The {@link FedoraAPIA} to be returned to the pool.
+     * @throws FedoraSystemException
+     *             Thrown in case of an internal error.
      */
     private void invalidateApiaObject(final FedoraAPIA fedoraApia) throws FedoraSystemException {
 
@@ -1188,9 +1333,11 @@ public class FedoraUtility implements InitializingBean {
 
     /**
      * Invalidate a {@link FedoraAPIM} to the pool.
-     *
-     * @param fedoraApim The {@link FedoraAPIM} to be returned to the pool.
-     * @throws FedoraSystemException Thrown in case of an internal error.
+     * 
+     * @param fedoraApim
+     *            The {@link FedoraAPIM} to be returned to the pool.
+     * @throws FedoraSystemException
+     *             Thrown in case of an internal error.
      */
     private void invalidateApimObject(final FedoraAPIM fedoraApim) throws FedoraSystemException {
         try {
@@ -1203,8 +1350,9 @@ public class FedoraUtility implements InitializingBean {
 
     /**
      * Converts an exception thrown during a pool operation to a {@link FedoraSystemException}.
-     *
-     * @param e The {@link Exception} to be converted.
+     * 
+     * @param e
+     *            The {@link Exception} to be converted.
      * @return Returns the {@link FedoraSystemException}
      */
     private static FedoraSystemException convertPoolException(final Exception e) {
@@ -1214,7 +1362,7 @@ public class FedoraUtility implements InitializingBean {
 
     /**
      * See Interface for functional description.
-     *
+     * 
      * @see InitializingBean #afterPropertiesSet()
      */
     @Override
@@ -1224,11 +1372,10 @@ public class FedoraUtility implements InitializingBean {
             new StackObjectPool(PoolUtils.synchronizedPoolableFactory(new BasePoolableObjectFactory() {
                 /**
                  * See Interface for functional description.
-                 *
+                 * 
                  * @return
                  * @throws Exception
-                 * @see BasePoolableObjectFactory
-                 *      #makeObject()
+                 * @see BasePoolableObjectFactory #makeObject()
                  */
                 @Override
                 public Object makeObject() throws Exception {
@@ -1240,11 +1387,10 @@ public class FedoraUtility implements InitializingBean {
         this.apiaPool = new StackObjectPool(PoolUtils.synchronizedPoolableFactory(new BasePoolableObjectFactory() {
             /**
              * See Interface for functional description.
-             *
+             * 
              * @return
              * @throws Exception
-             * @see BasePoolableObjectFactory
-             *      #makeObject()
+             * @see BasePoolableObjectFactory #makeObject()
              */
             @Override
             public Object makeObject() throws Exception {
@@ -1256,11 +1402,10 @@ public class FedoraUtility implements InitializingBean {
         this.apimPool = new StackObjectPool(new BasePoolableObjectFactory() {
             /**
              * See Interface for functional description.
-             *
+             * 
              * @return
              * @throws Exception
-             * @see BasePoolableObjectFactory
-             *      #makeObject()
+             * @see BasePoolableObjectFactory #makeObject()
              */
             @Override
             public Object makeObject() throws Exception {
@@ -1274,7 +1419,7 @@ public class FedoraUtility implements InitializingBean {
 
     /**
      * Returns a HttpClient object configured with credentials to access Fedora URLs.
-     *
+     * 
      * @return A HttpClient object configured with credentials to access Fedora URLs.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
@@ -1343,11 +1488,13 @@ public class FedoraUtility implements InitializingBean {
 
     /**
      * Makes a HTTP GET request to Fedora URL expanded by given local URL.
-     *
-     * @param localUrl The Fedora local URL. Should start with the '/' after the webcontext path (usually "fedora").
-     *                 E.g. if http://localhost:8080/fedora/get/... then localUrl is /get/...
+     * 
+     * @param localUrl
+     *            The Fedora local URL. Should start with the '/' after the webcontext path (usually "fedora"). E.g. if
+     *            http://localhost:8080/fedora/get/... then localUrl is /get/...
      * @return the content of the URL Request.
-     * @throws WebserverSystemException If an error occurs.
+     * @throws WebserverSystemException
+     *             If an error occurs.
      */
     public InputStream requestFedoraURL(final String localUrl) throws WebserverSystemException {
         final InputStream fedoraResponseStream;
@@ -1377,7 +1524,8 @@ public class FedoraUtility implements InitializingBean {
     }
 
     /**
-     * @param fedoraUrl the fedoraUrl to inject
+     * @param fedoraUrl
+     *            the fedoraUrl to inject
      */
     public void setFedoraUrl(final String fedoraUrl) {
 
@@ -1388,7 +1536,8 @@ public class FedoraUtility implements InitializingBean {
     }
 
     /**
-     * @param fedoraUser the fedoraUser to inject
+     * @param fedoraUser
+     *            the fedoraUser to inject
      */
     public void setFedoraUser(final String fedoraUser) {
 
@@ -1399,7 +1548,8 @@ public class FedoraUtility implements InitializingBean {
     }
 
     /**
-     * @param fedoraPassword the fedoraPassword to inject
+     * @param fedoraPassword
+     *            the fedoraPassword to inject
      */
     public void setFedoraPassword(final String fedoraPassword) {
 
@@ -1410,7 +1560,8 @@ public class FedoraUtility implements InitializingBean {
     }
 
     /**
-     * @param identifierPrefix the identifierPrefix to inject
+     * @param identifierPrefix
+     *            the identifierPrefix to inject
      */
     public void setIdentifierPrefix(final String identifierPrefix) {
 
@@ -1419,8 +1570,9 @@ public class FedoraUtility implements InitializingBean {
 
     /**
      * Injects the TripleStore utility.
-     *
-     * @param tripleStoreUtility TripleStoreUtility from Spring
+     * 
+     * @param tripleStoreUtility
+     *            TripleStoreUtility from Spring
      */
     public void setTripleStoreUtility(final TripleStoreUtility tripleStoreUtility) {
         this.tripleStoreUtility = tripleStoreUtility;
@@ -1428,9 +1580,10 @@ public class FedoraUtility implements InitializingBean {
 
     /**
      * Get FedoraUtility instance.
-     *
+     * 
      * @return Instance of FedoraUtilitiy.
-     * @throws FedoraSystemException Thrown if instantiation failed.
+     * @throws FedoraSystemException
+     *             Thrown if instantiation failed.
      */
     public static FedoraUtility getInstance() throws FedoraSystemException {
 
@@ -1449,9 +1602,11 @@ public class FedoraUtility implements InitializingBean {
      * This should only prevent to write the FoXML into log if the resource URL is wrong or resource in in accessible.
      * If the exception is required as Fedora Exception or not, like in the case of Components, is decided in the upper
      * methods.
-     *
-     * @param e          Exception
-     * @param datastream datastream (to write it to logfile)
+     * 
+     * @param e
+     *            Exception
+     * @param datastream
+     *            datastream (to write it to logfile)
      */
     private void preventWrongLogging(final Exception e, final byte[] datastream) {
 
@@ -1485,9 +1640,11 @@ public class FedoraUtility implements InitializingBean {
 
     /**
      * FIXME crud stuff.
-     *
-     * @param e          Exception
-     * @param datastream datastream (to write it to logfile)
+     * 
+     * @param e
+     *            Exception
+     * @param datastream
+     *            datastream (to write it to logfile)
      */
     private void preventWrongLogging(final Exception e, final String datastream) {
 

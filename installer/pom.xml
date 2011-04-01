@@ -3,12 +3,12 @@
 
 	<parent>
 		<artifactId>eSciDocCore</artifactId>
-		<groupId>eSciDocCore</groupId>
+		<groupId>org.escidoc.core</groupId>
 		<version>trunk-SNAPSHOT</version>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>eSciDocCore</groupId>
+	<groupId>org.escidoc.core</groupId>
 	<artifactId>installer</artifactId>
 	<packaging>jar</packaging>
 	<name>Installer</name>

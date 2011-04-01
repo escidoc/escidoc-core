@@ -29,8 +29,6 @@ import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import org.joda.time.DateTime;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.naming.directory.NoSuchAttributeException;
 import java.util.Collection;
@@ -39,12 +37,10 @@ import java.util.List;
 
 /**
  * Handle the parameters for a task oriented method.
- *
+ * 
  * @author Michael Schneider
  */
 public class TaskParamHandler extends DefaultHandler {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(TaskParamHandler.class);
 
     private final StaxParser parser;
 
@@ -88,8 +84,9 @@ public class TaskParamHandler extends DefaultHandler {
 
     /**
      * Instantiate a TaskParamHandler.
-     *
-     * @param parser The parser.
+     * 
+     * @param parser
+     *            The parser.
      */
     public TaskParamHandler(final StaxParser parser) {
 
@@ -98,10 +95,12 @@ public class TaskParamHandler extends DefaultHandler {
 
     /**
      * Handle the start of an element.
-     *
-     * @param element The element.
+     * 
+     * @param element
+     *            The element.
      * @return The element.
-     * @throws InvalidXmlException Thrown if the XML has an invalid structure.
+     * @throws InvalidXmlException
+     *             Thrown if the XML has an invalid structure.
      */
     @Override
     public StartElement startElement(final StartElement element) throws InvalidXmlException {
@@ -109,16 +108,13 @@ public class TaskParamHandler extends DefaultHandler {
         final String currentPath = parser.getCurPath();
 
         if (PARAM_PATH.equals(currentPath)) {
-            try {
-                final Attribute date = element.getAttribute(null, LAST_MODIFICATION_DATE_ATT);
-                this.lastModificationDate = date.getValue();
-            }
-            catch (final NoSuchAttributeException e1) {
-                if (LOGGER.isWarnEnabled()) {
-                    LOGGER.warn("Error on parsing last modification attribute.");
+            if (element.hasAttribute(null, LAST_MODIFICATION_DATE_ATT)) {
+                try {
+                    final Attribute date = element.getAttribute(null, LAST_MODIFICATION_DATE_ATT);
+                    this.lastModificationDate = date.getValue();
                 }
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("Error on parsing last modification attribute.", e1);
+                catch (final NoSuchAttributeException e1) {
+                    throw new XmlCorruptedException("Error on parsing last modification date attribute", e1);
                 }
             }
             // If we would have a schema for taskParam, then is the
@@ -127,7 +123,7 @@ public class TaskParamHandler extends DefaultHandler {
             try {
                 if (this.checkLastModificationDate) {
                     if (this.lastModificationDate == null) {
-                        throw new XmlCorruptedException("");
+                        throw new XmlCorruptedException("Last modification date is null");
                     }
                     new DateTime(this.lastModificationDate);
                 }
@@ -145,8 +141,9 @@ public class TaskParamHandler extends DefaultHandler {
 
     /**
      * Handle the end of an element.
-     *
-     * @param element The element.
+     * 
+     * @param element
+     *            The element.
      * @return The element.
      */
     @Override
@@ -157,9 +154,11 @@ public class TaskParamHandler extends DefaultHandler {
 
     /**
      * See Interface for functional description.
-     *
-     * @param data    The data.
-     * @param element The element.
+     * 
+     * @param data
+     *            The data.
+     * @param element
+     *            The element.
      * @return The character set of the element.
      */
     @Override
@@ -212,7 +211,7 @@ public class TaskParamHandler extends DefaultHandler {
 
     /**
      * Get the withdraw comment.
-     *
+     * 
      * @return withdraw comment
      */
     public String getWithdrawComment() {
@@ -221,7 +220,7 @@ public class TaskParamHandler extends DefaultHandler {
 
     /**
      * Get the comment.
-     *
+     * 
      * @return comment.
      */
     public String getComment() {
@@ -244,8 +243,9 @@ public class TaskParamHandler extends DefaultHandler {
 
     /**
      * Set the last-modification-date.
-     *
-     * @param checkLastModificationDate the checkLastModificationDate to set
+     * 
+     * @param checkLastModificationDate
+     *            the checkLastModificationDate to set
      */
     public void setCheckLastModificationDate(final boolean checkLastModificationDate) {
         this.checkLastModificationDate = checkLastModificationDate;
@@ -267,7 +267,7 @@ public class TaskParamHandler extends DefaultHandler {
 
     /**
      * Get the Pid.
-     *
+     * 
      * @return Value of pid element or null if not provided.
      */
     public String getPid() {

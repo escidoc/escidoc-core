@@ -120,24 +120,6 @@ public class Datastream {
     private boolean contentUnchanged;
 
     /**
-     * @param name     The name of the datastream.
-     * @param parentId The unique id the fedora object to which the datastream belongs.
-     * @throws StreamNotFoundException If there is no datastream identified by name and parentId in Fedora.
-     * @throws FedoraSystemException   Thrown in case of an internal system error caused by failed fedora access.
-     * @deprecated Use constructor with timestamp as third parameter.
-     *             <p/>
-     *             Constructs the Datastream identified by name and parentId. The latest version of the stream is
-     *             retrieved from Fedora. For versioning a timestamp is needed.
-     */
-    @Deprecated
-    public Datastream(final String name, final String parentId) throws StreamNotFoundException, FedoraSystemException {
-        this.name = name;
-        this.parentId = parentId;
-
-        init();
-    }
-
-    /**
      * Constructs the Datastream identified by name and parentId. The version of the stream identified by timestamp is
      * retrieved from Fedora. If timestamp is <code>null</code> the latest version is retrieved.
      *
@@ -427,7 +409,9 @@ public class Datastream {
                 String tempURI = null;
                 try {
                     try {
-                        tempURI = Utility.getInstance().upload(this.getStream(), this.parentId + this.name, "text/xml");
+                        tempURI =
+                            Utility.getInstance().upload(this.getStream(), this.parentId + this.name,
+                                MIME_TYPE_TEXT_XML);
                     }
                     catch (final FileSystemException e) {
                         throw new WebserverSystemException("Error while uploading of content of datastream '"
@@ -487,7 +471,7 @@ public class Datastream {
     public void delete() throws FedoraSystemException, WebserverSystemException {
         try {
             // TODO: check of the 'concurrent' flag have to be done too
-            if ("text/xml".equals(this.mimeType)) {
+            if (MIME_TYPE_TEXT_XML.equals(this.mimeType)) {
 
                 getFedoraUtility().modifyDatastream(this.parentId, this.name, this.label, Constants.MIME_TYPE_DELETED,
                     this.alternateIDs.toArray(new String[alternateIDs.size()]), this.getStream(), false);
@@ -714,7 +698,7 @@ public class Datastream {
         }
 
         final Datastream ds = (Datastream) obj;
-        if ("text/xml".equals(this.mimeType)) {
+        if (MIME_TYPE_TEXT_XML.equals(this.mimeType)) {
             if (!this.name.equals(ds.name)) {
                 return false;
             }
@@ -779,7 +763,7 @@ public class Datastream {
      * @throws WebserverSystemException     If an error ocurres.
      */
     public String getMd5Hash() throws ParserConfigurationException, SAXException, WebserverSystemException {
-        if ("text/xml".equals(this.mimeType)) {
+        if (MIME_TYPE_TEXT_XML.equals(this.mimeType)) {
             if (this.md5Hash == null && getStream() != null) {
                 this.md5Hash = XmlUtility.getMd5Hash(this.getStream());
             }

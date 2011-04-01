@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>eSciDocCore</artifactId>
-        <groupId>eSciDocCore</groupId>
+        <groupId>org.escidoc.core</groupId>
         <version>trunk-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -37,16 +37,16 @@
 
     <dependencies>
         <dependency>
-			<groupId>eSciDocCore</groupId>
+			<groupId>org.escidoc.core</groupId>
 			<artifactId>purge-service-spec</artifactId>
 		</dependency>
         <dependency>
-			<groupId>eSciDocCore</groupId>
+			<groupId>org.escidoc.core</groupId>
 			<artifactId>adm</artifactId>
             <type>ejb</type>
 		</dependency>
         <dependency>
-			<groupId>eSciDocCore</groupId>
+			<groupId>org.escidoc.core</groupId>
 			<artifactId>common</artifactId>
             <type>ejb</type>
 		</dependency>

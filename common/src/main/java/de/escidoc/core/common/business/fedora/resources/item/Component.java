@@ -307,7 +307,8 @@ public class Component extends GenericResourcePid implements ComponentInterface 
                     final Datastream newDc;
                     try {
                         newDc =
-                            new Datastream("DC", getId(), dcContent.getBytes(XmlUtility.CHARACTER_ENCODING), "text/xml");
+                            new Datastream("DC", getId(), dcContent.getBytes(XmlUtility.CHARACTER_ENCODING),
+                                Datastream.MIME_TYPE_TEXT_XML);
                     }
                     catch (final UnsupportedEncodingException e) {
                         throw new EncodingSystemException(e);
@@ -415,7 +416,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
                                 try {
                                     dcNew =
                                         new Datastream("DC", getId(), dcNewContent
-                                            .getBytes(XmlUtility.CHARACTER_ENCODING), "text/xml");
+                                            .getBytes(XmlUtility.CHARACTER_ENCODING), Datastream.MIME_TYPE_TEXT_XML);
                                 }
                                 catch (final UnsupportedEncodingException e) {
                                     throw new EncodingSystemException(e);

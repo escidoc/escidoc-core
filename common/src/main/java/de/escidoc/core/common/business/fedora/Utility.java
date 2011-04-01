@@ -1015,7 +1015,7 @@ public class Utility {
                         + versionEntry);
             final Datastream ds =
                 new Datastream("version-history", resource.getId(), newWov.getBytes(XmlUtility.CHARACTER_ENCODING),
-                    "text/xml");
+                    Datastream.MIME_TYPE_TEXT_XML);
             resource.setWov(ds);
         }
         catch (final StreamNotFoundException e) {
@@ -1058,7 +1058,7 @@ public class Utility {
                     "(<" + Constants.WOV_NAMESPACE_PREFIX + ":events[^>]*>)", "$1" + newEventEntry);
 
             resource.setWov(new Datastream(Elements.ELEMENT_WOV_VERSION_HISTORY, resource.getId(), newWovString
-                .getBytes(XmlUtility.CHARACTER_ENCODING), "text/xml"));
+                .getBytes(XmlUtility.CHARACTER_ENCODING), Datastream.MIME_TYPE_TEXT_XML));
         }
         catch (final Exception e) {
             throw new WebserverSystemException(e);

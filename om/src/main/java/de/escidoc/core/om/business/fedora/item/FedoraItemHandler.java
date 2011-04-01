@@ -743,7 +743,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         catch (final UnsupportedEncodingException e) {
             throw new EncodingSystemException(e.getMessage(), e);
         }
-        final Datastream newMDS = new Datastream(name, getItem().getId(), xmlDataBytes, "text/xml");
+        final Datastream newMDS = new Datastream(name, getItem().getId(), xmlDataBytes, Datastream.MIME_TYPE_TEXT_XML);
         newMDS.addAlternateId(Datastream.METADATA_ALTERNATE_ID); // this is the
         // reason for
         // setMdRecord etc.
@@ -936,7 +936,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         ItemNotFoundException, OperationNotFoundException {
 
         final EscidocBinaryContent content = new EscidocBinaryContent();
-        content.setMimeType("text/xml");
+        content.setMimeType(Datastream.MIME_TYPE_TEXT_XML);
 
         if ("version-history".equals(resourceName)) {
             try {
@@ -1857,7 +1857,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
                     mdProperties.put("nsUri", escidocMdRecordnsUri);
 
                 }
-                final Datastream ds = new Datastream(name, getItem().getId(), xmlBytes, "text/xml", mdProperties);
+                final Datastream ds =
+                    new Datastream(name, getItem().getId(), xmlBytes, Datastream.MIME_TYPE_TEXT_XML, mdProperties);
                 final Map mdRecordAttributes = (Map) mdAttributesMap.get(name);
                 ds.addAlternateId(Datastream.METADATA_ALTERNATE_ID);
                 ds.addAlternateId((String) mdRecordAttributes.get("type"));

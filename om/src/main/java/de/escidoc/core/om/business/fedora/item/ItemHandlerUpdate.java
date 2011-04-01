@@ -231,7 +231,8 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
                 mdProperties.put("nsUri", escidocMdRecordnsUri);
             }
             final Datastream ds =
-                new Datastream(stringByteArrayOutputStreamEntry.getKey(), c.getId(), xmlBytes, "text/xml", mdProperties);
+                new Datastream(stringByteArrayOutputStreamEntry.getKey(), c.getId(), xmlBytes,
+                    Datastream.MIME_TYPE_TEXT_XML, mdProperties);
             final Map<String, String> mdRecordAttributes =
                 mdAttributesMap.get(stringByteArrayOutputStreamEntry.getKey());
             ds.addAlternateId(Datastream.METADATA_ALTERNATE_ID);
@@ -276,7 +277,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
         try {
             final Datastream newRelsExt =
                 new Datastream(Datastream.RELS_EXT_DATASTREAM, id, getComponentRelsExtWithVelocity(id, properties,
-                    false).getBytes(XmlUtility.CHARACTER_ENCODING), FoXmlProvider.MIME_TYPE_TEXT_XML);
+                    false).getBytes(XmlUtility.CHARACTER_ENCODING), Datastream.MIME_TYPE_TEXT_XML);
             component.setRelsExt(newRelsExt);
             component.persist();
         }
@@ -303,7 +304,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
             final Datastream oldDs = getItem().getCts();
             final Datastream newDs =
                 new Datastream(Elements.ELEMENT_CONTENT_MODEL_SPECIFIC, getItem().getId(), xml
-                    .getBytes(XmlUtility.CHARACTER_ENCODING), "text/xml");
+                    .getBytes(XmlUtility.CHARACTER_ENCODING), Datastream.MIME_TYPE_TEXT_XML);
 
             if (oldDs == null || !oldDs.equals(newDs)) {
                 getItem().setCts(newDs);

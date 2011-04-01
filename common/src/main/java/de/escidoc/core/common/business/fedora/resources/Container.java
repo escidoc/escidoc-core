@@ -397,7 +397,7 @@ public class Container extends GenericVersionableResourcePid implements Containe
                                 try {
                                     dcNew =
                                         new Datastream("DC", getId(), dcNewContent
-                                            .getBytes(XmlUtility.CHARACTER_ENCODING), "text/xml");
+                                            .getBytes(XmlUtility.CHARACTER_ENCODING), Datastream.MIME_TYPE_TEXT_XML);
                                 }
                                 catch (final UnsupportedEncodingException e) {
                                     throw new EncodingSystemException(e);
@@ -610,7 +610,8 @@ public class Container extends GenericVersionableResourcePid implements Containe
             }
             else {
                 this.escidocRelsExt =
-                    new Datastream(DATASTREAM_ESCIDOC_RELS_EXT, getId(), getRelsExt().getStream(), "text/xml");
+                    new Datastream(DATASTREAM_ESCIDOC_RELS_EXT, getId(), getRelsExt().getStream(),
+                        Datastream.MIME_TYPE_TEXT_XML);
                 escidocRelsExt.setControlGroup("M");
                 setEscidocRelsExt(this.escidocRelsExt);
 

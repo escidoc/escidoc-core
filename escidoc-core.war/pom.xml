@@ -4,12 +4,12 @@
 
 	<parent>
 		<artifactId>eSciDocCore</artifactId>
-		<groupId>eSciDocCore</groupId>
+		<groupId>org.escidoc.core</groupId>
 		<version>trunk-SNAPSHOT</version>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>eSciDocCore</groupId>
+	<groupId>org.escidoc.core</groupId>
 	<artifactId>escidoc-core-war</artifactId>
 	<packaging>war</packaging>
 	<name>eSciDoc Core - Web Archive</name>

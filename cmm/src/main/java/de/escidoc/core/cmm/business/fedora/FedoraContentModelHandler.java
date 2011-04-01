@@ -455,7 +455,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
             try {
                 newDs =
                     new Datastream("DC", getContentModel().getId(), dcNew.getBytes(XmlUtility.CHARACTER_ENCODING),
-                        "text/xml");
+                        Datastream.MIME_TYPE_TEXT_XML);
             }
             catch (final UnsupportedEncodingException e) {
                 throw new WebserverSystemException(e);
@@ -529,7 +529,8 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
             getContentModel().setOtherStream(
                 name + "_xsd",
                 new Datastream(name + "_xsd", getContentModel().getId(), xsdUrl,
-                    de.escidoc.core.common.business.fedora.Constants.STORAGE_EXTERNAL_MANAGED, "text/xml"));
+                    de.escidoc.core.common.business.fedora.Constants.STORAGE_EXTERNAL_MANAGED,
+                    Datastream.MIME_TYPE_TEXT_XML));
         }
 
         // Resource Definitions
@@ -554,8 +555,8 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
                 else {
                     // update xslt
                     fu.modifyDatastream(sdefId, "xslt", "Transformation instructions for operation '"
-                        + resourceDefinition.getName() + "'.", "text/xml", new String[0], resourceDefinition
-                        .getXsltHref(), false);
+                        + resourceDefinition.getName() + "'.", Datastream.MIME_TYPE_TEXT_XML, new String[0],
+                        resourceDefinition.getXsltHref(), false);
                 }
             }
             else {

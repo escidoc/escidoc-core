@@ -683,7 +683,7 @@ public class GenericVersionableResource extends GenericResourcePid {
     public void setWov(final byte[] ds) throws StreamNotFoundException, FedoraSystemException,
         TripleStoreSystemException, IntegritySystemException, WebserverSystemException {
 
-        setWov(new Datastream(Elements.ELEMENT_WOV_VERSION_HISTORY, getId(), ds, "text/xml"));
+        setWov(new Datastream(Elements.ELEMENT_WOV_VERSION_HISTORY, getId(), ds, Datastream.MIME_TYPE_TEXT_XML));
 
     }
 
@@ -946,7 +946,7 @@ public class GenericVersionableResource extends GenericResourcePid {
             String tmpWov = new String(b, XmlUtility.CHARACTER_ENCODING);
             tmpWov = tmpWov.replaceAll(XmlTemplateProvider.TIMESTAMP_PLACEHOLDER, timestamp);
             setWov(new Datastream(Elements.ELEMENT_WOV_VERSION_HISTORY, getId(), tmpWov
-                .getBytes(XmlUtility.CHARACTER_ENCODING), "text/xml"));
+                .getBytes(XmlUtility.CHARACTER_ENCODING), Datastream.MIME_TYPE_TEXT_XML));
         }
         catch (final Exception e1) {
             throw new WebserverSystemException(e1);
@@ -1038,7 +1038,7 @@ public class GenericVersionableResource extends GenericResourcePid {
                     "(<" + Constants.WOV_NAMESPACE_PREFIX + ":events[^>]*>)", "$1" + newEventEntry);
 
             setWov(new Datastream(Elements.ELEMENT_WOV_VERSION_HISTORY, getId(), newWovString
-                .getBytes(XmlUtility.CHARACTER_ENCODING), "text/xml"));
+                .getBytes(XmlUtility.CHARACTER_ENCODING), Datastream.MIME_TYPE_TEXT_XML));
         }
         catch (final Exception e) {
             throw new WebserverSystemException(e);

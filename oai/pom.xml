@@ -3,7 +3,7 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>eSciDocCore</groupId>
+	<groupId>org.escidoc.core</groupId>
 	<artifactId>oai</artifactId>
 	<name>eSciDoc Core - OAI-PMH Service</name>
 	<version>trunk-SNAPSHOT</version>
@@ -11,7 +11,7 @@
 
 	<parent>
 		<artifactId>eSciDocCore</artifactId>
-		<groupId>eSciDocCore</groupId>
+		<groupId>org.escidoc.core</groupId>
 		<version>trunk-SNAPSHOT</version>
 	</parent>
 
@@ -127,11 +127,11 @@
                     </aspectLibraries>
                     <aspectLibraries>
                         <aspectLibrary>
-                            <groupId>eSciDocCore</groupId>
+                            <groupId>org.escidoc.core</groupId>
                             <artifactId>common</artifactId>
                         </aspectLibrary>
                         <aspectLibrary>
-                            <groupId>eSciDocCore</groupId>
+                            <groupId>org.escidoc.core</groupId>
                             <artifactId>aa</artifactId>
                         </aspectLibrary>
                     </aspectLibraries>
@@ -169,12 +169,12 @@
 
 	<dependencies>
         <dependency>
-            <groupId>eSciDocCore</groupId>
+            <groupId>org.escidoc.core</groupId>
             <artifactId>common</artifactId>
             <type>ejb</type>
         </dependency>
         <dependency>
-            <groupId>eSciDocCore</groupId>
+            <groupId>org.escidoc.core</groupId>
             <artifactId>aa</artifactId>
             <type>ejb</type>
         </dependency>

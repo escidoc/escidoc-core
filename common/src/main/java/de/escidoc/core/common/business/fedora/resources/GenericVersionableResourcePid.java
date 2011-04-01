@@ -399,7 +399,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
             sp.parse(new ByteArrayInputStream(getWov().getStream()));
             final ByteArrayOutputStream wovExtNew = addNewSubtreesHandler.getOutputStreams();
             final byte[] wovNewBytes = wovExtNew.toByteArray();
-            setWov(new Datastream(DATASTREAM_WOV, getId(), wovNewBytes, "text/xml"));
+            setWov(new Datastream(DATASTREAM_WOV, getId(), wovNewBytes, Datastream.MIME_TYPE_TEXT_XML));
         }
         catch (final Exception e) {
             throw new WebserverSystemException(e);

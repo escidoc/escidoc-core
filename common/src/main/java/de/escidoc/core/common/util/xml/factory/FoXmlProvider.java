@@ -37,8 +37,6 @@ public class FoXmlProvider extends XmlTemplateProvider {
 
     public static final String CONTROL_GROUP_R = "R";
 
-    public static final String MIME_TYPE_TEXT_XML = "text/xml";
-
     public static final String MIME_TYPE_APPLICATION_OCTET_STREAM = "application/octet-stream";
 
     public static final String DATASTREAM_CONTENT = "content";

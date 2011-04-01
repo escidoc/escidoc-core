@@ -23,7 +23,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>eSciDocCore</groupId>
+	<groupId>org.escidoc.core</groupId>
 	<artifactId>eSciDocCore</artifactId>
 	<packaging>pom</packaging>
 	<name>eSciDoc Core</name>
@@ -36,11 +36,11 @@
 	</issueManagement>
 	<ciManagement>
 		<system>Hudson</system>
-		<url>http://escidev2:8484/job/eSciDoc%20Trunk/</url>
+		<url>http://escidev2.fiz-karlsruhe.de:8484/job/eSciDoc%20Trunk/</url>
 	</ciManagement>
 	<scm>
-		<developerConnection>scm:svn:http://escidev5:8888/prototype/eSciDocCore</developerConnection>
-		<url>http://escidev5:8888/prototype/eSciDocCore/</url>
+		<developerConnection>scm:svn:http://escidev5.fiz-karlsruhe.de:8888/prototype/eSciDocCore</developerConnection>
+		<url>http://escidev5.fiz-karlsruhe.de:8888/prototype/eSciDocCore/</url>
 	</scm>
 	<organization>
 		<name>FIZ Karlsruhe</name>
@@ -1626,125 +1626,125 @@
 
       <!-- Internal Modules -->
       <dependency>
-        <groupId>eSciDocCore</groupId>
+        <groupId>org.escidoc.core</groupId>
         <artifactId>common</artifactId>
         <version>${project.version}</version>
         <type>ejb</type>
       </dependency>
       <dependency>
-        <groupId>eSciDocCore</groupId>
+        <groupId>org.escidoc.core</groupId>
         <artifactId>cmm</artifactId>
         <version>${project.version}</version>
         <type>ejb</type>
       </dependency>
       <dependency>
-        <groupId>eSciDocCore</groupId>
+        <groupId>org.escidoc.core</groupId>
         <artifactId>aa</artifactId>
         <version>${project.version}</version>
         <type>ejb</type>
       </dependency>
       <dependency>
-        <groupId>eSciDocCore</groupId>
+        <groupId>org.escidoc.core</groupId>
         <artifactId>om</artifactId>
         <version>${project.version}</version>
         <type>ejb</type>
       </dependency>
       <dependency>
-        <groupId>eSciDocCore</groupId>
+        <groupId>org.escidoc.core</groupId>
         <artifactId>oum</artifactId>
         <version>${project.version}</version>
         <type>ejb</type>
       </dependency>
       <dependency>
-        <groupId>eSciDocCore</groupId>
+        <groupId>org.escidoc.core</groupId>
         <artifactId>adm</artifactId>
         <version>${project.version}</version>
         <type>ejb</type>
       </dependency>
       <dependency>
-        <groupId>eSciDocCore</groupId>
+        <groupId>org.escidoc.core</groupId>
         <artifactId>oai</artifactId>
         <version>${project.version}</version>
         <type>ejb</type>
       </dependency>
       <dependency>
-        <groupId>eSciDocCore</groupId>
+        <groupId>org.escidoc.core</groupId>
         <artifactId>sb</artifactId>
         <version>${project.version}</version>
         <type>ejb</type>
       </dependency>
       <dependency>
-        <groupId>eSciDocCore</groupId>
+        <groupId>org.escidoc.core</groupId>
         <artifactId>sm</artifactId>
         <version>${project.version}</version>
         <type>ejb</type>
       </dependency>
       <dependency>
-        <groupId>eSciDocCore</groupId>
+        <groupId>org.escidoc.core</groupId>
         <artifactId>st</artifactId>
         <version>${project.version}</version>
         <type>ejb</type>
       </dependency>
       <dependency>
-        <groupId>eSciDocCore</groupId>
+        <groupId>org.escidoc.core</groupId>
         <artifactId>tme</artifactId>
         <version>${project.version}</version>
         <type>ejb</type>
       </dependency>
       <dependency>
-        <groupId>eSciDocCore</groupId>
+        <groupId>org.escidoc.core</groupId>
         <artifactId>common-remote</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>eSciDocCore</groupId>
+        <groupId>org.escidoc.core</groupId>
         <artifactId>escidoc-core-war</artifactId>
         <type>war</type>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>eSciDocCore</groupId>
+        <groupId>org.escidoc.core</groupId>
         <artifactId>axis</artifactId>
         <type>war</type>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>eSciDocCore</groupId>
+        <groupId>org.escidoc.core</groupId>
         <artifactId>jms-server</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>eSciDocCore</groupId>
+        <groupId>org.escidoc.core</groupId>
         <artifactId>http-client</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>eSciDocCore</groupId>
+        <groupId>org.escidoc.core</groupId>
         <artifactId>statistic-service-spec</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>eSciDocCore</groupId>
+        <groupId>org.escidoc.core</groupId>
         <artifactId>statistic-service-impl</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>eSciDocCore</groupId>
+        <groupId>org.escidoc.core</groupId>
         <artifactId>index-service-spec</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>eSciDocCore</groupId>
+        <groupId>org.escidoc.core</groupId>
         <artifactId>index-service-impl</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>eSciDocCore</groupId>
+        <groupId>org.escidoc.core</groupId>
         <artifactId>purge-service-spec</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>eSciDocCore</groupId>
+        <groupId>org.escidoc.core</groupId>
         <artifactId>purge-service-impl</artifactId>
         <version>${project.version}</version>
       </dependency>

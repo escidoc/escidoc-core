@@ -433,7 +433,7 @@ public class GenericResource implements FedoraResource {
 
         // TODO for resources that don't use versions could the RELS-EXT set to
         // override mode
-        setRelsExt(new Datastream(Datastream.RELS_EXT_DATASTREAM, this.id, relsExt, "text/xml"));
+        setRelsExt(new Datastream(Datastream.RELS_EXT_DATASTREAM, this.id, relsExt, Datastream.MIME_TYPE_TEXT_XML));
     }
 
     /**

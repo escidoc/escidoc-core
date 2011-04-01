@@ -4,7 +4,7 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>eSciDocCore</groupId>
+	<groupId>org.escidoc.core</groupId>
 	<artifactId>integration-tests</artifactId>
 	<packaging>jar</packaging>
 	<name>eSciDoc Core - Integration Tests</name>
@@ -13,7 +13,7 @@
 
 	<parent>
 		<artifactId>eSciDocCore</artifactId>
-		<groupId>eSciDocCore</groupId>
+		<groupId>org.escidoc.core</groupId>
 		<version>trunk-SNAPSHOT</version>
 	</parent>
 
@@ -585,7 +585,7 @@
 			<type>ear</type>
 		</dependency>
 		<dependency>
-			<groupId>eSciDocCore</groupId>
+			<groupId>org.escidoc.core</groupId>
 			<artifactId>common</artifactId>
 			<type>ejb</type>
 		</dependency>

@@ -34,6 +34,7 @@ import de.escidoc.core.common.business.fedora.FedoraUtility;
 import de.escidoc.core.common.business.fedora.HandlerBase;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
+import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.business.fedora.resources.listener.ResourceListener;
 import de.escidoc.core.common.business.filter.LuceneRequestParameters;
@@ -203,7 +204,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate implements Contex
         throws OperationNotFoundException, ContextNotFoundException, SystemException {
 
         final EscidocBinaryContent content = new EscidocBinaryContent();
-        content.setMimeType("text/xml");
+        content.setMimeType(Datastream.MIME_TYPE_TEXT_XML);
 
         if ("members".equals(resourceName)) {
             try {

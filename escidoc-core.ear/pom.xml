@@ -4,7 +4,7 @@
 
 	<parent>
 		<artifactId>eSciDocCore</artifactId>
-		<groupId>eSciDocCore</groupId>
+		<groupId>org.escidoc.core</groupId>
 		<version>trunk-SNAPSHOT</version>
 	</parent>
 
@@ -31,66 +31,66 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>eSciDocCore</groupId>
+			<groupId>org.escidoc.core</groupId>
 			<artifactId>common</artifactId>
 			<type>ejb</type>
 		</dependency>
 		<dependency>
-			<groupId>eSciDocCore</groupId>
+			<groupId>org.escidoc.core</groupId>
 			<artifactId>cmm</artifactId>
 			<type>ejb</type>
 		</dependency>
 		<dependency>
-			<groupId>eSciDocCore</groupId>
+			<groupId>org.escidoc.core</groupId>
 			<artifactId>aa</artifactId>
 			<type>ejb</type>
 		</dependency>
 		<dependency>
-			<groupId>eSciDocCore</groupId>
+			<groupId>org.escidoc.core</groupId>
 			<artifactId>om</artifactId>
 			<type>ejb</type>
 		</dependency>
 		<dependency>
-			<groupId>eSciDocCore</groupId>
+			<groupId>org.escidoc.core</groupId>
 			<artifactId>oum</artifactId>
 			<type>ejb</type>
 		</dependency>
 		<dependency>
-			<groupId>eSciDocCore</groupId>
+			<groupId>org.escidoc.core</groupId>
 			<artifactId>adm</artifactId>
 			<type>ejb</type>
 		</dependency>
 		<dependency>
-			<groupId>eSciDocCore</groupId>
+			<groupId>org.escidoc.core</groupId>
 			<artifactId>oai</artifactId>
 			<type>ejb</type>
 		</dependency>
 		<dependency>
-			<groupId>eSciDocCore</groupId>
+			<groupId>org.escidoc.core</groupId>
 			<artifactId>sb</artifactId>
 			<type>ejb</type>
 		</dependency>
 		<dependency>
-			<groupId>eSciDocCore</groupId>
+			<groupId>org.escidoc.core</groupId>
 			<artifactId>sm</artifactId>
 			<type>ejb</type>
 		</dependency>
 		<dependency>
-			<groupId>eSciDocCore</groupId>
+			<groupId>org.escidoc.core</groupId>
 			<artifactId>st</artifactId>
 			<type>ejb</type>
 		</dependency>
 		<dependency>
-			<groupId>eSciDocCore</groupId>
+			<groupId>org.escidoc.core</groupId>
 			<artifactId>tme</artifactId>
 			<type>ejb</type>
 		</dependency>
 		<dependency>
-			<groupId>eSciDocCore</groupId>
+			<groupId>org.escidoc.core</groupId>
 			<artifactId>common-remote</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>eSciDocCore</groupId>
+			<groupId>org.escidoc.core</groupId>
 			<artifactId>jms-server</artifactId>
 			<exclusions>
 				<exclusion>
@@ -100,24 +100,24 @@
 			</exclusions>
 		</dependency>
 		<dependency>
-			<groupId>eSciDocCore</groupId>
+			<groupId>org.escidoc.core</groupId>
 			<artifactId>statistic-service-impl</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>eSciDocCore</groupId>
+			<groupId>org.escidoc.core</groupId>
 			<artifactId>index-service-impl</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>eSciDocCore</groupId>
+			<groupId>org.escidoc.core</groupId>
 			<artifactId>purge-service-impl</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>eSciDocCore</groupId>
+			<groupId>org.escidoc.core</groupId>
 			<artifactId>escidoc-core-war</artifactId>
 			<type>war</type>
 		</dependency>
 		<dependency>
-			<groupId>eSciDocCore</groupId>
+			<groupId>org.escidoc.core</groupId>
 			<artifactId>axis</artifactId>
 			<type>war</type>
 		</dependency>
@@ -676,87 +676,87 @@
 					</archive>
 					<modules>
 						<ejbModule>
-							<groupId>eSciDocCore</groupId>
+							<groupId>org.escidoc.core</groupId>
 							<artifactId>common</artifactId>
 							<bundleFileName>01_common.jar</bundleFileName>
 							<bundleDir>/</bundleDir>
 						</ejbModule>
 						<ejbModule>
-							<groupId>eSciDocCore</groupId>
+							<groupId>org.escidoc.core</groupId>
 							<artifactId>aa</artifactId>
 							<bundleFileName>02_aa.jar</bundleFileName>
 							<bundleDir>/</bundleDir>
 						</ejbModule>
 						<ejbModule>
-							<groupId>eSciDocCore</groupId>
+							<groupId>org.escidoc.core</groupId>
 							<artifactId>oai</artifactId>
 							<bundleFileName>03_oai.jar</bundleFileName>
 							<bundleDir>/</bundleDir>
 						</ejbModule>
 						<ejbModule>
-							<groupId>eSciDocCore</groupId>
+							<groupId>org.escidoc.core</groupId>
 							<artifactId>adm</artifactId>
 							<bundleFileName>04_adm.jar</bundleFileName>
 							<bundleDir>/</bundleDir>
 						</ejbModule>
 						<ejbModule>
-							<groupId>eSciDocCore</groupId>
+							<groupId>org.escidoc.core</groupId>
 							<artifactId>cmm</artifactId>
 							<bundleFileName>05_cmm.jar</bundleFileName>
 							<bundleDir>/</bundleDir>
 						</ejbModule>
 						<ejbModule>
-							<groupId>eSciDocCore</groupId>
+							<groupId>org.escidoc.core</groupId>
 							<artifactId>om</artifactId>
 							<bundleFileName>06_om.jar</bundleFileName>
 							<bundleDir>/</bundleDir>
 						</ejbModule>
 						<ejbModule>
-							<groupId>eSciDocCore</groupId>
+							<groupId>org.escidoc.core</groupId>
 							<artifactId>oum</artifactId>
 							<bundleFileName>07_oum.jar</bundleFileName>
 							<bundleDir>/</bundleDir>
 						</ejbModule>
 						<ejbModule>
-							<groupId>eSciDocCore</groupId>
+							<groupId>org.escidoc.core</groupId>
 							<artifactId>sb</artifactId>
 							<bundleFileName>08_sb.jar</bundleFileName>
 							<bundleDir>/</bundleDir>
 						</ejbModule>
 						<ejbModule>
-							<groupId>eSciDocCore</groupId>
+							<groupId>org.escidoc.core</groupId>
 							<artifactId>sm</artifactId>
 							<bundleFileName>09_sm.jar</bundleFileName>
 							<bundleDir>/</bundleDir>
 						</ejbModule>
 						<ejbModule>
-							<groupId>eSciDocCore</groupId>
+							<groupId>org.escidoc.core</groupId>
 							<artifactId>st</artifactId>
 							<bundleFileName>10_st.jar</bundleFileName>
 							<bundleDir>/</bundleDir>
 						</ejbModule>
 						<ejbModule>
-							<groupId>eSciDocCore</groupId>
+							<groupId>org.escidoc.core</groupId>
 							<artifactId>tme</artifactId>
 							<bundleFileName>11_tme.jar</bundleFileName>
 							<bundleDir>/</bundleDir>
 						</ejbModule>
 						<jarModule>
-							<groupId>eSciDocCore</groupId>
+							<groupId>org.escidoc.core</groupId>
 							<artifactId>common-remote</artifactId>
 							<bundleFileName>12_common-remote.jar</bundleFileName>
 							<bundleDir>/</bundleDir>
 							<includeInApplicationXml>true</includeInApplicationXml>
 						</jarModule>
 						<webModule>
-							<groupId>eSciDocCore</groupId>
+							<groupId>org.escidoc.core</groupId>
 							<artifactId>escidoc-core-war</artifactId>
 							<bundleFileName>13_escidoc-core.war</bundleFileName>
 							<bundleDir>/</bundleDir>
 							<contextRoot>/</contextRoot>
 						</webModule>
 						<webModule>
-							<groupId>eSciDocCore</groupId>
+							<groupId>org.escidoc.core</groupId>
 							<artifactId>axis</artifactId>
 							<bundleFileName>14_axis.war</bundleFileName>
 							<bundleDir>/</bundleDir>
