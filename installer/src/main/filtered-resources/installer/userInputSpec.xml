@@ -329,7 +329,7 @@
 
     <panel order="13">
         <createForPack name="eSciDoc" />
-        <field type="title" txt="Database backup" bold="true" size="1" />
+        <field type="title" txt="Database Backup" bold="true" size="1" />
         <field type="divider" align="top"/>
         <field type="staticText" align="left" txt="If you don't have a recent backup of your database we strongly recommend to stop here and make a backup now. This ensures you will not loose data if the database migration fails." />
         <field type="divider" align="bottom"/>
@@ -337,12 +337,12 @@
 
     <panel order="14">
         <createForPack name="eSciDoc" />
-        <field type="title" txt="Database migration" bold="true" size="1" />
+        <field type="title" txt="Database Migration" bold="true" size="1" />
         <field type="divider" align="top"/>
         <field type="staticText" align="left" txt="Now you may run the database migration. Please keep an eye on the tool's output to see if the migration run successfully." />
         <field type="space"/>
         <field type="check" align="left" variable="RunDatabaseMigration">
-          <spec txt="Run the database migration." size="25" true="yes" false="no" set="no"/>
+          <spec txt="Run the database migration now." size="25" true="yes" false="no" set="no"/>
         </field>
         <field type="divider" align="bottom"/>
     </panel>
