@@ -17,20 +17,6 @@
 		<version>trunk-SNAPSHOT</version>
 	</parent>
 
-	<!-- Setting up the integration test infrastructure is a little bit complex 
-		and confusing. Following steps are required in the defined order: 1. Setup 
-		escidoc-core and fedora (both running within one JBoss). 1.1 drop databases 
-		for fedora (fedora3 and riTriples), drop role 1.2 use fcrepo-installer to 
-		create fedora.war and the fedora home directory 1.3 replace fedora config 
-		file (fedora.fcfg, because not all parameter could be set with installer) 
-		1.4 Install JBoss (currently is a prepared zip used where all configuration 
-		files and replaces jars are included. One can change this later on to a vanilla 
-		JBoss and replace jars and config during maven build.) 1.5 copy fedora.war 
-		into install directory of JBoss 1.6 start JBoss and deploy in same step with 
-		cargo2 plugin the escidoc ear 1.7 ingest FOXML files (escidocs persistent 
-		objects) 2. generate sources from wsdl files (these are retrieved from the 
-		running escidoc) 3. compile 4. run integration tests -->
-
 	<build>
 		<outputDirectory>target/test-classes</outputDirectory>
 
@@ -57,6 +43,127 @@
 						</configuration>
 					</execution>
 				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.2</version>
+				<executions>
+					<execution>
+						<id>deploy-testdata</id>
+						<phase>process-sources</phase>
+						<goals>
+							<goal>copy</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>org.escidoc</groupId>
+									<artifactId>testdata</artifactId>
+									<version>0.0.2-SNAPSHOT</version>
+									<type>war</type>
+									<overWrite>false</overWrite>
+									<outputDirectory>${project.build.directory}/escidoc/jboss/server/default/deploy</outputDirectory>
+									<destFileName>testdata.war</destFileName>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.4.3</version>
+				<executions>
+					<execution>
+						<id>copy-filtered-resources</id>
+						<phase>initialize</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}</outputDirectory>
+							<resources>
+								<resource>
+									<directory>src/test/filtered-resources</directory>
+									<filtering>true</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.2</version>
+				<executions>
+					<execution>
+						<id>install-escidoc-core</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>java</executable>
+							<arguments>
+								<argument>-Dskip.validation=true</argument>
+								<argument>-jar</argument>
+								<argument>${basedir}/../installer/target/installer-${project.version}-standard.jar</argument>
+								<argument>${project.build.directory}/escidoc-core-installer-config.xml</argument>
+							</arguments>
+							<outputFile>${project.build.directory}/escidoc-installer.log</outputFile>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.cargo</groupId>
+				<artifactId>cargo-maven2-plugin</artifactId>
+				<version>1.0.6</version>
+				<executions>
+					<execution>
+						<id>start-container</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>start</goal>
+						</goals>
+						<configuration>
+							<wait>false</wait>
+						</configuration>
+					</execution>
+					<execution>
+						<id>stop-container</id>
+						<phase>post-integration-test</phase>
+						<goals>
+							<goal>stop</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<container>
+						<containerId>jboss42x</containerId>
+						<home>${project.build.directory}/escidoc/jboss</home>
+						<timeout>600000</timeout>
+					</container>
+
+					<configuration>
+						<type>standalone</type>
+						<properties>
+							<cargo.hostname>localhost</cargo.hostname>
+							<cargo.protocol>http</cargo.protocol>
+
+							<cargo.servlet.port>8080</cargo.servlet.port>
+							<cargo.rmi.port>1099</cargo.rmi.port>
+							<cargo.logging>medium</cargo.logging>
+							<cargo.jvmargs>-Xmx1024m -Xms312m -XX:MaxPermSize=320m
+									</cargo.jvmargs>
+						</properties>
+					</configuration>
+				</configuration>
 			</plugin>
 
 			<plugin>
@@ -463,6 +570,7 @@
 			<artifactId>testdata</artifactId>
 			<version>0.0.2-SNAPSHOT</version>
 			<type>war</type>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.escidoc</groupId>
@@ -661,7 +769,7 @@
 
 	<profiles>
 		<profile>
-			<id>create-escidoc-database</id>
+			<id>postgresql-database</id>
 			<activation>
 				<property>
 					<name>env</name>
@@ -679,22 +787,6 @@
 						<version>2.5</version>
 						<executions>
 							<execution>
-								<id>copy-resources</id>
-								<phase>process-sources</phase>
-								<goals>
-									<goal>copy-resources</goal>
-								</goals>
-								<configuration>
-									<outputDirectory>${basedir}/target/sql-resources</outputDirectory>
-									<resources>
-										<resource>
-											<directory>${basedir}/../common/src/main/resources/sql</directory>
-											<filtering>true</filtering>
-										</resource>
-									</resources>
-								</configuration>
-							</execution>
-							<execution>
 								<id>copy-foxml-resources</id>
 								<phase>process-sources</phase>
 								<goals>
@@ -709,6 +801,22 @@
 										</resource>
 										<resource>
 											<directory>src/test/resources/examples/pubman/foxml1.1</directory>
+											<filtering>true</filtering>
+										</resource>
+									</resources>
+								</configuration>
+							</execution>
+							<execution>
+								<id>overwrite-configurations</id>
+								<phase>process-sources</phase>
+								<goals>
+									<goal>copy-resources</goal>
+								</goals>
+								<configuration>
+									<outputDirectory>${project.build.directory}/escidoc/jboss</outputDirectory>
+									<resources>
+										<resource>
+											<directory>src/test/resources/configuration/jboss</directory>
 											<filtering>true</filtering>
 										</resource>
 									</resources>
@@ -733,7 +841,7 @@
 						<!-- common configuration shared by all executions -->
 						<configuration>
 							<driver>org.postgresql.Driver</driver>
-							<url>jdbc:postgresql://localhost:5432/postgres</url>
+							<url>jdbc:postgresql://${escidoc.database.postgresql.url}/postgres</url>
 							<settingsKey>escidoc-core-db-admin</settingsKey>
 						</configuration>
 						<executions>
@@ -747,7 +855,7 @@
 								</goals>
 								<configuration>
 									<!-- need another database to drop the targeted one -->
-									<url>jdbc:postgresql://localhost:5432/postgres</url>
+									<url>jdbc:postgresql://${escidoc.database.postgresql.url}/postgres</url>
 									<autocommit>true</autocommit>
 									<sqlCommand>DROP DATABASE IF EXISTS "${escidoc.database}"</sqlCommand>
 									<onError>continue</onError>
@@ -763,198 +871,21 @@
 								</goals>
 								<configuration>
 									<!-- need another database to drop the targeted one -->
-									<url>jdbc:postgresql://localhost:5432/postgres</url>
+									<url>jdbc:postgresql://${escidoc.database.postgresql.url}/postgres</url>
 									<autocommit>true</autocommit>
 									<sqlCommand>DROP ROLE IF EXISTS "${escidoc.database.user}"</sqlCommand>
 									<onError>continue</onError>
 								</configuration>
 							</execution>
 							<execution>
-								<id>create-escidoc-role</id>
-								<phase>process-resources</phase>
-								<goals>
-									<goal>execute</goal>
-								</goals>
-								<configuration>
-									<url>jdbc:postgresql://localhost:5432/postgres</url>
-									<!-- no transaction -->
-									<autocommit>true</autocommit>
-									<sqlCommand>CREATE ROLE "${escidoc.database.user}" LOGIN
-										PASSWORD '${escidoc.database.password}'
-										VALID
-										UNTIL 'infinity';</sqlCommand>
-								</configuration>
-							</execution>
-							<execution>
-								<id>create-escidoc-db</id>
-								<phase>process-resources</phase>
-								<goals>
-									<goal>execute</goal>
-								</goals>
-								<configuration>
-									<url>jdbc:postgresql://localhost:5432/postgres</url>
-									<!-- no transaction -->
-									<autocommit>true</autocommit>
-									<sqlCommand>CREATE DATABASE "${escidoc.database}" WITH
-										ENCODING='UTF8'
-										OWNER="${escidoc.database.user}"</sqlCommand>
-								</configuration>
-							</execution>
-							<execution>
-								<id>create-escidoc-db-lang</id>
-								<phase>process-resources</phase>
-								<goals>
-									<goal>execute</goal>
-								</goals>
-								<configuration>
-									<url>jdbc:postgresql://localhost:5432/${escidoc.database}</url>
-									<!-- no transaction -->
-									<autocommit>true</autocommit>
-									<srcFiles>
-										<srcFile>${basedir}/target/sql-resources/postgres/create-language.sql
-										</srcFile>
-									</srcFiles>
-								</configuration>
-							</execution>
-							<execution>
-								<id>create-schemas</id>
-								<phase>process-resources</phase>
-								<goals>
-									<goal>execute</goal>
-								</goals>
-								<configuration>
-									<driver>org.postgresql.Driver</driver>
-									<url>jdbc:postgresql://localhost:5432/${escidoc.database}</url>
-									<username>${escidoc.database.user}</username>
-									<password>${escidoc.database.password}</password>
-									<autocommit>true</autocommit>
-									<srcFiles>
-										<!-- the initialize phase allows no filtering. Furthermore is creating 
-											database part of the test phase. That's why here should only be these tables 
-											are generated where hibernate depends on. -->
-										<srcFile>${basedir}/target/sql-resources/postgres/aa/aa.create.sql
-										</srcFile>
-										<srcFile>${basedir}/target/sql-resources/postgres/adm/adm.create.sql
-										</srcFile>
-										<srcFile>${basedir}/target/sql-resources/postgres/oai/oai.create.sql
-										</srcFile>
-										<srcFile>${basedir}/target/sql-resources/postgres/om/om.create.sql
-										</srcFile>
-										<srcFile>${basedir}/target/sql-resources/postgres/sm/sm.create.sql
-										</srcFile>
-										<srcFile>${basedir}/target/sql-resources/postgres/st/st.create.sql
-										</srcFile>
-									</srcFiles>
-								</configuration>
-							</execution>
-							<execution>
-								<!-- the initialize phase allows no filtering. Furthermore is creating 
-									database part of the test phase. That's why here should only be these tables 
-									are generated where hibernate depends on. -->
-								<id>insert-accounts-into-db</id>
-								<phase>process-resources</phase>
-								<goals>
-									<goal>execute</goal>
-								</goals>
-								<configuration>
-									<driver>org.postgresql.Driver</driver>
-									<url>jdbc:postgresql://localhost:5432/${escidoc.database}</url>
-									<username>${escidoc.database.user}</username>
-									<password>${escidoc.database.password}</password>
-									<autocommit>true</autocommit>
-									<srcFiles>
-										<srcFile>${basedir}/target/sql-resources/postgres/aa/aa.init.user-accounts.common.sql
-										</srcFile>
-										<srcFile>${basedir}/target/sql-resources/postgres/aa/aa.init.user-accounts.MPDL.sql
-										</srcFile>
-									</srcFiles>
-								</configuration>
-							</execution>
-							<execution>
-								<!-- the initialize phase allows no filtering. Furthermore is creating 
-									database part of the test phase. That's why here should only be these tables 
-									are generated where hibernate depends on. -->
-								<id>init-handles-into-db</id>
-								<phase>process-resources</phase>
-								<goals>
-									<goal>execute</goal>
-								</goals>
-								<configuration>
-									<driver>org.postgresql.Driver</driver>
-									<url>jdbc:postgresql://localhost:5432/${escidoc.database}</url>
-									<username>${escidoc.database.user}</username>
-									<password>${escidoc.database.password}</password>
-									<autocommit>true</autocommit>
-									<fileset>
-										<basedir>${basedir}/target/sql-resources/postgres</basedir>
-										<includes>
-											<include>aa/aa.init.handles.*.sql
-											</include>
-										</includes>
-									</fileset>
-								</configuration>
-							</execution>
-							<execution>
-								<!-- the initialize phase allows no filtering. Furthermore is creating 
-									database part of the test phase. That's why here should only be these tables 
-									are generated where hibernate depends on. -->
-								<id>insert-roles-into-db</id>
-								<phase>process-resources</phase>
-								<goals>
-									<goal>execute</goal>
-								</goals>
-								<configuration>
-									<driver>org.postgresql.Driver</driver>
-									<url>jdbc:postgresql://localhost:5432/${escidoc.database}</url>
-									<username>${escidoc.database.user}</username>
-									<password>${escidoc.database.password}</password>
-									<autocommit>true</autocommit>
-									<fileset>
-										<basedir>${basedir}/target/sql-resources/postgres/</basedir>
-										<includes>
-											<include>aa/aa.init.roles.*.sql
-											</include>
-										</includes>
-									</fileset>
-								</configuration>
-							</execution>
-							<execution>
-								<!-- the initialize phase allows no filtering. Furthermore is creating 
-									database part of the test phase. That's why here should only be these tables 
-									are generated where hibernate depends on. -->
-								<id>insert-into-db</id>
-								<phase>process-resources</phase>
-								<goals>
-									<goal>execute</goal>
-								</goals>
-								<configuration>
-									<driver>org.postgresql.Driver</driver>
-									<url>jdbc:postgresql://localhost:5432/${escidoc.database}</url>
-									<username>${escidoc.database.user}</username>
-									<password>${escidoc.database.password}</password>
-									<autocommit>true</autocommit>
-									<fileset>
-										<basedir>${basedir}/target/sql-resources/postgres/</basedir>
-										<includes>
-											<include>aa/aa.init.grants.*.sql
-											</include>
-											<include>aa/aa.init.actions.sql
-											</include>
-											<include>aa/aa.init.method-mappings.*.sql
-											</include>
-										</includes>
-									</fileset>
-								</configuration>
-							</execution>
-							<execution>
 								<id>insert-test-user</id>
-								<phase>process-resources</phase>
+								<phase>process-sources</phase>
 								<goals>
 									<goal>execute</goal>
 								</goals>
 								<configuration>
 									<driver>org.postgresql.Driver</driver>
-									<url>jdbc:postgresql://localhost:5432/${escidoc.database}</url>
+									<url>jdbc:postgresql://${escidoc.database.postgresql.url}/${escidoc.database}</url>
 									<username>${escidoc.database.user}</username>
 									<password>${escidoc.database.password}</password>
 									<autocommit>true</autocommit>
@@ -962,13 +893,13 @@
 										<!-- the initialize phase allows no filtering. Furthermore is creating 
 											database part of the test phase. That's why here should only be these tables 
 											are generated where hibernate depends on. -->
-										<srcFile>${basedir}/target/sql-resources/postgres/test/test.aa.init.roles.sql
+										<srcFile>${project.build.directory}/sql-resources/postgres/test/test.aa.init.roles.sql
 										</srcFile>
-										<srcFile>${basedir}/target/sql-resources/postgres/test/test.aa.init.users.sql
+										<srcFile>${project.build.directory}/sql-resources/postgres/test/test.aa.init.users.sql
 										</srcFile>
-										<srcFile>${basedir}/target/sql-resources/postgres/test/test.aa.init.groups.sql
+										<srcFile>${project.build.directory}/sql-resources/postgres/test/test.aa.init.groups.sql
 										</srcFile>
-										<srcFile>${basedir}/target/sql-resources/postgres/test/test.sm.create.sql
+										<srcFile>${project.build.directory}/sql-resources/postgres/test/test.sm.create.sql
 										</srcFile>
 									</srcFiles>
 								</configuration>
@@ -978,8 +909,9 @@
 				</plugins>
 			</build>
 		</profile>
+
 		<profile>
-			<id>create-escidoc-oracle-database</id>
+			<id>oracle-database</id>
 			<activation>
 				<property>
 					<name>env</name>
@@ -1013,7 +945,7 @@
 							</execution>
 							<execution>
 								<id>copy-resources</id>
-								<phase>process-sources</phase>
+								<phase>initialize</phase>
 								<goals>
 									<goal>copy-resources</goal>
 								</goals>
@@ -1042,6 +974,22 @@
 										</resource>
 										<resource>
 											<directory>src/test/resources/examples/pubman/foxml1.1</directory>
+											<filtering>true</filtering>
+										</resource>
+									</resources>
+								</configuration>
+							</execution>
+							<execution>
+								<id>overwrite-configurations</id>
+								<phase>process-sources</phase>
+								<goals>
+									<goal>copy-resources</goal>
+								</goals>
+								<configuration>
+									<outputDirectory>${project.build.directory}/escidoc/jboss</outputDirectory>
+									<resources>
+										<resource>
+											<directory>src/test/resources/configuration/oracle/jboss</directory>
 											<filtering>true</filtering>
 										</resource>
 									</resources>
@@ -1116,8 +1064,8 @@
 						</configuration>
 						<executions>
 							<execution>
-								<id>create-escidoc-db</id>
-								<phase>process-resources</phase>
+								<id>create-escidoc-db-oracle</id>
+								<phase>process-sources</phase>
 								<goals>
 									<goal>execute</goal>
 								</goals>
@@ -1138,7 +1086,7 @@
 							</execution>
 							<execution>
 								<id>create-schemas</id>
-								<phase>process-resources</phase>
+								<phase>process-sources</phase>
 								<goals>
 									<goal>execute</goal>
 								</goals>
@@ -1175,7 +1123,7 @@
 									database part of the test phase. That's why here should only be these tables 
 									are generated where hibernate depends on. -->
 								<id>insert-accounts-into-db</id>
-								<phase>process-resources</phase>
+								<phase>process-sources</phase>
 								<goals>
 									<goal>execute</goal>
 								</goals>
@@ -1201,7 +1149,7 @@
 									database part of the test phase. That's why here should only be these tables 
 									are generated where hibernate depends on. -->
 								<id>init-handles-into-db</id>
-								<phase>process-resources</phase>
+								<phase>process-sources</phase>
 								<goals>
 									<goal>execute</goal>
 								</goals>
@@ -1255,7 +1203,7 @@
 									database part of the test phase. That's why here should only be these tables 
 									are generated where hibernate depends on. -->
 								<id>insert-policies-into-db</id>
-								<phase>process-resources</phase>
+								<phase>process-sources</phase>
 								<goals>
 									<goal>execute</goal>
 								</goals>
@@ -1282,7 +1230,7 @@
 									database part of the test phase. That's why here should only be these tables 
 									are generated where hibernate depends on. -->
 								<id>insert-into-db</id>
-								<phase>process-resources</phase>
+								<phase>process-sources</phase>
 								<goals>
 									<goal>execute</goal>
 								</goals>
@@ -1310,7 +1258,7 @@
 							</execution>
 							<execution>
 								<id>insert-test-user</id>
-								<phase>process-resources</phase>
+								<phase>process-sources</phase>
 								<goals>
 									<goal>execute</goal>
 								</goals>
@@ -1324,9 +1272,6 @@
 									<delimiterType>normal</delimiterType>
 									<keepFormat>false</keepFormat>
 									<srcFiles>
-										<!-- the initialize phase allows no filtering. Furthermore is creating 
-											database part of the test phase. That's why here should only be these tables 
-											are generated where hibernate depends on. -->
 										<srcFile>${basedir}/target/sql-resources/oracle/test/test.aa.init.roles.sql
 										</srcFile>
 										<srcFile>${basedir}/target/sql-resources/oracle/test/test.aa.init.users.sql
@@ -1347,7 +1292,7 @@
 		<!-- Fedora -->
 
 		<profile>
-			<id>install-fedora</id>
+			<id>fedora-database-postgresql</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>
@@ -1369,7 +1314,7 @@
 						<!-- common configuration shared by all executions -->
 						<configuration>
 							<driver>org.postgresql.Driver</driver>
-							<url>jdbc:postgresql://localhost:5432/postgres</url>
+							<url>jdbc:postgresql://${escidoc.database.postgresql.url}/postgres</url>
 							<!-- use your settings.xml to configure username and password -->
 							<settingsKey>escidoc-core-db-admin</settingsKey>
 						</configuration>
@@ -1382,7 +1327,7 @@
 								</goals>
 								<configuration>
 									<!-- need another database to drop the targeted one -->
-									<url>jdbc:postgresql://localhost:5432/postgres</url>
+									<url>jdbc:postgresql://${escidoc.database.postgresql.url}/postgres</url>
 									<autocommit>true</autocommit>
 									<sqlCommand>DROP DATABASE IF EXISTS "${fedora.database}"</sqlCommand>
 									<onError>continue</onError>
@@ -1396,7 +1341,7 @@
 								</goals>
 								<configuration>
 									<!-- need another database to drop the targeted one -->
-									<url>jdbc:postgresql://localhost:5432/postgres</url>
+									<url>jdbc:postgresql://${escidoc.database.postgresql.url}/postgres</url>
 									<autocommit>true</autocommit>
 									<sqlCommand>DROP DATABASE IF EXISTS "${triplestore.database}"</sqlCommand>
 									<onError>continue</onError>
@@ -1410,130 +1355,13 @@
 								</goals>
 								<configuration>
 									<!-- need another database to drop the targeted one -->
-									<url>jdbc:postgresql://localhost:5432/postgres</url>
+									<url>jdbc:postgresql://${escidoc.database.postgresql.url}/postgres</url>
 									<autocommit>true</autocommit>
 									<sqlCommand>DROP ROLE IF EXISTS "${fedora.database.user}"</sqlCommand>
 									<onError>continue</onError>
 								</configuration>
 							</execution>
 
-							<execution>
-								<id>create-fedora-role</id>
-								<phase>validate</phase>
-								<goals>
-									<goal>execute</goal>
-								</goals>
-								<configuration>
-									<url>jdbc:postgresql://localhost:5432/postgres</url>
-									<!-- no transaction -->
-									<autocommit>true</autocommit>
-									<sqlCommand>CREATE ROLE "${fedora.database.user}" LOGIN
-										PASSWORD
-										'${fedora.database.password}'
-										VALID
-										UNTIL 'infinity';</sqlCommand>
-									<onError>continue</onError>
-								</configuration>
-							</execution>
-							<execution>
-								<id>create-fedora-db</id>
-								<phase>validate</phase>
-								<goals>
-									<goal>execute</goal>
-								</goals>
-								<configuration>
-									<url>jdbc:postgresql://localhost:5432/postgres</url>
-									<!-- no transaction -->
-									<autocommit>true</autocommit>
-									<sqlCommand>CREATE DATABASE "${fedora.database}" WITH
-										ENCODING='UTF8' OWNER="${fedora.database.user}"</sqlCommand>
-								</configuration>
-							</execution>
-							<execution>
-								<id>create-triplestore-db</id>
-								<phase>validate</phase>
-								<goals>
-									<goal>execute</goal>
-								</goals>
-								<configuration>
-									<url>jdbc:postgresql://localhost:5432/postgres</url>
-									<!-- no transaction -->
-									<autocommit>true</autocommit>
-									<sqlCommand>CREATE DATABASE "${triplestore.database}" WITH
-										ENCODING='SQL_ASCII'
-										OWNER="${fedora.database.user}"
-										TEMPLATE=template0</sqlCommand>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-
-					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>exec-maven-plugin</artifactId>
-						<version>1.2</version>
-						<executions>
-							<execution>
-								<id>install-fedora</id>
-								<phase>validate</phase>
-								<goals>
-									<goal>exec</goal>
-								</goals>
-								<configuration>
-									<executable>java</executable>
-									<arguments>
-										<argument>-jar</argument>
-										<argument>${settings.localRepository}/org/escidoc/fcrepo-installer/${fcrepo.version}/fcrepo-installer-${fcrepo.version}.jar</argument>
-										<argument>src/test/resources/fedora/install.properties</argument>
-									</arguments>
-									<outputFile>${project.build.directory}/fcrepo-install-error.log</outputFile>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-
-					<plugin>
-						<artifactId>maven-resources-plugin</artifactId>
-						<version>2.5</version>
-						<executions>
-							<execution>
-								<id>deploy-fedora-to-jboss</id>
-								<phase>initialize</phase>
-								<goals>
-									<goal>copy-resources</goal>
-								</goals>
-								<configuration>
-									<outputDirectory>${project.build.directory}/installs/${escidoc.jboss.zip.name}/jboss-4.2.3.GA/server/default/deploy</outputDirectory>
-									<resources>
-										<resource>
-											<directory>${project.build.directory}/fedora/install</directory>
-											<includes>
-												<include>fedora.war</include>
-											</includes>
-											<filtering>false</filtering>
-										</resource>
-									</resources>
-								</configuration>
-							</execution>
-							<execution>
-								<id>deploy-fedora-config</id>
-								<phase>initialize</phase>
-								<goals>
-									<goal>copy-resources</goal>
-								</goals>
-								<configuration>
-									<outputDirectory>${project.build.directory}/fedora/server/config</outputDirectory>
-									<resources>
-										<resource>
-											<directory>${basedir}/src/test/resources/fedora</directory>
-											<includes>
-												<include>fedora.fcfg</include>
-											</includes>
-											<filtering>false</filtering>
-										</resource>
-									</resources>
-								</configuration>
-							</execution>
 						</executions>
 					</plugin>
 
@@ -1727,7 +1555,7 @@
 								</configuration>
 							</execution>
 							<execution>
-								<id>deploy-fedora-config</id>
+								<id>deploy-fedora-config-orcale</id>
 								<phase>initialize</phase>
 								<goals>
 									<goal>copy-resources</goal>
@@ -1752,232 +1580,6 @@
 			</build>
 		</profile>
 
-		<profile>
-			<id>install-jboss</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.codehaus.cargo</groupId>
-						<artifactId>cargo-maven2-plugin</artifactId>
-						<version>1.0.6</version>
-						<executions>
-							<execution>
-								<id>install</id>
-								<phase>validate</phase>
-								<goals>
-									<goal>install</goal>
-								</goals>
-							</execution>
-							<execution>
-								<id>start-container</id>
-								<phase>compile</phase>
-								<goals>
-									<goal>start</goal>
-								</goals>
-								<configuration>
-									<wait>false</wait>
-								</configuration>
-							</execution>
-							<execution>
-								<id>stop-container</id>
-								<phase>post-integration-test</phase>
-								<goals>
-									<goal>stop</goal>
-								</goals>
-							</execution>
-						</executions>
-						<configuration>
-							<container>
-								<containerId>jboss42x</containerId>
-								<timeout>600000</timeout>
-								<zipUrlInstaller>
-									<!-- If you change the name of the JBoss package, change the install 
-										path too! -->
-									<url>http://escidev5.fiz-karlsruhe.de:8888/files/${escidoc.jboss.zip.name}.zip</url>
-									<!-- url>http://escidev5:8888/files/jboss-4.2.3.GA-jdk6.zip</url -->
-									<installDir>${project.build.directory}/installs</installDir>
-								</zipUrlInstaller>
-								<output>${project.build.directory}/jboss42x/container.log</output>
-								<append>false</append>
-								<log>${project.build.directory}/jboss42x/cargo.log</log>
-							</container>
-
-							<configuration>
-								<type>standalone</type>
-								<home>${project.build.directory}/jboss42x/container</home>
-								<properties>
-									<cargo.hostname>localhost</cargo.hostname>
-									<cargo.protocol>http</cargo.protocol>
-
-									<cargo.servlet.port>8080</cargo.servlet.port>
-									<cargo.rmi.port>1099</cargo.rmi.port>
-									<cargo.logging>medium</cargo.logging>
-									<cargo.jvmargs>-Xmx1024m -Xms312m -XX:MaxPermSize=320m
-									</cargo.jvmargs>
-								</properties>
-								<deployables>
-									<deployable>
-										<groupId>org.escidoc</groupId>
-										<artifactId>testdata</artifactId>
-										<type>war</type>
-										<properties>
-											<context>testdata</context>
-										</properties>
-									</deployable>
-									<deployable>
-										<groupId>org.escidoc</groupId>
-										<artifactId>escidoc-core</artifactId>
-										<type>ear</type>
-										<pingURL>${escidoc.url}/adm/admin/get-repository-info</pingURL>
-									</deployable>
-								</deployables>
-								<configfiles>
-									<!-- eSciDoc configuration files -->
-									<configfile>
-										<file>${basedir}/../data/jboss/server/default/conf/escidoc-core-log4j.xml</file>
-										<file>${basedir}/../data/jboss/server/default/conf/escidoc-core.properties</file>
-										<file>${basedir}/../data/jboss/server/default/conf/escidoc-login.xml</file>
-										<file>${basedir}/../data/jboss/server/default/conf/jboss-log4j.xml</file>
-										<file>${basedir}/../data/jboss/server/default/conf/catalog.xml</file>
-										<todir>conf</todir>
-									</configfile>
-									<configfile>
-										<file>${basedir}/../data/jboss/server/default/conf/props/defaultRoles.properties</file>
-										<file>${basedir}/../data/jboss/server/default/conf/props/defaultUsers.properties</file>
-										<todir>conf/props</todir>
-									</configfile>
-
-									<configfile>
-										<file>${basedir}/../data/jboss/server/default/conf/search/sen.xml</file>
-										<todir>conf/search</todir>
-									</configfile>
-									<configfile>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/fedoragsearch.properties</file>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/gsearchAttributes.xslt</file>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/permissions.xslt</file>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/SRWServer.props</file>
-										<todir>conf/search/config</todir>
-									</configfile>
-									<configfile>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/browseIndexToResultPage.xslt</file>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/copyXml.xslt</file>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/escidocGFfindObjectsToResultPage.xslt</file>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/gfindObjectsToResultPage.xslt</file>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/textFromXml.xslt</file>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/updateIndexToResultPage.xslt</file>
-										<todir>conf/search/config/index</todir>
-									</configfile>
-									<configfile>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/content_model_admin/content_model_admin.SRWDatabase.properties</file>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/content_model_admin/contentModelAdminXmlToLucene_old.xslt</file>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/content_model_admin/contentModelAdminXmlToLucene.xslt</file>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/content_model_admin/index.object-types.properties</file>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/content_model_admin/index.properties</file>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/content_model_admin/indexInfo.xml</file>
-										<todir>conf/search/config/index/content_model_admin</todir>
-									</configfile>
-									<configfile>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/content_relation_admin/content_relation_admin.SRWDatabase.properties</file>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/content_relation_admin/contentRelationAdminXmlToLucene_old.xslt</file>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/content_relation_admin/contentRelationAdminXmlToLucene.xslt</file>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/content_relation_admin/index.object-types.properties</file>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/content_relation_admin/index.properties</file>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/content_relation_admin/indexInfo.xml</file>
-										<todir>conf/search/config/index/content_relation_admin</todir>
-									</configfile>
-									<configfile>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/context_admin/context_admin.SRWDatabase.properties</file>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/context_admin/contextAdminXmlToLucene_old.xslt</file>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/context_admin/contextAdminAdminXmlToLucene.xslt</file>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/context_admin/index.object-types.properties</file>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/context_admin/index.properties</file>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/context_admin/indexInfo.xml</file>
-										<todir>conf/search/config/index/context_admin</todir>
-									</configfile>
-									<configfile>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/escidoc_all/escidoc_all.SRWDatabase.properties</file>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/escidoc_all/escidocXmlToLucene_old.xslt</file>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/escidoc_all/index.object-types.properties</file>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/escidoc_all/index.properties</file>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/escidoc_all/indexInfo.xml</file>
-										<todir>conf/search/config/index/escidoc_all</todir>
-									</configfile>
-									<configfile>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/escidocoaipmh_all/escidocoaipmh_all.SRWDatabase.properties</file>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/escidocoaipmh_all/escidocOaipmhXmlToLucene_old.xslt</file>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/escidocoaipmh_all/index.object-types.properties</file>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/escidocoaipmh_all/index.properties</file>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/escidocoaipmh_all/indexInfo.xml</file>
-										<todir>conf/search/config/index/escidocoaipmh_all</todir>
-									</configfile>
-									<configfile>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/escidocou_all/escidocou_all.SRWDatabase.properties</file>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/escidocou_all/escidocOuXmlToLucene_old.xslt</file>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/escidocou_all/index.object-types.properties</file>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/escidocou_all/index.properties</file>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/escidocou_all/indexInfo.xml</file>
-										<todir>conf/search/config/index/escidocou_all</todir>
-									</configfile>
-									<configfile>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/item_container_admin/item_container_admin.SRWDatabase.properties</file>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/item_container_admin/itemContainerAdminXmlToLucene_mpdl.xslt</file>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/item_container_admin/itemContainerAdminXmlToLucene_old.xslt</file>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/item_container_admin/itemContainerAdminXmlToLucene.xslt</file>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/item_container_admin/index.object-types.properties</file>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/item_container_admin/index.properties</file>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/item_container_admin/indexInfo.xml</file>
-										<todir>conf/search/config/index/item_container_admin</todir>
-									</configfile>
-									<configfile>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/ou_admin/ou_admin.SRWDatabase.properties</file>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/ou_admin/ouAdminXmlToLucene_mpdl.xslt</file>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/ou_admin/ouAdminXmlToLucene_old.xslt</file>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/ou_admin/ouAdminXmlToLucene.xslt</file>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/ou_admin/index.object-types.properties</file>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/ou_admin/index.properties</file>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/ou_admin/indexInfo.xml</file>
-										<todir>conf/search/config/index/ou_admin</todir>
-									</configfile>
-									<configfile>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/repository/escidocrepository/copyXml.xslt</file>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/repository/escidocrepository/repository.properties</file>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/repository/escidocrepository/repositoryInfo.xml</file>
-										<todir>conf/search/config/repository/escidocrepository</todir>
-									</configfile>
-									<configfile>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/rest/browseIndexToHtml.xslt</file>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/rest/copyXml.xslt</file>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/rest/getIndexInfoToHtml.xslt</file>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/rest/getRepositoryInfoToHtml.xslt</file>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/rest/gfindObjectsToHtml.xslt</file>
-										<file>${basedir}/../data/jboss/server/default/conf/search/config/rest/updateIndexToHtml.xslt</file>
-										<todir>conf/search/config/rest</todir>
-									</configfile>
-
-									<configfile>
-										<file>${basedir}/../data/jboss/server/default/conf/search/dic/da.sen</file>
-										<file>${basedir}/../data/jboss/server/default/conf/search/dic/dictionary.properties</file>
-										<file>${basedir}/../data/jboss/server/default/conf/search/dic/matrix.sen</file>
-										<file>${basedir}/../data/jboss/server/default/conf/search/dic/posInfo.sen</file>
-										<file>${basedir}/../data/jboss/server/default/conf/search/dic/token.sen</file>
-										<todir>conf/search/dic</todir>
-									</configfile>
-									<configfile>
-										<file>${basedir}/../data/jboss/server/default/conf/tme/jhove.conf</file>
-										<todir>conf/tme</todir>
-									</configfile>
-								</configfiles>
-							</configuration>
-						</configuration>
-					</plugin>
-
-				</plugins>
-			</build>
-		</profile>
 
 		<profile>
 			<id>ingest-into-fedora</id>
@@ -2008,13 +1610,13 @@
 										<argument>-Xmx96m</argument>
 
 										<argument>-classpath</argument>
-										<argument>${project.build.directory}${file.separator}fedora${file.separator}client${file.separator}bin${path.separator}${project.build.directory}${file.separator}fedora${file.separator}client${file.separator}fcrepo-client-admin-${fcrepo.version}.jar</argument>
-										<argument>-Djava.endorsed.dirs=${project.build.directory}${file.separator}fedora${file.separator}client${file.separator}lib</argument>
-										<argument>-Djavax.net.ssl.trustStore=${project.build.directory}${file.separator}fedora${file.separator}client${file.separator}truststore</argument>
+										<argument>${project.build.directory}${file.separator}escidoc${file.separator}fedora${file.separator}client${file.separator}bin${path.separator}${project.build.directory}${file.separator}escidoc${file.separator}fedora${file.separator}client${file.separator}fcrepo-client-admin-${fcrepo.version}.jar</argument>
+										<argument>-Djava.endorsed.dirs=${project.build.directory}${file.separator}escidoc${file.separator}fedora${file.separator}client${file.separator}lib</argument>
+										<argument>-Djavax.net.ssl.trustStore=${project.build.directory}${file.separator}escidoc${file.separator}fedora${file.separator}client${file.separator}truststore</argument>
 										<argument>-Djavax.net.ssl.trustStorePassword=tomcat</argument>
 										<argument>-Djavax.xml.parsers.DocumentBuilderFactory=org.apache.xerces.jaxp.DocumentBuilderFactoryImpl</argument>
 										<argument>-Djavax.xml.parsers.SAXParserFactory=org.apache.xerces.jaxp.SAXParserFactoryImpl</argument>
-										<argument>-Dfedora.home=${project.build.directory}${file.separator}fedora</argument>
+										<argument>-Dfedora.home=${project.build.directory}${file.separator}escidoc${file.separator}fedora</argument>
 
 										<argument>org.fcrepo.client.utility.ingest.Ingest</argument>
 										<argument>d</argument>

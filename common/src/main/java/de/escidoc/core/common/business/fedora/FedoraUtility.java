@@ -359,10 +359,11 @@ public class FedoraUtility implements InitializingBean {
                 return apia.getDatastreamDissemination(pid, dataStreamId, timestamp);
             }
             catch (final RemoteException e1) {
-                final String message = "Error on retrieve datastream (pid='" + pid + "', dataStreamId='" + dataStreamId
-                    + "', timestamp='" + timestamp + "') ";
+                final String message =
+                    "Error on retrieve datastream (pid='" + pid + "', dataStreamId='" + dataStreamId + "', timestamp='"
+                        + timestamp + "') ";
                 LOGGER.warn(message);
-                if(LOGGER.isDebugEnabled()) {
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug(message, e1);
                 }
                 throw new FedoraSystemException(message, e);
@@ -653,10 +654,10 @@ public class FedoraUtility implements InitializingBean {
                 datastreams = apim.getDatastreams(pid, timestamp, null);
             }
             catch (final RemoteException e1) {
-                final String message = "Error on retrieve datastream (pid='" + pid + "', timestamp='" + timestamp
-                        + "') ";
+                final String message =
+                    "Error on retrieve datastream (pid='" + pid + "', timestamp='" + timestamp + "') ";
                 LOGGER.warn(message);
-                if(LOGGER.isDebugEnabled()) {
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug(message, e1);
                 }
                 throw new FedoraSystemException(message, e);
@@ -1038,7 +1039,7 @@ public class FedoraUtility implements InitializingBean {
             catch (final RemoteException e1) {
                 final String message = "Error on retrieve object profile (pid='" + pid + "') ";
                 LOGGER.warn(message);
-                if(LOGGER.isDebugEnabled()) {
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug(message, e1);
                 }
                 throw new FedoraSystemException(message, e);

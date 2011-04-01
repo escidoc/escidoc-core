@@ -32,21 +32,18 @@ import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.string.StringUtility;
+import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.naming.directory.NoSuchAttributeException;
 
 /**
  * Stax handler implementation that handles the item update.
- *
+ * 
  * @author Frank Schwichtenberg
  */
 public class ItemUpdateHandler extends DefaultHandler {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(ItemUpdateHandler.class);
 
     private final StaxParser parser;
 
@@ -58,9 +55,11 @@ public class ItemUpdateHandler extends DefaultHandler {
 
     /**
      * The constructor.
-     *
-     * @param itemId The id of the item that shall be updated.
-     * @param parser The <code>StaxParser</code>.
+     * 
+     * @param itemId
+     *            The id of the item that shall be updated.
+     * @param parser
+     *            The <code>StaxParser</code>.
      */
     public ItemUpdateHandler(final String itemId, final StaxParser parser) {
 
@@ -70,8 +69,9 @@ public class ItemUpdateHandler extends DefaultHandler {
 
     /**
      * See Interface for functional description.
-     *
-     * @see de.escidoc.core.om.business.stax.handler.DefaultHandler#startElement (de.escidoc.core.om.business.stax.events.StartElement)
+     * 
+     * @see de.escidoc.core.om.business.stax.handler.DefaultHandler#startElement
+     *      (de.escidoc.core.om.business.stax.events.StartElement)
      */
     @Override
     public StartElement startElement(final StartElement element) throws InvalidContentException {
@@ -79,42 +79,36 @@ public class ItemUpdateHandler extends DefaultHandler {
         final String curPath = parser.getCurPath();
         if (!this.done && curPath.equals(ITEM_PATH)) {
             // handle xlink:href attribute
-            try {
-                final String href = element.getAttribute(Constants.XLINK_URI, "href").getValue();
-                final String expectedHref = Constants.ITEM_URL_BASE + this.itemId;
-                // check href
-                if (!href.equals(expectedHref)) {
-                    throw new InvalidContentException(StringUtility.format("Attribute xlink:href has invalid value.",
-                        href, expectedHref));
+            if (element.hasAttribute(Constants.XLINK_URI, Elements.ATTRIBUTE_XLINK_HREF)) {
+                try {
+                    final String href =
+                        element.getAttribute(Constants.XLINK_URI, Elements.ATTRIBUTE_XLINK_HREF).getValue();
+                    final String expectedHref = Constants.ITEM_URL_BASE + this.itemId;
+                    // check href
+                    if (!href.equals(expectedHref)) {
+                        throw new InvalidContentException(StringUtility.format(
+                            "Attribute xlink:href has invalid value.", href, expectedHref));
+                    }
                 }
-            }
-            catch (final NoSuchAttributeException e) {
-                if (LOGGER.isWarnEnabled()) {
-                    LOGGER.warn("Error on parsing item.");
+                catch (final NoSuchAttributeException e) {
+                    throw new InvalidContentException(e);
                 }
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("Error on parsing item.", e);
-                }
-                // LAX
             }
 
             // handle objid attribute
             // in case of non lax handling, an exception must be thrown if no
             // objid has been provided.
-            try {
-                final String objid = element.getAttribute(null, "objid").getValue();
-                if (!objid.equals(this.itemId)) {
-                    throw new InvalidContentException(StringUtility.format("Attribute objid has invalid value.", objid,
-                        this.itemId));
-                }
+            if (element.hasAttribute(null, "objid")) {
+                try {
+                    final String objid = element.getAttribute(null, "objid").getValue();
+                    if (!objid.equals(this.itemId)) {
+                        throw new InvalidContentException(StringUtility.format("Attribute objid has invalid value.",
+                            objid, this.itemId));
+                    }
 
-            }
-            catch (final NoSuchAttributeException e) {
-                if (LOGGER.isWarnEnabled()) {
-                    LOGGER.warn("Error on parsing item.");
                 }
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("Error on parsing item.", e);
+                catch (final NoSuchAttributeException e) {
+                    throw new InvalidContentException(e);
                 }
             }
             this.done = true;

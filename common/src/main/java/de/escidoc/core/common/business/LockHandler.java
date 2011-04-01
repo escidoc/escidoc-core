@@ -108,6 +108,10 @@ public class LockHandler extends JdbcDaoSupport {
      */
     public String getLockOwner(final String objid) throws WebserverSystemException {
 
+        if (objid == null) {
+            throw new NullPointerException("Objid for lock owner check is null");
+        }
+
         // TODO: use other query method to avoid exception in case of unlocked.
         try {
             return getJdbcTemplate().queryForObject("SELECT owner FROM om.lockstatus WHERE objid = ?",
