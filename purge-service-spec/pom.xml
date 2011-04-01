@@ -66,6 +66,7 @@
                     <compilerCompliance>1.6</compilerCompliance>
                     <compilerTargetPlatform>1.6</compilerTargetPlatform>
                     <lineEnding>CRLF</lineEnding>
+                    <encoding>UTF-8</encoding>
                     <configFile>${project.parent.basedir}/etc/eSciDoc_codestyle.xml</configFile>
                 </configuration>
                 <executions>
