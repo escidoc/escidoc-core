@@ -24,9 +24,9 @@ import java.util.Map;
 
 public class FedoraRestDeviationHandlerBean implements SessionBean {
 
-    FedoraRestDeviationHandlerInterface service;
+    private FedoraRestDeviationHandlerInterface service;
 
-    SessionContext sessionCtx;
+    private SessionContext sessionCtx;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FedoraRestDeviationHandlerBean.class);
 

@@ -30,9 +30,9 @@ import java.util.Map;
 
 public class ScopeHandlerBean implements SessionBean {
 
-    ScopeHandlerInterface service;
+    private ScopeHandlerInterface service;
 
-    SessionContext sessionCtx;
+    private SessionContext sessionCtx;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ScopeHandlerBean.class);
 

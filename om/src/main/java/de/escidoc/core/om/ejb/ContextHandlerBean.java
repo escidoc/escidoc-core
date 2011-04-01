@@ -46,9 +46,9 @@ import java.util.Map;
 
 public class ContextHandlerBean implements SessionBean {
 
-    ContextHandlerInterface service;
+    private ContextHandlerInterface service;
 
-    SessionContext sessionCtx;
+    private SessionContext sessionCtx;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ContextHandlerBean.class);
 

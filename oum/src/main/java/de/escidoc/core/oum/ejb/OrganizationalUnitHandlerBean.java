@@ -42,9 +42,9 @@ import java.util.Map;
 
 public class OrganizationalUnitHandlerBean implements SessionBean {
 
-    OrganizationalUnitHandlerInterface service;
+    private OrganizationalUnitHandlerInterface service;
 
-    SessionContext sessionCtx;
+    private SessionContext sessionCtx;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OrganizationalUnitHandlerBean.class);
 

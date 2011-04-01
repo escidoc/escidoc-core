@@ -39,9 +39,9 @@ import java.util.Map;
 
 public class ContentRelationHandlerBean implements SessionBean {
 
-    ContentRelationHandlerInterface service;
+    private ContentRelationHandlerInterface service;
 
-    SessionContext sessionCtx;
+    private SessionContext sessionCtx;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ContentRelationHandlerBean.class);
 

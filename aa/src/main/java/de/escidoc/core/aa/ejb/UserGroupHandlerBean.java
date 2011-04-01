@@ -44,9 +44,9 @@ import java.util.Map;
 
 public class UserGroupHandlerBean implements SessionBean {
 
-    UserGroupHandlerInterface service;
+    private UserGroupHandlerInterface service;
 
-    SessionContext sessionCtx;
+    private SessionContext sessionCtx;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserGroupHandlerBean.class);
 

@@ -27,9 +27,9 @@ import java.rmi.RemoteException;
 
 public class ActionHandlerBean implements SessionBean {
 
-    ActionHandlerInterface service;
+    private ActionHandlerInterface service;
 
-    SessionContext sessionCtx;
+    private SessionContext sessionCtx;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ActionHandlerBean.class);
 

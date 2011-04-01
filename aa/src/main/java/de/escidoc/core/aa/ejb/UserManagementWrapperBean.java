@@ -23,9 +23,9 @@ import java.rmi.RemoteException;
 
 public class UserManagementWrapperBean implements SessionBean {
 
-    UserManagementWrapperInterface service;
+    private UserManagementWrapperInterface service;
 
-    SessionContext sessionCtx;
+    private SessionContext sessionCtx;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserManagementWrapperBean.class);
 

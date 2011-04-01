@@ -27,9 +27,9 @@ import java.rmi.RemoteException;
 
 public class PreprocessingHandlerBean implements SessionBean {
 
-    PreprocessingHandlerInterface service;
+    private PreprocessingHandlerInterface service;
 
-    SessionContext sessionCtx;
+    private SessionContext sessionCtx;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PreprocessingHandlerBean.class);
 

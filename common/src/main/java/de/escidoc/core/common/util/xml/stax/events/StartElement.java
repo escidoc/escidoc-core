@@ -20,8 +20,7 @@
 
 package de.escidoc.core.common.util.xml.stax.events;
 
-import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
-//import org.slf4j.Logger;
+import de.escidoc.core.common.exceptions.system.XmlParserSystemException; //import org.slf4j.Logger;
 //import org.slf4j.LoggerFactory;
 
 import javax.naming.directory.NoSuchAttributeException;
@@ -68,8 +67,8 @@ public class StartElement extends AbstractElement {
         this.attributes = new ArrayList<Attribute>();
     }
 
-    public StartElement(final String localName, final String namespace,
-        final String prefix, final NamespaceContext nsContext) {
+    public StartElement(final String localName, final String namespace, final String prefix,
+        final NamespaceContext nsContext) {
 
         super(null, null);
         this.localName = localName;
@@ -81,8 +80,7 @@ public class StartElement extends AbstractElement {
         this.attributes = new ArrayList<Attribute>();
     }
 
-    public StartElement(final XMLStreamReader parser, final String path)
-        throws XmlParserSystemException {
+    public StartElement(final XMLStreamReader parser, final String path) throws XmlParserSystemException {
 
         super(parser, path);
         this.localName = parser.getLocalName();
@@ -105,8 +103,7 @@ public class StartElement extends AbstractElement {
      * attributes; }
      */
 
-    public Attribute getAttribute(final int index)
-        throws IndexOutOfBoundsException {
+    public Attribute getAttribute(final int index) throws IndexOutOfBoundsException {
         return attributes.get(index);
     }
 
@@ -119,9 +116,7 @@ public class StartElement extends AbstractElement {
 
     }
 
-    public Attribute getAttribute(
-        final String namespaceUri, final String localName)
-        throws NoSuchAttributeException {
+    public Attribute getAttribute(final String namespaceUri, final String localName) throws NoSuchAttributeException {
         final Attribute result;
 
         final int index = indexOfAttribute(namespaceUri, localName);
@@ -129,8 +124,7 @@ public class StartElement extends AbstractElement {
             result = getAttribute(index);
         }
         else {
-            throw new NoSuchAttributeException("No attribute {" + namespaceUri
-                + '}' + localName + '.');
+            throw new NoSuchAttributeException("No attribute {" + namespaceUri + '}' + localName + '.');
         }
 
         return result;
@@ -143,8 +137,7 @@ public class StartElement extends AbstractElement {
      * @param localName
      * @return
      */
-    public boolean hasAttribute(
-        final String namespaceUri, final String localName) {
+    public boolean hasAttribute(final String namespaceUri, final String localName) {
 
         if (indexOfAttribute(namespaceUri, localName) == -1) {
             return false;
@@ -152,9 +145,7 @@ public class StartElement extends AbstractElement {
         return true;
     }
 
-    public String getAttributeValue(
-        final String namespaceUri, final String localName)
-        throws NoSuchAttributeException {
+    public String getAttributeValue(final String namespaceUri, final String localName) throws NoSuchAttributeException {
 
         return getAttribute(namespaceUri, localName).getValue();
     }
@@ -165,9 +156,8 @@ public class StartElement extends AbstractElement {
      * @param localName
      * @return
      */
-    public int indexOfAttribute(
-        final CharSequence namespace, final String localName) {
-        
+    public int indexOfAttribute(final CharSequence namespace, final String localName) {
+
         final int size = attributes.size();
         for (int i = 0; i < size; i++) {
             final Attribute att = attributes.get(i);
@@ -178,8 +168,7 @@ public class StartElement extends AbstractElement {
                         return i;
                     }
                 }
-                else if (att.getNamespace() != null
-                    && att.getNamespace().equals(namespace)) {
+                else if (att.getNamespace() != null && att.getNamespace().equals(namespace)) {
                     return i;
                 }
             }

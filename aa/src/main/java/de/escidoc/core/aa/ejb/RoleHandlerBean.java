@@ -34,9 +34,9 @@ import java.util.Map;
 
 public class RoleHandlerBean implements SessionBean {
 
-    RoleHandlerInterface service;
+    private RoleHandlerInterface service;
 
-    SessionContext sessionCtx;
+    private SessionContext sessionCtx;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RoleHandlerBean.class);
 

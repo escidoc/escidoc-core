@@ -33,9 +33,9 @@ import java.util.Map;
 
 public class ReportDefinitionHandlerBean implements SessionBean {
 
-    ReportDefinitionHandlerInterface service;
+    private ReportDefinitionHandlerInterface service;
 
-    SessionContext sessionCtx;
+    private SessionContext sessionCtx;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ReportDefinitionHandlerBean.class);
 

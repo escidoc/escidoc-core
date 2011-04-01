@@ -63,9 +63,9 @@ import java.util.Map;
 
 public class ItemHandlerBean implements SessionBean {
 
-    ItemHandlerInterface service;
+    private ItemHandlerInterface service;
 
-    SessionContext sessionCtx;
+    private SessionContext sessionCtx;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ItemHandlerBean.class);
 

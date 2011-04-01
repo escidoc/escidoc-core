@@ -41,9 +41,9 @@ import java.util.Map;
 
 public class ContentModelHandlerBean implements SessionBean {
 
-    ContentModelHandlerInterface service;
+    private ContentModelHandlerInterface service;
 
-    SessionContext sessionCtx;
+    private SessionContext sessionCtx;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ContentModelHandlerBean.class);
 

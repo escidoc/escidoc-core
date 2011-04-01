@@ -23,9 +23,9 @@ import java.rmi.RemoteException;
 
 public class IngestHandlerBean implements SessionBean {
 
-    IngestHandlerInterface service;
+    private IngestHandlerInterface service;
 
-    SessionContext sessionCtx;
+    private SessionContext sessionCtx;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(IngestHandlerBean.class);
 

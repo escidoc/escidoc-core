@@ -31,9 +31,9 @@ import java.util.Map;
 
 public class SetDefinitionHandlerBean implements SessionBean {
 
-    SetDefinitionHandlerInterface service;
+    private SetDefinitionHandlerInterface service;
 
-    SessionContext sessionCtx;
+    private SessionContext sessionCtx;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SetDefinitionHandlerBean.class);
 

@@ -57,9 +57,9 @@ import java.util.Map;
 
 public class ContainerHandlerBean implements SessionBean {
 
-    ContainerHandlerInterface service;
+    private ContainerHandlerInterface service;
 
-    SessionContext sessionCtx;
+    private SessionContext sessionCtx;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ContainerHandlerBean.class);
 

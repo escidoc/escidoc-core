@@ -31,9 +31,9 @@ import java.util.Map;
 
 public class AggregationDefinitionHandlerBean implements SessionBean {
 
-    AggregationDefinitionHandlerInterface service;
+    private AggregationDefinitionHandlerInterface service;
 
-    SessionContext sessionCtx;
+    private SessionContext sessionCtx;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AggregationDefinitionHandlerBean.class);
 

@@ -29,9 +29,9 @@ import java.util.List;
 
 public class PolicyDecisionPointBean implements SessionBean {
 
-    PolicyDecisionPointInterface service;
+    private PolicyDecisionPointInterface service;
 
-    SessionContext sessionCtx;
+    private SessionContext sessionCtx;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PolicyDecisionPointBean.class);
 

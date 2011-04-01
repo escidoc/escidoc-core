@@ -138,9 +138,9 @@ import java.rmi.RemoteException;
 
 public class SoapExceptionGenerationBean implements SessionBean {
 
-    SoapExceptionGenerationInterface service;
+    private SoapExceptionGenerationInterface service;
 
-    SessionContext sessionCtx;
+    private SessionContext sessionCtx;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SoapExceptionGenerationBean.class);
 

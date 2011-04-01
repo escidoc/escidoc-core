@@ -28,9 +28,9 @@ import java.rmi.RemoteException;
 
 public class SemanticStoreHandlerBean implements SessionBean {
 
-    SemanticStoreHandlerInterface service;
+    private SemanticStoreHandlerInterface service;
 
-    SessionContext sessionCtx;
+    private SessionContext sessionCtx;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SemanticStoreHandlerBean.class);
 

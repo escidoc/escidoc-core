@@ -25,9 +25,9 @@ import java.rmi.RemoteException;
 
 public class StatisticDataHandlerBean implements SessionBean {
 
-    StatisticDataHandlerInterface service;
+    private StatisticDataHandlerInterface service;
 
-    SessionContext sessionCtx;
+    private SessionContext sessionCtx;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(StatisticDataHandlerBean.class);
 

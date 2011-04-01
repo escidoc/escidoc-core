@@ -28,9 +28,9 @@ import java.rmi.RemoteException;
 
 public class JhoveHandlerBean implements SessionBean {
 
-    JhoveHandlerInterface service;
+    private JhoveHandlerInterface service;
 
-    SessionContext sessionCtx;
+    private SessionContext sessionCtx;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JhoveHandlerBean.class);
 

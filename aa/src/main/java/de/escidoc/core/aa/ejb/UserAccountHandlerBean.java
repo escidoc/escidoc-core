@@ -46,9 +46,9 @@ import java.util.Map;
 
 public class UserAccountHandlerBean implements SessionBean {
 
-    UserAccountHandlerInterface service;
+    private UserAccountHandlerInterface service;
 
-    SessionContext sessionCtx;
+    private SessionContext sessionCtx;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserAccountHandlerBean.class);
 

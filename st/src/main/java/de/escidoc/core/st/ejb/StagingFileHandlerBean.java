@@ -27,9 +27,9 @@ import java.rmi.RemoteException;
 
 public class StagingFileHandlerBean implements SessionBean {
 
-    StagingFileHandlerInterface service;
+    private StagingFileHandlerInterface service;
 
-    SessionContext sessionCtx;
+    private SessionContext sessionCtx;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(StagingFileHandlerBean.class);
 
