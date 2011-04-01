@@ -6,13 +6,13 @@
 	<parent>
 		<artifactId>eSciDocCore</artifactId>
 		<groupId>eSciDocCore</groupId>
-		<version>${escidoc-core.version}</version>
+		<version>trunk-SNAPSHOT</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>eSciDocCore</groupId>
 	<artifactId>aa</artifactId>
 	<packaging>ejb</packaging>
-	<version>${escidoc-core.version}</version>
+	<version>trunk-SNAPSHOT</version>
 
 	<build>
 		<plugins>

@@ -6,13 +6,13 @@
 	<groupId>eSciDocCore</groupId>
 	<artifactId>oai</artifactId>
 	<name>eSciDoc Core - OAI-PMH Service</name>
-	<version>${escidoc-core.version}</version>
+	<version>trunk-SNAPSHOT</version>
     <packaging>ejb</packaging>
 
 	<parent>
 		<artifactId>eSciDocCore</artifactId>
 		<groupId>eSciDocCore</groupId>
-		<version>${escidoc-core.version}</version>
+		<version>trunk-SNAPSHOT</version>
 	</parent>
 
 	<description>OAI-PMH Service package of eSciDoc Core</description>

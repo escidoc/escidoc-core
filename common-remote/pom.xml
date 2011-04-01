@@ -8,13 +8,13 @@
 	<artifactId>common-remote</artifactId>
 	<packaging>jar</packaging>
 	<name>eSciDoc Core - Common Remote Service</name>
-	<version>${escidoc-core.version}</version>
+	<version>trunk-SNAPSHOT</version>
 	<description>Common-Remote package of eSciDoc Core</description>
 
 	<parent>
 		<artifactId>eSciDocCore</artifactId>
 		<groupId>eSciDocCore</groupId>
-		<version>${escidoc-core.version}</version>
+		<version>trunk-SNAPSHOT</version>
 	</parent>
 
 </project>

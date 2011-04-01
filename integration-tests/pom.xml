@@ -8,13 +8,13 @@
 	<artifactId>integration-tests</artifactId>
 	<packaging>jar</packaging>
 	<name>eSciDoc Core - Integration Tests</name>
-	<version>${escidoc-core.version}</version>
+	<version>trunk-SNAPSHOT</version>
 	<description>Integration Tests of eSciDoc Core</description>
 
 	<parent>
 		<artifactId>eSciDocCore</artifactId>
 		<groupId>eSciDocCore</groupId>
-		<version>${escidoc-core.version}</version>
+		<version>trunk-SNAPSHOT</version>
 	</parent>
 
 	<!-- Setting up the integration test infrastructure is a little bit complex 
@@ -473,7 +473,7 @@
 		<dependency>
 			<groupId>org.escidoc</groupId>
 			<artifactId>escidoc-core</artifactId>
-			<version>${escidoc-core.version}</version>
+			<version>trunk-SNAPSHOT</version>
 			<type>ear</type>
 		</dependency>
 		<dependency>
@@ -1526,6 +1526,217 @@
 									<resources>
 										<resource>
 											<directory>${basedir}/src/test/resources/fedora</directory>
+											<includes>
+												<include>fedora.fcfg</include>
+											</includes>
+											<filtering>false</filtering>
+										</resource>
+									</resources>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+
+				</plugins>
+			</build>
+		</profile>
+
+		<profile>
+			<id>install-fedora-oracle</id>
+
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-resources-plugin</artifactId>
+						<version>2.5</version>
+						<executions>
+							<execution>
+								<id>copy-fedora-drop-script</id>
+								<phase>clean</phase>
+								<goals>
+									<goal>copy-resources</goal>
+								</goals>
+								<configuration>
+									<outputDirectory>${basedir}/target/sql-resources/oracle</outputDirectory>
+									<resources>
+										<resource>
+											<directory>${basedir}/../common/src/main/resources/sql/oracle</directory>
+											<filtering>true</filtering>
+										</resource>
+									</resources>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>sql-maven-plugin</artifactId>
+						<version>1.3</version>
+						<dependencies>
+							<!-- specify the dependent jdbc driver here -->
+							<dependency>
+								<groupId>ojdbc</groupId>
+								<artifactId>ojdbc</artifactId>
+								<version>14</version>
+							</dependency>
+						</dependencies>
+						<!-- common configuration shared by all executions -->
+						<configuration>
+							<driver>oracle.jdbc.driver.OracleDriver</driver>
+							<url>jdbc:oracle:thin:@${escidoc.oracle.url}:${fedora.oracle.database}</url>
+							<username>${fedora.oracle.database.admin.user}</username>
+							<password>${fedora.oracle.database.admin.password}</password>
+          					<delimiter>/</delimiter>
+          					<delimiterType>row</delimiterType>
+          					<keepFormat>true</keepFormat>
+						</configuration>
+						<executions>
+							<execution>
+								<id>drop-fedora-oracle-db</id>
+								<phase>clean</phase>
+								<goals>
+									<goal>execute</goal>
+								</goals>
+								<configuration>
+									<driver>oracle.jdbc.driver.OracleDriver</driver>
+									<url>jdbc:oracle:thin:@${escidoc.oracle.url}:${fedora.oracle.database}</url>
+									<username>${fedora.oracle.database.admin.user}</username>
+									<password>${fedora.oracle.database.admin.password}</password>
+									<autocommit>true</autocommit>
+          							<delimiter>/</delimiter>
+          							<delimiterType>row</delimiterType>
+          							<keepFormat>true</keepFormat>
+									<srcFiles>
+										<srcFile>${basedir}/target/sql-resources/oracle/drop-fedora-db.sql
+										</srcFile>
+									</srcFiles>
+								</configuration>
+							</execution>
+							<execution>
+								<id>drop-triplestore-oracle-db</id>
+								<phase>clean</phase>
+								<goals>
+									<goal>execute</goal>
+								</goals>
+								<configuration>
+									<driver>oracle.jdbc.driver.OracleDriver</driver>
+									<url>jdbc:oracle:thin:@${escidoc.oracle.url}:${triplestore.oracle.database}</url>
+									<username>${triplestore.oracle.database.admin.user}</username>
+									<password>${triplestore.oracle.database.admin.password}</password>
+									<autocommit>true</autocommit>
+          							<delimiter>/</delimiter>
+          							<delimiterType>row</delimiterType>
+          							<keepFormat>true</keepFormat>
+									<srcFiles>
+										<srcFile>${basedir}/target/sql-resources/oracle/drop-triplestore-db.sql
+										</srcFile>
+									</srcFiles>
+								</configuration>
+							</execution>
+
+							<execution>
+								<id>create-fedora-oracle-db</id>
+								<phase>validate</phase>
+								<goals>
+									<goal>execute</goal>
+								</goals>
+								<configuration>
+									<driver>oracle.jdbc.driver.OracleDriver</driver>
+									<url>jdbc:oracle:thin:@${escidoc.oracle.url}:${fedora.oracle.database}</url>
+									<username>${fedora.oracle.database.admin.user}</username>
+									<password>${fedora.oracle.database.admin.password}</password>
+									<autocommit>true</autocommit>
+          							<delimiter>;</delimiter>
+          							<delimiterType>normal</delimiterType>
+          							<keepFormat>false</keepFormat>
+									<srcFiles>
+										<srcFile>${basedir}/target/sql-resources/oracle/create-fedora-db.sql
+										</srcFile>
+									</srcFiles>
+								</configuration>
+							</execution>
+							<execution>
+								<id>create-triplestore-oracle-db</id>
+								<phase>validate</phase>
+								<goals>
+									<goal>execute</goal>
+								</goals>
+								<configuration>
+									<driver>oracle.jdbc.driver.OracleDriver</driver>
+									<url>jdbc:oracle:thin:@${escidoc.oracle.url}:${triplestore.oracle.database}</url>
+									<username>${triplestore.oracle.database.admin.user}</username>
+									<password>${triplestore.oracle.database.admin.password}</password>
+									<autocommit>true</autocommit>
+          							<delimiter>;</delimiter>
+          							<delimiterType>normal</delimiterType>
+          							<keepFormat>false</keepFormat>
+									<srcFiles>
+										<srcFile>${basedir}/target/sql-resources/oracle/create-triplestore-db.sql
+										</srcFile>
+									</srcFiles>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>exec-maven-plugin</artifactId>
+						<version>1.2</version>
+						<executions>
+							<execution>
+								<id>install-fedora-oracle</id>
+								<phase>validate</phase>
+								<goals>
+									<goal>exec</goal>
+								</goals>
+								<configuration>
+									<executable>java</executable>
+									<arguments>
+										<argument>-jar</argument>
+										<argument>${settings.localRepository}/org/escidoc/fcrepo-installer/${fcrepo.version}/fcrepo-installer-${fcrepo.version}.jar</argument>
+										<argument>src/test/resources/fedora/install.properties</argument>
+									</arguments>
+									<outputFile>${project.build.directory}/fcrepo-install-error.log</outputFile>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+
+					<plugin>
+						<artifactId>maven-resources-plugin</artifactId>
+						<version>2.5</version>
+						<executions>
+							<execution>
+								<id>deploy-fedora-oracle-to-jboss</id>
+								<phase>initialize</phase>
+								<goals>
+									<goal>copy-resources</goal>
+								</goals>
+								<configuration>
+									<outputDirectory>${project.build.directory}/installs/${escidoc.jboss.zip.name}/jboss-4.2.3.GA/server/default/deploy</outputDirectory>
+									<resources>
+										<resource>
+											<directory>${project.build.directory}/fedora/install</directory>
+											<includes>
+												<include>fedora.war</include>
+											</includes>
+											<filtering>false</filtering>
+										</resource>
+									</resources>
+								</configuration>
+							</execution>
+							<execution>
+								<id>deploy-fedora-config</id>
+								<phase>initialize</phase>
+								<goals>
+									<goal>copy-resources</goal>
+								</goals>
+								<configuration>
+									<outputDirectory>${project.build.directory}/fedora/server/config</outputDirectory>
+									<resources>
+										<resource>
+											<directory>${basedir}/src/test/resources/fedora/oracle</directory>
 											<includes>
 												<include>fedora.fcfg</include>
 											</includes>

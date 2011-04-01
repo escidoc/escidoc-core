@@ -5,5 +5,5 @@
 /**
  * delete triplestore user
  */   
-begin execute immediate 'DROP USER ${triplestore.oracle.database.user} CASCADE'; CASCADE'; exception when others then null; end;
+begin execute immediate 'DROP USER ${triplestore.oracle.database.user} CASCADE'; exception when others then null; end;
 /
