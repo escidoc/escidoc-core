@@ -10,7 +10,7 @@
 	<appender name="ESCIDOCCONSOLE"
 		class="org.apache.log4j.ConsoleAppender">
 		<param name="Target" value="System.out" />
-		<param name="Threshold" value="WARN" />
+		<param name="Threshold" value="INFO" />
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern"
 				value="%-5p [%c{1}] %m%n" />
@@ -18,7 +18,7 @@
 	</appender>
     <appender name="FILEOUT" class="org.apache.log4j.DailyRollingFileAppender">
         <param name="Append" value="true"/>
-        <param name="Threshold" value="WARN" />
+        <param name="Threshold" value="INFO" />
         <param name="DatePattern" value="'.'yyyy-MM-dd"/>
         <param name="File" value="${jboss.server.home.dir}/log/escidoc-core.log"/>
         <layout class="org.apache.log4j.PatternLayout">
