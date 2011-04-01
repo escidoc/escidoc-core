@@ -41,3 +41,6 @@ add datastore to fedora.fcfg:
 
 -adapt module with role org.fcrepo.server.resourceIndex.ResourceIndex:
 	-adapt param with name datastore to value localOracleMPTTriplestore in fedora.fcfg
+	
+	
+-use MPTStore with OracleDDLGenerator
