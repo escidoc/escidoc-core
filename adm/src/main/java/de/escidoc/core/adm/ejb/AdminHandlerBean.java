@@ -45,17 +45,21 @@ public class AdminHandlerBean implements SessionBean {
         }
     }
 
+    @Override
     public void setSessionContext(final SessionContext arg0) throws RemoteException {
         this.sessionCtx = arg0;
     }
 
+    @Override
     public void ejbRemove() throws RemoteException {
     }
 
+    @Override
     public void ejbActivate() throws RemoteException {
 
     }
 
+    @Override
     public void ejbPassivate() throws RemoteException {
 
     }
