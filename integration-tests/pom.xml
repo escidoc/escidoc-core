@@ -1595,7 +1595,7 @@
 						<version>1.2</version>
 						<executions>
 							<execution>
-								<id>ingest-fedora-resources-unix</id>
+								<id>ingest-fedora-resources</id>
 								<phase>pre-integration-test</phase>
 								<goals>
 									<goal>exec</goal>
