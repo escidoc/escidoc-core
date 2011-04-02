@@ -1286,11 +1286,14 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
     /**
      * Calls release methods for all container members.
+     * 
+     * The concept of releasing members is incomplete and create huge security holes. 
      *
      * @param id The objid of the parent Container.
      * @throws OptimisticLockingException Thrown if objects altered through other processes during the release.
      * @throws SystemException            Thrown in case of internal error.
      */
+    @Deprecated
     private void releaseMembers(final String id) throws OptimisticLockingException, SystemException {
 
         // Find all members of container
@@ -1321,17 +1324,16 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
                 }
                 catch (final InvalidStatusException e) {
                     // do next member
-                    LOGGER.warn(
-                        "Member '" + memberId + "' of container '" + getContainer().getId() + "' not released.", e);
+                    LOGGER
+                        .warn("Member '" + memberId + "' of container '" + getContainer().getId() + "' not released.");
                 }
                 catch (final LockingException e) {
-                    LOGGER.warn("Member '" + memberId + "' of container '" + getContainer().getId() + "' locked.", e);
+                    LOGGER.warn("Member '" + memberId + "' of container '" + getContainer().getId() + "' locked.");
                 }
                 catch (final OptimisticLockingException e) {
                     LOGGER.warn(
                         "Member '" + memberId + "' of container '" + getContainer().getId() + "' not released.", e);
                     throw e;
-                    // do next member
                 }
                 catch (final WebserverSystemException e) {
                     throw e;
@@ -1352,14 +1354,15 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
                     setItem(memberId);
                 }
                 catch (final Exception e) {
-                    if (LOGGER.isWarnEnabled()) {
-                        LOGGER.warn("Error on setting item.");
-                    }
-                    if (LOGGER.isDebugEnabled()) {
-                        LOGGER.debug("Error on setting item.", e);
-                    }
-                    // do nothing
-                    continue;
+                    throw new WebserverSystemException(e);
+                    //                    if (LOGGER.isWarnEnabled()) {
+                    //                        LOGGER.warn("Error on setting item.");
+                    //                    }
+                    //                    if (LOGGER.isDebugEnabled()) {
+                    //                        LOGGER.debug("Error on setting item.", e);
+                    //                    }
+                    //                    // do nothing
+                    //                    continue;
                 }
                 final String param = "<param last-modification-date=\"" + getItem().getLastModificationDate() + "\"/>";
 
@@ -1367,13 +1370,12 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
                     itemHandler.release(memberId, param);
                 }
                 catch (final InvalidStatusException e) {
-                    if (LOGGER.isWarnEnabled()) {
-                        LOGGER.warn("Error on releasing item.");
-                    }
-                    if (LOGGER.isDebugEnabled()) {
-                        LOGGER.debug("Error on releasing item.", e);
-                    }
                     // do next member
+                    LOGGER
+                        .warn("Member '" + memberId + "' of container '" + getContainer().getId() + "' not released.");
+                }
+                catch (final LockingException e) {
+                    LOGGER.warn("Member '" + memberId + "' of container '" + getContainer().getId() + "' locked.");
                 }
                 catch (final Exception e) {
                     throw new IntegritySystemException(e);
