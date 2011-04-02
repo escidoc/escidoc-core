@@ -22,7 +22,7 @@
 		<ant-nodeps.version>1.8.1</ant-nodeps.version>
 		<ant-launcher.version>1.8.2</ant-launcher.version>
 		<jboss.version>4.2.3.GA</jboss.version>
-		<admin-tool.version>1.0-SNAPSHOT</admin-tool.version>
+		<admin-tool.version>1.1-SNAPSHOT</admin-tool.version>
 	</properties>
 
 	<dependencies>
