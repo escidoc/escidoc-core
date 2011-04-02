@@ -22,6 +22,7 @@ package de.escidoc.core.cmm.service.interfaces;
 
 import de.escidoc.core.common.annotation.Validate;
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
+import de.escidoc.core.common.business.interfaces.IngestableResource;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
@@ -48,7 +49,7 @@ import java.util.Map;
  *
  * @author Frank Schwichtenberg
  */
-public interface ContentModelHandlerInterface {
+public interface ContentModelHandlerInterface extends IngestableResource {
 
     /**
      * Create a Content Model.<br/> Since Version 1.2 of the eSciDoc Infrastructure the XML representation of Content

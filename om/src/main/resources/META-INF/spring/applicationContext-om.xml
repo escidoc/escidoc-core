@@ -224,12 +224,12 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
                 </bean>
                 <bean class="de.escidoc.core.om.business.fedora.ingest.ResourceMapperBean">
                     <property name="resourceType" value="OU"/>
-                    <property name="resource" ref="business.FedoraOrganizationalUnitHandler"/>
+                    <property name="resource" ref="service.OrganizationalUnitHandlerBean"/>
                     <property name="validator" ref="business.ingestValidator"/>
                 </bean>
                 <bean class="de.escidoc.core.om.business.fedora.ingest.ResourceMapperBean">
                     <property name="resourceType" value="CONTENT_MODEL"/>
-                    <property name="resource" ref="business.FedoraContentModelHandler"/>
+                    <property name="resource" ref="service.ContentModelHandlerBean"/>
                     <property name="validator" ref="business.ingestValidator"/>
                 </bean>
             </list>

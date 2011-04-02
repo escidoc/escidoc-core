@@ -77,6 +77,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.persistence.EscidocIdProvider;
+import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.MultipleExtractor;
@@ -93,6 +94,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -850,7 +852,26 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
 
     @Override
     public String ingest(final String xmlData) throws EscidocException {
-        throw new UnsupportedOperationException("Not yet implemented.");
+
+        final ContentModelCreate cm = parseContentModel(xmlData);
+        cm.setIdProvider(getIdProvider());
+        validate(cm);
+        cm.persist(true);
+        final String objid = cm.getObjid();
+        try {
+            if (EscidocConfiguration.getInstance().getAsBoolean(
+                EscidocConfiguration.ESCIDOC_CORE_NOTIFY_INDEXER_ENABLED)) {
+                fireContentModelCreated(objid, retrieve(objid));
+            }
+        }
+        catch (final IOException e) {
+            throw new SystemException("The eSciDoc configuration could not be read", e);
+        }
+        catch (final ResourceNotFoundException e) {
+            throw new IntegritySystemException("The Content Model with id '" + objid + "', which was just ingested, "
+                + "could not be found for retrieve.", e);
+        }
+        return objid;
     }
 
     /**

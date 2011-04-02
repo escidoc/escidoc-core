@@ -7,6 +7,7 @@ package de.escidoc.core.cmm.ejb;
 
 import de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface;
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
+import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
@@ -14,9 +15,11 @@ import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
+import de.escidoc.core.common.exceptions.application.missing.MissingElementValueException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ContentStreamNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.OrganizationalUnitNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
@@ -77,6 +80,33 @@ public class ContentModelHandlerBean implements SessionBean {
     @Override
     public void ejbPassivate() throws RemoteException {
 
+    }
+
+    public String ingest(final String xmlData, final SecurityContext securityContext) throws AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, SystemException, MissingAttributeValueException,
+        MissingElementValueException, ContentModelNotFoundException, InvalidXmlException, InvalidStatusException,
+        EscidocException {
+        try {
+            UserContext.setUserContext(securityContext);
+        }
+        catch (Exception e) {
+            throw new SystemException("Initialization of security context failed.", e);
+        }
+        return service.ingest(xmlData);
+    }
+
+    public String ingest(final String xmlData, final String authHandle, final Boolean restAccess)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException,
+        MissingAttributeValueException, MissingElementValueException, ContentModelNotFoundException,
+        InvalidXmlException, InvalidStatusException, EscidocException {
+        try {
+            UserContext.setUserContext(authHandle);
+            UserContext.setRestAccess(restAccess);
+        }
+        catch (Exception e) {
+            throw new SystemException("Initialization of security context failed.", e);
+        }
+        return service.ingest(xmlData);
     }
 
     public String create(final String xmlData, final SecurityContext securityContext) throws InvalidContentException,
