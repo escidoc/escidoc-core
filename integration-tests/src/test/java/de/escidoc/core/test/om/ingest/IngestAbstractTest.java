@@ -203,24 +203,16 @@ public class IngestAbstractTest extends IngestTestBase {
     }
 
     /**
-     * Test what happens if an invalid but well formed xml fragment gets ingested. An XmlSchemaValidationException has
+     * Test what happens if an invalid but well formed XML fragment gets ingested. An InvalidResourceException has
      * to be thrown as a result.
      *
-     * @throws Exception the Exception, in this case XmlSchemaValidationException
+     * @throws Exception the Exception, in this case InvalidResourceException
      */
-    @Test
+    @Test(expected = InvalidResourceException.class)
     public void testIngestXmlNotValid() throws Exception {
+
         String toBeCreatedXml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><root><a/></root>";
-        try {
-            ingest(toBeCreatedXml);
-        }
-        catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(InvalidResourceException.class.getName() + " expected.",
-                InvalidResourceException.class, e);
-            return;
-        }
-        // No exception happened ? -> fail
-        failMissingException(XmlSchemaValidationException.class);
+        ingest(toBeCreatedXml);
     }
 
     /**
