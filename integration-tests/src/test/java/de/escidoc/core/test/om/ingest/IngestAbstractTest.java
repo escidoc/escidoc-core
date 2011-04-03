@@ -476,7 +476,9 @@ public class IngestAbstractTest extends IngestTestBase {
      */
     @Test
     public void ingestContentModel() throws Exception {
-        String cmmTempl = getTemplateAsString(TEMPLATE_CONTENT_MODEL_PATH, "content-model-minimal-for-create.xml");
+        String cmmTempl =
+            getTemplateAsString(TEMPLATE_CONTENT_MODEL_PATH, getTransport(false)
+                + "/content-model-minimal-for-create.xml");
 
         String createdXml = ingest(cmmTempl);
 
