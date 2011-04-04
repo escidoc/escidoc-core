@@ -14,8 +14,7 @@
           </itemizedlist></para>
 
         <para>This role is a limited role. 
-        It is restricted to a context, container, item or component.
-        If restricted to a component, user may also see the item.
+        It is restricted to a context, container or item.
         Scope definitions to point from container to member-items are not realized.</para>
       </section>
      */
@@ -31,13 +30,6 @@ INSERT INTO aa.scope_def
     ('escidoc:scope-def-role-collaborator-modifier', 'escidoc:role-collaborator-modifier', 'component', 
      'info:escidoc/names:aa:1.0:resource:component:item',
      'item');
-
-INSERT INTO aa.scope_def 
-    (id, role_id, object_type, attribute_id, attribute_object_type) 
-    VALUES 
-    ('escidoc:scope-def-role-collaborator-modifier-2', 'escidoc:role-collaborator-modifier', 'item', 
-    'info:escidoc/names:aa:1.0:resource:item:component',
-     'component');
 
 INSERT INTO aa.scope_def 
     (id, role_id, object_type, attribute_id, attribute_object_type)
