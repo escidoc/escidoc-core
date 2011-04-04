@@ -1763,38 +1763,6 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
     }
 
     /**
-     * See Interface for functional description.
-     *
-     * @see HandlerBase #setFedoraUtility(de.escidoc.core.common.business.fedora.FedoraUtility)
-     */
-    @Override
-    public void setFedoraUtility(final FedoraUtility fedoraUtility) {
-
-        super.setFedoraUtility(fedoraUtility);
-    }
-
-    /**
-     * Injects the triple store utility bean.
-     *
-     * @param tsu The {@link TripleStoreUtility}.
-     */
-    @Override
-    public void setTripleStoreUtility(final TripleStoreUtility tsu) {
-        super.setTripleStoreUtility(tsu);
-    }
-
-    /**
-     * See Interface for functional description.
-     *
-     * @see HandlerBase #setIdProvider(de.escidoc.core.common.persistence.EscidocIdProvider)
-     */
-    @Override
-    public void setIdProvider(final EscidocIdProvider idProvider) {
-
-        super.setIdProvider(idProvider);
-    }
-
-    /**
      * Sets the metadata datastream with name <code>name</code> for this item.
      *
      * @param name         The name of the metadata datastream.

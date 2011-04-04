@@ -818,38 +818,6 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
         this.sruRequest = sruRequest;
     }
 
-    /**
-     * Injects the triple store utility bean.
-     *
-     * @param tsu The {@link TripleStoreUtility}.
-     */
-    @Override
-    public void setTripleStoreUtility(final TripleStoreUtility tsu) {
-        super.setTripleStoreUtility(tsu);
-    }
-
-    /**
-     * See Interface for functional description.
-     *
-     * @see HandlerBase #setFedoraUtility(de.escidoc.core.common.business.fedora.FedoraUtility)
-     */
-    @Override
-    public void setFedoraUtility(final FedoraUtility fedoraUtility) {
-
-        super.setFedoraUtility(fedoraUtility);
-    }
-
-    /**
-     * See Interface for functional description.
-     *
-     * @see HandlerBase #setIdProvider(de.escidoc.core.common.persistence.EscidocIdProvider)
-     */
-    @Override
-    public void setIdProvider(final EscidocIdProvider idProvider) {
-
-        super.setIdProvider(idProvider);
-    }
-
     @Override
     public String ingest(final String xmlData) throws EscidocException {
 

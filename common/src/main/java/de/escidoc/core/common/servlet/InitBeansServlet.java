@@ -71,15 +71,4 @@ public class InitBeansServlet extends HttpServlet {
         }
     }
 
-    /**
-     * See Interface for functional description.
-     *
-     * @see GenericServlet#destroy()
-     */
-    @Override
-    public void destroy() {
-
-        super.destroy();
-    }
-
 }

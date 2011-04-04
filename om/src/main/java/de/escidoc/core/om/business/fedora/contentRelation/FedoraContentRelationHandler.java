@@ -356,40 +356,6 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
     }
 
     /**
-     * Injects the triple store utility bean.
-     *
-     * @param tsu The {@link TripleStoreUtility}.
-     */
-    @Override
-    public void setTripleStoreUtility(final TripleStoreUtility tsu) {
-        super.setTripleStoreUtility(tsu);
-    }
-
-    /**
-     * See Interface for functional description.
-     *
-     * @param fedoraUtility Fedora utility
-     * @see HandlerBase #setFedoraUtility(de.escidoc.core.common.business.fedora.FedoraUtility)
-     */
-    @Override
-    public void setFedoraUtility(final FedoraUtility fedoraUtility) {
-
-        super.setFedoraUtility(fedoraUtility);
-    }
-
-    /**
-     * See Interface for functional description.
-     *
-     * @param idProvider id provider
-     * @see HandlerBase #setIdProvider(de.escidoc.core.common.persistence.EscidocIdProvider)
-     */
-    @Override
-    public void setIdProvider(final EscidocIdProvider idProvider) {
-
-        super.setIdProvider(idProvider);
-    }
-
-    /**
      * Submit the Content Relation.
      *
      * @param id    objid of ContentRelation
