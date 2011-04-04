@@ -44,3 +44,12 @@ add datastore to fedora.fcfg:
 	
 	
 -use MPTStore with OracleDDLGenerator
+
+
+
+Installer:
+sql-skripte
+variablen
+gepatchter MPTStore
+OJDBC-Treiber
+escidoc.core.custom.properties
