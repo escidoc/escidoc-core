@@ -1704,7 +1704,7 @@ public abstract class UserGroupTest extends UserGroupTestBase {
         String[] selector2 = new String[3];
         selector2[0] = "user-account";
         selector2[1] = "internal";
-        selector2[2] = "escidoc:user42";
+        selector2[2] = "escidoc:testsystemadministrator";
         ArrayList<String[]> selectors = new ArrayList<String[]>();
         selectors.add(selector1);
         selectors.add(selector2);
@@ -1743,7 +1743,7 @@ public abstract class UserGroupTest extends UserGroupTestBase {
         String[] selector2 = new String[3];
         selector2[0] = "user-account";
         selector2[1] = "internal";
-        selector2[2] = "escidoc:user42";
+        selector2[2] = "escidoc:testsystemadministrator";
         ArrayList<String[]> selectors = new ArrayList<String[]>();
         selectors.add(selector1);
         selectors.add(selector2);
@@ -1775,7 +1775,7 @@ public abstract class UserGroupTest extends UserGroupTestBase {
         String[] selector2 = new String[3];
         selector2[0] = "user-account";
         selector2[1] = "internal";
-        selector2[2] = "escidoc:user42";
+        selector2[2] = "escidoc:testsystemadministrator";
         ArrayList<String[]> selectors = new ArrayList<String[]>();
         selectors.add(selector1);
         selectors.add(selector2);
