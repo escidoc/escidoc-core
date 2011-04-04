@@ -792,7 +792,7 @@
     <escidoc.database.user>escidoc</escidoc.database.user>
     <escidoc.database.password>escidoc</escidoc.database.password>
 
-	<!-- escidoc.oracle.url>escidev5:1521</escidoc.oracle.url>
+	<escidoc.oracle.url>escidev5:1521</escidoc.oracle.url>
 	<fedora.oracle.database>oraesci01</fedora.oracle.database>
 	<fedora.oracle.database.user>fedoraAdmin</fedora.oracle.database.user>
 	<fedora.oracle.database.password>fedoraAdmin</fedora.oracle.database.password>
@@ -813,9 +813,9 @@
 	<escidoc.oracle.database.admin.user>oraesci_adm</escidoc.oracle.database.admin.user>
 	<escidoc.oracle.database.admin.password>oraesciadm</escidoc.oracle.database.admin.password>
 	<escidoc.oracle.default.tablespace>escidoc</escidoc.oracle.default.tablespace>
-	<escidoc.oracle.temp.tablespace>TEMP</escidoc.oracle.temp.tablespace -->
+	<escidoc.oracle.temp.tablespace>TEMP</escidoc.oracle.temp.tablespace>
 
-	<escidoc.oracle.url>localhost:1521</escidoc.oracle.url>
+	<!-- escidoc.oracle.url>localhost:1521</escidoc.oracle.url>
 	<fedora.oracle.database>XE</fedora.oracle.database>
 	<fedora.oracle.database.user>fedoraAdmin</fedora.oracle.database.user>
 	<fedora.oracle.database.password>fedoraAdmin</fedora.oracle.database.password>
@@ -836,7 +836,7 @@
 	<escidoc.oracle.database.admin.user>HR</escidoc.oracle.database.admin.user>
 	<escidoc.oracle.database.admin.password>oracle</escidoc.oracle.database.admin.password>
 	<escidoc.oracle.default.tablespace>USERS</escidoc.oracle.default.tablespace>
-	<escidoc.oracle.temp.tablespace>TEMP</escidoc.oracle.temp.tablespace>
+	<escidoc.oracle.temp.tablespace>TEMP</escidoc.oracle.temp.tablespace -->
   </properties>
 
   <dependencies>
