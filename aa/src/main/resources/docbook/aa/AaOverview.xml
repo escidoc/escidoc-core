@@ -249,8 +249,7 @@
           </itemizedlist></para>
 
         <para>This role is a limited role. 
-        It is restricted to a context, container, item or component.
-        If restricted to a component, user may also see the item.
+        It is restricted to a context, container or item.
         Scope definitions to point from container to member-items are not realized.</para>
       </section>
 
