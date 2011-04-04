@@ -1176,7 +1176,7 @@
 									database part of the test phase. That's why here should only be these tables 
 									are generated where hibernate depends on. -->
 								<id>insert-roles-into-db</id>
-								<phase>process-resources</phase>
+								<phase>process-sources</phase>
 								<goals>
 									<goal>execute</goal>
 								</goals>
@@ -1523,7 +1523,7 @@
 									<arguments>
 										<argument>-jar</argument>
 										<argument>${settings.localRepository}/org/escidoc/fcrepo-installer/${fcrepo.version}/fcrepo-installer-${fcrepo.version}.jar</argument>
-										<argument>src/test/resources/fedora/install.properties</argument>
+										<argument>src/test/resources/fedora/oracle/install.properties</argument>
 									</arguments>
 									<outputFile>${project.build.directory}/fcrepo-install-error.log</outputFile>
 								</configuration>
@@ -1562,6 +1562,7 @@
 								</goals>
 								<configuration>
 									<outputDirectory>${project.build.directory}/fedora/server/config</outputDirectory>
+									<overwrite>true</overwrite>
 									<resources>
 										<resource>
 											<directory>${basedir}/src/test/resources/fedora/oracle</directory>
