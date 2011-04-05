@@ -956,6 +956,10 @@
 											<directory>${basedir}/../common/src/main/resources/sql</directory>
 											<filtering>true</filtering>
 										</resource>
+										<resource>
+											<directory>${basedir}/src/test/filtered-resources/sql-resources</directory>
+											<filtering>true</filtering>
+										</resource>
 									</resources>
 								</configuration>
 							</execution>
@@ -1041,31 +1045,9 @@
 									</srcFiles>
 								</configuration>
 							</execution>
-						</executions>
-					</plugin>
-					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>sql-maven-plugin</artifactId>
-						<version>1.3</version>
-						<dependencies>
-							<!-- specify the dependent jdbc driver here -->
-							<dependency>
-								<groupId>ojdbc</groupId>
-								<artifactId>ojdbc</artifactId>
-								<version>14</version>
-							</dependency>
-						</dependencies>
-						<!-- common configuration shared by all executions -->
-						<configuration>
-							<driver>oracle.jdbc.driver.OracleDriver</driver>
-							<url>jdbc:oracle:thin:@${escidoc.oracle.url}:${escidoc.oracle.database}</url>
-							<username>${escidoc.oracle.database.admin.user}</username>
-							<password>${escidoc.oracle.database.admin.password}</password>
-						</configuration>
-						<executions>
 							<execution>
 								<id>create-escidoc-db-oracle</id>
-								<phase>process-sources</phase>
+								<phase>initialize</phase>
 								<goals>
 									<goal>execute</goal>
 								</goals>
@@ -1086,7 +1068,7 @@
 							</execution>
 							<execution>
 								<id>create-schemas</id>
-								<phase>process-sources</phase>
+								<phase>initialize</phase>
 								<goals>
 									<goal>execute</goal>
 								</goals>
@@ -1123,7 +1105,7 @@
 									database part of the test phase. That's why here should only be these tables 
 									are generated where hibernate depends on. -->
 								<id>insert-accounts-into-db</id>
-								<phase>process-sources</phase>
+								<phase>initialize</phase>
 								<goals>
 									<goal>execute</goal>
 								</goals>
@@ -1149,7 +1131,7 @@
 									database part of the test phase. That's why here should only be these tables 
 									are generated where hibernate depends on. -->
 								<id>init-handles-into-db</id>
-								<phase>process-sources</phase>
+								<phase>initialize</phase>
 								<goals>
 									<goal>execute</goal>
 								</goals>
@@ -1176,7 +1158,7 @@
 									database part of the test phase. That's why here should only be these tables 
 									are generated where hibernate depends on. -->
 								<id>insert-roles-into-db</id>
-								<phase>process-sources</phase>
+								<phase>initialize</phase>
 								<goals>
 									<goal>execute</goal>
 								</goals>
@@ -1203,7 +1185,7 @@
 									database part of the test phase. That's why here should only be these tables 
 									are generated where hibernate depends on. -->
 								<id>insert-policies-into-db</id>
-								<phase>process-sources</phase>
+								<phase>initialize</phase>
 								<goals>
 									<goal>execute</goal>
 								</goals>
@@ -1230,7 +1212,7 @@
 									database part of the test phase. That's why here should only be these tables 
 									are generated where hibernate depends on. -->
 								<id>insert-into-db</id>
-								<phase>process-sources</phase>
+								<phase>initialize</phase>
 								<goals>
 									<goal>execute</goal>
 								</goals>
@@ -1258,7 +1240,7 @@
 							</execution>
 							<execution>
 								<id>insert-test-user</id>
-								<phase>process-sources</phase>
+								<phase>initialize</phase>
 								<goals>
 									<goal>execute</goal>
 								</goals>
@@ -1464,7 +1446,7 @@
 
 							<execution>
 								<id>create-fedora-oracle-db</id>
-								<phase>validate</phase>
+								<phase>initialize</phase>
 								<goals>
 									<goal>execute</goal>
 								</goals>
@@ -1485,7 +1467,7 @@
 							</execution>
 							<execution>
 								<id>create-triplestore-oracle-db</id>
-								<phase>validate</phase>
+								<phase>initialize</phase>
 								<goals>
 									<goal>execute</goal>
 								</goals>
@@ -1508,60 +1490,17 @@
 					</plugin>
 
 					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>exec-maven-plugin</artifactId>
-						<version>1.2</version>
-						<executions>
-							<execution>
-								<id>install-fedora-oracle</id>
-								<phase>validate</phase>
-								<goals>
-									<goal>exec</goal>
-								</goals>
-								<configuration>
-									<executable>java</executable>
-									<arguments>
-										<argument>-jar</argument>
-										<argument>${settings.localRepository}/org/escidoc/fcrepo-installer/${fcrepo.version}/fcrepo-installer-${fcrepo.version}.jar</argument>
-										<argument>src/test/resources/fedora/oracle/install.properties</argument>
-									</arguments>
-									<outputFile>${project.build.directory}/fcrepo-install-error.log</outputFile>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-
-					<plugin>
 						<artifactId>maven-resources-plugin</artifactId>
 						<version>2.5</version>
 						<executions>
 							<execution>
-								<id>deploy-fedora-oracle-to-jboss</id>
-								<phase>initialize</phase>
-								<goals>
-									<goal>copy-resources</goal>
-								</goals>
-								<configuration>
-									<outputDirectory>${project.build.directory}/installs/${escidoc.jboss.zip.name}/jboss-4.2.3.GA/server/default/deploy</outputDirectory>
-									<resources>
-										<resource>
-											<directory>${project.build.directory}/fedora/install</directory>
-											<includes>
-												<include>fedora.war</include>
-											</includes>
-											<filtering>false</filtering>
-										</resource>
-									</resources>
-								</configuration>
-							</execution>
-							<execution>
 								<id>deploy-fedora-config-orcale</id>
-								<phase>initialize</phase>
+								<phase>generate-resources</phase>
 								<goals>
 									<goal>copy-resources</goal>
 								</goals>
 								<configuration>
-									<outputDirectory>${project.build.directory}/fedora/server/config</outputDirectory>
+									<outputDirectory>${project.build.directory}/escidoc/fedora/server/config</outputDirectory>
 									<overwrite>true</overwrite>
 									<resources>
 										<resource>
