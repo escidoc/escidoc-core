@@ -45,6 +45,8 @@ add datastore to fedora.fcfg:
 	
 -use MPTStore with OracleDDLGenerator
 
+-Oracle-Treiber in fedora.war integrieren
+
 
 
 Installer:
