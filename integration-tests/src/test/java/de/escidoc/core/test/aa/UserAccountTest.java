@@ -61,19 +61,28 @@ import static org.junit.Assert.fail;
 
 /**
  * Test suite for the userAccount resource.
- *
+ * 
  * @author Torsten Tetteroo
  *         <p/>
- *         changed for schema version 0.5: <ul> <li>Removed testAACua8 (primary attribute has been removed)</li>
- *         <li>Removed testAACua9 (primary attribute has been removed)</li> <li>Removed testAARuas11 (primary attribute
- *         has been removed)</li> <li>Modified testAARuas13 (primary attribute has been removed)</li> </ul>
+ *         changed for schema version 0.5:
+ *         <ul>
+ *         <li>Removed testAACua8 (primary attribute has been removed)</li>
+ *         <li>Removed testAACua9 (primary attribute has been removed)</li>
+ *         <li>Removed testAARuas11 (primary attribute has been removed)</li>
+ *         <li>Modified testAARuas13 (primary attribute has been removed)</li>
+ *         </ul>
  *         <p/>
- *         changes for schema version 0.3: <ul> <li>Replaced UM_CUA-4, UM_CUA-4-2, UM_CUA-10 by
- *         UM_CUA-10-rest/UM_CUA-10-soap</li> <li>Replaced UM_CUA-4-3 by UM_CUA-4-3-rest</li> <li>Replaced UM_UUA-7 by
- *         UM_UUA-7-rest/UM_UUA-7-soap</li> <li>Replaced UM_UUA-10 by UM_UUA-10-rest/UM_UUA-10-soap</li> <li>Replaced
- *         UM_UUA-11, UM_UUA-11-2, UM_UUA-11-3 by UM_UUA-11-rest, UM_UUA-11-2-rest, UM_UUA-11-3-rest</li> <li>Replaced
- *         UM_UUA-11-4 by UM_UUA-11-4-soap</li> <li>Replaced UM_RVR-1, UM_RVR-2, UM_RVR-2-2, and UM_RVR-3 by
- *         UM_RVR-1-rest, UM_RVR-2-rest, UM_RVR-2-2-rest, and UM_RVR-3-rest</li> </ul>
+ *         changes for schema version 0.3:
+ *         <ul>
+ *         <li>Replaced UM_CUA-4, UM_CUA-4-2, UM_CUA-10 by UM_CUA-10-rest/UM_CUA-10-soap</li>
+ *         <li>Replaced UM_CUA-4-3 by UM_CUA-4-3-rest</li>
+ *         <li>Replaced UM_UUA-7 by UM_UUA-7-rest/UM_UUA-7-soap</li>
+ *         <li>Replaced UM_UUA-10 by UM_UUA-10-rest/UM_UUA-10-soap</li>
+ *         <li>Replaced UM_UUA-11, UM_UUA-11-2, UM_UUA-11-3 by UM_UUA-11-rest, UM_UUA-11-2-rest, UM_UUA-11-3-rest</li>
+ *         <li>Replaced UM_UUA-11-4 by UM_UUA-11-4-soap</li>
+ *         <li>Replaced UM_RVR-1, UM_RVR-2, UM_RVR-2-2, and UM_RVR-3 by UM_RVR-1-rest, UM_RVR-2-rest, UM_RVR-2-2-rest,
+ *         and UM_RVR-3-rest</li>
+ *         </ul>
  */
 public abstract class UserAccountTest extends UserAccountTestBase {
 
@@ -84,6 +93,12 @@ public abstract class UserAccountTest extends UserAccountTestBase {
     public static final String RDF_USER_ACCOUNT_BASE_URI = "http://localhost:8080" + Constants.USER_ACCOUNT_BASE_URI;
 
     public static final String XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT = XPATH_SRW_RESPONSE_OBJECT + NAME_USER_ACCOUNT;
+
+    private static final String SYSTEM_ADMINISTRATOR_LOGIN_NAME = "testsystemadministrator";
+
+    private static final String SYSTEM_INSPECTOR_LOGIN_NAME = "testsysteminspector";
+
+    private static final String DEPOSITOR_LOGIN_NAME = "testdepositor";
 
     private static UserAttributeTestBase userAttributeTestBase = null;
 
@@ -110,7 +125,8 @@ public abstract class UserAccountTest extends UserAccountTestBase {
     private static int methodCounter = 0;
 
     /**
-     * @param transport The transport identifier.
+     * @param transport
+     *            The transport identifier.
      */
     public UserAccountTest(final int transport) throws Exception {
 
@@ -124,8 +140,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Set up servlet test.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Before
     public void initialize() throws Exception {
@@ -136,8 +153,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Clean up after servlet test.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @After
     public void deinitialize() throws Exception {
@@ -146,8 +164,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test successful creating an UserAccount resource.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAACua1() throws Exception {
@@ -160,8 +179,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test declining creation of UserAccount with corrupted XML data.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAACua2() throws Exception {
@@ -177,8 +197,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test declining creation of UserAccount without providing XML data.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAACua3() throws Exception {
@@ -194,8 +215,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test declining creation of UserAccount with missing mandatory element in XML data.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAACua5() throws Exception {
@@ -216,8 +238,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test declining creation of UserAccount with reserved String as login Name.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAACua61() throws Exception {
@@ -238,8 +261,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test declining creation of UserAccount with non-unique login name in XML data.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAACua6() throws Exception {
@@ -258,8 +282,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test successful retrieving an existing UserAccount resource by its id.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAARua1() throws Exception {
@@ -280,8 +305,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test successful retrieving an existing UserAccount resource by its loginname.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAARua1_2() throws Exception {
@@ -301,8 +327,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test successful retrieving an existing UserAccount resource by its loginname.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     public void testAARuaWithLoginNameContainingSpace() throws Exception {
 
@@ -322,8 +349,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test retrieving the current user.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testRetrieveCurrentUser() throws Exception {
@@ -338,8 +366,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test retrieving the current user.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testDecliningRetrieveCurrentUser() throws Exception {
@@ -355,8 +384,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test declining the retrieval of an UserAccount with unknown id.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAARua2() throws Exception {
@@ -372,8 +402,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test declining the retrieval of an UserAccount with invalid id of an existing resource of another resource type.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAARua2_2() throws Exception {
@@ -389,8 +420,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test declining the retrieval of an UserAccount with missing parameter id.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAARua3() throws Exception {
@@ -405,8 +437,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test successful activating an existing, deactive UserAccount.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAAAua1() throws Exception {
@@ -462,8 +495,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test declining the activating of an UserAccount with invalid (unknown) parameter id.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAAAua2() throws Exception {
@@ -481,8 +515,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test declining the activating of an UserAccount with id of a resource of another resource type.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAAAua2_2() throws Exception {
@@ -500,8 +535,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test declining the activating of an UserAccount with missing parameter id.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAAAua3() throws Exception {
@@ -519,8 +555,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test declining the activating of an UserAccount that is already active.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAAAua4() throws Exception {
@@ -541,8 +578,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test declining the activating of an UserAccount with missing task parameters.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAAAua5() throws Exception {
@@ -561,8 +599,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test successful deactivating an existing, active UserAccount.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAADua1() throws Exception {
@@ -606,8 +645,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test declining the deactivating of an UserAccount with invalid (unknown) parameter id.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAADua2() throws Exception {
@@ -625,8 +665,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test declining the deactivating of an UserAccount with id od a resource of another resource type.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAADua2_2() throws Exception {
@@ -644,8 +685,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test declining the deactivating of an UserAccount with missing parameter id.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAADua3() throws Exception {
@@ -663,8 +705,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test declining the deactivating of an UserAccount that is already deactive.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAADua4() throws Exception {
@@ -705,8 +748,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test declining the deactivating of an UserAccount with missing task parameters.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAADua5() throws Exception {
@@ -725,8 +769,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test successfully updating an UserAccount.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAAUua1() throws Exception {
@@ -752,8 +797,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test declining update of UserAccount without providing XML data.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAAUua2() throws Exception {
@@ -772,8 +818,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test declining update of UserAccount with corrupted XML data.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAAUua3() throws Exception {
@@ -792,8 +839,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test declining update of UserAccount without providing an id.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAAUua4() throws Exception {
@@ -811,8 +859,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test declining updating of UserAccount in case of an optimistic locking error.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAAUua5() throws Exception {
@@ -832,8 +881,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test declining updating of UserAccount with corrupted XML data.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAAUua6() throws Exception {
@@ -852,8 +902,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test declining update of UserAccount where a mandatory element is missing in XML data.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAAUua8() throws Exception {
@@ -873,8 +924,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test declining update of UserAccount with non-unique login name in XML data.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAAUua9() throws Exception {
@@ -897,8 +949,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test declining updating an UserAccount with unknown id.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAAUua12() throws Exception {
@@ -917,8 +970,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test declining updating an UserAccount with unknown id.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAAUua12_2() throws Exception {
@@ -937,8 +991,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test successfully updating an UserAccount.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAAUua13() throws Exception {
@@ -965,8 +1020,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test successfully updating the password of an UserAccount.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAAUup1() throws Exception {
@@ -989,8 +1045,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test declining updating the password of an UserAccount without providing an id.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAAUup2() throws Exception {
@@ -1016,8 +1073,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test declining updating the password of an UserAccount without providing a task parameter.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAAUup3() throws Exception {
@@ -1039,8 +1097,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test declining updating the password of an UserAccount without providing a password.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAAUup4() throws Exception {
@@ -1063,8 +1122,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test declining updating the password of an UserAccount wiht an empty last-modification timestamp.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAAUup5() throws Exception {
@@ -1087,8 +1147,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test declining updating the password of an UserAccount without providing a last-modification-timestamp.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAAUup6() throws Exception {
@@ -1109,8 +1170,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test declining updating the password of an UserAccount with an unknown id.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAAUup7() throws Exception {
@@ -1135,8 +1197,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test declining updating the password of an UserAccount of a deactivated UserAccount.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAAUup8() throws Exception {
@@ -1167,8 +1230,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test declining updating the password of an UserAccount with a wrong last-modification timestamp.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAAUup9() throws Exception {
@@ -1195,8 +1259,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test declining updating the password of an UserAccount with a wrong last-modification timestamp.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAAUup10() throws Exception {
@@ -1223,8 +1288,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test deleting a user-account that has no referencing data-records.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testDeleteUserWithoutReferences() throws Exception {
@@ -1249,8 +1315,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test declining deleting a user-account that has referencing data-records.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testDecliningDeleteUserWithReferences() throws Exception {
@@ -1277,8 +1344,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test successful retrieving a list of existing UserAccount resources.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAARuas1CQL() throws Exception {
@@ -1300,18 +1368,19 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         final Document retrievedDocument = EscidocRestSoapTestBase.getDocument(retrievedUserAccountsXml);
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
         assertXmlExists("Missing user System Administrator User.", retrievedDocument,
-            XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[properties/login-name='sysadmin']");
+            XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[properties/login-name='" + SYSTEM_ADMINISTRATOR_LOGIN_NAME + "']");
         assertXmlExists("Missing user System Inspector (Read Only Super User).", retrievedDocument,
-            XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[properties/login-name='sysinspector']");
+            XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[properties/login-name='" + SYSTEM_INSPECTOR_LOGIN_NAME + "']");
         assertXmlExists("Missing user Depositor User.", retrievedDocument, XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT
-            + "[properties/login-name='depositor']");
+            + "[properties/login-name='" + DEPOSITOR_LOGIN_NAME + "']");
         // FIXME further assertions needed
     }
 
     /**
      * Test declining retrieving a list of user accounts with providing corrupted filter parameter.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAARuas3() throws Exception {
@@ -1334,8 +1403,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test declining retrieving a list of user accounts with providing invalid filter.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAARuas4CQL() throws Exception {
@@ -1357,8 +1427,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test successful retrieving a list of existing UserAccount resources using filter user-accounts.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAARuas5CQL() throws Exception {
@@ -1383,16 +1454,17 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         assertEquals("Unexpected number of user accounts.", 2, userAccountNodes.getLength());
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
         assertXmlExists("Missing user System Administrator User.", retrievedDocument,
-            XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[properties/login-name='sysadmin']");
+            XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[properties/login-name='" + SYSTEM_ADMINISTRATOR_LOGIN_NAME + "']");
         assertXmlExists("Missing user Depositor User.", retrievedDocument, XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT
-            + "[properties/login-name='depositor']");
+            + "[properties/login-name='" + DEPOSITOR_LOGIN_NAME + "']");
         // FIXME further assertions needed
     }
 
     /**
      * Test successful retrieving a list of existing UserAccount resources using filter active.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAARuas6CQL() throws Exception {
@@ -1414,11 +1486,11 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         final Document retrievedDocument = EscidocRestSoapTestBase.getDocument(retrievedUserAccountsXml);
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
         assertXmlExists("Missing user System Administrator User.", retrievedDocument,
-            XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[properties/login-name='sysadmin']");
+            XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[properties/login-name='" + SYSTEM_ADMINISTRATOR_LOGIN_NAME + "']");
         assertXmlExists("Missing user System Inspector (Read Only Super User).", retrievedDocument,
-            XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[properties/login-name='sysinspector']");
+            XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[properties/login-name='" + SYSTEM_INSPECTOR_LOGIN_NAME + "']");
         assertXmlExists("Missing user Depositor User.", retrievedDocument, XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT
-            + "[properties/login-name='depositor']");
+            + "[properties/login-name='" + DEPOSITOR_LOGIN_NAME + "']");
         assertXmlNotExists("Unexpected deactivated user account", retrievedDocument,
             XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[active='false']");
         // FIXME further assertions needed
@@ -1426,8 +1498,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test successful retrieving a list of existing UserAccount resources using filter deactive.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAARuas7CQL() throws Exception {
@@ -1472,8 +1545,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test declining retrieving a list of existing UserAccount resources using unsupported filter email.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAARuas8CQL() throws Exception {
@@ -1497,8 +1571,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test successful retrieving a list of existing UserAccount resources using filter login-name.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAARuas9CQL() throws Exception {
@@ -1522,14 +1597,15 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         assertEquals("Unexpected number of user accounts.", 1, userAccountNodes.getLength());
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
         assertXmlExists("Missing user System Administrator User.", retrievedDocument,
-            XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[properties/login-name='sysadmin']");
+            XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[properties/login-name='" + SYSTEM_ADMINISTRATOR_LOGIN_NAME + "']");
         // FIXME further assertions needed
     }
 
     /**
      * Test successful retrieving a list of existing UserAccount resources using filter name.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAARuas10CQL() throws Exception {
@@ -1553,14 +1629,15 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         assertEquals("Unexpected number of user accounts.", 3, userAccountNodes.getLength());
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
         assertXmlExists("Missing user System Administrator User.", retrievedDocument,
-            XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[properties/login-name='sysadmin']");
+            XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[properties/login-name='" + SYSTEM_ADMINISTRATOR_LOGIN_NAME + "']");
         // FIXME further assertions needed
     }
 
     /**
      * Test successful retrieving a list of existing UserAccount resources using filter ou.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAARuas12CQL() throws Exception {
@@ -1582,11 +1659,11 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         final Document retrievedDocument = EscidocRestSoapTestBase.getDocument(retrievedUserAccountsXml);
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
         assertXmlExists("Missing user System Administrator User.", retrievedDocument,
-            XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[properties/login-name='sysadmin']");
+            XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[properties/login-name='" + SYSTEM_ADMINISTRATOR_LOGIN_NAME + "']");
         assertXmlExists("Missing user System Inspector (Read Only Super User).", retrievedDocument,
-            XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[properties/login-name='sysinspector']");
+            XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[properties/login-name='" + SYSTEM_INSPECTOR_LOGIN_NAME + "']");
         assertXmlExists("Missing user Depositor User.", retrievedDocument, XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT
-            + "[properties/login-name='depositor']");
+            + "[properties/login-name='" + DEPOSITOR_LOGIN_NAME + "']");
 
         // FIXME: assert only containing user accounts of addressed ou.
 
@@ -1595,8 +1672,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test successful retrieving a list of existing UserAccount resources using filter group.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAARuas121CQL() throws Exception {
@@ -1639,8 +1717,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test successfully retrieving an empty list of user-accounts.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAARuas13CQL() throws Exception {
@@ -1666,8 +1745,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test successfully retrieving a list of user-accounts using multiple filters.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAARuas14CQL() throws Exception {
@@ -1694,15 +1774,16 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         assertEquals("Unexpected number of user accounts.", 2, userAccountNodes.getLength());
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
         assertXmlExists("Missing user System Administrator User.", retrievedDocument,
-            XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[properties/login-name='sysadmin']");
+            XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[properties/login-name='" + SYSTEM_ADMINISTRATOR_LOGIN_NAME + "']");
         assertXmlExists("Missing user System Inspector User.", retrievedDocument,
-            XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[properties/login-name='sysinspector']");
+            XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[properties/login-name='" + SYSTEM_INSPECTOR_LOGIN_NAME + "']");
     }
 
     /**
      * Test successfully retrieving a list of user-accounts using multiple filters including group-filter.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAARuas141CQL() throws Exception {
@@ -1752,8 +1833,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test filters including group-filter.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAARuas143CQL() throws Exception {
@@ -1782,8 +1864,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test invalid filters including group-filter.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAARuas144CQL() throws Exception {
@@ -1807,8 +1890,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test invalid filters including group-filter.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAARuas145CQL() throws Exception {
@@ -1834,8 +1918,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test invalid filters including group-filter.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAARuas146CQL() throws Exception {
@@ -1860,8 +1945,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test invalid filters including group-filter.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAARuas147CQL() throws Exception {
@@ -1886,8 +1972,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test decline retrieving a list of user-accounts using unsupported filter.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAARuas16CQL() throws Exception {
@@ -1911,8 +1998,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test successfully retrieving a list of user-accounts using id filter and ascending ordering by name.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAARuas17CQL() throws Exception {
@@ -1949,8 +2037,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test successfully retrieving a list of user-accounts using id filter and descending ordering by name.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAARuas18CQL() throws Exception {
@@ -1987,8 +2076,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test successfully retrieving a list of user-accounts using id filter, descending ordering by name and offset.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAARuas19CQL() throws Exception {
@@ -2024,8 +2114,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
     /**
      * Test successfully retrieving a list of user-accounts using id filter, descending ordering by name, offset, and
      * limit.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAARuas20CQL() throws Exception {
@@ -2059,8 +2150,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test successfully retrieving a list of user-accounts by an Author user.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAARuas21CQL() throws Exception {
@@ -2095,8 +2187,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test successfully retrieving an empty list of user-accounts by an Author user that uses offset = 1.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAARuas22CQL() throws Exception {
@@ -2128,8 +2221,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
     /**
      * Test successful retrieving a list of existing UserAccount resources. Test if maximumRecords=0 delivers 0
      * UserAccounts
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void emptyFilterZeroMaximumRecords() throws Exception {
@@ -2157,8 +2251,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Test successfully retrieving an explain response.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void explainTest() throws Exception {
@@ -2179,8 +2274,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     /**
      * Prepare data to test userAccountFilter with group.
-     *
-     * @throws Exception e
+     * 
+     * @throws Exception
+     *             e
      */
     private void prepareUserAccountGroupFilterData() throws Exception {
         // create ou and open it
