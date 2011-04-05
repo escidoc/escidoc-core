@@ -28,7 +28,6 @@
  */
 package de.escidoc.core.om.business.renderer;
 
-import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.factory.ContextFoXmlProvider;
 import de.escidoc.core.om.business.renderer.interfaces.ContextFoXmlRendererInterface;

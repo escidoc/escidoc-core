@@ -21,7 +21,6 @@
 package de.escidoc.core.common.business.fedora;
 
 import de.escidoc.core.common.exceptions.system.FedoraSystemException;
-import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.persistence.interfaces.ResourceIdentifierDao;
 
 /**

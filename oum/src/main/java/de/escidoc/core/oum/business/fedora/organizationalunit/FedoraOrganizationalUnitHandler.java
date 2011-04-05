@@ -33,8 +33,6 @@ package de.escidoc.core.oum.business.fedora.organizationalunit;
 
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
-import de.escidoc.core.common.business.fedora.FedoraUtility;
-import de.escidoc.core.common.business.fedora.HandlerBase;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.fedora.resources.Predecessor;
@@ -66,7 +64,6 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
-import de.escidoc.core.common.persistence.EscidocIdProvider;
 import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.stax.StaxParser;

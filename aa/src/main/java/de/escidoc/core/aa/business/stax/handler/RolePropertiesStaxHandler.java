@@ -34,7 +34,6 @@ import de.escidoc.core.aa.business.persistence.EscidocRoleDaoInterface;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.violated.UniqueConstraintViolationException;
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
-import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;

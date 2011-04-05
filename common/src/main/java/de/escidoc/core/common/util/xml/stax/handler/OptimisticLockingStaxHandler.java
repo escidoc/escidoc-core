@@ -20,7 +20,6 @@
 
 package de.escidoc.core.common.util.xml.stax.handler;
 
-import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException;
 import de.escidoc.core.common.util.date.Iso8601Util;

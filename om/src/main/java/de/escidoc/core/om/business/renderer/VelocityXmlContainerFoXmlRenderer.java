@@ -3,7 +3,6 @@ package de.escidoc.core.om.business.renderer;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.fedora.resources.StatusType;
-import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.factory.ContainerFoXmlProvider;

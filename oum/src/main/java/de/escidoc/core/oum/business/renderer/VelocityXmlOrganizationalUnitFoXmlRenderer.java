@@ -29,7 +29,6 @@
 package de.escidoc.core.oum.business.renderer;
 
 import de.escidoc.core.common.business.Constants;
-import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.factory.OrganizationalUnitFoXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
