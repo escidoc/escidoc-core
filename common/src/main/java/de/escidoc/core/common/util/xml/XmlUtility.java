@@ -568,6 +568,9 @@ public final class XmlUtility {
             case CONTENT_RELATION:
                 schemaLocation = getContentRelationSchemaLocation();
                 break;
+            case CONTENT_MODEL:
+                schemaLocation = getContentModelSchemaLocation();
+                break;
             default:
                 throw new WebserverSystemException("Unknown schema location for resoure type " + type);
         }
