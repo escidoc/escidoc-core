@@ -775,7 +775,7 @@
     <param name="jdbcURL" value="jdbc:oracle:thin:@localhost:1521:XE">
       <comment>The JDBC connection URL.</comment>
     </param>
-    <param name="jdbcDriverClass" value="oracle.jdbc.OracleDriver">
+    <param name="jdbcDriverClass" value="oracle.jdbc.driver.OracleDriver">
       <comment>The JDBC driver class name.</comment>
     </param>
     <param name="ddlConverter" value="org.fcrepo.server.utilities.OracleDDLConverter"/>
@@ -1029,7 +1029,7 @@
   <datastore id="localOracleMPTTriplestore">
     <param name="connectorClassName" value="org.trippi.impl.mpt.MPTConnector"/>
     <param name="ddlGenerator" value="org.nsdl.mptstore.impl.oracle.OracleDDLGenerator"/>
-    <param name="jdbcDriver" value="oracle.jdbc.OracleDriver"/>
+    <param name="jdbcDriver" value="oracle.jdbc.driver.OracleDriver"/>
     <param name="jdbcURL" value="jdbc:oracle:thin:@localhost:1521:XE"/>
     <param name="username" value="riTriples"/>
     <param name="password" value="riTriples"/>
