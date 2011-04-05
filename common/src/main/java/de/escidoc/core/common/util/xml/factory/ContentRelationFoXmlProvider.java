@@ -23,6 +23,7 @@ package de.escidoc.core.common.util.xml.factory;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.resources.create.ContentRelationCreate;
 import de.escidoc.core.common.business.fedora.resources.create.MdRecordCreate;
+import de.escidoc.core.common.exceptions.system.EncodingSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 
@@ -70,7 +71,8 @@ public final class ContentRelationFoXmlProvider extends InfrastructureFoXmlProvi
      * @return FoXML representation of the ContentRelation
      * @throws SystemException Thrown if character encoding failed of mdrecord failed.
      */
-    public String getFoXml(final ContentRelationCreate cr) throws SystemException {
+    public String getFoXml(final ContentRelationCreate cr) throws SystemException, EncodingSystemException,
+        WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
 

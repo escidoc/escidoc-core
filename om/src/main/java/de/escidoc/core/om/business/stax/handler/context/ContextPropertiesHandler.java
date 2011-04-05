@@ -38,7 +38,10 @@ import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusExcept
 import de.escidoc.core.common.exceptions.application.missing.MissingElementValueException;
 import de.escidoc.core.common.exceptions.application.notfound.OrganizationalUnitNotFoundException;
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyAttributeViolationException;
+import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.Elements;
@@ -99,8 +102,8 @@ public class ContextPropertiesHandler extends DefaultHandler {
 
     @Override
     public String characters(final String data, final StartElement element) throws InvalidStatusException,
-        OrganizationalUnitNotFoundException, SystemException, ReadonlyAttributeViolationException,
-        MissingElementValueException {
+        OrganizationalUnitNotFoundException, ReadonlyAttributeViolationException, MissingElementValueException,
+        IntegritySystemException, TripleStoreSystemException, WebserverSystemException {
         final String curPath = parser.getCurPath();
 
         if (curPath.startsWith(this.propertiesPath + '/')) {

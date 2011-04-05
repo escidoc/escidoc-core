@@ -28,6 +28,7 @@ import de.escidoc.core.common.exceptions.application.missing.MissingMethodParame
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.IOUtils;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.xml.Elements;
@@ -749,7 +750,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * @return
      */
     public List<String> evaluate(final String objectType, final Map<String, Object> filterMap, final String whereClause)
-        throws SystemException, MissingMethodParameterException {
+        throws MissingMethodParameterException, TripleStoreSystemException, IntegritySystemException {
 
         return evaluate(objectType, filterMap, null, whereClause);
     }
@@ -764,7 +765,8 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
     @Override
     public List<String> evaluate(
         final String objectType, final Map<String, Object> filterMap, final String additionalConditionTriple,
-        final String whereClause) throws SystemException, MissingMethodParameterException {
+        final String whereClause) throws MissingMethodParameterException, TripleStoreSystemException,
+        IntegritySystemException {
 
         final Map filter = (Map) filterMap.get("filter");
 
@@ -1131,7 +1133,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
     @Override
     public List<String> getContainerMemberList(
         final String containerId, final Map<String, Object> filterMap, final String whereClause)
-        throws SystemException, MissingMethodParameterException {
+        throws MissingMethodParameterException, TripleStoreSystemException {
 
         final String tableWithMembers = getTableName(Constants.STRUCTURAL_RELATIONS_NS_URI + "member");
         final StringBuffer queryResultBuf;
@@ -1428,8 +1430,8 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
 
     @Override
     public List<String> getContextMemberList(
-        final String contextId, final Map<String, Object> filterMap, final String whereClause) throws SystemException,
-        MissingMethodParameterException {
+        final String contextId, final Map<String, Object> filterMap, final String whereClause)
+        throws MissingMethodParameterException, TripleStoreSystemException, IntegritySystemException {
         // TODO check functionality
         return evaluate("member", filterMap, "* <" + Constants.STRUCTURAL_RELATIONS_NS_URI + "context> <info:fedora/"
             + contextId + '>');
@@ -1443,7 +1445,8 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      */
     @Override
     public String getObjectRefs(final String objectType, final Map<String, Object> filterMap, final String whereClause)
-        throws SystemException, MissingMethodParameterException {
+        throws MissingMethodParameterException, WebserverSystemException, TripleStoreSystemException,
+        IntegritySystemException {
 
         final List<String> list = evaluate(objectType, filterMap, whereClause);
 

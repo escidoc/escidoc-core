@@ -43,6 +43,10 @@ import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.application.notfound.GrantNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ItemNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
+import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
+import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
@@ -123,7 +127,8 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
     @Override
     protected Object[] resolveLocalPart(
         final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
-        final String resourceVersionNumber) throws EscidocException {
+        final String resourceVersionNumber) throws TripleStoreSystemException, SystemException, GrantNotFoundException,
+        SqlDatabaseSystemException, WebserverSystemException, ResourceNotFoundException {
 
         final EvaluationResult result;
         final String resolvedAttributeIdValue;
@@ -175,7 +180,8 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
      */
     private Object[] resolveAssignedOnAttribute(
         final EvaluationCtx ctx, final String attributeIdValue, final String resolvableAttribute, final String tail)
-        throws EscidocException {
+        throws TripleStoreSystemException, SystemException, GrantNotFoundException, ResourceNotFoundException,
+        WebserverSystemException {
         EvaluationResult result;
         final String userOrGroupId =
             FinderModuleHelper.retrieveSingleResourceAttribute(ctx, Constants.URI_RESOURCE_ID, true);
@@ -250,7 +256,7 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
      */
     private Object[] resolveCreatedByAttribute(
         final EvaluationCtx ctx, final String attributeIdValue, final String resolvableAttribute, final String tail)
-        throws EscidocException {
+        throws GrantNotFoundException, SqlDatabaseSystemException, ResourceNotFoundException, WebserverSystemException {
         final String userOrGroupId =
             FinderModuleHelper.retrieveSingleResourceAttribute(ctx, Constants.URI_RESOURCE_ID, true);
         final String grantId =
@@ -280,7 +286,7 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
      */
     private Object[] resolveRoleAttribute(
         final EvaluationCtx ctx, final String attributeIdValue, final String resolvableAttribute, final String tail)
-        throws EscidocException {
+        throws GrantNotFoundException, WebserverSystemException, ResourceNotFoundException {
         final String userOrGroupId =
             FinderModuleHelper.retrieveSingleResourceAttribute(ctx, Constants.URI_RESOURCE_ID, true);
         final String grantId =

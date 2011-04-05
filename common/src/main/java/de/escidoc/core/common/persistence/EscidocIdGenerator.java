@@ -21,6 +21,7 @@
 package de.escidoc.core.common.persistence;
 
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.service.BeanLocator;
 import org.hibernate.HibernateException;
 import org.hibernate.engine.SessionImplementor;
@@ -61,7 +62,7 @@ public class EscidocIdGenerator implements IdentifierGenerator {
      * @return Returns the  object.
      * @throws SystemException Thrown in case of an internal system error.
      */
-    public EscidocIdProvider getIdProvider() throws SystemException {
+    public EscidocIdProvider getIdProvider() throws WebserverSystemException {
 
         if (this.idProvider == null) {
             this.idProvider =

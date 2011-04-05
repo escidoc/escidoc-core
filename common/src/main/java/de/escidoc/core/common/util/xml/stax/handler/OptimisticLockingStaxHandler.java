@@ -21,6 +21,7 @@
 package de.escidoc.core.common.util.xml.stax.handler;
 
 import de.escidoc.core.common.exceptions.EscidocException;
+import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException;
 import de.escidoc.core.common.util.date.Iso8601Util;
 import de.escidoc.core.common.util.string.StringUtility;
@@ -67,7 +68,8 @@ public class OptimisticLockingStaxHandler extends DefaultHandler {
      * @see DefaultHandler #startElement (de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
-    public StartElement startElement(final StartElement element) throws EscidocException {
+    public StartElement startElement(final StartElement element) throws MissingAttributeValueException,
+        OptimisticLockingException {
 
         final boolean notReadyFlag = isNotReady();
 

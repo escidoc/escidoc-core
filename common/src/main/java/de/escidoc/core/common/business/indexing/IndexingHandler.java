@@ -22,7 +22,9 @@ package de.escidoc.core.common.business.indexing;
 
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.resources.listener.ResourceListener;
+import de.escidoc.core.common.exceptions.system.ApplicationServerSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.IOUtils;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
@@ -130,7 +132,8 @@ public class IndexingHandler implements ResourceListener {
      * @throws SystemException The resource could not be stored.
      */
     @Override
-    public void resourceCreated(final String id, final String restXml, final String soapXml) throws SystemException {
+    public void resourceCreated(final String id, final String restXml, final String soapXml) throws SystemException,
+        TripleStoreSystemException, WebserverSystemException, ApplicationServerSystemException {
         if (!this.notifyIndexerEnabled) {
             return;
         }
@@ -160,7 +163,8 @@ public class IndexingHandler implements ResourceListener {
      * @throws SystemException The resource could not be deleted.
      */
     @Override
-    public void resourceDeleted(final String id) throws SystemException {
+    public void resourceDeleted(final String id) throws SystemException, ApplicationServerSystemException,
+        WebserverSystemException, TripleStoreSystemException {
         if (!this.notifyIndexerEnabled) {
             return;
         }
@@ -182,7 +186,8 @@ public class IndexingHandler implements ResourceListener {
      * @throws SystemException The resource could not be deleted and newly created.
      */
     @Override
-    public void resourceModified(final String id, final String restXml, final String soapXml) throws SystemException {
+    public void resourceModified(final String id, final String restXml, final String soapXml) throws SystemException,
+        TripleStoreSystemException, WebserverSystemException, ApplicationServerSystemException {
         if (!this.notifyIndexerEnabled) {
             return;
         }
@@ -215,7 +220,8 @@ public class IndexingHandler implements ResourceListener {
      * @param xml        xml of the resource to index.
      * @throws SystemException e
      */
-    private void addResource(final String resource, final String objectType, final String xml) throws SystemException {
+    private void addResource(final String resource, final String objectType, final String xml) throws SystemException,
+        WebserverSystemException, ApplicationServerSystemException, TripleStoreSystemException {
         indexResource(resource, objectType,
             de.escidoc.core.common.business.Constants.INDEXER_QUEUE_ACTION_PARAMETER_UPDATE_VALUE, xml);
     }
@@ -226,7 +232,8 @@ public class IndexingHandler implements ResourceListener {
      * @param resource href of the resource to index.
      * @throws SystemException e
      */
-    private void deleteResource(final String resource) throws SystemException {
+    private void deleteResource(final String resource) throws SystemException, WebserverSystemException,
+        ApplicationServerSystemException, TripleStoreSystemException {
         doIndexing(resource, null,
             de.escidoc.core.common.business.Constants.INDEXER_QUEUE_ACTION_PARAMETER_DELETE_VALUE, false, null);
     }
@@ -242,7 +249,7 @@ public class IndexingHandler implements ResourceListener {
      * @throws SystemException e
      */
     private void indexResource(final String resource, final String objectType, final String action, final String xml)
-        throws SystemException {
+        throws SystemException, WebserverSystemException, ApplicationServerSystemException, TripleStoreSystemException {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Do indexing for resource " + resource + ", objectType: " + objectType);
@@ -298,7 +305,7 @@ public class IndexingHandler implements ResourceListener {
      */
     public void doIndexing(
         final String resource, final String objectType, final String action, final boolean isAsynch, final String xml)
-        throws SystemException {
+        throws SystemException, ApplicationServerSystemException, WebserverSystemException, TripleStoreSystemException {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("calling do Indexing with resource: " + resource + ", objectType: " + objectType
                 + ", action: " + action + ", isAsynch: " + isAsynch + ", xml: " + xml);
@@ -344,7 +351,8 @@ public class IndexingHandler implements ResourceListener {
      */
     public void doIndexing(
         final String resource, final String objectType, final String indexName, final String action,
-        final boolean isAsynch, final String xml) throws SystemException {
+        final boolean isAsynch, final String xml) throws SystemException, TripleStoreSystemException,
+        WebserverSystemException, ApplicationServerSystemException {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("indexing " + resource + ", objectType: " + objectType + ", indexName: " + indexName
@@ -558,7 +566,8 @@ public class IndexingHandler implements ResourceListener {
      * @return true if the resource already exists
      * @throws SystemException Thrown if a framework internal error occurs.
      */
-    public boolean exists(final String id, final String objectType, final String indexName) throws SystemException {
+    public boolean exists(final String id, final String objectType, final String indexName) throws SystemException,
+        WebserverSystemException {
         boolean result = false;
         final Map<String, Map<String, Object>> resourceParameters = getObjectTypeParameters().get(objectType);
 
@@ -637,7 +646,8 @@ public class IndexingHandler implements ResourceListener {
      * @return List of PIDs
      * @throws SystemException Thrown if a framework internal error occurs.
      */
-    public Set<String> getPids(final String objectType, final String indexName) throws SystemException {
+    public Set<String> getPids(final String objectType, final String indexName) throws SystemException,
+        WebserverSystemException {
         final Map<String, Map<String, Object>> resourceParameters = getObjectTypeParameters().get(objectType);
         Set<String> result = new HashSet<String>();
 
@@ -721,7 +731,7 @@ public class IndexingHandler implements ResourceListener {
      * @throws IOException     e
      * @throws SystemException e
      */
-    private Iterable<String> getIndexNames() throws IOException, SystemException {
+    private Iterable<String> getIndexNames() throws IOException, ApplicationServerSystemException {
         if (this.indexNames == null) {
             // Get index names from gsearch-config
             final Map<String, Map<String, String>> indexConfig = gsearchHandler.getIndexConfigurations();
@@ -740,7 +750,7 @@ public class IndexingHandler implements ResourceListener {
      * @throws IOException     e
      * @throws SystemException e
      */
-    private void getIndexConfigs() throws IOException, SystemException {
+    private void getIndexConfigs() throws IOException, SystemException, ApplicationServerSystemException {
         // Build IndexInfo HashMap
         this.objectTypeParameters = new HashMap<String, Map<String, Map<String, Object>>>();
         final String searchPropertiesDirectory =

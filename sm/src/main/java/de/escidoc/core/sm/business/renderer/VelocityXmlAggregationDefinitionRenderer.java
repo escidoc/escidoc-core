@@ -76,7 +76,8 @@ public final class VelocityXmlAggregationDefinitionRenderer implements Aggregati
      * @see de.escidoc.core.sm.business.renderer.interfaces. AggregationDefinitionRendererInterface#render(Map)
      */
     @Override
-    public String render(final AggregationDefinition aggregationDefinition) throws SystemException {
+    public String render(final AggregationDefinition aggregationDefinition) throws SystemException,
+        WebserverSystemException {
         final Map<String, Object> values = new HashMap<String, Object>();
         values.put("isRootAggregationDefinition", XmlTemplateProvider.TRUE);
         addAggregationDefinitionNamespaceValues(values);
@@ -219,7 +220,7 @@ public final class VelocityXmlAggregationDefinitionRenderer implements Aggregati
     @Override
     public String renderAggregationDefinitions(
         final Collection<AggregationDefinition> aggregationDefinitions, final RecordPacking recordPacking)
-        throws SystemException {
+        throws SystemException, WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
 
@@ -250,7 +251,7 @@ public final class VelocityXmlAggregationDefinitionRenderer implements Aggregati
      * @throws SystemException e
      */
     private static void addAggregationDefinitionNamespaceValues(final Map<String, Object> values)
-        throws SystemException {
+        throws WebserverSystemException {
         addEscidocBaseUrl(values);
         values.put("aggregationDefinitionNamespacePrefix", Constants.AGGREGATION_DEFINITION_NS_PREFIX);
         values.put("aggregationDefinitionNamespace", Constants.AGGREGATION_DEFINITION_NS_URI);
@@ -267,7 +268,7 @@ public final class VelocityXmlAggregationDefinitionRenderer implements Aggregati
      * @throws SystemException e
      */
     private static void addAggregationDefinitionListNamespaceValues(final Map<String, Object> values)
-        throws SystemException {
+        throws WebserverSystemException {
         addEscidocBaseUrl(values);
         values.put("searchResultNamespace", Constants.SEARCH_RESULT_NS_URI);
         values.put("aggregationDefinitionListNamespacePrefix", Constants.AGGREGATION_DEFINITION_LIST_NS_PREFIX);

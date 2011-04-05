@@ -83,7 +83,7 @@ public class XacmlStaxHandler extends DefaultHandler {
      * @see DefaultHandler #startElement (de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
-    public StartElement startElement(final StartElement element) throws EscidocException {
+    public StartElement startElement(final StartElement element) throws SystemException {
 
         if (isNotReady()) {
             final String elementName = element.getLocalName();
@@ -125,7 +125,7 @@ public class XacmlStaxHandler extends DefaultHandler {
      * See Interface for functional description.
      */
     @Override
-    public String characters(final String data, final StartElement element) throws Exception {
+    public String characters(final String data, final StartElement element) throws XMLStreamException {
 
         if (isNotReady() && this.insidePolicy) {
             policyWriter.writeCharacters(data);
@@ -139,7 +139,7 @@ public class XacmlStaxHandler extends DefaultHandler {
      * @see DefaultHandler #endElement(de.escidoc.core.common.util.xml.stax.events.EndElement)
      */
     @Override
-    public EndElement endElement(final EndElement element) throws Exception {
+    public EndElement endElement(final EndElement element) throws XMLStreamException {
 
         if (isNotReady() && this.insidePolicy) {
 

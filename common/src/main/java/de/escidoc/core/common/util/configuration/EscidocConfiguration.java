@@ -229,7 +229,7 @@ public final class EscidocConfiguration {
      * properties attribute.
      * @throws de.escidoc.core.common.exceptions.EscidocException
      */
-    private EscidocConfiguration() throws EscidocException {
+    private EscidocConfiguration() throws SystemException {
         System.setProperty("java.awt.headless", "true");
         this.properties = loadProperties();
     }
@@ -410,7 +410,7 @@ public final class EscidocConfiguration {
      * @return The properties.
      * @throws IOException If access to the specified file fails.
      */
-    private static Properties getProperties(final String filename) throws IOException {
+    private static Properties getProperties(final String filename) throws IOException, FileNotFoundException {
 
         final Properties result = new Properties();
         final InputStream propertiesStream = getInputStream(filename);
@@ -425,7 +425,7 @@ public final class EscidocConfiguration {
      * @return The InputStream or null if the file could not be located.
      * @throws FileNotFoundException If access to the specified file fails.
      */
-    private static InputStream getInputStream(final String filename) throws IOException {
+    private static InputStream getInputStream(final String filename) throws IOException, FileNotFoundException {
         final ResourcePatternResolver applicationContext = new ClassPathXmlApplicationContext(new String[] {});
         final Resource[] resource = applicationContext.getResources("classpath*:" + filename);
         if (resource.length == 0) {

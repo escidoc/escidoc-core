@@ -41,6 +41,8 @@ import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.string.StringUtility;
 
 import java.net.URI;
@@ -215,7 +217,8 @@ public class TripleStoreAttributeFinderModule extends AbstractAttributeFinderMod
     @Override
     protected boolean assertAttribute(
         final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
-        final String resourceVersionNumber, final int designatorType) throws EscidocException {
+        final String resourceVersionNumber, final int designatorType) throws EscidocException,
+        ResourceNotFoundException, WebserverSystemException {
 
         // make sure it is an eSciDoc resource attribute and an id of the
         // resource for that the attribute shall be found
@@ -271,7 +274,8 @@ public class TripleStoreAttributeFinderModule extends AbstractAttributeFinderMod
     @Override
     protected Object[] resolveLocalPart(
         final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
-        final String resourceVersionNumber) throws EscidocException {
+        final String resourceVersionNumber) throws TripleStoreSystemException, SystemException,
+        ResourceNotFoundException {
 
         List<String> cachedAttribute = new ArrayList<String>();
         final MapResult mapresult = mapIt(attributeIdValue);
@@ -337,7 +341,7 @@ public class TripleStoreAttributeFinderModule extends AbstractAttributeFinderMod
      */
     protected List<String> getHierarchicalCachedAttributes(
         final Collection<String> attributesList, final List<String> totalAttributesList, final MapResult mapresult)
-        throws ResourceNotFoundException, SystemException {
+        throws ResourceNotFoundException, SystemException, TripleStoreSystemException {
         List<String> hierarchicalAttributesList = totalAttributesList;
         if (attributesList != null && !attributesList.isEmpty()) {
             for (final String attribute : attributesList) {

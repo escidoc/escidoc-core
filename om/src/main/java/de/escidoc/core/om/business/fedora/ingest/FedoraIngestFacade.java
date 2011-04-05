@@ -31,6 +31,7 @@ package de.escidoc.core.om.business.fedora.ingest;
 
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.EscidocException;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidResourceException;
 import de.escidoc.core.om.business.interfaces.IngestFacade;
 import de.escidoc.core.om.business.interfaces.ValueFormatter;
 
@@ -85,7 +86,7 @@ public class FedoraIngestFacade implements IngestFacade {
      * according to the rule implemented in the injected Formatter instance.
      */
     @Override
-    public String ingest(final String xmlData) throws EscidocException {
+    public String ingest(final String xmlData) throws EscidocException, InvalidResourceException {
         final ResourceMapperBean bean = getResourceMapperDao().getIngestableForResource(xmlData);
         final String objectId = bean.getResource().ingest(xmlData);
 

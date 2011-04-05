@@ -72,7 +72,7 @@ public class EscidocSpringProvider extends RPCProvider {
      * @see EJBProvider#makeNewServiceObject(MessageContext, String)
      */
     @Override
-    protected Object makeNewServiceObject(final MessageContext messageContext, final String className) throws Exception {
+    protected Object makeNewServiceObject(final MessageContext messageContext, final String className) throws AxisFault {
         final Object springBean = lookupSpringBean(messageContext.getService());
         // initialize user context from webservice security data
         try {

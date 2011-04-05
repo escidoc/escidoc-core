@@ -48,8 +48,11 @@ import de.escidoc.core.aa.business.persistence.UserLoginData;
 import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.exceptions.EscidocException;
+import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException;
+import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.list.ListSorting;
@@ -244,7 +247,9 @@ public class UserAccountAttributeFinderModule extends AbstractAttributeFinderMod
     @Override
     protected Object[] resolveLocalPart(
         final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
-        final String resourceVersionNumber) throws EscidocException {
+        final String resourceVersionNumber) throws EscidocException, UserAccountNotFoundException,
+        ResourceNotFoundException, WebserverSystemException, SystemException, TripleStoreSystemException,
+        SqlDatabaseSystemException {
 
         // determine the id of the user account and to simplify the further
         // work, replace INTERNAL_SUBJECT_ATTRIBUTE_PREFIX by
@@ -377,7 +382,7 @@ public class UserAccountAttributeFinderModule extends AbstractAttributeFinderMod
      * @throws EscidocException e
      */
     private EvaluationResult fetchUserAccountOus(final UserAccount userAccount, final boolean getChildren)
-        throws EscidocException {
+        throws TripleStoreSystemException, SystemException, SqlDatabaseSystemException {
 
         final String ouAttributeName;
         try {
@@ -454,7 +459,7 @@ public class UserAccountAttributeFinderModule extends AbstractAttributeFinderMod
      * @throws EscidocException e
      */
     private EvaluationResult fetchRoleScopes(final String userAccountId, final CharSequence attributeId)
-        throws EscidocException {
+        throws SqlDatabaseSystemException {
 
         // get role to fetch
         final Matcher roleMatcher = PATTERN_PARSE_ROLE_GRANT_ROLE.matcher(attributeId);

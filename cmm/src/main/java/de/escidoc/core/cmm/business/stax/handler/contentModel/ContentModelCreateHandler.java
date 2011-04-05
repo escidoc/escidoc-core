@@ -168,7 +168,7 @@ public class ContentModelCreateHandler extends DefaultHandler {
     @Override
     public EndElement endElement(final EndElement element) throws MissingContentException, InvalidXmlException,
         MissingAttributeValueException, ContextNotFoundException, ContentModelNotFoundException,
-        UnsupportedEncodingException, SystemException, InvalidContentException {
+        UnsupportedEncodingException, InvalidContentException, WebserverSystemException {
 
         final String currentPath = parser.getCurPath();
 

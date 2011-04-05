@@ -34,7 +34,11 @@ import de.escidoc.core.common.exceptions.application.invalid.InvalidContentExcep
 import de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException;
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyAttributeViolationException;
+import de.escidoc.core.common.exceptions.system.EncodingSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.Attribute;
@@ -97,7 +101,8 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
     @Override
     public StartElement startElement(final StartElement element) throws ReadonlyAttributeViolationException,
         InvalidContentException, ReferencedResourceNotFoundException, RelationPredicateNotFoundException,
-        SystemException {
+        SystemException, EncodingSystemException, XmlParserSystemException, WebserverSystemException,
+        TripleStoreSystemException {
 
         final String currentPath = parser.getCurPath();
         String contentRelationsPath = "/item/relations";
@@ -223,7 +228,8 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
      * @throws SystemException
      */
     private void checkRefElement(final StartElement element) throws InvalidContentException,
-        ReadonlyAttributeViolationException, ReferencedResourceNotFoundException, SystemException {
+        ReadonlyAttributeViolationException, ReferencedResourceNotFoundException, SystemException,
+        TripleStoreSystemException, WebserverSystemException {
         try {
             final String objectId = element.getAttribute(null, "objid").getValue();
             final String xlinkHref = element.getAttribute(Constants.XLINK_URI, "href").getValue();
@@ -264,7 +270,8 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
      * @throws ReferencedResourceNotFoundException
      * @throws SystemException
      */
-    private void targetExist(final String targetObjectType) throws ReferencedResourceNotFoundException, SystemException {
+    private void targetExist(final String targetObjectType) throws ReferencedResourceNotFoundException,
+        TripleStoreSystemException, WebserverSystemException {
         if (!TripleStoreUtility.getInstance().exists(this.targetIdWithoutVersion)) {
             throw new ReferencedResourceNotFoundException("Referenced target resource with id "
                 + this.targetIdWithoutVersion + " does not exist.");

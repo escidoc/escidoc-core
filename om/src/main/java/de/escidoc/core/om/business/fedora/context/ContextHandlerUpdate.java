@@ -56,6 +56,7 @@ import de.escidoc.core.common.exceptions.application.violated.PidAlreadyAssigned
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyAttributeViolationException;
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException;
 import de.escidoc.core.common.exceptions.system.EncodingSystemException;
+import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
@@ -122,7 +123,9 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
     public boolean update(final FedoraContextHandler contextHandler, final String xmlData)
         throws ContextNotFoundException, InvalidStatusException, OptimisticLockingException,
         ReadonlyAttributeViolationException, ReadonlyElementViolationException, ContextNameNotUniqueException,
-        MissingElementValueException, SystemException, InvalidContentException {
+        MissingElementValueException, SystemException, InvalidContentException, EncodingSystemException,
+        IntegritySystemException, FedoraSystemException, TripleStoreSystemException, XmlParserSystemException,
+        WebserverSystemException {
 
         final String startTimeStamp = getContext().getLastFedoraModificationDate();
         final StaxParser sp = new StaxParser();
@@ -244,8 +247,9 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
      * @throws LockingException           Thrown if Context is locked.
      */
     public void open(final FedoraContextHandler contextHandler, final String taskParam)
-        throws ContextNotFoundException, InvalidStatusException, InvalidXmlException, OptimisticLockingException,
-        SystemException, LockingException, StreamNotFoundException {
+        throws ContextNotFoundException, InvalidStatusException, OptimisticLockingException, SystemException,
+        LockingException, StreamNotFoundException, EncodingSystemException, FedoraSystemException,
+        WebserverSystemException, XmlCorruptedException, TripleStoreSystemException {
 
         checkStatus(Constants.STATUS_CONTEXT_CREATED);
         final TaskParamHandler taskParamHandler;
@@ -331,8 +335,9 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
      * @throws LockingException           Thrown if Context is locked.
      */
     public void close(final FedoraContextHandler contextHandler, final String taskParam)
-        throws ContextNotFoundException, InvalidStatusException, InvalidXmlException, OptimisticLockingException,
-        SystemException, LockingException, StreamNotFoundException {
+        throws ContextNotFoundException, InvalidStatusException, OptimisticLockingException, SystemException,
+        LockingException, StreamNotFoundException, EncodingSystemException, FedoraSystemException,
+        WebserverSystemException, XmlCorruptedException, TripleStoreSystemException {
 
         checkStatus(Constants.STATUS_CONTEXT_OPENED);
         final TaskParamHandler taskParamHandler;
@@ -506,7 +511,9 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
      */
     private boolean updateDc(
         final Map<String, String> changedValues, final List<String> propertiesToRemove,
-        final Map<String, String> propertiesToAdd) throws ContextNameNotUniqueException, SystemException {
+        final Map<String, String> propertiesToAdd) throws ContextNameNotUniqueException, SystemException,
+        EncodingSystemException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException,
+        XmlParserSystemException, WebserverSystemException {
         if ((changedValues == null || changedValues.isEmpty())
             && (propertiesToRemove == null || propertiesToRemove.isEmpty())
             && (propertiesToAdd == null || propertiesToAdd.isEmpty())) {
@@ -714,7 +721,8 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
      * @param xml New DC representation.
      * @throws SystemException If anything fails.
      */
-    private void setDc(final String xml) throws SystemException {
+    private void setDc(final String xml) throws TripleStoreSystemException, EncodingSystemException,
+        IntegritySystemException, FedoraSystemException, WebserverSystemException {
         try {
             final Datastream oldDs = getContext().getDc();
             final Datastream newDs =
@@ -741,7 +749,8 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
      * @return true if admindescriptors where updated.
      * @throws SystemException TODO
      */
-    boolean handleAdminDescriptors(final Map<String, Object> streams) throws SystemException {
+    boolean handleAdminDescriptors(final Map<String, Object> streams) throws FedoraSystemException,
+        WebserverSystemException {
         boolean updated = false;
         final Set<Entry<String, Object>> streamsEntrySet = streams.entrySet();
 

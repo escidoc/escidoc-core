@@ -38,6 +38,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -155,7 +156,7 @@ public class FrameworkInfo extends JdbcDaoSupport {
      * @throws IOException  Thrown if the XML file could not be read
      * @throws SQLException Thrown if the structure of the database could not be determined
      */
-    public boolean isConsistent() throws IOException, SQLException {
+    public boolean isConsistent() throws IOException, SQLException, FileNotFoundException {
         boolean result = false;
         Connection connection = null;
         try {

@@ -38,6 +38,7 @@ import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.string.StringUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -117,7 +118,7 @@ public class CheckProvidedAttributeFinderModule extends AbstractAttributeFinderM
     @Override
     protected Object[] resolveLocalPart(
         final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
-        final String resourceVersionNumber) throws EscidocException {
+        final String resourceVersionNumber) throws SystemException, ResourceNotFoundException, WebserverSystemException {
 
         final AttributeValue providedAttributesIds =
             ctx.getEnvironmentAttribute(Constants.URI_XMLSCHEMA_STRING, getAttributeId(), null).getAttributeValue();

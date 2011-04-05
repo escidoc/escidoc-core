@@ -116,7 +116,7 @@ public class RoleHandler implements RoleHandlerInterface {
      */
     @Override
     public String create(final String xmlData) throws XmlCorruptedException, UniqueConstraintViolationException,
-        SystemException {
+        SystemException, SqlDatabaseSystemException, WebserverSystemException {
 
         final EscidocRole role = new EscidocRole();
         final ByteArrayInputStream in = XmlUtility.convertToByteArrayInputStream(xmlData);
@@ -174,7 +174,8 @@ public class RoleHandler implements RoleHandlerInterface {
      * @see de.escidoc.core.aa.service.interfaces.RoleHandlerInterface #delete(java.lang.String)
      */
     @Override
-    public void delete(final String id) throws RoleNotFoundException, RoleInUseViolationException, SystemException {
+    public void delete(final String id) throws RoleNotFoundException, RoleInUseViolationException, SystemException,
+        SqlDatabaseSystemException {
 
         final EscidocRole role = fetchRole(id);
         if (FORBIDDEN_ROLE_NAME.equals(role.getRoleName())) {
@@ -201,7 +202,8 @@ public class RoleHandler implements RoleHandlerInterface {
      * @see de.escidoc.core.aa.service.interfaces.RoleHandlerInterface #retrieve(java.lang.String)
      */
     @Override
-    public String retrieve(final String id) throws RoleNotFoundException, SystemException {
+    public String retrieve(final String id) throws RoleNotFoundException, WebserverSystemException,
+        SqlDatabaseSystemException {
 
         return renderer.render(fetchRole(id));
     }
@@ -212,7 +214,8 @@ public class RoleHandler implements RoleHandlerInterface {
      * @see de.escidoc.core.aa.service.interfaces.RoleHandlerInterface #retrieveResources(java.lang.String)
      */
     @Override
-    public String retrieveResources(final String id) throws RoleNotFoundException, SystemException {
+    public String retrieveResources(final String id) throws RoleNotFoundException, WebserverSystemException,
+        SqlDatabaseSystemException {
 
         return renderer.renderResources(fetchRole(id));
     }
@@ -224,7 +227,8 @@ public class RoleHandler implements RoleHandlerInterface {
      */
     @Override
     public String update(final String id, final String xmlData) throws RoleNotFoundException, XmlCorruptedException,
-        MissingAttributeValueException, UniqueConstraintViolationException, OptimisticLockingException, SystemException {
+        MissingAttributeValueException, UniqueConstraintViolationException, OptimisticLockingException,
+        SystemException, SqlDatabaseSystemException, WebserverSystemException {
 
         // Check XACML Policy
         EscidocRole role = new EscidocRole();
@@ -316,7 +320,8 @@ public class RoleHandler implements RoleHandlerInterface {
      * @see de.escidoc.core.aa.service.interfaces.RoleHandlerInterface #retrieveRoles(java.util.Map)
      */
     @Override
-    public String retrieveRoles(final Map<String, String[]> filter) throws InvalidSearchQueryException, SystemException {
+    public String retrieveRoles(final Map<String, String[]> filter) throws InvalidSearchQueryException,
+        SystemException, SqlDatabaseSystemException, WebserverSystemException {
         final SRURequestParameters parameters = new DbRequestParameters(filter);
         final String query = parameters.getQuery();
         final int limit = parameters.getMaximumRecords();
@@ -427,7 +432,8 @@ public class RoleHandler implements RoleHandlerInterface {
      * @param role The <code>EscidocRole</code> object to modify.
      * @throws SystemException Thrown in case of an internal error.
      */
-    private void setModificationValues(final EscidocRole role) throws SystemException {
+    private void setModificationValues(final EscidocRole role) throws SqlDatabaseSystemException,
+        WebserverSystemException {
 
         // initialized last-modification-date value
         role.setLastModificationDate(new Date(System.currentTimeMillis()));
@@ -448,7 +454,7 @@ public class RoleHandler implements RoleHandlerInterface {
      * @throws SystemException       Thrown in case of an internal database error.
      * @throws RoleNotFoundException Thrown if a role with the provided id does not exist.
      */
-    private EscidocRole fetchRole(final String id) throws SystemException, RoleNotFoundException {
+    private EscidocRole fetchRole(final String id) throws RoleNotFoundException, SqlDatabaseSystemException {
 
         final EscidocRole role = roleDao.retrieveRole(id);
         if (role == null) {

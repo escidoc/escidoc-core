@@ -93,8 +93,9 @@ public class Component extends GenericResourcePid implements ComponentInterface 
      * @throws SystemException           Thrown in case of an internal system error.
      * @throws ResourceNotFoundException Thrown if the Component resource was not found.
      */
-    public Component(final String id, final String parentId, final String timestamp) throws SystemException,
-        ResourceNotFoundException {
+    public Component(final String id, final String parentId, final String timestamp) throws ResourceNotFoundException,
+        ItemNotFoundException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException,
+        XmlParserSystemException, WebserverSystemException {
 
         super(id);
 
@@ -513,7 +514,8 @@ public class Component extends GenericResourcePid implements ComponentInterface 
      * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
      */
     public Map<String, String> setProperties(final String xml, final String itemId) throws InvalidContentException,
-        ComponentNotFoundException, SystemException {
+        ComponentNotFoundException, TripleStoreSystemException, EncodingSystemException, FedoraSystemException,
+        XmlParserSystemException, WebserverSystemException {
 
         final StaxParser sp = new StaxParser();
         final ComponentPropertiesUpdateHandler cpuh =

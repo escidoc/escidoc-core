@@ -32,6 +32,8 @@ import de.escidoc.core.aa.service.interfaces.PolicyDecisionPointInterface;
 import de.escidoc.core.common.exceptions.application.notfound.OrganizationalUnitNotFoundException;
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,7 +90,7 @@ public class OrganizationalUnitHandlerRetrieve extends OrganizationalUnitHandler
      * @return The xml representation of the properties of an organizational unit.
      * @throws SystemException If anything fails while rendering the xml representation.
      */
-    protected String getPropertiesXml() throws SystemException {
+    protected String getPropertiesXml() throws WebserverSystemException {
 
         return getRenderer().renderProperties(getOrganizationalUnit());
     }
@@ -99,7 +101,7 @@ public class OrganizationalUnitHandlerRetrieve extends OrganizationalUnitHandler
      * @return The xml representation in REST or SOAP format of an organizational unit.
      * @throws SystemException If anything fails while rendering the xml representation.
      */
-    protected String getResourcesXml() throws SystemException {
+    protected String getResourcesXml() throws WebserverSystemException {
 
         return getRenderer().renderResources(getOrganizationalUnit());
     }
@@ -111,7 +113,7 @@ public class OrganizationalUnitHandlerRetrieve extends OrganizationalUnitHandler
      * @return The xml representation of the md-records of an organizational unit.
      * @throws SystemException If anything fails while rendering the xml representation.
      */
-    protected String getMdRecordsXml() throws SystemException {
+    protected String getMdRecordsXml() throws WebserverSystemException {
 
         return getRenderer().renderMdRecords(getOrganizationalUnit());
     }
@@ -124,7 +126,7 @@ public class OrganizationalUnitHandlerRetrieve extends OrganizationalUnitHandler
      * @return The xml representation of the md-record of an organizational unit.
      * @throws SystemException If anything fails while rendering the xml representation.
      */
-    protected String getMdRecordXml(final String name) throws SystemException {
+    protected String getMdRecordXml(final String name) throws WebserverSystemException {
 
         return getRenderer().renderMdRecord(getOrganizationalUnit(), name);
     }
@@ -148,7 +150,8 @@ public class OrganizationalUnitHandlerRetrieve extends OrganizationalUnitHandler
      * @return The xml representation of the parents of an organizational unit.
      * @throws SystemException If anything fails while rendering the xml representation.
      */
-    protected String getChildObjectsXml() throws SystemException {
+    protected String getChildObjectsXml() throws SystemException, IntegritySystemException, TripleStoreSystemException,
+        WebserverSystemException {
         final List<String> children = new ArrayList<String>();
         final List<String> chidrenIds = getOrganizationalUnit().getChildrenIds();
         final String parentId = getOrganizationalUnit().getId();
@@ -180,7 +183,8 @@ public class OrganizationalUnitHandlerRetrieve extends OrganizationalUnitHandler
      * @return The xml representation of the children of an organizational unit.
      * @throws SystemException If anything fails while rendering the xml representation.
      */
-    protected String getParentObjectsXml() throws SystemException {
+    protected String getParentObjectsXml() throws SystemException, IntegritySystemException,
+        TripleStoreSystemException, WebserverSystemException {
 
         final List<String> parents = new ArrayList<String>();
         final List<String> parentsIds = getOrganizationalUnit().getParents();
@@ -213,7 +217,7 @@ public class OrganizationalUnitHandlerRetrieve extends OrganizationalUnitHandler
      * @return The xml representation of the path list of an organizational unit.
      * @throws SystemException If anything fails while rendering the xml representation.
      */
-    protected String getPathListXml() throws SystemException {
+    protected String getPathListXml() throws SystemException, TripleStoreSystemException {
 
         return getRenderer().renderPathList(getOrganizationalUnit(), computePathes());
     }
@@ -224,7 +228,7 @@ public class OrganizationalUnitHandlerRetrieve extends OrganizationalUnitHandler
      * @return The pathes.
      * @throws SystemException If anything fails while computing the pathes.
      */
-    private List<List<String>> computePathes() throws SystemException {
+    private List<List<String>> computePathes() throws SystemException, TripleStoreSystemException {
 
         initPathes();
         final List<List<String>> result = new ArrayList<List<String>>();

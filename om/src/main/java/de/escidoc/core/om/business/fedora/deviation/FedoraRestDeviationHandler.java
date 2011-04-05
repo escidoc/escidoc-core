@@ -30,6 +30,8 @@ package de.escidoc.core.om.business.fedora.deviation;
 
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.business.fedora.MIMETypedStream;
+import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.om.business.indexer.IndexerResourceCache;
 import de.escidoc.core.om.business.interfaces.FedoraRestDeviationHandlerInterface;
@@ -129,7 +131,7 @@ public class FedoraRestDeviationHandler implements FedoraRestDeviationHandlerInt
      * @throws Exception ex
      */
     @Override
-    public void cache(final String pid, final String xml) throws Exception {
+    public void cache(final String pid, final String xml) throws SystemException, TripleStoreSystemException {
         IndexerResourceCache.getInstance().setResource(pid, xml);
     }
 
@@ -140,7 +142,7 @@ public class FedoraRestDeviationHandler implements FedoraRestDeviationHandlerInt
      * @throws Exception ex
      */
     @Override
-    public void removeFromCache(final String pid) throws Exception {
+    public void removeFromCache(final String pid) throws SystemException, TripleStoreSystemException {
         IndexerResourceCache.getInstance().deleteResource(pid);
     }
 
@@ -152,7 +154,7 @@ public class FedoraRestDeviationHandler implements FedoraRestDeviationHandlerInt
      * @throws Exception ex
      */
     @Override
-    public void replaceInCache(final String pid, final String xml) throws Exception {
+    public void replaceInCache(final String pid, final String xml) throws SystemException, TripleStoreSystemException {
         IndexerResourceCache.getInstance().replaceResource(pid, xml);
     }
 

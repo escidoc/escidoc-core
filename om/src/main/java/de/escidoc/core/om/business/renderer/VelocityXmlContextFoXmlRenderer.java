@@ -46,7 +46,7 @@ public class VelocityXmlContextFoXmlRenderer implements ContextFoXmlRendererInte
      * See Interface for functional description.
      */
     @Override
-    public String render(final Map<String, Object> values) throws SystemException {
+    public String render(final Map<String, Object> values) throws WebserverSystemException {
 
         return ContextFoXmlProvider.getInstance().getContextFoXml(values);
     }

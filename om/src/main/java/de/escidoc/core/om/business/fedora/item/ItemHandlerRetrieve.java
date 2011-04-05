@@ -90,7 +90,9 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
      * #render()
      */
     @Override
-    public String render() throws SystemException, ComponentNotFoundException, ItemNotFoundException {
+    public String render() throws SystemException, ComponentNotFoundException, ItemNotFoundException,
+        EncodingSystemException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException,
+        XmlParserSystemException, WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
 
@@ -116,7 +118,9 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
      * @throws SystemException            Thrown if an unexpected error occurs
      */
     @Override
-    public String renderComponents(final boolean isRoot) throws ComponentNotFoundException, SystemException {
+    public String renderComponents(final boolean isRoot) throws ComponentNotFoundException, SystemException,
+        WebserverSystemException, TripleStoreSystemException, IntegritySystemException, XmlParserSystemException,
+        FedoraSystemException, EncodingSystemException {
 
         return renderComponents(getCommonValues(getItem()), isRoot);
     }
@@ -129,7 +133,8 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
      * #renderComponents(boolean)
      */
     public String renderComponents(final Map<String, String> commonValues, final boolean isRoot)
-        throws ComponentNotFoundException, SystemException {
+        throws ComponentNotFoundException, SystemException, TripleStoreSystemException, IntegritySystemException,
+        XmlParserSystemException, WebserverSystemException, FedoraSystemException, EncodingSystemException {
 
         final Map<String, String> values = new HashMap<String, String>();
 
@@ -182,7 +187,8 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
      */
     @Override
     public String renderComponent(final String id, final boolean isRoot) throws ComponentNotFoundException,
-        SystemException {
+        SystemException, WebserverSystemException, TripleStoreSystemException, IntegritySystemException,
+        FedoraSystemException, EncodingSystemException, XmlParserSystemException {
 
         return renderComponent(id, getCommonValues(getItem()), isRoot);
     }
@@ -195,7 +201,8 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
      * #renderComponent(java.lang.String, boolean)
      */
     public String renderComponent(final String id, final Map<String, String> commonValues, final boolean isRoot)
-        throws ComponentNotFoundException, SystemException {
+        throws ComponentNotFoundException, SystemException, TripleStoreSystemException, WebserverSystemException,
+        IntegritySystemException, FedoraSystemException, EncodingSystemException, XmlParserSystemException {
 
         Component component = getComponent(id);
 
@@ -262,7 +269,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
     }
 
     public String renderComponentProperties(final String id) throws ComponentNotFoundException, FedoraSystemException,
-        SystemException {
+        TripleStoreSystemException, WebserverSystemException, IntegritySystemException, XmlParserSystemException {
 
         final Component component;
         final Map<String, String> values = new HashMap<String, String>();
@@ -542,14 +549,16 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
     }
 
     public String renderComponentMdRecords(final String componentId, final boolean isRoot)
-        throws ComponentNotFoundException, SystemException {
+        throws ComponentNotFoundException, SystemException, WebserverSystemException, TripleStoreSystemException,
+        IntegritySystemException, FedoraSystemException, EncodingSystemException, XmlParserSystemException {
 
         return renderComponentMdRecords(componentId, getCommonValues(getItem()), isRoot);
     }
 
     public String renderComponentMdRecords(
         final String componentId, final Map<String, String> commonValues, final boolean isRoot)
-        throws ComponentNotFoundException, SystemException {
+        throws ComponentNotFoundException, SystemException, TripleStoreSystemException, IntegritySystemException,
+        FedoraSystemException, WebserverSystemException, EncodingSystemException, XmlParserSystemException {
 
         final Component component;
         final Map<String, String> values = new HashMap<String, String>();
@@ -594,14 +603,17 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
     }
 
     public String renderComponentMdRecord(final String componentId, final String name, final boolean isRoot)
-        throws MdRecordNotFoundException, ComponentNotFoundException, FedoraSystemException, SystemException {
+        throws MdRecordNotFoundException, ComponentNotFoundException, FedoraSystemException, WebserverSystemException,
+        EncodingSystemException, TripleStoreSystemException, IntegritySystemException, XmlParserSystemException {
 
         return renderComponentMdRecord(componentId, name, getCommonValues(getItem()), isRoot);
     }
 
     public String renderComponentMdRecord(
         final String componentId, final String name, final Map<String, String> commonValues, final boolean isRoot)
-        throws MdRecordNotFoundException, ComponentNotFoundException, FedoraSystemException, SystemException {
+        throws MdRecordNotFoundException, ComponentNotFoundException, FedoraSystemException,
+        TripleStoreSystemException, EncodingSystemException, WebserverSystemException, IntegritySystemException,
+        XmlParserSystemException {
 
         final Component component;
         final Map<String, String> values = new HashMap<String, String>();
@@ -718,7 +730,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
      * @return Returns the XML representation of the virtual resource <code>parents</code> of an container.
      * @throws SystemException Thrown in case of an internal error.
      */
-    public String renderParents(final String itemId) throws SystemException {
+    public String renderParents(final String itemId) throws WebserverSystemException, TripleStoreSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         addXlinkValues(values);
@@ -738,7 +750,8 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
      * @param itemId
      * @throws SystemException Thrown in case of an internal error.
      */
-    private void addParentsValues(final Map<String, Object> values, final String itemId) throws SystemException {
+    private void addParentsValues(final Map<String, Object> values, final String itemId)
+        throws TripleStoreSystemException {
         values.put("parentsHref", XmlUtility.getItemParentsHref(XmlUtility.getItemHref(itemId)));
         values.put("parentsTitle", "parents of item " + itemId);
 
@@ -785,7 +798,9 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
      * #renderItems(java.util.List)
      */
     @Override
-    public String renderItems(final List<String> items) throws SystemException {
+    public String renderItems(final List<String> items) throws SystemException, WebserverSystemException,
+        EncodingSystemException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException,
+        XmlParserSystemException {
 
         final Collection<String> renderedEntries = new ArrayList<String>();
         final Map<String, Object> values = new HashMap<String, Object>();

@@ -46,8 +46,10 @@ import de.escidoc.core.aa.business.xacml.function.XacmlFunctionRoleIsGranted;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.business.fedora.resources.Values;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
+import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.util.IOUtils;
 import de.escidoc.core.common.util.list.ListSorting;
 import de.escidoc.core.common.util.xml.XmlUtility;
@@ -55,9 +57,11 @@ import de.escidoc.core.common.util.xml.stax.StaxParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.xml.stream.XMLStreamException;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
@@ -210,7 +214,8 @@ public class XacmlParser {
      * @param file file to be parsed
      * @throws Exception Thrown in case of an internal error.
      */
-    public void parse(final File file) throws Exception {
+    public void parse(final File file) throws Exception, FileNotFoundException, XMLStreamException,
+        WebserverSystemException, XmlParserSystemException, XmlCorruptedException {
         this.role = new EscidocRole();
         initFactory();
 

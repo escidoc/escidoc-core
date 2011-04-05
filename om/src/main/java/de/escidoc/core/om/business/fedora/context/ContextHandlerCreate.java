@@ -51,7 +51,13 @@ import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingE
 import de.escidoc.core.common.exceptions.application.violated.PidAlreadyAssignedException;
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyAttributeViolationException;
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException;
+import de.escidoc.core.common.exceptions.system.EncodingSystemException;
+import de.escidoc.core.common.exceptions.system.FedoraSystemException;
+import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.MultipleExtractor;
 import de.escidoc.core.common.util.xml.Elements;
@@ -105,7 +111,9 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
     public String createContext(final String xmlData) throws ContextNameNotUniqueException,
         ContentModelNotFoundException, ReadonlyElementViolationException, MissingAttributeValueException,
         MissingElementValueException, ReadonlyAttributeViolationException, InvalidContentException,
-        OrganizationalUnitNotFoundException, SystemException, InvalidStatusException {
+        OrganizationalUnitNotFoundException, SystemException, InvalidStatusException, EncodingSystemException,
+        IntegritySystemException, FedoraSystemException, TripleStoreSystemException, XmlParserSystemException,
+        WebserverSystemException {
 
         final String contextId = getIdProvider().getNextPid();
         final String createComment = "Object " + contextId + " created.";
@@ -232,7 +240,8 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
      */
     protected String buildContextFoxml(
         final String id, final Map<String, Object> properties, final Map<String, String> dcProperties,
-        final Map<String, String> propertiesAsReferences, final Map<String, Object> dataStreams) throws SystemException {
+        final Map<String, String> propertiesAsReferences, final Map<String, Object> dataStreams)
+        throws SystemException, WebserverSystemException {
         final Map<String, Object> values = new HashMap<String, Object>();
 
         values.put("id", id);
@@ -285,7 +294,7 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
      * @throws SystemException Thrown if the FOXML rendering failed.
      */
     protected String buildContextRelsExt(final String contextId, final Map<String, Object> properties)
-        throws SystemException {
+        throws WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
 

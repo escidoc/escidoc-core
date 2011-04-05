@@ -90,7 +90,7 @@ public final class IOUtils {
         return bos.toByteArray();
     }
 
-    public static String readStringFromStream(final InputStream input) throws IOException {
+    public static String readStringFromStream(final InputStream input) throws IOException, UnsupportedEncodingException {
         int i = input.available();
         if (i < DEFAULT_BUFFER_SIZE) {
             i = DEFAULT_BUFFER_SIZE;

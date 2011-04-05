@@ -199,11 +199,11 @@ public class StaxParser implements DefaultHandlerStackInterface {
     public void parse(final byte[] in) throws XMLStreamException, ContentModelNotFoundException,
         ContextNotFoundException, MissingContentException, LockingException, ReadonlyElementViolationException,
         MissingAttributeValueException, MissingElementValueException, ReadonlyAttributeViolationException,
-        InvalidXmlException, InvalidContentException, OptimisticLockingException, AlreadyExistsException,
+        InvalidContentException, OptimisticLockingException, AlreadyExistsException,
         ReferencedResourceNotFoundException, InvalidStatusException, RelationPredicateNotFoundException,
         OrganizationalUnitNotFoundException, ContentRelationNotFoundException, PidAlreadyAssignedException,
         TripleStoreSystemException, WebserverSystemException, EncodingSystemException, XmlParserSystemException,
-        IntegritySystemException, MissingMdRecordException, TmeException {
+        IntegritySystemException, MissingMdRecordException, TmeException, XmlCorruptedException {
 
         parseStream(new ByteArrayInputStream(in));
     }
@@ -484,10 +484,11 @@ public class StaxParser implements DefaultHandlerStackInterface {
     protected void parseEvents(final InputStream in) throws XMLStreamException, ContentModelNotFoundException,
         ContextNotFoundException, MissingContentException, LockingException, ReadonlyElementViolationException,
         MissingAttributeValueException, MissingElementValueException, ReadonlyAttributeViolationException,
-        InvalidXmlException, InvalidContentException, OptimisticLockingException, AlreadyExistsException,
+        InvalidContentException, OptimisticLockingException, AlreadyExistsException,
         ReferencedResourceNotFoundException, InvalidStatusException, RelationPredicateNotFoundException,
-        SystemException, OrganizationalUnitNotFoundException, ContentRelationNotFoundException,
-        PidAlreadyAssignedException, MissingMdRecordException, TmeException {
+        OrganizationalUnitNotFoundException, ContentRelationNotFoundException, PidAlreadyAssignedException,
+        MissingMdRecordException, TmeException, XmlCorruptedException, TripleStoreSystemException,
+        WebserverSystemException, EncodingSystemException, IntegritySystemException, XmlParserSystemException {
 
         final XMLEventReader parser = factory.createXMLEventReader(in);
 

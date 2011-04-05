@@ -42,6 +42,7 @@ import de.escidoc.core.common.exceptions.application.missing.MissingAttributeVal
 import de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ItemNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
 import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException;
 import de.escidoc.core.common.exceptions.application.violated.UniqueConstraintViolationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
@@ -127,7 +128,9 @@ public class ResourceAttributeFinderModule extends AbstractAttributeFinderModule
     @Override
     protected Object[] resolveLocalPart(
         final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
-        final String resourceVersionNumber) throws EscidocException {
+        final String resourceVersionNumber) throws OptimisticLockingException, MissingAttributeValueException,
+        SystemException, ComponentNotFoundException, ResourceNotFoundException, UniqueConstraintViolationException,
+        ItemNotFoundException, InvalidXmlException, ContainerNotFoundException, WebserverSystemException {
 
         final EvaluationResult result;
         final String resolvedAttributeIdValue;
@@ -169,7 +172,9 @@ public class ResourceAttributeFinderModule extends AbstractAttributeFinderModule
      */
     private EvaluationResult fetchItemOrContainerAttribute(
         final String attributeIdValue, final EvaluationCtx ctx, final String resourceId,
-        final String resolvedAttributeIdValue) throws EscidocException {
+        final String resolvedAttributeIdValue) throws MissingAttributeValueException, OptimisticLockingException,
+        SystemException, UniqueConstraintViolationException, ItemNotFoundException, InvalidXmlException,
+        ContainerNotFoundException, WebserverSystemException {
 
         final String localCacheKey = StringUtility.concatenateWithColonToString(resourceId, resolvedAttributeIdValue);
         // A previous parse process could have stored the found
@@ -251,7 +256,10 @@ public class ResourceAttributeFinderModule extends AbstractAttributeFinderModule
      * @throws EscidocException Thrown if anything fails during parsing the xml representation of the component.
      */
     private EvaluationResult fetchComponentAttribute(
-        final String attributeIdValue, final EvaluationCtx ctx, final String itemId) throws EscidocException {
+        final String attributeIdValue, final EvaluationCtx ctx, final String itemId) throws SystemException,
+        MissingAttributeValueException, OptimisticLockingException, ComponentNotFoundException,
+        ResourceNotFoundException, UniqueConstraintViolationException, ItemNotFoundException, InvalidXmlException,
+        WebserverSystemException {
 
         // to resolve a component attribute, the id of the component
         // must be known

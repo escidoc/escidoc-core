@@ -31,6 +31,7 @@ package de.escidoc.core.aa.business.xacml.finder;
 import com.sun.xacml.AbstractPolicy;
 import com.sun.xacml.EvaluationCtx;
 import com.sun.xacml.PolicyReference;
+import com.sun.xacml.UnknownIdentifierException;
 import com.sun.xacml.combine.OrderedPermitOverridesPolicyAlg;
 import com.sun.xacml.ctx.Status;
 import com.sun.xacml.finder.PolicyFinder;
@@ -311,7 +312,8 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
      * @return Returns the created <code>XacmlPolicySet</code> object for the user.
      * @throws Exception e
      */
-    private XacmlPolicySet getUserPolicies(final String userId) throws Exception {
+    private XacmlPolicySet getUserPolicies(final String userId) throws UnknownIdentifierException, URISyntaxException,
+        WebserverSystemException {
 
         // first check the cache
         XacmlPolicySet result = PoliciesCache.getUserPolicies(userId);
@@ -356,7 +358,8 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
      * @return Returns the created <code>XacmlPolicySet</code> object for the user.
      * @throws Exception e
      */
-    private XacmlPolicySet getUserGroupPolicies(final String userId) throws Exception {
+    private XacmlPolicySet getUserGroupPolicies(final String userId) throws UnknownIdentifierException,
+        URISyntaxException, WebserverSystemException {
 
         final List<AbstractPolicy> policies = new ArrayList<AbstractPolicy>();
         // get groups the user belongs to

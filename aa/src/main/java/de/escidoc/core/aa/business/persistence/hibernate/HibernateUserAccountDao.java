@@ -698,7 +698,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao implements Use
     @Override
     public List<RoleGrant> retrieveGrants(
         final String criterias, final int offset, final int maxResults, final UserGroupHandlerInterface userGroupHandler)
-        throws InvalidSearchQueryException, SystemException {
+        throws InvalidSearchQueryException, SystemException, SqlDatabaseSystemException {
         final List<RoleGrant> result;
 
         if (criterias != null && criterias.length() > 0) {

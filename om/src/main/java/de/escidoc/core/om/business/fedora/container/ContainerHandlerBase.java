@@ -138,7 +138,8 @@ public class ContainerHandlerBase extends HandlerBase {
      * @throws ContainerNotFoundException If there is no container with <code>id</code> in the repository.
      * @throws SystemException            Thrown in case of an internal system error.
      */
-    public void setContainer(final String id) throws ContainerNotFoundException, SystemException {
+    public void setContainer(final String id) throws ContainerNotFoundException, SystemException,
+        TripleStoreSystemException, IntegritySystemException, XmlParserSystemException, WebserverSystemException {
 
         try {
             this.container = new Container(id);
@@ -435,7 +436,7 @@ public class ContainerHandlerBase extends HandlerBase {
      * @throws InvalidStatusException If container is not in the specified status .
      * @throws SystemException        In case of an internal error.
      */
-    protected void checkStatus(final String status) throws InvalidStatusException, SystemException {
+    protected void checkStatus(final String status) throws InvalidStatusException, TripleStoreSystemException {
         final String objectStatus =
             getTripleStoreUtility().getPropertiesElements(container.getId(), TripleStoreUtility.PROP_PUBLIC_STATUS);
         if (!objectStatus.equals(status)) {
@@ -471,7 +472,7 @@ public class ContainerHandlerBase extends HandlerBase {
      * @throws InvalidStatusException If container is in the specified status.
      * @throws SystemException        Thrown in case of internal error.
      */
-    protected void checkStatusNot(final String status) throws InvalidStatusException, SystemException {
+    protected void checkStatusNot(final String status) throws InvalidStatusException, TripleStoreSystemException {
         final String objectStatus =
             getTripleStoreUtility().getPropertiesElements(container.getId(), TripleStoreUtility.PROP_PUBLIC_STATUS);
         if (objectStatus.equals(status)) {

@@ -33,6 +33,7 @@ import de.escidoc.core.aa.business.authorisation.FinderModuleHelper;
 import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.string.StringUtility;
 
 import java.util.regex.Matcher;
@@ -83,7 +84,7 @@ public class ResourceNotFoundAttributeFinderModule extends AbstractAttributeFind
     @Override
     protected Object[] resolveLocalPart(
         final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
-        final String resourceVersionNumber) throws EscidocException {
+        final String resourceVersionNumber) throws ResourceNotFoundException, WebserverSystemException {
 
         // check if the object identified by resource-id is of the expected
         // object type addressed in the attribute id

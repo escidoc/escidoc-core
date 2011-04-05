@@ -36,7 +36,10 @@ import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.business.indexing.IndexingHandler;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
+import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
+import de.escidoc.core.common.exceptions.system.ApplicationServerSystemException;
 import de.escidoc.core.common.exceptions.system.EncodingSystemException;
+import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
@@ -89,7 +92,8 @@ public class AdminHandler {
      * @throws InvalidXmlException thrown if the taskParam has an invalid structure
      * @throws SystemException     thrown in case of an internal error
      */
-    public String deleteObjects(final String taskParam) throws InvalidXmlException, SystemException {
+    public String deleteObjects(final String taskParam) throws SystemException, EncodingSystemException,
+        ApplicationServerSystemException, XmlCorruptedException {
         final StringBuilder result = new StringBuilder();
         final PurgeStatus purgeStatus = PurgeStatus.getInstance();
 
@@ -185,7 +189,7 @@ public class AdminHandler {
      * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
      */
     public String reindex(final boolean clearIndex, final String indexNamePrefix) throws SystemException,
-        InvalidSearchQueryException {
+        InvalidSearchQueryException, ApplicationServerSystemException, FedoraSystemException, WebserverSystemException {
         return getUtility().prepareReturnXml(reindexer.reindex(clearIndex, indexNamePrefix));
     }
 

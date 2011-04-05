@@ -272,7 +272,7 @@ public class ContainerHandler implements ContainerHandlerInterface {
     public String updateMetadataRecord(final String id, final String mdRecordId, final String xmlData)
         throws ContainerNotFoundException, LockingException, XmlSchemaNotFoundException, MdRecordNotFoundException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException,
-        InvalidXmlException, InvalidStatusException, ReadonlyVersionException {
+        InvalidXmlException, InvalidStatusException, ReadonlyVersionException, XmlSchemaValidationException {
 
         return handler.updateMetadataRecord(id, mdRecordId, xmlData);
     }

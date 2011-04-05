@@ -71,7 +71,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer imple
      * @see UserAccountRendererInterface# render(Map)
      */
     @Override
-    public String render(final UserAccount userAccount) throws SystemException {
+    public String render(final UserAccount userAccount) throws SystemException, WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
 
@@ -273,7 +273,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer imple
      */
     @Override
     public String renderUserAccounts(final List<UserAccount> userAccounts, final RecordPacking recordPacking)
-        throws SystemException {
+        throws SystemException, WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         values.put("isRootUserAccount", XmlTemplateProvider.TRUE);
@@ -377,7 +377,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer imple
 
     @Override
     public String renderPreference(final UserAccount userAccount, final UserPreference preference)
-        throws SystemException {
+        throws WebserverSystemException {
         return renderPreference(userAccount, preference, true);
     }
 
@@ -405,7 +405,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer imple
 
     @Override
     public String renderPreferences(final UserAccount userAccount, final Set<UserPreference> preferences)
-        throws SystemException {
+        throws WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
 
@@ -442,7 +442,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer imple
      * @throws SystemException e
      */
     @Override
-    public String renderAttribute(final UserAttribute attribute) throws SystemException {
+    public String renderAttribute(final UserAttribute attribute) throws WebserverSystemException {
         return renderAttribute(attribute, XmlTemplateProvider.TRUE);
     }
 
@@ -485,7 +485,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer imple
      */
     @Override
     public String renderAttributes(final UserAccount userAccount, final Set<UserAttribute> attributes)
-        throws SystemException {
+        throws WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
 

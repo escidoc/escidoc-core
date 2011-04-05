@@ -95,7 +95,7 @@ public class Fingerprint implements Comparable<Object> {
      * @throws IOException  Thrown if the XML file could not be written.
      * @throws SQLException Thrown if an SQL statement failed to be executed.
      */
-    public Fingerprint(final Connection conn) throws IOException, SQLException {
+    public Fingerprint(final Connection conn) throws IOException, SQLException, FileNotFoundException {
         final ArrayList<Schema> schemas = new ArrayList<Schema>();
 
         for (final String schemaName : getSchemaNames(conn)) {

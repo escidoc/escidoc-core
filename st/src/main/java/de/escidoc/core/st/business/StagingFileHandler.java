@@ -34,6 +34,7 @@ import de.escidoc.core.common.exceptions.application.missing.MissingMethodParame
 import de.escidoc.core.common.exceptions.application.notfound.StagingFileNotFoundException;
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
+import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.string.StringUtility;
@@ -67,7 +68,7 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
      */
     @Override
     public String create(final EscidocBinaryContent binaryContent) throws MissingMethodParameterException,
-        AuthenticationException, AuthorizationException, SystemException {
+        AuthenticationException, AuthorizationException, SqlDatabaseSystemException, WebserverSystemException {
 
         StagingFile stagingFile = StagingUtil.generateStagingFile(true, this.dao);
         if (stagingFile == null) {
@@ -135,7 +136,8 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
      */
     @Override
     public EscidocBinaryContent retrieve(final String stagingFileId) throws StagingFileNotFoundException,
-        AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException {
+        AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException,
+        SqlDatabaseSystemException {
 
         final StagingFile stagingFile = getStagingFile(stagingFileId);
         final EscidocBinaryContent binaryContent = new EscidocBinaryContent();
@@ -176,7 +178,7 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
      * @throws SystemException              Thrown in case of an internal database error.
      */
     private StagingFile getStagingFile(final String stagingFileId) throws MissingMethodParameterException,
-        StagingFileNotFoundException, SystemException {
+        StagingFileNotFoundException, SqlDatabaseSystemException {
 
         if (stagingFileId == null) {
             throw new MissingMethodParameterException("staging file id must be provided.");

@@ -51,6 +51,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -179,7 +180,7 @@ public class EscidocServlet extends HttpServlet {
      */
     @Override
     public void service(final ServletRequest request, final ServletResponse response) throws ServletException,
-        IOException {
+        IOException, UnsupportedEncodingException {
 
         try {
             final String protocol = request.getProtocol();
@@ -299,7 +300,7 @@ public class EscidocServlet extends HttpServlet {
      */
     private boolean handleException(
         final HttpServletRequest httpRequest, final HttpServletResponse httpResponse, final BeanMethod method,
-        final Throwable e) throws IOException {
+        final Throwable e) throws IOException, UnsupportedEncodingException {
 
         boolean ret = false;
 
@@ -373,7 +374,7 @@ public class EscidocServlet extends HttpServlet {
      * @throws SAXException                 If anything fails.
      */
     private static MapperInterface getMethodMapper(final String filename) throws IOException, TransformerException,
-        ParserConfigurationException, SAXException {
+        ParserConfigurationException, SAXException, FileNotFoundException {
         MapperInterface result = MAPPINGS.get(filename);
         if (result == null) {
             result = new MethodMapper(filename);
@@ -556,7 +557,7 @@ public class EscidocServlet extends HttpServlet {
      */
     private static void doRedirect(
         final HttpServletRequest httpRequest, final HttpServletResponse httpResponse, final SecurityException exception)
-        throws IOException {
+        throws IOException, UnsupportedEncodingException {
 
         final String message = exception.toXmlString();
         final String redirectLocation =

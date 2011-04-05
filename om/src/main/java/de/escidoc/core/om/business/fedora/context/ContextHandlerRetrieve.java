@@ -30,6 +30,7 @@ package de.escidoc.core.om.business.fedora.context;
 
 import de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -62,7 +63,7 @@ public class ContextHandlerRetrieve extends ContextHandlerBase {
      * @return XML representation of Context Properties.
      * @throws SystemException If anything fails.
      */
-    protected String getPropertiesXml(final FedoraContextHandler contextHandler) throws SystemException {
+    protected String getPropertiesXml(final FedoraContextHandler contextHandler) throws WebserverSystemException {
 
         return getRenderer().renderProperties(contextHandler);
     }
@@ -74,7 +75,7 @@ public class ContextHandlerRetrieve extends ContextHandlerBase {
      * @return XML representation of Context Resources.
      * @throws SystemException If anything fails.
      */
-    protected String getResourcesXml(final FedoraContextHandler contextHandler) throws SystemException {
+    protected String getResourcesXml(final FedoraContextHandler contextHandler) throws WebserverSystemException {
 
         return getRenderer().renderResources(contextHandler);
     }

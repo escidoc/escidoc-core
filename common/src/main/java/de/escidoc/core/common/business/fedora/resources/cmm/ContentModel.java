@@ -30,6 +30,7 @@ import de.escidoc.core.common.business.fedora.resources.GenericVersionableResour
 import de.escidoc.core.common.business.fedora.resources.create.ResourceDefinitionCreate;
 import de.escidoc.core.common.business.fedora.resources.interfaces.VersionableResource;
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
+import de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.StreamNotFoundException;
 import de.escidoc.core.common.exceptions.system.FedoraSystemException;
@@ -95,7 +96,8 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
      *                                    thrown.
      */
     public ContentModel(final String id) throws TripleStoreSystemException, WebserverSystemException,
-        IntegritySystemException, FedoraSystemException, StreamNotFoundException, ResourceNotFoundException {
+        IntegritySystemException, FedoraSystemException, StreamNotFoundException, ResourceNotFoundException,
+        ContentModelNotFoundException {
         super(id);
         setPropertiesNames(expandPropertiesNames(getPropertiesNames()),
             expandPropertiesNamesMapping(getPropertiesNamesMapping()));

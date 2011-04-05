@@ -39,7 +39,8 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
     }
 
     // TODO ContentModelHandlerBase ?
-    protected void setContentModel(final String id) throws ContentModelNotFoundException, SystemException {
+    protected void setContentModel(final String id) throws ContentModelNotFoundException, TripleStoreSystemException,
+        IntegritySystemException, FedoraSystemException, WebserverSystemException {
 
         try {
             this.contentModel = new ContentModel(id);

@@ -141,7 +141,8 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
     @Override
     protected Object[] resolveLocalPart(
         final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
-        final String resourceVersionNumber) throws EscidocException {
+        final String resourceVersionNumber) throws AggregationDefinitionNotFoundException, ScopeNotFoundException,
+        WebserverSystemException, ReportDefinitionNotFoundException {
 
         final EvaluationResult result;
         String resolvedAttributeIdValue;

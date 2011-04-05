@@ -34,6 +34,7 @@ import de.escidoc.core.aa.business.authorisation.CustomEvaluationResultBuilder;
 import de.escidoc.core.common.business.LockHandler;
 import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
 import de.escidoc.core.common.exceptions.EscidocException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 
 import java.util.regex.Pattern;
 
@@ -79,7 +80,7 @@ public class LockOwnerAttributeFinderModule extends AbstractAttributeFinderModul
     @Override
     protected Object[] resolveLocalPart(
         final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
-        final String resourceVersionNumber) throws EscidocException {
+        final String resourceVersionNumber) throws WebserverSystemException {
 
         final String lockOwner = lockHandler.getLockOwner(resourceId);
         final EvaluationResult result = CustomEvaluationResultBuilder.createSingleStringValueResult(lockOwner);

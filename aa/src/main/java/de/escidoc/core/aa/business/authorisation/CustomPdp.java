@@ -65,6 +65,7 @@ import de.escidoc.core.aa.business.xacml.function.XacmlFunctionRoleIsGranted;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -205,8 +206,8 @@ public class CustomPdp {
      * @throws ParsingException         if the Request is invalid
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    public ResponseCtx evaluate(final String requestFile) throws IOException, ParsingException,
-        WebserverSystemException {
+    public ResponseCtx evaluate(final String requestFile) throws ParsingException, WebserverSystemException,
+        FileNotFoundException {
 
         if (this.pdp == null) {
             init();

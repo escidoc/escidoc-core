@@ -82,7 +82,8 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
      * render(de.escidoc.core.oum.business.fedora.resources.OrganizationalUnit)
      */
     @Override
-    public String render(final OrganizationalUnit organizationalUnit) throws SystemException {
+    public String render(final OrganizationalUnit organizationalUnit) throws WebserverSystemException,
+        TripleStoreSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         addCommonValues(organizationalUnit, values);
@@ -170,7 +171,8 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
      * @see OrganizationalUnitRendererInterface# renderParents(de.escidoc.core.oum.business.fedora.resources.OrganizationalUnit)
      */
     @Override
-    public String renderParents(final OrganizationalUnit organizationalUnit) throws SystemException {
+    public String renderParents(final OrganizationalUnit organizationalUnit) throws WebserverSystemException,
+        TripleStoreSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         addCommonValues(organizationalUnit, values);
@@ -187,7 +189,7 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
      */
     @Override
     public String renderChildObjects(final OrganizationalUnit organizationalUnit, final List<String> children)
-        throws SystemException {
+        throws WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         addXlinkValues(values);
@@ -207,7 +209,7 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
      */
     @Override
     public String renderParentObjects(final OrganizationalUnit organizationalUnit, final List<String> parents)
-        throws SystemException {
+        throws WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         addXlinkValues(values);
@@ -228,7 +230,7 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
      */
     @Override
     public String renderPathList(final OrganizationalUnit organizationalUnit, final List<List<String>> pathes)
-        throws SystemException {
+        throws WebserverSystemException, TripleStoreSystemException {
         final Map<String, Object> values = new HashMap<String, Object>();
         addXlinkValues(values);
         addPathListNamespaceValues(values);
@@ -254,7 +256,8 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
      * .business.fedora.resources.OrganizationalUnit)
      */
     @Override
-    public String renderSuccessors(final OrganizationalUnit organizationalUnit) throws SystemException {
+    public String renderSuccessors(final OrganizationalUnit organizationalUnit) throws WebserverSystemException,
+        TripleStoreSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
 
@@ -279,7 +282,8 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
      * @return The expected <code>List</code> of <code>Maps</code>.
      * @throws SystemException Thrown in case of an internal error.
      */
-    private static List<Map<String, String>> retrieveRefValues(final Collection<String> ids) throws SystemException {
+    private static List<Map<String, String>> retrieveRefValues(final Collection<String> ids)
+        throws TripleStoreSystemException, WebserverSystemException {
         final List<Map<String, String>> entries = new ArrayList<Map<String, String>>(ids.size());
         for (final String id : ids) {
             final Map<String, String> entry = new HashMap<String, String>(THREE);
@@ -560,7 +564,7 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
      * @throws SystemException Thrown in case of an internal error.
      */
     private static void addParentsValues(final OrganizationalUnit organizationalUnit, final Map<String, Object> values)
-        throws SystemException {
+        throws TripleStoreSystemException, WebserverSystemException {
         values.put("parentsHref", XmlUtility.getOrganizationalUnitParentsHref(organizationalUnit.getId()));
         values.put("parentsTitle", "Parents");
         final List<String> ids = organizationalUnit.getParents();
@@ -588,7 +592,8 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
      * @throws SystemException Thrown in case of an internal error.
      */
     private static void addPredecessorsValues(
-        final OrganizationalUnit organizationalUnit, final Map<String, Object> values) throws SystemException {
+        final OrganizationalUnit organizationalUnit, final Map<String, Object> values)
+        throws TripleStoreSystemException, WebserverSystemException {
 
         values.put(XmlTemplateProvider.PREDECESSORS_HREF, XmlUtility
             .getOrganizationalUnitPredecessorsHref(organizationalUnit.getId()));
@@ -623,7 +628,8 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
      * @throws SystemException Thrown in case of an internal error.
      */
     private static void addSuccessorsValues(
-        final OrganizationalUnit organizationalUnit, final Map<String, Object> values) throws SystemException {
+        final OrganizationalUnit organizationalUnit, final Map<String, Object> values)
+        throws TripleStoreSystemException, WebserverSystemException {
 
         values.put(XmlTemplateProvider.SUCCESSORS_HREF, XmlUtility
             .getOrganizationalUnitSuccessorsHref(organizationalUnit.getId()));

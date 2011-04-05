@@ -89,7 +89,8 @@ public class Context extends GenericResource implements ContextInterface {
      * @throws ContextNotFoundException Thrown if Context with id could not be found.
      * @throws SystemException          Thrown in case of an internal error.
      */
-    public Context(final String id) throws ContextNotFoundException, SystemException {
+    public Context(final String id) throws ContextNotFoundException, TripleStoreSystemException,
+        IntegritySystemException, WebserverSystemException {
 
         super(id);
         setPropertiesNames(expandPropertiesNames(getPropertiesNames()),
@@ -120,7 +121,8 @@ public class Context extends GenericResource implements ContextInterface {
      * @throws StreamNotFoundException If resource datastream could not be found.
      * @throws SystemException         If anything else fails.
      */
-    public void setResources(final Datastream ds) throws StreamNotFoundException, SystemException {
+    public void setResources(final Datastream ds) throws StreamNotFoundException, FedoraSystemException,
+        WebserverSystemException {
         // check if properties is set, is equal to ds and save to fedora
         try {
             final Datastream curDs = getProperties();
@@ -163,7 +165,8 @@ public class Context extends GenericResource implements ContextInterface {
      * )
      */
     @Override
-    public void setProperties(final Datastream ds) throws StreamNotFoundException, SystemException {
+    public void setProperties(final Datastream ds) throws StreamNotFoundException, FedoraSystemException,
+        WebserverSystemException {
         // check if properties is set, is equal to ds and save to fedora
         try {
             final Datastream curDs = getProperties();
@@ -444,7 +447,7 @@ public class Context extends GenericResource implements ContextInterface {
      * @return modified-by id
      * @throws SystemException If anything fails.
      */
-    public String getModifiedBy() throws SystemException {
+    public String getModifiedBy() throws TripleStoreSystemException, WebserverSystemException {
         return getResourceProperties().get(PropertyMapKeys.LATEST_VERSION_MODIFIED_BY_ID);
     }
 
@@ -466,7 +469,7 @@ public class Context extends GenericResource implements ContextInterface {
      * @return Vector with hrefs of organizational units.
      * @throws SystemException If anythings fails.
      */
-    public Collection<String> getOrganizationalUnitHrefs() throws SystemException {
+    public Collection<String> getOrganizationalUnitHrefs() throws TripleStoreSystemException, WebserverSystemException {
         final String path = "/oum/organizational-unit/";
         final List<String> propVals = getOrganizationalUnitObjids();
         final Collection<String> ouHrefs = new ArrayList<String>(propVals.size());
@@ -484,7 +487,8 @@ public class Context extends GenericResource implements ContextInterface {
      * @throws ContextNotFoundException Thrown if no Context exists with this object id.
      * @throws SystemException          Thrown in case of internal error.
      */
-    private void checkContextExist() throws ContextNotFoundException, SystemException {
+    private void checkContextExist() throws ContextNotFoundException, TripleStoreSystemException,
+        IntegritySystemException, WebserverSystemException {
 
         try {
             Utility.getInstance().checkIsContext(getId());

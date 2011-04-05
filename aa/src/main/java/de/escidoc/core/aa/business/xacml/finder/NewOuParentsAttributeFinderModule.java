@@ -112,7 +112,7 @@ public class NewOuParentsAttributeFinderModule extends AbstractAttributeFinderMo
     @Override
     protected Object[] resolveLocalPart(
         final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
-        final String resourceVersionNumber) throws EscidocException {
+        final String resourceVersionNumber) throws SystemException {
 
         try {
             if (attributeIdValue.equals(ATTR_HIERARCHICAL_PARENTS_NEW)) {

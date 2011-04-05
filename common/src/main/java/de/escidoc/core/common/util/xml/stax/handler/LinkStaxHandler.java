@@ -23,6 +23,7 @@ package de.escidoc.core.common.util.xml.stax.handler;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
@@ -99,7 +100,8 @@ public class LinkStaxHandler extends DefaultHandler {
      * @see DefaultHandler #startElement (de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
-    public StartElement startElement(final StartElement element) throws EscidocException {
+    public StartElement startElement(final StartElement element) throws EscidocException, SystemException,
+        WebserverSystemException {
 
         final String currentPath = element.getPath();
         if (isNotReady() && currentPath.equals(this.elementPath)) {

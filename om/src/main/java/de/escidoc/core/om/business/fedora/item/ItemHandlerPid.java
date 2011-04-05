@@ -40,12 +40,14 @@ import de.escidoc.core.common.exceptions.application.notfound.ItemNotFoundExcept
 import de.escidoc.core.common.exceptions.application.violated.LockingException;
 import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException;
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException;
+import de.escidoc.core.common.exceptions.system.EncodingSystemException;
 import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.PidSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.persistence.PIDSystem;
 import de.escidoc.core.common.persistence.PIDSystemFactory;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
@@ -95,7 +97,8 @@ public class ItemHandlerPid extends ItemHandlerContent {
     public String assignContentPid(final String id, final String componentId, final String taskParam)
         throws ItemNotFoundException, LockingException, MissingMethodParameterException, OptimisticLockingException,
         InvalidStatusException, ComponentNotFoundException, SystemException, XmlCorruptedException,
-        ReadonlyVersionException {
+        ReadonlyVersionException, EncodingSystemException, FedoraSystemException, TripleStoreSystemException,
+        XmlParserSystemException, PidSystemException, WebserverSystemException, IntegritySystemException {
 
         setItem(id);
 
@@ -149,7 +152,9 @@ public class ItemHandlerPid extends ItemHandlerContent {
      */
     public String assignObjectPid(final String id, final String taskParam) throws InvalidStatusException,
         ItemNotFoundException, ComponentNotFoundException, LockingException, MissingMethodParameterException,
-        OptimisticLockingException, XmlCorruptedException, SystemException {
+        OptimisticLockingException, XmlCorruptedException, SystemException, EncodingSystemException,
+        IntegritySystemException, FedoraSystemException, TripleStoreSystemException, PidSystemException,
+        WebserverSystemException, XmlParserSystemException {
 
         setItem(id);
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(taskParam);
@@ -199,7 +204,9 @@ public class ItemHandlerPid extends ItemHandlerContent {
      */
     public String assignVersionPid(final String id, final String taskParam) throws ItemNotFoundException,
         LockingException, MissingMethodParameterException, OptimisticLockingException, InvalidStatusException,
-        XmlCorruptedException, SystemException, ComponentNotFoundException, ReadonlyVersionException {
+        XmlCorruptedException, SystemException, ComponentNotFoundException, ReadonlyVersionException,
+        EncodingSystemException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException,
+        PidSystemException, WebserverSystemException, XmlParserSystemException {
 
         setItem(id);
 
@@ -405,7 +412,8 @@ public class ItemHandlerPid extends ItemHandlerContent {
      * @throws ComponentNotFoundException Thrown if the component with the given componentId could not be found
      */
     private void checkContentPidAssignable(final String componentId) throws InvalidStatusException, SystemException,
-        ComponentNotFoundException {
+        ComponentNotFoundException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException,
+        WebserverSystemException, XmlParserSystemException {
 
         checkStatus(Constants.STATUS_WITHDRAWN);
         checkVersionStatusNot(Constants.STATUS_WITHDRAWN);
@@ -442,7 +450,8 @@ public class ItemHandlerPid extends ItemHandlerContent {
      * @throws InvalidStatusException If item status is not released
      * @throws SystemException        Thrown if instance of configuration throws exception.
      */
-    private void checkItemVersionPidAssignable() throws InvalidStatusException, SystemException {
+    private void checkItemVersionPidAssignable() throws InvalidStatusException, SystemException,
+        IntegritySystemException, WebserverSystemException {
 
         checkStatus(Constants.STATUS_WITHDRAWN);
         checkVersionStatusNot(Constants.STATUS_WITHDRAWN);
@@ -479,7 +488,8 @@ public class ItemHandlerPid extends ItemHandlerContent {
      * @throws InvalidStatusException If item status is not released
      * @throws SystemException        Thrown if instance of configuration throws exception.
      */
-    protected void checkObjectPidAssignable() throws InvalidStatusException, SystemException {
+    protected void checkObjectPidAssignable() throws InvalidStatusException, SystemException,
+        TripleStoreSystemException, WebserverSystemException {
 
         checkStatus(Constants.STATUS_WITHDRAWN);
 

@@ -32,7 +32,10 @@ import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.exceptions.application.notfound.OrganizationalUnitNotFoundException;
+import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
@@ -65,7 +68,8 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      * @throws SystemException                If an intenal error occurs.
      */
     protected String checkParentRef(final StartElement element) throws MissingAttributeValueException,
-        OrganizationalUnitNotFoundException, SystemException {
+        OrganizationalUnitNotFoundException, TripleStoreSystemException, IntegritySystemException,
+        WebserverSystemException {
 
         String result;
         try {
@@ -103,7 +107,7 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      * @return The value of the property.
      * @throws SystemException If access to the triplestore fails.
      */
-    public String getProperty(final String property) throws SystemException {
+    public String getProperty(final String property) throws TripleStoreSystemException {
 
         return getTripleStoreUtility().getPropertiesElements(getId(), property);
     }

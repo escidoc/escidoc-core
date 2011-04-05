@@ -35,6 +35,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamSource;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.regex.Pattern;
 
@@ -133,7 +134,7 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
      * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
      */
     private InputStream mapKeyToXslt(final String key) throws WebserverSystemException, FedoraSystemException,
-        IOException {
+        IOException, MalformedURLException {
 
         final String[] keyParts = SPLIT_PATTERN.split(key);
         final String nsUri = keyParts[0];

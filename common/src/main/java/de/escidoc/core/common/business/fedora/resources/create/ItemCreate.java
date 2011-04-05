@@ -188,7 +188,8 @@ public class ItemCreate extends GenericResourceCreate {
      */
     public void persist() throws SystemException, InvalidStatusException, MissingMdRecordException,
         FileNotFoundException, InvalidContentException, ReferencedResourceNotFoundException,
-        RelationPredicateNotFoundException, MissingAttributeValueException {
+        RelationPredicateNotFoundException, MissingAttributeValueException, IntegritySystemException,
+        FedoraSystemException {
 
         persist(true);
     }
@@ -201,7 +202,8 @@ public class ItemCreate extends GenericResourceCreate {
      * @throws de.escidoc.core.common.exceptions.application.notfound.FileNotFoundException
      * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
      */
-    public void persist(final boolean forceSync) throws SystemException, FileNotFoundException, InvalidContentException {
+    public void persist(final boolean forceSync) throws SystemException, FileNotFoundException,
+        InvalidContentException, IntegritySystemException, FedoraSystemException {
 
         if (getProperties().getObjectProperties().getOrigin() == null) {
             persistComponents();
@@ -477,7 +479,8 @@ public class ItemCreate extends GenericResourceCreate {
      * @throws SystemException              Thrown if rendering of Item or sub-elements failed.
      * @throws UnsupportedEncodingException Thrown if conversion to default character set failed.
      */
-    private String getMinimalFoXML() throws SystemException, UnsupportedEncodingException {
+    private String getMinimalFoXML() throws SystemException, UnsupportedEncodingException, EncodingSystemException,
+        WebserverSystemException {
 
         final Map<String, Object> valueMap = new HashMap<String, Object>();
 
@@ -520,7 +523,7 @@ public class ItemCreate extends GenericResourceCreate {
      * @return RELS-EXT XML snippet
      * @throws SystemException Thrown if renderer failed.
      */
-    private String renderRelsExt() throws SystemException {
+    private String renderRelsExt() throws SystemException, WebserverSystemException {
 
         final Map<String, Object> valueMap = new HashMap<String, Object>();
 
@@ -544,7 +547,8 @@ public class ItemCreate extends GenericResourceCreate {
      * @throws de.escidoc.core.common.exceptions.system.SystemException
      * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
      */
-    private void persistComponents() throws SystemException, FileNotFoundException, InvalidContentException {
+    private void persistComponents() throws SystemException, FileNotFoundException, InvalidContentException,
+        IntegritySystemException, FedoraSystemException {
 
         int i = 0;
         List<String> componentIds = null;
@@ -594,7 +598,7 @@ public class ItemCreate extends GenericResourceCreate {
      * @return HashMap with template values.
      * @throws SystemException Thrown if obtaining values from framework configuration or TripleStore failed.
      */
-    private Map<String, String> preparePropertiesValueMap() throws SystemException {
+    private Map<String, String> preparePropertiesValueMap() throws WebserverSystemException {
 
         final Map<String, String> valueMap = new HashMap<String, String>();
 

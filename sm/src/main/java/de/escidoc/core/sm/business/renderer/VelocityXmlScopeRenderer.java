@@ -65,7 +65,7 @@ public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
      * @see de.escidoc.core.sm.business.renderer.interfaces.ScopeRendererInterface#render(Map)
      */
     @Override
-    public String render(final Scope scope) throws SystemException {
+    public String render(final Scope scope) throws SystemException, WebserverSystemException {
         final Map<String, Object> values = new HashMap<String, Object>();
         values.put("isRootScope", XmlTemplateProvider.TRUE);
         addScopeNamespaceValues(values);
@@ -111,7 +111,7 @@ public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
      */
     @Override
     public String renderScopes(final Collection<Scope> scopes, final RecordPacking recordPacking)
-        throws SystemException {
+        throws SystemException, WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
 
@@ -144,7 +144,7 @@ public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
      * @param values The {@link Map} to that the values shall be added.
      * @throws SystemException e
      */
-    private static void addScopeNamespaceValues(final Map<String, Object> values) throws SystemException {
+    private static void addScopeNamespaceValues(final Map<String, Object> values) throws WebserverSystemException {
         addEscidocBaseUrl(values);
         values.put("scopeNamespacePrefix", Constants.SCOPE_NS_PREFIX);
         values.put("scopeNamespace", Constants.SCOPE_NS_URI);
@@ -160,7 +160,7 @@ public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
      * @param values The {@link Map} to that the values shall be added.
      * @throws SystemException e
      */
-    private static void addScopeListNamespaceValues(final Map<String, Object> values) throws SystemException {
+    private static void addScopeListNamespaceValues(final Map<String, Object> values) throws WebserverSystemException {
         addEscidocBaseUrl(values);
         values.put("searchResultNamespace", Constants.SEARCH_RESULT_NS_URI);
         values.put("scopeListNamespacePrefix", Constants.SCOPE_LIST_NS_PREFIX);

@@ -61,7 +61,8 @@ public class IngestHandlerBean implements SessionBean {
 
     }
 
-    public String ingest(final String xmlData, final SecurityContext securityContext) throws EscidocException {
+    public String ingest(final String xmlData, final SecurityContext securityContext) throws EscidocException,
+        SystemException {
         try {
             UserContext.setUserContext(securityContext);
         }
@@ -72,7 +73,7 @@ public class IngestHandlerBean implements SessionBean {
     }
 
     public String ingest(final String xmlData, final String authHandle, final Boolean restAccess)
-        throws EscidocException {
+        throws EscidocException, SystemException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);

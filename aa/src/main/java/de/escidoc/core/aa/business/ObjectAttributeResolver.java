@@ -12,7 +12,10 @@ import de.escidoc.core.common.exceptions.application.missing.MissingMethodParame
 import de.escidoc.core.common.exceptions.application.notfound.ScopeNotFoundException;
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
+import de.escidoc.core.common.exceptions.system.IntegritySystemException;
+import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.sm.service.interfaces.ScopeHandlerInterface;
@@ -57,7 +60,8 @@ public class ObjectAttributeResolver {
      * @throws AuthenticationException e
      */
     public Map<String, String> resolveObjectAttributes(final String objectId) throws MissingMethodParameterException,
-        SystemException, AuthorizationException, AuthenticationException {
+        SystemException, AuthorizationException, AuthenticationException, IntegritySystemException,
+        TripleStoreSystemException, SqlDatabaseSystemException {
         return resolveObjectAttributes(objectId, false);
     }
 
@@ -73,7 +77,8 @@ public class ObjectAttributeResolver {
      * @throws AuthenticationException e
      */
     public String resolveObjectType(final String objectId) throws MissingMethodParameterException, SystemException,
-        AuthorizationException, AuthenticationException {
+        AuthorizationException, AuthenticationException, IntegritySystemException, TripleStoreSystemException,
+        SqlDatabaseSystemException {
         final Map<String, String> objectAttributes = resolveObjectAttributes(objectId, true);
         return objectAttributes != null ? objectAttributes.get(ATTR_OBJECT_TYPE) : null;
     }
@@ -91,7 +96,8 @@ public class ObjectAttributeResolver {
      * @throws AuthenticationException e
      */
     private Map<String, String> resolveObjectAttributes(final String objectId, final boolean typeOnly)
-        throws MissingMethodParameterException, SystemException, AuthorizationException, AuthenticationException {
+        throws MissingMethodParameterException, SystemException, AuthorizationException, AuthenticationException,
+        IntegritySystemException, TripleStoreSystemException, SqlDatabaseSystemException {
 
         // try getting attributes from Triple-Store
         Map<String, String> objectAttributes = getObjectFromTripleStore(objectId, typeOnly);
@@ -134,7 +140,7 @@ public class ObjectAttributeResolver {
      * @throws SystemException e
      */
     private Map<String, String> getObjectFromTripleStore(final String objectId, final boolean typeOnly)
-        throws SystemException {
+        throws TripleStoreSystemException, IntegritySystemException {
         final Map<String, String> result = new HashMap<String, String>();
         final String objectType = tsu.getObjectType(objectId);
         if (objectType != null) {
@@ -200,7 +206,7 @@ public class ObjectAttributeResolver {
      * @throws SystemException e
      */
     private Map<String, String> getObjectFromUserAccount(final String objectId, final boolean typeOnly)
-        throws SystemException {
+        throws SqlDatabaseSystemException {
         final Map<String, String> result = new HashMap<String, String>();
         if (typeOnly) {
             if (userAccountDao.userAccountExists(objectId)) {
@@ -236,7 +242,7 @@ public class ObjectAttributeResolver {
      * @throws SystemException e
      */
     private Map<String, String> getObjectFromUserGroup(final String objectId, final boolean typeOnly)
-        throws SystemException {
+        throws SqlDatabaseSystemException {
         final Map<String, String> result = new HashMap<String, String>();
         if (typeOnly) {
             if (userGroupDao.userGroupExists(objectId)) {
@@ -271,7 +277,8 @@ public class ObjectAttributeResolver {
      * @return HashMap with objectType and objectTitle
      * @throws SystemException Thrown in case of an internal error.
      */
-    private Map<String, String> getObjectFromRole(final String objectId, final boolean typeOnly) throws SystemException {
+    private Map<String, String> getObjectFromRole(final String objectId, final boolean typeOnly)
+        throws SqlDatabaseSystemException {
         final Map<String, String> result = new HashMap<String, String>();
         if (typeOnly) {
             if (roleDao.roleExists(objectId)) {
@@ -307,7 +314,7 @@ public class ObjectAttributeResolver {
      * @throws SystemException Thrown in case of an internal error.
      */
     private Map<String, String> getObjectFromGrant(final String objectId, final boolean typeOnly)
-        throws SystemException {
+        throws SqlDatabaseSystemException {
         final Map<String, String> result = new HashMap<String, String>();
         if (userAccountDao.grantExists(objectId)) {
             result.put(ATTR_OBJECT_TYPE, XmlUtility.NAME_GRANT);

@@ -22,6 +22,8 @@ package de.escidoc.core.common.util.aop;
 
 import de.escidoc.core.common.annotation.Validate;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
+import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
+import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
@@ -61,7 +63,8 @@ public class XmlValidationInterceptor implements Ordered {
     //    @Before("call(public !static * de.escidoc.core.*.service.interfaces.*.*(..))"
     //        + " && within(de.escidoc.core.*.ejb.*Bean)")
     @Before("call(public !static * de.escidoc.core.*.service.interfaces.*.*(..))")
-    public void validate(final JoinPoint joinPoint) throws Throwable {
+    public void validate(final JoinPoint joinPoint) throws XmlParserSystemException, WebserverSystemException,
+        XmlSchemaValidationException, XmlCorruptedException {
 
         final Method calledMethod = ((MethodSignature) joinPoint.getSignature()).getMethod();
         final Annotation annotation = calledMethod.getAnnotation(Validate.class);
@@ -83,7 +86,7 @@ public class XmlValidationInterceptor implements Ordered {
      * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
      */
     private void validate(final String xml, final String resolvingMethod, final String root)
-        throws InvalidXmlException, WebserverSystemException, XmlParserSystemException {
+        throws WebserverSystemException, XmlParserSystemException, XmlSchemaValidationException, XmlCorruptedException {
 
         XmlUtility.validate(xml, getSchemaLocation(resolvingMethod), root);
     }

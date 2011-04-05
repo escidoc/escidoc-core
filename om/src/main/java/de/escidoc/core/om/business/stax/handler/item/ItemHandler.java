@@ -33,6 +33,7 @@ import de.escidoc.core.common.business.stax.handler.common.ContentStreamsHandler
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
+import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.exceptions.application.missing.MissingContentException;
 import de.escidoc.core.common.exceptions.application.missing.MissingElementValueException;
@@ -40,7 +41,9 @@ import de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFou
 import de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException;
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyAttributeViolationException;
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException;
+import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
@@ -183,8 +186,9 @@ public class ItemHandler extends DefaultHandler {
      */
     @Override
     public EndElement endElement(final EndElement element) throws MissingContentException, XMLStreamException,
-        InvalidXmlException, MissingAttributeValueException, ContextNotFoundException, ContentModelNotFoundException,
-        UnsupportedEncodingException, SystemException, InvalidContentException {
+        MissingAttributeValueException, ContextNotFoundException, ContentModelNotFoundException,
+        UnsupportedEncodingException, InvalidContentException, WebserverSystemException, IntegritySystemException,
+        TripleStoreSystemException, XmlCorruptedException {
 
         final String currentPath = parser.getCurPath();
 

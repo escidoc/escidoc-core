@@ -42,6 +42,7 @@ import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
@@ -103,7 +104,9 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      * @see ContainerRendererInterface#render(FedoraContainerHandler)
      */
     @Override
-    public String render(final Container container) throws SystemException {
+    public String render(final Container container) throws SystemException, EncodingSystemException,
+        IntegritySystemException, FedoraSystemException, TripleStoreSystemException, XmlParserSystemException,
+        WebserverSystemException {
 
         // Container container = containerHandler.getContainer();
         final Map<String, Object> values = new HashMap<String, Object>();
@@ -137,7 +140,8 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      * )
      */
     @Override
-    public String renderProperties(final Container container) throws WebserverSystemException, SystemException {
+    public String renderProperties(final Container container) throws WebserverSystemException,
+        TripleStoreSystemException, EncodingSystemException, IntegritySystemException, FedoraSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         commonRenderer.addCommonValues(container, values);
@@ -174,7 +178,8 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      * @throws SystemException Thrown in case of an internal error.
      */
     @Override
-    public String renderRelations(final Container container) throws WebserverSystemException, SystemException {
+    public String renderRelations(final Container container) throws WebserverSystemException,
+        TripleStoreSystemException, IntegritySystemException, FedoraSystemException, XmlParserSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         commonRenderer.addCommonValues(container, values);
@@ -194,7 +199,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      * @throws SystemException Thrown in case of an internal error.
      */
     @Override
-    public String renderParents(final String containerId) throws SystemException {
+    public String renderParents(final String containerId) throws WebserverSystemException, TripleStoreSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         commonRenderer.addXlinkValues(values);
@@ -214,7 +219,8 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      * @param values      The map to add values to.
      * @throws SystemException Thrown in case of an internal error.
      */
-    private void addParentsValues(final String containerId, final Map<String, Object> values) throws SystemException {
+    private void addParentsValues(final String containerId, final Map<String, Object> values)
+        throws TripleStoreSystemException {
         values.put("parentsHref", XmlUtility.getContainerParentsHref(XmlUtility.getContainerHref(containerId)));
         values.put("parentsTitle", "parents of container " + containerId);
         final StringBuffer query = tsu.getRetrieveSelectClause(true, TripleStoreUtility.PROP_MEMBER);
@@ -283,7 +289,8 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      * @throws SystemException Thrown in case of an internal error.
      */
     private static void addPropertiesValus(final Map<String, Object> values, final Container container)
-        throws SystemException {
+        throws TripleStoreSystemException, EncodingSystemException, IntegritySystemException, FedoraSystemException,
+        WebserverSystemException {
 
         final Map<String, String> properties = container.getResourceProperties();
         final String id = container.getId();
@@ -446,7 +453,8 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      * @param values    The map to add values to.
      * @throws SystemException Thrown in case of an internal error.
      */
-    private void addStructMapValus(final Container container, final Map<String, Object> values) throws SystemException {
+    private void addStructMapValus(final Container container, final Map<String, Object> values) throws SystemException,
+        WebserverSystemException, TripleStoreSystemException, XmlParserSystemException {
 
         values.put("structMapTitle", "StructMap of Container");
         values.put("structMapHref", container.getHref() + "/struct-map");
@@ -467,7 +475,8 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      * @throws MissingMethodParameterException
      */
     private static void addMemberRefs(final Container container, final Map<String, Object> values)
-        throws SystemException, MissingMethodParameterException {
+        throws SystemException, MissingMethodParameterException, TripleStoreSystemException, WebserverSystemException,
+        XmlParserSystemException {
 
         final UserFilter ufilter = new UserFilter();
 
@@ -644,7 +653,8 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      * @throws SystemException Thrown in case of an internal error.
      */
     @Override
-    public String renderStructMap(final Container container) throws SystemException {
+    public String renderStructMap(final Container container) throws SystemException, WebserverSystemException,
+        TripleStoreSystemException, XmlParserSystemException {
         final Map<String, Object> values = new HashMap<String, Object>();
         commonRenderer.addCommonValues(container, values);
         addNamespaceValues(values);

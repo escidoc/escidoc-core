@@ -62,7 +62,8 @@ public class FedoraDescribeDeviationHandlerBean implements SessionBean {
 
     }
 
-    public String getFedoraDescription(final Map parameters, final SecurityContext securityContext) throws Exception {
+    public String getFedoraDescription(final Map parameters, final SecurityContext securityContext) throws Exception,
+        SystemException {
         try {
             UserContext.setUserContext(securityContext);
         }
@@ -73,7 +74,7 @@ public class FedoraDescribeDeviationHandlerBean implements SessionBean {
     }
 
     public String getFedoraDescription(final Map parameters, final String authHandle, final Boolean restAccess)
-        throws Exception {
+        throws Exception, SystemException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);

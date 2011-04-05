@@ -34,7 +34,9 @@ import de.escidoc.core.common.business.filter.SRURequestParameters;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.ScopeNotFoundException;
+import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.factory.ExplainXmlProvider;
 import de.escidoc.core.sm.business.filter.ScopeFilter;
@@ -74,7 +76,8 @@ public class ScopeHandler implements ScopeHandlerInterface {
      * @see de.escidoc.core.sm.business.interfaces .ScopeHandlerInterface #create(java.lang.String)
      */
     @Override
-    public String create(final String xmlData) throws MissingMethodParameterException, SystemException {
+    public String create(final String xmlData) throws MissingMethodParameterException, SystemException,
+        SqlDatabaseSystemException, WebserverSystemException {
         if (xmlData == null || xmlData.length() == 0) {
             throw new MissingMethodParameterException("xml may not be null");
         }
@@ -112,7 +115,8 @@ public class ScopeHandler implements ScopeHandlerInterface {
      * @see de.escidoc.core.sm.business.interfaces .ScopeHandlerInterface #delete(java.lang.String)
      */
     @Override
-    public void delete(final String id) throws ScopeNotFoundException, MissingMethodParameterException, SystemException {
+    public void delete(final String id) throws ScopeNotFoundException, MissingMethodParameterException,
+        SqlDatabaseSystemException {
         if (id == null) {
             throw new MissingMethodParameterException("id may not be null");
         }
@@ -133,7 +137,7 @@ public class ScopeHandler implements ScopeHandlerInterface {
      */
     @Override
     public String retrieve(final String id) throws ScopeNotFoundException, MissingMethodParameterException,
-        SystemException {
+        SystemException, SqlDatabaseSystemException {
         if (id == null) {
             throw new MissingMethodParameterException("id may not be null");
         }
@@ -151,7 +155,7 @@ public class ScopeHandler implements ScopeHandlerInterface {
      */
     @Override
     public String retrieveScopes(final Map<String, String[]> parameters) throws InvalidSearchQueryException,
-        SystemException {
+        SystemException, SqlDatabaseSystemException, WebserverSystemException {
         final String result;
         final SRURequestParameters params = new DbRequestParameters(parameters);
         final String query = params.getQuery();
@@ -202,7 +206,7 @@ public class ScopeHandler implements ScopeHandlerInterface {
      */
     @Override
     public String update(final String id, final String xmlData) throws ScopeNotFoundException,
-        MissingMethodParameterException, SystemException {
+        MissingMethodParameterException, SystemException, SqlDatabaseSystemException, WebserverSystemException {
         if (id == null) {
             throw new MissingMethodParameterException("id may not be null");
         }

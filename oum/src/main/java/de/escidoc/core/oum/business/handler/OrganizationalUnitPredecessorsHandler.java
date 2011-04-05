@@ -35,7 +35,9 @@ import de.escidoc.core.common.business.fedora.resources.PredecessorForm;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.exceptions.application.notfound.OrganizationalUnitNotFoundException;
+import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.Elements;
@@ -81,8 +83,9 @@ public class OrganizationalUnitPredecessorsHandler extends HandlerBase {
      * @throws InvalidContentException        Thrown if value of Attribute is invalid (e.g. type).
      */
     @Override
-    public StartElement startElement(final StartElement element) throws SystemException,
-        MissingAttributeValueException, OrganizationalUnitNotFoundException, InvalidContentException {
+    public StartElement startElement(final StartElement element) throws MissingAttributeValueException,
+        OrganizationalUnitNotFoundException, InvalidContentException, TripleStoreSystemException,
+        IntegritySystemException, WebserverSystemException {
 
         final String curPath = getParser().getCurPath();
 

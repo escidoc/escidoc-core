@@ -35,8 +35,12 @@ import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusExcept
 import de.escidoc.core.common.exceptions.application.notfound.ItemNotFoundException;
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.application.violated.LockingException;
+import de.escidoc.core.common.exceptions.system.FedoraSystemException;
+import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.servlet.invocation.BeanMethod;
 import de.escidoc.core.common.servlet.invocation.MethodMapper;
 import de.escidoc.core.common.util.service.BeanLocator;
@@ -66,7 +70,8 @@ public class ItemHandlerDelete extends ItemHandlerCreate {
      * @throws AuthorizationException If further needed access rights are not given.
      */
     protected void remove(final String id) throws ItemNotFoundException, LockingException, InvalidStatusException,
-        SystemException, AuthorizationException {
+        SystemException, AuthorizationException, FedoraSystemException, TripleStoreSystemException,
+        WebserverSystemException, IntegritySystemException, XmlParserSystemException {
 
         // TODO move precondition checks to service method (? FRS)
         setItem(id);

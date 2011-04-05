@@ -24,6 +24,7 @@ import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.resources.RepositoryIndicator;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.ItemFoXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
@@ -203,7 +204,7 @@ public class MdRecordCreate implements Serializable {
      * @return FoXML representation of metadata record.
      * @throws SystemException Thrown if rendering failed.
      */
-    public String getFOXML() throws SystemException {
+    public String getFOXML() throws SystemException, WebserverSystemException {
 
         final Map<String, String> templateValues = getValueMap();
         return ItemFoXmlProvider.getInstance().getMetadataFoXml(templateValues);

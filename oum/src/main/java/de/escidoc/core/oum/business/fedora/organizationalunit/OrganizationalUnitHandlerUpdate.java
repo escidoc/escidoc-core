@@ -36,7 +36,9 @@ import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusExcept
 import de.escidoc.core.common.exceptions.application.notfound.StreamNotFoundException;
 import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException;
 import de.escidoc.core.common.exceptions.application.violated.OrganizationalUnitHasChildrenException;
+import de.escidoc.core.common.exceptions.system.EncodingSystemException;
 import de.escidoc.core.common.exceptions.system.FedoraSystemException;
+import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
@@ -70,7 +72,8 @@ public class OrganizationalUnitHandlerUpdate extends OrganizationalUnitHandlerCr
      */
     protected void setMdRecords(
         final Map<String, ByteArrayOutputStream> xml, final Map<String, Map<String, String>> mdAttributesMap,
-        final String escidocMdRecordnsUri) throws StreamNotFoundException, SystemException {
+        final String escidocMdRecordnsUri) throws StreamNotFoundException, IntegritySystemException,
+        FedoraSystemException, WebserverSystemException, EncodingSystemException, TripleStoreSystemException {
         final Map<String, Datastream> updated = new HashMap<String, Datastream>();
 
         // iterate over md-record names (keys) with
@@ -104,7 +107,8 @@ public class OrganizationalUnitHandlerUpdate extends OrganizationalUnitHandlerCr
      * @throws SystemException              If anything else fails.
      * @throws UnsupportedEncodingException If dc datastream has wrong encoding.
      */
-    protected void setDc(final String dc) throws StreamNotFoundException, SystemException, UnsupportedEncodingException {
+    protected void setDc(final String dc) throws StreamNotFoundException, UnsupportedEncodingException,
+        TripleStoreSystemException, FedoraSystemException, WebserverSystemException {
 
         getOrganizationalUnit().setDc(
             new Datastream(Datastream.DC_DATASTREAM, getOrganizationalUnit().getId(), dc
@@ -117,7 +121,8 @@ public class OrganizationalUnitHandlerUpdate extends OrganizationalUnitHandlerCr
      * @param state The new state.
      * @throws SystemException Thrown in case of an internal error.
      */
-    protected void updateState(final String state) throws SystemException {
+    protected void updateState(final String state) throws SystemException, TripleStoreSystemException,
+        EncodingSystemException, FedoraSystemException, WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         final String buildNumber = Utility.getBuildNumber();
@@ -176,7 +181,7 @@ public class OrganizationalUnitHandlerUpdate extends OrganizationalUnitHandlerCr
      * @throws SystemException        If anything else fails.
      */
     protected void checkParentsInState(final String methodText, final String state) throws InvalidStatusException,
-        SystemException {
+        TripleStoreSystemException {
 
         final List<String> parents = getOrganizationalUnit().getParents();
         for (final String parent : parents) {
@@ -198,7 +203,7 @@ public class OrganizationalUnitHandlerUpdate extends OrganizationalUnitHandlerCr
      * @throws SystemException        If anything else fails.
      */
     protected void checkCreateParentsConditions(final Iterable<String> parents) throws InvalidStatusException,
-        SystemException {
+        TripleStoreSystemException {
 
         // all parents must be in state created or opened
         for (final String parent : parents) {
@@ -220,7 +225,7 @@ public class OrganizationalUnitHandlerUpdate extends OrganizationalUnitHandlerCr
      * @throws SystemException        If anything else fails.
      */
     protected void checkUpdateParentsConditions(final Collection<String> parents) throws InvalidStatusException,
-        SystemException {
+        TripleStoreSystemException {
 
         final String status = getOrganizationalUnit().getPublicStatus();
         if (Constants.STATUS_OU_CREATED.equals(status)) {
@@ -261,7 +266,7 @@ public class OrganizationalUnitHandlerUpdate extends OrganizationalUnitHandlerCr
      * @throws SystemException Thrown in case of an internal error.
      */
     protected void checkWithoutChildren(final String methodText) throws OrganizationalUnitHasChildrenException,
-        SystemException {
+        TripleStoreSystemException, WebserverSystemException {
 
         if (!getOrganizationalUnit().getChildrenIds().isEmpty()) {
             throw new OrganizationalUnitHasChildrenException("Organizational unit with id='"
@@ -278,7 +283,7 @@ public class OrganizationalUnitHandlerUpdate extends OrganizationalUnitHandlerCr
      * @throws SystemException        Thrown in case of an internal error.
      */
     protected void checkWithoutChildrenOrChildrenClosed(final String methodText) throws InvalidStatusException,
-        SystemException {
+        TripleStoreSystemException, WebserverSystemException {
 
         final List<String> children = getOrganizationalUnit().getChildrenIds();
         if (!children.isEmpty()) {

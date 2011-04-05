@@ -83,7 +83,7 @@ public class SetDefinitionCreateHandler extends DefaultHandler {
     }
 
     @Override
-    public String characters(final String s, final StartElement element) throws InvalidXmlException {
+    public String characters(final String s, final StartElement element) throws XmlCorruptedException {
 
         final String theName = element.getLocalName();
         if (this.inProperties) {

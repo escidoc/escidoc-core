@@ -114,7 +114,8 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
      * @throws SystemException Thrown in case of internal error.
      */
     @Override
-    public void setObjectPid(final String pid) throws SystemException {
+    public void setObjectPid(final String pid) throws SystemException, IntegritySystemException, FedoraSystemException,
+        WebserverSystemException, EncodingSystemException, TripleStoreSystemException, XmlParserSystemException {
 
         super.setObjectPid(pid);
 
@@ -199,7 +200,8 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
      * @param pid The to assign PID.
      * @throws SystemException Thrown in case of internal failure.
      */
-    public void setVersionPid(final String pid) throws SystemException {
+    public void setVersionPid(final String pid) throws TripleStoreSystemException, IntegritySystemException,
+        FedoraSystemException, WebserverSystemException, EncodingSystemException, XmlParserSystemException {
 
         final String timestamp = getLastFedoraModificationDate();
 
@@ -222,7 +224,8 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
      *
      * @throws SystemException Thrown if anything failed.
      */
-    public void setLatestReleasePid() throws SystemException {
+    public void setLatestReleasePid() throws TripleStoreSystemException, IntegritySystemException,
+        WebserverSystemException, FedoraSystemException, XmlParserSystemException {
 
         // Currently we can not trust the internal map because the status is
         // changes out side of the resource.
@@ -258,7 +261,8 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
      * @param pid The to PID of the latest released version.
      * @throws SystemException Thrown in case of internal failure.
      */
-    public void setLatestReleasePid(final String pid) throws SystemException {
+    public void setLatestReleasePid(final String pid) throws TripleStoreSystemException, FedoraSystemException,
+        XmlParserSystemException, WebserverSystemException {
 
         byte[] relsExtS = null;
 
@@ -328,7 +332,8 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
      * @param pid Persistent Identifier
      * @throws SystemException Thrown in case of an internal error.
      */
-    private void setPidToRelsExt(final String pid) throws SystemException {
+    private void setPidToRelsExt(final String pid) throws TripleStoreSystemException, EncodingSystemException,
+        IntegritySystemException, FedoraSystemException, XmlParserSystemException, WebserverSystemException {
 
         /*
          * if (version == latest release) if (latest-release.pid == null) create

@@ -20,6 +20,7 @@
 
 package de.escidoc.core.common.util.service;
 
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.servlet.EscidocServlet;
 import de.escidoc.core.common.servlet.UserHandleCookieUtil;
 import de.escidoc.core.common.util.IOUtils;
@@ -32,10 +33,16 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
 
@@ -100,7 +107,8 @@ public class HttpRequester {
      * @return String response
      * @throws Exception e
      */
-    public String doGet(final String resource) throws Exception {
+    public String doGet(final String resource) throws MalformedURLException, IOException, ProtocolException,
+        NoSuchAlgorithmException, KeyManagementException, WebserverSystemException, UnsupportedEncodingException {
         return request(resource, "GET", null);
     }
 
@@ -112,7 +120,9 @@ public class HttpRequester {
      * @return String response
      * @throws Exception e
      */
-    public String doPut(final String resource, final String body) throws Exception {
+    public String doPut(final String resource, final String body) throws Exception, MalformedURLException, IOException,
+        ProtocolException, NoSuchAlgorithmException, KeyManagementException, UnsupportedEncodingException,
+        WebserverSystemException {
         if (body == null || body.length() == 0) {
             throw new Exception("body may not be null");
         }
@@ -127,7 +137,9 @@ public class HttpRequester {
      * @return String response
      * @throws Exception e
      */
-    public String doPost(final String resource, final String body) throws Exception {
+    public String doPost(final String resource, final String body) throws Exception, MalformedURLException,
+        IOException, ProtocolException, NoSuchAlgorithmException, KeyManagementException, UnsupportedEncodingException,
+        WebserverSystemException {
         if (body == null || body.length() == 0) {
             throw new Exception("body may not be null");
         }
@@ -141,7 +153,8 @@ public class HttpRequester {
      * @return String response
      * @throws Exception e
      */
-    public String doDelete(final String resource) throws Exception {
+    public String doDelete(final String resource) throws MalformedURLException, IOException, ProtocolException,
+        NoSuchAlgorithmException, KeyManagementException, WebserverSystemException, UnsupportedEncodingException {
         return request(resource, "DELETE", null);
     }
 
@@ -154,7 +167,9 @@ public class HttpRequester {
      * @return String response
      * @throws Exception e
      */
-    private String request(final String resource, final String method, final String body) throws Exception {
+    private String request(final String resource, final String method, final String body) throws MalformedURLException,
+        IOException, ProtocolException, NoSuchAlgorithmException, KeyManagementException, WebserverSystemException,
+        UnsupportedEncodingException {
         return SSL ? requestSsl(resource, method, body) : requestNoSsl(resource, method, body);
     }
 
@@ -170,7 +185,9 @@ public class HttpRequester {
     // False positive: Private method is never called
     @edu.umd.cs.findbugs.annotations.SuppressWarnings
     private String requestSsl( // Ignore FindBugs
-        final String resource, final String method, final String body) throws Exception {
+        final String resource, final String method, final String body) throws MalformedURLException, IOException,
+        ProtocolException, NoSuchAlgorithmException, KeyManagementException, WebserverSystemException,
+        UnsupportedEncodingException {
 
         // Open Connection to given resource
         final URL url = new URL(this.domain + resource);
@@ -233,7 +250,9 @@ public class HttpRequester {
      * @return String response
      * @throws Exception e
      */
-    private String requestNoSsl(final String resource, final String method, final String body) throws Exception {
+    private String requestNoSsl(final String resource, final String method, final String body)
+        throws MalformedURLException, IOException, ProtocolException, WebserverSystemException,
+        UnsupportedEncodingException {
         HttpURLConnection connection = null;
         InputStream is = null;
         OutputStream out = null;

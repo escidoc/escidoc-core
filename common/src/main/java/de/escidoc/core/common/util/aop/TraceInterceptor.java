@@ -38,7 +38,7 @@ public class TraceInterceptor {
     private static final int DEPTH_SPACES = 2;
 
     @Around("execution(public * de.escidoc.core..*.* (..))" + " && !within(de.escidoc.core.common.util.aop..*)")
-    public Object traceMethod(final ProceedingJoinPoint joinPoint) throws Throwable {
+    public Object traceMethod(final ProceedingJoinPoint joinPoint) throws Throwable, Exception {
         if (LOGGER.isDebugEnabled()) {
             final StaticPart staticPart = joinPoint.getStaticPart();
             final Signature signature = staticPart.getSignature();

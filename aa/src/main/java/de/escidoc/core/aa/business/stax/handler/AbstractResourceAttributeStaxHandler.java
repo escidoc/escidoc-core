@@ -35,6 +35,7 @@ import com.sun.xacml.cond.EvaluationResult;
 import de.escidoc.core.aa.business.authorisation.Constants;
 import de.escidoc.core.aa.business.authorisation.CustomEvaluationResultBuilder;
 import de.escidoc.core.aa.business.cache.RequestAttributesCache;
+import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
@@ -90,7 +91,7 @@ public class AbstractResourceAttributeStaxHandler extends DefaultHandler {
      * @see DefaultHandler #startElement (de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
-    public StartElement startElement(final StartElement element) throws Exception {
+    public StartElement startElement(final StartElement element) throws MissingAttributeValueException {
 
         //Only parse elements that are not in metadata-section
         if (XmlUtility.NAME_MDRECORDS.equals(element.getLocalName())) {

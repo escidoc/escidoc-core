@@ -64,7 +64,7 @@ public class FedoraRestDeviationHandlerBean implements SessionBean {
 
     public EscidocBinaryContent getDatastreamDissemination(
         final String pid, final String dsID, final Map parameters, final SecurityContext securityContext)
-        throws Exception {
+        throws Exception, SystemException {
         try {
             UserContext.setUserContext(securityContext);
         }
@@ -76,7 +76,7 @@ public class FedoraRestDeviationHandlerBean implements SessionBean {
 
     public EscidocBinaryContent getDatastreamDissemination(
         final String pid, final String dsID, final Map parameters, final String authHandle, final Boolean restAccess)
-        throws Exception {
+        throws Exception, SystemException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
@@ -88,7 +88,7 @@ public class FedoraRestDeviationHandlerBean implements SessionBean {
     }
 
     public String export(final String pid, final Map parameters, final SecurityContext securityContext)
-        throws Exception {
+        throws Exception, SystemException {
         try {
             UserContext.setUserContext(securityContext);
         }
@@ -99,7 +99,7 @@ public class FedoraRestDeviationHandlerBean implements SessionBean {
     }
 
     public String export(final String pid, final Map parameters, final String authHandle, final Boolean restAccess)
-        throws Exception {
+        throws Exception, SystemException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
@@ -110,7 +110,8 @@ public class FedoraRestDeviationHandlerBean implements SessionBean {
         return service.export(pid, parameters);
     }
 
-    public void cache(final String pid, final String xml, final SecurityContext securityContext) throws Exception {
+    public void cache(final String pid, final String xml, final SecurityContext securityContext) throws Exception,
+        SystemException {
         try {
             UserContext.setUserContext(securityContext);
         }
@@ -121,7 +122,7 @@ public class FedoraRestDeviationHandlerBean implements SessionBean {
     }
 
     public void cache(final String pid, final String xml, final String authHandle, final Boolean restAccess)
-        throws Exception {
+        throws Exception, SystemException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
@@ -132,7 +133,8 @@ public class FedoraRestDeviationHandlerBean implements SessionBean {
         service.cache(pid, xml);
     }
 
-    public void removeFromCache(final String pid, final SecurityContext securityContext) throws Exception {
+    public void removeFromCache(final String pid, final SecurityContext securityContext) throws Exception,
+        SystemException {
         try {
             UserContext.setUserContext(securityContext);
         }
@@ -142,7 +144,8 @@ public class FedoraRestDeviationHandlerBean implements SessionBean {
         service.removeFromCache(pid);
     }
 
-    public void removeFromCache(final String pid, final String authHandle, final Boolean restAccess) throws Exception {
+    public void removeFromCache(final String pid, final String authHandle, final Boolean restAccess) throws Exception,
+        SystemException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
@@ -154,7 +157,7 @@ public class FedoraRestDeviationHandlerBean implements SessionBean {
     }
 
     public void replaceInCache(final String pid, final String xml, final SecurityContext securityContext)
-        throws Exception {
+        throws Exception, SystemException {
         try {
             UserContext.setUserContext(securityContext);
         }
@@ -165,7 +168,7 @@ public class FedoraRestDeviationHandlerBean implements SessionBean {
     }
 
     public void replaceInCache(final String pid, final String xml, final String authHandle, final Boolean restAccess)
-        throws Exception {
+        throws Exception, SystemException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);

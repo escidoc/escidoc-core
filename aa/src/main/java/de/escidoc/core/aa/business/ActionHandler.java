@@ -40,7 +40,10 @@ import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException;
+import de.escidoc.core.common.exceptions.system.IntegritySystemException;
+import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.StaxParser;
@@ -73,7 +76,8 @@ public class ActionHandler implements ActionHandlerInterface {
      */
     @Override
     public String createUnsecuredActions(final String contextId, final String actions) throws ContextNotFoundException,
-        XmlCorruptedException, XmlSchemaValidationException, SystemException {
+        XmlCorruptedException, XmlSchemaValidationException, IntegritySystemException, TripleStoreSystemException,
+        SqlDatabaseSystemException, WebserverSystemException {
 
         utility.checkIsContext(contextId);
 
@@ -113,7 +117,8 @@ public class ActionHandler implements ActionHandlerInterface {
      * @see RoleHandlerInterface #deleteUnsecuredActions(java.lang.String)
      */
     @Override
-    public void deleteUnsecuredActions(final String contextId) throws ContextNotFoundException, SystemException {
+    public void deleteUnsecuredActions(final String contextId) throws ContextNotFoundException, SystemException,
+        TripleStoreSystemException, IntegritySystemException, SqlDatabaseSystemException, WebserverSystemException {
 
         Utility.getInstance().checkIsContext(contextId);
         final UnsecuredActionList unsecuredActionList = actionDao.retrieveUnsecuredActionList(contextId);
@@ -131,7 +136,8 @@ public class ActionHandler implements ActionHandlerInterface {
      * @see RoleHandlerInterface #retrieveUnsecuredActions(java.lang.String)
      */
     @Override
-    public String retrieveUnsecuredActions(final String contextId) throws ContextNotFoundException, SystemException {
+    public String retrieveUnsecuredActions(final String contextId) throws ContextNotFoundException,
+        TripleStoreSystemException, IntegritySystemException, SqlDatabaseSystemException, WebserverSystemException {
 
         Utility.getInstance().checkIsContext(contextId);
         UnsecuredActionList unsecuredActionList = actionDao.retrieveUnsecuredActionList(contextId);

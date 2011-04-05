@@ -31,6 +31,7 @@ package de.escidoc.core.aa.business.stax.handler;
 import com.sun.xacml.EvaluationCtx;
 import com.sun.xacml.attr.StringAttribute;
 import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
+import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
@@ -69,7 +70,7 @@ public class ItemStaxHandler extends AbstractResourceAttributeStaxHandler {
      * @see DefaultHandler #startElement (de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
-    public StartElement startElement(final StartElement element) throws Exception {
+    public StartElement startElement(final StartElement element) throws MissingAttributeValueException {
 
         super.startElement(element);
         if (isNotReady() && !isInMetadata()) {

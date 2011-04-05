@@ -33,6 +33,8 @@ import de.escidoc.core.aa.business.authorisation.CustomEvaluationResultBuilder;
 import de.escidoc.core.aa.business.authorisation.FinderModuleHelper;
 import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
 import de.escidoc.core.common.exceptions.EscidocException;
+import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -91,7 +93,7 @@ public class ResourceIdentifierAttributeFinderModule extends AbstractAttributeFi
     @Override
     protected Object[] resolveLocalPart(
         final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
-        final String resourceVersionNumber) throws EscidocException {
+        final String resourceVersionNumber) throws ResourceNotFoundException, WebserverSystemException {
 
         // check if resource id is empty, i.e. new resource. In this case, an
         // empty result (= null) has to be returned, as no resource identifiers

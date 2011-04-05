@@ -128,7 +128,7 @@ public class RoleAttributeFinderModule extends AbstractAttributeFinderModule {
     @Override
     protected Object[] resolveLocalPart(
         final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
-        final String resourceVersionNumber) throws EscidocException {
+        final String resourceVersionNumber) throws RoleNotFoundException, WebserverSystemException {
 
         EvaluationResult result = null;
         final String resolvedAttributeIdValue;

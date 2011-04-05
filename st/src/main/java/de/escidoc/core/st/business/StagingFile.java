@@ -177,7 +177,7 @@ public class StagingFile extends de.escidoc.core.st.business.persistence.Staging
      *         StagingFile.
      * @throws IOException If operation fails.
      */
-    public void read(final InputStream inputStream) throws IOException {
+    public void read(final InputStream inputStream) throws IOException, FileNotFoundException {
 
         if (inputStream == null) {
             throw new IOException();

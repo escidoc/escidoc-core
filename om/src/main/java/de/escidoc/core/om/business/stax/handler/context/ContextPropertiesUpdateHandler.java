@@ -38,7 +38,10 @@ import de.escidoc.core.common.exceptions.application.missing.MissingElementValue
 import de.escidoc.core.common.exceptions.application.notfound.OrganizationalUnitNotFoundException;
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyAttributeViolationException;
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException;
+import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
@@ -101,7 +104,8 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
     @Override
     public StartElement startElement(final StartElement element) throws InvalidContentException,
         ReadonlyElementViolationException, ReadonlyAttributeViolationException, MissingAttributeValueException,
-        OrganizationalUnitNotFoundException, InvalidStatusException, SystemException {
+        OrganizationalUnitNotFoundException, InvalidStatusException, TripleStoreSystemException,
+        IntegritySystemException, WebserverSystemException {
 
         final String currentPath = parser.getCurPath();
         // String theName = element.getLocalName();
@@ -130,7 +134,8 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
     }
 
     @Override
-    public String characters(final String data, final StartElement element) throws Exception {
+    public String characters(final String data, final StartElement element) throws TripleStoreSystemException,
+        SystemException, MissingElementValueException, WebserverSystemException {
         final String curPath = parser.getCurPath();
 
         if (curPath.startsWith(this.propertiesPath)) {
@@ -204,7 +209,8 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
      *         value.
      * @throws SystemException In case of TripeStore access error.
      */
-    private boolean checkValueChanged(final String key, final String value) throws SystemException {
+    private boolean checkValueChanged(final String key, final String value) throws TripleStoreSystemException,
+        WebserverSystemException {
 
         final String repositoryValue =
             key.equals(Elements.ELEMENT_DESCRIPTION) ? TripleStoreUtility.getInstance().getPropertiesElements(

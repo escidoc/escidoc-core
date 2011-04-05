@@ -542,7 +542,8 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
      *
      * @throws SystemException Thrown if internal error occurs.
      */
-    private void createFedoraResource() throws SystemException {
+    private void createFedoraResource() throws SystemException, FedoraSystemException, WebserverSystemException,
+        EncodingSystemException {
         setObjid(this.idProvider.getNextPid());
 
         if (this.properties.getTitle() == null) {
@@ -568,7 +569,7 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
      *
      * @throws SystemException Thrown if internal error occurs.
      */
-    private void updateFedoraResource() throws SystemException {
+    private void updateFedoraResource() throws SystemException, FedoraSystemException, WebserverSystemException {
 
         // update md-records
         if (getMetadataRecords() != null) {
@@ -603,7 +604,8 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
      * @param sync Set true if TripleStore sync is to call. False otherwise.
      * @throws SystemException Thrown if updating Fedora repository or syncing TripleStore failed.
      */
-    public void persistProperties(final boolean sync) throws SystemException {
+    public void persistProperties(final boolean sync) throws SystemException, FedoraSystemException,
+        WebserverSystemException {
 
         final String relsExt = ContentRelationFoXmlProvider.getInstance().getRelsExt(this);
         try {

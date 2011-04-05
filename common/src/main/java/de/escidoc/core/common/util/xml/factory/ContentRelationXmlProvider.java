@@ -94,7 +94,8 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
      * @return XML representation
      * @throws SystemException Thrown if an internal error occur.
      */
-    public String getContentRelationXml(final ContentRelationCreate cr) throws SystemException {
+    public String getContentRelationXml(final ContentRelationCreate cr) throws TripleStoreSystemException,
+        EncodingSystemException, IntegritySystemException, FedoraSystemException, WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         // put all relevant values from object into value Map
@@ -124,8 +125,8 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
      * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
-    public String getContentRelationMdRecords(final ContentRelationCreate cr) throws SystemException,
-        EncodingSystemException, FedoraSystemException, IntegritySystemException {
+    public String getContentRelationMdRecords(final ContentRelationCreate cr) throws EncodingSystemException,
+        FedoraSystemException, IntegritySystemException, TripleStoreSystemException, WebserverSystemException {
 
         final Map<String, String> commonValues = getCommonValues();
         return renderMdRecords(cr, commonValues, true);
@@ -142,7 +143,8 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
      * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
      */
     public String getContentRelationMdRecord(final ContentRelationCreate cr, final MdRecordCreate mr)
-        throws MdRecordNotFoundException, FedoraSystemException, SystemException {
+        throws MdRecordNotFoundException, FedoraSystemException, TripleStoreSystemException, EncodingSystemException,
+        IntegritySystemException, WebserverSystemException {
 
         final Map<String, String> commonValues = getCommonValues();
         final String mdRecord = renderMdRecord(cr, mr, commonValues, true);
@@ -161,7 +163,7 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
      * @return XML representation
      * @throws SystemException Thrown if an internal error occur.
      */
-    public String getContentRelationPropertiesXml(final ContentRelationCreate cr) throws SystemException {
+    public String getContentRelationPropertiesXml(final ContentRelationCreate cr) throws WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         // put all relevant values from object into value Map

@@ -77,7 +77,7 @@ public class RolePropertiesStaxHandler extends DefaultHandler {
      */
     @Override
     public String characters(final String s, final StartElement element) throws UniqueConstraintViolationException,
-        XmlCorruptedException, SystemException {
+        XmlCorruptedException, SqlDatabaseSystemException {
 
         if (isNotReady()) {
 

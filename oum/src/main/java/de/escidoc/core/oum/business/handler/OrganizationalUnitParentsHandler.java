@@ -32,7 +32,9 @@ import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.exceptions.application.notfound.OrganizationalUnitNotFoundException;
+import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.XmlUtility;
@@ -73,7 +75,8 @@ public class OrganizationalUnitParentsHandler extends OrganizationalUnitHandlerB
      */
     @Override
     public StartElement startElement(final StartElement element) throws OrganizationalUnitNotFoundException,
-        SystemException, InvalidXmlException, MissingAttributeValueException {
+        MissingAttributeValueException, XmlCorruptedException, TripleStoreSystemException, IntegritySystemException,
+        WebserverSystemException {
 
         final String curPath = getParser().getCurPath();
         if (!this.rootElementPathChecked) {

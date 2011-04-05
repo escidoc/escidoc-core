@@ -33,8 +33,11 @@ import de.escidoc.core.common.exceptions.application.invalid.InvalidTripleStoreO
 import de.escidoc.core.common.exceptions.application.invalid.InvalidTripleStoreQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.missing.MissingElementValueException;
+import de.escidoc.core.common.exceptions.system.EncodingSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.SemanticQueryHandler;
 import de.escidoc.core.common.util.xml.XmlUtility;
@@ -82,8 +85,9 @@ public class FedoraSemanticStoreHandler implements SemanticStoreHandlerInterface
      *                         Thrown if triple store output format is wrong defined.
      */
     @Override
-    public String spo(final String taskParam) throws SystemException, InvalidTripleStoreQueryException,
-        InvalidTripleStoreOutputFormatException, InvalidXmlException, MissingElementValueException {
+    public String spo(final String taskParam) throws InvalidTripleStoreQueryException,
+        InvalidTripleStoreOutputFormatException, InvalidXmlException, MissingElementValueException,
+        EncodingSystemException, TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
 
         final StaxParser sp = new StaxParser();
         final SemanticQueryHandler qh = new SemanticQueryHandler();

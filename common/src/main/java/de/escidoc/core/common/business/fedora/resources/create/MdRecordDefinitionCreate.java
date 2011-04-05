@@ -22,6 +22,7 @@ package de.escidoc.core.common.business.fedora.resources.create;
 
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.ItemFoXmlProvider;
@@ -137,7 +138,7 @@ public class MdRecordDefinitionCreate {
      * @return FoXML representation of metadata record.
      * @throws SystemException Thrown if rendering failed.
      */
-    public String getFOXML() throws SystemException {
+    public String getFOXML() throws SystemException, WebserverSystemException {
 
         final Map<String, String> templateValues = getValueMap();
         return ItemFoXmlProvider.getInstance().getMetadataFoXml(templateValues);

@@ -32,8 +32,14 @@ import de.escidoc.core.common.business.fedora.resources.listener.ResourceListene
 import de.escidoc.core.common.business.indexing.IndexingHandler;
 import de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ItemNotFoundException;
+import de.escidoc.core.common.exceptions.system.ApplicationServerSystemException;
+import de.escidoc.core.common.exceptions.system.EncodingSystemException;
+import de.escidoc.core.common.exceptions.system.FedoraSystemException;
+import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.util.service.UserContext;
 
 import java.util.ArrayList;
@@ -76,7 +82,8 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
      * @param xmlData complete item XML
      * @throws SystemException One of the listeners threw an exception.
      */
-    protected void fireItemCreated(final String id, final String xmlData) throws SystemException {
+    protected void fireItemCreated(final String id, final String xmlData) throws SystemException,
+        WebserverSystemException {
         final String restXml;
         final String soapXml;
 
@@ -103,7 +110,8 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
      * @throws SystemException            One of the listeners threw an exception.
      */
     protected void fireItemModified(final String id) throws ComponentNotFoundException, ItemNotFoundException,
-        SystemException {
+        SystemException, WebserverSystemException, EncodingSystemException, IntegritySystemException,
+        FedoraSystemException, TripleStoreSystemException, XmlParserSystemException {
 
         setItem(id);
         final String soapXml;
@@ -128,7 +136,8 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
      * @param xmlData complete item XML
      * @throws SystemException One of the listeners threw an exception.
      */
-    public void fireItemModified(final String id, final String xmlData) throws SystemException {
+    public void fireItemModified(final String id, final String xmlData) throws SystemException,
+        WebserverSystemException {
         final String restXml;
         final String soapXml;
 
@@ -165,7 +174,7 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
      * @return alternate form of the item
      * @throws SystemException An internal error occurred.
      */
-    private String getAlternateForm(final String id) throws SystemException {
+    private String getAlternateForm(final String id) throws SystemException, WebserverSystemException {
         String result = null;
         final boolean isRestAccess = UserContext.isRestAccess();
 
@@ -202,7 +211,9 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
      * @throws SystemException            One of the listeners threw an exception.
      */
     protected void queueItemsModified(final Iterable<String> ids) throws ComponentNotFoundException,
-        ItemNotFoundException, SystemException {
+        ItemNotFoundException, SystemException, TripleStoreSystemException, WebserverSystemException,
+        EncodingSystemException, IntegritySystemException, FedoraSystemException, XmlParserSystemException,
+        ApplicationServerSystemException {
         if (this.indexingHandler != null) {
             for (final String id : ids) {
 

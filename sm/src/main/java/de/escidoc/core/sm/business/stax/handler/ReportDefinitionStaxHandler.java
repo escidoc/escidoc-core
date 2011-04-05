@@ -67,7 +67,8 @@ public class ReportDefinitionStaxHandler extends DefaultHandler {
      * @throws Exception e
      */
     @Override
-    public StartElement startElement(final StartElement element) throws Exception {
+    public StartElement startElement(final StartElement element) throws MissingAttributeValueException,
+        IntegritySystemException {
         if ("allowed-role".equals(element.getLocalName())) {
             final String objId = XmlUtility.getIdFromStartElement(element);
             if (objId != null) {

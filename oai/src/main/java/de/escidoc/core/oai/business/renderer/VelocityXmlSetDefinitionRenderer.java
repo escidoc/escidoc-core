@@ -60,7 +60,7 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer imp
      * @see SetDefinitionRendererInterface#render(SetDefinition)
      */
     @Override
-    public String render(final SetDefinition setDefinition) throws SystemException {
+    public String render(final SetDefinition setDefinition) throws SystemException, WebserverSystemException {
         final Map<String, Object> values = new HashMap<String, Object>();
         values.put("isRootSetDefinition", XmlTemplateProvider.TRUE);
         addCommonValues(values);
@@ -110,7 +110,7 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer imp
      */
     @Override
     public String renderSetDefinitions(final List<SetDefinition> setDefinitions, final RecordPacking recordPacking)
-        throws SystemException {
+        throws SystemException, WebserverSystemException {
         final Map<String, Object> values = new HashMap<String, Object>();
 
         values.put("isRootSetDefinition", "false");

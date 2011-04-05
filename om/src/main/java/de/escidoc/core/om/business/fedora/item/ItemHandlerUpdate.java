@@ -107,7 +107,9 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
         final Map<String, String> nsUris) throws ComponentNotFoundException, LockingException, InvalidStatusException,
         SystemException, InvalidContentException, MissingContentException, FileNotFoundException,
         XmlCorruptedException, XmlSchemaValidationException, ReadonlyElementViolationException,
-        ReadonlyAttributeViolationException, MissingElementValueException {
+        ReadonlyAttributeViolationException, MissingElementValueException, EncodingSystemException,
+        IntegritySystemException, FedoraSystemException, TripleStoreSystemException, XmlParserSystemException,
+        WebserverSystemException {
 
         // FIXME don't set but use getComponents()? (FRS)
         // What do you want to have fixed? I want to have setComponent() but I
@@ -171,8 +173,9 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
      */
     protected void setComponent(
         final Component c, final Map streams, final Map<String, Map<String, String>> mdRecordsMetadataAttribures,
-        final String nsUri) throws InvalidContentException, SystemException, MissingContentException,
-        FileNotFoundException, ComponentNotFoundException {
+        final String nsUri) throws InvalidContentException, MissingContentException, FileNotFoundException,
+        ComponentNotFoundException, EncodingSystemException, FedoraSystemException, TripleStoreSystemException,
+        XmlParserSystemException, WebserverSystemException, IntegritySystemException {
 
         final Map<String, String> properties;
         try {
@@ -219,7 +222,8 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
     private static void setComponentMetadataRecords(
         final Component c, final Map<String, ByteArrayOutputStream> mdMap,
         final Map<String, Map<String, String>> mdAttributesMap, final String escidocMdRecordnsUri)
-        throws SystemException, ComponentNotFoundException {
+        throws ComponentNotFoundException, EncodingSystemException, IntegritySystemException, FedoraSystemException,
+        WebserverSystemException {
 
         final Map<String, Datastream> dsMap = new HashMap<String, Datastream>();
         for (final Entry<String, ByteArrayOutputStream> stringByteArrayOutputStreamEntry : mdMap.entrySet()) {
@@ -254,7 +258,8 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
      * @throws ComponentNotFoundException Thrown if Component with provided objid was not found.
      */
     protected Map<String, String> setComponentProperties(final String id, final String xml)
-        throws InvalidContentException, ComponentNotFoundException, SystemException {
+        throws InvalidContentException, ComponentNotFoundException, FedoraSystemException, TripleStoreSystemException,
+        XmlParserSystemException, WebserverSystemException, IntegritySystemException {
 
         final Component component = getComponent(id);
         final StaxParser sp = new StaxParser();
@@ -332,7 +337,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
     protected void setComponentContent(
         final Component component, final String xml, final String fileName, final String mimeType)
         throws MissingContentException, InvalidContentException, FileNotFoundException, ComponentNotFoundException,
-        SystemException {
+        TripleStoreSystemException, FedoraSystemException, WebserverSystemException {
 
         final StaxParser sp = new StaxParser();
 

@@ -33,7 +33,10 @@ import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException;
+import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.om.business.renderer.VelocityXmlContextRenderer;
 import de.escidoc.core.om.business.renderer.interfaces.ContextRendererInterface;
 
@@ -64,7 +67,8 @@ public class ContextHandlerBase extends HandlerBase {
      * @throws ContextNotFoundException If there is no context with <code>id</code> in the repository.
      * @throws SystemException          If anything else fails.
      */
-    public void setContext(final String id) throws ContextNotFoundException, SystemException {
+    public void setContext(final String id) throws ContextNotFoundException, TripleStoreSystemException,
+        IntegritySystemException, WebserverSystemException {
 
         this.context = new Context(id);
     }
@@ -99,7 +103,7 @@ public class ContextHandlerBase extends HandlerBase {
      * @throws InvalidStatusException Thrown if status compares of Context not to the status parameter.
      * @throws SystemException        If anything else fails.
      */
-    protected void checkStatus(final String status) throws InvalidStatusException, SystemException {
+    protected void checkStatus(final String status) throws InvalidStatusException, TripleStoreSystemException {
         final String objectStatus =
             getTripleStoreUtility().getPropertiesElements(this.context.getId(), TripleStoreUtility.PROP_PUBLIC_STATUS);
 

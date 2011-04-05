@@ -40,7 +40,7 @@ public class VelocityXmlContainerFoXmlRenderer implements ContainerFoXmlRenderer
     public String render(
         final Map<String, Object> values, final Map<String, String> properties, final List<String> members,
         final String containerId, final String lastModificationDate, final List<Map<String, String>> contentRelations,
-        final String comment, final Map<String, String> propertiesAsReferences) throws SystemException {
+        final String comment, final Map<String, String> propertiesAsReferences) throws WebserverSystemException {
 
         values.put(XmlTemplateProvider.TITLE, "Container " + containerId);
         addRelsExtValues(values, properties, members, containerId, lastModificationDate, contentRelations, comment,

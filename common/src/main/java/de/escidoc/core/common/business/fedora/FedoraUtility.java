@@ -76,6 +76,7 @@ import org.springframework.jmx.export.annotation.ManagedOperation;
 import org.springframework.jmx.export.annotation.ManagedResource;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.rpc.ServiceException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -1366,7 +1367,7 @@ public class FedoraUtility implements InitializingBean {
      * @see InitializingBean #afterPropertiesSet()
      */
     @Override
-    public void afterPropertiesSet() throws Exception {
+    public void afterPropertiesSet() throws IOException, MalformedURLException, ServiceException {
 
         this.fedoraClientPool =
             new StackObjectPool(PoolUtils.synchronizedPoolableFactory(new BasePoolableObjectFactory() {
@@ -1378,7 +1379,7 @@ public class FedoraUtility implements InitializingBean {
                  * @see BasePoolableObjectFactory #makeObject()
                  */
                 @Override
-                public Object makeObject() throws Exception {
+                public Object makeObject() throws MalformedURLException {
                     return new FedoraClient(FedoraUtility.this.fedoraUrl, FedoraUtility.this.fedoraUser,
                         FedoraUtility.this.fedoraPassword);
                 }
@@ -1393,7 +1394,7 @@ public class FedoraUtility implements InitializingBean {
              * @see BasePoolableObjectFactory #makeObject()
              */
             @Override
-            public Object makeObject() throws Exception {
+            public Object makeObject() throws IOException, MalformedURLException, ServiceException {
                 return new FedoraClient(FedoraUtility.this.fedoraUrl, FedoraUtility.this.fedoraUser,
                     FedoraUtility.this.fedoraPassword).getAPIA();
             }
@@ -1408,7 +1409,7 @@ public class FedoraUtility implements InitializingBean {
              * @see BasePoolableObjectFactory #makeObject()
              */
             @Override
-            public Object makeObject() throws Exception {
+            public Object makeObject() throws IOException, MalformedURLException, ServiceException {
                 return new FedoraClient(FedoraUtility.this.fedoraUrl, FedoraUtility.this.fedoraUser,
                     FedoraUtility.this.fedoraPassword).getAPIM();
             }

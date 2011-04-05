@@ -25,6 +25,7 @@ import de.escidoc.core.common.business.fedora.FedoraUtility;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.system.EncodingSystemException;
+import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.FileSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
@@ -143,7 +144,7 @@ public class ComponentCreate extends GenericResourceCreate implements Callable<S
      * @throws SystemException Thrown if getting new objid from ID-Provider failed.
      * @throws IOException     Thrown if preparing of properties, meta data record failed.
      */
-    public String getFOXML() throws SystemException, IOException {
+    public String getFOXML() throws SystemException, IOException, EncodingSystemException, WebserverSystemException {
 
         // objid
         if (getObjid() == null) {
@@ -204,7 +205,8 @@ public class ComponentCreate extends GenericResourceCreate implements Callable<S
      * @throws SystemException         Thrown if getting new objid from ID-Provider or Fedora synchronization failed.
      * @throws IOException             Thrown if preparing of properties, meta data record failed.
      */
-    public String persist(final boolean forceSync) throws SystemException, InvalidContentException, IOException {
+    public String persist(final boolean forceSync) throws SystemException, InvalidContentException, IOException,
+        FedoraSystemException, WebserverSystemException, EncodingSystemException {
 
         validate();
         final String foxml = getFOXML();
@@ -218,7 +220,8 @@ public class ComponentCreate extends GenericResourceCreate implements Callable<S
      * @throws Exception Thrown if a Thread failed.
      */
     @Override
-    public String call() throws Exception {
+    public String call() throws IOException, InvalidContentException, SystemException, FedoraSystemException,
+        WebserverSystemException, EncodingSystemException {
 
         persist(false);
         return getObjid();

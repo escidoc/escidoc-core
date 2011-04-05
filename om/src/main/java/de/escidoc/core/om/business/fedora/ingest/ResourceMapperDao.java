@@ -69,7 +69,8 @@ public class ResourceMapperDao {
      * @return the IngestableResource responsible for the given resource.
      * @throws de.escidoc.core.common.exceptions.EscidocException
      */
-    public ResourceMapperBean getIngestableForResource(final String xmlData) throws EscidocException {
+    public ResourceMapperBean getIngestableForResource(final String xmlData) throws EscidocException,
+        InvalidResourceException {
         final StringBuilder exceptions = new StringBuilder();
         for (final ResourceMapperBean bean : getResourceMappers()) {
             try {

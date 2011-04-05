@@ -34,6 +34,7 @@ import de.escidoc.core.common.exceptions.application.violated.LockingException;
 import de.escidoc.core.common.exceptions.system.EncodingSystemException;
 import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
+import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
@@ -737,7 +738,8 @@ public class GenericResource implements FedoraResource {
      * @throws LockingException Thrown if locking fails.
      * @throws SystemException  Thrown in case of an internal error.
      */
-    public void setLocked(final boolean lock, final String[] lockOwner) throws LockingException, SystemException {
+    public void setLocked(final boolean lock, final String[] lockOwner) throws LockingException,
+        SqlDatabaseSystemException, WebserverSystemException {
 
         // Should lock only be checked in handler? No, it is part of the
         // resource representation.
@@ -778,7 +780,8 @@ public class GenericResource implements FedoraResource {
      * @throws LockingException        Thrown if resource is locked.
      * @throws SystemException         Thrown in case of internal failure.
      */
-    public void setDatastream(final Datastream ds) throws StreamNotFoundException, LockingException, SystemException {
+    public void setDatastream(final Datastream ds) throws StreamNotFoundException, LockingException,
+        FedoraSystemException, WebserverSystemException {
 
         if (isLocked()) {
             final String msg = "Resource " + this.id + " is locked.";

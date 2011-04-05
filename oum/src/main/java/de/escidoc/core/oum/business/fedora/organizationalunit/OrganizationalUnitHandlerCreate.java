@@ -31,6 +31,7 @@ package de.escidoc.core.oum.business.fedora.organizationalunit;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.exceptions.system.EncodingSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
@@ -67,7 +68,8 @@ public class OrganizationalUnitHandlerCreate extends OrganizationalUnitHandlerRe
     protected String getOrganizationalUnitFoxml(
         final String id, final Map<String, Object> relsExtValues, final List<String> parents,
         final Map<String, Map<String, String>> metadataProperties,
-        final Map<String, ByteArrayOutputStream> metadataStreams, final String dcStream) throws SystemException {
+        final Map<String, ByteArrayOutputStream> metadataStreams, final String dcStream) throws SystemException,
+        EncodingSystemException, WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         values.putAll(relsExtValues);
@@ -119,7 +121,8 @@ public class OrganizationalUnitHandlerCreate extends OrganizationalUnitHandlerRe
      * @throws SystemException If anything fails.
      */
     protected String getOrganizationalUnitRelsExt(
-        final String id, final Map<String, Object> relsExtValues, final List<String> parents) throws SystemException {
+        final String id, final Map<String, Object> relsExtValues, final List<String> parents)
+        throws WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         values.putAll(relsExtValues);

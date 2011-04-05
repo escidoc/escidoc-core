@@ -34,6 +34,8 @@ import de.escidoc.core.common.exceptions.application.missing.MissingMethodParame
 import de.escidoc.core.common.exceptions.application.notfound.ScopeNotFoundException;
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.sm.business.interfaces.StatisticDataHandlerInterface;
 import de.escidoc.core.sm.business.persistence.SmStatisticDataDaoInterface;
@@ -86,7 +88,8 @@ public class StatisticDataHandler implements StatisticDataHandlerInterface {
      */
     @Override
     public void insertStatisticData(final String xmlData) throws ScopeNotFoundException,
-        MissingMethodParameterException, XmlSchemaValidationException, XmlCorruptedException, SystemException {
+        MissingMethodParameterException, XmlSchemaValidationException, XmlCorruptedException, XmlParserSystemException,
+        SqlDatabaseSystemException, WebserverSystemException {
         if (xmlData == null || xmlData.length() == 0) {
             throw new MissingMethodParameterException("xml may not be null");
         }

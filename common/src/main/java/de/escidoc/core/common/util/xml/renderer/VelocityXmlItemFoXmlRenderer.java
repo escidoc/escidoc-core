@@ -57,7 +57,7 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
         final Map<String, Object> values, final String itemId, final String lastModificationDate,
         final String[] components, final Map<String, String> properties,
         final List<Map<String, String>> contentRelations, final Map<String, String> propertiesAsReferences,
-        final Map<String, String> propertiesVersion) throws SystemException {
+        final Map<String, String> propertiesVersion) throws WebserverSystemException {
 
         values.put("title", "Item " + itemId);
         addRelsExtValues(values, itemId, lastModificationDate, components, properties, contentRelations,

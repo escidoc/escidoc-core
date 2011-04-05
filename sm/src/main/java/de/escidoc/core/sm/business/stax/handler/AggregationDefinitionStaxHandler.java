@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.sm.business.stax.handler;
 
+import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.XmlUtility;
@@ -206,7 +207,8 @@ public class AggregationDefinitionStaxHandler extends DefaultHandler {
      * @throws Exception e
      */
     @Override
-    public StartElement startElement(final StartElement element) throws Exception {
+    public StartElement startElement(final StartElement element) throws MissingAttributeValueException,
+        IndexOutOfBoundsException {
         final String currentPath = parser.getCurPath();
         boolean fieldRootElement = false;
         if (TABLE_PATH.equals(currentPath)) {
@@ -281,7 +283,7 @@ public class AggregationDefinitionStaxHandler extends DefaultHandler {
      * @throws Exception e
      */
     @Override
-    public EndElement endElement(final EndElement element) throws Exception {
+    public EndElement endElement(final EndElement element) throws SystemException {
         final String currentPath = parser.getCurPath();
         if (TABLE_PATH.equals(currentPath)) {
             this.inTable = false;

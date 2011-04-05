@@ -53,7 +53,12 @@ import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingE
 import de.escidoc.core.common.exceptions.application.violated.PidAlreadyAssignedException;
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyAttributeViolationException;
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException;
+import de.escidoc.core.common.exceptions.system.EncodingSystemException;
+import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.MultipleExtractor2;
 import de.escidoc.core.common.util.xml.XmlUtility;
@@ -99,7 +104,8 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      *                         If no organizational unit with the given id exists.
      * @throws SystemException If anything unexpected goes wrong.
      */
-    protected void setOrganizationalUnit(final String id) throws OrganizationalUnitNotFoundException, SystemException {
+    protected void setOrganizationalUnit(final String id) throws OrganizationalUnitNotFoundException,
+        TripleStoreSystemException, IntegritySystemException, WebserverSystemException {
 
         if (id != null) {
             try {
@@ -170,7 +176,7 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      * @param path The path to expand.
      * @throws SystemException If the access to the triplestore fails.
      */
-    protected void expandPaths(final List<String> path) throws SystemException {
+    protected void expandPaths(final List<String> path) throws TripleStoreSystemException {
 
         final List<String> organizationalUnitIds = getTripleStoreUtility().getParents(path.get(path.size() - 1));
         if (organizationalUnitIds != null) {
@@ -203,7 +209,8 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      */
     protected void parseIncomingXmlForCreate(final String xml, final StaxParser parser)
         throws MissingAttributeValueException, MissingElementValueException, OrganizationalUnitNotFoundException,
-        XmlCorruptedException, SystemException, MissingMdRecordException {
+        XmlCorruptedException, MissingMdRecordException, EncodingSystemException, IntegritySystemException,
+        TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
 
         try {
             parser.parse(XmlUtility.convertToByteArrayInputStream(xml));
@@ -270,8 +277,10 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      *                                    If the organizational unit does not exist.
      * @throws SystemException            If anything fails.
      */
-    protected void parseIncomingXmlForUpdate(final String xml, final StaxParser parser) throws InvalidXmlException,
-        OptimisticLockingException, OrganizationalUnitNotFoundException, SystemException {
+    protected void parseIncomingXmlForUpdate(final String xml, final StaxParser parser)
+        throws OptimisticLockingException, OrganizationalUnitNotFoundException, EncodingSystemException,
+        IntegritySystemException, TripleStoreSystemException, XmlParserSystemException, WebserverSystemException,
+        XmlCorruptedException {
 
         try {
             parser.parse(XmlUtility.convertToByteArrayInputStream(xml));

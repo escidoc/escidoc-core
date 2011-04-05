@@ -89,7 +89,7 @@ public class GenericResourcePid extends GenericResource {
      *
      * @throws SystemException Thrown in case of internal error.
      */
-    public void removeObjectPid() throws SystemException {
+    public void removeObjectPid() throws WebserverSystemException {
         final Map<String, List<StartElementWithChildElements>> deleteFromRelsExt =
             new TreeMap<String, List<StartElementWithChildElements>>();
         final List<StartElementWithChildElements> elementsToRemove = new ArrayList<StartElementWithChildElements>();
@@ -111,7 +111,8 @@ public class GenericResourcePid extends GenericResource {
      * @param pid The PID which is to assign as object PID.
      * @throws SystemException Thrown in case of internal error.
      */
-    public void setObjectPid(final String pid) throws SystemException {
+    public void setObjectPid(final String pid) throws SystemException, TripleStoreSystemException,
+        EncodingSystemException, FedoraSystemException, XmlParserSystemException, WebserverSystemException {
 
         if (!validPidStructure(pid)) {
             throw new SystemException("Invalid structure for Persistent Identifier");

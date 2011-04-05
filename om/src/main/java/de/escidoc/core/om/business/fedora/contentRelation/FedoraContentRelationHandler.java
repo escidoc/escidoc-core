@@ -59,12 +59,15 @@ import de.escidoc.core.common.exceptions.application.notfound.StreamNotFoundExce
 import de.escidoc.core.common.exceptions.application.violated.LockingException;
 import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException;
 import de.escidoc.core.common.exceptions.application.violated.PidAlreadyAssignedException;
+import de.escidoc.core.common.exceptions.system.EncodingSystemException;
 import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.PidSystemException;
+import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.persistence.EscidocIdProvider;
 import de.escidoc.core.common.persistence.PIDSystem;
 import de.escidoc.core.common.persistence.PIDSystemFactory;
@@ -127,8 +130,9 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      */
     @Override
     public String create(final String xmlData) throws MissingAttributeValueException, MissingMethodParameterException,
-        InvalidXmlException, InvalidContentException, ReferencedResourceNotFoundException,
-        RelationPredicateNotFoundException, SystemException {
+        InvalidContentException, ReferencedResourceNotFoundException, RelationPredicateNotFoundException,
+        SystemException, EncodingSystemException, IntegritySystemException, FedoraSystemException,
+        TripleStoreSystemException, WebserverSystemException, XmlParserSystemException, XmlCorruptedException {
 
         final ContentRelationCreate cr = parseContentRelation(xmlData);
 
@@ -158,7 +162,9 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      * @throws SystemException Thrown if internal error occurs.
      */
     @Override
-    public String retrieve(final String id) throws ContentRelationNotFoundException, SystemException {
+    public String retrieve(final String id) throws ContentRelationNotFoundException, SystemException,
+        EncodingSystemException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException,
+        WebserverSystemException {
 
         final ContentRelationCreate cr = setContentRelation(id);
         enrichWithMetadataContent(cr);
@@ -173,7 +179,7 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      * @throws SystemException If case of internal error.
      */
     @Override
-    public String retrieveContentRelations(final SRURequestParameters parameters) throws SystemException {
+    public String retrieveContentRelations(final SRURequestParameters parameters) throws WebserverSystemException {
         final StringWriter result = new StringWriter();
 
         if (parameters.isExplain()) {
@@ -195,7 +201,8 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      * @throws SystemException Thrown if internal error occurs.
      */
     @Override
-    public String retrieveProperties(final String id) throws ContentRelationNotFoundException, SystemException {
+    public String retrieveProperties(final String id) throws ContentRelationNotFoundException, SystemException,
+        WebserverSystemException, TripleStoreSystemException, IntegritySystemException, FedoraSystemException {
 
         final ContentRelationCreate cr = setContentRelation(id);
         return ContentRelationXmlProvider.getInstance().getContentRelationPropertiesXml(cr);
@@ -211,7 +218,9 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      * @throws SystemException Thrown if internal error occurs.
      */
     @Override
-    public String retrieveMdRecords(final String id) throws ContentRelationNotFoundException, SystemException {
+    public String retrieveMdRecords(final String id) throws ContentRelationNotFoundException, SystemException,
+        EncodingSystemException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException,
+        WebserverSystemException {
 
         final ContentRelationCreate cr = setContentRelation(id);
         enrichWithMetadataContent(cr);
@@ -231,7 +240,8 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      */
     @Override
     public String retrieveMdRecord(final String id, final String name) throws ContentRelationNotFoundException,
-        MdRecordNotFoundException, SystemException {
+        MdRecordNotFoundException, SystemException, EncodingSystemException, IntegritySystemException,
+        FedoraSystemException, TripleStoreSystemException, WebserverSystemException {
 
         final ContentRelationCreate cr = setContentRelation(id);
         enrichWithMetadataContent(cr);
@@ -273,8 +283,10 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
     @Override
     public String update(final String id, final String xmlData) throws ContentRelationNotFoundException,
         OptimisticLockingException, InvalidContentException, InvalidStatusException, LockingException,
-        MissingAttributeValueException, MissingMethodParameterException, SystemException, InvalidXmlException,
-        ReferencedResourceNotFoundException, RelationPredicateNotFoundException {
+        MissingAttributeValueException, MissingMethodParameterException, SystemException,
+        ReferencedResourceNotFoundException, RelationPredicateNotFoundException, EncodingSystemException,
+        IntegritySystemException, FedoraSystemException, TripleStoreSystemException, WebserverSystemException,
+        XmlCorruptedException, XmlParserSystemException {
 
         // instance of stored Content Relation
         final ContentRelationCreate cr = setContentRelation(id);
@@ -317,7 +329,8 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      * @throws SystemException  Thrown if internal error occurs.
      */
     @Override
-    public void delete(final String id) throws ContentRelationNotFoundException, SystemException, LockingException {
+    public void delete(final String id) throws ContentRelationNotFoundException, SystemException, LockingException,
+        FedoraSystemException, WebserverSystemException, IntegritySystemException, TripleStoreSystemException {
 
         final ContentRelationCreate cr = setContentRelation(id);
         checkLocked(cr);
@@ -332,7 +345,7 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      * @throws EscidocException e
      */
     @Override
-    public String ingest(final String xmlData) throws EscidocException {
+    public String ingest(final String xmlData) throws WebserverSystemException {
 
         throw new WebserverSystemException("Missing implementation");
     }
@@ -375,7 +388,8 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
     @Override
     public String submit(final String id, final String param) throws ContentRelationNotFoundException,
         LockingException, InvalidStatusException, MissingMethodParameterException, SystemException,
-        OptimisticLockingException, InvalidXmlException, InvalidContentException {
+        OptimisticLockingException, InvalidContentException, XmlCorruptedException, EncodingSystemException,
+        IntegritySystemException, FedoraSystemException, TripleStoreSystemException, WebserverSystemException {
 
         final ContentRelationCreate cr = setContentRelation(id);
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(param);
@@ -432,7 +446,8 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
     @Override
     public String release(final String id, final String param) throws ContentRelationNotFoundException,
         LockingException, InvalidStatusException, MissingMethodParameterException, SystemException,
-        OptimisticLockingException, InvalidXmlException, InvalidContentException {
+        OptimisticLockingException, InvalidContentException, XmlCorruptedException, EncodingSystemException,
+        IntegritySystemException, FedoraSystemException, TripleStoreSystemException, WebserverSystemException {
 
         final ContentRelationCreate cr = setContentRelation(id);
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(param);
@@ -484,7 +499,8 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
     @Override
     public String revise(final String id, final String taskParam) throws ContentRelationNotFoundException,
         LockingException, InvalidStatusException, MissingMethodParameterException, SystemException,
-        OptimisticLockingException, XmlCorruptedException, InvalidContentException {
+        OptimisticLockingException, XmlCorruptedException, InvalidContentException, EncodingSystemException,
+        IntegritySystemException, FedoraSystemException, TripleStoreSystemException, WebserverSystemException {
 
         final ContentRelationCreate cr = setContentRelation(id);
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(taskParam);
@@ -534,7 +550,8 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
     @Override
     public String lock(final String id, final String param) throws ContentRelationNotFoundException, LockingException,
         InvalidContentException, MissingMethodParameterException, SystemException, OptimisticLockingException,
-        InvalidXmlException, InvalidStatusException {
+        InvalidStatusException, XmlCorruptedException, EncodingSystemException, IntegritySystemException,
+        FedoraSystemException, TripleStoreSystemException, SqlDatabaseSystemException, WebserverSystemException {
 
         final ContentRelationCreate cr = setContentRelation(id);
         checkReleased(cr);
@@ -581,7 +598,9 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
     @Override
     public String unlock(final String id, final String param) throws ContentRelationNotFoundException,
         LockingException, MissingMethodParameterException, SystemException, OptimisticLockingException,
-        InvalidXmlException, InvalidContentException, InvalidStatusException {
+        InvalidContentException, InvalidStatusException, XmlCorruptedException, EncodingSystemException,
+        IntegritySystemException, FedoraSystemException, TripleStoreSystemException, SqlDatabaseSystemException,
+        WebserverSystemException {
 
         final ContentRelationCreate cr = setContentRelation(id);
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(param);
@@ -624,8 +643,9 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      */
     @Override
     public String assignObjectPid(final String id, final String taskParam) throws ContentRelationNotFoundException,
-        LockingException, MissingMethodParameterException, OptimisticLockingException, InvalidXmlException,
-        SystemException, PidAlreadyAssignedException {
+        LockingException, MissingMethodParameterException, OptimisticLockingException, SystemException,
+        PidAlreadyAssignedException, EncodingSystemException, TripleStoreSystemException, PidSystemException,
+        WebserverSystemException, XmlCorruptedException, IntegritySystemException, FedoraSystemException {
 
         final ContentRelationCreate cr = setContentRelation(id);
         if (cr.getProperties().getPid() != null) {
@@ -700,7 +720,8 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      * @return XML representation of resources
      */
     @Override
-    public String retrieveResources(final String id) throws ContentRelationNotFoundException, SystemException {
+    public String retrieveResources(final String id) throws ContentRelationNotFoundException, SystemException,
+        WebserverSystemException, TripleStoreSystemException, IntegritySystemException, FedoraSystemException {
 
         final ContentRelationCreate cr = setContentRelation(id);
         return ContentRelationXmlProvider.getInstance().getContentRelationResourcesXml(cr);
@@ -716,7 +737,8 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      * @throws SystemException Thrown in case of an internal system error.
      */
     protected ContentRelationCreate setContentRelation(final String id) throws ContentRelationNotFoundException,
-        SystemException {
+        SystemException, TripleStoreSystemException, IntegritySystemException, FedoraSystemException,
+        WebserverSystemException {
 
         final ContentRelationCreate cr = new ContentRelationCreate();
         cr.setObjid(id);
@@ -789,7 +811,7 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      *                         Thrown if resource with provided id could not be found in Fedora repository.
      */
     private static void setRelsExtValues(final ContentRelationCreate cr) throws SystemException,
-        ContentRelationNotFoundException {
+        ContentRelationNotFoundException, FedoraSystemException, WebserverSystemException {
 
         // retrieve resource with id from Fedora
         final Datastream relsExt;
@@ -1005,7 +1027,8 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      * @throws SystemException                Thrown if internal error occur
      */
     private static ContentRelationCreate parseContentRelation(final String xml) throws MissingAttributeValueException,
-        InvalidXmlException, InvalidContentException, SystemException {
+        InvalidContentException, SystemException, XmlParserSystemException, WebserverSystemException,
+        XmlCorruptedException {
 
         final StaxParser sp = new StaxParser();
 
@@ -1130,7 +1153,7 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      * @throws SystemException One of the listeners threw an exception.
      */
     private void fireContentRelationModified(final ContentRelationCreate cr, final String xmlData)
-        throws SystemException {
+        throws SystemException, WebserverSystemException {
         final String restXml;
         final String soapXml;
 
@@ -1155,7 +1178,7 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      * @throws SystemException One of the listeners threw an exception.
      */
     private void fireContentRelationCreated(final ContentRelationCreate cr, final String xmlData)
-        throws SystemException {
+        throws SystemException, WebserverSystemException {
         final String restXml;
         final String soapXml;
 
@@ -1216,7 +1239,8 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      * @return alternate form of the content relation
      * @throws SystemException An internal error occurred.
      */
-    private static String getAlternateForm(final ContentRelationCreate cr) throws SystemException {
+    private static String getAlternateForm(final ContentRelationCreate cr) throws SystemException,
+        WebserverSystemException {
         String result = null;
         final boolean isRestAccess = UserContext.isRestAccess();
 

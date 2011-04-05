@@ -68,7 +68,7 @@ public final class VelocityXmlReportDefinitionRenderer implements ReportDefiniti
      * @see de.escidoc.core.sm.business.renderer.interfaces.ReportDefinitionRendererInterface#render(Map)
      */
     @Override
-    public String render(final ReportDefinition reportDefinition) throws SystemException {
+    public String render(final ReportDefinition reportDefinition) throws SystemException, WebserverSystemException {
         final Map<String, Object> values = new HashMap<String, Object>();
         values.put("isRootReportDefinition", XmlTemplateProvider.TRUE);
         addReportDefinitionNamespaceValues(values);
@@ -146,7 +146,8 @@ public final class VelocityXmlReportDefinitionRenderer implements ReportDefiniti
      */
     @Override
     public String renderReportDefinitions(
-        final Collection<ReportDefinition> reportDefinitions, final RecordPacking recordPacking) throws SystemException {
+        final Collection<ReportDefinition> reportDefinitions, final RecordPacking recordPacking)
+        throws SystemException, WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
 
@@ -179,7 +180,8 @@ public final class VelocityXmlReportDefinitionRenderer implements ReportDefiniti
      * @param values The {@link Map} to that the values shall be added.
      * @throws SystemException e
      */
-    private static void addReportDefinitionNamespaceValues(final Map<String, Object> values) throws SystemException {
+    private static void addReportDefinitionNamespaceValues(final Map<String, Object> values)
+        throws WebserverSystemException {
         addEscidocBaseUrl(values);
         values.put("reportDefinitionNamespacePrefix", Constants.REPORT_DEFINITION_NS_PREFIX);
         values.put("reportDefinitionNamespace", Constants.REPORT_DEFINITION_NS_URI);
@@ -195,7 +197,8 @@ public final class VelocityXmlReportDefinitionRenderer implements ReportDefiniti
      * @param values The {@link Map} to that the values shall be added.
      * @throws SystemException e
      */
-    private static void addReportDefinitionListNamespaceValues(final Map<String, Object> values) throws SystemException {
+    private static void addReportDefinitionListNamespaceValues(final Map<String, Object> values)
+        throws WebserverSystemException {
         addEscidocBaseUrl(values);
         values.put("searchResultNamespace", Constants.SEARCH_RESULT_NS_URI);
         values.put("reportDefinitionListNamespacePrefix", Constants.REPORT_DEFINITION_LIST_NS_PREFIX);

@@ -74,6 +74,7 @@ import de.escidoc.core.common.exceptions.system.EncodingSystemException;
 import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.persistence.EscidocIdProvider;
@@ -122,34 +123,41 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
      * See Interface for functional description.
      */
     @Override
-    public String retrieve(final String id) throws ContentModelNotFoundException, SystemException {
+    public String retrieve(final String id) throws ContentModelNotFoundException, SystemException,
+        EncodingSystemException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException,
+        XmlParserSystemException, WebserverSystemException {
 
         setContentModel(id);
         return render();
     }
 
     @Override
-    public String retrieveProperties(final String id) throws ContentModelNotFoundException, SystemException {
+    public String retrieveProperties(final String id) throws ContentModelNotFoundException, SystemException,
+        EncodingSystemException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException,
+        XmlParserSystemException, WebserverSystemException {
         setContentModel(id);
         return renderProperties();
     }
 
     @Override
-    public String retrieveContentStreams(final String id) throws ContentModelNotFoundException, SystemException {
+    public String retrieveContentStreams(final String id) throws ContentModelNotFoundException, SystemException,
+        EncodingSystemException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException,
+        WebserverSystemException {
         setContentModel(id);
         return renderContentStreams(true);
     }
 
     @Override
     public String retrieveContentStream(final String id, final String name) throws ContentModelNotFoundException,
-        SystemException {
+        TripleStoreSystemException, IntegritySystemException, WebserverSystemException, FedoraSystemException {
         setContentModel(id);
         return renderContentStream(name, true);
     }
 
     @Override
     public EscidocBinaryContent retrieveContentStreamContent(final String id, final String name)
-        throws ContentModelNotFoundException, SystemException, ContentStreamNotFoundException, InvalidStatusException {
+        throws ContentModelNotFoundException, ContentStreamNotFoundException, InvalidStatusException,
+        FedoraSystemException, TripleStoreSystemException, WebserverSystemException, IntegritySystemException {
 
         setContentModel(id);
         if (getContentModel().isWithdrawn()) {
@@ -217,25 +225,29 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
     }
 
     @Override
-    public String retrieveResources(final String id) throws ContentModelNotFoundException, SystemException {
+    public String retrieveResources(final String id) throws ContentModelNotFoundException, SystemException,
+        EncodingSystemException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException,
+        XmlParserSystemException, WebserverSystemException {
         setContentModel(id);
         return renderResources();
     }
 
-    public String retrieveResourceDefinitions(final String id) throws ContentModelNotFoundException, SystemException {
+    public String retrieveResourceDefinitions(final String id) throws ContentModelNotFoundException,
+        TripleStoreSystemException, IntegritySystemException, FedoraSystemException, WebserverSystemException {
         setContentModel(id);
         return renderResourceDefinitions();
     }
 
     public String retrieveResourceDefinition(final String id, final String name) throws ContentModelNotFoundException,
-        SystemException {
+        TripleStoreSystemException, IntegritySystemException, FedoraSystemException, WebserverSystemException {
         setContentModel(id);
         return renderResourceDefinition(name);
     }
 
     @Override
     public EscidocBinaryContent retrieveMdRecordDefinitionSchemaContent(final String id, final String name)
-        throws ContentModelNotFoundException, SystemException {
+        throws ContentModelNotFoundException, WebserverSystemException, TripleStoreSystemException,
+        IntegritySystemException, FedoraSystemException {
 
         setContentModel(id);
         return retrieveOtherContent(name + "_xsd");
@@ -243,7 +255,8 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
 
     @Override
     public EscidocBinaryContent retrieveResourceDefinitionXsltContent(final String id, final String name)
-        throws ContentModelNotFoundException, ResourceNotFoundException, SystemException {
+        throws ContentModelNotFoundException, ResourceNotFoundException, FedoraSystemException,
+        WebserverSystemException, TripleStoreSystemException, IntegritySystemException {
 
         setContentModel(id);
 
@@ -266,7 +279,9 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
     }
 
     @Override
-    public String retrieveVersionHistory(final String id) throws ContentModelNotFoundException, SystemException {
+    public String retrieveVersionHistory(final String id) throws ContentModelNotFoundException,
+        EncodingSystemException, IntegritySystemException, FedoraSystemException, WebserverSystemException,
+        TripleStoreSystemException {
 
         setContentModel(id);
         final String versionsXml;
@@ -294,7 +309,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
      * @throws SystemException Thrown in case of an internal error.
      */
     @Override
-    public String retrieveContentModels(final SRURequestParameters parameters) throws SystemException {
+    public String retrieveContentModels(final SRURequestParameters parameters) throws WebserverSystemException {
         final StringWriter result = new StringWriter();
 
         if (parameters.isExplain()) {
@@ -311,7 +326,8 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
      */
     @Override
     public String create(final String xmlData) throws InvalidContentException, MissingAttributeValueException,
-        SystemException, XmlCorruptedException {
+        SystemException, XmlCorruptedException, IntegritySystemException, FedoraSystemException,
+        XmlParserSystemException, WebserverSystemException, EncodingSystemException, TripleStoreSystemException {
 
         final ContentModelCreate contentModel = parseContentModel(xmlData);
 
@@ -341,7 +357,8 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
      */
     @Override
     public void delete(final String id) throws ContentModelNotFoundException, SystemException, LockingException,
-        InvalidStatusException, ResourceInUseException {
+        InvalidStatusException, ResourceInUseException, FedoraSystemException, TripleStoreSystemException,
+        WebserverSystemException, IntegritySystemException {
 
         setContentModel(id);
         checkLocked();
@@ -368,7 +385,8 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
     @Override
     public String update(final String id, final String xmlData) throws ContentModelNotFoundException,
         OptimisticLockingException, SystemException, ReadonlyVersionException, MissingAttributeValueException,
-        InvalidXmlException, InvalidContentException {
+        InvalidXmlException, InvalidContentException, EncodingSystemException, IntegritySystemException,
+        FedoraSystemException, TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
 
         setContentModel(id);
         final String startTimestamp = getContentModel().getLastFedoraModificationDate();
@@ -819,7 +837,9 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
     }
 
     @Override
-    public String ingest(final String xmlData) throws EscidocException {
+    public String ingest(final String xmlData) throws InvalidContentException, MissingAttributeValueException,
+        SystemException, IntegritySystemException, XmlCorruptedException, FedoraSystemException,
+        XmlParserSystemException, WebserverSystemException, EncodingSystemException, TripleStoreSystemException {
 
         final ContentModelCreate cm = parseContentModel(xmlData);
         cm.setIdProvider(getIdProvider());
@@ -849,7 +869,8 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
      * @param xmlData complete Content Model XML
      * @throws SystemException One of the listeners threw an exception.
      */
-    private void fireContentModelModified(final String id, final String xmlData) throws SystemException {
+    private void fireContentModelModified(final String id, final String xmlData) throws SystemException,
+        WebserverSystemException {
         final String restXml;
         final String soapXml;
 
@@ -873,7 +894,8 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
      * @param xmlData complete Content Model XML
      * @throws SystemException One of the listeners threw an exception.
      */
-    private void fireContentModelCreated(final String id, final String xmlData) throws SystemException {
+    private void fireContentModelCreated(final String id, final String xmlData) throws SystemException,
+        WebserverSystemException {
         final String restXml;
         final String soapXml;
 
@@ -909,7 +931,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
      * @return alternate form of the Content Model
      * @throws SystemException Thrown if an internal error occurred.
      */
-    private String getAlternateForm() throws SystemException {
+    private String getAlternateForm() throws SystemException, WebserverSystemException {
         String result = null;
         final boolean isRestAccess = UserContext.isRestAccess();
 

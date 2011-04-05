@@ -75,7 +75,7 @@ public class NewComponentExtractor extends DefaultHandler {
     }
 
     @Override
-    public EndElement endElement(final EndElement element) throws Exception {
+    public EndElement endElement(final EndElement element) throws XMLStreamException {
         final String curPath = parser.getCurPath();
 
         if (this.inside) {

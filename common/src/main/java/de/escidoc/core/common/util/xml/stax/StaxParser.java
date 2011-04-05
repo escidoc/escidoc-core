@@ -21,6 +21,7 @@
 package de.escidoc.core.common.util.xml.stax;
 
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
+import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
@@ -111,7 +112,8 @@ public class StaxParser implements DefaultHandlerStackInterface {
      * @throws Exception If anything fails. This depends on the implementation of the handlers in the used handler
      *                   chain
      */
-    public void parse(final InputStream in) throws Exception {
+    public void parse(final InputStream in) throws Exception, XMLStreamException, XmlParserSystemException,
+        XmlCorruptedException {
         if (this.handlerChain == null || handlerChain.isEmpty()) {
             throw new XMLStreamException("Parser has no handlers. Try StaxParser sp.addHandler"
                 + "(new DefaultHandler());");
@@ -126,7 +128,8 @@ public class StaxParser implements DefaultHandlerStackInterface {
      * @throws Exception If anything fails. This depends on the implementation of the handlers in the used handler
      *                   chain
      */
-    protected void parseStream(final InputStream in) throws Exception {
+    protected void parseStream(final InputStream in) throws Exception, XmlParserSystemException, XMLStreamException,
+        XmlCorruptedException {
 
         final XMLStreamReader parser = factory.createXMLStreamReader(in, XmlUtility.CHARACTER_ENCODING);
 
@@ -192,7 +195,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
      * @throws Exception If anything fails. This depends on the implementation of the handlers in the used handler
      *                   chain
      */
-    protected void parseEvents(final InputStream in) throws Exception {
+    protected void parseEvents(final InputStream in) throws Exception, XMLStreamException, XmlCorruptedException {
 
         final XMLEventReader parser = factory.createXMLEventReader(in);
 
@@ -308,7 +311,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
      * @throws Exception If anything fails. This depends on the implementation of the handlers in the used handler
      *                   chain.
      */
-    protected void handle(final StartElement e) throws Exception {
+    protected void handle(final StartElement e) throws Exception, XmlCorruptedException {
 
         StartElement element = e;
         if (!this.rootChecked) {

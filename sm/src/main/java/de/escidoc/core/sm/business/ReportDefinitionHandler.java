@@ -39,6 +39,7 @@ import de.escidoc.core.common.exceptions.application.notfound.ScopeNotFoundExcep
 import de.escidoc.core.common.exceptions.application.violated.ScopeContextViolationException;
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.factory.ExplainXmlProvider;
 import de.escidoc.core.sm.business.filter.ReportDefinitionFilter;
@@ -96,7 +97,8 @@ public class ReportDefinitionHandler implements ReportDefinitionHandlerInterface
      */
     @Override
     public String create(final String xmlData) throws InvalidSqlException, MissingMethodParameterException,
-        ScopeNotFoundException, ScopeContextViolationException, SystemException {
+        ScopeNotFoundException, ScopeContextViolationException, SystemException, SqlDatabaseSystemException,
+        WebserverSystemException {
         if (xmlData == null || xmlData.length() == 0) {
             throw new MissingMethodParameterException("xml may not be null");
         }
@@ -144,7 +146,7 @@ public class ReportDefinitionHandler implements ReportDefinitionHandlerInterface
      */
     @Override
     public void delete(final String id) throws ReportDefinitionNotFoundException, MissingMethodParameterException,
-        SystemException {
+        SqlDatabaseSystemException {
         if (id == null) {
             throw new MissingMethodParameterException("id may not be null");
         }
@@ -167,7 +169,7 @@ public class ReportDefinitionHandler implements ReportDefinitionHandlerInterface
      */
     @Override
     public String retrieve(final String id) throws ReportDefinitionNotFoundException, MissingMethodParameterException,
-        SystemException {
+        SystemException, SqlDatabaseSystemException {
         if (id == null) {
             throw new MissingMethodParameterException("id may not be null");
         }
@@ -185,7 +187,7 @@ public class ReportDefinitionHandler implements ReportDefinitionHandlerInterface
      */
     @Override
     public String retrieveReportDefinitions(final Map<String, String[]> parameters) throws InvalidSearchQueryException,
-        SystemException {
+        SystemException, SqlDatabaseSystemException, WebserverSystemException {
         final String result;
         final SRURequestParameters params = new DbRequestParameters(parameters);
         final String query = params.getQuery();
@@ -241,7 +243,7 @@ public class ReportDefinitionHandler implements ReportDefinitionHandlerInterface
     @Override
     public String update(final String id, final String xmlData) throws ReportDefinitionNotFoundException,
         MissingMethodParameterException, ScopeNotFoundException, InvalidSqlException, ScopeContextViolationException,
-        SystemException {
+        SystemException, SqlDatabaseSystemException, WebserverSystemException {
         if (id == null || id.length() == 0) {
             throw new MissingMethodParameterException("id may not be null");
         }
@@ -292,7 +294,7 @@ public class ReportDefinitionHandler implements ReportDefinitionHandlerInterface
      * @throws SystemException                ex
      */
     private void checkSql(final String sql, final String scopeId) throws ScopeContextViolationException,
-        InvalidSqlException, ScopeNotFoundException, SystemException {
+        InvalidSqlException, ScopeNotFoundException, SqlDatabaseSystemException {
         // getScope
         final Scope scope = scopesDao.retrieve(scopeId);
 

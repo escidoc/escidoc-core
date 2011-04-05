@@ -76,6 +76,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -1208,7 +1209,8 @@ public final class XmlUtility {
      * @throws IOException              Thrown in case of an I/O error.
      * @throws WebserverSystemException Thrown if schema can not be parsed.
      */
-    public static Schema getSchema(final String schemaUri) throws IOException, WebserverSystemException {
+    public static Schema getSchema(final String schemaUri) throws IOException, WebserverSystemException,
+        MalformedURLException {
 
         Schema schema = SCHEMA_CACHE.get(schemaUri);
         if (schema == null) {
@@ -1242,7 +1244,8 @@ public final class XmlUtility {
      * @throws IOException              Thrown in case of an I/O error.
      * @throws WebserverSystemException Thrown if schema can not be parsed.
      */
-    public static Validator getValidator(final String schemaUri) throws IOException, WebserverSystemException {
+    public static Validator getValidator(final String schemaUri) throws IOException, WebserverSystemException,
+        MalformedURLException {
 
         return getSchema(schemaUri).newValidator();
     }

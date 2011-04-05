@@ -32,6 +32,7 @@ import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.business.fedora.MIMETypedStream;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.servlet.invocation.BeanMethod;
 import de.escidoc.core.common.servlet.invocation.MethodMapper;
 import de.escidoc.core.common.servlet.invocation.exceptions.MethodNotFoundException;
@@ -147,7 +148,7 @@ public final class IndexerResourceCache {
      * @return Object resource-object
      * @throws SystemException e
      */
-    public Object getResource(final String identifier) throws SystemException {
+    public Object getResource(final String identifier) throws SystemException, TripleStoreSystemException {
         final String href = getHref(identifier);
         if (getResourceWithInternalKey(href) == null) {
             if (identifier.startsWith("http")) {
@@ -167,7 +168,8 @@ public final class IndexerResourceCache {
      * @param resource   resource-object
      * @throws SystemException e
      */
-    public void setResource(final String identifier, final Object resource) throws SystemException {
+    public void setResource(final String identifier, final Object resource) throws SystemException,
+        TripleStoreSystemException {
         final String href = getHref(identifier);
         final Element element = new Element(href, resource);
         resources.put(element);
@@ -191,7 +193,7 @@ public final class IndexerResourceCache {
      * @param identifier identifier
      * @throws SystemException e
      */
-    public void deleteResource(final String identifier) throws SystemException {
+    public void deleteResource(final String identifier) throws SystemException, TripleStoreSystemException {
         final String href = getHref(identifier);
         final Collection<String> keys = new ArrayList<String>();
         for (final Object key : resources.getKeys()) {
@@ -212,7 +214,8 @@ public final class IndexerResourceCache {
      * @param resource
      * @throws SystemException e
      */
-    public void replaceResource(final String identifier, final Object resource) throws SystemException {
+    public void replaceResource(final String identifier, final Object resource) throws SystemException,
+        TripleStoreSystemException {
         final String href = getHref(identifier);
         final Collection<String> keys = new ArrayList<String>();
         for (final Object key : resources.getKeys()) {
@@ -338,7 +341,7 @@ public final class IndexerResourceCache {
      * @return String href
      * @throws SystemException e
      */
-    private String getHref(final String identifier) throws SystemException {
+    private String getHref(final String identifier) throws SystemException, TripleStoreSystemException {
         String href = identifier;
         if (!href.contains("/")) {
             // objectId provided, generate href

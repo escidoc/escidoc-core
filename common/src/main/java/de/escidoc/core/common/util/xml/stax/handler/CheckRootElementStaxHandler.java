@@ -51,7 +51,7 @@ public class CheckRootElementStaxHandler extends DefaultHandler {
      * @see DefaultHandler #startElement (de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
-    public StartElement startElement(final StartElement element) throws EscidocException {
+    public StartElement startElement(final StartElement element) throws XmlCorruptedException, WebserverSystemException {
 
         if (element.getLocalName().equals(this.expectedRootElement)) {
             throw new WebserverSystemException("Check successful, please ignore.");

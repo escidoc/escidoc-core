@@ -40,8 +40,11 @@ import de.escidoc.core.common.exceptions.application.notfound.ItemNotFoundExcept
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.system.EncodingSystemException;
 import de.escidoc.core.common.exceptions.system.FedoraSystemException;
+import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.date.Iso8601Util;
 import de.escidoc.core.common.util.service.BeanLocator;
@@ -80,7 +83,8 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * #render(de.escidoc.core.om.business.fedora.resources.Context)
      */
     @Override
-    public String render(final FedoraContextHandler contextHandler) throws SystemException {
+    public String render(final FedoraContextHandler contextHandler) throws SystemException, EncodingSystemException,
+        FedoraSystemException, WebserverSystemException, TripleStoreSystemException {
 
         final Context context = contextHandler.getContext();
         final Map<String, Object> values = new HashMap<String, Object>();
@@ -232,7 +236,8 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      */
     @Override
     public String renderMemberList(final FedoraContextHandler contextHandler, final List<String> memberList)
-        throws SystemException, AuthorizationException {
+        throws SystemException, AuthorizationException, WebserverSystemException, TripleStoreSystemException,
+        IntegritySystemException, FedoraSystemException, XmlParserSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         final Context context = contextHandler.getContext();
@@ -253,7 +258,8 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      */
     @Override
     public String renderMemberRefList(final FedoraContextHandler contextHandler, final List<String> memberList)
-        throws SystemException, AuthorizationException {
+        throws SystemException, AuthorizationException, WebserverSystemException, TripleStoreSystemException,
+        IntegritySystemException, FedoraSystemException, XmlParserSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         final Context context = contextHandler.getContext();
@@ -346,7 +352,8 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * @param values  Map with property values. New values are added to this Map.
      * @throws SystemException If anything fails.
      */
-    private void addPropertiesValues(final Context context, final Map<String, Object> values) throws SystemException {
+    private void addPropertiesValues(final Context context, final Map<String, Object> values) throws SystemException,
+        TripleStoreSystemException, WebserverSystemException {
 
         final Map<String, String> properties = context.getResourceProperties();
 
@@ -388,7 +395,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * @throws SystemException Thrown if retrieving OU context failed.
      */
     public Collection<Map<String, String>> getOrganizationalUnitsContext(final Iterable<String> ouids)
-        throws SystemException {
+        throws TripleStoreSystemException, WebserverSystemException {
 
         final Collection<Map<String, String>> ousContext = new ArrayList<Map<String, String>>();
 
@@ -406,7 +413,8 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * @return HashMap with (id, title, href)
      * @throws SystemException Thrown if instance of TripleStore failed.
      */
-    public Map<String, String> getOrganizationalUnitContext(final String id) throws SystemException {
+    public Map<String, String> getOrganizationalUnitContext(final String id) throws TripleStoreSystemException,
+        WebserverSystemException {
         final Map<String, String> ouContext = new HashMap<String, String>();
 
         ouContext.put("id", id);
@@ -452,7 +460,8 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      */
     private void addMemberListValues(
         final Context context, final Map<String, Object> values, final Iterable<String> memberList)
-        throws SystemException, AuthorizationException {
+        throws SystemException, AuthorizationException, TripleStoreSystemException, WebserverSystemException,
+        IntegritySystemException, FedoraSystemException, XmlParserSystemException {
 
         final FedoraItemHandler itemHandler =
             (FedoraItemHandler) BeanLocator.getBean("Om.spring.ejb.context", "business.FedoraItemHandler");
@@ -548,7 +557,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * @return Returns the name of a context.
      * @throws SystemException Thrown in case of an internal error.
      */
-    public String getName(final String id) throws SystemException {
+    public String getName(final String id) throws TripleStoreSystemException, WebserverSystemException {
         return getProperty(id, TripleStoreUtility.PROP_NAME);
     }
 
@@ -558,7 +567,8 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * @return Returns a value of a property of an organizational unit.
      * @throws SystemException Thrown in case of an internal error.
      */
-    private static String getProperty(final String id, final String property) throws SystemException {
+    private static String getProperty(final String id, final String property) throws TripleStoreSystemException,
+        WebserverSystemException {
 
         return TripleStoreUtility.getInstance().getPropertiesElements(id, property);
     }

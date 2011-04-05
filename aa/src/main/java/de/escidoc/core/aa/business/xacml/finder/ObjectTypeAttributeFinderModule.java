@@ -40,7 +40,10 @@ import de.escidoc.core.common.exceptions.application.missing.MissingMethodParame
 import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
+import de.escidoc.core.common.exceptions.system.IntegritySystemException;
+import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.string.StringUtility;
 import org.slf4j.Logger;
@@ -98,7 +101,9 @@ public class ObjectTypeAttributeFinderModule extends AbstractAttributeFinderModu
     @Override
     protected Object[] resolveLocalPart(
         final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
-        final String resourceVersionNumber) throws EscidocException {
+        final String resourceVersionNumber) throws SystemException, AuthorizationException, AuthenticationException,
+        ResourceNotFoundException, MissingMethodParameterException, IntegritySystemException,
+        TripleStoreSystemException, SqlDatabaseSystemException {
 
         return FinderModuleHelper.isNewResourceId(resourceId) ? resolveObjectTypeNew(attributeIdValue, ctx) : resolveObjectType(
             attributeIdValue, resourceId, resourceObjid);
@@ -120,7 +125,8 @@ public class ObjectTypeAttributeFinderModule extends AbstractAttributeFinderModu
      */
     private Object[] resolveObjectType(
         final String attributeIdValue, final String resourceId, final String resourceObjid) throws SystemException,
-        MissingMethodParameterException, AuthenticationException, AuthorizationException, ResourceNotFoundException {
+        MissingMethodParameterException, AuthenticationException, AuthorizationException, ResourceNotFoundException,
+        IntegritySystemException, TripleStoreSystemException, SqlDatabaseSystemException {
 
         EvaluationResult result = null;
         final String objectType = objectAttributeResolver.resolveObjectType(resourceObjid);

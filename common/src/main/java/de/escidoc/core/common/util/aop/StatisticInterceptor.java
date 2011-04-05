@@ -22,6 +22,7 @@ package de.escidoc.core.common.util.aop;
 
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.statistic.StatisticRecord;
@@ -125,7 +126,8 @@ public class StatisticInterceptor implements Ordered {
     @Around("call(public !static * de.escidoc.core.*.service.interfaces.*.*(..))"
         + " && within(de.escidoc.core.*.ejb.*Bean)" + " && !call(* de.escidoc.core..*.SemanticStoreHandler*.*(..))"
         + " && !call(* de.escidoc.core..*.StatisticService*.*(..))" + " && !call(* de.escidoc.core.common..*.*(..))")
-    public Object createStatisticRecord(final ProceedingJoinPoint joinPoint) throws Throwable {
+    public Object createStatisticRecord(final ProceedingJoinPoint joinPoint) throws Throwable, SystemException,
+        Exception, WebserverSystemException {
         final long invocationStartTime = System.currentTimeMillis();
         boolean successful = true;
         boolean internal = false;

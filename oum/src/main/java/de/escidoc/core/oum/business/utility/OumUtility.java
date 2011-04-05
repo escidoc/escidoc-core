@@ -31,6 +31,8 @@ package de.escidoc.core.oum.business.utility;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.exceptions.application.violated.OrganizationalUnitHierarchyViolationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -63,7 +65,7 @@ public class OumUtility {
      * @throws SystemException If triplestore query fails.
      */
     public void detectCycles(final String organizationalUnitId, final Collection<String> parentIds)
-        throws OrganizationalUnitHierarchyViolationException, SystemException {
+        throws OrganizationalUnitHierarchyViolationException, TripleStoreSystemException, WebserverSystemException {
         if (!parentIds.isEmpty()) {
             for (final String id : parentIds) {
                 if (id.equals(organizationalUnitId)) {
@@ -96,7 +98,7 @@ public class OumUtility {
      * @param currentOuId The parent ou.
      * @throws SystemException If triplestore query fails.
      */
-    private void expand(final String currentOuId) throws SystemException {
+    private void expand(final String currentOuId) throws TripleStoreSystemException, WebserverSystemException {
 
         final Collection<String> children = TripleStoreUtility.getInstance().getChildren(currentOuId);
         if (children != null) {

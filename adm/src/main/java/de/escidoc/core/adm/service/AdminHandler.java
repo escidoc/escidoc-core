@@ -31,9 +31,15 @@ package de.escidoc.core.adm.service;
 import de.escidoc.core.adm.service.interfaces.AdminHandlerInterface;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
+import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
+import de.escidoc.core.common.exceptions.system.ApplicationServerSystemException;
+import de.escidoc.core.common.exceptions.system.EncodingSystemException;
+import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 
 /**
  * Administration tool that rebuilds the search index, rebuilds the resource cache and deletes objects physically from
@@ -61,8 +67,8 @@ public class AdminHandler implements AdminHandlerInterface {
      * @throws AuthorizationException  Thrown if authorization fails.
      */
     @Override
-    public String deleteObjects(final String taskParam) throws InvalidXmlException, SystemException,
-        AuthenticationException, AuthorizationException {
+    public String deleteObjects(final String taskParam) throws SystemException, AuthenticationException,
+        AuthorizationException, XmlCorruptedException, EncodingSystemException, ApplicationServerSystemException {
         return business.deleteObjects(taskParam);
     }
 
@@ -125,7 +131,8 @@ public class AdminHandler implements AdminHandlerInterface {
      */
     @Override
     public String reindex(final String clearIndex, final String indexNamePrefix) throws SystemException,
-        InvalidSearchQueryException, AuthenticationException, AuthorizationException {
+        InvalidSearchQueryException, AuthenticationException, AuthorizationException, ApplicationServerSystemException,
+        FedoraSystemException, WebserverSystemException {
         return business.reindex(Boolean.valueOf(clearIndex), indexNamePrefix);
     }
 
@@ -148,7 +155,8 @@ public class AdminHandler implements AdminHandlerInterface {
      * @throws AuthorizationException  Thrown if authorization fails.
      */
     @Override
-    public String getIndexConfiguration() throws SystemException, AuthenticationException, AuthorizationException {
+    public String getIndexConfiguration() throws AuthenticationException, AuthorizationException,
+        TripleStoreSystemException, EncodingSystemException, WebserverSystemException {
         return this.business.getIndexConfiguration();
     }
 
@@ -163,7 +171,8 @@ public class AdminHandler implements AdminHandlerInterface {
      * @throws AuthorizationException  Thrown if authorization fails.
      */
     @Override
-    public String getRepositoryInfo() throws SystemException, AuthenticationException, AuthorizationException {
+    public String getRepositoryInfo() throws AuthenticationException, AuthorizationException,
+        TripleStoreSystemException, EncodingSystemException, WebserverSystemException {
         return this.business.getRepositoryInfo();
     }
 

@@ -50,6 +50,7 @@ import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.factory.ItemXmlProvider;
 import de.escidoc.core.common.util.xml.factory.RelationsXmlProvider;
@@ -158,7 +159,8 @@ public class ItemHandlerBase extends HandlerBase {
      * @throws ItemNotFoundException If there is no item with <code>id</code> in the repository.
      * @throws SystemException       Thrown in case of an internal system error.
      */
-    final void setItem(final String id) throws ItemNotFoundException, SystemException {
+    final void setItem(final String id) throws ItemNotFoundException, TripleStoreSystemException,
+        IntegritySystemException, FedoraSystemException, XmlParserSystemException, WebserverSystemException {
 
         try {
             this.item = new Item(id);
@@ -178,7 +180,8 @@ public class ItemHandlerBase extends HandlerBase {
      * @throws ItemNotFoundException If there is no item with <code>id</code> in the repository.
      * @throws SystemException       Thrown in case of an internal system error.
      */
-    final void setOriginItem(final String id) throws ItemNotFoundException, SystemException {
+    final void setOriginItem(final String id) throws ItemNotFoundException, TripleStoreSystemException,
+        IntegritySystemException, FedoraSystemException, XmlParserSystemException, WebserverSystemException {
         try {
             this.originItem = new Item(id);
         }
@@ -218,7 +221,8 @@ public class ItemHandlerBase extends HandlerBase {
      * @throws ComponentNotFoundException Thrown if Component with provided objid could not be found.
      * @throws SystemException            Thrown in case of internal error.
      */
-    final Component getComponent(final String id) throws ComponentNotFoundException, SystemException {
+    final Component getComponent(final String id) throws ComponentNotFoundException, FedoraSystemException,
+        WebserverSystemException, TripleStoreSystemException, IntegritySystemException, XmlParserSystemException {
 
         Component c;
         try {

@@ -30,6 +30,37 @@ package de.escidoc.core.adm.business.admin;
 
 import de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidContextException;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
+import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
+import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
+import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
+import de.escidoc.core.common.exceptions.application.missing.MissingContentException;
+import de.escidoc.core.common.exceptions.application.missing.MissingElementValueException;
+import de.escidoc.core.common.exceptions.application.missing.MissingMdRecordException;
+import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
+import de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.FileNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.ItemNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.OrganizationalUnitNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.StreamNotFoundException;
+import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
+import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
+import de.escidoc.core.common.exceptions.application.violated.ContextNameNotUniqueException;
+import de.escidoc.core.common.exceptions.application.violated.LockingException;
+import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException;
+import de.escidoc.core.common.exceptions.application.violated.ReadonlyAttributeViolationException;
+import de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException;
+import de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException;
+import de.escidoc.core.common.exceptions.application.violated.ReadonlyViolationException;
+import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.IOUtils;
 import de.escidoc.core.common.util.service.BeanLocator;
@@ -40,12 +71,17 @@ import de.escidoc.core.om.service.interfaces.ContextHandlerInterface;
 import de.escidoc.core.om.service.interfaces.ItemHandlerInterface;
 import de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface;
 import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.MessageFormat;
@@ -97,7 +133,8 @@ public class Examples {
      * @return last modification date
      * @throws Exception thrown if the XPath evaluation failed
      */
-    private static String getLastModificationDate(final String xml) throws Exception {
+    private static String getLastModificationDate(final String xml) throws XPathExpressionException, IOException,
+        ParserConfigurationException, SAXException, UnsupportedEncodingException {
         String result = null;
 
         if (xml != null) {
@@ -124,7 +161,9 @@ public class Examples {
      * @return last modification date
      * @throws Exception thrown if the XPath evaluation failed
      */
-    private static String getLastModificationDate(final String xml, final ResourceType type) throws Exception {
+    private static String getLastModificationDate(final String xml, final ResourceType type)
+        throws XPathExpressionException, IOException, ParserConfigurationException, SAXException,
+        UnsupportedEncodingException {
         String result = null;
 
         if (xml != null) {
@@ -151,7 +190,8 @@ public class Examples {
      * @return object id
      * @throws Exception thrown if the XPath evaluation failed
      */
-    private static String getObjectId(final String xml, final ResourceType type) throws Exception {
+    private static String getObjectId(final String xml, final ResourceType type) throws XPathExpressionException,
+        IOException, ParserConfigurationException, SAXException, UnsupportedEncodingException {
         String result = null;
 
         if (xml != null) {
@@ -179,7 +219,17 @@ public class Examples {
      * @return some useful information to the user which objects were loaded
      * @throws Exception thrown in case of an internal error
      */
-    public String load(final String directory) throws Exception {
+    public String load(final String directory) throws MalformedURLException, WebserverSystemException,
+        RelationPredicateNotFoundException, OptimisticLockingException, XmlSchemaValidationException,
+        AuthorizationException, IOException, SAXException, InvalidContentException, XmlCorruptedException,
+        StreamNotFoundException, AuthenticationException, MissingContentException, ReadonlyViolationException,
+        InvalidXmlException, ContextNotFoundException, ContainerNotFoundException, MissingAttributeValueException,
+        SystemException, InvalidStatusException, InvalidContextException, XPathExpressionException,
+        MissingElementValueException, ReadonlyElementViolationException, LockingException,
+        ParserConfigurationException, ContentModelNotFoundException, ComponentNotFoundException,
+        ContextNameNotUniqueException, OrganizationalUnitNotFoundException, FileNotFoundException,
+        ReadonlyVersionException, ItemNotFoundException, ReadonlyAttributeViolationException, MissingMdRecordException,
+        ReferencedResourceNotFoundException, MissingMethodParameterException, UnsupportedEncodingException {
         final StringBuilder result = new StringBuilder();
         final String ouId = loadOrganizationalUnit(loadFile(directory + EXAMPLE_OU));
 
@@ -214,7 +264,12 @@ public class Examples {
      * @throws Exception thrown in case of an internal error
      */
     private static String loadContainer(final String xml, final String contextId, final String contentModelId)
-        throws Exception {
+        throws XmlSchemaValidationException, MissingAttributeValueException, SystemException,
+        RelationPredicateNotFoundException, IOException, AuthorizationException, InvalidStatusException, SAXException,
+        XPathExpressionException, MissingElementValueException, ParserConfigurationException, WebserverSystemException,
+        InvalidContentException, ContentModelNotFoundException, XmlCorruptedException, AuthenticationException,
+        MissingMdRecordException, ReferencedResourceNotFoundException, ContextNotFoundException,
+        MissingMethodParameterException, UnsupportedEncodingException {
         String result = null;
         final ContainerHandlerInterface handler = BeanLocator.locateContainerHandler();
 
@@ -233,7 +288,10 @@ public class Examples {
      * @return object id of the newly created content model
      * @throws Exception thrown in case of an internal error
      */
-    private static String loadContentModel(final String xml) throws Exception {
+    private static String loadContentModel(final String xml) throws MissingAttributeValueException, SystemException,
+        XmlSchemaValidationException, AuthorizationException, IOException, SAXException, XPathExpressionException,
+        WebserverSystemException, ParserConfigurationException, InvalidContentException, XmlCorruptedException,
+        AuthenticationException, MissingMethodParameterException, UnsupportedEncodingException {
         String result = null;
         final ContentModelHandlerInterface handler = BeanLocator.locateContentModelHandler();
 
@@ -253,7 +311,14 @@ public class Examples {
      * @return object id of the newly created context
      * @throws Exception thrown in case of an internal error
      */
-    private static String loadContext(final String xml, final String ouId) throws Exception {
+    private static String loadContext(final String xml, final String ouId) throws XmlSchemaValidationException,
+        OptimisticLockingException, AuthorizationException, IOException, SAXException, WebserverSystemException,
+        InvalidContentException, XmlCorruptedException, StreamNotFoundException, AuthenticationException,
+        InvalidXmlException, ContextNotFoundException, SystemException, MissingAttributeValueException,
+        InvalidStatusException, MissingElementValueException, XPathExpressionException,
+        ReadonlyElementViolationException, LockingException, ParserConfigurationException,
+        ContentModelNotFoundException, OrganizationalUnitNotFoundException, ContextNameNotUniqueException,
+        ReadonlyAttributeViolationException, MissingMethodParameterException, UnsupportedEncodingException {
         String result = null;
         final ContextHandlerInterface handler = BeanLocator.locateContextHandler();
 
@@ -290,7 +355,15 @@ public class Examples {
      */
     private static String loadItem(
         final String xml, final String contextId, final String contentModelId, final String containerId)
-        throws Exception {
+        throws OptimisticLockingException, RelationPredicateNotFoundException, AuthorizationException, IOException,
+        SAXException, WebserverSystemException, InvalidContentException, XmlCorruptedException,
+        AuthenticationException, ReadonlyViolationException, MissingContentException, InvalidXmlException,
+        ContextNotFoundException, ContainerNotFoundException, MissingAttributeValueException, SystemException,
+        InvalidStatusException, InvalidContextException, MissingElementValueException, XPathExpressionException,
+        LockingException, ReadonlyElementViolationException, ParserConfigurationException,
+        ContentModelNotFoundException, ComponentNotFoundException, ReadonlyVersionException, FileNotFoundException,
+        ItemNotFoundException, ReadonlyAttributeViolationException, MissingMdRecordException,
+        ReferencedResourceNotFoundException, MissingMethodParameterException, UnsupportedEncodingException {
         String result = null;
         final ContainerHandlerInterface containerHandler = BeanLocator.locateContainerHandler();
         final ItemHandlerInterface itemHandler = BeanLocator.locateItemHandler();
@@ -320,7 +393,12 @@ public class Examples {
      * @return object id of the newly created organizational unit
      * @throws Exception thrown in case of an internal error
      */
-    private static String loadOrganizationalUnit(final String xml) throws Exception {
+    private static String loadOrganizationalUnit(final String xml) throws OptimisticLockingException,
+        MissingAttributeValueException, SystemException, XmlSchemaValidationException, IOException,
+        AuthorizationException, InvalidStatusException, SAXException, MissingElementValueException,
+        XPathExpressionException, ParserConfigurationException, WebserverSystemException, XmlCorruptedException,
+        OrganizationalUnitNotFoundException, AuthenticationException, MissingMdRecordException, InvalidXmlException,
+        MissingMethodParameterException, UnsupportedEncodingException {
         String result = null;
         final OrganizationalUnitHandlerInterface handler = BeanLocator.locateOrganizationalUnitHandler();
 

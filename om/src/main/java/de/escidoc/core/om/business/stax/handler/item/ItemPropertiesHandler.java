@@ -41,7 +41,9 @@ import de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFou
 import de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException;
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyAttributeViolationException;
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException;
+import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.stax.StaxParser;
@@ -152,9 +154,9 @@ public class ItemPropertiesHandler extends DefaultHandler {
      * @return EndElement
      */
     @Override
-    public EndElement endElement(final EndElement element) throws InvalidXmlException, MissingAttributeValueException,
-        SystemException, ContextNotFoundException, ContentModelNotFoundException, XMLStreamException,
-        UnsupportedEncodingException {
+    public EndElement endElement(final EndElement element) throws MissingAttributeValueException,
+        ContextNotFoundException, ContentModelNotFoundException, XMLStreamException, UnsupportedEncodingException,
+        IntegritySystemException, TripleStoreSystemException, WebserverSystemException, XmlCorruptedException {
 
         final String currentPath = parser.getCurPath();
         if (currentPath.equals(XPATH_ITEM_PROPERTIES)) {

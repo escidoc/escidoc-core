@@ -48,6 +48,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -113,7 +114,7 @@ public class InvocationParser {
          * @throws SAXException                 Thrown in case of a parse error
          */
         public Document retrieveDocument(final Object documentData) throws IOException, ParserConfigurationException,
-            SAXException {
+            SAXException, UnsupportedEncodingException {
 
             Document document = map.get(documentData);
             if (document == null) {
@@ -147,7 +148,7 @@ public class InvocationParser {
      */
     public List<Map<String, String>> buildRequestsList(final Object[] arguments, final MethodMapping methodMapping)
         throws MissingMethodParameterException, MissingAttributeValueException, MissingElementValueException,
-        InvalidXmlException, SystemException {
+        WebserverSystemException, XmlCorruptedException {
 
         return buildRequestsList(arguments, methodMapping, true);
     }
@@ -171,7 +172,7 @@ public class InvocationParser {
      */
     public List<Map<String, String>> buildRequestsList(final Object argument, final MethodMapping methodMapping)
         throws MissingMethodParameterException, MissingAttributeValueException, MissingElementValueException,
-        InvalidXmlException, SystemException {
+        WebserverSystemException, XmlCorruptedException {
 
         return buildRequestsList(argument, methodMapping, false);
     }
@@ -197,7 +198,7 @@ public class InvocationParser {
     private List<Map<String, String>> buildRequestsList(
         final Object arguments, final MethodMapping methodMapping, final boolean isArray)
         throws MissingMethodParameterException, MissingAttributeValueException, MissingElementValueException,
-        InvalidXmlException, SystemException {
+        WebserverSystemException, XmlCorruptedException {
 
         final Set<InvocationMapping> invocationMappings = methodMapping.getInvocationMappings();
 
@@ -260,7 +261,7 @@ public class InvocationParser {
     private Map<String, String> setupResourceAttributes(
         final Object arguments, final Iterable<InvocationMapping> invocationMappings, final boolean isArray,
         final int index) throws MissingMethodParameterException, MissingAttributeValueException,
-        MissingElementValueException, WebserverSystemException, InvalidXmlException {
+        MissingElementValueException, WebserverSystemException, XmlCorruptedException {
 
         if (arguments == null || invocationMappings == null) {
             return new HashMap<String, String>();
@@ -319,7 +320,7 @@ public class InvocationParser {
      */
     private StringAttribute getValueForInvocationMapping(
         final Object arguments, final boolean isArray, final int index, final InvocationMapping invocationMapping)
-        throws WebserverSystemException, MissingMethodParameterException, InvalidXmlException {
+        throws WebserverSystemException, MissingMethodParameterException, XmlCorruptedException {
 
         // set the value
         final StringAttribute value;

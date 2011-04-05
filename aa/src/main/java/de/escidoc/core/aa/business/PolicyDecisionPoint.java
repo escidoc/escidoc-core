@@ -61,6 +61,7 @@ import de.escidoc.core.common.exceptions.application.missing.MissingMethodParame
 import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
+import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
@@ -221,7 +222,8 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
      */
     @Override
     public boolean[] evaluateRequestList(final List<Map<String, String>> requests) throws ResourceNotFoundException,
-        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
+        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException,
+        WebserverSystemException {
 
         final boolean[] allowedObjects = new boolean[requests.size()];
         int i = 0;
@@ -299,7 +301,7 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
      */
     @Override
     public String evaluate(final String requestsXml) throws ResourceNotFoundException, XmlSchemaValidationException,
-        XmlCorruptedException, SystemException {
+        XmlCorruptedException, SystemException, WebserverSystemException {
 
         XmlUtility.validate(requestsXml, XmlUtility.getPdpRequestsSchemaLocation());
 
@@ -340,7 +342,7 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
     @Override
     public List<Object[]> evaluateMethodForList(
         final String resourceName, final String methodName, final List<Object[]> argumentList)
-        throws ResourceNotFoundException, SystemException {
+        throws ResourceNotFoundException, SystemException, IntegritySystemException, WebserverSystemException {
 
         // convert the resourceName if provided in triple store format
         final String convertedResourceName = FinderModuleHelper.convertObjectType(resourceName, false);
@@ -392,7 +394,7 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
      */
     @Override
     public List<String> evaluateRetrieve(final String resourceName, final List<String> ids)
-        throws ResourceNotFoundException, SystemException {
+        throws ResourceNotFoundException, SystemException, IntegritySystemException, WebserverSystemException {
 
         // convert the resourceName if provided in triple store format
         final String convertedResourceName = FinderModuleHelper.convertObjectType(resourceName, false);
@@ -556,7 +558,7 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
      * @throws SystemException              Thrown in case of an internal error.
      */
     private List<ResponseCtx> doEvaluate(final CharSequence requestsXml) throws XmlSchemaValidationException,
-        SystemException {
+        SystemException, WebserverSystemException {
 
         // trim white spaces and newlines around < and >
         Matcher matcher = TRIM_PATTERN.matcher(requestsXml);

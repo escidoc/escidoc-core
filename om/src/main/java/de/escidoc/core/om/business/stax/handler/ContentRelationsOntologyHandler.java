@@ -78,7 +78,7 @@ public class ContentRelationsOntologyHandler extends DefaultHandler {
     }
 
     @Override
-    public StartElement startElement(final StartElement element) throws InvalidXmlException, InvalidContentException {
+    public StartElement startElement(final StartElement element) throws InvalidContentException, XmlCorruptedException {
 
         final String currentPath = parser.getCurPath();
         if (BASE_PATH.equals(currentPath)) {

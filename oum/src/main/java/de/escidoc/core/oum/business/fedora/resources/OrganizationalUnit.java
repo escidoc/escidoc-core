@@ -35,6 +35,7 @@ import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.business.fedora.resources.GenericResource;
 import de.escidoc.core.common.business.fedora.resources.Predecessor;
 import de.escidoc.core.common.business.fedora.resources.PredecessorForm;
+import de.escidoc.core.common.exceptions.application.notfound.OrganizationalUnitNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.StreamNotFoundException;
 import de.escidoc.core.common.exceptions.system.EncodingSystemException;
@@ -100,7 +101,8 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
      * @throws SystemException           Thrown in case of an internal error.
      * @throws ResourceNotFoundException Thrown if no organizational resource could be found under the provided id.
      */
-    public OrganizationalUnit(final String id) throws SystemException, ResourceNotFoundException {
+    public OrganizationalUnit(final String id) throws OrganizationalUnitNotFoundException, TripleStoreSystemException,
+        IntegritySystemException, WebserverSystemException {
 
         super(id);
         if (id != null) {
@@ -291,7 +293,7 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
      * @return The list of children ids for this organizational unit.
      * @throws SystemException If access to the triplestore fails.
      */
-    public List<String> getChildrenIds() throws SystemException {
+    public List<String> getChildrenIds() throws TripleStoreSystemException, WebserverSystemException {
 
         return TripleStoreUtility.getInstance().getChildren(getId());
     }
@@ -412,7 +414,8 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
      * See Interface for functional description.
      */
     @Override
-    public void setMdRecord(final String name, final Datastream ds) throws SystemException {
+    public void setMdRecord(final String name, final Datastream ds) throws EncodingSystemException,
+        IntegritySystemException, FedoraSystemException, WebserverSystemException, TripleStoreSystemException {
         final String mimeType = ds.getMimeType();
         String type = Constants.DEFAULT_ALTID_TYPE;
         String schema = Constants.DEFAULT_ALTID_SCHEMA;
@@ -483,7 +486,8 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
      * See Interface for functional description.
      */
     @Override
-    public void setMdRecords(final Map<String, Datastream> mdRecords) throws SystemException {
+    public void setMdRecords(final Map<String, Datastream> mdRecords) throws IntegritySystemException,
+        FedoraSystemException, WebserverSystemException, EncodingSystemException, TripleStoreSystemException {
         // Container.setMdRecords throws FedoraSystemException, WebserverSystemException,
         // TripleStoreSystemException, IntegritySystemException,
         // EncodingSystemException
@@ -552,7 +556,8 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
      * @throws StreamNotFoundException If there is no datastream identified by name and parentId in Fedora.
      * @throws SystemException         Thrown in case of an internal system error caused by failed fedora access.
      */
-    public void setDc(final Datastream ds) throws StreamNotFoundException, SystemException {
+    public void setDc(final Datastream ds) throws StreamNotFoundException, TripleStoreSystemException,
+        FedoraSystemException, WebserverSystemException {
 
         try {
             if (!ds.equals(getDc())) {

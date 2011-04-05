@@ -28,6 +28,7 @@ import de.escidoc.core.common.exceptions.application.invalid.InvalidTripleStoreQ
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.util.IOUtils;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
@@ -984,7 +985,8 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
      */
     @Override
     public String getObjectRefs(final String objectType, final Map filterMap, final String whereClause)
-        throws SystemException, MissingMethodParameterException {
+        throws MissingMethodParameterException, TripleStoreSystemException, XmlParserSystemException,
+        WebserverSystemException {
 
         final List<String> list = evaluate(objectType, filterMap, null, whereClause);
         final String resourcesName = getObjectsToFind(objectType);

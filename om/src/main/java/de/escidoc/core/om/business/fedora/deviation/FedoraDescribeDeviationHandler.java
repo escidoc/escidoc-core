@@ -28,12 +28,15 @@
  */
 package de.escidoc.core.om.business.fedora.deviation;
 
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.service.ConnectionUtility;
 import de.escidoc.core.om.business.interfaces.FedoraDescribeDeviationHandlerInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -54,7 +57,8 @@ public class FedoraDescribeDeviationHandler implements FedoraDescribeDeviationHa
      * @see de.escidoc.core.om.business.interfaces .FedoraDescribeDeviationHandlerInterface#getDatastreamDissemination(Map)
      */
     @Override
-    public String getFedoraDescription(final Map<String, String[]> parameters) throws Exception {
+    public String getFedoraDescription(final Map<String, String[]> parameters) throws IOException,
+        MalformedURLException, WebserverSystemException {
 
         final String urlParams = buildUrlParameters(parameters);
         String baseURL = EscidocConfiguration.getInstance().get(EscidocConfiguration.FEDORA_URL);

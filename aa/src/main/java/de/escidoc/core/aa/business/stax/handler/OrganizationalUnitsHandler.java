@@ -34,6 +34,9 @@ import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.application.notfound.OrganizationalUnitNotFoundException;
+import de.escidoc.core.common.exceptions.system.IntegritySystemException;
+import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
@@ -73,7 +76,8 @@ public class OrganizationalUnitsHandler extends LinkCollectionStaxHandler {
      * @see LinkCollectionStaxHandler #endLinkElement(de.escidoc.core.common.util.xml.stax.events.EndElement)
      */
     @Override
-    public EndElement endLinkElement(final EndElement element) throws EscidocException {
+    public EndElement endLinkElement(final EndElement element) throws EscidocException, TripleStoreSystemException,
+        IntegritySystemException, InvalidStatusException, OrganizationalUnitNotFoundException, WebserverSystemException {
 
         Utility.getInstance().checkIsOrganizationalUnit(getObjid());
         if (!Constants.STATUS_OU_OPENED.equals(tsu.getPublicStatus(getObjid()))) {

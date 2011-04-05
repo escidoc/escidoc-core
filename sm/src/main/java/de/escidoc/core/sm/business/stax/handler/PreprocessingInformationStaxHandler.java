@@ -32,6 +32,7 @@ import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -72,7 +73,7 @@ public class PreprocessingInformationStaxHandler extends DefaultHandler {
      * @throws Exception e
      */
     @Override
-    public String characters(final String s, final StartElement element) throws Exception {
+    public String characters(final String s, final StartElement element) throws ParseException {
         final String currentPath = parser.getCurPath();
 
         if (START_DATE_PATH.equals(currentPath)) {

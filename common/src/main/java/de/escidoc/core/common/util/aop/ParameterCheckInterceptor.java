@@ -56,7 +56,7 @@ public class ParameterCheckInterceptor implements Ordered {
         + " && (!call(* de.escidoc.core..*.*HandlerInterface.retrieve*List(String))"
         + " || call(* de.escidoc.core.aa..*.*HandlerInterface.retrieve*List(String)))"
         + " && !call(* de.escidoc.core..*.Fedora*Handler*.*(..))")
-    public void checkParameters(final JoinPoint joinPoint) throws Throwable {
+    public void checkParameters(final JoinPoint joinPoint) throws MissingMethodParameterException {
         final Object[] arguments = joinPoint.getArgs();
         final int length = arguments.length;
         for (int i = 0; i < length; ++i) {

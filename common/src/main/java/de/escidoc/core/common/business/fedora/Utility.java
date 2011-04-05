@@ -261,7 +261,7 @@ public class Utility {
      * @return true if objects has same context else false.
      * @throws SystemException Thrown in case of an internal error.
      */
-    public boolean hasSameContext(final String id0, final String id1) throws SystemException {
+    public boolean hasSameContext(final String id0, final String id1) throws TripleStoreSystemException {
         final String context0 = tripleStoreUtility.getContext(id0);
         final String context1 = tripleStoreUtility.getContext(id1);
 
@@ -301,7 +301,8 @@ public class Utility {
      * @throws SystemException            Thrown in case of an internal error.
      * @throws ComponentNotFoundException If the component does not exist or if the object is no component.
      */
-    public void checkIsComponent(final String id) throws SystemException, ComponentNotFoundException {
+    public void checkIsComponent(final String id) throws ComponentNotFoundException, TripleStoreSystemException,
+        IntegritySystemException, WebserverSystemException {
 
         try {
             checkIsOfObjectType(id, Constants.COMPONENT_OBJECT_TYPE);
@@ -318,7 +319,8 @@ public class Utility {
      * @throws SystemException            Thrown in case of an internal error.
      * @throws ContainerNotFoundException If the container does not exist or if the object is no container.
      */
-    public void checkIsContainer(final String id) throws SystemException, ContainerNotFoundException {
+    public void checkIsContainer(final String id) throws ContainerNotFoundException, TripleStoreSystemException,
+        IntegritySystemException, WebserverSystemException {
 
         try {
             checkIsOfObjectType(id, Constants.CONTAINER_OBJECT_TYPE);
@@ -335,7 +337,8 @@ public class Utility {
      * @throws SystemException          Thrown in case of an internal error.
      * @throws ContextNotFoundException If the context does not exist or if the object is no context.
      */
-    public void checkIsContext(final String id) throws SystemException, ContextNotFoundException {
+    public void checkIsContext(final String id) throws ContextNotFoundException, TripleStoreSystemException,
+        IntegritySystemException, WebserverSystemException {
 
         try {
             checkIsOfObjectType(id, Constants.CONTEXT_OBJECT_TYPE);
@@ -353,7 +356,8 @@ public class Utility {
      * @throws ContentRelationNotFoundException
      *                         Thrown if Content Relation the does not exist.
      */
-    public void checkIsContentRelation(final String id) throws SystemException, ContentRelationNotFoundException {
+    public void checkIsContentRelation(final String id) throws ContentRelationNotFoundException,
+        TripleStoreSystemException, IntegritySystemException, WebserverSystemException {
 
         try {
             checkIsOfObjectType(id, Constants.CONTENT_RELATION2_OBJECT_TYPE);
@@ -433,7 +437,8 @@ public class Utility {
      *                         If the organizational-unit does not exist or if the object is no organizational-unit.
      * @throws SystemException Thrown in case of an internal error.
      */
-    public void checkIsOrganizationalUnit(final String id) throws OrganizationalUnitNotFoundException, SystemException {
+    public void checkIsOrganizationalUnit(final String id) throws OrganizationalUnitNotFoundException,
+        TripleStoreSystemException, IntegritySystemException, WebserverSystemException {
 
         try {
             checkIsOfObjectType(id, Constants.ORGANIZATIONAL_UNIT_OBJECT_TYPE);
@@ -483,7 +488,8 @@ public class Utility {
      *                                 object.
      * @throws SystemException         Thrown in case of internal failure.
      */
-    public void checkSameContext(final String id, final String xmlData) throws InvalidContextException, SystemException {
+    public void checkSameContext(final String id, final String xmlData) throws InvalidContextException,
+        SystemException, TripleStoreSystemException, WebserverSystemException {
 
         // TODO This is a quick fix hack. Change to StAX parser. And, may be,
         // move the check to another level in create to avoid a double XML
@@ -566,7 +572,8 @@ public class Utility {
      */
     public void makeVersion(
         final String versionComment, final String newStatus, final VersionableResource resource,
-        final FedoraUtility fedoraUtility) throws SystemException {
+        final FedoraUtility fedoraUtility) throws SystemException, EncodingSystemException, IntegritySystemException,
+        FedoraSystemException, TripleStoreSystemException, WebserverSystemException, XmlParserSystemException {
 
         final String comment = createComment(resource, newStatus, versionComment);
 
@@ -783,7 +790,8 @@ public class Utility {
     private static void updateElementsInRelsExt(
         final Map<String, StartElementWithChildElements> updateElementsRelsExt,
         final Map<String, List<StartElementWithChildElements>> removeElementsRelsExt, final FedoraResource resource,
-        final String currentPublicStatus, final boolean release) throws SystemException {
+        final String currentPublicStatus, final boolean release) throws SystemException, EncodingSystemException,
+        IntegritySystemException, XmlParserSystemException {
 
         final StaxParser sp = new StaxParser();
         final ItemRelsExtUpdateHandler itemRelsExtUpdateHandler =

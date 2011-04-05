@@ -396,7 +396,7 @@ public class Login extends HttpServlet {
      */
     private void doLoginOfExistingUser(
         final HttpServletRequest request, final HttpServletResponse response, final UserAccount userAccount)
-        throws SystemException, IOException {
+        throws IOException, SqlDatabaseSystemException, WebserverSystemException {
 
         if (Boolean.TRUE.equals(userAccount.getActive())) {
 

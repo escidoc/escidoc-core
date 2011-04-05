@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.aa.business.stax.handler;
 
+import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
@@ -70,7 +71,7 @@ public class OuListOuIdHandler extends DefaultHandler {
      * @see DefaultHandler #startElement(de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
-    public StartElement startElement(final StartElement element) throws Exception {
+    public StartElement startElement(final StartElement element) throws MissingAttributeValueException {
 
         final String ouRefPath = "/organizational-unit-path-list/" + "organizational-unit-path/organizational-unit-ref";
         final String currentPath = parser.getCurPath();

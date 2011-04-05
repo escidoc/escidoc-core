@@ -33,6 +33,7 @@ import org.xml.sax.SAXException;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -81,7 +82,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      * @throws TransformerException         Thrown if an xml transformation fails.
      */
     public MethodMapper(final String descriptor) throws ParserConfigurationException, SAXException, IOException,
-        TransformerException {
+        TransformerException, FileNotFoundException {
 
         final Collection<String> paths = new ArrayList<String>();
         paths.add(descriptor);
@@ -98,7 +99,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      * @throws TransformerException         Thrown if an xml transformation fails.
      */
     public MethodMapper(final Collection<String> descriptors) throws ParserConfigurationException, SAXException,
-        IOException, TransformerException {
+        IOException, TransformerException, FileNotFoundException {
 
         setDescriptorFilenames(descriptors);
     }
@@ -113,7 +114,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      * @throws TransformerException         Thrown if an xml transformation fails.
      */
     public final void setDescriptorFilenames(final Iterable<String> descriptorFilenames)
-        throws ParserConfigurationException, SAXException, IOException, TransformerException {
+        throws ParserConfigurationException, SAXException, IOException, TransformerException, FileNotFoundException {
 
         this.descriptorFilenames = new ArrayList<String>();
         for (String descriptor : descriptorFilenames) {
@@ -136,7 +137,8 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      * @throws IOException                  If anything fails.
      * @throws TransformerException         Thrown if an xml transformation fails.
      */
-    private void init() throws ParserConfigurationException, SAXException, IOException, TransformerException {
+    private void init() throws ParserConfigurationException, SAXException, IOException, TransformerException,
+        FileNotFoundException {
 
         final Iterator<String> iter = this.descriptorFilenames.iterator();
         this.methodMappings = new ArrayList<Document>();

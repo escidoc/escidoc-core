@@ -71,7 +71,8 @@ public final class VelocityXmlReportRenderer implements ReportRendererInterface 
      * @see de.escidoc.core.sm.business.renderer.interfaces.ReportRendererInterface#render(List, ReportDefinition)
      */
     @Override
-    public String render(final List dbResult, final ReportDefinition reportDefinition) throws SystemException {
+    public String render(final List dbResult, final ReportDefinition reportDefinition) throws SystemException,
+        WebserverSystemException {
         final Map<String, Object> values = new HashMap<String, Object>();
 
         addReportNamespaceValues(values);
@@ -156,7 +157,7 @@ public final class VelocityXmlReportRenderer implements ReportRendererInterface 
      * @param values The {@link Map} to that the values shall be added.
      * @throws SystemException e
      */
-    private void addReportNamespaceValues(final Map<String, Object> values) throws SystemException {
+    private void addReportNamespaceValues(final Map<String, Object> values) throws WebserverSystemException {
         addEscidocBaseUrl(values);
         values.put("reportNamespacePrefix", Constants.REPORT_NS_PREFIX);
         values.put("reportNamespace", Constants.REPORT_NS_URI);

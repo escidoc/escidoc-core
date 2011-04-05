@@ -40,9 +40,13 @@ import de.escidoc.core.common.exceptions.application.notfound.ContentStreamNotFo
 import de.escidoc.core.common.exceptions.application.notfound.ItemNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
+import de.escidoc.core.common.exceptions.system.EncodingSystemException;
 import de.escidoc.core.common.exceptions.system.FedoraSystemException;
+import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.util.IOUtils;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.service.UserContext;
@@ -57,6 +61,7 @@ import de.escidoc.core.om.service.result.EscidocServiceRedirect;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.InvalidParameterException;
@@ -104,8 +109,9 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
      * @throws de.escidoc.core.common.exceptions.system.SystemException
      */
     public EscidocBinaryContent retrieveContent(final String id, final String componentId)
-        throws ItemNotFoundException, ComponentNotFoundException, MissingMethodParameterException, SystemException,
-        InvalidStatusException, ResourceNotFoundException, AuthorizationException {
+        throws ItemNotFoundException, ComponentNotFoundException, MissingMethodParameterException,
+        InvalidStatusException, ResourceNotFoundException, AuthorizationException, FedoraSystemException,
+        TripleStoreSystemException, WebserverSystemException, IntegritySystemException, XmlParserSystemException {
 
         setItem(id);
         Component component = getItem().getComponent(componentId);
@@ -192,7 +198,8 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
     public EscidocBinaryContent retrieveContent(
         final String id, final String componentId, final String transformer, final String param)
         throws ItemNotFoundException, ComponentNotFoundException, MissingMethodParameterException, SystemException,
-        InvalidStatusException, AuthorizationException {
+        InvalidStatusException, AuthorizationException, TripleStoreSystemException, WebserverSystemException,
+        IntegritySystemException, FedoraSystemException, XmlParserSystemException {
 
         setItem(id);
         final Component component = getComponent(componentId);
@@ -252,7 +259,8 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
     public EscidocServiceRedirectInterface redirectContentService(
         final String id, final String componentId, final String transformer, final String clientService)
         throws ItemNotFoundException, ComponentNotFoundException, MissingMethodParameterException, SystemException,
-        InvalidStatusException, AuthorizationException {
+        InvalidStatusException, AuthorizationException, TripleStoreSystemException, WebserverSystemException,
+        IntegritySystemException, FedoraSystemException, XmlParserSystemException {
 
         setItem(id);
         final Component component = getComponent(componentId);
@@ -397,7 +405,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
      * @return content of template file
      * @throws IOException Thrown in case of an I/O error.
      */
-    private String initFileContent(final String templateFileName) throws IOException {
+    private String initFileContent(final String templateFileName) throws IOException, UnsupportedEncodingException {
 
         final ByteArrayOutputStream result = new ByteArrayOutputStream();
         InputStream inputStream = null;
@@ -460,7 +468,8 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
      * retrieveContentStream(java.lang.String, java.lang.String)
      */
     public String retrieveContentStream(final String itemId, final String name) throws ItemNotFoundException,
-        SystemException, ContentStreamNotFoundException, AuthorizationException {
+        ContentStreamNotFoundException, AuthorizationException, TripleStoreSystemException, IntegritySystemException,
+        WebserverSystemException, FedoraSystemException, XmlParserSystemException {
 
         setItem(itemId);
         final String contentStream = renderContentStream(name, true);
@@ -472,7 +481,8 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
     }
 
     public EscidocBinaryContent retrieveContentStreamContent(final String itemId, final String name)
-        throws ItemNotFoundException, SystemException, ContentStreamNotFoundException, AuthorizationException {
+        throws ItemNotFoundException, ContentStreamNotFoundException, AuthorizationException, FedoraSystemException,
+        TripleStoreSystemException, WebserverSystemException, IntegritySystemException, XmlParserSystemException {
 
         setItem(itemId);
         try {
@@ -490,8 +500,9 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
      * @seede.escidoc.core.om.business.interfaces.ItemHandlerInterface#
      * retrieveContentStreams(java.lang.String)
      */
-    public String retrieveContentStreams(final String itemId) throws ItemNotFoundException, SystemException,
-        AuthorizationException {
+    public String retrieveContentStreams(final String itemId) throws ItemNotFoundException, AuthorizationException,
+        EncodingSystemException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException,
+        WebserverSystemException, XmlParserSystemException {
         setItem(itemId);
         return renderContentStreams(true);
     }

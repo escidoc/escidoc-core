@@ -472,7 +472,7 @@ public class ItemHandlerBean implements SessionBean {
     public EscidocBinaryContent retrieveContent(
         final String id, final String contentId, final SecurityContext securityContext) throws ItemNotFoundException,
         AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException,
-        InvalidStatusException, ResourceNotFoundException {
+        InvalidStatusException, ResourceNotFoundException, ComponentNotFoundException {
         try {
             UserContext.setUserContext(securityContext);
         }
@@ -485,7 +485,7 @@ public class ItemHandlerBean implements SessionBean {
     public EscidocBinaryContent retrieveContent(
         final String id, final String contentId, final String authHandle, final Boolean restAccess)
         throws ItemNotFoundException, AuthenticationException, AuthorizationException, MissingMethodParameterException,
-        SystemException, InvalidStatusException, ResourceNotFoundException {
+        SystemException, InvalidStatusException, ResourceNotFoundException, ComponentNotFoundException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);

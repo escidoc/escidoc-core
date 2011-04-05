@@ -30,8 +30,11 @@ package de.escidoc.core.om.business.fedora.container;
 
 import de.escidoc.core.common.business.fedora.resources.listener.ResourceListener;
 import de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException;
+import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.util.service.UserContext;
 
 import java.util.ArrayList;
@@ -91,7 +94,8 @@ public class ContainerResourceListener extends ContainerHandlerRetrieve {
      * @param xmlData complete container XML
      * @throws SystemException One of the listeners threw an exception.
      */
-    protected void fireContainerCreated(final String id, final String xmlData) throws SystemException {
+    protected void fireContainerCreated(final String id, final String xmlData) throws SystemException,
+        WebserverSystemException {
         final String restXml;
         final String soapXml;
 
@@ -127,7 +131,8 @@ public class ContainerResourceListener extends ContainerHandlerRetrieve {
      * @throws ContainerNotFoundException Thrown if a container with the provided id does not exist in the framework.
      * @throws SystemException            One of the listeners threw an exception.
      */
-    protected void fireContainerModified(final String id) throws ContainerNotFoundException, SystemException {
+    protected void fireContainerModified(final String id) throws ContainerNotFoundException, SystemException,
+        WebserverSystemException, TripleStoreSystemException, IntegritySystemException, XmlParserSystemException {
 
         setContainer(id);
         final String soapXml;
@@ -152,7 +157,8 @@ public class ContainerResourceListener extends ContainerHandlerRetrieve {
      * @param xmlData complete container XML
      * @throws SystemException One of the listeners threw an exception.
      */
-    protected void fireContainerModified(final String id, final String xmlData) throws SystemException {
+    protected void fireContainerModified(final String id, final String xmlData) throws SystemException,
+        WebserverSystemException {
         final String restXml;
         final String soapXml;
 
@@ -192,7 +198,7 @@ public class ContainerResourceListener extends ContainerHandlerRetrieve {
      * @return alternate form of the container
      * @throws SystemException An internal error occurred.
      */
-    private String getAlternateForm(final String id) throws SystemException {
+    private String getAlternateForm(final String id) throws SystemException, WebserverSystemException {
         String result = null;
         final boolean isRestAccess = UserContext.isRestAccess();
 

@@ -34,6 +34,7 @@ import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.business.indexing.IndexingHandler;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.system.ApplicationServerSystemException;
+import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.IOUtils;
@@ -140,7 +141,7 @@ public class Reindexer {
      * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
      */
     public String reindex(final boolean clearIndex, final String indexName) throws SystemException,
-        InvalidSearchQueryException {
+        InvalidSearchQueryException, ApplicationServerSystemException, FedoraSystemException, WebserverSystemException {
         if ("errorTest".equals(indexName)) {
             return testReindexError();
         }
@@ -271,7 +272,7 @@ public class Reindexer {
      * @throws SystemException             Thrown if a framework internal error occurs.
      * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
      */
-    public String testReindexError() throws SystemException, InvalidSearchQueryException {
+    public String testReindexError() throws InvalidSearchQueryException, ApplicationServerSystemException {
         sendUpdateIndexMessage("nonexistingPid", ResourceType.ITEM, null);
         return "OK";
     }
@@ -365,7 +366,7 @@ public class Reindexer {
      */
     private Collection<String> getIds(
         final String indexName, final ResourceType type, final String listQuery, final boolean clearIndex)
-        throws SystemException {
+        throws SystemException, FedoraSystemException, WebserverSystemException {
         final Collection<String> result = new LinkedList<String>();
         if (contains(indexName, type)) {
             BufferedReader input = null;

@@ -40,6 +40,7 @@ import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.string.StringUtility;
 import org.slf4j.Logger;
@@ -337,7 +338,7 @@ public final class FinderModuleHelper {
      */
     public static List<String> retrieveFromTripleStore(
         final boolean targetIsSubject, final StringBuffer whereClause, final String objectId, final String predicateId,
-        final TripleStoreUtility tsu) throws ResourceNotFoundException, SystemException {
+        final TripleStoreUtility tsu) throws ResourceNotFoundException, SystemException, TripleStoreSystemException {
 
         final StringBuffer query = tsu.getRetrieveSelectClause(targetIsSubject, predicateId).append(whereClause);
         final List<String> result = tsu.retrieve(query.toString());
@@ -357,7 +358,7 @@ public final class FinderModuleHelper {
      * @throws SystemException           Thrown in case of an internal error.
      */
     private static List<String> handleAttributeFromTripleStoreNotFound(final String id, final TripleStoreUtility tsu)
-        throws ResourceNotFoundException, SystemException {
+        throws ResourceNotFoundException, TripleStoreSystemException {
 
         if (tsu.exists(id)) {
             return new ArrayList<String>();

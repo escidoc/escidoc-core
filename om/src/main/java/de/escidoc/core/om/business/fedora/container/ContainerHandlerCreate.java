@@ -31,6 +31,7 @@ package de.escidoc.core.om.business.fedora.container;
 import de.escidoc.core.common.business.fedora.resources.StatusType;
 import de.escidoc.core.common.exceptions.system.EncodingSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
@@ -74,7 +75,8 @@ public class ContainerHandlerCreate extends ContainerResourceListener {
         final String containerId, final String contentModel, final Map<String, String> properties,
         final List<String> members, final String lastModificationDate,
         final List<Map<String, String>> contentRelations, final String comment,
-        final Map<String, String> propertiesAsReferences) throws SystemException {
+        final Map<String, String> propertiesAsReferences) throws SystemException, EncodingSystemException,
+        WebserverSystemException {
 
         final Map<String, Map<String, String>> metadataAttributes = metadataHandler.getMetadataAttributes();
         final Map<String, Object> values = new HashMap<String, Object>();

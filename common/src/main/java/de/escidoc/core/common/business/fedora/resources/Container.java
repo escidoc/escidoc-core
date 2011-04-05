@@ -27,6 +27,7 @@ import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.business.fedora.resources.interfaces.ContainerInterface;
 import de.escidoc.core.common.business.fedora.resources.interfaces.FedoraResource;
+import de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.StreamNotFoundException;
 import de.escidoc.core.common.exceptions.system.EncodingSystemException;
@@ -87,7 +88,9 @@ public class Container extends GenericVersionableResourcePid implements Containe
      * @throws SystemException           Thrown in case of an internal error.
      * @throws ResourceNotFoundException Thrown if no container could be found under the provided id.
      */
-    public Container(final String id) throws StreamNotFoundException, SystemException, ResourceNotFoundException {
+    public Container(final String id) throws StreamNotFoundException, SystemException, ResourceNotFoundException,
+        ContainerNotFoundException, IntegritySystemException, TripleStoreSystemException, XmlParserSystemException,
+        WebserverSystemException {
 
         super(id);
         setPropertiesNames(expandPropertiesNames(getPropertiesNames()),

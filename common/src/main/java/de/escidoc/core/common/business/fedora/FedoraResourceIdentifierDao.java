@@ -20,6 +20,7 @@
 
 package de.escidoc.core.common.business.fedora;
 
+import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.persistence.interfaces.ResourceIdentifierDao;
 
@@ -36,7 +37,7 @@ public class FedoraResourceIdentifierDao implements ResourceIdentifierDao {
      * See Interface for functional description.
      */
     @Override
-    public String[] getNextPids(final int noOfPids) throws SystemException {
+    public String[] getNextPids(final int noOfPids) throws FedoraSystemException {
 
         return getFedoraUtility().getNextPID(noOfPids);
     }

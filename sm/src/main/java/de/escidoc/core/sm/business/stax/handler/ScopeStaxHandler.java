@@ -63,7 +63,7 @@ public class ScopeStaxHandler extends DefaultHandler {
      * @throws Exception e
      */
     @Override
-    public StartElement startElement(final StartElement element) throws Exception {
+    public StartElement startElement(final StartElement element) throws IntegritySystemException {
         if ("scope".equals(element.getLocalName())) {
             try {
                 final String scopeId = XmlUtility.getIdFromStartElement(element);

@@ -2,6 +2,7 @@ package de.escidoc.core.tme.business.jhove;
 
 import de.escidoc.core.common.exceptions.application.invalid.TmeException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.util.IOUtils;
 import de.escidoc.core.tme.business.TmeHandlerBase;
 import de.escidoc.core.tme.business.interfaces.JhoveHandlerInterface;
@@ -87,7 +88,7 @@ public class JhoveHandler extends TmeHandlerBase implements JhoveHandlerInterfac
      *
      * @throws IOException Thrown if the configuration file could not be loaded or copied.
      */
-    public JhoveHandler() throws IOException {
+    public JhoveHandler() throws IOException, FileNotFoundException {
         OutputStream outputStream = null;
         try {
             InputStream inputStream = getClass().getClassLoader().getResourceAsStream(CONFIG_FILE);
@@ -115,7 +116,7 @@ public class JhoveHandler extends TmeHandlerBase implements JhoveHandlerInterfac
      * @throws TmeException    Thrown if JHove produced an error during meta data extraction.
      */
     @Override
-    public String extract(final String requests) throws SystemException, TmeException {
+    public String extract(final String requests) throws SystemException, TmeException, XmlParserSystemException {
 
         final String[] files = parseRequests(requests);
         return callJhove(files);

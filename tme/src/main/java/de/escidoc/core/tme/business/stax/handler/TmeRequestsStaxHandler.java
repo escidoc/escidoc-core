@@ -65,7 +65,7 @@ public class TmeRequestsStaxHandler extends DefaultHandler {
      * @throws EscidocException TODO
      */
     @Override
-    public StartElement startElement(final StartElement element) throws EscidocException {
+    public StartElement startElement(final StartElement element) throws TmeException {
 
         if ("file".equals(element.getLocalName())) {
             try {

@@ -96,7 +96,7 @@ public class AuthenticationInterceptor implements Ordered {
      * @throws Throwable Thrown in case of an error.
      */
     @Before("call(public !static * de.escidoc.core.*.service.interfaces.*.*(..))")
-    public void authenticate(final JoinPoint joinPoint) throws Throwable {
+    public void authenticate(final JoinPoint joinPoint) throws AuthenticationException, WebserverSystemException {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug(StringUtility.format("authenticate", this, UserContext.getSecurityContext()));

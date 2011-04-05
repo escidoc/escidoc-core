@@ -111,7 +111,8 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
      */
     public Item(final String id) throws StreamNotFoundException, TripleStoreSystemException, WebserverSystemException,
-        XmlParserSystemException, IntegritySystemException, ResourceNotFoundException, FedoraSystemException {
+        XmlParserSystemException, IntegritySystemException, ResourceNotFoundException, FedoraSystemException,
+        ComponentNotFoundException, ItemNotFoundException {
 
         super(id);
         setPropertiesNames(expandPropertiesNames(getPropertiesNames()),
@@ -184,7 +185,8 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      * @throws de.escidoc.core.common.exceptions.system.SystemException
      */
     public void deleteComponent(final String componentId) throws LockingException, ComponentNotFoundException,
-        InvalidStatusException, SystemException {
+        InvalidStatusException, SystemException, EncodingSystemException, IntegritySystemException,
+        FedoraSystemException, TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
 
         deleteComponent(getComponent(componentId));
     }
@@ -226,7 +228,8 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      * @throws de.escidoc.core.common.exceptions.system.SystemException
      */
     public Component getComponent(final String componentId) throws ComponentNotFoundException,
-        WebserverSystemException, FedoraSystemException, SystemException {
+        WebserverSystemException, FedoraSystemException, TripleStoreSystemException, IntegritySystemException,
+        XmlParserSystemException {
 
         // check if the Component is part of this Item.
         if (!this.components.containsKey(componentId)) {
@@ -259,7 +262,7 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      * @throws de.escidoc.core.common.exceptions.system.SystemException
      */
     public Map<String, Component> getComponentsByLocalName() throws ComponentNotFoundException,
-        WebserverSystemException, FedoraSystemException, SystemException {
+        WebserverSystemException, FedoraSystemException, TripleStoreSystemException, XmlParserSystemException {
 
         initComponents();
         return this.componentsByLocalName;
@@ -277,7 +280,7 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      * @throws de.escidoc.core.common.exceptions.system.SystemException
      */
     public Component getComponentByLocalName(final String componentName) throws ComponentNotFoundException,
-        WebserverSystemException, FedoraSystemException, SystemException {
+        WebserverSystemException, FedoraSystemException, TripleStoreSystemException, XmlParserSystemException {
 
         initComponents();
         final Component c = this.componentsByLocalName.get(componentName);
@@ -350,7 +353,8 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      * @throws SystemException
      *             Thrown in case of internal failure.
      */
-    private void initComponents() throws ComponentNotFoundException, SystemException {
+    private void initComponents() throws ComponentNotFoundException, TripleStoreSystemException,
+        XmlParserSystemException, WebserverSystemException {
 
         if (this.components == null) {
             final Iterator<String> idsIter = getComponentIds().iterator();
@@ -823,7 +827,8 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      * @throws SystemException
      *             Thrown if connection or writing to Fedora failed or internal errors.
      */
-    public boolean persistComponents() throws ComponentNotFoundException, SystemException {
+    public boolean persistComponents() throws ComponentNotFoundException, TripleStoreSystemException,
+        FedoraSystemException, XmlParserSystemException, WebserverSystemException, IntegritySystemException {
 
         boolean resourceUpdated = false;
 

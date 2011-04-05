@@ -38,6 +38,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 public class ShibbolethAuthenticationEntryPoint implements AuthenticationEntryPoint {
@@ -49,7 +50,7 @@ public class ShibbolethAuthenticationEntryPoint implements AuthenticationEntryPo
     @Override
     public void commence(
         final ServletRequest request, final ServletResponse response, final AuthenticationException authException)
-        throws IOException, ServletException {
+        throws IOException, ServletException, UnsupportedEncodingException {
         final HttpServletRequest httpRequest = (HttpServletRequest) request;
         // FIXME:URL!!!
         final StringBuilder target = new StringBuilder(this.serviceProviderBaseUrl).append("aa/login");

@@ -103,7 +103,7 @@ public class TaskParamHandler extends DefaultHandler {
      *             Thrown if the XML has an invalid structure.
      */
     @Override
-    public StartElement startElement(final StartElement element) throws InvalidXmlException {
+    public StartElement startElement(final StartElement element) throws XmlCorruptedException {
 
         final String currentPath = parser.getCurPath();
 

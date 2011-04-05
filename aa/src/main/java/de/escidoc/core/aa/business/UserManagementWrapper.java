@@ -93,7 +93,8 @@ public class UserManagementWrapper implements UserManagementWrapperInterface {
      * @throws SystemException         Thrown in case of an internal error.
      */
     @Override
-    public void initHandleExpiryTimestamp(final String handle) throws SystemException {
+    public void initHandleExpiryTimestamp(final String handle) throws SqlDatabaseSystemException,
+        WebserverSystemException {
         final UserLoginData userLoginData = dao.retrieveUserLoginDataByHandle(handle);
         final long expiryts = System.currentTimeMillis() + getESciDocUserHandleLifetime();
         if (userLoginData.getExpiryts() < expiryts) {

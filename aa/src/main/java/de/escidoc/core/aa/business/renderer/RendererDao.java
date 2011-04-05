@@ -31,6 +31,7 @@ package de.escidoc.core.aa.business.renderer;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.exceptions.application.notfound.OrganizationalUnitNotFoundException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -61,7 +62,7 @@ public class RendererDao {
      * @throws SystemException Thrown in case of an internal error.
      */
     public String getOrganizationalUnitTitle(final String ouId) throws OrganizationalUnitNotFoundException,
-        SystemException {
+        TripleStoreSystemException {
 
         String title = tsu.getTitle(ouId);
 

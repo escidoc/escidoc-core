@@ -60,9 +60,12 @@ import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingE
 import de.escidoc.core.common.exceptions.application.violated.OrganizationalUnitHasChildrenException;
 import de.escidoc.core.common.exceptions.application.violated.OrganizationalUnitHierarchyViolationException;
 import de.escidoc.core.common.exceptions.system.EncodingSystemException;
+import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.persistence.EscidocIdProvider;
 import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.service.UserContext;
@@ -139,7 +142,7 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
      * @return alternate form of the ou
      * @throws SystemException An internal error occurred.
      */
-    private String getAlternateForm(final String id) throws SystemException {
+    private String getAlternateForm(final String id) throws SystemException, WebserverSystemException {
         String result = null;
         final boolean isRestAccess = UserContext.isRestAccess();
 
@@ -173,7 +176,7 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
      * @param xmlData complete ou XML
      * @throws SystemException One of the listeners threw an exception.
      */
-    private void fireOuCreated(final String id, final String xmlData) throws SystemException {
+    private void fireOuCreated(final String id, final String xmlData) throws SystemException, WebserverSystemException {
         final String restXml;
         final String soapXml;
 
@@ -209,7 +212,7 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
      * @param xmlData complete item XML
      * @throws SystemException One of the listeners threw an exception.
      */
-    private void fireOuModified(final String id, final String xmlData) throws SystemException {
+    private void fireOuModified(final String id, final String xmlData) throws SystemException, WebserverSystemException {
         final String restXml;
         final String soapXml;
 
@@ -241,9 +244,10 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
      * @throws MissingMdRecordException       If the required md-record is missing
      */
     @Override
-    public String ingest(final String xmlData) throws InvalidStatusException, InvalidXmlException,
-        MissingElementValueException, MissingAttributeValueException, OrganizationalUnitNotFoundException,
-        SystemException, MissingMdRecordException {
+    public String ingest(final String xmlData) throws InvalidStatusException, MissingElementValueException,
+        MissingAttributeValueException, OrganizationalUnitNotFoundException, SystemException, MissingMdRecordException,
+        XmlCorruptedException, EncodingSystemException, IntegritySystemException, FedoraSystemException,
+        WebserverSystemException, TripleStoreSystemException, XmlParserSystemException {
         return doCreate(xmlData, false);
     }
 
@@ -263,7 +267,8 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
     @Override
     public String create(final String xmlData) throws InvalidStatusException, MissingElementValueException,
         MissingAttributeValueException, SystemException, OrganizationalUnitNotFoundException, XmlCorruptedException,
-        XmlSchemaValidationException, MissingMdRecordException {
+        XmlSchemaValidationException, MissingMdRecordException, EncodingSystemException, IntegritySystemException,
+        FedoraSystemException, WebserverSystemException, TripleStoreSystemException, XmlParserSystemException {
         return doCreate(xmlData, true);
     }
 
@@ -286,7 +291,9 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
      */
     public String doCreate(final String xml, final boolean isCreate) throws InvalidStatusException,
         MissingElementValueException, MissingAttributeValueException, SystemException,
-        OrganizationalUnitNotFoundException, XmlCorruptedException, MissingMdRecordException {
+        OrganizationalUnitNotFoundException, XmlCorruptedException, MissingMdRecordException, EncodingSystemException,
+        IntegritySystemException, FedoraSystemException, WebserverSystemException, TripleStoreSystemException,
+        XmlParserSystemException {
 
         final StaxParser sp = new StaxParser();
         final OrganizationalUnitParentsHandler parentsHandler = new OrganizationalUnitParentsHandler(sp);
@@ -384,7 +391,8 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
      */
     @Override
     public void delete(final String id) throws OrganizationalUnitNotFoundException, InvalidStatusException,
-        OrganizationalUnitHasChildrenException, SystemException {
+        OrganizationalUnitHasChildrenException, SystemException, FedoraSystemException, WebserverSystemException,
+        IntegritySystemException, TripleStoreSystemException {
 
         setOrganizationalUnit(id);
         checkInState("deleted", Constants.STATUS_OU_CREATED);
@@ -412,7 +420,8 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
      * @see de.escidoc.core.oum.business.interfaces. OrganizationalUnitHandlerInterface#retrieve(java.lang.String)
      */
     @Override
-    public String retrieve(final String id) throws OrganizationalUnitNotFoundException, SystemException {
+    public String retrieve(final String id) throws OrganizationalUnitNotFoundException, SystemException,
+        TripleStoreSystemException, IntegritySystemException, WebserverSystemException {
 
         setOrganizationalUnit(id);
         return getRenderer().render(getOrganizationalUnit());
@@ -434,9 +443,11 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
      *      java.lang.String)
      */
     @Override
-    public String update(final String id, final String xml) throws InvalidXmlException, MissingElementValueException,
+    public String update(final String id, final String xml) throws MissingElementValueException,
         OrganizationalUnitNotFoundException, SystemException, OptimisticLockingException,
-        OrganizationalUnitHierarchyViolationException, InvalidStatusException {
+        OrganizationalUnitHierarchyViolationException, InvalidStatusException, EncodingSystemException,
+        IntegritySystemException, FedoraSystemException, TripleStoreSystemException, WebserverSystemException,
+        XmlParserSystemException, XmlCorruptedException {
 
         setOrganizationalUnit(id);
         final List<String> parentsBeforeUpdate = getOrganizationalUnit().getParents();
@@ -523,7 +534,8 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
      */
     protected void updateModifiedParents(
         final Collection<String> parentsBeforeUpdate, final Collection<String> updatedParents)
-        throws OrganizationalUnitNotFoundException, SystemException {
+        throws OrganizationalUnitNotFoundException, SystemException, WebserverSystemException,
+        TripleStoreSystemException, IntegritySystemException {
 
         for (final String id : parentsBeforeUpdate) {
             if (!updatedParents.contains(id)) {
@@ -548,7 +560,8 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
      */
     private void updateModifiedPredecessors(
         final Collection<Predecessor> predecessorBeforeUpdate, final Collection<Predecessor> updatedPredecessors)
-        throws OrganizationalUnitNotFoundException, SystemException {
+        throws OrganizationalUnitNotFoundException, SystemException, WebserverSystemException,
+        TripleStoreSystemException, IntegritySystemException {
 
         for (final Predecessor predecessor : predecessorBeforeUpdate) {
             if (!updatedPredecessors.contains(predecessor)) {
@@ -574,9 +587,10 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
      * @throws InvalidStatusException       e
      */
     @Override
-    public String updateMdRecords(final String id, final String xml) throws InvalidXmlException,
-        MissingElementValueException, OptimisticLockingException, OrganizationalUnitNotFoundException, SystemException,
-        InvalidStatusException {
+    public String updateMdRecords(final String id, final String xml) throws MissingElementValueException,
+        OptimisticLockingException, OrganizationalUnitNotFoundException, SystemException, InvalidStatusException,
+        EncodingSystemException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException,
+        WebserverSystemException, XmlParserSystemException, XmlCorruptedException {
 
         setOrganizationalUnit(id);
         final String startTimeStamp = getOrganizationalUnit().getLastFedoraModificationDate();
@@ -647,9 +661,11 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
      * @throws SystemException              e
      */
     @Override
-    public String updateParents(final String id, final String xml) throws InvalidXmlException,
-        MissingElementValueException, OptimisticLockingException, OrganizationalUnitHierarchyViolationException,
-        OrganizationalUnitNotFoundException, SystemException, InvalidStatusException {
+    public String updateParents(final String id, final String xml) throws MissingElementValueException,
+        OptimisticLockingException, OrganizationalUnitHierarchyViolationException, OrganizationalUnitNotFoundException,
+        SystemException, InvalidStatusException, EncodingSystemException, IntegritySystemException,
+        FedoraSystemException, TripleStoreSystemException, WebserverSystemException, XmlParserSystemException,
+        XmlCorruptedException {
 
         setOrganizationalUnit(id);
         final List<String> parentsBeforeUpdate = getOrganizationalUnit().getParents();
@@ -712,7 +728,8 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
      * @see de.escidoc.core.oum.business.interfaces. OrganizationalUnitHandlerInterface#retrieveProperties(java.lang.String)
      */
     @Override
-    public String retrieveProperties(final String id) throws OrganizationalUnitNotFoundException, SystemException {
+    public String retrieveProperties(final String id) throws OrganizationalUnitNotFoundException,
+        WebserverSystemException, TripleStoreSystemException, IntegritySystemException {
 
         setOrganizationalUnit(id);
         return getPropertiesXml();
@@ -731,7 +748,8 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
      */
     @Override
     public EscidocBinaryContent retrieveResource(final String id, final String resourceName)
-        throws OperationNotFoundException, OrganizationalUnitNotFoundException, SystemException {
+        throws OperationNotFoundException, OrganizationalUnitNotFoundException, SystemException,
+        WebserverSystemException, TripleStoreSystemException, IntegritySystemException {
 
         final EscidocBinaryContent content = new EscidocBinaryContent();
         content.setMimeType(Constants.DEFAULT_MIME_TYPE);
@@ -777,7 +795,8 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
      * @see de.escidoc.core.oum.business.interfaces. OrganizationalUnitHandlerInterface#retrieveResources(java.lang.String)
      */
     @Override
-    public String retrieveResources(final String id) throws OrganizationalUnitNotFoundException, SystemException {
+    public String retrieveResources(final String id) throws OrganizationalUnitNotFoundException,
+        WebserverSystemException, TripleStoreSystemException, IntegritySystemException {
 
         setOrganizationalUnit(id);
         return getResourcesXml();
@@ -792,7 +811,8 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
      * @see de.escidoc.core.oum.business.interfaces. OrganizationalUnitHandlerInterface#retrieveMdRecords(java.lang.String)
      */
     @Override
-    public String retrieveMdRecords(final String id) throws OrganizationalUnitNotFoundException, SystemException {
+    public String retrieveMdRecords(final String id) throws OrganizationalUnitNotFoundException,
+        WebserverSystemException, TripleStoreSystemException, IntegritySystemException {
 
         setOrganizationalUnit(id);
         return getMdRecordsXml();
@@ -808,7 +828,8 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
      */
     @Override
     public String retrieveMdRecord(final String id, final String name) throws MdRecordNotFoundException,
-        OrganizationalUnitNotFoundException, SystemException {
+        OrganizationalUnitNotFoundException, WebserverSystemException, TripleStoreSystemException,
+        IntegritySystemException {
         setOrganizationalUnit(id);
         final String mdRecord = getMdRecordXml(name);
         if (mdRecord.length() == 0) {
@@ -827,7 +848,8 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
      * @see de.escidoc.core.oum.business.interfaces. OrganizationalUnitHandlerInterface#retrieveParents(java.lang.String)
      */
     @Override
-    public String retrieveParents(final String id) throws OrganizationalUnitNotFoundException, SystemException {
+    public String retrieveParents(final String id) throws OrganizationalUnitNotFoundException, SystemException,
+        TripleStoreSystemException, IntegritySystemException, WebserverSystemException {
 
         setOrganizationalUnit(id);
         return getParentsXml();
@@ -842,7 +864,8 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
      * @see de.escidoc.core.oum.business.interfaces. OrganizationalUnitHandlerInterface#retrieveChildObjects(java.lang.String)
      */
     @Override
-    public String retrieveChildObjects(final String id) throws OrganizationalUnitNotFoundException, SystemException {
+    public String retrieveChildObjects(final String id) throws OrganizationalUnitNotFoundException,
+        TripleStoreSystemException, IntegritySystemException, WebserverSystemException {
         final StringWriter result = new StringWriter();
 
         Utility.getInstance().checkIsOrganizationalUnit(id);
@@ -860,7 +883,8 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
      * @see de.escidoc.core.oum.business.interfaces. OrganizationalUnitHandlerInterface#retrieveParentObjects(java.lang.String)
      */
     @Override
-    public String retrieveParentObjects(final String id) throws OrganizationalUnitNotFoundException, SystemException {
+    public String retrieveParentObjects(final String id) throws OrganizationalUnitNotFoundException, SystemException,
+        TripleStoreSystemException, IntegritySystemException, WebserverSystemException {
         final StringWriter result = new StringWriter();
 
         Utility.getInstance().checkIsOrganizationalUnit(id);
@@ -894,7 +918,8 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
      * @see de.escidoc.core.oum.business.interfaces. OrganizationalUnitHandlerInterface#retrievePathList(java.lang.String)
      */
     @Override
-    public String retrievePathList(final String id) throws OrganizationalUnitNotFoundException, SystemException {
+    public String retrievePathList(final String id) throws OrganizationalUnitNotFoundException, SystemException,
+        TripleStoreSystemException, IntegritySystemException, WebserverSystemException {
 
         setOrganizationalUnit(id);
         return getPathListXml();
@@ -909,7 +934,7 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
      * @see de.escidoc.core.oum.business.interfaces. OrganizationalUnitHandlerInterface#retrieveOrganizationalUnits(de.escidoc.core.common.business.filter.SRURequestParameters)
      */
     @Override
-    public String retrieveOrganizationalUnits(final SRURequestParameters parameters) throws SystemException {
+    public String retrieveOrganizationalUnits(final SRURequestParameters parameters) throws WebserverSystemException {
         final StringWriter result = new StringWriter();
 
         if (parameters.isExplain()) {
@@ -932,7 +957,9 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
      */
     @Override
     public String close(final String id, final String taskParam) throws OrganizationalUnitNotFoundException,
-        InvalidStatusException, SystemException, OptimisticLockingException, InvalidXmlException {
+        InvalidStatusException, SystemException, OptimisticLockingException, XmlCorruptedException,
+        EncodingSystemException, FedoraSystemException, TripleStoreSystemException, WebserverSystemException,
+        IntegritySystemException {
 
         setOrganizationalUnit(id);
         final TaskParamHandler taskParamHandler = XmlUtility.parseTaskParam(taskParam);
@@ -958,7 +985,9 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
      */
     @Override
     public String open(final String id, final String taskParam) throws OrganizationalUnitNotFoundException,
-        InvalidStatusException, SystemException, OptimisticLockingException, InvalidXmlException {
+        InvalidStatusException, SystemException, OptimisticLockingException, XmlCorruptedException,
+        EncodingSystemException, FedoraSystemException, TripleStoreSystemException, WebserverSystemException,
+        IntegritySystemException {
 
         setOrganizationalUnit(id);
         final TaskParamHandler taskParamHandler = XmlUtility.parseTaskParam(taskParam);
@@ -983,7 +1012,7 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
      * @throws SystemException If an error occurs.
      */
     private String retrieveContentRelations(final String id) throws OrganizationalUnitNotFoundException,
-        SystemException {
+        SystemException, TripleStoreSystemException, IntegritySystemException, WebserverSystemException {
         final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
         setOrganizationalUnit(id);
@@ -1031,7 +1060,8 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
      * @throws SystemException Thrown if render failed.
      */
     @Override
-    public String retrieveSuccessors(final String objid) throws OrganizationalUnitNotFoundException, SystemException {
+    public String retrieveSuccessors(final String objid) throws OrganizationalUnitNotFoundException, SystemException,
+        TripleStoreSystemException, IntegritySystemException, WebserverSystemException {
 
         setOrganizationalUnit(objid);
         return getRenderer().renderSuccessors(getOrganizationalUnit());
@@ -1049,7 +1079,8 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
      * @throws InvalidStatusException Thrown if predecessor has same id than current OU (predecessor points to itself).
      */
     private List<Map<String, String>> getPredessorsMap(final List<Predecessor> predecessors, final String oUobjid)
-        throws OrganizationalUnitNotFoundException, SystemException, InvalidStatusException {
+        throws OrganizationalUnitNotFoundException, InvalidStatusException, TripleStoreSystemException,
+        IntegritySystemException, WebserverSystemException {
 
         List<Map<String, String>> predecessorsMap = null;
 

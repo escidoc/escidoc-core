@@ -99,7 +99,7 @@ public class ContentStreamHandler extends WriteHandler {
      * (de.escidoc.core.common.util.xml.stax.events.EndElement)
      */
     @Override
-    public EndElement endElement(final EndElement element) throws InvalidXmlException, XMLStreamException {
+    public EndElement endElement(final EndElement element) throws XMLStreamException, XmlCorruptedException {
 
         // in respect to WriteHandler
         this.decreaseDeepLevel();
@@ -166,8 +166,8 @@ public class ContentStreamHandler extends WriteHandler {
      * @throws FedoraSystemException If FedoraUtility can not connect to Fedora.
      */
     @Override
-    public StartElement startElement(final StartElement element) throws InvalidXmlException, InvalidContentException,
-        XMLStreamException, FedoraSystemException {
+    public StartElement startElement(final StartElement element) throws InvalidContentException, XMLStreamException,
+        FedoraSystemException, XmlCorruptedException {
 
         // in respect to WriteHandler
         this.increaseDeepLevel();

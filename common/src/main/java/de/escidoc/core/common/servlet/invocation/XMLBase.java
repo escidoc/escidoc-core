@@ -213,7 +213,8 @@ public class XMLBase {
      * @throws SAXException                 If anything fails.
      * @throws IOException                  If anything fails.
      */
-    public Document getDocument(final String filename) throws ParserConfigurationException, SAXException, IOException {
+    public Document getDocument(final String filename) throws ParserConfigurationException, SAXException, IOException,
+        FileNotFoundException {
 
         final DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
         final DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
@@ -296,7 +297,7 @@ public class XMLBase {
      * @param contents The contents to save.
      * @throws IOException If the save operation fails.
      */
-    public void saveToFile(final String filename, final String contents) throws IOException {
+    public void saveToFile(final String filename, final String contents) throws IOException, FileNotFoundException {
 
         final File outFile = new File(filename);
         outFile.createNewFile();

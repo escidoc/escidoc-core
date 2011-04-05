@@ -221,8 +221,9 @@ public class ContainerPropertiesHandler extends DefaultHandler {
      * @throws SystemException               Thrown if internal failure occur
      */
     @Override
-    public EndElement endElement(final EndElement element) throws ContentModelNotFoundException, InvalidXmlException,
-        ContextNotFoundException, SystemException {
+    public EndElement endElement(final EndElement element) throws ContentModelNotFoundException,
+        ContextNotFoundException, TripleStoreSystemException, IntegritySystemException, WebserverSystemException,
+        XmlCorruptedException {
         if (staxParser.getCurPath().equals(PROPERTIES_PATH)) {
             if (!expectedElements.isEmpty()) {
                 throw new XmlCorruptedException("One of " + expectedElements.toString() + " missing.");

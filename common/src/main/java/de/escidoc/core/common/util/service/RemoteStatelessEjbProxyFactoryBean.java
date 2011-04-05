@@ -107,7 +107,7 @@ public class RemoteStatelessEjbProxyFactoryBean extends SimpleRemoteStatelessSes
      * @see AbstractRemoteSlsbInvokerInterceptor #invoke(org.aopalliance.intercept.MethodInvocation) // *
      */
     @Override
-    public Object invoke(final MethodInvocation arg0) throws Throwable {
+    public Object invoke(final MethodInvocation arg0) throws Throwable, InvocationTargetException {
         final Method method = arg0.getMethod();
         final Object[] args = arg0.getArguments();
         final Class[] argTypes = method.getParameterTypes();

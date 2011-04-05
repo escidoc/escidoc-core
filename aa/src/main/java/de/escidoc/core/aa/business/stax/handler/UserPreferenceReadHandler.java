@@ -32,6 +32,7 @@ import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
+import javax.naming.directory.NoSuchAttributeException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,7 +42,7 @@ public class UserPreferenceReadHandler extends DefaultHandler {
     private final Map<String, String> preferences = new HashMap<String, String>();
 
     @Override
-    public String characters(final String data, final StartElement element) throws Exception {
+    public String characters(final String data, final StartElement element) throws Exception, NoSuchAttributeException {
         if (element.getLocalName().equals(Elements.ELEMENT_USER_PREFERENCE)) {
             final String name = element.getAttributeValue(null, "name");
             this.preferences.put(name, data);

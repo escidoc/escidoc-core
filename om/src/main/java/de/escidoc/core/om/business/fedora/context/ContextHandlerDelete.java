@@ -32,7 +32,10 @@ import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.application.invalid.ContextNotEmptyException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException;
+import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.string.StringUtility;
 
 /**
@@ -50,7 +53,8 @@ public class ContextHandlerDelete extends ContextHandlerCreate {
      * @throws SystemException          If anything else fails.
      */
     public void remove(final FedoraContextHandler contextHandler) throws ContextNotEmptyException,
-        ContextNotFoundException, InvalidStatusException, SystemException {
+        ContextNotFoundException, InvalidStatusException, SystemException, TripleStoreSystemException,
+        FedoraSystemException, WebserverSystemException {
 
         final Context context = contextHandler.getContext();
         final String objectType = getTripleStoreUtility().getObjectType(context.getId());

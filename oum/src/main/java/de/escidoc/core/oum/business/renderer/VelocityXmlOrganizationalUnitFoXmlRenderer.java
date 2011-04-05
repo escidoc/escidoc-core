@@ -48,7 +48,7 @@ public class VelocityXmlOrganizationalUnitFoXmlRenderer implements Organizationa
      * See Interface for functional description.
      */
     @Override
-    public String render(final Map<String, Object> values) throws SystemException {
+    public String render(final Map<String, Object> values) throws WebserverSystemException {
 
         values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX, Constants.PROPERTIES_NS_PREFIX);
         values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS, Constants.PROPERTIES_NS_URI);

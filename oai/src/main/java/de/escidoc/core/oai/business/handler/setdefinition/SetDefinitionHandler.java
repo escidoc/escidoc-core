@@ -14,6 +14,7 @@ import de.escidoc.core.common.exceptions.application.violated.UniqueConstraintVi
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.stax.StaxParser;
@@ -67,7 +68,8 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
      */
     @Override
     public String create(final String xmlData) throws UniqueConstraintViolationException, InvalidXmlException,
-        MissingMethodParameterException, SystemException {
+        MissingMethodParameterException, SystemException, XmlParserSystemException, SqlDatabaseSystemException,
+        WebserverSystemException {
         final ByteArrayInputStream in = XmlUtility.convertToByteArrayInputStream(xmlData);
         final StaxParser sp = new StaxParser();
         final SetDefinitionCreateHandler sdch = new SetDefinitionCreateHandler(sp);
@@ -100,7 +102,7 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
      *                         The specification of the given set definition has already been used.
      */
     private void setCreationValues(final SetDefinition setDefinition, final Map<String, String> setProperties)
-        throws SystemException, UniqueConstraintViolationException {
+        throws UniqueConstraintViolationException, SqlDatabaseSystemException, WebserverSystemException {
 
         // initialize creation-date value
         setDefinition.setCreationDate(setDefinition.getLastModificationDate());
@@ -129,7 +131,7 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
      * @return
      */
     private static boolean setModificationValues(
-        final SetDefinition setDefinition, final Map<String, String> setProperties) throws SystemException {
+        final SetDefinition setDefinition, final Map<String, String> setProperties) throws WebserverSystemException {
         boolean changed = false;
         if (setProperties != null) {
             final String newDescription = setProperties.get(Elements.ELEMENT_DESCRIPTION);
@@ -173,7 +175,8 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
      * @see de.escidoc.core.oai.service.interfaces.SetDefinitionIdHandlerInterface #retrieve(java.lang.String)
      */
     @Override
-    public String retrieve(final String setDefinitionId) throws ResourceNotFoundException, SystemException {
+    public String retrieve(final String setDefinitionId) throws ResourceNotFoundException, SystemException,
+        SqlDatabaseSystemException {
         final SetDefinition setDefinition = setDefinitionDao.retrieveSetDefinition(setDefinitionId);
 
         if (setDefinition == null) {
@@ -193,7 +196,8 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
      */
     @Override
     public String update(final String setDefinitionId, final String xmlData) throws ResourceNotFoundException,
-        OptimisticLockingException, MissingMethodParameterException, SystemException {
+        OptimisticLockingException, MissingMethodParameterException, SystemException, XmlParserSystemException,
+        SqlDatabaseSystemException, WebserverSystemException {
         final SetDefinition setDefinition = setDefinitionDao.retrieveSetDefinition(setDefinitionId);
         if (setDefinition == null) {
             throw new ResourceNotFoundException(StringUtility.format(MSG_SET_DEFINITION_NOT_FOUND_BY_ID,
@@ -234,7 +238,7 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
      * @see de.escidoc.core.oai.service.interfaces.SetDefinitionHandlerInterface #delete(java.lang.String)
      */
     @Override
-    public void delete(final String setDefinitionId) throws ResourceNotFoundException, SystemException {
+    public void delete(final String setDefinitionId) throws ResourceNotFoundException, SqlDatabaseSystemException {
         final SetDefinition setDefinition = setDefinitionDao.retrieveSetDefinition(setDefinitionId);
 
         if (setDefinition == null) {
@@ -256,7 +260,8 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
      */
     @Override
     public String retrieveSetDefinitions(final Map<String, String[]> filter) throws AuthenticationException,
-        AuthorizationException, InvalidSearchQueryException, SystemException {
+        AuthorizationException, InvalidSearchQueryException, SystemException, SqlDatabaseSystemException,
+        WebserverSystemException {
 
         final SRURequestParameters parameters = new DbRequestParameters(filter);
 
