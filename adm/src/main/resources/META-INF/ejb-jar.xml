@@ -19,7 +19,7 @@
          <local-home>de.escidoc.core.adm.ejb.interfaces.AdminHandlerLocalHome</local-home>
          <local>de.escidoc.core.adm.ejb.interfaces.AdminHandlerLocal</local>
       	 <service-endpoint>de.escidoc.core.adm.service.AdminHandlerService</service-endpoint>
-         <ejb-class>de.escidoc.core.adm.ejb.AdminHandlerSession</ejb-class>
+         <ejb-class>de.escidoc.core.adm.ejb.AdminHandlerBean</ejb-class>
          <session-type>Stateless</session-type>
          <transaction-type>Container</transaction-type>
 

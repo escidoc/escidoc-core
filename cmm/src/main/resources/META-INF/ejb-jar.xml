@@ -19,7 +19,7 @@
          <local-home>de.escidoc.core.cmm.ejb.interfaces.ContentModelHandlerLocalHome</local-home>
          <local>de.escidoc.core.cmm.ejb.interfaces.ContentModelHandlerLocal</local>
       	 <service-endpoint>de.escidoc.core.cmm.service.ContentModelHandlerService</service-endpoint>
-         <ejb-class>de.escidoc.core.cmm.ejb.ContentModelHandlerSession</ejb-class>
+         <ejb-class>de.escidoc.core.cmm.ejb.ContentModelHandlerBean</ejb-class>
          <session-type>Stateless</session-type>
          <transaction-type>Container</transaction-type>
 

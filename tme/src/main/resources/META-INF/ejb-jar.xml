@@ -19,7 +19,7 @@
          <local-home>de.escidoc.core.tme.ejb.interfaces.JhoveHandlerLocalHome</local-home>
          <local>de.escidoc.core.tme.ejb.interfaces.JhoveHandlerLocal</local>
       	 <service-endpoint>de.escidoc.core.tme.service.JhoveHandlerService</service-endpoint>
-         <ejb-class>de.escidoc.core.tme.ejb.JhoveHandlerSession</ejb-class>
+         <ejb-class>de.escidoc.core.tme.ejb.JhoveHandlerBean</ejb-class>
          <session-type>Stateless</session-type>
          <transaction-type>Container</transaction-type>
 

@@ -39,7 +39,7 @@
          <local-home>de.escidoc.core.common.ejb.interfaces.SoapExceptionGenerationLocalHome</local-home>
          <local>de.escidoc.core.common.ejb.interfaces.SoapExceptionGenerationLocal</local>
       	 <service-endpoint>de.escidoc.core.common.service.SoapExceptionGenerationService</service-endpoint>
-         <ejb-class>de.escidoc.core.common.ejb.SoapExceptionGenerationSession</ejb-class>
+         <ejb-class>de.escidoc.core.common.ejb.SoapExceptionGenerationBean</ejb-class>
          <session-type>Stateless</session-type>
          <transaction-type>Container</transaction-type>
 

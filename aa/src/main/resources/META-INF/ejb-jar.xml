@@ -19,7 +19,7 @@
          <local-home>de.escidoc.core.aa.ejb.interfaces.UserAccountHandlerLocalHome</local-home>
          <local>de.escidoc.core.aa.ejb.interfaces.UserAccountHandlerLocal</local>
       	 <service-endpoint>de.escidoc.core.aa.service.UserAccountHandlerService</service-endpoint>
-         <ejb-class>de.escidoc.core.aa.ejb.UserAccountHandlerSession</ejb-class>
+         <ejb-class>de.escidoc.core.aa.ejb.UserAccountHandlerBean</ejb-class>
          <session-type>Stateless</session-type>
          <transaction-type>Container</transaction-type>
 
@@ -42,7 +42,7 @@
          <local-home>de.escidoc.core.aa.ejb.interfaces.UserGroupHandlerLocalHome</local-home>
          <local>de.escidoc.core.aa.ejb.interfaces.UserGroupHandlerLocal</local>
       	 <service-endpoint>de.escidoc.core.aa.service.UserGroupHandlerService</service-endpoint>
-         <ejb-class>de.escidoc.core.aa.ejb.UserGroupHandlerSession</ejb-class>
+         <ejb-class>de.escidoc.core.aa.ejb.UserGroupHandlerBean</ejb-class>
          <session-type>Stateless</session-type>
          <transaction-type>Container</transaction-type>
 
@@ -65,7 +65,7 @@
          <local-home>de.escidoc.core.aa.ejb.interfaces.PolicyDecisionPointLocalHome</local-home>
          <local>de.escidoc.core.aa.ejb.interfaces.PolicyDecisionPointLocal</local>
       	 <service-endpoint>de.escidoc.core.aa.service.PolicyDecisionPointService</service-endpoint>
-         <ejb-class>de.escidoc.core.aa.ejb.PolicyDecisionPointSession</ejb-class>
+         <ejb-class>de.escidoc.core.aa.ejb.PolicyDecisionPointBean</ejb-class>
          <session-type>Stateless</session-type>
          <transaction-type>Container</transaction-type>
 
@@ -88,7 +88,7 @@
          <local-home>de.escidoc.core.aa.ejb.interfaces.RoleHandlerLocalHome</local-home>
          <local>de.escidoc.core.aa.ejb.interfaces.RoleHandlerLocal</local>
       	 <service-endpoint>de.escidoc.core.aa.service.RoleHandlerService</service-endpoint>
-         <ejb-class>de.escidoc.core.aa.ejb.RoleHandlerSession</ejb-class>
+         <ejb-class>de.escidoc.core.aa.ejb.RoleHandlerBean</ejb-class>
          <session-type>Stateless</session-type>
          <transaction-type>Container</transaction-type>
 
@@ -111,7 +111,7 @@
          <local-home>de.escidoc.core.aa.ejb.interfaces.ActionHandlerLocalHome</local-home>
          <local>de.escidoc.core.aa.ejb.interfaces.ActionHandlerLocal</local>
       	 <service-endpoint>de.escidoc.core.aa.service.ActionHandlerService</service-endpoint>
-         <ejb-class>de.escidoc.core.aa.ejb.ActionHandlerSession</ejb-class>
+         <ejb-class>de.escidoc.core.aa.ejb.ActionHandlerBean</ejb-class>
          <session-type>Stateless</session-type>
          <transaction-type>Container</transaction-type>
 
@@ -134,7 +134,7 @@
          <local-home>de.escidoc.core.aa.ejb.interfaces.UserManagementWrapperLocalHome</local-home>
          <local>de.escidoc.core.aa.ejb.interfaces.UserManagementWrapperLocal</local>
       	 <service-endpoint>de.escidoc.core.aa.service.UserManagementWrapperService</service-endpoint>
-         <ejb-class>de.escidoc.core.aa.ejb.UserManagementWrapperSession</ejb-class>
+         <ejb-class>de.escidoc.core.aa.ejb.UserManagementWrapperBean</ejb-class>
          <session-type>Stateless</session-type>
          <transaction-type>Container</transaction-type>
 

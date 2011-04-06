@@ -19,7 +19,7 @@
          <local-home>de.escidoc.core.oum.ejb.interfaces.OrganizationalUnitHandlerLocalHome</local-home>
          <local>de.escidoc.core.oum.ejb.interfaces.OrganizationalUnitHandlerLocal</local>
       	 <service-endpoint>de.escidoc.core.oum.service.OrganizationalUnitHandlerService</service-endpoint>
-         <ejb-class>de.escidoc.core.oum.ejb.OrganizationalUnitHandlerSession</ejb-class>
+         <ejb-class>de.escidoc.core.oum.ejb.OrganizationalUnitHandlerBean</ejb-class>
          <session-type>Stateless</session-type>
          <transaction-type>Container</transaction-type>
 

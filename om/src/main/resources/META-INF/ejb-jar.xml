@@ -19,7 +19,7 @@
          <local-home>de.escidoc.core.om.ejb.interfaces.ContextHandlerLocalHome</local-home>
          <local>de.escidoc.core.om.ejb.interfaces.ContextHandlerLocal</local>
       	 <service-endpoint>de.escidoc.core.om.service.ContextHandlerService</service-endpoint>
-         <ejb-class>de.escidoc.core.om.ejb.ContextHandlerSession</ejb-class>
+         <ejb-class>de.escidoc.core.om.ejb.ContextHandlerBean</ejb-class>
          <session-type>Stateless</session-type>
          <transaction-type>Container</transaction-type>
 
@@ -42,7 +42,7 @@
          <local-home>de.escidoc.core.om.ejb.interfaces.ContainerHandlerLocalHome</local-home>
          <local>de.escidoc.core.om.ejb.interfaces.ContainerHandlerLocal</local>
       	 <service-endpoint>de.escidoc.core.om.service.ContainerHandlerService</service-endpoint>
-         <ejb-class>de.escidoc.core.om.ejb.ContainerHandlerSession</ejb-class>
+         <ejb-class>de.escidoc.core.om.ejb.ContainerHandlerBean</ejb-class>
          <session-type>Stateless</session-type>
          <transaction-type>Container</transaction-type>
 
@@ -65,7 +65,7 @@
          <local-home>de.escidoc.core.om.ejb.interfaces.ItemHandlerLocalHome</local-home>
          <local>de.escidoc.core.om.ejb.interfaces.ItemHandlerLocal</local>
       	 <service-endpoint>de.escidoc.core.om.service.ItemHandlerService</service-endpoint>
-         <ejb-class>de.escidoc.core.om.ejb.ItemHandlerSession</ejb-class>
+         <ejb-class>de.escidoc.core.om.ejb.ItemHandlerBean</ejb-class>
          <session-type>Stateless</session-type>
          <transaction-type>Container</transaction-type>
 
@@ -88,7 +88,7 @@
          <local-home>de.escidoc.core.om.ejb.interfaces.ContentRelationHandlerLocalHome</local-home>
          <local>de.escidoc.core.om.ejb.interfaces.ContentRelationHandlerLocal</local>
       	 <service-endpoint>de.escidoc.core.om.service.ContentRelationHandlerService</service-endpoint>
-         <ejb-class>de.escidoc.core.om.ejb.ContentRelationHandlerSession</ejb-class>
+         <ejb-class>de.escidoc.core.om.ejb.ContentRelationHandlerBean</ejb-class>
          <session-type>Stateless</session-type>
          <transaction-type>Container</transaction-type>
 
@@ -111,7 +111,7 @@
          <local-home>de.escidoc.core.om.ejb.interfaces.SemanticStoreHandlerLocalHome</local-home>
          <local>de.escidoc.core.om.ejb.interfaces.SemanticStoreHandlerLocal</local>
       	 <service-endpoint>de.escidoc.core.om.service.SemanticStoreHandlerService</service-endpoint>
-         <ejb-class>de.escidoc.core.om.ejb.SemanticStoreHandlerSession</ejb-class>
+         <ejb-class>de.escidoc.core.om.ejb.SemanticStoreHandlerBean</ejb-class>
          <session-type>Stateless</session-type>
          <transaction-type>Container</transaction-type>
 
@@ -134,7 +134,7 @@
          <local-home>de.escidoc.core.om.ejb.interfaces.IngestHandlerLocalHome</local-home>
          <local>de.escidoc.core.om.ejb.interfaces.IngestHandlerLocal</local>
       	 <service-endpoint>de.escidoc.core.om.service.IngestHandlerService</service-endpoint>
-         <ejb-class>de.escidoc.core.om.ejb.IngestHandlerSession</ejb-class>
+         <ejb-class>de.escidoc.core.om.ejb.IngestHandlerBean</ejb-class>
          <session-type>Stateless</session-type>
          <transaction-type>Container</transaction-type>
 
@@ -157,7 +157,7 @@
          <local-home>de.escidoc.core.om.ejb.interfaces.FedoraRestDeviationHandlerLocalHome</local-home>
          <local>de.escidoc.core.om.ejb.interfaces.FedoraRestDeviationHandlerLocal</local>
       	 <service-endpoint>de.escidoc.core.om.service.FedoraRestDeviationHandlerService</service-endpoint>
-         <ejb-class>de.escidoc.core.om.ejb.FedoraRestDeviationHandlerSession</ejb-class>
+         <ejb-class>de.escidoc.core.om.ejb.FedoraRestDeviationHandlerBean</ejb-class>
          <session-type>Stateless</session-type>
          <transaction-type>Container</transaction-type>
 
@@ -180,7 +180,7 @@
          <local-home>de.escidoc.core.om.ejb.interfaces.FedoraDescribeDeviationHandlerLocalHome</local-home>
          <local>de.escidoc.core.om.ejb.interfaces.FedoraDescribeDeviationHandlerLocal</local>
       	 <service-endpoint>de.escidoc.core.om.ejb.interfaces.FedoraDescribeDeviationHandler</service-endpoint>
-         <ejb-class>de.escidoc.core.om.ejb.FedoraDescribeDeviationHandlerSession</ejb-class>
+         <ejb-class>de.escidoc.core.om.ejb.FedoraDescribeDeviationHandlerBean</ejb-class>
          <session-type>Stateless</session-type>
          <transaction-type>Container</transaction-type>
 

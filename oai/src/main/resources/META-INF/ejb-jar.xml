@@ -19,7 +19,7 @@
          <local-home>de.escidoc.core.oai.ejb.interfaces.SetDefinitionHandlerLocalHome</local-home>
          <local>de.escidoc.core.oai.ejb.interfaces.SetDefinitionHandlerLocal</local>
       	 <service-endpoint>de.escidoc.core.oai.service.SetDefinitionHandlerService</service-endpoint>
-         <ejb-class>de.escidoc.core.oai.ejb.SetDefinitionHandlerSession</ejb-class>
+         <ejb-class>de.escidoc.core.oai.ejb.SetDefinitionHandlerBean</ejb-class>
          <session-type>Stateless</session-type>
          <transaction-type>Container</transaction-type>
 

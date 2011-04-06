@@ -19,7 +19,7 @@
          <local-home>de.escidoc.core.sm.ejb.interfaces.ScopeHandlerLocalHome</local-home>
          <local>de.escidoc.core.sm.ejb.interfaces.ScopeHandlerLocal</local>
       	 <service-endpoint>de.escidoc.core.sm.service.ScopeHandlerService</service-endpoint>
-         <ejb-class>de.escidoc.core.sm.ejb.ScopeHandlerSession</ejb-class>
+         <ejb-class>de.escidoc.core.sm.ejb.ScopeHandlerBean</ejb-class>
          <session-type>Stateless</session-type>
          <transaction-type>Container</transaction-type>
 
@@ -42,7 +42,7 @@
          <local-home>de.escidoc.core.sm.ejb.interfaces.PreprocessingHandlerLocalHome</local-home>
          <local>de.escidoc.core.sm.ejb.interfaces.PreprocessingHandlerLocal</local>
       	 <service-endpoint>de.escidoc.core.sm.service.PreprocessingHandlerService</service-endpoint>
-         <ejb-class>de.escidoc.core.sm.ejb.PreprocessingHandlerSession</ejb-class>
+         <ejb-class>de.escidoc.core.sm.ejb.PreprocessingHandlerBean</ejb-class>
          <session-type>Stateless</session-type>
          <transaction-type>Container</transaction-type>
 
@@ -65,7 +65,7 @@
          <local-home>de.escidoc.core.sm.ejb.interfaces.ReportDefinitionHandlerLocalHome</local-home>
          <local>de.escidoc.core.sm.ejb.interfaces.ReportDefinitionHandlerLocal</local>
       	 <service-endpoint>de.escidoc.core.sm.service.ReportDefinitionHandlerService</service-endpoint>
-         <ejb-class>de.escidoc.core.sm.ejb.ReportDefinitionHandlerSession</ejb-class>
+         <ejb-class>de.escidoc.core.sm.ejb.ReportDefinitionHandlerBean</ejb-class>
          <session-type>Stateless</session-type>
          <transaction-type>Container</transaction-type>
 
@@ -88,7 +88,7 @@
          <local-home>de.escidoc.core.sm.ejb.interfaces.AggregationDefinitionHandlerLocalHome</local-home>
          <local>de.escidoc.core.sm.ejb.interfaces.AggregationDefinitionHandlerLocal</local>
       	 <service-endpoint>de.escidoc.core.sm.service.AggregationDefinitionHandlerService</service-endpoint>
-         <ejb-class>de.escidoc.core.sm.ejb.AggregationDefinitionHandlerSession</ejb-class>
+         <ejb-class>de.escidoc.core.sm.ejb.AggregationDefinitionHandlerBean</ejb-class>
          <session-type>Stateless</session-type>
          <transaction-type>Container</transaction-type>
 
@@ -111,7 +111,7 @@
          <local-home>de.escidoc.core.sm.ejb.interfaces.StatisticDataHandlerLocalHome</local-home>
          <local>de.escidoc.core.sm.ejb.interfaces.StatisticDataHandlerLocal</local>
       	 <service-endpoint>de.escidoc.core.sm.service.StatisticDataHandlerService</service-endpoint>
-         <ejb-class>de.escidoc.core.sm.ejb.StatisticDataHandlerSession</ejb-class>
+         <ejb-class>de.escidoc.core.sm.ejb.StatisticDataHandlerBean</ejb-class>
          <session-type>Stateless</session-type>
          <transaction-type>Container</transaction-type>
 
@@ -134,7 +134,7 @@
          <local-home>de.escidoc.core.sm.ejb.interfaces.ReportHandlerLocalHome</local-home>
          <local>de.escidoc.core.sm.ejb.interfaces.ReportHandlerLocal</local>
       	 <service-endpoint>de.escidoc.core.sm.service.ReportHandlerService</service-endpoint>
-         <ejb-class>de.escidoc.core.sm.ejb.ReportHandlerSession</ejb-class>
+         <ejb-class>de.escidoc.core.sm.ejb.ReportHandlerBean</ejb-class>
          <session-type>Stateless</session-type>
          <transaction-type>Container</transaction-type>
 

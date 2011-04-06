@@ -19,7 +19,7 @@
          <local-home>de.escidoc.core.st.ejb.interfaces.StagingFileHandlerLocalHome</local-home>
          <local>de.escidoc.core.st.ejb.interfaces.StagingFileHandlerLocal</local>
       	 <service-endpoint>de.escidoc.core.st.ejb.interfaces.StagingFileHandler</service-endpoint>
-         <ejb-class>de.escidoc.core.st.ejb.StagingFileHandlerSession</ejb-class>
+         <ejb-class>de.escidoc.core.st.ejb.StagingFileHandlerBean</ejb-class>
          <session-type>Stateless</session-type>
          <transaction-type>Container</transaction-type>
 
