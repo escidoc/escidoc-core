@@ -53,6 +53,8 @@ public final class EscidocConfiguration {
 
     public static final String FEDORA_USER = "fedora.user";
 
+    public static final String TRIPLESTORE_DDL_GENERATOR = "triplestore.ddlgenerator.class";
+
     public static final String BUILD_NUMBER = "escidoc-core.build";
 
     public static final String ADMIN_EMAIL = "escidoc-core.admin-email";

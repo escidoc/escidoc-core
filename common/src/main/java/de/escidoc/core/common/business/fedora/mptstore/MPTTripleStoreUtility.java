@@ -30,17 +30,20 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.IOUtils;
+import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import org.nsdl.mptstore.core.BasicTableManager;
+import org.nsdl.mptstore.core.DDLGenerator;
 import org.nsdl.mptstore.core.TableManager;
-import org.nsdl.mptstore.impl.postgres.PostgresDDLGenerator;
 import org.nsdl.mptstore.rdf.URIReference;
 import org.nsdl.mptstore.util.NTriplesUtil;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 
 import javax.sql.DataSource;
+
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -1581,13 +1584,40 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
 
         final TableManager result;
         try {
-            result = new BasicTableManager(getDataSource(), new PostgresDDLGenerator(), "tMap", "t");
+            result = new BasicTableManager(getDataSource(), getDdlGenerator(), "tMap", "t");
         }
         catch (final SQLException e1) {
             throw new TripleStoreSystemException(e1.getMessage(), e1);
         }
         setTableManager(result);
         return result;
+    }
+
+    /**
+     * Gets the database-dependent configured ddl-generator for the triplestore.
+     *
+     * @return DDLGenerator.
+     * @throws TripleStoreSystemException If instanciation fails.
+     */
+    private DDLGenerator getDdlGenerator() throws TripleStoreSystemException {
+
+        try {
+            String ddlGenerator =
+                EscidocConfiguration.getInstance().get(EscidocConfiguration.TRIPLESTORE_DDL_GENERATOR);
+            return (DDLGenerator) Class.forName(ddlGenerator).newInstance();
+        }
+        catch (IOException e) {
+            throw new TripleStoreSystemException(e.getMessage(), e);
+        }
+        catch (InstantiationException e) {
+            throw new TripleStoreSystemException(e.getMessage(), e);
+        }
+        catch (IllegalAccessException e) {
+            throw new TripleStoreSystemException(e.getMessage(), e);
+        }
+        catch (ClassNotFoundException e) {
+            throw new TripleStoreSystemException(e.getMessage(), e);
+        }
     }
 
     /**

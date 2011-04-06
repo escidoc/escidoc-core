@@ -46,6 +46,7 @@ add datastore to fedora.fcfg:
 -use MPTStore with OracleDDLGenerator
 
 -Oracle-Treiber in fedora.war integrieren
+-MPTStore mit OracleDDL-Klasse in fedora.war integrieren
 
 
 
@@ -55,3 +56,8 @@ variablen
 gepatchter MPTStore
 OJDBC-Treiber
 escidoc.core.custom.properties
+
+Angepasste Configdateien: 
+/installer/src/main/resources/fedora/oracle/install.properties
+/integration-tests/src/test/resources/configuration/oracle/jboss/server/default/conf/escidoc-core.custom.proeprties
+/integration-tests/src/test/resources/fedora/oracle/fedora.fcfg + install.properties
