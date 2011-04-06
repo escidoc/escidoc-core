@@ -144,7 +144,7 @@
     </resources>
 
     <variables>
-      <!-- Short Installer uses PostgreSQL and form-based authentication as defaults -->
+      <!-- Short Installer uses form-based authentication as default -->
       <variable name="ShortInstaller" value="yes" />
 
       <!-- Show dialog that asks for install or update? -->
@@ -159,27 +159,32 @@
       <!-- eSciDoc version and build -->
       <variable name="EscidocVersion" value="${project.version}" />
       <!-- make sure to add the appropriate separator as prefix (usually a dot) if needed, e.g. a ".build345" -->
+
       <!-- JDK checks -->
       <variable name="JDKPathPanel.minVersion" value="1.6.0" />
       <variable name="JDKPathPanel.maxVersion" value="1.6.99" />
       <variable name="JDKPathPanel.skipIfValid" value="yes" />
-      <!-- remove value in following line before final test and release -->
+
       <!-- database connection -->
-      <!-- default to PostgreSQL. For MySQL support, remove "PostgreSQL" from value (see line below) --> 
-      <variable name="Database" value="PostgreSQL" />
-      <!-- variable name="Database" value="" /-->
+      <!-- Postgres -->
       <variable name="DatabaseAdminUsernamePostgres" value="postgres" />
+      <variable name="DatabaseDriverClassPostgres" value="org.postgresql.Driver" />
+      <variable name="DatabasePortPostgres" value="5432" />
+
+      <!-- MySQL -->
       <variable name="DatabaseAdminUsernameMySQL" value="root" />
+      <variable name="DatabaseDriverClassMySQL" value="com.mysql.jdbc.Driver" />
+      <variable name="DatabasePortMySQL" value="3306" />
+
+      <!-- Oracle -->
+      <variable name="DatabaseAdminUsernameOracle" value="system" />
+      <variable name="DatabaseDriverClassOracle" value="oracle.jdbc.driver.OracleDriver" />
+      <variable name="DatabasePortOracle" value="1521" />
+
       <variable name="DatabaseAdminPassword" value="" />
       <variable name="DatabaseUsername" value="escidoc" />
       <variable name="DatabasePassword" value="escidoc" />
       <variable name="DatabaseHost" value="localhost" />
-      <variable name="DatabaseURLPostgres" value="jdbc:postgresql://localhost:5432/" />
-      <variable name="DatabaseDriverClassPostgres" value="org.postgresql.Driver" />
-      <variable name="DatabasePortPostgres" value="5432" />
-      <variable name="DatabaseURLMySQL" value="jdbc:mysql://localhost:3306/" />
-      <variable name="DatabaseDriverClassMySQL" value="com.mysql.jdbc.Driver" />
-      <variable name="DatabasePortMySQL" value="3306" />
       <!-- spring security -->
       <!-- default to form-based. For MySQL support, remove "form-based" from value (see line below) --> 
       <variable name="AuthenticationMethod" value="form-based" />
@@ -211,35 +216,49 @@
       <!-- Database Configuration -->
       <variable name="DatabaseDriverClass" value="${DatabaseDriverClassPostgres}" condition="databaseIsPostgres" />
       <variable name="DatabaseDriverClass" value="${DatabaseDriverClassMySQL}" condition="databaseIsMySQL" />
+      <variable name="DatabaseDriverClass" value="${DatabaseDriverClassOracle}" condition="databaseIsOracle" />
       <variable name="DatabaseURL" value="jdbc:postgresql://${DatabaseHost}:${DatabasePortPostgres}/" condition="databaseIsPostgres" />
       <variable name="DatabaseURL" value="jdbc:mysql://${DatabaseHost}:${DatabasePortMySQL}/" condition="databaseIsMySQL" />
+      <variable name="DatabaseURL" value="jdbc:oracle:thin:@//${DatabaseHost}:${DatabasePortOracle}/" condition="databaseIsOracle" />
       <variable name="DatabasePort" value="${DatabasePortPostgres}" condition="databaseIsPostgres" />
       <variable name="DatabasePort" value="${DatabasePortMySQL}" condition="databaseIsMySQL" />
+      <variable name="DatabasePort" value="${DatabasePortOracle}" condition="databaseIsOracle" />
       <variable name="DatabaseAdminUsername" value="${DatabaseAdminUsernamePostgres}" condition="databaseIsPostgres" />
       <variable name="DatabaseAdminUsername" value="${DatabaseAdminUsernameMySQL}" condition="databaseIsMySQL" />
+      <variable name="DatabaseAdminUsername" value="${DatabaseAdminUsernameOracle}" condition="databaseIsOracle" />
       <!-- PostgreSQL requires a root database to which one needs to connected to be able to create databaes and roles -->
       <variable name="RootDatabaseName" value="postgres" condition="databaseIsPostgres" />
       <variable name="RootDatabaseName" value="" condition="databaseIsMySQL" />
+      <variable name="RootDatabaseName" value="" condition="databaseIsOracle" />
       <variable name="DatabaseIdentifier" value="postgresql" condition="databaseIsPostgres" />
       <variable name="DatabaseIdentifier" value="mysql" condition="databaseIsMySQL" />
+      <variable name="DatabaseIdentifier" value="oracle" condition="databaseIsOracle" />
       <variable name="DatabaseAccessor" value="DirectPostgresDatabaseAccessor" condition="databaseIsPostgres" />
       <variable name="DatabaseAccessor" value="DirectMysqlDatabaseAccessor" condition="databaseIsMySQL" />
+      <variable name="DatabaseAccessor" value="DirectOracleDatabaseAccessor" condition="databaseIsOracle" />
       <!-- PostgreSQL requires autocommit to be switched on, MySQL doesn't understand this parameter -->
       <variable name="DatabaseAutocommit" value="autocommit=&quot;true&quot;" condition="databaseIsPostgres" />
       <variable name="DatabaseAutocommit" value="" condition="databaseIsMySQL" />
+      <variable name="DatabaseAutocommit" value="autocommit=&quot;true&quot;" condition="databaseIsOracle" />
       <!-- do not drop/create database "escidoc-core" for MySQL -->
       <variable name="EscidocCoreDBIn" value="" condition="databaseIsPostgres" />
       <variable name="EscidocCoreDBOut" value="" condition="databaseIsPostgres" />
       <variable name="EscidocCoreDBIn" value="/*" condition="databaseIsMySQL" />
       <variable name="EscidocCoreDBOut" value="*/" condition="databaseIsMySQL" />
+      <variable name="EscidocCoreDBIn" value="/*" condition="databaseIsOracle" />
+      <variable name="EscidocCoreDBOut" value="*/" condition="databaseIsOracle" />
       <variable name="DatasourceEscidoc" value="escidoc-core" condition="databaseIsPostgres" />
       <variable name="DatasourceEscidoc" value="" condition="databaseIsMySQL" />
+      <variable name="DatasourceEscidoc" value="" condition="databaseIsOracle" />
       <variable name="DatasourceTriplestore" value="riTriples" condition="databaseIsPostgres" />
       <variable name="DatasourceTriplestore" value="" condition="databaseIsMySQL" />
+      <variable name="DatasourceTriplestore" value="" condition="databaseIsOracle" />
       <variable name="DatastoreScriptPrefix" value="" condition="databaseIsPostgres" />
       <variable name="DatastoreScriptPrefix" value="mysql." condition="databaseIsMySQL" />
+      <variable name="DatastoreScriptPrefix" value="oracle." condition="databaseIsOracle" />
       <variable name="HibernateDialect" value="PostgreSQLDialect" condition="databaseIsPostgres" />
       <variable name="HibernateDialect" value="MySQLDialect" condition="databaseIsMySQL" />
+      <variable name="HibernateDialect" value="Oracle8iDialect" condition="databaseIsOracle" />
       <!-- Authentication Configuration -->
       <variable name="FormBasedIn" value="&lt;!--" condition="!authMethodIsFormBased" />
       <variable name="FormBasedIn" value="" condition="authMethodIsFormBased" />
@@ -287,6 +306,10 @@
         <name>Database</name>
         <value>MySQL</value>
       </condition>
+      <condition type="variable" id="databaseIsOracle">
+        <name>Database</name>
+        <value>Oracle</value>
+      </condition>
       <condition type="and" id="installPostgres">
         <condition type="ref" refid="installEscidoc" />
         <condition type="ref" refid="databaseIsPostgres" />
@@ -294,6 +317,10 @@
       <condition type="and" id="installMySQL">
         <condition type="ref" refid="installEscidoc" />
         <condition type="ref" refid="databaseIsMySQL" />
+      </condition>
+      <condition type="and" id="installOracle">
+        <condition type="ref" refid="installEscidoc" />
+        <condition type="ref" refid="databaseIsOracle" />
       </condition>
       <condition type="variable" id="authMethodIsFormBased">
         <name>AuthenticationMethod</name>
@@ -318,14 +345,14 @@
         <panel classname="HTMLInfoPanel" id="info" />
         <panel classname="UserInputPanel" id="UserInputPanel.0" condition="askForUpgrade" />
         <panel classname="UserInputPanel" id="UserInputPanel.1" />
-        <panel classname="UserInputPanel" id="UserInputPanel.2" condition="fullDialog" />
+        <panel classname="UserInputPanel" id="UserInputPanel.2" condition="installEscidoc" />
         <panel classname="UserInputPanel" id="UserInputPanel.3" condition="databaseIsPostgres" />
         <panel classname="UserInputPanel" id="UserInputPanel.4" condition="databaseIsMySQL" />
         <panel classname="UserInputPanel" id="UserInputPanel.5" />
         <panel classname="UserInputPanel" id="UserInputPanel.6" condition="installPostgres">
           <validator classname="JDBCValidator" />
         </panel>
-        <panel classname="UserInputPanel" id="UserInputPanel.7" condition="installMySQL">
+        <panel classname="UserInputPanel" id="UserInputPanel.7" condition="installOracle">
           <validator classname="JDBCValidator" />
         </panel>
         <panel classname="UserInputPanel" id="UserInputPanel.8" />
