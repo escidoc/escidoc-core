@@ -124,7 +124,7 @@ public interface FedoraResource {
     /**
      * Gets the information about the datastreams of a fedora object.
      *
-     * @return the {@link fedora.server.types.gen.Datastream}s of the fedora object.
+     * @return the {@link org.fcrepo.server.types.gen.Datastream}s of the fedora object.
      * @throws FedoraSystemException Thrown in case of an error during accessing fedora.
      */
     org.fcrepo.server.types.gen.Datastream[] getDatastreamsInformation() throws FedoraSystemException;

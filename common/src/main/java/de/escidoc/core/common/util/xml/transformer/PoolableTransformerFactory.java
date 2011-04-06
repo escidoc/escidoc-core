@@ -132,6 +132,7 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
      * @throws IOException Thrown if retrieving values from eSciDoc properties (configuration) failed.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws java.net.MalformedURLException
      */
     private InputStream mapKeyToXslt(final String key) throws WebserverSystemException, FedoraSystemException,
         IOException, MalformedURLException {

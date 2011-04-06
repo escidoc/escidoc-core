@@ -302,7 +302,6 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
      *
      * @param parameters parameters from the SRU request
      * @return Returns XML representation of the list of Content Model objects.
-     * @throws SystemException Thrown in case of an internal error.
      */
     @Override
     public String retrieveContentModels(final SRURequestParameters parameters) throws WebserverSystemException {
@@ -615,8 +614,6 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
      *
      * @param resourceDefinition The resource definition create object.
      * @return FoXML representation of service definition.
-     * @throws SystemException              Thrown if rendering of ContentModel or sub-elements failed.
-     * @throws UnsupportedEncodingException Thrown if conversion to default character set failed.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private String getSDefFoXML(final ResourceDefinitionCreate resourceDefinition) throws WebserverSystemException {
@@ -630,8 +627,6 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
      *
      * @param resourceDefinition The resource definition create object.
      * @return FoXML representation of service deployment.
-     * @throws SystemException              Thrown if rendering of ContentModel or sub-elements failed.
-     * @throws UnsupportedEncodingException Thrown if conversion to default character set failed.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private String getSDepFoXML(final ResourceDefinitionCreate resourceDefinition) throws WebserverSystemException {
@@ -715,7 +710,6 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
      * Checks if all required values are set and consistent.
      *
      * @param item The item which is to validate.
-     * @throws InvalidStatusException Thrown if Item has invalid status.
      * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
      */
     private void validate(final ContentModelCreate item) throws InvalidContentException {
@@ -864,6 +858,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
      * @param id      Content Model id
      * @param xmlData complete Content Model XML
      * @throws SystemException One of the listeners threw an exception.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private void fireContentModelModified(final String id, final String xmlData) throws SystemException,
         WebserverSystemException {
@@ -889,6 +884,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
      * @param id      Content Model id
      * @param xmlData complete Content Model XML
      * @throws SystemException One of the listeners threw an exception.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private void fireContentModelCreated(final String id, final String xmlData) throws SystemException,
         WebserverSystemException {
@@ -926,6 +922,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
      *
      * @return alternate form of the Content Model
      * @throws SystemException Thrown if an internal error occurred.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private String getAlternateForm() throws SystemException, WebserverSystemException {
         String result = null;

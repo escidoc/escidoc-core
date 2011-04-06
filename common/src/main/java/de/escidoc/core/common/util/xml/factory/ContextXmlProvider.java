@@ -59,8 +59,6 @@ public final class ContextXmlProvider extends InfrastructureXmlProvider {
 
     /**
      * Private constructor to prevent initialization.
-     *
-     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     private ContextXmlProvider() {
     }
@@ -69,7 +67,6 @@ public final class ContextXmlProvider extends InfrastructureXmlProvider {
      * Gets the XML PROVIDER.
      *
      * @return Returns the <code>ContextXmlProvider</code> object.
-     * @throws WebserverSystemException Thrown if the instance cannot be created due to an internal error.
      */
     public static ContextXmlProvider getInstance() {
         return PROVIDER;

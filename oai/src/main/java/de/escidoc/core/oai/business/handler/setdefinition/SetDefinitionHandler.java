@@ -97,9 +97,10 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
      *
      * @param setDefinition definition The <code>SetDefinition</code> object to modify.
      * @param setProperties
-     * @throws SystemException Thrown in case of an internal error.
      * @throws UniqueConstraintViolationException
      *                         The specification of the given set definition has already been used.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
      */
     private void setCreationValues(final SetDefinition setDefinition, final Map<String, String> setProperties)
         throws UniqueConstraintViolationException, SqlDatabaseSystemException, WebserverSystemException {
@@ -127,8 +128,8 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
      *
      * @param setDefinition The <code>SetDefinition</code> object to modify.
      * @param setProperties map which contains all properties of the set definition
-     * @throws SystemException Thrown in case of an internal error.
      * @return
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private static boolean setModificationValues(
         final SetDefinition setDefinition, final Map<String, String> setProperties) throws WebserverSystemException {
@@ -172,7 +173,7 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
      *
      * @throws ResourceNotFoundException e
      * @throws SystemException           e
-     * @see de.escidoc.core.oai.service.interfaces.SetDefinitionIdHandlerInterface #retrieve(java.lang.String)
+     * @see de.escidoc.core.oai.service.interfaces.SetDefinitionHandlerInterface#retrieve(java.lang.String)
      */
     @Override
     public String retrieve(final String setDefinitionId) throws ResourceNotFoundException, SystemException,
@@ -234,7 +235,6 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
      * See Interface for functional description.
      *
      * @throws ResourceNotFoundException e
-     * @throws SystemException           e
      * @see de.escidoc.core.oai.service.interfaces.SetDefinitionHandlerInterface #delete(java.lang.String)
      */
     @Override

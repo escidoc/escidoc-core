@@ -439,7 +439,6 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer imple
      *
      * @param attribute attribute
      * @return String rendered attribute
-     * @throws SystemException e
      */
     @Override
     public String renderAttribute(final UserAttribute attribute) throws WebserverSystemException {
@@ -481,7 +480,6 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer imple
      * @param userAccount user-account-do
      * @param attributes  set containing the attributes
      * @return String rendered attributes
-     * @throws SystemException e
      */
     @Override
     public String renderAttributes(final UserAccount userAccount, final Set<UserAttribute> attributes)

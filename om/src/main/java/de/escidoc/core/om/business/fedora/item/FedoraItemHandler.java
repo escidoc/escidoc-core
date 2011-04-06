@@ -821,6 +821,11 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      * @return list of content relations
      * @throws ItemNotFoundException Thrown if an item with the specified id could not be found.
      * @throws SystemException       If an error occurs.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     private String retrieveContentRelations(final String id) throws ItemNotFoundException, SystemException,
         IntegritySystemException, FedoraSystemException, TripleStoreSystemException, XmlParserSystemException,
@@ -861,6 +866,12 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      * @throws InvalidContentException
      * @throws XmlCorruptedException
      * @throws ReadonlyVersionException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
      */
     public String updateComponents(final String id, final String xmlData) throws ItemNotFoundException,
         ComponentNotFoundException, FileNotFoundException, XmlSchemaValidationException, LockingException,
@@ -1660,7 +1671,6 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
     /**
      * @param parameters
      * @return
-     * @throws SystemException
      */
     @Override
     public String retrieveItems(final SRURequestParameters parameters) throws WebserverSystemException {
@@ -1720,6 +1730,12 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
     /**
      * @param comment Optional comment to associate with the created version or event.
      * @throws SystemException If an error occures.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     private void makeVersion(final String comment) throws SystemException, TripleStoreSystemException,
         EncodingSystemException, IntegritySystemException, FedoraSystemException, WebserverSystemException,
@@ -1798,6 +1814,12 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      * @param comment   Optional comment to associate with the created version or event.
      * @param newStatus The status of the new version.
      * @throws SystemException If an error occures.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     private void makeVersion(final String comment, final String newStatus) throws SystemException,
         TripleStoreSystemException, EncodingSystemException, IntegritySystemException, FedoraSystemException,
@@ -1867,7 +1889,11 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      * @param mdMap           A HashMap which contains the metadata datastreams as ByteArrayOutputStream.
      * @param mdAttributesMap A HashMap which contains the metadata attributes.
      * @param escidocMdRecordnsUri
-     * @throws SystemException Thrown in case of an internal error.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     private void setMetadataRecords(final Map mdMap, final Map mdAttributesMap, final String escidocMdRecordnsUri)
         throws TripleStoreSystemException, EncodingSystemException, IntegritySystemException, FedoraSystemException,
@@ -1957,10 +1983,15 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      * @throws RelationPredicateNotFoundException
      *                                        Thrown if the predicate of the relation was not found within the
      *                                        ontologie.
-     * @throws SystemException                TODO
      * @throws AuthorizationException         Thrown if permissions are restricted on origin Item.
      * @throws MissingAttributeValueException Thrown if required attribute is missing.
      * @throws XmlCorruptedException          e
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     private void validateCreate(final ItemCreate item) throws InvalidStatusException, MissingMdRecordException,
         InvalidContentException, ReferencedResourceNotFoundException, RelationPredicateNotFoundException,
@@ -2017,7 +2048,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      * @throws EncodingSystemException        Thrown if encoding is invalid.
      * @throws TripleStoreSystemException     Thrown if access to TripleStore failed.
      * @throws WebserverSystemException       Thrown in case of internal error.
-     * @throws InvalidXmlException            e
+     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
      */
     private void validateIngest(final ItemCreate item) throws InvalidStatusException, TripleStoreSystemException,
         WebserverSystemException, MissingMdRecordException, InvalidContentException,
@@ -2106,7 +2137,11 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      * @throws InvalidContentException Thrown if content is invalid.
      * @throws InvalidStatusException  Thrown if status of origin Item in invalid.
      * @throws AuthorizationException  Thrown if access to origin Item is denied.
-     * @throws SystemException         Thrown in case of internal error.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     private void validateOriginItem(final ItemCreate item) throws InvalidContentException, InvalidStatusException,
         AuthorizationException, TripleStoreSystemException, WebserverSystemException, IntegritySystemException,
@@ -2240,7 +2275,11 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      * Obtain right version of origin Item.
      *
      * @throws ItemNotFoundException Thrown if no Item with this objid exits.
-     * @throws SystemException       Thrown in case of TripleStore request failures.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     private void prepareAndSetOriginItem() throws ItemNotFoundException, TripleStoreSystemException,
         WebserverSystemException, IntegritySystemException, FedoraSystemException, XmlParserSystemException {
@@ -2269,7 +2308,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      *
      * @param origin Objid of the origin Item
      * @return true if user has permission on origin Item, false if access with provided userid is forbidden.
-     * @throws SystemException Thrown in case of internal failure.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private boolean checkUserRights(final String origin) throws WebserverSystemException {
 
@@ -2294,8 +2333,12 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      * @param errorMessage The error message if failure occurs because of permission restriction.
      * @return true if origin Item was loaded, false otherwise
      * @throws ItemNotFoundException  Thrown if Item with provided objid not exits.
-     * @throws SystemException        Thrown in case of internal failure.
      * @throws AuthorizationException Thrown if user has no permission to use origin Item.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     private boolean loadOrigin(final String errorMessage) throws ItemNotFoundException, AuthorizationException,
         TripleStoreSystemException, WebserverSystemException, IntegritySystemException, FedoraSystemException,

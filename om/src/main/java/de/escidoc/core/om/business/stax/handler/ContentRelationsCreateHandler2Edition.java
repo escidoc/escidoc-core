@@ -84,7 +84,6 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
      *
      * @param element The element.
      * @return The element.
-     * @throws SystemException Thrown in case of an internal error.
      */
     @Override
     public StartElement startElement(final StartElement element) throws InvalidContentException,

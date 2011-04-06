@@ -61,7 +61,7 @@ public class ContextHandlerRetrieve extends ContextHandlerBase {
      *
      * @param contextHandler FedoraContextHandler
      * @return XML representation of Context Properties.
-     * @throws SystemException If anything fails.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     protected String getPropertiesXml(final FedoraContextHandler contextHandler) throws WebserverSystemException {
 
@@ -73,7 +73,7 @@ public class ContextHandlerRetrieve extends ContextHandlerBase {
      *
      * @param contextHandler FedoraContextHandler
      * @return XML representation of Context Resources.
-     * @throws SystemException If anything fails.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     protected String getResourcesXml(final FedoraContextHandler contextHandler) throws WebserverSystemException {
 

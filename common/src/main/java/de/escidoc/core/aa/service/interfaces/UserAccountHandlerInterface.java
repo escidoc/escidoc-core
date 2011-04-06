@@ -245,8 +245,6 @@ public interface UserAccountHandlerInterface {
      * @throws MissingMethodParameterException
      *                                      Thrown if no user id or no task parameters are provided.
      * @throws OptimisticLockingException   Thrown in case of an optimistic locking error.
-     * @throws MissingMethodParameterException
-     *                                      Thrown if no user id or no task parameters are provided.
      * @throws AuthenticationException      Thrown if the authentication fails due to an invalid provided
      *                                      eSciDocUserHandle.
      * @throws AuthorizationException       Thrown if the authorization fails.
@@ -723,12 +721,12 @@ public interface UserAccountHandlerInterface {
         AuthorizationException, UserAccountNotFoundException, SystemException;
 
     /**
-     * Retrieves the {@link UserPreference} identified by given name associated to the User Account identified by the
+     * Retrieves the user preference identified by given name associated to the User Account identified by the
      * provided eSciDoc User Handle.
      *
      * @param userId         The User Account ID.
      * @param preferenceName The User Preference Name.
-     * @return Returns {@link UserPreference} object.
+     * @return Returns user preference object.
      * @throws MissingMethodParameterException
      *                                      Thrown if no XML representation of filter parameters is provided.
      * @throws AuthenticationException      Thrown if the authentication fails due to an invalid provided
@@ -743,11 +741,11 @@ public interface UserAccountHandlerInterface {
         SystemException;
 
     /**
-     * Retrieves {@link UserPreference} object associated to the User Account identified by the provided eSciDoc user
+     * Retrieves user preference object associated to the User Account identified by the provided eSciDoc user
      * handle.
      *
      * @param userId The User Account ID.
-     * @return Returns {@link UserPreference} object.
+     * @return Returns user preference object.
      * @throws MissingMethodParameterException
      *                                      Thrown if no XML representation of filter parameters is provided.
      * @throws AuthenticationException      Thrown if the authentication fails due to an invalid provided
@@ -905,11 +903,11 @@ public interface UserAccountHandlerInterface {
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
 
     /**
-     * Retrieves {@link UserAttribute} objects associated to the User Account identified by the provided User Account
+     * Retrieves user preference objects associated to the User Account identified by the provided User Account
      * ID.
      *
      * @param userId The User Account ID.
-     * @return Returns {@link UserAttribute} objects.
+     * @return Returns user preference objects.
      * @throws MissingMethodParameterException
      *                                      Thrown if no User Account ID is provided.
      * @throws AuthenticationException      Thrown if the authentication fails due to an invalid provided
@@ -923,12 +921,12 @@ public interface UserAccountHandlerInterface {
         AuthenticationException, AuthorizationException, SystemException;
 
     /**
-     * Retrieves {@link UserAttribute} objects associated to the User Account identified by the provided User Account ID
+     * Retrieves user preference objects associated to the User Account identified by the provided User Account ID
      * and the provided User Attribute Name.
      *
      * @param userId The User Account ID.
      * @param name   The User Attribute Name to be retrieved.
-     * @return Returns {@link UserAttribute} objects.
+     * @return Returns user preference objects.
      * @throws MissingMethodParameterException
      *                                        Thrown if no User Account ID or User Attribute Name is provided.
      * @throws AuthenticationException        Thrown if the authentication fails due to an invalid provided
@@ -944,12 +942,12 @@ public interface UserAccountHandlerInterface {
         AuthorizationException, SystemException;
 
     /**
-     * Retrieves the {@link UserAttribute} object associated to the User Account identified by the provided User Account
+     * Retrieves the user preference object associated to the User Account identified by the provided User Account
      * ID and the provided User Attribute ID.
      *
      * @param userId      The User Account ID.
      * @param attributeId The User Attribute ID to be retrieved.
-     * @return Returns the {@link UserAttribute} object.
+     * @return Returns the user preference object.
      * @throws MissingMethodParameterException
      *                                        Thrown if no User Account ID or User Attribute ID is provided.
      * @throws AuthenticationException        Thrown if the authentication fails due to an invalid provided

@@ -106,7 +106,11 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
      * @throws de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundException
      * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException
      * @throws de.escidoc.core.common.exceptions.application.security.AuthorizationException
-     * @throws de.escidoc.core.common.exceptions.system.SystemException
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     public EscidocBinaryContent retrieveContent(final String id, final String componentId)
         throws ItemNotFoundException, ComponentNotFoundException, MissingMethodParameterException,
@@ -194,6 +198,11 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
      * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException
      * @throws de.escidoc.core.common.exceptions.application.security.AuthorizationException
      * @throws de.escidoc.core.common.exceptions.system.SystemException
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     public EscidocBinaryContent retrieveContent(
         final String id, final String componentId, final String transformer, final String param)
@@ -255,6 +264,11 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
      * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException
      * @throws de.escidoc.core.common.exceptions.application.security.AuthorizationException
      * @throws de.escidoc.core.common.exceptions.system.SystemException
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     public EscidocServiceRedirectInterface redirectContentService(
         final String id, final String componentId, final String transformer, final String clientService)
@@ -404,6 +418,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
      * @param templateFileName The file name of the template that shall be retrieved/loaded.
      * @return content of template file
      * @throws IOException Thrown in case of an I/O error.
+     * @throws java.io.UnsupportedEncodingException
      */
     private String initFileContent(final String templateFileName) throws IOException, UnsupportedEncodingException {
 

@@ -43,8 +43,6 @@ public final class AggregationDefinitionXmlProvider extends InfrastructureXmlPro
 
     /**
      * Private constructor to prevent initialization.
-     *
-     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     private AggregationDefinitionXmlProvider() {
     }
@@ -53,7 +51,6 @@ public final class AggregationDefinitionXmlProvider extends InfrastructureXmlPro
      * Gets the AggregationDefinition xml PROVIDER.
      *
      * @return Returns the <code>AggregationDefinitionXmlProvider</code> object.
-     * @throws WebserverSystemException Thrown if the instance cannot be created due to an internal error.
      */
     public static AggregationDefinitionXmlProvider getInstance() {
         return PROVIDER;

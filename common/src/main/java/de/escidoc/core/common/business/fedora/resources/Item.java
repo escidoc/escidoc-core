@@ -109,6 +109,8 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      * @throws de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException
      * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ItemNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundException
      */
     public Item(final String id) throws StreamNotFoundException, TripleStoreSystemException, WebserverSystemException,
         XmlParserSystemException, IntegritySystemException, ResourceNotFoundException, FedoraSystemException,
@@ -183,6 +185,12 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      * @throws de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundException
      * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException
      * @throws de.escidoc.core.common.exceptions.system.SystemException
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     public void deleteComponent(final String componentId) throws LockingException, ComponentNotFoundException,
         InvalidStatusException, SystemException, EncodingSystemException, IntegritySystemException,
@@ -225,7 +233,9 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundException
      * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
-     * @throws de.escidoc.core.common.exceptions.system.SystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     public Component getComponent(final String componentId) throws ComponentNotFoundException,
         WebserverSystemException, FedoraSystemException, TripleStoreSystemException, IntegritySystemException,
@@ -259,7 +269,8 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundException
      * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
-     * @throws de.escidoc.core.common.exceptions.system.SystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     public Map<String, Component> getComponentsByLocalName() throws ComponentNotFoundException,
         WebserverSystemException, FedoraSystemException, TripleStoreSystemException, XmlParserSystemException {
@@ -277,7 +288,8 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundException
      * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
-     * @throws de.escidoc.core.common.exceptions.system.SystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     public Component getComponentByLocalName(final String componentName) throws ComponentNotFoundException,
         WebserverSystemException, FedoraSystemException, TripleStoreSystemException, XmlParserSystemException {
@@ -350,8 +362,9 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      * 
      * @throws ComponentNotFoundException
      *             Thrown if Component of Item could no t be found.
-     * @throws SystemException
-     *             Thrown in case of internal failure.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     private void initComponents() throws ComponentNotFoundException, TripleStoreSystemException,
         XmlParserSystemException, WebserverSystemException {
@@ -824,8 +837,11 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      * @return true if a Component was updated (and with this persisted), false otherwise.
      * @throws ComponentNotFoundException
      *             Thrown if Component was not found.
-     * @throws SystemException
-     *             Thrown if connection or writing to Fedora failed or internal errors.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     public boolean persistComponents() throws ComponentNotFoundException, TripleStoreSystemException,
         FedoraSystemException, XmlParserSystemException, WebserverSystemException, IntegritySystemException {

@@ -73,7 +73,7 @@ public final class VelocityXmlAggregationDefinitionRenderer implements Aggregati
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.sm.business.renderer.interfaces. AggregationDefinitionRendererInterface#render(Map)
+     * @see de.escidoc.core.sm.business.renderer.interfaces.AggregationDefinitionRendererInterface#render(AggregationDefinition)
      */
     @Override
     public String render(final AggregationDefinition aggregationDefinition) throws SystemException,
@@ -214,7 +214,7 @@ public final class VelocityXmlAggregationDefinitionRenderer implements Aggregati
      *
      * @param recordPacking A string to determine how the record should be escaped in the response. Defined values are
      *                      'string' and 'xml'. The default is 'xml'.
-     * @see de.escidoc.core.aa.business.renderer.interfaces. AggregationDefinitionRendererInterface
+     * @see de.escidoc.core.sm.business.renderer.interfaces.AggregationDefinitionRendererInterface
      *      #renderAggregationDefinitions(de.escidoc.core.sm.business.aggregationDefinition)
      */
     @Override
@@ -248,7 +248,7 @@ public final class VelocityXmlAggregationDefinitionRenderer implements Aggregati
      * Adds the aggregation definition name space values.
      *
      * @param values The {@link Map} to that the values shall be added.
-     * @throws SystemException e
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private static void addAggregationDefinitionNamespaceValues(final Map<String, Object> values)
         throws WebserverSystemException {
@@ -265,7 +265,7 @@ public final class VelocityXmlAggregationDefinitionRenderer implements Aggregati
      * Adds the aggregation definition list name space values.
      *
      * @param values The {@link Map} to that the values shall be added.
-     * @throws SystemException e
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private static void addAggregationDefinitionListNamespaceValues(final Map<String, Object> values)
         throws WebserverSystemException {

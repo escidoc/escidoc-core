@@ -94,7 +94,7 @@ public class ContainerHandler implements ContainerHandlerInterface {
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.common.service.interfaces.ResourceHandlerInterface #create(java.lang.String)
+     * @see de.escidoc.core.common.business.interfaces.ResourceHandlerInterface#create(java.lang.String)
      */
     @Override
     public String create(final String xmlData) throws ContextNotFoundException, ContentModelNotFoundException,
@@ -109,7 +109,7 @@ public class ContainerHandler implements ContainerHandlerInterface {
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.common.service.interfaces.ResourceHandlerInterface #delete(java.lang.String)
+     * @see de.escidoc.core.common.business.interfaces.ResourceHandlerInterface#delete(java.lang.String)
      */
     @Override
     public void delete(final String id) throws ContainerNotFoundException, LockingException, InvalidStatusException,
@@ -121,7 +121,7 @@ public class ContainerHandler implements ContainerHandlerInterface {
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.common.service.interfaces.ResourceHandlerInterface #retrieve(java.lang.String)
+     * @see de.escidoc.core.common.business.interfaces.ResourceHandlerInterface#retrieve(java.lang.String)
      */
     @Override
     public String retrieve(final String id) throws MissingMethodParameterException, ContainerNotFoundException,
@@ -133,7 +133,7 @@ public class ContainerHandler implements ContainerHandlerInterface {
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.common.service.interfaces.ResourceHandlerInterface #update(java.lang.String,
+     * @see de.escidoc.core.common.business.interfaces.ResourceHandlerInterface#update(java.lang.String,
      *      java.lang.String)
      */
     @Override

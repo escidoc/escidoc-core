@@ -30,9 +30,6 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author
- */
 public class ComponentIdsInItemFoxmlHandler extends DefaultHandler {
 
     private final StaxParser parser;

@@ -185,7 +185,6 @@ public interface SoapExceptionGenerationInterface {
      * @throws ScopeNotFoundException
      * @throws SearchNotFoundException
      * @throws ContentRelationNotFoundException
-     * @throws ContentRelationNotFoundException
      * @throws ReferencedResourceNotFoundException
      * @throws RelationPredicateNotFoundException
      * @throws StructuralMapEntryNotFoundException
@@ -223,7 +222,7 @@ public interface SoapExceptionGenerationInterface {
      * @throws WebserverSystemException
      * @throws XmlParserSystemException
      * @throws TmeException
-     * @throws UserGroupHierarchyViolationExceptionTODO
+     * @throws UserGroupHierarchyViolationException
      * @throws de.escidoc.core.common.exceptions.application.violated.UserGroupHierarchyViolationException
      * @throws de.escidoc.core.common.exceptions.application.violated.ResourceInUseException
      */

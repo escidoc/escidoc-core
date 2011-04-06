@@ -87,7 +87,7 @@ public class GenericResourcePid extends GenericResource {
      * <p/>
      * ObjectPid is part of the RELS-EXT (and therefore in the TripleStore)
      *
-     * @throws SystemException Thrown in case of internal error.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     public void removeObjectPid() throws WebserverSystemException {
         final Map<String, List<StartElementWithChildElements>> deleteFromRelsExt =
@@ -110,6 +110,11 @@ public class GenericResourcePid extends GenericResource {
      *
      * @param pid The PID which is to assign as object PID.
      * @throws SystemException Thrown in case of internal error.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     public void setObjectPid(final String pid) throws SystemException, TripleStoreSystemException,
         EncodingSystemException, FedoraSystemException, XmlParserSystemException, WebserverSystemException {

@@ -137,6 +137,13 @@ public class SecurityInterceptor implements Ordered {
      * @param joinPoint The current {@link JoinPoint}.
      * @throws Throwable Thrown in case of an error.
      * @return
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingElementValueException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.security.AuthorizationException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException
      */
     //    @Around("call(public !static * de.escidoc.core.*.service.interfaces.*.*(..))"
     //        + " && within(de.escidoc.core.*.ejb.*Bean)")
@@ -390,7 +397,7 @@ public class SecurityInterceptor implements Ordered {
      *
      * @param className  The name of the class.
      * @param methodName The name of the method.
-     * @return Returns the {@link CreateDestMsg} {@link AuthorizationException}.
+     * @return Returns the {@link AuthorizationException}.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
     private static AuthorizationException createAuthorizationException(final String className, final String methodName)

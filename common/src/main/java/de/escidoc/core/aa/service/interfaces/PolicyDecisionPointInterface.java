@@ -521,7 +521,6 @@ public interface PolicyDecisionPointInterface {
      * @param requests A {@link List} of {@link Map} defining the attributes of the requests to evaluate.
      * @return Returns an array with a boolean evaluation result for each input request.
      * @throws ResourceNotFoundException Thrown if a resource does not exist.
-     * @throws XmlCorruptedException     Thrown if invalid XML is provided.
      * @throws MissingMethodParameterException
      *                                   Thrown if no XML representation of requests is provided.
      * @throws AuthenticationException   Thrown if the authentication fails due to an invalid provided

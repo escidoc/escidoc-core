@@ -97,7 +97,7 @@ public class RoleAttributeFinderModule extends AbstractAttributeFinderModule {
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.aa.business.xacml.finder. AbstractAttributeFinderModule#assertAttribute(java.lang.String,
+     * @see de.escidoc.core.aa.business.xacml.finder.AbstractAttributeFinderModule#assertAttribute(java.lang.String,
      *      com.sun.xacml.EvaluationCtx, java.lang.String, java.lang.String, java.lang.String, int)
      */
     @Override
@@ -122,7 +122,7 @@ public class RoleAttributeFinderModule extends AbstractAttributeFinderModule {
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.aa.business.xacml.finder. AbstractAttributeFinderModule#resolveLocalPart(java.lang.String,
+     * @see de.escidoc.core.aa.business.xacml.finder.AbstractAttributeFinderModule#resolveLocalPart(java.lang.String,
      *      com.sun.xacml.EvaluationCtx, java.lang.String, java.lang.String, java.lang.String)
      */
     @Override

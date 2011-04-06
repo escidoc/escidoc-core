@@ -53,7 +53,6 @@ public class FedoraDescribeDeviationHandler implements FedoraDescribeDeviationHa
     /**
      * @param parameters http request parameters.
      * @return String response
-     * @throws Exception ex
      * @see de.escidoc.core.om.business.interfaces .FedoraDescribeDeviationHandlerInterface#getDatastreamDissemination(Map)
      */
     @Override

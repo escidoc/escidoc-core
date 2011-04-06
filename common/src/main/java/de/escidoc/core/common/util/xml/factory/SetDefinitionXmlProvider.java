@@ -46,8 +46,6 @@ public final class SetDefinitionXmlProvider extends InfrastructureXmlProvider {
 
     /**
      * Private constructor to prevent initialization.
-     *
-     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     private SetDefinitionXmlProvider() {
     }
@@ -56,7 +54,6 @@ public final class SetDefinitionXmlProvider extends InfrastructureXmlProvider {
      * Gets the set definition xml PROVIDER.
      *
      * @return Returns the <code>SetDefinitionXmlProvider</code> object.
-     * @throws WebserverSystemException Thrown if the instance cannot be created due to an internal error.
      */
     public static SetDefinitionXmlProvider getInstance() {
         return PROVIDER;

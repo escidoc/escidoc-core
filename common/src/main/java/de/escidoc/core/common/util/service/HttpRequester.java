@@ -105,7 +105,13 @@ public class HttpRequester {
      *
      * @param resource String resource
      * @return String response
-     * @throws Exception e
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws java.io.UnsupportedEncodingException
+     * @throws java.security.KeyManagementException
+     * @throws java.security.NoSuchAlgorithmException
+     * @throws java.net.ProtocolException
+     * @throws java.io.IOException
+     * @throws java.net.MalformedURLException
      */
     public String doGet(final String resource) throws MalformedURLException, IOException, ProtocolException,
         NoSuchAlgorithmException, KeyManagementException, WebserverSystemException, UnsupportedEncodingException {
@@ -119,6 +125,13 @@ public class HttpRequester {
      * @param body     String body
      * @return String response
      * @throws Exception e
+     * @throws java.io.UnsupportedEncodingException
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws java.security.KeyManagementException
+     * @throws java.security.NoSuchAlgorithmException
+     * @throws java.net.ProtocolException
+     * @throws java.io.IOException
+     * @throws java.net.MalformedURLException
      */
     public String doPut(final String resource, final String body) throws Exception, MalformedURLException, IOException,
         ProtocolException, NoSuchAlgorithmException, KeyManagementException, UnsupportedEncodingException,
@@ -136,6 +149,13 @@ public class HttpRequester {
      * @param body     String body
      * @return String response
      * @throws Exception e
+     * @throws java.io.UnsupportedEncodingException
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws java.security.KeyManagementException
+     * @throws java.security.NoSuchAlgorithmException
+     * @throws java.net.ProtocolException
+     * @throws java.io.IOException
+     * @throws java.net.MalformedURLException
      */
     public String doPost(final String resource, final String body) throws Exception, MalformedURLException,
         IOException, ProtocolException, NoSuchAlgorithmException, KeyManagementException, UnsupportedEncodingException,
@@ -151,7 +171,13 @@ public class HttpRequester {
      *
      * @param resource String resource
      * @return String response
-     * @throws Exception e
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws java.io.UnsupportedEncodingException
+     * @throws java.security.KeyManagementException
+     * @throws java.security.NoSuchAlgorithmException
+     * @throws java.net.ProtocolException
+     * @throws java.io.IOException
+     * @throws java.net.MalformedURLException
      */
     public String doDelete(final String resource) throws MalformedURLException, IOException, ProtocolException,
         NoSuchAlgorithmException, KeyManagementException, WebserverSystemException, UnsupportedEncodingException {
@@ -164,8 +190,14 @@ public class HttpRequester {
      * @param resource String resource
      * @param method   String method
      * @param body     String body
-     * @return String response
-     * @throws Exception e
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws java.io.UnsupportedEncodingException
+     * @throws java.security.KeyManagementException
+     * @throws java.security.NoSuchAlgorithmException
+     * @throws java.net.ProtocolException
+     * @throws java.io.IOException
+     * @throws java.net.MalformedURLException
+     * @return
      */
     private String request(final String resource, final String method, final String body) throws MalformedURLException,
         IOException, ProtocolException, NoSuchAlgorithmException, KeyManagementException, WebserverSystemException,
@@ -180,7 +212,13 @@ public class HttpRequester {
      * @param method   String method
      * @param body     String body
      * @return String response
-     * @throws Exception e
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws java.io.UnsupportedEncodingException
+     * @throws java.security.KeyManagementException
+     * @throws java.security.NoSuchAlgorithmException
+     * @throws java.net.ProtocolException
+     * @throws java.io.IOException
+     * @throws java.net.MalformedURLException
      */
     // False positive: Private method is never called
     @edu.umd.cs.findbugs.annotations.SuppressWarnings
@@ -248,7 +286,11 @@ public class HttpRequester {
      * @param method   String method
      * @param body     String body
      * @return String response
-     * @throws Exception e
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws java.io.UnsupportedEncodingException
+     * @throws java.net.ProtocolException
+     * @throws java.io.IOException
+     * @throws java.net.MalformedURLException
      */
     private String requestNoSsl(final String resource, final String method, final String body)
         throws MalformedURLException, IOException, ProtocolException, WebserverSystemException,

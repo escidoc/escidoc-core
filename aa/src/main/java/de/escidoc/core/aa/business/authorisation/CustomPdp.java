@@ -202,9 +202,9 @@ public class CustomPdp {
      *
      * @param requestFile the name of a file that contains a Request
      * @return the result of the evaluation
-     * @throws IOException              if there is a problem accessing the file
      * @throws ParsingException         if the Request is invalid
      * @throws WebserverSystemException Thrown in case of an internal error.
+     * @throws java.io.FileNotFoundException
      */
     public ResponseCtx evaluate(final String requestFile) throws ParsingException, WebserverSystemException,
         FileNotFoundException {
@@ -389,7 +389,7 @@ public class CustomPdp {
     }
 
     /**
-     * Injects the {@link NewOuParentsAttributesFinderModule}.
+     * Injects the {@link NewOuParentsAttributeFinderModule}.
      *
      * @param newOuParentsAttributeFinderModule
      *         the {@link NewOuParentsAttributeFinderModule} to inject.

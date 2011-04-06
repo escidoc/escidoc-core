@@ -781,6 +781,8 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * @return Map with replaced cql-query (userId replaced with groupIds)
      * @throws InvalidSearchQueryException e
      * @throws SystemException             e
+     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     private Map<String, String[]> fixCqlUserFilter(final Map<String, String[]> filter)
         throws InvalidSearchQueryException, SystemException, SqlDatabaseSystemException, TripleStoreSystemException {
@@ -880,7 +882,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * @param userGroupId       id of the user group, the member should be added to
      * @param memberCandidateId id of the member candidate user group
      * @return true if the user group hierarchy will not be violated false if the user group hierarchy will be violated
-     * @throws de.escidoc.core.common.exceptions.system.SystemException
+     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
      */
     private boolean isCycleFree(final String userGroupId, final String memberCandidateId)
         throws SqlDatabaseSystemException {
@@ -1134,6 +1136,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * @param totalList total list of all Parents.
      * @return List of ancestor-orgUnits
      * @throws SystemException If anything fails while computing the pathes.
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     private List<String> getOrgUnitPathList(final String orgUnitId, final List<String> totalList)
         throws SystemException, TripleStoreSystemException {
@@ -1567,9 +1570,10 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * @param userGroup       The <code>UserGroup</code> object to modify.
      * @param groupProperties map which contains all properties of the user group
      * @return true if the modification values were changed
-     * @throws SystemException Thrown in case of an internal error.
      * @throws UniqueConstraintViolationException
      *                         The label of the given user group has already been used.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
      */
     private boolean setModificationValues(final UserGroup userGroup, final Map<String, String> groupProperties)
         throws UniqueConstraintViolationException, SqlDatabaseSystemException, WebserverSystemException {

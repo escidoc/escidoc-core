@@ -79,7 +79,6 @@ public class XacmlStaxHandler extends DefaultHandler {
      * See Interface for functional description.<br> If the current element is the link element, the xlink attributes
      * and the objid attribute is fetched and stored. After that, <code>startLinkElement is called.</code>
      *
-     * @throws EscidocException Thrown exceptions depend on sub class implementations.
      * @see DefaultHandler #startElement (de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override

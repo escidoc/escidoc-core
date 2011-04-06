@@ -68,6 +68,11 @@ public class ItemHandlerDelete extends ItemHandlerCreate {
      * @throws InvalidStatusException If the item can not be deleted because it is released.
      * @throws SystemException        Thrown in case of an internal system error.
      * @throws AuthorizationException If further needed access rights are not given.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     protected void remove(final String id) throws ItemNotFoundException, LockingException, InvalidStatusException,
         SystemException, AuthorizationException, FedoraSystemException, TripleStoreSystemException,

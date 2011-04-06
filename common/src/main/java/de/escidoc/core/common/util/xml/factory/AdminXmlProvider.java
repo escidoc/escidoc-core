@@ -53,7 +53,6 @@ public class AdminXmlProvider extends InfrastructureXmlProvider {
      * Gets the admin xml PROVIDER.
      *
      * @return Returns the <code>AdminXmlProvider</code> object.
-     * @throws WebserverSystemException Thrown if the instance cannot be created due to an internal error.
      */
     public static AdminXmlProvider getInstance() {
         return PROVIDER;

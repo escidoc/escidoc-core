@@ -60,7 +60,7 @@ public class EscidocIdGenerator implements IdentifierGenerator {
      * Gets (an initializes if needed) the {@link EscidocIdProvider}.
      *
      * @return Returns the  object.
-     * @throws SystemException Thrown in case of an internal system error.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     public EscidocIdProvider getIdProvider() throws WebserverSystemException {
 

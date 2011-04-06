@@ -107,7 +107,6 @@ public class NewOuParentsAttributeFinderModule extends AbstractAttributeFinderMo
      * @param resourceObjid         resourceObjid
      * @param resourceVersionNumber resourceVersionNumber
      * @return Object[]
-     * @throws EscidocException e
      */
     @Override
     protected Object[] resolveLocalPart(

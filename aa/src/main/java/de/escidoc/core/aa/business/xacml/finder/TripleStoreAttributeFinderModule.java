@@ -338,6 +338,7 @@ public class TripleStoreAttributeFinderModule extends AbstractAttributeFinderMod
      * @return List
      * @throws ResourceNotFoundException e
      * @throws SystemException           e
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     protected List<String> getHierarchicalCachedAttributes(
         final Collection<String> attributesList, final List<String> totalAttributesList, final MapResult mapresult)

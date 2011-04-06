@@ -259,7 +259,7 @@ public class Utility {
      * @param id0 of object
      * @param id1 of object
      * @return true if objects has same context else false.
-     * @throws SystemException Thrown in case of an internal error.
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     public boolean hasSameContext(final String id0, final String id1) throws TripleStoreSystemException {
         final String context0 = tripleStoreUtility.getContext(id0);
@@ -298,8 +298,10 @@ public class Utility {
      * Checks if a component with id exists.
      *
      * @param id The id of the object.
-     * @throws SystemException            Thrown in case of an internal error.
      * @throws ComponentNotFoundException If the component does not exist or if the object is no component.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     public void checkIsComponent(final String id) throws ComponentNotFoundException, TripleStoreSystemException,
         IntegritySystemException, WebserverSystemException {
@@ -316,8 +318,10 @@ public class Utility {
      * Checks if a container with id exists.
      *
      * @param id The id of the object.
-     * @throws SystemException            Thrown in case of an internal error.
      * @throws ContainerNotFoundException If the container does not exist or if the object is no container.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     public void checkIsContainer(final String id) throws ContainerNotFoundException, TripleStoreSystemException,
         IntegritySystemException, WebserverSystemException {
@@ -334,8 +338,10 @@ public class Utility {
      * Checks if a context with id exists.
      *
      * @param id The id of the object.
-     * @throws SystemException          Thrown in case of an internal error.
      * @throws ContextNotFoundException If the context does not exist or if the object is no context.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     public void checkIsContext(final String id) throws ContextNotFoundException, TripleStoreSystemException,
         IntegritySystemException, WebserverSystemException {
@@ -352,9 +358,11 @@ public class Utility {
      * Checks if a Content Relation with id exists.
      *
      * @param id The id of the object.
-     * @throws SystemException Thrown in case of an internal error.
      * @throws ContentRelationNotFoundException
      *                         Thrown if Content Relation the does not exist.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     public void checkIsContentRelation(final String id) throws ContentRelationNotFoundException,
         TripleStoreSystemException, IntegritySystemException, WebserverSystemException {
@@ -371,7 +379,6 @@ public class Utility {
      * Checks if a content model with id exists.
      *
      * @param id The id of the object.
-     * @throws SystemException               Thrown in case of an internal error.
      * @throws ContentModelNotFoundException If the content model does not exist or if the object is no content model.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
@@ -435,7 +442,9 @@ public class Utility {
      * @param id The id of the object.
      * @throws OrganizationalUnitNotFoundException
      *                         If the organizational-unit does not exist or if the object is no organizational-unit.
-     * @throws SystemException Thrown in case of an internal error.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     public void checkIsOrganizationalUnit(final String id) throws OrganizationalUnitNotFoundException,
         TripleStoreSystemException, IntegritySystemException, WebserverSystemException {
@@ -487,6 +496,8 @@ public class Utility {
      * @throws InvalidContextException Thrown if the contextId of xmlData differs from the ContextId of the reference
      *                                 object.
      * @throws SystemException         Thrown in case of internal failure.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     public void checkSameContext(final String id, final String xmlData) throws InvalidContextException,
         SystemException, TripleStoreSystemException, WebserverSystemException {
@@ -569,6 +580,12 @@ public class Utility {
      * @param resource       resource object.
      * @param fedoraUtility  The {@link FedoraUtility} to use for accessing the data store back end.
      * @throws SystemException Thrown in case of an internal system error.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     public void makeVersion(
         final String versionComment, final String newStatus, final VersionableResource resource,
@@ -786,6 +803,9 @@ public class Utility {
      * @param currentPublicStatus   public-status of current version
      * @param release               set true if version is release, false otherwise
      * @throws SystemException Thrown in case of internal failure.
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     private static void updateElementsInRelsExt(
         final Map<String, StartElementWithChildElements> updateElementsRelsExt,

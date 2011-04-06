@@ -65,7 +65,7 @@ public abstract class DefaultHandler {
     /**
      * This method handles a start element.<br> The default implementation just returns the provided object.
      *
-     * @param element The {@link StartElementStartElement} to handle.
+     * @param element The {@link StartElement} to handle.
      * @return Returns a start element that shall be handled by further handlers in the chain, or <code>null</code> to
      *         stop the chain.
      * @throws Exception Thrown if anything fails. This depends on the implementation of the concrete class.
@@ -77,7 +77,7 @@ public abstract class DefaultHandler {
     /**
      * This method handles an end element.<br> The default implementation just returns the provided object.
      *
-     * @param element The {@link StartElementStartElement} to handle.
+     * @param element The {@link StartElement} to handle.
      * @return Returns an end element that shall be handled by further handlers in the chain, or <code>null</code> to
      *         stop the chain.
      * @throws Exception Thrown if anything fails. This depends on the implementation of the concrete class.
@@ -90,7 +90,7 @@ public abstract class DefaultHandler {
      * This method handles the character content of an element.
      *
      * @param data    The character content of the element.
-     * @param element The current {@link StartElementStartElement} to that the content belongs.
+     * @param element The current {@link StartElement} to that the content belongs.
      * @return Returns a {@link String} that shall be handled by further handlers in the chain, or <code>null</code> to
      *         stop the chain.
      * @throws Exception Thrown if anything fails. This depends on the implementation of the concrete class.

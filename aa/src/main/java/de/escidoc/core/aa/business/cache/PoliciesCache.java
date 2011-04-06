@@ -246,7 +246,7 @@ public final class PoliciesCache {
      * Stores the provided {@link EvaluationResult} for {@link XacmlFunctionRoleIsGranted} result using the user ID, the
      * role ID and (optional) the resource ID as key. <br> Realized as an outer {@link LRUMap} that uses user ID as key
      * and which has an inner {@link LRUMap} as value, that uses the role ID as key and has an inner {@link LRUMap} as
-     * value that uses the resource id or <code>null</code> as key and has an {@link Evaluation result} object as
+     * value that uses the resource id or <code>null</code> as key and has an {@link EvaluationResult} object as
      * value.
      *
      * @param userOrGroupId The user or group ID to use as key for {@link LRUMap}. This must not be <code>null</code>.
@@ -393,7 +393,7 @@ public final class PoliciesCache {
      * Gets the {@link EvaluationResult} for {@link XacmlFunctionRoleIsGranted} result using the user ID, the role ID
      * and (optional) the resource ID as key. <br> Realized as an outer {@link LRUMap} that uses user ID as key and
      * which has an inner {@link LRUMap} as value, that uses the role ID as key and has an inner {@link LRUMap} as value
-     * that uses the resource id or <code>null</code> as key and has an {@link Evaluation result} object as value.
+     * that uses the resource id or <code>null</code> as key and has an {@link EvaluationResult} object as value.
      *
      * @param userOrGroupId The user ID to use as key for {@link LRUMap}. This must not be <code>null</code>. If
      *                      <code>null</code> is provided, nothing is done.

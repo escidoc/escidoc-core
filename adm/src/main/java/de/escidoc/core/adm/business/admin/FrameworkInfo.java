@@ -155,6 +155,7 @@ public class FrameworkInfo extends JdbcDaoSupport {
      * @return true if both structures are equal
      * @throws IOException  Thrown if the XML file could not be read
      * @throws SQLException Thrown if the structure of the database could not be determined
+     * @throws java.io.FileNotFoundException
      */
     public boolean isConsistent() throws IOException, SQLException, FileNotFoundException {
         boolean result = false;

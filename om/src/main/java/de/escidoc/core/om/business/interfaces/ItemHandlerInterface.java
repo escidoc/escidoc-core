@@ -489,12 +489,9 @@ public interface ItemHandlerInterface extends IngestableResource {
      * @param xmlData The new value of the subresource.
      * @return Returns the value of the subresource.
      * @throws ItemNotFoundException        Thrown if an item with the specified id could not be found.
-     * @throws XmlSchemaNotFoundException   Thrown if the schema specified in the data could not be found.
      * @throws XmlSchemaValidationException Thrown if the schema validation of the provided metadata fails.
      * @throws LockingException             Thrown if Item is locked.
      * @throws InvalidStatusException       Thrown in case of an invalid status.
-     * @throws MissingMethodParameterException
-     *                                      If a mandatory element value is missing.
      * @throws SystemException              If an unexpected error occurs.
      * @throws ComponentNotFoundException   Thrown if a component with the specified id could not be found.
      * @throws AuthorizationException       Thrown if the authorization fails.

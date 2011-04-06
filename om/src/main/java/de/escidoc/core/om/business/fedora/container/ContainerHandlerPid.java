@@ -125,6 +125,13 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
      * @throws XmlCorruptedException      Thrown if taskParam is invalid.
      * @throws ReadonlyVersionException   Thrown if a provided container version id is not a latest version.
      * @throws SystemException            Thrown if internal error occures.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.PidSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     public String assignVersionPid(final String id, final String taskParam) throws ContainerNotFoundException,
         LockingException, MissingMethodParameterException, SystemException, OptimisticLockingException,
@@ -284,7 +291,7 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
      *
      * @param versionId ID of container object
      * @throws InvalidStatusException thrown if assignment is forbidden
-     * @throws SystemException        thrown in case of error
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     protected void checkObjectPidAssignable(final String versionId) throws InvalidStatusException,
         TripleStoreSystemException {

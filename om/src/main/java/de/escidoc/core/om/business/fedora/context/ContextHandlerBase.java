@@ -65,7 +65,9 @@ public class ContextHandlerBase extends HandlerBase {
      *
      * @param id The ID of the context which should be bound to this Handler.
      * @throws ContextNotFoundException If there is no context with <code>id</code> in the repository.
-     * @throws SystemException          If anything else fails.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     public void setContext(final String id) throws ContextNotFoundException, TripleStoreSystemException,
         IntegritySystemException, WebserverSystemException {
@@ -101,7 +103,7 @@ public class ContextHandlerBase extends HandlerBase {
      *
      * @param status Value of Context status which is to check.
      * @throws InvalidStatusException Thrown if status compares of Context not to the status parameter.
-     * @throws SystemException        If anything else fails.
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     protected void checkStatus(final String status) throws InvalidStatusException, TripleStoreSystemException {
         final String objectStatus =

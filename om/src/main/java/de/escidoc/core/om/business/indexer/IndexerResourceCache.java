@@ -147,6 +147,7 @@ public final class IndexerResourceCache {
      * @param identifier identifier
      * @return Object resource-object
      * @throws SystemException e
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     public Object getResource(final String identifier) throws SystemException, TripleStoreSystemException {
         final String href = getHref(identifier);
@@ -167,6 +168,7 @@ public final class IndexerResourceCache {
      * @param identifier identifier
      * @param resource   resource-object
      * @throws SystemException e
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     public void setResource(final String identifier, final Object resource) throws SystemException,
         TripleStoreSystemException {
@@ -192,6 +194,7 @@ public final class IndexerResourceCache {
      *
      * @param identifier identifier
      * @throws SystemException e
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     public void deleteResource(final String identifier) throws SystemException, TripleStoreSystemException {
         final String href = getHref(identifier);
@@ -213,6 +216,7 @@ public final class IndexerResourceCache {
      * @param identifier identifier
      * @param resource
      * @throws SystemException e
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     public void replaceResource(final String identifier, final Object resource) throws SystemException,
         TripleStoreSystemException {
@@ -340,6 +344,7 @@ public final class IndexerResourceCache {
      * @param identifier identifier
      * @return String href
      * @throws SystemException e
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     private String getHref(final String identifier) throws SystemException, TripleStoreSystemException {
         String href = identifier;

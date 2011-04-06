@@ -387,7 +387,6 @@ public class GsearchHandler {
      * @param request  request that was send to gsearch
      * @param response response thatr was returned by gsearch
      * @param retries  numer of retries already executed
-     * @throws Exception e
      * @throws de.escidoc.core.common.exceptions.system.ApplicationServerSystemException
      */
     private void handleGsearchException(final String index, final String request, String response, int retries)

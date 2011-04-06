@@ -746,8 +746,9 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * @param filterMap
      * @param whereClause
      * @throws de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException
-     * @throws de.escidoc.core.common.exceptions.system.SystemException
      * @return
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     public List<String> evaluate(final String objectType, final Map<String, Object> filterMap, final String whereClause)
         throws MissingMethodParameterException, TripleStoreSystemException, IntegritySystemException {
@@ -1066,7 +1067,6 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      *
      * @param columnName
      * @param objects
-     * @param idSet
      * @return
      */
     private static String getQueryPartId(final String columnName, final Set<String> objects) {

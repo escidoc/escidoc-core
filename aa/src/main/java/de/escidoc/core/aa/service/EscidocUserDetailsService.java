@@ -62,7 +62,7 @@ public class EscidocUserDetailsService implements EscidocUserDetailsServiceInter
     /**
      * See Interface for functional description.
      *
-     * @see org.acegisecurity.userdetails.UserDetailsService #loadUserByUsername(java.lang.String)
+     * @see org.springframework.security.userdetails.UserDetailsService#loadUserByUsername(java.lang.String)
      */
     @Override
     public UserDetails loadUserByUsername(final String identifier) {

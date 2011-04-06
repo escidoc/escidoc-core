@@ -59,7 +59,6 @@ import java.net.URL;
  * Communication with PIDManager WebService via RESTlet API.
  *
  * @author Steffen Wagner
- * @see PIDManager Web Service
  */
 public class PIDManagerRESTService implements PIDSystem {
 
@@ -258,6 +257,7 @@ public class PIDManagerRESTService implements PIDSystem {
      * @throws java.io.IOException
      * @throws javax.xml.transform.TransformerFactoryConfigurationError
      * @throws javax.xml.transform.TransformerException
+     * @throws javax.xml.transform.TransformerConfigurationException
      */
     private static String preparePidManagerDatastructure(final String systemID, final String param)
         throws ParserConfigurationException, SAXException, IOException, TransformerFactoryConfigurationError,

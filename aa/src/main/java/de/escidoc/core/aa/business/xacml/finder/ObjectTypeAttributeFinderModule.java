@@ -96,7 +96,6 @@ public class ObjectTypeAttributeFinderModule extends AbstractAttributeFinderModu
      * @param resourceObjid         resourceObjid
      * @param resourceVersionNumber resourceVersionNumber
      * @return Object[]
-     * @throws EscidocException e
      */
     @Override
     protected Object[] resolveLocalPart(
@@ -122,6 +121,9 @@ public class ObjectTypeAttributeFinderModule extends AbstractAttributeFinderModu
      * @throws AuthenticationException   e
      * @throws AuthorizationException    e
      * @throws ResourceNotFoundException e
+     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     private Object[] resolveObjectType(
         final String attributeIdValue, final String resourceId, final String resourceObjid) throws SystemException,

@@ -754,7 +754,7 @@ public class Datastream {
     }
 
     /**
-     * Returns the md5 checksum of the content of this datastream. The {@link de.escidoc.core.om.business.stax.XMLHashHandler
+     * Returns the md5 checksum of the content of this datastream. The {@link de.escidoc.core.common.util.stax.XMLHashHandler
      * XMLHashHandler} is used to generate a comparable string from the xml data and calculate the checksum.
      *
      * @return The md5 hash of the content of this datastream.

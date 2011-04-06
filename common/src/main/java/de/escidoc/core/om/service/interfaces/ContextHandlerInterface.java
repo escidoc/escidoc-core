@@ -115,7 +115,6 @@ public interface ContextHandlerInterface {
      *                                        Thrown if read-only elements are altered.
      * @throws OrganizationalUnitNotFoundException
      *                                        Thrown if organizational unit(s) of Context could not be found.
-     * @throws SystemException                If case of internal error.
      * @throws InvalidStatusException         Thrown if an organizational unit is in an invalid status.
      * @throws XmlCorruptedException          Thrown if the schema validation of the provided data failed.
      * @throws XmlSchemaValidationException   Thrown if the schema validation of the provided data failed.

@@ -94,6 +94,7 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
      * @throws ResourceNotFoundException  If an object with the specified ID can not be found. If there is such an
      *                                    object but this object is no Content Model a ContentModelNotFoundException is
      *                                    thrown.
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException
      */
     public ContentModel(final String id) throws TripleStoreSystemException, WebserverSystemException,
         IntegritySystemException, FedoraSystemException, StreamNotFoundException, ResourceNotFoundException,

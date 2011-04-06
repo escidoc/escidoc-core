@@ -59,7 +59,7 @@ public class RendererDao {
      * @return Returns the title of the organizational unit.
      * @throws OrganizationalUnitNotFoundException
      *                         Thrown if no organizational unit with the provided id exists.
-     * @throws SystemException Thrown in case of an internal error.
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     public String getOrganizationalUnitTitle(final String ouId) throws OrganizationalUnitNotFoundException,
         TripleStoreSystemException {

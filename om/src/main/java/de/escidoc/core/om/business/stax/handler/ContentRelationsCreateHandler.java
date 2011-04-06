@@ -226,6 +226,8 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
      * @throws ReadonlyAttributeViolationException
      * @throws ReferencedResourceNotFoundException
      * @throws SystemException
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     private void checkRefElement(final StartElement element) throws InvalidContentException,
         ReadonlyAttributeViolationException, ReferencedResourceNotFoundException, SystemException,
@@ -268,7 +270,8 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
      *
      * @param targetObjectType
      * @throws ReferencedResourceNotFoundException
-     * @throws SystemException
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     private void targetExist(final String targetObjectType) throws ReferencedResourceNotFoundException,
         TripleStoreSystemException, WebserverSystemException {

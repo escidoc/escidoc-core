@@ -66,7 +66,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer impleme
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.aa.business.renderer.interfaces.UserGroupRendererInterface#render(Map)
+     * @see de.escidoc.core.aa.business.renderer.interfaces.UserGroupRendererInterface#render(UserGroup)
      */
     @Override
     public String render(final UserGroup userGroup) throws SystemException, WebserverSystemException {

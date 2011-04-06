@@ -207,7 +207,8 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
      * @param value value
      * @return true If value does not compares to the reopsitory value. false If value compares to the respository
      *         value.
-     * @throws SystemException In case of TripeStore access error.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     private boolean checkValueChanged(final String key, final String value) throws TripleStoreSystemException,
         WebserverSystemException {

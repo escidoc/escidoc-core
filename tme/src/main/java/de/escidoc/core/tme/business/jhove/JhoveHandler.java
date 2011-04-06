@@ -87,6 +87,7 @@ public class JhoveHandler extends TmeHandlerBase implements JhoveHandlerInterfac
      * configuration file for JHove.
      *
      * @throws IOException Thrown if the configuration file could not be loaded or copied.
+     * @throws java.io.FileNotFoundException
      */
     public JhoveHandler() throws IOException, FileNotFoundException {
         OutputStream outputStream = null;

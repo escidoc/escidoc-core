@@ -137,6 +137,10 @@ public class ContainerHandlerBase extends HandlerBase {
      * @param id The ID of the container which should be bound to this Handler.
      * @throws ContainerNotFoundException If there is no container with <code>id</code> in the repository.
      * @throws SystemException            Thrown in case of an internal system error.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     public void setContainer(final String id) throws ContainerNotFoundException, SystemException,
         TripleStoreSystemException, IntegritySystemException, XmlParserSystemException, WebserverSystemException {
@@ -434,7 +438,7 @@ public class ContainerHandlerBase extends HandlerBase {
      *
      * @param status A status.
      * @throws InvalidStatusException If container is not in the specified status .
-     * @throws SystemException        In case of an internal error.
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     protected void checkStatus(final String status) throws InvalidStatusException, TripleStoreSystemException {
         final String objectStatus =
@@ -470,7 +474,7 @@ public class ContainerHandlerBase extends HandlerBase {
      *
      * @param status A status.
      * @throws InvalidStatusException If container is in the specified status.
-     * @throws SystemException        Thrown in case of internal error.
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     protected void checkStatusNot(final String status) throws InvalidStatusException, TripleStoreSystemException {
         final String objectStatus =

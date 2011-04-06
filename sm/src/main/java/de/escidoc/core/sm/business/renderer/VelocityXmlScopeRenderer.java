@@ -62,7 +62,7 @@ public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.sm.business.renderer.interfaces.ScopeRendererInterface#render(Map)
+     * @see de.escidoc.core.sm.business.renderer.interfaces.ScopeRendererInterface#render(Scope)
      */
     @Override
     public String render(final Scope scope) throws SystemException, WebserverSystemException {
@@ -107,7 +107,7 @@ public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
      *
      * @param recordPacking A string to determine how the record should be escaped in the response. Defined values are
      *                      'string' and 'xml'. The default is 'xml'.
-     * @see de.escidoc.core.aa.business.renderer.interfaces.ScopeRendererInterface #renderScopes(de.escidoc.core.sm.business.Scope)
+     * @see de.escidoc.core.sm.business.renderer.interfaces.ScopeRendererInterface#renderScopes(Collection, RecordPacking)
      */
     @Override
     public String renderScopes(final Collection<Scope> scopes, final RecordPacking recordPacking)
@@ -142,7 +142,7 @@ public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
      * Adds the scope name space values.
      *
      * @param values The {@link Map} to that the values shall be added.
-     * @throws SystemException e
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private static void addScopeNamespaceValues(final Map<String, Object> values) throws WebserverSystemException {
         addEscidocBaseUrl(values);
@@ -158,7 +158,7 @@ public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
      * Adds the scope list name space values.
      *
      * @param values The {@link Map} to that the values shall be added.
-     * @throws SystemException e
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private static void addScopeListNamespaceValues(final Map<String, Object> values) throws WebserverSystemException {
         addEscidocBaseUrl(values);

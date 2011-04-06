@@ -65,7 +65,7 @@ public final class VelocityXmlReportDefinitionRenderer implements ReportDefiniti
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.sm.business.renderer.interfaces.ReportDefinitionRendererInterface#render(Map)
+     * @see de.escidoc.core.sm.business.renderer.interfaces.ReportDefinitionRendererInterface#render(ReportDefinition)
      */
     @Override
     public String render(final ReportDefinition reportDefinition) throws SystemException, WebserverSystemException {
@@ -141,7 +141,7 @@ public final class VelocityXmlReportDefinitionRenderer implements ReportDefiniti
      *
      * @param recordPacking A string to determine how the record should be escaped in the response. Defined values are
      *                      'string' and 'xml'. The default is 'xml'.
-     * @see de.escidoc.core.aa.business.renderer.interfaces.ReportDefinitionRendererInterface
+     * @see de.escidoc.core.sm.business.renderer.interfaces.ReportDefinitionRendererInterface
      *      #renderReportDefinitions(de.escidoc.core.sm.business.ReportDefinition)
      */
     @Override
@@ -178,7 +178,7 @@ public final class VelocityXmlReportDefinitionRenderer implements ReportDefiniti
      * Adds the report definition name space values.
      *
      * @param values The {@link Map} to that the values shall be added.
-     * @throws SystemException e
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private static void addReportDefinitionNamespaceValues(final Map<String, Object> values)
         throws WebserverSystemException {
@@ -195,7 +195,7 @@ public final class VelocityXmlReportDefinitionRenderer implements ReportDefiniti
      * Adds the report definition list name space values.
      *
      * @param values The {@link Map} to that the values shall be added.
-     * @throws SystemException e
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private static void addReportDefinitionListNamespaceValues(final Map<String, Object> values)
         throws WebserverSystemException {

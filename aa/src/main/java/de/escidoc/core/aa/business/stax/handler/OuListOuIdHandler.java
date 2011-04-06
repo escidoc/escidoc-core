@@ -67,7 +67,6 @@ public class OuListOuIdHandler extends DefaultHandler {
      *
      * @param element element
      * @return StartElement
-     * @throws Exception e
      * @see DefaultHandler #startElement(de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override

@@ -102,7 +102,9 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      * @param id The id of the organizational unit which should be bound to this Handler.
      * @throws OrganizationalUnitNotFoundException
      *                         If no organizational unit with the given id exists.
-     * @throws SystemException If anything unexpected goes wrong.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     protected void setOrganizationalUnit(final String id) throws OrganizationalUnitNotFoundException,
         TripleStoreSystemException, IntegritySystemException, WebserverSystemException {
@@ -174,7 +176,7 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      * Expands the given path with its parents. If there are no parents the given path is the only result.
      *
      * @param path The path to expand.
-     * @throws SystemException If the access to the triplestore fails.
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     protected void expandPaths(final List<String> path) throws TripleStoreSystemException {
 
@@ -204,8 +206,12 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      * @throws OrganizationalUnitNotFoundException
      *                                        If the organizational unit does not exist.
      * @throws XmlCorruptedException          Thrown if the schema validation of the provided data failed.
-     * @throws SystemException                If anything fails.
      * @throws MissingMdRecordException       If the required md-record is missing
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     protected void parseIncomingXmlForCreate(final String xml, final StaxParser parser)
         throws MissingAttributeValueException, MissingElementValueException, OrganizationalUnitNotFoundException,
@@ -271,11 +277,15 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      *
      * @param xml    The xml to parse.
      * @param parser The stax parser.
-     * @throws InvalidXmlException        If xml is invalid.
      * @throws OptimisticLockingException If the organizational unit was changed in the meantime.
      * @throws OrganizationalUnitNotFoundException
      *                                    If the organizational unit does not exist.
-     * @throws SystemException            If anything fails.
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     protected void parseIncomingXmlForUpdate(final String xml, final StaxParser parser)
         throws OptimisticLockingException, OrganizationalUnitNotFoundException, EncodingSystemException,
@@ -344,9 +354,8 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
 
     /**
      * Creates and initlizes a {@link MultipleExtractor2} that uses the provided {@link StaxParser}.<br/> The created
-     * <code>MultipleExtractor2</code> extracts the pathes {@link OrganizationalUnitHandlerBase.OU_ORGANIZATION_DETAILS_PATH}.<br/>
-     * It is initilized with the prefixes for {@link Constants.ORGANIZATIONAL_UNIT_NAMESPACE_URI} and {@link
-     * Constants.XLINK_NS_URI}.
+     * <code>MultipleExtractor2</code> extracts the pathes OU_ORGANIZATION_DETAILS_PATH.<br/>
+     * It is initilized with the prefixes for ORGANIZATIONAL_UNIT_NAMESPACE_URI and XLINK_NS_URI.
      *
      * @param sp           The {@link StaxParser} to use.
      * @param mdRecordPath The xpath to organization-details element.

@@ -335,6 +335,7 @@ public final class FinderModuleHelper {
      *         empty.
      * @throws ResourceNotFoundException Thrown if a resource with the provided id cannot be found in the triple store.
      * @throws SystemException           Thrown in case of an internal error.
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     public static List<String> retrieveFromTripleStore(
         final boolean targetIsSubject, final StringBuffer whereClause, final String objectId, final String predicateId,
@@ -355,7 +356,7 @@ public final class FinderModuleHelper {
      * @param tsu The {@link TripleStoreUtility} to use.
      * @return Returns an empty list or throws an exception.
      * @throws ResourceNotFoundException Thrown if a resource with the provided id is not found.
-     * @throws SystemException           Thrown in case of an internal error.
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     private static List<String> handleAttributeFromTripleStoreNotFound(final String id, final TripleStoreUtility tsu)
         throws ResourceNotFoundException, TripleStoreSystemException {

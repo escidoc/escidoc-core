@@ -101,7 +101,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      * @param container Container
      * @return XML Container representation.
      * @throws SystemException If an error occurs.
-     * @see ContainerRendererInterface#render(FedoraContainerHandler)
+     * @see ContainerRendererInterface#render(Container)
      */
     @Override
     public String render(final Container container) throws SystemException, EncodingSystemException,
@@ -175,7 +175,6 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      *
      * @param container The Container.
      * @return Returns the XML representation of the sub resource <code>ou-parents</code> of an organizational unit.
-     * @throws SystemException Thrown in case of an internal error.
      */
     @Override
     public String renderRelations(final Container container) throws WebserverSystemException,
@@ -196,7 +195,6 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      *
      * @param containerId The Container.
      * @return Returns the XML representation of the virtual resource <code>parents</code> of an container.
-     * @throws SystemException Thrown in case of an internal error.
      */
     @Override
     public String renderParents(final String containerId) throws WebserverSystemException, TripleStoreSystemException {
@@ -217,7 +215,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      *
      * @param containerId The container for that data shall be created.
      * @param values      The map to add values to.
-     * @throws SystemException Thrown in case of an internal error.
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     private void addParentsValues(final String containerId, final Map<String, Object> values)
         throws TripleStoreSystemException {
@@ -286,7 +284,11 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      *
      * @param values    The map to add values to.
      * @param container The Container.
-     * @throws SystemException Thrown in case of an internal error.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     private static void addPropertiesValus(final Map<String, Object> values, final Container container)
         throws TripleStoreSystemException, EncodingSystemException, IntegritySystemException, FedoraSystemException,
@@ -452,6 +454,9 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      * @param container The Container.
      * @param values    The map to add values to.
      * @throws SystemException Thrown in case of an internal error.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     private void addStructMapValus(final Container container, final Map<String, Object> values) throws SystemException,
         WebserverSystemException, TripleStoreSystemException, XmlParserSystemException {
@@ -473,6 +478,9 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      * @param values
      * @throws SystemException
      * @throws MissingMethodParameterException
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     private static void addMemberRefs(final Container container, final Map<String, Object> values)
         throws SystemException, MissingMethodParameterException, TripleStoreSystemException, WebserverSystemException,

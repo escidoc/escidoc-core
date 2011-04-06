@@ -216,9 +216,7 @@ public class ContainerPropertiesHandler extends DefaultHandler {
      * @param element The element.
      * @return The element.
      * @throws ContentModelNotFoundException Thrown if referenced Content Model does not exist
-     * @throws InvalidXmlException           Thrown if XML is invalid
      * @throws ContextNotFoundException      Thrown if referenced Context does not exist
-     * @throws SystemException               Thrown if internal failure occur
      */
     @Override
     public EndElement endElement(final EndElement element) throws ContentModelNotFoundException,

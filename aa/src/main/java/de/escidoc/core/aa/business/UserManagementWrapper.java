@@ -89,8 +89,6 @@ public class UserManagementWrapper implements UserManagementWrapperInterface {
      * See Interface for functional description.
      *
      * @param handle the handle
-     * @throws AuthenticationException Thrown if the authentication fails due to an invalid provided eSciDocUserHandle.
-     * @throws SystemException         Thrown in case of an internal error.
      */
     @Override
     public void initHandleExpiryTimestamp(final String handle) throws SqlDatabaseSystemException,

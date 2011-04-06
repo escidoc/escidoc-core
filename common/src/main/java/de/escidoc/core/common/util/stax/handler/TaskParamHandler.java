@@ -99,8 +99,6 @@ public class TaskParamHandler extends DefaultHandler {
      * @param element
      *            The element.
      * @return The element.
-     * @throws InvalidXmlException
-     *             Thrown if the XML has an invalid structure.
      */
     @Override
     public StartElement startElement(final StartElement element) throws XmlCorruptedException {

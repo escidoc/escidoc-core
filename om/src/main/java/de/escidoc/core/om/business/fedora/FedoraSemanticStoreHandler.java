@@ -80,7 +80,6 @@ public class FedoraSemanticStoreHandler implements SemanticStoreHandlerInterface
      * @return Returns XML representation of the query result.
      * @throws InvalidTripleStoreQueryException
      *                         Thrown if triple store query is invalid.
-     * @throws SystemException Thrown in case of internal failure.
      * @throws InvalidTripleStoreOutputFormatException
      *                         Thrown if triple store output format is wrong defined.
      */

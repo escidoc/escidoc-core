@@ -68,7 +68,11 @@ public class OrganizationalUnitHandlerUpdate extends OrganizationalUnitHandlerCr
      * @param mdAttributesMap      The md attributes.
      * @param escidocMdRecordnsUri The ns uri of escidoc md record.
      * @throws StreamNotFoundException If any stream was noch found in fedora.
-     * @throws SystemException         If anything else fails.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     protected void setMdRecords(
         final Map<String, ByteArrayOutputStream> xml, final Map<String, Map<String, String>> mdAttributesMap,
@@ -104,8 +108,10 @@ public class OrganizationalUnitHandlerUpdate extends OrganizationalUnitHandlerCr
      *
      * @param dc The dc datastream.
      * @throws StreamNotFoundException      If the dc datastream was not found.
-     * @throws SystemException              If anything else fails.
      * @throws UnsupportedEncodingException If dc datastream has wrong encoding.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
      */
     protected void setDc(final String dc) throws StreamNotFoundException, UnsupportedEncodingException,
         TripleStoreSystemException, FedoraSystemException, WebserverSystemException {
@@ -120,6 +126,10 @@ public class OrganizationalUnitHandlerUpdate extends OrganizationalUnitHandlerCr
      *
      * @param state The new state.
      * @throws SystemException Thrown in case of an internal error.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     protected void updateState(final String state) throws SystemException, TripleStoreSystemException,
         EncodingSystemException, FedoraSystemException, WebserverSystemException {
@@ -178,7 +188,7 @@ public class OrganizationalUnitHandlerUpdate extends OrganizationalUnitHandlerCr
      * @param methodText A text for exception.
      * @param state      The expected state.
      * @throws InvalidStatusException If the organizational unit is in another state.
-     * @throws SystemException        If anything else fails.
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     protected void checkParentsInState(final String methodText, final String state) throws InvalidStatusException,
         TripleStoreSystemException {
@@ -200,7 +210,7 @@ public class OrganizationalUnitHandlerUpdate extends OrganizationalUnitHandlerCr
      *
      * @param parents The updated list of parents.
      * @throws InvalidStatusException If any update rule is not met.
-     * @throws SystemException        If anything else fails.
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     protected void checkCreateParentsConditions(final Iterable<String> parents) throws InvalidStatusException,
         TripleStoreSystemException {
@@ -222,7 +232,7 @@ public class OrganizationalUnitHandlerUpdate extends OrganizationalUnitHandlerCr
      *
      * @param parents The updated list of parents.
      * @throws InvalidStatusException If any update rule is not met.
-     * @throws SystemException        If anything else fails.
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     protected void checkUpdateParentsConditions(final Collection<String> parents) throws InvalidStatusException,
         TripleStoreSystemException {
@@ -263,7 +273,8 @@ public class OrganizationalUnitHandlerUpdate extends OrganizationalUnitHandlerCr
      * @param methodText A text for exception.
      * @throws OrganizationalUnitHasChildrenException
      *                         If the organizational unit has children
-     * @throws SystemException Thrown in case of an internal error.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     protected void checkWithoutChildren(final String methodText) throws OrganizationalUnitHasChildrenException,
         TripleStoreSystemException, WebserverSystemException {
@@ -280,7 +291,8 @@ public class OrganizationalUnitHandlerUpdate extends OrganizationalUnitHandlerCr
      *
      * @param methodText A text for exception.
      * @throws InvalidStatusException Thrown if one of the children is not closed.
-     * @throws SystemException        Thrown in case of an internal error.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     protected void checkWithoutChildrenOrChildrenClosed(final String methodText) throws InvalidStatusException,
         TripleStoreSystemException, WebserverSystemException {

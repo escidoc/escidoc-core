@@ -62,7 +62,6 @@ public class TmeRequestsStaxHandler extends DefaultHandler {
      * See Interface for functional description.
      *
      * @param element Start Element
-     * @throws EscidocException TODO
      */
     @Override
     public StartElement startElement(final StartElement element) throws TmeException {

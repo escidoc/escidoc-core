@@ -280,8 +280,6 @@ public class ContentModelCreate extends GenericResourceCreate {
      * object).
      *
      * @return FoXML representation of ContentModel.
-     * @throws SystemException              Thrown if rendering of ContentModel or sub-elements failed.
-     * @throws UnsupportedEncodingException Thrown if conversion to default character set failed.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private String getMinimalFoXML() throws WebserverSystemException {
@@ -319,8 +317,6 @@ public class ContentModelCreate extends GenericResourceCreate {
      *
      * @param resourceDefinition The resource definition create object.
      * @return FoXML representation of service definition.
-     * @throws SystemException              Thrown if rendering of ContentModel or sub-elements failed.
-     * @throws UnsupportedEncodingException Thrown if conversion to default character set failed.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private String getSDefFoXML(final ResourceDefinitionCreate resourceDefinition) throws WebserverSystemException {
@@ -334,8 +330,6 @@ public class ContentModelCreate extends GenericResourceCreate {
      *
      * @param resourceDefinition The resource definition create object.
      * @return FoXML representation of service deployment.
-     * @throws SystemException              Thrown if rendering of ContentModel or sub-elements failed.
-     * @throws UnsupportedEncodingException Thrown if conversion to default character set failed.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private String getSDepFoXML(final ResourceDefinitionCreate resourceDefinition) throws WebserverSystemException {
@@ -381,7 +375,6 @@ public class ContentModelCreate extends GenericResourceCreate {
      * Prepare values for FOXML Template Renderer (Velocity).
      *
      * @return HashMap with template values.
-     * @throws SystemException Thrown if obtaining values from framework configuration or TripleStore failed.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private Map<String, String> preparePropertiesValueMap() throws WebserverSystemException {

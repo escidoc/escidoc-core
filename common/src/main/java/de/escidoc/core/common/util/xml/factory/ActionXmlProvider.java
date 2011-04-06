@@ -49,7 +49,6 @@ public final class ActionXmlProvider extends InfrastructureXmlProvider {
      * Gets the action xml PROVIDER.
      *
      * @return Returns the <code>ActionXmlProvider</code> object.
-     * @throws WebserverSystemException Thrown if the instance cannot be created due to an internal error.
      */
     public static ActionXmlProvider getInstance() {
         return PROVIDER;

@@ -124,7 +124,6 @@ public class BinaryContent {
      * Set location of content via String.
      *
      * @param url URL of data location
-     * @throws IOException Thrown if obtaining eSciDoc base url failed.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     public void setDataLocation(final String url) throws WebserverSystemException {

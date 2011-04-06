@@ -87,6 +87,11 @@ public class Container extends GenericVersionableResourcePid implements Containe
      * @throws StreamNotFoundException   Thrown if a datastream could not be found.
      * @throws SystemException           Thrown in case of an internal error.
      * @throws ResourceNotFoundException Thrown if no container could be found under the provided id.
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     public Container(final String id) throws StreamNotFoundException, SystemException, ResourceNotFoundException,
         ContainerNotFoundException, IntegritySystemException, TripleStoreSystemException, XmlParserSystemException,
@@ -275,7 +280,6 @@ public class Container extends GenericVersionableResourcePid implements Containe
 
     /**
      * @throws WebserverSystemException Thrown in case of an internal error.
-     * @see FedoraResource#setMdRecords(HashMap)
      */
     @Override
     public void setMdRecords(final Map<String, Datastream> mdRecords) throws FedoraSystemException,
@@ -334,9 +338,6 @@ public class Container extends GenericVersionableResourcePid implements Containe
         }
     }
 
-    /**
-     * @see FedoraResource#getMdRecord(String)
-     */
     @Override
     public Datastream getMdRecord(final String name) throws StreamNotFoundException, FedoraSystemException {
         // check if the ds is set
@@ -356,7 +357,6 @@ public class Container extends GenericVersionableResourcePid implements Containe
 
     /**
      * @throws WebserverSystemException Thrown in case of an internal error.
-     * @see FedoraResource#setMdRecord(String, Datastream)
      */
     @Override
     public void setMdRecord(final String name, final Datastream ds) throws WebserverSystemException,
@@ -795,9 +795,6 @@ public class Container extends GenericVersionableResourcePid implements Containe
      * @param ds The WOV data stream.
      * @throws StreamNotFoundException    Thrown if the WOV data stream was not found.
      * @throws FedoraSystemException      Thrown in case of Fedora error.
-     * @throws TripleStoreSystemException Thrown if request of TripleStore failed.
-     * @throws IntegritySystemException   Thrown if data integrity is violated.
-     * @throws WebserverSystemException   Thrown in case of internal error.
      */
     @Override
     public void setWov(final Datastream ds) throws FedoraSystemException, StreamNotFoundException {

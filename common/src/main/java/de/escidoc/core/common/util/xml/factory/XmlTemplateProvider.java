@@ -791,6 +791,7 @@ public abstract class XmlTemplateProvider {
      * @param filename The filename.
      * @return The contents of the file.
      * @throws IOException If the file was not found.
+     * @throws java.io.UnsupportedEncodingException
      */
     private String getFileContents(final String filename) throws IOException, UnsupportedEncodingException {
         final ByteArrayOutputStream result = new ByteArrayOutputStream();

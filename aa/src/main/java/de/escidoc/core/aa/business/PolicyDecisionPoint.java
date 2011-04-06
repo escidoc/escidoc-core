@@ -336,7 +336,7 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
      * See Interface for functional description.
      *
      * @return List, marked with allowed or denied
-     * @see de.escidoc.core.aa.service.interfaces.AaInterface #evaluateMethodForList(java.lang.String, java.lang.String,
+     * @see de.escidoc.core.aa.service.interfaces.PolicyDecisionPointInterface#evaluateMethodForList(java.lang.String, java.lang.String,
      *      List)
      */
     @Override
@@ -390,7 +390,7 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.aa.service.interfaces.AaInterface #evaluateRetrieve(java.lang.String, List)
+     * @see de.escidoc.core.aa.service.interfaces.PolicyDecisionPointInterface#evaluateRetrieve(java.lang.String, List)
      */
     @Override
     public List<String> evaluateRetrieve(final String resourceName, final List<String> ids)
@@ -556,6 +556,7 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
      *         (in the same order).
      * @throws XmlSchemaValidationException Thrown in case of a schema validation error or a corrupted xml.
      * @throws SystemException              Thrown in case of an internal error.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private List<ResponseCtx> doEvaluate(final CharSequence requestsXml) throws XmlSchemaValidationException,
         SystemException, WebserverSystemException {

@@ -93,6 +93,13 @@ public class ItemHandlerPid extends ItemHandlerContent {
      * @throws ReadonlyVersionException   Thrown if a provided item version id is not a latest version.
      * @throws SystemException            Thrown in case of internal error.
      * @see ItemHandlerInterface #assignContentPid(java.lang.String,java.lang.String, java.lang.String)
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.PidSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     public String assignContentPid(final String id, final String componentId, final String taskParam)
         throws ItemNotFoundException, LockingException, MissingMethodParameterException, OptimisticLockingException,
@@ -149,6 +156,13 @@ public class ItemHandlerPid extends ItemHandlerContent {
      * @throws XmlCorruptedException      Thrown if taskParam has invalid XML.
      * @throws SystemException            Thrown in case of internal error.
      * @see ItemHandlerInterface #assignObjectPid(java.lang.String,java.lang.String)
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.PidSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     public String assignObjectPid(final String id, final String taskParam) throws InvalidStatusException,
         ItemNotFoundException, ComponentNotFoundException, LockingException, MissingMethodParameterException,
@@ -201,6 +215,13 @@ public class ItemHandlerPid extends ItemHandlerContent {
      * @throws SystemException            Thrown in case of internal error.
      * @throws ReadonlyVersionException   Thrown if a provided item version id is not a latest version.
      * @see ItemHandlerInterface #assignVersionPid(java.lang.String,java.lang.String)
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.PidSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     public String assignVersionPid(final String id, final String taskParam) throws ItemNotFoundException,
         LockingException, MissingMethodParameterException, OptimisticLockingException, InvalidStatusException,
@@ -410,6 +431,11 @@ public class ItemHandlerPid extends ItemHandlerContent {
      * @throws InvalidStatusException     If item status is not released
      * @throws SystemException            Thrown if instance of configuration throws exception.
      * @throws ComponentNotFoundException Thrown if the component with the given componentId could not be found
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     private void checkContentPidAssignable(final String componentId) throws InvalidStatusException, SystemException,
         ComponentNotFoundException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException,
@@ -449,6 +475,8 @@ public class ItemHandlerPid extends ItemHandlerContent {
      *
      * @throws InvalidStatusException If item status is not released
      * @throws SystemException        Thrown if instance of configuration throws exception.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     private void checkItemVersionPidAssignable() throws InvalidStatusException, SystemException,
         IntegritySystemException, WebserverSystemException {
@@ -487,6 +515,8 @@ public class ItemHandlerPid extends ItemHandlerContent {
      *
      * @throws InvalidStatusException If item status is not released
      * @throws SystemException        Thrown if instance of configuration throws exception.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     protected void checkObjectPidAssignable() throws InvalidStatusException, SystemException,
         TripleStoreSystemException, WebserverSystemException {

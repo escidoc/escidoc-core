@@ -50,8 +50,6 @@ public final class ItemFoXmlProvider extends InfrastructureFoXmlProvider {
 
     /**
      * Private constructor to prevent initialization.
-     *
-     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     private ItemFoXmlProvider() {
     }
@@ -60,7 +58,6 @@ public final class ItemFoXmlProvider extends InfrastructureFoXmlProvider {
      * Gets the Item FoXML PROVIDER.
      *
      * @return Returns the <code>ItemFoXmlProvider</code> object.
-     * @throws WebserverSystemException Thrown if the instance cannot be created due to an internal error.
      */
     public static ItemFoXmlProvider getInstance() {
         return PROVIDER;

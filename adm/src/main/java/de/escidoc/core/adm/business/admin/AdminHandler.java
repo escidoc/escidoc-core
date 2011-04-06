@@ -89,8 +89,10 @@ public class AdminHandler {
      *                  cache have to be kept in sync. If this value is set to false then the re-indexing and re-caching
      *                  should be run manually afterwards.
      * @return total number of objects deleted, ...
-     * @throws InvalidXmlException thrown if the taskParam has an invalid structure
      * @throws SystemException     thrown in case of an internal error
+     * @throws de.escidoc.core.common.exceptions.system.ApplicationServerSystemException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     public String deleteObjects(final String taskParam) throws SystemException, EncodingSystemException,
         ApplicationServerSystemException, XmlCorruptedException {
@@ -187,6 +189,9 @@ public class AdminHandler {
      * @return total number of objects found, ...
      * @throws SystemException             Thrown if a framework internal error occurs.
      * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.ApplicationServerSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
      */
     public String reindex(final boolean clearIndex, final String indexNamePrefix) throws SystemException,
         InvalidSearchQueryException, ApplicationServerSystemException, FedoraSystemException, WebserverSystemException {

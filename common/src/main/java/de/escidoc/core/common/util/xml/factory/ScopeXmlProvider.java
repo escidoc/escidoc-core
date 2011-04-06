@@ -43,8 +43,6 @@ public final class ScopeXmlProvider extends InfrastructureXmlProvider {
 
     /**
      * Private constructor to prevent initialization.
-     *
-     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     private ScopeXmlProvider() {
     }

@@ -99,7 +99,6 @@ public class ReportParametersStaxHandler extends DefaultHandler {
      * @param s       The contents of the character section.
      * @param element The element.
      * @return The character section.
-     * @throws Exception e
      */
     @Override
     public String characters(final String s, final StartElement element) throws NumberFormatException {

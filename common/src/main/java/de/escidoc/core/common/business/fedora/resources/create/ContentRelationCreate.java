@@ -50,9 +50,9 @@ import java.util.List;
 
 /**
  * Content Relation.<br/>
+ * See http://colab.mpdl.mpg.de/mediawiki/ESciDoc_Content_Relations_Concept.
  *
  * @author Steffen Wagner
- * @see http://colab.mpdl.mpg.de/mediawiki/ESciDoc_Content_Relations_Concept.
  */
 public class ContentRelationCreate extends GenericResourceCreate implements Cloneable, Serializable {
 
@@ -541,6 +541,9 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
      * Create resource in Fedora.
      *
      * @throws SystemException Thrown if internal error occurs.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     private void createFedoraResource() throws SystemException, FedoraSystemException, WebserverSystemException,
         EncodingSystemException {
@@ -568,6 +571,8 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
      * Update resource in Fedora.
      *
      * @throws SystemException Thrown if internal error occurs.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
      */
     private void updateFedoraResource() throws SystemException, FedoraSystemException, WebserverSystemException {
 
@@ -603,6 +608,8 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
      *
      * @param sync Set true if TripleStore sync is to call. False otherwise.
      * @throws SystemException Thrown if updating Fedora repository or syncing TripleStore failed.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
      */
     public void persistProperties(final boolean sync) throws SystemException, FedoraSystemException,
         WebserverSystemException {

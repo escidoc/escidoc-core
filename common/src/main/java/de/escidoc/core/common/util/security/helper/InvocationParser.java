@@ -112,6 +112,7 @@ public class InvocationParser {
          * @throws IOException                  Thrown in case of an i/o error.
          * @throws ParserConfigurationException Thrown in case of an error in parser configuration
          * @throws SAXException                 Thrown in case of a parse error
+         * @throws java.io.UnsupportedEncodingException
          */
         public Document retrieveDocument(final Object documentData) throws IOException, ParserConfigurationException,
             SAXException, UnsupportedEncodingException {
@@ -137,14 +138,13 @@ public class InvocationParser {
      * @param arguments     The arguments
      * @param methodMapping The method mappings to use
      * @return The generated {@link List} of {@link Map} objects.
-     * @throws SystemException                Thrown in case of an internal error.
      * @throws MissingElementValueException   Thrown if an argument does not contain a mandatory element.
      * @throws MissingAttributeValueException Thrown if an argument does not contain a mandatory attribute .
      * @throws MissingMethodParameterException
      *                                        Thrown if an argument has not been provided but is needed for
      *                                        authorization.
-     * @throws InvalidXmlException            Thrown if an argument is expected to contain XML data but cannot be
-     *                                        parsed.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
      */
     public List<Map<String, String>> buildRequestsList(final Object[] arguments, final MethodMapping methodMapping)
         throws MissingMethodParameterException, MissingAttributeValueException, MissingElementValueException,
@@ -161,14 +161,13 @@ public class InvocationParser {
      * @param argument      The arguments
      * @param methodMapping The method mappings to use
      * @return The generated {@link List} of {@link Map} objects.
-     * @throws SystemException                Thrown in case of an internal error.
      * @throws MissingElementValueException   Thrown if an argument does not contain a mandatory element.
      * @throws MissingAttributeValueException Thrown if an argument does not contain a mandatory attribute .
      * @throws MissingMethodParameterException
      *                                        Thrown if an argument has not been provided but is needed for
      *                                        authorization.
-     * @throws InvalidXmlException            Thrown if an argument is expected to contain XML data but cannot be
-     *                                        parsed.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
      */
     public List<Map<String, String>> buildRequestsList(final Object argument, final MethodMapping methodMapping)
         throws MissingMethodParameterException, MissingAttributeValueException, MissingElementValueException,
@@ -186,14 +185,13 @@ public class InvocationParser {
      * @param isArray       Flag that indicates that the given arguments parameter is an array (<code>true</code>) or
      *                      not (<code>false</code>).
      * @return The generated {@link List} of {@link Map} objects.
-     * @throws SystemException                Thrown in case of an internal error.
      * @throws MissingElementValueException   Thrown if an argument does not contain a mandatory element.
      * @throws MissingAttributeValueException Thrown if an argument does not contain a mandatory attribute .
      * @throws MissingMethodParameterException
      *                                        Thrown if an argument has not been provided but is needed for
      *                                        authorization.
-     * @throws InvalidXmlException            Thrown if an argument is expected to contain XML data but cannot be
-     *                                        parsed.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
      */
     private List<Map<String, String>> buildRequestsList(
         final Object arguments, final MethodMapping methodMapping, final boolean isArray)
@@ -255,8 +253,7 @@ public class InvocationParser {
      * @throws MissingElementValueException   Thrown if an invocation mapping references an element in an argument that
      *                                        holds XML data but the element cannot be found.
      * @throws WebserverSystemException       Thrown if there is a problem with an invocation mapping.
-     * @throws InvalidXmlException            Thrown if an argument should contain XML but cannot be parsed or an
-     *                                        argument or element is expected but missing.
+     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
      */
     private Map<String, String> setupResourceAttributes(
         final Object arguments, final Iterable<InvocationMapping> invocationMappings, final boolean isArray,
@@ -315,8 +312,8 @@ public class InvocationParser {
      * @return Returns a {@link StringAttribute} with the value for the invocation mapping.
      * @throws MissingMethodParameterException
      *                                  Thrown if a mandatory method parameter is not provided.
-     * @throws InvalidXmlException      Thrown in case of provided invalid xml.
      * @throws WebserverSystemException Thrown in case of an internal error.
+     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
      */
     private StringAttribute getValueForInvocationMapping(
         final Object arguments, final boolean isArray, final int index, final InvocationMapping invocationMapping)

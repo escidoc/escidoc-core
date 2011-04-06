@@ -391,8 +391,9 @@ public class Login extends HttpServlet {
      * @param request     Request.
      * @param response    Response.
      * @param userAccount The {@link UserAccount} of the user.
-     * @throws SystemException Thrown in case of an internal system error.
      * @throws IOException     Thrown in case of an I/O error.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
      */
     private void doLoginOfExistingUser(
         final HttpServletRequest request, final HttpServletResponse response, final UserAccount userAccount)

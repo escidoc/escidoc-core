@@ -60,7 +60,6 @@ public class ScopeStaxHandler extends DefaultHandler {
      *
      * @param element startElement
      * @return StartElement startElement
-     * @throws Exception e
      */
     @Override
     public StartElement startElement(final StartElement element) throws IntegritySystemException {

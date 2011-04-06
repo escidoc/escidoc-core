@@ -68,8 +68,6 @@ public final class UserAccountXmlProvider extends InfrastructureXmlProvider {
 
     /**
      * Private constructor to prevent initialization.
-     *
-     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     private UserAccountXmlProvider() {
     }
@@ -78,7 +76,6 @@ public final class UserAccountXmlProvider extends InfrastructureXmlProvider {
      * Gets the role xml PROVIDER.
      *
      * @return Returns the <code>UserAccountXmlProvider</code> object.
-     * @throws WebserverSystemException Thrown if the instance cannot be created due to an internal error.
      */
     public static UserAccountXmlProvider getInstance() {
         return PROVIDER;

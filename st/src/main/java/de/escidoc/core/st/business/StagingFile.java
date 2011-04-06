@@ -173,9 +173,8 @@ public class StagingFile extends de.escidoc.core.st.business.persistence.Staging
      * referenced destination file exists, it will be overridden.
      *
      * @param inputStream The input stream to read the content from.
-     * @return Returns <code>true</code> if bytes have been found in the inputStream and have been read in to the
-     *         StagingFile.
      * @throws IOException If operation fails.
+     * @throws java.io.FileNotFoundException
      */
     public void read(final InputStream inputStream) throws IOException, FileNotFoundException {
 

@@ -1375,7 +1375,6 @@ public class FedoraUtility implements InitializingBean {
                  * See Interface for functional description.
                  * 
                  * @return
-                 * @throws Exception
                  * @see BasePoolableObjectFactory #makeObject()
                  */
                 @Override
@@ -1390,7 +1389,6 @@ public class FedoraUtility implements InitializingBean {
              * See Interface for functional description.
              * 
              * @return
-             * @throws Exception
              * @see BasePoolableObjectFactory #makeObject()
              */
             @Override
@@ -1405,7 +1403,6 @@ public class FedoraUtility implements InitializingBean {
              * See Interface for functional description.
              * 
              * @return
-             * @throws Exception
              * @see BasePoolableObjectFactory #makeObject()
              */
             @Override

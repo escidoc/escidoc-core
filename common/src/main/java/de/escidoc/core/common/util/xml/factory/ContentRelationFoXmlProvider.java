@@ -32,9 +32,9 @@ import java.util.Map;
 
 /**
  * FoXML representations of the Content Relation resource.<br/>
+ * See http://colab.mpdl.mpg.de/mediawiki/ESciDoc_Content_Relations_Concept
  *
  * @author Steffen Wagner
- * @see http://colab.mpdl.mpg.de/mediawiki/ESciDoc_Content_Relations_Concept
  */
 public final class ContentRelationFoXmlProvider extends InfrastructureFoXmlProvider {
 
@@ -70,6 +70,8 @@ public final class ContentRelationFoXmlProvider extends InfrastructureFoXmlProvi
      * @param cr The ContentRelation
      * @return FoXML representation of the ContentRelation
      * @throws SystemException Thrown if character encoding failed of mdrecord failed.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     public String getFoXml(final ContentRelationCreate cr) throws SystemException, EncodingSystemException,
         WebserverSystemException {

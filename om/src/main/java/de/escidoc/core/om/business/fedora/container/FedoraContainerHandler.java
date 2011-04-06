@@ -218,7 +218,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
      * @throws InvalidContentException        e
      * @throws MissingMethodParameterException
      *                                        e
-     * @throws InvalidXmlException            e
      * @throws MissingAttributeValueException e
      * @throws MissingElementValueException   e
      * @throws SystemException                e
@@ -277,6 +276,12 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
      * @throws de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException
      * @throws de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException
      * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     private String doCreate(final String xmlData, final boolean isCreate) throws SystemException,
         ContentModelNotFoundException, ContextNotFoundException, MissingAttributeValueException,
@@ -481,8 +486,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
      *
      * @param id The ID of the container to delete.
      * @throws LockingException       If container is locked.
-     * @throws MissingMethodParameterException
-     *                                If some parameter is missed.
      * @throws InvalidStatusException If container is in invalid status for deletion.
      * @throws AuthorizationException If further calls fail because of insufficient access rights.
      * @see de.escidoc.core.om.service.interfaces.ContainerHandlerInterface #delete(java.lang.String)
@@ -788,7 +791,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
      * @param parameters parameters from the SRU request
      * @return Returns xml representation of a list of containers and items.
      * @throws ContainerNotFoundException Thrown if the given container was not found.
-     * @throws SystemException            cf. Interface
      */
     @Override
     public String retrieveMembers(final String id, final SRURequestParameters parameters)
@@ -878,7 +880,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
      *
      * @param parameters parameters from the SRU request
      * @return The list of Containers matching filter parameter.
-     * @throws SystemException cf. Interface
      */
     @Override
     public String retrieveContainers(final SRURequestParameters parameters) throws WebserverSystemException {
@@ -1147,6 +1148,12 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
      * @throws SystemException
      * @throws ContainerNotFoundException
      * @throws OperationNotFoundException
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     public EscidocBinaryContent retrieveResource(final String id, final String resourceName) throws SystemException,
         ContainerNotFoundException, OperationNotFoundException, TripleStoreSystemException, WebserverSystemException,
@@ -1261,7 +1268,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
      * @throws SystemException            e
      * @throws OptimisticLockingException e
      * @throws ReadonlyVersionException   cf. Interface
-     * @throws InvalidXmlException        e
      */
     @Override
     public String release(final String id, final String param) throws ContainerNotFoundException, LockingException,
@@ -1314,6 +1320,11 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
      * @param id The objid of the parent Container.
      * @throws OptimisticLockingException Thrown if objects altered through other processes during the release.
      * @throws SystemException            Thrown in case of internal error.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     @Deprecated
     private void releaseMembers(final String id) throws OptimisticLockingException, SystemException,
@@ -1427,7 +1438,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
      * @throws SystemException            e
      * @throws OptimisticLockingException e
      * @throws ReadonlyVersionException   cf. Interface
-     * @throws InvalidXmlException        e
      */
     @Override
     public String submit(final String id, final String param) throws ContainerNotFoundException, LockingException,
@@ -1535,7 +1545,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
      * @throws OptimisticLockingException e
      * @throws AlreadyWithdrawnException  e
      * @throws ReadonlyVersionException   cf. Interface
-     * @throws InvalidXmlException        e
      */
     @Override
     public String withdraw(final String id, final String param) throws ContainerNotFoundException, LockingException,
@@ -1597,7 +1606,10 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
      *
      * @param id              id
      * @param withdrawComment withdrawComment
-     * @throws SystemException e
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     private void withdrawMembers(final String id, final String withdrawComment) throws TripleStoreSystemException,
         IntegritySystemException, FedoraSystemException, WebserverSystemException {
@@ -1693,7 +1705,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
      *                                    e
      * @throws SystemException            e
      * @throws OptimisticLockingException e
-     * @throws InvalidXmlException        e
      * @see de.escidoc.core.om.service.interfaces.ContainerHandlerInterface#lock(String, String)
      */
     @Override
@@ -1737,7 +1748,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
      *                                    e
      * @throws SystemException            e
      * @throws OptimisticLockingException e
-     * @throws InvalidXmlException        e
      * @see de.escidoc.core.om.service.interfaces.ContainerHandlerInterface#unlock(String, String)
      */
     @Override
@@ -1832,7 +1842,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
      *                                        e
      * @throws MissingMethodParameterException
      *                                        e
-     * @throws InvalidXmlException            e
      * @throws FileNotFoundException          e
      * @throws LockingException               e
      * @throws InvalidContentException        e
@@ -1903,7 +1912,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
      * @throws ContextNotFoundException       e
      * @throws ContentModelNotFoundException  e
      * @throws InvalidContentException        e
-     * @throws InvalidXmlException            e
      * @throws MissingAttributeValueException e
      * @throws MissingElementValueException   e
      * @throws AuthenticationException        e
@@ -2278,6 +2286,12 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
     /**
      * @param comment comment
      * @throws SystemException e
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     private void makeVersion(final String comment) throws SystemException, TripleStoreSystemException,
         EncodingSystemException, IntegritySystemException, FedoraSystemException, WebserverSystemException,
@@ -2289,6 +2303,12 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
      * @param comment   comment
      * @param newStatus newStatus
      * @throws SystemException e
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     private void makeVersion(final String comment, final String newStatus) throws SystemException,
         TripleStoreSystemException, EncodingSystemException, IntegritySystemException, FedoraSystemException,
@@ -2310,7 +2330,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
      *                                      e
      * @throws AlreadyExistsException       e
      * @throws InvalidStatusException       e
-     * @throws InvalidXmlException          e
      * @throws MissingElementValueException e
      * @throws LockingException             e
      * @throws ReadonlyVersionException     e
@@ -2432,13 +2451,9 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
      * @throws SystemException              e
      * @throws OptimisticLockingException   e
      * @throws InvalidStatusException       e
-     * @throws MissingElementValueException e
-     * @throws InvalidXmlException          e
      * @throws ContentRelationNotFoundException
      *                                      e
      * @throws LockingException             e
-     * @throws ReadonlyVersionException     cf. Interface
-     * @throws InvalidXmlException          e
      * @throws ContainerNotFoundException   e
      */
     @Override
@@ -2559,6 +2574,10 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
      * @return list of content relations
      * @throws ContainerNotFoundException Thrown if an item with the specified id could not be found.
      * @throws SystemException            If an error occurs.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     private String retrieveContentRelations(final String id) throws ContainerNotFoundException, SystemException,
         TripleStoreSystemException, IntegritySystemException, XmlParserSystemException, WebserverSystemException {

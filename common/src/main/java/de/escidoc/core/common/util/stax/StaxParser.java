@@ -169,7 +169,6 @@ public class StaxParser implements DefaultHandlerStackInterface {
      * @throws LockingException               eSciDoc specific; thrown by some Handlers.
      * @throws ReadonlyElementViolationException
      *                                        eSciDoc specific; thrown by some Handlers.
-     * @throws InvalidXmlException            eSciDoc specific; thrown by some Handlers.
      * @throws OptimisticLockingException     Thrown in case of an internal error.
      * @throws PidAlreadyAssignedException    eSciDoc specific; thrown by some Handlers.
      * @throws XmlParserSystemException       eSciDoc specific; thrown by some Handlers.
@@ -195,6 +194,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
      *                                        eSciDoc specific; thrown by some Handlers.
      * @throws IntegritySystemException       eSciDoc specific; thrown by some Handlers.
      * @throws TmeException                   eSciDoc specific; thrown by some Handlers.
+     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
      */
     public void parse(final byte[] in) throws XMLStreamException, ContentModelNotFoundException,
         ContextNotFoundException, MissingContentException, LockingException, ReadonlyElementViolationException,
@@ -276,7 +276,6 @@ public class StaxParser implements DefaultHandlerStackInterface {
      * @throws OptimisticLockingException     Thrown in case of an internal error.
      * @throws PidAlreadyAssignedException    eSciDoc specific; thrown by some Handlers.
      * @throws XmlParserSystemException       eSciDoc specific; thrown by some Handlers.
-     * @throws EncodingSystemException        eSciDoc specific; thrown by some Handlers.
      * @throws WebserverSystemException       eSciDoc specific; thrown by some Handlers.
      * @throws TripleStoreSystemException     eSciDoc specific; thrown by some Handlers.
      * @throws MissingContentException        eSciDoc specific; thrown by some Handlers.
@@ -456,11 +455,9 @@ public class StaxParser implements DefaultHandlerStackInterface {
      * @throws ContentModelNotFoundException  eSciDoc specific; thrown by some Handlers.
      * @throws ContextNotFoundException       eSciDoc specific; thrown by some Handlers.
      * @throws LockingException               eSciDoc specific; thrown by some Handlers.
-     * @throws InvalidXmlException            eSciDoc specific; thrown by some Handlers.
      * @throws InvalidContentException        eSciDoc specific; thrown by some Handlers.
      * @throws InvalidStatusException         Thrown if an organizational unit is in an invalid status.
      * @throws OptimisticLockingException     eSciDoc specific; thrown by some Handlers.
-     * @throws SystemException                Thrown in case of an internal error.
      * @throws PidAlreadyAssignedException    eSciDoc specific; thrown by some Handlers.
      * @throws MissingContentException        eSciDoc specific; thrown by some Handlers.
      * @throws ReadonlyElementViolationException
@@ -480,6 +477,12 @@ public class StaxParser implements DefaultHandlerStackInterface {
      *                                        eSciDoc specific; thrown by some Handlers.
      * @throws MissingMdRecordException       eSciDoc specific; thrown by some Handlers.
      * @throws TmeException                   eSciDoc specific; thrown by some Handlers.
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     protected void parseEvents(final InputStream in) throws XMLStreamException, ContentModelNotFoundException,
         ContextNotFoundException, MissingContentException, LockingException, ReadonlyElementViolationException,
@@ -617,7 +620,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
     /**
      * Calls startElement() for every Handler in the handler chain.
      *
-     * @param startElement {@link de.escidoc.core.om.business.stax.events.StartElement StartElement}
+     * @param startElement {@link de.escidoc.core.common.util.xml.stax.events.StartElement StartElement}
      * @throws XMLStreamException             If parsing failed.
      * @throws ContentModelNotFoundException  eSciDoc specific; thrown by some Handlers.
      * @throws ContextNotFoundException       eSciDoc specific; thrown by some Handlers.
@@ -740,7 +743,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
     /**
      * Calls endElement() for every Handler in the handler chain.
      *
-     * @param endElement The <code>{@link de.escidoc.core.om.business.stax.events.EndElement EndElement}</code>
+     * @param endElement The <code>{@link de.escidoc.core.common.util.xml.stax.events.EndElement EndElement}</code>
      * @throws ContextNotFoundException       eSciDoc specific; thrown by some Handlers.
      * @throws ContentModelNotFoundException  eSciDoc specific; thrown by some Handlers.
      * @throws MissingAttributeValueException eSciDoc specific; thrown by some Handlers.
@@ -839,8 +842,6 @@ public class StaxParser implements DefaultHandlerStackInterface {
      * @throws ReferencedResourceNotFoundException
      *                                      eSciDoc specific; thrown by some Handlers.
      * @throws RelationPredicateNotFoundException
-     *                                      eSciDoc specific; thrown by some Handlers.
-     * @throws ReadonlyAttributeViolationException
      *                                      eSciDoc specific; thrown by some Handlers.
      * @throws InvalidContentException      eSciDoc specific; thrown by some Handlers.
      * @throws OrganizationalUnitNotFoundException

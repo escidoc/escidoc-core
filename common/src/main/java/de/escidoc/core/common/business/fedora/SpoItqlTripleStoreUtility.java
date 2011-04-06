@@ -622,7 +622,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
     /**
      * See Interface for functional description.
      *
-     * @see TripleStoreUtility#getObjectList(String, String)
+     * @see TripleStoreUtility#getObjectList(String, Map, String)
      */
     @Override
     public String getObjectList(final String objectType, final Map filterMap, final String whereClause)
@@ -800,7 +800,6 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
     /**
      *
      * @param objectType
-     * @param filterXML
      * @param additionalQueryPart
      * @param whereClause
      * @return
@@ -928,7 +927,8 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
     /**
      *
      * @param containerId
-     * @param filterParam
+     * @param filterMap
+     * @param whereClause
      * @return
      * @throws MissingMethodParameterException
      * @throws TripleStoreSystemException

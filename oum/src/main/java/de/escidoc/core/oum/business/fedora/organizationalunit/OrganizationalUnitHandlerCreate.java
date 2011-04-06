@@ -64,6 +64,8 @@ public class OrganizationalUnitHandlerCreate extends OrganizationalUnitHandlerRe
      * @param dcStream           The dc stream.
      * @return the foxml representation of the organizational unit.
      * @throws SystemException If anything fails.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     protected String getOrganizationalUnitFoxml(
         final String id, final Map<String, Object> relsExtValues, final List<String> parents,
@@ -118,7 +120,7 @@ public class OrganizationalUnitHandlerCreate extends OrganizationalUnitHandlerRe
      * @param relsExtValues The rels-ext values.
      * @param parents       The parent organizational units.
      * @return The foxml representation of the rels-ext datastream of an organizational unit.
-     * @throws SystemException If anything fails.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     protected String getOrganizationalUnitRelsExt(
         final String id, final Map<String, Object> relsExtValues, final List<String> parents)

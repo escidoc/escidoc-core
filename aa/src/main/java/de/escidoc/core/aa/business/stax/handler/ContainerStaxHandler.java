@@ -71,7 +71,7 @@ public class ContainerStaxHandler extends AbstractResourceAttributeStaxHandler {
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.aa.business.stax.handler. AbstractResourceAttributeStaxHandler#startElement
+     * @see de.escidoc.core.aa.business.stax.handler.AbstractResourceAttributeStaxHandler#startElement
      *      (de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override

@@ -227,7 +227,7 @@ public final class EscidocConfiguration {
     /**
      * Private Constructor, in order to prevent instantiation of this utility class. read the Properties and fill it in
      * properties attribute.
-     * @throws de.escidoc.core.common.exceptions.EscidocException
+     * @throws de.escidoc.core.common.exceptions.system.SystemException
      */
     private EscidocConfiguration() throws SystemException {
         System.setProperty("java.awt.headless", "true");
@@ -409,6 +409,7 @@ public final class EscidocConfiguration {
      * @param filename The name of the properties file.
      * @return The properties.
      * @throws IOException If access to the specified file fails.
+     * @throws java.io.FileNotFoundException
      */
     private static Properties getProperties(final String filename) throws IOException, FileNotFoundException {
 

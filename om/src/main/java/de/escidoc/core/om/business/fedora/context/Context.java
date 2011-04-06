@@ -87,7 +87,9 @@ public class Context extends GenericResource implements ContextInterface {
      *
      * @param id The id of an context managed in Fedora.
      * @throws ContextNotFoundException Thrown if Context with id could not be found.
-     * @throws SystemException          Thrown in case of an internal error.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     public Context(final String id) throws ContextNotFoundException, TripleStoreSystemException,
         IntegritySystemException, WebserverSystemException {
@@ -119,7 +121,8 @@ public class Context extends GenericResource implements ContextInterface {
      *
      * @param ds new resource datastream.
      * @throws StreamNotFoundException If resource datastream could not be found.
-     * @throws SystemException         If anything else fails.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
      */
     public void setResources(final Datastream ds) throws StreamNotFoundException, FedoraSystemException,
         WebserverSystemException {
@@ -445,7 +448,8 @@ public class Context extends GenericResource implements ContextInterface {
      * Get id of modifier.
      *
      * @return modified-by id
-     * @throws SystemException If anything fails.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     public String getModifiedBy() throws TripleStoreSystemException, WebserverSystemException {
         return getResourceProperties().get(PropertyMapKeys.LATEST_VERSION_MODIFIED_BY_ID);
@@ -467,7 +471,8 @@ public class Context extends GenericResource implements ContextInterface {
      * Get hrefs of organizational units of context.
      *
      * @return Vector with hrefs of organizational units.
-     * @throws SystemException If anythings fails.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     public Collection<String> getOrganizationalUnitHrefs() throws TripleStoreSystemException, WebserverSystemException {
         final String path = "/oum/organizational-unit/";
@@ -485,7 +490,9 @@ public class Context extends GenericResource implements ContextInterface {
      * Check if resource with object id exists and has type of Context.
      *
      * @throws ContextNotFoundException Thrown if no Context exists with this object id.
-     * @throws SystemException          Thrown in case of internal error.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     private void checkContextExist() throws ContextNotFoundException, TripleStoreSystemException,
         IntegritySystemException, WebserverSystemException {

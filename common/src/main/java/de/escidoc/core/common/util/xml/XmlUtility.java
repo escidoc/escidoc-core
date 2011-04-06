@@ -1208,6 +1208,7 @@ public final class XmlUtility {
      * @return Returns the validator for the schema specified by the provided URL.
      * @throws IOException              Thrown in case of an I/O error.
      * @throws WebserverSystemException Thrown if schema can not be parsed.
+     * @throws java.net.MalformedURLException
      */
     public static Schema getSchema(final String schemaUri) throws IOException, WebserverSystemException,
         MalformedURLException {
@@ -1243,6 +1244,7 @@ public final class XmlUtility {
      * @return Returns the validator for the schema specified by the provided URL.
      * @throws IOException              Thrown in case of an I/O error.
      * @throws WebserverSystemException Thrown if schema can not be parsed.
+     * @throws java.net.MalformedURLException
      */
     public static Validator getValidator(final String schemaUri) throws IOException, WebserverSystemException,
         MalformedURLException {

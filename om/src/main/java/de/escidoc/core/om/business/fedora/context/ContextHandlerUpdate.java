@@ -119,6 +119,12 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
      * @throws MissingElementValueException  Thrown if value of element is missing.
      * @throws InvalidContentException       Thrown if the xmlData parameter has invalid content.
      * @throws SystemException               Thrown if anything else fails.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     public boolean update(final FedoraContextHandler contextHandler, final String xmlData)
         throws ContextNotFoundException, InvalidStatusException, OptimisticLockingException,
@@ -240,11 +246,15 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
      * @param taskParam      The parameter structure.
      * @throws ContextNotFoundException   Thrown if Context resource could not be found.
      * @throws InvalidStatusException     Thrown if Context has invalid status.
-     * @throws InvalidXmlException        Thrown if parameter is invalid XML.
      * @throws OptimisticLockingException Thrown if context resource is altered on open.
      * @throws SystemException            Thrown if anything else fails.
      * @throws StreamNotFoundException    Thrown if RELS-EXT datastream could not be retrieved.
      * @throws LockingException           Thrown if Context is locked.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     public void open(final FedoraContextHandler contextHandler, final String taskParam)
         throws ContextNotFoundException, InvalidStatusException, OptimisticLockingException, SystemException,
@@ -328,11 +338,15 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
      * @param taskParam      The parameter structure.
      * @throws ContextNotFoundException   Thrown if Context resource could not be found.
      * @throws InvalidStatusException     Thrown if Context has invalid status.
-     * @throws InvalidXmlException        Thrown if parameter is invalid XML.
      * @throws OptimisticLockingException Thrown if context resource is altered on open.
      * @throws SystemException            Thrown if anything else fails.
      * @throws StreamNotFoundException    Thrown if RELS-EXT datastream could not be retrieved.
      * @throws LockingException           Thrown if Context is locked.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     public void close(final FedoraContextHandler contextHandler, final String taskParam)
         throws ContextNotFoundException, InvalidStatusException, OptimisticLockingException, SystemException,
@@ -508,6 +522,12 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
      * @return true if dc was updated, false otherwise.
      * @throws ContextNameNotUniqueException In case of context name is already in use.
      * @throws SystemException               In case of an internal error in the webserver.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     private boolean updateDc(
         final Map<String, String> changedValues, final List<String> propertiesToRemove,
@@ -719,7 +739,11 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
      * Write DC datastream.
      *
      * @param xml New DC representation.
-     * @throws SystemException If anything fails.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     private void setDc(final String xml) throws TripleStoreSystemException, EncodingSystemException,
         IntegritySystemException, FedoraSystemException, WebserverSystemException {
@@ -747,7 +771,8 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
      *
      * @param streams Map of Datastreams with name of admin-descriptor as key.
      * @return true if admindescriptors where updated.
-     * @throws SystemException TODO
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
      */
     boolean handleAdminDescriptors(final Map<String, Object> streams) throws FedoraSystemException,
         WebserverSystemException {

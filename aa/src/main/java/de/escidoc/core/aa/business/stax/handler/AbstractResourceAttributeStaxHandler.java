@@ -111,7 +111,7 @@ public class AbstractResourceAttributeStaxHandler extends DefaultHandler {
     /**
      * This method handles an end element.<br> Check if this element is the mdrecords end element.
      *
-     * @param element The {@link StartElementStartElement} to handle.
+     * @param element The {@link StartElement} to handle.
      * @return Returns an end element that shall be handled by further handlers in the chain, or <code>null</code> to
      *         stop the chain.
      * @throws Exception Thrown if anything fails. This depends on the implementation of the concrete class.

@@ -71,8 +71,6 @@ public class ActionHandler implements ActionHandlerInterface {
 
     /**
      * See Interface for functional description.
-     *
-     * @see RoleHandlerInterface#createUnsecuredActions(String, String)
      */
     @Override
     public String createUnsecuredActions(final String contextId, final String actions) throws ContextNotFoundException,

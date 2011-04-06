@@ -600,7 +600,6 @@ public interface ItemHandlerInterface {
      * @return The redirect to the external content service.
      * @throws ItemNotFoundException      Thrown if an Item with the specified id cannot be found.
      * @throws ComponentNotFoundException Thrown if the Component containing the content cannot be found.
-     * @throws AuthenticationException    Thrown if the authentication fails.
      * @throws AuthorizationException     Thrown if the authorization fails.
      * @throws MissingMethodParameterException
      *                                    If at least one ID or parameter is not provided.

@@ -123,7 +123,6 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      * @throws RelationPredicateNotFoundException
      *                                        Thrown if the predicate is not registered.
      * @throws InvalidContentException        Thrown if content is invalid
-     * @throws InvalidXmlException            Thrown if XML is invalid
      * @throws MissingAttributeValueException Thrown if attribute value is missing
      * @throws SystemException                Thrown if internal error occur
      */
@@ -175,7 +174,6 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      *
      * @param parameters parameters from the SRU request
      * @return Returns XML representation of the list of content relation objects.
-     * @throws SystemException If case of internal error.
      */
     @Override
     public String retrieveContentRelations(final SRURequestParameters parameters) throws WebserverSystemException {
@@ -275,8 +273,6 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      * @throws RelationPredicateNotFoundException
      *                                        Thrown if the predicate is not registered.
      * @throws InvalidContentException        Thrown if content is invalid
-     * @throws InvalidXmlException            Thrown if XML is invalid
-     * @throws MissingAttributeValueException Thrown if attribute value is missing
      * @throws SystemException                Thrown if internal error occur
      */
     @Override
@@ -341,7 +337,6 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
     /**
      * @param xmlData content relation as XML
      * @return ingested content relation as XML
-     * @throws EscidocException e
      */
     @Override
     public String ingest(final String xmlData) throws WebserverSystemException {
@@ -381,7 +376,6 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      *                                    e
      * @throws SystemException            e
      * @throws OptimisticLockingException e
-     * @throws InvalidXmlException        e
      * @throws InvalidContentException    e
      */
     @Override
@@ -439,7 +433,6 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      *                                    e
      * @throws SystemException            e
      * @throws OptimisticLockingException e
-     * @throws InvalidXmlException        e
      * @throws InvalidContentException    e
      */
     @Override
@@ -543,7 +536,6 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      *                                    e
      * @throws SystemException            e
      * @throws OptimisticLockingException e
-     * @throws InvalidXmlException        e
      * @throws InvalidStatusException     e
      */
     @Override
@@ -591,7 +583,6 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      *                                    e
      * @throws SystemException            e
      * @throws OptimisticLockingException e
-     * @throws InvalidXmlException        e
      * @throws InvalidStatusException     Thrown if resource is not locked.
      */
     @Override
@@ -636,9 +627,7 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      *                                     Thrown if a parameter is missing within <code>taskParam</code>.
      * @throws OptimisticLockingException  Thrown if Item was altered in the mean time.
      * @throws PidAlreadyAssignedException Thrown if a Content-relation is already assigned a PID.
-     * @throws InvalidXmlException         Thrown if taskParam has invalid XML.
      * @throws SystemException             Thrown in case of internal error.
-     * @see de.escidoc.core.om.business.interfaces.ContentRelationsHandlerInterface #assignObjectPid(java.lang.String,java.lang.String)
      */
     @Override
     public String assignObjectPid(final String id, final String taskParam) throws ContentRelationNotFoundException,
@@ -734,6 +723,10 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      * @throws ContentRelationNotFoundException
      *                         If there is no item with <code>id</code> in the repository.
      * @throws SystemException Thrown in case of an internal system error.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     protected ContentRelationCreate setContentRelation(final String id) throws ContentRelationNotFoundException,
         SystemException, TripleStoreSystemException, IntegritySystemException, FedoraSystemException,
@@ -808,6 +801,8 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      * @throws SystemException Thrown in case of internal failure.
      * @throws ContentRelationNotFoundException
      *                         Thrown if resource with provided id could not be found in Fedora repository.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
      */
     private static void setRelsExtValues(final ContentRelationCreate cr) throws SystemException,
         ContentRelationNotFoundException, FedoraSystemException, WebserverSystemException {
@@ -1021,9 +1016,11 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      * @param xml The content relation XML (validated by schema).
      * @return ContentRelation
      * @throws InvalidContentException        Thrown if content is invalid
-     * @throws InvalidXmlException            Thrown if XML is invalid
      * @throws MissingAttributeValueException Thrown if attribute value is missing
      * @throws SystemException                Thrown if internal error occur
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
      */
     private static ContentRelationCreate parseContentRelation(final String xml) throws MissingAttributeValueException,
         InvalidContentException, SystemException, XmlParserSystemException, WebserverSystemException,
@@ -1150,6 +1147,7 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      * @param cr      Content Relation
      * @param xmlData complete content relation XML
      * @throws SystemException One of the listeners threw an exception.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private void fireContentRelationModified(final ContentRelationCreate cr, final String xmlData)
         throws SystemException, WebserverSystemException {
@@ -1175,6 +1173,7 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      * @param cr      content relation
      * @param xmlData complete content relation XML
      * @throws SystemException One of the listeners threw an exception.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private void fireContentRelationCreated(final ContentRelationCreate cr, final String xmlData)
         throws SystemException, WebserverSystemException {
@@ -1237,6 +1236,7 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      * @param cr content relation
      * @return alternate form of the content relation
      * @throws SystemException An internal error occurred.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private static String getAlternateForm(final ContentRelationCreate cr) throws SystemException,
         WebserverSystemException {

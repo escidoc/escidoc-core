@@ -55,6 +55,7 @@ public class ContainerHandlerRetrieve extends ContainerHandlerBase {
      * @param container instance of Container
      * @return String with container xml
      * @throws de.escidoc.core.common.exceptions.system.SystemException
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     protected String getContainerXml(final Container container) throws SystemException, WebserverSystemException {
 

@@ -42,8 +42,6 @@ public final class RoleXmlProvider extends InfrastructureXmlProvider {
 
     /**
      * Private constructor to prevent initialization.
-     *
-     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     private RoleXmlProvider() {
     }
@@ -52,7 +50,6 @@ public final class RoleXmlProvider extends InfrastructureXmlProvider {
      * Gets the role xml PROVIDER.
      *
      * @return Returns the <code>RoleXmlProvider</code> object.
-     * @throws WebserverSystemException Thrown if the instance cannot be created due to an internal error.
      */
     public static RoleXmlProvider getInstance() {
         return PROVIDER;

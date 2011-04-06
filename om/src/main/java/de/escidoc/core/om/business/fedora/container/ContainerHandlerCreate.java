@@ -69,6 +69,8 @@ public class ContainerHandlerCreate extends ContainerResourceListener {
      * @param propertiesAsReferences
      * @return FoXML of Container.
      * @throws de.escidoc.core.common.exceptions.system.SystemException
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     protected String getContainerFoxml(
         final Map<String, Object> containerDataStreams, final MetadataHandler metadataHandler,

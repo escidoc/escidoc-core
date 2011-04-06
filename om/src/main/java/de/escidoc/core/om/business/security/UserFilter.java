@@ -55,6 +55,8 @@ public class UserFilter {
      * @return List of Container member (if <code>filter != null</code> filtered)
      * @throws de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException
      * @throws de.escidoc.core.common.exceptions.system.SystemException
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
      */
     public List<String> getMemberRefList(final Container container) throws MissingMethodParameterException,
         SystemException, XmlParserSystemException, WebserverSystemException {

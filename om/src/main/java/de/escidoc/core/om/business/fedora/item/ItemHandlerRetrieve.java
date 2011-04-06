@@ -728,7 +728,8 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
      *
      * @param itemId
      * @return Returns the XML representation of the virtual resource <code>parents</code> of an container.
-     * @throws SystemException Thrown in case of an internal error.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     public String renderParents(final String itemId) throws WebserverSystemException, TripleStoreSystemException {
 
@@ -748,7 +749,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
      *
      * @param values The map to add values to.
      * @param itemId
-     * @throws SystemException Thrown in case of an internal error.
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     private void addParentsValues(final Map<String, Object> values, final String itemId)
         throws TripleStoreSystemException {

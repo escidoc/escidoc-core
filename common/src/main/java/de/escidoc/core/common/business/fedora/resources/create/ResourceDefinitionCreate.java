@@ -79,6 +79,7 @@ public class ResourceDefinitionCreate {
      *
      * @return FoXML representation of metadata record.
      * @throws SystemException Thrown if rendering failed.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     public String getFOXML() throws SystemException, WebserverSystemException {
 

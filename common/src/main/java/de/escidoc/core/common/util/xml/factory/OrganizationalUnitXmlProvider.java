@@ -65,8 +65,6 @@ public final class OrganizationalUnitXmlProvider extends InfrastructureXmlProvid
 
     /**
      * Private constructor to prevent initialization.
-     *
-     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     private OrganizationalUnitXmlProvider() {
     }

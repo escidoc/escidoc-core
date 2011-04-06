@@ -163,7 +163,6 @@ public class AggregationDefinitionHandler implements AggregationDefinitionHandle
      *                         e.
      * @throws MissingMethodParameterException
      *                         e.
-     * @throws SystemException e.
      * @see de.escidoc.core.sm.business.interfaces .AggregationDefinitionHandlerInterface #delete(java.lang.String)
      */
     @Override

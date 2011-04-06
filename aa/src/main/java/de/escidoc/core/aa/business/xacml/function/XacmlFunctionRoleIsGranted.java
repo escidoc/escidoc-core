@@ -70,16 +70,12 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
 
     /**
      * The pattern to find the position to insert the "-new" marker in attribute ids for new resources.
-     *
-     * @see PATTERN_INSERT_MARKER
      */
     private static final Pattern PATTERN_FIND_PLACE_FOR_MARKER =
         Pattern.compile('(' + AttributeIds.RESOURCE_ATTR_PREFIX + "[^:]*:[^:]*)(:{0,1}.*)");
 
     /**
      * The replacement pattern to insert the "-new" marker at the found position.
-     *
-     * @see PATTERN_FIND_PLACE_FOR_MARKER
      */
     private static final String PATTERN_INSERT_MARKER = "$1" + AttributeIds.MARKER + "$2";
 

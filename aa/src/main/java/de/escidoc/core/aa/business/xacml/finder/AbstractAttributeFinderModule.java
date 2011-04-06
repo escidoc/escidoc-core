@@ -138,7 +138,6 @@ public abstract class AbstractAttributeFinderModule extends AttributeFinderModul
      * The Designator is supported. Therefore we always return true.
      *
      * @return Always returns true.
-     * @see AttributeFinderModuleInterface#isDesignatorSupported()
      */
     @Override
     public boolean isDesignatorSupported() {

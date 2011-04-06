@@ -36,8 +36,6 @@ public final class OrganizationalUnitFoXmlProvider extends InfrastructureFoXmlPr
 
     /**
      * Private constructor to prevent initialization.
-     *
-     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     private OrganizationalUnitFoXmlProvider() {
     }
@@ -46,7 +44,6 @@ public final class OrganizationalUnitFoXmlProvider extends InfrastructureFoXmlPr
      * Gets the organizational unit foxml PROVIDER.
      *
      * @return Returns the <code>OrganizationalUnitFoXmlProvider</code> object.
-     * @throws WebserverSystemException Thrown if the instance cannot be created due to an internal error.
      */
     public static OrganizationalUnitFoXmlProvider getInstance() {
         return PROVIDER;

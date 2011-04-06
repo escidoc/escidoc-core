@@ -101,6 +101,12 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
      * @throws XmlSchemaValidationException If xml schema validation fails.
      * @throws XmlCorruptedException        If xml data is corrupt.
      * @throws SystemException              Thrown in case of internal error.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     protected void setComponents(
         final Map<String, Object> components, final Map<String, Map<String, Map<String, String>>> mdRecordsAttributes,
@@ -165,11 +171,16 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
      * @param streams                     The components datastreams.
      * @param mdRecordsMetadataAttribures Map with attributes of md-records XML element
      * @param nsUri                       Name space URI
-     * @throws SystemException            In case of an internal error.
      * @throws InvalidContentException    If some invalid content is found in streams.
      * @throws FileNotFoundException      If binary content can not be retrieved.
      * @throws MissingContentException    If some required content is missing.
      * @throws ComponentNotFoundException Thrown if Component with provided id was not found.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     protected void setComponent(
         final Component c, final Map streams, final Map<String, Map<String, String>> mdRecordsMetadataAttribures,
@@ -216,8 +227,11 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
      * @param mdMap                Map with md-record output streams of Component.
      * @param mdAttributesMap      Map with XML attributes of md-record XML element.
      * @param escidocMdRecordnsUri Name space URI
-     * @throws SystemException            Thrown in case of internal error.
      * @throws ComponentNotFoundException Thrown if Component with provided objid was not found.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     private static void setComponentMetadataRecords(
         final Component c, final Map<String, ByteArrayOutputStream> mdMap,
@@ -254,8 +268,12 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
      * @param xml The xml representation of the datastream.
      * @return The component properties in a map.
      * @throws InvalidContentException    If xml data contains invalid content.
-     * @throws SystemException            Thrown in case of internal error.
      * @throws ComponentNotFoundException Thrown if Component with provided objid was not found.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     protected Map<String, String> setComponentProperties(final String id, final String xml)
         throws InvalidContentException, ComponentNotFoundException, FedoraSystemException, TripleStoreSystemException,
@@ -331,8 +349,10 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
      * @throws MissingContentException    If some required content of xml data is missing.
      * @throws InvalidContentException    If some invalid content is found in xml data.
      * @throws FileNotFoundException      If binary content can not be retrieved.
-     * @throws SystemException            Thrown in case of internal error.
      * @throws ComponentNotFoundException Thrown if Component with provided objid was not found.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
      */
     protected void setComponentContent(
         final Component component, final String xml, final String fileName, final String mimeType)

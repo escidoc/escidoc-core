@@ -267,8 +267,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
      *
      * @param context the representation of the request data
      * @return the result of trying to find an applicable policy
-     * @see FinderModuleHelper#retrieveSingleAttribute
-     * @see #retrievePoliciesFromCache
+     * @see FinderModuleHelper#retrieveSingleResourceAttribute
      * @see PoliciesCache
      */
     @Override
@@ -310,7 +309,9 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
      *
      * @param userId The userId.
      * @return Returns the created <code>XacmlPolicySet</code> object for the user.
-     * @throws Exception e
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws java.net.URISyntaxException
+     * @throws com.sun.xacml.UnknownIdentifierException
      */
     private XacmlPolicySet getUserPolicies(final String userId) throws UnknownIdentifierException, URISyntaxException,
         WebserverSystemException {
@@ -356,7 +357,9 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
      *
      * @param userId The userId.
      * @return Returns the created <code>XacmlPolicySet</code> object for the user.
-     * @throws Exception e
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws java.net.URISyntaxException
+     * @throws com.sun.xacml.UnknownIdentifierException
      */
     private XacmlPolicySet getUserGroupPolicies(final String userId) throws UnknownIdentifierException,
         URISyntaxException, WebserverSystemException {

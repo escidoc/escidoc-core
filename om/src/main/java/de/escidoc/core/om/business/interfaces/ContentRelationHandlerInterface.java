@@ -95,7 +95,6 @@ public interface ContentRelationHandlerInterface extends IngestableResource {
      *                                        Thrown if the predicate is not registered.
      * @throws InvalidContentException        Thrown if content is invalid
      * @throws InvalidXmlException            Thrown if XML is invalid
-     * @throws MissingAttributeValueException Thrown if attribute value is missing
      * @throws SystemException                Thrown if internal error occur
      */
     String update(final String id, final String xmlData) throws ContentRelationNotFoundException,

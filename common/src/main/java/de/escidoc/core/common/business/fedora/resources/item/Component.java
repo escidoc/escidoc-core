@@ -90,8 +90,13 @@ public class Component extends GenericResourcePid implements ComponentInterface 
      * @param id        The id of an item managed in Fedora.
      * @param parentId  The id of the parent object.
      * @param timestamp The timestamp which specifies the version of the datastreams to retrieve.
-     * @throws SystemException           Thrown in case of an internal system error.
      * @throws ResourceNotFoundException Thrown if the Component resource was not found.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ItemNotFoundException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     public Component(final String id, final String parentId, final String timestamp) throws ResourceNotFoundException,
         ItemNotFoundException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException,
@@ -510,8 +515,12 @@ public class Component extends GenericResourcePid implements ComponentInterface 
      * @param itemId The id of the Item.
      * @return Map of Component properties.
      * @throws de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundException
-     * @throws de.escidoc.core.common.exceptions.system.SystemException
      * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     public Map<String, String> setProperties(final String xml, final String itemId) throws InvalidContentException,
         ComponentNotFoundException, TripleStoreSystemException, EncodingSystemException, FedoraSystemException,

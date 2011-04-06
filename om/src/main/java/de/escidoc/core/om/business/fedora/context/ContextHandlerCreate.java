@@ -107,6 +107,12 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
      *                                        Thrown if related organizational unit(s) could not be found.
      * @throws SystemException                Thrown if anything else fails.
      * @throws InvalidStatusException         Thrown if an organizational unit is in an invalid status.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     public String createContext(final String xmlData) throws ContextNameNotUniqueException,
         ContentModelNotFoundException, ReadonlyElementViolationException, MissingAttributeValueException,
@@ -237,6 +243,7 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
      * @param dataStreams            Data streams of that context object
      * @return foxml String
      * @throws SystemException Thrown if the FOXML rendering failed.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     protected String buildContextFoxml(
         final String id, final Map<String, Object> properties, final Map<String, String> dcProperties,
@@ -291,7 +298,7 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
      * @param properties HashMap with item properties
      * @param contextId  context id
      * @return String RELS-EXT
-     * @throws SystemException Thrown if the FOXML rendering failed.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     protected String buildContextRelsExt(final String contextId, final Map<String, Object> properties)
         throws WebserverSystemException {

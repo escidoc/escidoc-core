@@ -185,6 +185,8 @@ public class ItemCreate extends GenericResourceCreate {
      * @throws de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException
      * @throws de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException
      * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     public void persist() throws SystemException, InvalidStatusException, MissingMdRecordException,
         FileNotFoundException, InvalidContentException, ReferencedResourceNotFoundException,
@@ -201,6 +203,8 @@ public class ItemCreate extends GenericResourceCreate {
      * @throws SystemException Thrown if an unexpected error occurs
      * @throws de.escidoc.core.common.exceptions.application.notfound.FileNotFoundException
      * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     public void persist(final boolean forceSync) throws SystemException, FileNotFoundException,
         InvalidContentException, IntegritySystemException, FedoraSystemException {
@@ -478,6 +482,8 @@ public class ItemCreate extends GenericResourceCreate {
      * @return FoXML representation of Item.
      * @throws SystemException              Thrown if rendering of Item or sub-elements failed.
      * @throws UnsupportedEncodingException Thrown if conversion to default character set failed.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     private String getMinimalFoXML() throws SystemException, UnsupportedEncodingException, EncodingSystemException,
         WebserverSystemException {
@@ -522,6 +528,7 @@ public class ItemCreate extends GenericResourceCreate {
      *
      * @return RELS-EXT XML snippet
      * @throws SystemException Thrown if renderer failed.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private String renderRelsExt() throws SystemException, WebserverSystemException {
 
@@ -546,6 +553,8 @@ public class ItemCreate extends GenericResourceCreate {
      * @throws de.escidoc.core.common.exceptions.application.notfound.FileNotFoundException
      * @throws de.escidoc.core.common.exceptions.system.SystemException
      * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     private void persistComponents() throws SystemException, FileNotFoundException, InvalidContentException,
         IntegritySystemException, FedoraSystemException {
@@ -596,7 +605,7 @@ public class ItemCreate extends GenericResourceCreate {
      * Prepare values for FOXML Template Renderer (Velocity).
      *
      * @return HashMap with template values.
-     * @throws SystemException Thrown if obtaining values from framework configuration or TripleStore failed.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private Map<String, String> preparePropertiesValueMap() throws WebserverSystemException {
 

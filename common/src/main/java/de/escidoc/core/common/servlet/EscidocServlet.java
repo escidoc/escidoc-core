@@ -139,8 +139,6 @@ public class EscidocServlet extends HttpServlet {
 
     /**
      * The target URL to which the user shall be redirected after the authentication process.
-     *
-     * @see Shibboleth parameter target.
      */
     public static final String PARAM_TARGET = "target";
 
@@ -148,15 +146,11 @@ public class EscidocServlet extends HttpServlet {
 
     /**
      * The URL of the assertion consumer service, previously known as shire.
-     *
-     * @see Shibboleth parameter shire.
      */
     public static final String PARAM_SHIRE = "shire";
 
     /**
      * The provider id.
-     *
-     * @see Shibboleth parameter providerId.
      */
     public static final String PARAM_PROVIDER_ID = "providerId";
 
@@ -297,6 +291,7 @@ public class EscidocServlet extends HttpServlet {
      * @param e            The exception to handle.
      * @return Returns <code>true</code> if the exception has been handled.
      * @throws IOException In case of any failure.
+     * @throws java.io.UnsupportedEncodingException
      */
     private boolean handleException(
         final HttpServletRequest httpRequest, final HttpServletResponse httpResponse, final BeanMethod method,
@@ -372,6 +367,7 @@ public class EscidocServlet extends HttpServlet {
      * @throws TransformerException         If anything fails.
      * @throws ParserConfigurationException If anything fails.
      * @throws SAXException                 If anything fails.
+     * @throws java.io.FileNotFoundException
      */
     private static MapperInterface getMethodMapper(final String filename) throws IOException, TransformerException,
         ParserConfigurationException, SAXException, FileNotFoundException {
@@ -554,6 +550,7 @@ public class EscidocServlet extends HttpServlet {
      * @param httpResponse The http response.
      * @param exception    The exception that causes the redirect.
      * @throws IOException If anything fails.
+     * @throws java.io.UnsupportedEncodingException
      */
     private static void doRedirect(
         final HttpServletRequest httpRequest, final HttpServletResponse httpResponse, final SecurityException exception)
@@ -631,8 +628,7 @@ public class EscidocServlet extends HttpServlet {
 
     /**
      * Initializes the provided <code>HttpServletResponse</code> object to prevent caching of the response and to
-     * specify the content-type.<br/> The content-type is initialized to the value of {@link
-     * XML_RESPONSE_CONTENT_TYPE}.
+     * specify the content-type.<br/> The content-type is initialized to the value of XML_RESPONSE_CONTENT_TYPE.
      *
      * @param httpResponse The <code>HttpServletResponse</code> object to that the no-cache headers shall be added.
      */
@@ -643,8 +639,7 @@ public class EscidocServlet extends HttpServlet {
 
     /**
      * Initializes the provided <code>HttpServletResponse</code> object to prevent caching of the response and to
-     * specify the content-type.<br/> The content-type is initialized to the value of {@link
-     * XML_RESPONSE_CONTENT_TYPE}.
+     * specify the content-type.<br/> The content-type is initialized to the value of XML_RESPONSE_CONTENT_TYPE.
      *
      * @param httpResponse The <code>HttpServletResponse</code> object to that the no-cache headers shall be added.
      * @param contentType  The value of the Content-Type header to set.

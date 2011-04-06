@@ -128,7 +128,6 @@ public class FedoraRestDeviationHandler implements FedoraRestDeviationHandlerInt
      *
      * @param pid uri to the resource.
      * @param xml xml-representation of the object
-     * @throws Exception ex
      */
     @Override
     public void cache(final String pid, final String xml) throws SystemException, TripleStoreSystemException {
@@ -139,7 +138,6 @@ public class FedoraRestDeviationHandler implements FedoraRestDeviationHandlerInt
      * removes the given pid from the cache.
      *
      * @param pid uri to the resource.
-     * @throws Exception ex
      */
     @Override
     public void removeFromCache(final String pid) throws SystemException, TripleStoreSystemException {
@@ -151,7 +149,6 @@ public class FedoraRestDeviationHandler implements FedoraRestDeviationHandlerInt
      *
      * @param pid uri to the resource.
      * @param xml xml-representation of the object.
-     * @throws Exception ex
      */
     @Override
     public void replaceInCache(final String pid, final String xml) throws SystemException, TripleStoreSystemException {

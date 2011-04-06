@@ -130,7 +130,7 @@ public class ContextHandler implements ContextHandlerInterface {
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.common.service.interfaces.ResourceHandlerInterface #update(java.lang.String,
+     * @see de.escidoc.core.common.business.interfaces.ResourceHandlerInterface #update(java.lang.String,
      *      java.lang.String)
      */
     @Override

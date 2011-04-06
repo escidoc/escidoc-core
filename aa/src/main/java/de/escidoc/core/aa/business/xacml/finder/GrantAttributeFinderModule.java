@@ -176,7 +176,11 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
      * @param resolvableAttribute resolvable part of attribute
      * @param tail                tail after resolvable part
      * @return Object[] result
-     * @throws EscidocException e
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.GrantNotFoundException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException
+     * @throws de.escidoc.core.common.exceptions.system.SystemException
      */
     private Object[] resolveAssignedOnAttribute(
         final EvaluationCtx ctx, final String attributeIdValue, final String resolvableAttribute, final String tail)
@@ -252,7 +256,10 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
      * @param resolvableAttribute resolvable part of attribute
      * @param tail                tail after resolvable part
      * @return Object[] result
-     * @throws EscidocException e
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.GrantNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException
      */
     private Object[] resolveCreatedByAttribute(
         final EvaluationCtx ctx, final String attributeIdValue, final String resolvableAttribute, final String tail)
@@ -282,7 +289,9 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
      * @param resolvableAttribute resolvable part of attribute
      * @param tail                tail after resolvable part
      * @return Object[] result
-     * @throws EscidocException e
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.GrantNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException
      */
     private Object[] resolveRoleAttribute(
         final EvaluationCtx ctx, final String attributeIdValue, final String resolvableAttribute, final String tail)

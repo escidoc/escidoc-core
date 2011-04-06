@@ -88,7 +88,7 @@ public class OrganizationalUnitHandlerRetrieve extends OrganizationalUnitHandler
      * SOAP format is delivered is dependent on the transport of the original request.
      *
      * @return The xml representation of the properties of an organizational unit.
-     * @throws SystemException If anything fails while rendering the xml representation.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     protected String getPropertiesXml() throws WebserverSystemException {
 
@@ -99,7 +99,7 @@ public class OrganizationalUnitHandlerRetrieve extends OrganizationalUnitHandler
      * Get the xml representation of the resources of an organizational unit.
      *
      * @return The xml representation in REST or SOAP format of an organizational unit.
-     * @throws SystemException If anything fails while rendering the xml representation.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     protected String getResourcesXml() throws WebserverSystemException {
 
@@ -111,7 +111,7 @@ public class OrganizationalUnitHandlerRetrieve extends OrganizationalUnitHandler
      * is delivered is dependent on the transport of the original request.
      *
      * @return The xml representation of the md-records of an organizational unit.
-     * @throws SystemException If anything fails while rendering the xml representation.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     protected String getMdRecordsXml() throws WebserverSystemException {
 
@@ -124,7 +124,7 @@ public class OrganizationalUnitHandlerRetrieve extends OrganizationalUnitHandler
      *
      * @param name The name of teh md-record.
      * @return The xml representation of the md-record of an organizational unit.
-     * @throws SystemException If anything fails while rendering the xml representation.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     protected String getMdRecordXml(final String name) throws WebserverSystemException {
 
@@ -149,6 +149,9 @@ public class OrganizationalUnitHandlerRetrieve extends OrganizationalUnitHandler
      *
      * @return The xml representation of the parents of an organizational unit.
      * @throws SystemException If anything fails while rendering the xml representation.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     protected String getChildObjectsXml() throws SystemException, IntegritySystemException, TripleStoreSystemException,
         WebserverSystemException {
@@ -182,6 +185,9 @@ public class OrganizationalUnitHandlerRetrieve extends OrganizationalUnitHandler
      *
      * @return The xml representation of the children of an organizational unit.
      * @throws SystemException If anything fails while rendering the xml representation.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     protected String getParentObjectsXml() throws SystemException, IntegritySystemException,
         TripleStoreSystemException, WebserverSystemException {
@@ -216,6 +222,7 @@ public class OrganizationalUnitHandlerRetrieve extends OrganizationalUnitHandler
      *
      * @return The xml representation of the path list of an organizational unit.
      * @throws SystemException If anything fails while rendering the xml representation.
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     protected String getPathListXml() throws SystemException, TripleStoreSystemException {
 
@@ -227,6 +234,7 @@ public class OrganizationalUnitHandlerRetrieve extends OrganizationalUnitHandler
      *
      * @return The pathes.
      * @throws SystemException If anything fails while computing the pathes.
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     private List<List<String>> computePathes() throws SystemException, TripleStoreSystemException {
 

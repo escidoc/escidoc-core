@@ -241,7 +241,7 @@ public final class UserContext {
      * Gets the principal stored within the user context.<br> Before calling this method, the user context must be set
      * by using the setContext method. Otherwise, an exception is thrown here.
      *
-     * @return Returns the {@link UserContextPrincipal} object holding the information stored about the user.
+     * @return Returns the {@link EscidocUserDetails} object holding the information stored about the user.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
     private static EscidocUserDetails getPrincipal() throws WebserverSystemException {

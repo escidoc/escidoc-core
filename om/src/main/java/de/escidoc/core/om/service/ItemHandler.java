@@ -113,7 +113,7 @@ public class ItemHandler implements ItemHandlerInterface {
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.common.service.interfaces.ResourceHandlerInterface #delete(java.lang.String)
+     * @see de.escidoc.core.common.business.interfaces.ResourceHandlerInterface #delete(java.lang.String)
      */
     @Override
     public void delete(final String id) throws ItemNotFoundException, AlreadyPublishedException, LockingException,
@@ -126,7 +126,7 @@ public class ItemHandler implements ItemHandlerInterface {
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.common.service.interfaces.ResourceHandlerInterface #retrieve(java.lang.String)
+     * @see de.escidoc.core.common.business.interfaces.ResourceHandlerInterface #retrieve(java.lang.String)
      */
     @Override
     public String retrieve(final String id) throws ItemNotFoundException, ComponentNotFoundException,
@@ -138,7 +138,7 @@ public class ItemHandler implements ItemHandlerInterface {
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.common.service.interfaces.ResourceHandlerInterface #update(java.lang.String,
+     * @see de.escidoc.core.common.business.interfaces.ResourceHandlerInterface #update(java.lang.String,
      *      java.lang.String)
      */
     @Override

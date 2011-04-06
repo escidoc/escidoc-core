@@ -135,6 +135,12 @@ public class FedoraContextHandler extends ContextHandlerUpdate implements Contex
      * @throws OrganizationalUnitNotFoundException
      *                                        e
      * @throws InvalidStatusException         e
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     private String doCreate(final String xmlData, final boolean isCreate) throws ContextNameNotUniqueException,
         SystemException, ContentModelNotFoundException, ReadonlyElementViolationException,
@@ -444,6 +450,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate implements Contex
      * @param id      context id
      * @param xmlData complete context XML
      * @throws SystemException One of the listeners threw an exception.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private void fireContextModified(final String id, final String xmlData) throws SystemException,
         WebserverSystemException {
@@ -469,6 +476,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate implements Contex
      * @param id      context id
      * @param xmlData complete context XML
      * @throws SystemException One of the listeners threw an exception.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private void fireContextCreated(final String id, final String xmlData) throws SystemException,
         WebserverSystemException {
@@ -507,6 +515,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate implements Contex
      * @param id context id
      * @return alternate form of the context
      * @throws SystemException An internal error occurred.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private String getAlternateForm(final String id) throws SystemException, WebserverSystemException {
         String result = null;
@@ -542,6 +551,9 @@ public class FedoraContextHandler extends ContextHandlerUpdate implements Contex
      * @return list of content relations
      * @throws ContextNotFoundException Thrown if an item with the specified id could not be found.
      * @throws SystemException          If an error occurs.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     private String retrieveContentRelations(final String id) throws ContextNotFoundException, SystemException,
         WebserverSystemException, TripleStoreSystemException, IntegritySystemException {

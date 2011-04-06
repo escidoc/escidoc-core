@@ -75,7 +75,6 @@ public class OrganizationalUnitPredecessorsHandler extends HandlerBase {
      *
      * @param element StAX Parser StartElement
      * @return StAX Parser StartElement
-     * @throws SystemException                Thrown if getting instance Utility failed.
      * @throws MissingAttributeValueException Thrown if OU predecessor reference is not set (neither over href nor
      *                                        objid)
      * @throws OrganizationalUnitNotFoundException

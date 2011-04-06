@@ -379,7 +379,9 @@ public class UserAccountAttributeFinderModule extends AbstractAttributeFinderMod
      * @param userAccount The user account to fetch the value from.
      * @param getChildren if also children of userAccountous are to be fetched.
      * @return Returns the attribute value in an <code>EvaluationResult</code>.
-     * @throws EscidocException e
+     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.SystemException
      */
     private EvaluationResult fetchUserAccountOus(final UserAccount userAccount, final boolean getChildren)
         throws TripleStoreSystemException, SystemException, SqlDatabaseSystemException {
@@ -456,7 +458,7 @@ public class UserAccountAttributeFinderModule extends AbstractAttributeFinderMod
      * @param userAccountId The id of the user account to fetch the value from.
      * @param attributeId   The name of the attribute.
      * @return Returns the attribute value in an <code>EvaluationResult</code>.
-     * @throws EscidocException e
+     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
      */
     private EvaluationResult fetchRoleScopes(final String userAccountId, final CharSequence attributeId)
         throws SqlDatabaseSystemException {

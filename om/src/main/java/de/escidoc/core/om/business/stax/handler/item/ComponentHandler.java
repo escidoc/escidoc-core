@@ -143,7 +143,6 @@ public class ComponentHandler extends DefaultHandler {
      *
      * @param element StAX EndElement
      * @return StAX EndElement
-     * @throws XMLStreamException Thrown if writting event failed.
      */
     @Override
     public EndElement endElement(final EndElement element) throws WebserverSystemException {

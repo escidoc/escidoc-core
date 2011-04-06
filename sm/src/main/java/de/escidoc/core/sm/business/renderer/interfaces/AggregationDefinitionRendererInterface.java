@@ -53,7 +53,7 @@ public interface AggregationDefinitionRendererInterface {
     /**
      * Gets the representation of a list of the provided user accounts.
      *
-     * @param aggregationDefinitions The <code>List</code> of {@link de.escidoc.core.sm.business.persistence.AggregationDefinition}
+     * @param aggregationDefinitions The <code>List</code> of {@link de.escidoc.core.sm.business.persistence.hibernate.AggregationDefinition}
      *                               objects to render.
      * @param recordPacking          A string to determine how the record should be escaped in the response. Defined
      *                               values are 'string' and 'xml'. The default is 'xml'.

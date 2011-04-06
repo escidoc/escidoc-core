@@ -98,8 +98,10 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
      * getter is called.
      *
      * @param id The id of an organizational unit managed in Fedora.
-     * @throws SystemException           Thrown in case of an internal error.
-     * @throws ResourceNotFoundException Thrown if no organizational resource could be found under the provided id.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.OrganizationalUnitNotFoundException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     public OrganizationalUnit(final String id) throws OrganizationalUnitNotFoundException, TripleStoreSystemException,
         IntegritySystemException, WebserverSystemException {
@@ -291,7 +293,8 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
      * Get the list of children ids for this organizational unit from the triplestore.
      *
      * @return The list of children ids for this organizational unit.
-     * @throws SystemException If access to the triplestore fails.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     public List<String> getChildrenIds() throws TripleStoreSystemException, WebserverSystemException {
 
@@ -554,7 +557,9 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
      *
      * @param ds DC datastream
      * @throws StreamNotFoundException If there is no datastream identified by name and parentId in Fedora.
-     * @throws SystemException         Thrown in case of an internal system error caused by failed fedora access.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
      */
     public void setDc(final Datastream ds) throws StreamNotFoundException, TripleStoreSystemException,
         FedoraSystemException, WebserverSystemException {

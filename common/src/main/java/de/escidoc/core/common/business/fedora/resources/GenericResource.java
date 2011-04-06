@@ -408,7 +408,6 @@ public class GenericResource implements FedoraResource {
      * See Interface for functional description.
      *
      * @param ds The RELS-EXT datasream.
-     * @throws StreamNotFoundException  Thrown if the datastream was not found.
      * @throws FedoraSystemException    Thrown if Fedora request failed.
      * @throws WebserverSystemException Thrown in case of internal failure.
      */
@@ -425,7 +424,6 @@ public class GenericResource implements FedoraResource {
      * See Interface for functional description.
      *
      * @param relsExt The RELS-EXT datasream.
-     * @throws StreamNotFoundException  Thrown if the datastream was not found.
      * @throws FedoraSystemException    Thrown if Fedora request failed.
      * @throws WebserverSystemException Thrown in case of internal failure.
      */
@@ -462,7 +460,6 @@ public class GenericResource implements FedoraResource {
      *
      * @param relsExt The RELS-EXT datasream.
      * @throws EncodingSystemException  Thrown if data stream encoding failed.
-     * @throws StreamNotFoundException  Thrown if the datastream was not found.
      * @throws FedoraSystemException    Thrown if Fedora request failed.
      * @throws WebserverSystemException Thrown in case of internal failure.
      */
@@ -736,7 +733,8 @@ public class GenericResource implements FedoraResource {
      * @param lock      True == lock object. False == unlock object.
      * @param lockOwner Ids who is lock the object.
      * @throws LockingException Thrown if locking fails.
-     * @throws SystemException  Thrown in case of an internal error.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
      */
     public void setLocked(final boolean lock, final String[] lockOwner) throws LockingException,
         SqlDatabaseSystemException, WebserverSystemException {
@@ -778,7 +776,8 @@ public class GenericResource implements FedoraResource {
      * @param ds The datastream.
      * @throws StreamNotFoundException Thrown if the datastream was not found.
      * @throws LockingException        Thrown if resource is locked.
-     * @throws SystemException         Thrown in case of internal failure.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
      */
     public void setDatastream(final Datastream ds) throws StreamNotFoundException, LockingException,
         FedoraSystemException, WebserverSystemException {

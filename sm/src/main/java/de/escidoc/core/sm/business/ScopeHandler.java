@@ -111,8 +111,7 @@ public class ScopeHandler implements ScopeHandlerInterface {
      * @throws ScopeNotFoundException e.
      * @throws MissingMethodParameterException
      *                                e.
-     * @throws SystemException        e.
-     * @see de.escidoc.core.sm.business.interfaces .ScopeHandlerInterface #delete(java.lang.String)
+     * @see de.escidoc.core.sm.business.interfaces.ScopeHandlerInterface#delete(java.lang.String)
      */
     @Override
     public void delete(final String id) throws ScopeNotFoundException, MissingMethodParameterException,

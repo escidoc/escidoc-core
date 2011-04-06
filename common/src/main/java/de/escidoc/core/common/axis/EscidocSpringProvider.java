@@ -173,7 +173,7 @@ public class EscidocSpringProvider extends RPCProvider {
     }
 
     /**
-     * Looks up the spring bean identified by parameter {@link OPTION_SPRING_BEAN}.
+     * Looks up the spring bean identified by parameter OPTION_SPRING_BEAN.
      *
      * @param service The {@link Handler} used to get the springBean option from.
      * @return The identified spring bean. This will not be <code>null</code>. If a bean cannot be found, an {@link
@@ -199,7 +199,7 @@ public class EscidocSpringProvider extends RPCProvider {
      * @param service The service handler.
      * @return Returns the spring id. This will not be <code>null</code>. If a bean id cannot be found, an {@link
      *         AxisFault} is thrown.
-     * @throws AxisFault Thrown if the parameter {@link OPTION_SPRING_BEAN} is not found and no spring bean id could be
+     * @throws AxisFault Thrown if the parameter OPTION_SPRING_BEAN is not found and no spring bean id could be
      *                   returned.
      */
     private String getSpringBeanId(final Handler service) throws AxisFault {

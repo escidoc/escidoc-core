@@ -80,7 +80,6 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      * @return created userAccount as xml
      * @throws UniqueConstraintViolationException
      *                                 e
-     * @throws InvalidXmlException     e
      * @throws InvalidStatusException  e
      * @throws OrganizationalUnitNotFoundException
      *                                 e
@@ -524,7 +523,6 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      * @throws XmlSchemaValidationException   If
      * @throws MissingAttributeValueException If
      * @throws SystemException                If
-     * @throws OptimisticLockingException     Thrown in case of an optimistic locking error.
      * @throws MissingMethodParameterException
      *                                        Thrown if no user id or no task parameters are provided.
      * @throws AuthenticationException        Thrown if the authentication fails due to an invalid provided
@@ -569,7 +567,6 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      *
      * @param userId         The userId.
      * @param preferenceName The preferenceName.
-     * @throws UserAccountNotFoundException If
      * @throws UserAccountNotFoundException If
      * @throws PreferenceNotFoundException  If
      * @throws SystemException              If
@@ -639,7 +636,6 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      * @param name   name of attribute
      * @return String xml with user-attribute
      * @throws UserAccountNotFoundException   e
-     * @throws UserAttributeNotFoundException e
      * @throws UserAttributeNotFoundException e
      * @throws MissingMethodParameterException
      *                                        Thrown if no user id or no task parameters are provided.

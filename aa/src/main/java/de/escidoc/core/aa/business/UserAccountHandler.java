@@ -298,7 +298,6 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      *
      * @param userId userId
      * @throws UserAccountNotFoundException e
-     * @throws SystemException              e
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface #delete(java.lang.String)
      */
     @Override
@@ -463,7 +462,6 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      * @param userId userId
      * @return grants as map
      * @throws UserAccountNotFoundException e
-     * @throws SystemException              e
      * @see UserAccountHandlerInterface #retrieveCurrentGrantsAsMap(java.lang.String)
      */
     @Override
@@ -1117,7 +1115,6 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      * @param userId userId
      * @return List of userHandles
      * @throws UserAccountNotFoundException e
-     * @throws SystemException              e
      * @see UserAccountHandlerInterface #retrieveUserHandles(java.lang.String)
      */
     @Override
@@ -1243,6 +1240,8 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      * @return Map with replaced cql-query (groupId replaced with userIds)
      * @throws InvalidSearchQueryException e
      * @throws SystemException             e
+     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     private Map<String, String[]> fixCqlGroupFilter(final Map<String, String[]> filter)
         throws InvalidSearchQueryException, SystemException, SqlDatabaseSystemException, TripleStoreSystemException {
@@ -1342,6 +1341,8 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      * @throws UserGroupNotFoundException e
      * @throws SystemException            e
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface #retrieveUsersForGroup(java.lang.String)
+     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     private Set<String> retrieveUsersForGroup(final String groupId) throws UserGroupNotFoundException, SystemException,
         SqlDatabaseSystemException, TripleStoreSystemException {
@@ -1420,6 +1421,7 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      * @param totalList total list of all Children.
      * @return List of child-orgUnits
      * @throws SystemException If anything fails while computing the paths.
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     private List<String> getOrgUnitChildrenPathList(final String orgUnitId, final List<String> totalList)
         throws SystemException, TripleStoreSystemException {
@@ -1445,7 +1447,6 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      * @throws AuthenticationException      e
      * @throws AuthorizationException       e
      * @throws UserAccountNotFoundException e
-     * @throws SystemException              e
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface #retrieveUserDetails(java.lang.String)
      */
     @Override
@@ -1690,7 +1691,8 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      * current, authenticated user.
      *
      * @param userAccount The <code>UserAccount</code> object to modify.
-     * @throws SystemException Thrown in case of an internal error.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
      */
     private void setModificationValues(final UserAccount userAccount) throws SqlDatabaseSystemException,
         WebserverSystemException {
@@ -1952,7 +1954,6 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      * @param preferenceName name of preference to update
      * @throws UserAccountNotFoundException e
      * @throws PreferenceNotFoundException  e
-     * @throws SystemException              e
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface #deletePreference(java.lang.String,
      *      java.lang.String)
      */
@@ -2267,7 +2268,6 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      * @throws UserAttributeNotFoundException e
      * @throws ReadonlyElementViolationException
      *                                        e
-     * @throws SystemException                e
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface #deleteAttribute(java.lang.String,
      *      java.lang.String)
      */
@@ -2289,8 +2289,6 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      * @return filter sub query with permission rules
      * @throws SystemException             e
      * @throws InvalidSearchQueryException e
-     * @throws AuthenticationException     e
-     * @throws AuthorizationException      e
      */
     @Override
     public String retrievePermissionFilterQuery(final Map<String, String[]> parameters)

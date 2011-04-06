@@ -83,7 +83,6 @@ public class StatisticDataHandler implements StatisticDataHandlerInterface {
      *                                      ex
      * @throws XmlSchemaValidationException ex
      * @throws XmlCorruptedException        ex
-     * @throws SystemException              e
      * @see de.escidoc.core.sm.business.interfaces .StatisticDataHandlerInterface #insertStatisticData(java.lang.String)
      */
     @Override

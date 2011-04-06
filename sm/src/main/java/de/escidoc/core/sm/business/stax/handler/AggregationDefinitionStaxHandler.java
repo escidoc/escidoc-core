@@ -204,7 +204,6 @@ public class AggregationDefinitionStaxHandler extends DefaultHandler {
      *
      * @param element startElement
      * @return StartElement startElement
-     * @throws Exception e
      */
     @Override
     public StartElement startElement(final StartElement element) throws MissingAttributeValueException,
@@ -280,7 +279,6 @@ public class AggregationDefinitionStaxHandler extends DefaultHandler {
      *
      * @param element endElement
      * @return EndElement endElement
-     * @throws Exception e
      */
     @Override
     public EndElement endElement(final EndElement element) throws SystemException {

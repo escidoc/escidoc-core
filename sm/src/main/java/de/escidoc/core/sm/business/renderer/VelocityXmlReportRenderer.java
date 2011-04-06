@@ -155,7 +155,7 @@ public final class VelocityXmlReportRenderer implements ReportRendererInterface 
      * Adds the scope name space values.
      *
      * @param values The {@link Map} to that the values shall be added.
-     * @throws SystemException e
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private void addReportNamespaceValues(final Map<String, Object> values) throws WebserverSystemException {
         addEscidocBaseUrl(values);

@@ -58,7 +58,10 @@ public class XmlValidationInterceptor implements Ordered {
      * Before advice to perform the schema validation of xml data of the current request.
      *
      * @param joinPoint The current {@link JoinPoint}.
-     * @throws Throwable Thrown in case of an error.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException
      */
     //    @Before("call(public !static * de.escidoc.core.*.service.interfaces.*.*(..))"
     //        + " && within(de.escidoc.core.*.ejb.*Bean)")
@@ -81,9 +84,10 @@ public class XmlValidationInterceptor implements Ordered {
      * @param xml             The xml data to validate.
      * @param resolvingMethod The name of the resolving method used to identify the schema location.
      * @param root
-     * @throws InvalidXmlException      Thrown in case of failed xml schema validation.
      * @throws WebserverSystemException Thrown in case of an internal error.
      * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException
      */
     private void validate(final String xml, final String resolvingMethod, final String root)
         throws WebserverSystemException, XmlParserSystemException, XmlSchemaValidationException, XmlCorruptedException {

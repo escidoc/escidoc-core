@@ -93,7 +93,8 @@ public class AuthenticationInterceptor implements Ordered {
      * Before advice to perform the authentication of the user of the current request.
      *
      * @param joinPoint The current {@link JoinPoint}.
-     * @throws Throwable Thrown in case of an error.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.application.security.AuthenticationException
      */
     @Before("call(public !static * de.escidoc.core.*.service.interfaces.*.*(..))")
     public void authenticate(final JoinPoint joinPoint) throws AuthenticationException, WebserverSystemException {
@@ -214,9 +215,9 @@ public class AuthenticationInterceptor implements Ordered {
     }
 
     /**
-     * Injects the {@link UserManagementWrapper}.
+     * Injects the {@link UserManagementWrapperInterface}.
      *
-     * @param userManagementWrapper the {@link UserManagementWrapper} to inject.
+     * @param userManagementWrapper the {@link UserManagementWrapperInterface} to inject.
      */
     public void setUserManagementWrapper(final UserManagementWrapperInterface userManagementWrapper) {
         this.userManagementWrapper = userManagementWrapper;

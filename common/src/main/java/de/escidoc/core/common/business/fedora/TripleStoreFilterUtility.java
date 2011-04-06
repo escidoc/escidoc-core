@@ -66,7 +66,6 @@ public interface TripleStoreFilterUtility {
      * @param whereClause
      * @return
      * @throws TripleStoreSystemException
-     * @throws TripleStoreSystemException
      */
     List<String> getMemberList(final String id, final String whereClause) throws TripleStoreSystemException;
 

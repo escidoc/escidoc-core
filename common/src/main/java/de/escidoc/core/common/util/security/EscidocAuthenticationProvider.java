@@ -40,7 +40,7 @@ public class EscidocAuthenticationProvider implements AuthenticationProvider {
     /**
      * See Interface for functional description.
      *
-     * @see org.acegisecurity.providers.AuthenticationProvider #authenticate(org.acegisecurity.Authentication)
+     * @see org.springframework.security.providers.AuthenticationProvider#authenticate(org.springframework.security.Authentication)
      */
     @Override
     public Authentication authenticate(final Authentication authentication) throws AuthenticationException {
@@ -57,7 +57,7 @@ public class EscidocAuthenticationProvider implements AuthenticationProvider {
     /**
      * See Interface for functional description.
      *
-     * @see org.acegisecurity.providers.AuthenticationProvider #supports(java.lang.Class)
+     * @see org.springframework.security.providers.AuthenticationProvider#supports(java.lang.Class)
      */
     @Override
     public boolean supports(final Class cls) {

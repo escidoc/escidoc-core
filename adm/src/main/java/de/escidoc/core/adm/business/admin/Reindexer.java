@@ -139,6 +139,9 @@ public class Reindexer {
      * @return total number of objects found, ...
      * @throws SystemException             Thrown if a framework internal error occurs.
      * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.ApplicationServerSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
      */
     public String reindex(final boolean clearIndex, final String indexName) throws SystemException,
         InvalidSearchQueryException, ApplicationServerSystemException, FedoraSystemException, WebserverSystemException {
@@ -267,10 +270,9 @@ public class Reindexer {
     }
 
     /**
-     * @param indexName name of the index (may be null for "all indexes")
      * @return total number of objects found, ...
-     * @throws SystemException             Thrown if a framework internal error occurs.
      * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
+     * @throws de.escidoc.core.common.exceptions.system.ApplicationServerSystemException
      */
     public String testReindexError() throws InvalidSearchQueryException, ApplicationServerSystemException {
         sendUpdateIndexMessage("nonexistingPid", ResourceType.ITEM, null);
@@ -363,6 +365,8 @@ public class Reindexer {
      * @param clearIndex clear the index before adding objects to it
      * @return list of resource ids
      * @throws SystemException Thrown if eSciDoc failed to receive a resource.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
      */
     private Collection<String> getIds(
         final String indexName, final ResourceType type, final String listQuery, final boolean clearIndex)

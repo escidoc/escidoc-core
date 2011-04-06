@@ -71,8 +71,6 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
 
     /**
      * Private constructor to prevent initialization.
-     *
-     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     private ContentRelationXmlProvider() {
     }
@@ -81,7 +79,6 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
      * Gets the XML PROVIDER.
      *
      * @return Returns the <code>ContentRelationXmlProvider</code> object.
-     * @throws WebserverSystemException Thrown if the instance cannot be created due to an internal error.
      */
     public static ContentRelationXmlProvider getInstance() {
         return PROVIDER;
@@ -92,7 +89,11 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
      *
      * @param cr ContentRelation
      * @return XML representation
-     * @throws SystemException Thrown if an internal error occur.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     public String getContentRelationXml(final ContentRelationCreate cr) throws TripleStoreSystemException,
         EncodingSystemException, IntegritySystemException, FedoraSystemException, WebserverSystemException {
@@ -120,10 +121,11 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
      *
      * @param cr ContentRelation
      * @return XML representation of md-records.
-     * @throws SystemException If anything fails.
      * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
      * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     public String getContentRelationMdRecords(final ContentRelationCreate cr) throws EncodingSystemException,
         FedoraSystemException, IntegritySystemException, TripleStoreSystemException, WebserverSystemException {
@@ -138,9 +140,12 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
      * @param cr ContentRelation
      * @param mr meta date record
      * @return XML representation of md-record.
-     * @throws SystemException If anything fails.
      * @throws de.escidoc.core.common.exceptions.application.notfound.MdRecordNotFoundException
      * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     public String getContentRelationMdRecord(final ContentRelationCreate cr, final MdRecordCreate mr)
         throws MdRecordNotFoundException, FedoraSystemException, TripleStoreSystemException, EncodingSystemException,
@@ -161,7 +166,7 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
      *
      * @param cr ContentRelation
      * @return XML representation
-     * @throws SystemException Thrown if an internal error occur.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     public String getContentRelationPropertiesXml(final ContentRelationCreate cr) throws WebserverSystemException {
 

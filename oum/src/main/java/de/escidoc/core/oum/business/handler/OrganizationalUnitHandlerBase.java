@@ -65,7 +65,9 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      * @throws MissingAttributeValueException If neither href (REST transport) nor objid (SOAP transport) is found.
      * @throws OrganizationalUnitNotFoundException
      *                                        If the id does not point to an organizational unit.
-     * @throws SystemException                If an intenal error occurs.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     protected String checkParentRef(final StartElement element) throws MissingAttributeValueException,
         OrganizationalUnitNotFoundException, TripleStoreSystemException, IntegritySystemException,
@@ -105,7 +107,7 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      *
      * @param property The property.
      * @return The value of the property.
-     * @throws SystemException If access to the triplestore fails.
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     public String getProperty(final String property) throws TripleStoreSystemException {
 

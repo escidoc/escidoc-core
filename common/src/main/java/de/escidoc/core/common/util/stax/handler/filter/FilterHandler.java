@@ -89,9 +89,9 @@ public class FilterHandler extends DefaultHandler {
     private String orderBy;
 
     /**
-     * Constructs a FilterHandler object. This constructor implicitly sets default values: <ul> <li>{@link
-     * DEFAULT_LIMIT} used if no limit is defined in parsed data</li> <li>{@link DEFAULT_OFFSET} used if no offset is
-     * defined in parsed data</li> <li>{@link DEFAULT_SORTING} used if no sorting is defined in parsed data</li> </ul>
+     * Constructs a FilterHandler object. This constructor implicitly sets default values: <ul> <li>DEFAULT_LIMIT}
+     * used if no limit is defined in parsed data</li> <li>DEFAULT_OFFSET used if no offset is defined in parsed
+     * data</li> <li>DEFAULT_SORTING used if no sorting is defined in parsed data</li> </ul>
      *
      * @param parser The {@link StaxParser} to use.
      */
@@ -236,8 +236,7 @@ public class FilterHandler extends DefaultHandler {
     /**
      * Gets the parsed offset.
      *
-     * @return Returns the parsed offset. If none has been found, the default value {@link FilterHandler.DEFAULT_OFFSET}
-     *         is returned
+     * @return Returns the parsed offset. If none has been found, the default value DEFAULT_OFFSET returned
      */
     public int getOffset() {
 
@@ -247,8 +246,7 @@ public class FilterHandler extends DefaultHandler {
     /**
      * Gets the parsed limit.
      *
-     * @return Returns the parsed limit. If none has been found, the default value {@link FilterHandler.DEFAULT_LIMIT}
-     *         is returned.
+     * @return Returns the parsed limit. If none has been found, the default value DEFAULT_LIMIT is returned.
      */
     public int getLimit() {
 
@@ -267,8 +265,8 @@ public class FilterHandler extends DefaultHandler {
     /**
      * Gets the parsed sorting information.
      *
-     * @return Returns the parsed ordering information. If none has been found, the default value {@link
-     *         FilterHandler.DEFAULT_SORTING} is returned.
+     * @return Returns the parsed ordering information. If none has been found, the default value DEFAULT_SORTING is
+     * returned.
      */
     public ListSorting getSorting() {
         return this.sorting;

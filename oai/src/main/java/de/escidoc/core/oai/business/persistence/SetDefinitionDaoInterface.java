@@ -86,7 +86,6 @@ public interface SetDefinitionDaoInterface {
      *         parameter is provided, all user account objects are returned.
      * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
      * @throws SqlDatabaseSystemException  Thrown in case of an internal database error.
-     * @throws SqlDatabaseSystemException  Thrown in case of an internal database access error.
      */
     List<SetDefinition> retrieveSetDefinitions(final String criteria, final int offset, final int maxResults)
         throws InvalidSearchQueryException, SqlDatabaseSystemException;

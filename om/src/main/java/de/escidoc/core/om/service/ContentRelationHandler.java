@@ -88,7 +88,7 @@ public class ContentRelationHandler implements ContentRelationHandlerInterface {
      * @throws RelationPredicateNotFoundException
      *                                        Thrown if a provided relation type is not on the predicate list.
      * @throws SystemException                e
-     * @see de.escidoc.core.common.service.interfaces.ResourceHandlerInterface #create(java.lang.String)
+     * @see de.escidoc.core.common.business.interfaces.ResourceHandlerInterface #create(java.lang.String)
      */
     @Override
     public String create(final String xmlData) throws AuthenticationException, AuthorizationException,
@@ -262,7 +262,7 @@ public class ContentRelationHandler implements ContentRelationHandlerInterface {
      * @throws ContentRelationNotFoundException
      *                                 e
      * @throws SystemException         e
-     * @see de.escidoc.core.common.service.interfaces.ResourceHandlerInterface #retrieve(java.lang.String)
+     * @see de.escidoc.core.common.business.interfaces.ResourceHandlerInterface #retrieve(java.lang.String)
      */
     @Override
     public String retrieve(final String id) throws AuthenticationException, AuthorizationException,
@@ -328,7 +328,6 @@ public class ContentRelationHandler implements ContentRelationHandlerInterface {
      *                                        Thrown if the predicate is not registered.
      * @throws InvalidContentException        Thrown if content is invalid
      * @throws InvalidXmlException            Thrown if XML is invalid
-     * @throws MissingAttributeValueException Thrown if attribute value is missing
      * @throws SystemException                Thrown if internal error occur
      */
     @Override

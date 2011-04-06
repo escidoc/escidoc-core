@@ -54,7 +54,6 @@ public interface ItemRendererInterface {
      * @throws ItemNotFoundException      Thrown if Item could not be found.
      * @throws ComponentNotFoundException Thrown if Component of Item could not be found.
      * @throws SystemException            Thrown in case of an internal error.
-     * @throws ComponentNotFoundException Thrown if a Component of the Item could not be found.
      */
     String render() throws SystemException, ItemNotFoundException, ComponentNotFoundException;
 

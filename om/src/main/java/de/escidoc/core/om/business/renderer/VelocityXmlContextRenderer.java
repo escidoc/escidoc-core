@@ -351,6 +351,8 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * @param context .
      * @param values  Map with property values. New values are added to this Map.
      * @throws SystemException If anything fails.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     private void addPropertiesValues(final Context context, final Map<String, Object> values) throws SystemException,
         TripleStoreSystemException, WebserverSystemException {
@@ -392,7 +394,8 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      *
      * @param ouids Vector with IDs of OUs.
      * @return Vector with OU description (id, title, href)
-     * @throws SystemException Thrown if retrieving OU context failed.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     public Collection<Map<String, String>> getOrganizationalUnitsContext(final Iterable<String> ouids)
         throws TripleStoreSystemException, WebserverSystemException {
@@ -411,7 +414,8 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      *
      * @param id The Id of the Organizational Unit.
      * @return HashMap with (id, title, href)
-     * @throws SystemException Thrown if instance of TripleStore failed.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     public Map<String, String> getOrganizationalUnitContext(final String id) throws TripleStoreSystemException,
         WebserverSystemException {
@@ -457,6 +461,11 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * @param memberList
      * @throws AuthorizationException Thrown if access to origin Item is restricted.
      * @throws de.escidoc.core.common.exceptions.system.SystemException
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     private void addMemberListValues(
         final Context context, final Map<String, Object> values, final Iterable<String> memberList)
@@ -555,7 +564,8 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
     /**
      * @param id The id of the context.
      * @return Returns the name of a context.
-     * @throws SystemException Thrown in case of an internal error.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     public String getName(final String id) throws TripleStoreSystemException, WebserverSystemException {
         return getProperty(id, TripleStoreUtility.PROP_NAME);
@@ -565,7 +575,8 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * @param id       The id of the context.
      * @param property The name of the property.
      * @return Returns a value of a property of an organizational unit.
-     * @throws SystemException Thrown in case of an internal error.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     private static String getProperty(final String id, final String property) throws TripleStoreSystemException,
         WebserverSystemException {

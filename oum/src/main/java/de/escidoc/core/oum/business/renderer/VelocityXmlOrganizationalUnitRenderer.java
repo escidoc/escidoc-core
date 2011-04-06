@@ -280,7 +280,8 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
      *
      * @param ids The list of ids.
      * @return The expected <code>List</code> of <code>Maps</code>.
-     * @throws SystemException Thrown in case of an internal error.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     private static List<Map<String, String>> retrieveRefValues(final Collection<String> ids)
         throws TripleStoreSystemException, WebserverSystemException {
@@ -561,7 +562,8 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
      *
      * @param organizationalUnit The organizational unit for that data shall be created.
      * @param values             The map to add values to.
-     * @throws SystemException Thrown in case of an internal error.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     private static void addParentsValues(final OrganizationalUnit organizationalUnit, final Map<String, Object> values)
         throws TripleStoreSystemException, WebserverSystemException {
@@ -589,7 +591,8 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
      *
      * @param organizationalUnit The organizational unit for that data shall be created.
      * @param values             The map to add values to.
-     * @throws SystemException Thrown in case of an internal error.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     private static void addPredecessorsValues(
         final OrganizationalUnit organizationalUnit, final Map<String, Object> values)
@@ -625,7 +628,8 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
      *
      * @param organizationalUnit The organizational unit for that data shall be created.
      * @param values             The map to add values to.
-     * @throws SystemException Thrown in case of an internal error.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     private static void addSuccessorsValues(
         final OrganizationalUnit organizationalUnit, final Map<String, Object> values)

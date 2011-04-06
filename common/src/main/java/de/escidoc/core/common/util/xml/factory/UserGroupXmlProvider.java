@@ -56,8 +56,6 @@ public final class UserGroupXmlProvider extends InfrastructureXmlProvider {
 
     /**
      * Private constructor to prevent initialization.
-     *
-     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     private UserGroupXmlProvider() {
     }
@@ -66,7 +64,6 @@ public final class UserGroupXmlProvider extends InfrastructureXmlProvider {
      * Gets the role xml PROVIDER.
      *
      * @return Returns the <code>UserGroupXmlProvider</code> object.
-     * @throws WebserverSystemException Thrown if the instance cannot be created due to an internal error.
      */
     public static UserGroupXmlProvider getInstance() {
         return PROVIDER;

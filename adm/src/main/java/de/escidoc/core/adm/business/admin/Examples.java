@@ -131,7 +131,11 @@ public class Examples {
      *
      * @param xml result XML
      * @return last modification date
-     * @throws Exception thrown if the XPath evaluation failed
+     * @throws javax.xml.parsers.ParserConfigurationException
+     * @throws java.io.UnsupportedEncodingException
+     * @throws javax.xml.xpath.XPathExpressionException
+     * @throws org.xml.sax.SAXException
+     * @throws java.io.IOException
      */
     private static String getLastModificationDate(final String xml) throws XPathExpressionException, IOException,
         ParserConfigurationException, SAXException, UnsupportedEncodingException {
@@ -159,7 +163,11 @@ public class Examples {
      * @param xml  resource XML (item XML, container XML, ...)
      * @param type resource type
      * @return last modification date
-     * @throws Exception thrown if the XPath evaluation failed
+     * @throws javax.xml.parsers.ParserConfigurationException
+     * @throws java.io.UnsupportedEncodingException
+     * @throws javax.xml.xpath.XPathExpressionException
+     * @throws org.xml.sax.SAXException
+     * @throws java.io.IOException
      */
     private static String getLastModificationDate(final String xml, final ResourceType type)
         throws XPathExpressionException, IOException, ParserConfigurationException, SAXException,
@@ -188,7 +196,11 @@ public class Examples {
      * @param xml  resource XML (item XML, container XML, ...)
      * @param type resource type
      * @return object id
-     * @throws Exception thrown if the XPath evaluation failed
+     * @throws javax.xml.parsers.ParserConfigurationException
+     * @throws java.io.UnsupportedEncodingException
+     * @throws javax.xml.xpath.XPathExpressionException
+     * @throws org.xml.sax.SAXException
+     * @throws java.io.IOException
      */
     private static String getObjectId(final String xml, final ResourceType type) throws XPathExpressionException,
         IOException, ParserConfigurationException, SAXException, UnsupportedEncodingException {
@@ -217,7 +229,44 @@ public class Examples {
      *
      * @param directory URL to the directory which contains the eSciDoc XML files (including the trailing slash).
      * @return some useful information to the user which objects were loaded
-     * @throws Exception thrown in case of an internal error
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException
+     * @throws java.io.UnsupportedEncodingException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingMdRecordException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ItemNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.violated.ReadonlyAttributeViolationException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.FileNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.violated.ContextNameNotUniqueException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.OrganizationalUnitNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException
+     * @throws javax.xml.parsers.ParserConfigurationException
+     * @throws de.escidoc.core.common.exceptions.application.violated.LockingException
+     * @throws de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingElementValueException
+     * @throws javax.xml.xpath.XPathExpressionException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContextException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException
+     * @throws de.escidoc.core.common.exceptions.system.SystemException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException
+     * @throws java.net.MalformedURLException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException
+     * @throws de.escidoc.core.common.exceptions.application.violated.ReadonlyViolationException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingContentException
+     * @throws de.escidoc.core.common.exceptions.application.security.AuthenticationException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.StreamNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws org.xml.sax.SAXException
+     * @throws de.escidoc.core.common.exceptions.application.security.AuthorizationException
+     * @throws java.io.IOException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException
      */
     public String load(final String directory) throws MalformedURLException, WebserverSystemException,
         RelationPredicateNotFoundException, OptimisticLockingException, XmlSchemaValidationException,
@@ -261,7 +310,27 @@ public class Examples {
      * @param contextId      context id
      * @param contentModelId content model id
      * @return object id of the newly created container
-     * @throws Exception thrown in case of an internal error
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException
+     * @throws java.io.UnsupportedEncodingException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingMdRecordException
+     * @throws de.escidoc.core.common.exceptions.application.security.AuthenticationException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws javax.xml.parsers.ParserConfigurationException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingElementValueException
+     * @throws javax.xml.xpath.XPathExpressionException
+     * @throws org.xml.sax.SAXException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException
+     * @throws de.escidoc.core.common.exceptions.application.security.AuthorizationException
+     * @throws java.io.IOException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException
+     * @throws de.escidoc.core.common.exceptions.system.SystemException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException
      */
     private static String loadContainer(final String xml, final String contextId, final String contentModelId)
         throws XmlSchemaValidationException, MissingAttributeValueException, SystemException,
@@ -286,7 +355,20 @@ public class Examples {
      *
      * @param xml content model XML
      * @return object id of the newly created content model
-     * @throws Exception thrown in case of an internal error
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException
+     * @throws java.io.UnsupportedEncodingException
+     * @throws de.escidoc.core.common.exceptions.application.security.AuthenticationException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
+     * @throws javax.xml.parsers.ParserConfigurationException
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws javax.xml.xpath.XPathExpressionException
+     * @throws org.xml.sax.SAXException
+     * @throws java.io.IOException
+     * @throws de.escidoc.core.common.exceptions.application.security.AuthorizationException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException
+     * @throws de.escidoc.core.common.exceptions.system.SystemException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException
      */
     private static String loadContentModel(final String xml) throws MissingAttributeValueException, SystemException,
         XmlSchemaValidationException, AuthorizationException, IOException, SAXException, XPathExpressionException,
@@ -309,7 +391,32 @@ public class Examples {
      * @param xml  context XML
      * @param ouId organizational unit id
      * @return object id of the newly created context
-     * @throws Exception thrown in case of an internal error
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException
+     * @throws java.io.UnsupportedEncodingException
+     * @throws de.escidoc.core.common.exceptions.application.violated.ReadonlyAttributeViolationException
+     * @throws de.escidoc.core.common.exceptions.application.violated.ContextNameNotUniqueException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.OrganizationalUnitNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException
+     * @throws javax.xml.parsers.ParserConfigurationException
+     * @throws de.escidoc.core.common.exceptions.application.violated.LockingException
+     * @throws de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException
+     * @throws javax.xml.xpath.XPathExpressionException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingElementValueException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException
+     * @throws de.escidoc.core.common.exceptions.system.SystemException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException
+     * @throws de.escidoc.core.common.exceptions.application.security.AuthenticationException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.StreamNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws org.xml.sax.SAXException
+     * @throws de.escidoc.core.common.exceptions.application.security.AuthorizationException
+     * @throws java.io.IOException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException
+     * @throws de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException
      */
     private static String loadContext(final String xml, final String ouId) throws XmlSchemaValidationException,
         OptimisticLockingException, AuthorizationException, IOException, SAXException, WebserverSystemException,
@@ -351,7 +458,39 @@ public class Examples {
      * @param contentModelId content model id
      * @param containerId    container id
      * @return object id of the newly created item
-     * @throws Exception thrown in case of an internal error
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException
+     * @throws java.io.UnsupportedEncodingException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingMdRecordException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ItemNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.violated.ReadonlyAttributeViolationException
+     * @throws de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.FileNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException
+     * @throws javax.xml.parsers.ParserConfigurationException
+     * @throws de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException
+     * @throws de.escidoc.core.common.exceptions.application.violated.LockingException
+     * @throws javax.xml.xpath.XPathExpressionException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingElementValueException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContextException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException
+     * @throws de.escidoc.core.common.exceptions.system.SystemException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException
+     * @throws de.escidoc.core.common.exceptions.application.violated.ReadonlyViolationException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingContentException
+     * @throws de.escidoc.core.common.exceptions.application.security.AuthenticationException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws org.xml.sax.SAXException
+     * @throws de.escidoc.core.common.exceptions.application.security.AuthorizationException
+     * @throws java.io.IOException
+     * @throws de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException
      */
     private static String loadItem(
         final String xml, final String contextId, final String contentModelId, final String containerId)
@@ -391,7 +530,25 @@ public class Examples {
      *
      * @param xml organizational unit XML
      * @return object id of the newly created organizational unit
-     * @throws Exception thrown in case of an internal error
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException
+     * @throws java.io.UnsupportedEncodingException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingMdRecordException
+     * @throws de.escidoc.core.common.exceptions.application.security.AuthenticationException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.OrganizationalUnitNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws javax.xml.parsers.ParserConfigurationException
+     * @throws javax.xml.xpath.XPathExpressionException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingElementValueException
+     * @throws org.xml.sax.SAXException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException
+     * @throws de.escidoc.core.common.exceptions.application.security.AuthorizationException
+     * @throws java.io.IOException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException
+     * @throws de.escidoc.core.common.exceptions.system.SystemException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException
+     * @throws de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException
      */
     private static String loadOrganizationalUnit(final String xml) throws OptimisticLockingException,
         MissingAttributeValueException, SystemException, XmlSchemaValidationException, IOException,

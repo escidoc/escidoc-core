@@ -53,7 +53,7 @@ public class VelocityXmlContextFoXmlRenderer implements ContextFoXmlRendererInte
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.oum.business.renderer.interfaces.ContextFoXmlRendererInterface#renderRelsExt(Map)
+     * @see de.escidoc.core.om.business.renderer.interfaces.ContextFoXmlRendererInterface#renderRelsExt(Map)
      */
     @Override
     public String renderRelsExt(final Map<String, Object> values) throws WebserverSystemException {
@@ -64,7 +64,7 @@ public class VelocityXmlContextFoXmlRenderer implements ContextFoXmlRendererInte
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.oum.business.renderer.interfaces.ContextFoXmlRendererInterface#renderRelsExt(Map)
+     * @see de.escidoc.core.om.business.renderer.interfaces.ContextFoXmlRendererInterface#renderRelsExt(Map)
      */
     @Override
     public String renderDc(final Map<String, Object> values) throws WebserverSystemException {

@@ -41,7 +41,6 @@ public interface ValueFormatter {
     /**
      * Format a value
      *
-     * @param input the input value.
      * @return the formatted value.
      * @param values
      */

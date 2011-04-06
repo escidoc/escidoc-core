@@ -212,6 +212,7 @@ public class XMLBase {
      * @throws ParserConfigurationException If anything fails.
      * @throws SAXException                 If anything fails.
      * @throws IOException                  If anything fails.
+     * @throws java.io.FileNotFoundException
      */
     public Document getDocument(final String filename) throws ParserConfigurationException, SAXException, IOException,
         FileNotFoundException {
@@ -296,6 +297,7 @@ public class XMLBase {
      * @param filename The name of the file.
      * @param contents The contents to save.
      * @throws IOException If the save operation fails.
+     * @throws java.io.FileNotFoundException
      */
     public void saveToFile(final String filename, final String contents) throws IOException, FileNotFoundException {
 

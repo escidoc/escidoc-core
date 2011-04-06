@@ -111,6 +111,9 @@ public class StaxParser implements DefaultHandlerStackInterface {
      * @param in XML
      * @throws Exception If anything fails. This depends on the implementation of the handlers in the used handler
      *                   chain
+     * @throws javax.xml.stream.XMLStreamException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
      */
     public void parse(final InputStream in) throws Exception, XMLStreamException, XmlParserSystemException,
         XmlCorruptedException {
@@ -127,6 +130,9 @@ public class StaxParser implements DefaultHandlerStackInterface {
      * @param in XML
      * @throws Exception If anything fails. This depends on the implementation of the handlers in the used handler
      *                   chain
+     * @throws javax.xml.stream.XMLStreamException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
      */
     protected void parseStream(final InputStream in) throws Exception, XmlParserSystemException, XMLStreamException,
         XmlCorruptedException {
@@ -194,6 +200,8 @@ public class StaxParser implements DefaultHandlerStackInterface {
      * @param in XML
      * @throws Exception If anything fails. This depends on the implementation of the handlers in the used handler
      *                   chain
+     * @throws javax.xml.stream.XMLStreamException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
      */
     protected void parseEvents(final InputStream in) throws Exception, XMLStreamException, XmlCorruptedException {
 
@@ -310,6 +318,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
      * @param e {@link StartElement StartElement}
      * @throws Exception If anything fails. This depends on the implementation of the handlers in the used handler
      *                   chain.
+     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
      */
     protected void handle(final StartElement e) throws Exception, XmlCorruptedException {
 

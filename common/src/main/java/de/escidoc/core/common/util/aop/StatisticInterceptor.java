@@ -122,6 +122,9 @@ public class StatisticInterceptor implements Ordered {
      * @param joinPoint The current {@link ProceedingJoinPoint}.
      * @return Returns the changed result.
      * @throws Throwable Thrown in case of an error.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.SystemException
+     * @throws Exception
      */
     @Around("call(public !static * de.escidoc.core.*.service.interfaces.*.*(..))"
         + " && within(de.escidoc.core.*.ejb.*Bean)" + " && !call(* de.escidoc.core..*.SemanticStoreHandler*.*(..))"

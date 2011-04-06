@@ -263,6 +263,12 @@ public class ItemHandlerCreate extends ItemResourceListener {
      *                                      If a read-only attribute is set.
      * @throws InvalidContentException      If there is invalid content in xml data.
      * @throws MissingContentException      If some required content is missing in xml data.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     public String addComponent(final String xmlData) throws SystemException, XmlCorruptedException,
         XmlSchemaValidationException, LockingException, InvalidStatusException, FileNotFoundException,
@@ -437,6 +443,12 @@ public class ItemHandlerCreate extends ItemResourceListener {
      * @throws de.escidoc.core.common.exceptions.system.SystemException
      * @throws de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException
      * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     public String createComponent(final String xmlData) throws SystemException, XmlCorruptedException,
         XmlSchemaValidationException, LockingException, InvalidStatusException, FileNotFoundException,

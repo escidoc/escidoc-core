@@ -43,9 +43,9 @@ public class EscidocEjbProvider extends EscidocSpringProvider {
      * See Interface for functional description.<br>
      * <p/>
      * For providing "compatible" wsdl to previous implementation, the following is initialized: <ul> <li>the default
-     * name space of the service description is initialized using the value of option {@link
-     * EJBProvider.OPTION_REMOTEINTERFACENAME}.</li> </ul> Additionally, the following option should be defined properly
-     * in deployment descriptor: <ul> <li>OPTION_WSDL_PORTTYPE</li> <li>OPTION_WSDL_TARGETNAMESPACE</li>
+     * name space of the service description is initialized using the value of option OPTION_REMOTEINTERFACENAME.</li>
+     * </ul> Additionally, the following option should be defined properly in deployment descriptor: <ul>
+     * <li>OPTION_WSDL_PORTTYPE</li> <li>OPTION_WSDL_TARGETNAMESPACE</li>
      * <li>OPTION_WSDL_SERVICEELEMENT</li> <li>OPTION_WSDL_SERVICEPORT</li> </ul>
      *
      * @see JavaProvider #initServiceDesc(org.apache.axis.handlers.soap.SOAPService, org.apache.axis.MessageContext)

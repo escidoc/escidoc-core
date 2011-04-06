@@ -398,11 +398,6 @@ public interface ContainerHandlerInterface extends IngestableResource {
      * @param parameters
      * @return The content of the resource.
      * @throws ContainerNotFoundException Thrown if an item with the specified id cannot be found.
-     * @throws AuthenticationException    Thrown if the authentication fails due to an invalid provided
-     *                                    eSciDocUserHandle.
-     * @throws AuthorizationException     Thrown if the authorization fails.
-     * @throws MissingMethodParameterException
-     *                                    If no data is provided.
      * @throws SystemException            If an error occurs.
      * @throws de.escidoc.core.common.exceptions.application.notfound.OperationNotFoundException
      */

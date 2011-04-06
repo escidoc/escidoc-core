@@ -63,6 +63,7 @@ public class XmlHeaderInterceptor implements Ordered {
      * @param joinPoint The current {@link ProceedingJoinPoint}.
      * @return Returns the changed result.
      * @throws Throwable Thrown in case of an error.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     @Around("call(public !static java.lang.String de.escidoc.core.*.service.interfaces.*.*(..))"
         + " && within(de.escidoc.core.*.ejb.*Bean)" + " && !call(* de.escidoc.core..*.SemanticStoreHandler*.*(..))"

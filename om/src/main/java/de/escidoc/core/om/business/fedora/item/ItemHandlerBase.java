@@ -157,7 +157,11 @@ public class ItemHandlerBase extends HandlerBase {
      *
      * @param id The ID of the item which should be bound to this Handler.
      * @throws ItemNotFoundException If there is no item with <code>id</code> in the repository.
-     * @throws SystemException       Thrown in case of an internal system error.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     final void setItem(final String id) throws ItemNotFoundException, TripleStoreSystemException,
         IntegritySystemException, FedoraSystemException, XmlParserSystemException, WebserverSystemException {
@@ -178,7 +182,11 @@ public class ItemHandlerBase extends HandlerBase {
      *
      * @param id The ID of the item which should be bound to this Handler.
      * @throws ItemNotFoundException If there is no item with <code>id</code> in the repository.
-     * @throws SystemException       Thrown in case of an internal system error.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     final void setOriginItem(final String id) throws ItemNotFoundException, TripleStoreSystemException,
         IntegritySystemException, FedoraSystemException, XmlParserSystemException, WebserverSystemException {
@@ -219,7 +227,11 @@ public class ItemHandlerBase extends HandlerBase {
      * @param id ID of the component.
      * @return The requested component object or null.
      * @throws ComponentNotFoundException Thrown if Component with provided objid could not be found.
-     * @throws SystemException            Thrown in case of internal error.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     final Component getComponent(final String id) throws ComponentNotFoundException, FedoraSystemException,
         WebserverSystemException, TripleStoreSystemException, IntegritySystemException, XmlParserSystemException {

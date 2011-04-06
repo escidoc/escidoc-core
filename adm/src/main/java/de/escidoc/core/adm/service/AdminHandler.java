@@ -149,7 +149,6 @@ public class AdminHandler implements AdminHandlerInterface {
      * Provides a xml structure containing the index-configuration.
      *
      * @return xml structure with index configuration
-     * @throws SystemException         Thrown if a framework internal error occurs.
      * @throws AuthenticationException Thrown if the authentication fails due to an invalid provided eSciDoc user
      *                                 handle.
      * @throws AuthorizationException  Thrown if authorization fails.
@@ -165,7 +164,6 @@ public class AdminHandler implements AdminHandlerInterface {
      * creation date of Escidoc repository objects.
      *
      * @return xml structure with escidoc configuration properties
-     * @throws SystemException         Thrown if a framework internal error occurs.
      * @throws AuthenticationException Thrown if the authentication fails due to an invalid provided eSciDoc user
      *                                 handle.
      * @throws AuthorizationException  Thrown if authorization fails.

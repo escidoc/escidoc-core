@@ -51,6 +51,9 @@ public class ContextHandlerDelete extends ContextHandlerCreate {
      * @throws ContextNotFoundException If context could not be found.
      * @throws InvalidStatusException   If context is in invalid status.
      * @throws SystemException          If anything else fails.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
      */
     public void remove(final FedoraContextHandler contextHandler) throws ContextNotEmptyException,
         ContextNotFoundException, InvalidStatusException, SystemException, TripleStoreSystemException,
