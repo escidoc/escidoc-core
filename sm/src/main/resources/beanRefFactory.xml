@@ -17,6 +17,7 @@
 				<value>/META-INF/spring/applicationContext-aa-remote.xml</value>
 				<value>/META-INF/spring/applicationContext-om-remote.xml</value>
 				<value>/META-INF/spring/applicationContext-st-remote.xml</value>
+				<value>/META-INF/spring/applicationContext-cmm-remote.xml</value>
 			</list>
 		</constructor-arg>
 	</bean>
