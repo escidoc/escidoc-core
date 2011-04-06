@@ -94,15 +94,21 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     public static final String XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT = XPATH_SRW_RESPONSE_OBJECT + NAME_USER_ACCOUNT;
 
-    private static final String SYSTEM_ADMINISTRATOR_USER_NAME = "escidoc:testsystemadministrator";
+    private static final String SYSTEM_ADMINISTRATOR_USER_ID = "escidoc:testsystemadministrator";
+
+    private static final String SYSTEM_ADMINISTRATOR_NAME = "Test System Administrator User";
 
     private static final String SYSTEM_ADMINISTRATOR_LOGIN_NAME = "testsystemadministrator";
 
-    private static final String SYSTEM_INSPECTOR_USER_NAME = "escidoc:testsysteminspector";
+    private static final String SYSTEM_INSPECTOR_USER_ID = "escidoc:testsysteminspector";
+
+    private static final String SYSTEM_INSPECTOR_NAME = "Test System-Inspector User";
 
     private static final String SYSTEM_INSPECTOR_LOGIN_NAME = "testsysteminspector";
 
-    private static final String DEPOSITOR_USER_NAME = "escidoc:testdepositor";
+    private static final String DEPOSITOR_USER_ID = "escidoc:testdepositor";
+
+    private static final String DEPOSITOR_NAME = "Test Depositor User";
 
     private static final String DEPOSITOR_LOGIN_NAME = "testdepositor";
 
@@ -1360,7 +1366,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_NAME + "\"=%" });
-        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "100" });
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "1000" });
 
         String retrievedUserAccountsXml = null;
 
@@ -1445,7 +1451,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_IDENTIFIER + "\"="
-            + SYSTEM_ADMINISTRATOR_USER_NAME + " or " + "\"" + FILTER_IDENTIFIER + "\"=" + DEPOSITOR_USER_NAME });
+            + SYSTEM_ADMINISTRATOR_USER_ID + " or " + "\"" + FILTER_IDENTIFIER + "\"=" + DEPOSITOR_USER_ID });
 
         String retrievedUserAccountsXml = null;
 
@@ -1481,6 +1487,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_ACTIVE + "\"=true" });
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "1000" });
 
         String retrievedUserAccountsXml = null;
 
@@ -1590,7 +1597,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
         final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_LOGIN_NAME + "\"=%ysad%" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_LOGIN_NAME + "\"=%testsys%" });
 
         String retrievedUserAccountsXml = null;
 
@@ -1657,6 +1664,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_ORGANIZATIONAL_UNIT + "\"=escidoc:ex3" });
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "1000" });
 
         String retrievedUserAccountsXml = null;
 
@@ -1768,8 +1776,8 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\"" + FILTER_IDENTIFIER + "\"="
-            + SYSTEM_ADMINISTRATOR_USER_NAME + " or " + "\"" + FILTER_IDENTIFIER + "\"=" + SYSTEM_INSPECTOR_USER_NAME
-            + " or " + "\"" + FILTER_IDENTIFIER + "\"=" + DEPOSITOR_USER_NAME + ") and " + "\"" + FILTER_LOGIN_NAME
+            + SYSTEM_ADMINISTRATOR_USER_ID + " or " + "\"" + FILTER_IDENTIFIER + "\"=" + SYSTEM_INSPECTOR_USER_ID
+            + " or " + "\"" + FILTER_IDENTIFIER + "\"=" + DEPOSITOR_USER_ID + ") and " + "\"" + FILTER_LOGIN_NAME
             + "\"=testsys% and " + "\"" + FILTER_NAME + "\"=%Sys% and " + "\"" + FILTER_ACTIVE + "\"=true" });
 
         String retrievedUserAccountsXml = null;
@@ -1997,8 +2005,8 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\"" + FILTER_IDENTIFIER + "\"="
-            + SYSTEM_ADMINISTRATOR_USER_NAME + " or " + "\"" + FILTER_IDENTIFIER + "\"=" + SYSTEM_INSPECTOR_USER_NAME
-            + " or " + "\"" + FILTER_IDENTIFIER + "\"=" + DEPOSITOR_USER_NAME + ") and " + "\"" + FILTER_LOGIN_NAME
+            + SYSTEM_ADMINISTRATOR_USER_ID + " or " + "\"" + FILTER_IDENTIFIER + "\"=" + SYSTEM_INSPECTOR_USER_ID
+            + " or " + "\"" + FILTER_IDENTIFIER + "\"=" + DEPOSITOR_USER_ID + ") and " + "\"" + FILTER_LOGIN_NAME
             + "\"=testsys% and " + "\"" + FILTER_NAME + "\"=%Sys% and " + "\"" + FILTER_ACTIVE + "\"=true and " + "\""
             + FILTER_CONTEXT + "\"=escidoc:persistent3" });
         try {
@@ -2022,8 +2030,8 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_IDENTIFIER + "\"="
-            + SYSTEM_ADMINISTRATOR_USER_NAME + " or " + "\"" + FILTER_IDENTIFIER + "\"=" + SYSTEM_INSPECTOR_USER_NAME
-            + " or " + "\"" + FILTER_IDENTIFIER + "\"=" + DEPOSITOR_USER_NAME + " sortby " + "\"" + FILTER_NAME
+            + SYSTEM_ADMINISTRATOR_USER_ID + " or " + "\"" + FILTER_IDENTIFIER + "\"=" + SYSTEM_INSPECTOR_USER_ID
+            + " or " + "\"" + FILTER_IDENTIFIER + "\"=" + DEPOSITOR_USER_ID + " sortby " + "\"" + FILTER_NAME
             + "\"/sort.ascending" });
 
         String retrievedUserAccountsXml = null;
@@ -2042,12 +2050,13 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
 
         assertXmlExists("Missing user System Inspector User.", retrievedDocument, XPATH_SRW_RESPONSE_RECORD + "[3]"
-            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_USER_ACCOUNT
-            + "/properties[name='System Inspector User (Read Only Super User)']");
+            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_USER_ACCOUNT + "/properties[name='" + SYSTEM_INSPECTOR_NAME
+            + "']");
         assertXmlExists("Missing user System Administrator User.", retrievedDocument, XPATH_SRW_RESPONSE_RECORD + "[2]"
-            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_USER_ACCOUNT + "/properties[name='System Administrator User']");
+            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_USER_ACCOUNT + "/properties[name='" + SYSTEM_ADMINISTRATOR_NAME
+            + "']");
         assertXmlExists("Missing user Depositor User.", retrievedDocument, XPATH_SRW_RESPONSE_RECORD + "[1]"
-            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_USER_ACCOUNT + "/properties[name='Depositor User']");
+            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_USER_ACCOUNT + "/properties[name='" + DEPOSITOR_NAME + "']");
     }
 
     /**
@@ -2062,8 +2071,8 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_IDENTIFIER + "\"="
-            + SYSTEM_ADMINISTRATOR_USER_NAME + " or " + "\"" + FILTER_IDENTIFIER + "\"=" + SYSTEM_INSPECTOR_USER_NAME
-            + " or " + "\"" + FILTER_IDENTIFIER + "\"=" + DEPOSITOR_USER_NAME + " sortby " + "\"" + FILTER_NAME
+            + SYSTEM_ADMINISTRATOR_USER_ID + " or " + "\"" + FILTER_IDENTIFIER + "\"=" + SYSTEM_INSPECTOR_USER_ID
+            + " or " + "\"" + FILTER_IDENTIFIER + "\"=" + DEPOSITOR_USER_ID + " sortby " + "\"" + FILTER_NAME
             + "\"/sort.descending" });
 
         String retrievedUserAccountsXml = null;
@@ -2082,12 +2091,13 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
 
         assertXmlExists("Missing user System Inspector User.", retrievedDocument, XPATH_SRW_RESPONSE_RECORD + "[1]"
-            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_USER_ACCOUNT
-            + "/properties[name='System Inspector User (Read Only Super User)']");
+            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_USER_ACCOUNT + "/properties[name='" + SYSTEM_INSPECTOR_NAME
+            + "']");
         assertXmlExists("Missing user System Administrator User.", retrievedDocument, XPATH_SRW_RESPONSE_RECORD + "[2]"
-            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_USER_ACCOUNT + "/properties[name='System Administrator User']");
+            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_USER_ACCOUNT + "/properties[name='" + SYSTEM_ADMINISTRATOR_NAME
+            + "']");
         assertXmlExists("Missing user Depositor User.", retrievedDocument, XPATH_SRW_RESPONSE_RECORD + "[3]"
-            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_USER_ACCOUNT + "/properties[name='Depositor User']");
+            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_USER_ACCOUNT + "/properties[name='" + DEPOSITOR_NAME + "']");
     }
 
     /**
@@ -2102,8 +2112,8 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_IDENTIFIER + "\"="
-            + SYSTEM_ADMINISTRATOR_USER_NAME + " or " + "\"" + FILTER_IDENTIFIER + "\"=" + SYSTEM_INSPECTOR_USER_NAME
-            + " or " + "\"" + FILTER_IDENTIFIER + "\"=" + DEPOSITOR_USER_NAME + " sortby " + "\"" + FILTER_NAME
+            + SYSTEM_ADMINISTRATOR_USER_ID + " or " + "\"" + FILTER_IDENTIFIER + "\"=" + SYSTEM_INSPECTOR_USER_ID
+            + " or " + "\"" + FILTER_IDENTIFIER + "\"=" + DEPOSITOR_USER_ID + " sortby " + "\"" + FILTER_NAME
             + "\"/sort.descending" });
         filterParams.put(FILTER_PARAMETER_STARTRECORD, new String[] { "2" });
 
@@ -2123,9 +2133,10 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
 
         assertXmlExists("Missing user System Administrator User.", retrievedDocument, XPATH_SRW_RESPONSE_RECORD + "[1]"
-            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_USER_ACCOUNT + "/properties[name='System Administrator User']");
+            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_USER_ACCOUNT + "/properties[name='" + SYSTEM_ADMINISTRATOR_NAME
+            + "']");
         assertXmlExists("Missing user Depositor User.", retrievedDocument, XPATH_SRW_RESPONSE_RECORD + "[2]"
-            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_USER_ACCOUNT + "/properties[name='Depositor User']");
+            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_USER_ACCOUNT + "/properties[name='" + DEPOSITOR_NAME + "']");
     }
 
     /**
@@ -2141,8 +2152,8 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_IDENTIFIER + "\"="
-            + SYSTEM_ADMINISTRATOR_USER_NAME + " or " + "\"" + FILTER_IDENTIFIER + "\"=" + SYSTEM_INSPECTOR_USER_NAME
-            + " or " + "\"" + FILTER_IDENTIFIER + "\"=" + DEPOSITOR_USER_NAME + " sortby " + "\"" + FILTER_NAME
+            + SYSTEM_ADMINISTRATOR_USER_ID + " or " + "\"" + FILTER_IDENTIFIER + "\"=" + SYSTEM_INSPECTOR_USER_ID
+            + " or " + "\"" + FILTER_IDENTIFIER + "\"=" + DEPOSITOR_USER_ID + " sortby " + "\"" + FILTER_NAME
             + "\"/sort.descending" });
         filterParams.put(FILTER_PARAMETER_STARTRECORD, new String[] { "2" });
         filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "1" });
@@ -2163,7 +2174,8 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
 
         assertXmlExists("Missing user System Administrator User.", retrievedDocument, XPATH_SRW_RESPONSE_RECORD + "[1]"
-            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_USER_ACCOUNT + "/properties[name='System Administrator User']");
+            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_USER_ACCOUNT + "/properties[name='" + SYSTEM_ADMINISTRATOR_NAME
+            + "']");
     }
 
     /**
