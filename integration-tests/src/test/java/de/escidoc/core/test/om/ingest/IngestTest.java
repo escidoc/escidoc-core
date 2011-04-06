@@ -51,7 +51,7 @@ import static org.junit.Assert.fail;
  * @author Steffen Wagner, KST
  */
 @RunWith(value = Parameterized.class)
-public class IngestAbstractTest extends IngestTestBase {
+public class IngestTest extends IngestTestBase {
 
     private static final Pattern OBJECT_PATTERN =
         Pattern.compile("<objid resourceType=\"([^\"][^\"]*)\">(escidoc:\\d+)</objid>", Pattern.MULTILINE);
@@ -59,7 +59,7 @@ public class IngestAbstractTest extends IngestTestBase {
     /**
      * @param transport The transport identifier.
      */
-    public IngestAbstractTest(final int transport) {
+    public IngestTest(final int transport) {
         super(transport);
     }
 
