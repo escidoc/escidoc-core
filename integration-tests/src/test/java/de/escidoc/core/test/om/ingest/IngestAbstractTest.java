@@ -30,9 +30,12 @@ package de.escidoc.core.test.om.ingest;
 
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidResourceException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
+import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -47,6 +50,7 @@ import static org.junit.Assert.fail;
  *
  * @author Steffen Wagner, KST
  */
+@RunWith(value = Parameterized.class)
 public class IngestAbstractTest extends IngestTestBase {
 
     private static final Pattern OBJECT_PATTERN =
@@ -493,6 +497,17 @@ public class IngestAbstractTest extends IngestTestBase {
         else {
             fail("no match for content model found, return value " + "of ingest could not be matched successfully.");
         }
+    }
+
+    /**
+     * Test unexpected parser exception instead of XmlCorruptedException during create (see issue INFR-911).
+     *
+     * @throws Exception Thrown if behavior is not as expected.
+     */
+    @Test(expected = XmlCorruptedException.class)
+    public void testInvalidXml() throws Exception {
+
+        ingest("laber-rababer");
     }
 
 }
