@@ -202,19 +202,6 @@ public class ComponentMetadataHandler extends DefaultHandler {
     }
 
     /**
-     * Handle the character section of an element.
-     *
-     * @param s       The contents of the character section.
-     * @param element The element.
-     * @return The character section.
-     */
-    @Override
-    public String characters(final String s, final StartElement element) {
-
-        return s;
-    }
-
-    /**
      * @return Returns the title.
      */
     public String getTitle() {

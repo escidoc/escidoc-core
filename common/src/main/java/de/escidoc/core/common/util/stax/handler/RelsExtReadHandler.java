@@ -179,15 +179,16 @@ public class RelsExtReadHandler extends DefaultHandler {
      */
     private void getObjectValue(final StartElement element) {
 
-        if (element.hasAttribute(Constants.RDF_NAMESPACE_URI, RDF_RESOURCE)) {
+        final int index = element.indexOfAttribute(Constants.RDF_NAMESPACE_URI, RDF_RESOURCE);
+        if (index != -1) {
             try {
-                this.object = element.getAttributeValue(Constants.RDF_NAMESPACE_URI, RDF_RESOURCE);
+                this.object = element.getAttribute(index).getValue();
                 if (this.cleanIdentifier) {
                     this.object = cleanIdentifier(this.object);
                 }
 
             }
-            catch (final NoSuchAttributeException e) {
+            catch (final IndexOutOfBoundsException e) {
                 if (LOGGER.isWarnEnabled()) {
                     LOGGER.warn("Error on getting attribute.");
                 }

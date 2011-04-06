@@ -39,8 +39,6 @@ import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -59,8 +57,6 @@ public class OneComponentPropertiesHandler extends DefaultHandler {
     private final StaxParser parser;
 
     private final Map<String, String> properties = new HashMap<String, String>();
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(OneComponentPropertiesHandler.class);
 
     /**
      * OneComponentPropertiesHandler.

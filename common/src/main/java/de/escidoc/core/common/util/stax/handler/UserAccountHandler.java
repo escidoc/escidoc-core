@@ -74,10 +74,4 @@ public class UserAccountHandler extends DefaultHandler {
         return data;
     }
 
-    @Override
-    public EndElement endElement(final EndElement element) {
-
-        return element;
-    }
-
 }

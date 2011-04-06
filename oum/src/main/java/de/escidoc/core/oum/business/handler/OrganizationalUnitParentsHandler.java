@@ -93,17 +93,6 @@ public class OrganizationalUnitParentsHandler extends OrganizationalUnitHandlerB
     }
 
     /**
-     * See Interface for functional description.
-     *
-     * @see DefaultHandler# endElement(de.escidoc.core.common.util.xml.stax.events.EndElement)
-     */
-    @Override
-    public EndElement endElement(final EndElement element) throws InvalidXmlException {
-
-        return element;
-    }
-
-    /**
      * @return the parentOus
      */
     public List<String> getParentOus() {

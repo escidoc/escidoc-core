@@ -24,13 +24,10 @@ import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.Elements;
-import de.escidoc.core.common.util.xml.stax.events.Attribute;
-import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import org.joda.time.DateTime;
 
-import javax.naming.directory.NoSuchAttributeException;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -106,12 +103,12 @@ public class TaskParamHandler extends DefaultHandler {
         final String currentPath = parser.getCurPath();
 
         if (PARAM_PATH.equals(currentPath)) {
-            if (element.hasAttribute(null, LAST_MODIFICATION_DATE_ATT)) {
+            final int index = element.indexOfAttribute(null, LAST_MODIFICATION_DATE_ATT);
+            if (index != -1) {
                 try {
-                    final Attribute date = element.getAttribute(null, LAST_MODIFICATION_DATE_ATT);
-                    this.lastModificationDate = date.getValue();
+                    this.lastModificationDate = element.getAttribute(index).getValue();
                 }
-                catch (final NoSuchAttributeException e1) {
+                catch (final IndexOutOfBoundsException e1) {
                     throw new XmlCorruptedException("Error on parsing last modification date attribute", e1);
                 }
             }
@@ -134,19 +131,6 @@ public class TaskParamHandler extends DefaultHandler {
         else if (!currentPath.startsWith(PARAM_PATH)) {
             throw new XmlCorruptedException("Task param has wrong root element '" + currentPath + "'!");
         }
-        return element;
-    }
-
-    /**
-     * Handle the end of an element.
-     * 
-     * @param element
-     *            The element.
-     * @return The element.
-     */
-    @Override
-    public EndElement endElement(final EndElement element) {
-
         return element;
     }
 
