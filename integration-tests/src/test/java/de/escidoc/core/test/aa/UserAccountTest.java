@@ -1611,7 +1611,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         assertXmlValidSrwResponse(retrievedUserAccountsXml);
         final Document retrievedDocument = EscidocRestSoapTestBase.getDocument(retrievedUserAccountsXml);
         final NodeList userAccountNodes = selectNodeList(retrievedDocument, XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT);
-        assertEquals("Unexpected number of user accounts.", 1, userAccountNodes.getLength());
+        assertEquals("Unexpected number of user accounts.", 3, userAccountNodes.getLength());
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
         assertXmlExists("Missing user System Administrator User.", retrievedDocument,
             XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[properties/login-name='" + SYSTEM_ADMINISTRATOR_LOGIN_NAME
@@ -1664,7 +1664,6 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_ORGANIZATIONAL_UNIT + "\"=escidoc:ex3" });
-        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "1000" });
 
         String retrievedUserAccountsXml = null;
 
@@ -1679,12 +1678,12 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         final Document retrievedDocument = EscidocRestSoapTestBase.getDocument(retrievedUserAccountsXml);
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
         assertXmlExists("Missing user System Administrator User.", retrievedDocument,
-            XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[properties/login-name='" + SYSTEM_ADMINISTRATOR_LOGIN_NAME
-                + "']");
+            XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[properties/login-name='System Administrator User']");
         assertXmlExists("Missing user System Inspector (Read Only Super User).", retrievedDocument,
-            XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[properties/login-name='" + SYSTEM_INSPECTOR_LOGIN_NAME + "']");
+            XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT
+                + "[properties/login-name='System Inspector User (Read Only Super User)']");
         assertXmlExists("Missing user Depositor User.", retrievedDocument, XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT
-            + "[properties/login-name='" + DEPOSITOR_LOGIN_NAME + "']");
+            + "[properties/login-name='Depositor User']");
 
         // FIXME: assert only containing user accounts of addressed ou.
 
