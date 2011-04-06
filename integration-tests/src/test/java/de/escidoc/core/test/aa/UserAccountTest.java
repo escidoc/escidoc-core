@@ -94,9 +94,15 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     public static final String XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT = XPATH_SRW_RESPONSE_OBJECT + NAME_USER_ACCOUNT;
 
+    private static final String SYSTEM_ADMINISTRATOR_USER_NAME = "escidoc:testsystemadministrator";
+
     private static final String SYSTEM_ADMINISTRATOR_LOGIN_NAME = "testsystemadministrator";
 
+    private static final String SYSTEM_INSPECTOR_USER_NAME = "escidoc:testsysteminspector";
+
     private static final String SYSTEM_INSPECTOR_LOGIN_NAME = "testsysteminspector";
+
+    private static final String DEPOSITOR_USER_NAME = "escidoc:testdepositor";
 
     private static final String DEPOSITOR_LOGIN_NAME = "testdepositor";
 
@@ -173,8 +179,8 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
         final Document createdDocument = createSuccessfully("escidoc_useraccount_for_create.xml");
 
-        assertEquals("Creation date and last modification date are different. ", assertCreationDateExists("",
-            createdDocument), getLastModificationDateValue(createdDocument));
+        assertEquals("Creation date and last modification date are different. ",
+            assertCreationDateExists("", createdDocument), getLastModificationDateValue(createdDocument));
     }
 
     /**
@@ -1354,6 +1360,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_NAME + "\"=%" });
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "100" });
 
         String retrievedUserAccountsXml = null;
 
@@ -1368,7 +1375,8 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         final Document retrievedDocument = EscidocRestSoapTestBase.getDocument(retrievedUserAccountsXml);
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
         assertXmlExists("Missing user System Administrator User.", retrievedDocument,
-            XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[properties/login-name='" + SYSTEM_ADMINISTRATOR_LOGIN_NAME + "']");
+            XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[properties/login-name='" + SYSTEM_ADMINISTRATOR_LOGIN_NAME
+                + "']");
         assertXmlExists("Missing user System Inspector (Read Only Super User).", retrievedDocument,
             XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[properties/login-name='" + SYSTEM_INSPECTOR_LOGIN_NAME + "']");
         assertXmlExists("Missing user Depositor User.", retrievedDocument, XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT
@@ -1436,8 +1444,8 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
         final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_IDENTIFIER + "\"=escidoc:exuser1 or "
-            + "\"" + FILTER_IDENTIFIER + "\"=escidoc:exuser4" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_IDENTIFIER + "\"="
+            + SYSTEM_ADMINISTRATOR_USER_NAME + " or " + "\"" + FILTER_IDENTIFIER + "\"=" + DEPOSITOR_USER_NAME });
 
         String retrievedUserAccountsXml = null;
 
@@ -1454,7 +1462,8 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         assertEquals("Unexpected number of user accounts.", 2, userAccountNodes.getLength());
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
         assertXmlExists("Missing user System Administrator User.", retrievedDocument,
-            XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[properties/login-name='" + SYSTEM_ADMINISTRATOR_LOGIN_NAME + "']");
+            XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[properties/login-name='" + SYSTEM_ADMINISTRATOR_LOGIN_NAME
+                + "']");
         assertXmlExists("Missing user Depositor User.", retrievedDocument, XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT
             + "[properties/login-name='" + DEPOSITOR_LOGIN_NAME + "']");
         // FIXME further assertions needed
@@ -1486,7 +1495,8 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         final Document retrievedDocument = EscidocRestSoapTestBase.getDocument(retrievedUserAccountsXml);
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
         assertXmlExists("Missing user System Administrator User.", retrievedDocument,
-            XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[properties/login-name='" + SYSTEM_ADMINISTRATOR_LOGIN_NAME + "']");
+            XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[properties/login-name='" + SYSTEM_ADMINISTRATOR_LOGIN_NAME
+                + "']");
         assertXmlExists("Missing user System Inspector (Read Only Super User).", retrievedDocument,
             XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[properties/login-name='" + SYSTEM_INSPECTOR_LOGIN_NAME + "']");
         assertXmlExists("Missing user Depositor User.", retrievedDocument, XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT
@@ -1597,7 +1607,8 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         assertEquals("Unexpected number of user accounts.", 1, userAccountNodes.getLength());
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
         assertXmlExists("Missing user System Administrator User.", retrievedDocument,
-            XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[properties/login-name='" + SYSTEM_ADMINISTRATOR_LOGIN_NAME + "']");
+            XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[properties/login-name='" + SYSTEM_ADMINISTRATOR_LOGIN_NAME
+                + "']");
         // FIXME further assertions needed
     }
 
@@ -1629,7 +1640,8 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         assertEquals("Unexpected number of user accounts.", 3, userAccountNodes.getLength());
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
         assertXmlExists("Missing user System Administrator User.", retrievedDocument,
-            XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[properties/login-name='" + SYSTEM_ADMINISTRATOR_LOGIN_NAME + "']");
+            XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[properties/login-name='" + SYSTEM_ADMINISTRATOR_LOGIN_NAME
+                + "']");
         // FIXME further assertions needed
     }
 
@@ -1659,7 +1671,8 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         final Document retrievedDocument = EscidocRestSoapTestBase.getDocument(retrievedUserAccountsXml);
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
         assertXmlExists("Missing user System Administrator User.", retrievedDocument,
-            XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[properties/login-name='" + SYSTEM_ADMINISTRATOR_LOGIN_NAME + "']");
+            XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[properties/login-name='" + SYSTEM_ADMINISTRATOR_LOGIN_NAME
+                + "']");
         assertXmlExists("Missing user System Inspector (Read Only Super User).", retrievedDocument,
             XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[properties/login-name='" + SYSTEM_INSPECTOR_LOGIN_NAME + "']");
         assertXmlExists("Missing user Depositor User.", retrievedDocument, XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT
@@ -1754,10 +1767,10 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
         final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\"" + FILTER_IDENTIFIER + "\"=escidoc:exuser1 or "
-            + "\"" + FILTER_IDENTIFIER + "\"=escidoc:exuser2 or " + "\"" + FILTER_IDENTIFIER
-            + "\"=escidoc:exuser4) and " + "\"" + FILTER_LOGIN_NAME + "\"=sys% and " + "\"" + FILTER_NAME
-            + "\"=%Sys% and " + "\"" + FILTER_ACTIVE + "\"=true" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\"" + FILTER_IDENTIFIER + "\"="
+            + SYSTEM_ADMINISTRATOR_USER_NAME + " or " + "\"" + FILTER_IDENTIFIER + "\"=" + SYSTEM_INSPECTOR_USER_NAME
+            + " or " + "\"" + FILTER_IDENTIFIER + "\"=" + DEPOSITOR_USER_NAME + ") and " + "\"" + FILTER_LOGIN_NAME
+            + "\"=testsys% and " + "\"" + FILTER_NAME + "\"=%Sys% and " + "\"" + FILTER_ACTIVE + "\"=true" });
 
         String retrievedUserAccountsXml = null;
 
@@ -1774,7 +1787,8 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         assertEquals("Unexpected number of user accounts.", 2, userAccountNodes.getLength());
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
         assertXmlExists("Missing user System Administrator User.", retrievedDocument,
-            XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[properties/login-name='" + SYSTEM_ADMINISTRATOR_LOGIN_NAME + "']");
+            XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[properties/login-name='" + SYSTEM_ADMINISTRATOR_LOGIN_NAME
+                + "']");
         assertXmlExists("Missing user System Inspector User.", retrievedDocument,
             XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[properties/login-name='" + SYSTEM_INSPECTOR_LOGIN_NAME + "']");
     }
@@ -1982,11 +1996,11 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         final Class<InvalidSearchQueryException> ec = InvalidSearchQueryException.class;
         final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\"" + FILTER_IDENTIFIER + "\"=escidoc:exuser1 or "
-            + "\"" + FILTER_IDENTIFIER + "\"=escidoc:exuser2 or " + "\"" + FILTER_IDENTIFIER
-            + "\"=escidoc:exuser4) and " + "\"" + FILTER_LOGIN_NAME + "\"=sys% and " + "\"" + FILTER_NAME
-            + "\"=%Sys% and " + "\"" + FILTER_ACTIVE + "\"=true and " + "\"" + FILTER_CONTEXT
-            + "\"=escidoc:persistent3" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\"" + FILTER_IDENTIFIER + "\"="
+            + SYSTEM_ADMINISTRATOR_USER_NAME + " or " + "\"" + FILTER_IDENTIFIER + "\"=" + SYSTEM_INSPECTOR_USER_NAME
+            + " or " + "\"" + FILTER_IDENTIFIER + "\"=" + DEPOSITOR_USER_NAME + ") and " + "\"" + FILTER_LOGIN_NAME
+            + "\"=testsys% and " + "\"" + FILTER_NAME + "\"=%Sys% and " + "\"" + FILTER_ACTIVE + "\"=true and " + "\""
+            + FILTER_CONTEXT + "\"=escidoc:persistent3" });
         try {
             retrieveUserAccounts(filterParams);
             failMissingException("Retrieving with unknown filter criteria not declined.", ec);
@@ -2007,9 +2021,10 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
         final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_IDENTIFIER + "\"=escidoc:exuser1 or "
-            + "\"" + FILTER_IDENTIFIER + "\"=escidoc:exuser2 or " + "\"" + FILTER_IDENTIFIER
-            + "\"=escidoc:exuser4 sortby " + "\"" + FILTER_NAME + "\"/sort.ascending" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_IDENTIFIER + "\"="
+            + SYSTEM_ADMINISTRATOR_USER_NAME + " or " + "\"" + FILTER_IDENTIFIER + "\"=" + SYSTEM_INSPECTOR_USER_NAME
+            + " or " + "\"" + FILTER_IDENTIFIER + "\"=" + DEPOSITOR_USER_NAME + " sortby " + "\"" + FILTER_NAME
+            + "\"/sort.ascending" });
 
         String retrievedUserAccountsXml = null;
 
@@ -2046,9 +2061,10 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
         final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_IDENTIFIER + "\"=escidoc:exuser1 or "
-            + "\"" + FILTER_IDENTIFIER + "\"=escidoc:exuser2 or " + "\"" + FILTER_IDENTIFIER
-            + "\"=escidoc:exuser4 sortby " + "\"" + FILTER_NAME + "\"/sort.descending" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_IDENTIFIER + "\"="
+            + SYSTEM_ADMINISTRATOR_USER_NAME + " or " + "\"" + FILTER_IDENTIFIER + "\"=" + SYSTEM_INSPECTOR_USER_NAME
+            + " or " + "\"" + FILTER_IDENTIFIER + "\"=" + DEPOSITOR_USER_NAME + " sortby " + "\"" + FILTER_NAME
+            + "\"/sort.descending" });
 
         String retrievedUserAccountsXml = null;
 
@@ -2085,9 +2101,10 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
         final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_IDENTIFIER + "\"=escidoc:exuser1 or "
-            + "\"" + FILTER_IDENTIFIER + "\"=escidoc:exuser2 or " + "\"" + FILTER_IDENTIFIER
-            + "\"=escidoc:exuser4 sortby " + "\"" + FILTER_NAME + "\"/sort.descending" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_IDENTIFIER + "\"="
+            + SYSTEM_ADMINISTRATOR_USER_NAME + " or " + "\"" + FILTER_IDENTIFIER + "\"=" + SYSTEM_INSPECTOR_USER_NAME
+            + " or " + "\"" + FILTER_IDENTIFIER + "\"=" + DEPOSITOR_USER_NAME + " sortby " + "\"" + FILTER_NAME
+            + "\"/sort.descending" });
         filterParams.put(FILTER_PARAMETER_STARTRECORD, new String[] { "2" });
 
         String retrievedUserAccountsXml = null;
@@ -2123,9 +2140,10 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
         final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_IDENTIFIER + "\"=escidoc:exuser1 or "
-            + "\"" + FILTER_IDENTIFIER + "\"=escidoc:exuser2 or " + "\"" + FILTER_IDENTIFIER
-            + "\"=escidoc:exuser4 sortby " + "\"" + FILTER_NAME + "\"/sort.descending" });
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_IDENTIFIER + "\"="
+            + SYSTEM_ADMINISTRATOR_USER_NAME + " or " + "\"" + FILTER_IDENTIFIER + "\"=" + SYSTEM_INSPECTOR_USER_NAME
+            + " or " + "\"" + FILTER_IDENTIFIER + "\"=" + DEPOSITOR_USER_NAME + " sortby " + "\"" + FILTER_NAME
+            + "\"/sort.descending" });
         filterParams.put(FILTER_PARAMETER_STARTRECORD, new String[] { "2" });
         filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "1" });
 
