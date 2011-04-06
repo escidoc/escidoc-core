@@ -1064,7 +1064,8 @@ public class FedoraUtility implements InitializingBean {
     }
 
     /**
-     * Call the method callSync. In case of failure make 4 attempts more.
+     * Send a risearch request to fedora repository with flag flush set to true.
+     * Call reinialize() in order to reset a Table Manager for the Triple Store.
      * 
      * @throws FedoraSystemException
      *             Thrown if TripleStore synchronization failed.
@@ -1072,26 +1073,24 @@ public class FedoraUtility implements InitializingBean {
      *             Thrown if TripleStore initialization failed.
      */
     public void sync() throws FedoraSystemException, WebserverSystemException {
-        /*
-         * TODO The call to Fedora sync is handled multiple time to get a successful result. A single request should
-         * help, but the return value of the sync method is not always HTTP.200.
-         */
-        int i = 0;
-        while (i < SYNC_RETRIES) {
-            try {
-                callSync();
-                break;
+
+        FedoraClient fc = null;
+        try {
+            fc = borrowFedoraClient();
+            final HttpInputStream httpInStr = fc.get(this.syncRestQuery, true);
+            if (httpInStr.getStatusCode() != HTTP_OK) {
+                throw new FedoraSystemException("Triplestore sync failed.");
             }
-            catch (final IOException e) {
-                logExcetionAndWait(e, i);
-            }
-            catch (final TripleStoreSystemException e) {
-                logExcetionAndWait(e, i);
-            }
-            i++;
-            if (i >= SYNC_RETRIES) {
-                throw new FedoraSystemException("TripleStore sync failed.");
-            }
+            tripleStoreUtility.reinitialize();
+        }
+        catch (TripleStoreSystemException tse) {
+            throw new WebserverSystemException(tse);
+        }
+        catch (IOException e) {
+            throw new WebserverSystemException(e);
+        }
+        finally {
+            returnFedoraClient(fc);
         }
     }
 
@@ -1112,35 +1111,6 @@ public class FedoraUtility implements InitializingBean {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on waiting for Fedora.", e);
             }
-        }
-    }
-
-    /**
-     * Send a risearch request to fedora repository with flag flush set to true. Call reinialize() in order to reset a
-     * Table Manager for the Triple Store.
-     * 
-     * @throws TripleStoreSystemException
-     *             Thrown resetting of a Table Manager failed.
-     * @throws FedoraSystemException
-     *             Thrown if TripleStore synchronization failed.
-     * @throws WebserverSystemException
-     *             Thrown if TripleStore initialization failed.
-     * @throws IOException
-     *             Thrown from FedoraClient
-     */
-    private void callSync() throws FedoraSystemException, IOException, TripleStoreSystemException,
-        WebserverSystemException {
-        FedoraClient fc = null;
-        try {
-            fc = borrowFedoraClient();
-            final HttpInputStream httpInStr = fc.get(this.syncRestQuery, true);
-            if (httpInStr.getStatusCode() != HTTP_OK) {
-                throw new FedoraSystemException("Triplestore sync failed.");
-            }
-            tripleStoreUtility.reinitialize();
-        }
-        finally {
-            returnFedoraClient(fc);
         }
     }
 
