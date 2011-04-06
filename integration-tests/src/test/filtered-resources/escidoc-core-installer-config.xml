@@ -14,7 +14,9 @@
 </userInput>
 </com.izforge.izpack.panels.UserInputPanel>
 <com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.2">
-<userInput/>
+<userInput>
+<entry key="Database" value="PostgreSQL"/>
+</userInput>
 </com.izforge.izpack.panels.UserInputPanel>
 <com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.3">
 <userInput>
