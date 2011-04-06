@@ -211,6 +211,11 @@
 			<artifactId>trippi</artifactId>
 			<classifier>mptstore</classifier>
 		</dependency>
+      	<dependency>
+        	<groupId>mptstore</groupId>
+        	<artifactId>mptstore-oracle</artifactId>
+        	<version>0.9.4</version>
+      	</dependency>
 
 		<!-- DEPENDENCIES FOR FEDORAGSEARCH + SRW -->
 		<dependency>
