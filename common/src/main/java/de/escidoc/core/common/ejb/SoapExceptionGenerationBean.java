@@ -17,12 +17,6 @@
  * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
  * terms.
  */
-
-/*
- * Generate EJB from POJO with Spring framework Bean Factory
- * Bernhard Kraus (Accenture)
- */
-
 package de.escidoc.core.common.ejb;
 
 import de.escidoc.core.common.exceptions.EscidocException;
@@ -158,25 +152,25 @@ public class SoapExceptionGenerationBean implements SessionBean {
     }
 
     @Override
-    public void setSessionContext(final SessionContext arg0) throws RemoteException {
+    public final void setSessionContext(final SessionContext arg0) throws RemoteException {
         this.sessionCtx = arg0;
     }
 
     @Override
-    public void ejbRemove() throws RemoteException {
+    public final void ejbRemove() throws RemoteException {
     }
 
     @Override
-    public void ejbActivate() throws RemoteException {
+    public final void ejbActivate() throws RemoteException {
 
     }
 
     @Override
-    public void ejbPassivate() throws RemoteException {
+    public final void ejbPassivate() throws RemoteException {
 
     }
 
-    public void generateExceptions(final SecurityContext securityContext) throws EscidocException,
+    public final void generateExceptions(final SecurityContext securityContext) throws EscidocException,
         AggregationDefinitionNotFoundException, ApplicationException, ValidationException, ResourceNotFoundException,
         MissingAttributeValueException, MissingElementValueException, MissingParameterException,
         RuleViolationException, InvalidContextException, InvalidContextStatusException,
@@ -214,7 +208,7 @@ public class SoapExceptionGenerationBean implements SessionBean {
         service.generateExceptions();
     }
 
-    public void generateExceptions(final String authHandle, final Boolean restAccess) throws EscidocException,
+    public final void generateExceptions(final String authHandle, final Boolean restAccess) throws EscidocException,
         AggregationDefinitionNotFoundException, ApplicationException, ValidationException, ResourceNotFoundException,
         MissingAttributeValueException, MissingElementValueException, MissingParameterException,
         RuleViolationException, InvalidContextException, InvalidContextStatusException,

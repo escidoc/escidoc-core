@@ -1,8 +1,3 @@
-/*
- * Generate EJB from POJO with Spring framework Bean Factory
- * Bernhard Kraus (Accenture)
- */
-
 package de.escidoc.core.aa.ejb;
 
 import de.escidoc.core.aa.service.interfaces.ActionHandlerInterface;
@@ -47,25 +42,25 @@ public class ActionHandlerBean implements SessionBean {
     }
 
     @Override
-    public void setSessionContext(final SessionContext arg0) throws RemoteException {
+    public final void setSessionContext(final SessionContext arg0) throws RemoteException {
         this.sessionCtx = arg0;
     }
 
     @Override
-    public void ejbRemove() throws RemoteException {
+    public final void ejbRemove() throws RemoteException {
     }
 
     @Override
-    public void ejbActivate() throws RemoteException {
+    public final void ejbActivate() throws RemoteException {
 
     }
 
     @Override
-    public void ejbPassivate() throws RemoteException {
+    public final void ejbPassivate() throws RemoteException {
 
     }
 
-    public String createUnsecuredActions(
+    public final String createUnsecuredActions(
         final String contextId, final String actions, final SecurityContext securityContext)
         throws ContextNotFoundException, XmlCorruptedException, XmlSchemaValidationException, AuthenticationException,
         AuthorizationException, SystemException {
@@ -78,7 +73,7 @@ public class ActionHandlerBean implements SessionBean {
         return service.createUnsecuredActions(contextId, actions);
     }
 
-    public String createUnsecuredActions(
+    public final String createUnsecuredActions(
         final String contextId, final String actions, final String authHandle, final Boolean restAccess)
         throws ContextNotFoundException, XmlCorruptedException, XmlSchemaValidationException, AuthenticationException,
         AuthorizationException, SystemException {
@@ -92,7 +87,7 @@ public class ActionHandlerBean implements SessionBean {
         return service.createUnsecuredActions(contextId, actions);
     }
 
-    public void deleteUnsecuredActions(final String contextId, final SecurityContext securityContext)
+    public final void deleteUnsecuredActions(final String contextId, final SecurityContext securityContext)
         throws ContextNotFoundException, AuthenticationException, AuthorizationException, SystemException {
         try {
             UserContext.setUserContext(securityContext);
@@ -103,7 +98,7 @@ public class ActionHandlerBean implements SessionBean {
         service.deleteUnsecuredActions(contextId);
     }
 
-    public void deleteUnsecuredActions(final String contextId, final String authHandle, final Boolean restAccess)
+    public final void deleteUnsecuredActions(final String contextId, final String authHandle, final Boolean restAccess)
         throws ContextNotFoundException, AuthenticationException, AuthorizationException, SystemException {
         try {
             UserContext.setUserContext(authHandle);
@@ -115,7 +110,7 @@ public class ActionHandlerBean implements SessionBean {
         service.deleteUnsecuredActions(contextId);
     }
 
-    public String retrieveUnsecuredActions(final String contextId, final SecurityContext securityContext)
+    public final String retrieveUnsecuredActions(final String contextId, final SecurityContext securityContext)
         throws ContextNotFoundException, AuthenticationException, AuthorizationException, SystemException {
         try {
             UserContext.setUserContext(securityContext);
@@ -126,8 +121,9 @@ public class ActionHandlerBean implements SessionBean {
         return service.retrieveUnsecuredActions(contextId);
     }
 
-    public String retrieveUnsecuredActions(final String contextId, final String authHandle, final Boolean restAccess)
-        throws ContextNotFoundException, AuthenticationException, AuthorizationException, SystemException {
+    public final String retrieveUnsecuredActions(
+        final String contextId, final String authHandle, final Boolean restAccess) throws ContextNotFoundException,
+        AuthenticationException, AuthorizationException, SystemException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);

@@ -1,8 +1,3 @@
-/*
- * Generate EJB from POJO with Spring framework Bean Factory
- * Bernhard Kraus (Accenture)
- */
-
 package de.escidoc.core.oum.ejb;
 
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
@@ -62,28 +57,28 @@ public class OrganizationalUnitHandlerBean implements SessionBean {
     }
 
     @Override
-    public void setSessionContext(final SessionContext arg0) throws RemoteException {
+    public final void setSessionContext(final SessionContext arg0) throws RemoteException {
         this.sessionCtx = arg0;
     }
 
     @Override
-    public void ejbRemove() throws RemoteException {
+    public final void ejbRemove() throws RemoteException {
     }
 
     @Override
-    public void ejbActivate() throws RemoteException {
+    public final void ejbActivate() throws RemoteException {
 
     }
 
     @Override
-    public void ejbPassivate() throws RemoteException {
+    public final void ejbPassivate() throws RemoteException {
 
     }
 
-    public String ingest(final String xmlData, final SecurityContext securityContext) throws AuthenticationException,
-        AuthorizationException, MissingMethodParameterException, SystemException, MissingAttributeValueException,
-        MissingElementValueException, OrganizationalUnitNotFoundException, InvalidXmlException, InvalidStatusException,
-        EscidocException {
+    public final String ingest(final String xmlData, final SecurityContext securityContext)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException,
+        MissingAttributeValueException, MissingElementValueException, OrganizationalUnitNotFoundException,
+        InvalidXmlException, InvalidStatusException, EscidocException {
         try {
             UserContext.setUserContext(securityContext);
         }
@@ -93,7 +88,7 @@ public class OrganizationalUnitHandlerBean implements SessionBean {
         return service.ingest(xmlData);
     }
 
-    public String ingest(final String xmlData, final String authHandle, final Boolean restAccess)
+    public final String ingest(final String xmlData, final String authHandle, final Boolean restAccess)
         throws AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException,
         MissingAttributeValueException, MissingElementValueException, OrganizationalUnitNotFoundException,
         InvalidXmlException, InvalidStatusException, EscidocException {
@@ -107,7 +102,7 @@ public class OrganizationalUnitHandlerBean implements SessionBean {
         return service.ingest(xmlData);
     }
 
-    public String create(final String xml, final SecurityContext securityContext) throws AuthenticationException,
+    public final String create(final String xml, final SecurityContext securityContext) throws AuthenticationException,
         AuthorizationException, MissingMethodParameterException, SystemException, MissingAttributeValueException,
         MissingElementValueException, OrganizationalUnitNotFoundException, InvalidStatusException,
         XmlCorruptedException, XmlSchemaValidationException, MissingMdRecordException {
@@ -120,7 +115,7 @@ public class OrganizationalUnitHandlerBean implements SessionBean {
         return service.create(xml);
     }
 
-    public String create(final String xml, final String authHandle, final Boolean restAccess)
+    public final String create(final String xml, final String authHandle, final Boolean restAccess)
         throws AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException,
         MissingAttributeValueException, MissingElementValueException, OrganizationalUnitNotFoundException,
         InvalidStatusException, XmlCorruptedException, XmlSchemaValidationException, MissingMdRecordException {
@@ -134,7 +129,7 @@ public class OrganizationalUnitHandlerBean implements SessionBean {
         return service.create(xml);
     }
 
-    public void delete(final String id, final SecurityContext securityContext) throws AuthenticationException,
+    public final void delete(final String id, final SecurityContext securityContext) throws AuthenticationException,
         AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException,
         InvalidStatusException, OrganizationalUnitHasChildrenException, SystemException {
         try {
@@ -146,7 +141,7 @@ public class OrganizationalUnitHandlerBean implements SessionBean {
         service.delete(id);
     }
 
-    public void delete(final String id, final String authHandle, final Boolean restAccess)
+    public final void delete(final String id, final String authHandle, final Boolean restAccess)
         throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
         OrganizationalUnitNotFoundException, InvalidStatusException, OrganizationalUnitHasChildrenException,
         SystemException {
@@ -160,7 +155,7 @@ public class OrganizationalUnitHandlerBean implements SessionBean {
         service.delete(id);
     }
 
-    public String update(final String id, final String user, final SecurityContext securityContext)
+    public final String update(final String id, final String user, final SecurityContext securityContext)
         throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
         OrganizationalUnitNotFoundException, SystemException, OptimisticLockingException,
         OrganizationalUnitHierarchyViolationException, InvalidXmlException, MissingElementValueException,
@@ -174,7 +169,7 @@ public class OrganizationalUnitHandlerBean implements SessionBean {
         return service.update(id, user);
     }
 
-    public String update(final String id, final String user, final String authHandle, final Boolean restAccess)
+    public final String update(final String id, final String user, final String authHandle, final Boolean restAccess)
         throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
         OrganizationalUnitNotFoundException, SystemException, OptimisticLockingException,
         OrganizationalUnitHierarchyViolationException, InvalidXmlException, MissingElementValueException,
@@ -189,7 +184,7 @@ public class OrganizationalUnitHandlerBean implements SessionBean {
         return service.update(id, user);
     }
 
-    public String updateMdRecords(final String id, final String xml, final SecurityContext securityContext)
+    public final String updateMdRecords(final String id, final String xml, final SecurityContext securityContext)
         throws AuthenticationException, AuthorizationException, InvalidXmlException, InvalidStatusException,
         MissingMethodParameterException, OptimisticLockingException, OrganizationalUnitNotFoundException,
         MissingElementValueException, SystemException {
@@ -202,7 +197,8 @@ public class OrganizationalUnitHandlerBean implements SessionBean {
         return service.updateMdRecords(id, xml);
     }
 
-    public String updateMdRecords(final String id, final String xml, final String authHandle, final Boolean restAccess)
+    public final String updateMdRecords(
+        final String id, final String xml, final String authHandle, final Boolean restAccess)
         throws AuthenticationException, AuthorizationException, InvalidXmlException, InvalidStatusException,
         MissingMethodParameterException, OptimisticLockingException, OrganizationalUnitNotFoundException,
         MissingElementValueException, SystemException {
@@ -216,7 +212,7 @@ public class OrganizationalUnitHandlerBean implements SessionBean {
         return service.updateMdRecords(id, xml);
     }
 
-    public String updateParents(final String id, final String xml, final SecurityContext securityContext)
+    public final String updateParents(final String id, final String xml, final SecurityContext securityContext)
         throws AuthenticationException, AuthorizationException, InvalidXmlException, MissingMethodParameterException,
         OptimisticLockingException, OrganizationalUnitHierarchyViolationException, OrganizationalUnitNotFoundException,
         MissingElementValueException, SystemException, InvalidStatusException {
@@ -229,7 +225,8 @@ public class OrganizationalUnitHandlerBean implements SessionBean {
         return service.updateParents(id, xml);
     }
 
-    public String updateParents(final String id, final String xml, final String authHandle, final Boolean restAccess)
+    public final String updateParents(
+        final String id, final String xml, final String authHandle, final Boolean restAccess)
         throws AuthenticationException, AuthorizationException, InvalidXmlException, MissingMethodParameterException,
         OptimisticLockingException, OrganizationalUnitHierarchyViolationException, OrganizationalUnitNotFoundException,
         MissingElementValueException, SystemException, InvalidStatusException {
@@ -243,8 +240,9 @@ public class OrganizationalUnitHandlerBean implements SessionBean {
         return service.updateParents(id, xml);
     }
 
-    public String retrieve(final String id, final SecurityContext securityContext) throws AuthenticationException,
-        AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException {
+    public final String retrieve(final String id, final SecurityContext securityContext)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        OrganizationalUnitNotFoundException, SystemException {
         try {
             UserContext.setUserContext(securityContext);
         }
@@ -254,7 +252,7 @@ public class OrganizationalUnitHandlerBean implements SessionBean {
         return service.retrieve(id);
     }
 
-    public String retrieve(final String id, final String authHandle, final Boolean restAccess)
+    public final String retrieve(final String id, final String authHandle, final Boolean restAccess)
         throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
         OrganizationalUnitNotFoundException, SystemException {
         try {
@@ -267,7 +265,7 @@ public class OrganizationalUnitHandlerBean implements SessionBean {
         return service.retrieve(id);
     }
 
-    public String retrieveProperties(final String id, final SecurityContext securityContext)
+    public final String retrieveProperties(final String id, final SecurityContext securityContext)
         throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
         OrganizationalUnitNotFoundException, SystemException {
         try {
@@ -279,7 +277,7 @@ public class OrganizationalUnitHandlerBean implements SessionBean {
         return service.retrieveProperties(id);
     }
 
-    public String retrieveProperties(final String id, final String authHandle, final Boolean restAccess)
+    public final String retrieveProperties(final String id, final String authHandle, final Boolean restAccess)
         throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
         OrganizationalUnitNotFoundException, SystemException {
         try {

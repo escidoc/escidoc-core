@@ -1,8 +1,3 @@
-/*
- * Generate EJB from POJO with Spring framework Bean Factory
- * Bernhard Kraus (Accenture)
- */
-
 package de.escidoc.core.sm.ejb;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
@@ -53,27 +48,28 @@ public class ReportDefinitionHandlerBean implements SessionBean {
     }
 
     @Override
-    public void setSessionContext(final SessionContext arg0) throws RemoteException {
+    public final void setSessionContext(final SessionContext arg0) throws RemoteException {
         this.sessionCtx = arg0;
     }
 
     @Override
-    public void ejbRemove() throws RemoteException {
+    public final void ejbRemove() throws RemoteException {
     }
 
     @Override
-    public void ejbActivate() throws RemoteException {
+    public final void ejbActivate() throws RemoteException {
 
     }
 
     @Override
-    public void ejbPassivate() throws RemoteException {
+    public final void ejbPassivate() throws RemoteException {
 
     }
 
-    public String create(final String xmlData, final SecurityContext securityContext) throws AuthenticationException,
-        AuthorizationException, XmlSchemaValidationException, XmlCorruptedException, InvalidSqlException,
-        MissingMethodParameterException, ScopeNotFoundException, ScopeContextViolationException, SystemException {
+    public final String create(final String xmlData, final SecurityContext securityContext)
+        throws AuthenticationException, AuthorizationException, XmlSchemaValidationException, XmlCorruptedException,
+        InvalidSqlException, MissingMethodParameterException, ScopeNotFoundException, ScopeContextViolationException,
+        SystemException {
         try {
             UserContext.setUserContext(securityContext);
         }
@@ -83,7 +79,7 @@ public class ReportDefinitionHandlerBean implements SessionBean {
         return service.create(xmlData);
     }
 
-    public String create(final String xmlData, final String authHandle, final Boolean restAccess)
+    public final String create(final String xmlData, final String authHandle, final Boolean restAccess)
         throws AuthenticationException, AuthorizationException, XmlSchemaValidationException, XmlCorruptedException,
         InvalidSqlException, MissingMethodParameterException, ScopeNotFoundException, ScopeContextViolationException,
         SystemException {
@@ -97,7 +93,7 @@ public class ReportDefinitionHandlerBean implements SessionBean {
         return service.create(xmlData);
     }
 
-    public void delete(final String id, final SecurityContext securityContext) throws AuthenticationException,
+    public final void delete(final String id, final SecurityContext securityContext) throws AuthenticationException,
         AuthorizationException, ReportDefinitionNotFoundException, MissingMethodParameterException, SystemException {
         try {
             UserContext.setUserContext(securityContext);
@@ -108,7 +104,7 @@ public class ReportDefinitionHandlerBean implements SessionBean {
         service.delete(id);
     }
 
-    public void delete(final String id, final String authHandle, final Boolean restAccess)
+    public final void delete(final String id, final String authHandle, final Boolean restAccess)
         throws AuthenticationException, AuthorizationException, ReportDefinitionNotFoundException,
         MissingMethodParameterException, SystemException {
         try {
@@ -121,8 +117,9 @@ public class ReportDefinitionHandlerBean implements SessionBean {
         service.delete(id);
     }
 
-    public String retrieve(final String id, final SecurityContext securityContext) throws AuthenticationException,
-        AuthorizationException, ReportDefinitionNotFoundException, MissingMethodParameterException, SystemException {
+    public final String retrieve(final String id, final SecurityContext securityContext)
+        throws AuthenticationException, AuthorizationException, ReportDefinitionNotFoundException,
+        MissingMethodParameterException, SystemException {
         try {
             UserContext.setUserContext(securityContext);
         }
@@ -132,7 +129,7 @@ public class ReportDefinitionHandlerBean implements SessionBean {
         return service.retrieve(id);
     }
 
-    public String retrieve(final String id, final String authHandle, final Boolean restAccess)
+    public final String retrieve(final String id, final String authHandle, final Boolean restAccess)
         throws AuthenticationException, AuthorizationException, ReportDefinitionNotFoundException,
         MissingMethodParameterException, SystemException {
         try {
@@ -145,7 +142,7 @@ public class ReportDefinitionHandlerBean implements SessionBean {
         return service.retrieve(id);
     }
 
-    public String retrieveReportDefinitions(final Map filter, final SecurityContext securityContext)
+    public final String retrieveReportDefinitions(final Map filter, final SecurityContext securityContext)
         throws InvalidSearchQueryException, MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException {
         try {
@@ -157,7 +154,7 @@ public class ReportDefinitionHandlerBean implements SessionBean {
         return service.retrieveReportDefinitions(filter);
     }
 
-    public String retrieveReportDefinitions(final Map filter, final String authHandle, final Boolean restAccess)
+    public final String retrieveReportDefinitions(final Map filter, final String authHandle, final Boolean restAccess)
         throws InvalidSearchQueryException, MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException {
         try {
@@ -170,7 +167,7 @@ public class ReportDefinitionHandlerBean implements SessionBean {
         return service.retrieveReportDefinitions(filter);
     }
 
-    public String update(final String id, final String xmlData, final SecurityContext securityContext)
+    public final String update(final String id, final String xmlData, final SecurityContext securityContext)
         throws AuthenticationException, AuthorizationException, ReportDefinitionNotFoundException,
         MissingMethodParameterException, ScopeNotFoundException, InvalidSqlException, ScopeContextViolationException,
         XmlSchemaValidationException, XmlCorruptedException, SystemException {
@@ -183,7 +180,7 @@ public class ReportDefinitionHandlerBean implements SessionBean {
         return service.update(id, xmlData);
     }
 
-    public String update(final String id, final String xmlData, final String authHandle, final Boolean restAccess)
+    public final String update(final String id, final String xmlData, final String authHandle, final Boolean restAccess)
         throws AuthenticationException, AuthorizationException, ReportDefinitionNotFoundException,
         MissingMethodParameterException, ScopeNotFoundException, InvalidSqlException, ScopeContextViolationException,
         XmlSchemaValidationException, XmlCorruptedException, SystemException {

@@ -1,8 +1,3 @@
-/*
- * Generate EJB from POJO with Spring framework Bean Factory
- * Bernhard Kraus (Accenture)
- */
-
 package de.escidoc.core.st.ejb;
 
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
@@ -47,25 +42,25 @@ public class StagingFileHandlerBean implements SessionBean {
     }
 
     @Override
-    public void setSessionContext(final SessionContext arg0) throws RemoteException {
+    public final void setSessionContext(final SessionContext arg0) throws RemoteException {
         this.sessionCtx = arg0;
     }
 
     @Override
-    public void ejbRemove() throws RemoteException {
+    public final void ejbRemove() throws RemoteException {
     }
 
     @Override
-    public void ejbActivate() throws RemoteException {
+    public final void ejbActivate() throws RemoteException {
 
     }
 
     @Override
-    public void ejbPassivate() throws RemoteException {
+    public final void ejbPassivate() throws RemoteException {
 
     }
 
-    public String create(final EscidocBinaryContent binaryContent, final SecurityContext securityContext)
+    public final String create(final EscidocBinaryContent binaryContent, final SecurityContext securityContext)
         throws MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
         try {
             UserContext.setUserContext(securityContext);
@@ -76,7 +71,8 @@ public class StagingFileHandlerBean implements SessionBean {
         return service.create(binaryContent);
     }
 
-    public String create(final EscidocBinaryContent binaryContent, final String authHandle, final Boolean restAccess)
+    public final String create(
+        final EscidocBinaryContent binaryContent, final String authHandle, final Boolean restAccess)
         throws MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
         try {
             UserContext.setUserContext(authHandle);
@@ -88,7 +84,7 @@ public class StagingFileHandlerBean implements SessionBean {
         return service.create(binaryContent);
     }
 
-    public EscidocBinaryContent retrieve(final String stagingFileId, final SecurityContext securityContext)
+    public final EscidocBinaryContent retrieve(final String stagingFileId, final SecurityContext securityContext)
         throws StagingFileNotFoundException, AuthenticationException, AuthorizationException,
         MissingMethodParameterException, SystemException {
         try {
@@ -100,7 +96,8 @@ public class StagingFileHandlerBean implements SessionBean {
         return service.retrieve(stagingFileId);
     }
 
-    public EscidocBinaryContent retrieve(final String stagingFileId, final String authHandle, final Boolean restAccess)
+    public final EscidocBinaryContent retrieve(
+        final String stagingFileId, final String authHandle, final Boolean restAccess)
         throws StagingFileNotFoundException, AuthenticationException, AuthorizationException,
         MissingMethodParameterException, SystemException {
         try {

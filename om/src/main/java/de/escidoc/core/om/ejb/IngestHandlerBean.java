@@ -1,8 +1,3 @@
-/*
- * Generate EJB from POJO with Spring framework Bean Factory
- * Bernhard Kraus (Accenture)
- */
-
 package de.escidoc.core.om.ejb;
 
 import de.escidoc.core.common.exceptions.EscidocException;
@@ -43,25 +38,25 @@ public class IngestHandlerBean implements SessionBean {
     }
 
     @Override
-    public void setSessionContext(final SessionContext arg0) throws RemoteException {
+    public final void setSessionContext(final SessionContext arg0) throws RemoteException {
         this.sessionCtx = arg0;
     }
 
     @Override
-    public void ejbRemove() throws RemoteException {
+    public final void ejbRemove() throws RemoteException {
     }
 
     @Override
-    public void ejbActivate() throws RemoteException {
+    public final void ejbActivate() throws RemoteException {
 
     }
 
     @Override
-    public void ejbPassivate() throws RemoteException {
+    public final void ejbPassivate() throws RemoteException {
 
     }
 
-    public String ingest(final String xmlData, final SecurityContext securityContext) throws EscidocException,
+    public final String ingest(final String xmlData, final SecurityContext securityContext) throws EscidocException,
         SystemException {
         try {
             UserContext.setUserContext(securityContext);
@@ -72,7 +67,7 @@ public class IngestHandlerBean implements SessionBean {
         return service.ingest(xmlData);
     }
 
-    public String ingest(final String xmlData, final String authHandle, final Boolean restAccess)
+    public final String ingest(final String xmlData, final String authHandle, final Boolean restAccess)
         throws EscidocException, SystemException {
         try {
             UserContext.setUserContext(authHandle);

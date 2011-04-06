@@ -1,8 +1,3 @@
-/*
- * Generate EJB from POJO with Spring framework Bean Factory
- * Bernhard Kraus (Accenture)
- */
-
 package de.escidoc.core.om.ejb;
 
 import de.escidoc.core.common.exceptions.system.SystemException;
@@ -44,26 +39,26 @@ public class FedoraDescribeDeviationHandlerBean implements SessionBean {
     }
 
     @Override
-    public void setSessionContext(final SessionContext arg0) throws RemoteException {
+    public final void setSessionContext(final SessionContext arg0) throws RemoteException {
         this.sessionCtx = arg0;
     }
 
     @Override
-    public void ejbRemove() throws RemoteException {
+    public final void ejbRemove() throws RemoteException {
     }
 
     @Override
-    public void ejbActivate() throws RemoteException {
+    public final void ejbActivate() throws RemoteException {
 
     }
 
     @Override
-    public void ejbPassivate() throws RemoteException {
+    public final void ejbPassivate() throws RemoteException {
 
     }
 
-    public String getFedoraDescription(final Map parameters, final SecurityContext securityContext) throws Exception,
-        SystemException {
+    public final String getFedoraDescription(final Map parameters, final SecurityContext securityContext)
+        throws Exception, SystemException {
         try {
             UserContext.setUserContext(securityContext);
         }
@@ -73,7 +68,7 @@ public class FedoraDescribeDeviationHandlerBean implements SessionBean {
         return service.getFedoraDescription(parameters);
     }
 
-    public String getFedoraDescription(final Map parameters, final String authHandle, final Boolean restAccess)
+    public final String getFedoraDescription(final Map parameters, final String authHandle, final Boolean restAccess)
         throws Exception, SystemException {
         try {
             UserContext.setUserContext(authHandle);

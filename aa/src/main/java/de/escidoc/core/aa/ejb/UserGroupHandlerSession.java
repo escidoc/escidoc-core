@@ -5,7 +5,4 @@ package de.escidoc.core.aa.ejb;
  */
 public class UserGroupHandlerSession extends UserGroupHandlerBean {
 
-    public void unsetSessionContext() {
-    }
-
 }

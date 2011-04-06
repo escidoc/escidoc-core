@@ -1,8 +1,3 @@
-/*
- * Generate EJB from POJO with Spring framework Bean Factory
- * Bernhard Kraus (Accenture)
- */
-
 package de.escidoc.core.sm.ejb;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
@@ -52,27 +47,27 @@ public class AggregationDefinitionHandlerBean implements SessionBean {
     }
 
     @Override
-    public void setSessionContext(final SessionContext arg0) throws RemoteException {
+    public final void setSessionContext(final SessionContext arg0) throws RemoteException {
         this.sessionCtx = arg0;
     }
 
     @Override
-    public void ejbRemove() throws RemoteException {
+    public final void ejbRemove() throws RemoteException {
     }
 
     @Override
-    public void ejbActivate() throws RemoteException {
+    public final void ejbActivate() throws RemoteException {
 
     }
 
     @Override
-    public void ejbPassivate() throws RemoteException {
+    public final void ejbPassivate() throws RemoteException {
 
     }
 
-    public String create(final String xmlData, final SecurityContext securityContext) throws AuthenticationException,
-        AuthorizationException, XmlSchemaValidationException, XmlCorruptedException, MissingMethodParameterException,
-        ScopeNotFoundException, SystemException {
+    public final String create(final String xmlData, final SecurityContext securityContext)
+        throws AuthenticationException, AuthorizationException, XmlSchemaValidationException, XmlCorruptedException,
+        MissingMethodParameterException, ScopeNotFoundException, SystemException {
         try {
             UserContext.setUserContext(securityContext);
         }
@@ -82,7 +77,7 @@ public class AggregationDefinitionHandlerBean implements SessionBean {
         return service.create(xmlData);
     }
 
-    public String create(final String xmlData, final String authHandle, final Boolean restAccess)
+    public final String create(final String xmlData, final String authHandle, final Boolean restAccess)
         throws AuthenticationException, AuthorizationException, XmlSchemaValidationException, XmlCorruptedException,
         MissingMethodParameterException, ScopeNotFoundException, SystemException {
         try {
@@ -95,7 +90,7 @@ public class AggregationDefinitionHandlerBean implements SessionBean {
         return service.create(xmlData);
     }
 
-    public void delete(final String id, final SecurityContext securityContext) throws AuthenticationException,
+    public final void delete(final String id, final SecurityContext securityContext) throws AuthenticationException,
         AuthorizationException, AggregationDefinitionNotFoundException, MissingMethodParameterException,
         SystemException {
         try {
@@ -107,7 +102,7 @@ public class AggregationDefinitionHandlerBean implements SessionBean {
         service.delete(id);
     }
 
-    public void delete(final String id, final String authHandle, final Boolean restAccess)
+    public final void delete(final String id, final String authHandle, final Boolean restAccess)
         throws AuthenticationException, AuthorizationException, AggregationDefinitionNotFoundException,
         MissingMethodParameterException, SystemException {
         try {
@@ -120,9 +115,9 @@ public class AggregationDefinitionHandlerBean implements SessionBean {
         service.delete(id);
     }
 
-    public String retrieve(final String id, final SecurityContext securityContext) throws AuthenticationException,
-        AuthorizationException, AggregationDefinitionNotFoundException, MissingMethodParameterException,
-        SystemException {
+    public final String retrieve(final String id, final SecurityContext securityContext)
+        throws AuthenticationException, AuthorizationException, AggregationDefinitionNotFoundException,
+        MissingMethodParameterException, SystemException {
         try {
             UserContext.setUserContext(securityContext);
         }
@@ -132,7 +127,7 @@ public class AggregationDefinitionHandlerBean implements SessionBean {
         return service.retrieve(id);
     }
 
-    public String retrieve(final String id, final String authHandle, final Boolean restAccess)
+    public final String retrieve(final String id, final String authHandle, final Boolean restAccess)
         throws AuthenticationException, AuthorizationException, AggregationDefinitionNotFoundException,
         MissingMethodParameterException, SystemException {
         try {
@@ -145,7 +140,7 @@ public class AggregationDefinitionHandlerBean implements SessionBean {
         return service.retrieve(id);
     }
 
-    public String retrieveAggregationDefinitions(final Map parameters, final SecurityContext securityContext)
+    public final String retrieveAggregationDefinitions(final Map parameters, final SecurityContext securityContext)
         throws InvalidSearchQueryException, MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException {
         try {
@@ -157,9 +152,9 @@ public class AggregationDefinitionHandlerBean implements SessionBean {
         return service.retrieveAggregationDefinitions(parameters);
     }
 
-    public String retrieveAggregationDefinitions(final Map parameters, final String authHandle, final Boolean restAccess)
-        throws InvalidSearchQueryException, MissingMethodParameterException, AuthenticationException,
-        AuthorizationException, SystemException {
+    public final String retrieveAggregationDefinitions(
+        final Map parameters, final String authHandle, final Boolean restAccess) throws InvalidSearchQueryException,
+        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);

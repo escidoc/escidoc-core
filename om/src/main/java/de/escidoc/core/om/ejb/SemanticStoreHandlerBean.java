@@ -1,8 +1,3 @@
-/*
- * Generate EJB from POJO with Spring framework Bean Factory
- * Bernhard Kraus (Accenture)
- */
-
 package de.escidoc.core.om.ejb;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidTripleStoreOutputFormatException;
@@ -48,25 +43,25 @@ public class SemanticStoreHandlerBean implements SessionBean {
     }
 
     @Override
-    public void setSessionContext(final SessionContext arg0) throws RemoteException {
+    public final void setSessionContext(final SessionContext arg0) throws RemoteException {
         this.sessionCtx = arg0;
     }
 
     @Override
-    public void ejbRemove() throws RemoteException {
+    public final void ejbRemove() throws RemoteException {
     }
 
     @Override
-    public void ejbActivate() throws RemoteException {
+    public final void ejbActivate() throws RemoteException {
 
     }
 
     @Override
-    public void ejbPassivate() throws RemoteException {
+    public final void ejbPassivate() throws RemoteException {
 
     }
 
-    public String spo(final String taskParam, final SecurityContext securityContext) throws SystemException,
+    public final String spo(final String taskParam, final SecurityContext securityContext) throws SystemException,
         InvalidTripleStoreQueryException, InvalidTripleStoreOutputFormatException, InvalidXmlException,
         MissingElementValueException, AuthenticationException, AuthorizationException {
         try {
@@ -78,7 +73,7 @@ public class SemanticStoreHandlerBean implements SessionBean {
         return service.spo(taskParam);
     }
 
-    public String spo(final String taskParam, final String authHandle, final Boolean restAccess)
+    public final String spo(final String taskParam, final String authHandle, final Boolean restAccess)
         throws SystemException, InvalidTripleStoreQueryException, InvalidTripleStoreOutputFormatException,
         InvalidXmlException, MissingElementValueException, AuthenticationException, AuthorizationException {
         try {

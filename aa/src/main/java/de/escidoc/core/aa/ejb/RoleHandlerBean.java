@@ -1,8 +1,3 @@
-/*
- * Generate EJB from POJO with Spring framework Bean Factory
- * Bernhard Kraus (Accenture)
- */
-
 package de.escidoc.core.aa.ejb;
 
 import de.escidoc.core.aa.service.interfaces.RoleHandlerInterface;
@@ -54,25 +49,25 @@ public class RoleHandlerBean implements SessionBean {
     }
 
     @Override
-    public void setSessionContext(final SessionContext arg0) throws RemoteException {
+    public final void setSessionContext(final SessionContext arg0) throws RemoteException {
         this.sessionCtx = arg0;
     }
 
     @Override
-    public void ejbRemove() throws RemoteException {
+    public final void ejbRemove() throws RemoteException {
     }
 
     @Override
-    public void ejbActivate() throws RemoteException {
+    public final void ejbActivate() throws RemoteException {
 
     }
 
     @Override
-    public void ejbPassivate() throws RemoteException {
+    public final void ejbPassivate() throws RemoteException {
 
     }
 
-    public String create(final String xmlData, final SecurityContext securityContext)
+    public final String create(final String xmlData, final SecurityContext securityContext)
         throws UniqueConstraintViolationException, XmlCorruptedException, XmlSchemaValidationException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
         try {
@@ -84,7 +79,7 @@ public class RoleHandlerBean implements SessionBean {
         return service.create(xmlData);
     }
 
-    public String create(final String xmlData, final String authHandle, final Boolean restAccess)
+    public final String create(final String xmlData, final String authHandle, final Boolean restAccess)
         throws UniqueConstraintViolationException, XmlCorruptedException, XmlSchemaValidationException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
         try {
@@ -97,7 +92,7 @@ public class RoleHandlerBean implements SessionBean {
         return service.create(xmlData);
     }
 
-    public void delete(final String id, final SecurityContext securityContext) throws AuthenticationException,
+    public final void delete(final String id, final SecurityContext securityContext) throws AuthenticationException,
         AuthorizationException, MissingMethodParameterException, RoleNotFoundException, RoleInUseViolationException,
         SystemException {
         try {
@@ -109,7 +104,7 @@ public class RoleHandlerBean implements SessionBean {
         service.delete(id);
     }
 
-    public void delete(final String id, final String authHandle, final Boolean restAccess)
+    public final void delete(final String id, final String authHandle, final Boolean restAccess)
         throws AuthenticationException, AuthorizationException, MissingMethodParameterException, RoleNotFoundException,
         RoleInUseViolationException, SystemException {
         try {
@@ -122,7 +117,7 @@ public class RoleHandlerBean implements SessionBean {
         service.delete(id);
     }
 
-    public String retrieve(final String id, final SecurityContext securityContext) throws RoleNotFoundException,
+    public final String retrieve(final String id, final SecurityContext securityContext) throws RoleNotFoundException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
         try {
             UserContext.setUserContext(securityContext);
@@ -133,7 +128,7 @@ public class RoleHandlerBean implements SessionBean {
         return service.retrieve(id);
     }
 
-    public String retrieve(final String id, final String authHandle, final Boolean restAccess)
+    public final String retrieve(final String id, final String authHandle, final Boolean restAccess)
         throws RoleNotFoundException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
         SystemException {
         try {
@@ -146,7 +141,7 @@ public class RoleHandlerBean implements SessionBean {
         return service.retrieve(id);
     }
 
-    public String retrieveResources(final String id, final SecurityContext securityContext)
+    public final String retrieveResources(final String id, final SecurityContext securityContext)
         throws AuthenticationException, AuthorizationException, MissingMethodParameterException, RoleNotFoundException,
         SystemException {
         try {
@@ -158,7 +153,7 @@ public class RoleHandlerBean implements SessionBean {
         return service.retrieveResources(id);
     }
 
-    public String retrieveResources(final String id, final String authHandle, final Boolean restAccess)
+    public final String retrieveResources(final String id, final String authHandle, final Boolean restAccess)
         throws AuthenticationException, AuthorizationException, MissingMethodParameterException, RoleNotFoundException,
         SystemException {
         try {
@@ -171,7 +166,7 @@ public class RoleHandlerBean implements SessionBean {
         return service.retrieveResources(id);
     }
 
-    public String update(final String id, final String xmlData, final SecurityContext securityContext)
+    public final String update(final String id, final String xmlData, final SecurityContext securityContext)
         throws RoleNotFoundException, XmlCorruptedException, XmlSchemaValidationException,
         MissingAttributeValueException, UniqueConstraintViolationException, OptimisticLockingException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
@@ -184,7 +179,7 @@ public class RoleHandlerBean implements SessionBean {
         return service.update(id, xmlData);
     }
 
-    public String update(final String id, final String xmlData, final String authHandle, final Boolean restAccess)
+    public final String update(final String id, final String xmlData, final String authHandle, final Boolean restAccess)
         throws RoleNotFoundException, XmlCorruptedException, XmlSchemaValidationException,
         MissingAttributeValueException, UniqueConstraintViolationException, OptimisticLockingException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
@@ -198,7 +193,7 @@ public class RoleHandlerBean implements SessionBean {
         return service.update(id, xmlData);
     }
 
-    public String retrieveRoles(final Map filter, final SecurityContext securityContext)
+    public final String retrieveRoles(final Map filter, final SecurityContext securityContext)
         throws MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException,
         InvalidSearchQueryException {
         try {
@@ -210,7 +205,7 @@ public class RoleHandlerBean implements SessionBean {
         return service.retrieveRoles(filter);
     }
 
-    public String retrieveRoles(final Map filter, final String authHandle, final Boolean restAccess)
+    public final String retrieveRoles(final Map filter, final String authHandle, final Boolean restAccess)
         throws MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException,
         InvalidSearchQueryException {
         try {

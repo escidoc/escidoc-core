@@ -1,8 +1,3 @@
-/*
- * Generate EJB from POJO with Spring framework Bean Factory
- * Bernhard Kraus (Accenture)
- */
-
 package de.escidoc.core.sm.ejb;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
@@ -50,27 +45,27 @@ public class ScopeHandlerBean implements SessionBean {
     }
 
     @Override
-    public void setSessionContext(final SessionContext arg0) throws RemoteException {
+    public final void setSessionContext(final SessionContext arg0) throws RemoteException {
         this.sessionCtx = arg0;
     }
 
     @Override
-    public void ejbRemove() throws RemoteException {
+    public final void ejbRemove() throws RemoteException {
     }
 
     @Override
-    public void ejbActivate() throws RemoteException {
+    public final void ejbActivate() throws RemoteException {
 
     }
 
     @Override
-    public void ejbPassivate() throws RemoteException {
+    public final void ejbPassivate() throws RemoteException {
 
     }
 
-    public String create(final String xmlData, final SecurityContext securityContext) throws AuthenticationException,
-        AuthorizationException, XmlSchemaValidationException, XmlCorruptedException, MissingMethodParameterException,
-        SystemException {
+    public final String create(final String xmlData, final SecurityContext securityContext)
+        throws AuthenticationException, AuthorizationException, XmlSchemaValidationException, XmlCorruptedException,
+        MissingMethodParameterException, SystemException {
         try {
             UserContext.setUserContext(securityContext);
         }
@@ -80,7 +75,7 @@ public class ScopeHandlerBean implements SessionBean {
         return service.create(xmlData);
     }
 
-    public String create(final String xmlData, final String authHandle, final Boolean restAccess)
+    public final String create(final String xmlData, final String authHandle, final Boolean restAccess)
         throws AuthenticationException, AuthorizationException, XmlSchemaValidationException, XmlCorruptedException,
         MissingMethodParameterException, SystemException {
         try {
@@ -93,7 +88,7 @@ public class ScopeHandlerBean implements SessionBean {
         return service.create(xmlData);
     }
 
-    public void delete(final String id, final SecurityContext securityContext) throws AuthenticationException,
+    public final void delete(final String id, final SecurityContext securityContext) throws AuthenticationException,
         AuthorizationException, ScopeNotFoundException, MissingMethodParameterException, SystemException {
         try {
             UserContext.setUserContext(securityContext);
@@ -104,7 +99,7 @@ public class ScopeHandlerBean implements SessionBean {
         service.delete(id);
     }
 
-    public void delete(final String id, final String authHandle, final Boolean restAccess)
+    public final void delete(final String id, final String authHandle, final Boolean restAccess)
         throws AuthenticationException, AuthorizationException, ScopeNotFoundException,
         MissingMethodParameterException, SystemException {
         try {
@@ -117,8 +112,9 @@ public class ScopeHandlerBean implements SessionBean {
         service.delete(id);
     }
 
-    public String retrieve(final String id, final SecurityContext securityContext) throws AuthenticationException,
-        AuthorizationException, ScopeNotFoundException, MissingMethodParameterException, SystemException {
+    public final String retrieve(final String id, final SecurityContext securityContext)
+        throws AuthenticationException, AuthorizationException, ScopeNotFoundException,
+        MissingMethodParameterException, SystemException {
         try {
             UserContext.setUserContext(securityContext);
         }
@@ -128,7 +124,7 @@ public class ScopeHandlerBean implements SessionBean {
         return service.retrieve(id);
     }
 
-    public String retrieve(final String id, final String authHandle, final Boolean restAccess)
+    public final String retrieve(final String id, final String authHandle, final Boolean restAccess)
         throws AuthenticationException, AuthorizationException, ScopeNotFoundException,
         MissingMethodParameterException, SystemException {
         try {
@@ -141,7 +137,7 @@ public class ScopeHandlerBean implements SessionBean {
         return service.retrieve(id);
     }
 
-    public String retrieveScopes(final Map parameters, final SecurityContext securityContext)
+    public final String retrieveScopes(final Map parameters, final SecurityContext securityContext)
         throws InvalidSearchQueryException, MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException {
         try {
@@ -153,7 +149,7 @@ public class ScopeHandlerBean implements SessionBean {
         return service.retrieveScopes(parameters);
     }
 
-    public String retrieveScopes(final Map parameters, final String authHandle, final Boolean restAccess)
+    public final String retrieveScopes(final Map parameters, final String authHandle, final Boolean restAccess)
         throws InvalidSearchQueryException, MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException {
         try {
@@ -166,7 +162,7 @@ public class ScopeHandlerBean implements SessionBean {
         return service.retrieveScopes(parameters);
     }
 
-    public String update(final String id, final String xmlData, final SecurityContext securityContext)
+    public final String update(final String id, final String xmlData, final SecurityContext securityContext)
         throws AuthenticationException, AuthorizationException, ScopeNotFoundException,
         MissingMethodParameterException, XmlSchemaValidationException, XmlCorruptedException, SystemException {
         try {
@@ -178,7 +174,7 @@ public class ScopeHandlerBean implements SessionBean {
         return service.update(id, xmlData);
     }
 
-    public String update(final String id, final String xmlData, final String authHandle, final Boolean restAccess)
+    public final String update(final String id, final String xmlData, final String authHandle, final Boolean restAccess)
         throws AuthenticationException, AuthorizationException, ScopeNotFoundException,
         MissingMethodParameterException, XmlSchemaValidationException, XmlCorruptedException, SystemException {
         try {

@@ -1,8 +1,3 @@
-/*
- * Generate EJB from POJO with Spring framework Bean Factory
- * Bernhard Kraus (Accenture)
- */
-
 package de.escidoc.core.aa.ejb;
 
 import de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface;
@@ -66,25 +61,25 @@ public class UserAccountHandlerBean implements SessionBean {
     }
 
     @Override
-    public void setSessionContext(final SessionContext arg0) throws RemoteException {
+    public final void setSessionContext(final SessionContext arg0) throws RemoteException {
         this.sessionCtx = arg0;
     }
 
     @Override
-    public void ejbRemove() throws RemoteException {
+    public final void ejbRemove() throws RemoteException {
     }
 
     @Override
-    public void ejbActivate() throws RemoteException {
+    public final void ejbActivate() throws RemoteException {
 
     }
 
     @Override
-    public void ejbPassivate() throws RemoteException {
+    public final void ejbPassivate() throws RemoteException {
 
     }
 
-    public String create(final String user, final SecurityContext securityContext)
+    public final String create(final String user, final SecurityContext securityContext)
         throws UniqueConstraintViolationException, XmlCorruptedException, XmlSchemaValidationException,
         OrganizationalUnitNotFoundException, MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException, InvalidStatusException {
@@ -97,7 +92,7 @@ public class UserAccountHandlerBean implements SessionBean {
         return service.create(user);
     }
 
-    public String create(final String user, final String authHandle, final Boolean restAccess)
+    public final String create(final String user, final String authHandle, final Boolean restAccess)
         throws UniqueConstraintViolationException, XmlCorruptedException, XmlSchemaValidationException,
         OrganizationalUnitNotFoundException, MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException, InvalidStatusException {
@@ -111,8 +106,9 @@ public class UserAccountHandlerBean implements SessionBean {
         return service.create(user);
     }
 
-    public void delete(final String userId, final SecurityContext securityContext) throws UserAccountNotFoundException,
-        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
+    public final void delete(final String userId, final SecurityContext securityContext)
+        throws UserAccountNotFoundException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException {
         try {
             UserContext.setUserContext(securityContext);
         }
@@ -122,7 +118,7 @@ public class UserAccountHandlerBean implements SessionBean {
         service.delete(userId);
     }
 
-    public void delete(final String userId, final String authHandle, final Boolean restAccess)
+    public final void delete(final String userId, final String authHandle, final Boolean restAccess)
         throws UserAccountNotFoundException, MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException {
         try {
@@ -135,7 +131,7 @@ public class UserAccountHandlerBean implements SessionBean {
         service.delete(userId);
     }
 
-    public String update(final String userId, final String user, final SecurityContext securityContext)
+    public final String update(final String userId, final String user, final SecurityContext securityContext)
         throws UserAccountNotFoundException, UniqueConstraintViolationException, XmlCorruptedException,
         XmlSchemaValidationException, MissingMethodParameterException, MissingAttributeValueException,
         OptimisticLockingException, AuthenticationException, AuthorizationException,
@@ -149,7 +145,7 @@ public class UserAccountHandlerBean implements SessionBean {
         return service.update(userId, user);
     }
 
-    public String update(final String userId, final String user, final String authHandle, final Boolean restAccess)
+    public final String update(final String userId, final String user, final String authHandle, final Boolean restAccess)
         throws UserAccountNotFoundException, UniqueConstraintViolationException, XmlCorruptedException,
         XmlSchemaValidationException, MissingMethodParameterException, MissingAttributeValueException,
         OptimisticLockingException, AuthenticationException, AuthorizationException,
@@ -164,7 +160,7 @@ public class UserAccountHandlerBean implements SessionBean {
         return service.update(userId, user);
     }
 
-    public void updatePassword(final String userId, final String taskParam, final SecurityContext securityContext)
+    public final void updatePassword(final String userId, final String taskParam, final SecurityContext securityContext)
         throws UserAccountNotFoundException, InvalidStatusException, XmlCorruptedException,
         MissingMethodParameterException, OptimisticLockingException, AuthenticationException, AuthorizationException,
         SystemException {
@@ -177,7 +173,7 @@ public class UserAccountHandlerBean implements SessionBean {
         service.updatePassword(userId, taskParam);
     }
 
-    public void updatePassword(
+    public final void updatePassword(
         final String userId, final String taskParam, final String authHandle, final Boolean restAccess)
         throws UserAccountNotFoundException, InvalidStatusException, XmlCorruptedException,
         MissingMethodParameterException, OptimisticLockingException, AuthenticationException, AuthorizationException,
@@ -192,7 +188,7 @@ public class UserAccountHandlerBean implements SessionBean {
         service.updatePassword(userId, taskParam);
     }
 
-    public String retrieve(final String userId, final SecurityContext securityContext)
+    public final String retrieve(final String userId, final SecurityContext securityContext)
         throws UserAccountNotFoundException, MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException {
         try {
@@ -204,7 +200,7 @@ public class UserAccountHandlerBean implements SessionBean {
         return service.retrieve(userId);
     }
 
-    public String retrieve(final String userId, final String authHandle, final Boolean restAccess)
+    public final String retrieve(final String userId, final String authHandle, final Boolean restAccess)
         throws UserAccountNotFoundException, MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException {
         try {
@@ -217,7 +213,7 @@ public class UserAccountHandlerBean implements SessionBean {
         return service.retrieve(userId);
     }
 
-    public String retrieveCurrentUser(final SecurityContext securityContext) throws UserAccountNotFoundException,
+    public final String retrieveCurrentUser(final SecurityContext securityContext) throws UserAccountNotFoundException,
         AuthenticationException, AuthorizationException, SystemException {
         try {
             UserContext.setUserContext(securityContext);
@@ -228,7 +224,7 @@ public class UserAccountHandlerBean implements SessionBean {
         return service.retrieveCurrentUser();
     }
 
-    public String retrieveCurrentUser(final String authHandle, final Boolean restAccess)
+    public final String retrieveCurrentUser(final String authHandle, final Boolean restAccess)
         throws UserAccountNotFoundException, AuthenticationException, AuthorizationException, SystemException {
         try {
             UserContext.setUserContext(authHandle);
@@ -240,7 +236,7 @@ public class UserAccountHandlerBean implements SessionBean {
         return service.retrieveCurrentUser();
     }
 
-    public String retrieveResources(final String userId, final SecurityContext securityContext)
+    public final String retrieveResources(final String userId, final SecurityContext securityContext)
         throws UserAccountNotFoundException, MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException {
         try {
@@ -252,7 +248,7 @@ public class UserAccountHandlerBean implements SessionBean {
         return service.retrieveResources(userId);
     }
 
-    public String retrieveResources(final String userId, final String authHandle, final Boolean restAccess)
+    public final String retrieveResources(final String userId, final String authHandle, final Boolean restAccess)
         throws UserAccountNotFoundException, MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException {
         try {
@@ -265,7 +261,7 @@ public class UserAccountHandlerBean implements SessionBean {
         return service.retrieveResources(userId);
     }
 
-    public String retrieveCurrentGrants(final String userId, final SecurityContext securityContext)
+    public final String retrieveCurrentGrants(final String userId, final SecurityContext securityContext)
         throws UserAccountNotFoundException, MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException {
         try {
@@ -277,7 +273,7 @@ public class UserAccountHandlerBean implements SessionBean {
         return service.retrieveCurrentGrants(userId);
     }
 
-    public String retrieveCurrentGrants(final String userId, final String authHandle, final Boolean restAccess)
+    public final String retrieveCurrentGrants(final String userId, final String authHandle, final Boolean restAccess)
         throws UserAccountNotFoundException, MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException {
         try {
@@ -290,7 +286,7 @@ public class UserAccountHandlerBean implements SessionBean {
         return service.retrieveCurrentGrants(userId);
     }
 
-    public String retrieveGrant(final String userId, final String grantId, final SecurityContext securityContext)
+    public final String retrieveGrant(final String userId, final String grantId, final SecurityContext securityContext)
         throws UserAccountNotFoundException, GrantNotFoundException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException {
         try {
@@ -302,7 +298,7 @@ public class UserAccountHandlerBean implements SessionBean {
         return service.retrieveGrant(userId, grantId);
     }
 
-    public String retrieveGrant(
+    public final String retrieveGrant(
         final String userId, final String grantId, final String authHandle, final Boolean restAccess)
         throws UserAccountNotFoundException, GrantNotFoundException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException {
@@ -316,7 +312,7 @@ public class UserAccountHandlerBean implements SessionBean {
         return service.retrieveGrant(userId, grantId);
     }
 
-    public String retrieveGrants(final Map filter, final SecurityContext securityContext)
+    public final String retrieveGrants(final Map filter, final SecurityContext securityContext)
         throws MissingMethodParameterException, InvalidSearchQueryException, AuthenticationException,
         AuthorizationException, SystemException {
         try {
@@ -328,7 +324,7 @@ public class UserAccountHandlerBean implements SessionBean {
         return service.retrieveGrants(filter);
     }
 
-    public String retrieveGrants(final Map filter, final String authHandle, final Boolean restAccess)
+    public final String retrieveGrants(final Map filter, final String authHandle, final Boolean restAccess)
         throws MissingMethodParameterException, InvalidSearchQueryException, AuthenticationException,
         AuthorizationException, SystemException {
         try {
@@ -341,7 +337,7 @@ public class UserAccountHandlerBean implements SessionBean {
         return service.retrieveGrants(filter);
     }
 
-    public void activate(final String userId, final String taskParam, final SecurityContext securityContext)
+    public final void activate(final String userId, final String taskParam, final SecurityContext securityContext)
         throws AlreadyActiveException, UserAccountNotFoundException, XmlCorruptedException,
         MissingMethodParameterException, MissingAttributeValueException, OptimisticLockingException,
         AuthenticationException, AuthorizationException, SystemException {
@@ -354,7 +350,8 @@ public class UserAccountHandlerBean implements SessionBean {
         service.activate(userId, taskParam);
     }
 
-    public void activate(final String userId, final String taskParam, final String authHandle, final Boolean restAccess)
+    public final void activate(
+        final String userId, final String taskParam, final String authHandle, final Boolean restAccess)
         throws AlreadyActiveException, UserAccountNotFoundException, XmlCorruptedException,
         MissingMethodParameterException, MissingAttributeValueException, OptimisticLockingException,
         AuthenticationException, AuthorizationException, SystemException {
@@ -368,7 +365,7 @@ public class UserAccountHandlerBean implements SessionBean {
         service.activate(userId, taskParam);
     }
 
-    public void deactivate(final String userId, final String taskParam, final SecurityContext securityContext)
+    public final void deactivate(final String userId, final String taskParam, final SecurityContext securityContext)
         throws AlreadyDeactiveException, UserAccountNotFoundException, XmlCorruptedException,
         MissingMethodParameterException, MissingAttributeValueException, OptimisticLockingException,
         AuthenticationException, AuthorizationException, SystemException {
@@ -381,7 +378,7 @@ public class UserAccountHandlerBean implements SessionBean {
         service.deactivate(userId, taskParam);
     }
 
-    public void deactivate(
+    public final void deactivate(
         final String userId, final String taskParam, final String authHandle, final Boolean restAccess)
         throws AlreadyDeactiveException, UserAccountNotFoundException, XmlCorruptedException,
         MissingMethodParameterException, MissingAttributeValueException, OptimisticLockingException,
@@ -396,7 +393,7 @@ public class UserAccountHandlerBean implements SessionBean {
         service.deactivate(userId, taskParam);
     }
 
-    public String createGrant(final String userId, final String grantXML, final SecurityContext securityContext)
+    public final String createGrant(final String userId, final String grantXML, final SecurityContext securityContext)
         throws AlreadyExistsException, UserAccountNotFoundException, InvalidScopeException, RoleNotFoundException,
         XmlCorruptedException, XmlSchemaValidationException, MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException {
@@ -409,7 +406,7 @@ public class UserAccountHandlerBean implements SessionBean {
         return service.createGrant(userId, grantXML);
     }
 
-    public String createGrant(
+    public final String createGrant(
         final String userId, final String grantXML, final String authHandle, final Boolean restAccess)
         throws AlreadyExistsException, UserAccountNotFoundException, InvalidScopeException, RoleNotFoundException,
         XmlCorruptedException, XmlSchemaValidationException, MissingMethodParameterException, AuthenticationException,
@@ -424,7 +421,7 @@ public class UserAccountHandlerBean implements SessionBean {
         return service.createGrant(userId, grantXML);
     }
 
-    public void revokeGrant(
+    public final void revokeGrant(
         final String userId, final String grantId, final String taskParam, final SecurityContext securityContext)
         throws UserAccountNotFoundException, GrantNotFoundException, AlreadyRevokedException, XmlCorruptedException,
         MissingAttributeValueException, MissingMethodParameterException, AuthenticationException,
@@ -438,7 +435,7 @@ public class UserAccountHandlerBean implements SessionBean {
         service.revokeGrant(userId, grantId, taskParam);
     }
 
-    public void revokeGrant(
+    public final void revokeGrant(
         final String userId, final String grantId, final String taskParam, final String authHandle,
         final Boolean restAccess) throws UserAccountNotFoundException, GrantNotFoundException, AlreadyRevokedException,
         XmlCorruptedException, MissingAttributeValueException, MissingMethodParameterException,
@@ -453,7 +450,7 @@ public class UserAccountHandlerBean implements SessionBean {
         service.revokeGrant(userId, grantId, taskParam);
     }
 
-    public void revokeGrants(final String userId, final String taskParam, final SecurityContext securityContext)
+    public final void revokeGrants(final String userId, final String taskParam, final SecurityContext securityContext)
         throws UserAccountNotFoundException, GrantNotFoundException, AlreadyRevokedException, XmlCorruptedException,
         MissingAttributeValueException, MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException {
@@ -466,7 +463,7 @@ public class UserAccountHandlerBean implements SessionBean {
         service.revokeGrants(userId, taskParam);
     }
 
-    public void revokeGrants(
+    public final void revokeGrants(
         final String userId, final String taskParam, final String authHandle, final Boolean restAccess)
         throws UserAccountNotFoundException, GrantNotFoundException, AlreadyRevokedException, XmlCorruptedException,
         MissingAttributeValueException, MissingMethodParameterException, AuthenticationException,
@@ -481,7 +478,7 @@ public class UserAccountHandlerBean implements SessionBean {
         service.revokeGrants(userId, taskParam);
     }
 
-    public String retrieveUserAccounts(final Map filter, final SecurityContext securityContext)
+    public final String retrieveUserAccounts(final Map filter, final SecurityContext securityContext)
         throws MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException,
         InvalidSearchQueryException {
         try {
@@ -493,7 +490,7 @@ public class UserAccountHandlerBean implements SessionBean {
         return service.retrieveUserAccounts(filter);
     }
 
-    public String retrieveUserAccounts(final Map filter, final String authHandle, final Boolean restAccess)
+    public final String retrieveUserAccounts(final Map filter, final String authHandle, final Boolean restAccess)
         throws MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException,
         InvalidSearchQueryException {
         try {
@@ -506,7 +503,7 @@ public class UserAccountHandlerBean implements SessionBean {
         return service.retrieveUserAccounts(filter);
     }
 
-    public UserDetails retrieveUserDetails(final String handle, final SecurityContext securityContext)
+    public final UserDetails retrieveUserDetails(final String handle, final SecurityContext securityContext)
         throws MissingMethodParameterException, AuthenticationException, AuthorizationException,
         UserAccountNotFoundException, SystemException {
         try {
@@ -518,7 +515,7 @@ public class UserAccountHandlerBean implements SessionBean {
         return service.retrieveUserDetails(handle);
     }
 
-    public UserDetails retrieveUserDetails(final String handle, final String authHandle, final Boolean restAccess)
+    public final UserDetails retrieveUserDetails(final String handle, final String authHandle, final Boolean restAccess)
         throws MissingMethodParameterException, AuthenticationException, AuthorizationException,
         UserAccountNotFoundException, SystemException {
         try {
@@ -531,7 +528,7 @@ public class UserAccountHandlerBean implements SessionBean {
         return service.retrieveUserDetails(handle);
     }
 
-    public String retrievePreferences(final String userId, final SecurityContext securityContext)
+    public final String retrievePreferences(final String userId, final SecurityContext securityContext)
         throws UserAccountNotFoundException, MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException {
         try {
@@ -543,7 +540,7 @@ public class UserAccountHandlerBean implements SessionBean {
         return service.retrievePreferences(userId);
     }
 
-    public String retrievePreferences(final String userId, final String authHandle, final Boolean restAccess)
+    public final String retrievePreferences(final String userId, final String authHandle, final Boolean restAccess)
         throws UserAccountNotFoundException, MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException {
         try {
@@ -556,7 +553,7 @@ public class UserAccountHandlerBean implements SessionBean {
         return service.retrievePreferences(userId);
     }
 
-    public String createPreference(
+    public final String createPreference(
         final String userId, final String preferenceXML, final SecurityContext securityContext)
         throws AlreadyExistsException, UserAccountNotFoundException, PreferenceNotFoundException,
         XmlCorruptedException, XmlSchemaValidationException, MissingMethodParameterException, AuthenticationException,
@@ -570,7 +567,7 @@ public class UserAccountHandlerBean implements SessionBean {
         return service.createPreference(userId, preferenceXML);
     }
 
-    public String createPreference(
+    public final String createPreference(
         final String userId, final String preferenceXML, final String authHandle, final Boolean restAccess)
         throws AlreadyExistsException, UserAccountNotFoundException, PreferenceNotFoundException,
         XmlCorruptedException, XmlSchemaValidationException, MissingMethodParameterException, AuthenticationException,
@@ -585,7 +582,7 @@ public class UserAccountHandlerBean implements SessionBean {
         return service.createPreference(userId, preferenceXML);
     }
 
-    public String updatePreferences(
+    public final String updatePreferences(
         final String userId, final String preferencesXML, final SecurityContext securityContext)
         throws UserAccountNotFoundException, XmlCorruptedException, XmlSchemaValidationException,
         OptimisticLockingException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
@@ -599,7 +596,7 @@ public class UserAccountHandlerBean implements SessionBean {
         return service.updatePreferences(userId, preferencesXML);
     }
 
-    public String updatePreferences(
+    public final String updatePreferences(
         final String userId, final String preferencesXML, final String authHandle, final Boolean restAccess)
         throws UserAccountNotFoundException, XmlCorruptedException, XmlSchemaValidationException,
         OptimisticLockingException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
@@ -614,7 +611,7 @@ public class UserAccountHandlerBean implements SessionBean {
         return service.updatePreferences(userId, preferencesXML);
     }
 
-    public String updatePreference(
+    public final String updatePreference(
         final String userId, final String preferenceName, final String preferenceXML,
         final SecurityContext securityContext) throws AlreadyExistsException, UserAccountNotFoundException,
         XmlCorruptedException, XmlSchemaValidationException, MissingMethodParameterException, AuthenticationException,
@@ -629,7 +626,7 @@ public class UserAccountHandlerBean implements SessionBean {
         return service.updatePreference(userId, preferenceName, preferenceXML);
     }
 
-    public String updatePreference(
+    public final String updatePreference(
         final String userId, final String preferenceName, final String preferenceXML, final String authHandle,
         final Boolean restAccess) throws AlreadyExistsException, UserAccountNotFoundException, XmlCorruptedException,
         XmlSchemaValidationException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
@@ -644,7 +641,7 @@ public class UserAccountHandlerBean implements SessionBean {
         return service.updatePreference(userId, preferenceName, preferenceXML);
     }
 
-    public String retrievePreference(
+    public final String retrievePreference(
         final String userId, final String preferenceName, final SecurityContext securityContext)
         throws UserAccountNotFoundException, PreferenceNotFoundException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException {
@@ -657,7 +654,7 @@ public class UserAccountHandlerBean implements SessionBean {
         return service.retrievePreference(userId, preferenceName);
     }
 
-    public String retrievePreference(
+    public final String retrievePreference(
         final String userId, final String preferenceName, final String authHandle, final Boolean restAccess)
         throws UserAccountNotFoundException, PreferenceNotFoundException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException {
@@ -671,7 +668,8 @@ public class UserAccountHandlerBean implements SessionBean {
         return service.retrievePreference(userId, preferenceName);
     }
 
-    public void deletePreference(final String userId, final String preferenceName, final SecurityContext securityContext)
+    public final void deletePreference(
+        final String userId, final String preferenceName, final SecurityContext securityContext)
         throws UserAccountNotFoundException, PreferenceNotFoundException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException {
         try {
@@ -683,7 +681,7 @@ public class UserAccountHandlerBean implements SessionBean {
         service.deletePreference(userId, preferenceName);
     }
 
-    public void deletePreference(
+    public final void deletePreference(
         final String userId, final String preferenceName, final String authHandle, final Boolean restAccess)
         throws UserAccountNotFoundException, PreferenceNotFoundException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException {
@@ -697,7 +695,8 @@ public class UserAccountHandlerBean implements SessionBean {
         service.deletePreference(userId, preferenceName);
     }
 
-    public String createAttribute(final String userId, final String attributeXml, final SecurityContext securityContext)
+    public final String createAttribute(
+        final String userId, final String attributeXml, final SecurityContext securityContext)
         throws AlreadyExistsException, UserAccountNotFoundException, XmlCorruptedException,
         XmlSchemaValidationException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
         SystemException {
@@ -710,7 +709,7 @@ public class UserAccountHandlerBean implements SessionBean {
         return service.createAttribute(userId, attributeXml);
     }
 
-    public String createAttribute(
+    public final String createAttribute(
         final String userId, final String attributeXml, final String authHandle, final Boolean restAccess)
         throws AlreadyExistsException, UserAccountNotFoundException, XmlCorruptedException,
         XmlSchemaValidationException, MissingMethodParameterException, AuthenticationException, AuthorizationException,

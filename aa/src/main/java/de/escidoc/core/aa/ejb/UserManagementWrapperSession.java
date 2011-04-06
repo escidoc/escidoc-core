@@ -5,7 +5,4 @@ package de.escidoc.core.aa.ejb;
  */
 public class UserManagementWrapperSession extends UserManagementWrapperBean {
 
-    public void unsetSessionContext() {
-    }
-
 }

@@ -1,8 +1,3 @@
-/*
- * Generate EJB from POJO with Spring framework Bean Factory
- * Bernhard Kraus (Accenture)
- */
-
 package de.escidoc.core.om.ejb;
 
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
@@ -44,16 +39,16 @@ public class FedoraRestDeviationHandlerBean implements SessionBean {
     }
 
     @Override
-    public void setSessionContext(final SessionContext arg0) throws RemoteException {
+    public final void setSessionContext(final SessionContext arg0) throws RemoteException {
         this.sessionCtx = arg0;
     }
 
     @Override
-    public void ejbRemove() throws RemoteException {
+    public final void ejbRemove() throws RemoteException {
     }
 
     @Override
-    public void ejbActivate() throws RemoteException {
+    public final void ejbActivate() throws RemoteException {
 
     }
 
@@ -62,7 +57,7 @@ public class FedoraRestDeviationHandlerBean implements SessionBean {
 
     }
 
-    public EscidocBinaryContent getDatastreamDissemination(
+    public final EscidocBinaryContent getDatastreamDissemination(
         final String pid, final String dsID, final Map parameters, final SecurityContext securityContext)
         throws Exception, SystemException {
         try {
@@ -74,7 +69,7 @@ public class FedoraRestDeviationHandlerBean implements SessionBean {
         return service.getDatastreamDissemination(pid, dsID, parameters);
     }
 
-    public EscidocBinaryContent getDatastreamDissemination(
+    public final EscidocBinaryContent getDatastreamDissemination(
         final String pid, final String dsID, final Map parameters, final String authHandle, final Boolean restAccess)
         throws Exception, SystemException {
         try {
@@ -87,7 +82,7 @@ public class FedoraRestDeviationHandlerBean implements SessionBean {
         return service.getDatastreamDissemination(pid, dsID, parameters);
     }
 
-    public String export(final String pid, final Map parameters, final SecurityContext securityContext)
+    public final String export(final String pid, final Map parameters, final SecurityContext securityContext)
         throws Exception, SystemException {
         try {
             UserContext.setUserContext(securityContext);
@@ -98,7 +93,7 @@ public class FedoraRestDeviationHandlerBean implements SessionBean {
         return service.export(pid, parameters);
     }
 
-    public String export(final String pid, final Map parameters, final String authHandle, final Boolean restAccess)
+    public final String export(final String pid, final Map parameters, final String authHandle, final Boolean restAccess)
         throws Exception, SystemException {
         try {
             UserContext.setUserContext(authHandle);
@@ -110,8 +105,8 @@ public class FedoraRestDeviationHandlerBean implements SessionBean {
         return service.export(pid, parameters);
     }
 
-    public void cache(final String pid, final String xml, final SecurityContext securityContext) throws Exception,
-        SystemException {
+    public final void cache(final String pid, final String xml, final SecurityContext securityContext)
+        throws Exception, SystemException {
         try {
             UserContext.setUserContext(securityContext);
         }
@@ -121,7 +116,7 @@ public class FedoraRestDeviationHandlerBean implements SessionBean {
         service.cache(pid, xml);
     }
 
-    public void cache(final String pid, final String xml, final String authHandle, final Boolean restAccess)
+    public final void cache(final String pid, final String xml, final String authHandle, final Boolean restAccess)
         throws Exception, SystemException {
         try {
             UserContext.setUserContext(authHandle);
@@ -133,7 +128,7 @@ public class FedoraRestDeviationHandlerBean implements SessionBean {
         service.cache(pid, xml);
     }
 
-    public void removeFromCache(final String pid, final SecurityContext securityContext) throws Exception,
+    public final void removeFromCache(final String pid, final SecurityContext securityContext) throws Exception,
         SystemException {
         try {
             UserContext.setUserContext(securityContext);
@@ -144,8 +139,8 @@ public class FedoraRestDeviationHandlerBean implements SessionBean {
         service.removeFromCache(pid);
     }
 
-    public void removeFromCache(final String pid, final String authHandle, final Boolean restAccess) throws Exception,
-        SystemException {
+    public final void removeFromCache(final String pid, final String authHandle, final Boolean restAccess)
+        throws Exception, SystemException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);
@@ -156,7 +151,7 @@ public class FedoraRestDeviationHandlerBean implements SessionBean {
         service.removeFromCache(pid);
     }
 
-    public void replaceInCache(final String pid, final String xml, final SecurityContext securityContext)
+    public final void replaceInCache(final String pid, final String xml, final SecurityContext securityContext)
         throws Exception, SystemException {
         try {
             UserContext.setUserContext(securityContext);
@@ -167,8 +162,9 @@ public class FedoraRestDeviationHandlerBean implements SessionBean {
         service.replaceInCache(pid, xml);
     }
 
-    public void replaceInCache(final String pid, final String xml, final String authHandle, final Boolean restAccess)
-        throws Exception, SystemException {
+    public final void replaceInCache(
+        final String pid, final String xml, final String authHandle, final Boolean restAccess) throws Exception,
+        SystemException {
         try {
             UserContext.setUserContext(authHandle);
             UserContext.setRestAccess(restAccess);

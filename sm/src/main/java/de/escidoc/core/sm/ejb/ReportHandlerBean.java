@@ -1,8 +1,3 @@
-/*
- * Generate EJB from POJO with Spring framework Bean Factory
- * Bernhard Kraus (Accenture)
- */
-
 package de.escidoc.core.sm.ejb;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSqlException;
@@ -49,27 +44,27 @@ public class ReportHandlerBean implements SessionBean {
     }
 
     @Override
-    public void setSessionContext(final SessionContext arg0) throws RemoteException {
+    public final void setSessionContext(final SessionContext arg0) throws RemoteException {
         this.sessionCtx = arg0;
     }
 
     @Override
-    public void ejbRemove() throws RemoteException {
+    public final void ejbRemove() throws RemoteException {
     }
 
     @Override
-    public void ejbActivate() throws RemoteException {
+    public final void ejbActivate() throws RemoteException {
 
     }
 
     @Override
-    public void ejbPassivate() throws RemoteException {
+    public final void ejbPassivate() throws RemoteException {
 
     }
 
-    public String retrieve(final String xml, final SecurityContext securityContext) throws AuthenticationException,
-        AuthorizationException, XmlCorruptedException, XmlSchemaValidationException, ReportDefinitionNotFoundException,
-        MissingMethodParameterException, InvalidSqlException, SystemException {
+    public final String retrieve(final String xml, final SecurityContext securityContext)
+        throws AuthenticationException, AuthorizationException, XmlCorruptedException, XmlSchemaValidationException,
+        ReportDefinitionNotFoundException, MissingMethodParameterException, InvalidSqlException, SystemException {
         try {
             UserContext.setUserContext(securityContext);
         }
@@ -79,7 +74,7 @@ public class ReportHandlerBean implements SessionBean {
         return service.retrieve(xml);
     }
 
-    public String retrieve(final String xml, final String authHandle, final Boolean restAccess)
+    public final String retrieve(final String xml, final String authHandle, final Boolean restAccess)
         throws AuthenticationException, AuthorizationException, XmlCorruptedException, XmlSchemaValidationException,
         ReportDefinitionNotFoundException, MissingMethodParameterException, InvalidSqlException, SystemException {
         try {

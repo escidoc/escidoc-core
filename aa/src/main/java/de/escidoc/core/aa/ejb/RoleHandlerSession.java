@@ -5,7 +5,4 @@ package de.escidoc.core.aa.ejb;
  */
 public class RoleHandlerSession extends RoleHandlerBean {
 
-    public void unsetSessionContext() {
-    }
-
 }

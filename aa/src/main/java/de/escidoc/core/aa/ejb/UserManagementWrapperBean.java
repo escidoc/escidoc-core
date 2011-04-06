@@ -1,8 +1,3 @@
-/*
- * Generate EJB from POJO with Spring framework Bean Factory
- * Bernhard Kraus (Accenture)
- */
-
 package de.escidoc.core.aa.ejb;
 
 import de.escidoc.core.aa.service.interfaces.UserManagementWrapperInterface;
@@ -43,25 +38,25 @@ public class UserManagementWrapperBean implements SessionBean {
     }
 
     @Override
-    public void setSessionContext(final SessionContext arg0) throws RemoteException {
+    public final void setSessionContext(final SessionContext arg0) throws RemoteException {
         this.sessionCtx = arg0;
     }
 
     @Override
-    public void ejbRemove() throws RemoteException {
+    public final void ejbRemove() throws RemoteException {
     }
 
     @Override
-    public void ejbActivate() throws RemoteException {
+    public final void ejbActivate() throws RemoteException {
 
     }
 
     @Override
-    public void ejbPassivate() throws RemoteException {
+    public final void ejbPassivate() throws RemoteException {
 
     }
 
-    public void logout(final SecurityContext securityContext) throws AuthenticationException, SystemException {
+    public final void logout(final SecurityContext securityContext) throws AuthenticationException, SystemException {
         try {
             UserContext.setUserContext(securityContext);
         }
@@ -71,7 +66,7 @@ public class UserManagementWrapperBean implements SessionBean {
         service.logout();
     }
 
-    public void logout(final String authHandle, final Boolean restAccess) throws AuthenticationException,
+    public final void logout(final String authHandle, final Boolean restAccess) throws AuthenticationException,
         SystemException {
         try {
             UserContext.setUserContext(authHandle);
@@ -83,7 +78,7 @@ public class UserManagementWrapperBean implements SessionBean {
         service.logout();
     }
 
-    public void initHandleExpiryTimestamp(final String handle, final SecurityContext securityContext)
+    public final void initHandleExpiryTimestamp(final String handle, final SecurityContext securityContext)
         throws AuthenticationException, SystemException {
         try {
             UserContext.setUserContext(securityContext);
@@ -94,7 +89,7 @@ public class UserManagementWrapperBean implements SessionBean {
         service.initHandleExpiryTimestamp(handle);
     }
 
-    public void initHandleExpiryTimestamp(final String handle, final String authHandle, final Boolean restAccess)
+    public final void initHandleExpiryTimestamp(final String handle, final String authHandle, final Boolean restAccess)
         throws AuthenticationException, SystemException {
         try {
             UserContext.setUserContext(authHandle);

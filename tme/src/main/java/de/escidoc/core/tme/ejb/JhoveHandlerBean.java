@@ -1,8 +1,3 @@
-/*
- * Generate EJB from POJO with Spring framework Bean Factory
- * Bernhard Kraus (Accenture)
- */
-
 package de.escidoc.core.tme.ejb;
 
 import de.escidoc.core.common.exceptions.application.invalid.TmeException;
@@ -48,27 +43,27 @@ public class JhoveHandlerBean implements SessionBean {
     }
 
     @Override
-    public void setSessionContext(final SessionContext arg0) throws RemoteException {
+    public final void setSessionContext(final SessionContext arg0) throws RemoteException {
         this.sessionCtx = arg0;
     }
 
     @Override
-    public void ejbRemove() throws RemoteException {
+    public final void ejbRemove() throws RemoteException {
     }
 
     @Override
-    public void ejbActivate() throws RemoteException {
+    public final void ejbActivate() throws RemoteException {
 
     }
 
     @Override
-    public void ejbPassivate() throws RemoteException {
+    public final void ejbPassivate() throws RemoteException {
 
     }
 
-    public String extract(final String requests, final SecurityContext securityContext) throws AuthenticationException,
-        AuthorizationException, XmlCorruptedException, XmlSchemaValidationException, MissingMethodParameterException,
-        SystemException, TmeException {
+    public final String extract(final String requests, final SecurityContext securityContext)
+        throws AuthenticationException, AuthorizationException, XmlCorruptedException, XmlSchemaValidationException,
+        MissingMethodParameterException, SystemException, TmeException {
         try {
             UserContext.setUserContext(securityContext);
         }
@@ -78,7 +73,7 @@ public class JhoveHandlerBean implements SessionBean {
         return service.extract(requests);
     }
 
-    public String extract(final String requests, final String authHandle, final Boolean restAccess)
+    public final String extract(final String requests, final String authHandle, final Boolean restAccess)
         throws AuthenticationException, AuthorizationException, XmlCorruptedException, XmlSchemaValidationException,
         MissingMethodParameterException, SystemException, TmeException {
         try {

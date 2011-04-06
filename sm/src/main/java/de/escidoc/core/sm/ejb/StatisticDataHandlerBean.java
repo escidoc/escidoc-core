@@ -1,8 +1,3 @@
-/*
- * Generate EJB from POJO with Spring framework Bean Factory
- * Bernhard Kraus (Accenture)
- */
-
 package de.escidoc.core.sm.ejb;
 
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
@@ -45,26 +40,26 @@ public class StatisticDataHandlerBean implements SessionBean {
     }
 
     @Override
-    public void setSessionContext(final SessionContext arg0) throws RemoteException {
+    public final void setSessionContext(final SessionContext arg0) throws RemoteException {
         this.sessionCtx = arg0;
     }
 
     @Override
-    public void ejbRemove() throws RemoteException {
+    public final void ejbRemove() throws RemoteException {
     }
 
     @Override
-    public void ejbActivate() throws RemoteException {
+    public final void ejbActivate() throws RemoteException {
 
     }
 
     @Override
-    public void ejbPassivate() throws RemoteException {
+    public final void ejbPassivate() throws RemoteException {
 
     }
 
-    public void create(final String xmlData, final SecurityContext securityContext) throws AuthenticationException,
-        AuthorizationException, MissingMethodParameterException, SystemException {
+    public final void create(final String xmlData, final SecurityContext securityContext)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException {
         try {
             UserContext.setUserContext(securityContext);
         }
@@ -74,7 +69,7 @@ public class StatisticDataHandlerBean implements SessionBean {
         service.create(xmlData);
     }
 
-    public void create(final String xmlData, final String authHandle, final Boolean restAccess)
+    public final void create(final String xmlData, final String authHandle, final Boolean restAccess)
         throws AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException {
         try {
             UserContext.setUserContext(authHandle);

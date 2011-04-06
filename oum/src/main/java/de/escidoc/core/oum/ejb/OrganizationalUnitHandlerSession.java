@@ -5,7 +5,4 @@ package de.escidoc.core.oum.ejb;
  */
 public class OrganizationalUnitHandlerSession extends OrganizationalUnitHandlerBean {
 
-    public void unsetSessionContext() {
-    }
-
 }
