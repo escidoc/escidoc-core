@@ -45,7 +45,7 @@
         <field type="title" txt="Select Relational Database Management System" bold="true" size="1" />
         <field type="divider" align="top"/>
         <!-- Underlying RDBMS -->
-        <field type="combo" variable="Database">
+        <field type="radio" variable="Database">
           <description>eSciDoc requires a relational database system. Currently, only Oracle and PostgreSQL are supported. The database will only hold internal data (e.g. user rights), but not the actual content.</description>
           <spec txt="Relational Database:" id="userdata.database">
             <choice txt="Oracle" value="Oracle"/>
