@@ -1,6 +1,7 @@
 package de.escidoc.core.cmm.ejb.interfaces;
 
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
+import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
@@ -8,6 +9,7 @@ import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
+import de.escidoc.core.common.exceptions.application.missing.MissingElementValueException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ContentStreamNotFoundException;
@@ -46,6 +48,16 @@ public interface ContentModelHandlerRemote extends EJBObject {
         ContentModelNotFoundException, AuthenticationException, AuthorizationException,
         MissingMethodParameterException, LockingException, InvalidStatusException, ResourceInUseException,
         RemoteException;
+
+    String ingest(String xmlData, SecurityContext securityContext) throws AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, SystemException, MissingAttributeValueException,
+        MissingElementValueException, ContentModelNotFoundException, InvalidXmlException, InvalidStatusException,
+        EscidocException, RemoteException;
+
+    String ingest(String xmlData, String authHandle, Boolean restAccess) throws AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, SystemException, MissingAttributeValueException,
+        MissingElementValueException, ContentModelNotFoundException, InvalidXmlException, InvalidStatusException,
+        EscidocException, RemoteException;
 
     String retrieve(String id, SecurityContext securityContext) throws ContentModelNotFoundException, SystemException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, RemoteException;
