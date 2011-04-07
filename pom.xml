@@ -794,6 +794,13 @@
 
 	<escidoc.oracle.host>escidev5</escidoc.oracle.host>
 	<escidoc.oracle.port>1521</escidoc.oracle.port>
+	<escidoc.oracle.database>oraesci01</escidoc.oracle.database>
+	<escidoc.oracle.database.user>escidoc</escidoc.oracle.database.user>
+	<escidoc.oracle.database.password>escidoc</escidoc.oracle.database.password>
+	<escidoc.oracle.database.admin.user>oraesci_adm</escidoc.oracle.database.admin.user>
+	<escidoc.oracle.database.admin.password>oraesciadm</escidoc.oracle.database.admin.password>
+	<escidoc.oracle.default.tablespace>escidoc</escidoc.oracle.default.tablespace>
+	<escidoc.oracle.temp.tablespace>TEMP</escidoc.oracle.temp.tablespace>
 	<fedora.oracle.database>oraesci01</fedora.oracle.database>
 	<fedora.oracle.database.user>fedoraAdmin</fedora.oracle.database.user>
 	<fedora.oracle.database.password>fedoraAdmin</fedora.oracle.database.password>
@@ -808,16 +815,16 @@
 	<triplestore.oracle.database.admin.password>oraesciadm</triplestore.oracle.database.admin.password>
 	<triplestore.oracle.default.tablespace>triples</triplestore.oracle.default.tablespace>
 	<triplestore.oracle.temp.tablespace>TEMP</triplestore.oracle.temp.tablespace>
-	<escidoc.oracle.database>oraesci01</escidoc.oracle.database>
-	<escidoc.oracle.database.user>escidoc</escidoc.oracle.database.user>
-	<escidoc.oracle.database.password>escidoc</escidoc.oracle.database.password>
-	<escidoc.oracle.database.admin.user>oraesci_adm</escidoc.oracle.database.admin.user>
-	<escidoc.oracle.database.admin.password>oraesciadm</escidoc.oracle.database.admin.password>
-	<escidoc.oracle.default.tablespace>escidoc</escidoc.oracle.default.tablespace>
-	<escidoc.oracle.temp.tablespace>TEMP</escidoc.oracle.temp.tablespace>
 
 	<!-- escidoc.oracle.host>localhost</escidoc.oracle.host>
 	<escidoc.oracle.port>1521</escidoc.oracle.port>
+	<escidoc.oracle.database>XE</escidoc.oracle.database>
+	<escidoc.oracle.database.user>escidoc</escidoc.oracle.database.user>
+	<escidoc.oracle.database.password>escidoc</escidoc.oracle.database.password>
+	<escidoc.oracle.database.admin.user>HR</escidoc.oracle.database.admin.user>
+	<escidoc.oracle.database.admin.password>oracle</escidoc.oracle.database.admin.password>
+	<escidoc.oracle.default.tablespace>USERS</escidoc.oracle.default.tablespace>
+	<escidoc.oracle.temp.tablespace>TEMP</escidoc.oracle.temp.tablespace>
 	<fedora.oracle.database>XE</fedora.oracle.database>
 	<fedora.oracle.database.user>fedoraAdmin</fedora.oracle.database.user>
 	<fedora.oracle.database.password>fedoraAdmin</fedora.oracle.database.password>
@@ -831,14 +838,7 @@
 	<triplestore.oracle.database.admin.user>HR</triplestore.oracle.database.admin.user>
 	<triplestore.oracle.database.admin.password>oracle</triplestore.oracle.database.admin.password>
 	<triplestore.oracle.default.tablespace>USERS</triplestore.oracle.default.tablespace>
-	<triplestore.oracle.temp.tablespace>TEMP</triplestore.oracle.temp.tablespace>
-	<escidoc.oracle.database>XE</escidoc.oracle.database>
-	<escidoc.oracle.database.user>escidoc</escidoc.oracle.database.user>
-	<escidoc.oracle.database.password>escidoc</escidoc.oracle.database.password>
-	<escidoc.oracle.database.admin.user>HR</escidoc.oracle.database.admin.user>
-	<escidoc.oracle.database.admin.password>oracle</escidoc.oracle.database.admin.password>
-	<escidoc.oracle.default.tablespace>USERS</escidoc.oracle.default.tablespace>
-	<escidoc.oracle.temp.tablespace>TEMP</escidoc.oracle.temp.tablespace -->
+	<triplestore.oracle.temp.tablespace>TEMP</triplestore.oracle.temp.tablespace -->
   </properties>
 
   <dependencies>
@@ -1588,7 +1588,7 @@
         <version>${jdbc.postgresql.version}</version>
       </dependency>
 	  <dependency>
-		<groupId>restricted</groupId>
+		<groupId>ojdbc</groupId>
 		<artifactId>ojdbc</artifactId>
 		<version>${jdbc.oracle.version}</version>
 	  </dependency>

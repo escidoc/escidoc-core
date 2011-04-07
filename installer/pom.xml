@@ -129,14 +129,6 @@
 									<overWrite>false</overWrite>
 									<outputDirectory>${staging.dir}/lib</outputDirectory>
 								</artifactItem>
-								<artifactItem>
-									<groupId>restricted</groupId>
-									<artifactId>ojdbc</artifactId>
-									<version>${jdbc.oracle.version}</version>
-									<type>jar</type>
-									<overWrite>false</overWrite>
-									<outputDirectory>${staging.dir}/lib</outputDirectory>
-								</artifactItem>
 
 								<artifactItem>
 									<groupId>org.apache.ant</groupId>

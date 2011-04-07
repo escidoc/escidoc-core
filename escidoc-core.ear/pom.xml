@@ -198,10 +198,6 @@
 			<artifactId>postgresql</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>restricted</groupId>
-			<artifactId>ojdbc</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>org</groupId>
 			<artifactId>trippi</artifactId>
 			<classifier>core</classifier>
