@@ -240,6 +240,10 @@
       <variable name="DatabaseAutocommit" value="autocommit=&quot;true&quot;" condition="databaseIsPostgres" />
       <variable name="DatabaseAutocommit" value="" condition="databaseIsMySQL" />
       <variable name="DatabaseAutocommit" value="autocommit=&quot;true&quot;" condition="databaseIsOracle" />
+      <!-- name of the subdirectory containing the SQL scripts -->
+      <variable name="DatabaseScriptPrefix" value="postgres" condition="databaseIsPostgres" />
+      <variable name="DatabaseScriptPrefix" value="mysql" condition="databaseIsMySQL" />
+      <variable name="DatabaseScriptPrefix" value="oracle" condition="databaseIsOracle" />
       <!-- do not drop/create database "escidoc-core" for MySQL -->
       <variable name="EscidocCoreDBIn" value="" condition="databaseIsPostgres" />
       <variable name="EscidocCoreDBOut" value="" condition="databaseIsPostgres" />
@@ -253,9 +257,6 @@
       <variable name="DatasourceTriplestore" value="riTriples" condition="databaseIsPostgres" />
       <variable name="DatasourceTriplestore" value="" condition="databaseIsMySQL" />
       <variable name="DatasourceTriplestore" value="" condition="databaseIsOracle" />
-      <variable name="DatastoreScriptPrefix" value="" condition="databaseIsPostgres" />
-      <variable name="DatastoreScriptPrefix" value="mysql." condition="databaseIsMySQL" />
-      <variable name="DatastoreScriptPrefix" value="oracle." condition="databaseIsOracle" />
       <variable name="HibernateDialect" value="PostgreSQLDialect" condition="databaseIsPostgres" />
       <variable name="HibernateDialect" value="MySQLDialect" condition="databaseIsMySQL" />
       <variable name="HibernateDialect" value="Oracle8iDialect" condition="databaseIsOracle" />
@@ -507,13 +508,6 @@
             <description>Creates the necessary databases and system roles</description>
             <file src="config/escidoc/core/database.properties" targetdir="$INSTALL_PATH/install.tmp" />
             <parsable targetfile="$INSTALL_PATH/install.tmp/database.properties" />
-            
-            <!-- The following four lines should be deleted for final release 1.2 of eSciDoc Infrastructure --> 
-            <file src="config/escidoc/core/drop-db.sql" targetdir="$INSTALL_PATH/install.tmp" />
-            <parsable targetfile="$INSTALL_PATH/install.tmp/drop-db.sql" />
-            <file src="config/escidoc/core/create-db.sql" targetdir="$INSTALL_PATH/install.tmp" />
-            <parsable targetfile="$INSTALL_PATH/install.tmp/create-db.sql" />
-            
             <file src="config/escidoc/core/database-init.xml" targetdir="$INSTALL_PATH/install.tmp" />
             <parsable targetfile="$INSTALL_PATH/install.tmp/database-init.xml" />
             <file src="config/escidoc/core/aa.init.user-accounts.common.sql" targetdir="$INSTALL_PATH/install.tmp" />

@@ -12,9 +12,9 @@
 
 	<target name="build" description="Creates databases escidoc-core, fedora32, and riTriples (target create_all). CAVEAT: if databases preexist, they will be dropped first. All data will be LOST!">
 		<!-- creates, initializes, and populates all schemas -->
-		<echo level="info">Creating databases and roles on ${escidoc.jdbc.url}, using (${root.database.userid}/${root.database.password})</echo>
+		<echo level="info">Creating databases and roles on ${escidoc.jdbc.url}, using (${root.database.user}/${root.database.password})</echo>
 		<antcall target="create-db" />
-		<echo level="info">Creating eSciDoc Core tables and AA roles on ${escidoc.jdbc.url}, using (${escidoc.database.userid}/${escidoc.database.password})</echo>
+		<echo level="info">Creating eSciDoc Core tables and AA roles on ${escidoc.jdbc.url}, using (${escidoc.database.user}/${escidoc.database.password})</echo>
 		<antcall target="create-tables" />
 		<antcall target="create-roles" />
 	</target>
@@ -22,21 +22,21 @@
 	<target name="create-db" description="Creates all necessary database and roles for eSciDoc">
 		<!-- creates all databases and schemas -->
 		<echo level="info">Creating databases, schemas, and roles</echo>
-		<echo level="info">Executing script ${sql.dir}/drop-db.sql</echo>
+		<echo level="info">Executing script ${sql.dir}/${script.prefix}/drop-db.sql</echo>
 		<sql classpathref="database.classpath" 
 		     driver="${jdbc.driver.class}" 
 		     url="${root.jdbc.url}" 
-		     userid="${root.database.userid}" 
+		     userid="${root.database.user}" 
 		     password="${root.database.password}" 
-		     src="${sql.dir}/drop-db.sql"
+		     src="${sql.dir}/${script.prefix}/drop-db.sql"
 		     ${DatabaseAutocommit} />
-		<echo level="info">Executing script ${sql.dir}/create-db.sql</echo>
+		<echo level="info">Executing script ${sql.dir}/${script.prefix}/create-db.sql</echo>
 		<sql classpathref="database.classpath" 
 		     driver="${jdbc.driver.class}" 
 		     url="${root.jdbc.url}" 
-		     userid="${root.database.userid}" 
+		     userid="${root.database.user}" 
 		     password="${root.database.password}" 
-		     src="${sql.dir}/create-db.sql"
+		     src="${sql.dir}/${script.prefix}/create-db.sql"
 		     ${DatabaseAutocommit} />
 	</target>
 
@@ -45,23 +45,8 @@
 		<echo level="info">Creating all necessary tables for eSciDoc</echo>
 		<!-- Create tables for AA and populate -->
 		<antcall target="execute-sql">
-			<param name="script" value="aa/aa.create.sql" />
+			<param name="script" value="${script.prefix}/*/*.create.sql" />
 		</antcall>
-                <antcall target="execute-sql">
-                        <param name="script" value="adm/adm.create.sql" />
-                </antcall>
-                <antcall target="execute-sql">
-                        <param name="script" value="oai/oai.create.sql" />
-                </antcall>
-                <antcall target="execute-sql">
-                        <param name="script" value="om/om.create.sql" />
-                </antcall>
-                <antcall target="execute-sql">
-                        <param name="script" value="sm/sm.create.sql" />
-                </antcall>
-                <antcall target="execute-sql">
-                        <param name="script" value="st/st.create.sql" />
-                </antcall>
         </target>
 
 	<target name="create-roles" description="Creates basic user accounts and necessary system roles">
@@ -73,7 +58,7 @@
 		<!-- creates necessary system roles -->
 		<echo level="info">Creating necessary system roles</echo>
 		<antcall target="execute-sql">
-			<param name="script" value="aa/aa.init.roles.*.sql" />
+			<param name="script" value="${script.prefix}/aa/aa.init.roles.*.sql" />
 		</antcall>
 
 		<!-- granting newly created user accounts with necessary policies -->
@@ -85,13 +70,13 @@
                 <!-- creates necessary actions -->
                 <echo level="info">Creating necessary actions</echo>
                 <antcall target="execute-sql">
-                        <param name="script" value="aa/aa.init.actions.sql" />
+                        <param name="script" value="${script.prefix}/aa/aa.init.actions.sql" />
                 </antcall>
 
                 <!-- creates necessary method mappings -->
                 <echo level="info">Creating necessary method mappings</echo>
                 <antcall target="execute-sql">
-                        <param name="script" value="aa/aa.init.method-mappings.*.sql" />
+                        <param name="script" value="${script.prefix}/aa/aa.init.method-mappings.*.sql" />
                 </antcall>
 	</target>
 
@@ -100,7 +85,7 @@
 		<sql classpathref="database.classpath" 
 		     driver="${jdbc.driver.class}" 
 		     url="${escidoc.jdbc.url}" 
-		     userid="${escidoc.database.userid}" 
+		     userid="${escidoc.database.user}" 
 		     password="${escidoc.database.password}" 
 		     ${DatabaseAutocommit}>
                         <path>

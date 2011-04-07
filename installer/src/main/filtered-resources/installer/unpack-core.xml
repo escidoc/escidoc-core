@@ -176,8 +176,6 @@
     <echo level="info">Prepare for database creation</echo>
     <move file="${install.dir}/install.tmp/database.properties" todir="${install.dir}/core/etc"/>
     <move file="${install.dir}/install.tmp/database-init.xml" todir="${install.dir}/core/bin"/>
-    <move file="${install.dir}/install.tmp/drop-db.sql" todir="${install.dir}/core/sql"/>
-    <move file="${install.dir}/install.tmp/create-db.sql" todir="${install.dir}/core/sql"/>
     <move file="${install.dir}/install.tmp/aa.init.user-accounts.common.sql" todir="${install.dir}/core/sql"/>
     <move file="${install.dir}/install.tmp/aa.init.grants.common.sql" todir="${install.dir}/core/sql"/>
     <move file="${install.dir}/install.tmp/postgresql-${jdbc.postgresql.version}.jar" todir="${install.dir}/core/lib"/>

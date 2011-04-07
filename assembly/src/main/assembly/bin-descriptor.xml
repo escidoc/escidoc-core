@@ -51,7 +51,7 @@
       </includes>
     </fileSet>
     <fileSet>
-      <directory>${project.basedir}/../common/src/main/resources/sql/postgres</directory>
+      <directory>${project.basedir}/../common/src/main/resources/sql</directory>
       <outputDirectory>/sql</outputDirectory>
       <includes>
         <include>**/*</include>
