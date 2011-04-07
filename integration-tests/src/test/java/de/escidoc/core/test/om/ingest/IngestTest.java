@@ -46,18 +46,20 @@ import java.util.regex.Pattern;
 import static org.junit.Assert.fail;
 
 /**
- * Test ingesting resource via ingest interface.<br> By default, the tests are executed using a depositor user.
- *
+ * Test ingesting resource via ingest interface.<br>
+ * By default, the tests are executed using a depositor user.
+ * 
  * @author Steffen Wagner, KST
  */
 @RunWith(value = Parameterized.class)
 public class IngestTest extends IngestTestBase {
 
-    private static final Pattern OBJECT_PATTERN =
-        Pattern.compile("<objid resourceType=\"([^\"][^\"]*)\">(escidoc:\\d+)</objid>", Pattern.MULTILINE);
+    private static final Pattern OBJECT_PATTERN = Pattern.compile(
+        "<objid resourceType=\"([^\"][^\"]*)\">(escidoc:\\d+)</objid>", Pattern.MULTILINE);
 
     /**
-     * @param transport The transport identifier.
+     * @param transport
+     *            The transport identifier.
      */
     public IngestTest(final int transport) {
         super(transport);
@@ -67,10 +69,11 @@ public class IngestTest extends IngestTestBase {
      * Test if a valid item gets ingested. The return value must be a xml fragment containing the object id. The return
      * value gets first parsed to check if it is well formed xml. Then the xml gets matched against a pattern which
      * looks for an object id.
-     *
-     * @throws Exception the Exception gets thrown in the following cases: <ul <li>The ingest fails due to internal
-     *                   reasons (Fedora, eSciDoc) <li> The return value is not well formed <li>The return value does
-     *                   not contain a vaild object id. </ul>
+     * 
+     * @throws Exception
+     *             the Exception gets thrown in the following cases: <ul <li>The ingest fails due to internal reasons
+     *             (Fedora, eSciDoc) <li>The return value is not well formed <li>The return value does not contain a
+     *             vaild object id. </ul>
      */
     @Test
     public void testIngestItemValid() throws Exception {
@@ -106,11 +109,15 @@ public class IngestTest extends IngestTestBase {
      * Test if a valid Item in public-status 'released' gets ingested. The return value must be a xml fragment
      * containing the object id. The return value gets first parsed to check if it is well formed xml. Then the xml gets
      * matched against a pattern which looks for an object id.
-     *
-     * @throws Exception the Exception gets thrown in the following cases: <ul> <li>The ingest fails due to internal
-     *                   reasons (Fedora, eSciDoc)</li> <li> The return value is not well formed</li> <li>The return
-     *                   value does not contain a vaild object id.</li> <li>No exception is thrown because object PID is
-     *                   missing</li> </ul>
+     * 
+     * @throws Exception
+     *             the Exception gets thrown in the following cases:
+     *             <ul>
+     *             <li>The ingest fails due to internal reasons (Fedora, eSciDoc)</li>
+     *             <li>The return value is not well formed</li>
+     *             <li>The return value does not contain a vaild object id.</li>
+     *             <li>No exception is thrown because object PID is missing</li>
+     *             </ul>
      */
     @Test
     public void testIngestReleasedItem01() throws Exception {
@@ -142,11 +149,16 @@ public class IngestTest extends IngestTestBase {
      * Test if a valid Item in public-status 'released' gets ingested. The return value must be a xml fragment
      * containing the object id. The return value gets first parsed to check if it is well formed xml. Then the xml gets
      * matched against a pattern which looks for an object id.
-     *
-     * @throws Exception the Exception gets thrown in the following cases: <ul> <li>The ingest fails due to internal
-     *                   reasons (Fedora, eSciDoc)</li> <li> The return value is not well formed</li> <li>The return
-     *                   value does not contain a vaild object id.</li> <li>The public-status 'released' is not
-     *                   copied</li> <li>The object pid is not copied.</li> </ul>
+     * 
+     * @throws Exception
+     *             the Exception gets thrown in the following cases:
+     *             <ul>
+     *             <li>The ingest fails due to internal reasons (Fedora, eSciDoc)</li>
+     *             <li>The return value is not well formed</li>
+     *             <li>The return value does not contain a vaild object id.</li>
+     *             <li>The public-status 'released' is not copied</li>
+     *             <li>The object pid is not copied.</li>
+     *             </ul>
      */
     @Test
     public void testIngestReleasedItem02() throws Exception {
@@ -207,10 +219,11 @@ public class IngestTest extends IngestTestBase {
     }
 
     /**
-     * Test what happens if an invalid but well formed XML fragment gets ingested. An InvalidResourceException has
-     * to be thrown as a result.
-     *
-     * @throws Exception the Exception, in this case InvalidResourceException
+     * Test what happens if an invalid but well formed XML fragment gets ingested. An InvalidResourceException has to be
+     * thrown as a result.
+     * 
+     * @throws Exception
+     *             the Exception, in this case InvalidResourceException
      */
     @Test(expected = InvalidResourceException.class)
     public void testIngestXmlNotValid() throws Exception {
@@ -319,11 +332,15 @@ public class IngestTest extends IngestTestBase {
      * Test if a valid Container in public-status 'released' gets ingested. The return value must be a xml fragment
      * containing the object id. The return value gets first parsed to check if it is well formed xml. Then the xml gets
      * matched against a pattern which looks for an object id.
-     *
-     * @throws Exception the Exception gets thrown in the following cases: <ul> <li>The ingest fails due to internal
-     *                   reasons (Fedora, eSciDoc)</li> <li> The return value is not well formed</li> <li>The return
-     *                   value does not contain a vaild object id.</li> <li>No exception is thrown because object PID is
-     *                   missing</li> </ul>
+     * 
+     * @throws Exception
+     *             the Exception gets thrown in the following cases:
+     *             <ul>
+     *             <li>The ingest fails due to internal reasons (Fedora, eSciDoc)</li>
+     *             <li>The return value is not well formed</li>
+     *             <li>The return value does not contain a vaild object id.</li>
+     *             <li>No exception is thrown because object PID is missing</li>
+     *             </ul>
      */
     @Test
     public void testIngestReleasedContainer01() throws Exception {
@@ -358,11 +375,16 @@ public class IngestTest extends IngestTestBase {
      * Test if a valid Container in public-status 'released' gets ingested. The return value must be a xml fragment
      * containing the object id. The return value gets first parsed to check if it is well formed xml. Then the xml gets
      * matched against a pattern which looks for an object id.
-     *
-     * @throws Exception the Exception gets thrown in the following cases: <ul> <li>The ingest fails due to internal
-     *                   reasons (Fedora, eSciDoc)</li> <li> The return value is not well formed</li> <li>The return
-     *                   value does not contain a valid object id.</li> <li>The public-status 'released' is not
-     *                   copied</li> <li>The object PID is not copied.</li> </ul>
+     * 
+     * @throws Exception
+     *             the Exception gets thrown in the following cases:
+     *             <ul>
+     *             <li>The ingest fails due to internal reasons (Fedora, eSciDoc)</li>
+     *             <li>The return value is not well formed</li>
+     *             <li>The return value does not contain a valid object id.</li>
+     *             <li>The public-status 'released' is not copied</li>
+     *             <li>The object PID is not copied.</li>
+     *             </ul>
      */
     @Test
     public void testIngestReleasedContainer02() throws Exception {
@@ -430,8 +452,9 @@ public class IngestTest extends IngestTestBase {
     /**
      * Test if a valid ou gets ingested. The return value must be a xml fragment containing the object id and conforming
      * the the result.xsd schema.
-     *
-     * @throws Exception Throws Exception if test failes.
+     * 
+     * @throws Exception
+     *             Throws Exception if test failes.
      */
     @Test
     public void testIngestOuValid() throws Exception {
@@ -467,8 +490,9 @@ public class IngestTest extends IngestTestBase {
     /**
      * Test if a valid Content Model gets ingested. The return value must be a XML fragment containing the object id and
      * conforming the the result.xsd schema.
-     *
-     * @throws Exception Throws Exception if test fail.
+     * 
+     * @throws Exception
+     *             Throws Exception if test fail.
      */
     @Test
     public void ingestContentModel() throws Exception {
@@ -488,7 +512,7 @@ public class IngestTest extends IngestTestBase {
             String objectId = matcher.group(2);
 
             // Have we just ingested a content model ?
-            assert (resourceType.equals("CMM"));
+            assert resourceType.equals("CMM") : "expected resource type \"CMM\" but got " + resourceType;
 
             // We can't assume anything about the object's id except not being
             // null, can we ?
@@ -501,8 +525,9 @@ public class IngestTest extends IngestTestBase {
 
     /**
      * Test unexpected parser exception instead of XmlCorruptedException during create (see issue INFR-911).
-     *
-     * @throws Exception Thrown if behavior is not as expected.
+     * 
+     * @throws Exception
+     *             Thrown if behavior is not as expected.
      */
     @Test(expected = XmlCorruptedException.class)
     public void testInvalidXml() throws Exception {
