@@ -1678,12 +1678,11 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         final Document retrievedDocument = EscidocRestSoapTestBase.getDocument(retrievedUserAccountsXml);
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
         assertXmlExists("Missing user System Administrator User.", retrievedDocument,
-            XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[properties/login-name='System Administrator User']");
+            XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[properties/login-name='sysadmin']");
         assertXmlExists("Missing user System Inspector (Read Only Super User).", retrievedDocument,
-            XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT
-                + "[properties/login-name='System Inspector User (Read Only Super User)']");
+            XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[properties/login-name='inspector']");
         assertXmlExists("Missing user Depositor User.", retrievedDocument, XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT
-            + "[properties/login-name='Depositor User']");
+            + "[properties/login-name='depositor']");
 
         // FIXME: assert only containing user accounts of addressed ou.
 
