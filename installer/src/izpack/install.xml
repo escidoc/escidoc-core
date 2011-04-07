@@ -429,7 +429,7 @@
         
         <pack name="eSciDoc Infrastructure" parent="eSciDoc" required="yes">
             <description>Required services of the eSciDoc Infrastructure</description>
-            <file src="${basedir}/../assembly/target/escidoc-core-${project.version}-bin.zip" targetdir="$INSTALL_PATH/install.tmp" />
+            <file src="../../../assembly/target/escidoc-core-${project.version}-bin.zip" targetdir="$INSTALL_PATH/install.tmp" />
         </pack>
         
         <!-- pack name="Examples" parent="eSciDoc" required="yes">
