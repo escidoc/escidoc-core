@@ -207,6 +207,8 @@
       <variable name="HibernateDialect" value="PostgreSQLDialect" condition="databaseIsPostgres" />
       <variable name="HibernateDialect" value="MySQLDialect" condition="databaseIsMySQL" />
       <variable name="HibernateDialect" value="Oracle8iDialect" condition="databaseIsOracle" />
+      <variable name="TriplestoreUsername" value="fedoraAdmin" condition="databaseIsPostgres" />
+      <variable name="TriplestorePassword" value="fedoraAdmin" condition="databaseIsPostgres" />
       <!-- DDLGenerator for MPTStore -->
       <variable name="DDLGeneratorClass" value="org.nsdl.mptstore.impl.postgres.PostgresDDLGenerator" condition="databaseIsPostgres" />
       <variable name="DDLGeneratorClass" value="org.nsdl.mptstore.impl.mysql.MysqlDDLGenerator" condition="databaseIsMySQL" />
@@ -308,17 +310,18 @@
           <validator classname="JDBCValidator" />
         </panel>
         <panel classname="UserInputPanel" id="UserInputPanel.8" />
-        <panel classname="UserInputPanel" id="UserInputPanel.9" condition="fullDialog" />
+        <panel classname="UserInputPanel" id="UserInputPanel.9" condition="installOracle" />
+        <panel classname="UserInputPanel" id="UserInputPanel.10" condition="fullDialog" />
         <panel classname="JDKPathPanel" id="CommonJDKPath" />
         <panel classname="TargetPanel" id="EscidocTarget" />
         <panel classname="TreePacksPanel" id="EscidocPacks" />
-        <panel classname="UserInputPanel" id="UserInputPanel.10" condition="authMethodIsFormBased+installEscidoc" />
-        <panel classname="UserInputPanel" id="UserInputPanel.11" condition="authMethodIsFormBased" />
-        <panel classname="UserInputPanel" id="UserInputPanel.12" condition="authMethodIsFormBased+installEscidoc" />
+        <panel classname="UserInputPanel" id="UserInputPanel.11" condition="authMethodIsFormBased+installEscidoc" />
+        <panel classname="UserInputPanel" id="UserInputPanel.12" condition="authMethodIsFormBased" />
+        <panel classname="UserInputPanel" id="UserInputPanel.13" condition="authMethodIsFormBased+installEscidoc" />
         <!-- panel classname="DataCheckPanel" id="Debug" / -->
         <panel classname="InstallPanel" id="EscidocInstall" />
-        <panel classname="UserInputPanel" id="UserInputPanel.13" condition="upgradeEscidoc" />
         <panel classname="UserInputPanel" id="UserInputPanel.14" condition="upgradeEscidoc" />
+        <panel classname="UserInputPanel" id="UserInputPanel.15" condition="upgradeEscidoc" />
         <panel classname="ProcessPanel" condition="runDatabaseMigration" />
         <panel classname="HTMLInfoPanel" id="info2" />
         <panel classname="FinishPanel" id="CommonFinish" />

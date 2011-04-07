@@ -447,10 +447,10 @@
 												attr="value" value="${DatabaseURL}${DatasourceTriplestore}" />
 											<attr
 												path="//*[local-name()='datastore'][@id='localPostgresMPTTriplestore']/*[local-name()='param'][@name='username']"
-												attr="value" value="${FedoraUsername}" />
+												attr="value" value="${TriplestoreUsername}" />
 											<attr
 												path="//*[local-name()='datastore'][@id='localPostgresMPTTriplestore']/*[local-name()='param'][@name='password']"
-												attr="value" value="${FedoraPassword}" />
+												attr="value" value="${TriplestorePassword}" />
 										</xmltask>
 		
 										<!-- fedora-users.xml -->
