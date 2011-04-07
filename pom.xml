@@ -792,7 +792,8 @@
     <escidoc.database.user>escidoc</escidoc.database.user>
     <escidoc.database.password>escidoc</escidoc.database.password>
 
-	<escidoc.oracle.url>escidev5:1521</escidoc.oracle.url>
+	<escidoc.oracle.host>escidev5</escidoc.oracle.host>
+	<escidoc.oracle.port>1521</escidoc.oracle.port>
 	<fedora.oracle.database>oraesci01</fedora.oracle.database>
 	<fedora.oracle.database.user>fedoraAdmin</fedora.oracle.database.user>
 	<fedora.oracle.database.password>fedoraAdmin</fedora.oracle.database.password>
@@ -815,7 +816,8 @@
 	<escidoc.oracle.default.tablespace>escidoc</escidoc.oracle.default.tablespace>
 	<escidoc.oracle.temp.tablespace>TEMP</escidoc.oracle.temp.tablespace>
 
-	<!-- escidoc.oracle.url>localhost:1521</escidoc.oracle.url>
+	<!-- escidoc.oracle.host>localhost</escidoc.oracle.host>
+	<escidoc.oracle.port>1521</escidoc.oracle.port>
 	<fedora.oracle.database>XE</fedora.oracle.database>
 	<fedora.oracle.database.user>fedoraAdmin</fedora.oracle.database.user>
 	<fedora.oracle.database.password>fedoraAdmin</fedora.oracle.database.password>
@@ -1465,6 +1467,11 @@
         <version>0.9.4</version>
       </dependency>
       <dependency>
+        <groupId>mptstore</groupId>
+        <artifactId>mptstore-oracle</artifactId>
+        <version>0.9.4</version>
+      </dependency>
+      <dependency>
         <groupId>org.fcrepo</groupId>
         <artifactId>fcrepo-client-admin</artifactId>
         <version>${fcrepo.version}</version>
@@ -1581,7 +1588,7 @@
         <version>${jdbc.postgresql.version}</version>
       </dependency>
 	  <dependency>
-		<groupId>ojdbc</groupId>
+		<groupId>restricted</groupId>
 		<artifactId>ojdbc</artifactId>
 		<version>${jdbc.oracle.version}</version>
 	  </dependency>

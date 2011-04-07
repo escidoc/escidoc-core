@@ -1008,15 +1008,15 @@
 						<dependencies>
 							<!-- specify the dependent jdbc driver here -->
 							<dependency>
-								<groupId>ojdbc</groupId>
+								<groupId>restricted</groupId>
 								<artifactId>ojdbc</artifactId>
-								<version>14</version>
+								<version>${jdbc.oracle.version}</version>
 							</dependency>
 						</dependencies>
 						<!-- common configuration shared by all executions -->
 						<configuration>
 							<driver>oracle.jdbc.driver.OracleDriver</driver>
-							<url>jdbc:oracle:thin:@${escidoc.oracle.url}:${escidoc.oracle.database}</url>
+							<url>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${escidoc.oracle.database}</url>
 							<username>${escidoc.oracle.database.admin.user}</username>
 							<password>${escidoc.oracle.database.admin.password}</password>
 							<delimiter>/</delimiter>
@@ -1032,7 +1032,7 @@
 								</goals>
 								<configuration>
 									<driver>oracle.jdbc.driver.OracleDriver</driver>
-									<url>jdbc:oracle:thin:@${escidoc.oracle.url}:${escidoc.oracle.database}</url>
+									<url>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${escidoc.oracle.database}</url>
 									<username>${escidoc.oracle.database.admin.user}</username>
 									<password>${escidoc.oracle.database.admin.password}</password>
 									<autocommit>true</autocommit>
@@ -1053,7 +1053,7 @@
 								</goals>
 								<configuration>
 									<driver>oracle.jdbc.driver.OracleDriver</driver>
-									<url>jdbc:oracle:thin:@${escidoc.oracle.url}:${escidoc.oracle.database}</url>
+									<url>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${escidoc.oracle.database}</url>
 									<username>${escidoc.oracle.database.admin.user}</username>
 									<password>${escidoc.oracle.database.admin.password}</password>
 									<autocommit>true</autocommit>
@@ -1074,7 +1074,7 @@
 								</goals>
 								<configuration>
 									<driver>oracle.jdbc.driver.OracleDriver</driver>
-									<url>jdbc:oracle:thin:@${escidoc.oracle.url}:${escidoc.oracle.database}</url>
+									<url>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${escidoc.oracle.database}</url>
 									<username>${escidoc.oracle.database.user}</username>
 									<password>${escidoc.oracle.database.password}</password>
 									<autocommit>true</autocommit>
@@ -1111,7 +1111,7 @@
 								</goals>
 								<configuration>
 									<driver>oracle.jdbc.driver.OracleDriver</driver>
-									<url>jdbc:oracle:thin:@${escidoc.oracle.url}:${escidoc.oracle.database}</url>
+									<url>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${escidoc.oracle.database}</url>
 									<username>${escidoc.oracle.database.user}</username>
 									<password>${escidoc.oracle.database.password}</password>
 									<autocommit>true</autocommit>
@@ -1137,7 +1137,7 @@
 								</goals>
 								<configuration>
 									<driver>oracle.jdbc.driver.OracleDriver</driver>
-									<url>jdbc:oracle:thin:@${escidoc.oracle.url}:${escidoc.oracle.database}</url>
+									<url>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${escidoc.oracle.database}</url>
 									<username>${escidoc.oracle.database.user}</username>
 									<password>${escidoc.oracle.database.password}</password>
 									<autocommit>true</autocommit>
@@ -1164,7 +1164,7 @@
 								</goals>
 								<configuration>
 									<driver>oracle.jdbc.driver.OracleDriver</driver>
-									<url>jdbc:oracle:thin:@${escidoc.oracle.url}:${escidoc.oracle.database}</url>
+									<url>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${escidoc.oracle.database}</url>
 									<username>${escidoc.oracle.database.user}</username>
 									<password>${escidoc.oracle.database.password}</password>
 									<autocommit>true</autocommit>
@@ -1191,7 +1191,7 @@
 								</goals>
 								<configuration>
 									<driver>oracle.jdbc.driver.OracleDriver</driver>
-									<url>jdbc:oracle:thin:@${escidoc.oracle.url}:${escidoc.oracle.database}</url>
+									<url>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${escidoc.oracle.database}</url>
 									<username>${escidoc.oracle.database.user}</username>
 									<password>${escidoc.oracle.database.password}</password>
 									<autocommit>true</autocommit>
@@ -1218,7 +1218,7 @@
 								</goals>
 								<configuration>
 									<driver>oracle.jdbc.driver.OracleDriver</driver>
-									<url>jdbc:oracle:thin:@${escidoc.oracle.url}:${escidoc.oracle.database}</url>
+									<url>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${escidoc.oracle.database}</url>
 									<username>${escidoc.oracle.database.user}</username>
 									<password>${escidoc.oracle.database.password}</password>
 									<autocommit>true</autocommit>
@@ -1246,7 +1246,7 @@
 								</goals>
 								<configuration>
 									<driver>oracle.jdbc.driver.OracleDriver</driver>
-									<url>jdbc:oracle:thin:@${escidoc.oracle.url}:${escidoc.oracle.database}</url>
+									<url>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${escidoc.oracle.database}</url>
 									<username>${escidoc.oracle.database.user}</username>
 									<password>${escidoc.oracle.database.password}</password>
 									<autocommit>true</autocommit>
@@ -1385,15 +1385,15 @@
 						<dependencies>
 							<!-- specify the dependent jdbc driver here -->
 							<dependency>
-								<groupId>ojdbc</groupId>
+								<groupId>restricted</groupId>
 								<artifactId>ojdbc</artifactId>
-								<version>14</version>
+								<version>${jdbc.oracle.version}</version>
 							</dependency>
 						</dependencies>
 						<!-- common configuration shared by all executions -->
 						<configuration>
 							<driver>oracle.jdbc.driver.OracleDriver</driver>
-							<url>jdbc:oracle:thin:@${escidoc.oracle.url}:${fedora.oracle.database}</url>
+							<url>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${fedora.oracle.database}</url>
 							<username>${fedora.oracle.database.admin.user}</username>
 							<password>${fedora.oracle.database.admin.password}</password>
           					<delimiter>/</delimiter>
@@ -1409,7 +1409,7 @@
 								</goals>
 								<configuration>
 									<driver>oracle.jdbc.driver.OracleDriver</driver>
-									<url>jdbc:oracle:thin:@${escidoc.oracle.url}:${fedora.oracle.database}</url>
+									<url>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${fedora.oracle.database}</url>
 									<username>${fedora.oracle.database.admin.user}</username>
 									<password>${fedora.oracle.database.admin.password}</password>
 									<autocommit>true</autocommit>
@@ -1430,7 +1430,7 @@
 								</goals>
 								<configuration>
 									<driver>oracle.jdbc.driver.OracleDriver</driver>
-									<url>jdbc:oracle:thin:@${escidoc.oracle.url}:${triplestore.oracle.database}</url>
+									<url>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${triplestore.oracle.database}</url>
 									<username>${triplestore.oracle.database.admin.user}</username>
 									<password>${triplestore.oracle.database.admin.password}</password>
 									<autocommit>true</autocommit>
@@ -1452,7 +1452,7 @@
 								</goals>
 								<configuration>
 									<driver>oracle.jdbc.driver.OracleDriver</driver>
-									<url>jdbc:oracle:thin:@${escidoc.oracle.url}:${fedora.oracle.database}</url>
+									<url>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${fedora.oracle.database}</url>
 									<username>${fedora.oracle.database.admin.user}</username>
 									<password>${fedora.oracle.database.admin.password}</password>
 									<autocommit>true</autocommit>
@@ -1473,7 +1473,7 @@
 								</goals>
 								<configuration>
 									<driver>oracle.jdbc.driver.OracleDriver</driver>
-									<url>jdbc:oracle:thin:@${escidoc.oracle.url}:${triplestore.oracle.database}</url>
+									<url>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${triplestore.oracle.database}</url>
 									<username>${triplestore.oracle.database.admin.user}</username>
 									<password>${triplestore.oracle.database.admin.password}</password>
 									<autocommit>true</autocommit>

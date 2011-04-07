@@ -68,234 +68,6 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>sql-maven-plugin</artifactId>
-				<version>1.3</version>
-				<dependencies>
-					<!-- specify the dependent jdbc driver here -->
-					<dependency>
-						<groupId>postgresql</groupId>
-						<artifactId>postgresql</artifactId>
-						<version>${jdbc.postgresql.version}</version>
-					</dependency>
-				</dependencies>
-				<!-- common configuration shared by all executions -->
-				<configuration>
-					<driver>org.postgresql.Driver</driver>
-					<url>jdbc:postgresql://localhost:5432/postgres</url>
-					<!-- use your settings.xml to configure username and password -->
-					<settingsKey>escidoc-core-db-admin</settingsKey>
-				</configuration>
-				<executions>
-					<execution>
-						<id>drop-fedora-db</id>
-						<phase>clean</phase>
-						<goals>
-							<goal>execute</goal>
-						</goals>
-						<configuration>
-							<!-- need another database to drop the targeted one -->
-							<url>jdbc:postgresql://localhost:5432/postgres</url>
-							<autocommit>true</autocommit>
-							<sqlCommand>DROP DATABASE IF EXISTS "${fedora.database}"</sqlCommand>
-							<onError>continue</onError>
-						</configuration>
-					</execution>
-					<execution>
-						<id>drop-triplestore-db</id>
-						<phase>clean</phase>
-						<goals>
-							<goal>execute</goal>
-						</goals>
-						<configuration>
-							<!-- need another database to drop the targeted one -->
-							<url>jdbc:postgresql://localhost:5432/postgres</url>
-							<autocommit>true</autocommit>
-							<sqlCommand>DROP DATABASE IF EXISTS "${triplestore.database}"</sqlCommand>
-							<onError>continue</onError>
-						</configuration>
-					</execution>
-					<execution>
-						<id>drop-fedora-role</id>
-						<phase>clean</phase>
-						<goals>
-							<goal>execute</goal>
-						</goals>
-						<configuration>
-							<!-- need another database to drop the targeted one -->
-							<url>jdbc:postgresql://localhost:5432/postgres</url>
-							<autocommit>true</autocommit>
-							<sqlCommand>DROP ROLE IF EXISTS "${fedora.database.user}"</sqlCommand>
-							<onError>continue</onError>
-						</configuration>
-					</execution>
-
-					<execution>
-						<id>create-fedora-role</id>
-						<phase>validate</phase>
-						<goals>
-							<goal>execute</goal>
-						</goals>
-						<configuration>
-							<url>jdbc:postgresql://localhost:5432/postgres</url>
-							<!-- no transaction -->
-							<autocommit>true</autocommit>
-							<sqlCommand>CREATE ROLE "${fedora.database.user}" LOGIN
-								PASSWORD
-								'${fedora.database.password}'
-								VALID
-								UNTIL 'infinity';</sqlCommand>
-							<onError>continue</onError>
-						</configuration>
-					</execution>
-					<execution>
-						<id>create-fedora-db</id>
-						<phase>validate</phase>
-						<goals>
-							<goal>execute</goal>
-						</goals>
-						<configuration>
-							<url>jdbc:postgresql://localhost:5432/postgres</url>
-							<!-- no transaction -->
-							<autocommit>true</autocommit>
-							<sqlCommand>CREATE DATABASE "${fedora.database}" WITH
-								ENCODING='UTF8' OWNER="${fedora.database.user}"</sqlCommand>
-						</configuration>
-					</execution>
-					<execution>
-						<id>create-triplestore-db</id>
-						<phase>validate</phase>
-						<goals>
-							<goal>execute</goal>
-						</goals>
-						<configuration>
-							<url>jdbc:postgresql://localhost:5432/postgres</url>
-							<!-- no transaction -->
-							<autocommit>true</autocommit>
-							<sqlCommand>CREATE DATABASE "${triplestore.database}" WITH
-								ENCODING='SQL_ASCII'
-								OWNER="${fedora.database.user}"
-								TEMPLATE=template0</sqlCommand>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>exec-maven-plugin</artifactId>
-				<version>1.2</version>
-				<executions>
-					<execution>
-						<id>install-fedora</id>
-						<phase>validate</phase>
-						<goals>
-							<goal>exec</goal>
-						</goals>
-						<configuration>
-							<executable>java</executable>
-							<arguments>
-								<argument>-jar</argument>
-								<argument>${settings.localRepository}/org/escidoc/fcrepo-installer/${fcrepo.version}/fcrepo-installer-${fcrepo.version}.jar</argument>
-								<argument>src/main/resources/fedora/install.properties</argument>
-							</arguments>
-							<outputFile>${project.build.directory}/fcrepo-install-error.log</outputFile>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-
-			<plugin>
-				<artifactId>maven-antrun-plugin</artifactId>
-				<dependencies>
-					<dependency>
-						<groupId>com.oopsconsultancy</groupId>
-						<artifactId>xmltask</artifactId>
-						<version>1.14</version>
-					</dependency>
-				</dependencies>
-				<executions>
-					<execution>
-						<id>prepare-fedora-configs</id>
-						<phase>initialize</phase>
-						<goals>
-							<goal>run</goal>
-						</goals>
-						<configuration>
-							<tasks>
-								<echo message="Preparing Fedora Configuration" />
-								<taskdef name="xmltask" classname="com.oopsconsultancy.xmltask.ant.XmlTask"
-									classpathref="maven.plugin.classpath" />
-
-								<!-- fedora.fcfg -->
-								<xmltask
-									source="${project.build.directory}/fedora/server/config/fedora.fcfg"
-									dest="${project.build.directory}/fedora/fedora.fcfg"
-									failWithoutMatch="true">
-									<!-- general settings -->
-									<attr path="//*[@name='adminEmailList']" attr="value"
-										value="${FedoraAdminMailAddress}" />
-
-									<!-- database settings -->
-									<attr path="//*[@name='storagePool']" attr="value"
-										value="local${Database}Pool" />
-									<attr path="//*[@name='connectionPool']" attr="value"
-										value="local${Database}Pool" />
-									<attr path="//*[@name='defaultPoolName']" attr="value"
-										value="local${Database}Pool" />
-									<attr path="//*[@name='poolNames']" attr="value"
-										value="local${Database}Pool" />
-									<attr path="//*[@name='dbUsername']" attr="value"
-										value="${FedoraUsername}" />
-									<attr path="//*[@name='dbPassword']" attr="value"
-										value="${FedoraPassword}" />
-									<attr path="//*[@name='jdbcURL']" attr="value"
-										value="${DatabaseURL}fedora3" />
-									<attr path="//*[@name='jdbcDriverClass']" attr="value"
-										value="${DatabaseDriverClass}" />
-
-									<!-- triplestore settings -->
-									<attr
-										path="//*[local-name()='datastore'][@id='localPostgresMPTTriplestore']/*[local-name()='param'][@name='jdbcDriver']"
-										attr="value" value="${DatabaseDriverClass}" />
-									<attr
-										path="//*[local-name()='datastore'][@id='localPostgresMPTTriplestore']/*[local-name()='param'][@name='jdbcURL']"
-										attr="value" value="${DatabaseURL}riTriples" />
-									<attr
-										path="//*[local-name()='datastore'][@id='localPostgresMPTTriplestore']/*[local-name()='param'][@name='username']"
-										attr="value" value="${FedoraUsername}" />
-									<attr
-										path="//*[local-name()='datastore'][@id='localPostgresMPTTriplestore']/*[local-name()='param'][@name='password']"
-										attr="value" value="${FedoraPassword}" />
-								</xmltask>
-
-								<!-- fedora-users.xml -->
-								<xmltask
-									source="${project.build.directory}/fedora/server/config/fedora-users.xml"
-									dest="${project.build.directory}/fedora/fedora-users.xml"
-									failWithoutMatch="true">
-									<attr path="/users/user[@name='fedoraAdmin']" attr="password"
-										value="${FedoraPassword}" />
-									<attr path="/users/user[@name='fedoraAdmin']" attr="name"
-										value="${FedoraUsername}" />
-								</xmltask>
-
-								<!-- web.xml -->
-								<xmltask
-									source="${project.build.directory}/fedora/install/fedorawar/WEB-INF/web.xml"
-									dest="${project.build.directory}/fedora/web.xml"
-									failWithoutMatch="true">
-									<replace
-										path="//*[local-name()='param-name' and text()='fedora.home']/following-sibling::*[1]/text()"
-										withText="${INSTALL_PATH}${FILE_SEPARATOR}fedora" />
-								</xmltask>
-							</tasks>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-
-			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
 				<version>2.2</version>
 				<executions>
@@ -353,6 +125,14 @@
 									<groupId>postgresql</groupId>
 									<artifactId>postgresql</artifactId>
 									<version>${jdbc.postgresql.version}</version>
+									<type>jar</type>
+									<overWrite>false</overWrite>
+									<outputDirectory>${staging.dir}/lib</outputDirectory>
+								</artifactItem>
+								<artifactItem>
+									<groupId>restricted</groupId>
+									<artifactId>ojdbc</artifactId>
+									<version>${jdbc.oracle.version}</version>
 									<type>jar</type>
 									<overWrite>false</overWrite>
 									<outputDirectory>${staging.dir}/lib</outputDirectory>
@@ -467,4 +247,514 @@
 		</plugins>
 
 	</build>
+	<profiles>
+		<profile>
+			<id>install-fedora-postgres</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+	
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>sql-maven-plugin</artifactId>
+						<version>1.3</version>
+						<dependencies>
+							<!-- specify the dependent jdbc driver here -->
+							<dependency>
+								<groupId>postgresql</groupId>
+								<artifactId>postgresql</artifactId>
+								<version>${jdbc.postgresql.version}</version>
+							</dependency>
+						</dependencies>
+						<!-- common configuration shared by all executions -->
+						<configuration>
+							<driver>org.postgresql.Driver</driver>
+							<url>jdbc:postgresql://localhost:5432/postgres</url>
+							<!-- use your settings.xml to configure username and password -->
+							<settingsKey>escidoc-core-db-admin</settingsKey>
+						</configuration>
+						<executions>
+							<execution>
+								<id>drop-fedora-db</id>
+								<phase>clean</phase>
+								<goals>
+									<goal>execute</goal>
+								</goals>
+								<configuration>
+									<!-- need another database to drop the targeted one -->
+									<url>jdbc:postgresql://localhost:5432/postgres</url>
+									<autocommit>true</autocommit>
+									<sqlCommand>DROP DATABASE IF EXISTS "${fedora.database}"</sqlCommand>
+									<onError>continue</onError>
+								</configuration>
+							</execution>
+							<execution>
+								<id>drop-triplestore-db</id>
+								<phase>clean</phase>
+								<goals>
+									<goal>execute</goal>
+								</goals>
+								<configuration>
+									<!-- need another database to drop the targeted one -->
+									<url>jdbc:postgresql://localhost:5432/postgres</url>
+									<autocommit>true</autocommit>
+									<sqlCommand>DROP DATABASE IF EXISTS "${triplestore.database}"</sqlCommand>
+									<onError>continue</onError>
+								</configuration>
+							</execution>
+							<execution>
+								<id>drop-fedora-role</id>
+								<phase>clean</phase>
+								<goals>
+									<goal>execute</goal>
+								</goals>
+								<configuration>
+									<!-- need another database to drop the targeted one -->
+									<url>jdbc:postgresql://localhost:5432/postgres</url>
+									<autocommit>true</autocommit>
+									<sqlCommand>DROP ROLE IF EXISTS "${fedora.database.user}"</sqlCommand>
+									<onError>continue</onError>
+								</configuration>
+							</execution>
+		
+							<execution>
+								<id>create-fedora-role</id>
+								<phase>validate</phase>
+								<goals>
+									<goal>execute</goal>
+								</goals>
+								<configuration>
+									<url>jdbc:postgresql://localhost:5432/postgres</url>
+									<!-- no transaction -->
+									<autocommit>true</autocommit>
+									<sqlCommand>CREATE ROLE "${fedora.database.user}" LOGIN
+										PASSWORD
+										'${fedora.database.password}'
+										VALID
+										UNTIL 'infinity';</sqlCommand>
+									<onError>continue</onError>
+								</configuration>
+							</execution>
+							<execution>
+								<id>create-fedora-db</id>
+								<phase>validate</phase>
+								<goals>
+									<goal>execute</goal>
+								</goals>
+								<configuration>
+									<url>jdbc:postgresql://localhost:5432/postgres</url>
+									<!-- no transaction -->
+									<autocommit>true</autocommit>
+									<sqlCommand>CREATE DATABASE "${fedora.database}" WITH
+										ENCODING='UTF8' OWNER="${fedora.database.user}"</sqlCommand>
+								</configuration>
+							</execution>
+							<execution>
+								<id>create-triplestore-db</id>
+								<phase>validate</phase>
+								<goals>
+									<goal>execute</goal>
+								</goals>
+								<configuration>
+									<url>jdbc:postgresql://localhost:5432/postgres</url>
+									<!-- no transaction -->
+									<autocommit>true</autocommit>
+									<sqlCommand>CREATE DATABASE "${triplestore.database}" WITH
+										ENCODING='SQL_ASCII'
+										OWNER="${fedora.database.user}"
+										TEMPLATE=template0</sqlCommand>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+		
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>exec-maven-plugin</artifactId>
+						<version>1.2</version>
+						<executions>
+							<execution>
+								<id>install-fedora</id>
+								<phase>validate</phase>
+								<goals>
+									<goal>exec</goal>
+								</goals>
+								<configuration>
+									<executable>java</executable>
+									<arguments>
+										<argument>-jar</argument>
+										<argument>${settings.localRepository}/org/escidoc/fcrepo-installer/${fcrepo.version}/fcrepo-installer-${fcrepo.version}.jar</argument>
+										<argument>src/main/resources/fedora/install.properties</argument>
+									</arguments>
+									<outputFile>${project.build.directory}/fcrepo-install-error.log</outputFile>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+		
+					<plugin>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<dependencies>
+							<dependency>
+								<groupId>com.oopsconsultancy</groupId>
+								<artifactId>xmltask</artifactId>
+								<version>1.14</version>
+							</dependency>
+						</dependencies>
+						<executions>
+							<execution>
+								<id>prepare-fedora-configs</id>
+								<phase>initialize</phase>
+								<goals>
+									<goal>run</goal>
+								</goals>
+								<configuration>
+									<tasks>
+										<echo message="Preparing Fedora Configuration" />
+										<taskdef name="xmltask" classname="com.oopsconsultancy.xmltask.ant.XmlTask"
+											classpathref="maven.plugin.classpath" />
+		
+										<!-- fedora.fcfg -->
+										<xmltask
+											source="${project.build.directory}/fedora/server/config/fedora.fcfg"
+											dest="${project.build.directory}/fedora/fedora.fcfg"
+											failWithoutMatch="true">
+											<!-- general settings -->
+											<attr path="//*[@name='adminEmailList']" attr="value"
+												value="${FedoraAdminMailAddress}" />
+		
+											<!-- database settings -->
+											<attr path="//*[@name='storagePool']" attr="value"
+												value="local${Database}Pool" />
+											<attr path="//*[@name='connectionPool']" attr="value"
+												value="local${Database}Pool" />
+											<attr path="//*[@name='defaultPoolName']" attr="value"
+												value="local${Database}Pool" />
+											<attr path="//*[@name='poolNames']" attr="value"
+												value="local${Database}Pool" />
+											<attr path="//*[@name='dbUsername']" attr="value"
+												value="${FedoraUsername}" />
+											<attr path="//*[@name='dbPassword']" attr="value"
+												value="${FedoraPassword}" />
+											<attr path="//*[@name='jdbcURL']" attr="value"
+												value="${DatabaseURL}fedora3" />
+											<attr path="//*[@name='jdbcDriverClass']" attr="value"
+												value="${DatabaseDriverClass}" />
+		
+											<!-- triplestore settings -->
+											<attr
+												path="//*[local-name()='datastore'][@id='localPostgresMPTTriplestore']/*[local-name()='param'][@name='jdbcDriver']"
+												attr="value" value="${DatabaseDriverClass}" />
+											<attr
+												path="//*[local-name()='datastore'][@id='localPostgresMPTTriplestore']/*[local-name()='param'][@name='jdbcURL']"
+												attr="value" value="${DatabaseURL}riTriples" />
+											<attr
+												path="//*[local-name()='datastore'][@id='localPostgresMPTTriplestore']/*[local-name()='param'][@name='username']"
+												attr="value" value="${FedoraUsername}" />
+											<attr
+												path="//*[local-name()='datastore'][@id='localPostgresMPTTriplestore']/*[local-name()='param'][@name='password']"
+												attr="value" value="${FedoraPassword}" />
+										</xmltask>
+		
+										<!-- fedora-users.xml -->
+										<xmltask
+											source="${project.build.directory}/fedora/server/config/fedora-users.xml"
+											dest="${project.build.directory}/fedora/fedora-users.xml"
+											failWithoutMatch="true">
+											<attr path="/users/user[@name='fedoraAdmin']" attr="password"
+												value="${FedoraPassword}" />
+											<attr path="/users/user[@name='fedoraAdmin']" attr="name"
+												value="${FedoraUsername}" />
+										</xmltask>
+		
+										<!-- web.xml -->
+										<xmltask
+											source="${project.build.directory}/fedora/install/fedorawar/WEB-INF/web.xml"
+											dest="${project.build.directory}/fedora/web.xml"
+											failWithoutMatch="true">
+											<replace
+												path="//*[local-name()='param-name' and text()='fedora.home']/following-sibling::*[1]/text()"
+												withText="${INSTALL_PATH}${FILE_SEPARATOR}fedora" />
+										</xmltask>
+									</tasks>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>install-fedora-oracle</id>
+	
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-resources-plugin</artifactId>
+						<version>2.5</version>
+						<executions>
+							<execution>
+								<id>copy-fedora-drop-script</id>
+								<phase>clean</phase>
+								<goals>
+									<goal>copy-resources</goal>
+								</goals>
+								<configuration>
+									<outputDirectory>${basedir}/target/sql-resources/oracle</outputDirectory>
+									<resources>
+										<resource>
+											<directory>${basedir}/../common/src/main/resources/sql/oracle</directory>
+											<filtering>true</filtering>
+										</resource>
+									</resources>
+								</configuration>
+							</execution>
+							<execution>
+								<id>copy-fedora-install-properties</id>
+								<phase>validate</phase>
+								<goals>
+									<goal>copy-resources</goal>
+								</goals>
+								<configuration>
+									<outputDirectory>${project.build.directory}/fedora/oracle</outputDirectory>
+									<resources>
+										<resource>
+											<directory>${basedir}/src/main/filtered-resources/fedora/oracle</directory>
+											<filtering>true</filtering>
+										</resource>
+									</resources>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>sql-maven-plugin</artifactId>
+						<version>1.3</version>
+						<dependencies>
+							<!-- specify the dependent jdbc driver here -->
+							<dependency>
+								<groupId>restricted</groupId>
+								<artifactId>ojdbc</artifactId>
+								<version>${jdbc.oracle.version}</version>
+							</dependency>
+						</dependencies>
+						<!-- common configuration shared by all executions -->
+						<configuration>
+							<driver>oracle.jdbc.driver.OracleDriver</driver>
+							<url>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${fedora.oracle.database}</url>
+							<username>${fedora.oracle.database.admin.user}</username>
+							<password>${fedora.oracle.database.admin.password}</password>
+          					<delimiter>/</delimiter>
+          					<delimiterType>row</delimiterType>
+          					<keepFormat>true</keepFormat>
+						</configuration>
+						<executions>
+							<execution>
+								<id>drop-fedora-oracle-db</id>
+								<phase>clean</phase>
+								<goals>
+									<goal>execute</goal>
+								</goals>
+								<configuration>
+									<driver>oracle.jdbc.driver.OracleDriver</driver>
+									<url>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${fedora.oracle.database}</url>
+									<username>${fedora.oracle.database.admin.user}</username>
+									<password>${fedora.oracle.database.admin.password}</password>
+									<autocommit>true</autocommit>
+          							<delimiter>/</delimiter>
+          							<delimiterType>row</delimiterType>
+          							<keepFormat>true</keepFormat>
+									<srcFiles>
+										<srcFile>${basedir}/target/sql-resources/oracle/drop-fedora-db.sql
+										</srcFile>
+									</srcFiles>
+								</configuration>
+							</execution>
+							<execution>
+								<id>drop-triplestore-oracle-db</id>
+								<phase>clean</phase>
+								<goals>
+									<goal>execute</goal>
+								</goals>
+								<configuration>
+									<driver>oracle.jdbc.driver.OracleDriver</driver>
+									<url>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${triplestore.oracle.database}</url>
+									<username>${triplestore.oracle.database.admin.user}</username>
+									<password>${triplestore.oracle.database.admin.password}</password>
+									<autocommit>true</autocommit>
+          							<delimiter>/</delimiter>
+          							<delimiterType>row</delimiterType>
+          							<keepFormat>true</keepFormat>
+									<srcFiles>
+										<srcFile>${basedir}/target/sql-resources/oracle/drop-triplestore-db.sql
+										</srcFile>
+									</srcFiles>
+								</configuration>
+							</execution>
+
+							<execution>
+								<id>create-fedora-oracle-db</id>
+								<phase>validate</phase>
+								<goals>
+									<goal>execute</goal>
+								</goals>
+								<configuration>
+									<driver>oracle.jdbc.driver.OracleDriver</driver>
+									<url>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${fedora.oracle.database}</url>
+									<username>${fedora.oracle.database.admin.user}</username>
+									<password>${fedora.oracle.database.admin.password}</password>
+									<autocommit>true</autocommit>
+          							<delimiter>;</delimiter>
+          							<delimiterType>normal</delimiterType>
+          							<keepFormat>false</keepFormat>
+									<srcFiles>
+										<srcFile>${basedir}/target/sql-resources/oracle/create-fedora-db.sql
+										</srcFile>
+									</srcFiles>
+								</configuration>
+							</execution>
+							<execution>
+								<id>create-triplestore-oracle-db</id>
+								<phase>validate</phase>
+								<goals>
+									<goal>execute</goal>
+								</goals>
+								<configuration>
+									<driver>oracle.jdbc.driver.OracleDriver</driver>
+									<url>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${triplestore.oracle.database}</url>
+									<username>${triplestore.oracle.database.admin.user}</username>
+									<password>${triplestore.oracle.database.admin.password}</password>
+									<autocommit>true</autocommit>
+          							<delimiter>;</delimiter>
+          							<delimiterType>normal</delimiterType>
+          							<keepFormat>false</keepFormat>
+									<srcFiles>
+										<srcFile>${basedir}/target/sql-resources/oracle/create-triplestore-db.sql
+										</srcFile>
+									</srcFiles>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+		
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>exec-maven-plugin</artifactId>
+						<version>1.2</version>
+						<executions>
+							<execution>
+								<id>install-fedora</id>
+								<phase>validate</phase>
+								<goals>
+									<goal>exec</goal>
+								</goals>
+								<configuration>
+									<executable>java</executable>
+									<arguments>
+										<argument>-jar</argument>
+										<argument>${settings.localRepository}/org/escidoc/fcrepo-installer/${fcrepo.version}/fcrepo-installer-${fcrepo.version}.jar</argument>
+										<argument>${project.build.directory}/fedora/oracle/install.properties</argument>
+									</arguments>
+									<outputFile>${project.build.directory}/fcrepo-install-error.log</outputFile>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+		
+					<plugin>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<dependencies>
+							<dependency>
+								<groupId>com.oopsconsultancy</groupId>
+								<artifactId>xmltask</artifactId>
+								<version>1.14</version>
+							</dependency>
+						</dependencies>
+						<executions>
+							<execution>
+								<id>prepare-fedora-configs</id>
+								<phase>initialize</phase>
+								<goals>
+									<goal>run</goal>
+								</goals>
+								<configuration>
+									<tasks>
+										<echo message="Preparing Fedora Configuration" />
+										<taskdef name="xmltask" classname="com.oopsconsultancy.xmltask.ant.XmlTask"
+											classpathref="maven.plugin.classpath" />
+		
+										<!-- fedora.fcfg -->
+										<xmltask
+											source="${project.build.directory}/fedora/server/config/fedora.fcfg"
+											dest="${project.build.directory}/fedora/fedora.fcfg"
+											failWithoutMatch="true">
+											<!-- general settings -->
+											<attr path="//*[@name='adminEmailList']" attr="value"
+												value="${FedoraAdminMailAddress}" />
+		
+											<!-- database settings -->
+											<attr path="//*[@name='storagePool']" attr="value"
+												value="local${Database}Pool" />
+											<attr path="//*[@name='connectionPool']" attr="value"
+												value="local${Database}Pool" />
+											<attr path="//*[@name='defaultPoolName']" attr="value"
+												value="local${Database}Pool" />
+											<attr path="//*[@name='poolNames']" attr="value"
+												value="local${Database}Pool" />
+											<attr path="//*[@name='dbUsername']" attr="value"
+												value="${FedoraUsername}" />
+											<attr path="//*[@name='dbPassword']" attr="value"
+												value="${FedoraPassword}" />
+											<attr path="//*[@name='jdbcURL']" attr="value"
+												value="${DatabaseURL}fedora3" />
+											<attr path="//*[@name='jdbcDriverClass']" attr="value"
+												value="${DatabaseDriverClass}" />
+		
+											<!-- triplestore settings -->
+											<attr
+												path="//*[local-name()='datastore'][@id='localPostgresMPTTriplestore']/*[local-name()='param'][@name='jdbcDriver']"
+												attr="value" value="${DatabaseDriverClass}" />
+											<attr
+												path="//*[local-name()='datastore'][@id='localPostgresMPTTriplestore']/*[local-name()='param'][@name='jdbcURL']"
+												attr="value" value="${DatabaseURL}riTriples" />
+											<attr
+												path="//*[local-name()='datastore'][@id='localPostgresMPTTriplestore']/*[local-name()='param'][@name='username']"
+												attr="value" value="${FedoraUsername}" />
+											<attr
+												path="//*[local-name()='datastore'][@id='localPostgresMPTTriplestore']/*[local-name()='param'][@name='password']"
+												attr="value" value="${FedoraPassword}" />
+										</xmltask>
+		
+										<!-- fedora-users.xml -->
+										<xmltask
+											source="${project.build.directory}/fedora/server/config/fedora-users.xml"
+											dest="${project.build.directory}/fedora/fedora-users.xml"
+											failWithoutMatch="true">
+											<attr path="/users/user[@name='fedoraAdmin']" attr="password"
+												value="${FedoraPassword}" />
+											<attr path="/users/user[@name='fedoraAdmin']" attr="name"
+												value="${FedoraUsername}" />
+										</xmltask>
+		
+										<!-- web.xml -->
+										<xmltask
+											source="${project.build.directory}/fedora/install/fedorawar/WEB-INF/web.xml"
+											dest="${project.build.directory}/fedora/web.xml"
+											failWithoutMatch="true">
+											<replace
+												path="//*[local-name()='param-name' and text()='fedora.home']/following-sibling::*[1]/text()"
+												withText="${INSTALL_PATH}${FILE_SEPARATOR}fedora" />
+										</xmltask>
+									</tasks>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>

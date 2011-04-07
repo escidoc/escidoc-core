@@ -198,7 +198,7 @@
 			<artifactId>postgresql</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>ojdbc</groupId>
+			<groupId>restricted</groupId>
 			<artifactId>ojdbc</artifactId>
 		</dependency>
 		<dependency>

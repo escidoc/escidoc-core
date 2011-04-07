@@ -1,7 +1,8 @@
 -create Oracle Database with character encoding UTF-8
 -create Tablespace for escidoc-tables
 -configure 
-	escidoc.oracle.url
+	escidoc.oracle.host
+	escidoc.oracle.port
 	escidoc.oracle.database
 	escidoc.oracle.database.user
 	escidoc.oracle.database.password
@@ -61,3 +62,6 @@ Angepasste Configdateien:
 /installer/src/main/resources/fedora/oracle/install.properties
 /integration-tests/src/test/resources/configuration/oracle/jboss/server/default/conf/escidoc-core.custom.proeprties
 /integration-tests/src/test/resources/fedora/oracle/fedora.fcfg + install.properties
+
+
+-put ojdbc-treiber in local repository of each machine
