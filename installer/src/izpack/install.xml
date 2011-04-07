@@ -217,9 +217,13 @@
       <variable name="DatabaseDriverClass" value="${DatabaseDriverClassPostgres}" condition="databaseIsPostgres" />
       <variable name="DatabaseDriverClass" value="${DatabaseDriverClassMySQL}" condition="databaseIsMySQL" />
       <variable name="DatabaseDriverClass" value="${DatabaseDriverClassOracle}" condition="databaseIsOracle" />
-      <variable name="DatabaseURL" value="jdbc:postgresql://${DatabaseHost}:${DatabasePortPostgres}/" condition="databaseIsPostgres" />
-      <variable name="DatabaseURL" value="jdbc:mysql://${DatabaseHost}:${DatabasePortMySQL}/" condition="databaseIsMySQL" />
-      <variable name="DatabaseURL" value="jdbc:oracle:thin:@//${DatabaseHost}:${DatabasePortOracle}/" condition="databaseIsOracle" />
+      <!-- database identifier for JDBC URL -->
+      <variable name="DatabaseIdentifier" value="postgresql" condition="databaseIsPostgres" />
+      <variable name="DatabaseIdentifier" value="mysql" condition="databaseIsMySQL" />
+      <variable name="DatabaseIdentifier" value="oracle" condition="databaseIsOracle" />
+      <variable name="DatabaseURL" value="jdbc:${DatabaseIdentifier}://${DatabaseHost}:${DatabasePortPostgres}/" condition="databaseIsPostgres" />
+      <variable name="DatabaseURL" value="jdbc:${DatabaseIdentifier}://${DatabaseHost}:${DatabasePortMySQL}/" condition="databaseIsMySQL" />
+      <variable name="DatabaseURL" value="jdbc:${DatabaseIdentifier}:thin:@//${DatabaseHost}:${DatabasePortOracle}/" condition="databaseIsOracle" />
       <variable name="DatabasePort" value="${DatabasePortPostgres}" condition="databaseIsPostgres" />
       <variable name="DatabasePort" value="${DatabasePortMySQL}" condition="databaseIsMySQL" />
       <variable name="DatabasePort" value="${DatabasePortOracle}" condition="databaseIsOracle" />
@@ -230,9 +234,6 @@
       <variable name="RootDatabaseName" value="postgres" condition="databaseIsPostgres" />
       <variable name="RootDatabaseName" value="" condition="databaseIsMySQL" />
       <variable name="RootDatabaseName" value="" condition="databaseIsOracle" />
-      <variable name="DatabaseIdentifier" value="postgresql" condition="databaseIsPostgres" />
-      <variable name="DatabaseIdentifier" value="mysql" condition="databaseIsMySQL" />
-      <variable name="DatabaseIdentifier" value="oracle" condition="databaseIsOracle" />
       <variable name="DatabaseAccessor" value="DirectPostgresDatabaseAccessor" condition="databaseIsPostgres" />
       <variable name="DatabaseAccessor" value="DirectMysqlDatabaseAccessor" condition="databaseIsMySQL" />
       <variable name="DatabaseAccessor" value="DirectOracleDatabaseAccessor" condition="databaseIsOracle" />
