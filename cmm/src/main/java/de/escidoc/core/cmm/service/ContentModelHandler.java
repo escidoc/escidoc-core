@@ -76,7 +76,8 @@ public class ContentModelHandler implements de.escidoc.core.cmm.service.interfac
     @Override
     public String ingest(final String xmlData) throws AuthenticationException, AuthorizationException,
         MissingMethodParameterException, SystemException, MissingAttributeValueException, MissingElementValueException,
-        ContentModelNotFoundException, InvalidXmlException, InvalidStatusException, EscidocException {
+        ContentModelNotFoundException, InvalidXmlException, XmlCorruptedException, InvalidStatusException,
+        EscidocException {
 
         return business.ingest(xmlData);
     }
