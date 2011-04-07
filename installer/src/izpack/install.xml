@@ -198,6 +198,9 @@
       <variable name="DatasourceEscidoc" value="escidoc-core" condition="databaseIsPostgres" />
       <variable name="DatasourceEscidoc" value="" condition="databaseIsMySQL" />
       <variable name="DatasourceEscidoc" value="" condition="databaseIsOracle" />
+      <variable name="DatasourceFedora" value="fedora3" condition="databaseIsPostgres" />
+      <variable name="DatasourceFedora" value="" condition="databaseIsMySQL" />
+      <variable name="DatasourceFedora" value="" condition="databaseIsOracle" />
       <variable name="DatasourceTriplestore" value="riTriples" condition="databaseIsPostgres" />
       <variable name="DatasourceTriplestore" value="" condition="databaseIsMySQL" />
       <variable name="DatasourceTriplestore" value="" condition="databaseIsOracle" />

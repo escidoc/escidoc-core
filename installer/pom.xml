@@ -431,7 +431,7 @@
 											<attr path="//*[@name='dbPassword']" attr="value"
 												value="${FedoraPassword}" />
 											<attr path="//*[@name='jdbcURL']" attr="value"
-												value="${DatabaseURL}fedora3" />
+												value="${DatabaseURL}${DatasourceFedora}" />
 											<attr path="//*[@name='jdbcDriverClass']" attr="value"
 												value="${DatabaseDriverClass}" />
 		
@@ -444,7 +444,7 @@
 												attr="value" value="${DatabaseDriverClass}" />
 											<attr
 												path="//*[local-name()='datastore'][@id='localPostgresMPTTriplestore']/*[local-name()='param'][@name='jdbcURL']"
-												attr="value" value="${DatabaseURL}riTriples" />
+												attr="value" value="${DatabaseURL}${DatasourceTriplestore}" />
 											<attr
 												path="//*[local-name()='datastore'][@id='localPostgresMPTTriplestore']/*[local-name()='param'][@name='username']"
 												attr="value" value="${FedoraUsername}" />
