@@ -29,56 +29,6 @@
   All rights reserved.  Use is subject to license terms.
 
 -->
-<!-- 
-  eSciDoc IzPack Installation Config File
-    
-  To compile:
-    - open a command window or shell
-    - set the ANT_HOME environment variable
-    - add ANT_HOME\bin to the PATH environment variable 
-    - go in the \projects\installer directory within the IzPack directory
-    - invoke "ant build-full"
--->
-
-<!--
-  How to prepare the required folder structure:
-  
-  /escidoc
-    /config
-      /escidoc
-        /core
-      /fedora
-      /jboss
-    /dist
-    /installer
-    /packages
-      /escidoc
-      /jboss
-  
-  What to put into which directory ("take" means use software offered via escidoc.org):
-    
-  1) take the patched Fedora 3.3.0 version, then
-     - run the installer (choose a directory outside of the above mentioned folder structure)
-     - follow the instructions on the escidoc.org website, with one important exception: 
-     - do not choose the default servlet container (Tomcat), but JBoss instead
-     - copy the resulting fedora.war file from the <fedora-home>/install directory to the 
-       "config/fedora"
-       folder
-     - create a new ZIP file from the fedora installation directory and include the following
-       subdirectories:
-        /client
-        /docs
-        /server
-     - name the newly created ZIP file fedora3.zip and put it into the "config/fedora" folder
-     - copy fedora-users.xml from "<fedora-home>/install/server/config/" to "config/fedora/"
-       and replace user name and password with place holders
-     - copy fedora.fcfg from "<fedora-home>/install/server/config/" to "config/fedora/"
-       and replace adminEmailList, pidNamespace, storagePool, connectionPool, defaultPoolName,
-       poolNames, dbUsername, dbPassword, jdbcURL, jdbcDriverClass for MySQL, Postgres and
-       Triplestore with place holders
-     - copy web.xml from "<fedora-home>/install/fedorawar/WEB-INF/" to "config/fedora/"
-       and replace the servlet path with place holders
--->
 
 <installation version="1.0">
 
@@ -245,13 +195,6 @@
       <variable name="DatabaseScriptPrefix" value="postgres" condition="databaseIsPostgres" />
       <variable name="DatabaseScriptPrefix" value="mysql" condition="databaseIsMySQL" />
       <variable name="DatabaseScriptPrefix" value="oracle" condition="databaseIsOracle" />
-      <!-- do not drop/create database "escidoc-core" for MySQL -->
-      <variable name="EscidocCoreDBIn" value="" condition="databaseIsPostgres" />
-      <variable name="EscidocCoreDBOut" value="" condition="databaseIsPostgres" />
-      <variable name="EscidocCoreDBIn" value="/*" condition="databaseIsMySQL" />
-      <variable name="EscidocCoreDBOut" value="*/" condition="databaseIsMySQL" />
-      <variable name="EscidocCoreDBIn" value="/*" condition="databaseIsOracle" />
-      <variable name="EscidocCoreDBOut" value="*/" condition="databaseIsOracle" />
       <variable name="DatasourceEscidoc" value="escidoc-core" condition="databaseIsPostgres" />
       <variable name="DatasourceEscidoc" value="" condition="databaseIsMySQL" />
       <variable name="DatasourceEscidoc" value="" condition="databaseIsOracle" />
