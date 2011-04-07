@@ -204,6 +204,10 @@
       <variable name="HibernateDialect" value="PostgreSQLDialect" condition="databaseIsPostgres" />
       <variable name="HibernateDialect" value="MySQLDialect" condition="databaseIsMySQL" />
       <variable name="HibernateDialect" value="Oracle8iDialect" condition="databaseIsOracle" />
+      <!-- DDLGenerator for MPTStore -->
+      <variable name="DDLGeneratorClass" value="org.nsdl.mptstore.impl.postgres.PostgresDDLGenerator" condition="databaseIsPostgres" />
+      <variable name="DDLGeneratorClass" value="org.nsdl.mptstore.impl.mysql.MysqlDDLGenerator" condition="databaseIsMySQL" />
+      <variable name="DDLGeneratorClass" value="org.nsdl.mptstore.impl.oracle.OracleDDLGenerator" condition="databaseIsOracle" />
       <!-- Authentication Configuration -->
       <variable name="FormBasedIn" value="&lt;!--" condition="!authMethodIsFormBased" />
       <variable name="FormBasedIn" value="" condition="authMethodIsFormBased" />

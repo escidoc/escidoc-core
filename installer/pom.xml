@@ -437,6 +437,9 @@
 		
 											<!-- triplestore settings -->
 											<attr
+												path="//*[local-name()='datastore'][@id='localPostgresMPTTriplestore']/*[local-name()='param'][@name='ddlGenerator']"
+												attr="value" value="${DDLGeneratorClass}" />
+											<attr
 												path="//*[local-name()='datastore'][@id='localPostgresMPTTriplestore']/*[local-name()='param'][@name='jdbcDriver']"
 												attr="value" value="${DatabaseDriverClass}" />
 											<attr
