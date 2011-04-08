@@ -185,8 +185,8 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
         final Document createdDocument = createSuccessfully("escidoc_useraccount_for_create.xml");
 
-        assertEquals("Creation date and last modification date are different. ",
-            assertCreationDateExists("", createdDocument), getLastModificationDateValue(createdDocument));
+        assertEquals("Creation date and last modification date are different. ", assertCreationDateExists("",
+            createdDocument), getLastModificationDateValue(createdDocument));
     }
 
     /**

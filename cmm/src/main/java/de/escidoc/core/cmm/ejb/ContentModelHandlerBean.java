@@ -79,7 +79,7 @@ public class ContentModelHandlerBean implements SessionBean {
     public final String ingest(final String xmlData, final SecurityContext securityContext)
         throws AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException,
         MissingAttributeValueException, MissingElementValueException, ContentModelNotFoundException,
-        InvalidXmlException,XmlCorruptedException, InvalidStatusException, EscidocException {
+        InvalidXmlException, XmlCorruptedException, InvalidStatusException, EscidocException {
         try {
             UserContext.setUserContext(securityContext);
         }

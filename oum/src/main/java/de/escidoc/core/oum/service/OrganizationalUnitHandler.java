@@ -76,7 +76,8 @@ public class OrganizationalUnitHandler
     @Override
     public String ingest(final String xmlData) throws AuthenticationException, AuthorizationException,
         MissingMethodParameterException, SystemException, MissingAttributeValueException, MissingElementValueException,
-        OrganizationalUnitNotFoundException, InvalidXmlException, XmlCorruptedException, InvalidStatusException, EscidocException {
+        OrganizationalUnitNotFoundException, InvalidXmlException, XmlCorruptedException, InvalidStatusException,
+        EscidocException {
 
         return business.ingest(xmlData);
     }
