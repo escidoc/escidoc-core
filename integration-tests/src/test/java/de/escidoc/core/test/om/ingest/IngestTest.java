@@ -54,8 +54,8 @@ import static org.junit.Assert.fail;
 @RunWith(value = Parameterized.class)
 public class IngestTest extends IngestTestBase {
 
-    private static final Pattern OBJECT_PATTERN = Pattern.compile(
-        "<objid resourceType=\"([^\"][^\"]*)\">(escidoc:\\d+)</objid>", Pattern.MULTILINE);
+    private static final Pattern OBJECT_PATTERN =
+        Pattern.compile("<objid resourceType=\"([^\"][^\"]*)\">(escidoc:\\d+)</objid>", Pattern.MULTILINE);
 
     /**
      * @param transport
