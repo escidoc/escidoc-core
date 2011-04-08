@@ -766,13 +766,13 @@
             information regarding connection pool options, refer to the Apache
             Commons Pool API documentation at
             http://jakarta.apache.org/commons/pool/apidocs/index.html.</comment>
-    <param name="dbUsername" value="fedoraAdmin">
+    <param name="dbUsername" value="${fedora.database.user}userrrr">
       <comment>The database user name.</comment>
     </param>
-    <param name="dbPassword" value="fedoraAdmin">
+    <param name="dbPassword" value="${fedora.database.password}">
       <comment>The database password.</comment>
     </param>
-    <param name="jdbcURL" value="jdbc:oracle:thin:@localhost:1521:XE">
+    <param name="jdbcURL" value="jdbc:oracle:thin:${escidoc.at}${escidoc.oracle.host}:${escidoc.oracle.port}:${fedora.oracle.database}">
       <comment>The JDBC connection URL.</comment>
     </param>
     <param name="jdbcDriverClass" value="oracle.jdbc.driver.OracleDriver">
@@ -1030,9 +1030,9 @@
     <param name="connectorClassName" value="org.trippi.impl.mpt.MPTConnector"/>
     <param name="ddlGenerator" value="org.nsdl.mptstore.impl.oracle.OracleDDLGenerator"/>
     <param name="jdbcDriver" value="oracle.jdbc.driver.OracleDriver"/>
-    <param name="jdbcURL" value="jdbc:oracle:thin:@localhost:1521:XE"/>
-    <param name="username" value="riTriples"/>
-    <param name="password" value="riTriples"/>
+    <param name="jdbcURL" value="jdbc:oracle:thin:${escidoc.at}${escidoc.oracle.host}:${escidoc.oracle.port}:${triplestore.oracle.database}"/>
+    <param name="username" value="${triplestore.database.user}"/>
+    <param name="password" value="${triplestore.database.password}"/>
     <param name="poolInitialSize" value="3"/>
     <param name="poolMaxSize" value="10"/>
     <param name="backslashIsEscape" value="true"/>

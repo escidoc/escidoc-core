@@ -984,7 +984,7 @@
 								</configuration>
 							</execution>
 							<execution>
-								<id>overwrite-configurations</id>
+								<id>overwrite-jboss-configurations</id>
 								<phase>process-sources</phase>
 								<goals>
 									<goal>copy-resources</goal>
@@ -996,7 +996,38 @@
 											<directory>src/test/resources/configuration/oracle/jboss</directory>
 											<filtering>true</filtering>
 										</resource>
+										<resource>
+											<directory>src/test/filtered-resources/configuration/oracle/jboss</directory>
+											<filtering>true</filtering>
+										</resource>
 									</resources>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-dependency-plugin</artifactId>
+						<version>2.2</version>
+						<executions>
+							<execution>
+								<id>copy-oracle-driver</id>
+								<phase>process-sources</phase>
+								<goals>
+									<goal>copy</goal>
+								</goals>
+								<configuration>
+									<artifactItems>
+										<artifactItem>
+											<groupId>restricted</groupId>
+											<artifactId>ojdbc</artifactId>
+											<version>${jdbc.oracle.version}</version>
+											<type>jar</type>
+											<overWrite>false</overWrite>
+											<outputDirectory>${project.build.directory}/escidoc/jboss/server/default/lib</outputDirectory>
+											<destFileName>ojdbc-14.jar</destFileName>
+										</artifactItem>
+									</artifactItems>
 								</configuration>
 							</execution>
 						</executions>
@@ -1462,7 +1493,7 @@
 									<overwrite>true</overwrite>
 									<resources>
 										<resource>
-											<directory>${basedir}/src/test/resources/fedora/oracle</directory>
+											<directory>${project.build.directory}/test-classes/fedora/oracle</directory>
 											<includes>
 												<include>fedora.fcfg</include>
 											</includes>
