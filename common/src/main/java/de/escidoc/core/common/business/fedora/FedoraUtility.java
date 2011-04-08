@@ -1094,26 +1094,6 @@ public class FedoraUtility implements InitializingBean {
         }
     }
 
-    private static void logExcetionAndWait(final Exception e, final int i) throws FedoraSystemException {
-        if (LOGGER.isWarnEnabled()) {
-            LOGGER.warn("Error syncing with TripleStore.");
-        }
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Error syncing with TripleStore.", e);
-        }
-        try {
-            Thread.sleep((long) (i + 1000));
-        }
-        catch (final InterruptedException e1) {
-            if (LOGGER.isWarnEnabled()) {
-                LOGGER.warn("Error on waiting for Fedora.");
-            }
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Error on waiting for Fedora.", e);
-            }
-        }
-    }
-
     /**
      * Get the last-modification-date for the Fedora object.
      * 
