@@ -86,6 +86,7 @@ import org.slf4j.LoggerFactory;
 import java.io.StringWriter;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -1074,7 +1075,7 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
                     final Datastream ds =
                         new Datastream(mdRecord.getName(), cr.getObjid(), mdRecord.getMimeType(), mdRecord
                             .getDatastreamLocation(), mdRecord.getControlGroup(), cr.getProperties().getVersionDate());
-                    mdRecord.setContent(new String(ds.getStream()));
+                    mdRecord.setContent(new String(ds.getStream(), Charset.forName("UTF-8")));
                 }
             }
         }
