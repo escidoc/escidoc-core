@@ -103,58 +103,6 @@ public class CollaboratorModifierRestTest extends CollaboratorModifierAbstractTe
     }
 
     /**
-     * Test collaborator with scope on component.
-     *
-     * @throws Exception If anything fails.
-     */
-    @Test
-    public void testRetrieveContentWithContentScopeDecline() throws Exception {
-
-        //create grant collaborator for user USER_ID and scope of component
-        doTestCreateGrant(null, grantCreationUserOrGroupId, privateComponentHref, ROLE_HREF_COLLABORATOR_MODIFIER, null);
-
-        //test declining retrieving content
-        try {
-            PWCallback.setHandle(HANDLE);
-            ((ItemClient) getClient(ITEM_HANDLER_CODE)).retrieveContent(itemId, privateComponentId);
-            EscidocRestSoapTestBase.failMissingException(AuthorizationException.class);
-        }
-        catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(AuthorizationException.class, e);
-        }
-        finally {
-            PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
-        }
-
-        //test declining retrieving content of version of item
-        try {
-            PWCallback.setHandle(HANDLE);
-            ((ItemClient) getClient(ITEM_HANDLER_CODE)).retrieveContent(itemId + ":1", privateComponentId);
-            EscidocRestSoapTestBase.failMissingException(AuthorizationException.class);
-        }
-        catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(AuthorizationException.class, e);
-        }
-        finally {
-            PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
-        }
-
-        //test declining retrieving content
-        try {
-            PWCallback.setHandle(HANDLE);
-            ((ItemClient) getClient(ITEM_HANDLER_CODE)).retrieveContent(itemId, publicComponentId);
-            EscidocRestSoapTestBase.failMissingException(AuthorizationException.class);
-        }
-        catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(AuthorizationException.class, e);
-        }
-        finally {
-            PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
-        }
-
-    }
-
-    /**
      * Test collaborator with scope on container.
      *
      * @throws Exception If anything fails.

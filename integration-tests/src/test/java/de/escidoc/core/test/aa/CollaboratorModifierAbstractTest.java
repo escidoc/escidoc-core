@@ -316,17 +316,6 @@ public abstract class CollaboratorModifierAbstractTest extends GrantTestBase {
     }
 
     /**
-     * Test collaborator-modifier updating an item with scope on component.
-     *
-     * @throws Exception If anything fails.
-     */
-    @Test
-    public void testUpdateItemWithContentScope() throws Exception {
-        doTestUpdateWithRole(grantCreationUserOrGroupId, ROLE_HREF_COLLABORATOR_MODIFIER, publicComponentHref, HANDLE,
-            ITEM_HANDLER_CODE, itemId, "semiconductor surfaces", " u", null);
-    }
-
-    /**
      * Test collaborator-modifier updating an item with scope on container.
      *
      * @throws Exception If anything fails.
@@ -456,17 +445,6 @@ public abstract class CollaboratorModifierAbstractTest extends GrantTestBase {
     public void testLockUnlockItemWithItemScope() throws Exception {
         doTestLockUnlockWithRole(grantCreationUserOrGroupId, ROLE_HREF_COLLABORATOR_MODIFIER, itemHref, HANDLE,
             ITEM_HANDLER_CODE, itemId, null);
-    }
-
-    /**
-     * Test collaborator-modifier locking/unlocking an item with scope on component.
-     *
-     * @throws Exception If anything fails.
-     */
-    @Test
-    public void testLockUnlockItemWithContentScope() throws Exception {
-        doTestLockUnlockWithRole(grantCreationUserOrGroupId, ROLE_HREF_COLLABORATOR_MODIFIER, publicComponentHref,
-            HANDLE, ITEM_HANDLER_CODE, itemId, null);
     }
 
     /**
