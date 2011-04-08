@@ -148,23 +148,11 @@ public abstract class WriteHandler extends DefaultHandler {
                 if (attributeValueArray.length == 2) {
                     final int index = attributeValueArray[1].indexOf('/');
                     if (index == -1) {
-                        // int index = attributeValue.indexOf(":");
-                        // if(index != -1) {
-                        // String prefixValue =
-                        // attributeValue.substring(0, index);
                         String prefixValue = attributeValueArray[0];
                         if (prefixValue != null) {
                             final String valueUri = nscontext.getNamespaceURI(prefixValue);
                             if (valueUri != null) {
-                                if (nsuris.containsKey(valueUri)) {
-                                    final List namespaceTrace = nsuris.get(valueUri);
-                                    final String prefixTrace = (String) namespaceTrace.get(2);
-                                    if (!prefixTrace.equals(prefixValue)) {
-                                        prefixValue = prefixTrace;
-                                    }
-
-                                }
-                                else {
+                                if (!nsuris.containsKey(valueUri)) {
                                     final List namespaceTrace = new ArrayList();
                                     namespaceTrace.add(this.deepLevel);
                                     namespaceTrace.add(elementName);
@@ -176,7 +164,6 @@ public abstract class WriteHandler extends DefaultHandler {
                             }
                         }
                     }
-                    // writer.writeNamespace(valuePrefix, valueUri);
                 }
             }
         }
