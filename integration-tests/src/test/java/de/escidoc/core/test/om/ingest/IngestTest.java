@@ -512,7 +512,8 @@ public class IngestTest extends IngestTestBase {
             String objectId = matcher.group(2);
 
             // Have we just ingested a content model ?
-            assert resourceType.equals("CMM") : "expected resource type \"CMM\" but got " + resourceType;
+            assert resourceType.equals("CONTENT_MODEL") : "expected resource type \"CONTENT_MODEL\" but got \""
+                + resourceType + "\"";
 
             // We can't assume anything about the object's id except not being
             // null, can we ?
