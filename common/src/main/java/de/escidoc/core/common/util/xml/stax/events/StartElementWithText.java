@@ -53,12 +53,4 @@ public class StartElementWithText extends StartElement {
     public void setElementText(final String elementText) {
         this.elementText = elementText;
     }
-
-    /*
-     * public List getAttributes() { return attributes; }
-     * 
-     * public void setAttributes(List attributes) { this.attributes =
-     * attributes; }
-     */
-
 }

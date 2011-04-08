@@ -20,8 +20,7 @@
 
 package de.escidoc.core.common.util.xml.stax.events;
 
-import de.escidoc.core.common.exceptions.system.XmlParserSystemException; //import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
+import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 
 import javax.naming.directory.NoSuchAttributeException;
 import javax.xml.namespace.NamespaceContext;
@@ -30,9 +29,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StartElement extends AbstractElement {
-
-    // private static final Logger LOGGER =
-    // LoggerFactory.getLogger(StartElement.class);
 
     private String localName;
 
