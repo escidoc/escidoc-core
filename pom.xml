@@ -807,8 +807,6 @@
 	<triplestore.oracle.database>oraesci01</triplestore.oracle.database>
 	<triplestore.database.user>riTriples</triplestore.database.user>
 	<triplestore.database.password>riTriples</triplestore.database.password>
-	<triplestore.oracle.database.admin.user>oraesci_adm</triplestore.oracle.database.admin.user>
-	<triplestore.oracle.database.admin.password>oraesciadm</triplestore.oracle.database.admin.password>
 	<triplestore.default.tablespace>triples</triplestore.default.tablespace>
 	<triplestore.temp.tablespace>TEMP</triplestore.temp.tablespace>
 
@@ -827,8 +825,6 @@
 	<triplestore.oracle.database>XE</triplestore.oracle.database>
 	<triplestore.database.user>riTriples</triplestore.database.user>
 	<triplestore.database.password>riTriples</triplestore.database.password>
-	<triplestore.oracle.database.admin.user>HR</triplestore.oracle.database.admin.user>
-	<triplestore.oracle.database.admin.password>oracle</triplestore.oracle.database.admin.password>
 	<triplestore.default.tablespace>USERS</triplestore.default.tablespace>
 	<triplestore.temp.tablespace>TEMP</triplestore.temp.tablespace -->
   </properties>

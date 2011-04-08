@@ -1422,27 +1422,6 @@
 									</srcFiles>
 								</configuration>
 							</execution>
-							<execution>
-								<id>drop-triplestore-oracle-db</id>
-								<phase>clean</phase>
-								<goals>
-									<goal>execute</goal>
-								</goals>
-								<configuration>
-									<driver>oracle.jdbc.driver.OracleDriver</driver>
-									<url>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${triplestore.oracle.database}</url>
-									<username>${triplestore.oracle.database.admin.user}</username>
-									<password>${triplestore.oracle.database.admin.password}</password>
-									<autocommit>true</autocommit>
-          							<delimiter>/</delimiter>
-          							<delimiterType>row</delimiterType>
-          							<keepFormat>true</keepFormat>
-									<srcFiles>
-										<srcFile>${basedir}/target/sql-resources/oracle/drop-triplestore-db.sql
-										</srcFile>
-									</srcFiles>
-								</configuration>
-							</execution>
 
 							<execution>
 								<id>create-fedora-oracle-db</id>
@@ -1461,27 +1440,6 @@
           							<keepFormat>false</keepFormat>
 									<srcFiles>
 										<srcFile>${basedir}/target/sql-resources/oracle/create-fedora-db.sql
-										</srcFile>
-									</srcFiles>
-								</configuration>
-							</execution>
-							<execution>
-								<id>create-triplestore-oracle-db</id>
-								<phase>initialize</phase>
-								<goals>
-									<goal>execute</goal>
-								</goals>
-								<configuration>
-									<driver>oracle.jdbc.driver.OracleDriver</driver>
-									<url>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${triplestore.oracle.database}</url>
-									<username>${triplestore.oracle.database.admin.user}</username>
-									<password>${triplestore.oracle.database.admin.password}</password>
-									<autocommit>true</autocommit>
-          							<delimiter>;</delimiter>
-          							<delimiterType>normal</delimiterType>
-          							<keepFormat>false</keepFormat>
-									<srcFiles>
-										<srcFile>${basedir}/target/sql-resources/oracle/create-triplestore-db.sql
 										</srcFile>
 									</srcFiles>
 								</configuration>
