@@ -1407,6 +1407,26 @@
 									</resources>
 								</configuration>
 							</execution>
+							<execution>
+								<id>deploy-fedora-config-orcale</id>
+								<phase>generate-resources</phase>
+								<goals>
+									<goal>copy-resources</goal>
+								</goals>
+								<configuration>
+									<outputDirectory>${project.build.directory}/escidoc/fedora/server/config</outputDirectory>
+									<overwrite>true</overwrite>
+									<resources>
+										<resource>
+											<directory>${basedir}/src/test/filtered-resources/fedora/oracle</directory>
+											<includes>
+												<include>fedora.fcfg</include>
+											</includes>
+											<filtering>true</filtering>
+										</resource>
+									</resources>
+								</configuration>
+							</execution>
 						</executions>
 					</plugin>
 					<plugin>
@@ -1473,33 +1493,6 @@
 										<srcFile>${basedir}/target/sql-resources/oracle/create-fedora-db.sql
 										</srcFile>
 									</srcFiles>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-
-					<plugin>
-						<artifactId>maven-resources-plugin</artifactId>
-						<version>2.5</version>
-						<executions>
-							<execution>
-								<id>deploy-fedora-config-orcale</id>
-								<phase>generate-resources</phase>
-								<goals>
-									<goal>copy-resources</goal>
-								</goals>
-								<configuration>
-									<outputDirectory>${project.build.directory}/escidoc/fedora/server/config</outputDirectory>
-									<overwrite>true</overwrite>
-									<resources>
-										<resource>
-											<directory>${basedir}/src/test/filtered-resources/fedora/oracle</directory>
-											<includes>
-												<include>fedora.fcfg</include>
-											</includes>
-											<filtering>true</filtering>
-										</resource>
-									</resources>
 								</configuration>
 							</execution>
 						</executions>
