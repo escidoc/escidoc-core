@@ -39,7 +39,6 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.naming.directory.NoSuchAttributeException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -96,23 +95,15 @@ public class MdRecordsUpdateHandler extends DefaultHandler {
                 this.isInside = true;
                 // get name of md-record
 
-                try {
-                    this.name = element.getAttribute(null, "name").getValue();
+                int index = element.indexOfAttribute(null, "name");
+                if (index > -1) {
+                    this.name = element.getAttribute(index).getValue();
                     if (name.length() == 0) {
                         throw new MissingAttributeValueException("the value of the"
-                            + " \"name\" atribute of the element " + theName + " is missing");
-
+                            + " \"name\" atribute of the element " + theName + " is empty.");
                     }
-                    if (name.equals(Elements.MANDATORY_MD_RECORD_NAME)) {
+                    if (Elements.MANDATORY_MD_RECORD_NAME.equals(name)) {
                         this.isMandatoryName = true;
-                    }
-                }
-                catch (final NoSuchAttributeException e) {
-                    if (LOGGER.isWarnEnabled()) {
-                        LOGGER.warn("Error on getting attribute.");
-                    }
-                    if (LOGGER.isDebugEnabled()) {
-                        LOGGER.debug("Error on getting attribute.", e);
                     }
                 }
 
