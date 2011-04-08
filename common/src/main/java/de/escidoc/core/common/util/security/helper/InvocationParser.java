@@ -405,6 +405,9 @@ public class InvocationParser {
                         if (node.getFirstChild() != null) {
                             tmpValue = node.getFirstChild().getNodeValue();
                         }
+                        else {
+                            tmpValue = "";
+                        }
                         if (tmpValue != null) {
                             if (extractObjidNeeded) {
                                 tmpValue = XmlUtility.getIdFromURI(tmpValue);
