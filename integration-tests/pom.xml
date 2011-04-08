@@ -108,6 +108,7 @@
 							<goal>exec</goal>
 						</goals>
 						<configuration>
+							<skip>${skipInstaller}</skip>
 							<executable>java</executable>
 							<arguments>
 								<argument>-Dskip.validation=true</argument>
