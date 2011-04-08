@@ -2672,54 +2672,6 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception If anything fails.
      */
     @Test(timeout = 120000)
-    public void testSearchAsCollaboratorModifierUser() throws Exception {
-        HashMap<String, Object> role = new HashMap<String, Object>() {
-            private static final long serialVersionUID = 1L;
-
-            {
-                put("role0", GrantHelper.ROLE_HREF_COLLABORATOR_MODIFIER);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.ITEM_BASE_URI + "/" + itemIds[0]
-                    + "/components/component/" + componentIds[0][0]);
-                put("handle", PWCallback.TEST_HANDLE1);
-                put("user", TEST_USER_ACCOUNT_ID1);
-                put("expectedHits", "55");
-                put("searchresultIds", new HashMap<String, ArrayList<String>>() {
-                    private static final long serialVersionUID = 1L;
-
-                    {
-                        for (int j = 0; j < 2; j++) {
-                            for (int i = (3 + j * 10); i < (10 + j * 10); i++) {
-                                if (i == 9 || i == 19) {
-                                    continue;
-                                }
-                                if (i == 8 + j * 10) {
-                                    put(adminTestContainerIds[i], getAdminTestContainerXpathList(i, "released"));
-                                }
-                                else {
-                                    put(adminTestContainerIds[i], getAdminTestContainerXpathList(i, null));
-                                }
-
-                            }
-                        }
-                        for (int i = 0; i < 84; i += 6) {
-                            put(itemIds[i + 2], getItemXpathList(i + 2, null));
-                            put(itemIds[i + 3], getItemXpathList(i + 3, null));
-                            put(itemIds[i + 4], getItemXpathList(i + 4, "released"));
-                        }
-                        put(itemIds[0], getItemXpathList(0, null));
-                    }
-                });
-            }
-        };
-        search(role);
-    }
-
-    /**
-     * Test searching as CollaboratorModifier user.
-     *
-     * @throws Exception If anything fails.
-     */
-    @Test(timeout = 120000)
     public void testSearchAsCollaboratorModifierUser1() throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
             private static final long serialVersionUID = 1L;
