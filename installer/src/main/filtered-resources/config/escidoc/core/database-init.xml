@@ -30,6 +30,15 @@
 		     password="${root.database.password}" 
 		     src="${sql.dir}/${script.prefix}/drop-db.sql"
 		     ${DatabaseAutocommit} />
+                <echo level="info">Executing script ${sql.dir}/${script.prefix}/drop-fedora-db.sql</echo>
+                <sql classpathref="database.classpath"  
+                     driver="${jdbc.driver.class}"              
+                     url="${root.jdbc.url}"                     
+                     userid="${root.database.user}" 
+                     password="${root.database.password}"       
+                     src="${sql.dir}/${script.prefix}/drop-fedora-db.sql"
+                     ${DatabaseAutocommit} />
+
 		<echo level="info">Executing script ${sql.dir}/${script.prefix}/create-db.sql</echo>
 		<sql classpathref="database.classpath" 
 		     driver="${jdbc.driver.class}" 
@@ -38,6 +47,14 @@
 		     password="${root.database.password}" 
 		     src="${sql.dir}/${script.prefix}/create-db.sql"
 		     ${DatabaseAutocommit} />
+               <echo level="info">Executing script ${sql.dir}/${script.prefix}/create-fedora-db.sql</echo>
+                <sql classpathref="database.classpath"          
+                     driver="${jdbc.driver.class}"                      
+                     url="${root.jdbc.url}"                             
+                     userid="${root.database.user}"                     
+                     password="${root.database.password}"               
+                     src="${sql.dir}/${script.prefix}/create-fedora-db.sql"    
+                     ${DatabaseAutocommit} />  
 	</target>
 
 	<target name="create-tables" description="Creates all necessary tables for eSciDoc">
