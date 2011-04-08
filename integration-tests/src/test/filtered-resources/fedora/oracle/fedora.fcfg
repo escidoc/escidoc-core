@@ -766,7 +766,7 @@
             information regarding connection pool options, refer to the Apache
             Commons Pool API documentation at
             http://jakarta.apache.org/commons/pool/apidocs/index.html.</comment>
-    <param name="dbUsername" value="${fedora.database.user}userrrr">
+    <param name="dbUsername" value="${fedora.database.user}">
       <comment>The database user name.</comment>
     </param>
     <param name="dbPassword" value="${fedora.database.password}">

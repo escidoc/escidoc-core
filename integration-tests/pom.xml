@@ -1493,7 +1493,7 @@
 									<overwrite>true</overwrite>
 									<resources>
 										<resource>
-											<directory>${project.build.directory}/test-classes/fedora/oracle</directory>
+											<directory>${basedir}/src/test/filtered-resources/fedora/oracle</directory>
 											<includes>
 												<include>fedora.fcfg</include>
 											</includes>
