@@ -9,7 +9,7 @@ INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_b
   true, true, 'de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException');
 
 INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_type, mapping_type, multi_value, value, method_mapping)
-  VALUES ('escidoc-mm-content-model-retrieve-1', 'urn:oasis:names:tc:xacml:1.0:resource:resource-id', '', 0, 
+  VALUES ('escidoc-im-content-model-retrieve-1', 'urn:oasis:names:tc:xacml:1.0:resource:resource-id', '', 0, 
           'http://www.w3.org/2001/XMLSchema#string', 0, false, '', 'escidoc:mm-content-model-retrieve');
          
         /**
@@ -115,7 +115,7 @@ INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_b
   true, true, 'de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException');
 
 INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_type, mapping_type, multi_value, value, method_mapping)
-  VALUES ('escidoc-mm-content-model-create-1', 'urn:oasis:names:tc:xacml:1.0:resource:resource-id', '', 0, 
+  VALUES ('escidoc-im-content-model-create-1', 'urn:oasis:names:tc:xacml:1.0:resource:resource-id', '', 0, 
           'http://www.w3.org/2001/XMLSchema#string', 0, false, '', 'escidoc:mm-content-model-create');
          
         /**
@@ -126,7 +126,7 @@ INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_b
   true, true, 'de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException');
 
 INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_type, mapping_type, multi_value, value, method_mapping)
-  VALUES ('escidoc-mm-content-model-update-1', 'urn:oasis:names:tc:xacml:1.0:resource:resource-id', '', 0, 
+  VALUES ('escidoc-im-content-model-update-1', 'urn:oasis:names:tc:xacml:1.0:resource:resource-id', '', 0, 
           'http://www.w3.org/2001/XMLSchema#string', 0, false, '', 'escidoc:mm-content-model-update');
           
         /**
@@ -137,7 +137,7 @@ INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_b
   true, true, 'de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException');
 
 INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_type, mapping_type, multi_value, value, method_mapping)
-  VALUES ('escidoc-mm-content-model-delete-1', 'urn:oasis:names:tc:xacml:1.0:resource:resource-id', '', 0, 
+  VALUES ('escidoc-im-content-model-delete-1', 'urn:oasis:names:tc:xacml:1.0:resource:resource-id', '', 0, 
           'http://www.w3.org/2001/XMLSchema#string', 0, false, '', 'escidoc:mm-content-model-delete');
          
          
