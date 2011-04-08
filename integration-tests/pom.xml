@@ -1075,8 +1075,8 @@
 								<configuration>
 									<driver>oracle.jdbc.driver.OracleDriver</driver>
 									<url>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${escidoc.oracle.database}</url>
-									<username>${escidoc.oracle.database.user}</username>
-									<password>${escidoc.oracle.database.password}</password>
+									<username>${escidoc.database.user}</username>
+									<password>${escidoc.database.password}</password>
 									<autocommit>true</autocommit>
 									<delimiter>;</delimiter>
 									<delimiterType>normal</delimiterType>
@@ -1112,8 +1112,8 @@
 								<configuration>
 									<driver>oracle.jdbc.driver.OracleDriver</driver>
 									<url>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${escidoc.oracle.database}</url>
-									<username>${escidoc.oracle.database.user}</username>
-									<password>${escidoc.oracle.database.password}</password>
+									<username>${escidoc.database.user}</username>
+									<password>${escidoc.database.password}</password>
 									<autocommit>true</autocommit>
 									<delimiter>;</delimiter>
 									<delimiterType>normal</delimiterType>
@@ -1138,8 +1138,8 @@
 								<configuration>
 									<driver>oracle.jdbc.driver.OracleDriver</driver>
 									<url>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${escidoc.oracle.database}</url>
-									<username>${escidoc.oracle.database.user}</username>
-									<password>${escidoc.oracle.database.password}</password>
+									<username>${escidoc.database.user}</username>
+									<password>${escidoc.database.password}</password>
 									<autocommit>true</autocommit>
 									<delimiter>;</delimiter>
 									<delimiterType>normal</delimiterType>
@@ -1165,8 +1165,8 @@
 								<configuration>
 									<driver>oracle.jdbc.driver.OracleDriver</driver>
 									<url>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${escidoc.oracle.database}</url>
-									<username>${escidoc.oracle.database.user}</username>
-									<password>${escidoc.oracle.database.password}</password>
+									<username>${escidoc.database.user}</username>
+									<password>${escidoc.database.password}</password>
 									<autocommit>true</autocommit>
 									<delimiter>;</delimiter>
 									<delimiterType>normal</delimiterType>
@@ -1192,8 +1192,8 @@
 								<configuration>
 									<driver>oracle.jdbc.driver.OracleDriver</driver>
 									<url>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${escidoc.oracle.database}</url>
-									<username>${escidoc.oracle.database.user}</username>
-									<password>${escidoc.oracle.database.password}</password>
+									<username>${escidoc.database.user}</username>
+									<password>${escidoc.database.password}</password>
 									<autocommit>true</autocommit>
 									<delimiter>/</delimiter>
 									<delimiterType>row</delimiterType>
@@ -1219,8 +1219,8 @@
 								<configuration>
 									<driver>oracle.jdbc.driver.OracleDriver</driver>
 									<url>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${escidoc.oracle.database}</url>
-									<username>${escidoc.oracle.database.user}</username>
-									<password>${escidoc.oracle.database.password}</password>
+									<username>${escidoc.database.user}</username>
+									<password>${escidoc.database.password}</password>
 									<autocommit>true</autocommit>
 									<delimiter>;</delimiter>
 									<delimiterType>normal</delimiterType>
@@ -1247,8 +1247,8 @@
 								<configuration>
 									<driver>oracle.jdbc.driver.OracleDriver</driver>
 									<url>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${escidoc.oracle.database}</url>
-									<username>${escidoc.oracle.database.user}</username>
-									<password>${escidoc.oracle.database.password}</password>
+									<username>${escidoc.database.user}</username>
+									<password>${escidoc.database.password}</password>
 									<autocommit>true</autocommit>
 									<delimiter>;</delimiter>
 									<delimiterType>normal</delimiterType>

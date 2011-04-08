@@ -4,12 +4,12 @@
 	escidoc.oracle.host
 	escidoc.oracle.port
 	escidoc.oracle.database
-	escidoc.oracle.database.user
-	escidoc.oracle.database.password
+	escidoc.database.user
+	escidoc.database.password
 	escidoc.oracle.database.admin.user
 	escidoc.oracle.database.admin.password
-	escidoc.oracle.default.tablespace
-	escidoc.oracle.temp.tablespace
+	escidoc.default.tablespace
+	escidoc.temp.tablespace
 	
 -add escidoc-core.custom.properties to jboss-conf directory, containing configuration for oracle db.
 

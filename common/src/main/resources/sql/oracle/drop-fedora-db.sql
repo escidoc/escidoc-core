@@ -5,5 +5,5 @@
 /**
  * delete eSciDoc core users
  */   
-begin execute immediate 'DROP USER ${fedora.oracle.database.user} CASCADE'; exception when others then null; end;
+begin execute immediate 'DROP USER ${fedora.database.user} CASCADE'; exception when others then null; end;
 /

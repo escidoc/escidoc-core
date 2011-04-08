@@ -5,7 +5,7 @@
 /**
  * delete eSciDoc core users
  */   
-begin execute immediate 'DROP USER ${escidoc.oracle.database.user} CASCADE'; exception when others then null; end;
+begin execute immediate 'DROP USER ${escidoc.database.user} CASCADE'; exception when others then null; end;
 /
 begin execute immediate 'DROP USER aa CASCADE'; exception when others then null; end;
 /

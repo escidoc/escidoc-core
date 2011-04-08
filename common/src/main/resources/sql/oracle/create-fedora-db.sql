@@ -5,11 +5,11 @@
 /**
  * create fedora DB users
  */  
-CREATE USER ${fedora.oracle.database.user} 
-IDENTIFIED BY ${fedora.oracle.database.password}
-DEFAULT TABLESPACE ${fedora.oracle.default.tablespace}
-TEMPORARY TABLESPACE ${fedora.oracle.temp.tablespace}; 
+CREATE USER ${fedora.database.user} 
+IDENTIFIED BY ${fedora.database.password}
+DEFAULT TABLESPACE ${fedora.default.tablespace}
+TEMPORARY TABLESPACE ${fedora.temp.tablespace}; 
 
-GRANT CONNECT, create any table, create any index, drop any table, drop any index, select any table, insert any table, update any table, delete any table, UNLIMITED TABLESPACE TO ${fedora.oracle.database.user};
+GRANT CONNECT, create any table, create any index, drop any table, drop any index, select any table, insert any table, update any table, delete any table, UNLIMITED TABLESPACE TO ${fedora.database.user};
 
     
