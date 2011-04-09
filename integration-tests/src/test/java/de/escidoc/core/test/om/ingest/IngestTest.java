@@ -245,10 +245,10 @@ public class IngestTest extends IngestTestBase {
 
         if (getTransport() == Constants.TRANSPORT_REST) {
 
-            substitute(toBeCreatedDocument, "/item/properties/context@href", "/ir/context/" + UNKNOWN_ID);
+            substitute(toBeCreatedDocument, "/item/properties/context/@href", "/ir/context/" + UNKNOWN_ID);
         }
         else {
-            substitute(toBeCreatedDocument, "/item/properties/context@id", UNKNOWN_ID);
+            substitute(toBeCreatedDocument, "/item/properties/context/@id", UNKNOWN_ID);
         }
 
         String toBeCreatedXml = toString(toBeCreatedDocument, false);
