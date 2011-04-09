@@ -248,7 +248,7 @@ public class IngestTest extends IngestTestBase {
             substitute(toBeCreatedDocument, "/item/properties/context/@href", "/ir/context/" + UNKNOWN_ID);
         }
         else {
-            substitute(toBeCreatedDocument, "/item/properties/context/@id", UNKNOWN_ID);
+            substitute(toBeCreatedDocument, "/item/properties/context/@objid", UNKNOWN_ID);
         }
 
         String toBeCreatedXml = toString(toBeCreatedDocument, false);
@@ -557,7 +557,7 @@ public class IngestTest extends IngestTestBase {
      *             Thrown if behavior is not as expected.
      */
     // should be activated when SOAP is dropped
-    @Ignore("Mapping in SOAP seem on this way impossible")
+    //    @Ignore("Mapping in SOAP seem on this way impossible")
     @Test(expected = XmlCorruptedException.class)
     public void testInvalidXml() throws Exception {
 
