@@ -38,7 +38,7 @@
   </target>
 
   <target name="copy-oracle-jdbc-jar" if="databaseIsOracle">
-    <copy file="$DatabaseDriver}" todir="${install.dir}/install.tmp/" />
+    <copy file="${DatabaseDriver}" todir="${install.dir}/install.tmp/WEB-INF/lib/" />
   </target>
 
   <target name="jboss" depends="init" description="Installs JBoss Application Server">
@@ -84,7 +84,9 @@
     <!-- patch fedora.war by replacing web.xml with customized version -->
     <jar basedir="${install.dir}/install.tmp" update="yes" destfile="${install.dir}/install.tmp/fedora.war" includes="WEB-INF/web.xml"/>
     <!-- patch fedora.war by adding the database driver -->
-    <jar basedir="${install.dir}/install.tmp" update="yes" destfile="${install.dir}/install.tmp/fedora.war" includes="${DatabaseDriver}" />
+    <basename property="DatabaseDriverFile" file="${DatabaseDriver}" />
+    <jar basedir="${install.dir}/install.tmp" update="yes" destfile="${install.dir}/install.tmp/fedora.war" includes="WEB-INF/lib/${DatabaseDriverFile}" />
+    <jar basedir="${install.dir}/install.tmp" update="yes" destfile="${install.dir}/install.tmp/fedora.war" includes="WEB-INF/lib/${OracleDDLGenerator}" />
     <!-- deploy fedora.war in JBoss -->
     <move file="${install.dir}/install.tmp/fedora.war" tofile="${install.dir}/jboss/server/default/deploy/fedora.war"/>
     <move file="${install.dir}/install.tmp/fedora-users.xml" tofile="${install.dir}/fedora/server/config/fedora-users.xml"/>
