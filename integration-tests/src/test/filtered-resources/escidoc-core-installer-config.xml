@@ -85,7 +85,7 @@
 </com.izforge.izpack.panels.UserInputPanel>
 <com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.13">
 <userInput>
-<entry key="InspectorHandle" value="eSciDoc"/>
+<entry key="InspectorPassword" value="eSciDoc"/>
 <entry key="InspectorUsername" value="inspector"/>
 </userInput>
 </com.izforge.izpack.panels.UserInputPanel>

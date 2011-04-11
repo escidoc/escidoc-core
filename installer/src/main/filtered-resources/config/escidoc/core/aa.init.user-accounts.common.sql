@@ -33,7 +33,7 @@ INSERT INTO aa.user_account
     ${SqlTrue},
     'System Inspector User (Read Only Super User)',
     '${InspectorUsername}',
-    '${InspectorHandle}',
+    '${InspectorPassword}',
     'escidoc:exuser1',
     CURRENT_TIMESTAMP,
     'escidoc:exuser1',
@@ -49,7 +49,7 @@ INSERT INTO aa.user_login_data
      VALUES
     ('escidoc:exuser2LoginData', 
     'escidoc:exuser2',
-    '${InspectorHandle}', 
+    '${InspectorPassword}', 
     1999999999999);
 
     

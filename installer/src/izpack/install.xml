@@ -161,8 +161,6 @@
       <!-- Infrastructure inspector user -->
       <variable name="InspectorUsername" value="inspector" />
       <variable name="InspectorPassword" value="" />
-      <!-- variable name="InspectorEmail" value="" / -->
-      <variable name="InspectorHandle" value="" />
       <!-- Infrastructure depositor user -->
       <variable name="DepositorUsername" value="depositor" />
       <variable name="DepositorPassword" value="" />
