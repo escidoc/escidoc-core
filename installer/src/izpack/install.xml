@@ -319,11 +319,11 @@
         <panel classname="UserInputPanel" id="UserInputPanel.3" condition="databaseIsOracle" />
         <panel classname="UserInputPanel" id="UserInputPanel.4" condition="databaseIsPostgres" />
         <panel classname="UserInputPanel" id="UserInputPanel.5" condition="databaseIsOracle" />
-        <panel classname="UserInputPanel" id="UserInputPanel.6" />
-        <panel classname="UserInputPanel" id="UserInputPanel.7" condition="installEscidoc+databaseIsPostgres">
+        <panel classname="UserInputPanel" id="UserInputPanel.6" condition="installEscidoc+databaseIsPostgres">
           <validator classname="JDBCValidator" />
         </panel>
-        <panel classname="UserInputPanel" id="UserInputPanel.8" condition="installEscidoc+databaseIsOracle" />
+        <panel classname="UserInputPanel" id="UserInputPanel.7" condition="installEscidoc+databaseIsOracle" />
+        <panel classname="UserInputPanel" id="UserInputPanel.8" />
         <panel classname="UserInputPanel" id="UserInputPanel.9" />
         <panel classname="UserInputPanel" id="UserInputPanel.10" condition="installEscidoc+databaseIsOracle" />
         <panel classname="UserInputPanel" id="UserInputPanel.11" condition="fullDialog" />

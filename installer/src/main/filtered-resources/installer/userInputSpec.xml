@@ -124,34 +124,7 @@
         <field type="divider" align="bottom"/>
     </panel>
 
-    <panel order="6" id="eSciDoc database user">
-        <createForPack name="eSciDoc" />
-        <field type="title" txt="eSciDoc Database User" bold="true" size="1" />
-        <field type="divider" align="top"/>
-        <field type="staticText" align="left" txt="The datebase user specified here will be created by the installer and will be used at runtime for eSciDoc. This user should not have administrative privileges. Please take care not to re-use an existing user, as the installer will drop pre-existing users with the same name!" />
-        <field type="space"/>
-        <!-- Username -->
-        <field type="text" align="left" variable="DatabaseUsername">
-          <spec txt="Database Username:" size="25" set=""/>
-          <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Database username must not be empty string."/>
-        </field>
-        <field type="space"/>
-        <!-- Password -->
-        <field type="password" align="left" variable="DatabasePassword">
-          <spec>
-            <pwd txt="Database Password:" size="25" set=""/>
-            <pwd txt="Retype Password:" size="25" set=""/>
-          </spec>
-          <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Database password must not be empty string."/>
-          <validator class="com.izforge.izpack.util.PasswordEqualityValidator" txt="Both database passwords must match."/>
-        </field>
-        <!--field type="space"/>
-        <field type="staticText" align="left" txt="If the installer shall create the necessary databases for you, this user requires additional privileges (create and drop databases and roles). After a successful installation, you may revoke the additional privileges." /-->
-        <field type="space"/>
-        <field type="divider" align="bottom"/>
-    </panel>
-
-    <panel order="7" id="Postgres admin user">
+    <panel order="6" id="Postgres admin user">
         <createForPack name="Database Creation" />
         <field type="title" txt="User Credentials for Database and Role Creation" bold="true" size="1" />
         <field type="divider" align="top"/>
@@ -178,7 +151,7 @@
         <field type="divider" align="bottom"/>
     </panel>
 
-    <panel order="8" id="Oracle admin user">
+    <panel order="7" id="Oracle admin user">
         <createForPack name="Database Creation" />
         <field type="title" txt="User Credentials for Database and Role Creation" bold="true" size="1" />
         <field type="divider" align="top"/>
@@ -201,6 +174,33 @@
           <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Database admin password must not be an empty string."/>
           <validator class="com.izforge.izpack.util.PasswordEqualityValidator" txt="Both database admin passwords must match."/>
         </field>
+        <field type="space"/>
+        <field type="divider" align="bottom"/>
+    </panel>
+
+    <panel order="8" id="eSciDoc database user">
+        <createForPack name="eSciDoc" />
+        <field type="title" txt="eSciDoc Database User" bold="true" size="1" />
+        <field type="divider" align="top"/>
+        <field type="staticText" align="left" txt="The datebase user specified here will be created by the installer and will be used at runtime for eSciDoc. This user should not have administrative privileges. Please take care not to re-use an existing user, as the installer will drop pre-existing users with the same name!" />
+        <field type="space"/>
+        <!-- Username -->
+        <field type="text" align="left" variable="DatabaseUsername">
+          <spec txt="Database Username:" size="25" set=""/>
+          <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Database username must not be empty string."/>
+        </field>
+        <field type="space"/>
+        <!-- Password -->
+        <field type="password" align="left" variable="DatabasePassword">
+          <spec>
+            <pwd txt="Database Password:" size="25" set=""/>
+            <pwd txt="Retype Password:" size="25" set=""/>
+          </spec>
+          <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Database password must not be empty string."/>
+          <validator class="com.izforge.izpack.util.PasswordEqualityValidator" txt="Both database passwords must match."/>
+        </field>
+        <!--field type="space"/>
+        <field type="staticText" align="left" txt="If the installer shall create the necessary databases for you, this user requires additional privileges (create and drop databases and roles). After a successful installation, you may revoke the additional privileges." /-->
         <field type="space"/>
         <field type="divider" align="bottom"/>
     </panel>
