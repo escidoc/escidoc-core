@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
 
 <userInput>
-    <!-- install or upgrade eSciDoc -->
-    <panel order="0">
+
+    <panel order="0" id="Install or upgrade eSciDoc">
       <createForPack name="eSciDoc" />
       <field type="title" txt="Install / Upgrade" bold="true" size="1" />
       <field type="divider" align="top" />
@@ -16,9 +16,7 @@
       <field type="divider" align="bottom" />
     </panel>
 
-    <!-- Install -->
-    <panel order="1">
-      <!-- Hostname -->
+    <panel order="1" id="Select host name">
         <createForPack name="eSciDoc" />
         <field type="title" txt="Hostname" bold="true" size="1" />
         <field type="divider" align="top"/>
@@ -39,8 +37,7 @@
         <field type="divider" align="bottom"/ -->
     </panel>
 
-    <panel order="2">
-      <!-- Select RDBMS for eSciDoc and Fedora -->
+    <panel order="2" id="Select RDBMS for eSciDoc and Fedora">
         <createForPack name="eSciDoc" />
         <field type="title" txt="Select Relational Database Management System" bold="true" size="1" />
         <field type="divider" align="top"/>
@@ -55,7 +52,7 @@
         <field type="divider" align="bottom"/>
     </panel>
 
-    <panel order="3">
+    <panel order="3" id="Oracle JDBC driver">
         <field type="title" txt="Oracle Driver Selection" bold="true" size="1" />
         <field type="divider" align="top"/>
         <field type="space"/>
@@ -67,7 +64,7 @@
         <field type="divider" align="bottom"/>
     </panel>
 
-    <panel order="4">
+    <panel order="4" id="Postgres connection">
         <createForPack name="eSciDoc" />
         <field type="title" txt="PostgreSQL Database Connection" bold="true" size="1" />
         <field type="divider" align="top"/>
@@ -97,7 +94,7 @@
         <field type="divider" align="bottom"/>
     </panel>
 
-    <panel order="5">
+    <panel order="5" id="Oracle connection">
         <createForPack name="eSciDoc" />
         <field type="title" txt="Oracle Database Connection" bold="true" size="1" />
         <field type="divider" align="top"/>
@@ -127,7 +124,7 @@
         <field type="divider" align="bottom"/>
     </panel>
 
-    <panel order="6">
+    <panel order="6" id="eSciDoc database user">
         <createForPack name="eSciDoc" />
         <field type="title" txt="eSciDoc Database User" bold="true" size="1" />
         <field type="divider" align="top"/>
@@ -154,7 +151,7 @@
         <field type="divider" align="bottom"/>
     </panel>
 
-    <panel order="7">
+    <panel order="7" id="Postgres admin user">
         <createForPack name="Database Creation" />
         <field type="title" txt="User Credentials for Database and Role Creation" bold="true" size="1" />
         <field type="divider" align="top"/>
@@ -181,7 +178,7 @@
         <field type="divider" align="bottom"/>
     </panel>
 
-    <panel order="8">
+    <panel order="8" id="Oracle admin user">
         <createForPack name="Database Creation" />
         <field type="title" txt="User Credentials for Database and Role Creation" bold="true" size="1" />
         <field type="divider" align="top"/>
@@ -208,7 +205,7 @@
         <field type="divider" align="bottom"/>
     </panel>
 
-    <panel order="9">
+    <panel order="9" id="Fedora admin/database user">
         <createForPack name="eSciDoc" />
         <field type="title" txt="Fedora Adminstration User" bold="true" size="1" />
         <field type="divider" align="top"/>
@@ -241,7 +238,7 @@
         <field type="divider" align="bottom"/>
     </panel>
 
-    <panel order="10">
+    <panel order="10" id="riTriples database user">
         <createForPack name="eSciDoc" />
         <field type="title" txt="Triplestore Database User" bold="true" size="1" />
         <field type="divider" align="top"/>
@@ -266,8 +263,7 @@
         <field type="divider" align="bottom"/>
     </panel>
 
-    <panel order="11">
-      <!-- Select authentication method -->
+    <panel order="11" id="Select authentication method">
         <createForPack name="eSciDoc" />
         <field type="title" txt="Authentication Method" bold="true" size="1" />
         <field type="divider" align="top"/>
@@ -284,7 +280,7 @@
         <field type="divider" align="bottom"/>
     </panel>
 
-    <panel order="12">
+    <panel order="12" id="System administrator user">
         <createForPack name="Roles and Users Creation" />
         <field type="title" txt="User Credentials for System Administrator User" bold="true" size="1" />
         <field type="divider" align="top"/>
@@ -315,7 +311,7 @@
         <field type="divider" align="bottom"/>
     </panel>
 
-    <panel order="13">
+    <panel order="13" id="System inspector user">
         <createForPack name="Install Scripts" />
         <field type="title" txt="User Credentials for System Inspector User" bold="true" size="1" />
         <field type="divider" align="top"/>
@@ -346,7 +342,7 @@
         <field type="divider" align="bottom"/>
     </panel>
 
-    <panel order="14">
+    <panel order="14" id="Depositor user">
         <createForPack name="Roles and Users Creation" />
         <field type="title" txt="User Credentials for Depositor User" bold="true" size="1" />
         <field type="divider" align="top"/>
@@ -371,7 +367,7 @@
         <field type="divider" align="bottom"/>
     </panel>
 
-    <panel order="15">
+    <panel order="15" id="Database backup">
         <createForPack name="eSciDoc" />
         <field type="title" txt="Database Backup" bold="true" size="1" />
         <field type="divider" align="top"/>
@@ -379,7 +375,7 @@
         <field type="divider" align="bottom"/>
     </panel>
 
-    <panel order="16">
+    <panel order="16" id="Database migration">
         <createForPack name="eSciDoc" />
         <field type="title" txt="Database Migration" bold="true" size="1" />
         <field type="divider" align="top"/>
