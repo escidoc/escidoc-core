@@ -6,6 +6,10 @@
     <istrue value="${UpgradeEscidoc}"/>
   </condition>
 
+  <condition property="databaseIsOracle">
+    <istrue value="${DatabaseIsOracle}"/>
+  </condition>
+
   <target name="build" description="Installs JBoss with patches, Fedora, and escidoc-core">
     <echo level="info">Unpack and install eSciDoc Infrastructure</echo>
     <antcall target="jboss"/>
@@ -30,6 +34,11 @@
     <property name="escidoc.admin.zip" value="escidoc-core-admin-${EscidocVersion}.zip"/>
     <property name="digilib.server.war" value="DigilibServer.war"/>
     <property name="digilib.client.war" value="DigilibClient.war"/>
+    <antcall target="copy-oracle-jdbc-jar" />
+  </target>
+
+  <target name="copy-oracle-jdbc-jar" if="databaseIsOracle">
+    <copy file="$DatabaseDriver}" todir="${install.dir}/install.tmp/" />
   </target>
 
   <target name="jboss" depends="init" description="Installs JBoss Application Server">
