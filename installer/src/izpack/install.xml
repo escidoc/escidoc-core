@@ -143,6 +143,8 @@
       <variable name="DatabaseAdminPassword" value="" />
       <variable name="DatabaseUsername" value="escidoc" />
       <variable name="DatabasePassword" value="escidoc" />
+      <variable name="DatabaseDefaultTablespace" value="escidoc" />
+      <variable name="DatabaseTempTablespace" value="TEMP" />
       <variable name="DatabaseHost" value="localhost" />
       <!-- spring security -->
       <!-- default to form-based. For MySQL support, remove "form-based" from value (see line below) --> 
@@ -152,6 +154,8 @@
       <variable name="FedoraUsername" value="fedoraAdmin" />
       <variable name="FedoraPassword" value="fedoraAdmin" />
       <variable name="FedoraAdminMailAddress" value="" />
+      <variable name="FedoraDefaultTablespace" value="fedora" />
+      <variable name="FedoraTempTablespace" value="TEMP" />
       <!-- Identifier prefix -->
       <variable name="sid-prefix" value="escidoc" />
       <!-- Infrastructure administrator user -->
@@ -321,20 +325,22 @@
           <validator classname="JDBCValidator" />
         </panel>
         <panel classname="UserInputPanel" id="UserInputPanel.7" condition="installEscidoc+databaseIsOracle" />
-        <panel classname="UserInputPanel" id="UserInputPanel.8" />
-        <panel classname="UserInputPanel" id="UserInputPanel.9" />
-        <panel classname="UserInputPanel" id="UserInputPanel.10" condition="installEscidoc+databaseIsOracle" />
-        <panel classname="UserInputPanel" id="UserInputPanel.11" condition="fullDialog" />
+        <panel classname="UserInputPanel" id="UserInputPanel.8" condition="databaseIsPostgres" />
+        <panel classname="UserInputPanel" id="UserInputPanel.9" condition="databaseIsOracle" />
+        <panel classname="UserInputPanel" id="UserInputPanel.10" condition="databaseIsPostgres" />
+        <panel classname="UserInputPanel" id="UserInputPanel.11" condition="databaseIsOracle" />
+        <panel classname="UserInputPanel" id="UserInputPanel.12" condition="installEscidoc+databaseIsOracle" />
+        <panel classname="UserInputPanel" id="UserInputPanel.13" condition="fullDialog" />
         <panel classname="JDKPathPanel" id="CommonJDKPath" />
         <panel classname="TargetPanel" id="EscidocTarget" />
         <panel classname="TreePacksPanel" id="EscidocPacks" />
-        <panel classname="UserInputPanel" id="UserInputPanel.12" condition="installEscidoc+authMethodIsFormBased" />
-        <panel classname="UserInputPanel" id="UserInputPanel.13" condition="authMethodIsFormBased" />
         <panel classname="UserInputPanel" id="UserInputPanel.14" condition="installEscidoc+authMethodIsFormBased" />
+        <panel classname="UserInputPanel" id="UserInputPanel.15" condition="authMethodIsFormBased" />
+        <panel classname="UserInputPanel" id="UserInputPanel.16" condition="installEscidoc+authMethodIsFormBased" />
         <!-- panel classname="DataCheckPanel" id="Debug" / -->
         <panel classname="InstallPanel" id="EscidocInstall" />
-        <panel classname="UserInputPanel" id="UserInputPanel.15" condition="upgradeEscidoc" />
-        <panel classname="UserInputPanel" id="UserInputPanel.16" condition="upgradeEscidoc" />
+        <panel classname="UserInputPanel" id="UserInputPanel.17" condition="upgradeEscidoc" />
+        <panel classname="UserInputPanel" id="UserInputPanel.18" condition="upgradeEscidoc" />
         <panel classname="ProcessPanel" condition="runDatabaseMigration" />
         <panel classname="HTMLInfoPanel" id="info2" />
         <panel classname="FinishPanel" id="CommonFinish" />
