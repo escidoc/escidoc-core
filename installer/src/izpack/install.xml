@@ -120,16 +120,25 @@
       <variable name="DatabaseAdminUsernamePostgres" value="postgres" />
       <variable name="DatabaseDriverClassPostgres" value="org.postgresql.Driver" />
       <variable name="DatabasePortPostgres" value="5432" />
+      <variable name="SqlScriptDelimiterPostgres" value=";" />
+      <variable name="SqlScriptDelimiterTypePostgres" value="normal" />
+      <variable name="SqlScriptKeepFormatPostgres" value="false" />
 
       <!-- MySQL -->
       <variable name="DatabaseAdminUsernameMySQL" value="root" />
       <variable name="DatabaseDriverClassMySQL" value="com.mysql.jdbc.Driver" />
       <variable name="DatabasePortMySQL" value="3306" />
+      <variable name="SqlScriptDelimiterMySQL" value=";" />
+      <variable name="SqlScriptDelimiterTypeMySQL" value="normal" />
+      <variable name="SqlScriptKeepFormatMySQL" value="false" />
 
       <!-- Oracle -->
-      <variable name="DatabaseAdminUsernameOracle" value="system" />
+      <variable name="DatabaseAdminUsernameOracle" value="oraesci_adm" />
       <variable name="DatabaseDriverClassOracle" value="oracle.jdbc.driver.OracleDriver" />
       <variable name="DatabasePortOracle" value="1521" />
+      <variable name="SqlScriptDelimiterOracle" value="/" />
+      <variable name="SqlScriptDelimiterTypeOracle" value="row" />
+      <variable name="SqlScriptKeepFormatOracle" value="true" />
 
       <variable name="DatabaseAdminPassword" value="" />
       <variable name="DatabaseUsername" value="escidoc" />
@@ -163,7 +172,11 @@
       <!-- JBoss Configuration -->
       <variable name="java.io.tmpdir" value=" -Djava.io.tmpdir=/tmp" condition="izpack.macinstall" />
       <variable name="java.io.tmpdir" value="" condition="!izpack.macinstall" />
-      <!-- Database Configuration -->
+      <!-- JDBC jar (absolute path) -->
+      <variable name="DatabaseDriver" value="$INSTALL_PATH/install.tmp/postgresql-${jdbc.postgresql.version}.jar" condition="databaseIsPostgres" />
+      <variable name="DatabaseDriver" value="$INSTALL_PATH/install.tmp/${jdbc.driver.mysql}" condition="databaseIsMySQL" />
+      <variable name="DatabaseDriver" value="${jdbc.driver.oracle}" condition="databaseIsOracle" />
+      <!-- database driver class -->
       <variable name="DatabaseDriverClass" value="${DatabaseDriverClassPostgres}" condition="databaseIsPostgres" />
       <variable name="DatabaseDriverClass" value="${DatabaseDriverClassMySQL}" condition="databaseIsMySQL" />
       <variable name="DatabaseDriverClass" value="${DatabaseDriverClassOracle}" condition="databaseIsOracle" />
@@ -183,7 +196,7 @@
       <!-- PostgreSQL requires a root database to which one needs to connected to be able to create databaes and roles -->
       <variable name="RootDatabaseName" value="postgres" condition="databaseIsPostgres" />
       <variable name="RootDatabaseName" value="" condition="databaseIsMySQL" />
-      <variable name="RootDatabaseName" value="" condition="databaseIsOracle" />
+      <variable name="RootDatabaseName" value="XE" condition="databaseIsOracle" />
       <variable name="DatabaseAccessor" value="DirectPostgresDatabaseAccessor" condition="databaseIsPostgres" />
       <variable name="DatabaseAccessor" value="DirectMysqlDatabaseAccessor" condition="databaseIsMySQL" />
       <variable name="DatabaseAccessor" value="DirectOracleDatabaseAccessor" condition="databaseIsOracle" />
@@ -197,13 +210,13 @@
       <variable name="DatabaseScriptPrefix" value="oracle" condition="databaseIsOracle" />
       <variable name="DatasourceEscidoc" value="escidoc-core" condition="databaseIsPostgres" />
       <variable name="DatasourceEscidoc" value="" condition="databaseIsMySQL" />
-      <variable name="DatasourceEscidoc" value="" condition="databaseIsOracle" />
+      <variable name="DatasourceEscidoc" value="${RootDatabaseName}" condition="databaseIsOracle" />
       <variable name="DatasourceFedora" value="fedora3" condition="databaseIsPostgres" />
       <variable name="DatasourceFedora" value="" condition="databaseIsMySQL" />
-      <variable name="DatasourceFedora" value="" condition="databaseIsOracle" />
+      <variable name="DatasourceFedora" value="${RootDatabaseName}" condition="databaseIsOracle" />
       <variable name="DatasourceTriplestore" value="riTriples" condition="databaseIsPostgres" />
       <variable name="DatasourceTriplestore" value="" condition="databaseIsMySQL" />
-      <variable name="DatasourceTriplestore" value="" condition="databaseIsOracle" />
+      <variable name="DatasourceTriplestore" value="${RootDatabaseName}" condition="databaseIsOracle" />
       <variable name="HibernateDialect" value="PostgreSQLDialect" condition="databaseIsPostgres" />
       <variable name="HibernateDialect" value="MySQLDialect" condition="databaseIsMySQL" />
       <variable name="HibernateDialect" value="Oracle8iDialect" condition="databaseIsOracle" />
@@ -213,6 +226,20 @@
       <variable name="DDLGeneratorClass" value="org.nsdl.mptstore.impl.postgres.PostgresDDLGenerator" condition="databaseIsPostgres" />
       <variable name="DDLGeneratorClass" value="org.nsdl.mptstore.impl.mysql.MysqlDDLGenerator" condition="databaseIsMySQL" />
       <variable name="DDLGeneratorClass" value="org.nsdl.mptstore.impl.oracle.OracleDDLGenerator" condition="databaseIsOracle" />
+      <!-- format of SQL scripts -->
+      <variable name="SqlScriptDelimiter" value="${SqlScriptDelimiterPostgres}" condition="databaseIsPostgres" />
+      <variable name="SqlScriptDelimiter" value="${SqlScriptDelimiterMySQL}" condition="databaseIsMySQL" />
+      <variable name="SqlScriptDelimiter" value="${SqlScriptDelimiterOracle}" condition="databaseIsOracle" />
+      <variable name="SqlScriptDelimiterType" value="${SqlScriptDelimiterTypePostgres}" condition="databaseIsPostgres" />
+      <variable name="SqlScriptDelimiterType" value="${SqlScriptDelimiterTypeMySQL}" condition="databaseIsMySQL" />
+      <variable name="SqlScriptDelimiterType" value="${SqlScriptDelimiterTypeOracle}" condition="databaseIsOracle" />
+      <variable name="SqlScriptKeepFormat" value="${SqlScriptKeepFormatPostgres}" condition="databaseIsPostgres" />
+      <variable name="SqlScriptKeepFormat" value="${SqlScriptKeepFormatMySQL}" condition="databaseIsMySQL" />
+      <variable name="SqlScriptKeepFormat" value="${SqlScriptKeepFormatOracle}" condition="databaseIsOracle" />
+      <!-- Oracle doesn't know about a "boolean" datatype -->
+      <variable name="SqlTrue" value="true" condition="databaseIsPostgres" />
+      <variable name="SqlTrue" value="true" condition="databaseIsMySQL" />
+      <variable name="SqlTrue" value="1" condition="databaseIsOracle" />
       <!-- Authentication Configuration -->
       <variable name="FormBasedIn" value="&lt;!--" condition="!authMethodIsFormBased" />
       <variable name="FormBasedIn" value="" condition="authMethodIsFormBased" />
@@ -227,6 +254,7 @@
       <variable name="ShibbolethOut" value="-->" condition="!authMethodIsShibboleth" />
       <variable name="ShibbolethOut" value="" condition="authMethodIsShibboleth" />
       <variable name="UpgradeEscidoc" value="yes" condition="upgradeEscidoc" />
+      <variable name="DatabaseIsOracle" value="yes" condition="databaseIsOracle" />
     </dynamicvariables>
     
     <conditions>
@@ -264,18 +292,6 @@
         <name>Database</name>
         <value>Oracle</value>
       </condition>
-      <condition type="and" id="installPostgres">
-        <condition type="ref" refid="installEscidoc" />
-        <condition type="ref" refid="databaseIsPostgres" />
-      </condition>
-      <condition type="and" id="installMySQL">
-        <condition type="ref" refid="installEscidoc" />
-        <condition type="ref" refid="databaseIsMySQL" />
-      </condition>
-      <condition type="and" id="installOracle">
-        <condition type="ref" refid="installEscidoc" />
-        <condition type="ref" refid="databaseIsOracle" />
-      </condition>
       <condition type="variable" id="authMethodIsFormBased">
         <name>AuthenticationMethod</name>
         <value>form-based</value>
@@ -300,28 +316,27 @@
         <panel classname="UserInputPanel" id="UserInputPanel.0" condition="askForUpgrade" />
         <panel classname="UserInputPanel" id="UserInputPanel.1" />
         <panel classname="UserInputPanel" id="UserInputPanel.2" condition="installEscidoc" />
-        <panel classname="UserInputPanel" id="UserInputPanel.3" condition="databaseIsPostgres" />
-        <panel classname="UserInputPanel" id="UserInputPanel.4" condition="databaseIsMySQL" />
-        <panel classname="UserInputPanel" id="UserInputPanel.5" />
-        <panel classname="UserInputPanel" id="UserInputPanel.6" condition="installPostgres">
+        <panel classname="UserInputPanel" id="UserInputPanel.3" condition="databaseIsOracle" />
+        <panel classname="UserInputPanel" id="UserInputPanel.4" condition="databaseIsPostgres" />
+        <panel classname="UserInputPanel" id="UserInputPanel.5" condition="databaseIsOracle" />
+        <panel classname="UserInputPanel" id="UserInputPanel.6" />
+        <panel classname="UserInputPanel" id="UserInputPanel.7" condition="installEscidoc+databaseIsPostgres">
           <validator classname="JDBCValidator" />
         </panel>
-        <panel classname="UserInputPanel" id="UserInputPanel.7" condition="installOracle">
-          <validator classname="JDBCValidator" />
-        </panel>
-        <panel classname="UserInputPanel" id="UserInputPanel.8" />
-        <panel classname="UserInputPanel" id="UserInputPanel.9" condition="installOracle" />
-        <panel classname="UserInputPanel" id="UserInputPanel.10" condition="fullDialog" />
+        <panel classname="UserInputPanel" id="UserInputPanel.8" condition="installEscidoc+databaseIsOracle" />
+        <panel classname="UserInputPanel" id="UserInputPanel.9" />
+        <panel classname="UserInputPanel" id="UserInputPanel.10" condition="installEscidoc+databaseIsOracle" />
+        <panel classname="UserInputPanel" id="UserInputPanel.11" condition="fullDialog" />
         <panel classname="JDKPathPanel" id="CommonJDKPath" />
         <panel classname="TargetPanel" id="EscidocTarget" />
         <panel classname="TreePacksPanel" id="EscidocPacks" />
-        <panel classname="UserInputPanel" id="UserInputPanel.11" condition="authMethodIsFormBased+installEscidoc" />
-        <panel classname="UserInputPanel" id="UserInputPanel.12" condition="authMethodIsFormBased" />
-        <panel classname="UserInputPanel" id="UserInputPanel.13" condition="authMethodIsFormBased+installEscidoc" />
+        <panel classname="UserInputPanel" id="UserInputPanel.12" condition="installEscidoc+authMethodIsFormBased" />
+        <panel classname="UserInputPanel" id="UserInputPanel.13" condition="authMethodIsFormBased" />
+        <panel classname="UserInputPanel" id="UserInputPanel.14" condition="installEscidoc+authMethodIsFormBased" />
         <!-- panel classname="DataCheckPanel" id="Debug" / -->
         <panel classname="InstallPanel" id="EscidocInstall" />
-        <panel classname="UserInputPanel" id="UserInputPanel.14" condition="upgradeEscidoc" />
         <panel classname="UserInputPanel" id="UserInputPanel.15" condition="upgradeEscidoc" />
+        <panel classname="UserInputPanel" id="UserInputPanel.16" condition="upgradeEscidoc" />
         <panel classname="ProcessPanel" condition="runDatabaseMigration" />
         <panel classname="HTMLInfoPanel" id="info2" />
         <panel classname="FinishPanel" id="CommonFinish" />

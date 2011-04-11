@@ -56,7 +56,7 @@
     </antcall>
     <move file="${install.dir}/install.tmp/jboss-patch-${EscidocVersion}/server" todir="${install.dir}/jboss"/>
     <move file="${install.dir}/install.tmp/escidoc-core.custom.properties" tofile="${install.dir}/jboss/server/default/conf/escidoc-core.custom.properties"/>
-    <!-- copy file="${install.dir}/install.tmp/mysql-connector-java-5.1.7-bin.jar" tofile="${install.dir}/jboss/server/default/lib/mysql-connector-java-5.1.7-bin.jar" / -->
+    <copy file="${DatabaseDriver}" todir="${install.dir}/jboss/server/default/lib/" />
     <move file="${install.dir}/install.tmp/run.conf" tofile="${install.dir}/jboss/bin/run.conf"/>
     <move file="${install.dir}/install.tmp/run.bat" tofile="${install.dir}/jboss/bin/run.bat"/>
     <move file="${install.dir}/install.tmp/shutdown.bat" tofile="${install.dir}/jboss/bin/shutdown.bat"/>
@@ -74,11 +74,8 @@
     </antcall>
     <!-- patch fedora.war by replacing web.xml with customized version -->
     <jar basedir="${install.dir}/install.tmp" update="yes" destfile="${install.dir}/install.tmp/fedora.war" includes="WEB-INF/web.xml"/>
-    <!-- patch fedora.war by adding MySQL database driver -->
-    <!--jar basedir="${install.dir}/install.tmp" update="yes" destfile="${install.dir}/install.tmp/fedora.war" includes="WEB-INF/lib/mpt-mysql.jar" /-->
-    <!-- patch fedora.war by replacing RISearchServlet.class with patched version -->
-    <!-- RISearchServlet Patch -->
-    <!-- jar basedir="${install.dir}/install.tmp" update="yes" destfile="${install.dir}/install.tmp/fedora.war" includes="WEB-INF/classes/fedora/server/access/RISearchServlet.class" /-->
+    <!-- patch fedora.war by adding the database driver -->
+    <jar basedir="${install.dir}/install.tmp" update="yes" destfile="${install.dir}/install.tmp/fedora.war" includes="${DatabaseDriver}" />
     <!-- deploy fedora.war in JBoss -->
     <move file="${install.dir}/install.tmp/fedora.war" tofile="${install.dir}/jboss/server/default/deploy/fedora.war"/>
     <move file="${install.dir}/install.tmp/fedora-users.xml" tofile="${install.dir}/fedora/server/config/fedora-users.xml"/>
@@ -178,8 +175,7 @@
     <move file="${install.dir}/install.tmp/database-init.xml" todir="${install.dir}/core/bin"/>
     <move file="${install.dir}/install.tmp/aa.init.user-accounts.common.sql" todir="${install.dir}/core/sql"/>
     <move file="${install.dir}/install.tmp/aa.init.grants.common.sql" todir="${install.dir}/core/sql"/>
-    <move file="${install.dir}/install.tmp/postgresql-${jdbc.postgresql.version}.jar" todir="${install.dir}/core/lib"/>
-    <!-- move file="${install.dir}/install.tmp/mysql-connector-java-5.1.7-bin.jar" todir="${install.dir}/core/lib" / -->
+    <copy file="${DatabaseDriver}" todir="${install.dir}/core/lib"/>
     <!--delete dir="${install.dir}/install.tmp" /-->
   </target>
 

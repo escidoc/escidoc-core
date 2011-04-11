@@ -8,7 +8,7 @@ INSERT INTO aa.user_account
     (id, active, name, loginName, password, creator_id, creation_date, modified_by_id, last_modification_date)
     VALUES
     ('escidoc:exuser1',
-    true,
+    ${SqlTrue},
     'System Administrator User',
     '${AdminUsername}',
     '${AdminPassword}',
@@ -20,7 +20,7 @@ INSERT INTO aa.user_account
 INSERT INTO aa.user_attribute
     (id, user_id, name, value, internal)
      VALUES
-    ('escidoc:exuser1ouattribute', 'escidoc:exuser1', 'o', 'escidoc:ex3', 'TRUE');
+    ('escidoc:exuser1ouattribute', 'escidoc:exuser1', 'o', 'escidoc:ex3', '${SqlTrue}');
 
 
     /*
@@ -30,7 +30,7 @@ INSERT INTO aa.user_account
     (id, active, name, loginName, password, creator_id, creation_date, modified_by_id, last_modification_date)
     VALUES
     ('escidoc:exuser2',
-    true,
+    ${SqlTrue},
     'System Inspector User (Read Only Super User)',
     '${InspectorUsername}',
     '${InspectorHandle}',
@@ -42,7 +42,7 @@ INSERT INTO aa.user_account
 INSERT INTO aa.user_attribute
     (id, user_id, name, value, internal)
      VALUES
-    ('escidoc:exuser2ouattribute', 'escidoc:exuser2', 'o', 'escidoc:ex3', 'TRUE');
+    ('escidoc:exuser2ouattribute', 'escidoc:exuser2', 'o', 'escidoc:ex3', '${SqlTrue}');
     
 INSERT INTO aa.user_login_data
     (id, user_id, handle, expiryts)
@@ -60,7 +60,7 @@ INSERT INTO aa.user_account
     (id, active, name, loginName, password, creator_id, creation_date, modified_by_id, last_modification_date)
     VALUES
     ('escidoc:exuser4',
-    true,
+    ${SqlTrue},
     'Depositor User',
     '${DepositorUsername}',
     '${DepositorPassword}',
@@ -72,6 +72,6 @@ INSERT INTO aa.user_account
 INSERT INTO aa.user_attribute
     (id, user_id, name, value, internal)
      VALUES
-    ('escidoc:exuser4ouattribute', 'escidoc:exuser4','o', 'escidoc:ex3', 'TRUE');
+    ('escidoc:exuser4ouattribute', 'escidoc:exuser4','o', 'escidoc:ex3', '${SqlTrue}');
 
    	  
