@@ -34,6 +34,12 @@
 			<type>jar</type>
 		</dependency>
 		<dependency>
+			<groupId>org.escidoc</groupId>
+			<artifactId>fcrepo-installer</artifactId>
+			<version>${fcrepo.version}.oracle</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
 			<groupId>mptstore</groupId>
 			<artifactId>mptstore-oracle</artifactId>
 			<version>${mptstore.version}</version>

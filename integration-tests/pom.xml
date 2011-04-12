@@ -581,6 +581,12 @@
 		</dependency>
 		<dependency>
 			<groupId>org.escidoc</groupId>
+			<artifactId>fcrepo-installer</artifactId>
+			<version>${fcrepo.version}.oracle</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>org.escidoc</groupId>
 			<artifactId>escidoc-core</artifactId>
 			<version>trunk-SNAPSHOT</version>
 			<type>ear</type>
