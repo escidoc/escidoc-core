@@ -88,9 +88,9 @@
         </field>
         <field type="space"/>
         <!-- Default Database Name -->
-        <field type="text" align="left" variable="DefaultDatabaseName">
+        <field type="text" align="left" variable="RootDatabaseName">
           <description>During the installation of PostgreSQL, you have set a name for the root database. If you accepted the default value, you do not need to edit this field.</description>
-          <spec txt="Root Database Name:" size="25" set="${RootDatabaseName}"/>
+          <spec txt="Root Database Name:" size="25" set="${RootDatabaseNamePostgres}"/>
           <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Default database name must not be empty string."/>
         </field>
         <field type="space"/>
@@ -118,9 +118,9 @@
         </field>
         <field type="space"/>
         <!-- Default Database Name -->
-        <field type="text" align="left" variable="DefaultDatabaseName">
+        <field type="text" align="left" variable="RootDatabaseName">
           <description>During the installation of Oracle, you have set a name for the database (SID). If you accepted the default value, you do not need to edit this field.</description>
-          <spec txt="Database SID:" size="25" set="${RootDatabaseName}"/>
+          <spec txt="Database SID:" size="25" set="${RootDatabaseNameOracle}"/>
           <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Database name must not be empty string."/>
         </field>
         <field type="space"/>

@@ -123,6 +123,7 @@
       <variable name="SqlScriptDelimiterPostgres" value=";" />
       <variable name="SqlScriptDelimiterTypePostgres" value="normal" />
       <variable name="SqlScriptKeepFormatPostgres" value="false" />
+      <variable name="RootDatabaseNamePostgres" value="postgres" />
 
       <!-- MySQL -->
       <variable name="DatabaseAdminUsernameMySQL" value="root" />
@@ -140,6 +141,7 @@
       <variable name="SqlScriptDelimiterTypeOracle" value="row" />
       <variable name="SqlScriptKeepFormatOracle" value="true" />
       <variable name="OracleDDLGenerator" value="mptstore-oracle-0.9.4.jar" />
+      <variable name="RootDatabaseNameOracle" value="oraesci01" />
 
       <variable name="DatabaseAdminPassword" value="" />
       <variable name="DatabaseUsername" value="escidoc" />
@@ -188,7 +190,7 @@
       <variable name="DatabaseIdentifier" value="mysql" condition="databaseIsMySQL" />
       <variable name="DatabaseIdentifier" value="oracle" condition="databaseIsOracle" />
       <variable name="DatabaseURL" value="jdbc:${DatabaseIdentifier}://${DatabaseHost}:${DatabasePortPostgres}/" condition="databaseIsPostgres" />
-      <variable name="DatabaseURL" value="jdbc:${DatabaseIdentifier}://${DatabaseHost}:${DatabasePortMySQL}/" condition="databaseIsMySQL" />
+      <variable name="DatabaseURL" value="jdbc:${DatabaseIdentifier}:thin:@${DatabaseHost}:${DatabasePortOracle}:" condition="databaseIsOracle" />
       <variable name="DatabaseURL" value="jdbc:${DatabaseIdentifier}:thin:@//${DatabaseHost}:${DatabasePortOracle}/" condition="databaseIsOracle" />
       <variable name="DatabasePort" value="${DatabasePortPostgres}" condition="databaseIsPostgres" />
       <variable name="DatabasePort" value="${DatabasePortMySQL}" condition="databaseIsMySQL" />
@@ -197,9 +199,6 @@
       <variable name="DatabaseAdminUsername" value="${DatabaseAdminUsernameMySQL}" condition="databaseIsMySQL" />
       <variable name="DatabaseAdminUsername" value="${DatabaseAdminUsernameOracle}" condition="databaseIsOracle" />
       <!-- PostgreSQL requires a root database to which one needs to connected to be able to create databaes and roles -->
-      <variable name="RootDatabaseName" value="postgres" condition="databaseIsPostgres" />
-      <variable name="RootDatabaseName" value="" condition="databaseIsMySQL" />
-      <variable name="RootDatabaseName" value="XE" condition="databaseIsOracle" />
       <variable name="DatabaseAccessor" value="DirectPostgresDatabaseAccessor" condition="databaseIsPostgres" />
       <variable name="DatabaseAccessor" value="DirectMysqlDatabaseAccessor" condition="databaseIsMySQL" />
       <variable name="DatabaseAccessor" value="DirectOracleDatabaseAccessor" condition="databaseIsOracle" />
