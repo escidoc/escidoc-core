@@ -25,7 +25,7 @@
         <field type="staticText" align="left" txt="The hostname of the server you are about to install the eSciDoc Infrastructure onto. You may optionally append the domain name. Please make sure not to append a port." />
         <field type="staticText" align="left" txt="Alternativly, you may provide the IP address instead of hostname and domain name. Keeping the default value 'localhost' will prohibit access from remote hosts." />
         <field type="text" align="left" variable="Hostname">
-          <spec txt="Hostname:" size="25" set="${Hostname}"/>
+          <spec txt="Hostname:" size="25" set=""/>
           <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Hostname must not be empty string."/>
         </field>
         <field type="space"/>
@@ -73,17 +73,17 @@
         <field type="divider" align="top"/>
         <field type="space"/>
         <field type="text" align="left" variable="DatabaseHost">
-          <spec txt="JDBC Database Host:" size="25" set="${DatabaseHost}"/>
+          <spec txt="JDBC Database Host:" size="25" set=""/>
           <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Database host must not be empty string."/>
         </field>
         <field type="text" align="left" variable="DatabasePortPostgres">
-          <spec txt="JDBC Database Port:" size="25" set="${DatabasePortPostgres}"/>
+          <spec txt="JDBC Database Port:" size="25" set=""/>
           <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Database port must not be empty string."/>
         </field>
         <field type="space"/>
         <!-- Database Driver Class -->
         <field type="text" align="left" variable="DatabaseDriverClassPostgres">
-          <spec txt="JDBC Database Driver Class:" size="25" set="${DatabaseDriverClassPostgres}"/>
+          <spec txt="JDBC Database Driver Class:" size="25" set=""/>
           <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Database driver class must not be empty string."/>
         </field>
         <field type="space"/>
@@ -103,17 +103,17 @@
         <field type="divider" align="top"/>
         <field type="space"/>
         <field type="text" align="left" variable="DatabaseHost">
-          <spec txt="JDBC Database Host:" size="25" set="${DatabaseHost}"/>
+          <spec txt="JDBC Database Host:" size="25" set=""/>
           <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Database host must not be empty string."/>
         </field>
         <field type="text" align="left" variable="DatabasePortOracle">
-          <spec txt="JDBC Database Port:" size="25" set="${DatabasePortOracle}"/>
+          <spec txt="JDBC Database Port:" size="25" set=""/>
           <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Database port must not be empty string."/>
         </field>
         <field type="space"/>
         <!-- Database Driver Class -->
         <field type="text" align="left" variable="DatabaseDriverClassOracle">
-          <spec txt="JDBC Database Driver Class:" size="25" set="${DatabaseDriverClassOracle}" />
+          <spec txt="JDBC Database Driver Class:" size="25" set="" />
           <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Database driver class must not be empty string."/>
         </field>
         <field type="space"/>
@@ -137,15 +137,15 @@
         <field type="staticText" align="left" txt="Please provide the user creadentials of an appropriate database user with sufficient privileges. This user will not be stored in any configuration file and will not be used once the necessary databases and roles have been created." />
         <field type="space"/>
         <field type="text" align="left" variable="DatabaseAdminUsernamePostgres">
-          <spec txt="Database Admin Username:" size="25" set="${DatabaseAdminUsernamePostgres}" />
+          <spec txt="Database Admin Username:" size="25" set="" />
           <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Database admin username must not be an empty string."/>
         </field>
         <field type="space"/>
         <!-- Password -->
         <field type="password" align="left" variable="DatabaseAdminPassword">
           <spec>
-            <pwd txt="Database Admin Password:" size="25" set="${DatabaseAdminPassword}" />
-            <pwd txt="Retype Admin Password:" size="25" set="${DatabaseAdminPassword}" />
+            <pwd txt="Database Admin Password:" size="25" set="" />
+            <pwd txt="Retype Admin Password:" size="25" set="" />
           </spec>
           <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Database admin password must not be an empty string."/>
           <validator class="com.izforge.izpack.util.PasswordEqualityValidator" txt="Both database admin passwords must match."/>
@@ -164,15 +164,15 @@
         <field type="staticText" align="left" txt="Please provide the user creadentials of an appropriate database user with sufficient privileges. This user will not be stored in any configuration file and will not be used once the necessary databases and roles have been created." />
         <field type="space"/>
         <field type="text" align="left" variable="DatabaseAdminUsernameOracle">
-          <spec txt="Database Admin Username:" size="25" set="${DatabaseAdminUsernameOracle}" />
+          <spec txt="Database Admin Username:" size="25" set="" />
           <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Database admin username must not be an empty string."/>
         </field>
         <field type="space"/>
         <!-- Password -->
         <field type="password" align="left" variable="DatabaseAdminPassword">
           <spec>
-            <pwd txt="Database Admin Password:" size="25" set="${DatabaseAdminPassword}" />
-            <pwd txt="Retype Admin Password:" size="25" set="${DatabaseAdminPassword}" />
+            <pwd txt="Database Admin Password:" size="25" set="" />
+            <pwd txt="Retype Admin Password:" size="25" set="" />
           </spec>
           <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Database admin password must not be an empty string."/>
           <validator class="com.izforge.izpack.util.PasswordEqualityValidator" txt="Both database admin passwords must match."/>
@@ -253,7 +253,7 @@
         <field type="space"/>
         <!-- Username -->
         <field type="text" align="left" variable="FedoraUsername">
-          <spec txt="Fedora Username:" size="25" set="FedoraUsername"/>
+          <spec txt="Fedora Username:" size="25" set=""/>
           <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Fedora username must not be an empty string."/>
         </field>
         <field type="space"/>
@@ -286,7 +286,7 @@
         <field type="space"/>
         <!-- Username -->
         <field type="text" align="left" variable="FedoraUsername">
-          <spec txt="Fedora Username:" size="25" set="FedoraUsername"/>
+          <spec txt="Fedora Username:" size="25" set=""/>
           <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Fedora username must not be an empty string."/>
         </field>
         <field type="space"/>
@@ -329,18 +329,30 @@
         <field type="space"/>
         <!-- Username -->
         <field type="text" align="left" variable="TriplestoreUsername">
-          <spec txt="Database Username:" size="25" set="riTriples"/>
+          <spec txt="Database Username:" size="25" set=""/>
           <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Database username must not be an empty string."/>
         </field>
         <field type="space"/>
         <!-- Password -->
         <field type="password" align="left" variable="TriplestorePassword">
           <spec>
-            <pwd txt="Database Password:" size="25" set="riTriples"/>
-            <pwd txt="Database Password:" size="25" set="riTriples"/>
+            <pwd txt="Database Password:" size="25" set=""/>
+            <pwd txt="Database Password:" size="25" set=""/>
           </spec>
           <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Database password must not be an empty string."/>
           <validator class="com.izforge.izpack.util.PasswordEqualityValidator" txt="Both database passwords must match."/>
+        </field>
+        <field type="space"/>
+        <!-- Default tablespace -->
+        <field type="text" align="left" variable="TriplestoreDefaultTablespace">
+          <spec txt="Triplestore Default Tablespace:" size="25" set=""/>
+          <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Triplestore default tablespace must not be empty string."/>
+        </field>
+        <field type="space"/>
+        <!-- Temporary tablespace -->
+        <field type="text" align="left" variable="TriplestoreTempTablespace">
+          <spec txt="Triplestore Temporary Tablespace:" size="25" set=""/>
+          <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Triplestore temporary tablespace must not be empty string."/>
         </field>
         <field type="space"/>
         <field type="divider" align="bottom"/>
@@ -372,7 +384,7 @@
         <field type="staticText" align="left" txt="The System Administrator user has access to all resources in the eSciDoc Infrastructure. He can create other users and grant roles and privileges to them." />
         <field type="space"/>
         <field type="text" align="left" variable="AdminUsername">
-          <spec txt="System Administrator Username:" size="25" set="AdminUsername" />
+          <spec txt="System Administrator Username:" size="25" set="" />
           <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="System administrator username must not be an empty string."/>
         </field>
         <field type="space"/>
@@ -403,7 +415,7 @@
         <field type="staticText" align="left" txt="The System Inspector user is a read-only user, who may access all resources in the system. The System Inspector user is needed for infrastructure-internal purposes like indexing." />
         <field type="space"/>
         <field type="text" align="left" variable="InspectorUsername">
-          <spec txt="System Inspector Username:" size="25" set="InspectorUsername" />
+          <spec txt="System Inspector Username:" size="25" set="" />
           <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="System Inspector username must not be an empty string."/>
         </field>
         <field type="space"/>
@@ -434,7 +446,7 @@
         <field type="staticText" align="left" txt="The Depositor user is entitles to create new resources within the eSciDoc Infrastructure. This is the user for most of the day-to-day work." />
         <field type="space"/>
         <field type="text" align="left" variable="DepositorUsername">
-          <spec txt="Depositor Username:" size="25" set="DepositorUsername" />
+          <spec txt="Depositor Username:" size="25" set="" />
           <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Depositor username must not be an empty string."/>
         </field>
         <field type="space"/>

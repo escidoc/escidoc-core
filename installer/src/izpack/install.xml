@@ -159,6 +159,10 @@
       <variable name="FedoraAdminMailAddress" value="" />
       <variable name="FedoraDefaultTablespace" value="fedora" />
       <variable name="FedoraTempTablespace" value="TEMP" />
+      <variable name="TriplestoreUsername" value="riTriples" />
+      <variable name="TriplestorePassword" value="riTriples" />
+      <variable name="TriplestoreDefaultTablespace" value="triples" />
+      <variable name="TriplestoreTempTablespace" value="TEMP" />
       <!-- Identifier prefix -->
       <variable name="sid-prefix" value="escidoc" />
       <!-- Infrastructure administrator user -->
