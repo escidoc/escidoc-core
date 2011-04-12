@@ -1390,7 +1390,7 @@
 		</profile>
 
 		<profile>
-			<id>install-fedora-oracle</id>
+			<id>fedora-database-oracle</id>
 
 			<build>
 				<plugins>
