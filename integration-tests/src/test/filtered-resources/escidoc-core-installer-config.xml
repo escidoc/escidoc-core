@@ -48,16 +48,22 @@
 </userInput>
 </com.izforge.izpack.panels.UserInputPanel>
 <com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.9">
+<userInput/>
+</com.izforge.izpack.panels.UserInputPanel>
+<com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.10">
 <userInput>
 <entry key="FedoraPassword" value="fedoraAdmin"/>
 <entry key="FedoraUsername" value="fedoraAdmin"/>
 <entry key="FedoraAdminMailAddress" value="steffen.wagner@fiz-karlsruhe.de"/>
 </userInput>
 </com.izforge.izpack.panels.UserInputPanel>
-<com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.10">
+<com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.11">
 <userInput/>
 </com.izforge.izpack.panels.UserInputPanel>
-<com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.11">
+<com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.12">
+<userInput/>
+</com.izforge.izpack.panels.UserInputPanel>
+<com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.13">
 <userInput/>
 </com.izforge.izpack.panels.UserInputPanel>
 <com.izforge.izpack.panels.JDKPathPanel id="CommonJDKPath"/>
@@ -77,29 +83,29 @@
 <pack index="9" name="Database Initialization" selected="true"/>
 <pack index="10" name="Roles and Users Creation" selected="true"/>
 </com.izforge.izpack.panels.TreePacksPanel>
-<com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.12">
+<com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.14">
 <userInput>
 <entry key="AdminPassword" value="eSciDoc"/>
 <entry key="AdminUsername" value="sysadmin"/>
 </userInput>
 </com.izforge.izpack.panels.UserInputPanel>
-<com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.13">
+<com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.15">
 <userInput>
 <entry key="InspectorPassword" value="eSciDoc"/>
 <entry key="InspectorUsername" value="inspector"/>
 </userInput>
 </com.izforge.izpack.panels.UserInputPanel>
-<com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.14">
+<com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.16">
 <userInput>
 <entry key="DepositorPassword" value="eSciDoc"/>
 <entry key="DepositorUsername" value="depositor"/>
 </userInput>
 </com.izforge.izpack.panels.UserInputPanel>
 <com.izforge.izpack.panels.InstallPanel id="EscidocInstall"/>
-<com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.15">
+<com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.17">
 <userInput/>
 </com.izforge.izpack.panels.UserInputPanel>
-<com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.16">
+<com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.18">
 <userInput/>
 </com.izforge.izpack.panels.UserInputPanel>
 <com.izforge.izpack.panels.ProcessPanel id="UNKNOWN (com.izforge.izpack.panels.ProcessPanel)"/>
