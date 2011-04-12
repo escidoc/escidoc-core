@@ -510,7 +510,7 @@
 									<executable>java</executable>
 									<arguments>
 										<argument>-jar</argument>
-										<argument>${settings.localRepository}/org/escidoc/fcrepo-installer/${fcrepo.version}/fcrepo-installer-${fcrepo.version}.jar</argument>
+										<argument>${settings.localRepository}/org/escidoc/fcrepo-installer/${fcrepo.version}.oracle/fcrepo-installer-${fcrepo.version}.oracle.jar</argument>
 										<argument>${project.build.directory}/classes/fedora/oracle/install.properties</argument>
 									</arguments>
 									<outputFile>${project.build.directory}/fcrepo-install-error.log</outputFile>
