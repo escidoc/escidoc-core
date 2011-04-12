@@ -191,7 +191,6 @@
       <variable name="DatabaseIdentifier" value="oracle" condition="databaseIsOracle" />
       <variable name="DatabaseURL" value="jdbc:${DatabaseIdentifier}://${DatabaseHost}:${DatabasePortPostgres}/" condition="databaseIsPostgres" />
       <variable name="DatabaseURL" value="jdbc:${DatabaseIdentifier}:thin:@${DatabaseHost}:${DatabasePortOracle}:" condition="databaseIsOracle" />
-      <variable name="DatabaseURL" value="jdbc:${DatabaseIdentifier}:thin:@//${DatabaseHost}:${DatabasePortOracle}/" condition="databaseIsOracle" />
       <variable name="DatabasePort" value="${DatabasePortPostgres}" condition="databaseIsPostgres" />
       <variable name="DatabasePort" value="${DatabasePortMySQL}" condition="databaseIsMySQL" />
       <variable name="DatabasePort" value="${DatabasePortOracle}" condition="databaseIsOracle" />
