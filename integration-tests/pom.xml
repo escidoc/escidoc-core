@@ -568,13 +568,6 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.escidoc</groupId>
-			<artifactId>testdata</artifactId>
-			<version>0.0.2-alpha1</version>
-			<type>war</type>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.escidoc</groupId>
 			<artifactId>escidoc-core</artifactId>
 			<version>trunk-SNAPSHOT</version>
 			<type>ear</type>
