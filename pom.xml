@@ -781,6 +781,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <escidoc-core.version>trunk-SNAPSHOT</escidoc-core.version>
+    <escidoc.installer.config>escidoc-core-installer-config.xml</escidoc.installer.config>
 
     <escidoc.at>@</escidoc.at>
     <escidoc.url>http://localhost:8080</escidoc.url>
