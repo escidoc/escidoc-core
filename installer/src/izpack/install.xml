@@ -159,8 +159,9 @@
       <variable name="FedoraAdminMailAddress" value="" />
       <variable name="FedoraDefaultTablespace" value="fedora" />
       <variable name="FedoraTempTablespace" value="TEMP" />
-      <variable name="TriplestoreUsername" value="riTriples" />
-      <variable name="TriplestorePassword" value="riTriples" />
+      <!-- triplestore database user -->
+      <variable name="TriplestoreUsernameOracle" value="riTriples" />
+      <variable name="TriplestorePasswordOracle" value="riTriples" />
       <variable name="TriplestoreDefaultTablespace" value="triples" />
       <variable name="TriplestoreTempTablespace" value="TEMP" />
       <!-- Identifier prefix -->
@@ -225,8 +226,12 @@
       <variable name="HibernateDialect" value="PostgreSQLDialect" condition="databaseIsPostgres" />
       <variable name="HibernateDialect" value="MySQLDialect" condition="databaseIsMySQL" />
       <variable name="HibernateDialect" value="Oracle8iDialect" condition="databaseIsOracle" />
-      <variable name="TriplestoreUsername" value="fedoraAdmin" condition="databaseIsPostgres" />
-      <variable name="TriplestorePassword" value="fedoraAdmin" condition="databaseIsPostgres" />
+      <variable name="TriplestoreUsername" value="${FedoraUsername}" condition="databaseIsPostgres" />
+      <variable name="TriplestorePassword" value="${FedoraPassword}" condition="databaseIsPostgres" />
+      <variable name="TriplestoreUsername" value="${FedoraUsername}" condition="databaseIsMySQL" />
+      <variable name="TriplestorePassword" value="${FedoraPassword}" condition="databaseIsMySQL" />
+      <variable name="TriplestoreUsername" value="${TriplestoreUsernameOracle}" condition="databaseIsOracle" />
+      <variable name="TriplestorePassword" value="${TriplestorePasswordOracle}" condition="databaseIsOracle" />
       <!-- DDLGenerator for MPTStore -->
       <variable name="DDLGeneratorClass" value="org.nsdl.mptstore.impl.postgres.PostgresDDLGenerator" condition="databaseIsPostgres" />
       <variable name="DDLGeneratorClass" value="org.nsdl.mptstore.impl.mysql.MysqlDDLGenerator" condition="databaseIsMySQL" />

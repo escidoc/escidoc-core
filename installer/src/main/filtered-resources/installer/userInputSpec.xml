@@ -328,13 +328,13 @@
         <field type="staticText" align="left" txt="The database user specified here will be created by the installer and will be used at runtime to access the riTriples database. Please take care not to re-use an existing user, as the installer will drop pre-existing users with the same name!" />
         <field type="space"/>
         <!-- Username -->
-        <field type="text" align="left" variable="TriplestoreUsername">
+        <field type="text" align="left" variable="TriplestoreUsernameOracle">
           <spec txt="Database Username:" size="25" set=""/>
           <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Database username must not be an empty string."/>
         </field>
         <field type="space"/>
         <!-- Password -->
-        <field type="password" align="left" variable="TriplestorePassword">
+        <field type="password" align="left" variable="TriplestorePasswordOracle">
           <spec>
             <pwd txt="Database Password:" size="25" set=""/>
             <pwd txt="Database Password:" size="25" set=""/>
