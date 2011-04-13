@@ -394,7 +394,7 @@
 						<executions>
 							<execution>
 								<id>copy-fedora-install-config</id>
-								<phase>validate</phase>
+								<phase>clean</phase>
 								<goals>
 									<goal>copy-resources</goal>
 								</goals>
