@@ -64,7 +64,7 @@
 
 		<!-- creates necessary system policies -->
 		<echo level="info">Creating necessary system policies</echo>
-		<antcall target="execute-sqls">
+		<antcall target="execute-special-sqls">
 			<param name="script" value="${script.prefix}/aa/aa.init.policy.*.sql" />
 		</antcall>
 
@@ -128,4 +128,22 @@
                 </sql>
 	</target>
 
+	<target name="execute-special-sqls" description="Processes an SQL script with alternative command delimiter">
+		<echo level="info">Executing script(s) ${sql.dir}/${script}</echo>
+		<sql classpathref="database.classpath" 
+		     driver="${jdbc.driver.class}" 
+		     url="${escidoc.jdbc.url}" 
+		     userid="${escidoc.database.user}" 
+		     password="${escidoc.database.password}" 
+        	 delimiter="${SqlScriptDelimiter}"
+        	 delimitertype="${SqlScriptDelimiterType}"
+        	 keepformat="${SqlScriptKeepFormat}"
+		     ${DatabaseAutocommit}>
+                        <path>
+                                <fileset dir="${sql.dir}">
+                                        <include name="${script}"/>
+                                </fileset>
+                        </path>
+                </sql>
+	</target>
 </project>
