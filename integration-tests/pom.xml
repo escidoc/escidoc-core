@@ -114,7 +114,7 @@
 								<argument>-Dskip.validation=true</argument>
 								<argument>-jar</argument>
 								<argument>${basedir}/../installer/target/installer-${project.version}-standard.jar</argument>
-								<argument>${project.build.directory}/escidoc-core-installer-config.xml</argument>
+								<argument>${project.build.directory}/${escidoc.installer.config}</argument>
 							</arguments>
 							<outputFile>${project.build.directory}/escidoc-installer.log</outputFile>
 						</configuration>
