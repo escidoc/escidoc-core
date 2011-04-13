@@ -939,26 +939,6 @@
 								</configuration>
 							</execution>
 							<execution>
-								<id>copy-resources</id>
-								<phase>initialize</phase>
-								<goals>
-									<goal>copy-resources</goal>
-								</goals>
-								<configuration>
-									<outputDirectory>${basedir}/target/sql-resources</outputDirectory>
-									<resources>
-										<resource>
-											<directory>${basedir}/../common/src/main/resources/sql</directory>
-											<filtering>true</filtering>
-										</resource>
-										<resource>
-											<directory>${basedir}/src/test/filtered-resources/sql-resources</directory>
-											<filtering>true</filtering>
-										</resource>
-									</resources>
-								</configuration>
-							</execution>
-							<execution>
 								<id>copy-foxml-resources</id>
 								<phase>process-sources</phase>
 								<goals>
@@ -996,33 +976,6 @@
 											<filtering>true</filtering>
 										</resource>
 									</resources>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-dependency-plugin</artifactId>
-						<version>2.2</version>
-						<executions>
-							<execution>
-								<id>copy-oracle-driver</id>
-								<phase>process-sources</phase>
-								<goals>
-									<goal>copy</goal>
-								</goals>
-								<configuration>
-									<artifactItems>
-										<artifactItem>
-											<groupId>restricted</groupId>
-											<artifactId>ojdbc</artifactId>
-											<version>${jdbc.oracle.version}</version>
-											<type>jar</type>
-											<overWrite>false</overWrite>
-											<outputDirectory>${project.build.directory}/escidoc/jboss/server/default/lib</outputDirectory>
-											<destFileName>ojdbc-14.jar</destFileName>
-										</artifactItem>
-									</artifactItems>
 								</configuration>
 							</execution>
 						</executions>
@@ -1072,201 +1025,8 @@
 								</configuration>
 							</execution>
 							<execution>
-								<id>create-escidoc-db-oracle</id>
-								<phase>initialize</phase>
-								<goals>
-									<goal>execute</goal>
-								</goals>
-								<configuration>
-									<driver>oracle.jdbc.driver.OracleDriver</driver>
-									<url>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${escidoc.oracle.database}</url>
-									<username>${escidoc.oracle.database.admin.user}</username>
-									<password>${escidoc.oracle.database.admin.password}</password>
-									<autocommit>true</autocommit>
-									<delimiter>;</delimiter>
-									<delimiterType>normal</delimiterType>
-									<keepFormat>false</keepFormat>
-									<srcFiles>
-										<srcFile>${basedir}/target/sql-resources/oracle/create-db.sql
-										</srcFile>
-									</srcFiles>
-								</configuration>
-							</execution>
-							<execution>
-								<id>create-schemas</id>
-								<phase>initialize</phase>
-								<goals>
-									<goal>execute</goal>
-								</goals>
-								<configuration>
-									<driver>oracle.jdbc.driver.OracleDriver</driver>
-									<url>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${escidoc.oracle.database}</url>
-									<username>${escidoc.database.user}</username>
-									<password>${escidoc.database.password}</password>
-									<autocommit>true</autocommit>
-									<delimiter>;</delimiter>
-									<delimiterType>normal</delimiterType>
-									<keepFormat>false</keepFormat>
-									<srcFiles>
-										<!-- the initialize phase allows no filtering. Furthermore is creating 
-											database part of the test phase. That's why here should only be these tables 
-											are generated where hibernate depends on. -->
-										<srcFile>${basedir}/target/sql-resources/oracle/aa/aa.create.sql
-										</srcFile>
-										<srcFile>${basedir}/target/sql-resources/oracle/adm/adm.create.sql
-										</srcFile>
-										<srcFile>${basedir}/target/sql-resources/oracle/oai/oai.create.sql
-										</srcFile>
-										<srcFile>${basedir}/target/sql-resources/oracle/om/om.create.sql
-										</srcFile>
-										<srcFile>${basedir}/target/sql-resources/oracle/sm/sm.create.sql
-										</srcFile>
-										<srcFile>${basedir}/target/sql-resources/oracle/st/st.create.sql
-										</srcFile>
-									</srcFiles>
-								</configuration>
-							</execution>
-							<execution>
-								<!-- the initialize phase allows no filtering. Furthermore is creating 
-									database part of the test phase. That's why here should only be these tables 
-									are generated where hibernate depends on. -->
-								<id>insert-accounts-into-db</id>
-								<phase>initialize</phase>
-								<goals>
-									<goal>execute</goal>
-								</goals>
-								<configuration>
-									<driver>oracle.jdbc.driver.OracleDriver</driver>
-									<url>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${escidoc.oracle.database}</url>
-									<username>${escidoc.database.user}</username>
-									<password>${escidoc.database.password}</password>
-									<autocommit>true</autocommit>
-									<delimiter>;</delimiter>
-									<delimiterType>normal</delimiterType>
-									<keepFormat>false</keepFormat>
-									<srcFiles>
-										<srcFile>${basedir}/target/sql-resources/oracle/aa/aa.init.user-accounts.common.sql
-										</srcFile>
-										<srcFile>${basedir}/target/sql-resources/oracle/aa/aa.init.user-accounts.MPDL.sql
-										</srcFile>
-									</srcFiles>
-								</configuration>
-							</execution>
-							<execution>
-								<!-- the initialize phase allows no filtering. Furthermore is creating 
-									database part of the test phase. That's why here should only be these tables 
-									are generated where hibernate depends on. -->
-								<id>init-handles-into-db</id>
-								<phase>initialize</phase>
-								<goals>
-									<goal>execute</goal>
-								</goals>
-								<configuration>
-									<driver>oracle.jdbc.driver.OracleDriver</driver>
-									<url>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${escidoc.oracle.database}</url>
-									<username>${escidoc.database.user}</username>
-									<password>${escidoc.database.password}</password>
-									<autocommit>true</autocommit>
-									<delimiter>;</delimiter>
-									<delimiterType>normal</delimiterType>
-									<keepFormat>false</keepFormat>
-									<fileset>
-										<basedir>${basedir}/target/sql-resources/oracle</basedir>
-										<includes>
-											<include>aa/aa.init.handles.*.sql
-											</include>
-										</includes>
-									</fileset>
-								</configuration>
-							</execution>
-							<execution>
-								<!-- the initialize phase allows no filtering. Furthermore is creating 
-									database part of the test phase. That's why here should only be these tables 
-									are generated where hibernate depends on. -->
-								<id>insert-roles-into-db</id>
-								<phase>initialize</phase>
-								<goals>
-									<goal>execute</goal>
-								</goals>
-								<configuration>
-									<driver>oracle.jdbc.driver.OracleDriver</driver>
-									<url>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${escidoc.oracle.database}</url>
-									<username>${escidoc.database.user}</username>
-									<password>${escidoc.database.password}</password>
-									<autocommit>true</autocommit>
-									<delimiter>;</delimiter>
-									<delimiterType>normal</delimiterType>
-									<keepFormat>false</keepFormat>
-									<fileset>
-										<basedir>${basedir}/target/sql-resources/oracle/</basedir>
-										<includes>
-											<include>aa/aa.init.roles.*.sql
-											</include>
-										</includes>
-									</fileset>
-								</configuration>
-							</execution>
-							<execution>
-								<!-- the initialize phase allows no filtering. Furthermore is creating 
-									database part of the test phase. That's why here should only be these tables 
-									are generated where hibernate depends on. -->
-								<id>insert-policies-into-db</id>
-								<phase>initialize</phase>
-								<goals>
-									<goal>execute</goal>
-								</goals>
-								<configuration>
-									<driver>oracle.jdbc.driver.OracleDriver</driver>
-									<url>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${escidoc.oracle.database}</url>
-									<username>${escidoc.database.user}</username>
-									<password>${escidoc.database.password}</password>
-									<autocommit>true</autocommit>
-									<delimiter>/</delimiter>
-									<delimiterType>row</delimiterType>
-									<keepFormat>true</keepFormat>
-									<fileset>
-										<basedir>${basedir}/target/sql-resources/oracle/</basedir>
-										<includes>
-											<include>aa/aa.init.policy.*.sql
-											</include>
-										</includes>
-									</fileset>
-								</configuration>
-							</execution>
-							<execution>
-								<!-- the initialize phase allows no filtering. Furthermore is creating 
-									database part of the test phase. That's why here should only be these tables 
-									are generated where hibernate depends on. -->
-								<id>insert-into-db</id>
-								<phase>initialize</phase>
-								<goals>
-									<goal>execute</goal>
-								</goals>
-								<configuration>
-									<driver>oracle.jdbc.driver.OracleDriver</driver>
-									<url>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${escidoc.oracle.database}</url>
-									<username>${escidoc.database.user}</username>
-									<password>${escidoc.database.password}</password>
-									<autocommit>true</autocommit>
-									<delimiter>;</delimiter>
-									<delimiterType>normal</delimiterType>
-									<keepFormat>false</keepFormat>
-									<fileset>
-										<basedir>${basedir}/target/sql-resources/oracle/</basedir>
-										<includes>
-											<include>aa/aa.init.grants.*.sql
-											</include>
-											<include>aa/aa.init.actions.sql
-											</include>
-											<include>aa/aa.init.method-mappings.*.sql
-											</include>
-										</includes>
-									</fileset>
-								</configuration>
-							</execution>
-							<execution>
 								<id>insert-test-user</id>
-								<phase>initialize</phase>
+								<phase>process-sources</phase>
 								<goals>
 									<goal>execute</goal>
 								</goals>
@@ -1404,7 +1164,7 @@
 							</execution>
 							<execution>
 								<id>deploy-fedora-config-orcale</id>
-								<phase>generate-resources</phase>
+								<phase>process-sources</phase>
 								<goals>
 									<goal>copy-resources</goal>
 								</goals>
@@ -1469,27 +1229,6 @@
 								</configuration>
 							</execution>
 
-							<execution>
-								<id>create-fedora-oracle-db</id>
-								<phase>initialize</phase>
-								<goals>
-									<goal>execute</goal>
-								</goals>
-								<configuration>
-									<driver>oracle.jdbc.driver.OracleDriver</driver>
-									<url>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${fedora.oracle.database}</url>
-									<username>${fedora.oracle.database.admin.user}</username>
-									<password>${fedora.oracle.database.admin.password}</password>
-									<autocommit>true</autocommit>
-          							<delimiter>;</delimiter>
-          							<delimiterType>normal</delimiterType>
-          							<keepFormat>false</keepFormat>
-									<srcFiles>
-										<srcFile>${basedir}/target/sql-resources/oracle/create-fedora-db.sql
-										</srcFile>
-									</srcFiles>
-								</configuration>
-							</execution>
 						</executions>
 					</plugin>
 
