@@ -345,14 +345,14 @@
         <field type="space"/>
         <!-- Default tablespace -->
         <field type="text" align="left" variable="TriplestoreDefaultTablespace">
-          <spec txt="Triplestore Default Tablespace:" size="25" set=""/>
-          <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Triplestore default tablespace must not be empty string."/>
+          <spec txt="Database Default Tablespace:" size="25" set=""/>
+          <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Database default tablespace must not be empty string."/>
         </field>
         <field type="space"/>
         <!-- Temporary tablespace -->
         <field type="text" align="left" variable="TriplestoreTempTablespace">
-          <spec txt="Triplestore Temporary Tablespace:" size="25" set=""/>
-          <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Triplestore temporary tablespace must not be empty string."/>
+          <spec txt="Database Temporary Tablespace:" size="25" set=""/>
+          <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Database temporary tablespace must not be empty string."/>
         </field>
         <field type="space"/>
         <field type="divider" align="bottom"/>
