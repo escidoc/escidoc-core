@@ -89,6 +89,8 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
 
     private static final String XPATH_ADMIN_DESCRIPTORS = "/context/admin-descriptors/admin-descriptor";
 
+    private ContextFoXmlRendererInterface foxmlRenderer;
+
     /**
      * Create new Context.
      *
@@ -230,8 +232,6 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
 
         return contextId;
     }
-
-    private ContextFoXmlRendererInterface foxmlRenderer;
 
     /**
      * The method builds foxml for fedora object, which will represent a Context.
