@@ -22,8 +22,9 @@
 		<ant-nodeps.version>1.8.1</ant-nodeps.version>
 		<ant-launcher.version>1.8.2</ant-launcher.version>
 		<jboss.version>4.2.3.GA</jboss.version>
-		<admin-tool.version>1.1-SNAPSHOT</admin-tool.version>
 		<mptstore.version>0.9.4</mptstore.version>
+		<admin-tool.version>1.1-SNAPSHOT</admin-tool.version>
+		<migration-tool.version>trunk-SNAPSHOT</migration-tool.version>
 	</properties>
 
 	<dependencies>
@@ -70,6 +71,12 @@
 			<version>${admin-tool.version}</version>
 			<type>war</type>
 		</dependency>
+                <dependency>
+                        <groupId>org.escidoc.core</groupId>
+                        <artifactId>migration-tool</artifactId>
+                        <version>${migration-tool.version}</version>
+                        <type>zip</type>
+                </dependency>
 	</dependencies>
 
 	<build>
@@ -144,6 +151,7 @@
 									<overWrite>false</overWrite>
 									<outputDirectory>${staging.dir}/lib</outputDirectory>
 								</artifactItem>
+
 								<artifactItem>
 									<groupId>org.apache.ant</groupId>
 									<artifactId>ant-nodeps</artifactId>
@@ -185,6 +193,15 @@
 									<version>${mptstore.version}</version>
 									<overWrite>false</overWrite>
 									<outputDirectory>${staging.dir}/lib</outputDirectory>
+								</artifactItem>
+
+								<artifactItem>
+									<groupId>org.escidoc.core</groupId>
+									<artifactId>migration-tool</artifactId>
+									<type>zip</type>
+									<version>${migration-tool.version}</version>
+									<overWrite>false</overWrite>
+									<outputDirectory>${staging.dir}/packages/migration-tool</outputDirectory>
 								</artifactItem>
 							</artifactItems>
 							<!-- other configurations here -->
