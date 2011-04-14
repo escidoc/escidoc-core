@@ -169,9 +169,12 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
     </bean>
     <bean id="common.XmlValidationInterceptor" class="de.escidoc.core.common.util.aop.XmlValidationInterceptor"
           factory-method="aspectOf" lazy-init="false"></bean>
-    <bean id="business.LockHandler" class="de.escidoc.core.common.business.LockHandler">
+    <bean id="business.LockHandler" class="de.escidoc.core.common.business.LockHandler" init-method="init">
         <property name="myDataSource">
             <ref bean="escidoc-core.DataSource"/>
+        </property>
+        <property name="sessionFactory">
+            <ref bean="common.SessionFactory"/>
         </property>
     </bean>
     <bean id="escidoc-core.txProxyTemplate"

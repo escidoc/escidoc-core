@@ -20,8 +20,18 @@
 
 package de.escidoc.core.common.business;
 
-import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
+
+import javax.sql.DataSource;
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
+
+import org.hibernate.SessionFactory;
+import org.hibernate.impl.SessionFactoryImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.BeanFactory;
@@ -31,14 +41,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
-import javax.sql.DataSource;
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
-import java.sql.Timestamp;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.TimeZone;
+import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 
 /**
  * @author Frank Schwichtenberg
@@ -49,28 +53,53 @@ public class LockHandler extends JdbcDaoSupport {
 
     private static final boolean LOCKED_VALUE = true;
 
+    private SessionFactory sessionFactory = null;
+
+    private String lockedValue = null;
+
+    /**
+     * Initialize and get the database dependent locked value.
+     */
+    public void init() {
+        lockedValue = ((SessionFactoryImpl) sessionFactory).getDialect().toBooleanValueString(LOCKED_VALUE);
+    }
+
     /**
      * Wrapper of setDataSource to enable bean stuff generation for this handler.
-     *
-     * @param myDataSource The {@link DataSource} to wrap.
+     * 
+     * @param myDataSource
+     *            The {@link DataSource} to wrap.
      */
     public void setMyDataSource(final DataSource myDataSource) {
         setDataSource(myDataSource);
     }
 
     /**
+     * Wrapper of setSessionFactory to enable bean stuff generation for this handler.
+     * 
+     * @param sessionFactory
+     *            The sessionFactory to set.
+     */
+    public final void setSessionFactory(final SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
+    /**
      * Lock an object and forbid further modifications.
-     *
-     * @param objid     The id of the object to lock.
-     * @param lockOwner The id of the lock owner.
-     * @throws SqlDatabaseSystemException Thrown if an error occurs accessing the database.
+     * 
+     * @param objid
+     *            The id of the object to lock.
+     * @param lockOwner
+     *            The id of the lock owner.
+     * @throws SqlDatabaseSystemException
+     *             Thrown if an error occurs accessing the database.
      */
     public void lock(final String objid, final String[] lockOwner) throws SqlDatabaseSystemException {
 
         try {
             getJdbcTemplate().execute(
                 "INSERT INTO om.lockstatus (objid, owner, ownertitle, locked) " + "VALUES ('" + objid + "','"
-                    + lockOwner[0] + "','" + lockOwner[1] + "', " + LOCKED_VALUE + ')');
+                    + lockOwner[0] + "','" + lockOwner[1] + "', " + lockedValue + ')');
         }
         catch (final DataAccessException e) {
             throw new SqlDatabaseSystemException(e);
@@ -82,9 +111,11 @@ public class LockHandler extends JdbcDaoSupport {
 
     /**
      * Unlock an object and permit further modifications.
-     *
-     * @param objid The id of the object to unlock.
-     * @throws SqlDatabaseSystemException Thrown if an error occurs accessing the database.
+     * 
+     * @param objid
+     *            The id of the object to unlock.
+     * @throws SqlDatabaseSystemException
+     *             Thrown if an error occurs accessing the database.
      */
     public void unlock(final String objid) throws SqlDatabaseSystemException {
 
@@ -101,10 +132,12 @@ public class LockHandler extends JdbcDaoSupport {
 
     /**
      * Get the lock owner of a locked object.
-     *
-     * @param objid The id of the object to unlock.
+     * 
+     * @param objid
+     *            The id of the object to unlock.
      * @return The lock owner.
-     * @throws WebserverSystemException Thrown in case of an internal error.
+     * @throws WebserverSystemException
+     *             Thrown in case of an internal error.
      */
     public String getLockOwner(final String objid) throws WebserverSystemException {
 
@@ -136,10 +169,12 @@ public class LockHandler extends JdbcDaoSupport {
 
     /**
      * Gets the title for the lock owner of the specified object.
-     *
-     * @param objid The internal id of the object.
+     * 
+     * @param objid
+     *            The internal id of the object.
      * @return Returns the title of the lock owner.
-     * @throws WebserverSystemException Thrown in case of an internal error.
+     * @throws WebserverSystemException
+     *             Thrown in case of an internal error.
      */
     public String getLockOwnerTitle(final String objid) throws WebserverSystemException {
         // TODO: use other query method to avoid exception in case of unlocked.
@@ -166,10 +201,12 @@ public class LockHandler extends JdbcDaoSupport {
 
     /**
      * Get the lock owner of a locked object.
-     *
-     * @param objid The id of the object to unlock.
+     * 
+     * @param objid
+     *            The id of the object to unlock.
      * @return The lock owner.
-     * @throws WebserverSystemException Thrown in case of an internal error.
+     * @throws WebserverSystemException
+     *             Thrown in case of an internal error.
      */
     public String getLockDate(final String objid) throws WebserverSystemException {
         final String result;
@@ -206,10 +243,12 @@ public class LockHandler extends JdbcDaoSupport {
 
     /**
      * Get the lock status of an object.
-     *
-     * @param objid The id of the object.
+     * 
+     * @param objid
+     *            The id of the object.
      * @return The lock status. Returns true if object is locked, false otherwise.
-     * @throws WebserverSystemException Thrown in case of an internal error.
+     * @throws WebserverSystemException
+     *             Thrown in case of an internal error.
      */
     public boolean isLocked(final String objid) throws WebserverSystemException {
 
@@ -234,7 +273,7 @@ public class LockHandler extends JdbcDaoSupport {
 
     /**
      * Returns a LockHandler instance.
-     *
+     * 
      * @return The LockHandler instance.
      */
     public static LockHandler getInstance() {
