@@ -30,6 +30,8 @@ package de.escidoc.core.test.om.context;
 
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.common.compare.TripleStoreValue;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -119,6 +121,10 @@ public class UpdateOrganizationalUnitsTest extends ContextTestBase {
         node = selectSingleNode(newContextDoc, xpath);
 
         assertNull("OU not removed from Context", node);
+
+        // assert data structure in FoXML (indirect via triple store)
+        TripleStoreValue tsv = new TripleStoreValue(getTransport());
+        tsv.contextTripleStoreValues(newContextDoc);
     }
 
     /**
@@ -136,7 +142,6 @@ public class UpdateOrganizationalUnitsTest extends ContextTestBase {
         Node node = selectSingleNode(context, "/context/properties/organizational-units/organizational-unit");
 
         String attrId = null;
-        // String debug = toString(node, false);
         if (getTransport() == Constants.TRANSPORT_REST) {
             Node hrefNode = selectSingleNode(node, "@href");
             attrId = hrefNode.getNodeValue();
@@ -194,6 +199,10 @@ public class UpdateOrganizationalUnitsTest extends ContextTestBase {
         node = selectSingleNode(newContextDoc, xpath);
 
         assertNotNull("OU not added to Context", node);
+
+        // assert data structure in FoXML (indirect via triple store)
+        TripleStoreValue tsv = new TripleStoreValue(getTransport());
+        tsv.contextTripleStoreValues(newContextDoc);
     }
 
     /**

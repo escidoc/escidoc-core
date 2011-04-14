@@ -62,7 +62,7 @@ import java.util.TreeMap;
 
 /**
  * Context.
- *
+ * 
  * @author Steffen Wagner
  */
 public class Context extends GenericResource implements ContextInterface {
@@ -84,9 +84,11 @@ public class Context extends GenericResource implements ContextInterface {
     /**
      * Instantiates the Context with the specified id. The datastreams are instantiated and retrieved if the related
      * getter is called.
-     *
-     * @param id The id of an context managed in Fedora.
-     * @throws ContextNotFoundException Thrown if Context with id could not be found.
+     * 
+     * @param id
+     *            The id of an context managed in Fedora.
+     * @throws ContextNotFoundException
+     *             Thrown if Context with id could not be found.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
@@ -103,10 +105,12 @@ public class Context extends GenericResource implements ContextInterface {
 
     /**
      * Get Resources datastream.
-     *
+     * 
      * @return Datastream of resources.
-     * @throws StreamNotFoundException If datastream not exists.
-     * @throws FedoraSystemException   If datastream is not accessible.
+     * @throws StreamNotFoundException
+     *             If datastream not exists.
+     * @throws FedoraSystemException
+     *             If datastream is not accessible.
      */
     public Datastream getResources() throws StreamNotFoundException, FedoraSystemException {
         // if properties is unset, instantiate the Datastream
@@ -118,9 +122,11 @@ public class Context extends GenericResource implements ContextInterface {
 
     /**
      * Set Resource datastream.
-     *
-     * @param ds new resource datastream.
-     * @throws StreamNotFoundException If resource datastream could not be found.
+     * 
+     * @param ds
+     *            new resource datastream.
+     * @throws StreamNotFoundException
+     *             If resource datastream could not be found.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
      */
@@ -145,9 +151,7 @@ public class Context extends GenericResource implements ContextInterface {
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * de.escidoc.core.om.business.fedora.resources.interfaces.ContextInterface
-     * #getProperties()
+     * @see de.escidoc.core.om.business.fedora.resources.interfaces.ContextInterface #getProperties()
      */
     @Override
     public Datastream getProperties() throws StreamNotFoundException, FedoraSystemException {
@@ -161,11 +165,8 @@ public class Context extends GenericResource implements ContextInterface {
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * de.escidoc.core.om.business.fedora.resources.interfaces.ContextInterface
-     * #
-     * setProperties(de.escidoc.core.common.business.fedora.datastream.Datastream
-     * )
+     * @see de.escidoc.core.om.business.fedora.resources.interfaces.ContextInterface #
+     * setProperties(de.escidoc.core.common.business.fedora.datastream.Datastream )
      */
     @Override
     public void setProperties(final Datastream ds) throws StreamNotFoundException, FedoraSystemException,
@@ -248,7 +249,13 @@ public class Context extends GenericResource implements ContextInterface {
                 ouElement.setLocalName(Elements.ELEMENT_ORGANIZATIONAL_UNIT);
                 ouElement.setPrefix(Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
                 ouElement.setNamespace(Constants.STRUCTURAL_RELATIONS_NS_URI);
-                ouElement.setElementText(ou);
+
+                final Attribute resource =
+                    new Attribute("resource", Constants.RDF_NAMESPACE_URI, Constants.RDF_NAMESPACE_PREFIX,
+                        "info:fedora/" + ou);
+
+                ouElement.addAttribute(resource);
+                ouElement.setChildrenElements(null);
 
                 elementsToAdd.add(ouElement);
             }
@@ -271,7 +278,7 @@ public class Context extends GenericResource implements ContextInterface {
 
     /**
      * Get href of context.
-     *
+     * 
      * @return href.
      */
     @Override
@@ -282,9 +289,7 @@ public class Context extends GenericResource implements ContextInterface {
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * de.escidoc.core.om.business.fedora.resources.interfaces.ContextInterface
-     * #getRelsExt()
+     * @see de.escidoc.core.om.business.fedora.resources.interfaces.ContextInterface #getRelsExt()
      */
     public Datastream getDc() throws StreamNotFoundException, FedoraSystemException {
         if (this.dc == null) {
@@ -296,8 +301,7 @@ public class Context extends GenericResource implements ContextInterface {
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * de.escidoc.core.om.business.fedora.resources.interfaces.ContextInterface
+     * @see de.escidoc.core.om.business.fedora.resources.interfaces.ContextInterface
      * #setRelsExt(de.escidoc.core.common.business.fedora.datastream.Datastream)
      */
     public void setDc(final Datastream ds) throws StreamNotFoundException, FedoraSystemException,
@@ -320,9 +324,7 @@ public class Context extends GenericResource implements ContextInterface {
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * de.escidoc.core.om.business.fedora.resources.interfaces.FedoraResource
-     * #getAdminDescriptors()
+     * @see de.escidoc.core.om.business.fedora.resources.interfaces.FedoraResource #getAdminDescriptors()
      */
     @Override
     public Map<String, Datastream> getAdminDescriptors() throws IntegritySystemException, FedoraSystemException {
@@ -357,8 +359,7 @@ public class Context extends GenericResource implements ContextInterface {
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * de.escidoc.core.om.business.fedora.resources.interfaces.ContextInterface
+     * @see de.escidoc.core.om.business.fedora.resources.interfaces.ContextInterface
      * #getAdminDescriptor(java.lang.String)
      */
     @Override
@@ -378,10 +379,8 @@ public class Context extends GenericResource implements ContextInterface {
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * de.escidoc.core.om.business.fedora.resources.interfaces.ContextInterface
-     * #setAdminDescriptor(de.escidoc.core.common.business.fedora.datastream.
-     * Datastream)
+     * @see de.escidoc.core.om.business.fedora.resources.interfaces.ContextInterface
+     * #setAdminDescriptor(de.escidoc.core.common.business.fedora.datastream. Datastream)
      */
     @Override
     public void setAdminDescriptor(final Datastream ds) throws FedoraSystemException, WebserverSystemException {
@@ -395,9 +394,10 @@ public class Context extends GenericResource implements ContextInterface {
     /**
      * Get a map of all admin-decriptors of the Context. The map consists of datastream name and the admin-descriptor
      * datastream itself.
-     *
+     * 
      * @return Map of admin-descriptors.
-     * @throws FedoraSystemException Thrown if retrieve of datastreams fail.
+     * @throws FedoraSystemException
+     *             Thrown if retrieve of datastreams fail.
      */
     public Map<String, Datastream> getAdminDescriptorsMap() throws FedoraSystemException {
 
@@ -423,8 +423,9 @@ public class Context extends GenericResource implements ContextInterface {
 
     /**
      * Add an AdminDescriptor to Context.
-     *
-     * @param adm Admin Descriptor Datastream
+     * 
+     * @param adm
+     *            Admin Descriptor Datastream
      */
     public void addAdminDescriptor(final Datastream adm) {
 
@@ -434,10 +435,13 @@ public class Context extends GenericResource implements ContextInterface {
 
     /**
      * Delete an AdminDescriptor from Context.
-     *
-     * @param admDescName The name/id of the AdminDescriptor (must be unique within Context).
-     * @throws FedoraSystemException    Thrown if Fedora reports an error.
-     * @throws WebserverSystemException Thrown if an internal error occurs.
+     * 
+     * @param admDescName
+     *            The name/id of the AdminDescriptor (must be unique within Context).
+     * @throws FedoraSystemException
+     *             Thrown if Fedora reports an error.
+     * @throws WebserverSystemException
+     *             Thrown if an internal error occurs.
      */
     public void deleteAdminDescriptor(final String admDescName) throws FedoraSystemException, WebserverSystemException {
 
@@ -446,7 +450,7 @@ public class Context extends GenericResource implements ContextInterface {
 
     /**
      * Get id of modifier.
-     *
+     * 
      * @return modified-by id
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
@@ -457,10 +461,12 @@ public class Context extends GenericResource implements ContextInterface {
 
     /**
      * Get object id of organizational units of context.
-     *
+     * 
      * @return Vector with organizational units object ids
-     * @throws TripleStoreSystemException Thrown if TripleStore request fails.
-     * @throws WebserverSystemException   If anything fails.
+     * @throws TripleStoreSystemException
+     *             Thrown if TripleStore request fails.
+     * @throws WebserverSystemException
+     *             If anything fails.
      */
     public List<String> getOrganizationalUnitObjids() throws TripleStoreSystemException, WebserverSystemException {
         return TripleStoreUtility.getInstance().getPropertiesElementsVector(getId(),
@@ -469,7 +475,7 @@ public class Context extends GenericResource implements ContextInterface {
 
     /**
      * Get hrefs of organizational units of context.
-     *
+     * 
      * @return Vector with hrefs of organizational units.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
@@ -488,8 +494,9 @@ public class Context extends GenericResource implements ContextInterface {
 
     /**
      * Check if resource with object id exists and has type of Context.
-     *
-     * @throws ContextNotFoundException Thrown if no Context exists with this object id.
+     * 
+     * @throws ContextNotFoundException
+     *             Thrown if no Context exists with this object id.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
@@ -508,9 +515,10 @@ public class Context extends GenericResource implements ContextInterface {
     /**
      * Expand a list with names of properties values with the propertiesNames for a versionated resource. These list
      * could be used to request the TripleStore.
-     *
-     * @param propertiesNames Collection of propertiesNames. The collection contains only the version resource specific
-     *                        propertiesNames.
+     * 
+     * @param propertiesNames
+     *            Collection of propertiesNames. The collection contains only the version resource specific
+     *            propertiesNames.
      * @return Parameter name collection
      */
     private static Collection<String> expandPropertiesNames(final Collection<String> propertiesNames) {
@@ -526,11 +534,11 @@ public class Context extends GenericResource implements ContextInterface {
 
     /**
      * Expanding the properties naming map.
-     *
-     * @param propertiesMapping The properties name mapping from external as key and the internal name as value. E.g.
-     *                          with the key "version-status" and "LATEST_VERSION_STATUS" as value is the value of
-     *                          "version-status" after the mapping accessible with the internal key
-     *                          "LATEST_VERSION_STATUS".
+     * 
+     * @param propertiesMapping
+     *            The properties name mapping from external as key and the internal name as value. E.g. with the key
+     *            "version-status" and "LATEST_VERSION_STATUS" as value is the value of "version-status" after the
+     *            mapping accessible with the internal key "LATEST_VERSION_STATUS".
      * @return The key mapping.
      */
     private static Map<String, String> expandPropertiesNamesMapping(final Map<String, String> propertiesMapping) {
