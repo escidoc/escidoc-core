@@ -31,7 +31,7 @@
     <property name="escidoc.core.zip" value="escidoc-core-${EscidocVersion}-bin.zip"/>
     <property name="escidoc.examples.zip" value="escidoc-examples-${EscidocVersion}.zip"/>
     <property name="escidoc.sources.zip" value="escidoc-core-${EscidocVersion}-src.zip"/>
-    <property name="escidoc.admin.zip" value="escidoc-core-admin-${EscidocVersion}.zip"/>
+    <property name="escidoc.admin.zip" value="migration-tool-${EscidocVersion}.zip"/>
     <property name="digilib.server.war" value="DigilibServer.war"/>
     <property name="digilib.client.war" value="DigilibClient.war"/>
     <antcall target="copy-oracle-jdbc-jar" />

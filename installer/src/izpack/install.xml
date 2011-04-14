@@ -325,25 +325,25 @@
         <panel classname="HTMLInfoPanel" id="info" />
         <panel classname="UserInputPanel" id="UserInputPanel.0" condition="askForUpgrade" />
         <panel classname="UserInputPanel" id="UserInputPanel.1" />
-        <panel classname="UserInputPanel" id="UserInputPanel.2" condition="installEscidoc" />
+        <panel classname="UserInputPanel" id="UserInputPanel.2" />
         <panel classname="UserInputPanel" id="UserInputPanel.3" condition="databaseIsOracle" />
         <panel classname="UserInputPanel" id="UserInputPanel.4" condition="databaseIsPostgres" />
         <panel classname="UserInputPanel" id="UserInputPanel.5" condition="databaseIsOracle" />
-        <panel classname="UserInputPanel" id="UserInputPanel.6" condition="installEscidoc+databaseIsPostgres">
+        <panel classname="UserInputPanel" id="UserInputPanel.6" condition="databaseIsPostgres">
           <validator classname="JDBCValidator" />
         </panel>
-        <panel classname="UserInputPanel" id="UserInputPanel.7" condition="installEscidoc+databaseIsOracle" />
+        <panel classname="UserInputPanel" id="UserInputPanel.7" condition="databaseIsOracle" />
         <panel classname="UserInputPanel" id="UserInputPanel.8" condition="databaseIsPostgres" />
         <panel classname="UserInputPanel" id="UserInputPanel.9" condition="databaseIsOracle" />
         <panel classname="UserInputPanel" id="UserInputPanel.10" condition="databaseIsPostgres" />
         <panel classname="UserInputPanel" id="UserInputPanel.11" condition="databaseIsOracle" />
-        <panel classname="UserInputPanel" id="UserInputPanel.12" condition="installEscidoc+databaseIsOracle" />
+        <panel classname="UserInputPanel" id="UserInputPanel.12" condition="databaseIsOracle" />
         <panel classname="UserInputPanel" id="UserInputPanel.13" condition="fullDialog" />
         <panel classname="JDKPathPanel" id="CommonJDKPath" />
         <panel classname="TargetPanel" id="EscidocTarget" />
         <panel classname="TreePacksPanel" id="EscidocPacks" />
         <panel classname="UserInputPanel" id="UserInputPanel.14" condition="installEscidoc+authMethodIsFormBased" />
-        <panel classname="UserInputPanel" id="UserInputPanel.15" condition="authMethodIsFormBased" />
+        <panel classname="UserInputPanel" id="UserInputPanel.15" condition="installEscidoc+authMethodIsFormBased" />
         <panel classname="UserInputPanel" id="UserInputPanel.16" condition="installEscidoc+authMethodIsFormBased" />
         <!-- panel classname="DataCheckPanel" id="Debug" / -->
         <panel classname="InstallPanel" id="EscidocInstall" />
@@ -446,12 +446,10 @@
             <file src="packages/admin-tool/AdminTool-${admin-tool.version}.war" targetdir="$INSTALL_PATH/tools" />
         </pack>
 
-<!--
         <pack name="Migration Tool" parent="Additional Services and Tools" required="yes" condition="upgradeEscidoc">
             <description>Migration Tool for the eSciDoc Infrastructure</description>
-            <file src="@{tools.packages.dir}/escidoc-core-admin-${EscidocVersion}.zip" targetdir="$INSTALL_PATH/tools" />
+            <file src="packages/migration-tool/migration-tool-${EscidocVersion}.zip" targetdir="$INSTALL_PATH/tools" />
         </pack>
--->
 
         <!--pack name="Documentation" required="no">
           <description>eSciDoc Infrastructure Docomentation</description>
