@@ -94,7 +94,7 @@ public class PWCallback implements CallbackHandler {
      */
     public static String getHandle() {
 
-        return (handle);
+        return handle;
     }
 
     /**
