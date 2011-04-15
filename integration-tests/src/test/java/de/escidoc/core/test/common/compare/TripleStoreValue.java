@@ -307,7 +307,7 @@ public class TripleStoreValue {
                         .getTextContent();
             }
 
-            compareValuesWithTripleStore(EscidocRestSoapTestBase.getObjidValue(Constants.TRANSPORT_REST, xmlContext),
+            compareValuesWithTripleStore(EscidocRestSoapTestBase.getObjidValue(getTransport(), xmlContext),
                 "<info:fedora/" + ouId + ">", "/RDF/Description/organizational-unit",
                 "<http://escidoc.de/core/01/structural-relations/organizational-unit>");
         }
