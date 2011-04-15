@@ -52,7 +52,7 @@
 				<executions>
 					<execution>
 						<id>deploy-testdata</id>
-						<phase>process-sources</phase>
+						<phase>initialize</phase>
 						<goals>
 							<goal>copy</goal>
 						</goals>
@@ -66,6 +66,16 @@
 									<overWrite>false</overWrite>
 									<outputDirectory>${project.build.directory}/escidoc/jboss/server/default/deploy</outputDirectory>
 									<destFileName>testdata.war</destFileName>
+								</artifactItem>
+								<artifactItem>
+									<groupId>org.escidoc.core</groupId>
+									<artifactId>installer</artifactId>
+									<version>${project.version}</version>
+									<classifier>standard</classifier>
+									<type>jar</type>
+									<overWrite>false</overWrite>
+									<outputDirectory>${project.build.directory}</outputDirectory>
+									<destFileName>escidoc-installer-standard.jar</destFileName>
 								</artifactItem>
 							</artifactItems>
 						</configuration>
@@ -113,7 +123,7 @@
 							<arguments>
 								<argument>-Dskip.validation=true</argument>
 								<argument>-jar</argument>
-								<argument>${basedir}/../installer/target/installer-${project.version}-standard.jar</argument>
+								<argument>${project.build.directory}/escidoc-installer-standard.jar</argument>
 								<argument>${project.build.directory}/${escidoc.installer.config}</argument>
 							</arguments>
 							<outputFile>${project.build.directory}/escidoc-installer.log</outputFile>
