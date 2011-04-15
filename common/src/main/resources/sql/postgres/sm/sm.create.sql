@@ -149,11 +149,11 @@ INSERT INTO sm.aggregation_definitions (id, scope_id, name, creator_id, creation
 
 INSERT INTO sm.aggregation_tables (id, aggregation_definition_id, name, list_index) 
     VALUES 
-    ('escidoc:aggdef1table1', 'escidoc:aggdef1', 'escidocaggdef1_request_statistics', 1);
+    ('escidoc:aggdef1table1', 'escidoc:aggdef1', 'escidocaggdef1_request_stats', 1);
 
 INSERT INTO sm.aggregation_tables (id, aggregation_definition_id, name, list_index) 
     VALUES 
-    ('escidoc:aggdef1table2', 'escidoc:aggdef1', 'escidocaggdef1_object_statistics', 2);
+    ('escidoc:aggdef1table2', 'escidoc:aggdef1', 'escidocaggdef1_object_stats', 2);
 
 INSERT INTO sm.aggregation_table_indexes (id, aggregation_table_id, name, list_index) 
     VALUES 
@@ -351,7 +351,7 @@ INSERT INTO sm.agg_stat_data_selectors (
   ('escidoc:aggdef1selector', 'escidoc:aggdef1', 'statistic-table', '//parameter[@name="successful"]/*=''1'' 
             AND //parameter[@name="internal"]/*=''0''', 1);
 
-CREATE TABLE sm.escidocaggdef1_request_statistics ( 
+CREATE TABLE sm.escidocaggdef1_request_stats ( 
   handler TEXT NOT NULL,
   request TEXT NOT NULL,
   interface TEXT NOT NULL,
@@ -361,7 +361,7 @@ CREATE TABLE sm.escidocaggdef1_request_statistics (
   requests NUMERIC NOT NULL
 );
 
-CREATE TABLE sm.escidocaggdef1_object_statistics ( 
+CREATE TABLE sm.escidocaggdef1_object_stats ( 
   handler TEXT NOT NULL,
   request TEXT NOT NULL,
   object_id TEXT NOT NULL,
@@ -373,13 +373,13 @@ CREATE TABLE sm.escidocaggdef1_object_statistics (
 );
 
 CREATE INDEX escidocaggdef1_time1_idx
-ON sm.escidocaggdef1_request_statistics (day, month, year);
+ON sm.escidocaggdef1_request_stats (day, month, year);
 
 CREATE INDEX escidocaggdef1_time2_idx
-ON sm.escidocaggdef1_request_statistics (month, year);
+ON sm.escidocaggdef1_request_stats (month, year);
 
 CREATE INDEX escidocaggdef1_time3_idx
-ON sm.escidocaggdef1_object_statistics (month, year);
+ON sm.escidocaggdef1_object_stats (month, year);
 
 INSERT INTO sm.aggregation_definitions (id, scope_id, name, creator_id, creation_date) 
     VALUES 
@@ -387,7 +387,7 @@ INSERT INTO sm.aggregation_definitions (id, scope_id, name, creator_id, creation
 
 INSERT INTO sm.aggregation_tables (id, aggregation_definition_id, name, list_index) 
     VALUES 
-    ('escidoc:aggdef2table1', 'escidoc:aggdef2', 'escidocaggdef2_error_statistics', 1);
+    ('escidoc:aggdef2table1', 'escidoc:aggdef2', 'escidocaggdef2_error_stats', 1);
 
 INSERT INTO sm.aggregation_table_indexes (id, aggregation_table_id, name, list_index) 
     VALUES 
@@ -503,7 +503,7 @@ INSERT INTO sm.agg_stat_data_selectors (
   VALUES
   ('escidoc:aggdef2selector', 'escidoc:aggdef2', 'statistic-table', '//parameter[@name="successful"]/*=''0''', 1);
 
-CREATE TABLE sm.escidocaggdef2_error_statistics ( 
+CREATE TABLE sm.escidocaggdef2_error_stats ( 
   handler TEXT NOT NULL,
   request TEXT NOT NULL,
   interface TEXT NOT NULL,
@@ -515,17 +515,17 @@ CREATE TABLE sm.escidocaggdef2_error_statistics (
 );
 
 CREATE INDEX escidocaggdef2_time1_idx
-ON sm.escidocaggdef2_error_statistics (day, month, year);
+ON sm.escidocaggdef2_error_stats (day, month, year);
 
 CREATE INDEX escidocaggdef2_time2_idx
-ON sm.escidocaggdef2_error_statistics (month, year);
+ON sm.escidocaggdef2_error_stats (month, year);
 
 INSERT INTO sm.report_definitions ( 
   id, scope_id, name, sql, creator_id, creation_date, modified_by_id, last_modification_date)
   VALUES
   ('escidoc:repdef1', 'escidoc:scope1', 'Successful Framework Requests', 
   'select handler, request, day, month, year, sum(requests) 
-    from escidocaggdef1_request_statistics 
+    from escidocaggdef1_request_stats 
     group by handler, request, day, month, year;', '${escidoc.creator.user}', CURRENT_TIMESTAMP, '${escidoc.creator.user}', CURRENT_TIMESTAMP);
 
 INSERT INTO sm.report_definition_roles ( 
@@ -539,7 +539,7 @@ INSERT INTO sm.report_definitions (
   id, scope_id, name, sql, creator_id, creation_date, modified_by_id, last_modification_date)
   VALUES
   ('escidoc:repdef2', 'escidoc:scope1', 'Unsuccessful Framework Requests', 
-  'select * from escidocaggdef2_error_statistics;', '${escidoc.creator.user}', CURRENT_TIMESTAMP, '${escidoc.creator.user}', CURRENT_TIMESTAMP);
+  'select * from escidocaggdef2_error_stats;', '${escidoc.creator.user}', CURRENT_TIMESTAMP, '${escidoc.creator.user}', CURRENT_TIMESTAMP);
 
 INSERT INTO sm.report_definition_roles ( 
   id,
@@ -552,7 +552,7 @@ INSERT INTO sm.report_definitions (
   id, scope_id, name, sql, creator_id, creation_date, modified_by_id, last_modification_date)
   VALUES
   ('escidoc:repdef3', 'escidoc:scope1', 'Successful Framework Requests by Month and Year', 
-  'select * from escidocaggdef1_request_statistics where month = {month} and year = {year};', '${escidoc.creator.user}', CURRENT_TIMESTAMP, '${escidoc.creator.user}', CURRENT_TIMESTAMP);
+  'select * from escidocaggdef1_request_stats where month = {month} and year = {year};', '${escidoc.creator.user}', CURRENT_TIMESTAMP, '${escidoc.creator.user}', CURRENT_TIMESTAMP);
 
 INSERT INTO sm.report_definition_roles ( 
   id,
@@ -566,7 +566,7 @@ INSERT INTO sm.report_definitions (
   VALUES
   ('escidoc:repdef4', 'escidoc:scope2', 'Item retrievals, all users', 
   'select object_id as itemid, sum(requests) as itemrequests 
-    from escidocaggdef1_object_statistics 
+    from escidocaggdef1_object_stats 
     where object_id = {object_id} 
     and handler=''de.escidoc.core.om.service.ItemHandler'' 
     and request=''retrieve'' group by object_id;', '${escidoc.creator.user}', CURRENT_TIMESTAMP, '${escidoc.creator.user}', CURRENT_TIMESTAMP);
@@ -583,7 +583,7 @@ INSERT INTO sm.report_definitions (
   VALUES
   ('escidoc:repdef5', 'escidoc:scope2', 'File downloads per Item, all users', 
   'select parent_object_id as itemid, sum(requests) as filerequests 
-    from escidocaggdef1_object_statistics 
+    from escidocaggdef1_object_stats 
     where parent_object_id = {object_id} 
     and handler=''de.escidoc.core.om.service.ItemHandler'' 
     and request=''retrieveContent'' 
@@ -601,7 +601,7 @@ INSERT INTO sm.report_definitions (
   VALUES
   ('escidoc:repdef6', 'escidoc:scope2', 'File downloads, all users', 
   'select object_id as fileid, sum(requests) as filerequests 
-    from escidocaggdef1_object_statistics 
+    from escidocaggdef1_object_stats 
     where object_id = {object_id} 
     and handler=''de.escidoc.core.om.service.ItemHandler'' 
     and request=''retrieveContent'' 
@@ -619,7 +619,7 @@ INSERT INTO sm.report_definitions (
   VALUES
   ('escidoc:repdef7', 'escidoc:scope2', 'Item retrievals, anonymous users', 
   'select object_id as itemid, sum(requests) as itemrequests 
-    from escidocaggdef1_object_statistics 
+    from escidocaggdef1_object_stats 
     where object_id = {object_id} 
     and handler=''de.escidoc.core.om.service.ItemHandler'' 
     and request=''retrieve'' 
@@ -638,7 +638,7 @@ INSERT INTO sm.report_definitions (
   VALUES
   ('escidoc:repdef8', 'escidoc:scope2', 'File downloads per Item, anonymous users', 
   'select parent_object_id as itemid, sum(requests) as filerequests 
-    from escidocaggdef1_object_statistics 
+    from escidocaggdef1_object_stats 
     where parent_object_id = {object_id} 
     and handler=''de.escidoc.core.om.service.ItemHandler'' 
     and request=''retrieveContent'' 
@@ -657,7 +657,7 @@ INSERT INTO sm.report_definitions (
   VALUES
   ('escidoc:repdef9', 'escidoc:scope2', 'File downloads, anonymous users', 
   'select object_id as fileid, sum(requests) as filerequests 
-    from escidocaggdef1_object_statistics 
+    from escidocaggdef1_object_stats 
     where object_id = {object_id} 
     and handler=''de.escidoc.core.om.service.ItemHandler'' 
     and request=''retrieveContent'' 

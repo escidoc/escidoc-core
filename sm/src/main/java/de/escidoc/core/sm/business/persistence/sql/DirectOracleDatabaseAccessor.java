@@ -101,6 +101,7 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport implements Dire
     static {
         RESERVED_EXPRESSIONS.put("user", "");
         RESERVED_EXPRESSIONS.put("timestamp", "");
+        RESERVED_EXPRESSIONS.put("date", "");
     }
 
     /**
@@ -207,7 +208,7 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport implements Dire
                 i++;
             }
             fieldsSql.append(") ");
-            valuesSql.append(");");
+            valuesSql.append(")");
             sql.append(fieldsSql).append(valuesSql);
             getJdbcTemplate().execute(sql.toString());
         }
@@ -235,7 +236,6 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport implements Dire
                 sql.append(" WHERE ");
                 sql.append(handleWhereClause(databaseSelectVo));
             }
-            sql.append(';');
 
             getJdbcTemplate().execute(sql.toString());
         }
@@ -271,7 +271,6 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport implements Dire
                 sql.append(" WHERE ");
                 sql.append(handleWhereClause(databaseSelectVo));
             }
-            sql.append(';');
 
             getJdbcTemplate().execute(sql.toString());
         }
@@ -321,8 +320,6 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport implements Dire
                 }
             }
 
-            sql.append(';');
-
             return getJdbcTemplate().queryForList(sql.toString());
         }
         catch (final Exception e) {
@@ -341,7 +338,10 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport implements Dire
     @Override
     public List executeReadOnlySql(final String sql) throws SqlDatabaseSystemException {
         String executionSql = sql;
-        executionSql = executionSql.replaceAll("\\s+", " ");
+        executionSql = executionSql.replaceAll("\\s+", " ").trim();
+        if (executionSql.endsWith(";")) {
+            executionSql = executionSql.substring(0, executionSql.length() - 1);
+        }
         boolean condition = false;
         if (executionSql.matches("(?i).* (where|order by|group by) .*")) {
             condition = true;
@@ -362,7 +362,6 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport implements Dire
             condition ? executionSql.replaceFirst("(?i)(.*?from).*?((where|order by|group by).*)", "$1"
                 + Matcher.quoteReplacement(replacedFromClause.toString()) + "$2") : executionSql.replaceFirst(
                 "(?i)(.*?from).*", "$1" + Matcher.quoteReplacement(replacedFromClause.toString()));
-
         try {
             return getJdbcTemplate().queryForList(executionSql);
         }
@@ -402,7 +401,7 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport implements Dire
             createSql.append(databaseTableFieldVo.getFieldName()).append(' ').append(dbDataType).append("");
             i++;
         }
-        createSql.append(");");
+        createSql.append(")");
         sqlStatements.add(createSql.toString());
 
         // Get Create-Statements for Indexes
@@ -421,7 +420,7 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport implements Dire
                     indexSql.append(indexField);
                     j++;
                 }
-                indexSql.append(");");
+                indexSql.append(")");
                 sqlStatements.add(indexSql.toString());
             }
         }
@@ -443,7 +442,7 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport implements Dire
         if (databaseIndexVos != null) {
             for (final DatabaseIndexVo databaseIndexVo : databaseIndexVos) {
                 final StringBuilder indexSql = new StringBuilder("DROP INDEX ");
-                indexSql.append(databaseIndexVo.getIndexName()).append(" ON ").append(tablename).append(';');
+                indexSql.append(databaseIndexVo.getIndexName());
                 sqlStatements.add(indexSql.toString());
             }
         }
@@ -864,7 +863,7 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport implements Dire
      * @return String replaced tablename
      */
     public String handleTableName(final String tablename) {
-        return tablename.matches(".*\\..*") ? tablename.substring(tablename.indexOf('.')) : tablename;
+        return tablename.matches(".*\\..*") ? tablename : Constants.SM_SCHEMA_NAME + '.' + tablename;
 
     }
 

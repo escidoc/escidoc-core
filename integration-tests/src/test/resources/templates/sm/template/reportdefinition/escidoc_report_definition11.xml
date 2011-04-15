@@ -7,7 +7,7 @@
 	<sql>
 		select 
 		request,year,sum(requests) as requests 
-		from escidocaggdef1_request_statistics 
+		from escidocaggdef1_request_stats 
 		group by request,year;
 	</sql> 
 </report-definition>

@@ -51,7 +51,7 @@
 		<name>Else_Statistics</name>
 		<field>
 			<info-field feed="statistics-data">
-				<name>date</name>
+				<name>date_field</name>
 				<type>date</type>
 				<xpath>//parameter[@name="time"]/datevalue</xpath>
 			</info-field>
