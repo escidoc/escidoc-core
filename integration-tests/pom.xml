@@ -814,7 +814,7 @@
 									<outputDirectory>${project.build.directory}/escidoc/jboss</outputDirectory>
 									<resources>
 										<resource>
-											<directory>src/test/resources/configuration/jboss</directory>
+											<directory>src/test/resources/configuration/jboss/postgres</directory>
 											<filtering>true</filtering>
 										</resource>
 									</resources>
@@ -971,7 +971,7 @@
 									<outputDirectory>${project.build.directory}/escidoc/jboss</outputDirectory>
 									<resources>
 										<resource>
-											<directory>src/test/resources/configuration/jboss</directory>
+											<directory>src/test/resources/configuration/jboss/oracle</directory>
 											<filtering>true</filtering>
 										</resource>
 									</resources>
