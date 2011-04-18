@@ -1,25 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?> 
-<!--
-  ~ CDDL HEADER START
-  ~
-  ~ The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
-  ~ only (the "License"). You may not use this file except in compliance with the License.
-  ~
-  ~ You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
-  ~ the specific language governing permissions and limitations under the License.
-  ~
-  ~ When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
-  ~ license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
-  ~ brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
-  ~
-  ~ CDDL HEADER END
-  ~
-  ~ Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
-  ~ and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
-  ~ terms.
-  -->
-
-<java version="1.6.0_18" class="java.beans.XMLDecoder">
+<java version="1.6.0_24" class="java.beans.XMLDecoder"> 
  <object class="de.escidoc.core.common.util.db.Fingerprint"> 
   <void property="schemas"> 
    <array class="de.escidoc.core.common.util.db.Schema" length="6"> 
@@ -35,10 +15,10 @@
           <void property="columns"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>id/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>id/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>name/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>name/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
            </object> 
           </void> 
@@ -62,13 +42,13 @@
           <void property="columns"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>id/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>id/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>role_id/12/varchar/255/null/0/10/1/null/null/null/null/255/YES/null/null/null/null</string> 
+             <string>role_id/12/varchar/255/null/0/10/1/null/null/null/null/255/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>xml/12/text/2147483647/null/0/10/1/null/null/null/null/2147483647/YES/null/null/null/null</string> 
+             <string>xml/12/text/2147483647/null/0/10/1/null/null/null/null/2147483647/yes/null/null/null/null</string> 
             </void> 
            </object> 
           </void> 
@@ -96,25 +76,25 @@
           <void property="columns"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>creation_date/93/timestamp/29/null/6/10/1/null/null/null/null/29/YES/null/null/null/null</string> 
+             <string>creation_date/93/timestamp/29/null/6/10/1/null/null/null/null/29/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>creator_id/12/varchar/255/null/0/10/1/null/null/null/null/255/YES/null/null/null/null</string> 
+             <string>creator_id/12/varchar/255/null/0/10/1/null/null/null/null/255/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>description/12/text/2147483647/null/0/10/1/null/null/null/null/2147483647/YES/null/null/null/null</string> 
+             <string>description/12/text/2147483647/null/0/10/1/null/null/null/null/2147483647/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>id/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>id/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>last_modification_date/93/timestamp/29/null/6/10/1/null/null/null/null/29/YES/null/null/null/null</string> 
+             <string>last_modification_date/93/timestamp/29/null/6/10/1/null/null/null/null/29/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>modified_by_id/12/varchar/255/null/0/10/1/null/null/null/null/255/YES/null/null/null/null</string> 
+             <string>modified_by_id/12/varchar/255/null/0/10/1/null/null/null/null/255/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>role_name/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>role_name/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
            </object> 
           </void> 
@@ -145,31 +125,31 @@
           <void property="columns"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>attribute_id/12/text/2147483647/null/0/10/0/null/null/null/null/2147483647/NO/null/null/null/null</string> 
+             <string>attribute_id/12/text/2147483647/null/0/10/0/null/null/null/null/2147483647/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>attribute_type/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>attribute_type/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>id/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>id/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>mapping_type/2/numeric/2/null/0/10/0/null/null/null/null/2/NO/null/null/null/null</string> 
+             <string>mapping_type/2/numeric/2/null/0/10/0/null/null/null/null/2/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>method_mapping/12/varchar/255/null/0/10/1/null/null/null/null/255/YES/null/null/null/null</string> 
+             <string>method_mapping/12/varchar/255/null/0/10/1/null/null/null/null/255/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>multi_value/-7/bool/1/null/0/10/0/null/null/null/null/1/NO/null/null/null/null</string> 
+             <string>multi_value/-7/bool/1/null/0/10/0/null/null/null/null/1/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>path/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>path/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>position/2/numeric/2/null/0/10/0/null/null/null/null/2/NO/null/null/null/null</string> 
+             <string>position/2/numeric/2/null/0/10/0/null/null/null/null/2/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>value/12/varchar/100/null/0/10/1/null/null/null/null/100/YES/null/null/null/null</string> 
+             <string>value/12/varchar/100/null/0/10/1/null/null/null/null/100/yes/null/null/null/null</string> 
             </void> 
            </object> 
           </void> 
@@ -197,25 +177,25 @@
           <void property="columns"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>action_name/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>action_name/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>class_name/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>class_name/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>exec_before/-7/bool/1/null/0/10/0/null/null/null/null/1/NO/null/null/null/null</string> 
+             <string>exec_before/-7/bool/1/null/0/10/0/null/null/null/null/1/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>id/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>id/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>method_name/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>method_name/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>resource_not_found_exception/12/text/2147483647/null/0/10/1/null/null/null/null/2147483647/YES/null/null/null/null</string> 
+             <string>resource_not_found_exception/12/text/2147483647/null/0/10/1/null/null/null/null/2147483647/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>single_resource/-7/bool/1/null/0/10/0/null/null/null/null/1/NO/null/null/null/null</string> 
+             <string>single_resource/-7/bool/1/null/0/10/0/null/null/null/null/1/no/null/null/null/null</string> 
             </void> 
            </object> 
           </void> 
@@ -239,49 +219,49 @@
           <void property="columns"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>creation_date/93/timestamp/29/null/6/10/1/null/null/null/null/29/YES/null/null/null/null</string> 
+             <string>creation_date/93/timestamp/29/null/6/10/1/null/null/null/null/29/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>creator_id/12/varchar/255/null/0/10/1/null/null/null/null/255/YES/null/null/null/null</string> 
+             <string>creator_id/12/varchar/255/null/0/10/1/null/null/null/null/255/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>grant_remark/12/varchar/255/null/0/10/1/null/null/null/null/255/YES/null/null/null/null</string> 
+             <string>grant_remark/12/varchar/255/null/0/10/1/null/null/null/null/255/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>granted_from/93/timestamp/29/null/6/10/1/null/null/null/null/29/YES/null/null/null/null</string> 
+             <string>granted_from/93/timestamp/29/null/6/10/1/null/null/null/null/29/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>granted_to/93/timestamp/29/null/6/10/1/null/null/null/null/29/YES/null/null/null/null</string> 
+             <string>granted_to/93/timestamp/29/null/6/10/1/null/null/null/null/29/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>group_id/12/varchar/255/null/0/10/1/null/null/null/null/255/YES/null/null/null/null</string> 
+             <string>group_id/12/varchar/255/null/0/10/1/null/null/null/null/255/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>id/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>id/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>object_href/12/varchar/255/null/0/10/1/null/null/null/null/255/YES/null/null/null/null</string> 
+             <string>object_href/12/varchar/255/null/0/10/1/null/null/null/null/255/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>object_id/12/varchar/255/null/0/10/1/null/null/null/null/255/YES/null/null/null/null</string> 
+             <string>object_id/12/varchar/255/null/0/10/1/null/null/null/null/255/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>object_title/12/varchar/255/null/0/10/1/null/null/null/null/255/YES/null/null/null/null</string> 
+             <string>object_title/12/varchar/255/null/0/10/1/null/null/null/null/255/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>revocation_date/93/timestamp/29/null/6/10/1/null/null/null/null/29/YES/null/null/null/null</string> 
+             <string>revocation_date/93/timestamp/29/null/6/10/1/null/null/null/null/29/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>revocation_remark/12/varchar/255/null/0/10/1/null/null/null/null/255/YES/null/null/null/null</string> 
+             <string>revocation_remark/12/varchar/255/null/0/10/1/null/null/null/null/255/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>revoker_id/12/varchar/255/null/0/10/1/null/null/null/null/255/YES/null/null/null/null</string> 
+             <string>revoker_id/12/varchar/255/null/0/10/1/null/null/null/null/255/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>role_id/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>role_id/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>user_id/12/varchar/255/null/0/10/1/null/null/null/null/255/YES/null/null/null/null</string> 
+             <string>user_id/12/varchar/255/null/0/10/1/null/null/null/null/255/yes/null/null/null/null</string> 
             </void> 
            </object> 
           </void> 
@@ -321,19 +301,19 @@
           <void property="columns"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>attribute_id/12/varchar/255/null/0/10/1/null/null/null/null/255/YES/null/null/null/null</string> 
+             <string>attribute_id/12/varchar/255/null/0/10/1/null/null/null/null/255/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>attribute_object_type/12/varchar/255/null/0/10/1/null/null/null/null/255/YES/null/null/null/null</string> 
+             <string>attribute_object_type/12/varchar/255/null/0/10/1/null/null/null/null/255/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>id/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>id/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>object_type/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>object_type/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>role_id/12/varchar/255/null/0/10/1/null/null/null/null/255/YES/null/null/null/null</string> 
+             <string>role_id/12/varchar/255/null/0/10/1/null/null/null/null/255/yes/null/null/null/null</string> 
             </void> 
            </object> 
           </void> 
@@ -361,13 +341,13 @@
           <void property="columns"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>action_ids/12/text/2147483647/null/0/10/0/null/null/null/null/2147483647/NO/null/null/null/null</string> 
+             <string>action_ids/12/text/2147483647/null/0/10/0/null/null/null/null/2147483647/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>context_id/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>context_id/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>id/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>id/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
            </object> 
           </void> 
@@ -391,31 +371,31 @@
           <void property="columns"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>active/-7/bool/1/null/0/10/1/null/null/null/null/1/YES/null/null/null/null</string> 
+             <string>active/-7/bool/1/null/0/10/1/null/null/null/null/1/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>creation_date/93/timestamp/29/null/6/10/1/null/null/null/null/29/YES/null/null/null/null</string> 
+             <string>creation_date/93/timestamp/29/null/6/10/1/null/null/null/null/29/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>creator_id/12/varchar/255/null/0/10/1/null/null/null/null/255/YES/null/null/null/null</string> 
+             <string>creator_id/12/varchar/255/null/0/10/1/null/null/null/null/255/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>id/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>id/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>last_modification_date/93/timestamp/29/null/6/10/1/null/null/null/null/29/YES/null/null/null/null</string> 
+             <string>last_modification_date/93/timestamp/29/null/6/10/1/null/null/null/null/29/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>loginname/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>loginname/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>modified_by_id/12/varchar/255/null/0/10/1/null/null/null/null/255/YES/null/null/null/null</string> 
+             <string>modified_by_id/12/varchar/255/null/0/10/1/null/null/null/null/255/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>name/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>name/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>password/12/varchar/255/null/0/10/1/null/null/null/null/255/YES/null/null/null/null</string> 
+             <string>password/12/varchar/255/null/0/10/1/null/null/null/null/255/yes/null/null/null/null</string> 
             </void> 
            </object> 
           </void> 
@@ -446,19 +426,19 @@
           <void property="columns"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>id/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>id/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>internal/-7/bool/1/null/0/10/1/null/null/null/null/1/YES/null/null/null/null</string> 
+             <string>internal/-7/bool/1/null/0/10/1/null/null/null/null/1/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>name/12/varchar/255/null/0/10/1/null/null/null/null/255/YES/null/null/null/null</string> 
+             <string>name/12/varchar/255/null/0/10/1/null/null/null/null/255/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>user_id/12/varchar/255/null/0/10/1/null/null/null/null/255/YES/null/null/null/null</string> 
+             <string>user_id/12/varchar/255/null/0/10/1/null/null/null/null/255/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>value/12/varchar/255/null/0/10/1/null/null/null/null/255/YES/null/null/null/null</string> 
+             <string>value/12/varchar/255/null/0/10/1/null/null/null/null/255/yes/null/null/null/null</string> 
             </void> 
            </object> 
           </void> 
@@ -486,37 +466,37 @@
           <void property="columns"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>active/-7/bool/1/null/0/10/1/null/null/null/null/1/YES/null/null/null/null</string> 
+             <string>active/-7/bool/1/null/0/10/1/null/null/null/null/1/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>creation_date/93/timestamp/29/null/6/10/1/null/null/null/null/29/YES/null/null/null/null</string> 
+             <string>creation_date/93/timestamp/29/null/6/10/1/null/null/null/null/29/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>creator_id/12/varchar/255/null/0/10/1/null/null/null/null/255/YES/null/null/null/null</string> 
+             <string>creator_id/12/varchar/255/null/0/10/1/null/null/null/null/255/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>description/12/text/2147483647/null/0/10/1/null/null/null/null/2147483647/YES/null/null/null/null</string> 
+             <string>description/12/text/2147483647/null/0/10/1/null/null/null/null/2147483647/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>email/12/varchar/255/null/0/10/1/null/null/null/null/255/YES/null/null/null/null</string> 
+             <string>email/12/varchar/255/null/0/10/1/null/null/null/null/255/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>id/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>id/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>label/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>label/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>last_modification_date/93/timestamp/29/null/6/10/1/null/null/null/null/29/YES/null/null/null/null</string> 
+             <string>last_modification_date/93/timestamp/29/null/6/10/1/null/null/null/null/29/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>modified_by_id/12/varchar/255/null/0/10/1/null/null/null/null/255/YES/null/null/null/null</string> 
+             <string>modified_by_id/12/varchar/255/null/0/10/1/null/null/null/null/255/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>name/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>name/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>type/12/varchar/255/null/0/10/1/null/null/null/null/255/YES/null/null/null/null</string> 
+             <string>type/12/varchar/255/null/0/10/1/null/null/null/null/255/yes/null/null/null/null</string> 
             </void> 
            </object> 
           </void> 
@@ -547,19 +527,19 @@
           <void property="columns"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>id/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>id/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>name/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>name/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>type/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>type/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>user_group_id/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>user_group_id/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>value/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>value/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
            </object> 
           </void> 
@@ -587,16 +567,16 @@
           <void property="columns"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>expiryts/-5/int8/19/null/0/10/0/null/null/null/null/19/NO/null/null/null/null</string> 
+             <string>expiryts/-5/int8/19/null/0/10/0/null/null/null/null/19/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>handle/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>handle/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>id/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>id/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>user_id/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>user_id/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
            </object> 
           </void> 
@@ -624,16 +604,16 @@
           <void property="columns"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>id/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>id/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>name/12/varchar/255/null/0/10/1/null/null/null/null/255/YES/null/null/null/null</string> 
+             <string>name/12/varchar/255/null/0/10/1/null/null/null/null/255/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>user_id/12/varchar/255/null/0/10/1/null/null/null/null/255/YES/null/null/null/null</string> 
+             <string>user_id/12/varchar/255/null/0/10/1/null/null/null/null/255/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>value/12/varchar/255/null/0/10/1/null/null/null/null/255/YES/null/null/null/null</string> 
+             <string>value/12/varchar/255/null/0/10/1/null/null/null/null/255/yes/null/null/null/null</string> 
             </void> 
            </object> 
           </void> 
@@ -672,16 +652,16 @@
           <void property="columns"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>date/93/timestamp/29/null/6/10/0/null/null/null/null/29/NO/null/null/null/null</string> 
+             <string>date/93/timestamp/29/null/6/10/0/null/null/null/null/29/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>major_number/4/int4/10/null/0/10/0/null/null/null/null/10/NO/null/null/null/null</string> 
+             <string>major_number/4/int4/10/null/0/10/0/null/null/null/null/10/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>minor_number/4/int4/10/null/0/10/0/null/null/null/null/10/NO/null/null/null/null</string> 
+             <string>minor_number/4/int4/10/null/0/10/0/null/null/null/null/10/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>revision_number/4/int4/10/null/0/10/0/null/null/null/null/10/NO/null/null/null/null</string> 
+             <string>revision_number/4/int4/10/null/0/10/0/null/null/null/null/10/no/null/null/null/null</string> 
             </void> 
            </object> 
           </void> 
@@ -712,37 +692,37 @@
           <void property="columns"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>creation_date/93/timestamp/29/null/6/10/1/null/null/null/null/29/YES/null/null/null/null</string> 
+             <string>creation_date/93/timestamp/29/null/6/10/1/null/null/null/null/29/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>creator_id/12/varchar/255/null/0/10/1/null/null/null/null/255/YES/null/null/null/null</string> 
+             <string>creator_id/12/varchar/255/null/0/10/1/null/null/null/null/255/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>creator_title/12/varchar/255/null/0/10/1/null/null/null/null/255/YES/null/null/null/null</string> 
+             <string>creator_title/12/varchar/255/null/0/10/1/null/null/null/null/255/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>description/12/text/2147483647/null/0/10/1/null/null/null/null/2147483647/YES/null/null/null/null</string> 
+             <string>description/12/text/2147483647/null/0/10/1/null/null/null/null/2147483647/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>id/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>id/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>last_modification_date/93/timestamp/29/null/6/10/1/null/null/null/null/29/YES/null/null/null/null</string> 
+             <string>last_modification_date/93/timestamp/29/null/6/10/1/null/null/null/null/29/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>modified_by_id/12/varchar/255/null/0/10/1/null/null/null/null/255/YES/null/null/null/null</string> 
+             <string>modified_by_id/12/varchar/255/null/0/10/1/null/null/null/null/255/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>modified_by_title/12/varchar/255/null/0/10/1/null/null/null/null/255/YES/null/null/null/null</string> 
+             <string>modified_by_title/12/varchar/255/null/0/10/1/null/null/null/null/255/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>name/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>name/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>query/12/text/2147483647/null/0/10/0/null/null/null/null/2147483647/NO/null/null/null/null</string> 
+             <string>query/12/text/2147483647/null/0/10/0/null/null/null/null/2147483647/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>specification/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>specification/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
            </object> 
           </void> 
@@ -777,19 +757,19 @@
           <void property="columns"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>lock_timestamp/93/timestamp/29/null/6/10/0/null/now()/null/null/29/NO/null/null/null/null</string> 
+             <string>lock_timestamp/93/timestamp/29/null/6/10/0/null/now()/null/null/29/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>locked/-7/bool/1/null/0/10/0/null/null/null/null/1/NO/null/null/null/null</string> 
+             <string>locked/-7/bool/1/null/0/10/0/null/null/null/null/1/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>objid/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>objid/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>owner/12/varchar/255/null/0/10/1/null/null/null/null/255/YES/null/null/null/null</string> 
+             <string>owner/12/varchar/255/null/0/10/1/null/null/null/null/255/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>ownertitle/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>ownertitle/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
            </object> 
           </void> 
@@ -824,59 +804,19 @@
           <void property="columns"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>creation_date/93/timestamp/29/null/6/10/1/null/null/null/null/29/YES/null/null/null/null</string> 
+             <string>aggregation_definition_id/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>creator_id/12/varchar/255/null/0/10/1/null/null/null/null/255/YES/null/null/null/null</string> 
+             <string>id/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>id/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>list_index/2/numeric/2/null/0/10/0/null/null/null/null/2/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>name/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>selector_type/12/varchar/50/null/0/10/0/null/null/null/null/50/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>scope_id/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
-            </void> 
-           </object> 
-          </void> 
-          <void property="foreignKeys"> 
-           <object class="java.util.TreeSet"> 
-            <void method="add"> 
-             <string>id/null/sm/aggregation_definitions/scope_id/1/3/0/fk_scope_id/scopes_pkey/7</string> 
-            </void> 
-           </object> 
-          </void> 
-          <void property="name"> 
-           <string>aggregation_definitions</string> 
-          </void> 
-          <void property="primaryKeys"> 
-           <object class="java.util.TreeSet"> 
-            <void method="add"> 
-             <string>id/1/aggregation_definitions_pkey</string> 
-            </void> 
-           </object> 
-          </void> 
-         </object> 
-        </void> 
-        <void method="add"> 
-         <object class="de.escidoc.core.common.util.db.Table"> 
-          <void property="columns"> 
-           <object class="java.util.TreeSet"> 
-            <void method="add"> 
-             <string>aggregation_definition_id/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
-            </void> 
-            <void method="add"> 
-             <string>id/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
-            </void> 
-            <void method="add"> 
-             <string>list_index/2/numeric/2/null/0/10/0/null/null/null/null/2/NO/null/null/null/null</string> 
-            </void> 
-            <void method="add"> 
-             <string>selector_type/12/varchar/50/null/0/10/0/null/null/null/null/50/NO/null/null/null/null</string> 
-            </void> 
-            <void method="add"> 
-             <string>xpath/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>xpath/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
            </object> 
           </void> 
@@ -904,31 +844,71 @@
           <void property="columns"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>aggregation_table_id/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>creation_date/93/timestamp/29/null/6/10/1/null/null/null/null/29/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>data_type/12/varchar/10/null/0/10/1/null/null/null/null/10/YES/null/null/null/null</string> 
+             <string>creator_id/12/varchar/255/null/0/10/1/null/null/null/null/255/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>feed/12/varchar/255/null/0/10/1/null/null/null/null/255/YES/null/null/null/null</string> 
+             <string>id/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>field_type_id/2/numeric/2/null/0/10/0/null/null/null/null/2/NO/null/null/null/null</string> 
+             <string>name/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>id/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>scope_id/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
+            </void> 
+           </object> 
+          </void> 
+          <void property="foreignKeys"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>id/null/sm/aggregation_definitions/scope_id/1/3/0/fk_scope_id/scopes_pkey/7</string> 
+            </void> 
+           </object> 
+          </void> 
+          <void property="name"> 
+           <string>aggregation_definitions</string> 
+          </void> 
+          <void property="primaryKeys"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>id/1/aggregation_definitions_pkey</string> 
+            </void> 
+           </object> 
+          </void> 
+         </object> 
+        </void> 
+        <void method="add"> 
+         <object class="de.escidoc.core.common.util.db.Table"> 
+          <void property="columns"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>aggregation_table_id/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>list_index/2/numeric/2/null/0/10/0/null/null/null/null/2/NO/null/null/null/null</string> 
+             <string>data_type/12/varchar/10/null/0/10/1/null/null/null/null/10/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>name/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>feed/12/varchar/255/null/0/10/1/null/null/null/null/255/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>reduce_to/12/varchar/255/null/0/10/1/null/null/null/null/255/YES/null/null/null/null</string> 
+             <string>field_type_id/2/numeric/2/null/0/10/0/null/null/null/null/2/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>xpath/12/text/2147483647/null/0/10/1/null/null/null/null/2147483647/YES/null/null/null/null</string> 
+             <string>id/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
+            </void> 
+            <void method="add"> 
+             <string>list_index/2/numeric/2/null/0/10/0/null/null/null/null/2/no/null/null/null/null</string> 
+            </void> 
+            <void method="add"> 
+             <string>name/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
+            </void> 
+            <void method="add"> 
+             <string>reduce_to/12/varchar/255/null/0/10/1/null/null/null/null/255/yes/null/null/null/null</string> 
+            </void> 
+            <void method="add"> 
+             <string>xpath/12/text/2147483647/null/0/10/1/null/null/null/null/2147483647/yes/null/null/null/null</string> 
             </void> 
            </object> 
           </void> 
@@ -956,16 +936,16 @@
           <void property="columns"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>aggregation_table_index_id/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>aggregation_table_index_id/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>field/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>field/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>id/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>id/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>list_index/2/numeric/2/null/0/10/0/null/null/null/null/2/NO/null/null/null/null</string> 
+             <string>list_index/2/numeric/2/null/0/10/0/null/null/null/null/2/no/null/null/null/null</string> 
             </void> 
            </object> 
           </void> 
@@ -993,16 +973,16 @@
           <void property="columns"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>aggregation_table_id/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>aggregation_table_id/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>id/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>id/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>list_index/2/numeric/2/null/0/10/0/null/null/null/null/2/NO/null/null/null/null</string> 
+             <string>list_index/2/numeric/2/null/0/10/0/null/null/null/null/2/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>name/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>name/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
            </object> 
           </void> 
@@ -1030,16 +1010,16 @@
           <void property="columns"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>aggregation_definition_id/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>aggregation_definition_id/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>id/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>id/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>list_index/2/numeric/2/null/0/10/0/null/null/null/null/2/NO/null/null/null/null</string> 
+             <string>list_index/2/numeric/2/null/0/10/0/null/null/null/null/2/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>name/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>name/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
            </object> 
           </void> 
@@ -1067,19 +1047,19 @@
           <void property="columns"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>aggregation_definition_id/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>aggregation_definition_id/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>has_error/-7/bool/1/null/0/10/1/null/null/null/null/1/YES/null/null/null/null</string> 
+             <string>has_error/-7/bool/1/null/0/10/1/null/null/null/null/1/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>id/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>id/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>log_entry/12/text/2147483647/null/0/10/1/null/null/null/null/2147483647/YES/null/null/null/null</string> 
+             <string>log_entry/12/text/2147483647/null/0/10/1/null/null/null/null/2147483647/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>processing_date/91/date/13/null/0/10/0/null/null/null/null/13/NO/null/null/null/null</string> 
+             <string>processing_date/91/date/13/null/0/10/0/null/null/null/null/13/no/null/null/null/null</string> 
             </void> 
            </object> 
           </void> 
@@ -1107,16 +1087,16 @@
           <void property="columns"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>id/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>id/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>list_index/2/numeric/2/null/0/10/0/null/null/null/null/2/NO/null/null/null/null</string> 
+             <string>list_index/2/numeric/2/null/0/10/0/null/null/null/null/2/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>report_definition_id/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>report_definition_id/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>role_id/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>role_id/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
            </object> 
           </void> 
@@ -1144,28 +1124,28 @@
           <void property="columns"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>creation_date/93/timestamp/29/null/6/10/1/null/null/null/null/29/YES/null/null/null/null</string> 
+             <string>creation_date/93/timestamp/29/null/6/10/1/null/null/null/null/29/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>creator_id/12/varchar/255/null/0/10/1/null/null/null/null/255/YES/null/null/null/null</string> 
+             <string>creator_id/12/varchar/255/null/0/10/1/null/null/null/null/255/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>id/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>id/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>last_modification_date/93/timestamp/29/null/6/10/1/null/null/null/null/29/YES/null/null/null/null</string> 
+             <string>last_modification_date/93/timestamp/29/null/6/10/1/null/null/null/null/29/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>modified_by_id/12/varchar/255/null/0/10/1/null/null/null/null/255/YES/null/null/null/null</string> 
+             <string>modified_by_id/12/varchar/255/null/0/10/1/null/null/null/null/255/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>name/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>name/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>scope_id/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>scope_id/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>sql/12/text/2147483647/null/0/10/0/null/null/null/null/2147483647/NO/null/null/null/null</string> 
+             <string>sql/12/text/2147483647/null/0/10/0/null/null/null/null/2147483647/no/null/null/null/null</string> 
             </void> 
            </object> 
           </void> 
@@ -1193,25 +1173,25 @@
           <void property="columns"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>creation_date/93/timestamp/29/null/6/10/1/null/null/null/null/29/YES/null/null/null/null</string> 
+             <string>creation_date/93/timestamp/29/null/6/10/1/null/null/null/null/29/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>creator_id/12/varchar/255/null/0/10/1/null/null/null/null/255/YES/null/null/null/null</string> 
+             <string>creator_id/12/varchar/255/null/0/10/1/null/null/null/null/255/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>id/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>id/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>last_modification_date/93/timestamp/29/null/6/10/1/null/null/null/null/29/YES/null/null/null/null</string> 
+             <string>last_modification_date/93/timestamp/29/null/6/10/1/null/null/null/null/29/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>modified_by_id/12/varchar/255/null/0/10/1/null/null/null/null/255/YES/null/null/null/null</string> 
+             <string>modified_by_id/12/varchar/255/null/0/10/1/null/null/null/null/255/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>name/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>name/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>scope_type/12/varchar/20/null/0/10/0/null/null/null/null/20/NO/null/null/null/null</string> 
+             <string>scope_type/12/varchar/20/null/0/10/0/null/null/null/null/20/no/null/null/null/null</string> 
             </void> 
            </object> 
           </void> 
@@ -1235,16 +1215,16 @@
           <void property="columns"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>id/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>id/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>scope_id/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>scope_id/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>timemarker/93/timestamp/29/null/6/10/0/null/null/null/null/29/NO/null/null/null/null</string> 
+             <string>timemarker/93/timestamp/29/null/6/10/0/null/null/null/null/29/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>xml_data/12/text/2147483647/null/0/10/0/null/null/null/null/2147483647/NO/null/null/null/null</string> 
+             <string>xml_data/12/text/2147483647/null/0/10/0/null/null/null/null/2147483647/no/null/null/null/null</string> 
             </void> 
            </object> 
           </void> 
@@ -1283,19 +1263,19 @@
           <void property="columns"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>expiry_ts/-5/int8/19/null/0/10/0/null/null/null/null/19/NO/null/null/null/null</string> 
+             <string>expiry_ts/-5/int8/19/null/0/10/0/null/null/null/null/19/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>mime_type/12/varchar/255/null/0/10/1/null/null/null/null/255/YES/null/null/null/null</string> 
+             <string>mime_type/12/varchar/255/null/0/10/1/null/null/null/null/255/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>reference/12/text/2147483647/null/0/10/1/null/null/null/null/2147483647/YES/null/null/null/null</string> 
+             <string>reference/12/text/2147483647/null/0/10/1/null/null/null/null/2147483647/yes/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>token/12/varchar/255/null/0/10/0/null/null/null/null/255/NO/null/null/null/null</string> 
+             <string>token/12/varchar/255/null/0/10/0/null/null/null/null/255/no/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>upload/-7/bool/1/null/0/10/0/null/null/null/null/1/NO/null/null/null/null</string> 
+             <string>upload/-7/bool/1/null/0/10/0/null/null/null/null/1/no/null/null/null/null</string> 
             </void> 
            </object> 
           </void> 

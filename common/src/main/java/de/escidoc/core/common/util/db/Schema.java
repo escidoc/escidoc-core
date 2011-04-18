@@ -76,7 +76,7 @@ public class Schema {
      * @param name schema name
      */
     public final void setName(final String name) {
-        this.name = name;
+        this.name = name.toLowerCase();
     }
 
     /**

@@ -28,25 +28,27 @@
  */
 package de.escidoc.core.adm.business.admin;
 
-import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.util.IOUtils;
-import de.escidoc.core.common.util.Version;
-import de.escidoc.core.common.util.db.Fingerprint;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.util.IOUtils;
+import de.escidoc.core.common.util.Version;
+import de.escidoc.core.common.util.db.Fingerprint;
 
 /**
  * Get some interesting information about the eSciDoc framework.
- *
+ * 
  * @author Andr&eacute; Schenk
  */
 public class FrameworkInfo extends JdbcDaoSupport {
@@ -91,14 +93,15 @@ public class FrameworkInfo extends JdbcDaoSupport {
             + TABLE_NAME + ')';
 
     /**
-     * XML file with the finger print of the "escidoc-core" database.
+     * path to XML file with the finger print of the "escidoc-core" database.
      */
-    private static final String FINGERPRINT_FILE = "/META-INF/db/fingerprints/" + DB_VERSION.toString() + ".xml";
+    private static final String FINGERPRINT_PATH = "/META-INF/db/fingerprints/";
 
     /**
      * Check if the currently installed eSciDocCore database matches the needed database version.
-     *
-     * @throws SystemException Thrown if the eSciDocCore database has the wrong version
+     * 
+     * @throws SystemException
+     *             Thrown if the eSciDocCore database has the wrong version
      */
     public void checkDbVersion() throws SystemException {
         final Version currentDbVersion = getVersion();
@@ -111,7 +114,7 @@ public class FrameworkInfo extends JdbcDaoSupport {
 
     /**
      * Get the current database version from the database.
-     *
+     * 
      * @return current database version
      */
     public Version getVersion() {
@@ -151,10 +154,12 @@ public class FrameworkInfo extends JdbcDaoSupport {
 
     /**
      * Compare the current database structure with the structure stored in an XML file.
-     *
+     * 
      * @return true if both structures are equal
-     * @throws IOException  Thrown if the XML file could not be read
-     * @throws SQLException Thrown if the structure of the database could not be determined
+     * @throws IOException
+     *             Thrown if the XML file could not be read
+     * @throws SQLException
+     *             Thrown if the structure of the database could not be determined
      * @throws java.io.FileNotFoundException
      */
     public boolean isConsistent() throws IOException, SQLException, FileNotFoundException {
@@ -162,9 +167,11 @@ public class FrameworkInfo extends JdbcDaoSupport {
         Connection connection = null;
         try {
             connection = getConnection();
+            final DatabaseMetaData metaData = connection.getMetaData();
             final Fingerprint currentFingerprint = new Fingerprint(connection);
             final Fingerprint storedFingerprint =
-                Fingerprint.readObject(getClass().getResourceAsStream(FINGERPRINT_FILE));
+                Fingerprint.readObject(getClass().getResourceAsStream(
+                    FINGERPRINT_PATH + metaData.getDatabaseProductName() + "/" + DB_VERSION.toString() + ".xml"));
             result = storedFingerprint.equals(currentFingerprint);
         }
         finally {
