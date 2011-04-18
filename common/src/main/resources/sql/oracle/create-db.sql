@@ -10,7 +10,7 @@ IDENTIFIED BY ${escidoc.database.password}
 DEFAULT TABLESPACE ${escidoc.default.tablespace}
 TEMPORARY TABLESPACE ${escidoc.temp.tablespace}; 
 
-GRANT CONNECT, create any table, create any index, drop any table, drop any index, select any table, insert any table, update any table, delete any table, create any procedure, UNLIMITED TABLESPACE TO ${escidoc.database.user};
+GRANT CONNECT, create any table, create any index, drop any table, drop any index, select any table, insert any table, update any table, delete any table, create any procedure, analyze any, UNLIMITED TABLESPACE TO ${escidoc.database.user};
 
 CREATE USER aa IDENTIFIED BY aa
 DEFAULT TABLESPACE ${escidoc.default.tablespace}
