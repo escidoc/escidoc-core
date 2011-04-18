@@ -61,7 +61,7 @@
 								<artifactItem>
 									<groupId>org.escidoc</groupId>
 									<artifactId>testdata</artifactId>
-									<version>0.0.2-SNAPSHOT</version>
+									<version>0.0.2-alpha1</version>
 									<type>war</type>
 									<overWrite>false</overWrite>
 									<outputDirectory>${project.build.directory}/escidoc/jboss/server/default/deploy</outputDirectory>
