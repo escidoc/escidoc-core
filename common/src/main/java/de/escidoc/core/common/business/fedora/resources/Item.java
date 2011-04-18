@@ -674,14 +674,17 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
         }
     }
 
+    @Deprecated
     public Map<String, Datastream> getContentStreams() {
         return this.contentStreams;
     }
 
+    @Deprecated
     public Datastream getContentStream(final String name) {
         return this.contentStreams.get(name);
     }
 
+    @Deprecated
     public void setContentStream(final String name, final Datastream ds) throws FedoraSystemException,
         WebserverSystemException {
         // don't trust the handler
@@ -730,6 +733,7 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
         }
     }
 
+    @Deprecated
     public void setContentStreams(final Map<String, Datastream> contentStreamDatastreams) throws FedoraSystemException,
         WebserverSystemException, IntegritySystemException {
 

@@ -221,6 +221,7 @@ public class ItemXmlProvider extends InfrastructureXmlProvider {
      * @return The eSciDoc Item Content Streams document.
      * @throws WebserverSystemException If an error occurs.
      */
+    @Deprecated
     public String getContentStreamsXml(final Map<String, String> values) throws WebserverSystemException {
 
         return getXml(CONTENT_STREAMS_RESOURCE_NAME, CONTENT_STREAM_PATH, values);
@@ -233,6 +234,7 @@ public class ItemXmlProvider extends InfrastructureXmlProvider {
      * @return The eSciDoc Item Content Stream document.
      * @throws WebserverSystemException If an error occurs.
      */
+    @Deprecated
     public String getContentStreamXml(final Map<String, String> values) throws WebserverSystemException {
 
         return getXml(CONTENT_STREAM_RESOURCE_NAME, CONTENT_STREAM_PATH, values);

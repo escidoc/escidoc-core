@@ -187,6 +187,7 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
      *
      * @return The content streams of this content model.
      */
+    @Deprecated
     public Map<String, Datastream> getContentStreams() {
         return this.contentStreams;
     }
@@ -197,6 +198,7 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
      * @param name The name of the content stream.
      * @return The specified content stream of this content model.
      */
+    @Deprecated
     public Datastream getContentStream(final String name) {
         return this.contentStreams.get(name);
     }

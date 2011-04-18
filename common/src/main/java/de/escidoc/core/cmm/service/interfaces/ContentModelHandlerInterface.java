@@ -195,6 +195,7 @@ public interface ContentModelHandlerInterface extends IngestableResource {
      *                                       If the id is not provided.
      * @throws SystemException               If an internal error occurred.
      */
+    @Deprecated
     String retrieveContentStream(String id, String name) throws AuthenticationException, AuthorizationException,
         ContentModelNotFoundException, MissingMethodParameterException, SystemException;
 
@@ -213,6 +214,7 @@ public interface ContentModelHandlerInterface extends IngestableResource {
      * @throws ContentStreamNotFoundException If no content stream with specified name exists.
      * @throws InvalidStatusException         If the Content Model is withdrawn.
      */
+    @Deprecated
     EscidocBinaryContent retrieveContentStreamContent(String id, String name) throws AuthenticationException,
         AuthorizationException, ContentModelNotFoundException, MissingMethodParameterException, SystemException,
         ContentStreamNotFoundException, InvalidStatusException;

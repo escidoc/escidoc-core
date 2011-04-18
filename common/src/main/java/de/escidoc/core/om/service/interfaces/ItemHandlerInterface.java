@@ -551,6 +551,7 @@ public interface ItemHandlerInterface {
      *                                        If at least one ID is not provided.
      * @throws SystemException                If an error occurs.
      */
+    @Deprecated
     EscidocBinaryContent retrieveContentStreamContent(final String itemId, final String name)
         throws AuthenticationException, AuthorizationException, MissingMethodParameterException, ItemNotFoundException,
         SystemException, ContentStreamNotFoundException;
@@ -830,6 +831,7 @@ public interface ItemHandlerInterface {
      *                                 If the ID is not provided.
      * @throws SystemException         If an error occurs.
      */
+    @Deprecated
     String retrieveContentStreams(final String id) throws ItemNotFoundException, AuthenticationException,
         AuthorizationException, MissingMethodParameterException, SystemException;
 
@@ -850,6 +852,7 @@ public interface ItemHandlerInterface {
      *                                        If at least one of the IDs is not provided.
      * @throws SystemException                If an error occurs.
      */
+    @Deprecated
     String retrieveContentStream(final String id, final String name) throws ItemNotFoundException,
         AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException,
         ContentStreamNotFoundException;

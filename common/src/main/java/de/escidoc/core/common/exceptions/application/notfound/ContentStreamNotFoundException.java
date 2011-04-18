@@ -20,6 +20,7 @@
 
 package de.escidoc.core.common.exceptions.application.notfound;
 
+@Deprecated
 public class ContentStreamNotFoundException extends ResourceNotFoundException {
 
     /**

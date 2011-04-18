@@ -1934,6 +1934,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      * @throws WebserverSystemException e
      * @throws FedoraSystemException    e
      */
+    @Deprecated
     private void setContentStreams(final Map<String, Map<String, Object>> contentStreamMap)
         throws FedoraSystemException, WebserverSystemException, IntegritySystemException {
         final Map<String, Datastream> contentStreamDatastreams = new HashMap<String, Datastream>();

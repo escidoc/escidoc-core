@@ -449,28 +449,34 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
      * @seede.escidoc.core.om.business.interfaces.ItemHandlerInterface#
      * createContentStream(java.lang.String, java.lang.String)
      */
+    @Deprecated
     public String createContentStream(final String itemId, final String xmlData) {
         throw new UnsupportedOperationException("Not yet implemented.");
     }
 
+    @Deprecated
     public String createContentStreams(final String id, final String xmlData) {
         throw new UnsupportedOperationException("Not yet implemented.");
     }
 
+    @Deprecated
     public void deleteContentStream(final String id, final String name) throws ItemNotFoundException, SystemException,
         ContentStreamNotFoundException {
         throw new UnsupportedOperationException("Not yet implemented.");
     }
 
+    @Deprecated
     public void deleteContentStreams(final String id) throws ItemNotFoundException, SystemException {
         throw new UnsupportedOperationException("Not yet implemented.");
     }
 
+    @Deprecated
     public String updateContentStream(final String id, final String name, final String xml)
         throws ItemNotFoundException, SystemException, ContentStreamNotFoundException {
         throw new UnsupportedOperationException("Not yet implemented.");
     }
 
+    @Deprecated
     public String updateContentStreams(final String id, final String xmlData) throws ItemNotFoundException,
         SystemException {
         throw new UnsupportedOperationException("Not yet implemented.");
@@ -482,6 +488,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
      * @seede.escidoc.core.om.business.interfaces.ItemHandlerInterface#
      * retrieveContentStream(java.lang.String, java.lang.String)
      */
+    @Deprecated
     public String retrieveContentStream(final String itemId, final String name) throws ItemNotFoundException,
         ContentStreamNotFoundException, AuthorizationException, TripleStoreSystemException, IntegritySystemException,
         WebserverSystemException, FedoraSystemException, XmlParserSystemException {
@@ -495,6 +502,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
         return contentStream;
     }
 
+    @Deprecated
     public EscidocBinaryContent retrieveContentStreamContent(final String itemId, final String name)
         throws ItemNotFoundException, ContentStreamNotFoundException, AuthorizationException, FedoraSystemException,
         TripleStoreSystemException, WebserverSystemException, IntegritySystemException, XmlParserSystemException {
@@ -515,6 +523,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
      * @seede.escidoc.core.om.business.interfaces.ItemHandlerInterface#
      * retrieveContentStreams(java.lang.String)
      */
+    @Deprecated
     public String retrieveContentStreams(final String itemId) throws ItemNotFoundException, AuthorizationException,
         EncodingSystemException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException,
         WebserverSystemException, XmlParserSystemException {
@@ -522,6 +531,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
         return renderContentStreams(true);
     }
 
+    @Deprecated
     private EscidocBinaryContent getContentStream(final String name) throws ContentStreamNotFoundException,
         FedoraSystemException, WebserverSystemException {
 

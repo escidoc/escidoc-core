@@ -411,6 +411,7 @@ public interface ItemHandlerInterface extends IngestableResource {
      * @throws de.escidoc.core.common.exceptions.application.notfound.ContentStreamNotFoundException
      * @return
      */
+    @Deprecated
     EscidocBinaryContent retrieveContentStreamContent(final String itemId, final String name)
         throws ItemNotFoundException, SystemException, ContentStreamNotFoundException, AuthorizationException;
 
@@ -603,6 +604,7 @@ public interface ItemHandlerInterface extends IngestableResource {
      * @throws ItemNotFoundException  Thrown if an item with the specified id could not be found.
      * @throws AuthorizationException Thrown if the authorization fails.
      */
+    @Deprecated
     String retrieveContentStreams(final String id) throws ItemNotFoundException, SystemException,
         AuthorizationException;
 
@@ -613,6 +615,7 @@ public interface ItemHandlerInterface extends IngestableResource {
      * @throws SystemException       If an unexpected error occurs.
      * @return
      */
+    @Deprecated
     String updateContentStreams(final String id, final String xmlData) throws ItemNotFoundException, SystemException;
 
     /**
@@ -620,6 +623,7 @@ public interface ItemHandlerInterface extends IngestableResource {
      * @throws ItemNotFoundException Thrown if an item with the specified id could not be found.
      * @throws SystemException       If an unexpected error occurs.
      */
+    @Deprecated
     void deleteContentStreams(final String id) throws ItemNotFoundException, SystemException;
 
     /**
@@ -633,6 +637,7 @@ public interface ItemHandlerInterface extends IngestableResource {
      * @throws de.escidoc.core.common.exceptions.application.notfound.ContentStreamNotFoundException
      * @throws de.escidoc.core.common.exceptions.system.SystemException
      */
+    @Deprecated
     String retrieveContentStream(final String id, final String name) throws ItemNotFoundException, SystemException,
         ContentStreamNotFoundException, AuthorizationException;
 
@@ -645,6 +650,7 @@ public interface ItemHandlerInterface extends IngestableResource {
      * @throws de.escidoc.core.common.exceptions.application.notfound.ContentStreamNotFoundException
      * @return
      */
+    @Deprecated
     String updateContentStream(final String id, final String name, final String xml) throws ItemNotFoundException,
         SystemException, ContentStreamNotFoundException;
 
@@ -655,6 +661,7 @@ public interface ItemHandlerInterface extends IngestableResource {
      * @throws SystemException       If an unexpected error occurs.
      * @throws de.escidoc.core.common.exceptions.application.notfound.ContentStreamNotFoundException
      */
+    @Deprecated
     void deleteContentStream(final String id, final String name) throws ItemNotFoundException, SystemException,
         ContentStreamNotFoundException;
 
@@ -665,6 +672,7 @@ public interface ItemHandlerInterface extends IngestableResource {
      * @param xmlData The XML representation of the new content stream subresource.
      * @return Returns the value of the subresource.
      */
+    @Deprecated
     String createContentStream(final String id, final String xmlData);
 
     /**
@@ -673,6 +681,7 @@ public interface ItemHandlerInterface extends IngestableResource {
      * @param xmlData
      * @return
      */
+    @Deprecated
     String createContentStreams(final String id, final String xmlData);
 
     //

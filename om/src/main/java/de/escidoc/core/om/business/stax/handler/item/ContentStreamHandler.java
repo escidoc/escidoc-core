@@ -51,6 +51,7 @@ import java.util.Map;
 /**
  * @author Frank Schwichtenberg
  */
+@Deprecated
 public class ContentStreamHandler extends WriteHandler {
 
     private boolean inContentStreams;

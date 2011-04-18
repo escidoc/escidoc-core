@@ -326,6 +326,7 @@ public class ItemClient extends ClientBase
      * @return The HttpMethod after the service call (REST) or the result object (SOAP).
      * @throws Exception If the service call fails.
      */
+    @Deprecated
     public Object retrieveContentStreams(final String itemId) throws Exception {
 
         return callEsciDoc("Item.retrieveContentStreams", METHOD_RETRIEVE_CONTENT_STREAMS, Constants.HTTP_METHOD_GET,
@@ -341,6 +342,7 @@ public class ItemClient extends ClientBase
      * @return The HttpMethod after the service call (REST) or the result object (SOAP).
      * @throws Exception If the service call fails.
      */
+    @Deprecated
     public Object retrieveContentStreamContent(final String itemId, final String contentStreamName) throws Exception {
 
         return callEsciDoc("Item.retrieveContentStreamContent", METHOD_RETRIEVE_CONTENT_STREAM_CONTENT,
@@ -357,6 +359,7 @@ public class ItemClient extends ClientBase
      * @return The HttpMethod after the service call (REST) or the result object (SOAP).
      * @throws Exception If the service call fails.
      */
+    @Deprecated
     public Object retrieveContentStream(final String itemId, final String contentStreamName) throws Exception {
 
         return callEsciDoc("Item.retrieveContentStream", METHOD_RETRIEVE_CONTENT_STREAM, Constants.HTTP_METHOD_GET,

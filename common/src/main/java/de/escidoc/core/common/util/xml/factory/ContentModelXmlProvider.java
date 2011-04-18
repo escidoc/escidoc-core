@@ -145,6 +145,7 @@ public final class ContentModelXmlProvider extends InfrastructureXmlProvider {
      * @return The eSciDoc Content Model Content Streams document.
      * @throws WebserverSystemException If an error occurs.
      */
+    @Deprecated
     public String getContentStreamsXml(final Map<String, Object> values) throws WebserverSystemException {
 
         return getXml(CONTENT_STREAMS_RESOURCE_NAME, CONTENT_STREAM_PATH, values);
@@ -157,6 +158,7 @@ public final class ContentModelXmlProvider extends InfrastructureXmlProvider {
      * @return The eSciDoc Content Model Content Stream document.
      * @throws WebserverSystemException If an error occurs.
      */
+    @Deprecated
     public String getContentStreamXml(final Map<String, Object> values) throws WebserverSystemException {
 
         return getXml(CONTENT_STREAM_RESOURCE_NAME, CONTENT_STREAM_PATH, values);

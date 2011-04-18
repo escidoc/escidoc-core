@@ -45,6 +45,7 @@ import java.util.List;
  *
  * @author Steffen Wagner
  */
+@Deprecated
 public class ContentStreamsHandler extends DefaultHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ContentStreamsHandler.class);

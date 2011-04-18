@@ -212,6 +212,7 @@
 		</descriptor>
 		<!--#
 			# Content streams
+			# deprecated (functionality is given by components of Item) 
 			# -->
 		<descriptor uri="/ir/item/${ITEM-ID}/content-streams">
 			<invoke http="GET" method="retrieveContentStreams" param1="${ITEM-ID}"/>
