@@ -961,6 +961,22 @@
 									</resources>
 								</configuration>
 							</execution>
+							<execution>
+								<id>overwrite-configurations</id>
+								<phase>process-sources</phase>
+								<goals>
+									<goal>copy-resources</goal>
+								</goals>
+								<configuration>
+									<outputDirectory>${project.build.directory}/escidoc/jboss</outputDirectory>
+									<resources>
+										<resource>
+											<directory>src/test/resources/configuration/jboss</directory>
+											<filtering>true</filtering>
+										</resource>
+									</resources>
+								</configuration>
+							</execution>
 						</executions>
 					</plugin>
 					<plugin>
