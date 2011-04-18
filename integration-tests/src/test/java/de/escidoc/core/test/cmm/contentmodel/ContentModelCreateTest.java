@@ -28,6 +28,9 @@
  */
 package de.escidoc.core.test.cmm.contentmodel;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertEquals;
+
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
@@ -38,8 +41,6 @@ import org.w3c.dom.Document;
 
 import java.util.List;
 import java.util.Map;
-
-import static org.junit.Assert.assertFalse;
 
 /**
  * Test the mock implementation of the item resource.
@@ -212,6 +213,34 @@ public class ContentModelCreateTest extends ContentModelTestBase {
 
         String versionHistory = retrieveVersionHistory(cmId);
         assertFalse("Wrong references", versionHistory.contains("item"));
+    }
+
+    /**
+     * Test if md-record-name of resource-definitions of ContentModel is handled
+     * well.
+     * 
+     * See issue INFR-1122
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    public void testCmMetadataRecordName() throws Exception {
+
+        String xPath = "/content-model/resource-definitions/resource-definition[@name='trans']/md-record-name";
+        Document contentModel =
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
+                "content-model-all-for-create.xml");
+
+        String mdRecordName = "blafasel" + System.nanoTime();
+        substitute(contentModel, xPath, mdRecordName);
+
+        String contentModelXml = toString(contentModel, false);
+        String createdXML = create(contentModelXml);
+
+        Document cmCreated = EscidocRestSoapTestBase.getDocument(createdXML);
+
+        assertEquals("Wrong md-record-name", mdRecordName, selectSingleNode(cmCreated, xPath + "/text()")
+            .getNodeValue());
     }
 
 }

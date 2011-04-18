@@ -186,10 +186,12 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
 
     /**
      * Get Common values from ContentModel.
-     *
-     * @param contentModel The ContentModel.
+     * 
+     * @param contentModel
+     *            The ContentModel.
      * @return Map with common ContentModel values.
-     * @throws WebserverSystemException Thrown if values extracting failed.
+     * @throws WebserverSystemException
+     *             Thrown if values extracting failed.
      */
     private Map<String, String> getCommonValues(final ContentModel contentModel) throws WebserverSystemException {
 
@@ -251,8 +253,9 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
 
     /**
      * Prepare properties values from content model resource as velocity values.
-     *
-     * @param contentModel The Content Model.
+     * 
+     * @param contentModel
+     *            The Content Model.
      * @return Map with properties values (for velocity template)
      * @throws de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException
      * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
@@ -462,18 +465,26 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
 
         if (!methodNames.isEmpty()) {
             for (final String methodName : methodNames) {
-                final Map<String, String> resourceDefinition = new HashMap<String, String>();
-                resourceDefinition.put("name", methodName);
-                resourceDefinition.put("xsltHref", getContentModel().getHref()
-                    + "/resource-definitions/resource-definition/" + methodName + "/xslt/content");
-                // FIXME get from service deployment
-                // <http://escidoc.de/core/01/tmp/transforms>
-                // it's just a name or
-                resourceDefinition.put("mdRecordName", "escidoc");
-                // it's a URL
-                // resourceDefinition.put("xmlHref", "http://xml.to/transform");
 
-                resourceDefinitions.add(resourceDefinition);
+                for (final String sdef : sdefs) {
+                    final Map<String, String> resourceDefinition = new HashMap<String, String>();
+                    resourceDefinition.put("name", methodName);
+                    resourceDefinition.put("xsltHref", getContentModel().getHref()
+                        + "/resource-definitions/resource-definition/" + methodName + "/xslt/content");
+
+                    // md-record-name
+                    String mdRecordName =
+                        getTripleStoreUtility().getPropertiesElements(sdef, "http://escidoc.de/core/01/tmp/transforms");
+
+                    // FIXME get from service deployment
+                    // <http://escidoc.de/core/01/tmp/transforms>
+                    // it's just a name or
+                    resourceDefinition.put("mdRecordName", mdRecordName);
+                    // it's a URL
+                    // resourceDefinition.put("xmlHref", "http://xml.to/transform");
+
+                    resourceDefinitions.add(resourceDefinition);
+                }
             }
         }
 

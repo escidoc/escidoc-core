@@ -125,26 +125,6 @@ public class ContentModelCreate extends GenericResourceCreate {
         this.idProvider = idProvider;
     }
 
-    // /**
-    // * Persist whole ContentModel to Repository and force TripleStore sync.
-    // *
-    // * @throws SystemException
-    // * @throws MissingMdRecordException
-    // * @throws InvalidStatusException
-    // * @throws FileNotFoundException
-    // * @throws RelationPredicateNotFoundException
-    // * @throws ReferencedResourceNotFoundException
-    // * @throws InvalidContentException
-    // * @throws MissingAttributeValueException
-    // */
-    // public void persist() throws SystemException, InvalidStatusException,
-    // MissingMdRecordException, FileNotFoundException,
-    // InvalidContentException, ReferencedResourceNotFoundException,
-    // RelationPredicateNotFoundException, MissingAttributeValueException {
-    //
-    // persist(true);
-    // }
-
     /**
      * Persist whole ContentModel to Repository.
      *
