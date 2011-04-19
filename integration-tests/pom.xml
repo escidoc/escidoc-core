@@ -51,22 +51,13 @@
 				<version>2.2</version>
 				<executions>
 					<execution>
-						<id>deploy-testdata</id>
+						<id>download-installer</id>
 						<phase>initialize</phase>
 						<goals>
 							<goal>copy</goal>
 						</goals>
 						<configuration>
 							<artifactItems>
-								<artifactItem>
-									<groupId>org.escidoc</groupId>
-									<artifactId>testdata</artifactId>
-									<version>0.0.2-alpha1</version>
-									<type>war</type>
-									<overWrite>false</overWrite>
-									<outputDirectory>${project.build.directory}/escidoc/jboss/server/default/deploy</outputDirectory>
-									<destFileName>testdata.war</destFileName>
-								</artifactItem>
 								<artifactItem>
 									<groupId>org.escidoc.core</groupId>
 									<artifactId>installer</artifactId>
@@ -123,10 +114,13 @@
 							<arguments>
 								<argument>-Dskip.validation=true</argument>
 								<argument>-jar</argument>
-								<argument>${project.build.directory}/escidoc-installer-standard.jar</argument>
-								<argument>${project.build.directory}/${escidoc.installer.config}</argument>
+								<argument>${project.build.directory}/escidoc-installer-standard.jar
+								</argument>
+								<argument>${project.build.directory}/${escidoc.installer.config}
+								</argument>
 							</arguments>
-							<outputFile>${project.build.directory}/escidoc-installer.log</outputFile>
+							<outputFile>${project.build.directory}/escidoc-installer.log
+							</outputFile>
 						</configuration>
 					</execution>
 				</executions>
@@ -173,6 +167,16 @@
 							<cargo.jvmargs>-Xmx1024m -Xms312m -XX:MaxPermSize=320m
 									</cargo.jvmargs>
 						</properties>
+								<deployables>
+									<deployable>
+										<groupId>org.escidoc</groupId>
+										<artifactId>testdata</artifactId>
+										<type>war</type>
+										<properties>
+											<context>testdata</context>
+										</properties>
+									</deployable>
+								</deployables>
 					</configuration>
 				</configuration>
 			</plugin>
@@ -195,47 +199,63 @@
 					<noImports>true</noImports>
 					<runTestCasesAsUnitTests>false</runTestCasesAsUnitTests>
 					<subPackageByFileName>false</subPackageByFileName>
-					<outputDirectory>${project.build.directory}/generated-sources/</outputDirectory>
+					<outputDirectory>${project.build.directory}/generated-sources/
+					</outputDirectory>
 					<urls>
 						<!-- AA -->
 						<url>${escidoc.url}/axis/services/ActionHandlerService?wsdl</url>
 						<!-- wasn't there in 1.2 -->
 						<url>${escidoc.url}/axis/services/AdminService?wsdl</url>
 						<url>${escidoc.url}/axis/services/AdminHandlerService?wsdl</url>
-						<url>${escidoc.url}/axis/services/PolicyDecisionPointService?wsdl</url>
+						<url>${escidoc.url}/axis/services/PolicyDecisionPointService?wsdl
+						</url>
 						<url>${escidoc.url}/axis/services/RoleHandlerService?wsdl</url>
-						<url>${escidoc.url}/axis/services/UserAccountHandlerService?wsdl</url>
-						<url>${escidoc.url}/axis/services/UserGroupHandlerService?wsdl</url>
-						<url>${escidoc.url}/axis/services/UserManagementWrapperService?wsdl</url>
+						<url>${escidoc.url}/axis/services/UserAccountHandlerService?wsdl
+						</url>
+						<url>${escidoc.url}/axis/services/UserGroupHandlerService?wsdl
+						</url>
+						<url>${escidoc.url}/axis/services/UserManagementWrapperService?wsdl
+						</url>
 
 						<!-- common -->
-						<url>${escidoc.url}/axis/services/SoapExceptionGenerationService?wsdl</url>
+						<url>${escidoc.url}/axis/services/SoapExceptionGenerationService?wsdl
+						</url>
 
 						<!-- CMM -->
-						<url>${escidoc.url}/axis/services/ContentModelHandlerService?wsdl</url>
+						<url>${escidoc.url}/axis/services/ContentModelHandlerService?wsdl
+						</url>
 
 						<!-- OM -->
-						<url>${escidoc.url}/axis/services/ContainerHandlerService?wsdl</url>
-						<url>${escidoc.url}/axis/services/ContentRelationHandlerService?wsdl</url>
+						<url>${escidoc.url}/axis/services/ContainerHandlerService?wsdl
+						</url>
+						<url>${escidoc.url}/axis/services/ContentRelationHandlerService?wsdl
+						</url>
 						<url>${escidoc.url}/axis/services/ContextHandlerService?wsdl</url>
 						<url>${escidoc.url}/axis/services/ItemHandlerService?wsdl</url>
 						<url>${escidoc.url}/axis/services/IngestHandlerService?wsdl</url>
-						<url>${escidoc.url}/axis/services/SemanticStoreHandlerService?wsdl</url>
+						<url>${escidoc.url}/axis/services/SemanticStoreHandlerService?wsdl
+						</url>
 
 						<!-- OUM -->
-						<url>${escidoc.url}/axis/services/OrganizationalUnitHandlerService?wsdl</url>
+						<url>${escidoc.url}/axis/services/OrganizationalUnitHandlerService?wsdl
+						</url>
 
 						<!-- OAI -->
-						<url>${escidoc.url}/axis/services/SetDefinitionHandlerService?wsdl</url>
+						<url>${escidoc.url}/axis/services/SetDefinitionHandlerService?wsdl
+						</url>
 
 						<!-- SB -->
 						<url>${escidoc.url}/srw/search?wsdl</url>
 
 						<!-- SM -->
-						<url>${escidoc.url}/axis/services/StatisticDataHandlerService?wsdl</url>
-						<url>${escidoc.url}/axis/services/AggregationDefinitionHandlerService?wsdl</url>
-						<url>${escidoc.url}/axis/services/PreprocessingHandlerService?wsdl</url>
-						<url>${escidoc.url}/axis/services/ReportDefinitionHandlerService?wsdl</url>
+						<url>${escidoc.url}/axis/services/StatisticDataHandlerService?wsdl
+						</url>
+						<url>${escidoc.url}/axis/services/AggregationDefinitionHandlerService?wsdl
+						</url>
+						<url>${escidoc.url}/axis/services/PreprocessingHandlerService?wsdl
+						</url>
+						<url>${escidoc.url}/axis/services/ReportDefinitionHandlerService?wsdl
+						</url>
 						<url>${escidoc.url}/axis/services/ReportHandlerService?wsdl</url>
 						<url>${escidoc.url}/axis/services/ScopeHandlerService?wsdl</url>
 
@@ -552,36 +572,36 @@
 					</dependency>
 				</dependencies>
 			</plugin>
-            <plugin>
-                <groupId>com.googlecode.maven-java-formatter-plugin</groupId>
-                <artifactId>maven-java-formatter-plugin</artifactId>
-                <configuration>
-                    <compilerSource>1.6</compilerSource>
-                    <compilerCompliance>1.6</compilerCompliance>
-                    <compilerTargetPlatform>1.6</compilerTargetPlatform>
-                    <lineEnding>CRLF</lineEnding>
-                    <encoding>UTF-8</encoding>
-                    <configFile>${project.parent.basedir}/etc/eSciDoc_codestyle.xml</configFile>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>process-sources</phase>
-                        <goals>
-                            <goal>format</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+			<plugin>
+				<groupId>com.googlecode.maven-java-formatter-plugin</groupId>
+				<artifactId>maven-java-formatter-plugin</artifactId>
+				<configuration>
+					<compilerSource>1.6</compilerSource>
+					<compilerCompliance>1.6</compilerCompliance>
+					<compilerTargetPlatform>1.6</compilerTargetPlatform>
+					<lineEnding>CRLF</lineEnding>
+					<encoding>UTF-8</encoding>
+					<configFile>${project.parent.basedir}/etc/eSciDoc_codestyle.xml</configFile>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>process-sources</phase>
+						<goals>
+							<goal>format</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
 	<dependencies>
-		<dependency>
-			<groupId>org.escidoc</groupId>
-			<artifactId>escidoc-core</artifactId>
-			<version>trunk-SNAPSHOT</version>
-			<type>ear</type>
-		</dependency>
+	<dependency>
+		<groupId>org.escidoc</groupId>
+		<artifactId>testdata</artifactId>
+		<version>0.0.2-alpha1</version>
+		<type>war</type>
+	</dependency>
 		<dependency>
 			<groupId>org.escidoc.core</groupId>
 			<artifactId>common</artifactId>
@@ -791,14 +811,17 @@
 									<goal>copy-resources</goal>
 								</goals>
 								<configuration>
-									<outputDirectory>${basedir}/target/foxml-resources</outputDirectory>
+									<outputDirectory>${basedir}/target/foxml-resources
+									</outputDirectory>
 									<resources>
 										<resource>
-											<directory>src/test/resources/examples/common/foxml1.1</directory>
+											<directory>src/test/resources/examples/common/foxml1.1
+											</directory>
 											<filtering>true</filtering>
 										</resource>
 										<resource>
-											<directory>src/test/resources/examples/pubman/foxml1.1</directory>
+											<directory>src/test/resources/examples/pubman/foxml1.1
+											</directory>
 											<filtering>true</filtering>
 										</resource>
 									</resources>
@@ -811,10 +834,12 @@
 									<goal>copy-resources</goal>
 								</goals>
 								<configuration>
-									<outputDirectory>${project.build.directory}/escidoc/jboss</outputDirectory>
+									<outputDirectory>${project.build.directory}/escidoc/jboss
+									</outputDirectory>
 									<resources>
 										<resource>
-											<directory>src/test/resources/configuration/jboss/postgres</directory>
+											<directory>src/test/resources/configuration/jboss/postgres
+											</directory>
 											<filtering>true</filtering>
 										</resource>
 									</resources>
@@ -839,7 +864,8 @@
 						<!-- common configuration shared by all executions -->
 						<configuration>
 							<driver>org.postgresql.Driver</driver>
-							<url>jdbc:postgresql://${escidoc.database.postgresql.url}/postgres</url>
+							<url>jdbc:postgresql://${escidoc.database.postgresql.url}/postgres
+							</url>
 							<settingsKey>escidoc-core-db-admin</settingsKey>
 						</configuration>
 						<executions>
@@ -853,9 +879,11 @@
 								</goals>
 								<configuration>
 									<!-- need another database to drop the targeted one -->
-									<url>jdbc:postgresql://${escidoc.database.postgresql.url}/postgres</url>
+									<url>jdbc:postgresql://${escidoc.database.postgresql.url}/postgres
+									</url>
 									<autocommit>true</autocommit>
-									<sqlCommand>DROP DATABASE IF EXISTS "${escidoc.database}"</sqlCommand>
+									<sqlCommand>DROP DATABASE IF EXISTS "${escidoc.database}"
+									</sqlCommand>
 									<onError>continue</onError>
 								</configuration>
 							</execution>
@@ -869,9 +897,11 @@
 								</goals>
 								<configuration>
 									<!-- need another database to drop the targeted one -->
-									<url>jdbc:postgresql://${escidoc.database.postgresql.url}/postgres</url>
+									<url>jdbc:postgresql://${escidoc.database.postgresql.url}/postgres
+									</url>
 									<autocommit>true</autocommit>
-									<sqlCommand>DROP ROLE IF EXISTS "${escidoc.database.user}"</sqlCommand>
+									<sqlCommand>DROP ROLE IF EXISTS "${escidoc.database.user}"
+									</sqlCommand>
 									<onError>continue</onError>
 								</configuration>
 							</execution>
@@ -883,7 +913,8 @@
 								</goals>
 								<configuration>
 									<driver>org.postgresql.Driver</driver>
-									<url>jdbc:postgresql://${escidoc.database.postgresql.url}/${escidoc.database}</url>
+									<url>jdbc:postgresql://${escidoc.database.postgresql.url}/${escidoc.database}
+									</url>
 									<username>${escidoc.database.user}</username>
 									<password>${escidoc.database.password}</password>
 									<autocommit>true</autocommit>
@@ -932,10 +963,12 @@
 									<goal>copy-resources</goal>
 								</goals>
 								<configuration>
-									<outputDirectory>${basedir}/target/sql-resources/oracle</outputDirectory>
+									<outputDirectory>${basedir}/target/sql-resources/oracle
+									</outputDirectory>
 									<resources>
 										<resource>
-											<directory>${basedir}/../common/src/main/resources/sql/oracle</directory>
+											<directory>${basedir}/../common/src/main/resources/sql/oracle
+											</directory>
 											<filtering>true</filtering>
 										</resource>
 									</resources>
@@ -948,14 +981,17 @@
 									<goal>copy-resources</goal>
 								</goals>
 								<configuration>
-									<outputDirectory>${basedir}/target/foxml-resources</outputDirectory>
+									<outputDirectory>${basedir}/target/foxml-resources
+									</outputDirectory>
 									<resources>
 										<resource>
-											<directory>src/test/resources/examples/common/foxml1.1</directory>
+											<directory>src/test/resources/examples/common/foxml1.1
+											</directory>
 											<filtering>true</filtering>
 										</resource>
 										<resource>
-											<directory>src/test/resources/examples/pubman/foxml1.1</directory>
+											<directory>src/test/resources/examples/pubman/foxml1.1
+											</directory>
 											<filtering>true</filtering>
 										</resource>
 									</resources>
@@ -968,10 +1004,12 @@
 									<goal>copy-resources</goal>
 								</goals>
 								<configuration>
-									<outputDirectory>${project.build.directory}/escidoc/jboss</outputDirectory>
+									<outputDirectory>${project.build.directory}/escidoc/jboss
+									</outputDirectory>
 									<resources>
 										<resource>
-											<directory>src/test/resources/configuration/jboss/oracle</directory>
+											<directory>src/test/resources/configuration/jboss/oracle
+											</directory>
 											<filtering>true</filtering>
 										</resource>
 									</resources>
@@ -994,7 +1032,8 @@
 						<!-- common configuration shared by all executions -->
 						<configuration>
 							<driver>oracle.jdbc.driver.OracleDriver</driver>
-							<url>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${escidoc.oracle.database}</url>
+							<url>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${escidoc.oracle.database}
+							</url>
 							<username>${escidoc.oracle.database.admin.user}</username>
 							<password>${escidoc.oracle.database.admin.password}</password>
 							<delimiter>/</delimiter>
@@ -1010,7 +1049,8 @@
 								</goals>
 								<configuration>
 									<driver>oracle.jdbc.driver.OracleDriver</driver>
-									<url>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${escidoc.oracle.database}</url>
+									<url>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${escidoc.oracle.database}
+									</url>
 									<username>${escidoc.oracle.database.admin.user}</username>
 									<password>${escidoc.oracle.database.admin.password}</password>
 									<autocommit>true</autocommit>
@@ -1031,7 +1071,8 @@
 								</goals>
 								<configuration>
 									<driver>oracle.jdbc.driver.OracleDriver</driver>
-									<url>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${escidoc.oracle.database}</url>
+									<url>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${escidoc.oracle.database}
+									</url>
 									<username>${escidoc.database.user}</username>
 									<password>${escidoc.database.password}</password>
 									<autocommit>true</autocommit>
@@ -1081,7 +1122,8 @@
 						<!-- common configuration shared by all executions -->
 						<configuration>
 							<driver>org.postgresql.Driver</driver>
-							<url>jdbc:postgresql://${escidoc.database.postgresql.url}/postgres</url>
+							<url>jdbc:postgresql://${escidoc.database.postgresql.url}/postgres
+							</url>
 							<!-- use your settings.xml to configure username and password -->
 							<settingsKey>escidoc-core-db-admin</settingsKey>
 						</configuration>
@@ -1094,9 +1136,11 @@
 								</goals>
 								<configuration>
 									<!-- need another database to drop the targeted one -->
-									<url>jdbc:postgresql://${escidoc.database.postgresql.url}/postgres</url>
+									<url>jdbc:postgresql://${escidoc.database.postgresql.url}/postgres
+									</url>
 									<autocommit>true</autocommit>
-									<sqlCommand>DROP DATABASE IF EXISTS "${fedora.database}"</sqlCommand>
+									<sqlCommand>DROP DATABASE IF EXISTS "${fedora.database}"
+									</sqlCommand>
 									<onError>continue</onError>
 								</configuration>
 							</execution>
@@ -1108,9 +1152,11 @@
 								</goals>
 								<configuration>
 									<!-- need another database to drop the targeted one -->
-									<url>jdbc:postgresql://${escidoc.database.postgresql.url}/postgres</url>
+									<url>jdbc:postgresql://${escidoc.database.postgresql.url}/postgres
+									</url>
 									<autocommit>true</autocommit>
-									<sqlCommand>DROP DATABASE IF EXISTS "${triplestore.database}"</sqlCommand>
+									<sqlCommand>DROP DATABASE IF EXISTS "${triplestore.database}"
+									</sqlCommand>
 									<onError>continue</onError>
 								</configuration>
 							</execution>
@@ -1122,9 +1168,11 @@
 								</goals>
 								<configuration>
 									<!-- need another database to drop the targeted one -->
-									<url>jdbc:postgresql://${escidoc.database.postgresql.url}/postgres</url>
+									<url>jdbc:postgresql://${escidoc.database.postgresql.url}/postgres
+									</url>
 									<autocommit>true</autocommit>
-									<sqlCommand>DROP ROLE IF EXISTS "${fedora.database.user}"</sqlCommand>
+									<sqlCommand>DROP ROLE IF EXISTS "${fedora.database.user}"
+									</sqlCommand>
 									<onError>continue</onError>
 								</configuration>
 							</execution>
@@ -1152,10 +1200,12 @@
 									<goal>copy-resources</goal>
 								</goals>
 								<configuration>
-									<outputDirectory>${basedir}/target/sql-resources/oracle</outputDirectory>
+									<outputDirectory>${basedir}/target/sql-resources/oracle
+									</outputDirectory>
 									<resources>
 										<resource>
-											<directory>${basedir}/../common/src/main/resources/sql/oracle</directory>
+											<directory>${basedir}/../common/src/main/resources/sql/oracle
+											</directory>
 											<filtering>true</filtering>
 										</resource>
 									</resources>
@@ -1178,12 +1228,13 @@
 						<!-- common configuration shared by all executions -->
 						<configuration>
 							<driver>oracle.jdbc.driver.OracleDriver</driver>
-							<url>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${fedora.oracle.database}</url>
+							<url>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${fedora.oracle.database}
+							</url>
 							<username>${fedora.oracle.database.admin.user}</username>
 							<password>${fedora.oracle.database.admin.password}</password>
-          					<delimiter>/</delimiter>
-          					<delimiterType>row</delimiterType>
-          					<keepFormat>true</keepFormat>
+							<delimiter>/</delimiter>
+							<delimiterType>row</delimiterType>
+							<keepFormat>true</keepFormat>
 						</configuration>
 						<executions>
 							<execution>
@@ -1194,13 +1245,14 @@
 								</goals>
 								<configuration>
 									<driver>oracle.jdbc.driver.OracleDriver</driver>
-									<url>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${fedora.oracle.database}</url>
+									<url>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${fedora.oracle.database}
+									</url>
 									<username>${fedora.oracle.database.admin.user}</username>
 									<password>${fedora.oracle.database.admin.password}</password>
 									<autocommit>true</autocommit>
-          							<delimiter>/</delimiter>
-          							<delimiterType>row</delimiterType>
-          							<keepFormat>true</keepFormat>
+									<delimiter>/</delimiter>
+									<delimiterType>row</delimiterType>
+									<keepFormat>true</keepFormat>
 									<srcFiles>
 										<srcFile>${basedir}/target/sql-resources/oracle/drop-fedora-db.sql
 										</srcFile>
@@ -1239,19 +1291,26 @@
 									<skip>${skipITs}</skip>
 									<executable>java</executable>
 									<mainClass>org.fcrepo.client.utility.ingest.Ingest</mainClass>
-									<workingDirectory>${basedir}${file.separator}target</workingDirectory>
+									<workingDirectory>${basedir}${file.separator}target
+									</workingDirectory>
 									<arguments>
 										<argument>-Xms64m</argument>
 										<argument>-Xmx96m</argument>
 
 										<argument>-classpath</argument>
-										<argument>${project.build.directory}${file.separator}escidoc${file.separator}fedora${file.separator}client${file.separator}bin${path.separator}${project.build.directory}${file.separator}escidoc${file.separator}fedora${file.separator}client${file.separator}fcrepo-client-admin-${fcrepo.version}.jar</argument>
-										<argument>-Djava.endorsed.dirs=${project.build.directory}${file.separator}escidoc${file.separator}fedora${file.separator}client${file.separator}lib</argument>
-										<argument>-Djavax.net.ssl.trustStore=${project.build.directory}${file.separator}escidoc${file.separator}fedora${file.separator}client${file.separator}truststore</argument>
+										<argument>${project.build.directory}${file.separator}escidoc${file.separator}fedora${file.separator}client${file.separator}bin${path.separator}${project.build.directory}${file.separator}escidoc${file.separator}fedora${file.separator}client${file.separator}fcrepo-client-admin-${fcrepo.version}.jar
+										</argument>
+										<argument>-Djava.endorsed.dirs=${project.build.directory}${file.separator}escidoc${file.separator}fedora${file.separator}client${file.separator}lib
+										</argument>
+										<argument>-Djavax.net.ssl.trustStore=${project.build.directory}${file.separator}escidoc${file.separator}fedora${file.separator}client${file.separator}truststore
+										</argument>
 										<argument>-Djavax.net.ssl.trustStorePassword=tomcat</argument>
-										<argument>-Djavax.xml.parsers.DocumentBuilderFactory=org.apache.xerces.jaxp.DocumentBuilderFactoryImpl</argument>
-										<argument>-Djavax.xml.parsers.SAXParserFactory=org.apache.xerces.jaxp.SAXParserFactoryImpl</argument>
-										<argument>-Dfedora.home=${project.build.directory}${file.separator}escidoc${file.separator}fedora</argument>
+										<argument>-Djavax.xml.parsers.DocumentBuilderFactory=org.apache.xerces.jaxp.DocumentBuilderFactoryImpl
+										</argument>
+										<argument>-Djavax.xml.parsers.SAXParserFactory=org.apache.xerces.jaxp.SAXParserFactoryImpl
+										</argument>
+										<argument>-Dfedora.home=${project.build.directory}${file.separator}escidoc${file.separator}fedora
+										</argument>
 
 										<argument>org.fcrepo.client.utility.ingest.Ingest</argument>
 										<argument>d</argument>
@@ -1263,7 +1322,8 @@
 										<argument>http</argument>
 
 									</arguments>
-									<outputFile>${project.build.directory}${file.separator}fcrepo-ingest.log</outputFile>
+									<outputFile>${project.build.directory}${file.separator}fcrepo-ingest.log
+									</outputFile>
 								</configuration>
 							</execution>
 						</executions>
