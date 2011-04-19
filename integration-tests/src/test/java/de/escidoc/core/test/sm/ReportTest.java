@@ -375,9 +375,9 @@ public class ReportTest extends ReportTestBase {
         }
         expected = replaceYear(expected, "2009");
 
-        result = result.replaceAll("\\s+", "");
+        result = result.replaceAll("\\s+", "").toLowerCase();
         result = result.replaceFirst(".*?<report:report-record.*?>", "");
-        expected = expected.replaceAll("\\s+", "");
+        expected = expected.replaceAll("\\s+", "").toLowerCase();
         expected = expected.replaceFirst(".*?<report:report-record.*?>", "");
         if (expected.equals(result)) {
             return "OK";
