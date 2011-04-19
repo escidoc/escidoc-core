@@ -28,10 +28,8 @@
  */
 package de.escidoc.core.adm.business.admin;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -44,12 +42,13 @@ import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.util.IOUtils;
 import de.escidoc.core.common.util.Version;
+import de.escidoc.core.common.util.db.DatabaseType;
 import de.escidoc.core.common.util.db.Fingerprint;
 
 /**
  * Get some interesting information about the eSciDoc framework.
  * 
- * @author Andr&eacute; Schenk
+ * @author André Schenk
  */
 public class FrameworkInfo extends JdbcDaoSupport {
 
@@ -88,9 +87,8 @@ public class FrameworkInfo extends JdbcDaoSupport {
     /**
      * Database query to get the latest version.
      */
-    private static final String QUERY_LATEST_VERSION =
-        "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_DATE + "=(SELECT MAX(" + COLUMN_DATE + ") FROM "
-            + TABLE_NAME + ')';
+    private static final String QUERY_LATEST_VERSION = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_DATE
+        + "=(SELECT MAX(" + COLUMN_DATE + ") FROM " + TABLE_NAME + ')';
 
     /**
      * path to XML file with the finger print of the "escidoc-core" database.
@@ -162,16 +160,16 @@ public class FrameworkInfo extends JdbcDaoSupport {
      *             Thrown if the structure of the database could not be determined
      * @throws java.io.FileNotFoundException
      */
-    public boolean isConsistent() throws IOException, SQLException, FileNotFoundException {
+    public boolean isConsistent() throws IOException, SQLException {
         boolean result = false;
         Connection connection = null;
         try {
             connection = getConnection();
-            final DatabaseMetaData metaData = connection.getMetaData();
             final Fingerprint currentFingerprint = new Fingerprint(connection);
             final Fingerprint storedFingerprint =
                 Fingerprint.readObject(getClass().getResourceAsStream(
-                    FINGERPRINT_PATH + metaData.getDatabaseProductName() + "/" + DB_VERSION.toString() + ".xml"));
+                    FINGERPRINT_PATH + DatabaseType.valueOf(connection).getProductName() + "/" + DB_VERSION.toString()
+                        + ".xml"));
             result = storedFingerprint.equals(currentFingerprint);
         }
         finally {
