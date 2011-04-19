@@ -60,17 +60,7 @@ public class ReportParametersStaxHandler extends DefaultHandler {
     @Override
     public StartElement startElement(final StartElement element) throws Exception {
         if ("report-definition".equals(element.getLocalName())) {
-            try {
-                reportParametersVo.setReportDefinitionId(XmlUtility.getIdFromStartElement(element));
-            }
-            catch (final MissingAttributeValueException e) {
-                if (LOGGER.isWarnEnabled()) {
-                    LOGGER.warn("Missing attribute value.");
-                }
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("Missing attribute value.", e);
-                }
-            }
+            reportParametersVo.setReportDefinitionId(XmlUtility.getIdFromStartElement(element));
         }
         else if ("parameter".equals(element.getLocalName())) {
             this.parameterVo = new ParameterVo();

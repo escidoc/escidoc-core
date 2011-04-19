@@ -94,9 +94,6 @@ public class ReportDefinitionStaxHandler extends DefaultHandler {
                 }
             }
             catch (final MissingAttributeValueException e) {
-                if (LOGGER.isWarnEnabled()) {
-                    LOGGER.warn("Missing attribute value.");
-                }
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Missing attribute value.", e);
                 }
