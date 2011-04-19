@@ -1,6 +1,6 @@
 CREATE TABLE sm.scopes ( 
   id VARCHAR2(255) not null,
-  name VARCHAR2(255) not null,
+  name VARCHAR2(255 CHAR) not null,
   scope_type VARCHAR2(20) not null,
   creator_id VARCHAR2(255),
   creation_date TIMESTAMP,
@@ -22,7 +22,7 @@ CREATE TABLE sm.statistic_data (
 CREATE TABLE sm.aggregation_definitions ( 
   id VARCHAR2(255) not null,
   scope_id VARCHAR2(255) NOT NULL,
-  name VARCHAR2(255) NOT NULL,
+  name VARCHAR2(255 CHAR) NOT NULL,
   creator_id VARCHAR2(255),
   creation_date TIMESTAMP,
    CONSTRAINT FK_AD_SCOPE_ID FOREIGN KEY (scope_id) REFERENCES sm.scopes
@@ -33,7 +33,7 @@ CREATE TABLE sm.aggregation_definitions (
 CREATE TABLE sm.aggregation_tables ( 
   id VARCHAR2(255) not null,
   aggregation_definition_id VARCHAR2(255) NOT NULL,
-  name VARCHAR2(255) NOT NULL,
+  name VARCHAR2(255 CHAR) NOT NULL,
   list_index NUMERIC(2,0) NOT NULL,
    CONSTRAINT FK_AT_AGG_DEF FOREIGN KEY (aggregation_definition_id) REFERENCES sm.aggregation_definitions
    ON DELETE CASCADE,
@@ -43,7 +43,7 @@ CREATE TABLE sm.aggregation_tables (
 CREATE TABLE sm.aggregation_table_indexes ( 
   id VARCHAR2(255) not null,
   aggregation_table_id VARCHAR2(255) NOT NULL,
-  name VARCHAR2(255) NOT NULL,
+  name VARCHAR2(255 CHAR) NOT NULL,
   list_index NUMERIC(2,0) NOT NULL,
    CONSTRAINT FK_ATI_AGG_TABLE FOREIGN KEY (aggregation_table_id) REFERENCES sm.aggregation_tables
    ON DELETE CASCADE,
@@ -64,7 +64,7 @@ CREATE TABLE sm.aggregation_table_fields (
   id VARCHAR2(255) not null,
   aggregation_table_id VARCHAR2(255) NOT NULL,
   field_type_id NUMERIC(2,0) NOT NULL,
-  name VARCHAR2(255) NOT NULL,
+  name VARCHAR2(255 CHAR) NOT NULL,
   feed VARCHAR2(255),
   xpath CLOB,
   data_type VARCHAR2(10),
@@ -119,7 +119,7 @@ ON sm.preprocessing_logs (processing_date, has_error);
 CREATE TABLE sm.report_definitions ( 
   id VARCHAR2(255) not null,
   scope_id VARCHAR2(255) NOT NULL,
-  name VARCHAR2(255) NOT NULL,
+  name VARCHAR2(255 CHAR) NOT NULL,
   sql CLOB NOT NULL,
   creator_id VARCHAR2(255),
   creation_date TIMESTAMP,

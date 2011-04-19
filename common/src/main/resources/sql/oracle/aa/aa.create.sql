@@ -1,7 +1,7 @@
 CREATE TABLE aa.user_account ( 
   id VARCHAR2(255) NOT NULL,
   active NUMBER(1,0),
-  name VARCHAR2(255) NOT NULL,
+  name VARCHAR2(255 CHAR) NOT NULL,
   loginname VARCHAR2(255) NOT NULL,
   password VARCHAR2(255),
   creator_id VARCHAR2(255),
@@ -16,9 +16,9 @@ CREATE TABLE aa.user_account (
 
 CREATE TABLE aa.user_group (
   id VARCHAR2(255) NOT NULL,
-  label VARCHAR2(255) NOT NULL,
+  label VARCHAR2(255 CHAR) NOT NULL,
   active NUMBER(1,0),
-  name VARCHAR2(255) NOT NULL,
+  name VARCHAR2(255 CHAR) NOT NULL,
   description CLOB,
   type VARCHAR2(255),
   email VARCHAR2(255),
@@ -35,7 +35,7 @@ CREATE TABLE aa.user_group (
 CREATE TABLE aa.user_group_member (
   id VARCHAR2(255) NOT NULL,
   user_group_id VARCHAR2(255) NOT NULL,
-  name VARCHAR2(255) NOT NULL,
+  name VARCHAR2(255 CHAR) NOT NULL,
   type VARCHAR2(255) NOT NULL,
   value VARCHAR2(255) NOT NULL,
   CONSTRAINT PK_USER_GROUP_MEMBER PRIMARY KEY(id),
@@ -47,7 +47,7 @@ ON aa.user_group_member (type, name, value);
 
 CREATE TABLE aa.escidoc_role (
   id VARCHAR2(255) NOT NULL,
-  role_name VARCHAR2(255) NOT NULL,
+  role_name VARCHAR2(255 CHAR) NOT NULL,
   description CLOB,
   creator_id VARCHAR2(255),
   creation_date TIMESTAMP,
@@ -114,9 +114,9 @@ CREATE TABLE aa.role_grant (
   group_id VARCHAR2(255),
   role_id VARCHAR2(255) NOT NULL,
   object_id VARCHAR2(255), 
-  object_title VARCHAR2(255),
+  object_title VARCHAR2(255 CHAR),
   object_href VARCHAR2(255),
-  grant_remark VARCHAR2(255) NULL,
+  grant_remark VARCHAR2(255 CHAR) NULL,
   creator_id VARCHAR2(255),
   creation_date TIMESTAMP,
   revoker_id VARCHAR2(255),
@@ -144,8 +144,8 @@ ON aa.role_grant (group_id, role_id);
 CREATE TABLE aa.user_preference (
   id VARCHAR2(255) NOT NULL,
   user_id VARCHAR2(255),
-  name VARCHAR2(255),
-  value VARCHAR2(255),
+  name VARCHAR2(255 CHAR),
+  value VARCHAR2(255 CHAR),
   CONSTRAINT PK_USER_PREFERENCE PRIMARY KEY(id),
   CONSTRAINT FK_PREFERENCE_USER FOREIGN KEY (user_id) REFERENCES aa.user_account (id)
 );
@@ -153,8 +153,8 @@ CREATE TABLE aa.user_preference (
 CREATE TABLE aa.user_attribute (
   id VARCHAR2(255) NOT NULL,
   user_id VARCHAR2(255),
-  name VARCHAR2(255),
-  value VARCHAR2(255),
+  name VARCHAR2(255 CHAR),
+  value VARCHAR2(255 CHAR),
   internal NUMBER(1,0),
   CONSTRAINT PK_USER_ATTRIBUTE PRIMARY KEY(id),
   CONSTRAINT FK_ATTRIBUTE_USER FOREIGN KEY (user_id) REFERENCES aa.user_account (id)
