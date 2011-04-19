@@ -36,7 +36,6 @@ import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException
 import de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException;
 import de.escidoc.core.common.exceptions.system.EncodingSystemException;
-import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
@@ -71,11 +70,9 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
 
     /**
      * Instantiate a ContentRelationsCreateHandler.
-     *
-     * @param id     The id of the parsed object.
      * @param parser The parser.
      */
-    public ContentRelationsCreateHandler2Edition(final String id, final StaxParser parser) {
+    public ContentRelationsCreateHandler2Edition(final StaxParser parser) {
         this.parser = parser;
     }
 

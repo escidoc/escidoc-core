@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.om.business.stax.handler;
 
+import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMdRecordException;
 import de.escidoc.core.common.util.stax.StaxParser;
@@ -131,13 +132,13 @@ public class MetadataHandler extends DefaultHandler {
                 md.put("type", typeValue);
             }
             else {
-                md.put("type", "unknown");
+                md.put("type", Constants.UNKNOWN);
             }
             if (schemaValue != null) {
                 md.put("schema", schemaValue);
             }
             else {
-                md.put("schema", "unknown");
+                md.put("schema", Constants.UNKNOWN);
             }
 
             metadataAttributes.put(this.nameValue, md);

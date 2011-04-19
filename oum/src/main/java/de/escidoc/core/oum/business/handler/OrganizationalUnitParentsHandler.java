@@ -64,7 +64,7 @@ public class OrganizationalUnitParentsHandler extends OrganizationalUnitHandlerB
      */
     public OrganizationalUnitParentsHandler(final StaxParser parser) throws WebserverSystemException {
 
-        super(null, parser);
+        super(parser);
     }
 
     /**

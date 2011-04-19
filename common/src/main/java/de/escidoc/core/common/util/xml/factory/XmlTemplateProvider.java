@@ -104,6 +104,8 @@ public abstract class XmlTemplateProvider {
 
     public static final String OBJECT_PID = "OBJECT_PID";
 
+    public static final String BUILD_NUMBER = "build";
+
     /*
      * Common Version Types
      */

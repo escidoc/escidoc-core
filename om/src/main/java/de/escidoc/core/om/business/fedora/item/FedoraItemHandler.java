@@ -158,6 +158,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
 
     private FedoraContentRelationHandler contentRelationHandler;
 
+    private final static String NO_UPDATE_ALLOWED_MSG = "No update allowed.";
+
     /**
      * The policy decision point used to check access privileges.
      */
@@ -225,7 +227,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
 
         checkLatestVersion();
         checkLocked();
-        checkWithdrawn("No update allowed.");
+        checkWithdrawn(NO_UPDATE_ALLOWED_MSG);
         String originId = getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN);
         final String originVersionId = getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN_VERSION);
         if (originVersionId != null) {
@@ -242,7 +244,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
 
             final OptimisticLockingHandler olh =
                 new OptimisticLockingHandler(getItem().getId(), Constants.ITEM_OBJECT_TYPE, getItem()
-                    .getLastModificationDate(), sp);
+                    .getLastModificationDate());
             sp.addHandler(olh);
             final ContentRelationsUpdateHandler2Edition cruh = new ContentRelationsUpdateHandler2Edition(sp);
             sp.addHandler(cruh);
@@ -640,12 +642,12 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         checkLatestVersion();
         checkLocked();
         checkReleased();
-        checkWithdrawn("No update allowed.");
+        checkWithdrawn(NO_UPDATE_ALLOWED_MSG);
 
         final StaxParser sp = new StaxParser();
         final OptimisticLockingHandler olh =
             new OptimisticLockingHandler(getItem().getId(), Constants.ITEM_OBJECT_TYPE, getItem()
-                .getLastModificationDate(), sp);
+                .getLastModificationDate());
         sp.addHandler(olh);
         final MdRecordsUpdateHandler mdHandler = new MdRecordsUpdateHandler("", sp);
         sp.addHandler(mdHandler);
@@ -886,7 +888,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         checkLatestVersion();
         checkLocked();
         checkReleased();
-        checkWithdrawn("No update allowed.");
+        checkWithdrawn(NO_UPDATE_ALLOWED_MSG);
 
         // TODO check if this is realy needed. the intension may be to set the
         // components map.
@@ -898,7 +900,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         final StaxParser sp = new StaxParser();
         final OptimisticLockingHandler olh =
             new OptimisticLockingHandler(getItem().getId(), Constants.ITEM_OBJECT_TYPE, getItem()
-                .getLastModificationDate(), sp);
+                .getLastModificationDate());
         sp.addHandler(olh);
 
         final ComponentMdRecordsUpdateHandler cmuh =
@@ -1116,7 +1118,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         setItem(id);
         final StaxParser sp = new StaxParser();
         sp.addHandler(new OptimisticLockingHandler(getItem().getId(), Constants.ITEM_OBJECT_TYPE, getItem()
-            .getLastModificationDate(), sp));
+            .getLastModificationDate()));
 
         try {
             sp.parse(xmlData);
@@ -1169,7 +1171,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         checkLatestVersion();
         checkLocked();
         checkReleased();
-        checkWithdrawn("No update allowed.");
+        checkWithdrawn(NO_UPDATE_ALLOWED_MSG);
 
         final HashMap<String, String> extractPathes = new HashMap<String, String>();
         extractPathes.put("/component/properties", null);
@@ -1179,7 +1181,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         final StaxParser sp = new StaxParser();
         final OptimisticLockingHandler olh =
             new OptimisticLockingHandler(getItem().getId(), Constants.ITEM_OBJECT_TYPE, getItem()
-                .getLastModificationDate(), sp);
+                .getLastModificationDate());
         sp.addHandler(olh);
         final ComponentMdRecordsUpdateHandler cmuh = new ComponentMdRecordsUpdateHandler("/component/md-records", sp);
         sp.addHandler(cmuh);

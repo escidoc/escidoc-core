@@ -59,6 +59,8 @@ import java.util.Set;
  */
 public final class VelocityXmlUserAccountRenderer extends AbstractRenderer implements UserAccountRendererInterface {
 
+    private final static String USER_ACCOUNT_ID = "userAccountId";
+
     /**
      * Private constructor to prevent initialization.
      */
@@ -75,7 +77,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer imple
 
         final Map<String, Object> values = new HashMap<String, Object>();
 
-        values.put("isRootUserAccount", "true");
+        values.put("isRootUserAccount", XmlTemplateProvider.TRUE);
         addCommonValues(values);
 
         addUserAccountValues(userAccount, values);
@@ -102,7 +104,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer imple
         values.put("userAccountCreationDate", creationDate);
         values.put("userAccountName", userAccount.getName());
         values.put("userAccountLoginName", userAccount.getLoginname());
-        values.put("userAccountId", userAccount.getId());
+        values.put(USER_ACCOUNT_ID, userAccount.getId());
         values.put("userAccountActive", userAccount.getActive());
 
         final UserAccount createdBy = userAccount.getUserAccountByCreatorId();
@@ -126,7 +128,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer imple
         throws WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
-        values.put("isRootCurrentGrants", "true");
+        values.put("isRootCurrentGrants", XmlTemplateProvider.TRUE);
         values.put("grantNamespacePrefix", Constants.GRANTS_NS_PREFIX);
         values.put("grantNamespace", Constants.GRANTS_NS_URI);
         values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX, Constants.PROPERTIES_NS_PREFIX);
@@ -159,7 +161,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer imple
         final RecordPacking recordPacking) throws WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
-        values.put("isRootGrants", "true");
+        values.put("isRootGrants", XmlTemplateProvider.TRUE);
         values.put("grantNamespacePrefix", Constants.GRANTS_NS_PREFIX);
         values.put("grantNamespace", Constants.GRANTS_NS_URI);
         values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX, Constants.PROPERTIES_NS_PREFIX);
@@ -187,7 +189,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer imple
 
         final Map<String, Object> values = new HashMap<String, Object>();
 
-        values.put("isRootGrant", "true");
+        values.put("isRootGrant", XmlTemplateProvider.TRUE);
         values.put("grantNamespacePrefix", Constants.GRANTS_NS_PREFIX);
         values.put("grantNamespace", Constants.GRANTS_NS_URI);
         values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX, Constants.PROPERTIES_NS_PREFIX);
@@ -254,7 +256,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer imple
     public String renderResources(final UserAccount userAccount) throws WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
-        values.put("isRootResources", "true");
+        values.put("isRootResources", XmlTemplateProvider.TRUE);
         addResourcesValues(userAccount, values);
         addCommonValues(values);
         DateTime lmdDateTime = new DateTime(userAccount.getLastModificationDate());
@@ -394,7 +396,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer imple
             lmdDateTime = lmdDateTime.withZone(DateTimeZone.UTC);
             final String lmd = lmdDateTime.toString(Constants.TIMESTAMP_FORMAT);
             values.put("userAccountLastModificationDate", lmd);
-            values.put("userAccountId", userAccount.getId());
+            values.put(USER_ACCOUNT_ID, userAccount.getId());
             addEscidocBaseUrl(values);
         }
 
@@ -415,7 +417,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer imple
         lmdDateTime = lmdDateTime.withZone(DateTimeZone.UTC);
         final String lmd = lmdDateTime.toString(Constants.TIMESTAMP_FORMAT);
         values.put("userAccountLastModificationDate", lmd);
-        values.put("userAccountId", userAccount.getId());
+        values.put(USER_ACCOUNT_ID, userAccount.getId());
         addEscidocBaseUrl(values);
 
         final Collection<Map<String, String>> userAccountPreferencesValues = new ArrayList<Map<String, String>>();
@@ -465,7 +467,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer imple
             lmdDateTime = lmdDateTime.withZone(DateTimeZone.UTC);
             final String lmd = lmdDateTime.toString(Constants.TIMESTAMP_FORMAT);
             values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, lmd);
-            values.put("userAccountId", attribute.getUserAccountByUserId().getId());
+            values.put(USER_ACCOUNT_ID, attribute.getUserAccountByUserId().getId());
         }
         values.put("userAccountAttributeId", attribute.getId());
         values.put("userAccountAttributeName", attribute.getName());
@@ -492,13 +494,13 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer imple
         lmdDateTime = lmdDateTime.withZone(DateTimeZone.UTC);
         final String lmd = lmdDateTime.toString(Constants.TIMESTAMP_FORMAT);
         values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, lmd);
-        values.put("userAccountId", userAccount.getId());
+        values.put(USER_ACCOUNT_ID, userAccount.getId());
         addEscidocBaseUrl(values);
 
         final Collection<Map<String, Object>> userAccountAttributesValues = new ArrayList<Map<String, Object>>();
         for (final UserAttribute attribute : attributes) {
             final Map<String, Object> m = new HashMap<String, Object>();
-            m.put("userAccountId", userAccount.getId());
+            m.put(USER_ACCOUNT_ID, userAccount.getId());
             m.put("userAccountAttributeId", attribute.getId());
             m.put("userAccountAttributeName", attribute.getName());
             m.put("userAccountAttributeValue", attribute.getValue());

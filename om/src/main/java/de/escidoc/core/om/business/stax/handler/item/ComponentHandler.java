@@ -31,7 +31,6 @@ package de.escidoc.core.om.business.stax.handler.item;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.resources.create.BinaryContent;
 import de.escidoc.core.common.business.fedora.resources.create.ComponentCreate;
-import de.escidoc.core.common.business.fedora.resources.create.ItemCreate;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.exceptions.application.missing.MissingElementValueException;
@@ -83,9 +82,8 @@ public class ComponentHandler extends DefaultHandler {
      * ComponentHandler.
      *
      * @param parser StAX parser.
-     * @param item
      */
-    public ComponentHandler(final StaxParser parser, final ItemCreate item) {
+    public ComponentHandler(final StaxParser parser) {
         this.parser = parser;
         this.component = new ComponentCreate();
     }

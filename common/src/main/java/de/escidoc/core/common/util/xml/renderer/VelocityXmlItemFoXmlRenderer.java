@@ -39,7 +39,7 @@ import java.util.Vector;
 
 /**
  * velocity render for FoXML representation of Item and Item sub-elements.
- *
+ * 
  * @author ??
  */
 public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface {
@@ -71,10 +71,11 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
 
     /**
      * See Interface for functional description.
-     *
-     * @throws WebserverSystemException cf. Interface
+     * 
+     * @throws WebserverSystemException
+     *             cf. Interface
      * @see de.escidoc.core.om.business.renderer.interfaces.ContainerFoXmlRendererInterface#renderRelsExt(HashMap,
-     * String, ArrayList, String, String, String, Vector, String)
+     *      String, ArrayList, String, String, String, Vector, String)
      */
     @Override
     public String renderDefaultDc(final String componentId) throws WebserverSystemException {
@@ -148,8 +149,9 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
 
     /**
      * See Interface for functional description.
-     *
-     * @throws WebserverSystemException cf. Interface
+     * 
+     * @throws WebserverSystemException
+     *             cf. Interface
      * @see de.escidoc.core.om.business.renderer.interfaces.ContainerFoXmlRendererInterface#renderRelsExt(HashMap,
      *      String, ArrayList, String, String, String, Vector, String)
      */
@@ -169,8 +171,9 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
 
     /**
      * See Interface for functional description.
-     *
-     * @throws WebserverSystemException cf. Interface
+     * 
+     * @throws WebserverSystemException
+     *             cf. Interface
      * @see de.escidoc.core.om.business.renderer.interfaces.ContainerFoXmlRendererInterface#renderWov(String, String,
      *      String, String, String, String, String)
      */
@@ -184,12 +187,16 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
 
     /**
      * Render RELS-EXT of a Component.
-     *
-     * @param id         Objid of Component.
-     * @param properties Component properties
-     * @param inCreate   Set true if Component is to create, false if it's an update.
+     * 
+     * @param id
+     *            Objid of Component.
+     * @param properties
+     *            Component properties
+     * @param inCreate
+     *            Set true if Component is to create, false if it's an update.
      * @return RELS-EXT XML representation
-     * @throws WebserverSystemException Thrown in case of internal error.
+     * @throws WebserverSystemException
+     *             Thrown in case of internal error.
      */
     @Override
     public String renderComponentRelsExt(final String id, final Map<String, String> properties, final boolean inCreate)
@@ -203,36 +210,24 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
         values.put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER, this.buildNumber);
         values.put(XmlTemplateProvider.OBJID, id);
         values.put(XmlTemplateProvider.CREATED_BY_ID, properties.get(TripleStoreUtility.PROP_CREATED_BY_ID));
-        values.put(XmlTemplateProvider.CREATED_BY_TITLE, getEscpapedValue(properties
-            .get(TripleStoreUtility.PROP_CREATED_BY_TITLE), false));
+        values.put(XmlTemplateProvider.CREATED_BY_TITLE, XmlUtility.escapeForbiddenXmlCharacters(properties
+            .get(TripleStoreUtility.PROP_CREATED_BY_TITLE)));
 
-        values.put(XmlTemplateProvider.CONTENT_CATEGORY, getEscpapedValue(properties
-            .get(TripleStoreUtility.PROP_COMPONENT_CONTENT_CATEGORY), false));
-        values.put(XmlTemplateProvider.VISIBILITY, getEscpapedValue(properties.get(TripleStoreUtility.PROP_VISIBILITY),
-            false));
+        values.put(XmlTemplateProvider.CONTENT_CATEGORY, XmlUtility.escapeForbiddenXmlCharacters(properties
+            .get(TripleStoreUtility.PROP_COMPONENT_CONTENT_CATEGORY)));
+        values.put(XmlTemplateProvider.VISIBILITY, XmlUtility.escapeForbiddenXmlCharacters(properties
+            .get(TripleStoreUtility.PROP_VISIBILITY)));
         if (properties.get(TripleStoreUtility.PROP_MIME_TYPE) != null) {
-            values.put(XmlTemplateProvider.MIME_TYPE, getEscpapedValue(properties
-                .get(TripleStoreUtility.PROP_MIME_TYPE), false));
+            values.put(XmlTemplateProvider.MIME_TYPE, XmlUtility.escapeForbiddenXmlCharacters(properties
+                .get(TripleStoreUtility.PROP_MIME_TYPE)));
         }
         if (properties.get(TripleStoreUtility.PROP_VALID_STATUS) != null) {
-            values.put(XmlTemplateProvider.VALID_STATUS, getEscpapedValue(properties
-                .get(TripleStoreUtility.PROP_VALID_STATUS), false));
+            values.put(XmlTemplateProvider.VALID_STATUS, XmlUtility.escapeForbiddenXmlCharacters(properties
+                .get(TripleStoreUtility.PROP_VALID_STATUS)));
         }
         if (inCreate) {
             values.put("inCreate", inCreate);
         }
         return ItemFoXmlProvider.getInstance().getComponentRelsExt(values);
-    }
-
-    /**
-     * Escapes the value for xml.
-     *
-     * @param value       The string to escape.
-     * @param isAttribute If it is an attribute or element value.
-     * @return The escaped string.
-     */
-    private static String getEscpapedValue(final String value, final boolean isAttribute) {
-
-        return XmlUtility.escapeForbiddenXmlCharacters(value);
     }
 }

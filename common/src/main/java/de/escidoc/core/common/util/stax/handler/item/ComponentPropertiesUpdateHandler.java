@@ -55,7 +55,7 @@ public class ComponentPropertiesUpdateHandler extends DefaultHandler {
     private final List<String> expected;
 
     // names of elements that must be deleted if they do not occur
-    private static final String[] expectedElements =
+    private static final String[] EXPECTED_ELEMENTS =
         { TripleStoreUtility.PROP_MIME_TYPE, TripleStoreUtility.PROP_VALID_STATUS };
 
     public ComponentPropertiesUpdateHandler(final Component component, final String propertiesPath,
@@ -67,7 +67,7 @@ public class ComponentPropertiesUpdateHandler extends DefaultHandler {
         // TODO check this; was local var
         this.properties = component.getResourceProperties();
 
-        this.expected = new ArrayList<String>(Arrays.asList(expectedElements));
+        this.expected = new ArrayList<String>(Arrays.asList(EXPECTED_ELEMENTS));
     }
 
     public ComponentPropertiesUpdateHandler(final Map<String, String> properties, final String propertiesPath,
@@ -79,7 +79,7 @@ public class ComponentPropertiesUpdateHandler extends DefaultHandler {
         // TODO check this; was local var
         this.properties = properties;
 
-        this.expected = new ArrayList<String>(Arrays.asList(expectedElements));
+        this.expected = new ArrayList<String>(Arrays.asList(EXPECTED_ELEMENTS));
     }
 
     @Override

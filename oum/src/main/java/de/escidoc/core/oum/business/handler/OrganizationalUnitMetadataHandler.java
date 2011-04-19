@@ -50,8 +50,6 @@ import java.util.Map;
  */
 public class OrganizationalUnitMetadataHandler extends OrganizationalUnitHandlerBase {
 
-    private static final String UNKNOWN = "unknown";
-
     public static final String SCHEMA = "schema";
 
     public static final String TYPE = "md-type";
@@ -83,7 +81,7 @@ public class OrganizationalUnitMetadataHandler extends OrganizationalUnitHandler
      * @param rootPath XML root element path
      */
     public OrganizationalUnitMetadataHandler(final StaxParser parser, final String rootPath) {
-        super(null, parser);
+        super(parser);
         this.rootPath = rootPath == null || "/".equals(rootPath) ? "" : rootPath;
     }
 
@@ -123,14 +121,14 @@ public class OrganizationalUnitMetadataHandler extends OrganizationalUnitHandler
             final Map<String, String> md = new HashMap<String, String>();
             final int indexOfType = element.indexOfAttribute(null, TYPE);
             if (indexOfType == -1) {
-                md.put("type", UNKNOWN);
+                md.put("type", Constants.UNKNOWN);
             }
             else {
                 md.put("type", element.getAttribute(indexOfType).getValue());
             }
             final int indexOfSchema = element.indexOfAttribute(null, SCHEMA);
             if (indexOfSchema == -1) {
-                md.put(SCHEMA, UNKNOWN);
+                md.put(SCHEMA, Constants.UNKNOWN);
             }
             else {
                 md.put(SCHEMA, element.getAttribute(indexOfSchema).getValue());

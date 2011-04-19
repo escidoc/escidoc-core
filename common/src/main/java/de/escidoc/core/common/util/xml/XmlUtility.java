@@ -1944,7 +1944,7 @@ public final class XmlUtility {
         if (UserContext.isRestAccess()) {
             if (organizationalUnitRestSchemaLocation == null) {
                 organizationalUnitRestSchemaLocation =
-                    getSchemaBaseUrl() + "rest/" + "organizational-unit"
+                    getSchemaBaseUrl() + "rest/" + NAME_ORGANIZATIONAL_UNIT
                         + Constants.ORGANIZATIONAL_UNIT_NS_URI_SCHEMA_VERSION + "/organizational-unit.xsd";
             }
             result = organizationalUnitRestSchemaLocation;
@@ -1952,7 +1952,7 @@ public final class XmlUtility {
         else {
             if (organizationalUnitSoapSchemaLocation == null) {
                 organizationalUnitSoapSchemaLocation =
-                    getSchemaBaseUrl() + "soap/" + "organizational-unit"
+                    getSchemaBaseUrl() + "soap/" + NAME_ORGANIZATIONAL_UNIT
                         + Constants.ORGANIZATIONAL_UNIT_NS_URI_SCHEMA_VERSION + "/organizational-unit.xsd";
             }
             result = organizationalUnitSoapSchemaLocation;
@@ -1970,7 +1970,7 @@ public final class XmlUtility {
         if (UserContext.isRestAccess()) {
             if (organizationalUnitListRestSchemaLocation == null) {
                 organizationalUnitListRestSchemaLocation =
-                    getSchemaBaseUrl() + "rest/" + "organizational-unit"
+                    getSchemaBaseUrl() + "rest/" + NAME_ORGANIZATIONAL_UNIT
                         + Constants.CONTAINER_LIST_NS_URI_SCHEMA_VERSION + "/organizational-unit-list.xsd";
             }
             result = organizationalUnitListRestSchemaLocation;
@@ -1978,7 +1978,7 @@ public final class XmlUtility {
         else {
             if (organizationalUnitListSoapSchemaLocation == null) {
                 organizationalUnitListSoapSchemaLocation =
-                    getSchemaBaseUrl() + "soap/" + "organizational-unit"
+                    getSchemaBaseUrl() + "soap/" + NAME_ORGANIZATIONAL_UNIT
                         + Constants.CONTAINER_LIST_NS_URI_SCHEMA_VERSION + "/organizational-unit-list.xsd";
             }
             result = organizationalUnitListSoapSchemaLocation;

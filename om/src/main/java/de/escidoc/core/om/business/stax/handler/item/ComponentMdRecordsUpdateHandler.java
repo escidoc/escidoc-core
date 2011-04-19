@@ -174,14 +174,14 @@ public class ComponentMdRecordsUpdateHandler extends DefaultHandler {
                     md.put("type", typeValue);
                 }
                 else {
-                    md.put("type", "unknown");
+                    md.put("type", Constants.UNKNOWN);
                 }
 
                 if (schemaValue != null) {
                     md.put("schema", schemaValue);
                 }
                 else {
-                    md.put("schema", "unknown");
+                    md.put("schema", Constants.UNKNOWN);
                 }
 
                 componentMdRecords.put(this.name, md);

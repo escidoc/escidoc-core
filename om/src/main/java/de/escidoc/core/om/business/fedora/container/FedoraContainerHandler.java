@@ -303,8 +303,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         handlerChain.add(metadataHandler);
         final StructMapCreateHandler structMapHandler = new StructMapCreateHandler(staxParser);
         handlerChain.add(structMapHandler);
-        final ContentRelationsCreateHandler2Edition crch =
-            new ContentRelationsCreateHandler2Edition(containerId, staxParser);
+        final ContentRelationsCreateHandler2Edition crch = new ContentRelationsCreateHandler2Edition(staxParser);
         handlerChain.add(crch);
         final HashMap<String, String> extractPathes = new HashMap<String, String>();
         extractPathes.put("/container/md-records/md-record", "name");
@@ -647,7 +646,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
             // getContainer().getLastVersionData();
 
             sp.addHandler(new OptimisticLockingHandler(getContainer().getId(), Constants.CONTAINER_OBJECT_TYPE,
-                getContainer().getLastModificationDate(), sp));
+                getContainer().getLastModificationDate()));
 
             final ContentRelationsUpdateHandler2Edition cruh = new ContentRelationsUpdateHandler2Edition(sp);
             sp.addHandler(cruh);
@@ -2016,7 +2015,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
             final StaxParser sp = new StaxParser();
 
             sp.addHandler(new OptimisticLockingHandler(getContainer().getId(), Constants.CONTAINER_OBJECT_TYPE,
-                getContainer().getLastModificationDate(), sp));
+                getContainer().getLastModificationDate()));
 
             // add a member retrieving handler
             final BuildRelsExtMemberEntriesFromTaskParamHandlerNew bremeftph =
@@ -2123,7 +2122,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         final StaxParser sp = new StaxParser();
 
         sp.addHandler(new OptimisticLockingHandler(getContainer().getId(), Constants.CONTAINER_OBJECT_TYPE,
-            getContainer().getLastModificationDate(), sp));
+            getContainer().getLastModificationDate()));
 
         // add a member retrieving handler
         final BuildRelsExtMemberEntriesFromTaskParamHandlerNew bremeftph =
@@ -2210,7 +2209,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
             final StaxParser sp = new StaxParser();
 
             sp.addHandler(new OptimisticLockingHandler(getContainer().getId(), Constants.CONTAINER_OBJECT_TYPE,
-                getContainer().getLastModificationDate(), sp));
+                getContainer().getLastModificationDate()));
 
             // add a member retrieving handler
             final BuildRelsExtMemberEntriesFromTaskParamHandlerNew bremeftph =

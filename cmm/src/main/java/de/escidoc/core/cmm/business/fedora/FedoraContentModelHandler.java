@@ -391,7 +391,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
         final StaxParser sp = new StaxParser();
         // check optimistic locking criteria! and ID in root element?
         sp.addHandler(new OptimisticLockingHandler(getContentModel().getId(), Constants.CONTENT_MODEL_OBJECT_TYPE,
-            getContentModel().getLastModificationDate(), sp));
+            getContentModel().getLastModificationDate()));
         // get name and description
         final ContentModelPropertiesHandler cmph = new ContentModelPropertiesHandler(sp);
         sp.addHandler(cmph);
@@ -517,7 +517,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
                 hasServiceElement.setNamespace(Constants.FEDORA_MODEL_NS_URI);
                 final Attribute resource =
                     new Attribute("resource", Constants.RDF_NAMESPACE_URI, Constants.RDF_NAMESPACE_PREFIX,
-                        "info:fedora/" + sdefIdPrefix + resourceDefinition.getName());
+                        Constants.IDENTIFIER_PREFIX + sdefIdPrefix + resourceDefinition.getName());
                 hasServiceElement.addAttribute(resource);
                 addToRelsExt.add(hasServiceElement);
             }

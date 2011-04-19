@@ -600,8 +600,8 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             else {
                 try {
                     where =
-                        where.append('\'').append(new URIReference("info:fedora/" + idOrLiteral).toString()).append(
-                            "')");
+                        where.append('\'').append(
+                            new URIReference(Constants.IDENTIFIER_PREFIX + idOrLiteral).toString()).append("')");
                 }
                 catch (final URISyntaxException e) {
                     throw new TripleStoreSystemException(e.getMessage(), e);
@@ -662,7 +662,10 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                 }
 
                 try {
-                    where = where.append('\'').append(new URIReference("info:fedora/" + id).toString()).append('\'');
+                    where =
+                        where
+                            .append('\'').append(new URIReference(Constants.IDENTIFIER_PREFIX + id).toString()).append(
+                                '\'');
                 }
                 catch (final URISyntaxException e) {
                     throw new TripleStoreSystemException(e.getMessage(), e);
@@ -713,7 +716,8 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             final String querySelect = "SELECT " + table + ".o";
             final String queryFrom = " FROM " + table;
             final String queryWhere =
-                " WHERE " + '(' + table + ".s = '" + new URIReference("info:fedora/" + pid).toString() + "')";
+                " WHERE " + '(' + table + ".s = '" + new URIReference(Constants.IDENTIFIER_PREFIX + pid).toString()
+                    + "')";
 
             query = querySelect + queryFrom + queryWhere;
             connection = getConnection();
@@ -1769,7 +1773,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             queryBuffer.append(" WHERE (");
             queryBuffer.append(table);
             queryBuffer.append(" .s = '");
-            queryBuffer.append(new URIReference("info:fedora/" + pid).toString());
+            queryBuffer.append(new URIReference(Constants.IDENTIFIER_PREFIX + pid).toString());
             queryBuffer.append("')");
             query = queryBuffer.toString();
             connection = getConnection();

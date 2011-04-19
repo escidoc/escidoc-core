@@ -459,10 +459,10 @@ public class FedoraContextHandler extends ContextHandlerUpdate implements Contex
 
         if (UserContext.isRestAccess()) {
             restXml = xmlData;
-            soapXml = getAlternateForm(id);
+            soapXml = getAlternateForm();
         }
         else {
-            restXml = getAlternateForm(id);
+            restXml = getAlternateForm();
             soapXml = xmlData;
         }
         for (final ResourceListener contextListener : this.contextListeners) {
@@ -485,10 +485,10 @@ public class FedoraContextHandler extends ContextHandlerUpdate implements Contex
 
         if (UserContext.isRestAccess()) {
             restXml = xmlData;
-            soapXml = getAlternateForm(id);
+            soapXml = getAlternateForm();
         }
         else {
-            restXml = getAlternateForm(id);
+            restXml = getAlternateForm();
             soapXml = xmlData;
         }
         for (final ResourceListener contextListener : this.contextListeners) {
@@ -512,12 +512,11 @@ public class FedoraContextHandler extends ContextHandlerUpdate implements Contex
      * Get the alternate form of a context representation. If the current request came in via REST, then the SOAP form
      * will be returned here and vice versa.
      *
-     * @param id context id
      * @return alternate form of the context
      * @throws SystemException An internal error occurred.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
-    private String getAlternateForm(final String id) throws SystemException, WebserverSystemException {
+    private String getAlternateForm() throws SystemException, WebserverSystemException {
         String result = null;
         final boolean isRestAccess = UserContext.isRestAccess();
 

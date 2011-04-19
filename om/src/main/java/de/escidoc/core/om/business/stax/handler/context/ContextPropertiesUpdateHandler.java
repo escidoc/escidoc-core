@@ -75,7 +75,8 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
 
     private final List<String> orgunits = new ArrayList<String>();
 
-    private static final String organizationalUnitPath = "/context/properties/organizational-units/organizational-unit";
+    private static final String ORGANIZATIONAL_UNIT_PATH =
+        "/context/properties/organizational-units/organizational-unit";
 
     /**
      * Handler to update Context properties.
@@ -110,7 +111,7 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
         final String currentPath = parser.getCurPath();
         // String theName = element.getLocalName();
 
-        if (organizationalUnitPath.equals(currentPath)) {
+        if (ORGANIZATIONAL_UNIT_PATH.equals(currentPath)) {
             final String id = XmlUtility.getIdFromStartElement(element);
 
             Utility.getInstance().checkIsOrganizationalUnit(id);

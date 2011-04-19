@@ -122,7 +122,7 @@ public class GenericResourcePid extends GenericResource {
         if (!validPidStructure(pid)) {
             throw new SystemException("Invalid structure for Persistent Identifier");
         }
-        updateRelsExtWithObjectPid(getId(), pid);
+        updateRelsExtWithObjectPid(pid);
         this.objectPid = pid;
     }
 
@@ -201,17 +201,16 @@ public class GenericResourcePid extends GenericResource {
 
     /**
      * Update RELS-EXT with object PID. The pid is written to RELS-EXT ( <code>properties/pid</code>).
-     *
-     * @param id  object id
      * @param pid persistent identifier
+     *
      * @throws FedoraSystemException      If Fedora reports an error.
      * @throws EncodingSystemException    If an encoding failure occurs.
      * @throws XmlParserSystemException   If parsing of XMl data fails.
      * @throws WebserverSystemException   In case of an internal error.
      * @throws TripleStoreSystemException Thrown if TripleStore requests fail.
      */
-    private void updateRelsExtWithObjectPid(final String id, final String pid) throws XmlParserSystemException,
-        EncodingSystemException, FedoraSystemException, WebserverSystemException, TripleStoreSystemException {
+    private void updateRelsExtWithObjectPid(final String pid) throws XmlParserSystemException, EncodingSystemException,
+        FedoraSystemException, WebserverSystemException, TripleStoreSystemException {
 
         // TODO we haven't defined a non-versioned resource where we use
         // objectPid. So this method is more or less untested.

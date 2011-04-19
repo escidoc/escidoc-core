@@ -25,7 +25,6 @@ import de.escidoc.core.common.exceptions.application.invalid.InvalidContentExcep
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
@@ -60,8 +59,7 @@ public class OptimisticLockingHandler extends DefaultHandler {
      * @param lastModificationDate The last modification of the stores object.
      * @param parser               The parser this handler is added.
      */
-    public OptimisticLockingHandler(final String objid, final String objectType, final String lastModificationDate,
-        final StaxParser parser) {
+    public OptimisticLockingHandler(final String objid, final String objectType, final String lastModificationDate) {
         this.objid = objid;
         this.objectType = objectType;
         this.lastModifiedDate = lastModificationDate;

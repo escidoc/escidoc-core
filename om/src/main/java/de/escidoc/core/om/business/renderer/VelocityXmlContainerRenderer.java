@@ -622,10 +622,10 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         final String mdRecordContent = mdRecord.toStringUTF8();
         values.put(XmlTemplateProvider.MD_RECORD_CONTENT, mdRecordContent);
         final List<String> altIds = mdRecord.getAlternateIDs();
-        if (!"unknown".equals(altIds.get(1))) {
+        if (!Constants.UNKNOWN.equals(altIds.get(1))) {
             values.put(XmlTemplateProvider.MD_RECORD_TYPE, altIds.get(1));
         }
-        if (!"unknown".equals(altIds.get(2))) {
+        if (!Constants.UNKNOWN.equals(altIds.get(2))) {
             values.put(XmlTemplateProvider.MD_RECORD_SCHEMA, altIds.get(2));
         }
 

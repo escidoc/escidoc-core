@@ -397,10 +397,10 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
         }
 
         final List<String> altIds = ds.getAlternateIDs();
-        if (altIds.size() > 1 && !"unknown".equals(altIds.get(1))) {
+        if (altIds.size() > 1 && !de.escidoc.core.common.business.Constants.UNKNOWN.equals(altIds.get(1))) {
             values.put(XmlTemplateProvider.MD_RECORD_TYPE, altIds.get(1));
         }
-        if (altIds.size() > 2 && !"unknown".equals(altIds.get(2))) {
+        if (altIds.size() > 2 && !de.escidoc.core.common.business.Constants.UNKNOWN.equals(altIds.get(2))) {
             values.put(XmlTemplateProvider.MD_RECORD_SCHEMA, altIds.get(2));
         }
         try {
@@ -638,10 +638,10 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
             return "";
         }
         final List<String> altIds = ds.getAlternateIDs();
-        if (altIds.size() > 1 && !"unknown".equals(altIds.get(1))) {
+        if (altIds.size() > 1 && !de.escidoc.core.common.business.Constants.UNKNOWN.equals(altIds.get(1))) {
             values.put(XmlTemplateProvider.MD_RECORD_TYPE, altIds.get(1));
         }
-        if (altIds.size() > 2 && !"unknown".equals(altIds.get(2))) {
+        if (altIds.size() > 2 && !de.escidoc.core.common.business.Constants.UNKNOWN.equals(altIds.get(2))) {
             values.put(XmlTemplateProvider.MD_RECORD_SCHEMA, altIds.get(2));
         }
         try {

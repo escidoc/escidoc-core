@@ -21,7 +21,6 @@
 package de.escidoc.core.common.util.stax.handler;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
-import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
@@ -37,7 +36,7 @@ public class RelsExtRefListExtractor extends DefaultHandler {
 
     private final List<String> predicates;
 
-    public RelsExtRefListExtractor(final List<String> predicates, final StaxParser parser) {
+    public RelsExtRefListExtractor(final List<String> predicates) {
         this.predicates = predicates;
         this.entries = new HashMap<String, List<String>>();
         for (final String predicate : this.predicates) {

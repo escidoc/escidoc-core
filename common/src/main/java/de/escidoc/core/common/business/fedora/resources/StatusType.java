@@ -20,6 +20,7 @@
 
 package de.escidoc.core.common.business.fedora.resources;
 
+import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
 
 /**
@@ -51,7 +52,7 @@ public enum StatusType {
             case INREVISION:
                 return "in-revision";
             default:
-                return "unknown";
+                return Constants.UNKNOWN;
         }
 
     }

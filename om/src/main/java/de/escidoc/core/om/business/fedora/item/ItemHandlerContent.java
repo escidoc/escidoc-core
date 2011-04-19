@@ -606,7 +606,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
         throws WebserverSystemException {
 
         bin.setContent(getFedoraUtility().requestFedoraURL(url.toString()));
-
+        bin.setFileName(fileName);
     }
 
 }

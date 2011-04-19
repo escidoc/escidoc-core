@@ -65,8 +65,6 @@ public class RelsExtReadHandler extends DefaultHandler {
 
     private String object;
 
-    private static final String IDENTIFIER_PREFIX = "info:fedora/";
-
     /**
      * RelsExtReadHandler.
      *
@@ -211,8 +209,8 @@ public class RelsExtReadHandler extends DefaultHandler {
      */
     private static String cleanIdentifier(final String identifier) {
 
-        if (identifier.startsWith(IDENTIFIER_PREFIX)) {
-            return identifier.substring(IDENTIFIER_PREFIX.length());
+        if (identifier.startsWith(Constants.IDENTIFIER_PREFIX)) {
+            return identifier.substring(Constants.IDENTIFIER_PREFIX.length());
         }
 
         return identifier;

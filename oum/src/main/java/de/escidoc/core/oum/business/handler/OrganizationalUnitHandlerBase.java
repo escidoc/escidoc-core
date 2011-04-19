@@ -50,10 +50,9 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
     private String id;
 
     /**
-     * @param id     The id of the organizational unit.
      * @param parser The stax parser.
      */
-    public OrganizationalUnitHandlerBase(final String id, final StaxParser parser) {
+    public OrganizationalUnitHandlerBase(final StaxParser parser) {
         super(parser);
     }
 

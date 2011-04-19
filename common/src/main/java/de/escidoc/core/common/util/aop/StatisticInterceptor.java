@@ -20,6 +20,7 @@
 
 package de.escidoc.core.common.util.aop;
 
+import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
@@ -153,7 +154,7 @@ public class StatisticInterceptor implements Ordered {
                     StringUtility.format(element.getClassName(), element.getMethodName(), element.getLineNumber());
             }
             else {
-                exceptionSource = "unknown";
+                exceptionSource = Constants.UNKNOWN;
             }
             if (e instanceof EscidocException) {
                 throw e;

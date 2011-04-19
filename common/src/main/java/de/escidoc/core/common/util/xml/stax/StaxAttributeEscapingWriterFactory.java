@@ -41,7 +41,7 @@ public class StaxAttributeEscapingWriterFactory implements EscapingWriterFactory
     @Override
     public Writer createEscapingWriterFor(final Writer writer, final String enc) throws UnsupportedEncodingException {
 
-        return new StaxEscapingWriter(writer, true);
+        return new StaxEscapingWriter(writer);
     }
 
     /**

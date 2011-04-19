@@ -39,10 +39,8 @@ public class StaxEscapingWriter extends Writer {
      * Constructs a <code>StaxEscapingWriter</code>.
      *
      * @param writer          The <code>Writer</code> used for output.
-     * @param attributeWriter A Flag indicating if this writer is used for writing attributes (<code>true</code>) or if
-     *                        it is used for writing text content (<code>false)</code>).
      */
-    public StaxEscapingWriter(final Writer writer, final boolean attributeWriter) {
+    public StaxEscapingWriter(final Writer writer) {
 
         this.writer = writer;
     }

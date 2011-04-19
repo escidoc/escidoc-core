@@ -305,6 +305,8 @@ public final class Constants {
 
     public static final String RDF_SCHEMA_NAMESPACE_URI = "http://www.w3.org/2000/01/rdf-schema#";
 
+    public static final String IDENTIFIER_PREFIX = "info:fedora/";
+
     public static final String FEDORA_MODEL_NS_PREFIX = "fedora";
 
     public static final String FEDORA_MODEL_NS_URI = "info:fedora/fedora-system:def/model#";

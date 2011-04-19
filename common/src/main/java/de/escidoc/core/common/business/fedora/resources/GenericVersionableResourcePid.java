@@ -805,7 +805,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
                 newContentRelationElement.setNamespace(predicate[0]);
                 final Attribute resource =
                     new Attribute("resource", Constants.RDF_NAMESPACE_URI, Constants.RDF_NAMESPACE_PREFIX,
-                        "info:fedora/" + predicateAndTarget[1]);
+                        Constants.IDENTIFIER_PREFIX + predicateAndTarget[1]);
                 newContentRelationElement.addAttribute(resource);
                 // newComponentIdElement.setElementText(componentId);
                 newContentRelationElement.setChildrenElements(null);
@@ -830,7 +830,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
                 newContentRelationElement.setNamespace(predicate[0] + '/');
                 final Attribute resource =
                     new Attribute("resource", Constants.RDF_NAMESPACE_URI, Constants.RDF_NAMESPACE_PREFIX,
-                        "info:fedora/" + predicateAndTarget[1]);
+                        Constants.IDENTIFIER_PREFIX + predicateAndTarget[1]);
                 newContentRelationElement.addAttribute(resource);
                 newContentRelationElement.setChildrenElements(null);
                 if (predicateValuesVectorAssignment.containsKey(predicate[1])) {

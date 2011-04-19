@@ -242,7 +242,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
         final Map<String, Object> values = new HashMap<String, Object>();
         final Context context = contextHandler.getContext();
         addCommonValues(context, values);
-        addMemberListValues(context, values, memberList);
+        addMemberListValues(values, memberList);
 
         return ContextXmlProvider.getInstance().getMemberListXml(values);
     }
@@ -264,7 +264,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
         final Map<String, Object> values = new HashMap<String, Object>();
         final Context context = contextHandler.getContext();
         addCommonValues(context, values);
-        addMemberListValues(context, values, memberList);
+        addMemberListValues(values, memberList);
 
         return ContextXmlProvider.getInstance().getMemberRefListXml(values);
     }
@@ -455,10 +455,9 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
 
     /**
      * Add the values to render the member list.
-     *
-     * @param context The Context.
      * @param values
      * @param memberList
+     *
      * @throws AuthorizationException Thrown if access to origin Item is restricted.
      * @throws de.escidoc.core.common.exceptions.system.SystemException
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
@@ -467,8 +466,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
      * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
-    private void addMemberListValues(
-        final Context context, final Map<String, Object> values, final Iterable<String> memberList)
+    private void addMemberListValues(final Map<String, Object> values, final Iterable<String> memberList)
         throws SystemException, AuthorizationException, TripleStoreSystemException, WebserverSystemException,
         IntegritySystemException, FedoraSystemException, XmlParserSystemException {
 

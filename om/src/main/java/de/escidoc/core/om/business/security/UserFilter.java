@@ -76,7 +76,7 @@ public class UserFilter {
             final List<String> predicates = new ArrayList<String>();
             predicates.add(Constants.STRUCTURAL_RELATIONS_NS_URI + "member");
             final StaxParser sp = new StaxParser();
-            final RelsExtRefListExtractor rerle = new RelsExtRefListExtractor(predicates, sp);
+            final RelsExtRefListExtractor rerle = new RelsExtRefListExtractor(predicates);
             sp.addHandler(rerle);
             try {
                 sp.parse(container.getEscidocRelsExt().getStream());

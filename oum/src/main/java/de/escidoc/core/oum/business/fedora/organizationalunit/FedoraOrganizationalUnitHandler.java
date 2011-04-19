@@ -460,7 +460,7 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
         final StaxParser sp = new StaxParser();
         final OptimisticLockingHandler optimisticLockingHandler =
             new OptimisticLockingHandler(getOrganizationalUnit().getId(), Constants.ORGANIZATIONAL_UNIT_OBJECT_TYPE,
-                startTimeStamp, sp);
+                startTimeStamp);
         sp.addHandler(optimisticLockingHandler);
 
         final OrganizationalUnitMetadataHandler metadataHandler =
@@ -605,7 +605,7 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
         final StaxParser sp = new StaxParser();
         final OptimisticLockingHandler optimisticLockingHandler =
             new OptimisticLockingHandler(getOrganizationalUnit().getId(), Constants.ORGANIZATIONAL_UNIT_OBJECT_TYPE,
-                startTimeStamp, sp);
+                startTimeStamp);
         sp.addHandler(optimisticLockingHandler);
 
         final OrganizationalUnitMetadataHandler metadataHandler = new OrganizationalUnitMetadataHandler(sp, "");
@@ -680,7 +680,7 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
         final StaxParser sp = new StaxParser();
         final OptimisticLockingHandler optimisticLockingHandler =
             new OptimisticLockingHandler(getOrganizationalUnit().getId(), Constants.ORGANIZATIONAL_UNIT_OBJECT_TYPE,
-                startTimeStamp, sp);
+                startTimeStamp);
         sp.addHandler(optimisticLockingHandler);
         final OrganizationalUnitParentsHandler parentsHandler = new OrganizationalUnitParentsHandler(sp);
         parentsHandler.setRootElement(XmlUtility.NAME_PARENTS);

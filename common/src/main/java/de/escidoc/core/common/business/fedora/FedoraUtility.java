@@ -421,7 +421,7 @@ public class FedoraUtility implements InitializingBean {
                     null, null, null, true);
         }
         catch (final Exception e) {
-            preventWrongLogging(e, datastream);
+            preventWrongLogging(e);
             throw new FedoraSystemException(e.toString(), e);
         }
         finally {
@@ -651,12 +651,12 @@ public class FedoraUtility implements InitializingBean {
                             "eSciDoc object created");
                 }
                 catch (final Exception e1) {
-                    preventWrongLogging(e1, foxml);
+                    preventWrongLogging(e1);
                     throw new FedoraSystemException("Ingest to Fedora failed. ", e);
                 }
             }
 
-            preventWrongLogging(e, foxml);
+            preventWrongLogging(e);
             throw new FedoraSystemException("Ingest to Fedora failed. ", e);
         }
         finally {
@@ -1553,10 +1553,8 @@ public class FedoraUtility implements InitializingBean {
      * 
      * @param e
      *            Exception
-     * @param datastream
-     *            datastream (to write it to logfile)
      */
-    private void preventWrongLogging(final Exception e, final byte[] datastream) {
+    private void preventWrongLogging(final Exception e) {
 
         final Pattern patternErrorGetting =
             Pattern.compile("fedora.server.errors.GeneralException: Error getting", Pattern.CASE_INSENSITIVE);
@@ -1584,28 +1582,6 @@ public class FedoraUtility implements InitializingBean {
             }
         }
 
-    }
-
-    /**
-     * FIXME crud stuff.
-     * 
-     * @param e
-     *            Exception
-     * @param datastream
-     *            datastream (to write it to logfile)
-     */
-    private void preventWrongLogging(final Exception e, final String datastream) {
-
-        try {
-            preventWrongLogging(e, datastream.getBytes(XmlUtility.CHARACTER_ENCODING));
-        }
-        catch (final UnsupportedEncodingException e1) {
-            // nothing to do ? (FRS)
-            // SWA: This is derived from crud code. The main failure is the
-            // approach to write something to Fedora and if an Exception failed,
-            // than try an update instead of create. If the main failure is
-            // removed from code, than is this method redundant.
-        }
     }
 
 }

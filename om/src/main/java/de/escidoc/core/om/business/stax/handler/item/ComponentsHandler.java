@@ -106,7 +106,7 @@ public class ComponentsHandler extends DefaultHandler {
                 // creating a new Component shows that the parser is within a
                 // component element.
                 this.parsingComponent = true;
-                this.componentHandler = new ComponentHandler(this.parser, this.item);
+                this.componentHandler = new ComponentHandler(this.parser);
                 this.componentHandler.startElement(element);
             }
         }

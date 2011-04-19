@@ -78,7 +78,7 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer implements RoleRen
     public String renderResources(final EscidocRole role) throws WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
-        values.put("isRootResources", "true");
+        values.put("isRootResources", XmlTemplateProvider.TRUE);
 
         addCommonValues(values);
         values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, Iso8601Util.getIso8601(role

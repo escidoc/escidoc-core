@@ -38,6 +38,8 @@ public abstract class PIDSystemFactory {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PIDSystemFactory.class);
 
+    private static final String DEFAULT_FACTORY = "de.escidoc.core.common.persistence.impl.DummyPIDGeneratorFactory";
+
     private static PIDSystemFactory pidSystemFactory;
 
     static {
@@ -53,8 +55,6 @@ public abstract class PIDSystemFactory {
             }
         }
     }
-
-    private static final String defaultFactory = "de.escidoc.core.common.persistence.impl.DummyPIDGeneratorFactory";
 
     /**
      * Protected constructor as getInstance() should be used to create an instance of an PIDSystemFactory.
@@ -86,7 +86,7 @@ public abstract class PIDSystemFactory {
             factoryClassName =
                 EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_PID_SYSTEM_FACTORY);
             if (factoryClassName == null) {
-                factoryClassName = defaultFactory;
+                factoryClassName = DEFAULT_FACTORY;
             }
         }
         catch (final IOException e) {
@@ -96,7 +96,7 @@ public abstract class PIDSystemFactory {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on instanziating esidoc configuration factory.", e);
             }
-            factoryClassName = defaultFactory;
+            factoryClassName = DEFAULT_FACTORY;
         }
 
         try {

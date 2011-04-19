@@ -71,7 +71,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer impleme
     @Override
     public String render(final UserGroup userGroup) throws SystemException, WebserverSystemException {
         final Map<String, Object> values = new HashMap<String, Object>();
-        values.put("isRootUserGroup", "true");
+        values.put("isRootUserGroup", XmlTemplateProvider.TRUE);
         addCommonValues(values);
         addUserGroupValues(userGroup, values);
         return getUserGroupXmlProvider().getUserGroupXml(values);
@@ -130,7 +130,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer impleme
         throws WebserverSystemException {
         final Map<String, Object> values = new HashMap<String, Object>();
 
-        values.put("isRootCurrentGrants", "true");
+        values.put("isRootCurrentGrants", XmlTemplateProvider.TRUE);
         values.put("grantNamespacePrefix", Constants.GRANTS_NS_PREFIX);
         values.put("grantNamespace", Constants.GRANTS_NS_URI);
         values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX, Constants.PROPERTIES_NS_PREFIX);

@@ -529,10 +529,10 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
             throw new WebserverSystemException("Rendering of md-record failed. ", e);
         }
         final List<String> altIds = mdRecord.getAlternateIDs();
-        if (!"unknown".equals(altIds.get(1))) {
+        if (!Constants.UNKNOWN.equals(altIds.get(1))) {
             values.put(XmlTemplateProvider.MD_RECORD_TYPE, altIds.get(1));
         }
-        if (!"unknown".equals(altIds.get(2))) {
+        if (!Constants.UNKNOWN.equals(altIds.get(2))) {
             values.put(XmlTemplateProvider.MD_RECORD_SCHEMA, altIds.get(2));
         }
 

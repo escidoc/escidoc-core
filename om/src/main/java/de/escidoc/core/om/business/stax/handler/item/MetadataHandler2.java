@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.om.business.stax.handler.item;
 
+import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.resources.create.MdRecordCreate;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
@@ -121,12 +122,12 @@ public class MetadataHandler2 extends DefaultHandler {
                 this.metadataRecord.setName(getAttributeValue(element, null, "name"));
                 String schema = getAttributeValue(element, null, "schema");
                 if (schema == null) {
-                    schema = "unknown";
+                    schema = Constants.UNKNOWN;
                 }
                 this.metadataRecord.setSchema(schema);
                 String mdType = getAttributeValue(element, null, "md-type");
                 if (mdType == null) {
-                    mdType = "unknown";
+                    mdType = Constants.UNKNOWN;
                 }
                 this.metadataRecord.setType(mdType);
 

@@ -109,6 +109,8 @@ public class Utility {
 
     private TripleStoreUtility tripleStoreUtility;
 
+    private final static String RESOURCE_BASE_URL = "resourceBaseUrl";
+
     /**
      * The pattern used to extract the redirect base url and path from the staging file XML representation.
      */
@@ -608,8 +610,8 @@ public class Utility {
             new StartElementWithChildElements(Elements.ELEMENT_MODIFIED_BY, Constants.STRUCTURAL_RELATIONS_NS_URI,
                 Constants.STRUCTURAL_RELATIONS_NS_PREFIX, null, getCurrentUserId(), null);
         final Attribute resourceAttribute =
-            new Attribute("resource", Constants.RDF_NAMESPACE_URI, Constants.RDF_NAMESPACE_PREFIX, "info:fedora/"
-                + getCurrentUserId());
+            new Attribute("resource", Constants.RDF_NAMESPACE_URI, Constants.RDF_NAMESPACE_PREFIX,
+                Constants.IDENTIFIER_PREFIX + getCurrentUserId());
         modifiedBy.addAttribute(resourceAttribute);
         updateElementsRelsExt.put(Elements.ELEMENT_MODIFIED_BY, modifiedBy);
 
@@ -618,8 +620,8 @@ public class Utility {
             getCurrentUserRealName(), null));
 
         final String buildNumber = getBuildNumber();
-        updateElementsRelsExt.put("build", new StartElementWithChildElements("build",
-            "http://escidoc.de/core/01/system/", "system", null, buildNumber, null));
+        updateElementsRelsExt.put(XmlTemplateProvider.BUILD_NUMBER, new StartElementWithChildElements(
+            XmlTemplateProvider.BUILD_NUMBER, "http://escidoc.de/core/01/system/", "system", null, buildNumber, null));
 
         boolean release = false;
         if (newStatus != null) {
@@ -712,7 +714,7 @@ public class Utility {
             // add premis:event to version-history/version[1]/events as
             // first child
             final String newEventEntry =
-                createEventXml(resource.getId(), resBaseData.get("resourceBaseUrl"), getCurrentUserRealName(),
+                createEventXml(resource.getId(), resBaseData.get(RESOURCE_BASE_URL), getCurrentUserRealName(),
                     getCurrentUserId(), XmlTemplateProvider.TIMESTAMP_PLACEHOLDER, newStatus, comment,
                     currentVersionProperties);
 
@@ -911,7 +913,7 @@ public class Utility {
         newVersionEntry.put(XmlTemplateProvider.VAR_EVENT_TYPE, "update");
         newVersionEntry.put(XmlTemplateProvider.VAR_EVENT_XMLID, 'v' + Integer.toString(newVersionNumberInt) + 'e'
             + System.currentTimeMillis());
-        newVersionEntry.put(XmlTemplateProvider.VAR_EVENT_ID_VALUE, resBaseData.get("resourceBaseUrl")
+        newVersionEntry.put(XmlTemplateProvider.VAR_EVENT_ID_VALUE, resBaseData.get(RESOURCE_BASE_URL)
             + resource.getId() + "/resources/" + Elements.ELEMENT_WOV_VERSION_HISTORY + '#'
             + newVersionEntry.get(XmlTemplateProvider.VAR_EVENT_XMLID));
         newVersionEntry.put(XmlTemplateProvider.VAR_EVENT_ID_TYPE, Constants.PREMIS_ID_TYPE_URL_RELATIVE);
@@ -1004,17 +1006,17 @@ public class Utility {
 
         final Map<String, String> baseData = new HashMap<String, String>();
         if (resource instanceof Item) {
-            baseData.put("resourceBaseUrl", Constants.ITEM_URL_BASE);
+            baseData.put(RESOURCE_BASE_URL, Constants.ITEM_URL_BASE);
             baseData.put("resourcePrefix", Constants.ITEM_PROPERTIES_NAMESPACE_PREFIX);
             baseData.put("resourceNamespace", Constants.ITEM_PROPERTIES_NAMESPACE_URI);
         }
         else if (resource instanceof Container) {
-            baseData.put("resourceBaseUrl", Constants.CONTAINER_URL_BASE);
+            baseData.put(RESOURCE_BASE_URL, Constants.CONTAINER_URL_BASE);
             baseData.put("resourcePrefix", Constants.CONTAINER_PROPERTIES_PREFIX);
             baseData.put("resourceNamespace", Constants.CONTAINER_PROPERTIES_NAMESPACE_URI);
         }
         else if (resource instanceof ContentModel) {
-            baseData.put("resourceBaseUrl", Constants.CONTENT_MODEL_URL_BASE);
+            baseData.put(RESOURCE_BASE_URL, Constants.CONTENT_MODEL_URL_BASE);
             baseData.put("resourcePrefix", Constants.CONTENT_MODEL_NAMESPACE_PREFIX);
             baseData.put("resourceNamespace", Constants.CONTENT_MODEL_NAMESPACE_URI);
         }

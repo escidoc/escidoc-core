@@ -339,7 +339,7 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
                 final List<String> predicates = new ArrayList<String>();
                 predicates.add(Constants.STRUCTURAL_RELATIONS_NS_URI + "component");
                 final StaxParser sp = new StaxParser();
-                final RelsExtRefListExtractor rerle = new RelsExtRefListExtractor(predicates, sp);
+                final RelsExtRefListExtractor rerle = new RelsExtRefListExtractor(predicates);
                 sp.addHandler(rerle);
                 try {
                     sp.parse(getRelsExt().getStream());
@@ -1048,8 +1048,8 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
         newComponentIdElement.setPrefix(Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
         newComponentIdElement.setNamespace(Constants.STRUCTURAL_RELATIONS_NS_URI);
         final Attribute resource =
-            new Attribute("resource", Constants.RDF_NAMESPACE_URI, Constants.RDF_NAMESPACE_PREFIX, "info:fedora/"
-                + componentId);
+            new Attribute("resource", Constants.RDF_NAMESPACE_URI, Constants.RDF_NAMESPACE_PREFIX,
+                Constants.IDENTIFIER_PREFIX + componentId);
         newComponentIdElement.addAttribute(resource);
         // newComponentIdElement.setElementText(componentId);
         newComponentIdElement.setChildrenElements(null);
