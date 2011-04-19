@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?> 
-<java version="1.6.0_24" class="java.beans.XMLDecoder"> 
+<java version="1.6.0_18" class="java.beans.XMLDecoder"> 
  <object class="de.escidoc.core.common.util.db.Fingerprint"> 
   <void property="schemas"> 
    <array class="de.escidoc.core.common.util.db.Schema" length="6"> 
@@ -1047,25 +1047,25 @@
           <void property="columns"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>handler/2005/clob/4000/0/null/10/0/null/null/0/0/4000/no</string> 
+             <string>handler/12/varchar2/4000/0/null/10/0/null/null/0/0/4000/no</string> 
             </void> 
             <void method="add"> 
              <string>month/3/number/22/0/0/10/0/null/null/0/0/22/no</string> 
             </void> 
             <void method="add"> 
-             <string>object_id/2005/clob/4000/0/null/10/0/null/null/0/0/4000/no</string> 
+             <string>object_id/12/varchar2/4000/0/null/10/0/null/null/0/0/4000/no</string> 
             </void> 
             <void method="add"> 
-             <string>parent_object_id/2005/clob/4000/0/null/10/0/null/null/0/0/4000/no</string> 
+             <string>parent_object_id/12/varchar2/4000/0/null/10/0/null/null/0/0/4000/no</string> 
             </void> 
             <void method="add"> 
-             <string>request/2005/clob/4000/0/null/10/0/null/null/0/0/4000/no</string> 
+             <string>request/12/varchar2/4000/0/null/10/0/null/null/0/0/4000/no</string> 
             </void> 
             <void method="add"> 
              <string>requests/3/number/22/0/0/10/0/null/null/0/0/22/no</string> 
             </void> 
             <void method="add"> 
-             <string>user_id/2005/clob/4000/0/null/10/0/null/null/0/0/4000/no</string> 
+             <string>user_id/12/varchar2/4000/0/null/10/0/null/null/0/0/4000/no</string> 
             </void> 
             <void method="add"> 
              <string>year/3/number/22/0/0/10/0/null/null/0/0/22/no</string> 
@@ -1091,16 +1091,16 @@
              <string>day/3/number/22/0/0/10/0/null/null/0/0/22/no</string> 
             </void> 
             <void method="add"> 
-             <string>handler/2005/clob/4000/0/null/10/0/null/null/0/0/4000/no</string> 
+             <string>handler/12/varchar2/4000/0/null/10/0/null/null/0/0/4000/no</string> 
             </void> 
             <void method="add"> 
-             <string>interface/2005/clob/4000/0/null/10/0/null/null/0/0/4000/no</string> 
+             <string>interface/12/varchar2/4000/0/null/10/0/null/null/0/0/4000/no</string> 
             </void> 
             <void method="add"> 
              <string>month/3/number/22/0/0/10/0/null/null/0/0/22/no</string> 
             </void> 
             <void method="add"> 
-             <string>request/2005/clob/4000/0/null/10/0/null/null/0/0/4000/no</string> 
+             <string>request/12/varchar2/4000/0/null/10/0/null/null/0/0/4000/no</string> 
             </void> 
             <void method="add"> 
              <string>requests/3/number/22/0/0/10/0/null/null/0/0/22/no</string> 
@@ -1129,19 +1129,19 @@
              <string>day/3/number/22/0/0/10/0/null/null/0/0/22/no</string> 
             </void> 
             <void method="add"> 
-             <string>exception_name/2005/clob/4000/0/null/10/0/null/null/0/0/4000/no</string> 
+             <string>exception_name/12/varchar2/4000/0/null/10/0/null/null/0/0/4000/no</string> 
             </void> 
             <void method="add"> 
-             <string>handler/2005/clob/4000/0/null/10/0/null/null/0/0/4000/no</string> 
+             <string>handler/12/varchar2/4000/0/null/10/0/null/null/0/0/4000/no</string> 
             </void> 
             <void method="add"> 
-             <string>interface/2005/clob/4000/0/null/10/0/null/null/0/0/4000/no</string> 
+             <string>interface/12/varchar2/4000/0/null/10/0/null/null/0/0/4000/no</string> 
             </void> 
             <void method="add"> 
              <string>month/3/number/22/0/0/10/0/null/null/0/0/22/no</string> 
             </void> 
             <void method="add"> 
-             <string>request/2005/clob/4000/0/null/10/0/null/null/0/0/4000/no</string> 
+             <string>request/12/varchar2/4000/0/null/10/0/null/null/0/0/4000/no</string> 
             </void> 
             <void method="add"> 
              <string>requests/3/number/22/0/0/10/0/null/null/0/0/22/no</string> 
