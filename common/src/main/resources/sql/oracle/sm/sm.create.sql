@@ -361,9 +361,9 @@ INSERT INTO sm.agg_stat_data_selectors (
             AND //parameter[@name="internal"]/*=''0''', 1);
 
 CREATE TABLE sm.escidocaggdef1_request_stats ( 
-  handler CLOB NOT NULL,
-  request CLOB NOT NULL,
-  interface CLOB NOT NULL,
+  handler VARCHAR2(4000) NOT NULL,
+  request VARCHAR2(4000) NOT NULL,
+  interface VARCHAR2(4000) NOT NULL,
   day NUMERIC NOT NULL,
   month NUMERIC NOT NULL,
   year NUMERIC NOT NULL,
@@ -371,11 +371,11 @@ CREATE TABLE sm.escidocaggdef1_request_stats (
 );
 
 CREATE TABLE sm.escidocaggdef1_object_stats ( 
-  handler CLOB NOT NULL,
-  request CLOB NOT NULL,
-  object_id CLOB NOT NULL,
-  parent_object_id CLOB NOT NULL,
-  user_id CLOB NOT NULL,
+  handler VARCHAR2(4000) NOT NULL,
+  request VARCHAR2(4000) NOT NULL,
+  object_id VARCHAR2(4000) NOT NULL,
+  parent_object_id VARCHAR2(4000) NOT NULL,
+  user_id VARCHAR2(4000) NOT NULL,
   month NUMERIC NOT NULL,
   year NUMERIC NOT NULL,
   requests NUMERIC NOT NULL
@@ -513,10 +513,10 @@ INSERT INTO sm.agg_stat_data_selectors (
   ('escidoc:aggdef2selector', 'escidoc:aggdef2', 'statistic-table', '//parameter[@name="successful"]/*=''0''', 1);
 
 CREATE TABLE sm.escidocaggdef2_error_stats ( 
-  handler CLOB NOT NULL,
-  request CLOB NOT NULL,
-  interface CLOB NOT NULL,
-  exception_name CLOB NOT NULL,
+  handler VARCHAR2(4000) NOT NULL,
+  request VARCHAR2(4000) NOT NULL,
+  interface VARCHAR2(4000) NOT NULL,
+  exception_name VARCHAR2(4000) NOT NULL,
   day NUMERIC NOT NULL,
   month NUMERIC NOT NULL,
   year NUMERIC NOT NULL,

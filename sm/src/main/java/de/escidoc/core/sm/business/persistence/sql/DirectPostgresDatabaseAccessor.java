@@ -28,6 +28,22 @@
  */
 package de.escidoc.core.sm.business.persistence.sql;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.sql.DataSource;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
+
+import org.springframework.jdbc.core.support.JdbcDaoSupport;
+
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.sm.business.Constants;
 import de.escidoc.core.sm.business.persistence.DirectDatabaseAccessorInterface;
@@ -42,16 +58,6 @@ import de.escidoc.core.sm.business.vo.database.select.SelectFieldVo;
 import de.escidoc.core.sm.business.vo.database.table.DatabaseIndexVo;
 import de.escidoc.core.sm.business.vo.database.table.DatabaseTableFieldVo;
 import de.escidoc.core.sm.business.vo.database.table.DatabaseTableVo;
-import org.springframework.jdbc.core.support.JdbcDaoSupport;
-
-import javax.sql.DataSource;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Class for direct JDBC Database access via Hibernate.
@@ -84,7 +90,9 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport implements Di
 
     private static final String DATE_FUNCTION = "'${date_placeholder}'";
 
-    private static final String DAY_OF_MONTH_FUNCTION = "date_trunc('day',${FIELD_NAME})";
+    private static final String DATE_TO_CHAR_DAY_OF_MONTH_FUNCTION = "date_trunc('day',${FIELD_NAME})";
+
+    private static final String DATE_TO_CHAR_FUNCTION = "${FIELD_NAME}";
 
     private static final Pattern FIELD_NAME_PATTERN = Pattern.compile("\\$\\{FIELD_NAME\\}");
 
@@ -111,16 +119,50 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport implements Di
     }
 
     /**
-     * Converts xmldate into database-specific format. Method is synchronized because SimpleDateFormatter is not
-     * Thread-Safe!
+     * Converts xmldate into database-specific format.
+     * Eg for where-clauses
      *
      * @param xmldate date in xml-format
      * @return String date in database-specific format
      * @throws SqlDatabaseSystemException e
      */
-    private static String convertDate(final String xmldate) throws SqlDatabaseSystemException {
+    private static String convertDateForSelect(final String xmldate) throws SqlDatabaseSystemException {
+        try {
+            String dateFormatString = "yyyy-MM-dd";
+            if (xmldate.contains(":")) {
+                dateFormatString = "yyyy-MM-dd HH:mm:ss";
+            }
+            final XMLGregorianCalendar xmlCal = DatatypeFactory.newInstance().newXMLGregorianCalendar(xmldate);
+            final Calendar cal = xmlCal.toGregorianCalendar();
+            final SimpleDateFormat dateFormat = new SimpleDateFormat(dateFormatString);
+            return DATE_FUNCTION.replaceFirst("\\$\\{date_placeholder\\}", dateFormat.format(cal.getTime()));
+        }
+        catch (final Exception e) {
+            throw new SqlDatabaseSystemException(e);
+        }
+    }
 
-        return DATE_FUNCTION.replaceFirst("\\$\\{date_placeholder\\}", xmldate);
+    /**
+     * Converts xmldate into database-specific format.
+     *
+     * @param xmldate date in xml-format
+     * @return String date in database-specific format
+     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
+     */
+    private static String convertDateForInsert(final String xmldate) throws SqlDatabaseSystemException {
+        try {
+            String dateFormatString = "yyyy-MM-dd";
+            if (xmldate.contains(":")) {
+                dateFormatString = "yyyy-MM-dd HH:mm:ss";
+            }
+            final XMLGregorianCalendar xmlCal = DatatypeFactory.newInstance().newXMLGregorianCalendar(xmldate);
+            final Calendar cal = xmlCal.toGregorianCalendar();
+            final SimpleDateFormat dateFormat = new SimpleDateFormat(dateFormatString);
+            return DATE_FUNCTION.replaceFirst("\\$\\{date_placeholder\\}", dateFormat.format(cal.getTime()));
+        }
+        catch (final Exception e) {
+            throw new SqlDatabaseSystemException(e);
+        }
     }
 
     /**
@@ -195,7 +237,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport implements Di
                 // Case type=date and value=sysdate => sysdate
                 // (is 'now' in postgres)
                 if (field.getFieldType().equalsIgnoreCase(Constants.DATABASE_FIELD_TYPE_DATE)) {
-                    value = "sysdate".equalsIgnoreCase(value) ? SYSDATE : convertDate(value);
+                    value = "sysdate".equalsIgnoreCase(value) ? SYSDATE : convertDateForInsert(value);
                 }
                 else if (field.getFieldType().equalsIgnoreCase(Constants.DATABASE_FIELD_TYPE_TEXT)) {
                     value = value.replaceAll("'", "''");
@@ -562,15 +604,18 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport implements Di
         else if (fieldType.endsWith(Constants.DATABASE_FIELD_TYPE_DATE)) {
             if (fieldType.equalsIgnoreCase(Constants.DATABASE_FIELD_TYPE_DAYDATE)) {
                 final String dayOfMonthFunction =
-                    FIELD_NAME_MATCHER.reset(DAY_OF_MONTH_FUNCTION).replaceAll(
+                    FIELD_NAME_MATCHER.reset(DATE_TO_CHAR_DAY_OF_MONTH_FUNCTION).replaceAll(
                         Matcher.quoteReplacement(longFieldName.toString()));
 
                 whereClause.append(dayOfMonthFunction).append(operator).append(' ');
             }
             else {
-                whereClause.append(longFieldName).append(operator).append(' ');
+                final String dateToCharFunction =
+                    FIELD_NAME_MATCHER.reset(DATE_TO_CHAR_FUNCTION).replaceAll(
+                        Matcher.quoteReplacement(longFieldName.toString()));
+                whereClause.append(dateToCharFunction).append(operator).append(' ');
             }
-            final String value = "sysdate".equalsIgnoreCase(fieldValue) ? SYSDATE : convertDate(fieldValue);
+            final String value = "sysdate".equalsIgnoreCase(fieldValue) ? SYSDATE : convertDateForSelect(fieldValue);
             whereClause.append(value).append(' ');
         }
         else if (fieldType.equalsIgnoreCase(Constants.DATABASE_FIELD_TYPE_NUMERIC)) {
