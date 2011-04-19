@@ -87,7 +87,6 @@ public abstract class VelocityXmlProvider extends XmlTemplateProvider {
      *
      * @see XmlTemplateProvider #getXml(java.lang.String, java.lang.String, java.util.Map)
      */
-    @Override
     public String getXml(final String resource, final String path, final Map values) throws WebserverSystemException {
         // add escaper if none is set
         if (values.get(ESCAPER) == null) {

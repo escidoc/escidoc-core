@@ -42,16 +42,10 @@ public abstract class InfrastructureFoXmlProvider extends VelocityXmlProvider {
 
     private static final String METADATA_RECORD_RESOURCE_NAME = "md-record";
 
-    // private HashMap<String, String> keyMapping = null;
-
     /**
      * Protected constructor to prevent initialization.
      */
     protected InfrastructureFoXmlProvider() {
-
-        // if (this.keyMapping == null) {
-        // initKeyMapping();
-        // }
     }
 
     /**
@@ -76,145 +70,6 @@ public abstract class InfrastructureFoXmlProvider extends VelocityXmlProvider {
 
         return getXml(METADATA_RECORD_RESOURCE_NAME, COMMON_TEMPLATE_PATH, values);
     }
-
-    // /**
-    // * Mapping of eSciDoc ontologie key names to velocity template key names.
-    // *
-    // * @param values
-    // * Map with values, where key is eSciDoc (properties) ontologie
-    // * name. Keys where no mapping is defined are copied with
-    // * ontologie name to return value (map).
-    // * @return Map where key names are Velocity template names.
-    // */
-    // @Deprecated
-    // public HashMap<String, String> valueMapping(final Map<String, String>
-    // values) {
-    //
-    // /*
-    // * See initKeyMapping() for the mapping table.
-    // */
-    //
-    // if (values == null) {
-    // return null;
-    // }
-    //
-    // HashMap<String, String> mappedValues = new HashMap<String, String>();
-    //
-    // Iterator<String> keys = values.keySet().iterator();
-    //
-    // while (keys.hasNext()) {
-    // String key = keys.next();
-    // String mappedKey = mapValue(key);
-    // mappedValues.put(mappedKey, values.get(key));
-    // }
-    //
-    // return mappedValues;
-    // }
-
-    // /**
-    // * Define Mapping between Predicates (URI) and variable names within
-    // * templates.
-    // */
-    // @Deprecated
-    // private void initKeyMapping() {
-    //
-    // this.keyMapping = new HashMap<String, String>();
-    // /*
-    // * Common
-    // */
-    // this.keyMapping.put(TripleStoreUtility.PROP_CREATED_BY_ID,
-    // XmlTemplateProvider.CREATED_BY_ID);
-    //
-    // this.keyMapping.put(TripleStoreUtility.PROP_CREATED_BY_TITLE,
-    // XmlTemplateProvider.CREATED_BY_TITLE);
-    //
-    // /*
-    // * Common Version.
-    // */
-    // this.keyMapping.put(TripleStoreUtility.PROP_MODIFIED_BY_ID,
-    // XmlTemplateProvider.MODIFIED_BY_ID);
-    //
-    // this.keyMapping.put(TripleStoreUtility.PROP_MODIFIED_BY_TITLE,
-    // XmlTemplateProvider.MODIFIED_BY_TITLE);
-    //
-    // this.keyMapping.put(TripleStoreUtility.PROP_LATEST_VERSION_COMMENT,
-    // XmlTemplateProvider.VAR_LATEST_VERSION_COMMENT);
-    //
-    // /*
-    // * Latest Version
-    // */
-    // this.keyMapping.put(TripleStoreUtility.PROP_LATEST_VERSION_NUMBER,
-    // XmlTemplateProvider.VAR_LATEST_VERSION_NUMBER);
-    //
-    // this.keyMapping.put(TripleStoreUtility.PROP_LATEST_VERSION_DATE,
-    // XmlTemplateProvider.VAR_LATEST_VERSION_DATE);
-    //
-    // this.keyMapping.put(TripleStoreUtility.PROP_LATEST_VERSION_STATUS,
-    // XmlTemplateProvider.VAR_LATEST_VERSION_STATUS);
-    //
-    // this.keyMapping.put(TripleStoreUtility.PROP_LATEST_VERSION_COMMENT,
-    // XmlTemplateProvider.VAR_LATEST_VERSION_COMMENT);
-    //
-    // /*
-    // * Item/Container
-    // */
-    // this.keyMapping.put(TripleStoreUtility.PROP_CONTEXT_ID,
-    // XmlTemplateProvider.VAR_CONTEXT_ID);
-    //
-    // this.keyMapping.put(TripleStoreUtility.PROP_CONTEXT_TITLE,
-    // XmlTemplateProvider.VAR_CONTEXT_TITLE);
-    //
-    // this.keyMapping.put(TripleStoreUtility.PROP_CONTENT_MODEL_ID,
-    // XmlTemplateProvider.VAR_CONTENT_MODEL_ID);
-    //
-    // this.keyMapping.put(TripleStoreUtility.PROP_CONTENT_MODEL_TITLE,
-    // XmlTemplateProvider.VAR_CONTENT_MODEL_TITLE);
-    //
-    // /*
-    // * Component
-    // */
-    // this.keyMapping.put(TripleStoreUtility.PROP_MIME_TYPE,
-    // XmlTemplateProvider.VAR_MIME_TYPE);
-    //
-    // // this.keyMapping.put(TripleStoreUtility.PROP_TYPE,
-    // // XmlTemplateProvider.VAR_TYPE);
-    // this.keyMapping.put(TripleStoreUtility.PROP_COMPONENT_CONTENT_CATEGORY,
-    // XmlTemplateProvider.VAR_COMPONENT_TYPE);
-    //
-    // // http://escidoc.de/core/01/properties/mime-type
-    // this.keyMapping.put(TripleStoreUtility.PROP_MIME_TYPE,
-    // XmlTemplateProvider.VAR_MIME_TYPE);
-    //
-    // this.keyMapping.put(TripleStoreUtility.PROP_VISIBILITY,
-    // XmlTemplateProvider.VAR_VISIBILITY);
-    //
-    // this.keyMapping.put(TripleStoreUtility.PROP_VALID_STATUS,
-    // XmlTemplateProvider.VAR_VALID_STATUS);
-    //
-    // /*
-    // * Metadata
-    // */
-    // }
-    //
-    // /**
-    // * Get variable name, which is used in template, for a Predicate.
-    // *
-    // * @param key
-    // * @return
-    // */
-    // @Deprecated
-    // private String mapValue(final String key) {
-    //
-    // if (this.keyMapping == null) {
-    // initKeyMapping();
-    // }
-    //
-    // if (this.keyMapping.containsKey(key)) {
-    // return this.keyMapping.get(key);
-    // }
-    //
-    // return key;
-    // }
 
     /**
      * Generate FoXML for all MetadataRecords.
