@@ -414,8 +414,6 @@ public final class XmlUtility {
 
     public static final String NAME_RESOURCES = "resources";
 
-    public static final String NAME_ORGANIZATION_DETAILS = "organization-details";
-
     public static final String NAME_ID = "id";
 
     public static final String NAME_EMAIL = "email";
@@ -429,8 +427,6 @@ public final class XmlUtility {
     public static final String NAME_HANDLE = "handle";
 
     public static final String NAME_HREF = "href";
-
-    public static final String NAME_TASK_INSTANCE_ID = "task-instance-id";
 
     public static final String NAME_DESCRIPTION = "description";
 
@@ -471,8 +467,6 @@ public final class XmlUtility {
     public static final String NAME_UNSECURED_ACTION = "unsecured-action";
 
     public static final String NAME_UNSECURED_ACTIONS = "unsecured-actions";
-
-    public static final String XPATH_ITEM_COMPONENT_STATUS = "/item/component/properties/status";
 
     public static final String XPATH_USER_ACCOUNT_ORGANIZATIONAL_UNIT =
         "/user-account/properties/organizational-units/organizational-unit";
@@ -1236,23 +1230,6 @@ public final class XmlUtility {
     }
 
     /**
-     * Gets a <code>Validator</code> object for the specified schema.<br> The validator is thread-unsafe and
-     * non-reentrant. Therefore, it is not cached but a new <code>Validator</code> object is created using cached
-     * <code>Schema</code>.
-     *
-     * @param schemaUri The schema URI
-     * @return Returns the validator for the schema specified by the provided URL.
-     * @throws IOException              Thrown in case of an I/O error.
-     * @throws WebserverSystemException Thrown if schema can not be parsed.
-     * @throws java.net.MalformedURLException
-     */
-    public static Validator getValidator(final String schemaUri) throws IOException, WebserverSystemException,
-        MalformedURLException {
-
-        return getSchema(schemaUri).newValidator();
-    }
-
-    /**
      * Validates the provided XML data using the specified schema and creates a <code>ByteArrayInputStream</code> for
      * the data.
      *
@@ -1286,7 +1263,7 @@ public final class XmlUtility {
         throws XmlCorruptedException, XmlSchemaValidationException, WebserverSystemException {
 
         try {
-            final Validator validator = getValidator(schemaUri);
+            final Validator validator = getSchema(schemaUri).newValidator();
             validator.validate(new SAXSource(new InputSource(byteArrayInputStream)));
         }
         catch (final SAXParseException e) {
@@ -1655,7 +1632,7 @@ public final class XmlUtility {
         if (UserContext.isRestAccess()) {
             if (containerRestSchemaLocation == null) {
                 containerRestSchemaLocation =
-                    getSchemaBaseUrl() + "rest/" + "container" + Constants.CONTAINER_NS_URI_SCHEMA_VERSION
+                    getSchemaBaseUrl() + "rest/container" + Constants.CONTAINER_NS_URI_SCHEMA_VERSION
                         + "/container.xsd";
             }
             result = containerRestSchemaLocation;
@@ -1663,7 +1640,7 @@ public final class XmlUtility {
         else {
             if (containerSoapSchemaLocation == null) {
                 containerSoapSchemaLocation =
-                    getSchemaBaseUrl() + "soap/" + "container" + Constants.CONTAINER_NS_URI_SCHEMA_VERSION
+                    getSchemaBaseUrl() + "soap/container" + Constants.CONTAINER_NS_URI_SCHEMA_VERSION
                         + "/container.xsd";
             }
             result = containerSoapSchemaLocation;
@@ -1690,15 +1667,13 @@ public final class XmlUtility {
         final String result;
         if (UserContext.isRestAccess()) {
             if (containerMembersFilterRestSchemaLocation == null) {
-                containerMembersFilterRestSchemaLocation =
-                    getSchemaBaseUrl() + "rest/" + "container/0.3/filter-members.xsd";
+                containerMembersFilterRestSchemaLocation = getSchemaBaseUrl() + "rest/container/0.3/filter-members.xsd";
             }
             result = containerMembersFilterRestSchemaLocation;
         }
         else {
             if (containerMembersFilterSoapSchemaLocation == null) {
-                containerMembersFilterSoapSchemaLocation =
-                    getSchemaBaseUrl() + "soap/" + "container/0.3/filter-members.xsd";
+                containerMembersFilterSoapSchemaLocation = getSchemaBaseUrl() + "soap/container/0.3/filter-members.xsd";
             }
             result = containerMembersFilterSoapSchemaLocation;
         }
@@ -1712,11 +1687,11 @@ public final class XmlUtility {
     public static String getContainersFilterSchemaLocation() throws WebserverSystemException {
         final String result;
         if (UserContext.isRestAccess()) {
-            containersFilterRestSchemaLocation = getSchemaBaseUrl() + "rest/" + "container/0.3/filter-containers.xsd";
+            containersFilterRestSchemaLocation = getSchemaBaseUrl() + "rest/container/0.3/filter-containers.xsd";
             result = containersFilterRestSchemaLocation;
         }
         else {
-            containersFilterSoapSchemaLocation = getSchemaBaseUrl() + "soap/" + "container/0.3/filter-containers.xsd";
+            containersFilterSoapSchemaLocation = getSchemaBaseUrl() + "soap/container/0.3/filter-containers.xsd";
             result = containersFilterSoapSchemaLocation;
         }
 
@@ -1826,13 +1801,13 @@ public final class XmlUtility {
         final String result;
         if (UserContext.isRestAccess()) {
             if (contextsFilterSchemaLocationRest == null) {
-                contextsFilterSchemaLocationRest = getSchemaBaseUrl() + "rest/" + "context/0.3/filter-contexts.xsd";
+                contextsFilterSchemaLocationRest = getSchemaBaseUrl() + "rest/context/0.3/filter-contexts.xsd";
             }
             result = contextsFilterSchemaLocationRest;
         }
         else {
             if (contextsFilterSchemaLocationSoap == null) {
-                contextsFilterSchemaLocationSoap = getSchemaBaseUrl() + "soap/" + "context/0.3/filter-contexts.xsd";
+                contextsFilterSchemaLocationSoap = getSchemaBaseUrl() + "soap/context/0.3/filter-contexts.xsd";
             }
             result = contextsFilterSchemaLocationSoap;
         }
@@ -1902,14 +1877,14 @@ public final class XmlUtility {
         if (UserContext.isRestAccess()) {
             if (itemRestSchemaLocation == null) {
                 itemRestSchemaLocation =
-                    getSchemaBaseUrl() + "rest/" + "item" + Constants.ITEM_NS_URI_SCHEMA_VERSION + "/item.xsd";
+                    getSchemaBaseUrl() + "rest/item" + Constants.ITEM_NS_URI_SCHEMA_VERSION + "/item.xsd";
             }
             result = itemRestSchemaLocation;
         }
         else {
             if (itemSoapSchemaLocation == null) {
                 itemSoapSchemaLocation =
-                    getSchemaBaseUrl() + "soap/" + "item" + Constants.ITEM_NS_URI_SCHEMA_VERSION + "/item.xsd";
+                    getSchemaBaseUrl() + "soap/item" + Constants.ITEM_NS_URI_SCHEMA_VERSION + "/item.xsd";
             }
             result = itemSoapSchemaLocation;
         }
@@ -2021,14 +1996,14 @@ public final class XmlUtility {
         if (UserContext.isRestAccess()) {
             if (organizationalUnitPathListRestSchemaLocation == null) {
                 organizationalUnitPathListRestSchemaLocation =
-                    getSchemaBaseUrl() + "rest/" + "organizational-unit/0.4/organizational-unit-path-list.xsd";
+                    getSchemaBaseUrl() + "rest/organizational-unit/0.4/organizational-unit-path-list.xsd";
             }
             result = organizationalUnitPathListRestSchemaLocation;
         }
         else {
             if (organizationalUnitPathListSoapSchemaLocation == null) {
                 organizationalUnitPathListSoapSchemaLocation =
-                    getSchemaBaseUrl() + "soap/" + "organizational-unit/0.4/organizational-unit-path-list.xsd";
+                    getSchemaBaseUrl() + "soap/organizational-unit/0.4/organizational-unit-path-list.xsd";
             }
             result = organizationalUnitPathListSoapSchemaLocation;
         }
@@ -2045,14 +2020,14 @@ public final class XmlUtility {
         if (UserContext.isRestAccess()) {
             if (organizationalUnitRefListRestSchemaLocation == null) {
                 organizationalUnitRefListRestSchemaLocation =
-                    getSchemaBaseUrl() + "rest/" + "organizational-unit/0.4/organizational-unit-ref-list.xsd";
+                    getSchemaBaseUrl() + "rest/organizational-unit/0.4/organizational-unit-ref-list.xsd";
             }
             result = organizationalUnitRefListRestSchemaLocation;
         }
         else {
             if (organizationalUnitRefListSoapSchemaLocation == null) {
                 organizationalUnitRefListSoapSchemaLocation =
-                    getSchemaBaseUrl() + "soap/" + "organizational-unit/0.4/organizational-unit-ref-list.xsd";
+                    getSchemaBaseUrl() + "soap/organizational-unit/0.4/organizational-unit-ref-list.xsd";
             }
             result = organizationalUnitRefListSoapSchemaLocation;
         }
@@ -2068,13 +2043,13 @@ public final class XmlUtility {
         final String result;
         if (UserContext.isRestAccess()) {
             if (filterSchemaLocationRest == null) {
-                filterSchemaLocationRest = getSchemaBaseUrl() + "rest/" + "common/0.4/filter.xsd";
+                filterSchemaLocationRest = getSchemaBaseUrl() + "rest/common/0.4/filter.xsd";
             }
             result = filterSchemaLocationRest;
         }
         else {
             if (filterSchemaLocationSoap == null) {
-                filterSchemaLocationSoap = getSchemaBaseUrl() + "soap/" + "common/0.4/filter.xsd";
+                filterSchemaLocationSoap = getSchemaBaseUrl() + "soap/common/0.4/filter.xsd";
             }
             result = filterSchemaLocationSoap;
         }
@@ -2437,24 +2412,6 @@ public final class XmlUtility {
         catch (final IOException e) {
             throw new WebserverSystemException("Error accessing Escidoc configuration!", e);
         }
-    }
-
-    /**
-     * Replace the oldPrefix with newPrefix in xml String.
-     *
-     * @param xml           The xml String.
-     * @param currentPrefix The currentPrefix.
-     * @param newPrefix     The newPrefix.
-     * @return The resulting xml String.
-     */
-    public static String replaceNamespacePrefix(final String xml, final String currentPrefix, final String newPrefix) {
-        String result = xml;
-        if (result.contains(currentPrefix)) {
-            result = result.replaceAll("xmlns:" + currentPrefix, "xmlns:" + newPrefix);
-            result = result.replaceAll('<' + currentPrefix + ':', '<' + newPrefix + ':');
-            result = result.replaceAll("</" + currentPrefix + ':', "</" + newPrefix + ':');
-        }
-        return result;
     }
 
     /**

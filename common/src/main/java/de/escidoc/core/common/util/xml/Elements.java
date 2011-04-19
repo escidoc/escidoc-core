@@ -31,8 +31,6 @@ public final class Elements {
     private Elements() {
     }
 
-    public static final String ATTRIBUTE_WOV_VERSION_CREATED_DATE = "version-created-date";
-
     public static final String ATTRIBUTE_PREDICATE = "predicate";
 
     public static final String ELEMENT_ITEM = "item";
@@ -55,13 +53,7 @@ public final class Elements {
 
     public static final String ELEMENT_PID = "pid";
 
-    public static final String ELEMENT_WOV_EVENT = "event";
-
-    public static final String ELEMENT_WOV_EVENTS = "events";
-
     public static final String ELEMENT_WOV_EVENT_DATE = "eventDateTime";
-
-    public static final String ELEMENT_WOV_EVENT_COMMENT = "eventDetail";
 
     public static final String ELEMENT_WOV_EVENT_USER = "linkingAgentIdentifier";
 
@@ -73,23 +65,15 @@ public final class Elements {
 
     public static final String ELEMENT_USER_ATTRIBUTE = "attribute";
 
-    public static final String ELEMENT_USER_ATTRIBUTES = "attributes";
-
     public static final String ATTRIBUTE_XLINK_OBJID = "objid";
 
     public static final String ATTRIBUTE_XLINK_HREF = "href";
 
     public static final String ATTRIBUTE_XLINK_TITLE = "title";
 
-    public static final String ATTRIBUTE_XLINK_TYPE = "type";
-
     public static final String ATTRIBUTE_NAME = "name";
 
     public static final String PREDECESSOR_ATTRIBUTE_FORM = "form";
-
-    public static final String ELEMENT_WITHDRAWAL_DATE = "withdrawal-date";
-
-    public static final String ELEMENT_WITHDRAWAL_COMMENT = "withdrawal-comment";
 
     public static final String ELEMENT_COMPONENT_CONTENT_CATEGORY = "content-category";
 
@@ -98,8 +82,6 @@ public final class Elements {
     public static final String ELEMENT_COMPONENT_CONTENT_CHECKSUM = "checksum";
 
     public static final String ELEMENT_FILE_NAME = "file-name";
-
-    public static final String ELEMENT_FILE_SIZE = "file-size";
 
     public static final String ELEMENT_MIME_TYPE = "mime-type";
 
@@ -112,12 +94,6 @@ public final class Elements {
     public static final String ELEMENT_DESCRIPTION = "description";
 
     public static final String ELEMENT_PARAM_FORMAT = "format";
-
-    public static final String ELEMENT_PARAM_LIMIT = "limit";
-
-    public static final String ELEMENT_PARAM_OFFSET = "offset";
-
-    public static final String ELEMENT_PARAM_ORDER_BY = "order-by";
 
     public static final String ELEMENT_PARAM_WITHDRAW_COMMENT = "withdraw-comment";
 
@@ -137,10 +113,6 @@ public final class Elements {
 
     public static final String ELEMENT_CONTEXT = "context";
 
-    public static final String ELEMENT_ADMIN_DESCRIPTORS = "admin-descriptors";
-
-    public static final String ELEMENT_ADMIN_DESCRIPTOR = "admin-descriptor";
-
     public static final String ELEMENT_NAME = "name";
 
     public static final String ELEMENT_DATE = "date";
@@ -156,10 +128,6 @@ public final class Elements {
     public static final String ELEMENT_MODIFIED_BY = "modified-by";
 
     public static final String ELEMENT_MODIFIED_BY_TITLE = "modified-by-title";
-
-    public static final String ELEMENT_CONTEXT_LIST = "context-list";
-
-    public static final String ELEMENT_CONTEXT_CREATION_DATE = "creation-date";
 
     public static final String ELEMENT_ORGANIZATIONAL_UNITS = "organizational-units";
 
@@ -188,8 +156,6 @@ public final class Elements {
     public static final String ATTRIBUTE_CONTENT_STREAM_MIME_TYPE = "mime-type";
 
     public static final String ATTRIBUTE_STORAGE = "storage";
-
-    public static final String ELEMENT_MD_RECORD = "md-record";
 
     public static final String ELEMENT_MD_RECORDS = "md-records";
 
