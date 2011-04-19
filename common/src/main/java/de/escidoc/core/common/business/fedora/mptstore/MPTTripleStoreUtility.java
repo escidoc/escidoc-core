@@ -20,29 +20,6 @@
 
 package de.escidoc.core.common.business.fedora.mptstore;
 
-import de.escidoc.core.common.business.Constants;
-import de.escidoc.core.common.business.fedora.TripleStoreUtility;
-import de.escidoc.core.common.business.fedora.Utility;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
-import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
-import de.escidoc.core.common.exceptions.system.IntegritySystemException;
-import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.IOUtils;
-import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import de.escidoc.core.common.util.service.UserContext;
-import de.escidoc.core.common.util.xml.Elements;
-import de.escidoc.core.common.util.xml.XmlUtility;
-import org.nsdl.mptstore.core.BasicTableManager;
-import org.nsdl.mptstore.core.DDLGenerator;
-import org.nsdl.mptstore.core.TableManager;
-import org.nsdl.mptstore.rdf.URIReference;
-import org.nsdl.mptstore.util.NTriplesUtil;
-import org.springframework.jdbc.CannotGetJdbcConnectionException;
-
-import javax.sql.DataSource;
-
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.sql.Connection;
@@ -61,10 +38,35 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.regex.Pattern;
 
+import javax.sql.DataSource;
+
+import org.nsdl.mptstore.core.BasicTableManager;
+import org.nsdl.mptstore.core.DDLGenerator;
+import org.nsdl.mptstore.core.TableManager;
+import org.nsdl.mptstore.rdf.URIReference;
+import org.nsdl.mptstore.util.NTriplesUtil;
+import org.springframework.jdbc.CannotGetJdbcConnectionException;
+
+import de.escidoc.core.common.business.Constants;
+import de.escidoc.core.common.business.fedora.TripleStoreUtility;
+import de.escidoc.core.common.business.fedora.Utility;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
+import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
+import de.escidoc.core.common.exceptions.system.IntegritySystemException;
+import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.util.IOUtils;
+import de.escidoc.core.common.util.configuration.EscidocConfiguration;
+import de.escidoc.core.common.util.db.DatabaseType;
+import de.escidoc.core.common.util.service.UserContext;
+import de.escidoc.core.common.util.xml.Elements;
+import de.escidoc.core.common.util.xml.XmlUtility;
+
 /**
  * To use is as implementation of the abstract class TripleStoreUtility register this as spring.bean
  * id="business.TripleStoreUtility".
- *
+ * 
  * @author Frank Schwichtenberg
  */
 public class MPTTripleStoreUtility extends TripleStoreUtility {
@@ -73,8 +75,11 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
 
     private TableManager tableManager;
 
+    private DatabaseType databaseType;
+
     /**
      * Injects the data source.
+     * 
      * @param myDataSource
      */
     public void setMyDataSource(final DataSource myDataSource) {
@@ -505,9 +510,8 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * de.escidoc.core.common.business.fedora.TripleStoreUtility#executeQueryId
-     * (java.lang.String, boolean, java.lang.String)
+     * @see de.escidoc.core.common.business.fedora.TripleStoreUtility#executeQueryId (java.lang.String, boolean,
+     * java.lang.String)
      */
     @Override
     public List<String> executeQueryId(final String id, final boolean targetIsSubject, final String predicate)
@@ -518,9 +522,8 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * de.escidoc.core.common.business.fedora.TripleStoreUtility#executeQueryLiteral
-     * (java.lang.String, boolean, java.lang.String)
+     * @see de.escidoc.core.common.business.fedora.TripleStoreUtility#executeQueryLiteral (java.lang.String, boolean,
+     * java.lang.String)
      */
     @Override
     protected List<String> executeQueryLiteral(
@@ -566,7 +569,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
     }
 
     /**
-     *
+     * 
      * @param queryByLiteral
      * @param idOrLiteral
      * @param targetIsSubject
@@ -600,8 +603,10 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             else {
                 try {
                     where =
-                        where.append('\'').append(
-                            new URIReference(Constants.IDENTIFIER_PREFIX + idOrLiteral).toString()).append("')");
+                        where
+                            .append('\'')
+                            .append(new URIReference(Constants.IDENTIFIER_PREFIX + idOrLiteral).toString())
+                            .append("')");
                 }
                 catch (final URISyntaxException e) {
                     throw new TripleStoreSystemException(e.getMessage(), e);
@@ -628,7 +633,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
     }
 
     /**
-     *
+     * 
      * @param ids
      * @param targetIsSubject
      * @param predicate
@@ -664,8 +669,8 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                 try {
                     where =
                         where
-                            .append('\'').append(new URIReference(Constants.IDENTIFIER_PREFIX + id).toString()).append(
-                                '\'');
+                            .append('\'').append(new URIReference(Constants.IDENTIFIER_PREFIX + id).toString())
+                            .append('\'');
                 }
                 catch (final URISyntaxException e) {
                     throw new TripleStoreSystemException(e.getMessage(), e);
@@ -696,9 +701,8 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * de.escidoc.core.common.business.fedora.TripleStoreUtility#getRelation
-     * (java.lang.String, java.lang.String, java.lang.String)
+     * @see de.escidoc.core.common.business.fedora.TripleStoreUtility#getRelation (java.lang.String, java.lang.String,
+     * java.lang.String)
      */
     @Override
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SQL_PREPARED_STATEMENT_GENERATED_FROM_NONCONSTANT_STRING")
@@ -748,7 +752,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
     }
 
     /**
-     *
+     * 
      * @param objectType
      * @param filterMap
      * @param whereClause
@@ -766,9 +770,8 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * de.escidoc.core.common.business.fedora.IFTripleStoreFilterUtility#evaluate
-     * (java.lang.String, java.lang.String)
+     * @see de.escidoc.core.common.business.fedora.IFTripleStoreFilterUtility#evaluate (java.lang.String,
+     * java.lang.String)
      */
     @Override
     public List<String> evaluate(
@@ -975,7 +978,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
     }
 
     /**
-     *
+     * 
      * @param filters
      * @param begin
      * @return
@@ -1071,7 +1074,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
     }
 
     /**
-     *
+     * 
      * @param columnName
      * @param objects
      * @return
@@ -1102,8 +1105,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
     /*
      * (non-Javadoc)
      * 
-     * @seede.escidoc.core.common.business.fedora.IFTripleStoreFilterUtility#
-     * getMemberList(java.lang.String)
+     * @seede.escidoc.core.common.business.fedora.IFTripleStoreFilterUtility# getMemberList(java.lang.String)
      */
     @Override
     public List<String> getMemberList(final String id, final String whereClause) throws TripleStoreSystemException {
@@ -1235,8 +1237,8 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                             .append(columnObjectContainer).append("='<info:fedora/").append(val).append(">'");
                     }
                     else {
-                        queryPartPropertiesBuffer.append(columnObjectContainer).append("=\'\"").append(val).append(
-                            "\"\'");
+                        queryPartPropertiesBuffer
+                            .append(columnObjectContainer).append("=\'\"").append(val).append("\"\'");
                     }
                     queryPartPropertiesBuffer.append(") ");
                     queryPartPropertiesBuffer.append(tableNameNext);
@@ -1416,7 +1418,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
     }
 
     /**
-     *
+     * 
      * @param query
      * @return
      */
@@ -1431,8 +1433,8 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
     /*
      * (non-Javadoc)
      * 
-     * @seede.escidoc.core.common.business.fedora.IFTripleStoreFilterUtility#
-     * getContextMemberList(java.lang.String, java.lang.String)
+     * @seede.escidoc.core.common.business.fedora.IFTripleStoreFilterUtility# getContextMemberList(java.lang.String,
+     * java.lang.String)
      */
 
     @Override
@@ -1447,8 +1449,8 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
     /*
      * (non-Javadoc)
      * 
-     * @seede.escidoc.core.common.business.fedora.IFTripleStoreFilterUtility#
-     * getObjectRefs(java.lang.String, java.lang.String)
+     * @seede.escidoc.core.common.business.fedora.IFTripleStoreFilterUtility# getObjectRefs(java.lang.String,
+     * java.lang.String)
      */
     @Override
     public String getObjectRefs(final String objectType, final Map<String, Object> filterMap, final String whereClause)
@@ -1518,10 +1520,12 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
 
     /**
      * Get name of table for predicate.
-     *
-     * @param predicate Predicate (from SPO).
+     * 
+     * @param predicate
+     *            Predicate (from SPO).
      * @return name of table where predicate name is used.
-     * @throws TripleStoreSystemException Thrown if request of TripleStore failed.
+     * @throws TripleStoreSystemException
+     *             Thrown if request of TripleStore failed.
      */
     public String getTableName(final String predicate) throws TripleStoreSystemException {
         String result = null;
@@ -1543,10 +1547,13 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
     }
 
     /**
-     * @param pid                       The Id of the object.
-     * @param fullqualifiedPropertyName The full qualified property name.
+     * @param pid
+     *            The Id of the object.
+     * @param fullqualifiedPropertyName
+     *            The full qualified property name.
      * @return Value of property element.
-     * @throws TripleStoreSystemException If access to the triple store fails.
+     * @throws TripleStoreSystemException
+     *             If access to the triple store fails.
      */
     @Override
     public String getPropertiesElements(final String pid, final String fullqualifiedPropertyName)
@@ -1570,8 +1577,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
     /*
      * (non-Javadoc)
      * 
-     * @seede.escidoc.core.common.business.fedora.IFTripleStoreFilterUtility#
-     * reinitialize()
+     * @seede.escidoc.core.common.business.fedora.IFTripleStoreFilterUtility# reinitialize()
      */
     @Override
     public Object reinitialize() throws TripleStoreSystemException {
@@ -1579,10 +1585,12 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
     }
 
     /**
-     * Sets up the table manager.<br> The table manager is created in order to get the current table mappings.
-     *
+     * Sets up the table manager.<br>
+     * The table manager is created in order to get the current table mappings.
+     * 
      * @return Returns the created table manager.
-     * @throws TripleStoreSystemException If access to the triple store fails.
+     * @throws TripleStoreSystemException
+     *             If access to the triple store fails.
      */
     private TableManager setUpTableManager() throws TripleStoreSystemException {
 
@@ -1598,10 +1606,40 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
     }
 
     /**
+     * Determine the type of relational database the system is using.
+     * 
+     * @return current DatabaseType
+     * @throws TripleStoreSystemException
+     *             If access to the database fails.
+     */
+    private DatabaseType getDatabaseType() throws TripleStoreSystemException {
+        if (databaseType == null) {
+            Connection con = null;
+            try {
+                con = getConnection();
+                databaseType = DatabaseType.valueOf(con);
+            }
+            catch (final CannotGetJdbcConnectionException e) {
+                throw new TripleStoreSystemException("Failed to get JDBC connection.", e);
+            }
+            catch (final SQLException e) {
+                throw new TripleStoreSystemException("Failed to get database metadata ", e);
+            }
+            finally {
+                if (con != null) {
+                    releaseConnection(con);
+                }
+            }
+        }
+        return databaseType;
+    }
+
+    /**
      * Gets the database-dependent configured ddl-generator for the triplestore.
-     *
+     * 
      * @return DDLGenerator.
-     * @throws TripleStoreSystemException If instanciation fails.
+     * @throws TripleStoreSystemException
+     *             If instanciation fails.
      */
     private DDLGenerator getDdlGenerator() throws TripleStoreSystemException {
 
@@ -1627,10 +1665,12 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
     /**
      * If entry is an URI Identifier, the method extracts the contained id, if the entry is a literal value, the method
      * removes the leading and trailing quote (").
-     *
-     * @param entry The entry (result of a triplestore query)
+     * 
+     * @param entry
+     *            The entry (result of a triplestore query)
      * @return The result as described above.
-     * @throws TripleStoreSystemException If access to the triple store fails.
+     * @throws TripleStoreSystemException
+     *             If access to the triple store fails.
      */
     private String getValue(final String entry) throws TripleStoreSystemException {
         String result;
@@ -1657,10 +1697,12 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
 
     /**
      * Excecute query on TripleStore.
-     *
-     * @param query TripleStore query
+     * 
+     * @param query
+     *            TripleStore query
      * @return result list for request.
-     * @throws TripleStoreSystemException If access to the triple store fails.
+     * @throws TripleStoreSystemException
+     *             If access to the triple store fails.
      */
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SQL_PREPARED_STATEMENT_GENERATED_FROM_NONCONSTANT_STRING")
     public List<String> executeSqlQuery(final String query) throws TripleStoreSystemException {
@@ -1694,7 +1736,8 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
 
     /**
      * @return the tableManager
-     * @throws TripleStoreSystemException If access to the triple store fails.
+     * @throws TripleStoreSystemException
+     *             If access to the triple store fails.
      */
     public TableManager getTableManager() throws TripleStoreSystemException {
         if (this.tableManager == null) {
@@ -1704,7 +1747,8 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
     }
 
     /**
-     * @param tableManager the tableManager to set
+     * @param tableManager
+     *            the tableManager to set
      */
     public void setTableManager(final TableManager tableManager) {
         this.tableManager = tableManager;
@@ -1719,8 +1763,9 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
 
     /**
      * Builds the starting clause of a query to the triple store to retrieve objects.
-     *
-     * @param targetIsSubject targetIsSubject
+     * 
+     * @param targetIsSubject
+     *            targetIsSubject
      * @return Returns the starting clause "SELECT PREDICATE_TABLE.S FROM " in a {@link StringBuffer}
      */
     @Override
@@ -1750,9 +1795,11 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
 
     /**
      * Test id a resource with provided id exists.
-     *
-     * @param pid Fedora objid.
-     * @throws TripleStoreSystemException If access to the triple store fails.
+     * 
+     * @param pid
+     *            Fedora objid.
+     * @throws TripleStoreSystemException
+     *             If access to the triple store fails.
      */
     @Override
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SQL_PREPARED_STATEMENT_GENERATED_FROM_NONCONSTANT_STRING")
@@ -1804,23 +1851,29 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
 
     /**
      * Builds the starting clause of a query to the triple store.
-     *
-     * @param targetIsSubject     Flag indicating that the target to search for is the subject ( <code>true</code>) or
-     *                            the object (<code>false</code>) of the specified predicate.
-     * @param predicateId         The predicate id. If this equals to the id predicate (see de.escidoc.core.common.business.Constants.DC_IDENTIFIER_URI),
-     *                            the provided value of the parameter <code>targetIsSubject</code> is ignored and it is
-     *                            assumed it has been set to <code>true</code>.
-     * @param expectedValue       The value that must be matched by the specified predicate. If
-     *                            <code>targetIsSubject</code> is <code>true</code>, the object of the predicate must
-     *                            match the value. Otherwise the subject must match the value.<br/> In case of the id
-     *                            attribute, the expected value is ignored and $s is used for creating $s
-     *                            &lt;predicate&gt; $s clause part.
-     * @param targetResourceType  The object type of the target of the query. If this is <code>null</code>, no
-     *                            restriction for expected resource type is added.
-     * @param contentModelTitleId The id of the predicate pointing to the title of the content model. If this is
-     *                            <code>null</code>, targets of any content model are searched.
-     * @param contentModelTitle   The content model title that the subject must match. This must not be
-     *                            <code>null</code>, if contentModelTitleId is not <code>null</code>.
+     * 
+     * @param targetIsSubject
+     *            Flag indicating that the target to search for is the subject ( <code>true</code>) or the object (
+     *            <code>false</code>) of the specified predicate.
+     * @param predicateId
+     *            The predicate id. If this equals to the id predicate (see
+     *            de.escidoc.core.common.business.Constants.DC_IDENTIFIER_URI), the provided value of the parameter
+     *            <code>targetIsSubject</code> is ignored and it is assumed it has been set to <code>true</code>.
+     * @param expectedValue
+     *            The value that must be matched by the specified predicate. If <code>targetIsSubject</code> is
+     *            <code>true</code>, the object of the predicate must match the value. Otherwise the subject must match
+     *            the value.<br/>
+     *            In case of the id attribute, the expected value is ignored and $s is used for creating $s
+     *            &lt;predicate&gt; $s clause part.
+     * @param targetResourceType
+     *            The object type of the target of the query. If this is <code>null</code>, no restriction for expected
+     *            resource type is added.
+     * @param contentModelTitleId
+     *            The id of the predicate pointing to the title of the content model. If this is <code>null</code>,
+     *            targets of any content model are searched.
+     * @param contentModelTitle
+     *            The content model title that the subject must match. This must not be <code>null</code>, if
+     *            contentModelTitleId is not <code>null</code>.
      * @return Returns the where clause searching for the specified subjects.
      */
     @Override
@@ -1996,7 +2049,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
 
     /**
      * See Interface for functional description.
-     *
+     * 
      * @see TripleStoreUtility #retrieve(java.lang.String)
      */
     @Override
@@ -2006,10 +2059,12 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
 
     /**
      * Get the context id of the context with the given name.
-     *
-     * @param name context name
+     * 
+     * @param name
+     *            context name
      * @return context id or null, if no such context exists
-     * @throws TripleStoreSystemException If access to the triple store fails.
+     * @throws TripleStoreSystemException
+     *             If access to the triple store fails.
      */
     @Override
     public String getContextForName(final String name) throws TripleStoreSystemException {
@@ -2061,10 +2116,12 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
 
     /**
      * Get all child containers of the given container.
-     *
-     * @param id container id
+     * 
+     * @param id
+     *            container id
      * @return id list of all child containers
-     * @throws TripleStoreSystemException If access to the triple store fails.
+     * @throws TripleStoreSystemException
+     *             If access to the triple store fails.
      */
     @Override
     public List<String> getAllChildContainers(final String id) throws TripleStoreSystemException {
@@ -2073,14 +2130,29 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
         final String typeTableName = getTableName(PROP_OBJECT_TYPE);
 
         if (memberTableName != null && typeTableName != null) {
-            final String select =
-                MessageFormat.format("WITH RECURSIVE getChildContainers AS (SELECT {1}.s, {1}.o"
-                    + " FROM {0}, {1} WHERE {0}.s={1}.o AND {0}.o=''<" + Constants.CONTAINER_OBJECT_TYPE
-                    + ">'' AND {1}.s=''" + "<info:fedora/" + id + ">'' UNION SELECT {1}.s, {1}.o FROM {0}, {1}, "
-                    + "getChildContainers WHERE {1}.s=" + "getChildContainers.o AND {0}.s={1}.o AND {0}.o=''<"
-                    + Constants.CONTAINER_OBJECT_TYPE + ">'') SELECT o" + " FROM getChildContainers;", typeTableName,
-                    memberTableName);
-
+            String select = null;
+            final DatabaseType databaseType = getDatabaseType();
+            if (databaseType == DatabaseType.POSTGRES) {
+                select =
+                    MessageFormat.format("WITH RECURSIVE getChildContainers AS (SELECT {1}.s, {1}.o"
+                        + " FROM {0}, {1} WHERE {0}.s={1}.o AND {0}.o=''<" + Constants.CONTAINER_OBJECT_TYPE
+                        + ">'' AND {1}.s=''" + "<info:fedora/" + id + ">'' UNION SELECT {1}.s, {1}.o FROM {0}, {1}, "
+                        + "getChildContainers WHERE {1}.s=" + "getChildContainers.o AND {0}.s={1}.o AND {0}.o=''<"
+                        + Constants.CONTAINER_OBJECT_TYPE + ">'') SELECT o" + " FROM getChildContainers;",
+                        typeTableName, memberTableName);
+            }
+            else if (databaseType == DatabaseType.ORACLE) {
+                select =
+                    MessageFormat.format("WITH getChildContainers (s, o) AS (SELECT {1}.s, {1}.o"
+                        + " FROM {0}, {1} WHERE {0}.s={1}.o AND {0}.o=''<" + Constants.CONTAINER_OBJECT_TYPE
+                        + ">'' AND {1}.s=''" + "<info:fedora/" + id
+                        + ">'' UNION ALL SELECT {1}.s, {1}.o FROM {0}, {1}, " + "getChildContainers WHERE {1}.s="
+                        + "getChildContainers.o AND {0}.s={1}.o AND {0}.o=''<" + Constants.CONTAINER_OBJECT_TYPE
+                        + ">'') SELECT o" + " FROM getChildContainers", typeTableName, memberTableName);
+            }
+            else {
+                throw new TripleStoreSystemException("This kind of relational database is not supported.");
+            }
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug("Executing sql query '" + select + "'.");
             }
@@ -2100,10 +2172,12 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
 
     /**
      * Get all child OUs of the given organizational unit.
-     *
-     * @param id OU id
+     * 
+     * @param id
+     *            OU id
      * @return id list of all child OUs
-     * @throws TripleStoreSystemException If access to the triple store fails.
+     * @throws TripleStoreSystemException
+     *             If access to the triple store fails.
      */
     @Override
     public List<String> getAllChildOUs(final String id) throws TripleStoreSystemException {
@@ -2111,12 +2185,25 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
         final String parentTableName = getTableName(PROP_PARENT);
 
         if (parentTableName != null) {
-            final String select =
-                MessageFormat.format("WITH RECURSIVE getChildOUs AS (SELECT {0}.s, {0}.o"
-                    + " FROM {0} WHERE {0}.o=''<info:fedora/" + id + ">'' UNION SELECT {0}.s, {0}.o FROM {0},"
-                    + " getChildOUs WHERE {0}.o=getChildOUs.s)" + " SELECT distinct(s) FROM getChildOUs;",
-                    parentTableName);
-
+            String select;
+            final DatabaseType databaseType = getDatabaseType();
+            if (databaseType == DatabaseType.POSTGRES) {
+                select =
+                    MessageFormat.format("WITH RECURSIVE getChildOUs AS (SELECT {0}.s, {0}.o"
+                        + " FROM {0} WHERE {0}.o=''<info:fedora/" + id + ">'' UNION SELECT {0}.s, {0}.o FROM {0},"
+                        + " getChildOUs WHERE {0}.o=getChildOUs.s)" + " SELECT distinct(s) FROM getChildOUs;",
+                        parentTableName);
+            }
+            else if (databaseType == DatabaseType.ORACLE) {
+                select =
+                    MessageFormat.format("WITH getChildOUs (s, o) AS (SELECT {0}.s, {0}.o"
+                        + " FROM {0} WHERE {0}.o=''<info:fedora/" + id + ">'' UNION ALL SELECT {0}.s, {0}.o FROM {0},"
+                        + " getChildOUs WHERE {0}.o=getChildOUs.s)" + " SELECT distinct(s) FROM getChildOUs",
+                        parentTableName);
+            }
+            else {
+                throw new TripleStoreSystemException("This kind of relational database is not supported.");
+            }
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug("Executing sql query '" + select + "'.");
             }
