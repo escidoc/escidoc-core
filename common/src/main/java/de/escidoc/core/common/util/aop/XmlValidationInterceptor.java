@@ -21,7 +21,6 @@
 package de.escidoc.core.common.util.aop;
 
 import de.escidoc.core.common.annotation.Validate;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;

@@ -134,12 +134,11 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
      * Get the alternate form of an ou representation. If the current request came in via REST, then the SOAP form will
      * be returned here and vice versa.
      *
-     * @param id ou id
      * @return alternate form of the ou
      * @throws SystemException An internal error occurred.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
-    private String getAlternateForm(final String id) throws SystemException, WebserverSystemException {
+    private String getAlternateForm() throws SystemException, WebserverSystemException {
         String result = null;
         final boolean isRestAccess = UserContext.isRestAccess();
 
@@ -180,10 +179,10 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
 
         if (UserContext.isRestAccess()) {
             restXml = xmlData;
-            soapXml = getAlternateForm(id);
+            soapXml = getAlternateForm();
         }
         else {
-            restXml = getAlternateForm(id);
+            restXml = getAlternateForm();
             soapXml = xmlData;
         }
         for (final ResourceListener ouListener : this.ouListeners) {
@@ -217,10 +216,10 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
 
         if (UserContext.isRestAccess()) {
             restXml = xmlData;
-            soapXml = getAlternateForm(id);
+            soapXml = getAlternateForm();
         }
         else {
-            restXml = getAlternateForm(id);
+            restXml = getAlternateForm();
             soapXml = xmlData;
         }
         for (final ResourceListener ouListener : this.ouListeners) {
@@ -1108,7 +1107,7 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
                 predecessorsMap.add(predecessorMap);
             }
             // check rules
-            checkPredecessorRules(predecessors, oUobjid);
+            checkPredecessorRules(predecessors);
         }
 
         return predecessorsMap;
@@ -1118,11 +1117,9 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
      * Checks if definition of predecessors follows the defined rules.
      *
      * @param predecessors List of predecessors.
-     * @param oUobjid      Objid of the current Organizational Unit.
      * @throws InvalidStatusException Thrown if predecessor form not follows rules.
      */
-    private static void checkPredecessorRules(final List<Predecessor> predecessors, final String oUobjid)
-        throws InvalidStatusException {
+    private static void checkPredecessorRules(final List<Predecessor> predecessors) throws InvalidStatusException {
 
         if (predecessors.size() > 1) {
             /*

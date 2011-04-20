@@ -87,8 +87,9 @@ public class FrameworkInfo extends JdbcDaoSupport {
     /**
      * Database query to get the latest version.
      */
-    private static final String QUERY_LATEST_VERSION = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_DATE
-        + "=(SELECT MAX(" + COLUMN_DATE + ") FROM " + TABLE_NAME + ')';
+    private static final String QUERY_LATEST_VERSION =
+        "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_DATE + "=(SELECT MAX(" + COLUMN_DATE + ") FROM "
+            + TABLE_NAME + ')';
 
     /**
      * path to XML file with the finger print of the "escidoc-core" database.

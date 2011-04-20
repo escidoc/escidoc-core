@@ -26,8 +26,6 @@ import org.apache.axis.MessageContext;
 import org.apache.axis.description.ServiceDesc;
 import org.apache.axis.encoding.TypeMappingImpl;
 import org.apache.axis.handlers.soap.SOAPService;
-import org.apache.axis.providers.java.EJBProvider;
-import org.apache.axis.providers.java.JavaProvider;
 
 /**
  * EJBProvider implementation that extends org.apache.axis.providers.java.EJBProvider to forward the security context

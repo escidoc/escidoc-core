@@ -37,8 +37,6 @@ import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -58,8 +56,6 @@ public class MdRecordsUpdateHandler extends DefaultHandler {
     private boolean isRootMetadataElement;
 
     private final Map<String, Map<String, String>> metadataAttributes = new HashMap<String, Map<String, String>>();
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(MetadataHandler.class);
 
     private boolean isMandatoryName;
 

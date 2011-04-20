@@ -158,7 +158,7 @@ public class ItemHandler extends DefaultHandler {
             }
             else if (!this.surrogate && XPATH_ITEM_COMPONENTS.equals(currentPath)) {
                 this.parsingComponents = true;
-                this.componentsHandler = new ComponentsHandler(this.parser, this.getItem());
+                this.componentsHandler = new ComponentsHandler(this.parser);
                 this.componentsHandler.startElement(element);
             }
             else if (XPATH_ITEM_RELATION.equals(currentPath)) {

@@ -70,11 +70,6 @@ public class JhoveHandler extends TmeHandlerBase implements JhoveHandlerInterfac
     private static final String SAX_PARSER = "org.apache.xerces.parsers.SAXParser";
 
     /**
-     * Buffer size for file copy.
-     */
-    private static final int BUFFER_SIZE = 0xffff;
-
-    /**
      * Temporary file which contains the JHove configuration.
      */
     private final File jhoveConfigFile;

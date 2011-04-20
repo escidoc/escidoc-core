@@ -28,7 +28,6 @@
  */
 package de.escidoc.core.aa.security.cache;
 
-import de.escidoc.core.aa.security.aop.SecurityInterceptor;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;

@@ -29,8 +29,6 @@ import org.apache.axis.AxisFault;
 import org.apache.axis.Handler;
 import org.apache.axis.MessageContext;
 import org.apache.axis.handlers.soap.SOAPService;
-import org.apache.axis.providers.java.EJBProvider;
-import org.apache.axis.providers.java.JavaProvider;
 import org.apache.axis.providers.java.RPCProvider;
 import org.apache.ws.security.WSConstants;
 import org.apache.ws.security.WSSecurityEngineResult;

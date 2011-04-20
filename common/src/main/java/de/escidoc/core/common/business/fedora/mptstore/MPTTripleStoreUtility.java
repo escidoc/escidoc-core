@@ -603,10 +603,8 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             else {
                 try {
                     where =
-                        where
-                            .append('\'')
-                            .append(new URIReference(Constants.IDENTIFIER_PREFIX + idOrLiteral).toString())
-                            .append("')");
+                        where.append('\'').append(
+                            new URIReference(Constants.IDENTIFIER_PREFIX + idOrLiteral).toString()).append("')");
                 }
                 catch (final URISyntaxException e) {
                     throw new TripleStoreSystemException(e.getMessage(), e);
@@ -669,8 +667,8 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                 try {
                     where =
                         where
-                            .append('\'').append(new URIReference(Constants.IDENTIFIER_PREFIX + id).toString())
-                            .append('\'');
+                            .append('\'').append(new URIReference(Constants.IDENTIFIER_PREFIX + id).toString()).append(
+                                '\'');
                 }
                 catch (final URISyntaxException e) {
                     throw new TripleStoreSystemException(e.getMessage(), e);
@@ -1237,8 +1235,8 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                             .append(columnObjectContainer).append("='<info:fedora/").append(val).append(">'");
                     }
                     else {
-                        queryPartPropertiesBuffer
-                            .append(columnObjectContainer).append("=\'\"").append(val).append("\"\'");
+                        queryPartPropertiesBuffer.append(columnObjectContainer).append("=\'\"").append(val).append(
+                            "\"\'");
                     }
                     queryPartPropertiesBuffer.append(") ");
                     queryPartPropertiesBuffer.append(tableNameNext);

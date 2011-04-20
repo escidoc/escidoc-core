@@ -42,7 +42,6 @@ import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundEx
 import de.escidoc.core.common.exceptions.application.notfound.StreamNotFoundException;
 import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
-import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
@@ -76,8 +75,6 @@ public class Context extends GenericResource implements ContextInterface {
     private Datastream resources;
 
     private final Map<String, Datastream> adminDescriptors = new HashMap<String, Datastream>();
-
-    private final Datastream organizationalUnits = null;
 
     private boolean ouUpdated;
 
@@ -184,13 +181,6 @@ public class Context extends GenericResource implements ContextInterface {
             throw new StreamNotFoundException("No properties for context " + getId() + '.', e);
         }
         // getSomeValuesFromFedora();
-    }
-
-    /**
-     * @return Return Organizational Units.
-     */
-    public Datastream getOrganizationalUnitsDS() {
-        return this.organizationalUnits;
     }
 
     public void setOrganizationalUnits(final List<String> ous) throws InvalidContentException,

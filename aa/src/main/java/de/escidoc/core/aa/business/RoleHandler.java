@@ -37,7 +37,6 @@ import de.escidoc.core.aa.business.interfaces.RoleHandlerInterface;
 import de.escidoc.core.aa.business.persistence.EscidocRole;
 import de.escidoc.core.aa.business.persistence.EscidocRoleDaoInterface;
 import de.escidoc.core.aa.business.persistence.RoleGrant;
-import de.escidoc.core.aa.business.persistence.UserAccount;
 import de.escidoc.core.aa.business.persistence.UserAccountDaoInterface;
 import de.escidoc.core.aa.business.renderer.interfaces.RoleRendererInterface;
 import de.escidoc.core.aa.business.stax.handler.RolePropertiesStaxHandler;

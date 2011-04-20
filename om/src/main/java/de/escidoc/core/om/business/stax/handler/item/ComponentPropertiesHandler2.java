@@ -37,8 +37,6 @@ import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handles the Properties of one single Component.
@@ -46,8 +44,6 @@ import org.slf4j.LoggerFactory;
  * @author Steffen Wagner
  */
 public class ComponentPropertiesHandler2 extends DefaultHandler {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(ComponentPropertiesHandler2.class);
 
     private static final String XPATH_COMPONENT_PROPERTIES = "/item/components/component/properties";
 

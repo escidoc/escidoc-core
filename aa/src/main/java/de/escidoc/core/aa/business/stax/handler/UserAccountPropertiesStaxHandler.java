@@ -35,7 +35,6 @@ import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
-import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 /**
  * Stax Handler managing the properties of an UserAccount.

@@ -56,8 +56,6 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.om.business.interfaces.ItemHandlerInterface;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -68,8 +66,6 @@ import java.util.Collection;
  * @author Steffen Wagner
  */
 public class ItemHandlerPid extends ItemHandlerContent {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(ItemHandlerPid.class);
 
     private PIDSystemFactory pidGenFactory;
 

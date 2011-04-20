@@ -20,7 +20,6 @@
 
 package de.escidoc.core.common.util;
 
-import java.util.Hashtable;
 import java.util.regex.Pattern;
 
 /**

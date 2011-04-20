@@ -22,7 +22,6 @@ package de.escidoc.core.common.util.stax;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.invalid.TmeException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
@@ -43,7 +42,6 @@ import de.escidoc.core.common.exceptions.application.violated.ReadonlyAttributeV
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException;
 import de.escidoc.core.common.exceptions.system.EncodingSystemException;
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
-import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
@@ -53,8 +51,6 @@ import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import de.escidoc.core.common.util.xml.stax.interfaces.DefaultHandlerStackInterface;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.naming.directory.NoSuchAttributeException;
 import javax.xml.namespace.QName;
@@ -80,8 +76,6 @@ import java.util.Stack;
  * @see DefaultHandler
  */
 public class StaxParser implements DefaultHandlerStackInterface {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(StaxParser.class);
 
     private boolean started;
 

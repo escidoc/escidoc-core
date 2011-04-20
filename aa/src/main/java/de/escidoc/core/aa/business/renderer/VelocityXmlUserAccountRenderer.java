@@ -59,7 +59,7 @@ import java.util.Set;
  */
 public final class VelocityXmlUserAccountRenderer extends AbstractRenderer implements UserAccountRendererInterface {
 
-    private final static String USER_ACCOUNT_ID = "userAccountId";
+    private static final String USER_ACCOUNT_ID = "userAccountId";
 
     /**
      * Private constructor to prevent initialization.

@@ -1,7 +1,5 @@
 package de.escidoc.core.index.internal;
 
-import de.escidoc.core.index.IndexRequest;
-
 import javax.xml.bind.annotation.XmlRegistry;
 
 /**

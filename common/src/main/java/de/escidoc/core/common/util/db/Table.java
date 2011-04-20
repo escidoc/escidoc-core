@@ -20,7 +20,6 @@
 
 package de.escidoc.core.common.util.db;
 
-import java.util.Arrays;
 import java.util.TreeSet;
 
 /**

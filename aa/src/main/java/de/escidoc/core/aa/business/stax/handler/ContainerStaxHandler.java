@@ -35,7 +35,6 @@ import de.escidoc.core.common.exceptions.application.missing.MissingAttributeVal
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
-import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 import java.util.ArrayList;
 import java.util.Collection;

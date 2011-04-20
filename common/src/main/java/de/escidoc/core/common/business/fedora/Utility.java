@@ -109,7 +109,7 @@ public class Utility {
 
     private TripleStoreUtility tripleStoreUtility;
 
-    private final static String RESOURCE_BASE_URL = "resourceBaseUrl";
+    private static final String RESOURCE_BASE_URL = "resourceBaseUrl";
 
     /**
      * The pattern used to extract the redirect base url and path from the staging file XML representation.

@@ -23,7 +23,6 @@ package de.escidoc.core.common.servlet;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.service.BeanLocator;
 
-import javax.servlet.GenericServlet;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import java.util.regex.Pattern;

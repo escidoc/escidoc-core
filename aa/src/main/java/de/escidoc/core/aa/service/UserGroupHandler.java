@@ -28,7 +28,6 @@
  */
 package de.escidoc.core.aa.service;
 
-import de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface;
 import de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidScopeException;

@@ -90,17 +90,7 @@ public class ComponentUpdateHandler extends DefaultHandler {
 
     @Override
     public String characters(final String data, final StartElement element) {
-        final String curPath = parser.getCurPath();
 
-        // check content
-        if (curPath.equals(this.componentPath + "/content")) {
-
-            // check title
-            int index = element.indexOfAttribute(Constants.XLINK_URI, "title");
-
-            // check href
-            index = element.indexOfAttribute(Constants.XLINK_URI, "href");
-        }
         return data;
     }
 

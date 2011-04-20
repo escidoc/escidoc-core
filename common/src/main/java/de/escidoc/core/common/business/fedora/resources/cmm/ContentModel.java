@@ -25,7 +25,6 @@ import de.escidoc.core.common.business.PropertyMapKeys;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
-import de.escidoc.core.common.business.fedora.resources.GenericResource;
 import de.escidoc.core.common.business.fedora.resources.GenericVersionableResourcePid;
 import de.escidoc.core.common.business.fedora.resources.create.ResourceDefinitionCreate;
 import de.escidoc.core.common.business.fedora.resources.interfaces.VersionableResource;
@@ -120,7 +119,6 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
      * @return resource properties.
      * @throws TripleStoreSystemException Thrown if TripleStore request failed.
      * @throws WebserverSystemException   Thrown in case of internal failure.
-     * @see GenericResource#getResourceProperties()
      */
     @Override
     public Map<String, String> getResourceProperties() throws TripleStoreSystemException, WebserverSystemException {

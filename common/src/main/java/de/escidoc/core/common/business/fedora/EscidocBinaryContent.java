@@ -20,20 +20,12 @@
 
 package de.escidoc.core.common.business.fedora;
 
-import de.escidoc.core.common.util.xml.factory.FoXmlProvider;
-import org.apache.http.Header;
-import org.apache.http.client.methods.HttpGet;
-
-import java.io.IOException;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
 
 /**
  * Class encapsulating binary content.
  */
 public class EscidocBinaryContent {
-
-    private final HttpGet getMethod = null;
 
     @Deprecated
     private InputStream content;
@@ -44,9 +36,6 @@ public class EscidocBinaryContent {
 
     private String redirectUrl;
 
-    @Deprecated
-    private HttpURLConnection conn;
-
     /**
      * @return the redirectUrl
      */
@@ -55,7 +44,8 @@ public class EscidocBinaryContent {
     }
 
     /**
-     * @param redirectUrl the redirectUrl to set
+     * @param redirectUrl
+     *            the redirectUrl to set
      */
     public void setRedirectUrl(final String redirectUrl) {
         this.redirectUrl = redirectUrl;
@@ -63,21 +53,14 @@ public class EscidocBinaryContent {
 
     /**
      * @return the content
-     * @throws NullPointerException
-     * @throws java.io.IOException
      */
-    public InputStream getContent() throws IOException, NullPointerException {
-        if (this.getMethod == null) {
-            if (this.content != null) {
-                return this.content;
-            }
-            throw new NullPointerException("GetMethod not set or already released.");
-        }
+    public InputStream getContent() {
         return this.content;
     }
 
     /**
-     * @param content the content to set
+     * @param content
+     *            the content to set
      * @deprecated A GetMethod should be set. getContent will acquire the InputStream from that GetMethod.
      */
     @Deprecated
@@ -93,7 +76,8 @@ public class EscidocBinaryContent {
     }
 
     /**
-     * @param fileName the fileName to set
+     * @param fileName
+     *            the fileName to set
      */
     public void setFileName(final String fileName) {
         this.fileName = fileName;
@@ -103,37 +87,14 @@ public class EscidocBinaryContent {
      * @return the mimeType
      */
     public String getMimeType() {
-
-        if (this.mimeType == null && this.getMethod != null) {
-            final Header ctype = this.getMethod.getFirstHeader("Content-Type");
-            this.mimeType = ctype != null ? ctype.getValue() : FoXmlProvider.MIME_TYPE_APPLICATION_OCTET_STREAM;
-        }
         return this.mimeType;
     }
 
     /**
-     * @param mimeType the mimeType to set
+     * @param mimeType
+     *            the mimeType to set
      */
     public void setMimeType(final String mimeType) {
         this.mimeType = mimeType != null ? mimeType.trim() : null;
     }
-
-    /**
-     * @return The HtpURLconnection.
-     */
-    @Deprecated
-    public HttpURLConnection getConnection() {
-        return this.conn;
-    }
-
-    /**
-     * Set the HttpConnection.
-     *
-     * @param connection The HttpURLConnection to the content.
-     */
-    @Deprecated
-    public void setConnection(final HttpURLConnection connection) {
-        this.conn = connection;
-    }
-
 }

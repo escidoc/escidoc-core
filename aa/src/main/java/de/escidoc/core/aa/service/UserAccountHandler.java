@@ -53,8 +53,6 @@ import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingE
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException;
 import de.escidoc.core.common.exceptions.application.violated.UniqueConstraintViolationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.userdetails.UserDetails;
 
 import java.util.Map;
@@ -65,11 +63,6 @@ import java.util.Map;
  * @author Michael Schneider
  */
 public class UserAccountHandler implements UserAccountHandlerInterface {
-
-    /**
-     * The logger.
-     */
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserAccountHandler.class);
 
     private de.escidoc.core.aa.business.interfaces.UserAccountHandlerInterface business;
 

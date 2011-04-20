@@ -20,7 +20,6 @@
 
 package de.escidoc.core.common.persistence;
 
-import de.escidoc.core.common.business.fedora.FedoraResourceIdentifierDao;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.persistence.interfaces.ResourceIdentifierDao;
 

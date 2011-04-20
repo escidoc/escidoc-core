@@ -52,7 +52,7 @@ import java.io.IOException;
 
 /**
  * Staging File Handler implementation.
- *
+ * 
  * @author Torsten Tetteroo
  */
 public class StagingFileHandler implements StagingFileHandlerInterface {
@@ -63,8 +63,9 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
 
     /**
      * See Interface for functional description.
-     *
-     * @see de.escidoc.core.st.service.interfaces.StagingFileHandlerInterface #create(de.escidoc.core.om.service.result.EscidocBinaryContent)
+     * 
+     * @see de.escidoc.core.st.service.interfaces.StagingFileHandlerInterface
+     *      #create(de.escidoc.core.om.service.result.EscidocBinaryContent)
      */
     @Override
     public String create(final EscidocBinaryContent binaryContent) throws MissingMethodParameterException,
@@ -74,13 +75,14 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
         if (stagingFile == null) {
             throw new MissingMethodParameterException("Missing staging file.");
         }
-        String token = null;
+
+        if (binaryContent == null || binaryContent.getContent() == null) {
+            throw new MissingMethodParameterException("Binary content must be provided.");
+        }
+        String token = stagingFile.getToken();
+        stagingFile.setReference(StagingUtil.concatenatePath(StagingUtil.getUploadStagingArea(), token));
+
         try {
-            if (binaryContent == null || binaryContent.getContent() == null) {
-                throw new MissingMethodParameterException("Binary content must be provided.");
-            }
-            token = stagingFile.getToken();
-            stagingFile.setReference(StagingUtil.concatenatePath(StagingUtil.getUploadStagingArea(), token));
             stagingFile.read(binaryContent.getContent());
         }
         catch (final IOException e) {
@@ -131,7 +133,7 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
 
     /**
      * See Interface for functional description.
-     *
+     * 
      * @see de.escidoc.core.st.service.interfaces.StagingFileHandlerInterface #retrieve(java.lang.String)
      */
     @Override
@@ -160,8 +162,9 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
 
     /**
      * Setter for the dao.
-     *
-     * @param dao The data access object.
+     * 
+     * @param dao
+     *            The data access object.
      */
     public void setDao(final StagingFileDao dao) {
         this.dao = dao;
@@ -169,12 +172,14 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
 
     /**
      * Retrieve the staging file with the provided id.
-     *
-     * @param stagingFileId The StagingFile id.
+     * 
+     * @param stagingFileId
+     *            The StagingFile id.
      * @return The staging file.
      * @throws MissingMethodParameterException
-     *                                      Thrown in case of missing id.
-     * @throws StagingFileNotFoundException Thrown if no staging file with provided id exists.
+     *             Thrown in case of missing id.
+     * @throws StagingFileNotFoundException
+     *             Thrown if no staging file with provided id exists.
      * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
      */
     private StagingFile getStagingFile(final String stagingFileId) throws MissingMethodParameterException,

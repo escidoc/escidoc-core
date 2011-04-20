@@ -28,14 +28,11 @@
  */
 package de.escidoc.core.sm.business.stax.handler;
 
-import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import org.joda.time.DateTime;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Fills xml-data into VO.
@@ -43,8 +40,6 @@ import org.slf4j.LoggerFactory;
  * @author Michael Hoppe
  */
 public class ReportParametersStaxHandler extends DefaultHandler {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(ReportParametersStaxHandler.class);
 
     private final ReportParametersVo reportParametersVo = new ReportParametersVo();
 

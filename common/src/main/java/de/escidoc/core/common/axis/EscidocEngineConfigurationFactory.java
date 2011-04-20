@@ -23,7 +23,6 @@ package de.escidoc.core.common.axis;
 import org.apache.axis.AxisProperties;
 import org.apache.axis.EngineConfiguration;
 import org.apache.axis.EngineConfigurationFactory;
-import org.apache.axis.configuration.EngineConfigurationFactoryFinder;
 import org.apache.axis.transport.http.AdminServlet;
 import org.apache.axis.transport.http.AxisServlet;
 

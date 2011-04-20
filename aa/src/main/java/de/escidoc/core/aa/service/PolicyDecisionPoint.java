@@ -36,8 +36,6 @@ import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundEx
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Map;
@@ -48,11 +46,6 @@ import java.util.Map;
  * @author Rozita Friedman
  */
 public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
-
-    /**
-     * The logger.
-     */
-    private static final Logger LOGGER = LoggerFactory.getLogger(PolicyDecisionPoint.class);
 
     private de.escidoc.core.aa.business.interfaces.PolicyDecisionPointInterface business;
 

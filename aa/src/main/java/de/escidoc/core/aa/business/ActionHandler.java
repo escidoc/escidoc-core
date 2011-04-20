@@ -28,13 +28,11 @@
  */
 package de.escidoc.core.aa.business;
 
-import de.escidoc.core.aa.business.persistence.Action;
 import de.escidoc.core.aa.business.persistence.ActionDaoInterface;
 import de.escidoc.core.aa.business.persistence.UnsecuredActionList;
 import de.escidoc.core.aa.business.renderer.interfaces.ActionRendererInterface;
 import de.escidoc.core.aa.business.stax.handler.UnsecuredActionStaxHandler;
 import de.escidoc.core.aa.service.interfaces.ActionHandlerInterface;
-import de.escidoc.core.aa.service.interfaces.RoleHandlerInterface;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;

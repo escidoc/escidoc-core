@@ -88,10 +88,10 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
 
         if (UserContext.isRestAccess()) {
             restXml = xmlData;
-            soapXml = getAlternateForm(id);
+            soapXml = getAlternateForm();
         }
         else {
-            restXml = getAlternateForm(id);
+            restXml = getAlternateForm();
             soapXml = xmlData;
         }
         for (final ResourceListener itemListener : this.itemListeners) {
@@ -123,10 +123,10 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
         final String restXml;
         if (UserContext.isRestAccess()) {
             restXml = render();
-            soapXml = getAlternateForm(id);
+            soapXml = getAlternateForm();
         }
         else {
-            restXml = getAlternateForm(id);
+            restXml = getAlternateForm();
             soapXml = render();
         }
         for (final ResourceListener itemListener : this.itemListeners) {
@@ -149,10 +149,10 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
 
         if (UserContext.isRestAccess()) {
             restXml = xmlData;
-            soapXml = getAlternateForm(id);
+            soapXml = getAlternateForm();
         }
         else {
-            restXml = getAlternateForm(id);
+            restXml = getAlternateForm();
             soapXml = xmlData;
         }
         for (final ResourceListener itemListener : this.itemListeners) {
@@ -176,12 +176,11 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
      * Get the alternate form of an item representation. If the current request came in via REST, then the SOAP form
      * will be returned here and vice versa.
      *
-     * @param id item id
      * @return alternate form of the item
      * @throws SystemException An internal error occurred.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
-    private String getAlternateForm(final String id) throws SystemException, WebserverSystemException {
+    private String getAlternateForm() throws SystemException, WebserverSystemException {
         String result = null;
         final boolean isRestAccess = UserContext.isRestAccess();
 
@@ -236,10 +235,10 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
                 final String restXml;
                 if (UserContext.isRestAccess()) {
                     restXml = render();
-                    soapXml = getAlternateForm(id);
+                    soapXml = getAlternateForm();
                 }
                 else {
-                    restXml = getAlternateForm(id);
+                    restXml = getAlternateForm();
                     soapXml = render();
                 }
                 indexingHandler.resourceModified(id, restXml, soapXml);

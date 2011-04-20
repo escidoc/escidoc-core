@@ -51,13 +51,13 @@ public class NewComponentExtractor extends DefaultHandler {
 
     private XMLStreamWriter writer;
 
-    private final List outputStreams = new ArrayList();
+    private final List<ByteArrayOutputStream> outputStreams = new ArrayList<ByteArrayOutputStream>();
 
     private final StaxParser parser;
 
     private boolean inside;
 
-    private final Map nsuris = new HashMap();
+    private final Map<String, List> nsuris = new HashMap<String, List>();
 
     private int deepLevel;
 
@@ -95,18 +95,18 @@ public class NewComponentExtractor extends DefaultHandler {
             // attribute namespaces
             // TODO iteration is a hack, use
             // javax.xml.namespace.NamespaceContext
-            Iterator it = nsuris.keySet().iterator();
-            final Collection toRemove = new ArrayList();
+            Iterator<String> it = nsuris.keySet().iterator();
+            final Collection<String> toRemove = new ArrayList<String>();
             while (it.hasNext()) {
-                final String key = (String) it.next();
-                nsTrace = (List) nsuris.get(key);
+                final String key = it.next();
+                nsTrace = nsuris.get(key);
                 if ((Integer) nsTrace.get(0) == this.deepLevel + 1) {
                     toRemove.add(key);
                 }
             }
             it = toRemove.iterator();
             while (it.hasNext()) {
-                final String key = (String) it.next();
+                final String key = it.next();
                 nsuris.remove(key);
             }
             if (curPath.endsWith("components/component")) {
@@ -203,7 +203,7 @@ public class NewComponentExtractor extends DefaultHandler {
 
         if (uri != null) {
             if (nsuris.containsKey(uri)) {
-                final List namespaceTrace = (List) nsuris.get(uri);
+                final List namespaceTrace = nsuris.get(uri);
                 final String prefixTrace = (String) namespaceTrace.get(2);
                 if (!prefixTrace.equals(prefix)) {
                     prefix = prefixTrace;
@@ -223,7 +223,7 @@ public class NewComponentExtractor extends DefaultHandler {
         writer.writeAttribute(prefix, uri, attributeName, attributeValue);
     }
 
-    public List getOutputStreams() {
+    public List<ByteArrayOutputStream> getOutputStreams() {
         return this.outputStreams;
     }
 }

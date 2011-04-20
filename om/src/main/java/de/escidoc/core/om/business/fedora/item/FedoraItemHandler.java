@@ -158,7 +158,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
 
     private FedoraContentRelationHandler contentRelationHandler;
 
-    private final static String NO_UPDATE_ALLOWED_MSG = "No update allowed.";
+    private static final String NO_UPDATE_ALLOWED_MSG = "No update allowed.";
 
     /**
      * The policy decision point used to check access privileges.

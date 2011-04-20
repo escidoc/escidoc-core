@@ -35,7 +35,6 @@ import com.sun.xacml.attr.AttributeValue;
 import com.sun.xacml.attr.BooleanAttribute;
 import com.sun.xacml.attr.StringAttribute;
 import com.sun.xacml.cond.EvaluationResult;
-import com.sun.xacml.cond.Function;
 import com.sun.xacml.cond.FunctionBase;
 import com.sun.xacml.finder.PolicyFinderResult;
 import de.escidoc.core.aa.business.authorisation.CustomEvaluationResultBuilder;

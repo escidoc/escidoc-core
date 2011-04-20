@@ -29,7 +29,6 @@ import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
-import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 import javax.xml.namespace.NamespaceContext;
 import javax.xml.stream.XMLStreamException;
@@ -69,7 +68,7 @@ import java.util.regex.Pattern;
  * 1. if a provided container element has attributes and/or element text, the business logic checks if a matching
  * subtree element to remove has the same attributes and/oder the same element text 2. if a provided outer subtree
  * element has no attributes/text, the business logic ignores attributes/text in the matching element.
- *
+ * 
  * @author Rozita Friedman, FRA
  */
 public class MultipleExtractor extends WriteHandler {
@@ -84,7 +83,7 @@ public class MultipleExtractor extends WriteHandler {
 
     private Map<String, ByteArrayOutputStream> metadata;
 
-    private Map components;
+    private Map<String, HashMap<String, Object>> components;
 
     private final Map<String, Object> outputStreams = new HashMap<String, Object>();
 
@@ -112,9 +111,11 @@ public class MultipleExtractor extends WriteHandler {
 
     /**
      * Creates a instance of MultipleExtractor.
-     *
-     * @param extractPathes Paths subtree to extract as key and subtree root element attribute name or null as values
-     * @param parser        The parser this handler is added to.
+     * 
+     * @param extractPathes
+     *            Paths subtree to extract as key and subtree root element attribute name or null as values
+     * @param parser
+     *            The parser this handler is added to.
      */
     public MultipleExtractor(final String extractPathes, final StaxParser parser) {
 
@@ -125,10 +126,12 @@ public class MultipleExtractor extends WriteHandler {
 
     /**
      * Creates a instance of MultipleExtractor.
-     *
-     * @param extractPathes Map with pathes to subtrees to extract as keys and subtrees root elements attribute name or
-     *                      null as values
-     * @param parser        The parser this handler is added to.
+     * 
+     * @param extractPathes
+     *            Map with pathes to subtrees to extract as keys and subtrees root elements attribute name or null as
+     *            values
+     * @param parser
+     *            The parser this handler is added to.
      */
     public MultipleExtractor(final Map<String, String> extractPathes, final StaxParser parser) {
         this.parser = parser;
@@ -137,10 +140,13 @@ public class MultipleExtractor extends WriteHandler {
 
     /**
      * Creates a instance of MultipleExtractor.
-     *
-     * @param extractPath path to subtree to extract
-     * @param extractAtt  attribute name of the subtrees root element
-     * @param parser      The parser this handler is added to.
+     * 
+     * @param extractPath
+     *            path to subtree to extract
+     * @param extractAtt
+     *            attribute name of the subtrees root element
+     * @param parser
+     *            The parser this handler is added to.
      */
     public MultipleExtractor(final String extractPath, final String extractAtt, final StaxParser parser) {
         this.parser = parser;
@@ -150,7 +156,7 @@ public class MultipleExtractor extends WriteHandler {
 
     /**
      * Retrieves a Map with extracted subtrees.
-     *
+     * 
      * @return outputStreams
      */
     public Map<String, Object> getOutputStreams() {
@@ -159,8 +165,9 @@ public class MultipleExtractor extends WriteHandler {
 
     /**
      * Sets component ids.
-     *
-     * @param pids List with ids of components.
+     * 
+     * @param pids
+     *            List with ids of components.
      */
     public void setPids(final List<String> pids) {
         this.pids = pids;
@@ -168,8 +175,9 @@ public class MultipleExtractor extends WriteHandler {
 
     /**
      * Map of elements which are to remove from XML tree.
-     *
-     * @param elements Elements which are to remove.
+     * 
+     * @param elements
+     *            Elements which are to remove.
      */
     public void removeElements(final Map<String, List<StartElementWithChildElements>> elements) {
         // TODO extend this to List<StartElement>
@@ -178,8 +186,9 @@ public class MultipleExtractor extends WriteHandler {
 
     /**
      * See Interface for functional description.
-     *
-     * @throws WebserverSystemException If an error occured writing XML data.
+     * 
+     * @throws WebserverSystemException
+     *             If an error occured writing XML data.
      * @see DefaultHandler#startElement (de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
@@ -350,15 +359,15 @@ public class MultipleExtractor extends WriteHandler {
 
                     if (this.inComponent) {
                         if (this.components == null) {
-                            this.components = new HashMap();
+                            this.components = new HashMap<String, HashMap<String, Object>>();
                             outputStreams.put("components", this.components);
                         }
-                        final HashMap component;
+                        final HashMap<String, Object> component;
                         if (components.containsKey(this.componentId)) {
-                            component = (HashMap) components.get(this.componentId);
+                            component = components.get(this.componentId);
                         }
                         else {
-                            component = new HashMap();
+                            component = new HashMap<String, Object>();
 
                             components.put(this.componentId, component);
                         }
@@ -456,8 +465,9 @@ public class MultipleExtractor extends WriteHandler {
 
     /**
      * See Interface for functional description.
-     *
-     * @throws WebserverSystemException If an error occured writing XML data.
+     * 
+     * @throws WebserverSystemException
+     *             If an error occurred writing XML data.
      * @see DefaultHandler#endElement(EndElement)
      */
     @Override
@@ -509,11 +519,11 @@ public class MultipleExtractor extends WriteHandler {
                 // attribute namespaces
                 // TODO iteration is a hack, use
                 // javax.xml.namespace.NamespaceContext
-                Iterator it = this.getNsuris().keySet().iterator();
+                Iterator<String> it = this.getNsuris().keySet().iterator();
                 final Collection<String> toRemove = new ArrayList<String>();
                 while (it.hasNext()) {
                     try {
-                        final String key = (String) it.next();
+                        final String key = it.next();
                         nsTrace = this.getNsuris().get(key);
                         if ((Integer) nsTrace.get(0) == this.getDeepLevel() + 1) {
                             toRemove.add(key);
@@ -525,7 +535,7 @@ public class MultipleExtractor extends WriteHandler {
                 }
                 it = toRemove.iterator();
                 while (it.hasNext()) {
-                    final String key = (String) it.next();
+                    final String key = it.next();
                     this.getNsuris().remove(key);
                 }
 
@@ -544,8 +554,9 @@ public class MultipleExtractor extends WriteHandler {
 
     /**
      * See Interface for functional description.
-     *
-     * @throws WebserverSystemException If an error occured writing XML data.
+     * 
+     * @throws WebserverSystemException
+     *             If an error occured writing XML data.
      * @see DefaultHandler#characters(String, StartElement)
      */
     @Override

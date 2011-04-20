@@ -1,7 +1,5 @@
 package de.escidoc.core.purge.internal;
 
-import de.escidoc.core.purge.PurgeRequest;
-
 import javax.xml.bind.annotation.XmlRegistry;
 
 /**

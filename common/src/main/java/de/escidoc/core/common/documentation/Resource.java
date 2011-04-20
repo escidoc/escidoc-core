@@ -285,9 +285,9 @@ public class Resource extends XMLBase {
                     }
                     if (value != null && getAttributeValue(value, DOCUMENTATION_AVAILABLE_ATTR) != null) {
                         visible =
-                            getAttributeValue(value, DOCUMENTATION_AVAILABLE_ATTR).toLowerCase().equals(
+                            getAttributeValue(value, DOCUMENTATION_AVAILABLE_ATTR).equalsIgnoreCase(
                                 access.toLowerCase())
-                                || getAttributeValue(value, DOCUMENTATION_AVAILABLE_ATTR).toLowerCase().equals(
+                                || getAttributeValue(value, DOCUMENTATION_AVAILABLE_ATTR).equalsIgnoreCase(
                                     INTERFACE_BOTH.toLowerCase());
                     }
                     if (visible) {
