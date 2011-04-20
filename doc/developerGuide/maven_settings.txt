@@ -79,4 +79,21 @@ Changes in mavens settings.xml file:
       </properties>
     </profile>
 
+
+Set mirror for artifacts
+
+    <mirror>
+      <mirrorOf>maven2-repository.dev.java.net</mirrorOf>
+      <id>maven2-remote-repos</id>
+      <name>maven2-remote-repos</name>
+      <url>https://www.escidoc.org/artifactory/remote-repos</url>
+    </mirror>
+    <mirror>
+      <mirrorOf>MVNSearch</mirrorOf>
+      <id>mvnsearch-remote-repos</id>
+      <name>mvnsearch-remote-repos</name>
+      <url>https://www.escidoc.org/artifactory/remote-repos</url>
+    </mirror>
+
+ 
  
