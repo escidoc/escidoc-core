@@ -203,7 +203,7 @@ public abstract class CqlFilter {
      */
     private static Criterion getAndRestriction(final Criterion criterion) {
 
-        final Criterion result = criterion != null ? criterion : Restrictions.sqlRestriction("TRUE");
+        final Criterion result = criterion != null ? criterion : Restrictions.sqlRestriction("1 = 1");
         return result;
     }
 
@@ -233,7 +233,7 @@ public abstract class CqlFilter {
      */
     private static Criterion getOrRestriction(final Criterion criterion) {
 
-        final Criterion result = criterion != null ? criterion : Restrictions.sqlRestriction("FALSE");
+        final Criterion result = criterion != null ? criterion : Restrictions.sqlRestriction("1 = 0");
         return result;
     }
 
