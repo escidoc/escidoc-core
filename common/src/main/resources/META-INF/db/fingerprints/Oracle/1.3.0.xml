@@ -94,7 +94,7 @@
              <string>modified_by_id/12/varchar2/255/0/null/10/1/null/null/0/0/255/yes</string> 
             </void> 
             <void method="add"> 
-             <string>role_name/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+             <string>role_name/12/varchar2/1020/0/null/10/0/null/null/0/0/1020/no</string> 
             </void> 
            </object> 
           </void> 
@@ -225,7 +225,7 @@
              <string>creator_id/12/varchar2/255/0/null/10/1/null/null/0/0/255/yes</string> 
             </void> 
             <void method="add"> 
-             <string>grant_remark/12/varchar2/255/0/null/10/1/null/null/0/0/255/yes</string> 
+             <string>grant_remark/12/varchar2/1020/0/null/10/1/null/null/0/0/1020/yes</string> 
             </void> 
             <void method="add"> 
              <string>granted_from/93/timestamp(6)/11/0/6/10/1/null/null/0/0/11/yes</string> 
@@ -246,7 +246,7 @@
              <string>object_id/12/varchar2/255/0/null/10/1/null/null/0/0/255/yes</string> 
             </void> 
             <void method="add"> 
-             <string>object_title/12/varchar2/255/0/null/10/1/null/null/0/0/255/yes</string> 
+             <string>object_title/12/varchar2/1020/0/null/10/1/null/null/0/0/1020/yes</string> 
             </void> 
             <void method="add"> 
              <string>revocation_date/93/timestamp(6)/11/0/6/10/1/null/null/0/0/11/yes</string> 
@@ -392,7 +392,7 @@
              <string>modified_by_id/12/varchar2/255/0/null/10/1/null/null/0/0/255/yes</string> 
             </void> 
             <void method="add"> 
-             <string>name/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+             <string>name/12/varchar2/1020/0/null/10/0/null/null/0/0/1020/no</string> 
             </void> 
             <void method="add"> 
              <string>password/12/varchar2/255/0/null/10/1/null/null/0/0/255/yes</string> 
@@ -432,13 +432,13 @@
              <string>internal/3/number/1/0/0/10/1/null/null/0/0/22/yes</string> 
             </void> 
             <void method="add"> 
-             <string>name/12/varchar2/255/0/null/10/1/null/null/0/0/255/yes</string> 
+             <string>name/12/varchar2/1020/0/null/10/1/null/null/0/0/1020/yes</string> 
             </void> 
             <void method="add"> 
              <string>user_id/12/varchar2/255/0/null/10/1/null/null/0/0/255/yes</string> 
             </void> 
             <void method="add"> 
-             <string>value/12/varchar2/255/0/null/10/1/null/null/0/0/255/yes</string> 
+             <string>value/12/varchar2/1020/0/null/10/1/null/null/0/0/1020/yes</string> 
             </void> 
            </object> 
           </void> 
@@ -484,7 +484,7 @@
              <string>id/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
             </void> 
             <void method="add"> 
-             <string>label/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+             <string>label/12/varchar2/1020/0/null/10/0/null/null/0/0/1020/no</string> 
             </void> 
             <void method="add"> 
              <string>last_modification_date/93/timestamp(6)/11/0/6/10/1/null/null/0/0/11/yes</string> 
@@ -493,7 +493,7 @@
              <string>modified_by_id/12/varchar2/255/0/null/10/1/null/null/0/0/255/yes</string> 
             </void> 
             <void method="add"> 
-             <string>name/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+             <string>name/12/varchar2/1020/0/null/10/0/null/null/0/0/1020/no</string> 
             </void> 
             <void method="add"> 
              <string>type/12/varchar2/255/0/null/10/1/null/null/0/0/255/yes</string> 
@@ -530,7 +530,7 @@
              <string>id/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
             </void> 
             <void method="add"> 
-             <string>name/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+             <string>name/12/varchar2/1020/0/null/10/0/null/null/0/0/1020/no</string> 
             </void> 
             <void method="add"> 
              <string>type/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
@@ -607,13 +607,13 @@
              <string>id/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
             </void> 
             <void method="add"> 
-             <string>name/12/varchar2/255/0/null/10/1/null/null/0/0/255/yes</string> 
+             <string>name/12/varchar2/1020/0/null/10/1/null/null/0/0/1020/yes</string> 
             </void> 
             <void method="add"> 
              <string>user_id/12/varchar2/255/0/null/10/1/null/null/0/0/255/yes</string> 
             </void> 
             <void method="add"> 
-             <string>value/12/varchar2/255/0/null/10/1/null/null/0/0/255/yes</string> 
+             <string>value/12/varchar2/1020/0/null/10/1/null/null/0/0/1020/yes</string> 
             </void> 
            </object> 
           </void> 
@@ -698,7 +698,7 @@
              <string>creator_id/12/varchar2/255/0/null/10/1/null/null/0/0/255/yes</string> 
             </void> 
             <void method="add"> 
-             <string>creator_title/12/varchar2/255/0/null/10/1/null/null/0/0/255/yes</string> 
+             <string>creator_title/12/varchar2/1020/0/null/10/1/null/null/0/0/1020/yes</string> 
             </void> 
             <void method="add"> 
              <string>description/2005/clob/4000/0/null/10/1/null/null/0/0/4000/yes</string> 
@@ -716,13 +716,13 @@
              <string>modified_by_title/12/varchar2/255/0/null/10/1/null/null/0/0/255/yes</string> 
             </void> 
             <void method="add"> 
-             <string>name/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+             <string>name/12/varchar2/1020/0/null/10/0/null/null/0/0/1020/no</string> 
             </void> 
             <void method="add"> 
              <string>query/2005/clob/4000/0/null/10/0/null/null/0/0/4000/no</string> 
             </void> 
             <void method="add"> 
-             <string>specification/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+             <string>specification/12/varchar2/1020/0/null/10/0/null/null/0/0/1020/no</string> 
             </void> 
            </object> 
           </void> 
@@ -769,7 +769,7 @@
              <string>owner/12/varchar2/255/0/null/10/1/null/null/0/0/255/yes</string> 
             </void> 
             <void method="add"> 
-             <string>ownertitle/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+             <string>ownertitle/12/varchar2/1020/0/null/10/0/null/null/0/0/1020/no</string> 
             </void> 
            </object> 
           </void> 
@@ -853,7 +853,7 @@
              <string>id/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
             </void> 
             <void method="add"> 
-             <string>name/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+             <string>name/12/varchar2/1020/0/null/10/0/null/null/0/0/1020/no</string> 
             </void> 
             <void method="add"> 
              <string>scope_id/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
@@ -902,7 +902,7 @@
              <string>list_index/3/number/2/0/0/10/0/null/null/0/0/22/no</string> 
             </void> 
             <void method="add"> 
-             <string>name/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+             <string>name/12/varchar2/1020/0/null/10/0/null/null/0/0/1020/no</string> 
             </void> 
             <void method="add"> 
              <string>reduce_to/12/varchar2/255/0/null/10/1/null/null/0/0/255/yes</string> 
@@ -982,7 +982,7 @@
              <string>list_index/3/number/2/0/0/10/0/null/null/0/0/22/no</string> 
             </void> 
             <void method="add"> 
-             <string>name/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+             <string>name/12/varchar2/1020/0/null/10/0/null/null/0/0/1020/no</string> 
             </void> 
            </object> 
           </void> 
@@ -1019,7 +1019,7 @@
              <string>list_index/3/number/2/0/0/10/0/null/null/0/0/22/no</string> 
             </void> 
             <void method="add"> 
-             <string>name/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+             <string>name/12/varchar2/1020/0/null/10/0/null/null/0/0/1020/no</string> 
             </void> 
            </object> 
           </void> 
@@ -1039,126 +1039,6 @@
              <string>id/1/pk_agg_tables</string> 
             </void> 
            </object> 
-          </void> 
-         </object> 
-        </void> 
-        <void method="add"> 
-         <object class="de.escidoc.core.common.util.db.Table"> 
-          <void property="columns"> 
-           <object class="java.util.TreeSet"> 
-            <void method="add"> 
-             <string>handler/12/varchar2/4000/0/null/10/0/null/null/0/0/4000/no</string> 
-            </void> 
-            <void method="add"> 
-             <string>month/3/number/22/0/0/10/0/null/null/0/0/22/no</string> 
-            </void> 
-            <void method="add"> 
-             <string>object_id/12/varchar2/4000/0/null/10/0/null/null/0/0/4000/no</string> 
-            </void> 
-            <void method="add"> 
-             <string>parent_object_id/12/varchar2/4000/0/null/10/0/null/null/0/0/4000/no</string> 
-            </void> 
-            <void method="add"> 
-             <string>request/12/varchar2/4000/0/null/10/0/null/null/0/0/4000/no</string> 
-            </void> 
-            <void method="add"> 
-             <string>requests/3/number/22/0/0/10/0/null/null/0/0/22/no</string> 
-            </void> 
-            <void method="add"> 
-             <string>user_id/12/varchar2/4000/0/null/10/0/null/null/0/0/4000/no</string> 
-            </void> 
-            <void method="add"> 
-             <string>year/3/number/22/0/0/10/0/null/null/0/0/22/no</string> 
-            </void> 
-           </object> 
-          </void> 
-          <void property="foreignKeys"> 
-           <object class="java.util.TreeSet"/> 
-          </void> 
-          <void property="name"> 
-           <string>escidocaggdef1_object_stats</string> 
-          </void> 
-          <void property="primaryKeys"> 
-           <object class="java.util.TreeSet"/> 
-          </void> 
-         </object> 
-        </void> 
-        <void method="add"> 
-         <object class="de.escidoc.core.common.util.db.Table"> 
-          <void property="columns"> 
-           <object class="java.util.TreeSet"> 
-            <void method="add"> 
-             <string>day/3/number/22/0/0/10/0/null/null/0/0/22/no</string> 
-            </void> 
-            <void method="add"> 
-             <string>handler/12/varchar2/4000/0/null/10/0/null/null/0/0/4000/no</string> 
-            </void> 
-            <void method="add"> 
-             <string>interface/12/varchar2/4000/0/null/10/0/null/null/0/0/4000/no</string> 
-            </void> 
-            <void method="add"> 
-             <string>month/3/number/22/0/0/10/0/null/null/0/0/22/no</string> 
-            </void> 
-            <void method="add"> 
-             <string>request/12/varchar2/4000/0/null/10/0/null/null/0/0/4000/no</string> 
-            </void> 
-            <void method="add"> 
-             <string>requests/3/number/22/0/0/10/0/null/null/0/0/22/no</string> 
-            </void> 
-            <void method="add"> 
-             <string>year/3/number/22/0/0/10/0/null/null/0/0/22/no</string> 
-            </void> 
-           </object> 
-          </void> 
-          <void property="foreignKeys"> 
-           <object class="java.util.TreeSet"/> 
-          </void> 
-          <void property="name"> 
-           <string>escidocaggdef1_request_stats</string> 
-          </void> 
-          <void property="primaryKeys"> 
-           <object class="java.util.TreeSet"/> 
-          </void> 
-         </object> 
-        </void> 
-        <void method="add"> 
-         <object class="de.escidoc.core.common.util.db.Table"> 
-          <void property="columns"> 
-           <object class="java.util.TreeSet"> 
-            <void method="add"> 
-             <string>day/3/number/22/0/0/10/0/null/null/0/0/22/no</string> 
-            </void> 
-            <void method="add"> 
-             <string>exception_name/12/varchar2/4000/0/null/10/0/null/null/0/0/4000/no</string> 
-            </void> 
-            <void method="add"> 
-             <string>handler/12/varchar2/4000/0/null/10/0/null/null/0/0/4000/no</string> 
-            </void> 
-            <void method="add"> 
-             <string>interface/12/varchar2/4000/0/null/10/0/null/null/0/0/4000/no</string> 
-            </void> 
-            <void method="add"> 
-             <string>month/3/number/22/0/0/10/0/null/null/0/0/22/no</string> 
-            </void> 
-            <void method="add"> 
-             <string>request/12/varchar2/4000/0/null/10/0/null/null/0/0/4000/no</string> 
-            </void> 
-            <void method="add"> 
-             <string>requests/3/number/22/0/0/10/0/null/null/0/0/22/no</string> 
-            </void> 
-            <void method="add"> 
-             <string>year/3/number/22/0/0/10/0/null/null/0/0/22/no</string> 
-            </void> 
-           </object> 
-          </void> 
-          <void property="foreignKeys"> 
-           <object class="java.util.TreeSet"/> 
-          </void> 
-          <void property="name"> 
-           <string>escidocaggdef2_error_stats</string> 
-          </void> 
-          <void property="primaryKeys"> 
-           <object class="java.util.TreeSet"/> 
           </void> 
          </object> 
         </void> 
@@ -1259,7 +1139,7 @@
              <string>modified_by_id/12/varchar2/255/0/null/10/1/null/null/0/0/255/yes</string> 
             </void> 
             <void method="add"> 
-             <string>name/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+             <string>name/12/varchar2/1020/0/null/10/0/null/null/0/0/1020/no</string> 
             </void> 
             <void method="add"> 
              <string>scope_id/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
@@ -1308,7 +1188,7 @@
              <string>modified_by_id/12/varchar2/255/0/null/10/1/null/null/0/0/255/yes</string> 
             </void> 
             <void method="add"> 
-             <string>name/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+             <string>name/12/varchar2/1020/0/null/10/0/null/null/0/0/1020/no</string> 
             </void> 
             <void method="add"> 
              <string>scope_type/12/varchar2/20/0/null/10/0/null/null/0/0/20/no</string> 
