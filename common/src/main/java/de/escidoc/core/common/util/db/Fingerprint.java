@@ -369,7 +369,7 @@ public class Fingerprint implements Comparable<Object> {
             while (rs.next()) {
                 final String name = rs.getString(3);
                 // ignore dynamically created tables for statistics manager
-                if (!"sm".equals(schema) || VALID_SM_TABLES.contains(name)) {
+                if (!"sm".equalsIgnoreCase(schema) || VALID_SM_TABLES.contains(name.toLowerCase())) {
                     result.add(name);
                 }
             }
