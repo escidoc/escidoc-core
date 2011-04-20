@@ -44,7 +44,7 @@ import java.util.TreeSet;
 
 /**
  * This class parses a CQL filter and translates it into a Hibernate query.
- *
+ * 
  * @author André Schenk
  */
 public abstract class CqlFilter {
@@ -76,10 +76,12 @@ public abstract class CqlFilter {
 
     /**
      * Evaluate a CQL boolean node.
-     *
-     * @param node CQL node
+     * 
+     * @param node
+     *            CQL node
      * @return Hibernate query reflecting the given CQL query
-     * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
+     * @throws InvalidSearchQueryException
+     *             thrown if the given search query could not be translated into a SQL query
      */
     protected Criterion evaluate(final CQLBooleanNode node) throws InvalidSearchQueryException {
         Criterion result = null;
@@ -104,10 +106,12 @@ public abstract class CqlFilter {
 
     /**
      * Evaluate a CQL node.
-     *
-     * @param node CQL node
+     * 
+     * @param node
+     *            CQL node
      * @return Hibernate query reflecting the given CQL query
-     * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
+     * @throws InvalidSearchQueryException
+     *             thrown if the given search query could not be translated into a SQL query
      */
     protected Criterion evaluate(final CQLNode node) throws InvalidSearchQueryException {
         final Criterion result;
@@ -129,13 +133,18 @@ public abstract class CqlFilter {
 
     /**
      * Evaluate a CQL relation.
-     *
-     * @param relation     CQL relation
-     * @param propertyName left side of the statement
-     * @param value        right side of the statement
-     * @param useLike      use LIKE instead of = in case of an equality relation
+     * 
+     * @param relation
+     *            CQL relation
+     * @param propertyName
+     *            left side of the statement
+     * @param value
+     *            right side of the statement
+     * @param useLike
+     *            use LIKE instead of = in case of an equality relation
      * @return Hibernate query reflecting the given CQL query
-     * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
+     * @throws InvalidSearchQueryException
+     *             thrown if the given search query could not be translated into a SQL query
      */
     protected Criterion evaluate(
         final CQLRelation relation, final String propertyName, final Object value, final boolean useLike)
@@ -174,10 +183,12 @@ public abstract class CqlFilter {
 
     /**
      * Evaluate a CQL sort node.
-     *
-     * @param node CQL node
+     * 
+     * @param node
+     *            CQL node
      * @return Hibernate query reflecting the given CQL query
-     * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
+     * @throws InvalidSearchQueryException
+     *             thrown if the given search query could not be translated into a SQL query
      */
     protected Criterion evaluate(final CQLSortNode node) throws InvalidSearchQueryException {
         setOrderBy(node.getSortIndexes());
@@ -186,10 +197,12 @@ public abstract class CqlFilter {
 
     /**
      * Evaluate a CQL term node.
-     *
-     * @param node CQL node
+     * 
+     * @param node
+     *            CQL node
      * @return Hibernate query reflecting the given CQL query
-     * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
+     * @throws InvalidSearchQueryException
+     *             thrown if the given search query could not be translated into a SQL query
      */
     protected Criterion evaluate(final CQLTermNode node) throws InvalidSearchQueryException {
         return evaluate(node.getRelation(), node.getIndex(), node.getTerm(), false);
@@ -197,21 +210,22 @@ public abstract class CqlFilter {
 
     /**
      * Return the given criterion if it is not NULL. Otherwise return "TRUE".
-     *
-     * @param criterion Hibernate query or NULL
+     * 
+     * @param criterion
+     *            Hibernate query or NULL
      * @return the given Hibernate query or "TRUE"
      */
     private static Criterion getAndRestriction(final Criterion criterion) {
-
-        final Criterion result = criterion != null ? criterion : Restrictions.sqlRestriction("1 = 1");
-        return result;
+        return criterion != null ? criterion : Restrictions.sqlRestriction("1 = 1");
     }
 
     /**
      * get an in-restriction. Eventually concatenated with an isNull-restriction if criteria-set contains a null-value.
-     *
-     * @param criteria  criteria to put in in-restriction
-     * @param fieldName field-name for in-restriction
+     * 
+     * @param criteria
+     *            criteria to put in in-restriction
+     * @param fieldName
+     *            field-name for in-restriction
      * @return Criterion
      */
     protected Criterion getInRestrictions(final Collection<String> criteria, final String fieldName) {
@@ -227,19 +241,18 @@ public abstract class CqlFilter {
 
     /**
      * Return the given criterion if it is not NULL. Otherwise return "FALSE".
-     *
-     * @param criterion Hibernate query or NULL
+     * 
+     * @param criterion
+     *            Hibernate query or NULL
      * @return the given Hibernate query or "FALSE"
      */
     private static Criterion getOrRestriction(final Criterion criterion) {
-
-        final Criterion result = criterion != null ? criterion : Restrictions.sqlRestriction("1 = 0");
-        return result;
+        return criterion != null ? criterion : Restrictions.sqlRestriction("1 = 0");
     }
 
     /**
      * Get all property names that are allowed as filter criteria for that filter.
-     *
+     * 
      * @return all property names for that filter
      */
     public Set<String> getPropertyNames() {
@@ -253,7 +266,7 @@ public abstract class CqlFilter {
 
     /**
      * Get propertyNamesMap.
-     *
+     * 
      * @return propertyNamesMap
      */
     public Map<String, String> getPropertyMap() {
@@ -262,7 +275,7 @@ public abstract class CqlFilter {
 
     /**
      * Get criteriaMap.
-     *
+     * 
      * @return criteriaMap
      */
     public Map<String, Object[]> getCriteriaMap() {
@@ -271,7 +284,7 @@ public abstract class CqlFilter {
 
     /**
      * Get specialCriteriaNames.
-     *
+     * 
      * @return specialCriteriaNames
      */
     public Set<String> getSpecialCriteria() {
@@ -280,9 +293,11 @@ public abstract class CqlFilter {
 
     /**
      * Set all sorting attributes.
-     *
-     * @param orderBy order by attributes
-     * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
+     * 
+     * @param orderBy
+     *            order by attributes
+     * @throws InvalidSearchQueryException
+     *             thrown if the given search query could not be translated into a SQL query
      */
     protected void setOrderBy(final Iterable<ModifierSet> orderBy) throws InvalidSearchQueryException {
         for (final ModifierSet modifier : orderBy) {
@@ -313,9 +328,10 @@ public abstract class CqlFilter {
 
     /**
      * Convert the CQL filter into a Hibernate query.
-     *
+     * 
      * @return Hibernate query representing this filter
-     * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
+     * @throws InvalidSearchQueryException
+     *             thrown if the given search query could not be translated into a SQL query
      */
     public DetachedCriteria toSql() throws InvalidSearchQueryException {
         return this.detachedCriteria;
