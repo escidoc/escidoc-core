@@ -172,9 +172,10 @@ public class Fingerprint implements Comparable<Object> {
         throws SQLException {
         final ArrayList<String> result = new ArrayList<String>();
         final DatabaseMetaData metaData = conn.getMetaData();
-        final ResultSet rs = metaData.getColumns(conn.getCatalog(), schema, table, null);
-        final int columns = rs.getMetaData().getColumnCount();
+        ResultSet rs = null;
         try {
+            rs = metaData.getColumns(conn.getCatalog(), schema, table, null);
+            final int columns = rs.getMetaData().getColumnCount();
             while (rs.next()) {
                 final StringBuilder column = new StringBuilder();
                 for (int index = 4; (index <= columns) && (index <= 22); index++) {
@@ -212,8 +213,9 @@ public class Fingerprint implements Comparable<Object> {
         throws SQLException {
         final ArrayList<String> result = new ArrayList<String>();
         final DatabaseMetaData metaData = conn.getMetaData();
-        final ResultSet rs = metaData.getImportedKeys(conn.getCatalog(), schema, table);
+        ResultSet rs = null;
         try {
+            rs = metaData.getImportedKeys(conn.getCatalog(), schema, table);
             while (rs.next()) {
                 final StringBuilder indexInfo = new StringBuilder();
                 for (int index = 4; index <= 14; index++) {
@@ -248,8 +250,9 @@ public class Fingerprint implements Comparable<Object> {
         throws SQLException {
         final ArrayList<String> result = new ArrayList<String>();
         final DatabaseMetaData metaData = conn.getMetaData();
-        final ResultSet rs = metaData.getIndexInfo(conn.getCatalog(), schema, table, false, true);
+        ResultSet rs = null;
         try {
+            rs = metaData.getIndexInfo(conn.getCatalog(), schema, table, false, true);
             while (rs.next()) {
                 final StringBuilder indexInfo = new StringBuilder();
                 for (int index = 4; index <= 10; index++) {
@@ -284,8 +287,9 @@ public class Fingerprint implements Comparable<Object> {
         throws SQLException {
         final ArrayList<String> result = new ArrayList<String>();
         final DatabaseMetaData metaData = conn.getMetaData();
-        final ResultSet rs = metaData.getPrimaryKeys(conn.getCatalog(), schema, table);
+        ResultSet rs = null;
         try {
+            rs = metaData.getPrimaryKeys(conn.getCatalog(), schema, table);
             while (rs.next()) {
                 final StringBuilder indexInfo = new StringBuilder();
                 for (int index = 4; index <= 6; index++) {
@@ -315,8 +319,9 @@ public class Fingerprint implements Comparable<Object> {
     private static String[] getSchemaNames(final Connection conn) throws SQLException {
         final ArrayList<String> result = new ArrayList<String>();
         final DatabaseMetaData metaData = conn.getMetaData();
-        final ResultSet rs = metaData.getSchemas();
+        ResultSet rs = null;
         try {
+            rs = metaData.getSchemas();
             while (rs.next()) {
                 final String schema = rs.getString(1);
                 if (KNOWN_SCHEMAS.contains(schema.toLowerCase())) {
@@ -364,8 +369,9 @@ public class Fingerprint implements Comparable<Object> {
     private static String[] getTableNames(final Connection conn, final String schema) throws SQLException {
         final ArrayList<String> result = new ArrayList<String>();
         final DatabaseMetaData metaData = conn.getMetaData();
-        final ResultSet rs = metaData.getTables(conn.getCatalog(), schema, null, new String[] { "TABLE" });
+        ResultSet rs = null;
         try {
+            rs = metaData.getTables(conn.getCatalog(), schema, null, new String[] { "TABLE" });
             while (rs.next()) {
                 final String name = rs.getString(3);
                 // ignore dynamically created tables for statistics manager
@@ -402,7 +408,6 @@ public class Fingerprint implements Comparable<Object> {
      */
     public static Fingerprint readObject(final InputStream input) {
         final XMLDecoder d = new XMLDecoder(new BufferedInputStream(input));
-
         final Fingerprint result = (Fingerprint) d.readObject();
         d.close();
         return result;

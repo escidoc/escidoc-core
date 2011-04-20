@@ -20,6 +20,7 @@
 
 package de.escidoc.core.common.util.db;
 
+import java.util.Set;
 import java.util.TreeSet;
 
 /**
@@ -31,13 +32,13 @@ public class Table implements Comparable<Object> {
 
     private String name;
 
-    private TreeSet<String> columns;
+    private Set<String> columns;
 
-    private TreeSet<String> foreignKeys;
+    private Set<String> foreignKeys;
 
-    private TreeSet<String> indexes;
+    private Set<String> indexes;
 
-    private TreeSet<String> primaryKeys;
+    private Set<String> primaryKeys;
 
     /**
      * Constructor for bean deserialization.
@@ -98,7 +99,7 @@ public class Table implements Comparable<Object> {
      * 
      * @return column names
      */
-    public TreeSet<String> getColumns() {
+    public Set<String> getColumns() {
         return this.columns;
     }
 
@@ -107,7 +108,7 @@ public class Table implements Comparable<Object> {
      * 
      * @return foreign keys
      */
-    public TreeSet<String> getForeignKeys() {
+    public Set<String> getForeignKeys() {
         return this.foreignKeys;
     }
 
@@ -116,7 +117,7 @@ public class Table implements Comparable<Object> {
      * 
      * @return table indexes
      */
-    public TreeSet<String> getIndexes() {
+    public Set<String> getIndexes() {
         return this.indexes;
     }
 
@@ -134,7 +135,7 @@ public class Table implements Comparable<Object> {
      * 
      * @return primary keys
      */
-    public TreeSet<String> getPrimaryKeys() {
+    public Set<String> getPrimaryKeys() {
         return this.primaryKeys;
     }
 
