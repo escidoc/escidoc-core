@@ -621,18 +621,20 @@
   </target>
 
 	<target name="prepare-component">
-		<copy todir="${documentation.dist.basedir.docbook}">
+		<copy todir="${documentation.dist.basedir.docbook}" encoding="UTF-8" outputencoding="UTF-8">
 			<fileset dir="${basedir}/common/${documentation.src.basedir.docbook}/common" />
 		</copy>
 
-		<copy todir="${documentation.dist.basedir.docbook}">
+		<copy todir="${documentation.dist.basedir.docbook}" encoding="UTF-8" outputencoding="UTF-8">
 			<fileset dir="${basedir}/${component}/${documentation.src.basedir.docbook}/${component}" />
 		</copy>
 
-		<copy todir="${documentation.dist.basedir.docbook}" file="${basedir}/${component}/src/${descriptor}" failonerror="true" />
+		<copy todir="${documentation.dist.basedir.docbook}" encoding="UTF-8" outputencoding="UTF-8" 
+			file="${basedir}/${component}/src/${descriptor}" failonerror="true" />
 
     <!-- copy master document because contents will be substituted differently for each component -->
-		<copy todir="${documentation.dist.basedir.docbook}" file="${xsl.dbdoclet.master.dir}/${xsl.dbdoclet.master.document}" failonerror="true" overwrite="true"/>
+		<copy todir="${documentation.dist.basedir.docbook}" encoding="UTF-8" outputencoding="UTF-8"
+			file="${xsl.dbdoclet.master.dir}/${xsl.dbdoclet.master.document}" failonerror="true" overwrite="true"/>
 	</target>
 
 	<target name="full-rest">
