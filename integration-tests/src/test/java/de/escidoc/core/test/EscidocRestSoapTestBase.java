@@ -2858,7 +2858,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
             }
             if (isAscending) {
                 if (nodeValue.compareToIgnoreCase(lastValue) < 0) {
-                    fail(nodeValue + " is not sorted correctly");
+                    fail(nodeValue + " is not sorted correctly, should be >= " + lastValue);
                 }
                 else if (nodeValue.compareTo(lastValue) > 0) {
                     lastValue = nodeValue;
@@ -2866,7 +2866,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
             }
             else {
                 if (nodeValue.compareToIgnoreCase(lastValue) > 0) {
-                    fail(nodeValue + " is not sorted correctly");
+                    fail(nodeValue + " is not sorted correctly, should be <= " + lastValue);
                 }
                 else if (nodeValue.compareTo(lastValue) < 0) {
                     lastValue = nodeValue;
