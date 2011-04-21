@@ -381,7 +381,7 @@
             <description>JBoss Application Server ${jboss.version}</description>
             <file src="packages/jboss/jboss-${jboss.version}.zip" targetdir="$INSTALL_PATH/install.tmp" />
             <file src="../../../assembly/target/escidoc-core-${project.version}-jboss-patch.zip" targetdir="$INSTALL_PATH/install.tmp" />
-            <file src="${jdbc.driver.postgres}" targetdir="$INSTALL_PATH/install.tmp" condition="databaseIsPostgres" />
+            <file src="${jdbc.driver.postgres}" targetdir="$INSTALL_PATH/install.tmp" condition="installEscidoc+databaseIsPostgres" />
             <!--file src="${jdbc.driver.mysql}" targetdir="$INSTALL_PATH/install.tmp" /-->
             <file src="config/jboss/run.conf" targetdir="$INSTALL_PATH/install.tmp" />
             <parsable targetfile="$INSTALL_PATH/install.tmp/run.conf" />
