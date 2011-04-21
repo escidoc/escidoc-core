@@ -476,7 +476,8 @@
         <createForPack name="eSciDoc" />
         <field type="title" txt="Database Migration" bold="true" size="1" />
         <field type="divider" align="top"/>
-        <field type="staticText" align="left" txt="Now you may run the database migration. Please keep an eye on the tool's output to see if the migration run successfully." />
+        <field type="staticText" align="left" txt="Now you may run the database migration. Please stop the infrastructure for this." />
+        <field type="staticText" align="left" txt="Keep an eye on the tool's output to see if the migration run successfully." />
         <field type="space"/>
         <field type="check" align="left" variable="RunDatabaseMigration">
           <spec txt="Run the database migration now." size="25" true="true" false="false" set="false"/>

@@ -83,7 +83,8 @@
         <res id="HTMLHelloPanel.info" src="installer/welcome.html" />
         <res id="HTMLLicencePanel.licence" src="installer/license.html" />
         <res id="HTMLInfoPanel.info" src="installer/prerequisites.html" />
-        <res id="HTMLInfoPanel.info2" src="installer/nextsteps.html" parse="yes" type="plain" />
+        <res id="HTMLInfoPanel.installInfo" src="installer/nextstepsAfterInstall.html" parse="yes" type="plain" />
+        <res id="HTMLInfoPanel.upgradeInfo" src="installer/nextstepsAfterUpgrade.html" parse="yes" type="plain" />
         <res id="Heading.image" src="installer/escidoc-logo-small.jpg" />
         <res id="Splash.image" src="installer/splash.jpg" />
         <res id="userInputSpec.xml" src="installer/userInputSpec.xml" />
@@ -352,7 +353,8 @@
         <panel classname="UserInputPanel" id="UserInputPanel.17" condition="upgradeEscidoc" />
         <panel classname="UserInputPanel" id="UserInputPanel.18" condition="upgradeEscidoc" />
         <panel classname="ProcessPanel" condition="runDatabaseMigration" />
-        <panel classname="HTMLInfoPanel" id="info2" />
+        <panel classname="HTMLInfoPanel" id="installInfo" condition="installEscidoc" />
+        <panel classname="HTMLInfoPanel" id="upgradeInfo" condition="upgradeEscidoc" />
         <panel classname="FinishPanel" id="CommonFinish" />
     </panels>
 
