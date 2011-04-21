@@ -43,7 +43,7 @@
     <copy file="${DatabaseDriver}" todir="${install.dir}/install.tmp/WEB-INF/lib/" />
   </target>
 
-  <target name="jboss" depends="init" description="Installs JBoss Application Server">
+  <target name="jboss" depends="init" description="Installs JBoss Application Server" unless="upgradeEscidoc">
     <!-- unpack JBoss ZIP file -->
     <echo level="info">Unpack JBoss</echo>
     <antcall target="unpack">
@@ -54,7 +54,6 @@
       <param name="source" value="${install.dir}/${jboss}"/>
       <param name="target" value="${install.dir}/jboss"/>
     </antcall>
-    <delete file="${install.dir}/install.tmp/${jboss}.zip"/>
     <chmod dir="${install.dir}/jboss/bin" perm="ugo+rx" includes="*.sh"/>
   </target>
 
@@ -123,7 +122,7 @@
       <param name="target" value="${install.dir}/core"/>
     </antcall>
     <delete file="${install.dir}/install.tmp/${escidoc.core.zip}"/>
-    <move todir="${install.dir}/jboss/server/default/deploy">
+    <move tofile="${install.dir}/jboss/server/default/deploy/escidoc-core.ear">
       <fileset dir="${install.dir}/core/ear">
         <include name="escidoc-core*.ear"/>
       </fileset>
@@ -247,6 +246,7 @@
     <delete dir="${install.dir}/core/bin"/>
     <delete dir="${install.dir}/core/etc"/>
     <delete dir="${install.dir}/core/sql"/>
+    <delete file="${install.dir}/install.tmp/${jboss}.zip"/>
     <!-- The database driver lib is still bound to the ant script and cannot be deleted -->
     <!-- delete dir="${install.dir}/core/lib" / -->
   </target>
