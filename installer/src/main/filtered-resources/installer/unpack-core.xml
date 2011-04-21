@@ -58,7 +58,11 @@
     <chmod dir="${install.dir}/jboss/bin" perm="ugo+rx" includes="*.sh"/>
   </target>
 
-  <target name="jboss-patch" depends="init, copy-oracle-jdbc-jar" description="Installs JBoss Patches">
+  <target name="jboss-oracle" depends="copy-oracle-jdbc-jar" if="databaseIsOracle">
+    <copy file="${install.dir}/install.tmp/${DatabaseDriverFile}" todir="${install.dir}/jboss/server/default/lib/" />
+  </target>
+
+  <target name="jboss-patch" depends="init" description="Installs JBoss Patches">
     <!-- unpack jboss-patch ZIP file -->
     <echo level="info">Unpack JBoss Patches</echo>
     <antcall target="unpack">
@@ -67,7 +71,7 @@
     </antcall>
     <move file="${install.dir}/install.tmp/jboss-patch-${EscidocVersion}/server" todir="${install.dir}/jboss"/>
     <move file="${install.dir}/install.tmp/escidoc-core.custom.properties" tofile="${install.dir}/jboss/server/default/conf/escidoc-core.custom.properties"/>
-    <copy file="${install.dir}/install.tmp/${DatabaseDriverFile}" todir="${install.dir}/jboss/server/default/lib/" />
+    <antcall target="jboss-oracle" />
     <move file="${install.dir}/install.tmp/run.conf" tofile="${install.dir}/jboss/bin/run.conf"/>
     <move file="${install.dir}/install.tmp/run.bat" tofile="${install.dir}/jboss/bin/run.bat"/>
     <move file="${install.dir}/install.tmp/shutdown.bat" tofile="${install.dir}/jboss/bin/shutdown.bat"/>
