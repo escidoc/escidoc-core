@@ -2,6 +2,8 @@
 
 <project name="eSciDoc infrastructure - unpack core package" default="build">
 
+  <basename property="DatabaseDriverFile" file="${DatabaseDriver}" />
+
   <condition property="upgradeEscidoc">
     <istrue value="${UpgradeEscidoc}"/>
   </condition>
@@ -34,10 +36,10 @@
     <property name="escidoc.admin.zip" value="migration-tool-${EscidocVersion}.zip"/>
     <property name="digilib.server.war" value="DigilibServer.war"/>
     <property name="digilib.client.war" value="DigilibClient.war"/>
-    <antcall target="copy-oracle-jdbc-jar" />
   </target>
 
   <target name="copy-oracle-jdbc-jar" if="databaseIsOracle">
+    <copy file="${DatabaseDriver}" todir="${install.dir}/install.tmp/" />
     <copy file="${DatabaseDriver}" todir="${install.dir}/install.tmp/WEB-INF/lib/" />
   </target>
 
@@ -56,7 +58,7 @@
     <chmod dir="${install.dir}/jboss/bin" perm="ugo+rx" includes="*.sh"/>
   </target>
 
-  <target name="jboss-patch" depends="init" description="Installs JBoss Patches">
+  <target name="jboss-patch" depends="init, copy-oracle-jdbc-jar" description="Installs JBoss Patches">
     <!-- unpack jboss-patch ZIP file -->
     <echo level="info">Unpack JBoss Patches</echo>
     <antcall target="unpack">
@@ -65,7 +67,7 @@
     </antcall>
     <move file="${install.dir}/install.tmp/jboss-patch-${EscidocVersion}/server" todir="${install.dir}/jboss"/>
     <move file="${install.dir}/install.tmp/escidoc-core.custom.properties" tofile="${install.dir}/jboss/server/default/conf/escidoc-core.custom.properties"/>
-    <copy file="${DatabaseDriver}" todir="${install.dir}/jboss/server/default/lib/" />
+    <copy file="${install.dir}/install.tmp/${DatabaseDriverFile}" todir="${install.dir}/jboss/server/default/lib/" />
     <move file="${install.dir}/install.tmp/run.conf" tofile="${install.dir}/jboss/bin/run.conf"/>
     <move file="${install.dir}/install.tmp/run.bat" tofile="${install.dir}/jboss/bin/run.bat"/>
     <move file="${install.dir}/install.tmp/shutdown.bat" tofile="${install.dir}/jboss/bin/shutdown.bat"/>
@@ -74,7 +76,7 @@
     <delete dir="${install.dir}/install.tmp/jboss-patch-${EscidocVersion}"/>
   </target>
 
-  <target name="fedora" depends="init" description="Installs Fedora Commons Repository">
+  <target name="fedora" depends="init, copy-oracle-jdbc-jar" description="Installs Fedora Commons Repository">
     <!-- unpack Fedora ZIP file -->
     <echo level="info">Unpack Fedora</echo>
     <antcall target="unpack">
@@ -84,7 +86,6 @@
     <!-- patch fedora.war by replacing web.xml with customized version -->
     <jar basedir="${install.dir}/install.tmp" update="yes" destfile="${install.dir}/install.tmp/fedora.war" includes="WEB-INF/web.xml"/>
     <!-- patch fedora.war by adding the database driver -->
-    <basename property="DatabaseDriverFile" file="${DatabaseDriver}" />
     <jar basedir="${install.dir}/install.tmp" update="yes" destfile="${install.dir}/install.tmp/fedora.war" includes="WEB-INF/lib/${DatabaseDriverFile}" />
     <jar basedir="${install.dir}/install.tmp" update="yes" destfile="${install.dir}/install.tmp/fedora.war" includes="WEB-INF/lib/${OracleDDLGenerator}" />
     <!-- deploy fedora.war in JBoss -->
@@ -93,7 +94,7 @@
     <move file="${install.dir}/install.tmp/fedora.fcfg" tofile="${install.dir}/fedora/server/config/fedora.fcfg"/>
     <move file="${install.dir}/install.tmp/log4j.properties" tofile="${install.dir}/fedora/server/config/log4j.properties"/>
     <move file="${install.dir}/install.tmp/deny-everything-if-not-administrator.xml" tofile="${install.dir}/fedora/data/fedora-xacml-policies/repository-policies/deny-everything-if-not-administrator.xml"/>
-    <delete file="${install.dir}/install.tmp/fedora.zip"/>
+    <delete file="${install.dir}/install.tmp/fedora-fedora.zip"/>
     <delete dir="${install.dir}/install.tmp/WEB-INF"/>
     <chmod dir="${install.dir}/fedora/client/bin" perm="ugo+rx" includes="*.sh"/>
     <chmod dir="${install.dir}/fedora/server/bin" perm="ugo+rx" includes="*.sh"/>
@@ -179,14 +180,16 @@
     </propertyfile>
   </target>
 
-  <target name="db-create-scripts" depends="init" description="Prepare for database creation" unless="upgradeEscidoc">
+  <target name="db-create-scripts" depends="init, copy-oracle-jdbc-jar" description="Prepare for database creation" unless="upgradeEscidoc">
     <!-- prepare for database creation -->
     <echo level="info">Prepare for database creation</echo>
     <move file="${install.dir}/install.tmp/database.properties" todir="${install.dir}/core/etc"/>
     <move file="${install.dir}/install.tmp/database-init.xml" todir="${install.dir}/core/bin"/>
     <move file="${install.dir}/install.tmp/aa.init.user-accounts.common.sql" todir="${install.dir}/core/sql"/>
     <move file="${install.dir}/install.tmp/aa.init.grants.common.sql" todir="${install.dir}/core/sql"/>
-    <copy file="${DatabaseDriver}" todir="${install.dir}/core/lib"/>
+    <move file="${install.dir}/install.tmp/${DatabaseDriverFile}" todir="${install.dir}/core/lib"/>
+    <delete dir="${install.dir}/install.tmp/staging" />
+    <delete dir="${install.dir}/install.tmp/WEB-INF" />
     <!--delete dir="${install.dir}/install.tmp" /-->
   </target>
 

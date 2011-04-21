@@ -117,6 +117,7 @@
 
       <!-- database connection -->
       <!-- Postgres -->
+      <variable name="jdbc.driver.postgres" value="lib/postgresql-${jdbc.postgresql.version}.jar" />
       <variable name="DatabaseAdminUsernamePostgres" value="postgres" />
       <variable name="DatabaseDriverClassPostgres" value="org.postgresql.Driver" />
       <variable name="DatabasePortPostgres" value="5432" />
@@ -126,6 +127,7 @@
       <variable name="RootDatabaseNamePostgres" value="postgres" />
 
       <!-- MySQL -->
+      <variable name="jdbc.driver.mysql" value="" />
       <variable name="DatabaseAdminUsernameMySQL" value="root" />
       <variable name="DatabaseDriverClassMySQL" value="com.mysql.jdbc.Driver" />
       <variable name="DatabasePortMySQL" value="3306" />
@@ -183,8 +185,8 @@
       <variable name="java.io.tmpdir" value=" -Djava.io.tmpdir=/tmp" condition="izpack.macinstall" />
       <variable name="java.io.tmpdir" value="" condition="!izpack.macinstall" />
       <!-- JDBC jar (absolute path) -->
-      <variable name="DatabaseDriver" value="$INSTALL_PATH/install.tmp/postgresql-${jdbc.postgresql.version}.jar" condition="databaseIsPostgres" />
-      <variable name="DatabaseDriver" value="$INSTALL_PATH/install.tmp/${jdbc.driver.mysql}" condition="databaseIsMySQL" />
+      <variable name="DatabaseDriver" value="${jdbc.driver.postgres}" condition="databaseIsPostgres" />
+      <variable name="DatabaseDriver" value="${jdbc.driver.mysql}" condition="databaseIsMySQL" />
       <variable name="DatabaseDriver" value="${jdbc.driver.oracle}" condition="databaseIsOracle" />
       <!-- database driver class -->
       <variable name="DatabaseDriverClass" value="${DatabaseDriverClassPostgres}" condition="databaseIsPostgres" />
@@ -368,7 +370,7 @@
         <pack name="Install Scripts" parent="eSciDoc" required="yes">
             <description>Necessary installation scripts and configuration files</description>
             <!-- Ant scripts, need to be in the first pack under "eSciDoc" to be availble for "afterpack" actions -->
-            <file src="installer/unpack-core.xml" targetdir="$INSTALL_PATH/install.tmp" />
+            <singlefile src="installer/unpack-core.xml" target="$INSTALL_PATH/install.tmp/unpack-core.xml" override="true" />
             <parsable targetfile="$INSTALL_PATH/install.tmp/unpack-core.xml" />
             <!-- Configuration files -->
             <file src="config/escidoc/core/escidoc-core.custom.properties" targetdir="$INSTALL_PATH/install.tmp" />
@@ -379,8 +381,8 @@
             <description>JBoss Application Server ${jboss.version}</description>
             <file src="packages/jboss/jboss-${jboss.version}.zip" targetdir="$INSTALL_PATH/install.tmp" />
             <file src="../../../assembly/target/escidoc-core-${project.version}-jboss-patch.zip" targetdir="$INSTALL_PATH/install.tmp" />
-            <file src="lib/postgresql-${jdbc.postgresql.version}.jar" targetdir="$INSTALL_PATH/install.tmp" />
-            <!-- file src="@{jdbc.driver.mysql}" targetdir="$INSTALL_PATH/install.tmp" / -->
+            <file src="${jdbc.driver.postgres}" targetdir="$INSTALL_PATH/install.tmp" condition="databaseIsPostgres" />
+            <!--file src="${jdbc.driver.mysql}" targetdir="$INSTALL_PATH/install.tmp" /-->
             <file src="config/jboss/run.conf" targetdir="$INSTALL_PATH/install.tmp" />
             <parsable targetfile="$INSTALL_PATH/install.tmp/run.conf" />
             <file src="config/jboss/run.bat" targetdir="$INSTALL_PATH/install.tmp" />
