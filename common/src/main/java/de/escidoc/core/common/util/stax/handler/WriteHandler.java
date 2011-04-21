@@ -151,16 +151,14 @@ public abstract class WriteHandler extends DefaultHandler {
                         String prefixValue = attributeValueArray[0];
                         if (prefixValue != null) {
                             final String valueUri = nscontext.getNamespaceURI(prefixValue);
-                            if (valueUri != null) {
-                                if (!nsuris.containsKey(valueUri)) {
-                                    final List namespaceTrace = new ArrayList();
-                                    namespaceTrace.add(this.deepLevel);
-                                    namespaceTrace.add(elementName);
-                                    namespaceTrace.add(prefixValue);
-                                    nsuris.put(valueUri, namespaceTrace);
+                            if (valueUri != null && !nsuris.containsKey(valueUri)) {
+                                final List namespaceTrace = new ArrayList();
+                                namespaceTrace.add(this.deepLevel);
+                                namespaceTrace.add(elementName);
+                                namespaceTrace.add(prefixValue);
+                                nsuris.put(valueUri, namespaceTrace);
 
-                                    writer.writeNamespace(prefixValue, valueUri);
-                                }
+                                writer.writeNamespace(prefixValue, valueUri);
                             }
                         }
                     }

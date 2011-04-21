@@ -67,6 +67,7 @@ public class ContentStreamsHandler extends DefaultHandler {
      *
      * @param parser StAX Parser.
      */
+    @Deprecated
     public ContentStreamsHandler(final StaxParser parser) {
         this.parser = parser;
         this.xpathContentStream = this.xpathContentStreams + '/' + Elements.ELEMENT_CONTENT_STREAM;
@@ -78,6 +79,7 @@ public class ContentStreamsHandler extends DefaultHandler {
      * @param parser StAX Parser.
      * @param xpathContentStreams
      */
+    @Deprecated
     public ContentStreamsHandler(final StaxParser parser, final String xpathContentStreams) {
         this.xpathContentStreams = xpathContentStreams;
         this.xpathContentStream = this.xpathContentStreams + '/' + Elements.ELEMENT_CONTENT_STREAM;

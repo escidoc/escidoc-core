@@ -297,21 +297,14 @@ public class ItemHandlerBase extends HandlerBase {
      */
     final void checkReleased() throws InvalidStatusException, TripleStoreSystemException, WebserverSystemException {
 
-        final String status = getItem().getProperty(PropertyMapKeys.PUBLIC_STATUS);
-        // TripleStoreUtility.getInstance().getPropertiesElements(
-        // getItem().getId(), TripleStoreUtility.PROP_PUBLIC_STATUS);
         // In first release, if object is once released no changes are allowed
-        if (status.equals(Constants.STATUS_RELEASED)) {
+        if (Constants.STATUS_RELEASED.equals(getItem().getStatus())) {
             // check if the version is in status released
             // FIXME check if the LATEST version is in status released. That
             // seems to be the same because all methods that call checkReleased
             // also call checkLatestVersion. But the semantic should be true
             // without another method call. (? FRS)
-            // if (TripleStoreUtility.getInstance().getPropertiesElements(
-            // getItem().getId(),
-            // TripleStoreUtility.PROP_LATEST_VERSION_STATUS).equals(
-            // Constants.STATUS_RELEASED)) {
-            if (getItem().getProperty(PropertyMapKeys.LATEST_VERSION_VERSION_STATUS).equals(Constants.STATUS_RELEASED)) {
+            if (Constants.STATUS_RELEASED.equals(getItem().getProperty(PropertyMapKeys.LATEST_VERSION_VERSION_STATUS))) {
                 throw new InvalidStatusException("The object is in state '" + Constants.STATUS_RELEASED
                     + "' and can not be" + " changed.");
             }

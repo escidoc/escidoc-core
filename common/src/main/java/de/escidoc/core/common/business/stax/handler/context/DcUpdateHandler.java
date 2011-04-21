@@ -33,7 +33,7 @@ public class DcUpdateHandler extends DefaultHandler {
 
     private final StaxParser parser;
 
-    private final Map props;
+    private final Map<String, StartElementWithText> props;
 
     private static final String PATH = "/dc/";
 
@@ -42,19 +42,19 @@ public class DcUpdateHandler extends DefaultHandler {
         this.props = new TreeMap<String, StartElementWithText>();
     }
 
-    public DcUpdateHandler(final Map props, final StaxParser parser) {
+    public DcUpdateHandler(final Map<String, StartElementWithText> props, final StaxParser parser) {
         this.parser = parser;
-        this.props = new TreeMap(props);
+        this.props = new TreeMap<String, StartElementWithText>(props);
     }
 
-    public Map getProperties() {
+    public Map<String, StartElementWithText> getProperties() {
         return this.props;
     }
 
     public DcUpdateHandler(final String elementName, final StartElementWithChildElements element,
         final StaxParser parser) {
         this.parser = parser;
-        this.props = new TreeMap();
+        this.props = new TreeMap<String, StartElementWithText>();
         this.props.put(elementName, element);
     }
 
