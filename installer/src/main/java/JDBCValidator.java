@@ -78,7 +78,10 @@ public class JDBCValidator implements DataValidator {
 	}
 
 	/*
-	 * (non-Javadoc)
+	 * Check if the escidoc-core database exists.
+     * Skip the check if it is an upgrade procedure or if the system variable "skip.validation" is set to true.
+     *
+     * @return OK if the database not exists, ERROR otherwise
 	 * @see
 	 * com.izforge.izpack.installer.DataValidator#validateData
 	 * (com.izforge.izpack.installer.AutomatedInstallData)
@@ -88,8 +91,10 @@ public class JDBCValidator implements DataValidator {
 		Status status = Status.ERROR;
 		boolean skipValidation = Boolean.valueOf(data
 				.getVariable("SYSTEM_skip_validation"));
+		boolean upgradeEscidoc = Boolean.valueOf(data
+				.getVariable("UpgradeEscidoc"));
 
-		if (skipValidation) {
+		if (skipValidation || upgradeEscidoc) {
 			status = Status.OK;
 		} else {
 			String userName = data.getVariable("DatabaseUsername");
