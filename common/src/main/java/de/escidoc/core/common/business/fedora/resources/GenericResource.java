@@ -145,7 +145,7 @@ public class GenericResource implements FedoraResource {
      * @return objid (without version suffix)
      */
     @Override
-    public String getId() {
+    public final String getId() {
 
         return this.id;
     }
@@ -688,7 +688,7 @@ public class GenericResource implements FedoraResource {
      * @return Whether the resource is locked or not.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    public boolean isLocked() throws WebserverSystemException {
+    public final boolean isLocked() throws WebserverSystemException {
 
         return getLockHandler().isLocked(this.id);
     }
@@ -699,7 +699,7 @@ public class GenericResource implements FedoraResource {
      * @return The lock owner or null.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    public String getLockOwner() throws WebserverSystemException {
+    public final String getLockOwner() throws WebserverSystemException {
 
         return getLockHandler().getLockOwner(this.id);
     }
@@ -710,7 +710,7 @@ public class GenericResource implements FedoraResource {
      * @return The lock owner or null.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    public String getLockOwnerTitle() throws WebserverSystemException {
+    public final String getLockOwnerTitle() throws WebserverSystemException {
 
         return getLockHandler().getLockOwnerTitle(this.id);
     }
@@ -721,7 +721,7 @@ public class GenericResource implements FedoraResource {
      * @return The lock date or null.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    public String getLockDate() throws WebserverSystemException {
+    public final String getLockDate() throws WebserverSystemException {
 
         return getLockHandler().getLockDate(this.id);
     }
@@ -735,7 +735,7 @@ public class GenericResource implements FedoraResource {
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
      */
-    public void setLocked(final boolean lock, final String[] lockOwner) throws LockingException,
+    public final void setLocked(final boolean lock, final String[] lockOwner) throws LockingException,
         SqlDatabaseSystemException, WebserverSystemException {
 
         // Should lock only be checked in handler? No, it is part of the
