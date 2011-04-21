@@ -479,7 +479,7 @@
         <field type="staticText" align="left" txt="Now you may run the database migration. Please keep an eye on the tool's output to see if the migration run successfully." />
         <field type="space"/>
         <field type="check" align="left" variable="RunDatabaseMigration">
-          <spec txt="Run the database migration now." size="25" true="yes" false="no" set="no"/>
+          <spec txt="Run the database migration now." size="25" true="true" false="false" set="false"/>
         </field>
         <field type="space"/>
         <field type="divider" align="bottom"/>

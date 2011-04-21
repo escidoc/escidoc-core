@@ -95,10 +95,10 @@
 
     <variables>
       <!-- Short Installer uses form-based authentication as default -->
-      <variable name="ShortInstaller" value="yes" />
+      <variable name="ShortInstaller" value="true" />
 
       <!-- Show dialog that asks for install or update? -->
-      <variable name="AskForUpgrade" value="yes" />
+      <variable name="AskForUpgrade" value="true" />
 
       <!-- Hostname of the installation server -->
       <variable name="Hostname" value="localhost" />
@@ -263,18 +263,18 @@
       <variable name="ShibbolethIn" value="" condition="authMethodIsShibboleth" />
       <variable name="ShibbolethOut" value="-->" condition="!authMethodIsShibboleth" />
       <variable name="ShibbolethOut" value="" condition="authMethodIsShibboleth" />
-      <variable name="UpgradeEscidoc" value="yes" condition="upgradeEscidoc" />
-      <variable name="DatabaseIsOracle" value="yes" condition="databaseIsOracle" />
+      <variable name="UpgradeEscidoc" value="true" condition="upgradeEscidoc" />
+      <variable name="DatabaseIsOracle" value="true" condition="databaseIsOracle" />
     </dynamicvariables>
     
     <conditions>
       <condition type="variable" id="askForUpgrade">
         <name>AskForUpgrade</name>
-        <value>yes</value>
+        <value>true</value>
       </condition>
       <condition type="variable" id="runDatabaseMigration">
         <name>RunDatabaseMigration</name>
-        <value>yes</value>
+        <value>true</value>
       </condition>
       <condition type="variable" id="upgradeEscidoc">
         <name>InstallationType</name>
@@ -287,7 +287,7 @@
         <condition type="ref" refid="installEscidoc" />
         <condition type="variable">
           <name>ShortInstaller</name>
-          <value>no</value>
+          <value>false</value>
         </condition>
       </condition>
       <condition type="variable" id="databaseIsPostgres">
@@ -326,7 +326,7 @@
         <panel classname="UserInputPanel" id="UserInputPanel.0" condition="askForUpgrade" />
         <panel classname="UserInputPanel" id="UserInputPanel.1" />
         <panel classname="UserInputPanel" id="UserInputPanel.2" />
-        <panel classname="UserInputPanel" id="UserInputPanel.3" condition="databaseIsOracle" />
+        <panel classname="UserInputPanel" id="UserInputPanel.3" condition="installEscidoc+databaseIsOracle" />
         <panel classname="UserInputPanel" id="UserInputPanel.4" condition="databaseIsPostgres" />
         <panel classname="UserInputPanel" id="UserInputPanel.5" condition="databaseIsOracle" />
         <panel classname="UserInputPanel" id="UserInputPanel.6" condition="databaseIsPostgres">
