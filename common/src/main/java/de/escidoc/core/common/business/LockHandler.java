@@ -258,9 +258,10 @@ public class LockHandler extends JdbcDaoSupport {
                 new Object[] { objid }, Boolean.class);
         }
         catch (final IncorrectResultSizeDataAccessException e) {
-            if (LOGGER.isWarnEnabled()) {
-                LOGGER.warn("Error on quering for lock.");
-            }
+            // implementation is crud, but anyway having no lock entry mean resource is not locked
+            // if (LOGGER.isWarnEnabled()) {
+            // LOGGER.warn("Error on quering for lock.");
+            // }
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on quering for lock.", e);
             }
