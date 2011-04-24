@@ -339,7 +339,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
             catch (final UnsupportedEncodingException e) {
                 throw new EncodingSystemException(e.getMessage(), e);
             }
-            final Map mdRecordsStreams = (Map) streams.get("md-records");
+            final Map<String, ByteArrayOutputStream> mdRecordsStreams =
+                (Map<String, ByteArrayOutputStream>) streams.get("md-records");
             if (mdRecordsStreams != null && !mdRecordsStreams.containsKey("escidoc") && !origin) {
                 throw new MissingMdRecordException("No escidoc internal metadata found " + "(md-record/@name='escidoc'");
             }
@@ -1551,11 +1552,10 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
 
             final Set<Entry<String, List<StartElementWithChildElements>>> entrySet =
                 predicateValuesVectorAssignment.entrySet();
-            for (final Object anEntrySet : entrySet) {
-                final Entry entry = (Entry) anEntrySet;
-                final String predicateValue = (String) entry.getKey();
-                final List<StartElementWithChildElements> elements =
-                    (List<StartElementWithChildElements>) entry.getValue();
+            for (final Entry<String, List<StartElementWithChildElements>> anEntrySet : entrySet) {
+                final Entry<String, List<StartElementWithChildElements>> entry = anEntrySet;
+                final String predicateValue = entry.getKey();
+                final List<StartElementWithChildElements> elements = entry.getValue();
                 toRemove.put("/RDF/Description/" + predicateValue, elements);
             }
 
@@ -1897,17 +1897,18 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
-    private void setMetadataRecords(final Map mdMap, final Map mdAttributesMap, final String escidocMdRecordnsUri)
-        throws TripleStoreSystemException, EncodingSystemException, IntegritySystemException, FedoraSystemException,
-        WebserverSystemException {
+    private void setMetadataRecords(
+        final Map<String, ByteArrayOutputStream> mdMap, final Map<String, Map<String, String>> mdAttributesMap,
+        final String escidocMdRecordnsUri) throws TripleStoreSystemException, EncodingSystemException,
+        IntegritySystemException, FedoraSystemException, WebserverSystemException {
         final Map<String, Datastream> dsMap = new HashMap<String, Datastream>();
         if (mdMap == null) {
             getItem().setMdRecords(dsMap);
         }
         else {
-            for (final Object o : mdMap.keySet()) {
-                final String name = (String) o;
-                final ByteArrayOutputStream stream = (ByteArrayOutputStream) mdMap.get(name);
+            for (final String o : mdMap.keySet()) {
+                final String name = o;
+                final ByteArrayOutputStream stream = mdMap.get(name);
                 final byte[] xmlBytes = stream.toByteArray();
                 HashMap<String, String> mdProperties = null;
                 if ("escidoc".equals(name)) {
@@ -1917,10 +1918,10 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
                 }
                 final Datastream ds =
                     new Datastream(name, getItem().getId(), xmlBytes, Datastream.MIME_TYPE_TEXT_XML, mdProperties);
-                final Map mdRecordAttributes = (Map) mdAttributesMap.get(name);
+                final Map<String, String> mdRecordAttributes = mdAttributesMap.get(name);
                 ds.addAlternateId(Datastream.METADATA_ALTERNATE_ID);
-                ds.addAlternateId((String) mdRecordAttributes.get("type"));
-                ds.addAlternateId((String) mdRecordAttributes.get("schema"));
+                ds.addAlternateId(mdRecordAttributes.get("type"));
+                ds.addAlternateId(mdRecordAttributes.get("schema"));
                 dsMap.put(name, ds);
             }
             getItem().setMdRecords(dsMap);
