@@ -392,6 +392,9 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport implements Dire
             condition ? executionSql.replaceFirst("(?i)(.*?from).*?((where|order by|group by).*)", "$1"
                 + Matcher.quoteReplacement(replacedFromClause.toString()) + "$2") : executionSql.replaceFirst(
                 "(?i)(.*?from).*", "$1" + Matcher.quoteReplacement(replacedFromClause.toString()));
+        if (!executionSql.toLowerCase().startsWith("select")) {
+            throw new SqlDatabaseSystemException("No read-only statement");
+        }
         try {
             return getJdbcTemplate().queryForList(executionSql);
         }
