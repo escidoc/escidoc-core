@@ -330,7 +330,9 @@
         <panel classname="HTMLLicencePanel" id="HTMLLicencePanel.licence" />
         <panel classname="HTMLInfoPanel" id="info" />
         <panel classname="UserInputPanel" id="UserInputPanel.0" condition="askForUpgrade" />
-        <panel classname="UserInputPanel" id="UserInputPanel.1" />
+        <panel classname="UserInputPanel" id="UserInputPanel.1">
+          <validator classname="HTTPValidator" />
+        </panel>
         <panel classname="UserInputPanel" id="UserInputPanel.2" />
         <panel classname="UserInputPanel" id="UserInputPanel.3" condition="installEscidoc+databaseIsOracle" />
         <panel classname="UserInputPanel" id="UserInputPanel.4" condition="databaseIsPostgres" />

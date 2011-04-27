@@ -27,7 +27,6 @@
  * All rights reserved.  Use is subject to license terms.
  */
 import com.izforge.izpack.installer.AutomatedInstallData;
-import com.izforge.izpack.installer.DataValidator;
 import com.izforge.izpack.installer.DataValidator.Status;
 
 import java.sql.Connection;
@@ -37,45 +36,9 @@ import java.sql.SQLException;
 /**
  * Check if a database exists and return an error if it does.
  *
- * @author SCHE
+ * @author André Schenk
  */
-public class JDBCValidator implements DataValidator {
-
-	private final StringBuilder errorMessage = new StringBuilder();
-
-	/*
-	 * (non-Javadoc)
-	 * @see
-	 * com.izforge.izpack.installer.DataValidator#getDefaultAnswer
-	 * ()
-	 */
-	@Override
-	public boolean getDefaultAnswer() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see
-	 * com.izforge.izpack.installer.DataValidator#getErrorMessageId
-	 * ()
-	 */
-	@Override
-	public String getErrorMessageId() {
-		return errorMessage.toString();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see
-	 * com.izforge.izpack.installer.DataValidator#getWarningMessageId
-	 * ()
-	 */
-	@Override
-	public String getWarningMessageId() {
-		return "";
-	}
+public class JDBCValidator extends AbstractValidator {
 
 	/*
 	 * Check if the escidoc-core database exists.
@@ -122,11 +85,5 @@ public class JDBCValidator implements DataValidator {
 		errorMessage.append("The Database \"");
 		errorMessage.append(message);
 		errorMessage.append("\" already exists.");
-	}
-
-	private void clearErrorMessage() {
-		if (!errorMessage.toString().isEmpty()) {
-			errorMessage.delete(0, errorMessage.length());
-		}
 	}
 }
