@@ -12,6 +12,12 @@
     <istrue value="${DatabaseIsOracle}"/>
   </condition>
 
+  <taskdef resource="net/sf/antcontrib/antlib.xml" />
+
+  <tstamp>
+    <format property="timestamp" pattern="yyyy-MM-dd_HH-mm-ss"/>
+  </tstamp>
+
   <target name="build" description="Installs JBoss with patches, Fedora, and escidoc-core">
     <echo level="info">Unpack and install eSciDoc Infrastructure</echo>
     <antcall target="jboss"/>
@@ -68,13 +74,31 @@
       <param name="zipfile" value="${install.dir}/install.tmp/${jboss.patch.zip}"/>
       <param name="target.dir" value="${install.dir}/install.tmp"/>
     </antcall>
-    <move file="${install.dir}/install.tmp/jboss-patch-${EscidocVersion}/server" todir="${install.dir}/jboss"/>
-    <move file="${install.dir}/install.tmp/escidoc-core.custom.properties" tofile="${install.dir}/jboss/server/default/conf/escidoc-core.custom.properties"/>
+    <antcall target="move-with-save">
+      <param name="sourceDir" value="${install.dir}/install.tmp/jboss-patch-${EscidocVersion}/server"/>
+      <param name="targetDir" value="${install.dir}/jboss/server"/>
+    </antcall>
+    <antcall target="move-file-with-save">
+      <param name="source" value="${install.dir}/install.tmp/escidoc-core.custom.properties" />
+      <param name="target" value="${install.dir}/jboss/server/default/conf/escidoc-core.custom.properties" />
+    </antcall>
     <antcall target="jboss-oracle" />
-    <move file="${install.dir}/install.tmp/run.conf" tofile="${install.dir}/jboss/bin/run.conf"/>
-    <move file="${install.dir}/install.tmp/run.bat" tofile="${install.dir}/jboss/bin/run.bat"/>
-    <move file="${install.dir}/install.tmp/shutdown.bat" tofile="${install.dir}/jboss/bin/shutdown.bat"/>
-    <move file="${install.dir}/install.tmp/shutdown.sh" tofile="${install.dir}/jboss/bin/shutdown.sh"/>
+    <antcall target="move-file-with-save">
+      <param name="source" value="${install.dir}/install.tmp/run.conf" />
+      <param name="target" value="${install.dir}/jboss/bin/run.conf" />
+    </antcall>
+    <antcall target="move-file-with-save">
+      <param name="source" value="${install.dir}/install.tmp/run.bat" />
+      <param name="target" value="${install.dir}/jboss/bin/run.bat" />
+    </antcall>
+    <antcall target="move-file-with-save">
+      <param name="source" value="${install.dir}/install.tmp/shutdown.bat" />
+      <param name="target" value="${install.dir}/jboss/bin/shutdown.bat" />
+    </antcall>
+    <antcall target="move-file-with-save">
+      <param name="source" value="${install.dir}/install.tmp/shutdown.sh" />
+      <param name="target" value="${install.dir}/jboss/bin/shutdown.sh" />
+    </antcall>
     <delete file="${install.dir}/install.tmp/${jboss.patch.zip}"/>
     <delete dir="${install.dir}/install.tmp/jboss-patch-${EscidocVersion}"/>
   </target>
@@ -82,21 +106,38 @@
   <target name="fedora" depends="init, copy-oracle-jdbc-jar" description="Installs Fedora Commons Repository">
     <!-- unpack Fedora ZIP file -->
     <echo level="info">Unpack Fedora</echo>
+    <move file="${install.dir}/fedora" tofile="${install.dir}/fedora-${timestamp}" failonerror="false" />
     <antcall target="unpack">
       <param name="zipfile" value="${install.dir}/install.tmp/fedora-fedora.zip"/>
       <param name="target.dir" value="${install.dir}/fedora"/>
     </antcall>
+    <move file="${install.dir}/fedora-${timestamp}/data/objects" tofile="${install.dir}/fedora/data/objects" failonerror="false" />
     <!-- patch fedora.war by replacing web.xml with customized version -->
     <jar basedir="${install.dir}/install.tmp" update="yes" destfile="${install.dir}/install.tmp/fedora.war" includes="WEB-INF/web.xml"/>
     <!-- patch fedora.war by adding the database driver -->
     <jar basedir="${install.dir}/install.tmp" update="yes" destfile="${install.dir}/install.tmp/fedora.war" includes="WEB-INF/lib/${DatabaseDriverFile}" />
     <jar basedir="${install.dir}/install.tmp" update="yes" destfile="${install.dir}/install.tmp/fedora.war" includes="WEB-INF/lib/${OracleDDLGenerator}" />
     <!-- deploy fedora.war in JBoss -->
-    <move file="${install.dir}/install.tmp/fedora.war" tofile="${install.dir}/jboss/server/default/deploy/fedora.war"/>
-    <move file="${install.dir}/install.tmp/fedora-users.xml" tofile="${install.dir}/fedora/server/config/fedora-users.xml"/>
-    <move file="${install.dir}/install.tmp/fedora.fcfg" tofile="${install.dir}/fedora/server/config/fedora.fcfg"/>
-    <move file="${install.dir}/install.tmp/log4j.properties" tofile="${install.dir}/fedora/server/config/log4j.properties"/>
-    <move file="${install.dir}/install.tmp/deny-everything-if-not-administrator.xml" tofile="${install.dir}/fedora/data/fedora-xacml-policies/repository-policies/deny-everything-if-not-administrator.xml"/>
+    <antcall target="move-file-with-save">
+      <param name="source" value="${install.dir}/install.tmp/fedora.war" />
+      <param name="target" value="${install.dir}/jboss/server/default/deploy/fedora.war" />
+    </antcall>
+    <antcall target="move-file-with-save">
+      <param name="source" value="${install.dir}/install.tmp/fedora-users.xml" />
+      <param name="target" value="${install.dir}/fedora/server/config/fedora-users.xml" />
+    </antcall>
+    <antcall target="move-file-with-save">
+      <param name="source" value="${install.dir}/install.tmp/fedora.fcfg" />
+      <param name="target" value="${install.dir}/fedora/server/config/fedora.fcfg" />
+    </antcall>
+    <antcall target="move-file-with-save">
+      <param name="source" value="${install.dir}/install.tmp/log4j.properties" />
+      <param name="target" value="${install.dir}/fedora/server/config/log4j.properties" />
+    </antcall>
+    <antcall target="move-file-with-save">
+      <param name="source" value="${install.dir}/install.tmp/deny-everything-if-not-administrator.xml" />
+      <param name="target" value="${install.dir}/fedora/data/fedora-xacml-policies/repository-policies/deny-everything-if-not-administrator.xml" />
+    </antcall>
     <delete file="${install.dir}/install.tmp/fedora-fedora.zip"/>
     <delete dir="${install.dir}/install.tmp/WEB-INF"/>
     <chmod dir="${install.dir}/fedora/client/bin" perm="ugo+rx" includes="*.sh"/>
@@ -104,7 +145,10 @@
   </target>
 
   <target name="admintool" depends="init" description="Installs Admin Tool">
-    <move file="${install.dir}/tools/AdminTool-${admin-tool.version}.war" tofile="${install.dir}/jboss/server/default/deploy/AdminTool.war"/>
+    <antcall target="move-file-with-save">
+      <param name="source" value="${install.dir}/tools/AdminTool-${admin-tool.version}.war" />
+      <param name="target" value="${install.dir}/jboss/server/default/deploy/AdminTool.war" />
+    </antcall>
   </target>
 
   <target name="escidoc-core" depends="init" description="Installs eSciDoc Core Services">
@@ -122,12 +166,16 @@
       <param name="target" value="${install.dir}/core"/>
     </antcall>
     <delete file="${install.dir}/install.tmp/${escidoc.core.zip}"/>
+    <!-- Delete old admin.jsp. -->
+    <delete dir="${install.dir}/jboss/server/default/work/jboss.web/localhost/_"/>
+    <!-- move file="${install.dir}/jboss/server/default/deploy/escidoc-core.ear" tofile="${install.dir}/jboss/server/default/deploy/escidoc-core.ear-${timestamp}" /-->
     <move tofile="${install.dir}/jboss/server/default/deploy/escidoc-core.ear">
       <fileset dir="${install.dir}/core/ear">
         <include name="escidoc-core*.ear"/>
       </fileset>
     </move>
     <move file="${install.dir}/core/license/ESCIDOC.LICENSE" todir="${install.dir}"/>
+    <move file="${install.dir}/core/doc" tofile="${install.dir}/core/doc-${timestamp}" failonerror="false" />
     <move todir="${install.dir}/core/doc">
       <fileset dir="${install.dir}/core/ontologies"/>
     </move>
@@ -233,8 +281,14 @@
 
   <target name="digilib" depends="init" description="Installs Digilib Image Viewing and Manipulation Service">
     <!-- deploy Digilib Web Archives in JBoss -->
-    <move file="${install.dir}/install.tmp/${digilib.server.war}" tofile="${install.dir}/jboss/server/default/deploy/${digilib.server.war}"/>
-    <move file="${install.dir}/install.tmp/${digilib.client.war}" tofile="${install.dir}/jboss/server/default/deploy/${digilib.client.war}"/>
+    <antcall target="move-file-with-save">
+      <param name="source" value="${install.dir}/install.tmp/${digilib.server.war}" />
+      <param name="target" value="${install.dir}/jboss/server/default/deploy/${digilib.server.war}" />
+    </antcall>
+    <antcall target="move-file-with-save">
+      <param name="source" value="${install.dir}/install.tmp/${digilib.client.war}" />
+      <param name="target" value="${install.dir}/jboss/server/default/deploy/${digilib.client.war}" />
+    </antcall>
   </target>
 
   <!-- Following target is commented out for debugging purposes only.    -->
@@ -256,6 +310,36 @@
     <unzip src="${zipfile}" dest="${target.dir}"/>
   </target>
 
+  <target name="move-with-save" description="move a set of files and create a backup of each file before overwriting">
+    <for param="sourceFile">
+      <path>
+        <fileset dir="${sourceDir}" />
+      </path>
+      <sequential>
+        <propertyregex property="relativePath" input="@{sourceFile}" regexp="${sourceDir}/(.*)" select="\1" casesensitive="false" override="true" />
+        <antcall target="move-file-with-save">
+          <param name="source" value="@{sourceFile}" />
+          <param name="target" value="${targetDir}/${relativePath}" />
+        </antcall>
+      </sequential>
+    </for>
+  </target>
+
+  <target name="move-file-with-save" description="move a single file and create a backup of the file before overwriting">
+    <if>
+      <and>
+        <not>
+          <filesmatch file1="${source}" file2="${target}" />
+        </not>
+        <available file="${target}" />
+      </and>
+      <then>
+        <move file="${target}" tofile="${target}.bak" force="true" />
+      </then>
+    </if>
+    <move file="${source}" tofile="${target}" />
+  </target>
+
   <target name="rename" description="Renames a directory">
     <available file="${target}" property="dir.already.present"/>
     <antcall target="rename-with-save">
@@ -270,9 +354,6 @@
 
   <target name="rename-with-save" if="dir.already.present" description="Renames an existing directory and then renames a directory to the preexisting name">
     <!-- rename a file or directory -->
-    <tstamp>
-      <format property="timestamp" pattern="yyyy-MM-dd_HH-mm-ss"/>
-    </tstamp>
     <property name="new.name.for.old.target" value="${target}-${timestamp}"/>
     <move file="${target}" tofile="${new.name.for.old.target}"/>
     <move file="${source}" tofile="${target}"/>

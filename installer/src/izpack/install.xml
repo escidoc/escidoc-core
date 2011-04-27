@@ -101,6 +101,9 @@
       <!-- Show dialog that asks for install or update? -->
       <variable name="AskForUpgrade" value="true" />
 
+      <!-- Don't show warning in TargetPanel that directory doesn't exist. -->
+      <variable name="ShowCreateDirectoryMessage" value="false" />
+
       <!-- Hostname of the installation server -->
       <variable name="Hostname" value="localhost" />
       <!-- Bind address for JBoss Application Server -->
@@ -346,7 +349,7 @@
         <panel classname="TargetPanel" id="EscidocTarget" />
         <panel classname="TreePacksPanel" id="EscidocPacks" />
         <panel classname="UserInputPanel" id="UserInputPanel.14" condition="installEscidoc+authMethodIsFormBased" />
-        <panel classname="UserInputPanel" id="UserInputPanel.15" condition="installEscidoc+authMethodIsFormBased" />
+        <panel classname="UserInputPanel" id="UserInputPanel.15" condition="authMethodIsFormBased" />
         <panel classname="UserInputPanel" id="UserInputPanel.16" condition="installEscidoc+authMethodIsFormBased" />
         <!-- panel classname="DataCheckPanel" id="Debug" / -->
         <panel classname="InstallPanel" id="EscidocInstall" />
@@ -519,6 +522,7 @@
     <jar src="lib/ant-${ant.version}.jar" stage="install" />
     <jar src="lib/ant-nodeps-${ant-nodeps.version}.jar" stage="install" />
     <jar src="lib/ant-launcher-${ant-launcher.version}.jar" stage="install" />
+    <jar src="lib/ant-contrib-${ant-contrib.version}.jar" stage="install" />
     <jar src="lib/postgresql-${jdbc.postgresql.version}.jar" stage="install" />
     <jar src="escidoc-validators.jar" stage="install" />
 
