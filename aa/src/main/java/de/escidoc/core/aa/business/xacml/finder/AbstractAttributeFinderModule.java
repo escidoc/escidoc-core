@@ -644,9 +644,10 @@ public abstract class AbstractAttributeFinderModule extends AttributeFinderModul
         final Matcher matcher = PATTERN_PARSE_ATTRIBUTE_ID.matcher(attributeIdValue);
         if (matcher.find()) {
             final String objectType = matcher.group(2);
-            exceptionName.append(StringUtility.convertToUpperCaseLetterFormat(objectType));
             if (objectType == null || objectType.length() == 0) {
-                System.out.println("MIH: objectType is empty, attributeValue was " + attributeIdValue);
+                exceptionName.append("Resource");
+            } else {
+                exceptionName.append(StringUtility.convertToUpperCaseLetterFormat(objectType));
             }
         }
         else {
