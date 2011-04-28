@@ -112,7 +112,7 @@ public class StagingCleaner {
                 }
                 catch (final SqlDatabaseSystemException e) {
                     LOGGER.error("Error on deleting staging file " 
-                                    + stagingFile.getReference(), e);
+                                    + stagingFile.getToken(), e);
                 }
             }
         }
