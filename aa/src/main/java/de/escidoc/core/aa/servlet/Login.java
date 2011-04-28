@@ -541,9 +541,6 @@ public class Login extends HttpServlet {
             redirectUrl = retrieveDecodedTarget(request);
         }
         catch (final MissingParameterException e) {
-            if (LOGGER.isWarnEnabled()) {
-                LOGGER.warn("Error on retriving decoded target.");
-            }
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on retriving decoded target.", e);
             }
