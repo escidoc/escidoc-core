@@ -29,12 +29,12 @@
           <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Host name must not be empty string."/>
         </field>
         <!-- Port number of the system onto which eSciDoc will be installed -->
-        <!-- field type="space"/>
+        <field type="space"/>
         <field type="staticText" align="left" txt="The port number of the server you are about to install the eSciDoc Infrastructure onto." />
         <field type="text" align="left" variable="EscidocPort">
           <spec txt="Port number:" size="25" set=""/>
-          <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Port number must not be empty string."/>
-        </field -->
+          <validator class="com.izforge.izpack.util.PortValidator" txt="Port number must be a free port on localhost."/>
+        </field>
         <!-- Bind address of the system onto which eSciDoc will be installed -->
         <!-- field type="space"/>
         <field type="staticText" align="left" txt="By default, the eSciDoc Infrastructure will only bind to the loopback interface, which circumvents access from remote machines." />
