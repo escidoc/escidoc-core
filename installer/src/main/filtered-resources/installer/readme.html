@@ -36,7 +36,7 @@
       	you have to invoke the JBoss startup skript <code>run.bat</code> (Windows)/<code>run.sh</code> (Unix-like systems)
       	with an additional command line parameter <code>-b 0.0.0.0</code>.</li>
       <li>Wait until you see the line <code>12:32:17,360 INFO  [Server] JBoss (MX MicroKernel) [4.2.3.GA (build: SVNTag=JBoss_4_2_3_GA date=200807181417)] Started in 3m:20s:867ms</code> (log time and startup time will vary) in the command window/shell in which you started JBoss.</li>
-      <li>Start your web browser and open <a href="http://${Hostname}:8080/">http://${Hostname}:8080/</a></li>
+      <li>Start your web browser and open <a href="http://${EscidocHost}:${EscidocPort}/">http://${EscidocHost}:${EscidocPort}/</a></li>
       <li>You should now see the eSciDoc Infrastructure Status Page, stating the version number and 
       build date of the software.</li>
       <li>Your instance of the eSciDoc Infrastructure is now up and running!</li>
@@ -56,13 +56,13 @@
     	<pre>
       escidoc-core.earliest-date : 2008-07-02T05:09:43.796Z
 
-      container : http://www.escidoc.de/schemas/container/0.8
+      container : http://www.escidoc.de/schemas/container/0.9
 
-      escidoc-core.baseurl : http://localhost:8080
+      escidoc-core.baseurl : http://${EscidocHost}:8080
 
       context : http://www.escidoc.de/schemas/context/0.7
 
-      escidoc-core.database.version : 1.2.0
+      escidoc-core.database.version : 1.3.0
 
       organizational-unit : http://www.escidoc.de/schemas/organizationalunit/0.8
 
@@ -74,13 +74,13 @@
 
       user-account : http://www.escidoc.de/schemas/useraccount/0.7
 
-      escidoc-core.build : 1.2RC2
+      escidoc-core.build : 1.3
 
       gsearch.url : http://localhost:8080/fedoragsearch/rest
 
-      escidoc-core.repository-name : Escidoc Institutional Repository 
+      escidoc-core.repository-name : Escidoc Institutional Repository
 
-      item : http://www.escidoc.de/schemas/item/0.9
+      item : http://www.escidoc.de/schemas/item/0.10
     	</pre>
     	(Timestamp will vary, depending on your installation). If the list appears, your installation of the eSciDoc 
     	Infrastructure seem to work correctly.</li>
@@ -125,22 +125,22 @@
       these resources more conveniently.</li>
   		<li>You can now retrieve the example objects with the following URIs (please replace "&lt;id&gt;" with the object ID noted down in the previous step:
   		  <table>
-  				<tr><td>Organizational Unit:</td><td><a href="http://${Hostname}:8080/oum/organizational-unit/&lt;id&gt;">http://${Hostname}:8080/oum/organizational-unit/&lt;id&gt;</a></td></tr>
-  				<tr><td>Context:</td><td><a href="http://${Hostname}:8080/ir/context/&lt;id&gt;">http://${Hostname}:8080/ir/context/&lt;id&gt;</a></td></tr>
-  				<tr><td>Content Model:</td><td><a href="http://${Hostname}:8080/cmm/content-model/&lt;id&gt;">http://${Hostname}:8080/cmm/content-model/&lt;id&gt;</a></td></tr>
-  				<tr><td>Container:</td><td><a href="http://${Hostname}:8080/ir/container/&lt;id&gt;">http://${Hostname}:8080/ir/container/&lt;id&gt;</a></td></tr>
-  				<tr><td>Item:</td><td><a href="http://${Hostname}:8080/ir/item/&lt;id&gt;">http://${Hostname}:8080/ir/item/&lt;id&gt;</a></td></tr>
-  				<tr><td>Creator:</td><td><a href="http://${Hostname}:8080/aa/user-account/&lt;id&gt;">http://${Hostname}:8080/aa/user-account/&lt;id&gt;</a></td></tr>
+  				<tr><td>Organizational Unit:</td><td><a href="http://${EscidocHost}:${EscidocPort}/oum/organizational-unit/&lt;id&gt;">http://${EscidocHost}:${EscidocPort}/oum/organizational-unit/&lt;id&gt;</a></td></tr>
+  				<tr><td>Context:</td><td><a href="http://${EscidocHost}:${EscidocPort}/ir/context/&lt;id&gt;">http://${EscidocHost}:${EscidocPort}/ir/context/&lt;id&gt;</a></td></tr>
+  				<tr><td>Content Model:</td><td><a href="http://${EscidocHost}:${EscidocPort}/cmm/content-model/&lt;id&gt;">http://${EscidocHost}:${EscidocPort}/cmm/content-model/&lt;id&gt;</a></td></tr>
+  				<tr><td>Container:</td><td><a href="http://${EscidocHost}:${EscidocPort}/ir/container/&lt;id&gt;">http://${EscidocHost}:${EscidocPort}/ir/container/&lt;id&gt;</a></td></tr>
+  				<tr><td>Item:</td><td><a href="http://${EscidocHost}:${EscidocPort}/ir/item/&lt;id&gt;">http://${EscidocHost}:${EscidocPort}/ir/item/&lt;id&gt;</a></td></tr>
+  				<tr><td>Creator:</td><td><a href="http://${EscidocHost}:${EscidocPort}/aa/user-account/&lt;id&gt;">http://${EscidocHost}:${EscidocPort}/aa/user-account/&lt;id&gt;</a></td></tr>
   		 </table>
   		 
   		 Or you may search for the objects, using filters:
   		  <table>
-  				<tr><td>Organizational Unit:</td><td><a href="http://${Hostname}:8080/oum/organizational-units">http://${Hostname}:8080/oum/organizational-units</a></td></tr>
-  				<tr><td>Context:</td><td><a href="http://${Hostname}:8080/ir/contexts>http://${Hostname}:8080/ir/contexts</a></td></tr>
-  				<tr><td>Content Model:</td><td><a href="http://${Hostname}:8080/cmm/content-models">http://${Hostname}:8080/cmm/content-models</a></td></tr>
-  				<tr><td>Container:</td><td><a href="http://${Hostname}:8080/ir/containers">http://${Hostname}:8080/ir/containers</a></td></tr>
-  				<tr><td>Item:</td><td><a href="http://${Hostname}:8080/ir/items">http://${Hostname}:8080/ir/items</a></td></tr>
-  				<tr><td>Creator:</td><td><a href="http://${Hostname}:8080/aa/user-accounts">http://${Hostname}:8080/aa/user-accounts</a></td></tr>
+  				<tr><td>Organizational Unit:</td><td><a href="http://${EscidocHost}:${EscidocPort}/oum/organizational-units">http://${EscidocHost}:${EscidocPort}/oum/organizational-units</a></td></tr>
+  				<tr><td>Context:</td><td><a href="http://${EscidocHost}:${EscidocPort}/ir/contexts>http://${EscidocHost}:${EscidocPort}/ir/contexts</a></td></tr>
+  				<tr><td>Content Model:</td><td><a href="http://${EscidocHost}:${EscidocPort}/cmm/content-models">http://${EscidocHost}:${EscidocPort}/cmm/content-models</a></td></tr>
+  				<tr><td>Container:</td><td><a href="http://${EscidocHost}:${EscidocPort}/ir/containers">http://${EscidocHost}:${EscidocPort}/ir/containers</a></td></tr>
+  				<tr><td>Item:</td><td><a href="http://${EscidocHost}:${EscidocPort}/ir/items">http://${EscidocHost}:${EscidocPort}/ir/items</a></td></tr>
+  				<tr><td>Creator:</td><td><a href="http://${EscidocHost}:${EscidocPort}/aa/user-accounts">http://${EscidocHost}:${EscidocPort}/aa/user-accounts</a></td></tr>
   		 </table>
   		 </li>
     </ul>

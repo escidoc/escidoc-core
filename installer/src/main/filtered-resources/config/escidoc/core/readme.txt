@@ -47,9 +47,9 @@ common examples, but the MPDL examples!
 5) Execute the following command in your shell/command window:
    
    Windows:
-   "%FEDORA_HOME%\client\bin\fedora-ingest.bat" d foxml1.1 info:fedora/fedora-system:FOXML-1.1 localhost:8080 ${FedoraUsername} ${FedoraPassword} http ""
+   "%FEDORA_HOME%\client\bin\fedora-ingest.bat" d foxml1.1 info:fedora/fedora-system:FOXML-1.1 localhost:${EscidocPort} ${FedoraUsername} ${FedoraPassword} http ""
    Linux/Solaris/MacOS:
-   $FEDORA_HOME/client/bin/fedora-ingest.sh d foxml1.1 info:fedora/fedora-system:FOXML-1.1 localhost:8080 ${FedoraUsername} ${FedoraPassword} http ""
+   $FEDORA_HOME/client/bin/fedora-ingest.sh d foxml1.1 info:fedora/fedora-system:FOXML-1.1 localhost:${EscidocPort} ${FedoraUsername} ${FedoraPassword} http ""
 
 
 Ingesting eSciDoc Examples
@@ -83,8 +83,8 @@ Solution. More information about PubMan can be found on the web
 4) Execute the following command in your shell/command window:
    
    Windows:
-   "%FEDORA_HOME%\client\bin\fedora-ingest.bat" d foxml1.1 info:fedora/fedora-system:FOXML-1.1 localhost:8080 ${FedoraUsername} ${FedoraPassword} http ""
+   "%FEDORA_HOME%\client\bin\fedora-ingest.bat" d foxml1.1 info:fedora/fedora-system:FOXML-1.1 localhost:${EscidocPort} ${FedoraUsername} ${FedoraPassword} http ""
    
    Linux/Solaris/MacOS:
-   $FEDORA_HOME/client/bin/fedora-ingest.sh d foxml1.1 info:fedora/fedora-system:FOXML-1.1 localhost:8080 ${FedoraUsername} ${FedoraPassword} http ""
+   $FEDORA_HOME/client/bin/fedora-ingest.sh d foxml1.1 info:fedora/fedora-system:FOXML-1.1 localhost:${EscidocPort} ${FedoraUsername} ${FedoraPassword} http ""
 

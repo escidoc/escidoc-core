@@ -17,26 +17,32 @@
       <field type="divider" align="bottom" />
     </panel>
 
-    <panel order="1" id="Select host name">
+    <panel order="1" id="Select eSciDoc host name and port number">
         <createForPack name="eSciDoc" />
-        <field type="title" txt="Hostname" bold="true" size="1" />
+        <field type="title" txt="eSciDoc host name and port number" bold="true" size="1" />
         <field type="divider" align="top"/>
         <!-- Hostname of the system onto which eSciDoc will be installed -->
-        <field type="staticText" align="left" txt="The hostname of the server you are about to install the eSciDoc Infrastructure onto. You may optionally append the domain name. Please make sure not to append a port." />
+        <field type="staticText" align="left" txt="The host name of the server you are about to install the eSciDoc Infrastructure onto. You may optionally append the domain name. Please make sure not to append a port." />
         <field type="staticText" align="left" txt="Alternativly, you may provide the IP address instead of hostname and domain name. Keeping the default value 'localhost' will prohibit access from remote hosts." />
-        <field type="text" align="left" variable="Hostname">
-          <spec txt="Hostname:" size="25" set=""/>
-          <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Hostname must not be empty string."/>
+        <field type="text" align="left" variable="EscidocHost">
+          <spec txt="Host name:" size="25" set=""/>
+          <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Host name must not be empty string."/>
         </field>
-        <field type="space"/>
-        <field type="divider" align="bottom"/>
+        <!-- Port number of the system onto which eSciDoc will be installed -->
+        <!-- field type="space"/>
+        <field type="staticText" align="left" txt="The port number of the server you are about to install the eSciDoc Infrastructure onto." />
+        <field type="text" align="left" variable="EscidocPort">
+          <spec txt="Port number:" size="25" set=""/>
+          <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Port number must not be empty string."/>
+        </field -->
         <!-- Bind address of the system onto which eSciDoc will be installed -->
-        <!-- field type="staticText" align="left" txt="By default, the eSciDoc Infrastructure will only bind to the loopback interface, which circumvents access from remote machines." />
+        <!-- field type="space"/>
+        <field type="staticText" align="left" txt="By default, the eSciDoc Infrastructure will only bind to the loopback interface, which circumvents access from remote machines." />
         <field type="staticText" align="left" txt="If you want to access the eSciDoc Infrastructure from another machine, check this box. This is typically the case for a production environment. The eSciDoc Infrastructure will then bind to all existing network interfaces." />
         <field type="check" variable="jboss.bind.address">
           <spec txt="Bind to all network interfaces" true="0.0.0.0" false="localhost" set="true"/>
-        </field>
-        <field type="divider" align="bottom"/ -->
+        </field -->
+        <field type="divider" align="bottom"/>
     </panel>
 
     <panel order="2" id="Select RDBMS for eSciDoc and Fedora">

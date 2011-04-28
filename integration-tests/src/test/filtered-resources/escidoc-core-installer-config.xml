@@ -10,7 +10,7 @@
 </com.izforge.izpack.panels.UserInputPanel>
 <com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.1">
 <userInput>
-<entry key="Hostname" value="localhost"/>
+<entry key="EscidocHost" value="localhost"/>
 </userInput>
 </com.izforge.izpack.panels.UserInputPanel>
 <com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.2">

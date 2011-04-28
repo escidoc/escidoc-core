@@ -30,6 +30,7 @@ import com.izforge.izpack.installer.AutomatedInstallData;
 import com.izforge.izpack.installer.DataValidator.Status;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -50,15 +51,21 @@ public class HTTPValidator extends AbstractValidator {
     @Override
     public Status validateData(AutomatedInstallData data) {
         Status status = Status.ERROR;
-        String hostName = data.getVariable("Hostname");
-        String url = "http://" + hostName + ":8080/";
+        final String host = data.getVariable("EscidocHost");
+        final String port = data.getVariable("EscidocPort");
 
-        buildErrorMessage(url);
         try {
-            URLConnection conn = new URL(url).openConnection();
+            final URL url = new URL("http", host, Integer.parseInt(port), "/");
+
+            buildErrorMessage(url.toString());
+
+            final URLConnection conn = url.openConnection();
 
             conn.setConnectTimeout(5000);
             conn.connect();
+        }
+        catch (MalformedURLException e) {
+            System.err.println(e.getMessage());
         }
         catch (IOException e) {
             System.err.println(e.getMessage());

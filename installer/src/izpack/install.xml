@@ -105,11 +105,11 @@
       <variable name="ShowCreateDirectoryMessage" value="false" />
 
       <!-- Hostname of the installation server -->
-      <variable name="Hostname" value="localhost" />
+      <variable name="EscidocHost" value="localhost" />
+      <!-- Bind port for JBoss Application Server -->
+      <variable name="EscidocPort" value="8080" />
       <!-- Bind address for JBoss Application Server -->
       <!-- variable name="jboss.bind.address" value="0.0.0.0" / -->
-      <!-- Bind port for JBoss Application Server -->
-      <!-- variable name="jboss.bind.port" value="8080" / -->
       <!-- eSciDoc version and build -->
       <variable name="EscidocVersion" value="${project.version}" />
       <!-- make sure to add the appropriate separator as prefix (usually a dot) if needed, e.g. a ".build345" -->
