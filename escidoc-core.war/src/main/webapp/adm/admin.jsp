@@ -154,7 +154,7 @@ table.sample td td {
         }
         request.open("GET", getBaseURL() + "/adm/admin/" + methodName, true);
         request.setRequestHeader("Connection", "close");
-        request.send();
+        request.send(null);
         document.body.style.cursor = 'wait';
       }
 
