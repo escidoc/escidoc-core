@@ -335,8 +335,9 @@ public final class EscidocConfiguration {
         final String property = properties.getProperty(name);
         if (property == null) {
             LOGGER.error("Missing property '" + name + "'!");
+            throw new IllegalStateException("Missing property '" + name + "'!");
         }
-        throw new IllegalStateException("Missing property '" + name + "'!");
+        return property;
     }
 
     /**
