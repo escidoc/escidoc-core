@@ -28,14 +28,15 @@
  */
 package de.escidoc.core.st.business;
 
-import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
-import de.escidoc.core.common.util.string.StringUtility;
-import de.escidoc.core.st.business.persistence.StagingFileDao;
+import java.io.IOException;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-import java.util.List;
+import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
+import de.escidoc.core.common.util.string.StringUtility;
+import de.escidoc.core.st.business.persistence.StagingFileDao;
 
 /**
  * Implementation of staging area clean up.
@@ -72,6 +73,12 @@ public class StagingCleaner {
      * object and each expired staging file whose associated file does not exist or could be removed.
      */
     public void cleanUp() {
+        final long lastExecutionTime = 
+            StagingCleanerTimer.getInstance().getLastExecutionTime();
+        if (lastExecutionTime > 0L 
+            && System.currentTimeMillis() - lastExecutionTime < 1000L) {
+            return;
+        }
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Cleaning up the staging file area.");
         }
