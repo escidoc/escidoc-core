@@ -73,10 +73,8 @@ public class StagingCleaner {
      * object and each expired staging file whose associated file does not exist or could be removed.
      */
     public void cleanUp() {
-        final long lastExecutionTime = 
-            StagingCleanerTimer.getInstance().getLastExecutionTime();
-        if (lastExecutionTime > 0L 
-            && System.currentTimeMillis() - lastExecutionTime < 1000L) {
+        final long lastExecutionTime = StagingCleanerTimer.getInstance().getLastExecutionTime();
+        if (lastExecutionTime > 0L && System.currentTimeMillis() - lastExecutionTime < 10000L) {
             return;
         }
         if (LOGGER.isDebugEnabled()) {
@@ -118,8 +116,7 @@ public class StagingCleaner {
                     }
                 }
                 catch (final SqlDatabaseSystemException e) {
-                    LOGGER.error("Error on deleting staging file " 
-                                    + stagingFile.getToken(), e);
+                    LOGGER.error("Error on deleting staging file " + stagingFile.getToken(), e);
                 }
             }
         }
