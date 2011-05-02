@@ -11,6 +11,7 @@
 
     <artifactId>index-service-spec</artifactId>
     <name>eSciDoc Core - Index Service Spec.</name>
+	<version>1.3-SNAPSHOT</version>
 
     <build>
         <plugins>

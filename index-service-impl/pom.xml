@@ -11,6 +11,7 @@
 
     <artifactId>index-service-impl</artifactId>
     <name>eSciDoc Core - Index Service Impl.</name>
+	<version>1.3-SNAPSHOT</version>
 
     <build>
 		<plugins>
