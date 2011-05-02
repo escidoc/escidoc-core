@@ -646,7 +646,8 @@ public abstract class AbstractAttributeFinderModule extends AttributeFinderModul
             final String objectType = matcher.group(2);
             if (objectType == null || objectType.length() == 0) {
                 exceptionName.append("Resource");
-            } else {
+            }
+            else {
                 exceptionName.append(StringUtility.convertToUpperCaseLetterFormat(objectType));
             }
         }
