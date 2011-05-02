@@ -58,7 +58,7 @@ public final class XmlEscaper {
      * @return Returns the unescpaed value.
      */
     public static String unescape(final String value) {
-        return XmlUtility.unescapeForbiddenXmlCharacters(value, true);
+        return XmlUtility.unescapeForbiddenXmlCharacters(value);
     }
 
 }

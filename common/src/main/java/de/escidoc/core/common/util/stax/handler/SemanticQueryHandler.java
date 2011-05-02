@@ -45,7 +45,7 @@ public class SemanticQueryHandler extends DefaultHandler {
                 throw new MissingElementValueException("The value of the element " + element.getLocalName()
                     + " is missing.");
             }
-            this.query = XmlUtility.unescapeForbiddenXmlCharacters(data.trim(), false);
+            this.query = XmlUtility.unescapeForbiddenXmlCharacters(data.trim());
             // extract predicate
             final String[] queryParts = query.split("\\ +");
             this.subject = queryParts[0].trim();

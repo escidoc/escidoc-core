@@ -145,7 +145,7 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
         final String prefix = element.getPrefix();
 
         if (this.inside) {
-            writeElement(nsuri, theName, prefix, this.deepLevel, this.isRelsExt, this.isNew, false);
+            writeElement(nsuri, theName, prefix, this.deepLevel);
             final List<Attribute> attributes = element.getAttributes();
             for (final Attribute curAtt : attributes) {
                 handleAttribute(curAtt, theName, this.deepLevel, this.isRelsExt, this.isNew, false);
@@ -159,7 +159,7 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
                 this.writer = XmlUtility.createXmlStreamWriter(this.out);
                 this.inside = true;
                 this.nsuris = new HashMap();
-                writeElement(nsuri, theName, prefix, this.deepLevel, this.isRelsExt, this.isNew, false);
+                writeElement(nsuri, theName, prefix, this.deepLevel);
                 final List<Attribute> attributes = element.getAttributes();
                 for (final Attribute curAtt : attributes) {
                     handleAttribute(curAtt, theName, this.deepLevel, this.isRelsExt, this.isNew, false);
@@ -184,8 +184,7 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
                     this.isContentRelation = true;
                 }
 
-                writeElement(subtreeNsUri, subtreeName, subtreePrefix, this.deepLevel + 1, this.isRelsExt, this.isNew,
-                    this.isContentRelation);
+                writeElement(subtreeNsUri, subtreeName, subtreePrefix, this.deepLevel + 1);
                 final int attCount = subtreeToInsert.getAttributeCount();
                 for (int j = 0; j < attCount; j++) {
                     final Attribute curAtt = subtreeToInsert.getAttribute(j);
@@ -207,8 +206,7 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
                         if (insertedPrefix.equals(Constants.CONTENT_RELATIONS_NS_PREFIX_IN_RELSEXT)) {
                             this.isContentRelation = true;
                         }
-                        writeElement(insertedNsUri, insertedName, insertedPrefix, this.deepLevel + 2, this.isRelsExt,
-                            this.isNew, this.isContentRelation);
+                        writeElement(insertedNsUri, insertedName, insertedPrefix, this.deepLevel + 2);
 
                         final int attCount2 = inserted.getAttributeCount();
                         for (int j = 0; j < attCount2; j++) {
@@ -296,9 +294,8 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
         return null;
     }
 
-    private void writeElement(
-        final String uri, final String name, final String prefix, final int deep, final boolean isRelsExt,
-        final boolean isNew, final boolean isContentRelation) throws XMLStreamException {
+    private void writeElement(final String uri, final String name, final String prefix, final int deep)
+        throws XMLStreamException {
         String myPrefix = prefix;
         if (uri != null) {
             if (nsuris.containsKey(uri)) {
@@ -334,8 +331,7 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
 
     private void writeAttribute(
         final String uri, final String elementName, final String attributeName, final String attributeValue,
-        String prefix, final int deep, final boolean isRelsExt, final boolean isNew, final boolean isContentRelation)
-        throws XMLStreamException {
+        String prefix, final int deep) throws XMLStreamException {
         if (uri != null) {
             if (nsuris.containsKey(uri)) {
                 final List namespaceTrace = (List) nsuris.get(uri);
@@ -368,8 +364,7 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
         final String attrNameSpace = attribute.getNamespace();
         final String attrPrefix = attribute.getPrefix();
         final String attValue = attribute.getValue();
-        writeAttribute(attrNameSpace, theName, attLocalName, attValue, attrPrefix, deep, isRelsExt, isNew,
-            isContentRelation);
+        writeAttribute(attrNameSpace, theName, attLocalName, attValue, attrPrefix, deep);
 
     }
 

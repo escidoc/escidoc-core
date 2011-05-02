@@ -95,7 +95,8 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
         try {
             final XMLStreamWriter writer = XmlUtility.createXmlStreamWriter(out);
 
-            XmlUtility.setCommonPrefixes(writer);
+            writer.setPrefix("xlink", Constants.XLINK_NS_URI);
+            writer.setPrefix("xml", Constants.XML_NS_URI);
             writer.setDefaultNamespace(Constants.STAGING_FILE_NS_URI);
             writer.setPrefix("staging-file", Constants.STAGING_FILE_NS_URI);
 
@@ -103,7 +104,7 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
             XmlUtility.addXmlBaseAttribute(writer);
             writer.writeDefaultNamespace(Constants.STAGING_FILE_NS_URI);
             writer.writeNamespace("staging-file", Constants.STAGING_FILE_NS_URI);
-            XmlUtility.addCommonNamespaces(writer);
+            writer.writeNamespace("xlink", Constants.XLINK_NS_URI);
             XmlUtility.addXlinkAttributes(writer, null, "/st/staging-file/" + token);
             XmlUtility.addLastModificationDateAttribute(writer, new DateTime());
 

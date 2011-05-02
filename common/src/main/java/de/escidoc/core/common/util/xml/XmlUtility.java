@@ -282,8 +282,6 @@ public final class XmlUtility {
 
     public static final String CDATA_END_QUOTED = "]]&gt;";
 
-    public static final String NAME_ABBREVIATION = "abbreviation";
-
     public static final String NAME_ACTIVE = "active";
 
     public static final String NAME_VALUE = "value";
@@ -434,11 +432,7 @@ public final class XmlUtility {
 
     public static final String NAME_GRANT = "grant";
 
-    public static final String NAME_ADMIN_DESCRIPTOR = "admin-descriptor";
-
     public static final String NAME_ORGANIZATIONAL_UNIT = "organizational-unit";
-
-    public static final String NAME_METADATA_SCHEMA = "md-schema";
 
     public static final String NAME_PARENT_OBJECTS = "parent-objects";
 
@@ -1032,17 +1026,6 @@ public final class XmlUtility {
     }
 
     /**
-     * Adds the commonly used namespaces (xlink) to the provided <code>XMLStreamWriter</code> object.
-     *
-     * @param writer The <code>XMLStreamWriter</code> object to add the prefixes to.
-     * @throws XMLStreamException Thrown in case of an xml stream error.
-     */
-    public static void addCommonNamespaces(final XMLStreamWriter writer) throws XMLStreamException {
-
-        writer.writeNamespace("xlink", Constants.XLINK_NS_URI);
-    }
-
-    /**
      * Adds a new element to the provided <code>XMLStreamWriter</code> object containing a <code>String</code> value.
      *
      * @param writer         The <code>XMLStreamWriter</code> object to add the element to.
@@ -1180,18 +1163,6 @@ public final class XmlUtility {
 
         writer.writeAttribute(Constants.XML_NS_URI, "base", EscidocConfiguration.getInstance().get(
             EscidocConfiguration.ESCIDOC_CORE_BASEURL));
-    }
-
-    /**
-     * Sets the commonly used prefixes (xlink, xsi, and xlink).
-     *
-     * @param writer The <code>XMLStreamWriter</code> object to set the prefixes for.
-     * @throws XMLStreamException Thrown in case of an xml stream error.
-     */
-    public static void setCommonPrefixes(final XMLStreamWriter writer) throws XMLStreamException {
-
-        writer.setPrefix("xlink", Constants.XLINK_NS_URI);
-        writer.setPrefix("xml", Constants.XML_NS_URI);
     }
 
     /**
@@ -2372,7 +2343,7 @@ public final class XmlUtility {
      * @param isAttribute Indicates if this is an attribute.
      * @return The resulting text with unescaped characters.
      */
-    public static String unescapeForbiddenXmlCharacters(final String xmlText, final boolean isAttribute) {
+    public static String unescapeForbiddenXmlCharacters(final String xmlText) {
 
         String result = xmlText;
         if (result != null && PATTERN_UNESCAPE_NEEDED.matcher(result).find()) {
