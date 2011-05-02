@@ -1,0 +1,107 @@
+<!--
+  ~ CDDL HEADER START
+  ~
+  ~ The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+  ~ only (the "License"). You may not use this file except in compliance with the License.
+  ~
+  ~ You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+  ~ the specific language governing permissions and limitations under the License.
+  ~
+  ~ When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+  ~ license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+  ~ brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
+  ~
+  ~ CDDL HEADER END
+  ~
+  ~ Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+  ~ and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+  ~ terms.
+  -->
+
+<section id="Overview.AaSoap">
+	<title>Authentication and Authorization</title>
+		<para>
+			The access to most of the eSciDoc base services is proteced.
+			The user performing a request is authenticated and the
+			request is authorized, before it is executed. To
+			authenticate the current user, the eSciDoc user handle
+			identifying the user's account within eSciDoc has to be
+			provided within the request.
+		</para>
+		<para>
+			This is true for all services except the search service that
+			is unprotected. Therefore, everyone is allowed to perform a
+			search request.
+		</para>
+		<para>
+			<emphasis role="bold">Providing the eSciDoc User Handle</emphasis>
+		</para>
+		<para>
+			The SOAP interface uses webservice security (wss4j) to
+			protect the access to the methods of the base services.
+			A technical user name (eSciDocUser) and the eSciDoc user
+			handle that identifies the user's account must be
+			provided using the
+			<emphasis>UsernameToken</emphasis>
+			parameters. The technical user name has to be provided
+			in the user name parameter (
+			<emphasis>user</emphasis>
+			), and the eSciDoc user handle has to be provided in the
+			password parameter.
+		</para>
+		<para>
+			The deployment descriptor of a client should look like
+			shown in the following example:
+			<programlisting>
+				<![CDATA[
+<deployment xmlns="http://xml.apache.org/axis/wsdd/" 
+  xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+  <transport name="http" 
+             pivot="java:org.apache.axis.transport.http.HTTPSender"/>
+  <globalConfiguration >
+    <requestFlow >
+      <handler type="java:org.apache.ws.axis.security.WSDoAllSender" >
+        <parameter name="action" value="UsernameToken"/>
+        <parameter name="passwordCallbackClass" 
+                   value="de.escidoc.core.test.security.client.PWCallback"/>
+        <parameter name="passwordType" value="PasswordText"/>
+        <parameter name="user" value="eSciDocUser"/>
+        <parameter name="addUTElement" value="Nonce Created" />
+      </handler>
+    </requestFlow >
+  </globalConfiguration >
+</deployment>
+					]]>
+			</programlisting>
+		</para>
+		<para>
+			The
+			<emphasis>passwordCallbackClass</emphasis>
+			should point to the client's implementation of a
+			(password) callback handler. This handler implementation
+			has to determine the eSciDoc user handle and inject it
+			into the request as the password parameter.
+		</para>
+		<para>
+			In case of a failed authentication or authorization, the
+			services throw an
+			<emphasis>
+				de.escidoc.core.common.exceptions.application.security.AuthenticationException
+			</emphasis>
+			or
+			<emphasis>
+				de.escidoc.core.common.exceptions.application.security.AuthorizationException
+			</emphasis>
+			. These exceptions include the location of the eSciDoc
+			user management wrapper that enables the login of the
+			user. This location can be retrieved from the exception
+			by calling the getter method
+			<emphasis>getRedirectLocation</emphasis>
+			.
+		</para>
+		<para>
+			Note: The eSciDoc user management wrapper provides the
+			login of the user via REST, only (see the concept of
+			user management).
+		</para>
+</section>

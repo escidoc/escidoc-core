@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fileset-config file-format-version="1.2.0" simple-config="true">
+    <local-check-config name="eSciDoc_checkstyle" location="etc/eSciDoc_checkstyle.xml" type="project" description="">
+        <additional-data name="protect-config-file" value="false"/>
+    </local-check-config>
+    <fileset name="Alle" enabled="true" check-config-name="eSciDoc_checkstyle" local="true">
+        <file-match-pattern match-pattern="." include-pattern="true"/>
+    </fileset>
+    <filter name="FilesFromPackage" enabled="true">
+        <filter-data value="aa/target/hibernate3/generated-sources"/>
+        <filter-data value="common/target/hibernate3/generated-sources"/>
+        <filter-data value="oai/target/hibernate3/generated-sources"/>
+        <filter-data value="sm/target/hibernate3/generated-sources"/>
+        <filter-data value="st/target/hibernate3/generated-sources"/>
+        <filter-data value="integration-tests/target/generated-sources"/>
+    </filter>
+    <filter name="NonSrcDirs" enabled="true"/>
+</fileset-config>

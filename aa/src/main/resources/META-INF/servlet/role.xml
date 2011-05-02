@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapping>
+	<define>
+		<var name="ROLE-ID" regexp="/([^/?]*)" />
+	</define>
+	
+	<!--#########################################################
+		# Role list
+		# -->
+	<resource name="Role" base-uri="/aa/roles/">
+    	<descriptor uri="/aa/roles">
+    		<invoke http="GET" method="retrieveRoles" param1="${PARAMETERS}"/>
+    	</descriptor>
+	</resource>
+
+	<!--#########################################################
+		# Role
+		# -->
+	<resource name="Role" base-uri="/aa/role/">
+		<descriptor uri="/aa/role">
+			<invoke http="PUT" method="create" param1="${BODY}">
+			</invoke>
+		</descriptor>
+		<descriptor uri="/aa/role/${ROLE-ID}">
+			<invoke http="DELETE" method="delete" param1="${ROLE-ID}">
+			</invoke>
+			<invoke http="GET" method="retrieve" param1="${ROLE-ID}">
+			</invoke>
+
+			<invoke http="PUT" method="update" param1="${ROLE-ID}"
+				param2="${BODY}">
+			</invoke>
+		</descriptor>
+
+		<!--#
+			# Resources
+			# -->
+		<descriptor uri="/aa/role/${ROLE-ID}/resources">
+			<invoke http="GET" method="retrieveResources"
+				param1="${ROLE-ID}">
+			</invoke>
+		</descriptor>
+	</resource>
+</mapping>

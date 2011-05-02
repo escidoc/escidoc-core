@@ -1,0 +1,100 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping
+    schema="sm"
+>
+<!-- 
+    Created by the Middlegen Hibernate plugin 2.2
+
+    http://boss.bekk.no/boss/middlegen/
+    http://www.hibernate.org/
+-->
+
+<class 
+    name="de.escidoc.core.sm.business.persistence.hibernate.PreprocessingLog" 
+    table="preprocessing_logs"
+    lazy="false"
+>
+    <meta attribute="class-description" inherit="false">
+       @hibernate.class
+        table="preprocessing_logs"
+       @hibernate.mapping
+        schema="sm"
+    </meta>
+
+    <id
+        name="id"
+        type="java.lang.String"
+        column="id"
+    >
+    
+        <meta attribute="field-description">
+           @hibernate.id
+            generator-class="uuid"
+            type="java.lang.String"
+            column="id"
+
+        </meta>
+        <generator class="uuid" />
+    </id>
+
+    <property
+        name="processingDate"
+        type="java.sql.Date"
+        column="processing_date"
+        not-null="true"
+        length="13"
+    >
+        <meta attribute="field-description">
+           @hibernate.property
+            column="processing_date"
+            length="13"
+            not-null="true"
+        </meta>    
+    </property>
+    <property
+        name="logEntry"
+        type="java.lang.String"
+        column="log_entry"
+        length="2147483647"
+    >
+        <meta attribute="field-description">
+           @hibernate.property
+            column="log_entry"
+            length="2147483647"
+        </meta>    
+    </property>
+    <property
+        name="hasError"
+        type="java.lang.Boolean"
+        column="has_error"
+        length="1"
+    >
+        <meta attribute="field-description">
+           @hibernate.property
+            column="has_error"
+            length="1"
+        </meta>    
+    </property>
+
+    <!-- Associations -->
+  
+    <!-- bi-directional many-to-one association to AggregationDefinition -->
+    <many-to-one
+        name="aggregationDefinition"
+        class="de.escidoc.core.sm.business.persistence.hibernate.AggregationDefinition"
+        not-null="true"
+    >
+        <meta attribute="field-description">
+           @hibernate.many-to-one
+            not-null="true"
+           @hibernate.column name="aggregation_definition_id"         
+        </meta>
+        <column name="aggregation_definition_id" />
+    </many-to-one>
+
+</class>
+</hibernate-mapping>

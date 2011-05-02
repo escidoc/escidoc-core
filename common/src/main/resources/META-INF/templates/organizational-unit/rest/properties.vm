@@ -1,0 +1,12 @@
+#parse("common/macros.vm")<${organizationalUnitNamespacePrefix}:properties #restInsertConditionalRoot(${isRootProperties} "true" "true" ${organizationalUnitNamespacePrefix} ${organizationalUnitNamespace} ${propertiesTitle} ${propertiesHref} ${LAST_MODIFICATION_DATE})>	
+	#creationDate(${organizationalUnitCreationDate})
+    #set($unescapedCreator="#unesc(${organizationalUnitCreatedByTitle})")
+    #restCreatedBy("#escA($unescapedCreator)" ${organizationalUnitCreatedByHref})
+    #set($unescapedModifier="#unesc(${organizationalUnitModifiedByTitle})")    
+    #restModifiedBy("#escA($unescapedModifier)" ${organizationalUnitModifiedByHref})
+	<${escidocPropertiesNamespacePrefix}:public-status>${organizationalUnitStatus}</${escidocPropertiesNamespacePrefix}:public-status>
+	<${escidocPropertiesNamespacePrefix}:name>${NAME}</${escidocPropertiesNamespacePrefix}:name>
+	#if(${DESCRIPTION})<${escidocPropertiesNamespacePrefix}:description>${DESCRIPTION}</${escidocPropertiesNamespacePrefix}:description>#end
+    <${escidocPropertiesNamespacePrefix}:external-ids></${escidocPropertiesNamespacePrefix}:external-ids>
+    <${escidocPropertiesNamespacePrefix}:has-children>${organizationalUnitHasChildren}</${escidocPropertiesNamespacePrefix}:has-children>	
+</${organizationalUnitNamespacePrefix}:properties>

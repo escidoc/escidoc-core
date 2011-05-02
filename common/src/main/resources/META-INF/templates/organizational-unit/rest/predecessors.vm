@@ -1,0 +1,11 @@
+#*
+  Predecessor
+*#
+#if( ${PREDECESSORS} )
+#parse("common/macros.vm")#set($unescapedTitle="#unesc(${PREDECESSORS_TITLE})")
+<${organizationalUnitNamespacePrefix}:predecessors #restInsertConditionalRoot(${isRootParents} "false" "true" ${organizationalUnitNamespacePrefix} ${organizationalUnitNamespace} "#escA($unescapedTitle)" ${PREDECESSORS_HREF} ${LAST_MODIFICATION_DATE})>
+#foreach( ${PREDECESSOR} in ${PREDECESSORS} )
+ <${structuralRelationsNamespacePrefix}:predecessor #restLinkAttributes(${PREDECESSOR.TITLE} ${PREDECESSOR.HREF}) form="${PREDECESSOR.FORM}" />
+#end
+</${organizationalUnitNamespacePrefix}:predecessors>
+#end

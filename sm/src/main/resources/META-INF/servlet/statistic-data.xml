@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapping>
+	<define>
+		<var name="STATISTIC-DATA-ID" regexp="/([^/?]*)" />
+	</define>
+
+	<!--#########################################################
+		# StatisticData
+		# -->
+	<resource name="StatisticData" base-uri="/statistic/statistic-data/">
+		<descriptor uri="/statistic/statistic-data">
+			<invoke http="PUT" method="create" param1="${BODY}">
+			</invoke>
+		</descriptor>
+	</resource>
+</mapping>

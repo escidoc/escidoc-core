@@ -1,0 +1,211 @@
+/*
+ * Generate EJB from POJO with Spring framework Bean Factory
+ * Bernhard Kraus (Accenture)
+ */
+
+package <XDtPackage:packageOf><XDtClass:fullClassName/></XDtPackage:packageOf>;
+
+import java.rmi.RemoteException;
+
+import javax.ejb.CreateException;
+import javax.ejb.SessionBean;
+import javax.ejb.SessionContext;
+
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.access.BeanFactoryLocator;
+import org.springframework.beans.factory.access.SingletonBeanFactoryLocator;
+
+<XDtClass:ifHasClassTag tagName="interface" paramName="class">
+import <XDtClass:classTagValue tagName="interface" paramName="class" />;
+</XDtClass:ifHasClassTag>
+<XDtClass:ifDoesntHaveClassTag tagName="interface" paramName="class">
+import <XDtPackage:packageName />.interfaces.<XDtClass:className  />Interface;
+</XDtClass:ifDoesntHaveClassTag>
+import de.escidoc.core.common.util.logger.AppLogger;
+import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.exceptions.system.SystemException;
+
+
+/**
+<XDtClass:ifHasClassTag tagName="ejb.bean">
+ *  @ejb.bean <XDtClass:classTagValue tagName="ejb.bean" />
+</XDtClass:ifHasClassTag>
+<XDtClass:ifDoesntHaveClassTag tagName="ejb.bean">
+ *  @ejb.bean name="<XDtClass:className />" 
+ *            display-name="<XDtClass:className />"
+ *            description="<XDtClass:fullClassName />"
+ *            jndi-name="ejb/<XDtClass:className />"
+ *            local-jndi-name = "ejb/<XDtClass:className />Local"
+ *            type="Stateless"
+ *            view-type="all"
+</XDtClass:ifDoesntHaveClassTag>
+<XDtClass:ifHasClassTag tagName="ejb.home" paramName="local-pattern">
+ *  @ejb.home local-pattern = "<XDtClass:classTagValue tagName="ejb.home" paramName="local-pattern" />"
+</XDtClass:ifHasClassTag>
+<XDtClass:ifDoesntHaveClassTag tagName="ejb.home" paramName="local-pattern">
+ *  @ejb.home local-pattern = "<XDtClass:className />LocalHome"
+</XDtClass:ifDoesntHaveClassTag>
+<XDtClass:ifHasClassTag tagName="ejb.home" paramName="remote-pattern"> 
+ *  @ejb.home remote-pattern = "<XDtClass:classTagValue tagName="ejb.home" paramName="remote-pattern" />"
+</XDtClass:ifHasClassTag>
+<XDtClass:ifDoesntHaveClassTag tagName="ejb.home" paramName="remote-pattern">
+ *  @ejb.home remote-pattern = "<XDtClass:className />RemoteHome"
+</XDtClass:ifDoesntHaveClassTag>
+<XDtClass:ifHasClassTag tagName="ejb.interface" paramName="local-pattern"> 
+ *  @ejb.interface local-pattern = "<XDtClass:classTagValue tagName="ejb.interface" paramName="local-pattern" />"
+</XDtClass:ifHasClassTag>
+<XDtClass:ifDoesntHaveClassTag tagName="ejb.interface" paramName="local-pattern">
+ *  @ejb.interface local-pattern = "<XDtClass:className />Local"
+</XDtClass:ifDoesntHaveClassTag>
+<XDtClass:ifHasClassTag tagName="ejb.interface" paramName="remote-pattern">  
+ *  @ejb.interface remote-pattern = "<XDtClass:classTagValue tagName="ejb.interface" paramName="remote-pattern" />"
+</XDtClass:ifHasClassTag>
+<XDtClass:ifDoesntHaveClassTag tagName="ejb.interface" paramName="remote-pattern">
+ *  @ejb.interface remote-pattern = "<XDtClass:className />Remote"
+</XDtClass:ifDoesntHaveClassTag>
+<XDtClass:ifDoesntHaveClassTag tagName="axis.exclude">
+<XDtClass:ifHasClassTag tagName="ejb.interface" paramName="service-endpoint-class">  
+ *  @ejb.interface service-endpoint-class = "<XDtClass:classTagValue tagName="ejb.interface" paramName="service-endpoint-class" />"
+</XDtClass:ifHasClassTag>
+<XDtClass:ifDoesntHaveClassTag tagName="ejb.interface" paramName="service-endpoint-class">
+ *  @ejb.interface service-endpoint-class = "<XDtClass:fullTransformedClassName />Service"
+</XDtClass:ifDoesntHaveClassTag>
+</XDtClass:ifDoesntHaveClassTag>
+<XDtClass:ifHasClassTag tagName="ejb.transaction">  
+ *  @ejb.transaction <XDtClass:classTagValue tagName="ejb.transaction" />
+</XDtClass:ifHasClassTag>
+ * @ejb.security-identity run-as="Administrator"
+ 
+ * @ejb.permission role-name = "Administrator"
+<XDtClass:ifHasClassTag tagName="axis.service">  
+ *  @axis.service <XDtClass:classTagValue tagName="axis.service" />
+</XDtClass:ifHasClassTag>
+<XDtClass:ifDoesntHaveClassTag tagName="axis.service">
+<XDtClass:ifDoesntHaveClassTag tagName="axis.exclude">
+ *  @axis.service scope="Request" urn="<XDtClass:className />Service" provider="java:EscidocEJB"
+</XDtClass:ifDoesntHaveClassTag>
+</XDtClass:ifDoesntHaveClassTag>
+ */
+ 
+public class <XDtClass:className  />Bean
+   implements SessionBean
+{
+	<XDtClass:className />Interface service = null;
+	SessionContext sessionCtx;
+	private static AppLogger log = 
+        new AppLogger(<XDtClass:className  />Bean.class.getName());
+        
+	/**
+     * @ejb.create-method
+     * @ejb.permission unchecked="true" method-intf="Home,LocalHome"
+     */
+    public void ejbCreate() throws CreateException {
+        try {
+            log.debug("ejbCreate");
+            
+            BeanFactoryLocator beanFactoryLocator = SingletonBeanFactoryLocator
+                .getInstance();
+                         
+            BeanFactory factory = beanFactoryLocator.useBeanFactory(
+                "<XDtClass:className  />.spring.ejb.context").getFactory();
+                     
+            service = (<XDtClass:className  />Interface) 
+                factory.getBean("<XDtClass:classTagValue tagName="spring.bean" paramName="id"/>");            
+        } catch (Exception e) {
+            log.error("ejbCreate(): Exception <XDtClass:className  />Component: " + e);
+            System.out.println("ejbCreate(): Exception <XDtClass:className  />Component: " + e);
+            throw new CreateException(e.getMessage());
+        }
+    }
+    
+	public void setSessionContext(final SessionContext arg0)
+        throws RemoteException {
+        sessionCtx = arg0;
+    }
+	
+	/**
+     * @ejb.permission unchecked="true" method-intf="Home,LocalHome"
+     */
+    public void ejbRemove() throws RemoteException {
+        
+    }
+	
+	public void ejbActivate() throws RemoteException {
+
+    }
+	
+	public void ejbPassivate() throws RemoteException {
+
+    }
+  
+    <XDtMethod:forAllMethods>
+    	<XDtMethod:ifDoesntHaveMethodTag tagName="service.exclude">
+    	/**
+    	<XDtMethod:ifDoesntHaveMethodTag tagName="ejb.interface-method">
+		 * @ejb.interface-method view-type = "all"    	
+    	</XDtMethod:ifDoesntHaveMethodTag>
+    	<XDtMethod:ifHasMethodTag tagName="ejb.interface-method">
+		 * @ejb.interface-method  <XDtMethod:methodTagValue tagName="ejb.interface-method"/>    	
+    	</XDtMethod:ifHasMethodTag>
+    	<XDtMethod:ifHasMethodTag tagName="ejb.transaction">  
+ 		 * @ejb.transaction <XDtMethod:methodTagValue tagName="ejb.transaction" />
+		</XDtMethod:ifHasMethodTag>
+		<XDtMethod:ifDoesntHaveMethodTag  tagName="axis.exclude">
+		 * @axis.method
+		</XDtMethod:ifDoesntHaveMethodTag>
+		 */
+		public <XDtMethod:methodType/> <XDtMethod:methodName/>(<XDtParameter:forAllMethodParams><XDtParameter:methodParamType/> <XDtParameter:methodParamName/>, </XDtParameter:forAllMethodParams>org.springframework.security.context.SecurityContext securityContext) <XDtMethod:exceptionList/>{
+			
+            if (log.isDebugEnabled()) {
+			  log.debug("<XDtMethod:methodName/>");
+		    }
+			try {
+			    de.escidoc.core.common.util.service.UserContext.setUserContext(securityContext);			
+			} catch (Exception e) {
+			    throw new SystemException("Initialization of security context failed.", e);
+			}
+			<XDtMethod:ifDoesntReturnVoid>
+			return service.<XDtMethod:methodName/>(<XDtParameter:parameterList includeDefinition="false"/>);
+			</XDtMethod:ifDoesntReturnVoid>
+			<XDtMethod:ifReturnsVoid>
+			service.<XDtMethod:methodName/>(<XDtParameter:parameterList includeDefinition="false"/>);
+			</XDtMethod:ifReturnsVoid>
+		}
+		
+		/**
+    	<XDtMethod:ifDoesntHaveMethodTag tagName="ejb.interface-method">
+		 * @ejb.interface-method view-type = "all"    	
+    	</XDtMethod:ifDoesntHaveMethodTag>
+    	<XDtMethod:ifHasMethodTag tagName="ejb.interface-method">
+		 * @ejb.interface-method  <XDtMethod:methodTagValue tagName="ejb.interface-method"/>    	
+    	</XDtMethod:ifHasMethodTag>
+    	<XDtMethod:ifHasMethodTag tagName="ejb.transaction">  
+ 		 * @ejb.transaction <XDtMethod:methodTagValue tagName="ejb.transaction" />
+		</XDtMethod:ifHasMethodTag>
+         * @ejb.permission unchecked = "true"
+		<XDtMethod:ifDoesntHaveMethodTag  tagName="axis.exclude">
+		 * @axis.method
+		</XDtMethod:ifDoesntHaveMethodTag>
+		 */
+		public <XDtMethod:methodType/> <XDtMethod:methodName/>(<XDtParameter:forAllMethodParams><XDtParameter:methodParamType/> <XDtParameter:methodParamName/>, </XDtParameter:forAllMethodParams>java.lang.String authHandle, java.lang.Boolean restAccess) <XDtMethod:exceptionList/>{
+			
+            if (log.isDebugEnabled()) {
+			  log.debug("<XDtMethod:methodName/>");
+		    }
+			try {
+			    de.escidoc.core.common.util.service.UserContext.setUserContext(authHandle);
+			    de.escidoc.core.common.util.service.UserContext.setRestAccess(restAccess.booleanValue());
+			} catch (Exception e) {
+			    throw new SystemException("Initialization of security context failed.", e);
+			}
+			<XDtMethod:ifDoesntReturnVoid>
+			return service.<XDtMethod:methodName/>(<XDtParameter:parameterList includeDefinition="false"/>);
+			</XDtMethod:ifDoesntReturnVoid>
+			<XDtMethod:ifReturnsVoid>
+			service.<XDtMethod:methodName/>(<XDtParameter:parameterList includeDefinition="false"/>);
+			</XDtMethod:ifReturnsVoid>
+		}
+		</XDtMethod:ifDoesntHaveMethodTag>
+	</XDtMethod:forAllMethods>
+}

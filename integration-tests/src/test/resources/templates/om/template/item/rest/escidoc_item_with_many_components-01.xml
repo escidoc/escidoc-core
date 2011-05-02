@@ -1,0 +1,1525 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<escidocItem:item xmlns:escidocItem="http://www.escidoc.de/schemas/item/0.10"
+	xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5"
+	xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.9"
+	xmlns:prop="http://escidoc.de/core/01/properties/" xmlns:srel="http://escidoc.de/core/01/structural-relations/"
+	xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xml="http://www.w3.org/XML/1998/namespace">
+
+	<escidocItem:properties>
+		<srel:context xlink:href="/ir/context/escidoc:ex1" />
+		<srel:content-model xlink:href="/cmm/content-model/escidoc:ex4" />
+		<prop:content-model-specific>
+			<cms-prop test="1" />
+		</prop:content-model-specific>
+	</escidocItem:properties>
+
+	<escidocMetadataRecords:md-records>
+		<escidocMetadataRecords:md-record
+			name="escidoc">
+			<metadata />
+		</escidocMetadataRecords:md-record>
+
+	</escidocMetadataRecords:md-records>
+
+	<escidocComponents:components>
+		<escidocComponents:component>
+			<escidocComponents:properties>
+				<prop:valid-status>valid</prop:valid-status>
+				<prop:visibility>public</prop:visibility>
+				<prop:content-category>pre-print</prop:content-category>
+			</escidocComponents:properties>
+			<escidocComponents:content
+				xlink:href="http://localhost:8080/images/escidoc-banner.jpg"
+				storage="internal-managed" />
+
+			<escidocMetadataRecords:md-records>
+				<escidocMetadataRecords:md-record
+					name="md2" schema="http://www.escidoc-project.de/metadata/schema/0.1">
+					<md2-content />
+				</escidocMetadataRecords:md-record>
+
+				<escidocMetadataRecords:md-record
+					xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5"
+					name="escidoc" schema="http://www.escidoc-project.de/metadata/schema/0.1"
+					xlink:title="eSciDoc internal MD Record" xlink:type="simple">
+					<publication type="book-item"
+						prefix-xsi:schemaLocation="http://escidoc.mpg.de/metadataprofile/schema/0.1/ ../escidocprofile.xsd"
+						xmlns="http://escidoc.mpg.de/metadataprofile/schema/0.1/"
+						xmlns:prefix-dc="http://purl.org/dc/elements/1.1/"
+						xmlns:prefix-dcterms="http://purl.org/dc/terms/"
+						xmlns:e="http://escidoc.mpg.de/metadataprofile/schema/0.1/types"
+						xmlns:eidt="http://escidoc.mpg.de/metadataprofile/schema/0.1/idtypes"
+						xmlns:prefix-xsi="http://www.w3.org/2001/XMLSchema-instance">
+						<e:creator role="author">
+							<e:person>
+								<e:complete-name>
+									Arno Schindlmayr \a
+						</e:complete-name>
+								<e:family-name>Schindlmayr</e:family-name>
+								<e:given-name>Arno</e:given-name>
+								<e:organization>
+									<e:organization-name>
+										Forschungszentrum
+							</e:organization-name>
+									<e:address>52425 ch, Germany</e:address>
+									<e:identifier prefix-xsi:type="eidt:ESCIDOC">
+										escidoc:persistent1
+							</e:identifier>
+								</e:organization>
+							</e:person>
+						</e:creator>
+						<e:creator role="author">
+							<e:person>
+								<e:complete-name>
+									Matthias Scheffler
+						</e:complete-name>
+								<e:family-name>Scheffler</e:family-name>
+								<e:given-name>Matthias</e:given-name>
+								<e:organization>
+									<e:organization-name>
+										Fritz-Haber-Institut/Theory
+							</e:organization-name>
+									<e:address>
+										Faradayweg 4-6, 14195 Berlin
+							</e:address>
+									<e:identifier prefix-xsi:type="eidt:ESCIDOC">
+										escidoc:persistent1
+							</e:identifier>
+								</e:organization>
+							</e:person>
+						</e:creator>
+						<prefix-dc:title xml:lang="en-US">
+							Quasiparticle calculations for point defects at
+							semiconductor surfaces
+				</prefix-dc:title>
+						<prefix-dc:language prefix-xsi:type="prefix-dcterms:RFC3066">
+							en
+				</prefix-dc:language>
+						<prefix-dc:identifier prefix-xsi:type="eidt:DOI">
+							10.1007/11690320_8
+				</prefix-dc:identifier>
+						<prefix-dc:identifier prefix-xsi:type="eidt:EDOC">
+							290886
+				</prefix-dc:identifier>
+						<prefix-dc:identifier prefix-xsi:type="prefix-dcterms:URI">
+							http://www.springerlink.com/content/4877p75301w53364/fulltext.pdf
+						</prefix-dc:identifier>
+						<prefix-dcterms:issued prefix-xsi:type="prefix-dcterms:W3CDTF">
+							2006-11-13
+				</prefix-dcterms:issued>
+						<e:review-method>peer</e:review-method>
+						<e:source>
+							<prefix-dc:title>
+								Theory of Defects in Semiconductors
+					</prefix-dc:title>
+							<e:creator role="editor">
+								<e:person>
+									<e:complete-name>
+										David A. Drabold
+							</e:complete-name>
+								</e:person>
+							</e:creator>
+							<e:creator role="editor">
+								<e:person>
+									<e:complete-name>
+										Stefan K. Estreicher
+							</e:complete-name>
+								</e:person>
+							</e:creator>
+							<e:volume>104</e:volume>
+							<e:start-page>165</e:start-page>
+							<e:end-page>192</e:end-page>
+							<prefix-dc:identifier prefix-xsi:type="eidt:ISBN">
+								978-3-540-33400-2
+					</prefix-dc:identifier>
+							<prefix-dc:identifier prefix-xsi:type="eidt:DOI">
+								10.1007/11690320
+					</prefix-dc:identifier>
+							<prefix-dc:identifier prefix-xsi:type="prefix-dcterms:URI">
+								http://www.springerlink.com/content/978-3-540-33400-2/
+							</prefix-dc:identifier>
+							<e:source>
+								<prefix-dc:title>
+									Topics in Applied Physics
+						</prefix-dc:title>
+								<prefix-dc:identifier prefix-xsi:type="eidt:ISSN">
+									1437-0859
+						</prefix-dc:identifier>
+							</e:source>
+						</e:source>
+						<prefix-dcterms:abstract xml:lang="en-US">
+							Some content
+				</prefix-dcterms:abstract>
+						<prefix-dc:subject>
+							Physics ; Astronomy
+				</prefix-dc:subject>
+					</publication>
+				</escidocMetadataRecords:md-record>
+			</escidocMetadataRecords:md-records>
+
+		</escidocComponents:component>
+		<escidocComponents:component>
+			<escidocComponents:properties>
+				<prop:valid-status>valid</prop:valid-status>
+				<prop:visibility>public</prop:visibility>
+				<prop:content-category>pre-print</prop:content-category>
+			</escidocComponents:properties>
+			<escidocComponents:content
+				xlink:href="http://localhost:8080/images/escidoc-banner.jpg"
+				storage="internal-managed" />
+
+			<escidocMetadataRecords:md-records>
+				<escidocMetadataRecords:md-record
+					name="md2" schema="http://www.escidoc-project.de/metadata/schema/0.1">
+					<md2-content />
+				</escidocMetadataRecords:md-record>
+
+				<escidocMetadataRecords:md-record
+					xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5"
+					name="escidoc" schema="http://www.escidoc-project.de/metadata/schema/0.1"
+					xlink:title="eSciDoc internal MD Record" xlink:type="simple">
+					<publication type="book-item"
+						prefix-xsi:schemaLocation="http://escidoc.mpg.de/metadataprofile/schema/0.1/ ../escidocprofile.xsd"
+						xmlns="http://escidoc.mpg.de/metadataprofile/schema/0.1/"
+						xmlns:prefix-dc="http://purl.org/dc/elements/1.1/"
+						xmlns:prefix-dcterms="http://purl.org/dc/terms/"
+						xmlns:e="http://escidoc.mpg.de/metadataprofile/schema/0.1/types"
+						xmlns:eidt="http://escidoc.mpg.de/metadataprofile/schema/0.1/idtypes"
+						xmlns:prefix-xsi="http://www.w3.org/2001/XMLSchema-instance">
+						<e:creator role="author">
+							<e:person>
+								<e:complete-name>
+									Arno Schindlmayr \a
+						</e:complete-name>
+								<e:family-name>Schindlmayr</e:family-name>
+								<e:given-name>Arno</e:given-name>
+								<e:organization>
+									<e:organization-name>
+										Forschungszentrum
+							</e:organization-name>
+									<e:address>52425 ch, Germany</e:address>
+									<e:identifier prefix-xsi:type="eidt:ESCIDOC">
+										escidoc:persistent1
+							</e:identifier>
+								</e:organization>
+							</e:person>
+						</e:creator>
+						<e:creator role="author">
+							<e:person>
+								<e:complete-name>
+									Matthias Scheffler
+						</e:complete-name>
+								<e:family-name>Scheffler</e:family-name>
+								<e:given-name>Matthias</e:given-name>
+								<e:organization>
+									<e:organization-name>
+										Fritz-Haber-Institut/Theory
+							</e:organization-name>
+									<e:address>
+										Faradayweg 4-6, 14195 Berlin
+							</e:address>
+									<e:identifier prefix-xsi:type="eidt:ESCIDOC">
+										escidoc:persistent1
+							</e:identifier>
+								</e:organization>
+							</e:person>
+						</e:creator>
+						<prefix-dc:title xml:lang="en-US">
+							Quasiparticle calculations for point defects at
+							semiconductor surfaces
+				</prefix-dc:title>
+						<prefix-dc:language prefix-xsi:type="prefix-dcterms:RFC3066">
+							en
+				</prefix-dc:language>
+						<prefix-dc:identifier prefix-xsi:type="eidt:DOI">
+							10.1007/11690320_8
+				</prefix-dc:identifier>
+						<prefix-dc:identifier prefix-xsi:type="eidt:EDOC">
+							290886
+				</prefix-dc:identifier>
+						<prefix-dc:identifier prefix-xsi:type="prefix-dcterms:URI">
+							http://www.springerlink.com/content/4877p75301w53364/fulltext.pdf
+						</prefix-dc:identifier>
+						<prefix-dcterms:issued prefix-xsi:type="prefix-dcterms:W3CDTF">
+							2006-11-13
+				</prefix-dcterms:issued>
+						<e:review-method>peer</e:review-method>
+						<e:source>
+							<prefix-dc:title>
+								Theory of Defects in Semiconductors
+					</prefix-dc:title>
+							<e:creator role="editor">
+								<e:person>
+									<e:complete-name>
+										David A. Drabold
+							</e:complete-name>
+								</e:person>
+							</e:creator>
+							<e:creator role="editor">
+								<e:person>
+									<e:complete-name>
+										Stefan K. Estreicher
+							</e:complete-name>
+								</e:person>
+							</e:creator>
+							<e:volume>104</e:volume>
+							<e:start-page>165</e:start-page>
+							<e:end-page>192</e:end-page>
+							<prefix-dc:identifier prefix-xsi:type="eidt:ISBN">
+								978-3-540-33400-2
+					</prefix-dc:identifier>
+							<prefix-dc:identifier prefix-xsi:type="eidt:DOI">
+								10.1007/11690320
+					</prefix-dc:identifier>
+							<prefix-dc:identifier prefix-xsi:type="prefix-dcterms:URI">
+								http://www.springerlink.com/content/978-3-540-33400-2/
+							</prefix-dc:identifier>
+							<e:source>
+								<prefix-dc:title>
+									Topics in Applied Physics
+						</prefix-dc:title>
+								<prefix-dc:identifier prefix-xsi:type="eidt:ISSN">
+									1437-0859
+						</prefix-dc:identifier>
+							</e:source>
+						</e:source>
+						<prefix-dcterms:abstract xml:lang="en-US">
+							Some content
+				</prefix-dcterms:abstract>
+						<prefix-dc:subject>
+							Physics ; Astronomy
+				</prefix-dc:subject>
+					</publication>
+				</escidocMetadataRecords:md-record>
+			</escidocMetadataRecords:md-records>
+
+		</escidocComponents:component>
+		<escidocComponents:component>
+			<escidocComponents:properties>
+				<prop:valid-status>valid</prop:valid-status>
+				<prop:visibility>public</prop:visibility>
+				<prop:content-category>pre-print</prop:content-category>
+			</escidocComponents:properties>
+			<escidocComponents:content
+				xlink:href="http://localhost:8080/images/escidoc-banner.jpg"
+				storage="internal-managed" />
+
+			<escidocMetadataRecords:md-records>
+				<escidocMetadataRecords:md-record
+					name="md2" schema="http://www.escidoc-project.de/metadata/schema/0.1">
+					<md2-content />
+				</escidocMetadataRecords:md-record>
+
+				<escidocMetadataRecords:md-record
+					xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5"
+					name="escidoc" schema="http://www.escidoc-project.de/metadata/schema/0.1"
+					xlink:title="eSciDoc internal MD Record" xlink:type="simple">
+					<publication type="book-item"
+						prefix-xsi:schemaLocation="http://escidoc.mpg.de/metadataprofile/schema/0.1/ ../escidocprofile.xsd"
+						xmlns="http://escidoc.mpg.de/metadataprofile/schema/0.1/"
+						xmlns:prefix-dc="http://purl.org/dc/elements/1.1/"
+						xmlns:prefix-dcterms="http://purl.org/dc/terms/"
+						xmlns:e="http://escidoc.mpg.de/metadataprofile/schema/0.1/types"
+						xmlns:eidt="http://escidoc.mpg.de/metadataprofile/schema/0.1/idtypes"
+						xmlns:prefix-xsi="http://www.w3.org/2001/XMLSchema-instance">
+						<e:creator role="author">
+							<e:person>
+								<e:complete-name>
+									Arno Schindlmayr \a
+						</e:complete-name>
+								<e:family-name>Schindlmayr</e:family-name>
+								<e:given-name>Arno</e:given-name>
+								<e:organization>
+									<e:organization-name>
+										Forschungszentrum
+							</e:organization-name>
+									<e:address>52425 ch, Germany</e:address>
+									<e:identifier prefix-xsi:type="eidt:ESCIDOC">
+										escidoc:persistent1
+							</e:identifier>
+								</e:organization>
+							</e:person>
+						</e:creator>
+						<e:creator role="author">
+							<e:person>
+								<e:complete-name>
+									Matthias Scheffler
+						</e:complete-name>
+								<e:family-name>Scheffler</e:family-name>
+								<e:given-name>Matthias</e:given-name>
+								<e:organization>
+									<e:organization-name>
+										Fritz-Haber-Institut/Theory
+							</e:organization-name>
+									<e:address>
+										Faradayweg 4-6, 14195 Berlin
+							</e:address>
+									<e:identifier prefix-xsi:type="eidt:ESCIDOC">
+										escidoc:persistent1
+							</e:identifier>
+								</e:organization>
+							</e:person>
+						</e:creator>
+						<prefix-dc:title xml:lang="en-US">
+							Quasiparticle calculations for point defects at
+							semiconductor surfaces
+				</prefix-dc:title>
+						<prefix-dc:language prefix-xsi:type="prefix-dcterms:RFC3066">
+							en
+				</prefix-dc:language>
+						<prefix-dc:identifier prefix-xsi:type="eidt:DOI">
+							10.1007/11690320_8
+				</prefix-dc:identifier>
+						<prefix-dc:identifier prefix-xsi:type="eidt:EDOC">
+							290886
+				</prefix-dc:identifier>
+						<prefix-dc:identifier prefix-xsi:type="prefix-dcterms:URI">
+							http://www.springerlink.com/content/4877p75301w53364/fulltext.pdf
+						</prefix-dc:identifier>
+						<prefix-dcterms:issued prefix-xsi:type="prefix-dcterms:W3CDTF">
+							2006-11-13
+				</prefix-dcterms:issued>
+						<e:review-method>peer</e:review-method>
+						<e:source>
+							<prefix-dc:title>
+								Theory of Defects in Semiconductors
+					</prefix-dc:title>
+							<e:creator role="editor">
+								<e:person>
+									<e:complete-name>
+										David A. Drabold
+							</e:complete-name>
+								</e:person>
+							</e:creator>
+							<e:creator role="editor">
+								<e:person>
+									<e:complete-name>
+										Stefan K. Estreicher
+							</e:complete-name>
+								</e:person>
+							</e:creator>
+							<e:volume>104</e:volume>
+							<e:start-page>165</e:start-page>
+							<e:end-page>192</e:end-page>
+							<prefix-dc:identifier prefix-xsi:type="eidt:ISBN">
+								978-3-540-33400-2
+					</prefix-dc:identifier>
+							<prefix-dc:identifier prefix-xsi:type="eidt:DOI">
+								10.1007/11690320
+					</prefix-dc:identifier>
+							<prefix-dc:identifier prefix-xsi:type="prefix-dcterms:URI">
+								http://www.springerlink.com/content/978-3-540-33400-2/
+							</prefix-dc:identifier>
+							<e:source>
+								<prefix-dc:title>
+									Topics in Applied Physics
+						</prefix-dc:title>
+								<prefix-dc:identifier prefix-xsi:type="eidt:ISSN">
+									1437-0859
+						</prefix-dc:identifier>
+							</e:source>
+						</e:source>
+						<prefix-dcterms:abstract xml:lang="en-US">
+							Some content
+				</prefix-dcterms:abstract>
+						<prefix-dc:subject>
+							Physics ; Astronomy
+				</prefix-dc:subject>
+					</publication>
+				</escidocMetadataRecords:md-record>
+			</escidocMetadataRecords:md-records>
+
+		</escidocComponents:component>
+		<escidocComponents:component>
+			<escidocComponents:properties>
+				<prop:valid-status>valid</prop:valid-status>
+				<prop:visibility>public</prop:visibility>
+				<prop:content-category>pre-print</prop:content-category>
+			</escidocComponents:properties>
+			<escidocComponents:content
+				xlink:href="http://localhost:8080/images/escidoc-banner.jpg"
+				storage="internal-managed" />
+
+			<escidocMetadataRecords:md-records>
+				<escidocMetadataRecords:md-record
+					name="md2" schema="http://www.escidoc-project.de/metadata/schema/0.1">
+					<md2-content />
+				</escidocMetadataRecords:md-record>
+
+				<escidocMetadataRecords:md-record
+					xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5"
+					name="escidoc" schema="http://www.escidoc-project.de/metadata/schema/0.1"
+					xlink:title="eSciDoc internal MD Record" xlink:type="simple">
+					<publication type="book-item"
+						prefix-xsi:schemaLocation="http://escidoc.mpg.de/metadataprofile/schema/0.1/ ../escidocprofile.xsd"
+						xmlns="http://escidoc.mpg.de/metadataprofile/schema/0.1/"
+						xmlns:prefix-dc="http://purl.org/dc/elements/1.1/"
+						xmlns:prefix-dcterms="http://purl.org/dc/terms/"
+						xmlns:e="http://escidoc.mpg.de/metadataprofile/schema/0.1/types"
+						xmlns:eidt="http://escidoc.mpg.de/metadataprofile/schema/0.1/idtypes"
+						xmlns:prefix-xsi="http://www.w3.org/2001/XMLSchema-instance">
+						<e:creator role="author">
+							<e:person>
+								<e:complete-name>
+									Arno Schindlmayr \a
+						</e:complete-name>
+								<e:family-name>Schindlmayr</e:family-name>
+								<e:given-name>Arno</e:given-name>
+								<e:organization>
+									<e:organization-name>
+										Forschungszentrum
+							</e:organization-name>
+									<e:address>52425 ch, Germany</e:address>
+									<e:identifier prefix-xsi:type="eidt:ESCIDOC">
+										escidoc:persistent1
+							</e:identifier>
+								</e:organization>
+							</e:person>
+						</e:creator>
+						<e:creator role="author">
+							<e:person>
+								<e:complete-name>
+									Matthias Scheffler
+						</e:complete-name>
+								<e:family-name>Scheffler</e:family-name>
+								<e:given-name>Matthias</e:given-name>
+								<e:organization>
+									<e:organization-name>
+										Fritz-Haber-Institut/Theory
+							</e:organization-name>
+									<e:address>
+										Faradayweg 4-6, 14195 Berlin
+							</e:address>
+									<e:identifier prefix-xsi:type="eidt:ESCIDOC">
+										escidoc:persistent1
+							</e:identifier>
+								</e:organization>
+							</e:person>
+						</e:creator>
+						<prefix-dc:title xml:lang="en-US">
+							Quasiparticle calculations for point defects at
+							semiconductor surfaces
+				</prefix-dc:title>
+						<prefix-dc:language prefix-xsi:type="prefix-dcterms:RFC3066">
+							en
+				</prefix-dc:language>
+						<prefix-dc:identifier prefix-xsi:type="eidt:DOI">
+							10.1007/11690320_8
+				</prefix-dc:identifier>
+						<prefix-dc:identifier prefix-xsi:type="eidt:EDOC">
+							290886
+				</prefix-dc:identifier>
+						<prefix-dc:identifier prefix-xsi:type="prefix-dcterms:URI">
+							http://www.springerlink.com/content/4877p75301w53364/fulltext.pdf
+						</prefix-dc:identifier>
+						<prefix-dcterms:issued prefix-xsi:type="prefix-dcterms:W3CDTF">
+							2006-11-13
+				</prefix-dcterms:issued>
+						<e:review-method>peer</e:review-method>
+						<e:source>
+							<prefix-dc:title>
+								Theory of Defects in Semiconductors
+					</prefix-dc:title>
+							<e:creator role="editor">
+								<e:person>
+									<e:complete-name>
+										David A. Drabold
+							</e:complete-name>
+								</e:person>
+							</e:creator>
+							<e:creator role="editor">
+								<e:person>
+									<e:complete-name>
+										Stefan K. Estreicher
+							</e:complete-name>
+								</e:person>
+							</e:creator>
+							<e:volume>104</e:volume>
+							<e:start-page>165</e:start-page>
+							<e:end-page>192</e:end-page>
+							<prefix-dc:identifier prefix-xsi:type="eidt:ISBN">
+								978-3-540-33400-2
+					</prefix-dc:identifier>
+							<prefix-dc:identifier prefix-xsi:type="eidt:DOI">
+								10.1007/11690320
+					</prefix-dc:identifier>
+							<prefix-dc:identifier prefix-xsi:type="prefix-dcterms:URI">
+								http://www.springerlink.com/content/978-3-540-33400-2/
+							</prefix-dc:identifier>
+							<e:source>
+								<prefix-dc:title>
+									Topics in Applied Physics
+						</prefix-dc:title>
+								<prefix-dc:identifier prefix-xsi:type="eidt:ISSN">
+									1437-0859
+						</prefix-dc:identifier>
+							</e:source>
+						</e:source>
+						<prefix-dcterms:abstract xml:lang="en-US">
+							Some content
+				</prefix-dcterms:abstract>
+						<prefix-dc:subject>
+							Physics ; Astronomy
+				</prefix-dc:subject>
+					</publication>
+				</escidocMetadataRecords:md-record>
+			</escidocMetadataRecords:md-records>
+
+		</escidocComponents:component>
+		<escidocComponents:component>
+			<escidocComponents:properties>
+				<prop:valid-status>valid</prop:valid-status>
+				<prop:visibility>public</prop:visibility>
+				<prop:content-category>pre-print</prop:content-category>
+			</escidocComponents:properties>
+			<escidocComponents:content
+				xlink:href="http://localhost:8080/images/escidoc-banner.jpg"
+				storage="internal-managed" />
+
+			<escidocMetadataRecords:md-records>
+				<escidocMetadataRecords:md-record
+					name="md2" schema="http://www.escidoc-project.de/metadata/schema/0.1">
+					<md2-content />
+				</escidocMetadataRecords:md-record>
+
+				<escidocMetadataRecords:md-record
+					xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5"
+					name="escidoc" schema="http://www.escidoc-project.de/metadata/schema/0.1"
+					xlink:title="eSciDoc internal MD Record" xlink:type="simple">
+					<publication type="book-item"
+						prefix-xsi:schemaLocation="http://escidoc.mpg.de/metadataprofile/schema/0.1/ ../escidocprofile.xsd"
+						xmlns="http://escidoc.mpg.de/metadataprofile/schema/0.1/"
+						xmlns:prefix-dc="http://purl.org/dc/elements/1.1/"
+						xmlns:prefix-dcterms="http://purl.org/dc/terms/"
+						xmlns:e="http://escidoc.mpg.de/metadataprofile/schema/0.1/types"
+						xmlns:eidt="http://escidoc.mpg.de/metadataprofile/schema/0.1/idtypes"
+						xmlns:prefix-xsi="http://www.w3.org/2001/XMLSchema-instance">
+						<e:creator role="author">
+							<e:person>
+								<e:complete-name>
+									Arno Schindlmayr \a
+						</e:complete-name>
+								<e:family-name>Schindlmayr</e:family-name>
+								<e:given-name>Arno</e:given-name>
+								<e:organization>
+									<e:organization-name>
+										Forschungszentrum
+							</e:organization-name>
+									<e:address>52425 ch, Germany</e:address>
+									<e:identifier prefix-xsi:type="eidt:ESCIDOC">
+										escidoc:persistent1
+							</e:identifier>
+								</e:organization>
+							</e:person>
+						</e:creator>
+						<e:creator role="author">
+							<e:person>
+								<e:complete-name>
+									Matthias Scheffler
+						</e:complete-name>
+								<e:family-name>Scheffler</e:family-name>
+								<e:given-name>Matthias</e:given-name>
+								<e:organization>
+									<e:organization-name>
+										Fritz-Haber-Institut/Theory
+							</e:organization-name>
+									<e:address>
+										Faradayweg 4-6, 14195 Berlin
+							</e:address>
+									<e:identifier prefix-xsi:type="eidt:ESCIDOC">
+										escidoc:persistent1
+							</e:identifier>
+								</e:organization>
+							</e:person>
+						</e:creator>
+						<prefix-dc:title xml:lang="en-US">
+							Quasiparticle calculations for point defects at
+							semiconductor surfaces
+				</prefix-dc:title>
+						<prefix-dc:language prefix-xsi:type="prefix-dcterms:RFC3066">
+							en
+				</prefix-dc:language>
+						<prefix-dc:identifier prefix-xsi:type="eidt:DOI">
+							10.1007/11690320_8
+				</prefix-dc:identifier>
+						<prefix-dc:identifier prefix-xsi:type="eidt:EDOC">
+							290886
+				</prefix-dc:identifier>
+						<prefix-dc:identifier prefix-xsi:type="prefix-dcterms:URI">
+							http://www.springerlink.com/content/4877p75301w53364/fulltext.pdf
+						</prefix-dc:identifier>
+						<prefix-dcterms:issued prefix-xsi:type="prefix-dcterms:W3CDTF">
+							2006-11-13
+				</prefix-dcterms:issued>
+						<e:review-method>peer</e:review-method>
+						<e:source>
+							<prefix-dc:title>
+								Theory of Defects in Semiconductors
+					</prefix-dc:title>
+							<e:creator role="editor">
+								<e:person>
+									<e:complete-name>
+										David A. Drabold
+							</e:complete-name>
+								</e:person>
+							</e:creator>
+							<e:creator role="editor">
+								<e:person>
+									<e:complete-name>
+										Stefan K. Estreicher
+							</e:complete-name>
+								</e:person>
+							</e:creator>
+							<e:volume>104</e:volume>
+							<e:start-page>165</e:start-page>
+							<e:end-page>192</e:end-page>
+							<prefix-dc:identifier prefix-xsi:type="eidt:ISBN">
+								978-3-540-33400-2
+					</prefix-dc:identifier>
+							<prefix-dc:identifier prefix-xsi:type="eidt:DOI">
+								10.1007/11690320
+					</prefix-dc:identifier>
+							<prefix-dc:identifier prefix-xsi:type="prefix-dcterms:URI">
+								http://www.springerlink.com/content/978-3-540-33400-2/
+							</prefix-dc:identifier>
+							<e:source>
+								<prefix-dc:title>
+									Topics in Applied Physics
+						</prefix-dc:title>
+								<prefix-dc:identifier prefix-xsi:type="eidt:ISSN">
+									1437-0859
+						</prefix-dc:identifier>
+							</e:source>
+						</e:source>
+						<prefix-dcterms:abstract xml:lang="en-US">
+							Some content
+				</prefix-dcterms:abstract>
+						<prefix-dc:subject>
+							Physics ; Astronomy
+				</prefix-dc:subject>
+					</publication>
+				</escidocMetadataRecords:md-record>
+			</escidocMetadataRecords:md-records>
+
+		</escidocComponents:component>
+		<escidocComponents:component>
+			<escidocComponents:properties>
+				<prop:valid-status>valid</prop:valid-status>
+				<prop:visibility>public</prop:visibility>
+				<prop:content-category>pre-print</prop:content-category>
+			</escidocComponents:properties>
+			<escidocComponents:content
+				xlink:href="http://localhost:8080/images/escidoc-banner.jpg"
+				storage="internal-managed" />
+
+			<escidocMetadataRecords:md-records>
+				<escidocMetadataRecords:md-record
+					name="md2" schema="http://www.escidoc-project.de/metadata/schema/0.1">
+					<md2-content />
+				</escidocMetadataRecords:md-record>
+
+				<escidocMetadataRecords:md-record
+					xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5"
+					name="escidoc" schema="http://www.escidoc-project.de/metadata/schema/0.1"
+					xlink:title="eSciDoc internal MD Record" xlink:type="simple">
+					<publication type="book-item"
+						prefix-xsi:schemaLocation="http://escidoc.mpg.de/metadataprofile/schema/0.1/ ../escidocprofile.xsd"
+						xmlns="http://escidoc.mpg.de/metadataprofile/schema/0.1/"
+						xmlns:prefix-dc="http://purl.org/dc/elements/1.1/"
+						xmlns:prefix-dcterms="http://purl.org/dc/terms/"
+						xmlns:e="http://escidoc.mpg.de/metadataprofile/schema/0.1/types"
+						xmlns:eidt="http://escidoc.mpg.de/metadataprofile/schema/0.1/idtypes"
+						xmlns:prefix-xsi="http://www.w3.org/2001/XMLSchema-instance">
+						<e:creator role="author">
+							<e:person>
+								<e:complete-name>
+									Arno Schindlmayr \a
+						</e:complete-name>
+								<e:family-name>Schindlmayr</e:family-name>
+								<e:given-name>Arno</e:given-name>
+								<e:organization>
+									<e:organization-name>
+										Forschungszentrum
+							</e:organization-name>
+									<e:address>52425 ch, Germany</e:address>
+									<e:identifier prefix-xsi:type="eidt:ESCIDOC">
+										escidoc:persistent1
+							</e:identifier>
+								</e:organization>
+							</e:person>
+						</e:creator>
+						<e:creator role="author">
+							<e:person>
+								<e:complete-name>
+									Matthias Scheffler
+						</e:complete-name>
+								<e:family-name>Scheffler</e:family-name>
+								<e:given-name>Matthias</e:given-name>
+								<e:organization>
+									<e:organization-name>
+										Fritz-Haber-Institut/Theory
+							</e:organization-name>
+									<e:address>
+										Faradayweg 4-6, 14195 Berlin
+							</e:address>
+									<e:identifier prefix-xsi:type="eidt:ESCIDOC">
+										escidoc:persistent1
+							</e:identifier>
+								</e:organization>
+							</e:person>
+						</e:creator>
+						<prefix-dc:title xml:lang="en-US">
+							Quasiparticle calculations for point defects at
+							semiconductor surfaces
+				</prefix-dc:title>
+						<prefix-dc:language prefix-xsi:type="prefix-dcterms:RFC3066">
+							en
+				</prefix-dc:language>
+						<prefix-dc:identifier prefix-xsi:type="eidt:DOI">
+							10.1007/11690320_8
+				</prefix-dc:identifier>
+						<prefix-dc:identifier prefix-xsi:type="eidt:EDOC">
+							290886
+				</prefix-dc:identifier>
+						<prefix-dc:identifier prefix-xsi:type="prefix-dcterms:URI">
+							http://www.springerlink.com/content/4877p75301w53364/fulltext.pdf
+						</prefix-dc:identifier>
+						<prefix-dcterms:issued prefix-xsi:type="prefix-dcterms:W3CDTF">
+							2006-11-13
+				</prefix-dcterms:issued>
+						<e:review-method>peer</e:review-method>
+						<e:source>
+							<prefix-dc:title>
+								Theory of Defects in Semiconductors
+					</prefix-dc:title>
+							<e:creator role="editor">
+								<e:person>
+									<e:complete-name>
+										David A. Drabold
+							</e:complete-name>
+								</e:person>
+							</e:creator>
+							<e:creator role="editor">
+								<e:person>
+									<e:complete-name>
+										Stefan K. Estreicher
+							</e:complete-name>
+								</e:person>
+							</e:creator>
+							<e:volume>104</e:volume>
+							<e:start-page>165</e:start-page>
+							<e:end-page>192</e:end-page>
+							<prefix-dc:identifier prefix-xsi:type="eidt:ISBN">
+								978-3-540-33400-2
+					</prefix-dc:identifier>
+							<prefix-dc:identifier prefix-xsi:type="eidt:DOI">
+								10.1007/11690320
+					</prefix-dc:identifier>
+							<prefix-dc:identifier prefix-xsi:type="prefix-dcterms:URI">
+								http://www.springerlink.com/content/978-3-540-33400-2/
+							</prefix-dc:identifier>
+							<e:source>
+								<prefix-dc:title>
+									Topics in Applied Physics
+						</prefix-dc:title>
+								<prefix-dc:identifier prefix-xsi:type="eidt:ISSN">
+									1437-0859
+						</prefix-dc:identifier>
+							</e:source>
+						</e:source>
+						<prefix-dcterms:abstract xml:lang="en-US">
+							Some content
+				</prefix-dcterms:abstract>
+						<prefix-dc:subject>
+							Physics ; Astronomy
+				</prefix-dc:subject>
+					</publication>
+				</escidocMetadataRecords:md-record>
+			</escidocMetadataRecords:md-records>
+
+		</escidocComponents:component>
+		<escidocComponents:component>
+			<escidocComponents:properties>
+				<prop:valid-status>valid</prop:valid-status>
+				<prop:visibility>public</prop:visibility>
+				<prop:content-category>pre-print</prop:content-category>
+			</escidocComponents:properties>
+			<escidocComponents:content
+				xlink:href="http://localhost:8080/images/escidoc-banner.jpg"
+				storage="internal-managed" />
+
+			<escidocMetadataRecords:md-records>
+				<escidocMetadataRecords:md-record
+					name="md2" schema="http://www.escidoc-project.de/metadata/schema/0.1">
+					<md2-content />
+				</escidocMetadataRecords:md-record>
+
+				<escidocMetadataRecords:md-record
+					xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5"
+					name="escidoc" schema="http://www.escidoc-project.de/metadata/schema/0.1"
+					xlink:title="eSciDoc internal MD Record" xlink:type="simple">
+					<publication type="book-item"
+						prefix-xsi:schemaLocation="http://escidoc.mpg.de/metadataprofile/schema/0.1/ ../escidocprofile.xsd"
+						xmlns="http://escidoc.mpg.de/metadataprofile/schema/0.1/"
+						xmlns:prefix-dc="http://purl.org/dc/elements/1.1/"
+						xmlns:prefix-dcterms="http://purl.org/dc/terms/"
+						xmlns:e="http://escidoc.mpg.de/metadataprofile/schema/0.1/types"
+						xmlns:eidt="http://escidoc.mpg.de/metadataprofile/schema/0.1/idtypes"
+						xmlns:prefix-xsi="http://www.w3.org/2001/XMLSchema-instance">
+						<e:creator role="author">
+							<e:person>
+								<e:complete-name>
+									Arno Schindlmayr \a
+						</e:complete-name>
+								<e:family-name>Schindlmayr</e:family-name>
+								<e:given-name>Arno</e:given-name>
+								<e:organization>
+									<e:organization-name>
+										Forschungszentrum
+							</e:organization-name>
+									<e:address>52425 ch, Germany</e:address>
+									<e:identifier prefix-xsi:type="eidt:ESCIDOC">
+										escidoc:persistent1
+							</e:identifier>
+								</e:organization>
+							</e:person>
+						</e:creator>
+						<e:creator role="author">
+							<e:person>
+								<e:complete-name>
+									Matthias Scheffler
+						</e:complete-name>
+								<e:family-name>Scheffler</e:family-name>
+								<e:given-name>Matthias</e:given-name>
+								<e:organization>
+									<e:organization-name>
+										Fritz-Haber-Institut/Theory
+							</e:organization-name>
+									<e:address>
+										Faradayweg 4-6, 14195 Berlin
+							</e:address>
+									<e:identifier prefix-xsi:type="eidt:ESCIDOC">
+										escidoc:persistent1
+							</e:identifier>
+								</e:organization>
+							</e:person>
+						</e:creator>
+						<prefix-dc:title xml:lang="en-US">
+							Quasiparticle calculations for point defects at
+							semiconductor surfaces
+				</prefix-dc:title>
+						<prefix-dc:language prefix-xsi:type="prefix-dcterms:RFC3066">
+							en
+				</prefix-dc:language>
+						<prefix-dc:identifier prefix-xsi:type="eidt:DOI">
+							10.1007/11690320_8
+				</prefix-dc:identifier>
+						<prefix-dc:identifier prefix-xsi:type="eidt:EDOC">
+							290886
+				</prefix-dc:identifier>
+						<prefix-dc:identifier prefix-xsi:type="prefix-dcterms:URI">
+							http://www.springerlink.com/content/4877p75301w53364/fulltext.pdf
+						</prefix-dc:identifier>
+						<prefix-dcterms:issued prefix-xsi:type="prefix-dcterms:W3CDTF">
+							2006-11-13
+				</prefix-dcterms:issued>
+						<e:review-method>peer</e:review-method>
+						<e:source>
+							<prefix-dc:title>
+								Theory of Defects in Semiconductors
+					</prefix-dc:title>
+							<e:creator role="editor">
+								<e:person>
+									<e:complete-name>
+										David A. Drabold
+							</e:complete-name>
+								</e:person>
+							</e:creator>
+							<e:creator role="editor">
+								<e:person>
+									<e:complete-name>
+										Stefan K. Estreicher
+							</e:complete-name>
+								</e:person>
+							</e:creator>
+							<e:volume>104</e:volume>
+							<e:start-page>165</e:start-page>
+							<e:end-page>192</e:end-page>
+							<prefix-dc:identifier prefix-xsi:type="eidt:ISBN">
+								978-3-540-33400-2
+					</prefix-dc:identifier>
+							<prefix-dc:identifier prefix-xsi:type="eidt:DOI">
+								10.1007/11690320
+					</prefix-dc:identifier>
+							<prefix-dc:identifier prefix-xsi:type="prefix-dcterms:URI">
+								http://www.springerlink.com/content/978-3-540-33400-2/
+							</prefix-dc:identifier>
+							<e:source>
+								<prefix-dc:title>
+									Topics in Applied Physics
+						</prefix-dc:title>
+								<prefix-dc:identifier prefix-xsi:type="eidt:ISSN">
+									1437-0859
+						</prefix-dc:identifier>
+							</e:source>
+						</e:source>
+						<prefix-dcterms:abstract xml:lang="en-US">
+							Some content
+				</prefix-dcterms:abstract>
+						<prefix-dc:subject>
+							Physics ; Astronomy
+				</prefix-dc:subject>
+					</publication>
+				</escidocMetadataRecords:md-record>
+			</escidocMetadataRecords:md-records>
+
+		</escidocComponents:component>
+		<escidocComponents:component>
+			<escidocComponents:properties>
+				<prop:valid-status>valid</prop:valid-status>
+				<prop:visibility>public</prop:visibility>
+				<prop:content-category>pre-print</prop:content-category>
+			</escidocComponents:properties>
+			<escidocComponents:content
+				xlink:href="http://localhost:8080/images/escidoc-banner.jpg"
+				storage="internal-managed" />
+
+			<escidocMetadataRecords:md-records>
+				<escidocMetadataRecords:md-record
+					name="md2" schema="http://www.escidoc-project.de/metadata/schema/0.1">
+					<md2-content />
+				</escidocMetadataRecords:md-record>
+
+				<escidocMetadataRecords:md-record
+					xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5"
+					name="escidoc" schema="http://www.escidoc-project.de/metadata/schema/0.1"
+					xlink:title="eSciDoc internal MD Record" xlink:type="simple">
+					<publication type="book-item"
+						prefix-xsi:schemaLocation="http://escidoc.mpg.de/metadataprofile/schema/0.1/ ../escidocprofile.xsd"
+						xmlns="http://escidoc.mpg.de/metadataprofile/schema/0.1/"
+						xmlns:prefix-dc="http://purl.org/dc/elements/1.1/"
+						xmlns:prefix-dcterms="http://purl.org/dc/terms/"
+						xmlns:e="http://escidoc.mpg.de/metadataprofile/schema/0.1/types"
+						xmlns:eidt="http://escidoc.mpg.de/metadataprofile/schema/0.1/idtypes"
+						xmlns:prefix-xsi="http://www.w3.org/2001/XMLSchema-instance">
+						<e:creator role="author">
+							<e:person>
+								<e:complete-name>
+									Arno Schindlmayr \a
+						</e:complete-name>
+								<e:family-name>Schindlmayr</e:family-name>
+								<e:given-name>Arno</e:given-name>
+								<e:organization>
+									<e:organization-name>
+										Forschungszentrum
+							</e:organization-name>
+									<e:address>52425 ch, Germany</e:address>
+									<e:identifier prefix-xsi:type="eidt:ESCIDOC">
+										escidoc:persistent1
+							</e:identifier>
+								</e:organization>
+							</e:person>
+						</e:creator>
+						<e:creator role="author">
+							<e:person>
+								<e:complete-name>
+									Matthias Scheffler
+						</e:complete-name>
+								<e:family-name>Scheffler</e:family-name>
+								<e:given-name>Matthias</e:given-name>
+								<e:organization>
+									<e:organization-name>
+										Fritz-Haber-Institut/Theory
+							</e:organization-name>
+									<e:address>
+										Faradayweg 4-6, 14195 Berlin
+							</e:address>
+									<e:identifier prefix-xsi:type="eidt:ESCIDOC">
+										escidoc:persistent1
+							</e:identifier>
+								</e:organization>
+							</e:person>
+						</e:creator>
+						<prefix-dc:title xml:lang="en-US">
+							Quasiparticle calculations for point defects at
+							semiconductor surfaces
+				</prefix-dc:title>
+						<prefix-dc:language prefix-xsi:type="prefix-dcterms:RFC3066">
+							en
+				</prefix-dc:language>
+						<prefix-dc:identifier prefix-xsi:type="eidt:DOI">
+							10.1007/11690320_8
+				</prefix-dc:identifier>
+						<prefix-dc:identifier prefix-xsi:type="eidt:EDOC">
+							290886
+				</prefix-dc:identifier>
+						<prefix-dc:identifier prefix-xsi:type="prefix-dcterms:URI">
+							http://www.springerlink.com/content/4877p75301w53364/fulltext.pdf
+						</prefix-dc:identifier>
+						<prefix-dcterms:issued prefix-xsi:type="prefix-dcterms:W3CDTF">
+							2006-11-13
+				</prefix-dcterms:issued>
+						<e:review-method>peer</e:review-method>
+						<e:source>
+							<prefix-dc:title>
+								Theory of Defects in Semiconductors
+					</prefix-dc:title>
+							<e:creator role="editor">
+								<e:person>
+									<e:complete-name>
+										David A. Drabold
+							</e:complete-name>
+								</e:person>
+							</e:creator>
+							<e:creator role="editor">
+								<e:person>
+									<e:complete-name>
+										Stefan K. Estreicher
+							</e:complete-name>
+								</e:person>
+							</e:creator>
+							<e:volume>104</e:volume>
+							<e:start-page>165</e:start-page>
+							<e:end-page>192</e:end-page>
+							<prefix-dc:identifier prefix-xsi:type="eidt:ISBN">
+								978-3-540-33400-2
+					</prefix-dc:identifier>
+							<prefix-dc:identifier prefix-xsi:type="eidt:DOI">
+								10.1007/11690320
+					</prefix-dc:identifier>
+							<prefix-dc:identifier prefix-xsi:type="prefix-dcterms:URI">
+								http://www.springerlink.com/content/978-3-540-33400-2/
+							</prefix-dc:identifier>
+							<e:source>
+								<prefix-dc:title>
+									Topics in Applied Physics
+						</prefix-dc:title>
+								<prefix-dc:identifier prefix-xsi:type="eidt:ISSN">
+									1437-0859
+						</prefix-dc:identifier>
+							</e:source>
+						</e:source>
+						<prefix-dcterms:abstract xml:lang="en-US">
+							Some content
+				</prefix-dcterms:abstract>
+						<prefix-dc:subject>
+							Physics ; Astronomy
+				</prefix-dc:subject>
+					</publication>
+				</escidocMetadataRecords:md-record>
+			</escidocMetadataRecords:md-records>
+
+		</escidocComponents:component>
+		<escidocComponents:component>
+			<escidocComponents:properties>
+				<prop:valid-status>valid</prop:valid-status>
+				<prop:visibility>public</prop:visibility>
+				<prop:content-category>pre-print</prop:content-category>
+			</escidocComponents:properties>
+			<escidocComponents:content
+				xlink:href="http://localhost:8080/images/escidoc-banner.jpg"
+				storage="internal-managed" />
+
+			<escidocMetadataRecords:md-records>
+				<escidocMetadataRecords:md-record
+					name="md2" schema="http://www.escidoc-project.de/metadata/schema/0.1">
+					<md2-content />
+				</escidocMetadataRecords:md-record>
+
+				<escidocMetadataRecords:md-record
+					xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5"
+					name="escidoc" schema="http://www.escidoc-project.de/metadata/schema/0.1"
+					xlink:title="eSciDoc internal MD Record" xlink:type="simple">
+					<publication type="book-item"
+						prefix-xsi:schemaLocation="http://escidoc.mpg.de/metadataprofile/schema/0.1/ ../escidocprofile.xsd"
+						xmlns="http://escidoc.mpg.de/metadataprofile/schema/0.1/"
+						xmlns:prefix-dc="http://purl.org/dc/elements/1.1/"
+						xmlns:prefix-dcterms="http://purl.org/dc/terms/"
+						xmlns:e="http://escidoc.mpg.de/metadataprofile/schema/0.1/types"
+						xmlns:eidt="http://escidoc.mpg.de/metadataprofile/schema/0.1/idtypes"
+						xmlns:prefix-xsi="http://www.w3.org/2001/XMLSchema-instance">
+						<e:creator role="author">
+							<e:person>
+								<e:complete-name>
+									Arno Schindlmayr \a
+						</e:complete-name>
+								<e:family-name>Schindlmayr</e:family-name>
+								<e:given-name>Arno</e:given-name>
+								<e:organization>
+									<e:organization-name>
+										Forschungszentrum
+							</e:organization-name>
+									<e:address>52425 ch, Germany</e:address>
+									<e:identifier prefix-xsi:type="eidt:ESCIDOC">
+										escidoc:persistent1
+							</e:identifier>
+								</e:organization>
+							</e:person>
+						</e:creator>
+						<e:creator role="author">
+							<e:person>
+								<e:complete-name>
+									Matthias Scheffler
+						</e:complete-name>
+								<e:family-name>Scheffler</e:family-name>
+								<e:given-name>Matthias</e:given-name>
+								<e:organization>
+									<e:organization-name>
+										Fritz-Haber-Institut/Theory
+							</e:organization-name>
+									<e:address>
+										Faradayweg 4-6, 14195 Berlin
+							</e:address>
+									<e:identifier prefix-xsi:type="eidt:ESCIDOC">
+										escidoc:persistent1
+							</e:identifier>
+								</e:organization>
+							</e:person>
+						</e:creator>
+						<prefix-dc:title xml:lang="en-US">
+							Quasiparticle calculations for point defects at
+							semiconductor surfaces
+				</prefix-dc:title>
+						<prefix-dc:language prefix-xsi:type="prefix-dcterms:RFC3066">
+							en
+				</prefix-dc:language>
+						<prefix-dc:identifier prefix-xsi:type="eidt:DOI">
+							10.1007/11690320_8
+				</prefix-dc:identifier>
+						<prefix-dc:identifier prefix-xsi:type="eidt:EDOC">
+							290886
+				</prefix-dc:identifier>
+						<prefix-dc:identifier prefix-xsi:type="prefix-dcterms:URI">
+							http://www.springerlink.com/content/4877p75301w53364/fulltext.pdf
+						</prefix-dc:identifier>
+						<prefix-dcterms:issued prefix-xsi:type="prefix-dcterms:W3CDTF">
+							2006-11-13
+				</prefix-dcterms:issued>
+						<e:review-method>peer</e:review-method>
+						<e:source>
+							<prefix-dc:title>
+								Theory of Defects in Semiconductors
+					</prefix-dc:title>
+							<e:creator role="editor">
+								<e:person>
+									<e:complete-name>
+										David A. Drabold
+							</e:complete-name>
+								</e:person>
+							</e:creator>
+							<e:creator role="editor">
+								<e:person>
+									<e:complete-name>
+										Stefan K. Estreicher
+							</e:complete-name>
+								</e:person>
+							</e:creator>
+							<e:volume>104</e:volume>
+							<e:start-page>165</e:start-page>
+							<e:end-page>192</e:end-page>
+							<prefix-dc:identifier prefix-xsi:type="eidt:ISBN">
+								978-3-540-33400-2
+					</prefix-dc:identifier>
+							<prefix-dc:identifier prefix-xsi:type="eidt:DOI">
+								10.1007/11690320
+					</prefix-dc:identifier>
+							<prefix-dc:identifier prefix-xsi:type="prefix-dcterms:URI">
+								http://www.springerlink.com/content/978-3-540-33400-2/
+							</prefix-dc:identifier>
+							<e:source>
+								<prefix-dc:title>
+									Topics in Applied Physics
+						</prefix-dc:title>
+								<prefix-dc:identifier prefix-xsi:type="eidt:ISSN">
+									1437-0859
+						</prefix-dc:identifier>
+							</e:source>
+						</e:source>
+						<prefix-dcterms:abstract xml:lang="en-US">
+							Some content
+				</prefix-dcterms:abstract>
+						<prefix-dc:subject>
+							Physics ; Astronomy
+				</prefix-dc:subject>
+					</publication>
+				</escidocMetadataRecords:md-record>
+			</escidocMetadataRecords:md-records>
+
+		</escidocComponents:component>
+		<escidocComponents:component>
+			<escidocComponents:properties>
+				<prop:valid-status>valid</prop:valid-status>
+				<prop:visibility>public</prop:visibility>
+				<prop:content-category>pre-print</prop:content-category>
+			</escidocComponents:properties>
+			<escidocComponents:content
+				xlink:href="http://localhost:8080/images/escidoc-banner.jpg"
+				storage="internal-managed" />
+
+			<escidocMetadataRecords:md-records>
+				<escidocMetadataRecords:md-record
+					name="md2" schema="http://www.escidoc-project.de/metadata/schema/0.1">
+					<md2-content />
+				</escidocMetadataRecords:md-record>
+
+				<escidocMetadataRecords:md-record
+					xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5"
+					name="escidoc" schema="http://www.escidoc-project.de/metadata/schema/0.1"
+					xlink:title="eSciDoc internal MD Record" xlink:type="simple">
+					<publication type="book-item"
+						prefix-xsi:schemaLocation="http://escidoc.mpg.de/metadataprofile/schema/0.1/ ../escidocprofile.xsd"
+						xmlns="http://escidoc.mpg.de/metadataprofile/schema/0.1/"
+						xmlns:prefix-dc="http://purl.org/dc/elements/1.1/"
+						xmlns:prefix-dcterms="http://purl.org/dc/terms/"
+						xmlns:e="http://escidoc.mpg.de/metadataprofile/schema/0.1/types"
+						xmlns:eidt="http://escidoc.mpg.de/metadataprofile/schema/0.1/idtypes"
+						xmlns:prefix-xsi="http://www.w3.org/2001/XMLSchema-instance">
+						<e:creator role="author">
+							<e:person>
+								<e:complete-name>
+									Arno Schindlmayr \a
+						</e:complete-name>
+								<e:family-name>Schindlmayr</e:family-name>
+								<e:given-name>Arno</e:given-name>
+								<e:organization>
+									<e:organization-name>
+										Forschungszentrum
+							</e:organization-name>
+									<e:address>52425 ch, Germany</e:address>
+									<e:identifier prefix-xsi:type="eidt:ESCIDOC">
+										escidoc:persistent1
+							</e:identifier>
+								</e:organization>
+							</e:person>
+						</e:creator>
+						<e:creator role="author">
+							<e:person>
+								<e:complete-name>
+									Matthias Scheffler
+						</e:complete-name>
+								<e:family-name>Scheffler</e:family-name>
+								<e:given-name>Matthias</e:given-name>
+								<e:organization>
+									<e:organization-name>
+										Fritz-Haber-Institut/Theory
+							</e:organization-name>
+									<e:address>
+										Faradayweg 4-6, 14195 Berlin
+							</e:address>
+									<e:identifier prefix-xsi:type="eidt:ESCIDOC">
+										escidoc:persistent1
+							</e:identifier>
+								</e:organization>
+							</e:person>
+						</e:creator>
+						<prefix-dc:title xml:lang="en-US">
+							Quasiparticle calculations for point defects at
+							semiconductor surfaces
+				</prefix-dc:title>
+						<prefix-dc:language prefix-xsi:type="prefix-dcterms:RFC3066">
+							en
+				</prefix-dc:language>
+						<prefix-dc:identifier prefix-xsi:type="eidt:DOI">
+							10.1007/11690320_8
+				</prefix-dc:identifier>
+						<prefix-dc:identifier prefix-xsi:type="eidt:EDOC">
+							290886
+				</prefix-dc:identifier>
+						<prefix-dc:identifier prefix-xsi:type="prefix-dcterms:URI">
+							http://www.springerlink.com/content/4877p75301w53364/fulltext.pdf
+						</prefix-dc:identifier>
+						<prefix-dcterms:issued prefix-xsi:type="prefix-dcterms:W3CDTF">
+							2006-11-13
+				</prefix-dcterms:issued>
+						<e:review-method>peer</e:review-method>
+						<e:source>
+							<prefix-dc:title>
+								Theory of Defects in Semiconductors
+					</prefix-dc:title>
+							<e:creator role="editor">
+								<e:person>
+									<e:complete-name>
+										David A. Drabold
+							</e:complete-name>
+								</e:person>
+							</e:creator>
+							<e:creator role="editor">
+								<e:person>
+									<e:complete-name>
+										Stefan K. Estreicher
+							</e:complete-name>
+								</e:person>
+							</e:creator>
+							<e:volume>104</e:volume>
+							<e:start-page>165</e:start-page>
+							<e:end-page>192</e:end-page>
+							<prefix-dc:identifier prefix-xsi:type="eidt:ISBN">
+								978-3-540-33400-2
+					</prefix-dc:identifier>
+							<prefix-dc:identifier prefix-xsi:type="eidt:DOI">
+								10.1007/11690320
+					</prefix-dc:identifier>
+							<prefix-dc:identifier prefix-xsi:type="prefix-dcterms:URI">
+								http://www.springerlink.com/content/978-3-540-33400-2/
+							</prefix-dc:identifier>
+							<e:source>
+								<prefix-dc:title>
+									Topics in Applied Physics
+						</prefix-dc:title>
+								<prefix-dc:identifier prefix-xsi:type="eidt:ISSN">
+									1437-0859
+						</prefix-dc:identifier>
+							</e:source>
+						</e:source>
+						<prefix-dcterms:abstract xml:lang="en-US">
+							Some content
+				</prefix-dcterms:abstract>
+						<prefix-dc:subject>
+							Physics ; Astronomy
+				</prefix-dc:subject>
+					</publication>
+				</escidocMetadataRecords:md-record>
+			</escidocMetadataRecords:md-records>
+
+		</escidocComponents:component>
+		<escidocComponents:component>
+			<escidocComponents:properties>
+				<prop:valid-status>valid</prop:valid-status>
+				<prop:visibility>public</prop:visibility>
+				<prop:content-category>pre-print</prop:content-category>
+			</escidocComponents:properties>
+			<escidocComponents:content
+				xlink:href="http://localhost:8080/images/escidoc-banner.jpg"
+				storage="internal-managed" />
+
+			<escidocMetadataRecords:md-records>
+				<escidocMetadataRecords:md-record
+					name="md2" schema="http://www.escidoc-project.de/metadata/schema/0.1">
+					<md2-content />
+				</escidocMetadataRecords:md-record>
+
+				<escidocMetadataRecords:md-record
+					xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5"
+					name="escidoc" schema="http://www.escidoc-project.de/metadata/schema/0.1"
+					xlink:title="eSciDoc internal MD Record" xlink:type="simple">
+					<publication type="book-item"
+						prefix-xsi:schemaLocation="http://escidoc.mpg.de/metadataprofile/schema/0.1/ ../escidocprofile.xsd"
+						xmlns="http://escidoc.mpg.de/metadataprofile/schema/0.1/"
+						xmlns:prefix-dc="http://purl.org/dc/elements/1.1/"
+						xmlns:prefix-dcterms="http://purl.org/dc/terms/"
+						xmlns:e="http://escidoc.mpg.de/metadataprofile/schema/0.1/types"
+						xmlns:eidt="http://escidoc.mpg.de/metadataprofile/schema/0.1/idtypes"
+						xmlns:prefix-xsi="http://www.w3.org/2001/XMLSchema-instance">
+						<e:creator role="author">
+							<e:person>
+								<e:complete-name>
+									Arno Schindlmayr \a
+						</e:complete-name>
+								<e:family-name>Schindlmayr</e:family-name>
+								<e:given-name>Arno</e:given-name>
+								<e:organization>
+									<e:organization-name>
+										Forschungszentrum
+							</e:organization-name>
+									<e:address>52425 ch, Germany</e:address>
+									<e:identifier prefix-xsi:type="eidt:ESCIDOC">
+										escidoc:persistent1
+							</e:identifier>
+								</e:organization>
+							</e:person>
+						</e:creator>
+						<e:creator role="author">
+							<e:person>
+								<e:complete-name>
+									Matthias Scheffler
+						</e:complete-name>
+								<e:family-name>Scheffler</e:family-name>
+								<e:given-name>Matthias</e:given-name>
+								<e:organization>
+									<e:organization-name>
+										Fritz-Haber-Institut/Theory
+							</e:organization-name>
+									<e:address>
+										Faradayweg 4-6, 14195 Berlin
+							</e:address>
+									<e:identifier prefix-xsi:type="eidt:ESCIDOC">
+										escidoc:persistent1
+							</e:identifier>
+								</e:organization>
+							</e:person>
+						</e:creator>
+						<prefix-dc:title xml:lang="en-US">
+							Quasiparticle calculations for point defects at
+							semiconductor surfaces
+				</prefix-dc:title>
+						<prefix-dc:language prefix-xsi:type="prefix-dcterms:RFC3066">
+							en
+				</prefix-dc:language>
+						<prefix-dc:identifier prefix-xsi:type="eidt:DOI">
+							10.1007/11690320_8
+				</prefix-dc:identifier>
+						<prefix-dc:identifier prefix-xsi:type="eidt:EDOC">
+							290886
+				</prefix-dc:identifier>
+						<prefix-dc:identifier prefix-xsi:type="prefix-dcterms:URI">
+							http://www.springerlink.com/content/4877p75301w53364/fulltext.pdf
+						</prefix-dc:identifier>
+						<prefix-dcterms:issued prefix-xsi:type="prefix-dcterms:W3CDTF">
+							2006-11-13
+				</prefix-dcterms:issued>
+						<e:review-method>peer</e:review-method>
+						<e:source>
+							<prefix-dc:title>
+								Theory of Defects in Semiconductors
+					</prefix-dc:title>
+							<e:creator role="editor">
+								<e:person>
+									<e:complete-name>
+										David A. Drabold
+							</e:complete-name>
+								</e:person>
+							</e:creator>
+							<e:creator role="editor">
+								<e:person>
+									<e:complete-name>
+										Stefan K. Estreicher
+							</e:complete-name>
+								</e:person>
+							</e:creator>
+							<e:volume>104</e:volume>
+							<e:start-page>165</e:start-page>
+							<e:end-page>192</e:end-page>
+							<prefix-dc:identifier prefix-xsi:type="eidt:ISBN">
+								978-3-540-33400-2
+					</prefix-dc:identifier>
+							<prefix-dc:identifier prefix-xsi:type="eidt:DOI">
+								10.1007/11690320
+					</prefix-dc:identifier>
+							<prefix-dc:identifier prefix-xsi:type="prefix-dcterms:URI">
+								http://www.springerlink.com/content/978-3-540-33400-2/
+							</prefix-dc:identifier>
+							<e:source>
+								<prefix-dc:title>
+									Topics in Applied Physics
+						</prefix-dc:title>
+								<prefix-dc:identifier prefix-xsi:type="eidt:ISSN">
+									1437-0859
+						</prefix-dc:identifier>
+							</e:source>
+						</e:source>
+						<prefix-dcterms:abstract xml:lang="en-US">
+							Some content
+				</prefix-dcterms:abstract>
+						<prefix-dc:subject>
+							Physics ; Astronomy
+				</prefix-dc:subject>
+					</publication>
+				</escidocMetadataRecords:md-record>
+			</escidocMetadataRecords:md-records>
+
+		</escidocComponents:component>
+
+	</escidocComponents:components>
+
+</escidocItem:item>
+

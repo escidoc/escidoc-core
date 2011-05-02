@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<results:results
+  xmlns:results="http://www.escidoc.de/schemas/pdp/0.2/results"
+  xmlns:xacml-context="urn:oasis:names:tc:xacml:1.0:context">
+  <results:result decision="permit">
+    <xacml-context:Response>
+      <xacml-context:Result>
+        <xacml-context:Decision>Permit</xacml-context:Decision>
+        <xacml-context:Status>
+          <xacml-context:StatusCode 
+            Value="urn:oasis:names:tc:xacml:1.0:status:ok"/>
+        </xacml-context:Status>
+      </xacml-context:Result>
+    </xacml-context:Response>
+  </results:result>
+  <results:result decision="deny">
+    <xacml-context:Response>
+      <xacml-context:Result>
+        <xacml-context:Decision>NotApplicable</xacml-context:Decision>
+        <xacml-context:Status>
+          <xacml-context:StatusCode 
+            Value="urn:oasis:names:tc:xacml:1.0:status:ok"/>
+        </xacml-context:Status>
+      </xacml-context:Result>
+    </xacml-context:Response>
+  </results:result>
+</results:results>

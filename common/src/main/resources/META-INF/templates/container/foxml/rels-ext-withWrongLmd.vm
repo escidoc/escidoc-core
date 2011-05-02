@@ -1,0 +1,44 @@
+<foxml:datastream CONTROL_GROUP="X" ID="RELS-EXT" VERSIONABLE="false">
+<foxml:datastreamVersion ID="RELS-EXT.0" MIMETYPE="text/xml" LABEL="">
+<foxml:xmlContent>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:${escidocPropertiesNamespacePrefix}="${escidocPropertiesNamespace}" xmlns:${escidocPropertiesVersionNamespacePrefix}="${escidocPropertiesVersionNamespace}" xmlns:${structuralRelationsNamespacePrefix}="${structRelationsNamespace}" #if(${escidocPropertiesReleaseNamespace})xmlns:${escidocPropertiesReleaseNamespacePrefix}="${escidocPropertiesReleaseNamespace}"#end xmlns:system="http://escidoc.de/core/01/system/">
+<rdf:Description rdf:about="info:fedora/${OBJID}">
+<system:build>${BUILD_NUMBER}</system:build>
+#foreach( $key in $properties.keySet() )
+<${escidocPropertiesNamespacePrefix}:$key>$properties.get($key)</${escidocPropertiesNamespacePrefix}:$key>
+#end
+#foreach( $key in $propertiesAsReferences.keySet())
+<${structuralRelationsNamespacePrefix}:$key rdf:resource="info:fedora/$propertiesAsReferences.get($key)" />
+#end
+<rdf:type rdf:resource="${resourcesOntologiesNamespace}Container"/>
+<${escidocPropertiesVersionNamespacePrefix}:date>$latestVersionDate</${escidocPropertiesVersionNamespacePrefix}:date>
+<${escidocPropertiesVersionNamespacePrefix}:number>1</${escidocPropertiesVersionNamespacePrefix}:number>
+<${escidocPropertiesVersionNamespacePrefix}:status>${VERSION_STATUS}</${escidocPropertiesVersionNamespacePrefix}:status>
+##
+<${escidocPropertiesNamespacePrefix}:created-by-title>#escT($latestVersionUserTitle)</${escidocPropertiesNamespacePrefix}:created-by-title>
+<${escidocPropertiesNamespacePrefix}:modified-by-title>#escT($latestVersionUserTitle)</${escidocPropertiesNamespacePrefix}:modified-by-title>
+##
+<${escidocPropertiesVersionNamespacePrefix}:comment>#escT($latestVersionComment)</${escidocPropertiesVersionNamespacePrefix}:comment>
+#if(${OBJECT_PID})<${escidocPropertiesNamespacePrefix}:pid>${OBJECT_PID}</${escidocPropertiesNamespacePrefix}:pid>#end
+##
+#if(${LATEST_RELEASE_NUMBER})
+<${escidocPropertiesReleaseNamespacePrefix}:number>${LATEST_RELEASE_NUMBER}</${escidocPropertiesReleaseNamespacePrefix}:number>
+<${escidocPropertiesReleaseNamespacePrefix}:date>${LATEST_RELEASE_DATE}</${escidocPropertiesReleaseNamespacePrefix}:date>
+#end
+#if(${LATEST_RELEASE_PID})
+<${escidocPropertiesReleaseNamespacePrefix}:pid>${LATEST_RELEASE_PID}</${escidocPropertiesReleaseNamespacePrefix}:pid>
+#end
+##
+#if( ${members} )
+#foreach( $member in $members )
+<${structuralRelationsNamespacePrefix}:member rdf:resource="info:fedora/${member}" />
+#end #end
+#if( ${contentRelations} )
+#foreach( $relation in $contentRelations)
+	<${contentRelationsNamespacePrefix}:$relation.predicateValue rdf:resource="info:fedora/$relation.target" xmlns:${contentRelationsNamespacePrefix}="${relation.predicateNs}/"/>
+#end #end
+</rdf:Description>
+</rdf:RDF>
+</foxml:xmlContent>
+</foxml:datastreamVersion>
+</foxml:datastream>

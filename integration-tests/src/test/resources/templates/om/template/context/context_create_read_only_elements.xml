@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<prefix-context:context
+	xmlns:prefix-context="http://www.escidoc.de/schemas/context/0.7"
+	xmlns:prop="http://escidoc.de/core/01/properties/"
+	xmlns:srel="http://escidoc.de/core/01/structural-relations/"
+	xmlns:prefix-xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:prefix-xlink="http://www.w3.org/1999/xlink"
+	xml:base="http://localhost:8080" objid=""
+	prefix-xlink:title="A new PubMan Context" prefix-xlink:type="simple"
+	prefix-xlink:href="" last-modification-date="">
+
+	<prefix-context:properties prefix-xlink:type="simple"
+		prefix-xlink:title="Properties">
+		<prop:name>MPIWG Collection1</prop:name>
+		<prop:description>Test Context</prop:description>
+		<prop:creation-date>
+			2007-01-16T11:23:24.359Z
+		</prop:creation-date>
+		<prop:status>opened</prop:status>
+		<prop:type>PubMan</prop:type>
+		<srel:created-by prefix-xlink:type="simple"
+			prefix-xlink:title="Creator"
+			prefix-xlink:href="/aa/user-account/escidoc:user42" />
+		<prop:organizational-units>
+			<srel:organizational-unit
+				prefix-xlink:title="Department Research and Development"
+				prefix-xlink:href="/oum/organizational-unit/escidoc:persistent1"
+				prefix-xlink:type="simple" />
+		</prop:organizational-units>
+
+		<prop:last-modification-date>
+			2007-02-06T09:27:14.109Z
+		</prop:last-modification-date>
+	</prefix-context:properties>
+	<prefix-context:resources
+		xmlns:prefix-resources="http://www.escidoc.de/schemas/resources/0.1"
+		xmlns:prefix-xlink="http://www.w3.org/1999/xlink" prefix-xlink:href=""
+		prefix-xlink:title="Virtual Resources">
+	</prefix-context:resources>
+	<prefix-context:admin-descriptors>
+		<prefix-context:admin-descriptor
+			name="descriptor_for_webservice">
+			<prefix-context:properties>
+				<prefix-context:description>
+					SWB Collection 1 descriptor
+				</prefix-context:description>
+			</prefix-context:properties>
+			<prefix-context:allowed-content-types>
+				<prefix-context:allowed-content-type>
+					<prefix-context:allowed-md-schema />
+				</prefix-context:allowed-content-type>
+			</prefix-context:allowed-content-types>
+			<prefix-context:webservices>
+				<prefix-context:webservice
+					prefix-xlink:title="title for webservice"
+					prefix-xlink:type="simple">
+					<prefix-context:description>
+						ws1-desc
+					</prefix-context:description>
+					<prefix-context:service>
+						ws1-service
+					</prefix-context:service>
+					<prefix-context:parameters>
+						ws1-param
+					</prefix-context:parameters>
+				</prefix-context:webservice>
+				<prefix-context:webservice
+					prefix-xlink:title="title for webservice"
+					prefix-xlink:type="simple">
+					<prefix-context:description>
+						ws2-desc
+					</prefix-context:description>
+					<prefix-context:service>
+						ws2-service
+					</prefix-context:service>
+					<prefix-context:parameters>
+						ws2-param
+					</prefix-context:parameters>
+				</prefix-context:webservice>
+			</prefix-context:webservices>
+			<prefix-context:authority-files>
+				<prefix-context:authority-file></prefix-context:authority-file>
+				<prefix-context:authority-file></prefix-context:authority-file>
+			</prefix-context:authority-files>
+			<prefix-context:submission-methods>
+				<prefix-context:method>
+					ingestion
+				</prefix-context:method>
+				<prefix-context:method>
+					single-submission
+				</prefix-context:method>
+				<prefix-context:method>
+					multiple-submission
+				</prefix-context:method>
+			</prefix-context:submission-methods>
+			<prefix-context:relation-types>
+				<prefix-context:relation-type></prefix-context:relation-type>
+				<prefix-context:relation-type></prefix-context:relation-type>
+				<prefix-context:relation-type></prefix-context:relation-type>
+			</prefix-context:relation-types>
+
+			<prefix-context:component-visibility>
+				public
+			</prefix-context:component-visibility>
+			<prefix-context:visibility-of-references></prefix-context:visibility-of-references>
+			<prefix-context:visibility-of-annotations></prefix-context:visibility-of-annotations>
+		</prefix-context:admin-descriptor>
+	</prefix-context:admin-descriptors>
+</prefix-context:context>

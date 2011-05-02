@@ -1,0 +1,10 @@
+#set($unescapedName="#unesc(${contentStreamName})")
+#set($unescapedTitle="#unesc(${contentStreamTitle})")
+<${contentStreamsNamespacePrefix}:content-stream #insertConditionalAttribute( ${ORIGIN} "inherited") name="#escA($unescapedName)"
+ #restInsertConditionalRoot( ${isRootContentStream} "false" "false" ${contentStreamsNamespacePrefix} ${contentStreamsNamespace} "#escA(${unescapedTitle})" ${contentStreamHref} ${LAST_MODIFICATION_DATE})
+ mime-type="${contentStreamMimeType}" storage="${contentStreamStorage}"
+ #if(${contentStreamContent})
+ >${contentStreamContent}</${contentStreamsNamespacePrefix}:content-stream>
+ #else
+ />
+ #end

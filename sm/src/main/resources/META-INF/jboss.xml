@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE jboss PUBLIC
+        "-//JBoss//DTD JBOSS 4.0//EN"
+        "http://www.jboss.org/j2ee/dtd/jboss_5_0.dtd">
+<jboss>
+
+    <security-domain>java:/jaas/escidoc</security-domain>
+
+    <enterprise-beans>
+        <session>
+            <ejb-name>ScopeHandler</ejb-name>
+            <jndi-name>ejb/ScopeHandler</jndi-name>
+            <local-jndi-name>ejb/ScopeHandlerLocal</local-jndi-name>
+        </session>
+        <session>
+            <ejb-name>StatisticDataHandler</ejb-name>
+            <jndi-name>ejb/StatisticDataHandler</jndi-name>
+            <local-jndi-name>ejb/StatisticDataHandlerLocal</local-jndi-name>
+        </session>
+        <session>
+            <ejb-name>PreprocessingHandler</ejb-name>
+            <jndi-name>ejb/PreprocessingHandler</jndi-name>
+            <local-jndi-name>ejb/PreprocessingHandlerLocal</local-jndi-name>
+        </session>
+        <session>
+            <ejb-name>ReportDefinitionHandler</ejb-name>
+            <jndi-name>ejb/ReportDefinitionHandler</jndi-name>
+            <local-jndi-name>ejb/ReportDefinitionHandlerLocal</local-jndi-name>
+        </session>
+        <session>
+            <ejb-name>AggregationDefinitionHandler</ejb-name>
+            <jndi-name>ejb/AggregationDefinitionHandler</jndi-name>
+            <local-jndi-name>ejb/AggregationDefinitionHandlerLocal</local-jndi-name>
+        </session>
+        <session>
+            <ejb-name>ReportHandler</ejb-name>
+            <jndi-name>ejb/ReportHandler</jndi-name>
+            <local-jndi-name>ejb/ReportHandlerLocal</local-jndi-name>
+        </session>
+    </enterprise-beans>
+
+</jboss>

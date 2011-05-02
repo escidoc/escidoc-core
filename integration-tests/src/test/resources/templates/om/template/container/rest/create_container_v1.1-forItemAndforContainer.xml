@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- item: 12121 Version 0.6, updated: 21.11.2006-->
+<prefix-container:container xml:base="http://www.escidoc.de/"
+	xmlns="http://www.escidoc.de/schemas/container/0.9"
+	xmlns:prefix-container="http://www.escidoc.de/schemas/container/0.9"
+	xmlns:prop="http://escidoc.de/core/01/properties/"
+	xmlns:srel="http://escidoc.de/core/01/structural-relations/"
+	xmlns:version="http://escidoc.de/core/01/properties/version/"
+	xmlns:release="http://escidoc.de/core/01/properties/release/"
+	xmlns:struct-map="http://www.escidoc.de/schemas/structmap/0.4"
+	xmlns:prefix-metadata-records="http://www.escidoc.de/schemas/metadatarecords/0.5"
+	
+	xmlns:prefix-member-ref-list2="http://www.escidoc.de/schemas/memberreflist/0.2"
+	xmlns:prefix-dc="http://purl.org/dc/elements/1.0/"
+	xmlns:prefix-xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:prefix-xlink="http://www.w3.org/1999/xlink">
+	<!--  container:properties  -->
+	<prefix-container:properties>
+		<prop:name>Name</prop:name>
+		<prop:description>Description</prop:description>
+
+		<srel:context
+			prefix-xlink:href="/ir/context/escidoc:persistent3" />
+		<srel:content-model
+			prefix-xlink:href="/cmm/content-model/escidoc:persistent6" />
+		<prop:content-model-specific>
+			<xxx />
+		</prop:content-model-specific>
+		<!--container:admin-descriptor prefix-xlink:href="/ir/admin-descriptor/escidoc:10012"/-->
+	</prefix-container:properties>
+	<!-- metadata-records:md-records  -->
+	<prefix-metadata-records:md-records>
+		<prefix-metadata-records:md-record
+			schema="http://www.escidoc-project.de/metadata/schema/0.1"
+			name="escidoc">
+			<collection
+				xmlns="http://escidoc.mpg.de/metadataprofile/schema/0.1/"
+				xmlns:prefix-dc="http://purl.org/dc/elements/1.1/">
+				<prefix-dc:title>the title</prefix-dc:title>
+			</collection>
+		</prefix-metadata-records:md-record>
+	</prefix-metadata-records:md-records>
+	<!--  struct-map:struct-map  (or "members")-->
+	<struct-map:struct-map prefix-xlink:type="simple">
+	<srel:item prefix-xlink:type="simple"
+					prefix-xlink:href="/ir/item/##ITEMID##"/>
+	<srel:container prefix-xlink:type="simple"
+					prefix-xlink:href="/ir/container/##CONTAINERID##"/>
+	</struct-map:struct-map>
+	<!--  tocs:tocs  -->
+	<!--prefix-toc:toc pid="hdl:10231/1:1232" prefix-xlink:type="simple" prefix-xlink:title="tocs" prefix-xlink:href="/ir/container/escidoc:23233/toc">
+		<prefix-struct-map:member prefix-xlink:title="Interviewer Introduction" prefix-xlink:type="simple" prefix-xlink:href="/ir/container/escidoc:23232"/>
+		<prefix-struct-map:member prefix-xlink:title="Family History" prefix-xlink:href="/ir/item/escidoc:12121"/>
+		<prefix-struct-map:member prefix-xlink:title="General History" prefix-xlink:href="/ir/item/escidoc:12122"/>
+		</prefix-toc:toc-->
+	
+	<!-- relations:relations -->
+	<!-- will be defined later -->
+	<!--  struct-map:struct-map  -->
+	<!--  struct-map:struct-map  (or "members")-->
+</prefix-container:container>

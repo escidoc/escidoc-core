@@ -1,0 +1,46 @@
+<chapter id="ReportDefinition">
+	<title>Resource ReportDefinition</title>
+	<para>
+		To be able to generate different reports out of the 
+		aggregation-tables, the system uses report-definitions. 
+		A report-definition describes how to build a report, especially 
+		what data to extract out of which aggregation-tables. The data of the 
+		element &lt;sql&gt; has to be complient to the SQL-92-standard.		
+	</para>
+	<para>
+		Report-definitions can get created, modified, retrieved and deleted. 
+	</para>
+	<para>
+		Parameters and return-values of the interface-calls are xml-records according to 
+		the report-definition-schema. The xml-record contains the root-element with an attribute objid 
+		that holds the primary-key of the report-definition.
+		The root-element has three sub-elements:
+		'name' holds the name of the report-definition.
+		'scope' that holds the scope
+		'sql' that holds the sql-statement that has to get 
+		executed when creating a statistic-report (see interface 'Report').
+		In the sql-statement, it is possible to define placeholders. 
+		Placeholders are written in curly brackets. 
+		The values for the placeholders can get defined 
+		when creating a statistic report (see interface 'Report'). 
+	</para>
+	<para>
+		The Statistic Manager Component also provides an interface to retrieve a 
+		list of Report Definitions. The list only contains these Report Definitions 
+		the user has permissions to see (see chapter security concept).		
+	</para>
+	<para>
+		Each report-definition belongs to a statistic-scope. 
+		A report-definition can only acces aggregation-tables that belong to 
+		the same statistic-scope defined in the report-definition.		
+	</para>
+	<para>
+		The user who calls the interface has to have permissions to manage 
+		content of the scope defined in the report-definition-xml.		
+	</para>
+    <para>
+        The ReportDefinitionHandler also provides a method to retrieve a 
+        filtered list of Report-Definitions. The list only contains these Report-Definitions 
+        the user is allowed to see (see chapter ‘security concept’).        
+    </para>
+</chapter>

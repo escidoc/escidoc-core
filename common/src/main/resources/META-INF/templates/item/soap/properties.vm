@@ -1,0 +1,45 @@
+<${itemNamespacePrefix}:properties #versionReleaseRootNsDecls (${isRootProperties}) #soapInsertConditionalRoot(${isRootProperties} "true" "true" ${itemNamespacePrefix} ${itemNamespace} false ${LAST_MODIFICATION_DATE})>
+#creationDate(${itemCreationDate})
+#soapCreatedBy(${itemCreatedById}) 
+    #publicStatus(${itemStatus})
+    #xmlElement(${escidocPropertiesNamespacePrefix} "public-status-comment" "" ${itemStatusComment})
+    #soapContext(${itemContextId})
+    #soapContentModel(${itemContentModelId})
+    #if (${ORIGIN})
+    #soapOrigin(${originId})
+    #end
+    #xmlElement(${escidocPropertiesNamespacePrefix} "lock-status" "" ${itemLockStatus})
+    #if( $!{itemLockStatus} != "unlocked" )
+    	#xmlElement(${escidocPropertiesNamespacePrefix} "lock-date" "" ${itemLockDate})
+    	#soapLink(${structuralRelationsNamespacePrefix} "lock-owner" ${itemLockOwnerId})
+    #end
+    #if(${itemObjectPid})
+    	#xmlElement(${escidocPropertiesNamespacePrefix} "pid" "" ${itemObjectPid})
+    #end
+    <${escidocPropertiesNamespacePrefix}:version #soapLinkAttributes(${itemVersionId})>
+    	#xmlElement(${versionNamespacePrefix} "number" "" ${itemVersionNumber})
+    	#xmlElement(${versionNamespacePrefix} "date" "" ${itemVersionDate})
+    	#xmlElement(${versionNamespacePrefix} "status" "" ${itemVersionStatus})
+    	#soapModifiedBy( ${itemVersionModifiedById})
+    
+    	#xmlElement(${versionNamespacePrefix} "comment" "" ${itemVersionComment})
+    	#if(${itemVersionPid})
+	    	#xmlElement(${versionNamespacePrefix} "pid" "" ${itemVersionPid})
+    	#end
+    </${escidocPropertiesNamespacePrefix}:version>
+    <${escidocPropertiesNamespacePrefix}:latest-version #soapLinkAttributes(${itemLatestVersionId})>
+    	#xmlElement(	${versionNamespacePrefix} "number" "" ${itemLatestVersionNumber})
+    	#xmlElement(	${versionNamespacePrefix} "date" "" ${itemLatestVersionDate})
+    </${escidocPropertiesNamespacePrefix}:latest-version>
+    #if( ${itemLatestReleaseNumber} )
+	    <${escidocPropertiesNamespacePrefix}:latest-release #soapLinkAttributes(${itemLatestReleaseId})>
+    		#xmlElement(${releaseNamespacePrefix} "number" "" ${itemLatestReleaseNumber})
+	    	#xmlElement(${releaseNamespacePrefix} "date" "" ${itemLatestReleaseDate})
+	    	#if(${itemLatestReleasePid})
+	    		#xmlElement(	${releaseNamespacePrefix} "pid" "" ${itemLatestReleasePid})
+	    	#end
+	    </${escidocPropertiesNamespacePrefix}:latest-release>
+    #end
+    #if(${itemContentModelSpecific})${itemContentModelSpecific}#end
+</${itemNamespacePrefix}:properties>
+	

@@ -1,0 +1,9 @@
+<${contentRelationsNamespacePrefix}:relations 
+#restInsertConditionalRoot(${isRootRelations} "false" "false" ${contentRelationsNamespacePrefix} ${contentRelationsNamespace} ${contentRelationsTitle} ${contentRelationsHref} ${LAST_MODIFICATION_DATE})>
+#if($contentRelations)
+#foreach( $entry in $contentRelations )
+#set($unescapedTargetTitle="#unesc(${entry.targetTitle})")
+<${contentRelationsNamespacePrefix}:relation predicate="${entry.predicate}" #restLinkAttributes("#escA($unescapedTargetTitle)" ${entry.targetHref})/>
+#end
+#end
+</${contentRelationsNamespacePrefix}:relations>

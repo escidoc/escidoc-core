@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ CDDL HEADER START
+  ~
+  ~ The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+  ~ only (the "License"). You may not use this file except in compliance with the License.
+  ~
+  ~ You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License
+  ~ for the specific language governing permissions and limitations under the License.
+  ~
+  ~ When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+  ~ license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+  ~ brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
+  ~
+  ~ CDDL HEADER END
+  ~
+  ~ Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+  ~ and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+  ~ terms.
+  -->
+
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<!-- ===================================================================== -->
+<!--                                                                       -->
+<!--  Log4j Configuration                                                  -->
+<!--                                                                       -->
+<!-- ===================================================================== -->
+
+<!-- $Id: jboss-log4j.xml 75507 2008-07-08 20:15:07Z stan.silvert@jboss.com $ -->
+
+<!--
+   | For more configuration infromation and examples see the Jakarta Log4j
+   | owebsite: http://jakarta.apache.org/log4j
+ -->
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="false">
+
+   <!-- ================================= -->
+   <!-- Preserve messages in a local file -->
+   <!-- ================================= -->
+
+   <!-- A time/date based rolling appender -->
+   <appender name="FILE" class="org.jboss.logging.appender.DailyRollingFileAppender">
+      <errorHandler class="org.jboss.logging.util.OnlyOnceErrorHandler"/>
+      <param name="File" value="${jboss.server.log.dir}/server.log"/>
+      <param name="Threshold" value="INFO"/>
+      <param name="Append" value="false"/>
+
+      <!-- Rollover at midnight each day -->
+      <param name="DatePattern" value="'.'yyyy-MM-dd"/>
+
+      <!-- Rollover at the top of each hour
+      <param name="DatePattern" value="'.'yyyy-MM-dd-HH"/>
+      -->
+
+      <layout class="org.apache.log4j.PatternLayout">
+         <!-- The default pattern: Date Priority [Category] Message\n -->
+         <param name="ConversionPattern" value="%d %-5p [%c] %m%n"/>
+
+         <!-- The full pattern: Date MS Priority [Category] (Thread:NDC) Message\n
+         <param name="ConversionPattern" value="%d %-5r %-5p [%c] (%t:%x) %m%n"/>
+          -->
+      </layout>
+   </appender>
+
+   <!-- ============================== -->
+   <!-- Append messages to the console -->
+   <!-- ============================== -->
+
+   <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+      <errorHandler class="org.jboss.logging.util.OnlyOnceErrorHandler"/>
+      <param name="Target" value="System.out"/>
+      <param name="Threshold" value="INFO"/>
+
+      <layout class="org.apache.log4j.PatternLayout">
+         <!-- The default pattern: Date Priority [Category] Message\n -->
+         <param name="ConversionPattern" value="%d{ABSOLUTE} %-5p [%c{1}] %m%n"/>
+      </layout>
+   </appender>
+  
+   <!-- ============================================================ -->
+   <!-- Appenders and Loggers used by the eSciDoc-Core Infrastructure -->
+   <!-- ============================================================ -->
+    <appender name="FILEOUT" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="Append" value="true"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd"/>
+        <param name="File" value="${jboss.server.log.dir}/escidoc-core.log"/>
+        <param name="Threshold" value="INFO" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%p %d (%c{1}) %m%n"/>
+        </layout>
+    </appender>
+    
+    <appender name="INDEXERERROR" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="Append" value="true"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd"/>
+        <param name="File" value="${jboss.server.log.dir}/indexer-errors.log"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%p %d %m%n"/>
+        </layout>
+    </appender>
+    
+    <appender name="STATISTICSERROR" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="Append" value="true"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd"/>
+        <param name="File" value="${jboss.server.log.dir}/statistics-errors.log"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%p %d %m%n"/>
+        </layout>
+    </appender>
+    
+    <appender name="STATISTICSPREPROCESSINGERROR" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="Append" value="true"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd"/>
+        <param name="File" value="${jboss.server.log.dir}/statistics-preprocessing-errors.log"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%p %d %m%n"/>
+        </layout>
+    </appender>
+
+    <appender name="TRACE" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="Append" value="true"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd"/>
+        <param name="File" value="${jboss.server.home.dir}/log/trace.log"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%p %d %m%n"/>
+        </layout>
+    </appender>
+
+	<category name="de.escidoc.core.common.servlet">
+		<priority value="WARN" />
+	</category>
+    
+    <category name="org.apache">
+		<priority value="WARN" />
+	</category>
+    
+    <category name="org.apache.axis">
+		<priority value="'WARN" />
+	</category>
+    
+    <category name="org.hibernate">
+		<priority value="WARN" />
+	</category>
+    
+    <category name="org.nsdl">
+		<priority value="WARN" />
+	</category>
+    
+    <category name="org.springframework">
+		<priority value="WARN" />
+	</category>
+
+   <category name="jacorb">
+      <priority value="WARN"/>
+   </category>
+
+   <category name="org.jgroups">
+      <priority value="WARN"/>
+   </category>
+
+   <category name="org.quartz">
+      <priority value="WARN"/>
+   </category>
+
+   <category name="org.springframework.aop.framework.Cglib2AopProxy">
+      <priority value="ERROR"/>
+   </category>
+
+   <category name="javax.enterprise.resource.webcontainer.jsf">
+      <priority value="WARN" />
+   </category>
+
+   <category name="org.jboss">
+      <priority value="INFO"/>
+   </category>
+
+   <category name="org.jboss.management">
+      <priority value="INFO"/>
+   </category>
+
+   <category name="org.jboss.serial">
+      <priority value="INFO"/>
+   </category>
+
+    <logger name="de.escidoc" additivity="false">
+        <appender-ref ref="FILEOUT"/>
+        <appender-ref ref="FILE"/>
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+
+    <logger name="de.escidoc.core.index.IndexService" additivity="false">
+        <level value="ERROR"/>
+        <appender-ref ref="INDEXERERROR"/>
+    </logger>
+
+    <logger name="de.escidoc.core.statistic.StatisticService" additivity="false">
+        <level value="ERROR"/>
+        <appender-ref ref="STATISTICSERROR"/>
+    </logger>
+
+    <logger name="statistics-preprocessing-errors" additivity="false">
+        <level value="ERROR"/>
+        <appender-ref ref="STATISTICSPREPROCESSINGERROR"/>
+    </logger>
+
+    <logger name="de.escidoc.core.trace" additivity="false">
+        <level value="ERROR"/>
+        <appender-ref ref="TRACE"/>
+    </logger>
+
+   <!-- ======================= -->
+   <!-- Setup the Root category -->
+   <!-- ======================= -->
+   <root>
+      <appender-ref ref="CONSOLE"/>
+      <appender-ref ref="FILE"/>
+   </root>
+
+</log4j:configuration>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<escidocItem:item
+	xmlns:escidocItem="http://www.escidoc.de/schemas/item/0.10"
+	xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5"
+	xmlns:prop="http://escidoc.de/core/01/properties/"
+	xmlns:srel="http://escidoc.de/core/01/structural-relations/"
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	>
+
+	<escidocItem:properties>
+		<srel:context xlink:href="/ir/context/escidoc:ex1" />
+		<srel:content-model
+			xlink:href="/cmm/content-model/escidoc:ex4" />
+		<prop:content-model-specific><cms-prop test="1" /></prop:content-model-specific>
+	</escidocItem:properties>
+
+	<escidocMetadataRecords:md-records>
+		<escidocMetadataRecords:md-record name="escidoc">
+			<metadata />
+		</escidocMetadataRecords:md-record>
+
+	</escidocMetadataRecords:md-records>
+</escidocItem:item>
+

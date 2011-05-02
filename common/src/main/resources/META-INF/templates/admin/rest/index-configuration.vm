@@ -1,0 +1,7 @@
+#parse("common/macros.vm")<${indexConfigurationNamespacePrefix}:index-configuration #namespaceDecl(${indexConfigurationNamespacePrefix} ${indexConfigurationNamespace})>
+ #foreach( $resource in $resources )
+ #set($resourceName = ${resource.resourceName})
+ #set($indexes = ${resource.indexes})
+ #parse("admin/rest/index-configuration-resource.vm")
+ #end
+</${indexConfigurationNamespacePrefix}:index-configuration>

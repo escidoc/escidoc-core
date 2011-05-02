@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="http://localhost:8080/xsl/Resource2Html.xsl"?>
+<report:report xmlns:report="http://www.escidoc.de/schemas/report/0.4" xmlns:srel="http://escidoc.de/core/01/structural-relations/" xmlns:param="http://escidoc.de/core/01/parameter/" xmlns:xlink="http://www.w3.org/1999/xlink" xml:base="http://localhost:8080">
+    <srel:report-definition xlink:type="simple" xlink:title="Report Definition for Report Test" xlink:href="/statistic/report-definition/escidoc:44050" />
+    <report:report-record>
+        <param:parameter name="date">
+            <param:datevalue>1980-03-28T11:00:00.000Z</param:datevalue>
+        </param:parameter>
+        <param:parameter name="year">
+            <param:decimalvalue>3</param:decimalvalue>
+        </param:parameter>
+        <param:parameter name="requests">
+            <param:decimalvalue>3</param:decimalvalue>
+        </param:parameter>
+        <param:parameter name="sessions">
+            <param:decimalvalue>3</param:decimalvalue>
+        </param:parameter>
+    </report:report-record>
+    <report:report-record>
+        <param:parameter name="date">
+            <param:datevalue>1980-02-28T11:00:00.000Z</param:datevalue>
+        </param:parameter>
+        <param:parameter name="year">
+            <param:decimalvalue>2</param:decimalvalue>
+        </param:parameter>
+        <param:parameter name="requests">
+            <param:decimalvalue>6</param:decimalvalue>
+        </param:parameter>
+        <param:parameter name="sessions">
+            <param:decimalvalue>3</param:decimalvalue>
+        </param:parameter>
+    </report:report-record>
+    <report:report-record>
+        <param:parameter name="date">
+            <param:datevalue>1980-01-28T11:00:00.000Z</param:datevalue>
+        </param:parameter>
+        <param:parameter name="year">
+            <param:decimalvalue>1</param:decimalvalue>
+        </param:parameter>
+        <param:parameter name="requests">
+            <param:decimalvalue>9</param:decimalvalue>
+        </param:parameter>
+        <param:parameter name="sessions">
+            <param:decimalvalue>6</param:decimalvalue>
+        </param:parameter>
+    </report:report-record>
+</report:report>

@@ -1,0 +1,28 @@
+
+        <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+          <rdf:Description rdf:about="info:fedora/${OBJID}" xmlns:srel="http://escidoc.de/core/01/structural-relations/" xmlns:prop="http://escidoc.de/core/01/properties/" xmlns:version="http://escidoc.de/core/01/properties/version/">
+			<system:build xmlns:system="http://escidoc.de/core/01/system/">${BUILD_NUMBER}</system:build>
+            <rdf:type rdf:resource="http://escidoc.de/core/01/resources/ContentModel"/>
+            <hasModel rdf:resource="info:fedora/fedora-system:ContentModel-3.0" xmlns="info:fedora/fedora-system:def/model#"/>
+            <srel:created-by rdf:resource="info:fedora/${CREATED_BY_ID}"/>
+            <prop:public-status>${PUBLIC_STATUS}</prop:public-status>
+            <prop:public-status-comment>#escT(${PUBLIC_STATUS_COMMENT})</prop:public-status-comment>
+            <prop:created-by-title>#escT(${CREATED_BY_TITLE})</prop:created-by-title>
+            <version:number>${VERSION_NUMBER}</version:number>
+            <version:date>${VERSION_DATE}</version:date>
+            <version:status>${VERSION_STATUS}</version:status>
+            <srel:modified-by rdf:resource="info:fedora/${MODIFIED_BY_ID}"/>
+            <prop:modified-by-title>#escT(${MODIFIED_BY_TITLE})</prop:modified-by-title>
+            <version:comment>#escT(${VERSION_COMMENT}) Content Model ${OBJID} created.</version:comment>
+#if(${LATEST_RELEASE_NUMBER})
+<${escidocPropertiesReleaseNamespacePrefix}:number>${LATEST_RELEASE_NUMBER}</${escidocPropertiesReleaseNamespacePrefix}:number>
+<${escidocPropertiesReleaseNamespacePrefix}:date>${LATEST_RELEASE_DATE}</${escidocPropertiesReleaseNamespacePrefix}:date>
+#end
+#if(${LATEST_RELEASE_PID})
+<${escidocPropertiesReleaseNamespacePrefix}:pid>${LATEST_RELEASE_PID}</${escidocPropertiesReleaseNamespacePrefix}:pid>
+#end
+#if(${BEHAVIORS})#foreach( $behavior in $BEHAVIORS )
+<hasService rdf:resource="info:fedora/sdef:${OBJID_UNDERSCORE}-${behavior.name}" xmlns="info:fedora/fedora-system:def/model#" />
+#end#end
+          </rdf:Description>
+        </rdf:RDF>

@@ -1,0 +1,97 @@
+<!--
+  ~ CDDL HEADER START
+  ~
+  ~ The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+  ~ only (the "License"). You may not use this file except in compliance with the License.
+  ~
+  ~ You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+  ~ the specific language governing permissions and limitations under the License.
+  ~
+  ~ When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+  ~ license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+  ~ brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
+  ~
+  ~ CDDL HEADER END
+  ~
+  ~ Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+  ~ and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+  ~ terms.
+  -->
+
+<section>
+		<title>Roles and users</title>
+		<para>
+			The infrastructure offers some predefined roles and users.
+		</para>	
+		<section id="Overview.PredefinedRoles">
+			<title>Predefined Roles Overview</title>
+			<para>
+				The following predefined roles exist:
+				<itemizedlist mark="opencircle" spacing="compact">
+					<listitem>
+						<para>System Administrator</para>
+					</listitem>
+					<listitem>
+						<para>System Inspector (Read only super user)</para>
+						<para>A System Inspector is allowed to retrieve any 
+						resource object, but he/she is not allowed to create 
+						or update objects.</para>
+					</listitem>
+					<listitem>
+						<para>Administrator</para>
+					</listitem>
+					<listitem>
+						<para>Depositor</para>
+					</listitem>
+					<listitem>
+						<para>MD-Editor</para>
+					</listitem>
+					<listitem>
+						<para>Moderator</para>
+					</listitem>
+					<listitem>
+						<para>Ingester</para>
+					</listitem>
+                    <listitem>
+                        <para>User Group Administrator</para>
+                    </listitem>
+                    <listitem>
+                        <para>User Group Inspector</para>
+                    </listitem>
+					<listitem>
+						<para>Statistics-Editor</para>
+					</listitem>
+					<listitem>
+						<para>Statistics-Reader</para>
+					</listitem>
+				</itemizedlist>
+				Detailed information about these roles can be found in
+				the section "Predefined Roles" (of the API documentations
+				of the AA component).
+			</para>
+		</section>
+		<section id="Overview.DefaultPrivileges">
+			<title>Default Privileges Overview</title>
+			<para>
+				Besides the defined roles, some default privileges
+				exist for every user, even for the anonymous user, that
+				tries access to the services without providing an
+				eSciDoc user handle. The default privileges are
+				described in the section "Default Privileges" (of the
+				API documentations of the AA component).
+			</para>
+		</section>
+		<section id="Overview.PredefinedUsers">
+			<title>Predefined users</title>
+			<para>
+				If using the installer, 3 users are predefined for testing purposes.
+				1 systemadministrator, 1 systeminspector (read-only administrator) and 1 depositor.
+				While installing you are asked to choose a loginId and password for each
+				of these users.
+				For the systeminspector a persistent handle (=choosen password) is created.
+				This handle never expires, so you always can use the handle without logging in.
+				The handle is needed for the indexing-process that is done by fedoragsearch.
+			</para>
+		</section>
+</section>
+	

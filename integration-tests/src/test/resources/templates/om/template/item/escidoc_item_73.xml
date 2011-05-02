@@ -1,0 +1,247 @@
+<escidocItem:item
+	xmlns:escidocItem="http://www.escidoc.de/schemas/item/0.2"
+	objid="escidoc:73" xmlns:prefix-xlink="http://www.w3.org/1999/xlink"
+	xml:base="http://localhost:8080"
+	prefix-xlink:title="the two mystic scans"
+	modified-date="2006-12-14T14:22:46.68">
+	<escidocItem:properties prefix-xlink:type="simple"
+		prefix-xlink:title="Properties"
+		prefix-xlink:href="/ir/item/escidoc:73/properties">
+		<escidocItem:creation-date>
+			2006-12-12T12:43:37.956
+		</escidocItem:creation-date>
+		<escidocItem:context prefix-xlink:type="simple"
+			prefix-xlink:title="context of escidoc:73"
+			prefix-xlink:href="/ir/context/escidoc:12345" />
+		<escidocItem:content-type prefix-xlink:type="simple"
+			prefix-xlink:title="content-type of escidoc:73"
+			prefix-xlink:href="/ir/content-type/escidoc:65487" />
+		<escidocItem:status>pending</escidocItem:status>
+		<escidocItem:creator prefix-xlink:type="simple"
+			prefix-xlink:title="creator of escidoc:73"
+			prefix-xlink:href="/ir/account/de.escidoc.core.1111" />
+		<escidocItem:lock-status>unlocked</escidocItem:lock-status>
+		<escidocItem:content-type-specific>
+			<a:eins xmlns:a="http://a">1</a:eins>
+			<b:zwei xmlns:b="http://b">2</b:zwei>
+		</escidocItem:content-type-specific>
+		<escidocItem:current-version prefix-xlink:type="simple"
+			prefix-xlink:title="current version"
+			prefix-xlink:href="/ir/item/escidoc:73/properties/current-version">
+			<escidocItem:number>1</escidocItem:number>
+			<escidocItem:date>2006-12-13T13:29:15.059</escidocItem:date>
+			<escidocItem:version-status>
+				pending
+			</escidocItem:version-status>
+			<escidocItem:valid-status>valid</escidocItem:valid-status>
+		</escidocItem:current-version>
+		<escidocItem:latest-version prefix-xlink:type="simple"
+			prefix-xlink:title="latest version"
+			prefix-xlink:href="/ir/item/escidoc:73/properties/latest-version">
+			<escidocItem:number>1</escidocItem:number>
+			<escidocItem:date>2006-12-13T13:29:15.059</escidocItem:date>
+		</escidocItem:latest-version>
+	</escidocItem:properties>
+	<escidocResources:resources
+		xmlns:escidocResources="http://www.escidoc.de/schemas/resources/0.2"
+		xmlns:prefix-xlink="http://www.w3.org/1999/xlink"
+		prefix-xlink:href="/ir/item/escidoc:73/resources"
+		prefix-xlink:title="Virtual Resources">
+		<escidocResources:resource type="mets"
+			prefix-xlink:type="simple"
+			prefix-xlink:href="/ir/item/escidoc:73/resources/resource/mets"
+			prefix-xlink:title="METS-representation of this item" />
+	</escidocResources:resources>
+	<escidocMetadataRecords:md-records
+		xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.3"
+		xmlns:prefix-xlink="http://www.w3.org/1999/xlink"
+		prefix-xlink:type="simple"
+		prefix-xlink:href="/ir/item/escidoc:73/md-records"
+		prefix-xlink:title="Available Metadata">
+		<escidocMetadataRecords:md-record
+			xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.3"
+			xmlns:prefix-xlink="http://www.w3.org/1999/xlink" name="escidoc"
+			schema="http://www.escidoc-project.de/metadata/schema/0.1"
+			prefix-xlink:href="/ir/item/escidoc:73/md-records/md-record/escidoc"
+			prefix-xlink:title="eSciDoc internal MD Record"
+			prefix-xlink:type="simple">
+			<escidocMetadata:escidoc
+				xmlns:escidocMetadata="http://www.escidoc.de/metadata/schema/0.1">
+				<escidocMetadata:genre>Article</escidocMetadata:genre>
+				<escidocMetadata:identifier>
+					<escidocMetadata:id>
+						10.1899/0885-3593(2006)25[61:NVINSE]2.0.CO;2
+					</escidocMetadata:id>
+					<escidocMetadata:id-type>
+						DOI
+					</escidocMetadata:id-type>
+				</escidocMetadata:identifier>
+			</escidocMetadata:escidoc>
+		</escidocMetadataRecords:md-record>
+	</escidocMetadataRecords:md-records>
+	<escidocRelations:relations
+		xmlns:escidocRelations="http://www.escidoc.de/schemas/relations/0.3"
+		prefix-xlink:type="simple"
+		prefix-xlink:href="/ir/item/escidoc:73/relations"
+		prefix-xlink:title="Relations"><!-- FedoraItemHandler.getRelations not implemented --></escidocRelations:relations>
+	<escidocComponents:components
+		xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.9"
+		prefix-xlink:type="simple"
+		prefix-xlink:href="/ir/item/escidoc:73/components"
+		prefix-xlink:title="Components of Item escidoc:73">
+		<escidocComponents:component objid="escidoc:74"
+			prefix-xlink:type="simple"
+			prefix-xlink:href="/ir/item/escidoc:73/components/component/escidoc:74"
+			prefix-xlink:title="page scan 21">
+			<escidocComponents:properties
+				xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.9"
+				xmlns:prefix-xlink="http://www.w3.org/1999/xlink"
+				prefix-xlink:href="/ir/item/escidoc:73/components/component/escidoc:74/properties"
+				prefix-xlink:title="Properties" prefix-xlink:type="simple">
+				<escidocComponents:description>
+					this is the first file PubMa
+				</escidocComponents:description>
+				<escidocComponents:creation-date>
+					2006-06-21T12:00:00.000+01:00
+				</escidocComponents:creation-date>
+				<escidocComponents:status>submitted</escidocComponents:status>
+				<escidocComponents:visibility>public</escidocComponents:visibility>
+				
+				<escidocComponents:creator
+					prefix-xlink:href="/ir/account/creator" prefix-xlink:type="simple" />
+				<escidocComponents:content-category>
+					pre-print
+				</escidocComponents:content-category>
+				<escidocComponents:file-name>publication1.pdf</escidocComponents:file-name>
+				<escidocComponents:mime-type>image/jpg</escidocComponents:mime-type>
+				
+				
+			</escidocComponents:properties>
+			<escidocComponents:content prefix-xlink:type="simple"
+				prefix-xlink:title="the content"
+				prefix-xlink:href="http://escidev6:8082/images/newlogo2.jpg" />
+			<escidocMetadataRecords:md-records
+				xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.3"
+				xmlns:prefix-xlink="http://www.w3.org/1999/xlink"
+				xml:base="http://localhost:8080" prefix-xlink:type="simple"
+				prefix-xlink:href="/ir/item/escidoc:73/components/component/escidoc:74/md-records"
+				prefix-xlink:title="Available Metadata">
+				<escidocMetadataRecords:md-record
+					xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.3"
+					xmlns:prefix-xlink="http://www.w3.org/1999/xlink"
+					name="escidoc"
+					schema="http://www.escidoc.de/schemas/metadatarecords/0.3"
+					prefix-xlink:href="/ir/item/escidoc:73/components/component/escidoc:74/md-records/md-record/escidoc-tech"
+					prefix-xlink:title="escidoc technical metadata"
+					prefix-xlink:type="simple">
+					<jhove></jhove>
+				</escidocMetadataRecords:md-record>
+			</escidocMetadataRecords:md-records>
+			<escidocLicenses:licenses
+				xmlns:escidocLicenses="http://www.escidoc0.2/schemas/licenses/0.1"
+				prefix-xlink:type="simple" prefix-xlink:title="Licenses"
+				prefix-xlink:href="/ir/item/escidoc:73/components/component/escidoc:73/licenses">
+				<escidocLicenses:license>
+					<escidocLicenses:properties>
+						<escidocLicenses:license-type>
+							t
+						</escidocLicenses:license-type>
+						<escidocLicenses:time-frame-start>
+							s
+						</escidocLicenses:time-frame-start>
+						<escidocLicenses:time-frame-end>
+							d
+						</escidocLicenses:time-frame-end>
+						<escidocLicenses:accepted>
+							a
+						</escidocLicenses:accepted>
+					</escidocLicenses:properties>
+				</escidocLicenses:license>
+			</escidocLicenses:licenses>
+		</escidocComponents:component>
+		<escidocComponents:component objid="" prefix-xlink:type="simple"
+			prefix-xlink:href="/ir/item/escidoc:73/components/component/escidoc:111"
+			prefix-xlink:title="page scan 211">
+
+			<escidocComponents:properties
+				xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.9"
+				xmlns:prefix-xlink="http://www.w3.org/1999/xlink"
+				prefix-xlink:href="/ir/item/escidoc:73/components/component/escidoc:111/properties"
+				prefix-xlink:title="Properties" prefix-xlink:type="simple">
+				<escidocComponents:description>
+					this is the first file PubMa
+				</escidocComponents:description>
+				<escidocComponents:creation-date>
+					2006-06-21T12:00:00.000+01:00
+				</escidocComponents:creation-date>
+				<escidocComponents:status>submitted</escidocComponents:status>
+				<escidocComponents:visibility>public</escidocComponents:visibility>
+				
+				<escidocComponents:creator
+					prefix-xlink:href="/ir/account/creator" prefix-xlink:type="simple" />
+				<escidocComponents:content-category>
+					pre-print
+				</escidocComponents:content-category>
+				<escidocComponents:file-name>publication1.pdf</escidocComponents:file-name>
+				<escidocComponents:mime-type>image/jpg</escidocComponents:mime-type>
+				
+			</escidocComponents:properties>
+			<escidocComponents:content prefix-xlink:type="simple"
+				prefix-xlink:title="the content"
+				prefix-xlink:href="http://escidev6:8082/images/newlogo2.jpg" />
+			<escidocMetadataRecords:md-records
+				xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.3"
+				xmlns:prefix-xlink="http://www.w3.org/1999/xlink"
+				xml:base="http://localhost:8080" prefix-xlink:type="simple"
+				prefix-xlink:href="/ir/item/escidoc:73/components/component/escidoc:111/md-records"
+				prefix-xlink:title="Available Metadata">
+				<escidocMetadataRecords:md-record
+					xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.3"
+					xmlns:prefix-xlink="http://www.w3.org/1999/xlink"
+					name="escidoc"
+					schema="http://www.escidoc.de/schemas/metadatarecords/0.3"
+					prefix-xlink:href="/ir/item/escidoc:73/components/component/escidoc:111/md-records/md-record/escidoc-tech"
+					prefix-xlink:title="escidoc technical metadata"
+					prefix-xlink:type="simple">
+					<nix></nix>
+				</escidocMetadataRecords:md-record>
+			</escidocMetadataRecords:md-records>
+			<escidocLicenses:licenses
+				xmlns:escidocLicenses="http://www.escidoc0.2/schemas/licenses/0.1"
+				prefix-xlink:type="simple" prefix-xlink:title="Licenses"
+				prefix-xlink:href="/ir/item/escidoc:73/components/component/escidoc:73/licenses">
+				<escidocLicenses:license>
+					<escidocLicenses:properties>
+						<escidocLicenses:license-type>
+							t
+						</escidocLicenses:license-type>
+						<escidocLicenses:time-frame-start>
+							s
+						</escidocLicenses:time-frame-start>
+						<escidocLicenses:time-frame-end>
+							d
+						</escidocLicenses:time-frame-end>
+						<escidocLicenses:accepted>
+							a
+						</escidocLicenses:accepted>
+					</escidocLicenses:properties>
+				</escidocLicenses:license>
+			</escidocLicenses:licenses>
+		</escidocComponents:component>
+
+	</escidocComponents:components>
+	<!-- 
+		<eV:version-history xmlns:eV="http://www.escidoc.de/schemas/wov"
+		xmlns:prefix-xlink="http://www.w3.org/1999/xlink">
+		<eV:version objid="escidoc:73"
+		prefix-xlink:href="/ir/item/escidoc:73:1" prefix-xlink:title="Version 1"
+		prefix-xlink:type="simple">
+		<eV:versionNo>1</eV:versionNo>
+		<eV:timestamp>2006-12-12T12:43:37.987</eV:timestamp>
+		<eV:version-status>pending</eV:version-status>
+		<eV:valid-status>valid</eV:valid-status>
+		<eV:comment>first whole object version</eV:comment>
+		</eV:version>
+		</eV:version-history>
+	-->
+</escidocItem:item>

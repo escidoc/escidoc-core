@@ -1,0 +1,7 @@
+Moved to document 
+cpt_eSciDoc_Api_Doc_Generation_v0.1.doc
+
+in folder 
+\docs\02_General\03_Development_Environment
+
+on samba share. 

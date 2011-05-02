@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<role:role xmlns:role="http://www.escidoc.de/schemas/role/0.5"
+  xmlns:prop="http://escidoc.de/core/01/properties/"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  xmlns:xacml-policy="urn:oasis:names:tc:xacml:1.0:policy">
+  <role:properties>
+    <prop:name>FeePayer</prop:name>
+    <prop:description>
+	  This role permits the retrieval of binary content for that the user has paid a fee. It 
+      is limited to the items for that it is explicitly granted to the user. A grant for this
+      role has to be given to the user for an item after the user has paid the fee for that item.
+      This grant has to be revoked after the time period during that the user shall be able to
+      retrieve the binary content. The policies of this role are defined as follows:
+      Retrieval of binary content is possible, if the item has been released but not withdrawn,
+      the component is valid and has the visibility "private". The visibility should be changed
+      to something like "for-a-fee" when this is supported by the eSciDoc core services.
+	</prop:description>
+  </role:properties>
+  <role:scope unlimited="false">
+    <role:scope-def resource-type="item"
+			relation-attribute-id="info:escidoc/names:aa:1.0:resource:item-id" 
+			relation-attribute-object-type="item"/>
+  </role:scope>
+  <xacml-policy:Policy PolicyId="role-fee-payer-policy-1"
+     RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:ordered-permit-overrides">
+    <xacml-policy:Description>Policy of role FeePayer</xacml-policy:Description>
+	<xacml-policy:Target>
+      <xacml-policy:Subjects>
+        <xacml-policy:AnySubject />
+      </xacml-policy:Subjects>
+      <xacml-policy:Resources>
+        <xacml-policy:AnyResource />
+      </xacml-policy:Resources>
+      <xacml-policy:Actions>
+        <xacml-policy:Action>
+          <xacml-policy:ActionMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+            <xacml-policy:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
+              info:escidoc/names:aa:1.0:action:retrieve-item
+            </xacml-policy:AttributeValue>
+            <xacml-policy:ActionAttributeDesignator
+              AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id"
+              DataType="http://www.w3.org/2001/XMLSchema#string" />
+          </xacml-policy:ActionMatch>
+        </xacml-policy:Action>
+      </xacml-policy:Actions>
+    </xacml-policy:Target>
+    <xacml-policy:Rule RuleId="role-fee-payer-policy-1-rule-1" Effect="Permit">
+      <xacml-policy:Target>
+        <xacml-policy:Subjects>
+          <xacml-policy:AnySubject />
+        </xacml-policy:Subjects>
+        <xacml-policy:Resources>
+          <xacml-policy:AnyResource />
+        </xacml-policy:Resources>
+        <xacml-policy:Actions>
+          <xacml-policy:AnyAction />
+        </xacml-policy:Actions>
+      </xacml-policy:Target>
+      <xacml-policy:Condition
+        FunctionId="urn:oasis:names:tc:xacml:1.0:function:and">
+        <xacml-policy:Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:not">
+          <xacml-policy:Apply
+            FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+            <xacml-policy:Apply
+              FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
+              <xacml-policy:ResourceAttributeDesignator
+                DataType="http://www.w3.org/2001/XMLSchema#string"
+                AttributeId="info:escidoc/names:aa:1.0:resource:item:public-status" />
+            </xacml-policy:Apply>
+            <xacml-policy:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
+              withdrawn
+            </xacml-policy:AttributeValue>
+          </xacml-policy:Apply>
+        </xacml-policy:Apply>
+        <xacml-policy:Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+          <xacml-policy:Apply
+            FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
+            <xacml-policy:ResourceAttributeDesignator
+              DataType="http://www.w3.org/2001/XMLSchema#string"
+	          AttributeId="info:escidoc/names:aa:1.0:resource:item:version-status" />
+          </xacml-policy:Apply>
+          <xacml-policy:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
+            released
+          </xacml-policy:AttributeValue>
+        </xacml-policy:Apply>
+        <xacml-policy:Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+          <xacml-policy:Apply
+            FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
+            <xacml-policy:ResourceAttributeDesignator
+              DataType="http://www.w3.org/2001/XMLSchema#string"
+              AttributeId="info:escidoc/names:aa:1.0:resource:item:component:valid-status" />
+          </xacml-policy:Apply>
+          <xacml-policy:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
+            valid
+          </xacml-policy:AttributeValue>
+        </xacml-policy:Apply>
+        <xacml-policy:Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+          <xacml-policy:Apply
+            FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
+            <xacml-policy:ResourceAttributeDesignator
+              DataType="http://www.w3.org/2001/XMLSchema#string"
+              AttributeId="info:escidoc/names:aa:1.0:resource:item:component:visibility" />
+          </xacml-policy:Apply>
+          <xacml-policy:AttributeValue
+            DataType="http://www.w3.org/2001/XMLSchema#string">
+            private
+          </xacml-policy:AttributeValue>
+        </xacml-policy:Apply>
+      </xacml-policy:Condition>
+    </xacml-policy:Rule>
+  </xacml-policy:Policy>
+</role:role>

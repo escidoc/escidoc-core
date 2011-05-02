@@ -1,0 +1,376 @@
+<chapter>
+	<title>User Management Wrapper</title>
+	<para>
+		The User management Wrapper encapsulates the external user
+		management. It provides an interface for log in an user to
+		eSciDoc and for explicit log out of an logged-in user. It is
+		responsible for handling the communication with the external
+		user manager to authenticate the user and to retrieve the user's
+		attributes. After successful authentication it creates or
+		updates the UserAccount object representing the user within
+		eSciDoc and provides a temporarily valid eSciDocUserHandle as 
+		the result of the login request. The lifetime of the handle can be
+		specified in the infrastructure configuration property 
+		escidoc-core.userHandle.lifetime.
+	</para>
+	<section>
+		<title>login</title>
+		<para>
+			The following steps are performed to handle a login request
+			for an user:
+		</para>
+		<itemizedlist mark="opencircle">
+			<listitem>
+				<para>
+					Retrieve the targetURL from the login request. To
+					this targetURL, the user will be redirected after
+					the login.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Authenticate the user by using the external user
+					management.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					In case of successful authentication, retrieve the
+					user's attributes from the external user management.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Identify the respective UserAccount object within
+					eSciDoc by using a unique key provided within the
+					user's attributes.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					If an UserAccount representing the eSciDoc user has
+					been found, update it. Otherwise, create a new
+					UserAccount resource and store it.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Create a temporarily valid eSciDocHandle for the
+					UserAccount and store it. The lifetime of the eSciDocHandle
+					is taken from the infrastructure configuration property
+					escidoc-core.userHandle.lifetime (default value: one day). 
+				</para>
+			</listitem>
+			<listitem>
+				<para>Create a cookie holding the eSciDocHandle.</para>
+			</listitem>
+			<listitem>
+				<para>
+					Construct an HTTP redirect to the targetURL
+					containing the created cookie and provide the handle
+					within the http parameter
+					<emphasis role="italic">eSciDocUserHandle</emphasis>
+					.
+				</para>
+				<para>
+					Note: The http parameter contains the Base64 encoded
+					handle, not the "plain" handle.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Send the created HTTP redirect as the response to
+					the user's client.
+				</para>
+			</listitem>
+		</itemizedlist>
+		<table frame="all">
+			<title>login via REST</title>
+			<tgroup cols="5" align="left" colsep="1" rowsep="1">
+				<colspec colname="c1" />
+				<colspec colname="c2" />
+				<colspec colname="c3" />
+				<colspec colname="c4" />
+				<colspec colname="c5" />
+				<spanspec spanname="hspan25" namest="c2" nameend="c5"
+					align="left" />
+				<thead>
+					<row>
+						<entry>HTTP Request</entry>
+						<entry spanname="hspan25">
+							<para>GET /aa/login?target=xyz</para>
+							<para>DELETE /aa/login?target=xyz</para>
+							<para>POST /aa/login?target=xyz</para>
+							<para>PUT /aa/login?target=xyz</para>
+						</entry>
+					</row>
+				</thead>
+				<tbody>
+					<row>
+						<entry>
+
+						</entry>
+						<entry spanname="hspan25">
+
+						</entry>
+					</row>
+					<row>
+						<entry>Input from Uri</entry>
+						<entry spanname="hspan25">
+							<emphasis>targetUrl</emphasis>
+							: The URL to which the user is redirected
+							after login.
+						</entry>
+					</row>
+					<row>
+						<entry>
+
+						</entry>
+						<entry spanname="hspan25">
+
+						</entry>
+					</row>
+					<row>
+						<entry>Input from Body</entry>
+						<entry spanname="hspan25">
+							No input values
+						</entry>
+					</row>
+					<row>
+						<entry>
+
+						</entry>
+						<entry spanname="hspan25">
+
+						</entry>
+					</row>
+					<row>
+						<entry>Output</entry>
+						<entry spanname="hspan25">
+							Generated temporarily valid
+							eSciDocUserHandle provided in a cookie and
+							the HTTP parameter
+							<emphasis role="italic">
+								eSciDocUserHandle
+							</emphasis>
+							.
+						</entry>
+					</row>
+					<row>
+						<entry>
+
+						</entry>
+						<entry spanname="hspan25">
+
+						</entry>
+					</row>
+					<row>
+						<entry>Possible errors</entry>
+						<entry spanname="hspan25">
+							ServletException
+						</entry>
+					</row>
+				</tbody>
+			</tgroup>
+		</table>
+		<para>
+			This service is not available via SOAP as direct
+			communication with the user is needed.
+		</para>
+	</section>
+	<section>
+		<title>logout</title>
+		<para>
+			The following steps are performed to logout an user:
+		</para>
+		<itemizedlist mark="opencircle">
+			<listitem>
+				<para>
+					Authenticate the user by using the provided
+					eSciDocUserHandle. This handle is either provided in
+					a cookie named
+					<emphasis>escidocCookie</emphasis>
+					(in case of a REST access) or in a webservice
+					security parameter (in case of a SOAP access).
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Remove the eSciDocUserHandle from the UserAccount.
+					Further requests using this eSciDocUserHandle will
+					fail.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					In case of a REST access, send the request to remove
+					the cookie in the HTTP response.
+				</para>
+			</listitem>
+		</itemizedlist>
+
+		<table frame="all">
+			<title>logout via REST</title>
+			<tgroup cols="5" align="left" colsep="1" rowsep="1">
+				<colspec colname="c1" />
+				<colspec colname="c2" />
+				<colspec colname="c3" />
+				<colspec colname="c4" />
+				<colspec colname="c5" />
+				<spanspec spanname="hspan25" namest="c2" nameend="c5"
+					align="left" />
+				<thead>
+					<row>
+						<entry>HTTP Request</entry>
+						<entry spanname="hspan25">
+							<para>GET /aa/logout</para>
+							<para>DELETE /aa/logout</para>
+							<para>POST /aa/logout</para>
+							<para>PUT /aa/logout</para>
+						</entry>
+					</row>
+				</thead>
+				<tbody>
+					<row>
+						<entry>
+
+						</entry>
+						<entry spanname="hspan25">
+
+						</entry>
+					</row>
+					<row>
+						<entry>Input from Uri</entry>
+						<entry spanname="hspan25">
+							No input values
+						</entry>
+					</row>
+					<row>
+						<entry>
+
+						</entry>
+						<entry spanname="hspan25">
+
+						</entry>
+					</row>
+					<row>
+						<entry>Input from Body</entry>
+						<entry spanname="hspan25">
+							No input values
+						</entry>
+					</row>
+					<row>
+						<entry>
+
+						</entry>
+						<entry spanname="hspan25">
+
+						</entry>
+					</row>
+					<row>
+						<entry>Output</entry>
+						<entry spanname="hspan25">No Output</entry>
+					</row>
+					<row>
+						<entry>
+
+						</entry>
+						<entry spanname="hspan25">
+
+						</entry>
+					</row>
+					<row>
+						<entry>Possible errors</entry>
+						<entry spanname="hspan25">
+							ServletException
+						</entry>
+					</row>
+				</tbody>
+			</tgroup>
+		</table>
+
+		<para>
+			For information about how to send the cookie in a request,
+			please see
+			<xref linkend="AAviaREST" />
+		</para>
+
+		<table frame="all">
+			<title>logout via Soap</title>
+			<tgroup cols="5" align="left" colsep="1" rowsep="1">
+				<colspec colname="c1" />
+				<colspec colname="c2" />
+				<colspec colname="c3" />
+				<colspec colname="c4" />
+				<colspec colname="c5" />
+				<spanspec spanname="hspan25" namest="c2" nameend="c5"
+					align="left" />
+				<thead>
+					<row>
+						<entry>Method Signature</entry>
+						<entry spanname="hspan25">
+							void UserManagementWrapperService.logout ( )
+						</entry>
+					</row>
+				</thead>
+				<tbody>
+					<row>
+						<entry>
+
+						</entry>
+						<entry spanname="hspan25">
+
+						</entry>
+					</row>
+					<row>
+						<entry>Parameter</entry>
+						<entry spanname="hspan25">
+							No input parameter.
+
+						</entry>
+					</row>
+					<row>
+						<entry>
+
+						</entry>
+						<entry spanname="hspan25">
+
+						</entry>
+					</row>
+					<row>
+						<entry>Output</entry>
+						<entry spanname="hspan25">
+
+							No return value.
+
+						</entry>
+					</row>
+					<row>
+						<entry>
+
+						</entry>
+						<entry spanname="hspan25">
+
+						</entry>
+					</row>
+					<row>
+						<entry>Possible errors</entry>
+						<entry spanname="hspan25">
+							<para>AuthenticationException</para>
+							<para>SqlDatabaseSystemException</para>
+							<para>WebserverSystemException</para>
+						</entry>
+
+					</row>
+				</tbody>
+			</tgroup>
+		</table>
+
+		<para>
+			For information about how to send the eSciDoc user handle in
+			the SOAP request, please see
+			<xref linkend="AAviaSOAP" />
+		</para>
+
+	</section>
+</chapter>

@@ -1,0 +1,114 @@
+<chapter>
+	<title>User Management (AA)</title>
+	<section>
+		<title>Related Documents</title>
+		<para>
+			A detailed concept for User Management in eSciDoc can be
+			found in
+			<xref linkend="TTe06" />
+			.
+		</para>
+		<para>
+			The user management is closely related to the Concept for
+			Authentication and Authorization
+			<xref linkend="TTe06-1" />
+			.
+		</para>
+	</section>
+	<section>
+		<title>Overview of User Management (AA)</title>
+        <para> For the first release, the User Management (AA) offers services in
+            the following areas: </para>
+		<itemizedlist mark="opencircle">
+			<listitem>
+				<para>
+					<emphasis role="bold">
+						Caching of User Data:
+					</emphasis>
+				</para>
+				<para>
+					The eSciDoc users are represented within the system
+					by User account objects. These user account objects
+					can be seen as proxies that cache the information
+					about the users provided by an external user
+					management, e.g. provided by a Shibboleth Identity
+					Provider or an LDAP server.
+				</para>
+				<para>
+					An user account object can be identified by its
+					internal id or by a temporarily valid
+					esciDocUserHandle that is generated during the login
+					process of the user. The latter is used to
+					authenticate the user while handling incoming
+					requests.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					<emphasis role="bold">
+						Granting Roles to Users:
+					</emphasis>
+				</para>
+				<para>
+					The authorization in eSciDoc is based on roles that
+					are granted to users. In most cases, granting a role
+					to a user is limited to specific objects.
+				</para>
+				<para>
+					The information about the granted roles and, in case
+					of the limited roles, for which objects they have
+					been granted to the user is stored within the User
+					Management (AA).
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					<emphasis role="bold">
+						Embedding external user management:
+					</emphasis>
+				</para>
+				<para>
+					The external user management is responsible for
+					authenticating a user and for providing the user's
+					attribute to eSciDoc. It may be e.g. a Shibboleth
+					Identity Provider or an LDAP server.
+				</para>
+				<para>
+					The external user management is integrated within
+					eSciDoc by an User Management Wrapper. This wrapper
+					provides a service for the user login, encapsulates
+					the communication with the external user management
+					to authenticate the user and retrieve the user's
+					attributes, and creates or updates the user proxy
+					within eSciDoc. In case of successful user
+					authentication it provides an eSciDocUserHandle that
+					is used for identifying the User while authorizing
+					an incoming request to an eSciDoc resource.
+				</para>
+			</listitem>
+		</itemizedlist>
+	</section>
+	<section >
+		<title>Supported resources</title>
+		<para>
+			For the first release, the User Management (AA) supports the
+			following resources and subresources:
+		</para>
+		<itemizedlist mark="opencircle">
+			<listitem>
+				<para>UserAccount</para>
+				<itemizedlist mark="opencircle">
+					<listitem>
+						<para>Subresource Grants</para>
+					</listitem>
+					<listitem>
+						<para>Subresource Grant</para>
+					</listitem>
+				</itemizedlist>
+			</listitem>
+			<listitem>
+				<para>User Management Wrapper</para>
+			</listitem>
+		</itemizedlist>
+	</section>
+</chapter>

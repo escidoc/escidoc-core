@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<section>
+		<title>Description of Properties</title>
+		<section>
+			<title>Context</title>
+			<section>
+				<title>General Properties of a Content Relation</title>
+				<table frame="all">
+					<title>General Properties</title>
+					<tgroup cols="2" align="left" colsep="1"
+						rowsep="1">
+						<colspec colname="c1" />
+						<colspec colname="c2" />
+						<thead>
+							<row>
+								<entry>Property</entry>
+								<entry>Description</entry>
+							</row>
+						</thead>
+						<tbody>
+						<row>
+							<entry>objid</entry>
+							<entry>
+								An unique identifier of the	Content Relation within the eSciDoc system.
+							</entry>
+						</row>
+						<row>
+							<entry>creation-date</entry>
+
+							<entry>
+								This date is created by the infrastructure when the infrastructure stores the object the first time.
+							</entry>
+						</row>
+						<row>
+							<entry>created-by</entry>
+
+							<entry>
+								Link to the user who created the object, the infrastructure maintain this element.
+							</entry>
+						</row>
+						<row>
+							<entry>modified-by</entry>
+
+							<entry>
+								Link to the user who changed to the object last time.
+							</entry>
+						</row>
+						<row>
+							<entry>last-modification-date (attribute)</entry>
+
+							<entry>
+								This date is updated by the infrastructure whenever the object is stored.
+							</entry>
+						</row>
+						<row>
+							<entry>public-status</entry>
+
+							<entry>
+								The status of the Content Relation:
+									<para>
+										Valid status values are:
+									</para>
+									<itemizedlist mark="opencircle"
+										spacing="compact">
+										<listitem>created</listitem>
+										<listitem>opened</listitem>
+										<listitem>closed</listitem>
+									</itemizedlist>
+							</entry>
+						</row>
+						<row>
+							<entry>name</entry>
+							<entry>
+								Name of the Content Relation
+							</entry>
+						</row>
+						<row>
+							<entry>description</entry>
+							<entry>
+								Description of the Content Relation
+							</entry>
+						</row>
+						<row>
+							<entry>type</entry>
+							<entry>
+								The type of the Content Relation. These are solution controlled strings.
+							</entry>
+						</row>
+						</tbody>
+					</tgroup>
+				</table>
+			</section>
+		</section>
+	</section>

@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ CDDL HEADER START
+  ~
+  ~ The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+  ~ only (the "License"). You may not use this file except in compliance with the License.
+  ~
+  ~ You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+  ~ the specific language governing permissions and limitations under the License.
+  ~
+  ~ When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+  ~ license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+  ~ brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
+  ~
+  ~ CDDL HEADER END
+  ~
+  ~ Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+  ~ and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+  ~ terms.
+  -->
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jee="http://www.springframework.org/schema/jee" xmlns:jms="http://www.springframework.org/schema/jms"
+       xmlns:lang="http://www.springframework.org/schema/lang"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
+http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms-3.0.xs
+http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-3.0.xsd
+http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-2.0.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd"
+       default-autowire="no" default-lazy-init="true">
+    <bean id="common.TraceInterceptor" class="de.escidoc.core.common.util.aop.TraceInterceptor"
+          factory-method="aspectOf" lazy-init="false">
+    </bean>
+    <bean id="filter.Values" class="de.escidoc.core.common.business.fedora.resources.LuceneValues"></bean>
+    <bean id="common.ParameterCheckInterceptor" class="de.escidoc.core.common.util.aop.ParameterCheckInterceptor"
+          factory-method="aspectOf" lazy-init="false"></bean>
+    <bean id="business.TripleStoreConnector" class="de.escidoc.core.common.business.TripleStoreConnector">
+        <property name="connectionUtility">
+            <ref bean="escidoc.core.common.util.service.ConnectionUtility"/>
+        </property>
+        <property name="fedoraUrl">
+            <value>${fedora.url}</value>
+        </property>
+        <property name="fedoraUser">
+            <value>${fedora.user}</value>
+        </property>
+        <property name="fedoraPassword">
+            <value>${fedora.password}</value>
+        </property>
+    </bean>
+    <bean id="eSciDoc.core.common.helper.InvocationParser"
+          class="de.escidoc.core.common.util.security.helper.InvocationParser" lazy-init="true"></bean>
+    <bean id="common.StatisticInterceptor" class="de.escidoc.core.common.util.aop.StatisticInterceptor"
+          factory-method="aspectOf" lazy-init="false">
+        <property name="statisticService" ref="de.escidoc.core.statistic.StatisticService"/>
+    </bean>
+    <bean id="escidoc.core.business.EscidocIdProvider" class="de.escidoc.core.common.persistence.EscidocIdProvider">
+        <property name="numberPrefetchedIds">
+            <value>${escidoc-core.identifier.numberPrefetched}</value>
+        </property>
+        <property name="resourceIdentifierDao">
+            <ref bean="escidoc.core.business.FedoraResourceIdentifierDao"/>
+        </property>
+    </bean>
+    <bean id="common.XmlHeaderInterceptor" class="de.escidoc.core.common.util.aop.XmlHeaderInterceptor"
+          factory-method="aspectOf" lazy-init="false"></bean>
+    <bean id="escidoc.core.common.util.service.ConnectionUtility"
+          class="de.escidoc.core.common.util.service.ConnectionUtility" scope="singleton"></bean>
+    <bean id="eSciDoc.core.common.security.EscidocAuthenticationProvider"
+          class="de.escidoc.core.common.util.security.EscidocAuthenticationProvider">
+        <property name="escidocUserDetailsService">
+            <ref bean="eSciDoc.core.common.security.EscidocUserDetailsService"/>
+        </property>
+    </bean>
+    <bean id="service.SoapExceptionGeneration" class="de.escidoc.core.common.service.SoapExceptionGeneration"></bean>
+    <bean id="persistence.HibernateRequestMappingDao"
+          class="de.escidoc.core.common.util.security.persistence.hibernate.HibernateRequestMappingDao">
+        <property name="requestMappingSessionFactory">
+            <ref bean="common.SessionFactory"/>
+        </property>
+    </bean>
+    <bean id="escidoc.core.business.FedoraResourceIdentifierDao"
+          class="de.escidoc.core.common.business.fedora.FedoraResourceIdentifierDao">
+        <property name="fedoraUtility">
+            <ref bean="escidoc.core.business.FedoraUtility"/>
+        </property>
+    </bean>
+    <bean id="common.business.indexing.IndexingHandler" class="de.escidoc.core.common.business.indexing.IndexingHandler"
+          lazy-init="true">
+        <property name="gsearchHandler">
+            <ref bean="common.business.indexing.GsearchHandler"/>
+        </property>
+        <property name="indexingCacheHandler">
+            <ref bean="common.business.indexing.IndexingCacheHandler"/>
+        </property>
+        <property name="indexService">
+            <ref bean="de.escidoc.core.index.IndexService"/>
+        </property>
+        <property name="tripleStoreUtility">
+            <ref bean="business.TripleStoreUtility"/>
+        </property>
+    </bean>
+    <bean id="escidoc.core.business.FedoraUtility" class="de.escidoc.core.common.business.fedora.FedoraUtility">
+        <property name="fedoraUrl">
+            <value>${fedora.url}</value>
+        </property>
+        <property name="fedoraUser">
+            <value>${fedora.user}</value>
+        </property>
+        <property name="fedoraPassword">
+            <value>${fedora.password}</value>
+        </property>
+        <property name="identifierPrefix">
+            <value>${escidoc-core.identifier.prefix}</value>
+        </property>
+        <property name="tripleStoreUtility">
+            <ref bean="business.TripleStoreUtility"/>
+        </property>
+    </bean>
+    <bean id="de.escidoc.core.common.business.filter.SRURequest"
+          class="de.escidoc.core.common.business.filter.SRURequest">
+        <property name="connectionUtility">
+            <ref bean="escidoc.core.common.util.service.ConnectionUtility"/>
+        </property>
+    </bean>
+    <bean id="common.binding.JaxbBindingHandler" class="de.escidoc.core.common.binding.jaxb.JaxbBindingHandler"></bean>
+    <bean id="business.Utility" class="de.escidoc.core.common.business.fedora.Utility">
+        <property name="stagingFileHandler">
+            <ref bean="service.StagingFileHandlerBean"/>
+        </property>
+        <property name="tripleStoreUtility">
+            <ref bean="business.TripleStoreUtility"/>
+        </property>
+    </bean>
+    <bean id="common.ErrorMessageHandler"
+          class="de.escidoc.core.common.business.queue.errorprocessing.ErrorMessageHandler" lazy-init="true"></bean>
+    <bean id="common.business.indexing.IndexingCacheHandler"
+          class="de.escidoc.core.common.business.indexing.IndexingCacheHandler" scope="singleton" lazy-init="true">
+        <property name="fedoraRestDeviationHandler">
+            <ref bean="service.FedoraRestDeviationHandlerBean"/>
+        </property>
+    </bean>
+    <bean id="common.business.indexing.GsearchHandler" class="de.escidoc.core.common.business.indexing.GsearchHandler">
+        <property name="connectionUtility">
+            <ref bean="escidoc.core.common.util.service.ConnectionUtility"/>
+        </property>
+    </bean>
+    <bean id="business.ErrorQueueProcessor"
+          class="de.escidoc.core.common.business.queue.errorprocessing.ErrorQueueProcessor" scope="prototype"
+          lazy-init="true">
+        <property name="errorMessageHandler">
+            <ref bean="common.ErrorMessageHandler"/>
+        </property>
+    </bean>
+    <bean id="business.TripleStoreUtility"
+          class="de.escidoc.core.common.business.fedora.mptstore.MPTTripleStoreUtility">
+        <property name="myDataSource">
+            <ref bean="fedora.triplestore.DataSource"/>
+        </property>
+    </bean>
+    <bean id="common.XmlValidationInterceptor" class="de.escidoc.core.common.util.aop.XmlValidationInterceptor"
+          factory-method="aspectOf" lazy-init="false"></bean>
+    <bean id="business.LockHandler" class="de.escidoc.core.common.business.LockHandler" init-method="init">
+        <property name="myDataSource">
+            <ref bean="escidoc-core.DataSource"/>
+        </property>
+        <property name="sessionFactory">
+            <ref bean="common.SessionFactory"/>
+        </property>
+    </bean>
+    <bean id="escidoc-core.txProxyTemplate"
+          class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean" abstract="true"
+          lazy-init="true">
+        <property name="transactionManager">
+            <ref bean="escidoc-core.txManager"/>
+        </property>
+        <property name="transactionAttributes">
+            <props>
+                <prop key="executeReadOnly*">PROPAGATION_REQUIRED,+EscidocException, readOnly</prop>
+                <prop key="*">PROPAGATION_REQUIRED,+EscidocException</prop>
+            </props>
+        </property>
+    </bean>
+    <tx:advice id="escidoc-core.txAdvice" transaction-manager="escidoc-core.txManager">
+        <tx:attributes>
+            <tx:method name="*" propagation="REQUIRED"
+                       rollback-for="de.escidoc.core.common.exceptions.system.SystemException, java.lang.RuntimeException"/>
+        </tx:attributes>
+    </tx:advice>
+    <tx:advice id="escidoc-core.txAdvice.readOnly" transaction-manager="escidoc-core.txManager">
+        <tx:attributes>
+            <tx:method name="*" read-only="true" propagation="REQUIRED"
+                       rollback-for="de.escidoc.core.common.exceptions.system.SystemException, java.lang.RuntimeException"/>
+        </tx:attributes>
+    </tx:advice>
+    <bean id="escidoc-core.txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource">
+            <ref bean="escidoc-core.DataSource"/>
+        </property>
+    </bean>
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource">
+            <ref bean="escidoc-core.DataSource"/>
+        </property>
+    </bean>
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>file:${catalina.home}/conf/escidoc-core.properties</value>
+                <value>file:${catalina.home}/conf/escidoc-core.custom.properties</value>
+            </list>
+        </property>
+        <property name="ignoreResourceNotFound" value="true"/>
+    </bean>
+    <bean id="escidoc-core.DataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close"
+          lazy-init="true">
+        <!-- see escidoc-core.DataSource for property descriptions -->
+        <property name="driverClass" value="${escidoc-core.datasource.driverClassName}"/>
+        <property name="jdbcUrl" value="${escidoc-core.datasource.url}"/>
+        <property name="user" value="${escidoc-core.datasource.username}"/>
+        <property name="password" value="${escidoc-core.datasource.password}"/>
+        <property name="acquireIncrement" value="${escidoc-core.datasource.acquireIncrement}"/>
+        <property name="acquireRetryAttempts" value="${escidoc-core.datasource.acquireRetryAttempts}"/>
+        <property name="acquireRetryDelay" value="${escidoc-core.datasource.acquireRetryDelay}"/>
+        <property name="autoCommitOnClose" value="${escidoc-core.datasource.autoCommitOnClose}"/>
+        <property name="breakAfterAcquireFailure" value="${escidoc-core.datasource.breakAfterAcquireFailure}"/>
+        <property name="checkoutTimeout" value="${escidoc-core.datasource.checkoutTimeout}"/>
+        <property name="idleConnectionTestPeriod" value="${escidoc-core.datasource.idleConnectionTestPeriod}"/>
+        <property name="initialPoolSize" value="${escidoc-core.datasource.initialPoolSize}"/>
+        <property name="maxConnectionAge" value="${escidoc-core.datasource.maxConnectionAge}"/>
+        <property name="maxIdleTime" value="${escidoc-core.datasource.maxIdleTime}"/>
+        <property name="maxIdleTimeExcessConnections" value="${escidoc-core.datasource.maxIdleTimeExcessConnections}"/>
+        <property name="maxPoolSize" value="${escidoc-core.datasource.maxPoolSize}"/>
+        <property name="maxStatements" value="${escidoc-core.datasource.maxStatements}"/>
+        <property name="maxStatementsPerConnection" value="${escidoc-core.datasource.maxStatementsPerConnection}"/>
+        <property name="minPoolSize" value="${escidoc-core.datasource.minPoolSize}"/>
+        <property name="numHelperThreads" value="${escidoc-core.datasource.numHelperThreads}"/>
+        <property name="preferredTestQuery" value="${escidoc-core.datasource.preferredTestQuery}"/>
+        <property name="propertyCycle" value="${escidoc-core.datasource.propertyCycle}"/>
+        <property name="testConnectionOnCheckin" value="${escidoc-core.datasource.testConnectionOnCheckin}"/>
+        <property name="testConnectionOnCheckout" value="${escidoc-core.datasource.testConnectionOnCheckout}"/>
+        <property name="unreturnedConnectionTimeout" value="${escidoc-core.datasource.unreturnedConnectionTimeout}"/>
+        <property name="debugUnreturnedConnectionStackTraces" value="true"/>
+    </bean>
+    <bean id="fedora.triplestore.DataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close"
+          lazy-init="true">
+        <!-- see escidoc-core.DataSource for property descriptions -->
+        <property name="driverClass" value="${triplestore.datasource.driverClassName}"/>
+        <property name="jdbcUrl" value="${triplestore.datasource.url}"/>
+        <property name="user" value="${triplestore.datasource.username}"/>
+        <property name="password" value="${triplestore.datasource.password}"/>
+        <property name="acquireIncrement" value="${triplestore.datasource.acquireIncrement}"/>
+        <property name="acquireRetryAttempts" value="${triplestore.datasource.acquireRetryAttempts}"/>
+        <property name="acquireRetryDelay" value="${triplestore.datasource.acquireRetryDelay}"/>
+        <property name="autoCommitOnClose" value="${triplestore.datasource.autoCommitOnClose}"/>
+        <property name="breakAfterAcquireFailure" value="${triplestore.datasource.breakAfterAcquireFailure}"/>
+        <property name="checkoutTimeout" value="${triplestore.datasource.checkoutTimeout}"/>
+        <property name="idleConnectionTestPeriod" value="${triplestore.datasource.idleConnectionTestPeriod}"/>
+        <property name="initialPoolSize" value="${triplestore.datasource.initialPoolSize}"/>
+        <property name="maxConnectionAge" value="${triplestore.datasource.maxConnectionAge}"/>
+        <property name="maxIdleTime" value="${triplestore.datasource.maxIdleTime}"/>
+        <property name="maxIdleTimeExcessConnections" value="${triplestore.datasource.maxIdleTimeExcessConnections}"/>
+        <property name="maxPoolSize" value="${triplestore.datasource.maxPoolSize}"/>
+        <property name="maxStatements" value="${triplestore.datasource.maxStatements}"/>
+        <property name="maxStatementsPerConnection" value="${triplestore.datasource.maxStatementsPerConnection}"/>
+        <property name="minPoolSize" value="${triplestore.datasource.minPoolSize}"/>
+        <property name="numHelperThreads" value="${triplestore.datasource.numHelperThreads}"/>
+        <property name="preferredTestQuery" value="${triplestore.datasource.preferredTestQuery}"/>
+        <property name="propertyCycle" value="${triplestore.datasource.propertyCycle}"/>
+        <property name="testConnectionOnCheckin" value="${triplestore.datasource.testConnectionOnCheckin}"/>
+        <property name="testConnectionOnCheckout" value="${triplestore.datasource.testConnectionOnCheckout}"/>
+        <property name="unreturnedConnectionTimeout" value="${triplestore.datasource.unreturnedConnectionTimeout}"/>
+        <property name="debugUnreturnedConnectionStackTraces" value="true"/>
+    </bean>
+    <bean id="common.CommonMethodMapper" class="de.escidoc.core.common.servlet.invocation.MethodMapper">
+        <property name="descriptorFilenames">
+            <list>
+                <value>/META-INF/servlet/container.xml</value>
+                <value>/META-INF/servlet/content-relation.xml</value>
+                <value>/META-INF/servlet/context.xml</value>
+                <value>/META-INF/servlet/item.xml</value>
+                <value>/META-INF/servlet/ingest.xml</value>
+                <value>/META-INF/servlet/content-model.xml</value>
+                <value>/META-INF/servlet/organizational-unit.xml</value>
+                <value>/META-INF/servlet/user-account.xml</value>
+                <value>/META-INF/servlet/admin.xml</value>
+                <value>/META-INF/servlet/stagingfile.xml</value>
+            </list>
+        </property>
+    </bean>
+    <!-- security -->
+    <bean id="common.SessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+        <property name="dataSource">
+            <ref bean="escidoc-core.DataSource"/>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.transaction.factory_class">
+                    org.hibernate.transaction.JTATransactionFactory
+                </prop>
+                <prop key="hibernate.transaction.manager_lookup_class">
+                    ${escidoc-core.hibernate.transaction.manager_lookup_class}
+                </prop>
+                <prop key="hibernate.dialect">
+                    ${escidoc-core.hibernate.dialect}
+                </prop>
+                <!-- ehCache default provider cannot handle two session factories -->
+                <prop key="hibernate.cache.provider_class">
+                    org.hibernate.cache.HashtableCacheProvider
+                </prop>
+                <prop key="hibernate.show_sql">false</prop>
+                <prop key="jta.UserTransaction">${escidoc-core.jta.UserTransaction}</prop>
+                <prop key="hibernate.connection.release_mode">auto</prop>
+            </props>
+        </property>
+        <property name="mappingResources">
+            <list>
+                <value>
+                    de/escidoc/core/common/util/security/persistence/InvocationMapping.hbm.xml
+                </value>
+                <value>
+                    de/escidoc/core/common/util/security/persistence/MethodMapping.hbm.xml
+                </value>
+            </list>
+        </property>
+    </bean>
+    <!--
+           JMX
+    --><!-- exposing spring beans as MBeans that are annotated
+(using appropriate JAVA5 annotations). If a MBean with the same name
+has been exposed before, the new exposal is skipped (ignoreExisting)  -->
+    <bean id="eSciDoc.core.common.MBeanExporter"
+          class="org.springframework.jmx.export.annotation.AnnotationMBeanExporter" lazy-init="false">
+        <property name="autodetect" value="true"/>
+        <property name="registrationBehaviorName" value="REGISTRATION_IGNORE_EXISTING"/>
+    </bean>
+    <!-- end of JMX -->
+</beans>

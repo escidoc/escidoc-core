@@ -1,0 +1,13 @@
+#parse("common/macros.vm")<${setDefinitionNamespacePrefix}:set-definition #namespaceDecl(${setDefinitionNamespacePrefix} ${setDefinitionNamespace}) #restCommonRootNsDecls("true" "true") #restRootAttributes("#escA(${setDefinitionName})" ${setDefinitionHref} ${setDefinitionLastModificationDate})>
+<${setDefinitionNamespacePrefix}:properties>
+    #creationDate(${setDefinitionCreationDate})
+    #restCreatedBy("#escA(${setDefinitionCreatedByTitle})" ${setDefinitionCreatedByHref})
+    #restModifiedBy("#escA(${setDefinitionModifiedByTitle})" ${setDefinitionModifiedByHref})
+<${escidocPropertiesNamespacePrefix}:name>#escT(${setDefinitionName})</${escidocPropertiesNamespacePrefix}:name>
+#if(${setDefinitionDescription})
+<${escidocPropertiesNamespacePrefix}:description>#escT(${setDefinitionDescription})</${escidocPropertiesNamespacePrefix}:description>
+#end
+</${setDefinitionNamespacePrefix}:properties>
+<${setDefinitionNamespacePrefix}:specification>#escT(${setDefinitionSpecification})</${setDefinitionNamespacePrefix}:specification>
+<${setDefinitionNamespacePrefix}:query>#escT(${setDefinitionQuery})</${setDefinitionNamespacePrefix}:query>
+</${setDefinitionNamespacePrefix}:set-definition>

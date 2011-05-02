@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ CDDL HEADER START
+  ~
+  ~ The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+  ~ only (the "License"). You may not use this file except in compliance with the License.
+  ~
+  ~ You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+  ~ the specific language governing permissions and limitations under the License.
+  ~
+  ~ When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+  ~ license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+  ~ brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
+  ~
+  ~ CDDL HEADER END
+  ~
+  ~ Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+  ~ and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+  ~ terms.
+  -->
+
+<section id="Overview.Aa">
+  <title>Authentication and Authorization</title>
+
+  <para>Access to most of the eSciDoc services is protected. User requests
+  must be authorized before they are granted. Authorization occurs through
+  verification of a user's eSciDoc handle, which authenticates a user's
+  account within eSciDoc. </para>
+
+  <para>Exceptions are the search service and the StatisticDataHandler, which
+  are unprotected. Anyone is allowed to perform a search request and create
+  statistical data records.</para>
+
+  <para>When authentication of a user fails, the eSciDoc responds with a
+  redirect request to the eSciDoc user management wrapper, which provides the
+  user with a login prompt.</para>
+
+  <para><emphasis role="bold">Providing the eSciDoc User
+  Handle</emphasis></para>
+
+  <para>The eSciDoc user handle must be provided within a cookie named
+  <emphasis>escidocCookie</emphasis>.</para>
+
+  <para>The following example shows how the eSciDoc user handle can be
+  provided within the escidocCookie cookie. This Java example assumes the
+  usage of the http client from the apache jakarta project.</para>
+
+  <programlisting>
+			
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.HttpMessage;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.HttpResponse;
+
+    /**
+     * Adds a cookie named "escidocCookie" that holds the eScidoc user handle to
+     * the provided http method object.
+     * 
+     * @param method
+     *            The http method to add the cookie to.
+     * @param eSciDocUserHandle
+     *            The eSciDoc user handle to sent within the cookie.
+     */
+    private void addHandleToMethod(final HttpMessage method, 
+                                   final String eSciDocUserHandle) {
+
+        method.setHeader("Cookie", "escidocCookie=" + eSciDocUserHandle);
+    }
+    
+    /**
+     * Performs a GET request to the provided location.
+     *
+     * @param url
+     *            The location to that the GET request shall be sent.
+     * @return Returns the http method object of the performed request.
+     */
+    private HttpResponse performGetRequest(final String location) {
+    
+        HttpGet method = new HttpGet(location);
+       
+        addHandleToMethod(method);
+        
+        // Execute the method with HttpClient.
+        DefaultHttpClient client = new DefaultHttpClient();
+        HttpResponse res = client.execute(method);
+        return res;
+        
+    }
+				
+		</programlisting>
+
+  <section>
+    <title>Handling URL parameters</title>
+
+    <para>URL parameters are not evaluated by the base services. But if any
+    URL parameter is found in a GET or a HEAD request--for example, the
+    parameter eSciDocUserHandle from the login servlet-- a redirect response
+    to the same URL without these parameters is sent back. This is done to
+    prevent security information from being shown in the URL field of a
+    browser that directly connects to the base services.</para>
+  </section>
+</section>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- item: 12121 Version 0.6, updated: 21.11.2006-->
+<prefix-container:container xml:base="http://www.escidoc.de/" 
+xmlns="http://www.escidoc.de/schemas/container/0.5"
+xmlns:prefix-container="http://www.escidoc.de/schemas/container/0.5" 
+xmlns:prefix-properties="http://www.escidoc.de/schemas/properties" 
+xmlns:prefix-relations="http://www.escidoc.de/schemas/relations/0.3" 
+xmlns:prefix-metadata-records="http://www.escidoc.de/schemas/metadatarecords/0.3"
+xmlns:prefix-item="http://www.escidoc.de/schemas/item/0.3" 
+xmlns:prefix-struct-map="http://www.escidoc.de/schemas/structmap/0.3" 
+xmlns:prefix-member-ref-list="http://www.escidoc.de/schemas/memberreflist/0.3" 
+
+xmlns:prefix-dc="http://purl.org/dc/elements/1.0/" 
+xmlns:prefix-admin-descriptor="http://www.escidoc.de/schemas/admindescriptor/0.3" 
+xmlns:prefix-xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:prefix-xlink="http://www.w3.org/1999/xlink" prefix-xlink:type="simple" prefix-xlink:title="SWB scanned book">
+	<!--  container:properties  -->
+	<prefix-container:properties prefix-xlink:type="simple">
+		<prefix-container:name>Name</prefix-container:name>
+		<prefix-container:description>Description</prefix-container:description>
+		
+		<prefix-container:context objid="escidoc:persistent3" prefix-xlink:type="simple" prefix-xlink:href="/ir/context/escidoc:persistent3"/>
+		<prefix-container:content-type objid="escidoc:persistent4" prefix-xlink:type="simple" prefix-xlink:href="/cmm/content-model/escidoc:persistent4"/>
+		<prefix-container:pid>hdl:123/container456</prefix-container:pid>
+		<prefix-container:content-type-specific>
+			<xxx/>
+		</prefix-container:content-type-specific>
+		<!--container:admin-descriptor prefix-xlink:type="simple" prefix-xlink:title="descriptor for book-collections" prefix-xlink:href="/ir/admin-descriptor/escidoc:10012"/-->
+	</prefix-container:properties>
+	<!-- metadata-records:md-records  -->
+	<prefix-metadata-records:md-records prefix-xlink:type="simple">
+		<prefix-metadata-records:md-record prefix-xlink:type="simple" prefix-xlink:title="eSciDoc internal MD Record" schema="http://www.escidoc-project.de/metadata/schema/0.1" name="escidoc">
+			<collection 
+				xmlns="http://escidoc.mpg.de/metadataprofile/schema/0.1/"
+				xmlns:prefix-dc="http://purl.org/dc/elements/1.1/">
+				<prefix-dc:title>the title</prefix-dc:title>
+			</collection>
+		</prefix-metadata-records:md-record>
+	</prefix-metadata-records:md-records>
+	<!-- relations:relations -->
+	<!-- will be defined later -->
+	<!--  struct-map:struct-map  -->
+	<!--  struct-map:struct-map  (or "members")-->
+	<prefix-struct-map:struct-map prefix-xlink:type="simple">
+		<prefix-member-ref-list:member-ref-list>
+		</prefix-member-ref-list:member-ref-list>
+	</prefix-struct-map:struct-map>
+	
+</prefix-container:container>

@@ -1,0 +1,3 @@
+#parse("common/macros.vm")<${memberListNamespacePrefix}:member-list	#namespaceDecl(${memberListNamespacePrefix} ${memberListNamespace})	#commonRootNsDecls() #set($unescapedTitle="#unesc(${memberTitle})") >
+${memberList}
+</${memberListNamespacePrefix}:member-list>

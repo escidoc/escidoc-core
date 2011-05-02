@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- item: 12121 Version 0.6, updated: 21.11.2006-->
+<escidocContainer:container xml:base="http://www.escidoc.de/" 
+xmlns="http://www.escidoc.de/schemas/container/0.3/" 
+xmlns:escidocContainer="http://www.escidoc.de/schemas/container/0.3/" 
+xmlns:escidocProperties="http://www.escidoc.de/schemas/properties/0.2" 
+xmlns:escidocRelations="http://www.escidoc.de/schemas/relations/0.3/"
+xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.3/" 
+xmlns:escidocMetadata="http://www.escidoc.de/metadata/schema/0.2/" 
+xmlns:escidocAdmindescriptor="http://www.escidoc.de/schemas/admindescriptor/0.3" 
+xmlns:escidocItem="http://www.escidoc.de/schemas/item/0.3" 
+xmlns:escidocStructMap="http://www.escidoc.de/schemas/structmap/0.3/" 
+xmlns:escidocGenericProperties="http://www.escidoc.de/schemas/genericproperties/0.2/" 
+
+xmlns:prefix-dc="http://purl.org/dc/elements/1.0/" 
+xmlns:prefix-xsi="http://www.w3.org/2001/XMLSchema-instance" 
+prefix-xsi:schemaLocation="http://www.escidoc.de/schemas/container/0.2/
+W:\docs\04_Infrastructure\04_Interface\XML-Schema\examples\version1\container\schemas\escidoc_container_schema.xsd" xmlns:prefix-xlink="http://www.w3.org/1999/xlink" prefix-xlink:type="simple" prefix-xlink:title="SWB scanned book" prefix-xlink:href="/ir/container/escidoc:23233" objid="escidoc:23233">
+	<!--  escidocContainer:properties  -->
+	<escidocContainer:properties prefix-xlink:type="simple" prefix-xlink:title="properties" prefix-xlink:href="/ir/container/escidoc:23233/properties">
+		<escidocContainer:creation-date>2006-06-21T12:00:00.00+01:00</escidocContainer:creation-date>
+		<escidocContainer:context prefix-xlink:type="simple" prefix-xlink:title="MPIWG Collection" prefix-xlink:href="/ir/context/escidoc:12345"/>
+		<escidocContainer:content-type prefix-xlink:type="simple" prefix-xlink:title="SWB Scan" prefix-xlink:href="/ir/content-type/escidoc:65488"/>
+		<escidocContainer:status>released</escidocContainer:status>
+		<!-- allowed status values: pending, submitted, released, withdrawn, deleted -->
+		<escidocContainer:creator prefix-xlink:type="simple" prefix-xlink:title="michael hoppe" prefix-xlink:href="/ir/account/escidoc:14141"/>
+		<escidocContainer:lock-status>unlocked</escidocContainer:lock-status>
+		<escidocContainer:lock-owner/>
+		<escidocContainer:admin-descriptor prefix-xlink:type="simple" prefix-xlink:title="descriptor for book-collections" prefix-xlink:href="/ir/admin-descriptor/escidoc:10012"/>
+		<escidocContainer:current-version prefix-xlink:type="simple" prefix-xlink:title="current version" prefix-xlink:href="/ir/container/escidoc:23233/properties/current-version">
+			<escidocContainer:number>5</escidocContainer:number>
+			<escidocContainer:date>2006-08-23T12:00:00.000+01:00</escidocContainer:date>
+			<escidocContainer:version-status>pending</escidocContainer:version-status>
+			<!-- allowed status values: pending, submitted, released, withdrawn, deleted -->
+			<escidocContainer:valid-status/>
+		</escidocContainer:current-version>
+		<escidocContainer:latest-version prefix-xlink:type="simple" prefix-xlink:title="latest version" prefix-xlink:href="/ir/container/escidoc:23233/properties/latest-version">
+			<escidocContainer:number>5</escidocContainer:number>
+			<escidocContainer:date>2006-08-23T12:00:00.000+01:00</escidocContainer:date>
+		</escidocContainer:latest-version>
+		<escidocContainer:latest-revision prefix-xlink:type="simple" prefix-xlink:title="latest revision" prefix-xlink:href="/ir/container/escidoc:23233/properties/latest-revision">
+			<escidocContainer:number>2</escidocContainer:number>
+			<escidocContainer:date>2006-08-23T12:00:00.000+01:00</escidocContainer:date>
+			<escidocContainer:pid prefix-xlink:type="simple" prefix-xlink:title="infouri">info:escidoc/escidoc:23233:5</escidocContainer:pid>
+		</escidocContainer:latest-revision>
+	</escidocContainer:properties>
+	<!-- escidocProperties:generic-properties -->
+	<escidocGenericProperties:generic-properties prefix-xlink:type="simple" prefix-xlink:title="generic properties" prefix-xlink:href="/ir/container/escidoc:23233/generic-properties">
+		<escidocGenericProperties:property>
+			<escidocGenericProperties:key>visibilityLevel</escidocGenericProperties:key>
+			<escidocGenericProperties:value>public</escidocGenericProperties:value>
+		</escidocGenericProperties:property>
+		<escidocGenericProperties:property>
+			<escidocGenericProperties:key>publicationStatusPubMan</escidocGenericProperties:key>
+			<escidocGenericProperties:value>released</escidocGenericProperties:value>
+		</escidocGenericProperties:property>
+	</escidocGenericProperties:generic-properties>
+	<!--  escidocResources:resources  -->
+	<!--<escidocResources:resources prefix-xlink:type="simple" prefix-xlink:title="virtual resources" prefix-xlink:href="/ir/item/escidoc:12121/resources">
+		<escidocResources:resource prefix-xlink:type="simple" prefix-xlink:title="METS-representation of this container" prefix-xlink:href="/ir/container/escidoc:23233/resources/resource/mets"/>
+		<escidocResources:resource prefix-xlink:type="simple" prefix-xlink:title="list of all versions" prefix-xlink:href="/ir/container/escidoc:23233/resources/resource/versions"/>
+		<escidocResources:resource prefix-xlink:type="simple" prefix-xlink:title="list of all members" prefix-xlink:href="/ir/container/escidoc:23233/resources/resource/members"/>
+		<escidocResources:resource prefix-xlink:type="simple" prefix-xlink:title="list of all Items" prefix-xlink:href="/ir/container/escidoc:23233/resources/resource/items"/>
+		<escidocResources:resource prefix-xlink:type="simple" prefix-xlink:title="list of all Containers" prefix-xlink:href="/ir/container/escidoc:23233/resources/resource/containers"/>
+	</escidocResources:resources>-->
+	<!-- escidocMetadataRecords:md-records  -->
+	<escidocMetadataRecords:md-records prefix-xlink:type="simple" prefix-xlink:title="metadata" prefix-xlink:href="/ir/container/escidoc:23233/md-records">
+		<escidocMetadataRecords:md-record prefix-xlink:type="simple" prefix-xlink:title="Dublin Core MD Record" prefix-xlink:href="/ir/container/escidoc:23233/md-records/dc" schema="http://dublincore.org/schemas/xmls/qdc/2006/01/06/dc.xsd" name="dc" modified-date="">
+			<prefix-dc:dc>
+				<prefix-dc:title> Guidance on expressing the Dublin Core within the Resource Description
+     	Framework (RDF) </prefix-dc:title>
+				<prefix-dc:creator> Eric Miller </prefix-dc:creator>
+				<prefix-dc:creator> Paul Miller </prefix-dc:creator>
+				<prefix-dc:creator> Dan Brickley </prefix-dc:creator>
+				<prefix-dc:subject> Dublin Core; Resource Description Framework; RDF; eXtensible Markup Language; XML </prefix-dc:subject>
+				<prefix-dc:publisher> Dublin Core Metadata Initiative </prefix-dc:publisher>
+				<prefix-dc:contributor> Dublin Core Data Model Working Group </prefix-dc:contributor>
+				<prefix-dc:date> 1999-07-01 </prefix-dc:date>
+				<prefix-dc:format> text/html </prefix-dc:format>
+				<prefix-dc:language> en </prefix-dc:language>
+			</prefix-dc:dc>
+		</escidocMetadataRecords:md-record>
+		<escidocMetadataRecords:md-record prefix-xlink:type="simple" prefix-xlink:title="eSciDoc internal MD Record" prefix-xlink:href="/ir/container/escidoc:23233/md-records/escidoc" schema="http://www.escidoc-project.de/metadata/schema/0.1/" name="escidoc" modified-date="">
+			<escidocMetadata:escidoc>
+				<escidocMetadata:genre>Scholary Workbench Collection</escidocMetadata:genre>
+				<escidocMetadata:identifier>
+					<escidocMetadata:id/>
+					<escidocMetadata:id-type/>
+				</escidocMetadata:identifier>
+				<escidocMetadata:creator>
+					<escidocMetadata:person>
+						<escidocMetadata:identifier>
+							<escidocMetadata:id/>
+							<escidocMetadata:id-type/>
+						</escidocMetadata:identifier>
+						<escidocMetadata:complete-name>Brian Fuchs</escidocMetadata:complete-name>
+						<escidocMetadata:given-name>Brian</escidocMetadata:given-name>
+						<escidocMetadata:family-name>Fuchs</escidocMetadata:family-name>
+						<escidocMetadata:title/>
+						<escidocMetadata:pseudonym/>
+						<escidocMetadata:initials/>
+					</escidocMetadata:person>
+					<escidocMetadata:role>Editor</escidocMetadata:role>
+				</escidocMetadata:creator>
+				<escidocMetadata:creator>
+					<escidocMetadata:person>
+						<escidocMetadata:identifier>
+							<escidocMetadata:id/>
+							<escidocMetadata:id-type/>
+						</escidocMetadata:identifier>
+						<escidocMetadata:complete-name/>
+						<escidocMetadata:given-name/>
+						<escidocMetadata:family-name/>
+						<escidocMetadata:title/>
+						<escidocMetadata:pseudonym/>
+						<escidocMetadata:initials/>
+					</escidocMetadata:person>
+					<escidocMetadata:role>Publisher</escidocMetadata:role>
+				</escidocMetadata:creator>
+				<escidocMetadata:file>
+					<escidocMetadata:file-name>String</escidocMetadata:file-name>
+					<escidocMetadata:file-extension>String</escidocMetadata:file-extension>
+					<escidocMetadata:file-id>String</escidocMetadata:file-id>
+					<escidocMetadata:owner>String</escidocMetadata:owner>
+					<escidocMetadata:owner-id>String</escidocMetadata:owner-id>
+					<escidocMetadata:size>2147483647</escidocMetadata:size>
+					<escidocMetadata:mime-type>application</escidocMetadata:mime-type>
+					<escidocMetadata:import-date>1967-08-13</escidocMetadata:import-date>
+					<escidocMetadata:last-access-date>1967-08-13</escidocMetadata:last-access-date>
+					<escidocMetadata:last-modification-date>1967-08-13</escidocMetadata:last-modification-date>
+					<escidocMetadata:file-type>abstract</escidocMetadata:file-type>
+				</escidocMetadata:file>
+				<escidocMetadata:date>
+					<escidocMetadata:date>2006-06-21T12:00:00.00+01:00</escidocMetadata:date>
+					<escidocMetadata:type>published</escidocMetadata:type>
+				</escidocMetadata:date>
+				<escidocMetadata:title>Archimedes Collection of Mechanics</escidocMetadata:title>
+				<escidocMetadata:original-language>EN</escidocMetadata:original-language>
+				<escidocMetadata:original-title>Archimedes Collection of Mechanics</escidocMetadata:original-title>
+				<escidocMetadata:edition>first</escidocMetadata:edition>
+				<escidocMetadata:review-type/>
+				<escidocMetadata:publication-status>published</escidocMetadata:publication-status>
+				<escidocMetadata:relation>
+					<escidocMetadata:relation-type/>
+					<escidocMetadata:relation-identifier type="eSciDoc"/>
+					<escidocMetadata:relation-identifier-type/>
+					<escidocMetadata:short-description/>
+				</escidocMetadata:relation>
+				<escidocMetadata:table-of-contents/>
+				<escidocMetadata:audience/>
+				<escidocMetadata:custom/>
+				<escidocMetadata:subject/>
+				<escidocMetadata:source>
+					<escidocMetadata:title/>
+					<escidocMetadata:title-abbreviation/>
+					<escidocMetadata:alternate-title/>
+					<escidocMetadata:volume/>
+					<escidocMetadata:issue/>
+					<escidocMetadata:start-page/>
+					<escidocMetadata:end-page/>
+					<escidocMetadata:sequence-number/>
+					<escidocMetadata:place/>
+					<escidocMetadata:edition/>
+					<escidocMetadata:identifier/>
+				</escidocMetadata:source>
+			</escidocMetadata:escidoc>
+		</escidocMetadataRecords:md-record>
+	</escidocMetadataRecords:md-records>
+	<!-- escidocRelations:relations -->
+	<escidocRelations:relations prefix-xlink:type="simple" prefix-xlink:title="" prefix-xlink:href="/ir/container/escidoc:23233/relations">
+		<!-- will be defined later -->
+	</escidocRelations:relations>
+	<!--  escidocStructMap:struct-map  -->
+	<escidocStructMap:struct-map prefix-xlink:type="simple" prefix-xlink:title="structural map" prefix-xlink:href="/ir/container/escidoc:23233/struct-map">
+		<escidocStructMap:div id="div1" order="1" prefix-xlink:title="Interviewer Introduction" prefix-xlink:type="simple" prefix-xlink:href="/ir/container/escidoc:23232">
+			<escidocStructMap:description>something</escidocStructMap:description>
+		</escidocStructMap:div>
+		<escidocStructMap:div id="div2" order="2" prefix-xlink:title="Family History" prefix-xlink:href="/ir/item/escidoc:12121">
+			<escidocStructMap:description>something</escidocStructMap:description>
+		</escidocStructMap:div>
+		<escidocStructMap:div id="div3" order="3" prefix-xlink:title="General History" prefix-xlink:href="/ir/item/escidoc:12122">
+			<escidocStructMap:description>something</escidocStructMap:description>
+		</escidocStructMap:div>
+	</escidocStructMap:struct-map>
+	
+</escidocContainer:container>

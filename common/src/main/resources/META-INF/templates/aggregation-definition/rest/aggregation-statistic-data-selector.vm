@@ -1,0 +1,11 @@
+    <${aggregationDefinitionNamespacePrefix}:statistic-data>
+#if( ${aggregationStatisticDataSelectors})
+#foreach( $aggregationStatisticDataSelector in $aggregationStatisticDataSelectors )
+#if( ${aggregationStatisticDataSelector.selectorType} == "statistic-table")
+        <${aggregationDefinitionNamespacePrefix}:statistic-table>    
+            <${aggregationDefinitionNamespacePrefix}:xpath>#escT(${aggregationStatisticDataSelector.xpath})</${aggregationDefinitionNamespacePrefix}:xpath>    
+        </${aggregationDefinitionNamespacePrefix}:statistic-table>    
+#end
+#end
+#end
+    </${aggregationDefinitionNamespacePrefix}:statistic-data>

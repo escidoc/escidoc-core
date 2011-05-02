@@ -1,0 +1,5 @@
+<${contextNamespacePrefix}:resources #restInsertConditionalRoot(${isRootSubResource} "false" "false" ${contextNamespacePrefix} ${contextNamespace} ${resourcesTitle} ${resourcesHref} ${LAST_MODIFICATION_DATE})>
+#restLink(${contextNamespacePrefix} "members" ${membersTitle} ${membersHref} )
+#set($resourcesRelationsHref="${resourcesHref}/relations")
+#restLink(${contextNamespacePrefix} "relations" "Content Relations related to this Context" ${resourcesRelationsHref})
+</${contextNamespacePrefix}:resources>

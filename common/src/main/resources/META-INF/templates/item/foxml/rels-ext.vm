@@ -1,0 +1,42 @@
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:${escidocPropertiesNamespacePrefix}="${escidocPropertiesNamespace}" xmlns:${escidocPropertiesVersionNamespacePrefix}="${escidocPropertiesVersionNamespace}" xmlns:${escidocPropertiesReleaseNamespacePrefix}="${escidocPropertiesReleaseNamespace}" xmlns:${escidocRelationsNamespacePrefix}="${escidocRelationsNamespace}" xmlns:${escidocOriginNamespacePrefix}="${escidocOriginNamespace}" xmlns:system="http://escidoc.de/core/01/system/">
+<rdf:Description rdf:about="info:fedora/${OBJID}">
+<system:build>${BUILD_NUMBER}</system:build>
+<${escidocPropertiesNamespacePrefix}:context-title>${CONTEXT_TITLE}</${escidocPropertiesNamespacePrefix}:context-title>
+<${escidocPropertiesNamespacePrefix}:public-status>${PUBLIC_STATUS}</${escidocPropertiesNamespacePrefix}:public-status>
+<${escidocPropertiesNamespacePrefix}:public-status-comment>#escT(${PUBLIC_STATUS_COMMENT})</${escidocPropertiesNamespacePrefix}:public-status-comment>
+<${escidocPropertiesNamespacePrefix}:content-model-title>${CONTENT_MODEL_TITLE}</${escidocPropertiesNamespacePrefix}:content-model-title>
+<${escidocPropertiesNamespacePrefix}:modified-by-title>#escT(${MODIFIED_BY_TITLE})</${escidocPropertiesNamespacePrefix}:modified-by-title>
+<${escidocPropertiesNamespacePrefix}:created-by-title>#escT(${CREATED_BY_TITLE})</${escidocPropertiesNamespacePrefix}:created-by-title>
+<${escidocRelationsNamespacePrefix}:content-model rdf:resource="info:fedora/${CONTENT_MODEL_ID}"/>
+<fs:hasModel xmlns:fs="info:fedora/fedora-system:def/model#" rdf:resource="info:fedora/${CONTENT_MODEL_ID}"/>
+<${escidocRelationsNamespacePrefix}:created-by rdf:resource="info:fedora/${CREATED_BY_ID}"/>
+<${escidocRelationsNamespacePrefix}:modified-by rdf:resource="info:fedora/${MODIFIED_BY_ID}"/>
+<${escidocRelationsNamespacePrefix}:context rdf:resource="info:fedora/${CONTEXT_ID}"/>
+#if(${OBJECT_PID})<${escidocPropertiesNamespacePrefix}:pid>${OBJECT_PID}</${escidocPropertiesNamespacePrefix}:pid>#end
+<${escidocPropertiesVersionNamespacePrefix}:comment>#escT(${VERSION_COMMENT})</${escidocPropertiesVersionNamespacePrefix}:comment>
+<${escidocPropertiesVersionNamespacePrefix}:status>${VERSION_STATUS}</${escidocPropertiesVersionNamespacePrefix}:status>
+#if(${VERSION_DATE})<${escidocPropertiesVersionNamespacePrefix}:date>${VERSION_DATE}</${escidocPropertiesVersionNamespacePrefix}:date>#end
+<${escidocPropertiesVersionNamespacePrefix}:number>${VERSION_NUMBER}</${escidocPropertiesVersionNamespacePrefix}:number>
+<rdf:type rdf:resource="${escidocResourcesNamespace}Item"/>
+#if(${LATEST_RELEASE_NUMBER})
+<${escidocPropertiesReleaseNamespacePrefix}:number>${LATEST_RELEASE_NUMBER}</${escidocPropertiesReleaseNamespacePrefix}:number>
+<${escidocPropertiesReleaseNamespacePrefix}:date>${LATEST_RELEASE_DATE}</${escidocPropertiesReleaseNamespacePrefix}:date>
+#end
+#if(${LATEST_RELEASE_PID})
+<${escidocPropertiesReleaseNamespacePrefix}:pid>${LATEST_RELEASE_PID}</${escidocPropertiesReleaseNamespacePrefix}:pid>
+#end
+#if(${COMPONENTS})#foreach( $component in $COMPONENTS )
+<${escidocRelationsNamespacePrefix}:component rdf:resource="info:fedora/${component}" />
+#end#end
+#if($!{CONTENT_RELATIONS})
+#foreach( ${RELATION} in ${CONTENT_RELATIONS})
+<${contentRelationsNamespacePrefix}:${RELATION.PREDICATE} rdf:resource="info:fedora/${RELATION.OBJID}" xmlns:${contentRelationsNamespacePrefix}="${RELATION.PREDICATE_NS}/"/>
+#end #end
+#if($!{originObjectId})
+<${escidocRelationsNamespacePrefix}:origin rdf:resource="info:fedora/${originObjectId}"/>
+#if($!{originReleaseId})
+<${escidocOriginNamespacePrefix}:version-number>$originReleaseId</${escidocOriginNamespacePrefix}:version-number>
+#end
+#end
+</rdf:Description>
+</rdf:RDF>

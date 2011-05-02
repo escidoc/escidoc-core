@@ -1,0 +1,3 @@
+<${mdRecordsNamespacePrefix}:md-records #soapInsertConditionalRoot(${isRootSubResource} "false" "false" ${mdRecordsNamespacePrefix} ${mdRecordsNamespace} false ${LAST_MODIFICATION_DATE})>
+${mdRecordsContent}
+</${mdRecordsNamespacePrefix}:md-records>

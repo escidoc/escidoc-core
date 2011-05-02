@@ -1,0 +1,10 @@
+#foreach( $aggregationTableField in $aggregationTableFields )
+#set( $fieldName = ${aggregationTableField.name} )
+#set( $fieldTypeId = ${aggregationTableField.fieldTypeId} )
+#set( $fieldFeed = ${aggregationTableField.feed} )
+#set( $fieldXpath = ${aggregationTableField.xpath} )
+#set( $fieldDataType = ${aggregationTableField.dataType} )
+#set( $fieldReduceTo = ${aggregationTableField.reduceTo} )
+#parse("aggregation-definition/rest/aggregation-table-field.vm")
+    
+#end

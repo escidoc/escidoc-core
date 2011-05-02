@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<foxml:digitalObject FEDORA_URI="info:fedora/escidoc:container1" PID="escidoc:container1"
+  fedoraxsi:schemaLocation="info:fedora/fedora-system:def/foxml# http://www.fedora.info/definitions/1/0/foxml1-0.xsd"
+  xmlns:audit="info:fedora/fedora-system:def/audit#" xmlns:fedoraxsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:foxml="info:fedora/fedora-system:def/foxml#">
+  <foxml:objectProperties>
+    <foxml:property NAME="http://www.w3.org/1999/02/22-rdf-syntax-ns#type" VALUE="FedoraObject"/>
+    <foxml:property NAME="info:fedora/fedora-system:def/model#state" VALUE="Active"/>
+    <foxml:property NAME="info:fedora/fedora-system:def/model#label" VALUE="Example Container"/>
+  </foxml:objectProperties>
+  <foxml:datastream CONTROL_GROUP="X" FEDORA_URI="info:fedora/escidoc:container1/cts" ID="cts" STATE="A" VERSIONABLE="true">
+    <foxml:datastreamVersion ID="cts.0" LABEL="cts" MIMETYPE="text/xml">
+      <foxml:xmlContent>
+		<prefix-container:cts xmlns:prefix-container="http://www.escidoc.de/schemas/container/0.1">
+			<xxx/>
+		</prefix-container:cts>
+      </foxml:xmlContent>
+    </foxml:datastreamVersion>
+  </foxml:datastream>
+  <foxml:datastream CONTROL_GROUP="X" FEDORA_URI="info:fedora/escidoc:container1/toc" ID="toc" STATE="A" VERSIONABLE="true">
+    <foxml:datastreamVersion ID="toc.0" LABEL="toc" MIMETYPE="text/xml">
+      <foxml:xmlContent>
+	<prefix-toc:toc name="the only one" xmlns:prefix-xlink="http://www.w3.org/1999/xlink" prefix-xlink:type="simple" prefix-xlink:title="The Only TOC" prefix-xlink:href="/ir/container/escidoc:container1/toc" xmlns:prefix-toc="http://www.escidoc.de/schemas/toc/0.1">
+		<prefix-toc:description>the description of toc</prefix-toc:description>
+		<prefix-member-ref-list:member-ref-list xmlns:prefix-member-ref-list="http://www.escidoc.de/schemas/memberreflist/0.1">
+			<prefix-member-ref-list:item-ref objid="escidoc:2442"/>
+			<prefix-member-ref-list:container-ref objid="escidoc:container2"/>
+		</prefix-member-ref-list:member-ref-list>
+	</prefix-toc:toc>
+      </foxml:xmlContent>
+    </foxml:datastreamVersion>
+  </foxml:datastream>
+  <foxml:datastream CONTROL_GROUP="X" FEDORA_URI="info:fedora/escidoc:container1/escidoc" ID="escidoc" STATE="A" VERSIONABLE="true">
+    <foxml:datastreamVersion  ALT_IDS="metadata"  ID="escidoc.0" LABEL="escidoc" MIMETYPE="text/xml">
+      <foxml:xmlContent>
+      <prefix-metadata-records:md-record xmlns:prefix-xlink="http://www.w3.org/1999/xlink" xmlns:prefix-metadata-records="http://www.escidoc.de/schemas/metadatarecords/0.1" prefix-xlink:type="simple" prefix-xlink:title="eSciDoc internal MD Record" prefix-xlink:href="/ir/container/escidoc:container1/md-records/escidoc" schema="http://www.escidoc-project.de/metadata/schema/0.1" name="escidoc">
+			<prefix-internal-metadata:escidoc xmlns:prefix-internal-metadata="http://www.escidoc.de/schemas/internalmetadata/0.1">
+				<prefix-internal-metadata:collection/>
+			</prefix-internal-metadata:escidoc>
+		</prefix-metadata-records:md-record>
+      </foxml:xmlContent>
+    </foxml:datastreamVersion>
+  </foxml:datastream>
+  <foxml:datastream CONTROL_GROUP="X" FEDORA_URI="info:fedora/escidoc:container1/RELS-EXT" ID="RELS-EXT" STATE="A" VERSIONABLE="true">
+    <foxml:datastreamVersion CREATED="2007-01-16T11:14:21.203Z" ID="RELS-EXT.0" LABEL="Enter a label here."
+      MIMETYPE="text/xml">
+      <foxml:xmlContent>
+<rdf:RDF xmlns:prefix-container="http://www.escidoc.de/schemas/container/0.1/"
+  xmlns:myNamespace="http://www.nsdl.org/ontologies/relationships/"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:prefix-xlink="http://www.w3.org/1999/xlink/">
+  <rdf:Description rdf:about="info:fedora/escidoc:container1">
+    <prefix-container:context>escidoc:persistent3</prefix-container:context>
+    <prefix-container:status>pending</prefix-container:status>
+    <prefix-container:context-title>MPIWG Collection</prefix-container:context-title>
+    <prefix-container:content-type>escidoc:persistent4</prefix-container:content-type>
+    <prefix-container:content-type-title>SWB Scan</prefix-container:content-type-title>
+    <prefix-container:creator>escidoc:14141</prefix-container:creator>
+    <prefix-container:creator-title>Michael Hoppe</prefix-container:creator-title>
+    <prefix-container:lock-status>unlocked</prefix-container:lock-status>
+    <prefix-container:latest-version.number>1</prefix-container:latest-version.number>
+    <prefix-container:latest-version.date>2007-02-07T07:50:04.031Z</prefix-container:latest-version.date>
+    <myNamespace:title>Test Collection</myNamespace:title>
+    <myNamespace:hasAdminDescriptor>escidoc:persistent2</myNamespace:hasAdminDescriptor>
+    <myNamespace:hasMember>escidoc:container1</myNamespace:hasMember>
+    <myNamespace:hasMember>escidoc:4293</myNamespace:hasMember>
+    <myNamespace:hasMember>escidoc:4296</myNamespace:hasMember>
+    <myNamespace:objectType>container</myNamespace:objectType>
+  </rdf:Description>
+</rdf:RDF>
+
+      </foxml:xmlContent>
+    </foxml:datastreamVersion>
+  </foxml:datastream>
+  <foxml:datastream CONTROL_GROUP="X" FEDORA_URI="info:fedora/escidoc:container1/DC" ID="DC" STATE="A" VERSIONABLE="true">
+    <foxml:datastreamVersion CREATED="2007-01-16T11:10:39.578Z" ID="DC1.0" LABEL="Dublin Core Metadata"
+      MIMETYPE="text/xml" SIZE="271">
+      <foxml:xmlContent>
+        <oai_dc:dc xmlns:prefix-dc="http://purl.org/dc/elements/1.1/" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/">
+          <prefix-dc:title>Container Test</prefix-dc:title>
+          <prefix-dc:identifier>escidoc:container1</prefix-dc:identifier>
+        </oai_dc:dc>
+      </foxml:xmlContent>
+    </foxml:datastreamVersion>
+  </foxml:datastream>
+</foxml:digitalObject>

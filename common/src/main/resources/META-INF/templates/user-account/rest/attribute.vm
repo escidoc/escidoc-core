@@ -1,0 +1,6 @@
+#parse("common/macros.vm")
+#set( $attributeHref = "/aa/user-account/" + ${userAccountId} + "/resources/attributes/attribute/" + ${userAccountAttributeId})
+#set( $attributeTitle = ${userAccountAttributeId})
+<${attributesNamespacePrefix}:attribute 
+ #restInsertConditionalRoot(${isRootAttribute} "false" "false" ${attributesNamespacePrefix} ${attributesNamespace} ${attributeTitle} ${attributeHref} ${LAST_MODIFICATION_DATE})
+ name="${userAccountAttributeName}" internal="${userAccountAttributeIsInternal}">${userAccountAttributeValue}</${attributesNamespacePrefix}:attribute>

@@ -1,0 +1,35 @@
+#
+# Switch TripleStore
+#
+Following steps are necessary to replace the Mulgara TripleStore against 
+MPTTripleStore.
+
+- stop Fedora
+- create Postgres riTriples database:
+
+         CREATE DATABASE "riTriples"
+           WITH ENCODING='SQL_ASCII'
+           OWNER="fedoraAdmin";
+
+- alter feodra3.0b/server/config/fedora.fcfg:
+
+<module role="fedora.server.resourceIndex.ResourceIndex" class="fedora.server.resourceIndex.ResourceIndexModule">
+    <comment>Supports the ResourceIndex.</comment>
+    <param name="level" value="1">
+      <comment>(required) 
+            Index level. Currently, only 0, and 1 are supported levels. 
+            0 = off and 1 = on.
+            WARNING: changing the level (except to 0) requires 
+            running the Resource Index Rebuilder.</comment>
+    </param>
+    <param name="datastore" value="localPostgresMPTTriplestore">
+      <comment>(required) 
+            Name of the triplestore to use. WARNING: changing the 
+            triplestore running the Resource Index Rebuilder.
+      </comment>
+    
+
+- replace localMulgaraTriplestore with localPostgresMPTTriplestore
+- call fedora/server/bin/fedora-rebuild.[bat|sh and select option 1 to rebuild 
+  the triplestore.
+- restart Fedora

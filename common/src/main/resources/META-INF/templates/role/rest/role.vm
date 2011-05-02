@@ -1,0 +1,22 @@
+#parse("common/macros.vm")<${roleNamespacePrefix}:role #namespaceDecl(${roleNamespacePrefix} ${roleNamespace}) #restCommonRootNsDecls("true" "true") #namespaceDecl(${XACML_POLICY_NAMESPACE_PREFIX} ${XACML_POLICY_NAMESPACE}) #restRootAttributes("#escA(${roleName})" ${roleHref} ${LAST_MODIFICATION_DATE})>
+<${roleNamespacePrefix}:properties>
+#creationDate(${CREATION_DATE})
+#restCreatedBy("#escA(${roleCreatedByTitle})" ${roleCreatedByHref})
+#restModifiedBy("#escA(${roleModifiedByTitle})" ${roleModifiedByHref})
+<${escidocPropertiesNamespacePrefix}:name>#escT(${roleName})</${escidocPropertiesNamespacePrefix}:name>
+#if( ${DESCRIPTION} )
+<${escidocPropertiesNamespacePrefix}:description>#escT(${DESCRIPTION})</${escidocPropertiesNamespacePrefix}:description>
+#end
+</${roleNamespacePrefix}:properties>
+#parse( "role/rest/resources.vm" )
+#if( ${roleIsLimited} )
+<${roleNamespacePrefix}:scope unlimited="false" >
+#foreach( $scopeDef in ${roleScopeDefs} )
+<${roleNamespacePrefix}:scope-def resource-type="#escA(${scopeDef.objectType})" #if( ${scopeDef.attributeId} )relation-attribute-id="#escA(${scopeDef.attributeId})" #end #if( ${scopeDef.attributeObjectType} )relation-attribute-object-type="#escA(${scopeDef.attributeObjectType})" #end/>
+#end
+</${roleNamespacePrefix}:scope>
+#else
+<${roleNamespacePrefix}:scope unlimited="true" />
+#end
+${policy}
+</${roleNamespacePrefix}:role>

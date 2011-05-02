@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="<XDtConfig:configParameterValue paramName='Xmlencoding'/>"?>
+<XDtComment:comment>
+	This is a customized version of the axis-deploy_wsdd.xdt.
+	The axis-mappings-{0}.xml has been replaced by
+	axis-mappings-< XDtClass:className/ >.xml
+	Bernhard Kraus (Accenture)
+</XDtComment:comment>
+<deployment 
+    xmlns="http://xml.apache.org/axis/wsdd/" 
+    xmlns:java="http://xml.apache.org/axis/wsdd/providers/java"
+    xmlns:xsi="http://www.w3.org/2000/10/XMLSchema-instance">
+
+  <service name="<XDtClass:classTagValue tagName='axis:service' paramName='urn'/>"
+    <XDtClass:ifHasClassTag tagName="axis:service" paramName="provider">
+      provider="<XDtClass:classTagValue tagName="axis:service" paramName="provider" values="java:RPC,java:MSG,java:EscidocEJB" default="java:RPC"/>"
+    </XDtClass:ifHasClassTag>
+    <XDtClass:ifDoesntHaveClassTag tagName="axis:service" paramName="provider">
+      <XDtType:ifIsOfType type="javax.ejb.EntityBean,javax.ejb.SessionBean">
+      provider="java:EscidocEJB"
+      </XDtType:ifIsOfType>
+      <XDtType:ifIsNotOfType type="javax.ejb.EntityBean,javax.ejb.SessionBean">
+      provider="java:RPC"
+      </XDtType:ifIsNotOfType>      
+    </XDtClass:ifDoesntHaveClassTag>
+      >
+	
+	<XDtMerge:merge file="axis-wss4j-<XDtClass:className/>.xml">
+		<XDtMerge:merge file="axis-wss4j-default.xml">
+     		<XDtComment:comment>
+       		To add wss4j handler to the deployment descriptor, add a file to your
+       		XDoclet merge directory called axis-wss4j-default.xml that contains the
+       		<requestFlow/> and <handler/> markup. 
+     		</XDtComment:comment>
+   		</XDtMerge:merge>
+   	</XDtMerge:merge>
+	
+    <XDtClass:ifHasClassTag tagName="axis.service" paramName="namespace">
+    <namespace><XDtClass:classTagValue tagName="axis.service" paramName="namespace"/></namespace>
+    </XDtClass:ifHasClassTag>
+    <XDtType:ifIsOfType type="javax.ejb.EntityBean,javax.ejb.SessionBean">
+    <parameter name="springBean" value="service.<XDtClass:classTagValue tagName='ejb.bean' paramName='name'/>Bean"/>
+    <parameter name="beanJndiName" value="<XDtEjbHome:jndiName type='remote'/>"/>
+    <parameter name="homeInterfaceName" value="<XDtEjbHome:homeInterface type='remote'/>"/>
+    <parameter name="remoteInterfaceName" value="<XDtEjbIntf:componentInterface type='remote'/>"/>
+      <XDtConfig:ifHasConfigParam paramName='contextProviderUrl'>
+    <parameter name="jndiURL"
+               value="${<XDtConfig:configParameterValue paramName='contextProviderUrl'/>.service.provider.url}"/>
+      </XDtConfig:ifHasConfigParam>
+      <XDtConfig:ifHasConfigParam paramName='contextFactoryName'>
+    <parameter name="jndiContextClass"
+               value="<XDtConfig:configParameterValue paramName='contextFactoryName'/>"/>
+      </XDtConfig:ifHasConfigParam>
+      
+    <parameter name="wsdlPortType" value="<XDtClass:classTagValue tagName='ejb.bean' paramName='display-name'/>"/>
+    <parameter name="wsdlServiceElement" value="<XDtClass:classTagValue tagName='axis:service' paramName='urn'/>"/>
+    <parameter name="wsdlServicePort" value="<XDtClass:classTagValue tagName='axis:service' paramName='urn'/>"/>
+    
+    </XDtType:ifIsOfType>
+    <XDtType:ifIsNotOfType type="javax.ejb.EntityBean,javax.ejb.SessionBean">
+    <parameter name="className"
+               value="<XDtClass:fullClassName/>" />
+    </XDtType:ifIsNotOfType>
+    <parameter name="allowedMethods"
+    <XDtClass:ifDoesntHaveClassTag tagName="axis:service" paramName="include-all">
+               value="<XDtMethod:forAllMethods><XDtMethod:ifHasMethodTag tagName='axis:method'><XDtMethod:methodName/> </XDtMethod:ifHasMethodTag></XDtMethod:forAllMethods>"
+    </XDtClass:ifDoesntHaveClassTag>
+    <XDtClass:ifHasClassTag tagName="axis:service" paramName="include-all">
+               value="*"
+    </XDtClass:ifHasClassTag>
+    />
+    <parameter name="scope" value="<XDtClass:classTagValue tagName='axis:service' paramName='scope' value='request,session,application' default='request'/>"/>
+    <parameter name="wsdlTargetNamespace" value="http://www.escidoc.de/services/<XDtClass:classTagValue tagName='axis:service' paramName='urn'/>/0.1"/>
+  
+  </service>
+  
+   <XDtMerge:merge file="axis-mappings-<XDtClass:className/>.xml">
+     <XDtComment:comment>
+       To add type mappings to the deployment descriptor, add a file to your
+       XDoclet merge directory called axis-mappings-<XDtClass:className/>.xml that contains the
+       <beanMapping/> and <typeMapping/> markup. 
+     </XDtComment:comment>
+   </XDtMerge:merge>
+   
+   <XDtMerge:merge file="axis-mappings-all.xml">
+     <XDtComment:comment>
+       To add type mappings to the deployment descriptor, add a type mapping to your
+       XDoclet merge directory called axis-mappings-all.xml that contains the
+       <beanMapping/> and <typeMapping/> markup. 
+     </XDtComment:comment>
+   </XDtMerge:merge>
+</deployment>

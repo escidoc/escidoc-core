@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapping>
+	<!--#########################################################
+		# Jhove Service
+		# -->
+	<resource name="Jhove" base-uri="/tme/jhove/">
+		<documentation visible="false">
+		</documentation>
+		<descriptor uri="/tme/jhove">
+			<invoke http="POST" method="extract" param1="${BODY}">
+				<documentation visible="true" />
+			</invoke>
+		</descriptor>
+	</resource>
+</mapping>

@@ -1,0 +1,47 @@
+Prerequisites:
+- Java in version >= 1.5.0_update11 is installed.
+- Ant in version 1.7.0 or higher is installed.
+  Environment variable ANT_OPTS exists and is set to '-Xmx1024m -Xms512m  -XX:MaxPermSize=256m'
+- Jboss in version 4.2.2 is installed. The directory the jboss is installed will be named ${jboss.dir} in the following.
+  Add the following policy to ${jboss.dir}\server\default\conf\login-config.xml
+
+   <application-policy name="escidoc">
+      <authentication>
+         <login-module code="org.jboss.security.auth.spi.AnonLoginModule" flag="required" />
+      </authentication>
+   </application-policy>
+
+- Postgres in version 8.3 or higher
+  * Several Objects in the postgres databases have to be created:
+
+  CREATE ROLE "escidoc" LOGIN PASSWORD 'escidoc' NOINHERIT CREATEDB VALID UNTIL 'infinity';
+  CREATE DATABASE "escidoc-core" WITH ENCODING='UTF8' OWNER="escidoc";
+  
+  CREATE ROLE "fedoraAdmin" LOGIN PASSWORD 'fedoraAdmin' NOINHERIT CREATEDB VALID UNTIL 'infinity';
+  CREATE DATABASE "fedora22" WITH ENCODING='UTF8' OWNER="fedoraAdmin";
+  CREATE DATABASE "riTriples" WITH ENCODING='SQL_ASCII' OWNER="fedoraAdmin";
+
+- Fedora in version 3.1 is installed.
+  Fedora must be configured to use the postgres database named fedora31, and the MPT triplestore. The triplestore database has to be riTriples.
+
+Build:
+1. Extract source code archive to a directory of your choice. This directory will be named ${install.dir} in the following.
+2. Open a command shell and change the directory to ${install.dir}\Escidoc
+3. Execute the command
+   ant build-ear
+   and wait until the build process has finished.
+
+Jboss customization:
+1. Copy the files in ${install.dir}\data\jboss to ${jboss.dir}
+
+Deployment of the framework
+1. Escidoc properties
+   Open ${jboss.dir}\server\default\conf\escidoc.properties to edit and change the host name in the property escidoc.baseurl to the current hostname.
+
+2. Database setup
+   - Open a command shell and change the directory to ${install.dir}\Escidoc\build
+   - Execute the command
+     ant -f postgres-build
+3. start postrges, fedora, and jboss.
+4. Deploy the escidoc.ear
+   Copy the file ${install.dir}\Escidoc\dist\release\ear\escidoc.ear to ${jboss.dir}\server\default\deploy

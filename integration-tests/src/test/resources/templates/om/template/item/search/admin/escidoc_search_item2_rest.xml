@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<escidocItem:item xmlns:srel="http://escidoc.de/core/01/structural-relations/"
+                  xmlns:prop="http://escidoc.de/core/01/properties/"
+                  xmlns:metadata="http://www.escidoc.de/metadata/schema/0.1"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  xmlns:metadata-records="http://www.escidoc.de/schemas/metadatarecords/0.5"
+                  xmlns:escidocItem="http://www.escidoc.de/schemas/item/0.10"
+                  xlink:type="simple"
+                  xml:base="http://localhost:8080"
+                  xlink:title="Verfahren zum Vermessen eines Bohrlochs">
+   <escidocItem:properties xlink:type="simple">
+      <srel:context xlink:type="simple" xlink:href="/ir/context/escidoc:persistent3"/>
+      <srel:content-model xlink:type="simple" xlink:href="/cmm/content-model/escidoc:persistent4"/>
+      <properties:content-model-specific xmlns:properties="http://escidoc.de/core/01/properties/">
+         <element1>cms-test1</element1>
+         <element2>cms-test2</element2>
+      </properties:content-model-specific>
+   </escidocItem:properties>
+   <escidocMetadataRecords:md-records xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5">
+      <escidocMetadataRecords:md-record name="escidoc" schema="http://www.escidoc-project.de/metadata/schema/0.1/"
+                                        xlink:title="eSciDoc internal MD Record"
+                                        xlink:type="simple">
+         <escidocMetadataProfile:publication xmlns:escidocMetadataProfile="http://escidoc.mpg.de/metadataprofile/schema/0.1/"
+                                             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                             xmlns:publication="http://escidoc.mpg.de/metadataprofile/schema/0.1/publication"
+                                             xmlns:dc="http://purl.org/dc/elements/1.1/"
+                                             xmlns:dcterms="http://purl.org/dc/terms/"
+                                             xmlns:ec="http://escidoc.mpg.de/metadataprofile/schema/0.1/collection"
+                                             xmlns:e="http://escidoc.mpg.de/metadataprofile/schema/0.1/types"
+                                             type="article"
+                                             xsi:schemaLocation="http://escidoc.mpg.de/metadataprofile/schema/0.1/publication ../escidoc_publication_profile.xsd">
+            <publication:creator role="author">
+               <e:person>
+                  <e:family-name/>
+                  <e:given-name>LLER GRUNDBAU GmbH</e:given-name>
+                  <e:complete-name>KELLER GRUNDBAU GmbH</e:complete-name>
+               </e:person>
+            </publication:creator>
+            <publication:creator role="author">
+               <e:person>
+                  <e:family-name>Berg</e:family-name>
+                  <e:given-name>Joachim, Dipl.-Ing.</e:given-name>
+                  <e:complete-name>Berg, Joachim, Dipl.-Ing.</e:complete-name>
+               </e:person>
+            </publication:creator>
+            <publication:creator role="author">
+               <e:person>
+                  <e:family-name>Knitsch</e:family-name>
+                  <e:given-name>Henry, Dipl.-Ing.</e:given-name>
+                  <e:complete-name>Knitsch, Henry, Dipl.-Ing.</e:complete-name>
+               </e:person>
+            </publication:creator>
+            <publication:creator role="author">
+               <e:person>
+                  <e:family-name>Priebe</e:family-name>
+                  <e:given-name>Heinz, Dipl.-Ing.</e:given-name>
+                  <e:complete-name>Priebe, Heinz, Dipl.-Ing.</e:complete-name>
+               </e:person>
+            </publication:creator>
+            <publication:creator role="author">
+               <e:person>
+                  <e:family-name>Toth</e:family-name>
+                  <e:given-name>Stefan, Dipl.-Ing.</e:given-name>
+                  <e:complete-name>Toth, Stefan, Dipl.-Ing.</e:complete-name>
+               </e:person>
+            </publication:creator>
+            <publication:creator role="author">
+               <e:person>
+                  <e:family-name>Neumann</e:family-name>
+                  <e:given-name>Ernst Dieter, Dipl.-Ing.</e:given-name>
+                  <e:complete-name>Neumann, Ernst Dieter, Dipl.-Ing.</e:complete-name>
+               </e:person>
+            </publication:creator>
+            <publication:creator role="artist">
+               <e:person>
+                  <e:complete-name>Hans Meier</e:complete-name>
+                  <e:family-name>Meier</e:family-name>
+                  <e:given-name>Hans</e:given-name>
+                  <e:organization>
+                     <e:organization-name>Test Organization</e:organization-name>
+                     <e:address>Max-Planck-Str. 1</e:address>
+                     <e:identifier>escidoc:persistent26</e:identifier>
+                  </e:organization>
+               </e:person>
+            </publication:creator>
+            <publication:creator role="author">
+               <e:organization>
+                  <e:organization-name>Standalone Org</e:organization-name>
+                  <e:address>Hermann-von-Helmholtz Platz 1</e:address>
+                  <e:identifier>escidoc:persistent37</e:identifier>
+               </e:organization>
+            </publication:creator>
+            <dc:title xml:lang="DE">Verfahren zum Vermessen eines Bohrlochs titleappendi!x titleappendi(x ! (</dc:title>
+            <dc:language>DE</dc:language>
+            <dc:identifier xsi:type="eidt:ISSN">1108853</dc:identifier>
+            <dcterms:alternative xml:lang="EN">ÜMethod of measuring a borehole alternativeappendix! alternativeappendix(</dcterms:alternative>
+            <dcterms:created>1980-01-27T07:00:00.000+01:00</dcterms:created>
+            <dcterms:modified>1980-01-27T08:00:00.000+01:00</dcterms:modified>
+            <dcterms:dateSubmitted>1980-01-27T09:00:00.000+01:00</dcterms:dateSubmitted>
+            <publication:source type="articlesource">
+               <dc:title>兡也包因沘氓侷柵苗孫孫財</dc:title>
+            </publication:source>
+            <publication:source type="articlesource1">
+               <dc:title>TitelSourceVO</dc:title>
+            </publication:source>
+            <publication:event>
+               <dc:title>TitelEventVO</dc:title>
+            </publication:event>
+         </escidocMetadataProfile:publication>
+      </escidocMetadataRecords:md-record>
+   </escidocMetadataRecords:md-records>
+   <escidocComponents:components xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.9"
+                                 xlink:type="simple"
+                                 xlink:href="/ir/item/escidoc:198/components"
+                                 xlink:title="Components of Item"
+                                 xml:base="http://localhost:8080">
+      <escidocComponents:component>
+         <escidocComponents:properties xmlns:properties="http://escidoc.de/core/01/properties/"
+                                       xmlns:version="http://escidoc.de/core/01/properties/version/"
+                                       xlink:type="simple">
+            <properties:description>XML File</properties:description>
+            <properties:valid-status>valid</properties:valid-status>
+            <properties:visibility>public</properties:visibility>
+            <properties:content-category>pre-print</properties:content-category>
+            <properties:file-name>EPFull_1108853.xml</properties:file-name>
+            <properties:mime-type>text/xml</properties:mime-type>
+         </escidocComponents:properties>
+         <escidocComponents:content xlink:type="simple"
+                                    xlink:href="http://localhost:8082/ir/xml/EPFull_1108853.xml"
+                                    storage="internal-managed"/>
+         <escidocMetadataRecords:md-records xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5">
+            <escidocMetadataRecords:md-record name="escidoc" schema="http://www.escidoc-project.de/metadata/schema/0.1/"
+                                              xlink:title="eSciDoc internal MD Record"
+                                              xlink:type="simple">
+               <escidocMetadataProfile:publication xmlns:escidocMetadataProfile="http://escidoc.mpg.de/metadataprofile/schema/0.1/"
+                                                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                                   xmlns:publication="http://escidoc.mpg.de/metadataprofile/schema/0.1/publication"
+                                                   xmlns:dc="http://purl.org/dc/elements/1.1/"
+                                                   xmlns:dcterms="http://purl.org/dc/terms/"
+                                                   xmlns:ec="http://escidoc.mpg.de/metadataprofile/schema/0.1/collection"
+                                                   xmlns:e="http://escidoc.mpg.de/metadataprofile/schema/0.1/types"
+                                                   type="article"
+                                                   xsi:schemaLocation="http://escidoc.mpg.de/metadataprofile/schema/0.1/publication ../escidoc_publication_profile.xsd">
+                  <publication:creator role="author">
+                     <e:person>
+                        <e:family-name/>
+                        <e:given-name>LLER GRUNDBAU GmbH</e:given-name>
+                        <e:complete-name>compKELLER GRUNDBAU GmbH</e:complete-name>
+                     </e:person>
+                  </publication:creator>
+                  <publication:creator role="author">
+                     <e:person>
+                        <e:family-name>Berg</e:family-name>
+                        <e:given-name>Joachim, Dipl.-Ing.</e:given-name>
+                        <e:complete-name>compBerg, Joachim, Dipl.-Ing.</e:complete-name>
+                     </e:person>
+                  </publication:creator>
+                  <publication:creator role="author">
+                     <e:person>
+                        <e:family-name>Knitsch</e:family-name>
+                        <e:given-name>Henry, Dipl.-Ing.</e:given-name>
+                        <e:complete-name>compKnitsch, Henry, Dipl.-Ing.</e:complete-name>
+                     </e:person>
+                  </publication:creator>
+                  <publication:creator role="author">
+                     <e:person>
+                        <e:family-name>Priebe</e:family-name>
+                        <e:given-name>Heinz, Dipl.-Ing.</e:given-name>
+                        <e:complete-name>compPriebe, Heinz, Dipl.-Ing.</e:complete-name>
+                     </e:person>
+                  </publication:creator>
+                  <publication:creator role="author">
+                     <e:person>
+                        <e:family-name>Toth</e:family-name>
+                        <e:given-name>Stefan, Dipl.-Ing.</e:given-name>
+                        <e:complete-name>compToth, Stefan, Dipl.-Ing.</e:complete-name>
+                     </e:person>
+                  </publication:creator>
+                  <publication:creator role="author">
+                     <e:person>
+                        <e:family-name>Neumann</e:family-name>
+                        <e:given-name>Ernst Dieter, Dipl.-Ing.</e:given-name>
+                        <e:complete-name>compNeumann, Ernst Dieter, Dipl.-Ing.</e:complete-name>
+                     </e:person>
+                  </publication:creator>
+                  <dc:title xml:lang="DE">compVerfahren zum Vermessen eines Bohrlochs titleappendi!x titleappendi(x ! (</dc:title>
+                  <dc:language>DE</dc:language>
+                  <dc:identifier xsi:type="eidt:ISSN">comp1108853</dc:identifier>
+                  <dcterms:alternative xml:lang="EN">ÜcompMethod of measuring a borehole alternativeappendix! alternativeappendix(</dcterms:alternative>
+                  <dcterms:created>1980-01-27T07:00:00.000+01:00</dcterms:created>
+                  <dcterms:modified>1980-01-27T08:00:00.000+01:00</dcterms:modified>
+                  <dcterms:dateSubmitted>1980-01-27T09:00:00.000+01:00</dcterms:dateSubmitted>
+                  <publication:source type="articlesource">
+                     <dc:title>兡也包因沘氓侷柵苗孫孫財</dc:title>
+                  </publication:source>
+                  <publication:source type="articlesource1">
+                     <dc:title>compTitelSourceVO</dc:title>
+                  </publication:source>
+                  <publication:event>
+                     <dc:title>compTitelEventVO</dc:title>
+                  </publication:event>
+               </escidocMetadataProfile:publication>
+            </escidocMetadataRecords:md-record>
+         </escidocMetadataRecords:md-records>
+      </escidocComponents:component>
+      <escidocComponents:component>
+         <escidocComponents:properties xmlns:properties="http://escidoc.de/core/01/properties/"
+                                       xmlns:version="http://escidoc.de/core/01/properties/version/"
+                                       xlink:type="simple">
+            <properties:description>PDF File</properties:description>
+            <properties:valid-status>valid</properties:valid-status>
+            <properties:visibility>private</properties:visibility>
+            <properties:content-category>pre-print</properties:content-category>
+            <properties:file-name>EPFull_1108853.pdf</properties:file-name>
+            <properties:mime-type>application/pdf</properties:mime-type>
+         </escidocComponents:properties>
+         <escidocComponents:content xlink:type="simple"
+                                    xlink:href="http://localhost:8082/ir/pdf/EPFull_1108853.pdf"
+                                    storage="internal-managed"/>
+         <escidocMetadataRecords:md-records xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5">
+            <escidocMetadataRecords:md-record name="escidoc" schema="http://www.escidoc-project.de/metadata/schema/0.1/"
+                                              xlink:title="eSciDoc internal MD Record"
+                                              xlink:type="simple">
+               <escidocMetadataProfile:publication xmlns:escidocMetadataProfile="http://escidoc.mpg.de/metadataprofile/schema/0.1/"
+                                                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                                   xmlns:publication="http://escidoc.mpg.de/metadataprofile/schema/0.1/publication"
+                                                   xmlns:dc="http://purl.org/dc/elements/1.1/"
+                                                   xmlns:dcterms="http://purl.org/dc/terms/"
+                                                   xmlns:ec="http://escidoc.mpg.de/metadataprofile/schema/0.1/collection"
+                                                   xmlns:e="http://escidoc.mpg.de/metadataprofile/schema/0.1/types"
+                                                   type="article"
+                                                   xsi:schemaLocation="http://escidoc.mpg.de/metadataprofile/schema/0.1/publication ../escidoc_publication_profile.xsd">
+                  <publication:creator role="author">
+                     <e:person>
+                        <e:family-name/>
+                        <e:given-name>LLER GRUNDBAU GmbH</e:given-name>
+                        <e:complete-name>compKELLER GRUNDBAU GmbH</e:complete-name>
+                     </e:person>
+                  </publication:creator>
+                  <publication:creator role="author">
+                     <e:person>
+                        <e:family-name>Berg</e:family-name>
+                        <e:given-name>Joachim, Dipl.-Ing.</e:given-name>
+                        <e:complete-name>compBerg, Joachim, Dipl.-Ing.</e:complete-name>
+                     </e:person>
+                  </publication:creator>
+                  <publication:creator role="author">
+                     <e:person>
+                        <e:family-name>Knitsch</e:family-name>
+                        <e:given-name>Henry, Dipl.-Ing.</e:given-name>
+                        <e:complete-name>compKnitsch, Henry, Dipl.-Ing.</e:complete-name>
+                     </e:person>
+                  </publication:creator>
+                  <publication:creator role="author">
+                     <e:person>
+                        <e:family-name>Priebe</e:family-name>
+                        <e:given-name>Heinz, Dipl.-Ing.</e:given-name>
+                        <e:complete-name>compPriebe, Heinz, Dipl.-Ing.</e:complete-name>
+                     </e:person>
+                  </publication:creator>
+                  <publication:creator role="author">
+                     <e:person>
+                        <e:family-name>Toth</e:family-name>
+                        <e:given-name>Stefan, Dipl.-Ing.</e:given-name>
+                        <e:complete-name>compToth, Stefan, Dipl.-Ing.</e:complete-name>
+                     </e:person>
+                  </publication:creator>
+                  <publication:creator role="author">
+                     <e:person>
+                        <e:family-name>Neumann</e:family-name>
+                        <e:given-name>Ernst Dieter, Dipl.-Ing.</e:given-name>
+                        <e:complete-name>compNeumann, Ernst Dieter, Dipl.-Ing.</e:complete-name>
+                     </e:person>
+                  </publication:creator>
+                  <dc:title xml:lang="DE">compVerfahren zum Vermessen eines Bohrlochs titleappendi!x titleappendi(x ! (</dc:title>
+                  <dc:language>DE</dc:language>
+                  <dc:identifier xsi:type="eidt:ISSN">comp1108853</dc:identifier>
+                  <dcterms:alternative xml:lang="EN">ÜcompMethod of measuring a borehole alternativeappendix! alternativeappendix(</dcterms:alternative>
+                  <dcterms:created>1980-01-27T07:00:00.000+01:00</dcterms:created>
+                  <dcterms:modified>1980-01-27T08:00:00.000+01:00</dcterms:modified>
+                  <dcterms:dateSubmitted>1980-01-27T09:00:00.000+01:00</dcterms:dateSubmitted>
+                  <publication:source type="articlesource">
+                     <dc:title>兡也包因沘氓侷柵苗孫孫財</dc:title>
+                  </publication:source>
+                  <publication:source type="articlesource1">
+                     <dc:title>compTitelSourceVO</dc:title>
+                  </publication:source>
+                  <publication:event>
+                     <dc:title>compTitelEventVO</dc:title>
+                  </publication:event>
+               </escidocMetadataProfile:publication>
+            </escidocMetadataRecords:md-record>
+         </escidocMetadataRecords:md-records>
+      </escidocComponents:component>
+   </escidocComponents:components>
+</escidocItem:item>

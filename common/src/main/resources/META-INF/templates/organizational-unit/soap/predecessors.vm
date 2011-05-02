@@ -1,0 +1,10 @@
+#*
+  Predecessor
+*#
+#if( ${PREDECESSORS} )
+#parse("common/macros.vm")<${organizationalUnitNamespacePrefix}:predecessors #soapInsertConditionalRoot(${isRootParents} "false" "true" ${organizationalUnitNamespacePrefix} ${organizationalUnitNamespace} false ${LAST_MODIFICATION_DATE})>
+#foreach( ${PREDECESSOR} in ${PREDECESSORS} )
+ <${structuralRelationsNamespacePrefix}:predecessor #soapLinkAttributes(${PREDECESSOR.OBJID}) form="${PREDECESSOR.FORM}" />
+#end
+</${organizationalUnitNamespacePrefix}:predecessors>
+#end

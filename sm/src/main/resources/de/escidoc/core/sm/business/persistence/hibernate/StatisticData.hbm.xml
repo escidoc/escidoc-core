@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping
+    schema="sm"
+>
+<!-- 
+    Created by the Middlegen Hibernate plugin 2.2
+
+    http://boss.bekk.no/boss/middlegen/
+    http://www.hibernate.org/
+-->
+
+<class 
+    name="de.escidoc.core.sm.business.persistence.hibernate.StatisticData" 
+    table="statistic_data"
+    lazy="false"
+>
+    <meta attribute="class-description" inherit="false">
+       @hibernate.class
+        table="statistic_data"
+       @hibernate.mapping
+        schema="sm"
+    </meta>
+
+    <id
+        name="id"
+        type="java.lang.String"
+        column="id"
+    >
+    
+        <meta attribute="field-description">
+           @hibernate.id
+            generator-class="uuid"
+            type="java.lang.String"
+            column="id"
+
+        </meta>
+        <generator class="uuid" />
+    </id>
+
+    <property
+        name="xmlData"
+        type="java.lang.String"
+        column="xml_data"
+        not-null="true"
+        length="2147483647"
+    >
+        <meta attribute="field-description">
+           @hibernate.property
+            column="xml_data"
+            length="2147483647"
+            not-null="true"
+        </meta>    
+    </property>
+    <property
+        name="timemarker"
+        type="java.util.Date"
+        column="timemarker"
+        not-null="true"
+        length="29"
+    >
+        <meta attribute="field-description">
+           @hibernate.property
+            column="timemarker"
+            length="29"
+            not-null="true"
+        </meta>    
+    </property>
+
+    <!-- Associations -->
+  
+    <!-- bi-directional many-to-one association to Scope -->
+    <many-to-one
+        name="scope"
+        class="de.escidoc.core.sm.business.persistence.hibernate.Scope"
+        not-null="true"
+    >
+        <meta attribute="field-description">
+           @hibernate.many-to-one
+            not-null="true"
+           @hibernate.column name="scope_id"         
+        </meta>
+        <column name="scope_id" />
+    </many-to-one>
+
+</class>
+</hibernate-mapping>

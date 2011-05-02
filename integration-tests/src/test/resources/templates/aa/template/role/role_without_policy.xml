@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<prefix-role:role
+    xmlns:prefix-role="http://www.escidoc.de/schemas/role/0.5"
+    xmlns:prefix-prop="http://escidoc.de/core/01/properties/"
+    xmlns:prefix-xlink="http://www.w3.org/1999/xlink"
+    xmlns:prefix-xacml-policy="urn:oasis:names:tc:xacml:1.0:policy">
+    <prefix-role:properties>
+        <prefix-prop:name>ExampleRole</prefix-prop:name>
+        <prefix-prop:description>This is a role example°^^"§$%/()=ß?\´`@€+*~#,;.:-_| &amp;&gt;&lt;&quot;&apos; &amp;amp; &amp;gt; &amp;lt; &amp;quot; &amp;apos; <![CDATA[< & > " '    &lt; &amp; &gt; &quot; &apos;]]></prefix-prop:description>
+    </prefix-role:properties>
+    <prefix-role:scope>
+        <prefix-role:scope-def resource-type="staging-file"/>
+        <prefix-role:scope-def resource-type="item"
+            relation-attribute-id="info:escidoc/names:aa:1.0:resource:item:context"
+            relation-attribute-object-type="context"/>
+    </prefix-role:scope>
+</prefix-role:role>

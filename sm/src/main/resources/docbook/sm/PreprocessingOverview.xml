@@ -1,0 +1,18 @@
+<chapter id="Preprocessing">
+	<title>Resource Preprocessing</title>
+	<para>
+		The Statistic Manager provides an Interface to preprocess 
+		the StatisticData into the Aggregation-Definition Tables. 
+		Normally a cron-job runs every night and preprocesses the StatisticData from the day before.
+		But if a new AggregationDefinition was created and the StatisticData of the last days/weeks 
+		shall be written into the AggregationTable then this Interface can be used.
+	</para>
+	<para>
+		Parameters of the interface-call are an aggregation-definition-id and an xml-record, according to 
+		the preprocessing-information-schema. The xml-record contains an element start-date and an element end-date. 
+	</para>
+	<para>
+		The user that calls the interface has to have permissions to 
+		write content for the scope of the given aggregation-definition. (see chapter ‘security concept’)		
+	</para>
+</chapter>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<prefix-organizational-unit:organizational-unit
+	xmlns:prefix-organizational-unit="http://www.escidoc.de/schemas/organizationalunit/0.3"
+	xmlns:prefix-xlink="http://www.w3.org/1999/xlink" xmlns:prefix-xsi="http://www.w3.org/2001/XMLSchema-instance"
+	>
+	<prefix-organizational-unit:organization-details>
+		<prefix-organizational-unit:abbreviation>MPIWG°^^"§$%/()=ß?\´`@€+*~#',;.:-_|> &amp;&gt;&lt;&quot;&apos; &amp;amp; &amp;gt; &amp;lt; &amp;quot; &amp;apos; <![CDATA[< & > " '    &lt; &amp; &gt; &quot; &pos;]]></prefix-organizational-unit:abbreviation>
+		<prefix-organizational-unit:name>Some OU °^^"§$%/()=ß?\´`@€+*~#',;.:-_|> &amp;&gt;&lt;&quot;&apos; &amp;amp; &amp;gt; &amp;lt; &amp;quot; &amp;apos; <![CDATA[< & > " '    &lt; &amp; &gt; &quot; &pos;]]></prefix-organizational-unit:name>
+		<prefix-organizational-unit:uri>http://www.mpiwg-berlin.de?request=some&amp;response=some</prefix-organizational-unit:uri>
+		<prefix-organizational-unit:organization-type>institute °^^"§$%/()=ß?\´`@€+*~#',;.:-_|> &amp;&gt;&lt;&quot;&apos; &amp;amp; &amp;gt; &amp;lt; &amp;quot; &amp;apos; <![CDATA[< & > " '    &lt; &amp; &gt; &quot; &pos;]]></prefix-organizational-unit:organization-type>
+		<prefix-organizational-unit:description>°^^"§$%/()=ß?\´`@€+*~#',;.:-_|> 
+		&amp;&gt;&lt;&quot;&apos; &amp;amp; &amp;gt; &amp;lt; &amp;quot; &amp;apos; 
+		<![CDATA[< & > " ' &lt; &quot; &gt; &quot; &apos]]></prefix-organizational-unit:description>
+		<prefix-organizational-unit:external-id>id:123°^^"§$%/()=ß?\´`@€+*~#',;.:-_|>&amp;&gt;&lt;&quot;&apos;&amp;amp;&amp;gt;&amp;lt;&amp;quot;&amp;apos;<![CDATA[< & > " '    &lt; &amp; &gt; &quot; &pos;]]></prefix-organizational-unit:external-id>
+		<prefix-organizational-unit:postcode>12345ab °^^"§$%/()=ß?\´`@€+*~#',;.:-_|> &amp;&gt;&lt;&quot;&apos; &amp;amp; &amp;gt; &amp;lt; &amp;quot; &amp;apos; <![CDATA[< & > " '    &lt; &amp; &gt; &quot; &pos;]]></prefix-organizational-unit:postcode>
+		<prefix-organizational-unit:country>de</prefix-organizational-unit:country>
+		<prefix-organizational-unit:region>bw °^^"§$%/()=ß?\´`@€+*~#',;.:-_|> &amp;&gt;&lt;&quot;&apos; &amp;amp; &amp;gt; &amp;lt; &amp;quot; &amp;apos; <![CDATA[< & > " '    &lt; &amp; &gt; &quot; &pos;]]></prefix-organizational-unit:region>
+		<prefix-organizational-unit:address>some address, somewhere °^^"§$%/()=ß?\´`@€+*~#',;.:-_|> &amp;&gt;&lt;&quot;&apos; &amp;amp; &amp;gt; &amp;lt; &amp;quot; &amp;apos; <![CDATA[< & > " '    &lt; &amp; &gt; &quot; &pos;]]></prefix-organizational-unit:address>
+		<prefix-organizational-unit:city>some city 1234567890°^^"§$%/()=ß?\´`@€+*~#',;.:-_|> &amp;&gt;&lt;&quot;&apos; &amp;amp; &amp;gt; &amp;lt; &amp;quot; &amp;apos; <![CDATA[< & > " '    &lt; &amp; &gt; &quot; &pos;]]></prefix-organizational-unit:city>
+		<prefix-organizational-unit:telephone>+49 123 456-0</prefix-organizational-unit:telephone>
+		<prefix-organizational-unit:fax>+49 123 456-0</prefix-organizational-unit:fax>
+		<prefix-organizational-unit:email>some@email.somewhere°^^"§$%/()=ß?\´`@€+*~#',;.:-_|> &amp;&gt;&lt;&quot;&apos; &amp;amp; &amp;gt; &amp;lt; &amp;quot; &amp;apos; <![CDATA[< & > " '    &lt; &amp; &gt; &quot; &pos;]]></prefix-organizational-unit:email>
+		<prefix-organizational-unit:geo-coordinate>
+			<prefix-organizational-unit:location-longitude>1234.5678</prefix-organizational-unit:location-longitude>
+			<prefix-organizational-unit:location-latitude>1234.5678</prefix-organizational-unit:location-latitude>
+		</prefix-organizational-unit:geo-coordinate>
+	</prefix-organizational-unit:organization-details>
+
+</prefix-organizational-unit:organizational-unit>

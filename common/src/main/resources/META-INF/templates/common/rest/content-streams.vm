@@ -1,0 +1,3 @@
+<${contentStreamsNamespacePrefix}:content-streams #insertConditionalAttribute( ${ORIGIN} "inherited") #restInsertConditionalRoot(${isRootSubResource} "false" "false" ${contentStreamsNamespacePrefix} ${contentStreamsNamespace} ${contentStreamsTitle} ${contentStreamsHref} ${LAST_MODIFICATION_DATE})>
+${contentStreamsContent}
+</${contentStreamsNamespacePrefix}:content-streams>

@@ -1,0 +1,34 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.escidoc.de/schemas/aggregationdefinitionlist/0.4"
+	xmlns:aggregation-definition="http://www.escidoc.de/schemas/aggregationdefinition/0.4"
+	xmlns:aggregation-definition-list="http://www.escidoc.de/schemas/aggregationdefinitionlist/0.4"
+	elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.escidoc.org/schemas/common/0.4/xml.xsd"/>
+	<xs:import namespace="http://www.escidoc.de/schemas/aggregationdefinition/0.4"
+		schemaLocation="http://www.escidoc.org/schemas/soap/aggregation-definition/0.4/aggregation-definition.xsd" />
+	<xs:element name="aggregation-definition-list">
+		<xs:annotation>
+			<xs:documentation>
+				<para>
+					List of aggregation-definitions.
+				</para>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="aggregation-definition:aggregation-definition" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>
+							<para>
+								Aggregation-definition in aggregation-definition-schema.
+							</para>
+						</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+            <xs:attribute name="number-of-records" use="optional"/>
+            <xs:attribute name="offset" use="optional"/>
+            <xs:attribute name="limit" use="optional"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

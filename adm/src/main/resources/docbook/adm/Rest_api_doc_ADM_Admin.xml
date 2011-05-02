@@ -1,0 +1,50 @@
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook V5.0//EN"
+          "../../../../build/docbook/docbook-5.0/dtd/docbook.dtd"
+[
+<!ENTITY chapter1Overview        SYSTEM "chapter1Overview.xml">
+<!ENTITY chapter1Introduction    SYSTEM "chapter1IntroductionRest.xml">
+<!ENTITY chapter1Authentication  SYSTEM "chapter1AuthenticationRest.xml">
+<!ENTITY chapter1Roles           SYSTEM "chapter1Roles.xml">
+<!ENTITY chapter1Filters         SYSTEM "chapter1Filters.xml">
+<!ENTITY chapter1Specifications  SYSTEM "chapter1Specifications.xml">
+<!ENTITY ObjectApi               SYSTEM "RestContentModelApi.xml">
+<!ENTITY XslApi                  SYSTEM "RestXslApi.xml">
+<!ENTITY Bibliography            SYSTEM "Bibliography.xml">
+]>
+
+<book>
+	<bookinfo>
+		<title>API Documentation Admin Service</title>
+		<subtitle>Admin Manager  (ADM)</subtitle>
+		<subtitle>REST Interface</subtitle>
+		<mediaobject  id="m1">
+			<imageobject>
+				<imagedata align="center"
+					fileref="common/gen/documentation/docbook/escidoc-logo.jpg" format="JPG" />
+			</imageobject>
+		</mediaobject>
+		<mediaobject  id="m2">
+			<imageobject>
+				<imagedata align="center"
+					fileref="common/gen/documentation/docbook/by-nc_plain300.png" format="PNG" />
+			</imageobject>
+		</mediaobject>
+	</bookinfo>
+	<!--  Chapter 1 -->
+	<chapter>
+		<title>Overview</title>
+		&chapter1Overview;
+		&chapter1Introduction;
+		&chapter1Authentication;
+		&chapter1Roles;
+		&chapter1Filters;
+		&chapter1Specifications;
+	</chapter>
+	<!--  Chapter 2 -->
+	<!-- 	&ObjectApi; -->
+	<!--  Chapter 3 -->
+	<!-- Generated from JavaDoc --> 
+		&XslApi;
+	<!--  Bibliography -->
+	<!--	&Bibliography; -->
+</book>

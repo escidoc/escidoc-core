@@ -1,0 +1,8 @@
+
+Adding a new library to the classpath:
+
+add the classpath to build/templates/.classpath-complete
+e.g. <classpathentry kind="lib" path="escidoc-core.ear/META-INF/lib/commons/commons-math-1.2.jar"/>
+
+and rebuild the project
+

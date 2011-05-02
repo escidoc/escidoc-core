@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapping>
+	<define>
+		<var name="COMPONENT-ID" regexp="/([^/?]*)" />
+		<var name="CONTEXT-ID" regexp="/([^/?]*)" />
+		<var name="ITEM-ID" regexp="/([^/?]*)" />
+		<var name="MD-RECORD-ID" regexp="/([^/?]*)" />
+		<var name="RESOURCE_NAME" regexp="/([^/?]*)" />
+		<var name="CONTENT-STREAM-ID" regexp="/([^/?]*)" />
+		<var name="TRANS" regexp="/([^/?]*)" />
+		<var name="SERVICE" regexp="/([^/?]*)" />
+	</define>
+	<!--
+		######################################################### # Item #
+	-->
+
+	<resource name="Item" base-uri="/ir/items/">
+		<descriptor uri="/ir/items">
+			<invoke http="GET" method="retrieveItems" param1="${PARAMETERS}" />
+		</descriptor>
+	</resource>
+	<resource name="Item" base-uri="/ir/item/">
+		<descriptor uri="/ir/item">
+			<invoke http="PUT" method="create" param1="${BODY}"/>
+		</descriptor>
+		<descriptor uri="/ir/item/${ITEM-ID}">
+			<invoke http="DELETE" method="delete" param1="${ITEM-ID}"/>
+			<invoke http="GET" method="retrieve" param1="${ITEM-ID}"/>
+			<invoke http="PUT" method="update" param1="${ITEM-ID}" param2="${BODY}"/>
+		</descriptor>
+		<descriptor uri="/ir/item/${ITEM-ID}/content-relations/add">
+			<invoke http="POST" method="addContentRelations" param1="${ITEM-ID}"
+				param2="${BODY}"/>
+		</descriptor>
+		<descriptor uri="/ir/item/${ITEM-ID}/content-relations/remove">
+			<invoke http="POST" method="removeContentRelations" param1="${ITEM-ID}"
+				param2="${BODY}"/>
+		</descriptor>
+		<descriptor uri="/ir/item/${ITEM-ID}/submit">
+			<invoke http="POST" method="submit" param1="${ITEM-ID}"
+				param2="${BODY}"/>
+		</descriptor>
+		<descriptor uri="/ir/item/${ITEM-ID}/revise">
+			<invoke http="POST" method="revise" param1="${ITEM-ID}"
+				param2="${BODY}"/>
+		</descriptor>
+		<descriptor uri="/ir/item/${ITEM-ID}/release">
+			<invoke http="POST" method="release" param1="${ITEM-ID}"
+				param2="${BODY}"/>
+		</descriptor>
+		<descriptor uri="/ir/item/${ITEM-ID}/withdraw">
+			<invoke http="POST" method="withdraw" param1="${ITEM-ID}"
+				param2="${BODY}"/>
+		</descriptor>
+		<descriptor uri="/ir/item/${ITEM-ID}/lock">
+			<invoke http="POST" method="lock" param1="${ITEM-ID}" param2="${BODY}"/>
+		</descriptor>
+		<descriptor uri="/ir/item/${ITEM-ID}/unlock">
+			<invoke http="POST" method="unlock" param1="${ITEM-ID}"
+				param2="${BODY}"/>
+		</descriptor>
+		<!--#
+			# Properties
+			# -->
+		<descriptor uri="/ir/item/${ITEM-ID}/properties">
+			<invoke http="GET" method="retrieveProperties" param1="${ITEM-ID}"/>
+		</descriptor>
+        <!--#
+            # Parents
+            # -->
+        <descriptor uri="/ir/item/${ITEM-ID}/resources/parents">
+            <invoke http="GET" method="retrieveParents" param1="${ITEM-ID}"/>
+        </descriptor>
+		<!--#
+			# Change Context
+			# -->
+		<descriptor uri="/ir/item/${ITEM-ID}/move-to-context">
+			<invoke http="POST" method="moveToContext" param1="${ITEM-ID}"
+				param2="${BODY}"/>
+		</descriptor>
+		<descriptor uri="/ir/item/${ITEM-ID}/assign-object-pid">
+			<invoke http="POST" method="assignObjectPid" param1="${ITEM-ID}"
+				param2="${BODY}"/>
+		</descriptor>
+		<descriptor uri="/ir/item/${ITEM-ID}/assign-version-pid">
+			<invoke http="POST" method="assignVersionPid" param1="${ITEM-ID}"
+				param2="${BODY}"/>
+		</descriptor>
+
+		<!--#
+			# Components
+			# -->
+		<descriptor uri="/ir/item/${ITEM-ID}/components">
+			<invoke http="GET" method="retrieveComponents" param1="${ITEM-ID}"/>
+		</descriptor>
+		<!--#
+			# Component
+			# -->
+		<descriptor uri="/ir/item/${ITEM-ID}/components/component">
+			<invoke http="PUT" method="createComponent" param1="${ITEM-ID}"
+				param2="${BODY}"/>
+		</descriptor>
+		<descriptor uri="/ir/item/${ITEM-ID}/components/component/${COMPONENT-ID}">
+			<invoke http="DELETE" method="deleteComponent" param1="${ITEM-ID}"
+				param2="${COMPONENT-ID}"/>
+			<invoke http="GET" method="retrieveComponent" param1="${ITEM-ID}"
+				param2="${COMPONENT-ID}"/>
+			<invoke http="PUT" method="updateComponent" param1="${ITEM-ID}"
+				param2="${COMPONENT-ID}" param3="${BODY}"/>
+		</descriptor>
+		<!--#
+			# Component Properties
+			# -->
+		<descriptor
+			uri="/ir/item/${ITEM-ID}/components/component/${COMPONENT-ID}/properties">
+			<invoke http="GET" method="retrieveComponentProperties"
+				param1="${ITEM-ID}" param2="${COMPONENT-ID}"/>
+		</descriptor>
+		<descriptor
+			uri="/ir/item/${ITEM-ID}/components/component/${COMPONENT-ID}/md-records">
+			<invoke http="GET" method="retrieveComponentMdRecords" param1="${ITEM-ID}"
+				param2="${COMPONENT-ID}"/>
+		</descriptor>
+		<descriptor
+			uri="/ir/item/${ITEM-ID}/components/component/${COMPONENT-ID}/md-records/md-record/${MD-RECORD-ID}">
+			<invoke http="GET" method="retrieveComponentMdRecord" param1="${ITEM-ID}"
+				param2="${COMPONENT-ID}" param3="${MD-RECORD-ID}"/>
+		</descriptor>
+		<!--#
+			# Content
+			# -->
+		<descriptor
+			uri="/ir/item/${ITEM-ID}/components/component/${COMPONENT-ID}/content">
+			<invoke http="GET" method="retrieveContent" param1="${ITEM-ID}"
+				param2="${COMPONENT-ID}"/>
+		</descriptor>
+		<!--#
+			# Content transformation with GET params
+			# -->
+		<descriptor
+			uri="/ir/item/${ITEM-ID}/components/component/${COMPONENT-ID}/content/${TRANS}">
+			<invoke http="GET" method="retrieveContent" param1="${ITEM-ID}"
+				param2="${COMPONENT-ID}" param3="${TRANS}" param4="${QUERY}"/>
+		</descriptor>
+		<!--
+			# # Content transformation service redirect. # This method redirects
+			to another service but includes all # necessary parameter for the
+			external service. This interface # method was introduced to support
+			digilib client (digimage) # which is no core service. #
+		-->
+		<descriptor
+			uri="/ir/item/${ITEM-ID}/components/component/${COMPONENT-ID}/content/${TRANS}/${SERVICE}">
+			<invoke http="GET" method="redirectContentService" param1="${ITEM-ID}"
+				param2="${COMPONENT-ID}" param3="${TRANS}" param4="${SERVICE}"/>
+		</descriptor>
+		<!--#
+			# Persistent Identifier Methods
+		 	# -->
+		<descriptor
+			uri="/ir/item/${ITEM-ID}/components/component/${COMPONENT-ID}/assign-content-pid">
+			<invoke http="POST" method="assignContentPid" param1="${ITEM-ID}"
+				param2="${COMPONENT-ID}" param3="${BODY}"/>
+		</descriptor>
+		<!--#
+			# Metadata records
+			# -->
+		<descriptor uri="/ir/item/${ITEM-ID}/md-records">
+			<invoke http="GET" method="retrieveMdRecords" param1="${ITEM-ID}"/>
+		</descriptor>
+		<!--#
+			# Metadata record
+			# -->
+		<descriptor uri="/ir/item/${ITEM-ID}/md-records/md-record">
+			<invoke http="PUT" method="createMetadataRecord" param1="${ITEM-ID}"
+				param2="${BODY}"/>
+		</descriptor>
+		<descriptor uri="/ir/item/${ITEM-ID}/md-records/md-record/${MD-RECORD-ID}">
+			<!--
+				<invoke http="DELETE" method="deleteMetadataRecord"
+				param1="${ITEM-ID}" param2="${MD-RECORD-ID}"> <documentation
+				visible="false"> <title>Delete a Metadata Record for an item</title>
+				<description> <![CDATA[ <para> Note: The eSciDoc internal Metadata
+				Record can't be deleted. </para> <itemizedlist mark="opencircle"
+				spacing="compact"> <listitem> <para>Retrieve the item.</para>
+				</listitem> <listitem> <para>Remove the Metadata Record from the
+				item.</para> </listitem> <listitem> <para> The item is marked for
+				indexing (to be done by SB). </para> </listitem> <listitem> <para> A
+				new Version of the item is created. </para> </listitem> <listitem>
+				<para> In case of status "released", a new revision will be created.
+				</para> </listitem> <listitem> <para> Timestamp of the latest
+				modification in the system is updated to the current time. </para>
+				</listitem> </itemizedlist> ]]> </description> <param> <param1
+				name="itemId"> The id of the item. </param1> <param2
+				name="mdRecordId"> The id of the Metadata Record. </param2> </param>
+				<result type="void" /> </documentation> </invoke>
+			-->
+			<invoke http="GET" method="retrieveMdRecord" param1="${ITEM-ID}"
+				param2="${MD-RECORD-ID}"/>
+			<invoke http="PUT" method="updateMetadataRecord" param1="${ITEM-ID}"
+				param2="${MD-RECORD-ID}" param3="${BODY}"/>
+		</descriptor>
+		<!-- #
+			 # Metadata Record Content
+			 # -->
+		<descriptor
+			uri="/ir/item/${ITEM-ID}/md-records/md-record/${MD-RECORD-ID}/content">
+			<invoke http="GET" method="retrieveMdRecordContent" param1="${ITEM-ID}"
+				param2="${MD-RECORD-ID}">
+				<documentation visible="false">
+				</documentation>
+			</invoke>
+		</descriptor>
+		<!--#
+			# Content streams
+			# deprecated (functionality is given by components of Item) 
+			# -->
+		<descriptor uri="/ir/item/${ITEM-ID}/content-streams">
+			<invoke http="GET" method="retrieveContentStreams" param1="${ITEM-ID}"/>
+		</descriptor>
+		<descriptor
+			uri="/ir/item/${ITEM-ID}/content-streams/content-stream/${CONTENT-STREAM-ID}">
+			<invoke http="GET" method="retrieveContentStream" param1="${ITEM-ID}"
+				param2="${CONTENT-STREAM-ID}"/>
+		</descriptor>
+		<descriptor
+			uri="/ir/item/${ITEM-ID}/content-streams/content-stream/${CONTENT-STREAM-ID}/content">
+			<invoke http="GET" method="retrieveContentStreamContent"
+				param1="${ITEM-ID}" param2="${CONTENT-STREAM-ID}"/>
+		</descriptor>
+		<!-- #
+			 # DC Record Content
+			 #-->
+		<descriptor uri="/ir/item/${ITEM-ID}/resources/dc/content">
+			<invoke http="GET" method="retrieveDcRecordContent" param1="${ITEM-ID}">
+				<documentation visible="false">
+				</documentation>
+			</invoke>
+		</descriptor>
+		<!--#
+			# version
+			# 	-->
+		<descriptor uri="/ir/item/${ITEM-ID}/resources/version-history">
+			<invoke http="GET" method="retrieveVersionHistory" param1="${ITEM-ID}"/>
+		</descriptor>
+		<!--#
+			# resource
+			# 	-->
+		<descriptor uri="/ir/item/${ITEM-ID}/resources/${RESOURCE_NAME}">
+			<invoke http="GET" method="retrieveResource" param1="${ITEM-ID}"
+				param2="${RESOURCE_NAME}" param3="${PARAMETERS}"/>
+		</descriptor>
+		<!--#
+			# Resources
+			# -->
+		<descriptor uri="/ir/item/${ITEM-ID}/resources">
+			<invoke http="GET" method="retrieveResources" param1="${ITEM-ID}"/>
+		</descriptor>
+		<!--#
+			# Relations
+			# -->
+		<descriptor uri="/ir/item/${ITEM-ID}/relations">
+			<invoke http="GET" method="retrieveRelations" param1="${ITEM-ID}"/>
+		</descriptor>
+	</resource>
+</mapping>

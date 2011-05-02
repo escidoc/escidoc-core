@@ -1,0 +1,51 @@
+<${containerNamespacePrefix}:properties #versionReleaseRootNsDecls (${isRootProperties}) #soapInsertConditionalRoot(${isRootProperties} "true" "true" ${containerNamespacePrefix} ${containerNamespace} false ${LAST_MODIFICATION_DATE})>
+#set($unescapedName="#unesc(${containerName})")
+#creationDate(${containerCreationDate})
+#soapCreatedBy(${containerCreatedById})    
+	<${escidocPropertiesNamespacePrefix}:public-status>${containerStatus}</${escidocPropertiesNamespacePrefix}:public-status>	
+		<${escidocPropertiesNamespacePrefix}:public-status-comment>${containerStatusComment}</${escidocPropertiesNamespacePrefix}:public-status-comment>	
+	<${escidocPropertiesNamespacePrefix}:name>#escT($unescapedName)</${escidocPropertiesNamespacePrefix}:name>
+	#if($containerDescription)
+	#set($unescapedDescription="#unesc(${containerDescription})")
+	<${escidocPropertiesNamespacePrefix}:description>#escT($unescapedDescription)</${escidocPropertiesNamespacePrefix}:description>
+	#end
+	#soapLink(${structuralRelationsNamespacePrefix} "context" ${containerContextId})
+	#soapLink(${structuralRelationsNamespacePrefix} "content-model" ${containerContentModelId})
+
+	<${escidocPropertiesNamespacePrefix}:lock-status>${containerLockStatus}</${escidocPropertiesNamespacePrefix}:lock-status>	
+    #if( ${containerLocked} == "true" )
+    <${escidocPropertiesNamespacePrefix}:lock-date>${containerLockDate}</${escidocPropertiesNamespacePrefix}:lock-date>	
+    #soapLink(${structuralRelationsNamespacePrefix} "lock-owner"  ${containerLockOwnerId})
+	#end
+
+	#if ($containerPid)
+    <${escidocPropertiesNamespacePrefix}:pid>${containerPid}</${escidocPropertiesNamespacePrefix}:pid>
+    #end
+    <${escidocPropertiesNamespacePrefix}:version #soapLinkAttributes (${containerCurrentVersionId})>
+    <${versionNamespacePrefix}:number>${containerCurrentVersionNumber}</${versionNamespacePrefix}:number>
+    <${versionNamespacePrefix}:date>${containerCurrentVersionDate}</${versionNamespacePrefix}:date>
+    <${versionNamespacePrefix}:status>${containerCurrentVersionStatus}</${versionNamespacePrefix}:status>
+
+    #soapModifiedBy( ${containerCurrentVersionModifiedById})
+    #set($unescapedComment="#unesc(${containerCurrentVersionComment})")
+    <${versionNamespacePrefix}:comment>#escT(${unescapedComment})</${versionNamespacePrefix}:comment>
+    #if (${containerCurrentVersionPID})
+    <${versionNamespacePrefix}:pid>${containerCurrentVersionPID}</${versionNamespacePrefix}:pid>
+    #end
+    </${escidocPropertiesNamespacePrefix}:version>
+    <${escidocPropertiesNamespacePrefix}:latest-version #soapLinkAttributes (${containerLatestVersionId})>
+    <${versionNamespacePrefix}:number>${containerLatestVersionNumber}</${versionNamespacePrefix}:number>
+    <${versionNamespacePrefix}:date>${containerLatestVersionDate}</${versionNamespacePrefix}:date>
+    </${escidocPropertiesNamespacePrefix}:latest-version>
+
+    #if (${containerLatestReleaseDate})
+    <${escidocPropertiesNamespacePrefix}:latest-release #soapLinkAttributes (${containerLatestReleaseId})>
+    <${releaseNamespacePrefix}:number>${containerLatestReleaseNumber}</${releaseNamespacePrefix}:number>
+    <${releaseNamespacePrefix}:date>${containerLatestReleaseDate}</${releaseNamespacePrefix}:date>
+    #if (${containerLatestReleasePid})
+    <${releaseNamespacePrefix}:pid>${containerLatestReleasePid}</${releaseNamespacePrefix}:pid>
+    #end
+    </${escidocPropertiesNamespacePrefix}:latest-release>
+    #end
+	${containerCms}
+</${containerNamespacePrefix}:properties>

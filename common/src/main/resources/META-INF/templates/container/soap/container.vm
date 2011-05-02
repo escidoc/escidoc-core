@@ -1,0 +1,15 @@
+<${containerNamespacePrefix}:container
+	    #if($items || $containers)
+	    #namespaceDecl(${structmapNamespacePrefix} ${structmapNamespace})
+	    #end
+		    #namespaceDecl(${contentRelationsNamespacePrefix} ${contentRelationsNamespace})
+	    #namespaceDecl(${mdRecordsNamespacePrefix} ${mdRecordsNamespace})
+    #versionReleaseRootNsDecls("true")
+	    #soapInsertConditionalRoot("true" "true" "true" ${containerNamespacePrefix} ${containerNamespace} ${containerId} ${LAST_MODIFICATION_DATE})>
+    #parse("container/soap/properties.vm")
+    #parse("common/soap/md-records.vm")
+    #if($items || $containers)
+    #parse("container/soap/struct-map.vm")
+    #end
+    #parse("common/soap/relations.vm")
+</${containerNamespacePrefix}:container>

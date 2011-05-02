@@ -1,0 +1,32 @@
+#parse("common/macros.vm")
+<zs:searchRetrieveResponse #namespaceDecl("zs" "http://www.loc.gov/zing/srw/") #namespaceDecl(${grantNamespacePrefix} ${grantNamespace}) #namespaceDecl(${escidocPropertiesNamespacePrefix} ${escidocPropertiesNamespace}) #namespaceDecl(${structuralRelationsNamespacePrefix} ${structuralRelationsNamespace})>
+  <zs:version>1.1</zs:version>
+  <zs:numberOfRecords>${numberOfHits}</zs:numberOfRecords>
+#if ($grants.size() > 0)
+  <zs:records>
+#foreach($grant in $grants)
+    <zs:record>
+      <zs:recordSchema>${grantNamespace}</zs:recordSchema>
+      <zs:recordPacking>${recordPacking.getType()}</zs:recordPacking>
+      <zs:recordData>
+#set( $grantId = ${grant.id} )
+#set( $grantUserId = ${grant.userAccountByUserId.id})
+#set( $grantGroupId = ${grant.userGroupByGroupId.id})
+#set( $grantRoleId = ${grant.escidocRole.id})
+#set( $grantObjectRefId = ${grant.objectId})
+#set( $grantCreationDate = ${grant.getIso8601CreationDate()})
+#set( $grantLastModificationDate = ${grant.getIso8601LastModificationDate()})
+#set( $grantCreatedById = ${grant.userAccountByCreatorId.id})
+#set( $grantRemark = ${grant.grantRemark})
+#set( $grantRevocationDate = ${grant.getIso8601RevocationDate()})
+#set( $grantRevokedById = ${grant.userAccountByRevokerId.id})
+#set( $grantRevocationRemark = ${grant.grantRevocationRemark})
+#set( $isRootGrant = "true")
+#searchResultRecord("user-account/soap/grant.vm")
+      </zs:recordData>
+      <zs:recordPosition>$velocityCount</zs:recordPosition>
+    </zs:record>
+#end
+  </zs:records>
+#end
+</zs:searchRetrieveResponse>

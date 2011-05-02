@@ -1,0 +1,3 @@
+#if( $!{isRootResources} == "true" )
+<${roleNamespacePrefix}:resources #restInsertConditionalRoot(${isRootResources} "false" "false" ${roleNamespacePrefix} ${roleNamespace} "Virtual Resources" ${RESOURCES_HREF} ${LAST_MODIFICATION_DATE}) />
+#end

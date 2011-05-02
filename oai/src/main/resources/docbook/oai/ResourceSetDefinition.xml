@@ -1,0 +1,110 @@
+<chapter>
+	<title>Resource SetDefinition</title>
+	<section>
+		<title>General Information</title>
+		<para>
+			The resource SetDefinition holds the properties of a
+			set.
+		</para>
+	</section>
+    <section>
+		<title>Description of Properties</title>
+		<section >
+			<title>SetDefinition</title>
+			<table frame="all">
+				<title>Elements of Set Definition</title>
+				<tgroup cols="2" align="left" colsep="1" rowsep="1">
+					<colspec colname="c1" />
+					<colspec colname="c2" />
+					<thead>
+						<row>
+							<entry>Element</entry>
+							<entry>Desription</entry>
+						</row>
+					</thead>
+					<tbody>
+						<row>
+							<entry>objid</entry>
+							<entry>
+								An unique identifier of a Set within the eSciDoc system.
+							</entry>
+						</row>
+						<row>
+							<entry>creation-date</entry>
+
+							<entry>
+								This date is created by the infrastructure when the infrastructure stores the object the first time.
+							</entry>
+						</row>
+						<row>
+							<entry>created-by</entry>
+
+							<entry>
+								Link to the user who created the object, the infrastructure maintain this element.
+							</entry>
+						</row>
+						<row>
+							<entry>modified-by</entry>
+
+							<entry>
+								Link to the user who changed to the object last time.
+							</entry>
+						</row>
+						<row>
+							<entry>last-modification-date (attribute)</entry>
+
+							<entry>
+								This date is updated by the infrastructure whenever the object is stored.
+							</entry>
+						</row>
+						<row>
+							<entry>description</entry>
+							<entry>
+								The description of a Set.
+							</entry>
+						</row>
+						<row>
+							<entry>name</entry>
+							<entry>
+								The name of a Set.
+							</entry>
+						</row>
+						<row>
+							<entry>specification</entry>
+							<entry>
+								The specification of a Set. Must be unique
+								within the eSciDoc system. A set specification is used to identify a set
+								in OAI-PMH requests.
+							</entry>
+						</row>
+						<row>
+							<entry>query</entry>
+							<entry>
+								CQL-query defining a set membership.
+							</entry>
+						</row>
+						
+					</tbody>
+				</tgroup>
+			</table>
+		</section>
+	</section>
+	<section>
+		<title>XML Schemas</title>
+		<para>
+			In all methods XML-data is used as input and output. The related XML-schemas are located in
+			<itemizedlist mark="opencircle" spacing="compact">
+				<listitem>http://www.escidoc.de/schemas/rest/set-definition/0.1</listitem>
+				<listitem>http://www.escidoc.de/schemas/soap/set-definition/0.1</listitem>
+			</itemizedlist>
+		</para>
+		<para>
+			These XSDs are used:
+			<itemizedlist mark="opencircle" spacing="compact">			
+				<listitem>set-definition.xsd</listitem>
+				<listitem>set-definition-list.xsd</listitem>
+			</itemizedlist>
+		</para> 
+	</section>
+</chapter>
+	

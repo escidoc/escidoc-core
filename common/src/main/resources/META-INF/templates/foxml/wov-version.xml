@@ -1,0 +1,46 @@
+<!--
+  ~ CDDL HEADER START
+  ~
+  ~ The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+  ~ only (the "License"). You may not use this file except in compliance with the License.
+  ~
+  ~ You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+  ~ the specific language governing permissions and limitations under the License.
+  ~
+  ~ When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+  ~ license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+  ~ brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
+  ~
+  ~ CDDL HEADER END
+  ~
+  ~ Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+  ~ and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+  ~ terms.
+  -->
+
+<${NAMESPACE_PREFIX}:version objid="${OBJID}" xlink:type="simple" xlink:title="${TITLE}" xlink:href="${HREF}" timestamp="${TIMESTAMP}" xmlns:xlink="http://www.w3.org/1999/xlink">
+<${NAMESPACE_PREFIX}:version-number>${VERSION_NUMBER}</${NAMESPACE_PREFIX}:version-number>
+<${NAMESPACE_PREFIX}:timestamp>${TIMESTAMP}</${NAMESPACE_PREFIX}:timestamp>
+<${NAMESPACE_PREFIX}:version-status>${STATUS}</${NAMESPACE_PREFIX}:version-status>
+<${NAMESPACE_PREFIX}:valid-status>valid</${NAMESPACE_PREFIX}:valid-status>
+<${NAMESPACE_PREFIX}:comment>${COMMENT}</${NAMESPACE_PREFIX}:comment>
+<${NAMESPACE_PREFIX}:events>
+<premis:event xmlID="${EVENT_XMLID}" xmlns:premis="http://www.loc.gov/standards/premis/v1">
+<premis:eventIdentifier>
+<premis:eventIdentifierType>${EVENT_ID_TYPE}</premis:eventIdentifierType>
+<premis:eventIdentifierValue>${EVENT_ID_VALUE}</premis:eventIdentifierValue>
+</premis:eventIdentifier>
+<premis:eventType>${EVENT_TYPE}</premis:eventType>
+<premis:eventDateTime>${TIMESTAMP}</premis:eventDateTime>
+<premis:eventDetail>${COMMENT}</premis:eventDetail>
+<premis:linkingAgentIdentifier xlink:title="${AGENT_TITLE}" xlink:href="${AGENT_BASE_URI}${AGENT_ID_VALUE}" xlink:type="simple">
+<premis:linkingAgentIdentifierType>${AGENT_ID_TYPE}</premis:linkingAgentIdentifierType>
+<premis:linkingAgentIdentifierValue>${AGENT_ID_VALUE}</premis:linkingAgentIdentifierValue>
+</premis:linkingAgentIdentifier>
+<premis:linkingObjectIdentifier>
+<premis:linkingObjectIdentifierType>${OBJECT_ID_TYPE}</premis:linkingObjectIdentifierType>
+<premis:linkingObjectIdentifierValue>${OBJECT_ID_VALUE}</premis:linkingObjectIdentifierValue>
+</premis:linkingObjectIdentifier>
+</premis:event>
+</${NAMESPACE_PREFIX}:events>
+</${NAMESPACE_PREFIX}:version>

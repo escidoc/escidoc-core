@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<prefix-organizational-unit:organizational-unit  xmlns:prefix-organizational-unit="http://www.escidoc.de/schemas/organizationalunit/0.3" xmlns:prefix-xlink="http://www.w3.org/1999/xlink"
+ xmlns:resources="http://www.escidoc.de/schemas/resources/0.3" 
+ >
+	<prefix-organizational-unit:properties>
+		<prefix-organizational-unit:last-modification-date>2006-02-07T12:20:46.275+01:00</prefix-organizational-unit:last-modification-date>
+		<prefix-organizational-unit:creation-date>2006-02-07T12:20:46.275+01:00</prefix-organizational-unit:creation-date>
+		<prefix-organizational-unit:creator/>
+		<prefix-organizational-unit:status/>
+		<prefix-organizational-unit:pid/>
+	</prefix-organizational-unit:properties>
+		<resources:resources>
+		<resources:resource prefix-xlink:title="" prefix-xlink:type="simple" prefix-xlink:href="/oum/organizational-unit/escidoc:12345/resources/resource/parents"/>
+		<resources:resource prefix-xlink:title="" prefix-xlink:type="simple" prefix-xlink:href="/oum/organizational-unit/escidoc:12345/resources/resource/children"/>
+	</resources:resources>
+	<prefix-organizational-unit:organization-details>
+		<prefix-organizational-unit:abbreviation>
+			MPIWG
+		</prefix-organizational-unit:abbreviation>
+		<prefix-organizational-unit:name>
+			MPI für Wissenschaftgeschichte
+		</prefix-organizational-unit:name>
+		<prefix-organizational-unit:uri>
+			http://www.mpiwg-berlin.de
+		</prefix-organizational-unit:uri>
+		<prefix-organizational-unit:organization-type>institute</prefix-organizational-unit:organization-type>
+		<prefix-organizational-unit:description>
+			Das Institut besteht seit März 1994. Im Zentrum der
+			Forschungsarbeiten steht eine an systematischen
+			Fragestellungen orientierte und theoretisch angeleitete
+			Wissenschaftsgeschichte.
+		</prefix-organizational-unit:description>
+		 
+		<prefix-organizational-unit:external-id/>
+		<prefix-organizational-unit:postcode/>
+		<prefix-organizational-unit:country/>
+		<prefix-organizational-unit:region/>
+		<prefix-organizational-unit:address/>
+		<prefix-organizational-unit:city/>
+		<prefix-organizational-unit:telephone/>
+		<prefix-organizational-unit:fax/>
+		<prefix-organizational-unit:email/>
+		<prefix-organizational-unit:geo-coordinate>
+			<prefix-organizational-unit:location-longitude/>
+			<prefix-organizational-unit:location-latitude/>
+		</prefix-organizational-unit:geo-coordinate>
+	</prefix-organizational-unit:organization-details>
+	<prefix-organizational-unit:parent-ous>
+		<prefix-organizational-unit:parent-ou/>
+	</prefix-organizational-unit:parent-ous>
+</prefix-organizational-unit:organizational-unit>

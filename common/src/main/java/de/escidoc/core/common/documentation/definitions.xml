@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ CDDL HEADER START
+  ~
+  ~ The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+  ~ only (the "License"). You may not use this file except in compliance with the License.
+  ~
+  ~ You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+  ~ the specific language governing permissions and limitations under the License.
+  ~
+  ~ When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+  ~ license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+  ~ brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
+  ~
+  ~ CDDL HEADER END
+  ~
+  ~ Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+  ~ and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+  ~ terms.
+  -->
+
+<beans>
+    <bean id="service.SetDefinitionHandlerBean"
+                class="de.escidoc.core.oai.service.SetDefinitionHandler">
+        </bean>
+
+    <bean id="service.AdminDescriptorHandlerBean"
+		class="de.escidoc.core.om.service.AdminDescriptorHandler">
+	</bean>
+
+    <bean id="service.AdminHandlerBean"
+                class="de.escidoc.core.adm.service.AdminHandler">
+        </bean>
+
+    <bean id="service.ContainerCacheBean"
+		class="de.escidoc.core.om.service.ContainerCache">
+	</bean>
+    
+    <bean id="service.ContainerHandlerBean"
+		class="de.escidoc.core.om.service.ContainerHandler">
+	</bean>
+    
+    <bean id="service.ContextCacheBean"
+		class="de.escidoc.core.om.service.ContextCache">
+	</bean>
+
+    <bean id="service.ContextHandlerBean"
+		class="de.escidoc.core.om.service.ContextHandler">
+	</bean>
+
+    <bean id="service.ContentRelationCacheBean"
+		class="de.escidoc.core.om.service.ContentRelationCache">
+	</bean>
+
+    <bean id="service.ContentRelationHandlerBean"
+		class="de.escidoc.core.om.service.ContentRelationHandler">
+	</bean>
+
+	<bean id="service.ItemCacheBean"
+		class="de.escidoc.core.om.service.ItemCache">
+	</bean>
+
+	<bean id="service.ItemHandlerBean"
+		class="de.escidoc.core.om.service.ItemHandler">
+	</bean>
+
+    <bean id="service.SemanticStoreHandlerBean"
+		class="de.escidoc.core.om.service.SemanticStoreHandler">
+	</bean>
+	
+    <bean id="service.LicenseTypeHandlerBean"
+		class="de.escidoc.core.om.service.LicenseTypeHandler">
+	</bean>
+
+	<bean id="service.RelationHandlerBean"
+		class="de.escidoc.core.om.service.RelationHandler">
+	</bean>
+    
+    <bean id="service.XmlSchemaHandlerBean"
+		class="de.escidoc.core.om.service.XmlSchemaHandler">
+	</bean>
+	
+	<bean id="service.MdSchemaHandlerBean"
+		class="de.escidoc.core.mm.service.MdSchemaHandler">
+	</bean>
+	
+	<bean id="service.UserAccountHandlerBean"
+		class="de.escidoc.core.aa.service.UserAccountHandler">
+	</bean>
+
+	<bean id="service.OrganizationalUnitCacheBean"
+		class="de.escidoc.core.oum.service.OrganizationalUnitCache">
+	</bean>
+
+	<bean id="service.OrganizationalUnitHandlerBean"
+		class="de.escidoc.core.oum.service.OrganizationalUnitHandler">
+	</bean>
+
+	<bean id="service.ContentModelCacheBean"
+		class="de.escidoc.core.cmm.service.ContentModelCache">
+	</bean>
+
+	<bean id="service.ContentModelHandlerBean"
+		class="de.escidoc.core.cmm.service.ContentModelHandler">
+	</bean>
+
+    <bean id="service.RoleHandlerBean"
+		class="de.escidoc.core.aa.service.RoleHandler">
+	</bean>
+	<bean id="service.PolicyDecisionPointHandlerBean"
+		class="de.escidoc.core.aa.service.PolicyDecisionPoint">
+	</bean>
+
+	<bean id="service.AggregationDefinitionHandlerBean"
+		class="de.escidoc.core.sm.service.AggregationDefinitionHandler">
+	</bean>
+	<bean id="service.ReportDefinitionHandlerBean"
+		class="de.escidoc.core.sm.service.ReportDefinitionHandler">
+	</bean>
+	<bean id="service.ReportHandlerBean"
+		class="de.escidoc.core.sm.service.ReportHandler">
+	</bean>
+	<bean id="service.ScopeHandlerBean"
+		class="de.escidoc.core.sm.service.ScopeHandler">
+	</bean>
+	<bean id="service.StatisticDataHandlerBean"
+		class="de.escidoc.core.sm.service.StatisticDataHandler">
+	</bean>
+	<bean id="service.StagingFileHandlerBean"
+		class="de.escidoc.core.st.service.StagingFileHandler">
+	</bean>
+</beans>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<prefix-set-definition:set-definition
+    xmlns:prefix-set-definition="http://www.escidoc.de/schemas/setdefinition/0.1"
+    xmlns:prefix-prop="http://escidoc.de/core/01/properties/"
+    xmlns:prefix-xlink="http://www.w3.org/1999/xlink">
+    <prefix-set-definition:properties>
+        <prefix-prop:name>Test Set Definition</prefix-prop:name>
+        <prefix-prop:description>°^^"§$%/()=ß?\´`@€+*~#,;.:-_|> &amp;&gt;&lt;&quot;&apos; &amp;amp; &amp;gt; &amp;lt; &amp;quot; &amp;apos; <![CDATA[< & > " '    &lt; &amp; &gt; &quot; &apos;]]></prefix-prop:description> 
+    </prefix-set-definition:properties>
+    <prefix-set-definition:specification>Set1</prefix-set-definition:specification>
+    <prefix-set-definition:query>escidoc.publication.review-method=peer</prefix-set-definition:query>
+</prefix-set-definition:set-definition> 

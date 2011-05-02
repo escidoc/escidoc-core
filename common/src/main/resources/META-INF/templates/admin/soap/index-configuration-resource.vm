@@ -1,0 +1,20 @@
+<${indexConfigurationNamespacePrefix}:resource>
+<${indexConfigurationNamespacePrefix}:resource-name>${resourceName}</${indexConfigurationNamespacePrefix}:resource-name>
+ #foreach( $index in $indexes )
+    <${indexConfigurationNamespacePrefix}:index>
+    <${indexConfigurationNamespacePrefix}:index-name>${index.indexName}</${indexConfigurationNamespacePrefix}:index-name>
+    #if(${index.prerequisites})
+        <${indexConfigurationNamespacePrefix}:prerequisites>
+        #if (${index.prerequisites.indexingPrerequisiteXpath})
+            <${indexConfigurationNamespacePrefix}:indexing-xpath>${index.prerequisites.indexingPrerequisiteXpath}</${indexConfigurationNamespacePrefix}:indexing-xpath>
+        #end
+        #if (${index.prerequisites.deletePrerequisiteXpath})
+            <${indexConfigurationNamespacePrefix}:delete-xpath>${index.prerequisites.deletePrerequisiteXpath}</${indexConfigurationNamespacePrefix}:delete-xpath>
+        #end
+        </${indexConfigurationNamespacePrefix}:prerequisites>
+    #end
+    <${indexConfigurationNamespacePrefix}:index-asynchronous>${index.indexAsynchronous}</${indexConfigurationNamespacePrefix}:index-asynchronous>
+    <${indexConfigurationNamespacePrefix}:index-released-version>${index.indexReleasedVersion}</${indexConfigurationNamespacePrefix}:index-released-version>
+    </${indexConfigurationNamespacePrefix}:index>
+ #end
+</${indexConfigurationNamespacePrefix}:resource>

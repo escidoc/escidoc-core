@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<escidocContentModel:content-model
+	xmlns:escidocContentModel="http://www.escidoc.de/schemas/contentmodel/0.1"
+	xmlns:prop="http://escidoc.de/core/01/properties/" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+	<escidocContentModel:properties>
+		<prop:name>Generic Content Model</prop:name>
+	</escidocContentModel:properties>
+
+	<escidocContentModel:md-record-definitions>
+		<escidocContentModel:md-record-definition
+			name="escidoc">
+			<escidocContentModel:schema xlink:href="http://www.escidoc.de/schemas/rest/common/0.5/md-records.xsd" />
+		</escidocContentModel:md-record-definition>
+	</escidocContentModel:md-record-definitions>
+
+</escidocContentModel:content-model>
+

@@ -1,0 +1,9 @@
+#foreach( $aggregationTable in $aggregationTables )
+    <${aggregationDefinitionNamespacePrefix}:aggregation-table>
+        <${aggregationDefinitionNamespacePrefix}:name>#escT($aggregationTable.name)</${aggregationDefinitionNamespacePrefix}:name>
+#set( $aggregationTableFields = ${aggregationTable.aggregationTableFields} )
+#set( $aggregationTableIndexes = ${aggregationTable.aggregationTableIndexes} )
+#parse("aggregation-definition/rest/aggregation-table-field-list.vm")
+#parse("aggregation-definition/rest/aggregation-table-index-list.vm")
+    </${aggregationDefinitionNamespacePrefix}:aggregation-table>
+#end

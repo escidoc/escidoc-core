@@ -1,0 +1,348 @@
+<chapter>
+	<title>Resource UserAccount</title>
+    <section>
+        <title>General Information</title>
+        <para> An eSciDoc UserAccount is a proxy object that represents an eSciDoc
+            user. For each user, the name, loginname, email and the user's
+            organizational unit can be stored. These data has to be provided by an
+            external user management and will be updated by the user management
+            wrapper when the user logs in to eSciDoc. As the external user
+            management does not provide the password in general and may use other
+            credentials than a password, no password of the user is managed within
+            eSciDoc. </para>
+        <para> The details about the data stored in an UserAccount can be found in
+                section 5.2 . In addition to the noted
+            information, the User Manager stores a temporarily valid
+            eSciDocUserHandle that is used to identify the user during the
+            authentication of incoming requests. This handle is not provided
+            within the UserAccount but can be used to retrieve it. </para>
+        <para> Furthermore, the identification of an existing UserAccount by
+            using the data provided by the external user management has to be
+            supported. This is needed by the UserManagementWrapper. As it cannot
+            be generally guaranteed that the external management provides a
+            loginname that is unique within eSciDoc or provides an email address,
+            another unique key (besides the internal id, the loginname and the
+            eSciDocHandle) is stored and used to identify an User within the
+            UserManagementWrapper. This key may be generated e.g. by
+            concatenating a provided loginname and the name of the user's
+            affiliation, or by using another unique information within the
+            provided data. For the first release, it is assumed that the external
+            user management provides an email address, that is used to identify the
+            User. </para>
+        <para>User-Accounts can have user-attributes attached that can get created via the UserAccount-Interface
+        or that are implicitly created when logging in via Shibboleth or LDAP.
+        So it is possible to store the organizational-unit the user belongs to as user-attribute.
+        The eSciDoc-core framework also can store hierarchies of organizational-units in the repository. 
+        If the user belongs to one (or more) of the organizational-units that are stored within the eSciDocCore-framework
+        it is possible to resolve the hierarchy of the organizational-units. 
+        This is important if eg the member-users of a group are defined via a user-attribute-selector.
+        User is member if he belongs to the organizational-unit defined in the selector or to one of its child organizational-units.
+        To be able to resolve the hierarchy the framework has to know the name of the user-attribute containing the organizational-unit.
+        This name is configurable and has the default-value 'o'. 
+        So in default-configuration, all user-attributes with name 'o' are treated as organizational-units.
+        It is important to store the unique escidoc-id of the 
+        organizational-unit as value of the attribute and not the name of the organizational-unit!
+        The default-configuration can get overwritten 
+        by changing the property <cmdsynopsis><command>escidoc-core.aa.attribute-name.ou</command></cmdsynopsis>
+        in the escidoc-core.properties file that is located in &lt;jboss-home&gt;/server/default/conf.
+        </para>
+        <para> Each user gets assigned a number of roles, which make up, what the user
+            is allowed to do within eSciDoc. A role is granted to an user by adding a
+            respective Grant (see below) object to the UserAccount. It stores
+            information about the grante role and, in case of a limited role, for
+            which object the role has been granted. These Grants are not provided
+            within the UserAccount resource itself but are available as a
+            (virtual) subresource of UserAccount.</para> <note>
+            <para>Granting roles to a user for specific objects is limited to
+                objects of the following resource types:</para>
+            <itemizedlist mark="opencircle" spacing="compact">
+                <listitem>
+                    <para>container</para>
+                </listitem>
+                <listitem>
+                    <para>content model</para>
+                </listitem>
+                <listitem>
+                    <para>context</para>
+                </listitem>
+                <listitem>
+                    <para>item</para>
+                </listitem>
+                <listitem>
+                    <para>organizational unit</para>
+                </listitem>
+                <listitem>
+                    <para>scope</para>
+                </listitem>
+            </itemizedlist>
+        </note>
+    </section>
+	<section>
+		<title>XML Schemas</title>
+        <para> In all methods XML-data is used as input and output. The related
+            XML-schemas are located in <itemizedlist mark="opencircle"
+        spacing="compact">
+        <listitem>
+           <para>www.escidoc.de/schemas/rest/user-account/0.5</para> 
+        </listitem>
+
+        <listitem>
+           <para>www.escidoc.de/schemas/soap/user-account/0.5</para> 
+        </listitem>
+      </itemizedlist></para>
+	</section>
+	<section>
+		<title>Description of XML-Elements</title>
+		<section >
+			<title>UserAccount</title>
+			<table frame="all">
+				<title>Elements of User Account</title>
+				<tgroup cols="17" align="left" colsep="1" rowsep="1">
+					<colspec colname="c1" />
+					<colspec colname="c2" />
+					<colspec colname="c3" />
+					<colspec colname="c4" />
+					<colspec colname="c5" />
+					<colspec colname="c6" />
+					<colspec colname="c7" />
+					<colspec colname="c8" />
+					<colspec colname="c9" />
+					<colspec colname="c10" />
+					<colspec colname="c11" />
+					<colspec colname="c12" />
+					<colspec colname="c13" />
+					<colspec colname="c14" />
+					<colspec colname="c15" />
+					<colspec colname="c16" />
+					<colspec colname="c17" />
+					<spanspec spanname="element" namest="c1"
+						nameend="c4" align="left" />
+					<spanspec spanname="desc" namest="c5" nameend="c17"
+						align="left" />
+					<thead>
+						<row>
+							<entry spanname="element">Element</entry>
+
+							<entry spanname="desc">Desription</entry>
+						</row>
+					</thead>
+					<tbody>
+						<row>
+							<entry spanname="element">objid</entry>
+
+							<entry spanname="desc">
+								An unique identifier of the UserAccount
+								within the system. This id is created by
+								the framework when the object is stored
+								the first time.
+							</entry>
+						</row>
+						<row>
+							<entry spanname="element">name</entry>
+
+							<entry spanname="desc">
+								The name of the User.
+							</entry>
+						</row>
+						<row>
+							<entry spanname="element">login-name</entry>
+
+							<entry spanname="desc">
+								An unique login name for the
+								UserAccount.
+							</entry>
+						</row>
+						<row>
+							<entry spanname="element">active</entry>
+
+							<entry spanname="desc">
+								A flag indicating if the UserAccount is
+								active or has been deactivated. The
+								initial state of a new UserAccount is
+								active. It may be changed by using the
+								activate or deactivate methods, only.
+							</entry>
+						</row>
+						<row>
+							<entry spanname="element">person</entry>
+
+							<entry spanname="desc">
+								A link to the person resource that
+								represents the user, too.
+								<para>
+									As this is not needed in the first
+									release, it will be an empty
+									element.
+								</para>
+							</entry>
+						</row>
+						<row>
+							<entry spanname="element">
+								creation-date
+							</entry>
+
+							<entry spanname="desc">
+								This date is created by the framework
+								when the framework stores the object the
+								first time.
+							</entry>
+						</row>
+						<row>
+							<entry spanname="element">creator</entry>
+
+							<entry spanname="desc">
+								Link to the user who created the object,
+								the framework adds this element.
+							</entry>
+						</row>
+						<row>
+							<entry spanname="element">
+								modified-by
+							</entry>
+
+							<entry spanname="desc">
+								Link to the user who modified the object
+								the last time, the framework adds this
+								element.
+							</entry>
+						</row>
+						<row>
+							<entry spanname="element">
+								last-modification-date
+							</entry>
+
+							<entry spanname="desc">
+								This date is updated whenever the
+								UserAccount is stored.
+							</entry>
+						</row>
+					</tbody>
+				</tgroup>
+			</table>
+		</section>
+		<section>
+			<title>Grant</title>
+			<table frame="all">
+				<title>Elements of Grant</title>
+				<tgroup cols="17" align="left" colsep="1" rowsep="1">
+					<colspec colname="c1" />
+					<colspec colname="c2" />
+					<colspec colname="c3" />
+					<colspec colname="c4" />
+					<colspec colname="c5" />
+					<colspec colname="c6" />
+					<colspec colname="c7" />
+					<colspec colname="c8" />
+					<colspec colname="c9" />
+					<colspec colname="c10" />
+					<colspec colname="c11" />
+					<colspec colname="c12" />
+					<colspec colname="c13" />
+					<colspec colname="c14" />
+					<colspec colname="c15" />
+					<colspec colname="c16" />
+					<colspec colname="c17" />
+					<spanspec spanname="element" namest="c1"
+						nameend="c4" align="left" />
+					<spanspec spanname="desc" namest="c5" nameend="c17"
+						align="left" />
+					<thead>
+						<row>
+							<entry spanname="element">Element</entry>
+
+							<entry spanname="desc">Desription</entry>
+						</row>
+					</thead>
+					<tbody>
+                        <row>
+                            <entry spanname="element">granted-to</entry>
+
+                            <entry spanname="desc">
+                                Link to the resource (user-account or user-group)
+                                the role is granted to by the Grant object.
+                            </entry>
+                        </row>
+						<row>
+							<entry spanname="element">role</entry>
+
+							<entry spanname="desc">
+								Link to the role that is granted to the
+								user/group by the Grant object.
+							</entry>
+						</row>
+						<row>
+							<entry spanname="element">assigned-on</entry>
+
+							<entry spanname="desc">
+								Link to the object for that a limited
+								role is granted to the user/group by the Grant
+								object.
+							</entry>
+						</row>
+						<row>
+							<entry spanname="element">
+								creation-date
+							</entry>
+
+							<entry spanname="desc">
+								The date the role has been granted to
+								the user/group. This is created by the
+								framework when the framework stores the
+								grant.
+							</entry>
+						</row>
+						<row>
+							<entry spanname="element">created-by</entry>
+
+							<entry spanname="desc">
+								Link to the user who created the object,
+								the framework adds this element.
+							</entry>
+						</row>
+						<row>
+							<entry spanname="element">
+								grant-remark
+							</entry>
+
+							<entry spanname="desc">
+								Remark added during creation of the
+								grant.
+							</entry>
+						</row>
+						<row>
+							<entry spanname="element">
+								revocation-date
+							</entry>
+
+							<entry spanname="desc">
+								The date the grant has been revoked from
+								the user. This is created by the
+								framework when the revokeGrant method is
+								executed.
+							</entry>
+						</row>
+						<row>
+							<entry spanname="element">revoked-by</entry>
+
+							<entry spanname="desc">
+								Link to the user who revoked the
+								object.The framework adds this element
+								when the revokeGrant method is executed.
+							</entry>
+						</row>
+						<row>
+							<entry spanname="element">
+								revocation-remark
+							</entry>
+
+							<entry spanname="desc">
+								Remark added during revocation of the
+								Grant.
+							</entry>
+						</row>
+					</tbody>
+				</tgroup>
+			</table>
+		</section>
+	</section>
+</chapter>

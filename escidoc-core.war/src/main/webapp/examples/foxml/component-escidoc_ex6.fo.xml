@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<foxml:digitalObject VERSION="1.1" PID="escidoc:ex6"
+  xmlns:audit="info:fedora/fedora-system:def/audit#" xmlns:fedoraxsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:foxml="info:fedora/fedora-system:def/foxml#">
+  <foxml:objectProperties>
+    <foxml:property NAME="info:fedora/fedora-system:def/model#state" VALUE="Active"/>
+    <foxml:property NAME="info:fedora/fedora-system:def/model#label" VALUE="Component escidoc:ex6"/>
+    <foxml:property NAME="info:fedora/fedora-system:def/model#createdDate" VALUE="2007-11-15T08:36:49.625Z"/>
+     
+  </foxml:objectProperties>
+  <foxml:datastream CONTROL_GROUP="X" ID="RELS-EXT" STATE="A" VERSIONABLE="true">
+    <foxml:datastreamVersion CREATED="2007-11-15T08:36:49.296Z" ID="RELS-EXT.0" LABEL="" MIMETYPE="text/xml" SIZE="1282">
+      <foxml:contentDigest DIGEST="none" TYPE="DISABLED"/>
+      <foxml:xmlContent>
+        <rdf:RDF 
+          xmlns:prop="http://escidoc.de/core/01/properties/" 
+          xmlns:srel="http://escidoc.de/core/01/structural-relations/"
+          xmlns:escidocRelations="http://www.nsdl.org/ontologies/relationships/"
+          xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+          <rdf:Description rdf:about="info:fedora/escidoc:ex6">
+            <prop:content-category>image</prop:content-category>
+            <srel:created-by rdf:resource="info:fedora/escidoc:exuser1"/>
+            <prop:visibility>public</prop:visibility>
+            <prop:created-by-title>System Administrator User</prop:created-by-title>
+            <prop:valid-status>valid</prop:valid-status>
+            <prop:mime-type>image/jpeg</prop:mime-type>
+            <rdf:type rdf:resource="http://escidoc.de/core/01/resources/Component"/>
+          </rdf:Description>
+        </rdf:RDF>
+      </foxml:xmlContent>
+    </foxml:datastreamVersion>
+  </foxml:datastream>
+  <foxml:datastream CONTROL_GROUP="M" ID="content" STATE="A" VERSIONABLE="true">
+    <foxml:datastreamVersion CREATED="2007-11-15T08:36:49.296Z" ID="content.0" LABEL="" MIMETYPE="image/jpeg" SIZE="0">
+      <foxml:contentDigest DIGEST="none" TYPE="DISABLED"/>
+      <!-- foxml:contentLocation REF="http://www.escidoc.org/images/escidoc-logo.jpg" TYPE="URL"/ -->
+      <foxml:contentLocation REF="http://localhost:8080/images/escidoc-banner.jpg" TYPE="URL"/>
+    </foxml:datastreamVersion>
+  </foxml:datastream>
+  <foxml:datastream CONTROL_GROUP="X" ID="DC" STATE="A" VERSIONABLE="true">
+    <foxml:datastreamVersion CREATED="2007-11-15T08:36:49.296Z" ID="DC.0" LABEL="Dublin Core Metadata"
+      MIMETYPE="text/xml" SIZE="221">
+      <foxml:contentDigest DIGEST="none" TYPE="DISABLED"/>
+      <foxml:xmlContent>
+        <oai_dc:dc xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/">
+          <dc:title>Component escidoc:ex6</dc:title>
+          <dc:identifier>escidoc:ex6</dc:identifier>
+        </oai_dc:dc>
+      </foxml:xmlContent>
+    </foxml:datastreamVersion>
+  </foxml:datastream>
+</foxml:digitalObject>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<parent>
+		<artifactId>eSciDocCore</artifactId>
+		<groupId>org.escidoc.core</groupId>
+		<version>trunk-SNAPSHOT</version>
+	</parent>
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.escidoc.core</groupId>
+	<artifactId>escidoc-core-war</artifactId>
+	<packaging>war</packaging>
+	<name>eSciDoc Core - Web Archive</name>
+	<version>trunk-SNAPSHOT</version>
+	<description>eSciDoc Core Web Archive package</description>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.4.3</version>
+				<executions>
+					<execution>
+						<id>copy-schemas</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>target/${project.build.finalName}/xsd
+							</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${basedir}/../aa/src/main/xsd</directory>
+									<filtering>false</filtering>
+								</resource>
+								<resource>
+									<directory>${basedir}/../adm/src/main/xsd</directory>
+									<filtering>false</filtering>
+								</resource>
+								<resource>
+									<directory>${basedir}/../cmm/src/main/xsd</directory>
+									<filtering>false</filtering>
+								</resource>
+								<resource>
+									<directory>${basedir}/../common/src/main/xsd</directory>
+									<filtering>false</filtering>
+								</resource>
+								<resource>
+									<directory>${basedir}/../oai/src/main/xsd</directory>
+									<filtering>false</filtering>
+								</resource>
+								<resource>
+									<directory>${basedir}/../om/src/main/xsd</directory>
+									<filtering>false</filtering>
+								</resource>
+								<resource>
+									<directory>${basedir}/../oum/src/main/xsd</directory>
+									<filtering>false</filtering>
+								</resource>
+								<resource>
+									<directory>${basedir}/../sb/src/main/xsd</directory>
+									<filtering>false</filtering>
+								</resource>
+								<resource>
+									<directory>${basedir}/../sm/src/main/xsd</directory>
+									<filtering>false</filtering>
+								</resource>
+								<resource>
+									<directory>${basedir}/../st/src/main/xsd</directory>
+									<filtering>false</filtering>
+								</resource>
+								<resource>
+									<directory>${basedir}/../tme/src/main/xsd</directory>
+									<filtering>false</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.1.1</version>
+				<configuration>
+					<webResources>
+						<webResource>
+							<directory>${basedir}/src/main/webapp-filtered </directory>
+							<filtering>true</filtering>
+						</webResource>
+					</webResources>
+				</configuration>
+			</plugin>
+
+		</plugins>
+	</build>
+</project>

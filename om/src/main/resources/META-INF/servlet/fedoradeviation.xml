@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapping>
+	<define>
+		<var name="DS-ID" regexp="/(.*/content)" />
+		<var name="OBJECT-ID" regexp="/([^/?]*)" />
+	</define>
+	<resource name="FedoraDescribeDeviation"
+		base-uri="/fedoradeviation/describe">
+		<descriptor uri="/fedoradeviation/describe">
+			<invoke http="GET" method="getFedoraDescription" param1="${PARAMETERS}">
+				<documentation visible="false">
+					<title>Retrieve Description of Fedora Repository</title>
+					<description>
+						<![CDATA[
+						<itemizedlist mark="opencircle" spacing="compact">
+							<listitem>
+								<para>
+									Call fedora-describe URL.
+								</para>
+							</listitem>
+						</itemizedlist>						
+					]]>
+					</description>
+					<param />
+					<result type="String">
+						The XML representation of the list of the Admin
+						Descriptors.
+					</result>
+				</documentation>
+			</invoke>
+		</descriptor>
+	</resource>
+	<resource name="FedoraRestDeviation"
+		base-uri="/fedoradeviation/objects">
+		<descriptor uri="/fedoradeviation/objects/${OBJECT-ID}/export">
+			<invoke http="GET" method="export" param1="${OBJECT-ID}" param2="${PARAMETERS}">
+				<documentation visible="false">
+					<title>retrieve Fedora Object as FOXML</title>
+					<description>
+						<![CDATA[
+						<itemizedlist mark="opencircle" spacing="compact">
+							<listitem>
+								<para>
+									Call export-method of Fedora.
+								</para>
+							</listitem>
+						</itemizedlist>						
+					]]>
+					</description>
+					<param />
+					<result type="String">
+						The Fedora Object as FOXML.
+					</result>
+				</documentation>
+			</invoke>
+		</descriptor>
+		<descriptor uri="/fedoradeviation/objects/${OBJECT-ID}/datastreams/${DS-ID}/content">
+			<invoke http="GET" method="getDatastreamDissemination" 
+					param1="${OBJECT-ID}" param2="${DS-ID}" param3="${PARAMETERS}">
+				<documentation visible="false">
+					<title>retrieve Fedora Binary Datastream</title>
+					<description>
+						<![CDATA[
+						<itemizedlist mark="opencircle" spacing="compact">
+							<listitem>
+								<para>
+									Call getDatastreamDissemination-method of Fedora.
+								</para>
+							</listitem>
+						</itemizedlist>						
+					]]>
+					</description>
+					<param />
+					<result type="EscidocBinaryData">
+						The Fedora Datastream as EscidocBinaryData.
+					</result>
+				</documentation>
+			</invoke>
+		</descriptor>
+	</resource>
+
+</mapping>

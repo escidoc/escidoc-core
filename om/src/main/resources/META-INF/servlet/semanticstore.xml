@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapping>
+	<define />
+
+	<resource name="SemanticStore" base-uri="/ir/semantic-store/">
+		<descriptor uri="/ir/semantic-store/spo">
+			<invoke http="POST" method="spo" param1="${BODY}">
+				<documentation visible="true">
+					<title>spo</title>
+					<description>
+						<![CDATA[ 
+						<para>
+							Excecute a SPO query on the triple store. SPO is a simple RDF query 
+							language, where queries consist of a <emphasis role="bold">s</emphasis>ubject, 
+							a <emphasis role="bold">p</emphasis>redicate and an 
+							<emphasis role="bold">o</emphasis>bject. 
+							(see http://www.fedora.info/download/2.2.1/userdocs/server/webservices/risearch/index.html)
+						</para>
+						<para>
+							The query param contains the query to execute and a format 
+							identifier for the desired output format and has to be created 
+							according to schema "common/0.3/query.xsd".
+						</para>
+						<para>
+							Only querys with a registered predicate or an asterisk ('*')
+							instead of a predicate are allowed. The registered predicates
+							in the current release are published at
+							http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations.xml
+							defined as RDF-Properties. Further releases will provide means
+							to register additional predicates.
+						</para>
+						<para>
+							The result of a query is filtered in order to deliver triples
+							with registered predicates only. (in further releases)
+						</para>
+						<para>Valid output format identifiers are:</para>
+						<itemizedlist mark="opencircle" spacing="compact">
+							<listitem>
+								<para>N-Triples (http://www.w3.org/2001/sw/RDFCore/ntriples/)</para>
+							</listitem>
+							<listitem>
+								<para>Notation 3 (http://www.w3.org/DesignIssues/Notation3.html)</para>
+							</listitem>
+							<listitem>
+								<para>RDF/XML (http://www.w3.org/TR/rdf-syntax-grammar/)</para>
+							</listitem>
+							<listitem>
+								<para>Turtle (http://www.dajobe.org/2004/01/turtle/)</para>
+							</listitem>
+						</itemizedlist>
+						<para>Example:
+ 							<programlisting>]]><![CDATA[<![CDATA[
+<param>
+   <query>&lt;info:fedora/escidoc:111&gt; * *</query>
+   <format>N-Triples</format>						
+</param>
+]]]>]><![CDATA[</programlisting>
+]]><![CDATA[
+This request retrieves all triples which have &lt;info:fedora/escidoc:111&gt; as subject.
+						</para>
+			<para>Example with a registered predicate:
+ 							<programlisting>]]><![CDATA[<![CDATA[
+<param>
+   <query>
+   		&lt;info:fedora/escidoc:111&gt; 
+		&lt;http://www.escidoc.de/ontologies/mpdl-ontologies/ (remove line break)
+										content-relations#isMemberOf&gt;
+   		*
+   </query>
+   <format>N-Triples</format>						
+</param>
+]]]>]><![CDATA[</programlisting>
+]]><![CDATA[
+This request retrieves all triples which have &lt;info:fedora/escidoc:111&gt; as
+ subject and <emphasis role="italic">isMemberOf</emphasis> from the registered 
+ontologie http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations.xml 
+as predicte. Wrap the predicate in encoded tags (&amp;lt;/&amp;gt;) and separate 
+the relative URIref via # from namespace.
+						</para>
+						<para>
+						The vocabular of the current supported ontologie namespace is defined in 
+						http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations.xml. The following
+						list is a subset example of the defined vocabular. It is not avoidable to catch the 
+						whole set of vocabulary from the namespace definition.
+						
+						<itemizedlist mark="opencircle" spacing="compact">
+							<listitem>
+							<para>isRevisionOf</para>
+							</listitem>
+							<listitem>
+							<para>isPartOf</para>
+							</listitem>
+							<listitem>
+							<para>hasPart</para>
+							</listitem>
+							<listitem>
+							<para>isConstituentOf</para>
+							</listitem>
+							<listitem>
+							<para>hasConstituent</para>
+							</listitem>
+							<listitem>
+							<para>isMemberOf</para>
+							</listitem>
+							<listitem>
+							<para>hasMember</para>
+							</listitem>
+							<listitem>
+							<para>isSubsetOf</para>
+							</listitem>
+							<listitem>
+							<para>hasSubset</para>
+							</listitem>
+							<listitem>
+							<para>isMemberOfCollection</para>
+							</listitem>
+							<listitem>
+							<para>hasCollectionMember</para>
+							</listitem>
+							<listitem>
+							<para>isDerivationOf</para>
+							</listitem>
+							<listitem>
+							<para>hasDerivation</para>
+							</listitem>
+							<listitem>
+							<para>isDependentOf</para>
+							</listitem>
+							<listitem>
+							<para>hasDependent</para>
+							</listitem>
+							<listitem>
+							<para>isDescriptionOf</para>
+							</listitem>
+							<listitem>
+							<para>HasDescription</para>
+							</listitem>
+							<listitem>
+							<para>isMetadataFor</para>
+							</listitem>
+							<listitem>
+							<para>HasMetadata</para>
+							</listitem>
+							<listitem>
+							<para>isAnnotationOf</para>
+							</listitem>
+							<listitem>
+							<para>HasAnnotation</para>
+							</listitem>
+							<listitem>
+							<para>hasEquivalent</para>
+							</listitem>
+						</itemizedlist>
+						
+						Use this vocabulary as SPO predicate with full namespace and # as separator:
+						http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#isMemberOf
+						</para>
+					]]>
+					</description>
+					<param>
+						<param1 name="query-param">
+							An xml structure containing the spo query
+							and the expected output format. See
+							description above for details.
+						</param1>
+					</param>
+					<result type="String">
+						The result of the query.
+					</result>
+				</documentation>
+			</invoke>
+		</descriptor>
+	</resource>
+	<param>
+		<query>&lt;info:fedora/escidoc:111&gt; * *</query>
+		<format>N-Triples</format>
+	</param>
+</mapping>

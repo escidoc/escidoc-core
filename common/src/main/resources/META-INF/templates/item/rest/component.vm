@@ -1,0 +1,10 @@
+<${componentsNamespacePrefix}:component #insertConditionalAttribute( ${ORIGIN} "inherited")
+ #set($unescapedTitle="#unesc(${componentTitle})")
+#if(${isRoot})
+	 #namespaceDecl(${mdRecordsNamespacePrefix} ${mdRecordsNamespace})
+	#end
+#restInsertConditionalRoot( ${isRoot} "true" "true" ${componentsNamespacePrefix} ${componentsNamespace} "#escA(${unescapedTitle})" ${componentHref} ${LAST_MODIFICATION_DATE})>
+	  #parse("item/rest/componentProperties.vm")
+  #restLinkContent(${componentsNamespacePrefix} "content" 		${componentContentTitle} 		${componentContentHref} ${storage})
+  #if( ${componentMdRecordsContent} ) ${componentMdRecordsContent} #end
+</${componentsNamespacePrefix}:component>

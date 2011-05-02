@@ -1,0 +1,5 @@
+<${contextNamespacePrefix}:admin-descriptors #soapInsertConditionalRoot(${isRootSubResource} "false" "false" ${contextNamespacePrefix} ${contextNamespace} false ${LAST_MODIFICATION_DATE})>
+#foreach( ${admDesc} in ${admsContent} )
+${admDesc}
+#end
+</${contextNamespacePrefix}:admin-descriptors>

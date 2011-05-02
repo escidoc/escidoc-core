@@ -1,0 +1,26 @@
+#parse("common/macros.vm")<${grantNamespacePrefix}:grant #restInsertConditionalRoot(${isRootGrant} "true" "true" ${grantNamespacePrefix} ${grantNamespace} "#escA(${grantTitle})" ${grantHref} ${grantLastModificationDate})>
+<${grantNamespacePrefix}:properties>
+#if( ${grantUserHref})
+<${structuralRelationsNamespacePrefix}:granted-to resource="user-account" #restLinkAttributes("#escA(${grantUserTitle})" ${grantUserHref})/>
+#end
+#if( ${grantGroupHref})
+<${structuralRelationsNamespacePrefix}:granted-to resource="user-group" #restLinkAttributes("#escA(${grantGroupTitle})" ${grantGroupHref})/>
+#end
+#creationDate(${grantCreationDate})
+#restCreatedBy("#escA(${grantCreatedByTitle})" ${grantCreatedByHref})
+#if( ${grantRevocationDate})
+<${escidocPropertiesNamespacePrefix}:revocation-date>${grantRevocationDate}</${escidocPropertiesNamespacePrefix}:revocation-date>
+#restLink(${structuralRelationsNamespacePrefix} "revoked-by" "#escA(${grantRevokedByTitle})" ${grantRevokedByHref})
+#end
+#if ( ${grantRemark})
+<${escidocPropertiesNamespacePrefix}:grant-remark>#escT(${grantRemark})</${escidocPropertiesNamespacePrefix}:grant-remark>
+#end
+#if ( ${grantRevocationRemark})
+<${escidocPropertiesNamespacePrefix}:revocation-remark>#escT(${grantRevocationRemark})</${escidocPropertiesNamespacePrefix}:revocation-remark>
+#end
+#restLink( ${structuralRelationsNamespacePrefix} "role" "#escA(${grantRoleTitle})" ${grantRoleHref} )
+#if( ${grantObjectRefHref})
+#restLink(${structuralRelationsNamespacePrefix} "assigned-on" "#escA(${grantObjectRefTitle})" ${grantObjectRefHref} )
+#end
+</${grantNamespacePrefix}:properties>
+</${grantNamespacePrefix}:grant>

@@ -1,0 +1,5 @@
+<${userAccountNamespacePrefix}:resources #restInsertConditionalRoot(${isRootResources} "false" "false" ${userAccountNamespacePrefix} ${userAccountNamespace} "Virtual Resources" ${resourcesHref} ${userAccountLastModificationDate})>
+#restLink(${userAccountNamespacePrefix} "current-grants" "Current Grants" ${currentGrantsHref})
+#restLink(${userAccountNamespacePrefix} "preferences" "Preferences" ${preferencesHref})
+#restLink(${userAccountNamespacePrefix} "attributes" "Attributes" ${attributesHref})
+</${userAccountNamespacePrefix}:resources>

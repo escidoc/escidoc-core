@@ -1,0 +1,167 @@
+<appendix id="AdminDescriptor">
+	<title>Resource AdminDescriptor</title>
+	<section>
+		<title>Description of Properties</title>
+		<section>
+			<title>AdminDescriptor</title>
+			<section>
+				<title>General Properties of an AdminDescriptor</title>
+				<table frame="all">
+					<title>General Properties</title>
+					<tgroup cols="2" align="left" colsep="1"
+						rowsep="1">
+						<colspec colname="c1" />
+						<colspec colname="c2" />
+						<thead>
+							<row>
+								<entry>Property</entry>
+								<entry>Description</entry>
+							</row>
+						</thead>
+						<tbody>
+							<row>
+								<entry>component-visibility</entry>
+								<entry>
+									if "public" the component can be
+									seen by everybody, if "privat" only by the creator.
+								</entry>
+							</row>
+							<row>
+								<entry>item-visibility</entry>
+								<entry>visibility of the items (true/false)</entry>
+							</row>
+							<row>
+								<entry>webservice</entry>
+								<entry>
+									allowed web services which can be
+									used by the applications
+								</entry>
+							</row>
+							<row>
+								<entry>relation-type</entry>
+								<entry>allowed relation type</entry>
+							</row>
+							<row>
+								<entry>authority-file</entry>
+								<entry>allowed authority file</entry>
+							</row>
+							<row>
+								<entry>
+									<emphasis>
+										submission-methods
+									</emphasis>									
+								</entry>
+								<entry>see method</entry>
+							</row>
+							<row>
+								<entry>method</entry>
+								<entry>
+									The allowed submission methods for
+									the collection.
+									<para>
+										Valid submission method values
+										are:
+									</para>
+									<itemizedlist mark="opencircle"
+										spacing="compact">
+										<listitem>Ingestion</listitem>
+										<listitem>
+											Single submission
+										</listitem>
+										<listitem>
+											Multiple submission (manual
+											import)
+										</listitem>
+									</itemizedlist>
+								</entry>
+							</row>
+							<row>
+								<entry>
+									<emphasis>
+										allowed-content-types
+									</emphasis>
+								</entry>
+								<entry>
+									see section "allowed-content-types" below.
+								</entry>
+							</row>
+ 						</tbody>
+					</tgroup>
+				</table>
+			</section>
+			<section>
+				<title>Elements of the section "allowed-content-types"</title>
+					<para>
+						The content type section "allowed-content-types" contains 
+						a section "allowed-content-type" for each content-type which can be used. 
+						Each such section contains the following elements:
+					</para>
+				<table frame="all">
+					<title>section "allowed-content-type"</title>
+					<tgroup cols="2" align="left" colsep="1"
+						rowsep="1">
+						<colspec colname="c1" />
+						<colspec colname="c2" />
+						<thead>
+							<row>
+								<entry>Element</entry>
+								<entry>Description</entry>
+							</row>
+						</thead>
+						<tbody>
+							<row>
+								<entry>allowed-content-type</entry>
+								<entry>
+									Link to the content type object.
+								</entry>
+							</row>
+<!-- 
+							<row>
+								<entry>genre</entry>
+								<entry>
+									a list of "genres" may be specified.
+								</entry>
+							</row>
+ -->
+							<row>
+								<entry>default-md-record</entry>
+								<entry>
+									values for a default MD-record have to be specified	
+								</entry>
+							</row>
+							<row>
+								<entry>allowed-tag-list</entry>
+								<entry>
+									a tag-list section
+									<para>
+									containing the following elements:
+									</para>
+									<itemizedlist mark="opencircle"	spacing="compact">
+										<listitem>page</listitem>
+										<listitem>container</listitem>
+										<listitem>subcontainer</listitem>
+										<listitem>token</listitem>
+									</itemizedlist>
+								</entry>
+							</row>
+							<row>
+								<entry>allowed-xml-schema</entry>
+								<entry>
+									sometimes a XML-Schema(e.g.
+									in SWB-transcription)
+								</entry>
+							</row>
+							<row>
+								<entry>allowed-md-schema</entry>
+								<entry>
+									allowed metadata schema, at least the required schema 
+									which was defined in the content type.
+								</entry>
+							</row>
+						</tbody>
+					</tgroup>
+				</table>
+			</section>
+		</section>
+	</section>
+</appendix>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<escidocItem:item xmlns:escidocItem="http://www.escidoc.de/schemas/item/0.10"
+	xmlns:prefix-xlink="http://www.w3.org/1999/xlink" xmlns:relations="http://www.escidoc.de/schemas/relations/0.3"
+	xml:base="http://localhost:8080" prefix-xlink:title="the two ä mystic scans?"
+	prefix-xlink:type="simple">
+	<escidocItem:properties xmlns:prop="http://escidoc.de/core/01/properties/"
+		xmlns:srel="http://escidoc.de/core/01/structural-relations/">
+		<srel:context prefix-xlink:type="simple"
+			prefix-xlink:href="/ir/context/escidoc:persistent3" />
+		<srel:content-model prefix-xlink:type="simple"
+			prefix-xlink:href="/cmm/content-model/escidoc:persistent4" />
+		<prop:content-model-specific>
+			<nix></nix>
+		</prop:content-model-specific>
+	</escidocItem:properties>
+	<escidocMetadataRecords:md-records
+		xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5">
+		<escidocMetadataRecords:md-record
+			xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5"
+			name="escidoc" prefix-xlink:title="eSciDoc internal MD Record"
+			prefix-xlink:type="simple">
+			<metadata />
+		</escidocMetadataRecords:md-record>
+	</escidocMetadataRecords:md-records>
+	<content-streams:content-streams
+		xmlns:content-streams="http://www.escidoc.de/schemas/contentstreams/0.7">
+		<content-streams:content-stream name="internal_xml"
+			mime-type="text/xml" prefix-xlink:href="http://localhost:8082/ir/xml/EPFull_1277907.xml"
+			storage="internal-managed" />
+		<content-streams:content-stream name="redirect_image"
+			prefix-xlink:type="simple" prefix-xlink:title="An image"
+			prefix-xlink:href="http://localhost:8080/images/escidoc-banner.jpg"
+			mime-type="image/jpeg" storage="external-url" />
+		<content-streams:content-stream name="external_image"
+			prefix-xlink:type="simple" prefix-xlink:title="Another image"
+			prefix-xlink:href="http://localhost:8080/images/escidoc-banner.jpg"
+			mime-type="image/jpeg" storage="external-managed" />
+	</content-streams:content-streams>
+	<relations:relations />
+</escidocItem:item>

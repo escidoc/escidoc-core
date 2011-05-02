@@ -1,0 +1,17 @@
+#parse("common/macros.vm")<${grantNamespacePrefix}:current-grants #soapInsertConditionalRoot(${isRootCurrentGrants} "true" "true" ${grantNamespacePrefix} ${grantNamespace} false ${LAST_MODIFICATION_DATE})>
+#foreach( $grant in $currentGrants )
+#set( $grantId = ${grant.id})
+#set( $grantUserId = ${grant.userAccountByUserId.id})
+#set( $grantGroupId = ${grant.userGroupByGroupId.id})
+#set( $grantRoleId = ${grant.escidocRole.id})
+#set( $grantObjectRefId = ${grant.objectId})
+#set( $grantCreationDate = ${grant.getIso8601CreationDate()})
+#set( $grantLastModificationDate = ${grant.getIso8601LastModificationDate()})
+#set( $grantCreatedById = ${grant.userAccountByCreatorId.id})
+#set( $grantRemark = ${grant.grantRemark})
+#set( $grantRevocationDate = ${grant.getIso8601RevocationDate()})
+#set( $grantRevokedById = ${grant.userAccountByRevokerId.id})
+#set( $grantRevocationRemark = ${grant.grantRevocationRemark})
+#parse("user-account/soap/grant.vm")
+#end
+</${grantNamespacePrefix}:current-grants>

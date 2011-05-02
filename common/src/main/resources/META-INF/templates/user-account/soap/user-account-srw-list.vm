@@ -1,0 +1,30 @@
+#parse("common/macros.vm")
+<zs:searchRetrieveResponse #namespaceDecl("zs" "http://www.loc.gov/zing/srw/")>
+  <zs:version>1.1</zs:version>
+  <zs:numberOfRecords>$userAccounts.size()</zs:numberOfRecords>
+#if ($userAccounts.size() > 0)
+  <zs:records>
+#foreach($userAccount in $userAccounts)
+    <zs:record>
+      <zs:recordSchema>${userAccountNamespace}</zs:recordSchema>
+      <zs:recordPacking>${recordPacking.getType()}</zs:recordPacking>
+      <zs:recordData>
+#set( $userAccountName = ${userAccount.userAccountName} )
+#set( $userAccountId = ${userAccount.userAccountId} )
+#set( $userAccountLastModificationDate = ${userAccount.userAccountLastModificationDate} )
+#set( $userAccountCreationDate = ${userAccount.userAccountCreationDate} )
+#set( $userAccountCreatedById = ${userAccount.userAccountCreatedById} )
+#set( $userAccountModifiedById = ${userAccount.userAccountModifiedById} )
+#set( $userAccountEmail = ${userAccount.userAccountEmail} )
+#set( $userAccountLoginName = ${userAccount.userAccountLoginName} )
+#set( $userAccountActive = ${userAccount.userAccountActive} )
+#set( $userAccountOus = ${userAccount.userAccountOus} )
+#set( $userAccountCreationDate = ${userAccount.userAccountCreationDate} )
+#searchResultRecord("user-account/soap/user-account.vm")
+      </zs:recordData>
+      <zs:recordPosition>$velocityCount</zs:recordPosition>
+    </zs:record>
+#end
+  </zs:records>
+#end
+</zs:searchRetrieveResponse>

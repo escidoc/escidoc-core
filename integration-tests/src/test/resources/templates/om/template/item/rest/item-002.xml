@@ -1,0 +1,648 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<prefix-item:item
+	xmlns:prefix-item="http://www.escidoc.de/schemas/item/0.10"
+	xmlns:eidt="http://escidoc.mpg.de/metadataprofile/schema/0.1/idtypes"
+	xmlns:escidoc="http://escidoc.mpg.de/metadataprofile/schema/0.1/types"
+	xmlns:prefix-dcmitype="http://purl.org/dc/dcmitype/"
+	xmlns:prefix-dc="http://purl.org/dc/elements/1.1/"
+	xmlns:prefix-dcterms="http://purl.org/dc/terms/"
+	xmlns:components="http://www.escidoc.de/schemas/components/0.9"
+	xmlns:prefix-internal-metadata="http://escidoc.mpg.de/metadataprofile/schema/0.1/"
+	xmlns:md-records="http://www.escidoc.de/schemas/metadatarecords/0.5"
+	xmlns:prefix-properties="http://www.escidoc.de/schemas/properties/0.2"
+	xmlns:prefix-relations="http://www.escidoc.de/schemas/relations/0.3"
+	xmlns:prefix-resources="http://www.escidoc.de/schemas/resources/0.2"
+	xmlns:prefix-xlink="http://www.w3.org/1999/xlink"
+	xmlns:prefix-xsi="http://www.w3.org/2001/XMLSchema-instance"
+	prefix-xsi:schemaLocation="http://www.escidoc.de/schemas/item/0.6 item\0.6\item.xsd"
+	prefix-xlink:type="simple" prefix-xlink:title="Sample Item No. 1">
+	<prefix-item:properties prefix-xlink:type="simple"
+		xmlns:prefix-prop="http://escidoc.de/core/01/properties/" 
+		xmlns:prefix-srel="http://escidoc.de/core/01/structural-relations/">
+		<prefix-srel:context
+			prefix-xlink:href="/ir/context/escidoc:persistent3"
+			 prefix-xlink:type="simple" />
+		<prefix-srel:content-model
+			prefix-xlink:href="/cmm/content-model/escidoc:persistent4"
+			prefix-xlink:type="simple"/>
+		<prefix-prop:content-model-specific>
+			<anything />
+		</prefix-prop:content-model-specific>
+	</prefix-item:properties>
+	<md-records:md-records
+		xmlns:prefix-xsi="http://www.w3.org/2001/XMLSchema-instance">
+		<md-records:md-record
+			prefix-xlink:title="Sample Item No.1's metadata"
+			prefix-xlink:type="simple" name="escidoc"
+			xmlns:prefix-xsi="http://www.w3.org/2001/XMLSchema-instance">
+			<prefix-internal-metadata:publication type="journal"
+				xmlns:prefix-xsi="http://www.w3.org/2001/XMLSchema-instance">
+				<escidoc:creator role="artist">
+					<escidoc:organization>
+						<escidoc:organization-name xml:lang="fr">
+							Department of Physics, University of
+							California
+						</escidoc:organization-name>
+						<escidoc:address>
+							Berkeley, CA 94720, USA
+						</escidoc:address>
+						<escidoc:identifier
+							prefix-xsi:type="eidt:ESCIDOC">
+							P4711
+						</escidoc:identifier>
+					</escidoc:organization>
+				</escidoc:creator>
+				<escidoc:creator role="editor">
+					<escidoc:person>
+						<escidoc:complete-name xml:lang="fr">
+							Ron Rudolf Lindberg
+						</escidoc:complete-name>
+						<escidoc:family-name xml:lang="fr">
+							Lindberg
+						</escidoc:family-name>
+						<escidoc:given-name xml:lang="jp">
+							Ron
+						</escidoc:given-name>
+						<escidoc:alternative-name xml:lang="fr">
+							Ronny
+						</escidoc:alternative-name>
+						<escidoc:alternative-name xml:lang="fr">
+							Rudy
+						</escidoc:alternative-name>
+						<escidoc:person-title xml:lang="jp">
+							Dr.
+						</escidoc:person-title>
+						<escidoc:person-title xml:lang="fr">
+							Prof.
+						</escidoc:person-title>
+						<escidoc:pseudonym xml:lang="fr">
+							Pseudo
+						</escidoc:pseudonym>
+						<escidoc:pseudonym xml:lang="fr">
+							Nym
+						</escidoc:pseudonym>
+						<escidoc:organization>
+							<escidoc:organization-name xml:lang="fr">
+								Center for Beam Physics
+							</escidoc:organization-name>
+							<escidoc:address>
+								Lawrence Berkeley National Laboratory,
+								USA
+							</escidoc:address>
+							<escidoc:identifier
+								prefix-xsi:type="eidt:ESCIDOC">
+								52.35.Mw
+							</escidoc:identifier>
+						</escidoc:organization>
+						<escidoc:organization>
+							<escidoc:organization-name xml:lang="fr">
+								Centre for Plasma Science and
+								Astrophysics
+							</escidoc:organization-name>
+							<escidoc:address>
+								Ruhr-University Bochum, D-44780 Bochum,
+								Germany
+							</escidoc:address>
+							<escidoc:identifier
+								prefix-xsi:type="eidt:ESCIDOC">
+								52.65.Rr,52.27.Ny
+							</escidoc:identifier>
+						</escidoc:organization>
+						<escidoc:identifier
+							prefix-xsi:type="eidt:PND">
+							678 HJK
+						</escidoc:identifier>
+					</escidoc:person>
+				</escidoc:creator>
+				<escidoc:creator role="commentator">
+					<escidoc:person>
+						<escidoc:complete-name xml:lang="fr">
+							Martin Eduard Dieckmann
+						</escidoc:complete-name>
+						<escidoc:family-name xml:lang="jp">
+							Dieckmann
+						</escidoc:family-name>
+						<escidoc:given-name xml:lang="fr">
+							Martin
+						</escidoc:given-name>
+						<escidoc:alternative-name xml:lang="jp">
+							Martie
+						</escidoc:alternative-name>
+						<escidoc:alternative-name xml:lang="jp">
+							Doctor Dieckmann
+						</escidoc:alternative-name>
+						<escidoc:person-title xml:lang="jp">
+							Dr. rer. nat.
+						</escidoc:person-title>
+						<escidoc:person-title xml:lang="fr">
+							Prof. Dr. Dr. Dr. Dr.
+						</escidoc:person-title>
+						<escidoc:pseudonym xml:lang="fr">
+							Eugene Koslowski
+						</escidoc:pseudonym>
+						<escidoc:pseudonym xml:lang="jp">
+							Mando Richards
+						</escidoc:pseudonym>
+						<escidoc:organization>
+							<escidoc:organization-name xml:lang="jp">
+								Dublin Institute for Advanced Studies
+							</escidoc:organization-name>
+							<escidoc:address>
+								5 Merrion Square, Dublin 2, Ireland
+							</escidoc:address>
+							<escidoc:identifier
+								prefix-xsi:type="eidt:ESCIDOC">
+								sa78090
+							</escidoc:identifier>
+						</escidoc:organization>
+						<escidoc:organization>
+							<escidoc:organization-name xml:lang="fr">
+								Institute of Theoretical Physics
+							</escidoc:organization-name>
+							<escidoc:address>
+								Chalet Shalva, Randogne, CH-3975
+							</escidoc:address>
+							<escidoc:identifier
+								prefix-xsi:type="eidt:ESCIDOC">
+								UDC 533.92
+							</escidoc:identifier>
+						</escidoc:organization>
+						<escidoc:identifier
+							prefix-xsi:type="eidt:PND">
+							UAI 87987.2
+						</escidoc:identifier>
+					</escidoc:person>
+				</escidoc:creator>
+				<prefix-dc:title xml:lang="fr">
+					Observation of inertial energy cascade in
+					interplanetary space plasma
+				</prefix-dc:title>
+				<prefix-dc:language xml:lang="fr">
+					English
+				</prefix-dc:language>
+				<prefix-dc:language xml:lang="fr">
+					German
+				</prefix-dc:language>
+				<prefix-dcterms:alternative xml:lang="jp">
+					Direct evidence for the presence of an inertial
+					energy cascade
+				</prefix-dcterms:alternative>
+				<prefix-dcterms:alternative>
+					Most characteristic signature of hydromagnetic
+					turbulence (MHD)
+				</prefix-dcterms:alternative>
+				<prefix-dc:identifier prefix-xsi:type="eidt:ISSN">
+					0361-526X
+				</prefix-dc:identifier>
+				<prefix-dc:identifier prefix-xsi:type="eidt:ISBN">
+					978-3438012418
+				</prefix-dc:identifier>
+				<prefix-dc:identifier prefix-xsi:type="eidt:ISBN">
+					3438012413
+				</prefix-dc:identifier>
+				<escidoc:publishing-info>
+					<prefix-dc:publisher xml:lang="fr">
+						Dipartimento di Fisica
+					</prefix-dc:publisher>
+					<escidoc:place>
+						Universita della Calabria
+					</escidoc:place>
+					<escidoc:edition>2.</escidoc:edition>
+				</escidoc:publishing-info>
+				<prefix-dcterms:created>
+					2007-07-17T09:30:47.0Z
+				</prefix-dcterms:created>
+				<prefix-dcterms:modified>
+					2008-08-17T09:30:47.0Z
+				</prefix-dcterms:modified>
+				<prefix-dcterms:dateSubmitted>
+					2009-09-17T09:30:47.0Z
+				</prefix-dcterms:dateSubmitted>
+				<prefix-dcterms:issued>
+					2010-10-17T09:30:47.0Z
+				</prefix-dcterms:issued>
+				<escidoc:review-method>peer</escidoc:review-method>
+				<escidoc:source>
+					<prefix-dc:title xml:lang="fr">
+						Understanding of interplanetary turbulence
+					</prefix-dc:title>
+					<prefix-dcterms:alternative xml:lang="fr">
+						Relevant issue for spacecrafts and communication
+						satellites operations
+					</prefix-dcterms:alternative>
+					<prefix-dcterms:alternative xml:lang="fr">
+						Theoretical problems are concerned
+					</prefix-dcterms:alternative>
+					<escidoc:creator role="transcriber">
+						<escidoc:person>
+							<escidoc:complete-name xml:lang="fr">
+								Miklos Csuros
+							</escidoc:complete-name>
+							<escidoc:family-name xml:lang="fr">
+								Csuros
+							</escidoc:family-name>
+							<escidoc:given-name xml:lang="jp">
+								Miklos
+							</escidoc:given-name>
+							<escidoc:alternative-name xml:lang="jp">
+								Mike
+							</escidoc:alternative-name>
+							<escidoc:alternative-name xml:lang="fr">
+								Csu
+							</escidoc:alternative-name>
+							<escidoc:person-title xml:lang="fr">
+								Earl
+							</escidoc:person-title>
+							<escidoc:person-title xml:lang="fr">
+								Majesty
+							</escidoc:person-title>
+							<escidoc:pseudonym xml:lang="it">
+								Humphrey C.
+							</escidoc:pseudonym>
+							<escidoc:pseudonym xml:lang="it">
+								Iklos Makaba
+							</escidoc:pseudonym>
+							<escidoc:organization>
+								<escidoc:organization-name
+									xml:lang="fr">
+									Facultad de Ciencias
+								</escidoc:organization-name>
+								<escidoc:address>
+									Campus de Teatinos, 29071 Malaga,
+									Spain
+								</escidoc:address>
+								<escidoc:identifier
+									prefix-xsi:type="eidt:ESCIDOC">
+									ASG 2233-3
+								</escidoc:identifier>
+							</escidoc:organization>
+							<escidoc:organization>
+								<escidoc:organization-name
+									xml:lang="it">
+									Instituta Geometra y Topologa
+								</escidoc:organization-name>
+								<escidoc:address>
+									Placo Dominico, Madrid
+								</escidoc:address>
+								<escidoc:identifier
+									prefix-xsi:type="eidt:ESCIDOC">
+									IOP 998
+								</escidoc:identifier>
+							</escidoc:organization>
+							<escidoc:identifier
+								prefix-xsi:type="eidt:PND">
+								HJKS 1-23-24434
+							</escidoc:identifier>
+						</escidoc:person>
+					</escidoc:creator>
+					<escidoc:creator role="advisor">
+						<escidoc:person>
+							<escidoc:complete-name xml:lang="fr">
+								Kathryn Roeder
+							</escidoc:complete-name>
+							<escidoc:family-name xml:lang="it">
+								Roeder
+							</escidoc:family-name>
+							<escidoc:given-name xml:lang="fr">
+								Kathryn
+							</escidoc:given-name>
+							<escidoc:alternative-name xml:lang="de">
+								Kate
+							</escidoc:alternative-name>
+							<escidoc:alternative-name xml:lang="de">
+								Kati
+							</escidoc:alternative-name>
+							<escidoc:person-title xml:lang="fr">
+								Prof.
+							</escidoc:person-title>
+							<escidoc:person-title xml:lang="fr">
+								Dr.
+							</escidoc:person-title>
+							<escidoc:pseudonym xml:lang="fr">
+								Devlin
+							</escidoc:pseudonym>
+							<escidoc:pseudonym xml:lang="fr">
+								Larry
+							</escidoc:pseudonym>
+							<escidoc:organization>
+								<escidoc:organization-name
+									xml:lang="fr">
+									Department of Statistics
+								</escidoc:organization-name>
+								<escidoc:address>
+									Carnegie Mellon University,
+									Pittsburgh, PA, USA
+								</escidoc:address>
+								<escidoc:identifier
+									prefix-xsi:type="eidt:ESCIDOC">
+									PA 2827
+								</escidoc:identifier>
+							</escidoc:organization>
+							<escidoc:organization>
+								<escidoc:organization-name
+									xml:lang="fr">
+									Department of Psychiatry
+								</escidoc:organization-name>
+								<escidoc:address>
+									University of Pittsburgh,
+									Pittsburgh, PA, USA
+								</escidoc:address>
+								<escidoc:identifier
+									prefix-xsi:type="eidt:ESCIDOC">
+									PA 2782
+								</escidoc:identifier>
+							</escidoc:organization>
+							<escidoc:identifier
+								prefix-xsi:type="eidt:PND">
+								PND 289712937293
+							</escidoc:identifier>
+						</escidoc:person>
+					</escidoc:creator>
+					<escidoc:volume>2.</escidoc:volume>
+					<escidoc:issue>9.</escidoc:issue>
+					<escidoc:start-page>302</escidoc:start-page>
+					<escidoc:end-page>678</escidoc:end-page>
+					<escidoc:sequence-number>
+						444
+					</escidoc:sequence-number>
+					<escidoc:publishing-info>
+						<prefix-dc:publisher xml:lang="de">
+							University of Pittsburgh
+						</prefix-dc:publisher>
+						<escidoc:place>Pittsburgh</escidoc:place>
+						<escidoc:edition>1.</escidoc:edition>
+					</escidoc:publishing-info>
+					<prefix-dc:identifier prefix-xsi:type="eidt:DOI">
+						2387928 233
+					</prefix-dc:identifier>
+					<prefix-dc:identifier prefix-xsi:type="eidt:ISBN">
+						98-232342342-32
+					</prefix-dc:identifier>
+				</escidoc:source>
+				<escidoc:source>
+					<prefix-dc:title xml:lang="fr">
+						Center for Electronic Correlations and Magnetism
+					</prefix-dc:title>
+					<prefix-dcterms:alternative xml:lang="de">
+						The X-ray Properties of Optically-Selected
+						Galaxy Clusters
+					</prefix-dcterms:alternative>
+					<prefix-dcterms:alternative xml:lang="de">
+						Tachyon dark energy models: Dynamics and
+						constraints
+					</prefix-dcterms:alternative>
+					<escidoc:creator role="author">
+						<escidoc:person>
+							<escidoc:complete-name xml:lang="fr">
+								Gianluca Calcagni
+							</escidoc:complete-name>
+							<escidoc:family-name xml:lang="fr">
+								Calcagni
+							</escidoc:family-name>
+							<escidoc:given-name xml:lang="fr">
+								Gianluca Calcagni
+							</escidoc:given-name>
+							<escidoc:alternative-name xml:lang="fr">
+								text
+							</escidoc:alternative-name>
+							<escidoc:alternative-name xml:lang="fr">
+								text
+							</escidoc:alternative-name>
+							<escidoc:person-title xml:lang="fr">
+								text
+							</escidoc:person-title>
+							<escidoc:person-title xml:lang="fr">
+								text
+							</escidoc:person-title>
+							<escidoc:pseudonym xml:lang="fr">
+								text
+							</escidoc:pseudonym>
+							<escidoc:pseudonym xml:lang="fr">
+								text
+							</escidoc:pseudonym>
+							<escidoc:organization>
+								<escidoc:organization-name
+									xml:lang="fr">
+									text
+								</escidoc:organization-name>
+								<escidoc:address>
+									String
+								</escidoc:address>
+								<escidoc:identifier
+									prefix-xsi:type="eidt:ESCIDOC">
+									text
+								</escidoc:identifier>
+							</escidoc:organization>
+							<escidoc:organization>
+								<escidoc:organization-name
+									xml:lang="fr">
+									text
+								</escidoc:organization-name>
+								<escidoc:address>
+									String
+								</escidoc:address>
+								<escidoc:identifier
+									prefix-xsi:type="eidt:ESCIDOC">
+									text
+								</escidoc:identifier>
+							</escidoc:organization>
+							<escidoc:identifier
+								prefix-xsi:type="eidt:PND">
+								text
+							</escidoc:identifier>
+						</escidoc:person>
+					</escidoc:creator>
+					<escidoc:creator role="author">
+						<escidoc:person>
+							<escidoc:complete-name xml:lang="fr">
+								text
+							</escidoc:complete-name>
+							<escidoc:family-name xml:lang="fr">
+								text
+							</escidoc:family-name>
+							<escidoc:given-name xml:lang="fr">
+								text
+							</escidoc:given-name>
+							<escidoc:alternative-name xml:lang="fr">
+								text
+							</escidoc:alternative-name>
+							<escidoc:alternative-name xml:lang="fr">
+								text
+							</escidoc:alternative-name>
+							<escidoc:person-title xml:lang="fr">
+								text
+							</escidoc:person-title>
+							<escidoc:person-title xml:lang="fr">
+								text
+							</escidoc:person-title>
+							<escidoc:pseudonym xml:lang="fr">
+								text
+							</escidoc:pseudonym>
+							<escidoc:pseudonym xml:lang="fr">
+								text
+							</escidoc:pseudonym>
+							<escidoc:organization>
+								<escidoc:organization-name
+									xml:lang="fr">
+									text
+								</escidoc:organization-name>
+								<escidoc:address>
+									String
+								</escidoc:address>
+								<escidoc:identifier
+									prefix-xsi:type="eidt:ESCIDOC">
+									text
+								</escidoc:identifier>
+							</escidoc:organization>
+							<escidoc:organization>
+								<escidoc:organization-name
+									xml:lang="fr">
+									text
+								</escidoc:organization-name>
+								<escidoc:address>
+									String
+								</escidoc:address>
+								<escidoc:identifier
+									prefix-xsi:type="eidt:ESCIDOC">
+									text
+								</escidoc:identifier>
+							</escidoc:organization>
+							<escidoc:identifier
+								prefix-xsi:type="eidt:PND">
+								text
+							</escidoc:identifier>
+						</escidoc:person>
+					</escidoc:creator>
+					<escidoc:volume>String</escidoc:volume>
+					<escidoc:issue>String</escidoc:issue>
+					<escidoc:start-page>String</escidoc:start-page>
+					<escidoc:end-page>String</escidoc:end-page>
+					<escidoc:sequence-number>
+						String
+					</escidoc:sequence-number>
+					<escidoc:publishing-info>
+						<prefix-dc:publisher xml:lang="fr">
+							text
+						</prefix-dc:publisher>
+						<escidoc:place>String</escidoc:place>
+						<escidoc:edition>String</escidoc:edition>
+					</escidoc:publishing-info>
+					<prefix-dc:identifier prefix-xsi:type="eidt:ISBN">
+						text
+					</prefix-dc:identifier>
+					<prefix-dc:identifier prefix-xsi:type="eidt:ISSN">
+						text
+					</prefix-dc:identifier>
+				</escidoc:source>
+				<escidoc:event>
+					<prefix-dc:title xml:lang="fr">
+						item.md-records.md-record.publication.event.title
+					</prefix-dc:title>
+					<prefix-dcterms:alternative xml:lang="fr">
+						text
+					</prefix-dcterms:alternative>
+					<prefix-dcterms:alternative xml:lang="fr">
+						text
+					</prefix-dcterms:alternative>
+					<escidoc:start-date>
+						2001-12-17T09:30:47.0Z
+					</escidoc:start-date>
+					<escidoc:end-date>
+						2001-12-17T09:30:47.0Z
+					</escidoc:end-date>
+					<escidoc:place>String</escidoc:place>
+					<escidoc:invitation-status>
+						invited
+					</escidoc:invitation-status>
+				</escidoc:event>
+				<escidoc:total-number-of-pages>
+					899
+				</escidoc:total-number-of-pages>
+				<escidoc:degree>diploma</escidoc:degree>
+				<escidoc:relation type="isReferencedBy">
+					<prefix-dc:identifier prefix-xsi:type="eidt:DOI">
+						Relation One identifier
+					</prefix-dc:identifier>
+					<prefix-dc:description xml:lang="fr">
+						Relation I description 1 of 2
+					</prefix-dc:description>
+					<prefix-dc:description xml:lang="fr">
+						Relation I description 2 of 2
+					</prefix-dc:description>
+				</escidoc:relation>
+				<escidoc:relation type="isReferencedBy">
+					<prefix-dc:identifier prefix-xsi:type="eidt:ISSN">
+						Relation II ident
+					</prefix-dc:identifier>
+					<prefix-dc:description xml:lang="fr">
+						Relation 2 description 1 of 2
+					</prefix-dc:description>
+					<prefix-dc:description xml:lang="fr">
+						Relation 2 description 2 of 2
+					</prefix-dc:description>
+				</escidoc:relation>
+				<prefix-dcterms:abstract xml:lang="fr">
+					We will generalize the projective model structure in
+					the category of unbounded complexes of modules over
+					a commutative ring to the category of unbounded
+					complexes of quasi-coherent sheaves over the
+					projective line. Concretely we will define a locally
+					projective model structure in the category of
+					complexes of quasicoherent sheaves on the projective
+					line. In this model structure the cofibrant objects
+					are the dg-locally projective complexes. We also
+					describe the fibrations of this model structure and
+					show that the model structure is monoidal. We point
+					out that this model structure is necessarily
+					different from others model structures known until
+					now, like the injective model structure and the
+					locally free model structure.
+				</prefix-dcterms:abstract>
+				<prefix-dcterms:abstract xml:lang="fr">
+					The discovery of motifs underlying gene expression
+					is a challenging one. Some of these motifs are known
+					transcription factors, but sequence inspection often
+					provides valuable clues, even discovery of novel
+					motifs with uncharacterized function in gene
+					expression. Coupled with the complexity underlying
+					tissuespecific gene expression, there are several
+					motifs that are putatively responsible for
+					expression in a certain cell type. This has
+					important implications in understanding fundamental
+					biological processes, such as development and
+					disease progression. In this work, we present an
+					approach to the principled selection of motifs (not
+					necessarily transcription factor sites) and examine
+					its application to several questions in current
+					bioinformatics research.
+				</prefix-dcterms:abstract>
+				<prefix-dc:subject xml:lang="fr">
+					Estimators for local non-Gaussianities
+				</prefix-dc:subject>
+				<prefix-dcterms:tableOfContents xml:lang="fr">
+					Agamospermous reproduction in which seeds set
+					without a pollen parent is widely spread in plants
+					(Richards, 1986). The terms apomixis (Gustafsson,
+					1946, 1947; Asker and Jerling, 1992; Koltunow, 1993;
+					Dresselhaus, 2000) and apozygoty (Khokhlov, 1967)
+					are also used to designate the process. Under such
+					reproduction, the embryo develops out of the cell
+					which can be named apozygote (Maletskii et al.,
+					2004). There are classifications for ways of
+					reproduction considering the cytoembryological
+					origin of cell entering embryogenesis (Gustafsson,
+					1946, 1947). The genetic classification considering
+					the cell genome transformation before entering
+					embryogenesis was suggested (Levites, 2002a). In
+					this classification, agamospermy is considered as a
+					subsexual process in which meiotic and mitotic
+					agamospermy are distinguished.
+				</prefix-dcterms:tableOfContents>
+				<escidoc:location xml:lang="fr">
+					Novosibirsk, Russia
+				</escidoc:location>
+			</prefix-internal-metadata:publication>
+		</md-records:md-record>
+	</md-records:md-records>
+	<prefix-relations:relations />
+</prefix-item:item>

@@ -1,0 +1,161 @@
+<chapter>
+	<title>Resource Role</title>
+	<section>
+		<title>XML Schemas</title>
+        <para> In all methods XML-data is used as input and output. The related
+            XML-schemas are located in <itemizedlist mark="opencircle"
+        spacing="compact">
+        <listitem>
+           <para>www.escidoc.de/schemas/rest/role/0.3</para> 
+        </listitem>
+
+        <listitem>
+           <para>www.escidoc.de/schemas/soap/role/0.3</para> 
+        </listitem>
+      </itemizedlist></para>
+	</section>
+	<!-- Properties -->
+	<section>
+		<title>Description of Properties</title>
+		<section>
+			<title>Role</title>
+			<section>
+				<title>General Properties of a Role</title>
+				<table frame="all">
+					<title>General Properties</title>
+					<tgroup cols="2" align="left" colsep="1"
+						rowsep="1">
+						<colspec colname="c1" />
+						<colspec colname="c2" />
+						<thead>
+							<row>
+								<entry>Property</entry>
+								<entry>Description</entry>
+							</row>
+						</thead>
+						<tbody>
+							<row>
+								<entry>objid</entry>
+								<entry>
+									A unique identifier of the role
+									within the system.
+								</entry>
+							</row>
+							<row>
+								<entry>creation-date</entry>
+								<entry>
+									This date is created by the
+									framework when the framework stores
+									the object the first time.
+								</entry>
+							</row>
+							<row>
+								<entry>creator</entry>
+								<entry>
+									Link to the user who created the
+									object, the framework adds this
+									property.
+								</entry>
+							</row>
+							<row>
+								<entry>last-modification-date</entry>
+								<entry>
+									This date is always created by the
+									framework when the framework stores
+									or updates the object.
+								</entry>
+							</row>
+							<row>
+								<entry>scope</entry>
+								<entry>
+									The definition of the scope of the
+									role if the role is limited to
+									specific resource types or limited
+									to specific objects.
+								</entry>
+							</row>
+							<row>
+								<entry>xlink:title</entry>
+								<entry>
+									The name of the role. This name must
+									be unique within eSciDoc.
+								</entry>
+							</row>
+						</tbody>
+					</tgroup>
+				</table>
+			</section>
+		</section>
+
+		<!-- Scope definition -->
+
+		<title>Scope Definition</title>
+		<section>
+			<title>General Properties of a Scope Definition</title>
+			<table frame="all">
+				<title>General Properties</title>
+				<tgroup cols="2" align="left" colsep="1" rowsep="1">
+					<colspec colname="c1" />
+					<colspec colname="c2" />
+					<thead>
+						<row>
+							<entry>Property</entry>
+							<entry>Description</entry>
+						</row>
+					</thead>
+					<tbody>
+						<row>
+							<entry>resource-type</entry>
+							<entry>
+								The name of a resource for that a role
+								is defined, e.g. "item" or "container".
+								An object may only be in the scope of a
+								limited role that has been granted to an
+								user, if a role limitation condition is
+								defined for the role that matches the
+								object's resource-type.
+							</entry>
+						</row>
+						<row>
+							<entry>relation-attribute-id</entry>
+							<entry>
+								The id of a resource attribute
+								referencing the object on that the role
+								is granted to the users. An object can
+								only be in the scope of a role that has
+								been granted to an user, if one of the
+								user's grants for the role references
+								the same object as this attribute does.
+							</entry>
+						</row>
+                        <row>
+                            <entry>relation-attribute-object-type</entry>
+                            <entry>
+                                The type of object the relation-attribute-id resolves.
+                                Following object-types are allowed:
+                                context, content-model, container, item, component, content-relation, 
+                                organizational-unit, scope, user-account, user-group.
+                            </entry>
+                        </row>
+					</tbody>
+				</tgroup>
+			</table>
+		</section>
+	</section>
+
+	<!-- Virtual Resources -->
+
+	<section>
+		<title>Virtual Resources</title>
+		<para>
+			In additon to the resources and related sub resources the
+			eSciDoc framework supports "virtual" resources. A role
+			supports the following virtual resources:
+		</para>
+		<itemizedlist mark="opencircle" spacing="compact">
+			<listitem>
+				<para>none</para>
+			</listitem>
+		</itemizedlist>
+	</section>
+</chapter>

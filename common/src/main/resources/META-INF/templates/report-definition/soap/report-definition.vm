@@ -1,0 +1,6 @@
+#parse("common/macros.vm")<${reportDefinitionNamespacePrefix}:report-definition #soapInsertConditionalRoot(${isRootReportDefinition} "false" "false" ${reportDefinitionNamespacePrefix} ${reportDefinitionNamespace} ${reportDefinitionId})>
+    <${reportDefinitionNamespacePrefix}:name>#escT(${reportDefinitionName})</${reportDefinitionNamespacePrefix}:name>
+    #soapLink(${reportDefinitionNamespacePrefix} "scope" ${reportDefinitionScopeId})
+    <${reportDefinitionNamespacePrefix}:sql>#escT(${reportDefinitionSql})</${reportDefinitionNamespacePrefix}:sql>
+#parse("report-definition/soap/report-definition-allowed-roles.vm")
+</${reportDefinitionNamespacePrefix}:report-definition>

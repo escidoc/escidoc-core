@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<prefix-role:role xml:base="http://www.escidoc.de/"
+    xmlns:prefix-role="http://www.escidoc.de/schemas/role/0.5"
+    xmlns:prefix-prop="http://escidoc.de/core/01/properties/"
+    xmlns:prefix-srel="http://escidoc.de/core/01/structural-relations/"
+    xmlns:prefix-xlink="http://www.w3.org/1999/xlink"
+    xmlns:prefix-xacml-policy="urn:oasis:names:tc:xacml:1.0:policy"
+    prefix-xlink:type="simple" prefix-xlink:title="ExampleRole"
+    prefix-xlink:href="/some/href/some:id"
+    last-modification-date="2006-02-07T12:20:46.275+01:00">
+    
+    <prefix-role:properties>
+        <prefix-prop:creation-date>
+            2006-02-07T12:20:46.275+01:00</prefix-prop:creation-date>
+        <prefix-srel:created-by prefix-xlink:type="simple"
+            prefix-xlink:title="Created By"
+            prefix-xlink:href="/aa/user-account/escidoc:41414"/>
+        <prefix-srel:modified-by
+            prefix-xlink:type="simple" prefix-xlink:title="Modified By"
+            prefix-xlink:href="/aa/user-account/escidoc:41414"/>
+        <prefix-prop:name>ExampleRole</prefix-prop:name>
+        <prefix-prop:description>This is a role
+            example°^^"§$%/()=ß?\´`@€+*~#,;.:-_|
+            &amp;&gt;&lt;&quot;&apos; &amp;amp; &amp;gt; &amp;lt;
+            &amp;quot;
+            &amp;apos;
+            <![CDATA[< & > " '    &lt; &amp; &gt; &quot; &apos;]]></prefix-prop:description>
+    </prefix-role:properties>
+    <prefix-role:resources prefix-xlink:type="none"
+        prefix-xlink:title="SomeTitle"
+        prefix-xlink:href="/some/href/some:id/some-sub-resource"/>
+    <prefix-role:scope unlimited="false">
+        <prefix-role:scope-def resource-type="item"
+            relation-attribute-id="info:escidoc/names:aa:1.0:resource:item:context"
+            relation-attribute-object-type="context"/>
+        <prefix-role:scope-def resource-type="staging-file"/>
+    </prefix-role:scope>
+    <prefix-xacml-policy:PolicySet PolicySetId="some-policy-set-id"
+        PolicyCombiningAlgId="urn:oasis:names:tc:xacml:1.0:policy-combining-algorithm:ordered-permit-overrides">
+        <prefix-xacml-policy:Description> Some of the policies of role
+            ExampleRole°^^"§$%/()=ß?\´`@€+*~#,;.:-_|
+            &amp;&gt;&lt;&quot;&apos; &amp;amp; &amp;gt;
+            &amp;lt;
+            &amp;quot;
+            &amp;apos;
+            <![CDATA[< & > " '    &lt; &amp; &gt; &quot; &apos;]]>
+            </prefix-xacml-policy:Description>
+        <prefix-xacml-policy:Target>
+            <prefix-xacml-policy:Subjects>
+                <prefix-xacml-policy:AnySubject/>
+            </prefix-xacml-policy:Subjects>
+            <prefix-xacml-policy:Resources>
+                <prefix-xacml-policy:AnyResource/>
+            </prefix-xacml-policy:Resources>
+            <prefix-xacml-policy:Actions>
+                <prefix-xacml-policy:AnyAction/>
+            </prefix-xacml-policy:Actions>
+        </prefix-xacml-policy:Target>
+        <prefix-xacml-policy:Policy PolicyId="some-policy-id"
+            RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:ordered-permit-overrides">
+            <prefix-xacml-policy:Target>
+                <prefix-xacml-policy:Subjects>
+                    <prefix-xacml-policy:AnySubject/>
+                </prefix-xacml-policy:Subjects>
+                <prefix-xacml-policy:Resources>
+                    <prefix-xacml-policy:AnyResource/>
+                </prefix-xacml-policy:Resources>
+                <prefix-xacml-policy:Actions>
+                    <prefix-xacml-policy:Action>
+                        <prefix-xacml-policy:ActionMatch
+                            MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                            
+                            <prefix-xacml-policy:AttributeValue
+                                DataType="http://www.w3.org/2001/XMLSchema#string">
+                                info:escidoc/names:aa:1.0:action:create-container
+                                </prefix-xacml-policy:AttributeValue>
+                            
+                            
+                                <prefix-xacml-policy:ActionAttributeDesignator
+                                AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id"
+                                DataType="http://www.w3.org/2001/XMLSchema#string"/>
+                        </prefix-xacml-policy:ActionMatch>
+                    </prefix-xacml-policy:Action>
+                </prefix-xacml-policy:Actions>
+            </prefix-xacml-policy:Target>
+            <prefix-xacml-policy:Rule RuleId="System-Administrator-Rule"
+                Effect="Permit">
+                <prefix-xacml-policy:Target>
+                    <prefix-xacml-policy:Subjects>
+                        <prefix-xacml-policy:AnySubject/>
+                    </prefix-xacml-policy:Subjects>
+                    <prefix-xacml-policy:Resources>
+                        <prefix-xacml-policy:AnyResource/>
+                    </prefix-xacml-policy:Resources>
+                    <prefix-xacml-policy:Actions>
+                        <prefix-xacml-policy:AnyAction/>
+                    </prefix-xacml-policy:Actions>
+                </prefix-xacml-policy:Target>
+            </prefix-xacml-policy:Rule>
+        </prefix-xacml-policy:Policy>
+    </prefix-xacml-policy:PolicySet>
+</prefix-role:role>

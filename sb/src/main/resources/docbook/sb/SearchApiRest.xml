@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter>
+  <title>Methods for REST Interface</title>
+
+  <section>
+    <title>Explain</title>
+
+    <table>
+      <title>Explain via REST</title>
+
+      <tgroup cols="2">
+        <colspec colname="Target" colnum="" colwidth="20%" />
+
+        <colspec colname="content" colnum="" colwidth="80%" />
+
+        <tbody>
+          <row>
+            <entry>HTTP Request</entry>
+
+            <entry>GET /srw/search/escidoc_all</entry>
+          </row>
+
+          <row>
+            <entry>Input from URI</entry>
+
+            <entry>operation=explain</entry>
+          </row>
+
+          <row>
+            <entry>Output</entry>
+
+            <entry>xml document in ZeeRex Schema that contains the explain
+            plan</entry>
+          </row>
+
+          <row>
+            <entry>Possible errors</entry>
+
+            <entry>http 400 or 500</entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </table>
+  </section>
+
+  <section>
+    <title>Search</title>
+
+    <para>For searching, the SRW Server gets called with the url of the
+    database and additional request parameters.</para>
+
+    <table>
+      <title>Request parameters</title>
+
+      <tgroup cols="2">
+        <colspec colname="Target" colnum="" colwidth="0*" />
+
+        <colspec colname="content" colnum="" colwidth="*" />
+
+        <tbody>
+          <row>
+            <entry>query (M)</entry>
+
+            <entry>Contains a query expressed in CQL to be processed by the
+            server (see
+            http://www.loc.gov/standards/sru/cql/index.html)</entry>
+          </row>
+
+          <row>
+            <entry>startRecord</entry>
+
+            <entry>The position within the sequence of matched records of the
+            first record to be returned. The first position in the sequence is
+            1. The value supplied must be greater than 0. Default value if not
+            supplied is 1.</entry>
+          </row>
+
+          <row>
+            <entry>maximumRecords</entry>
+
+            <entry>The number of records requested to be returned. The value
+            must be 0 or greater. Default value if not supplied is determined
+            by the server (see explain plan). The server may return less than
+            this number of records, for example if there are fewer matching
+            records than requested.</entry>
+          </row>
+
+          <row>
+            <entry>recordPacking</entry>
+
+            <entry>A string to determine how the record should be escaped in
+            the response. Defined values are 'string' and 'xml'. The default
+            is 'xml'.</entry>
+          </row>
+
+          <row>
+            <entry>recordSchema</entry>
+
+            <entry>The schema requested for the records to be returned. See
+            explain plan for supported record schemas</entry>
+          </row>
+
+          <row>
+            <entry>recordXPath</entry>
+
+            <entry>Not supported by SRW Server</entry>
+          </row>
+
+          <row>
+            <entry>resultSetTTL</entry>
+
+            <entry>The number of seconds for which the client requests that
+            the result set created should be maintained. eSciDoc does not
+            maintain resultSets because of problems with the length of search
+            results and the sorting mechanism that might result in performance
+            problems. It certainly is possible to retrieve subsequent pages of
+            the same search result. In this case, search is executed once
+            again.</entry>
+          </row>
+
+          <row>
+            <entry>sortKeys</entry>
+
+            <entry>Contains a sequence of sort keys to be applied to the
+            results. See explain plan for sort keys.</entry>
+          </row>
+
+          <row>
+            <entry>stylesheet</entry>
+
+            <entry>A URL for an xml stylesheet. The client requests that the
+            server simply return this URL in the response. The
+            stylesheet-parameter just gets returned with the response as
+            header and triggers a stylesheet-conversion at the client-side (ie
+            the browser of the user).</entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </table>
+
+    <para>Result of the search is a list of search records in the requested
+    schema. For the 1st Release, eSciDoc only supports the eSciDoc default
+    schema for search results.</para>
+
+    <para>The default record for search results contains the link to the
+    object in eSciDoc, all metadata and properties, information about the
+    components that belog to the object and a text snippet that shows in which
+    context the hit was found. (see example result in attached file
+    searchResult.xml).</para>
+
+    <para>Only released objects get indexed, so the search can only find
+    released objects!</para>
+
+    <para>All components of the item are searchable, even if they are not
+    publicly visible!</para>
+
+    <table>
+      <title>Search via REST</title>
+
+      <tgroup cols="2">
+        <tbody>
+          <row>
+            <entry>HTTP Request</entry>
+
+            <entry>GET /srw/search/escidoc_all</entry>
+          </row>
+
+          <row>
+            <entry>Input from URI</entry>
+
+            <entry>All parameters mentioned in table above</entry>
+          </row>
+
+          <row>
+            <entry>Output</entry>
+
+            <entry>xml document in searchRetrieveResponseType-schema that
+            contains the search records, information about the search request,
+            number of hits etc. (see example result in attached file
+            searchResult.xml)</entry>
+          </row>
+
+          <row>
+            <entry>Possible errors</entry>
+
+            <entry><para>Different errors of Diagnostics Type (also contained
+            in searchRetrieveResponseType-schema). See example result in
+            attached file searchError.xml.</para><para>For list of possible
+            diagnostics, see
+            http://www.loc.gov/standards/sru/diagnostics-list.html</para></entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </table>
+  </section>
+
+  <section>
+    <title>Scan</title>
+
+    <para>While the searchRetrieve operation enables searches for a specific
+    term within a list of indexed terms from the records, the scan operation
+    allows the client to request a range of the available terms at a given
+    point within that list. This enables clients to present an ordered list of
+    values and, if supported, how many hits there would be for a search on
+    that term. Scan is often used to select terms for subsequent searching or
+    to verify visually a negative search result.</para>
+
+    <table>
+      <title>Supported request-parameters</title>
+
+      <tgroup cols="2">
+        <tbody>
+          <row>
+            <entry>scanClause (M)</entry>
+
+            <entry>The index field to be browsed and the start point within
+            it, expressed as a complete index-field, relation, term clause in
+            CQL.</entry>
+          </row>
+
+          <row>
+            <entry>Operation (M)</entry>
+
+            <entry>‘scan’</entry>
+          </row>
+
+          <row>
+            <entry>responsePosition</entry>
+
+            <entry><para>The position within the list of terms returned where
+            the client would like the start term to occur. If the position
+            given is 0, then the term should be immediately before the first
+            term in the response. If the position given is 1, then the term
+            should be first in the list, and so forth up to the number of
+            terms requested plus 1, meaning that the term should be
+            immediately after the last term in the response, even if the
+            number of terms returned is less than the number requested.
+            </para><para>The range of values is 0 to the number of terms
+            requested plus 1. The default value is 1. </para></entry>
+          </row>
+
+          <row>
+            <entry>maximumTerms</entry>
+
+            <entry><para>The number of terms which the client requests be
+            returned. The actual number returned may be less than this, for
+            example if the end of the term list is reached, but may not be
+            more. The explain record for the database may indicate the maximum
+            number of terms which the server will return at once.
+            </para><para>All positive integers are valid for this parameter.
+            If not specified, the default is server determined.</para></entry>
+          </row>
+
+          <row>
+            <entry>stylesheet</entry>
+
+            <entry>A URL for an xml stylesheet. The client requests that the
+            server simply returns this URL in the response.</entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </table>
+
+    <table>
+      <title>Scan via REST</title>
+
+      <tgroup cols="2">
+        <tbody>
+          <row>
+            <entry>HTTP Request</entry>
+
+            <entry>GET /srw/search/escidoc_all</entry>
+          </row>
+
+          <row>
+            <entry>Input from URI</entry>
+
+            <entry>All parameters mentioned in table above</entry>
+          </row>
+
+          <row>
+            <entry>Output</entry>
+
+            <entry>xml document in scanResponseType-schema that contains the
+            terms and information about the scan request. (see example result
+            in attached file scanResult.xml)</entry>
+          </row>
+
+          <row>
+            <entry>Possible errors</entry>
+
+            <entry><para>Different errors of Diagnostics Type (also contained
+            in searchRetrieveResponseType-schema). </para><para>For list of
+            possible diagnostics, see
+            http://www.loc.gov/standards/sru/diagnostics-list.html</para></entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </table>
+  </section>
+</chapter>

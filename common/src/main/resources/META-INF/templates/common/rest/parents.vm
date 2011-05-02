@@ -1,0 +1,7 @@
+#parse("common/macros.vm")#set($unescapedTitle="#unesc(${parentsTitle})")
+<${parentsNamespacePrefix}:parents #restInsertConditionalRoot(${isRootParents} "false" "true" ${parentsNamespacePrefix} ${parentsNamespace} "#escA($unescapedTitle)" ${parentsHref} ${LAST_MODIFICATION_DATE})>
+#foreach( $parent in $parents )
+#set($unescapedTitle="#unesc(${parent.title})")
+#restLink(${structuralRelationsNamespacePrefix} "parent" "#escA($unescapedTitle)" $parent.href )
+#end
+</${parentsNamespacePrefix}:parents>

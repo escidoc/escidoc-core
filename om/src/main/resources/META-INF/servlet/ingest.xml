@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapping>
+	<define>
+	</define>
+	<!--
+		######################################################### 
+		# Ingest action #
+	-->
+	<resource name="Ingest" base-uri="/ir/ingest/">
+		<descriptor uri="/ir/ingest">
+			<invoke http="PUT" method="ingest" param1="${BODY}">
+				<documentation visible="true">
+					<param>
+						<param1 name="resource"> The XML representation of the resource to be
+							ingested. The resource can be either of Item, Container,
+							Component or Organizational Unit.</param1>
+					</param>
+					<result type="String"> The XML representation of the object id that
+						the object is being assigned during ingest.</result>
+				</documentation>
+			</invoke>
+		</descriptor>
+	</resource>
+</mapping>

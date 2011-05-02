@@ -1,0 +1,23 @@
+#if(${IN_CREATE})
+<foxml:datastream CONTROL_GROUP="X" ID="RELS-EXT">
+<foxml:datastreamVersion ID="RELS-EXT.0" MIMETYPE="text/xml" LABEL="">
+<foxml:xmlContent>
+#end
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"	xmlns:${escidocPropertiesNamespacePrefix}="${escidocPropertiesNamespace}" xmlns:${escidocPropertiesVersionNamespacePrefix}="${escidocPropertiesVersionNamespace}" xmlns:${escidocPropertiesReleaseNamespacePrefix}="${escidocPropertiesReleaseNamespace}" xmlns:${escidocRelationsNamespacePrefix}="${escidocRelationsNamespace}" xmlns:system="http://escidoc.de/core/01/system/">
+<rdf:Description rdf:about="info:fedora/${OBJID}">
+#if(${OBJECT_PID})<${escidocPropertiesNamespacePrefix}:pid>${OBJECT_PID}</${escidocPropertiesNamespacePrefix}:pid>#end
+<system:build>${BUILD_NUMBER}</system:build>
+<${escidocPropertiesNamespacePrefix}:content-category>${CONTENT_CATEGORY}</${escidocPropertiesNamespacePrefix}:content-category>
+<${escidocRelationsNamespacePrefix}:created-by rdf:resource="info:fedora/${CREATED_BY_ID}" />
+<${escidocPropertiesNamespacePrefix}:visibility>${VISIBILITY}</${escidocPropertiesNamespacePrefix}:visibility>
+<${escidocPropertiesNamespacePrefix}:created-by-title>${CREATED_BY_TITLE}</${escidocPropertiesNamespacePrefix}:created-by-title>
+#if(${VALID_STATUS})<${escidocPropertiesNamespacePrefix}:valid-status>${VALID_STATUS}</${escidocPropertiesNamespacePrefix}:valid-status>#end
+#if(${MIME_TYPE})<${escidocPropertiesNamespacePrefix}:mime-type>${MIME_TYPE}</${escidocPropertiesNamespacePrefix}:mime-type>#end
+<rdf:type rdf:resource="${escidocResourcesNamespace}Component"/>
+</rdf:Description>
+</rdf:RDF>
+#if(${IN_CREATE})
+</foxml:xmlContent>
+</foxml:datastreamVersion>
+</foxml:datastream>
+#end

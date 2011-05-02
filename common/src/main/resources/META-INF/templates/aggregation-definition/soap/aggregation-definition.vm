@@ -1,0 +1,6 @@
+#parse("common/macros.vm")<${aggregationDefinitionNamespacePrefix}:aggregation-definition #soapInsertConditionalRoot(${isRootAggregationDefinition} "false" "false" ${aggregationDefinitionNamespacePrefix} ${aggregationDefinitionNamespace} ${aggregationDefinitionId})>
+    <${aggregationDefinitionNamespacePrefix}:name>#escT(${aggregationDefinitionName})</${aggregationDefinitionNamespacePrefix}:name>
+    #soapLink(${aggregationDefinitionNamespacePrefix} "scope" ${aggregationDefinitionScopeId})
+#parse("aggregation-definition/soap/aggregation-table-list.vm")
+#parse("aggregation-definition/soap/aggregation-statistic-data-selector.vm")
+</${aggregationDefinitionNamespacePrefix}:aggregation-definition>

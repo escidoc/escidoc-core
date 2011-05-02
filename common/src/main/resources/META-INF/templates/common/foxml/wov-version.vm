@@ -1,0 +1,25 @@
+<${NAMESPACE_PREFIX}:version objid="${OBJID}" xlink:type="simple" xlink:title="${TITLE}" xlink:href="${HREF}" timestamp="${TIMESTAMP}" xmlns:xlink="http://www.w3.org/1999/xlink">
+<${NAMESPACE_PREFIX}:version-number>${VERSION_NUMBER}</${NAMESPACE_PREFIX}:version-number>
+<${NAMESPACE_PREFIX}:timestamp>${TIMESTAMP}</${NAMESPACE_PREFIX}:timestamp>
+<${NAMESPACE_PREFIX}:version-status>${STATUS}</${NAMESPACE_PREFIX}:version-status>
+<${NAMESPACE_PREFIX}:comment>${COMMENT}</${NAMESPACE_PREFIX}:comment>
+<${NAMESPACE_PREFIX}:events>
+<premis:event xmlID="${EVENT_XMLID}" xmlns:premis="http://www.loc.gov/standards/premis/v1">
+<premis:eventIdentifier>
+<premis:eventIdentifierType>${EVENT_ID_TYPE}</premis:eventIdentifierType>
+<premis:eventIdentifierValue>${EVENT_ID_VALUE}</premis:eventIdentifierValue>
+</premis:eventIdentifier>
+<premis:eventType>${EVENT_TYPE}</premis:eventType>
+<premis:eventDateTime>${TIMESTAMP}</premis:eventDateTime>
+<premis:eventDetail>${COMMENT}</premis:eventDetail>
+<premis:linkingAgentIdentifier xlink:title="${AGENT_TITLE}" xlink:href="${AGENT_BASE_URI}${AGENT_ID_VALUE}" xlink:type="simple">
+<premis:linkingAgentIdentifierType>${AGENT_ID_TYPE}</premis:linkingAgentIdentifierType>
+<premis:linkingAgentIdentifierValue>${AGENT_ID_VALUE}</premis:linkingAgentIdentifierValue>
+</premis:linkingAgentIdentifier>
+<premis:linkingObjectIdentifier>
+<premis:linkingObjectIdentifierType>${OBJECT_ID_TYPE}</premis:linkingObjectIdentifierType>
+<premis:linkingObjectIdentifierValue>${OBJECT_ID_VALUE}</premis:linkingObjectIdentifierValue>
+</premis:linkingObjectIdentifier>
+</premis:event>
+</${NAMESPACE_PREFIX}:events>
+</${NAMESPACE_PREFIX}:version>

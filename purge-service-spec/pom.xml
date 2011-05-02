@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>eSciDocCore</artifactId>
+        <groupId>org.escidoc.core</groupId>
+        <version>trunk-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>purge-service-spec</artifactId>
+    <name>eSciDoc Core - Purge Service Spec.</name>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.sun.tools.jxc.maven2</groupId>
+                <artifactId>maven-jaxb-schemagen-plugin</artifactId>
+                <version>1.2</version>
+                <executions>
+                    <execution>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <destdir>${project.build.outputDirectory}/xsd</destdir>
+                    <srcdir>${project.build.sourceDirectory}/de/escidoc/core/purge/internal</srcdir>
+                    <schemas>
+                        <schema>
+                            <namespace>http://www.escidoc.de/schemas/purge-service/1.0/</namespace>
+                            <file>purge-service-1.0.xsd</file>
+                        </schema>
+                    </schemas>
+                    <excludes>
+                        <exclude>*Builder*</exclude>
+                        <exclude>*Service*</exclude>
+                    </excludes>
+                    <verbose>true</verbose>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>javax.xml.bind</groupId>
+                        <artifactId>jaxb-api</artifactId>
+                        <version>2.2</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>com.sun.xml.bind</groupId>
+			            <artifactId>jaxb-impl</artifactId>
+                        <version>2.2</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>com.sun.xml.bind</groupId>
+                        <artifactId>jaxb-xjc</artifactId>
+                        <version>2.2</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            <plugin>
+                <groupId>com.googlecode.maven-java-formatter-plugin</groupId>
+                <artifactId>maven-java-formatter-plugin</artifactId>
+                <configuration>
+                    <compilerSource>1.6</compilerSource>
+                    <compilerCompliance>1.6</compilerCompliance>
+                    <compilerTargetPlatform>1.6</compilerTargetPlatform>
+                    <lineEnding>CRLF</lineEnding>
+                    <encoding>UTF-8</encoding>
+                    <configFile>${project.parent.basedir}/etc/eSciDoc_codestyle.xml</configFile>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>process-sources</phase>
+                        <goals>
+                            <goal>format</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jms</artifactId>
+		</dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-jms</artifactId>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.camel</groupId>
+          <artifactId>camel-jaxb</artifactId>
+        </dependency>
+    </dependencies>
+
+</project>

@@ -1,0 +1,73 @@
+AA for new Handler:
+Register new methods in Table aa.actions:
+	modify SQL-Script eSciDocCore/data/sql/aa.init.actions.sql:
+		eg: 
+		INSERT INTO aa.actions (id, name) VALUES
+    		('escidoc:action-retrieve-item', 'info:escidoc/names:aa:1.0:action:retrieve-item');
+
+Register new methods in Table method_mappings and table invocation-mappings:
+	-method-mappings associates the action in table aa.actions with the handler and the method in the handler
+	Table has the following fields:
+		-id : primaryKey
+		-class_name: name (with package) of the Haandler
+		-method_name: name of the method
+		-action_name: name of the action (references table aa.actions, field name)
+		-exec_before: always leave 'true'
+		-single_resource: always leave 'true'
+		-resource_not_found_exception: define Exception that should be thrown 
+		if object is not found
+
+	-invocation-mappings define the parameters that should get extracted out of the request
+	and the position of the parameter. 
+	Table has the following fields:
+		-id (primkey)
+		-attribute_id (XACML-Name of the Attribute)
+		-path (Methodname bzw xPath-expression, where to find the parameter, if mapping-type = 2)
+		-position (position of the parameter in method-call)
+		-attribute-type (XACML-Type of the Attribute (int,long,String..))
+		-mapping-type 
+		 0: Simple Mapping on request-parameter (the method, not of http-request!)
+		 2: Complex Mapping, where value has to get extracted out of given xml)
+		 3: Value Mapping, the Value is hardcoded in field'value'
+		-multi_value
+		-value (hardcoded value of parameter, if mapping-type = 3)
+		-method-mapping (Foreign-Key to Table aa.method_mappings)
+
+	Must be at least the attribute urn:oasis:names:tc:xacml:1.0:resource:resource-id for retrieve/update/delete
+	and the attribute info:escidoc/names:aa:1.0:resource:object-type-new for create
+
+	modify one of the sql-scripts eSciDocCore/data/sql/aa.init.method-mappings-<component>.sql:
+		insert method-mapping
+		eg:
+		INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_before, single_resource,
+ 		resource_not_found_exception)
+		  VALUES ('escidoc:mm-item-retrieve', 'de.escidoc.core.om.service.ItemHandler', 
+		'retrieve', 'info:escidoc/names:aa:1.0:action:retrieve-item', 
+		  true, true, 'de.escidoc.core.common.exceptions.application.notfound.ItemNotFoundException');
+
+		insert invocation-mapping
+		eg for retrieve/update/delete:
+		INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_type, mapping_type,
+		 multi_value, value, method_mapping)
+  		VALUES ('escidoc-im-item-retrieve-1', 
+		'urn:oasis:names:tc:xacml:1.0:resource:resource-id', '', 0, 
+          	'http://www.w3.org/2001/XMLSchema#string', 0, false, '', 'escidoc:mm-item-retrieve');
+
+		eg for create:
+		INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_type, 
+		mapping_type, multi_value, value, method_mapping)
+  		VALUES ('escidoc-im-item-create-1', 'info:escidoc/names:aa:1.0:resource:object-type-new', '', 0, 
+     	        'http://www.w3.org/2001/XMLSchema#string', 3, false, 'item', 'escidoc:mm-item-create');
+		
+
+Register new methods in policies:
+	-If everybody may call the method, at laest write action 
+	into xacml-policy defined in eSciDocCore/data/sql/aa.init.roles.default-user.sql
+		-register action (as defined in table aa.actions, field name) as target
+		-register action at least in Rule with RuleId="Default-User-policy-rule-0 
+		(if no more conditions apply)
+
+	-If only superuser may call the method, at least write action
+	into xacml-policy defined in eSciDocCore/data/sql/aa.init.roles.system-administrator.sql
+		-register action (as defined in table aa.actions, field name) as target
+	

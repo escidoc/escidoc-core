@@ -1,0 +1,1427 @@
+<!--
+  ~ CDDL HEADER START
+  ~
+  ~ The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+  ~ only (the "License"). You may not use this file except in compliance with the License.
+  ~
+  ~ You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License
+  ~ for the specific language governing permissions and limitations under the License.
+  ~
+  ~ When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+  ~ license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+  ~ brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
+  ~
+  ~ CDDL HEADER END
+  ~
+  ~ Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+  ~ and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+  ~ terms.
+  -->
+
+<chapter>
+	<title>Methods of Resource OrganizationalUnit for REST Interface </title>
+<section>
+	<title>Resource oriented Methods</title>
+<section>
+	<title>create</title>
+	<para>
+						
+						<para>
+							Create an Organizational Unit.
+						</para>
+						<para>
+							See chapter 4 for detailed information about input and output data elements
+						</para>
+						<para>
+						    <emphasis role="bold">Tasks:</emphasis>
+						</para>
+						<itemizedlist mark="opencircle">
+							<listitem>
+								<para>
+									The XML data is validated against
+									the XML-Schema of an OrganizationalUnit.
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									The following consistency checks are made:
+									<itemizedlist mark="opencircle" spacing="compact">
+									   <listitem>
+								             The name is unique in relation to 
+								             the name of every other sibling
+								             OrganizationalUnit. 
+								        </listitem>
+								        <listitem>
+								             The links to the parent ous are 
+								             referencing OrganizationalUnits.
+								        </listitem>
+									</itemizedlist>
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									An OrganizationalUnit is created from 
+									the provided data including a generated 
+									internal id.
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									The status of the new OrganizationalUnit is set to 
+									"opened".
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									Creator and creation date are added to the
+									new OrganizationalUnit.
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									The new OrganizationalUnit is stored.
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									The XML representation for the stored 
+									OrganizationalUnit is created.
+								</para>
+							</listitem>
+							<listitem>
+								<para>The XML data is returned.</para>
+							</listitem>
+						</itemizedlist>
+						
+					</para>
+	<table frame="all">
+		<title>create via REST</title>
+		<tgroup cols="5" align="left" colsep="1" rowsep="1">
+			<colspec colname="c1" />
+			<colspec colname="c2" />
+			<colspec colname="c3" />
+			<colspec colname="c4" />
+			<colspec colname="c5" />
+			<spanspec spanname="hspan25" namest="c2" nameend="c5" 
+			    align="left" />
+			<spanspec spanname="hspan35" namest="c3" nameend="c5"
+				align="left" />
+			<thead>
+			    				<row rowsep="1">
+					<entry >
+						HTTP Request
+					</entry>
+					<entry spanname="hspan25">
+						PUT /oum/organizational-unit
+					</entry>
+				</row>
+
+			</thead>
+			<tbody>
+				<row rowsep="1">
+					<entry >
+						 
+					</entry>
+					<entry spanname="hspan25">
+						 
+					</entry>
+				</row>
+				<row rowsep="1">
+					<entry >
+						Input from Uri
+					</entry>
+					<entry spanname="hspan25">
+						No input values
+					</entry>
+				</row>
+				<row rowsep="1">
+					<entry >
+						 
+					</entry>
+					<entry spanname="hspan25">
+						 
+					</entry>
+				</row>
+				<row rowsep="1">
+					<entry >
+						Input from Body
+					</entry>
+					<entry spanname="hspan25">
+						
+							The XML representation of the
+							OrganizationalUnit to be created
+							corresponding to XML-schema
+							"organizationalunit.xsd".
+						
+					</entry>
+				</row>
+				<row rowsep="1">
+					<entry >
+						 
+					</entry>
+					<entry spanname="hspan25">
+						 
+					</entry>
+				</row>
+				<row rowsep="1">
+					<entry >
+						Output
+					</entry>
+					<entry spanname="hspan25">
+						
+						The XML representation of the created
+						OrganizationalUnit corresponding to XML-schema
+						"organizationalunit.xsd", including the
+						generated id, the creator and creation date.
+					
+					</entry>
+				</row>
+			</tbody>
+		</tgroup>
+	</table>
+<para role="pagebreak"/>
+</section>
+<section>
+	<title>delete</title>
+	<para>
+						
+						<para>
+							Delete an Organizational Unit.
+						</para>
+						<para>
+							<emphasis role="bold">Prerequisites:</emphasis>
+						</para>
+						<para>
+							The OrganizationalUnit must exist.
+						</para>
+						<para>
+							The OrganizationalUnit must not have any children.
+						</para>
+						<para>
+							Due to the fact that neither the open nor the close 
+							methods are implemented, by now any OrganizationalUnit 
+							in status "opened" that has no children will be deleted.
+						</para>
+						<para>
+						    <emphasis role="bold">Tasks:</emphasis>
+						</para>
+						<itemizedlist mark="opencircle">
+							<listitem>
+								<para>
+									The OrganizationalUnit is accessed 
+									using the provided id.
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									The OrganizationalUnit is removed.
+								</para>
+							</listitem>
+						</itemizedlist>
+						
+					</para>
+	<table frame="all">
+		<title>delete via REST</title>
+		<tgroup cols="5" align="left" colsep="1" rowsep="1">
+			<colspec colname="c1" />
+			<colspec colname="c2" />
+			<colspec colname="c3" />
+			<colspec colname="c4" />
+			<colspec colname="c5" />
+			<spanspec spanname="hspan25" namest="c2" nameend="c5" 
+			    align="left" />
+			<spanspec spanname="hspan35" namest="c3" nameend="c5"
+				align="left" />
+			<thead>
+			    				<row rowsep="1">
+					<entry >
+						HTTP Request
+					</entry>
+					<entry spanname="hspan25">
+						DELETE /oum/organizational-unit/<emphasis>&#60;ou-id&#62;</emphasis>
+					</entry>
+				</row>
+
+			</thead>
+			<tbody>
+				<row rowsep="1">
+					<entry >
+						 
+					</entry>
+					<entry spanname="hspan25">
+						 
+					</entry>
+				</row>
+				<row rowsep="1">
+					<entry >
+						Input from Uri
+					</entry>
+					<entry spanname="hspan25">
+						<emphasis>ou-id</emphasis>: 
+							The identifier of the Organizational Unit.
+						
+					</entry>
+				</row>
+				<row rowsep="1">
+					<entry >
+						 
+					</entry>
+					<entry spanname="hspan25">
+						 
+					</entry>
+				</row>
+				<row rowsep="1">
+					<entry >
+						Output
+					</entry>
+					<entry spanname="hspan25">
+						No return value
+					</entry>
+				</row>
+			</tbody>
+		</tgroup>
+	</table>
+<para role="pagebreak"/>
+</section>
+<section>
+	<title>retrieve</title>
+	<para>
+						
+						<para>
+							Retrieve the xml representation of an 
+							OrganizationalUnit.
+						</para>
+						<para>
+							<emphasis role="bold">Prerequisites:</emphasis>
+						</para>
+						<para>
+							The OrganizationalUnit must exist.
+						</para>
+						<para>
+						    <emphasis role="bold">Tasks:</emphasis>
+						</para>
+						<itemizedlist mark="opencircle">
+							<listitem>
+								<para>
+									The OrganizationalUnit is accessed 
+									using the provided id.
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									The XML data for that OrganizationalUnit
+									is created.
+								</para>
+							</listitem>
+							<listitem>
+								<para>The XML data is returned.</para>
+							</listitem>
+						</itemizedlist>
+						
+					</para>
+	<table frame="all">
+		<title>retrieve via REST</title>
+		<tgroup cols="5" align="left" colsep="1" rowsep="1">
+			<colspec colname="c1" />
+			<colspec colname="c2" />
+			<colspec colname="c3" />
+			<colspec colname="c4" />
+			<colspec colname="c5" />
+			<spanspec spanname="hspan25" namest="c2" nameend="c5" 
+			    align="left" />
+			<spanspec spanname="hspan35" namest="c3" nameend="c5"
+				align="left" />
+			<thead>
+			    				<row rowsep="1">
+					<entry >
+						HTTP Request
+					</entry>
+					<entry spanname="hspan25">
+						GET /oum/organizational-unit/<emphasis>&#60;ou-id&#62;</emphasis>
+					</entry>
+				</row>
+
+			</thead>
+			<tbody>
+				<row rowsep="1">
+					<entry >
+						 
+					</entry>
+					<entry spanname="hspan25">
+						 
+					</entry>
+				</row>
+				<row rowsep="1">
+					<entry >
+						Input from Uri
+					</entry>
+					<entry spanname="hspan25">
+						<emphasis>ou-id</emphasis>: 
+							The identifier of the Organizational Unit.
+						
+					</entry>
+				</row>
+				<row rowsep="1">
+					<entry >
+						 
+					</entry>
+					<entry spanname="hspan25">
+						 
+					</entry>
+				</row>
+				<row rowsep="1">
+					<entry >
+						Output
+					</entry>
+					<entry spanname="hspan25">
+						
+						The XML representation of the OrganizationalUnit
+						corresponding to XML-schema
+						"organizationalunit.xsd".
+					
+					</entry>
+				</row>
+			</tbody>
+		</tgroup>
+	</table>
+<para role="pagebreak"/>
+</section>
+<section>
+	<title>update</title>
+	<para>
+						
+						<para>
+							Update an OrganizationalUnit.
+						</para>
+						<para>
+							<emphasis role="bold">Prerequisites:</emphasis>
+						</para>
+						<para>
+							The OrganizationalUnit must exist.
+						</para>
+						<para>
+							See chapter 4 for detailed information about input and output data elements
+						</para>
+						<para>
+						    <emphasis role="bold">Tasks:</emphasis>
+						</para>
+						<itemizedlist mark="opencircle">
+							<listitem>
+								<para>
+									The OrganizationalUnit is accessed using 
+									the provided id.
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									The XML data is validated against
+									the XML-Schema of an OrganizationalUnit.
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									The optimistic locking criteria is checked.
+								</para>
+									The LastModificationTimestamp provided 
+									must match the LastModificationTimestamp
+									currently saved in the system.
+							</listitem>
+							<listitem>
+								<para>
+									The following consistency checks are made:
+									<itemizedlist mark="opencircle" spacing="compact">
+									   <listitem>
+								             The name is unique in relation to 
+								             the name of every other sibling
+								             OrganizationalUnit. 
+								        </listitem>
+								        <listitem>
+								             The links to the parent ous are 
+								             referencing OrganizationalUnits.
+								        </listitem>
+								        <listitem>
+								             The new OrganizationalUnit hierarchy
+								             has no cycles, i.e. none of its parents 
+								             is also one of its children.
+								        </listitem>
+									</itemizedlist>
+								</para>
+							</listitem>
+							<!--<listitem>
+								<para>
+									It is checked that no read-only element
+									(id, creation-date, 
+									last-modification-date, creator, 
+									status flag, name and abbreviation) shall be changed.
+								</para>
+							</listitem>-->
+							<listitem>
+								<para>
+									The OrganizationalUnit is updated from 
+									the provided data and stored.
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									The XML data for the updated 
+									OrganizationalUnit is created.
+								</para>
+							</listitem>
+							<listitem>
+								<para>The XML data is returned.</para>
+							</listitem>
+						</itemizedlist>
+						
+					</para>
+	<table frame="all">
+		<title>update via REST</title>
+		<tgroup cols="5" align="left" colsep="1" rowsep="1">
+			<colspec colname="c1" />
+			<colspec colname="c2" />
+			<colspec colname="c3" />
+			<colspec colname="c4" />
+			<colspec colname="c5" />
+			<spanspec spanname="hspan25" namest="c2" nameend="c5" 
+			    align="left" />
+			<spanspec spanname="hspan35" namest="c3" nameend="c5"
+				align="left" />
+			<thead>
+			    				<row rowsep="1">
+					<entry >
+						HTTP Request
+					</entry>
+					<entry spanname="hspan25">
+						PUT /oum/organizational-unit/<emphasis>&#60;ou-id&#62;</emphasis>
+					</entry>
+				</row>
+
+			</thead>
+			<tbody>
+				<row rowsep="1">
+					<entry >
+						 
+					</entry>
+					<entry spanname="hspan25">
+						 
+					</entry>
+				</row>
+				<row rowsep="1">
+					<entry >
+						Input from Uri
+					</entry>
+					<entry spanname="hspan25">
+						<emphasis>ou-id</emphasis>: 
+							The identifier of the Organizational Unit.
+						
+					</entry>
+				</row>
+				<row rowsep="1">
+					<entry >
+						 
+					</entry>
+					<entry spanname="hspan25">
+						 
+					</entry>
+				</row>
+				<row rowsep="1">
+					<entry >
+						Input from Body
+					</entry>
+					<entry spanname="hspan25">
+						
+							The XML representation of the
+							OrganizationalUnit to be updated
+							corresponding to XML-schema
+							"organizationalunit.xsd".
+						
+					</entry>
+				</row>
+				<row rowsep="1">
+					<entry >
+						 
+					</entry>
+					<entry spanname="hspan25">
+						 
+					</entry>
+				</row>
+				<row rowsep="1">
+					<entry >
+						Output
+					</entry>
+					<entry spanname="hspan25">
+						
+						The XML representation of the updated
+						OrganizationalUnit corresponding to XML-schema
+						"organizationalunit.xsd", including the
+						generated id, the creator and creation date.
+					
+					</entry>
+				</row>
+			</tbody>
+		</tgroup>
+	</table>
+<para role="pagebreak"/>
+</section>
+<section>
+	<title>retrieveResources</title>
+	<para>
+						
+						<para>
+							Retrieve the list of virtual Resources of an
+							OrganizationalUnit.
+						</para>
+						<para>
+							This methods returns a list of additional
+							resources which aren't stored but
+							created on request by the eSciDoc-Framework
+						</para>
+						<para><emphasis role="bold">Prerequisites:</emphasis></para>
+						<para>
+							The OrganizationalUnit must exist
+						</para>
+						<para><emphasis role="bold">Tasks:</emphasis></para>
+						<itemizedlist mark="opencircle" spacing="compact">
+							<listitem>
+								<para>
+									Determine which resources are
+									available.
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									Create the list of resources.
+								</para>
+							</listitem>
+							<listitem>
+								<para>The XML data is returned.</para>
+							</listitem>
+						</itemizedlist>
+					
+					</para>
+	<table frame="all">
+		<title>retrieveResources via REST</title>
+		<tgroup cols="5" align="left" colsep="1" rowsep="1">
+			<colspec colname="c1" />
+			<colspec colname="c2" />
+			<colspec colname="c3" />
+			<colspec colname="c4" />
+			<colspec colname="c5" />
+			<spanspec spanname="hspan25" namest="c2" nameend="c5" 
+			    align="left" />
+			<spanspec spanname="hspan35" namest="c3" nameend="c5"
+				align="left" />
+			<thead>
+			    				<row rowsep="1">
+					<entry >
+						HTTP Request
+					</entry>
+					<entry spanname="hspan25">
+						GET /oum/organizational-unit/<emphasis>&#60;ou-id&#62;</emphasis>/resources
+					</entry>
+				</row>
+
+			</thead>
+			<tbody>
+				<row rowsep="1">
+					<entry >
+						 
+					</entry>
+					<entry spanname="hspan25">
+						 
+					</entry>
+				</row>
+				<row rowsep="1">
+					<entry >
+						Input from Uri
+					</entry>
+					<entry spanname="hspan25">
+						<emphasis>ou-id</emphasis>: 
+							The identifier of the Organizational Unit.
+						
+					</entry>
+				</row>
+				<row rowsep="1">
+					<entry >
+						 
+					</entry>
+					<entry spanname="hspan25">
+						 
+					</entry>
+				</row>
+				<row rowsep="1">
+					<entry >
+						Output
+					</entry>
+					<entry spanname="hspan25">
+						
+						The XML representation of the resources of that
+						OrganizationalUnit.
+					
+					</entry>
+				</row>
+			</tbody>
+		</tgroup>
+	</table>
+<para role="pagebreak"/>
+</section>
+<section>
+	<title>retrieveProperties</title>
+	<para>
+						
+						<para>
+							Retrieve the datastream 'properties' of an
+							OrganizationalUnit.
+						</para>
+					
+					</para>
+	<table frame="all">
+		<title>retrieveProperties via REST</title>
+		<tgroup cols="5" align="left" colsep="1" rowsep="1">
+			<colspec colname="c1" />
+			<colspec colname="c2" />
+			<colspec colname="c3" />
+			<colspec colname="c4" />
+			<colspec colname="c5" />
+			<spanspec spanname="hspan25" namest="c2" nameend="c5" 
+			    align="left" />
+			<spanspec spanname="hspan35" namest="c3" nameend="c5"
+				align="left" />
+			<thead>
+			    				<row rowsep="1">
+					<entry >
+						HTTP Request
+					</entry>
+					<entry spanname="hspan25">
+						GET /oum/organizational-unit/<emphasis>&#60;ou-id&#62;</emphasis>/properties
+					</entry>
+				</row>
+
+			</thead>
+			<tbody>
+				<row rowsep="1">
+					<entry >
+						 
+					</entry>
+					<entry spanname="hspan25">
+						 
+					</entry>
+				</row>
+				<row rowsep="1">
+					<entry >
+						Input from Uri
+					</entry>
+					<entry spanname="hspan25">
+						<emphasis>ou-id</emphasis>: 
+							The identifier of the Organizational Unit.
+						
+					</entry>
+				</row>
+				<row rowsep="1">
+					<entry >
+						 
+					</entry>
+					<entry spanname="hspan25">
+						 
+					</entry>
+				</row>
+				<row rowsep="1">
+					<entry >
+						Output
+					</entry>
+					<entry spanname="hspan25">
+						
+						The XML representation of the properties of that
+						OrganizationalUnit corresponding to XML-schema
+						"organizational-unit.xsd".
+					
+					</entry>
+				</row>
+			</tbody>
+		</tgroup>
+	</table>
+<para role="pagebreak"/>
+</section>
+<section>
+	<title>retrieveParentOus</title>
+	<para>
+						
+						<para>
+							Retrieve a list with references to all Organizational Units to that this OrganizationalUnit is subordinated.
+						</para>
+						<para><emphasis role="bold">Prerequisites:</emphasis></para>
+						<para>
+							The OrganizationalUnit must exist.
+						</para>
+						<para><emphasis role="bold">Tasks:</emphasis></para>
+						<itemizedlist mark="opencircle" spacing="compact">
+							<listitem>
+								<para>
+									The Organizational Unit is accessed using the provided id.
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									The XML representation of a list of references of the parent Organizational Units is created.
+								</para>
+							</listitem>
+							<listitem>
+								<para>The XML data is returned.</para>
+							</listitem>
+						</itemizedlist>
+					
+					</para>
+	<table frame="all">
+		<title>retrieveParentOus via REST</title>
+		<tgroup cols="5" align="left" colsep="1" rowsep="1">
+			<colspec colname="c1" />
+			<colspec colname="c2" />
+			<colspec colname="c3" />
+			<colspec colname="c4" />
+			<colspec colname="c5" />
+			<spanspec spanname="hspan25" namest="c2" nameend="c5" 
+			    align="left" />
+			<spanspec spanname="hspan35" namest="c3" nameend="c5"
+				align="left" />
+			<thead>
+			    				<row rowsep="1">
+					<entry >
+						HTTP Request
+					</entry>
+					<entry spanname="hspan25">
+						GET /oum/organizational-unit/<emphasis>&#60;ou-id&#62;</emphasis>/parent-ous
+					</entry>
+				</row>
+
+			</thead>
+			<tbody>
+				<row rowsep="1">
+					<entry >
+						 
+					</entry>
+					<entry spanname="hspan25">
+						 
+					</entry>
+				</row>
+				<row rowsep="1">
+					<entry >
+						Input from Uri
+					</entry>
+					<entry spanname="hspan25">
+						<emphasis>ou-id</emphasis>: 
+							The identifier of the Organizational Unit.
+						
+					</entry>
+				</row>
+				<row rowsep="1">
+					<entry >
+						 
+					</entry>
+					<entry spanname="hspan25">
+						 
+					</entry>
+				</row>
+				<row rowsep="1">
+					<entry >
+						Output
+					</entry>
+					<entry spanname="hspan25">
+						
+						The XML representation of the parent-ous of that Organizational Unit corresponding to XML-schema
+						"organizational-unit.xsd" (only part "parent-ous").
+					
+					</entry>
+				</row>
+			</tbody>
+		</tgroup>
+	</table>
+<para role="pagebreak"/>
+</section>
+<section>
+	<title>retrieveParents</title>
+	<para>
+						
+						<para>
+							Retrieve all Organizational Units objects to that this OrganizationalUnit is subordinated.
+						</para>
+						<para><emphasis role="bold">Prerequisites:</emphasis></para>
+						<para>
+							The OrganizationalUnit must exist.
+						</para>
+						<para><emphasis role="bold">Tasks:</emphasis></para>
+						<itemizedlist mark="opencircle" spacing="compact">
+							<listitem>
+								<para>
+									The Organizational Unit is accessed using the provided id.
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									All Organizational Units to that this OrganizationalUnit is subordinated are retrieved.
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									The XML representation of a list of complete Organizational Units is created.
+								</para>
+							</listitem>
+							<listitem>
+								<para>The XML data is returned.</para>
+							</listitem>
+						</itemizedlist>
+					
+					</para>
+	<table frame="all">
+		<title>retrieveParents via REST</title>
+		<tgroup cols="5" align="left" colsep="1" rowsep="1">
+			<colspec colname="c1" />
+			<colspec colname="c2" />
+			<colspec colname="c3" />
+			<colspec colname="c4" />
+			<colspec colname="c5" />
+			<spanspec spanname="hspan25" namest="c2" nameend="c5" 
+			    align="left" />
+			<spanspec spanname="hspan35" namest="c3" nameend="c5"
+				align="left" />
+			<thead>
+			    				<row rowsep="1">
+					<entry >
+						HTTP Request
+					</entry>
+					<entry spanname="hspan25">
+						GET /oum/organizational-unit/<emphasis>&#60;ou-id&#62;</emphasis>/resources/parents
+					</entry>
+				</row>
+
+			</thead>
+			<tbody>
+				<row rowsep="1">
+					<entry >
+						 
+					</entry>
+					<entry spanname="hspan25">
+						 
+					</entry>
+				</row>
+				<row rowsep="1">
+					<entry >
+						Input from Uri
+					</entry>
+					<entry spanname="hspan25">
+						<emphasis>ou-id</emphasis>: 
+							The identifier of the Organizational Unit.
+						
+					</entry>
+				</row>
+				<row rowsep="1">
+					<entry >
+						 
+					</entry>
+					<entry spanname="hspan25">
+						 
+					</entry>
+				</row>
+				<row rowsep="1">
+					<entry >
+						Output
+					</entry>
+					<entry spanname="hspan25">
+						
+						The XML representation of the list of parent Organizational Units corresponding to XML-schema
+						"organizational-unit-list.xsd".
+					
+					</entry>
+				</row>
+			</tbody>
+		</tgroup>
+	</table>
+<para role="pagebreak"/>
+</section>
+<section>
+	<title>retrieveChildren</title>
+	<para>
+						
+						<para>
+							Retrieve the OrganizationalUnits that are 
+							subordinated to this OrganizationalUnit.
+						</para>
+						<para><emphasis role="bold">Prerequisites:</emphasis></para>
+						<para>
+							The OrganizationalUnit must exist.
+						</para>
+						<para><emphasis role="bold">Tasks:</emphasis></para>
+						<itemizedlist mark="opencircle" spacing="compact">
+							<listitem>
+								<para>
+									The OrganizationalUnit is accessed 
+									using the provided id.
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									The OrganizationalUnits that are 
+									subordinated to this OrganizationalUnit
+									are retrieved.
+								</para>
+							</listitem>
+							<listitem>
+								<para>The XML representation of a list of 
+								    children Organizational Units is created. 
+								    This list contains references to the 
+								    objects.
+								</para>
+							</listitem>
+							<listitem>
+								<para>The XML data is returned.</para>
+							</listitem>
+						</itemizedlist>
+					
+					</para>
+	<table frame="all">
+		<title>retrieveChildren via REST</title>
+		<tgroup cols="5" align="left" colsep="1" rowsep="1">
+			<colspec colname="c1" />
+			<colspec colname="c2" />
+			<colspec colname="c3" />
+			<colspec colname="c4" />
+			<colspec colname="c5" />
+			<spanspec spanname="hspan25" namest="c2" nameend="c5" 
+			    align="left" />
+			<spanspec spanname="hspan35" namest="c3" nameend="c5"
+				align="left" />
+			<thead>
+			    				<row rowsep="1">
+					<entry >
+						HTTP Request
+					</entry>
+					<entry spanname="hspan25">
+						GET /oum/organizational-unit/<emphasis>&#60;ou-id&#62;</emphasis>/resources/children
+					</entry>
+				</row>
+
+			</thead>
+			<tbody>
+				<row rowsep="1">
+					<entry >
+						 
+					</entry>
+					<entry spanname="hspan25">
+						 
+					</entry>
+				</row>
+				<row rowsep="1">
+					<entry >
+						Input from Uri
+					</entry>
+					<entry spanname="hspan25">
+						<emphasis>ou-id</emphasis>: 
+							The identifier of the Organizational Unit.
+						
+					</entry>
+				</row>
+				<row rowsep="1">
+					<entry >
+						 
+					</entry>
+					<entry spanname="hspan25">
+						 
+					</entry>
+				</row>
+				<row rowsep="1">
+					<entry >
+						Output
+					</entry>
+					<entry spanname="hspan25">
+						
+						The XML representation of the list of children
+						OrganizationalUnits corresponding to XML-schema
+						"organizationalunit.xsd".
+					
+					</entry>
+				</row>
+			</tbody>
+		</tgroup>
+	</table>
+<para role="pagebreak"/>
+</section>
+<section>
+	<title>retrievePathList</title>
+	<para>
+						
+						<para>
+							Retrieve the pathList of an
+							OrganizationalUnit. This is a list of all paths 
+							from a given organizational unit to all its top 
+							level organizational units. Each path contains references 
+							to all organizational units of that path.
+						</para>
+ 							<programlisting>
+A simple example:
+Following organizational unit structure is given:
+OrgA
+    |_ OrgC
+OrgB
+    |_ OrgD
+            |_ OrgC
+
+The service would return the following result in an appropriate xml
+structure when called with the id of OrgC
+-Path:
+    -OrgA  
+    -OrgC
+-Path:
+    -OrgB
+    -OrgD
+    -OrgC
+ 							</programlisting>
+					
+					</para>
+	<table frame="all">
+		<title>retrievePathList via REST</title>
+		<tgroup cols="5" align="left" colsep="1" rowsep="1">
+			<colspec colname="c1" />
+			<colspec colname="c2" />
+			<colspec colname="c3" />
+			<colspec colname="c4" />
+			<colspec colname="c5" />
+			<spanspec spanname="hspan25" namest="c2" nameend="c5" 
+			    align="left" />
+			<spanspec spanname="hspan35" namest="c3" nameend="c5"
+				align="left" />
+			<thead>
+			    				<row rowsep="1">
+					<entry >
+						HTTP Request
+					</entry>
+					<entry spanname="hspan25">
+						GET /oum/organizational-unit/<emphasis>&#60;ou-id&#62;</emphasis>/resources/path-list
+					</entry>
+				</row>
+
+			</thead>
+			<tbody>
+				<row rowsep="1">
+					<entry >
+						 
+					</entry>
+					<entry spanname="hspan25">
+						 
+					</entry>
+				</row>
+				<row rowsep="1">
+					<entry >
+						Input from Uri
+					</entry>
+					<entry spanname="hspan25">
+						<emphasis>ou-id</emphasis>: 
+							The identifier of the Organizational Unit.
+						
+					</entry>
+				</row>
+				<row rowsep="1">
+					<entry >
+						 
+					</entry>
+					<entry spanname="hspan25">
+						 
+					</entry>
+				</row>
+				<row rowsep="1">
+					<entry >
+						Output
+					</entry>
+					<entry spanname="hspan25">
+						
+						The XML representation of the pathlist of that
+						OrganizationalUnit corresponding to XMLschema
+						"organizational-unit-path-list.xsd"
+					
+					</entry>
+				</row>
+			</tbody>
+		</tgroup>
+	</table>
+<para role="pagebreak"/>
+</section>
+</section>
+<para role="pagebreak"/>
+<section id="tasks">
+	<title>Task oriented Methods</title>
+<section>
+	<title>retrieveOrganizationalUnits</title>
+	<para>
+						 
+						<para>
+							Filtered retrieval of OrganizationalUnit objects.
+							The filter is defined in the provided task-param 
+							XML structure. The filter result is a list of 
+							OrganizationalUnits.
+						</para>
+						<para><emphasis role="bold">Prerequisites:</emphasis></para>
+						<para>
+							At least one filter containing a value must be specified.
+						</para>
+						<para>
+						    <emphasis role="bold">Tasks:</emphasis>
+						</para>
+						<itemizedlist mark="opencircle" spacing="compact">
+							<listitem>
+								<para>
+									Check whether all filter names are valid.
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									All OrganizationalUnits matching the 
+									given filter criteria are retrieved.
+								</para>
+							</listitem>
+							<listitem>
+								<para>The XML representation of the list of OrganizationalUnits corresponding
+									to XML-schema is returned as output.</para>
+							</listitem>
+						</itemizedlist>
+						<para><emphasis role="bold">Filters:</emphasis></para>
+						<para>
+							There are two possible filters that may be combined:
+						</para>
+						<itemizedlist mark="opencircle">
+							<listitem>
+								<para>top-level-organizational-units; 
+									Retrieval of top-level OrganizationalUnits, i.e. 
+									OrganizationalUnits that are not subordinated to another 
+									OrganizationalUnit.
+								</para>
+							</listitem>
+						    <listitem>
+								<para>organizational-units; 
+									Retrieval of specified OrganizationalUnits.
+								</para>
+						    </listitem>
+						</itemizedlist>
+						
+						<para>examples:
+ 							<programlisting><![CDATA[
+<param>
+   <filter name="top-level-organizational-units" />
+</param>
+
+   or
+
+<param>
+   <filter name="organizational-units">
+     <id>escidoc:11111</id>
+     <id>escidoc:99999</id>
+   </filter>
+</param>
+]]></programlisting>
+
+					
+					</para>
+					
+					</para>
+	<table frame="all">
+		<title>retrieveOrganizationalUnits via REST</title>
+		<tgroup cols="5" align="left" colsep="1" rowsep="1">
+			<colspec colname="c1" />
+			<colspec colname="c2" />
+			<colspec colname="c3" />
+			<colspec colname="c4" />
+			<colspec colname="c5" />
+			<spanspec spanname="hspan25" namest="c2" nameend="c5" 
+			    align="left" />
+			<spanspec spanname="hspan35" namest="c3" nameend="c5"
+				align="left" />
+			<thead>
+			    				<row rowsep="1">
+					<entry >
+						HTTP Request
+					</entry>
+					<entry spanname="hspan25">
+						POST /oum/organizational-units/filter
+					</entry>
+				</row>
+
+			</thead>
+			<tbody>
+				<row rowsep="1">
+					<entry >
+						 
+					</entry>
+					<entry spanname="hspan25">
+						 
+					</entry>
+				</row>
+				<row rowsep="1">
+					<entry >
+						Input from Uri
+					</entry>
+					<entry spanname="hspan25">
+						No input values
+					</entry>
+				</row>
+				<row rowsep="1">
+					<entry >
+						 
+					</entry>
+					<entry spanname="hspan25">
+						 
+					</entry>
+				</row>
+				<row rowsep="1">
+					<entry >
+						Input from Body
+					</entry>
+					<entry spanname="hspan25">
+						
+							
+							The filter criteria to select the OrganizationalUnits corresponding to "filter-organizational-units.xsd".
+							If multiple filters are specified they are linked using logical AND.
+							
+						
+					</entry>
+				</row>
+				<row rowsep="1">
+					<entry >
+						 
+					</entry>
+					<entry spanname="hspan25">
+						 
+					</entry>
+				</row>
+				<row rowsep="1">
+					<entry >
+						Output
+					</entry>
+					<entry spanname="hspan25">
+						
+						The XML representation of the created list of items 
+						corresponding to XML-schema "organizational-unit-list.xsd".
+					
+					</entry>
+				</row>
+			</tbody>
+		</tgroup>
+	</table>
+<para role="pagebreak"/>
+</section>
+<section>
+	<title>retrieveOrganizationalUnitRefs</title>
+	<para>
+						 
+						<para>
+							Filtered retrieval of OrganizationalUnit objects.
+							This filter method is similar to the filter 
+							method decribed above but returns a list of 
+							references (xlink) to OrganizationalUnits.
+						</para>
+						<para>
+						    <emphasis role="bold">Tasks:</emphasis>
+						</para>
+						<itemizedlist mark="opencircle" spacing="compact">
+							<listitem>
+								<para>
+									All OrganizationalUnits matching the 
+									given filter criteria are retrieved.
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									The XML data for the list of references
+									to OrganizationalUnits is created.
+								</para>
+							</listitem>
+							<listitem>
+								<para>The XML data is returned.</para>
+							</listitem>
+						</itemizedlist>
+						<para><emphasis role="bold">Filters:</emphasis></para>
+						<para>For valid filter criteria names and examples see "retrieveOrganizationalUnits"</para>
+					
+					</para>
+	<table frame="all">
+		<title>retrieveOrganizationalUnitRefs via REST</title>
+		<tgroup cols="5" align="left" colsep="1" rowsep="1">
+			<colspec colname="c1" />
+			<colspec colname="c2" />
+			<colspec colname="c3" />
+			<colspec colname="c4" />
+			<colspec colname="c5" />
+			<spanspec spanname="hspan25" namest="c2" nameend="c5" 
+			    align="left" />
+			<spanspec spanname="hspan35" namest="c3" nameend="c5"
+				align="left" />
+			<thead>
+			    				<row rowsep="1">
+					<entry >
+						HTTP Request
+					</entry>
+					<entry spanname="hspan25">
+						POST /oum/organizational-units/filter/refs
+					</entry>
+				</row>
+
+			</thead>
+			<tbody>
+				<row rowsep="1">
+					<entry >
+						 
+					</entry>
+					<entry spanname="hspan25">
+						 
+					</entry>
+				</row>
+				<row rowsep="1">
+					<entry >
+						Input from Uri
+					</entry>
+					<entry spanname="hspan25">
+						No input values
+					</entry>
+				</row>
+				<row rowsep="1">
+					<entry >
+						 
+					</entry>
+					<entry spanname="hspan25">
+						 
+					</entry>
+				</row>
+				<row rowsep="1">
+					<entry >
+						Input from Body
+					</entry>
+					<entry spanname="hspan25">
+						
+							
+							The filter criteria to select the OrganizationalUnits corresponding to "filter-organizational-units.xsd".
+							If multiple filters are specified they are linked using logical AND.
+							
+						
+					</entry>
+				</row>
+				<row rowsep="1">
+					<entry >
+						 
+					</entry>
+					<entry spanname="hspan25">
+						 
+					</entry>
+				</row>
+				<row rowsep="1">
+					<entry >
+						Output
+					</entry>
+					<entry spanname="hspan25">
+						
+						The XML representation of the created list of references to OrganizationalUnits  
+						corresponding to XML-schema "organizational-unit-list-refs.xsd".
+					
+					</entry>
+				</row>
+			</tbody>
+		</tgroup>
+	</table>
+<para role="pagebreak"/>
+</section>
+</section>
+</chapter>

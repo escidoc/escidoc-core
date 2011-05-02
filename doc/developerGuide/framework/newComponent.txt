@@ -1,0 +1,8 @@
+Neue Komponente anlegen:
+
+-sourcefolders <komponentenname>/src + /gen anlegen
+-unterhalb von escidoc.ear <komponentenname>.jar
+-komponente in escidoc.ear/META-INF/application.xml eintragen
+-im build-verzeichnis <komponentenname>-build.xml anlegen
+-im build-verzeichnis in java-build.xml komponente eintragen (copy + compile)
+-in build/templates/classpath-.. sourcefolders eintragen (<classpathentry output="escidoc.ear/common.jar" kind="src" path="common/src"/>)

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns0:context prefix-xlink:title="" xml:base=""
+	xmlns:ns0="http://www.escidoc.de/schemas/context/0.7"
+	xmlns:prop="http://escidoc.de/core/01/properties/"
+	xmlns:srel="http://escidoc.de/core/01/structural-relations/"
+	xmlns:prefix-xlink="http://www.w3.org/1999/xlink"
+	prefix-xlink:type="simple">
+
+	<ns0:properties prefix-xlink:title="Properties"
+		prefix-xlink:type="simple">
+		<prop:name>my context reloaded</prop:name>
+		<prop:description>my context</prop:description>
+		<prop:type>PubMan</prop:type>
+		<prop:organizational-units>
+			<srel:organizational-unit
+				prefix-xlink:href="/oum/organizational-unit/escidoc:persistent1"
+				prefix-xlink:type="simple" />
+		</prop:organizational-units>
+	</ns0:properties>
+
+	<ns0:admin-descriptors>
+
+		<ns0:admin-descriptor name="hi_there">
+			<example-admin-descriptor>
+				<ns0:allowed-content-types>
+					<ns0:allowed-content-type>
+						<ns0:allowed-md-schema />
+						<!--ns0:allowed-md-record /-->
+					</ns0:allowed-content-type>
+				</ns0:allowed-content-types>
+				<ns0:webservices>
+					<ns0:webservice>
+						<ns0:description />
+						<ns0:service />
+						<ns0:parameters />
+					</ns0:webservice>
+				</ns0:webservices>
+				<ns0:authority-files>
+					<ns0:authority-file />
+				</ns0:authority-files>
+				<ns0:submission-methods>
+					<ns0:method>single-submission</ns0:method>
+				</ns0:submission-methods>
+				<ns0:relation-types>
+					<ns0:relation-type />
+				</ns0:relation-types>
+
+				<!-- <ns0:item-visibility />-->
+				<ns0:component-visibility />
+				<ns0:visibility-of-references />
+				<ns0:visibility-of-annotations />
+			</example-admin-descriptor>
+		</ns0:admin-descriptor>
+	</ns0:admin-descriptors>
+
+</ns0:context>

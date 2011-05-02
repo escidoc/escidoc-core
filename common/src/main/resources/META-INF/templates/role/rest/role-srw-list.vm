@@ -1,0 +1,31 @@
+#parse("common/macros.vm")
+<zs:searchRetrieveResponse #namespaceDecl("zs" "http://www.loc.gov/zing/srw/") #commonRootNsDecls()>
+  <zs:version>1.1</zs:version>
+  <zs:numberOfRecords>$roles.size()</zs:numberOfRecords>
+#if ($roles.size() > 0)
+  <zs:records>
+#foreach($role in $roles)
+    <zs:record>
+      <zs:recordSchema>${roleNamespace}</zs:recordSchema>
+      <zs:recordPacking>${recordPacking.getType()}</zs:recordPacking>
+      <zs:recordData>
+#set( $roleName = ${role.roleName} )
+#set( $roleHref = ${role.roleHref} )
+#set( $CREATION_DATE = ${role.CREATION_DATE} )
+#set( $roleCreatedByTitle = ${role.roleCreatedByTitle} )
+#set( $roleCreatedByHref = ${role.roleCreatedByHref} )
+#set( $LAST_MODIFICATION_DATE = ${role.LAST_MODIFICATION_DATE} )
+#set( $roleModifiedByTitle = ${role.roleModifiedByTitle} )
+#set( $roleModifiedByHref = ${role.roleModifiedByHref} )
+#set( $DESCRIPTION = ${role.DESCRIPTION} )
+#set( $roleIsLimited = ${role.roleIsLimited} )
+#set( $roleScopeDefs = ${role.roleScopeDefs} )
+#set( $policy = ${role.policy} )
+#searchResultRecord("role/rest/role.vm")
+      </zs:recordData>
+      <zs:recordPosition>$velocityCount</zs:recordPosition>
+    </zs:record>
+#end
+  </zs:records>
+#end
+</zs:searchRetrieveResponse>

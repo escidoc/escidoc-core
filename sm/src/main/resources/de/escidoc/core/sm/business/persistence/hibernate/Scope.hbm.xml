@@ -1,0 +1,215 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping
+    schema="sm"
+>
+<!-- 
+    Created by the Middlegen Hibernate plugin 2.2
+
+    http://boss.bekk.no/boss/middlegen/
+    http://www.hibernate.org/
+-->
+
+<class 
+    name="de.escidoc.core.sm.business.persistence.hibernate.Scope" 
+    table="scopes"
+    lazy="false"
+>
+    <meta attribute="class-description" inherit="false">
+       @hibernate.class
+        table="scopes"
+       @hibernate.mapping
+        schema="sm"
+    </meta>
+
+    <id
+        name="id"
+        type="java.lang.String"
+        column="id"
+    >
+    
+        <meta attribute="field-description">
+           @hibernate.id
+            generator-class="de.escidoc.core.common.persistence.EscidocIdGenerator"
+            type="java.lang.String"
+            column="id"
+
+        </meta>
+        <generator class="de.escidoc.core.common.persistence.EscidocIdGenerator" />
+    </id>
+
+    <property
+        name="name"
+        type="java.lang.String"
+        column="name"
+        not-null="true"
+        length="255"
+    >
+        <meta attribute="field-description">
+           @hibernate.property
+            column="name"
+            length="255"
+            not-null="true"
+        </meta>    
+    </property>
+    <property
+        name="scopeType"
+        type="java.lang.String"
+        column="scope_type"
+        not-null="true"
+        length="20"
+    >
+        <meta attribute="field-description">
+           @hibernate.property
+            column="scope_type"
+            length="20"
+            not-null="true"
+        </meta>    
+    </property>
+    <property
+        name="creatorId"
+        type="java.lang.String"
+        column="creator_id"
+        length="255"
+    >
+        <meta attribute="field-description">
+           @hibernate.property
+            column="creator_id"
+            length="255"
+        </meta>    
+    </property>
+    <property
+        name="creationDate"
+        type="java.util.Date"
+        column="creation_date"
+        length="29"
+    >
+        <meta attribute="field-description">
+           @hibernate.property
+            column="creation_date"
+            length="29"
+        </meta>    
+    </property>
+    <property
+        name="modifiedById"
+        type="java.lang.String"
+        column="modified_by_id"
+        length="255"
+    >
+        <meta attribute="field-description">
+           @hibernate.property
+            column="modified_by_id"
+            length="255"
+        </meta>    
+    </property>
+    <property
+        name="lastModificationDate"
+        type="java.util.Date"
+        column="last_modification_date"
+        length="29"
+    >
+        <meta attribute="field-description">
+           @hibernate.property
+            column="last_modification_date"
+            length="29"
+        </meta>    
+    </property>
+
+    <!-- Associations -->
+  
+    <!-- bi-directional one-to-many association to AggregationDefinition -->
+
+    <set
+        name="aggregationDefinitions"
+        lazy="true"
+        inverse="false"
+		cascade="all"
+
+    >
+        <meta attribute="field-description">
+           @hibernate.set
+            lazy="true"
+            inverse="false"
+            cascade="all"
+
+           @hibernate.collection-key
+            column="scope_id"
+
+
+           @hibernate.collection-one-to-many
+            class="de.escidoc.core.sm.business.persistence.hibernate.AggregationDefinition"
+        </meta>
+        <key>
+            <column name="scope_id" />
+        </key>
+        
+        <one-to-many 
+            class="de.escidoc.core.sm.business.persistence.hibernate.AggregationDefinition"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to StatisticData -->
+
+    <set
+        name="statisticDatas"
+        lazy="true"
+        inverse="false"
+		cascade="all"
+
+    >
+        <meta attribute="field-description">
+           @hibernate.set
+            lazy="true"
+            inverse="false"
+            cascade="all"
+
+           @hibernate.collection-key
+            column="scope_id"
+
+
+           @hibernate.collection-one-to-many
+            class="de.escidoc.core.sm.business.persistence.hibernate.StatisticData"
+        </meta>
+        <key>
+            <column name="scope_id" />
+        </key>
+        
+        <one-to-many 
+            class="de.escidoc.core.sm.business.persistence.hibernate.StatisticData"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to ReportDefinition -->
+
+    <set
+        name="reportDefinitions"
+        lazy="true"
+        inverse="false"
+		cascade="all"
+
+    >
+        <meta attribute="field-description">
+           @hibernate.set
+            lazy="true"
+            inverse="false"
+            cascade="all"
+
+           @hibernate.collection-key
+            column="scope_id"
+
+
+           @hibernate.collection-one-to-many
+            class="de.escidoc.core.sm.business.persistence.hibernate.ReportDefinition"
+        </meta>
+        <key>
+            <column name="scope_id" />
+        </key>
+        
+        <one-to-many 
+            class="de.escidoc.core.sm.business.persistence.hibernate.ReportDefinition"
+        />
+    </set>
+
+</class>
+</hibernate-mapping>

@@ -1,0 +1,27 @@
+<chapter id="Scope">
+	<title>Resource Scope</title>
+	<para>
+		The System is able to manage statistic-scopes. 
+		Statistic-Scopes divide the overall-statistics into areas 
+		of responsibility. Statistic-record writing, aggregation of 
+		data and report-generation only runs within a defined statistic-scope.
+		Therefore, every xml-structure has a mandatory element 'scope' with an attribute objid where
+		the objid of the scope has to be provided.		
+	</para>
+	<para>
+		To have the possibility to use the internally written statistic-data 
+		in user-defined aggregations, a statistic-scope has a parameter "type".
+		type can have the values "normal" or "admin". If the type is "admin", 
+		the aggregation-definitions belonging to that scope may also aggregate statistic_data
+		that was not written with the scope the aggregation-definition belongs to.
+		Additionally, report-definitions belonging to an "admin""-scope may access 
+		aggrgation-tables belonging to a different scope.
+			
+	</para>
+	<para>
+		Parameters and return-values of the interface-calls are xml-records according to 
+		the scope-schema. The xml-record contains the root-element with an attribute objid 
+		that defines the primary-key of the scope 
+		and a subelement name that holds the name of the scope.
+	</para>
+</chapter>

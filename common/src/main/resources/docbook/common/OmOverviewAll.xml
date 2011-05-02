@@ -1,0 +1,289 @@
+<!--
+  ~ CDDL HEADER START
+  ~
+  ~ The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+  ~ only (the "License"). You may not use this file except in compliance with the License.
+  ~
+  ~ You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+  ~ the specific language governing permissions and limitations under the License.
+  ~
+  ~ When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+  ~ license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+  ~ brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
+  ~
+  ~ CDDL HEADER END
+  ~
+  ~ Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+  ~ and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+  ~ terms.
+  -->
+
+<chapter>
+	<title>Object Manager (OM)</title>
+	<section>
+		<title>Overview of Object Manager (OM)</title>
+		<para>
+			In this release the Object Manager (OM) offers services in the following areas:
+		</para>
+		<itemizedlist mark="opencircle">
+			<listitem>
+				<para>
+					<emphasis role="bold">Containers:</emphasis>
+					Containers offer the concept of aggregation, i.e. they can contain other (simple and complex) objects.
+					Each container includes a structural map. A container can be a	collection or a bundle.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					<emphasis role="bold">Items:</emphasis>
+					These are the objects in the eSciDoc system that comprise the institutional repository. An item is a
+					simple or complex object like an article, a report or a translation.
+				</para>
+				<para>
+					Items can have various statuses, which also have an influence on whether actions are applicable to them
+					or not.
+				</para>
+				<para />
+				<para>
+					In this release, the Object Manager supports creation, retrieval, deletion, updates, versioning,
+					submit, release  and withdrawal of Items as	well as various kinds of relations between Items.
+				</para>
+				
+			</listitem>
+			<listitem>
+				<para>
+					<emphasis role="bold">Components:</emphasis>
+					Components are used when an Item should not only store metadata about a specific content, but the content itself as
+					digital objects. The Component will be handled as a	separate part of the Item, optionaly enriched with metadata
+					and licenses to facilitate handling and processing.
+				</para>
+				<para>
+					In this release, the Object Manager supports adding, retrieval, update and deletion of Components of Items.
+				</para>
+				<para>A Component can not exist without an Item.</para>
+			</listitem>
+			
+			
+				<listitem>
+					<para>
+						<emphasis role="bold">
+							Organizational Unit
+						</emphasis>
+					</para>
+					<para>
+						Every Organizational Unit will be described in
+						the system with a set of properties.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<emphasis role="bold">
+							Organizational Unit structure
+						</emphasis>
+					</para>
+					<para>
+						Organizational Units are hierarchically
+						organized:
+					</para>
+					<itemizedlist mark="opencircle">
+						<listitem>
+							<para>
+								Each Organizational Unit may have one or
+								more subunits.
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								An Organizational Unit may be
+								subordinated to one or more
+								Organizational Unit.
+							</para>
+						</listitem>
+					</itemizedlist>
+					<para>
+						There is no limitation in the depth of the
+						organizational Structure.
+					</para>
+					<para>
+						These kind of relation between Organizational
+						Units is handled by the Organizational Unit
+						Manager. Later releases will support the
+						Organizational Unit History, too.
+					</para>
+				</listitem>
+			
+			
+			
+			<listitem>
+				<para>
+					<emphasis role="bold">TOC:</emphasis>
+					TOCs are discrete objects to provide a Table of Content. They may be related to other
+					resources (primarily Containers) in order to describe a view to them. In fact they are 
+					specialised Items and therefore they are versioned and can have various statuses as Items have.
+				</para>
+				<para>
+					In this release, the Object Manager supports creation, retrieval, deletion, updates, versioning,
+					submit, release and withdrawal of TOCs.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					<emphasis role="bold">Context:</emphasis>
+					These are objects that are used to administrate Items and Containers. They will not be versioned but
+					can also have various statuses, which also has an influence on whether actions are applicable to them
+					or not. Each Context can include one or more AdminDescriptors.
+				</para>
+				<para>
+					In this release, the Object Manager supports the retrieval of Contexts as well as creating,	updating and 
+					deleting and furthermore adding, retrieving and moving of Items and Containers to
+					and from Contexts. New Contexts are created with public-status "created".
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					<emphasis role="bold">Admin-Descriptor:</emphasis>
+					An AdminDescriptor keeps settings from application. A Context may have multiple Admin-Descriptors as 
+					well as no one. The Admin-Descriptors are stored as data streams with unique names. Specifications for 
+					XML structure of Admin-Descriptors will not be done.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					<emphasis role="bold">Metadata:</emphasis>
+					A Metadata Record describes an Item or a Container in a given Metadata Schema. An Item or a Container 
+					may have one or more Metadata Records. A Metadata Record contains references to Metadata Elements of the respective
+					Metadata Schema and values for these Metadata Elements. Depending on the Metadata Element
+					definition, a Metadata Record may have more values for a single Metadata Element. Contexts do not have
+					their own internal metadata record but one ore more default Metadata records for ingest and other purposes.
+				</para>
+				<para>
+					Note: An Item or a Container has an internal Metadata Record as well as a set of properties. 
+					Items and Containers are versioned. 
+				</para>
+				<para>
+					In this release, the Object Manager allows updating, and retrieving of one Metadata record of Items and Containers.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					<emphasis role="bold">Properties:</emphasis>
+					In all methods except "create" most properties are read-only. In method "create" some properties can 
+					be set (see methods for details). 
+				</para>
+				<para>
+					The application may effect the values of some properties in using specific methods (like changing "public-status"
+					via method "release"), some properties like "name" and "description" of the container are changed via 
+					changes in the corresponding elements of "escidoc" meta data set, some properties are only changed by the 
+					infrastructure (e.x. "last-modification-date", "creation-date") and some are created once by the infrastructure 
+					and never changed (e.x. "created-by")
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					<emphasis role="bold">Content Relations:</emphasis>
+					The Items and containers stored in the Object Manager can be related to each other. The relations have
+					names and are directed.  
+					<!-- 
+					Content Relations can have additional metadata and are versioned (e.g. the "is
+					annotated by" between two Items.
+					 -->
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					<emphasis role="bold">
+						Structural Relations:
+					</emphasis>
+					Items stored in the Object Manager belong always to a Context and may be part of a Container. The
+					relations have types, names, and are directed. They	have no meta data but are versioned (e.g. the "hasMember"
+					relation between Context and Item).
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					<emphasis role="bold">
+						Persistent Identifiers:
+					</emphasis>
+					Container, Item and Component could be assigned with a persistent identifier (PID) which represents the whole object. 
+					These PIDs are called objectPid for Container and Item. Components are no discrete objects, the PIDs are therefore called 
+					componentPid. Each version of Container and Item could be assigned with an own PID, which represents the version.
+					The infrastructure is not limited to a special type of persistent identifier but currently only identifiers from 
+					Handle System are used.  
+				</para>
+				<para>
+					A persistent identifier consists at least of an identifier and a pointer to a location. The infrastructure does not 
+					validate the location pointer. This means that the solution, which assigns a persistent identifier could set any 
+					location. Usually should the persistent identifier point to the object or version at the solution URL or to the 
+					infrastructure URL. The eSciDoc Solution is responsible to set a valid URL during the assignment process. 
+				</para>
+				<para>
+					The Object Manager supports creation and assignment of PIDs via several methods during the publishing process.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					<emphasis role="bold">Validation:</emphasis>
+					This means checking the validity of objects handled by the Object Manager.
+				</para>
+			</listitem>
+<!-- 
+			<listitem>
+				<para>
+					<emphasis role="bold">Licenses:</emphasis>
+					are referenced from Components. They are stored in the Object Manager, to provide a list of all
+					possible licenses.
+				</para>
+				<para>
+					In this release, Licenses are not supported.
+				</para>
+			</listitem>
+ -->
+		</itemizedlist>
+	</section>
+	<section id="SupportedResources">
+		<title>Supported resources</title>
+		<para>
+			For this release the Object Manager (OM) supports the following resources:
+		</para>
+		<itemizedlist mark="opencircle" spacing="compact">
+			<listitem>
+				<para><emphasis role="bold">Context</emphasis></para>
+			</listitem>
+			<listitem>
+				<para><emphasis role="bold">Container</emphasis></para>
+			</listitem>
+			<listitem>
+				<para><emphasis role="bold">Item</emphasis></para>
+			</listitem>
+			<listitem>
+				<para><emphasis role="bold">OrganizationalUnit</emphasis></para>
+			</listitem>
+		</itemizedlist>
+	</section>
+	<section>
+		<title>Versioning</title>
+		<para>
+			The Object Manager allows versioning of Items and Containers. See cpt_versioning-v0.2.doc for more details.
+		</para>
+		<para>
+			The concepts applied for the versioning of digital objects are explained in
+			<xref linkend="MRFS06" />. Only the latest version of an object can be updated.
+		</para>
+	</section>
+	<section>
+		<title>Content Model</title>
+		<para>
+			With version 1.2 of the eSciDoc Infrastructure the Content Model Object gets structured 
+			and is no longer a dummy object. But
+			Content Models are still in an experimental state. E.g. it is possible to define which 
+			metadata an object must have but this definitions are not ensured and not even checked 
+			by the eScidoc Infrastructure.
+		</para>
+		<para>
+			A newly introduced feature of Content Models are the resource definitions. By resource definitions
+			in Content Models so-called resources can be added to objects. These resources are in fact operations
+			which can be called on a specific object by a specific name. The first - and for now the only - possible 
+			resource definition is to define a XSLT which transforms a specified metadata record.
+		</para>
+	</section>
+</chapter>
