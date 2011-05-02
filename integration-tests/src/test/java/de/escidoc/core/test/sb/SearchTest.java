@@ -580,11 +580,10 @@ public class SearchTest extends SearchTestBase {
         try {
             response = search(parameters, INDEX_NAME);
             assertXmlValidSearchResult(response);
-            
-            
-            assertEquals("1/java.lang.IllegalArgumentException: "
-                        + "numHits must be &gt; 0; please use TotalHitCountCollector "
-                        + "if you just need the total hit count", getDiagnostics(response));
+
+            assertEquals(
+                "1/java.lang.IllegalArgumentException: " + "numHits must be &gt; 0; please use TotalHitCountCollector "
+                    + "if you just need the total hit count", getDiagnostics(response));
         }
         catch (final Exception e) {
         }
